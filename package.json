@@ -1,0 +1,59 @@
+{
+  "name": "watson-developer-cloud-alpha",
+  "version": "0.9.9",
+  "description": "Nodejs Client Alpha Wrapper to use the IBM Watson Services",
+  "main": "./lib/index",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/watson-developer-cloud/nodejs-wrapper-alpha.git"
+  },
+  "keywords": [
+    "ibm",
+    "watson",
+    "watson-developer-cloud",
+    "message_resonance",
+    "user_modeling",
+    "machine_translation",
+    "concept_expansion",
+    "question_and_answer",
+    "relationship_extraction",
+    "language_identification"
+  ],
+  "author": "IBM Corp.",
+  "contributors": [
+    {
+      "name": "German Attanasio Ruiz",
+      "email": "germanatt@us.ibm.com"
+    },
+    {
+      "name": "Jeff Stylos",
+      "email": "jsstylos@us.ibm.com"
+    }
+  ],
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/watson-developer-cloud/nodejs-wrapper-alpha/issues"
+  },
+  "devDependencies": {
+    "mocha": "~1.8.1",
+    "coveralls": "~2.11.2",
+    "istanbul": "~0.3.5",
+    "nock": "~0.46.0",
+    "qs": "~2.3.3"
+  },
+  "dependencies": {
+    "async": "~0.9.0",
+    "extend": "~2.0.0",
+    "request": "~2.49.0",
+    "string-template": "~0.2.0"
+  },
+  "engines": {
+    "node": ">=0.10"
+  },
+  "scripts": {
+    "test": "mocha --reporter spec --timeout 4000",
+    "prepare": "npm test && npm version patch",
+    "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha --reporter spec --timeout 4000",
+    "coverall": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+  }
+}
