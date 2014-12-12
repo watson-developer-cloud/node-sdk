@@ -4,4 +4,4 @@ node_js:
 script:
   - npm test
 after_success:
-  - npm run coverall
+  - npm run coveralls
