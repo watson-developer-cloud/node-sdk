@@ -66,7 +66,7 @@ var question_and_answer_healthcare = watson.question_and_answer({
   username: '<username>',
   password: '<password>',
   version: 'v1',
-  dataset: 'heathcare' /* The dataset can be specified when creating the service or when calling it */
+  dataset: 'healthcare' /* The dataset can be specified when creating the service or when calling it */
 });
 
 question_and_answer_healthcare.ask({ text: 'What is HIV?'}, function (err, response) {
