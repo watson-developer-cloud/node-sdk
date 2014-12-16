@@ -1,6 +1,6 @@
 {
   "name": "watson-developer-cloud-alpha",
-  "version": "0.9.9",
+  "version": "0.9.10",
   "description": "Nodejs Client Alpha Wrapper to use the IBM Watson Services",
   "main": "./lib/index",
   "repository": {
