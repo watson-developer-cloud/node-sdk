@@ -175,7 +175,7 @@ var relationship_extraction = watson.relationship_extraction({
 });
 
 relationship_extraction.extract({
-  text: 'IBM Watson developer cloud', dataset: 'ie-en-news' };
+  text: 'IBM Watson developer cloud', dataset: 'ie-en-news' },
   function (err, response) {
     if (err)
       console.log('error:', err);
