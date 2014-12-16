@@ -73,7 +73,7 @@ question_and_answer_healthcare.ask({ text: 'What is HIV?'}, function (err, respo
   if (err)
     console.log('error:', err);
   else
-    console.log(response);
+    console.log(JSON.stringify(response, undefined, 2));
 });
 ```
 
