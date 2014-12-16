@@ -69,4 +69,18 @@ QuestionAndAnswer.prototype.ask = function(_params, callback) {
   return requestFactory(parameters, callback);
 };
 
+QuestionAndAnswer.prototype.datasets = function(_params, callback) {
+  var body = _params || {};
+
+  var parameters = {
+    options: {
+      url: this._options.url + '/v1/services',
+      method: 'GET',
+      json: true
+    },
+    default_options: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
 module.exports = QuestionAndAnswer;
