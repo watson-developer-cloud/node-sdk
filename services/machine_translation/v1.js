@@ -32,13 +32,8 @@ var responseFormatter = function(callback) {
   };
 };
 
-// V1 needs a 'frfr' for 'fr' and 'enus' for 'en'
-var language = function(lang) {
-  return lang === 'en' ? 'enus' : lang + lang;
-};
-
 var createSid = function(from, to) {
-  return util.format('mt-%s-%s', language(from), language(to));
+  return util.format('mt-%s-%s', from, to);
 };
 
 function MachineTranslation(options) {
@@ -51,9 +46,17 @@ function MachineTranslation(options) {
 }
 
 MachineTranslation.prototype.translate = function(_params, callback) {
-  var params = _params || {};
+  var params = _params || {},
+    sid = params.sid,
+    requiredParams = ['text'];
 
-  var missingParams = helper.getMissingParams(params, ['from','to','text']);
+  if (!sid) { // If !sid check that 'from' and 'to' were specified
+    sid = createSid(params.from, params.to);
+    requiredParams = ['text','from','to'];
+  }
+
+  var missingParams = helper.getMissingParams(params, requiredParams);
+
   if (missingParams){
     callback(new Error('Missing required parameters: ' + missingParams.join(', ')));
     return;
@@ -64,7 +67,7 @@ MachineTranslation.prototype.translate = function(_params, callback) {
       method: 'POST',
       url: this._options.url + '/v1/smt/0',
       form : {
-        sid: createSid(params.from, params.to),
+        sid: sid,
         rt:'text',
         txt: params.text // Change 'text' to 'txt'
       }

@@ -10,8 +10,8 @@ describe('machine_translation', function() {
   // Test params
   var payload = {
     text : 'Messi is the best',
-    from : 'en',
-    to   : 'es'
+    from : 'enus',
+    to   : 'eses'
   };
   var service_path = '/v1/smt/0';
   var service_request = {
@@ -51,17 +51,17 @@ describe('machine_translation', function() {
   });
 
   it('should check for missing text', function() {
-    var params = {from : 'en', to: 'es'};
+    var params = {from : 'enus', to: 'eses'};
     machine_translation.translate(params, missingParameter);
   });
 
   it('should check for missing "from"', function() {
-    var params = {to: 'es', text:'Messi' };
+    var params = {to: 'eses', text:'Messi' };
     machine_translation.translate(params, missingParameter);
   });
 
   it('should check for missing "to"', function() {
-    var params = {from : 'en', text:'Messi' };
+    var params = {from : 'enus', text:'Messi' };
     machine_translation.translate(params, missingParameter);
   });
 
@@ -77,6 +77,15 @@ describe('machine_translation', function() {
     assert.equal(req.uri.href, service.url+ service_path);
     assert.equal(body, qs.stringify(service_request));
     assert.equal(req.method, 'POST');
+  });
+
+  it('should work with sid and text', function() {
+    var params = {sid : 'mt-enus-eses', text: payload.text };
+    var req = machine_translation.translate(params, noop);
+    var body = new Buffer(req.body).toString('ascii');
+    assert.equal(req.uri.href, service.url+ service_path);
+    assert.equal(body, qs.stringify(service_request));
+
   });
 
   it('should format the response', function(done) {
