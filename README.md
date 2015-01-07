@@ -130,7 +130,7 @@ var machine_translation = watson.machine_translation({
 });
 
 machine_translation.translate({
-  text: 'A sentence must have a verb', from : 'en', to: 'es' },
+  text: 'A sentence must have a verb', from : 'enus', to: 'eses' },
   function (err, response) {
     if (err)
       console.log('error:', err);
