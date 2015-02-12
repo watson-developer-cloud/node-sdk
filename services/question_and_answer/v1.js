@@ -70,8 +70,6 @@ QuestionAndAnswer.prototype.ask = function(_params, callback) {
 };
 
 QuestionAndAnswer.prototype.datasets = function(_params, callback) {
-  var body = _params || {};
-
   var parameters = {
     options: {
       url: this._options.url + '/v1/services',
