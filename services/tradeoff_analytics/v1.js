@@ -21,12 +21,12 @@ var requestFactory = require('../../lib/requestwrapper');
 
 function TradeoffAnalytics(options) {
   // Default URL
-  var default_option = {
+  var defaultOptions = {
     url: 'https://gateway.watsonplatform.net/tradeoff-analytics-beta/api'
   };
 
   // Replace default options with user provided
-  this._options = extend(default_option, options);
+  this._options = extend(defaultOptions, options);
 }
 
 /**
@@ -44,11 +44,11 @@ TradeoffAnalytics.prototype.dilemmas = function(params, callback) {
   var parameters = {
     options: {
       method: 'POST',
-      url: this._options.url + '/v1/dilemmas',
+      url: '/v1/dilemmas',
       body: params,
       json: true,
     },
-    default_options: this._options
+    defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };

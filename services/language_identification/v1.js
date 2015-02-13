@@ -36,15 +36,16 @@ var responseFormatter = function(callback) {
 };
 
 function LanguageIdentification(options) {
-  var default_option = {
-    url: 'https://gateway.watsonplatform.net/laser/service/api'
+  var serviceDefaults = {
+    url: 'https://gateway.watsonplatform.net/language-identification-beta/api'
   };
 
   // Extend default options with user provided options
-  this._options = extend(default_option, options);
+  this._options = extend(serviceDefaults, options);
 }
 
 LanguageIdentification.prototype.identify = function(params, callback) {
+
   if (!params || !params.text){
     callback(new Error('Missing required parameters: text'));
     return;
@@ -53,14 +54,14 @@ LanguageIdentification.prototype.identify = function(params, callback) {
   var parameters = {
     options: {
       method: 'POST',
-      url: this._options.url + '/v1/txtlid/0',
+      url: '/v1/txtlid/0',
       form : {
         sid: 'lid-generic',
         rt:'json',
         txt: params.text // Change 'text' to 'txt'
       }
     },
-    default_options: this._options
+    defaultOptions: this._options
   };
   return requestFactory(parameters, responseFormatter(callback));
 };

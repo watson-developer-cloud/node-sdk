@@ -32,39 +32,36 @@ var toQuestion = function(params){
 
 
 function QuestionAndAnswer(options) {
-  var default_option = {
-    url: 'https://gateway.watsonplatform.net/qagw/service'
+  var serviceDefaults = {
+    url: 'https://gateway.watsonplatform.net/question-and-answer-beta/api'
   };
   this.dataset = options.dataset;
 
   // Extend default options with user provided options
-  this._options = extend(default_option, options);
+  this._options = extend(serviceDefaults, options);
 }
 
 QuestionAndAnswer.prototype.ask = function(_params, callback) {
-  var body = _params || {},
-    // User dataset or default
-    dataset = body.dataset || this.dataset,
-    path = dataset ? { dataset: dataset} : null;
-
+  var params = extend({dataset: this.dataset}, _params),
+    dataset = params.dataset;
   // If 'text' is specified, build POST body question using text
-  if (body.text) {
-    body = toQuestion(body);
+  if (params.text) {
+    params = toQuestion(params);
   }
 
-  delete body.dataset;
+  delete params.dataset;
 
   var parameters = {
     options: {
-      url: this._options.url + '/v1/question/{dataset}',
+      url: '/v1/question/{dataset}',
       headers: { 'X-synctimeout' : 30 },
       method: 'POST',
-      body: body,
+      body: params,
       json: true,
-      path: path
+      path: {dataset: dataset}
     },
     requiredParams: ['question','dataset'],
-    default_options: this._options
+    defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };
@@ -72,11 +69,11 @@ QuestionAndAnswer.prototype.ask = function(_params, callback) {
 QuestionAndAnswer.prototype.datasets = function(_params, callback) {
   var parameters = {
     options: {
-      url: this._options.url + '/v1/services',
+      url: '/v1/services',
       method: 'GET',
       json: true
     },
-    default_options: this._options
+    defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };

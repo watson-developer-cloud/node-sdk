@@ -21,12 +21,12 @@ var requestFactory = require('../../lib/requestwrapper');
 
 function VisualRecognition(options) {
   // Default URL
-  var default_option = {
+  var serviceDefaults = {
     url: 'https://gateway.watsonplatform.net/visual-recognition-beta/api'
   };
 
   // Replace default options with user provided
-  this._options = extend(default_option, options);
+  this._options = extend(serviceDefaults, options);
 }
 
 /**
@@ -38,11 +38,11 @@ VisualRecognition.prototype.labels = function(params, callback) {
   var parameters = {
     options: {
       method: 'GET',
-      url: this._options.url + '/v1/tag/labels',
+      url: '/v1/tag/labels',
       qs: params,
       json: true,
     },
-    default_options: this._options
+    defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };
@@ -56,7 +56,9 @@ VisualRecognition.prototype.labels = function(params, callback) {
  * @param  {String} labels_to_check The labels to check
  */
 VisualRecognition.prototype.recognize = function(params, callback) {
-  if (!params || !params.imgFile){
+  var formData = params || {};
+
+  if (!formData.imgFile){
     callback(new Error('Missing required parameters: imgFile'));
     return;
   }
@@ -64,11 +66,11 @@ VisualRecognition.prototype.recognize = function(params, callback) {
   var parameters = {
     options: {
       method: 'POST',
-      url: this._options.url + '/v1/tag/recognize',
-      formData: params,
+      url: '/v1/tag/recognize',
+      formData: formData,
       json: true,
     },
-    default_options: this._options
+    defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };

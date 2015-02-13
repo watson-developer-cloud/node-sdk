@@ -21,18 +21,14 @@ var requestFactory = require('../../lib/requestwrapper');
 var helper = require('../../lib/helper');
 
 function RelationshipExtraction(options) {
-  var default_option = {
-    url: 'https://gateway.watsonplatform.net/laser/service/api'
+  var serviceDefaults = {
+    url: 'https://gateway.watsonplatform.net/relationship-extranction-beta/api'
   };
 
-  var _options = extend(default_option, options);
-  _options.url = helper.stripTrailingSlash(_options.url);
+  this.dataset = options.dataset;
 
-  // Check for a default dataset
-  this.dataset = _options.dataset;
-  delete _options.dataset;
-
-  this._options = _options;
+  // Extend default options with user provided options
+  this._options = extend(serviceDefaults, options);
 }
 
 // Wrap the response to format the result.
@@ -62,14 +58,14 @@ RelationshipExtraction.prototype.extract = function(_params, callback) {
   var parameters = {
     options: {
       method: 'POST',
-      url: this._options.url + '/v1/sire/0',
+      url: '/v1/sire/0',
       form : {
         rt: 'json',
         sid: params.dataset,
         txt: params.text // Change 'text' to 'txt'
       }
     },
-    default_options: this._options
+    defaultOptions: this._options
   };
   return requestFactory(parameters, responseFormatter(callback));
 };

@@ -2,24 +2,27 @@
 
 var assert = require('assert');
 var watson = require('../lib/index');
-var nock   = require('nock');
-
-
+var nock = require('nock');
 
 describe('message_resonance', function() {
   // Test params
   var service_request = {
-    dataset : 1,
+    dataset: 1,
     text: 'X X X'
   };
   var service_response = {
     text: 'X X X',
-    dataset:1,
-    resonances:[
-      { word:'X', word_offset:0},
-      { word:'X', word_offset:2},
-      { word:'X', word_offset:2}
-    ]
+    dataset: 1,
+    resonances: [{
+      word: 'X',
+      word_offset: 0
+    }, {
+      word: 'X',
+      word_offset: 2
+    }, {
+      word: 'X',
+      word_offset: 2
+    }]
   };
   var service = {
     username: 'batman',
@@ -30,36 +33,45 @@ describe('message_resonance', function() {
   var ringscore_path = '/v1/ringscore';
   var datasets_path = '/v1/datasets';
 
-  var mock_word_resonance = {word: 'X'};
-  var mock_datasets = [{id:1, name:'cloud'}];
+  var mock_word_resonance = {
+    word: 'X'
+  };
+  var mock_datasets = [{
+    id: 1,
+    name: 'cloud'
+  }];
 
-  before(function(){
+  before(function() {
     nock.disableNetConnect();
     nock(service.url)
-    .persist()
-    .get(ringscore_path+'?text=X&dataset=1')
-    .reply(200, mock_word_resonance)
-    .get(datasets_path)
-    .reply(200, mock_datasets);
+      .persist()
+      .get(ringscore_path + '?text=X&dataset=1')
+      .reply(200, mock_word_resonance)
+      .get(datasets_path)
+      .reply(200, mock_datasets);
   });
 
-  after(function(){
+  after(function() {
     nock.cleanAll();
   });
 
   var message_resonance = watson.message_resonance(service);
 
-  var missingParameter =function(err) {
+  var missingParameter = function(err) {
     assert.ok((err instanceof Error) && /required parameters/.test(err));
   };
 
   it('should check for missing text', function() {
-    var params = {dataset: service_request.dataset};
+    var params = {
+      dataset: service_request.dataset
+    };
     message_resonance.resonance(params, missingParameter);
   });
 
   it('should check for missing dataset', function() {
-    var params = {text: service_request.text};
+    var params = {
+      text: service_request.text
+    };
     message_resonance.resonance(params, missingParameter);
   });
 
@@ -70,7 +82,7 @@ describe('message_resonance', function() {
   });
 
   it('/datasets: should generate a valid payload', function() {
-    var checkDatasets = function(err,res) {
+    var checkDatasets = function(err, res) {
       assert.equal(JSON.stringify(res), JSON.stringify(mock_datasets));
     };
 
@@ -80,7 +92,7 @@ describe('message_resonance', function() {
   });
 
   it('should format the response', function(done) {
-    message_resonance.resonance(service_request, function(err, response){
+    message_resonance.resonance(service_request, function(err, response) {
       if (err)
         done(err);
       else {
@@ -91,6 +103,3 @@ describe('message_resonance', function() {
   });
 
 });
-
-
-

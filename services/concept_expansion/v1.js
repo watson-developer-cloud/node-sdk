@@ -50,11 +50,11 @@ var concept_decode = {
 
 // The concepts are encoded using the concept_decode map
 // Create a regular expression to decode them to a human readable form
-var ce_regexp = new RegExp('/'+Object.keys(concept_decode).join('|')+'/','g');
+var decoderRegExp = new RegExp('/'+Object.keys(concept_decode).join('|')+'/','g');
 var decodeConcept = function (encoded_concept) {
   return {
     prevalence: encoded_concept.prevalence,
-    result: encoded_concept.result.replace(ce_regexp,function(word) {
+    result: encoded_concept.result.replace(decoderRegExp,function(word) {
       return concept_decode[word];
     })
   };
@@ -73,13 +73,13 @@ var responseFormatter = function(cb) {
 };
 
 function ConceptExpansion(options) {
-  var default_option = {
-    url: 'https://gateway.watsonplatform.net/conceptexpansion/service/api/glimpse'
+  var serviceDefaults = {
+    url: 'https://gateway.watsonplatform.net/concept-expansion-beta/api'
   };
   this.dataset = options.dataset;
 
   // Extend default options with user provided options
-  this._options = extend(default_option, options);
+  this._options = extend(serviceDefaults, options);
 }
 
 ConceptExpansion.prototype.createJob = function(params, callback) {
@@ -87,12 +87,12 @@ ConceptExpansion.prototype.createJob = function(params, callback) {
   var parameters = {
     options: {
       method: 'POST',
-      url: this._options.url + '/v1/upload',
+      url: '/v1/upload',
       body: body,
       json: true
     },
     requiredParams: ['dataset', 'seeds', 'label'],
-    default_options: this._options
+    defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };
@@ -101,12 +101,12 @@ ConceptExpansion.prototype.getStatus = function(params, callback) {
   var parameters = {
     options: {
       method: 'GET',
-      url: this._options.url + '/v1/status',
+      url: '/v1/status',
       json: true,
       qs: params
     },
     requiredParams: ['jobid'],
-    default_options: this._options
+    defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };
@@ -116,12 +116,12 @@ ConceptExpansion.prototype.getResult = function(params, callback) {
   var parameters = {
     options: {
       method: 'PUT',
-      url: this._options.url + '/v1/result',
+      url: '/v1/result',
       body: params,
       json: true
     },
     requiredParams: ['jobid'],
-    default_options: this._options
+    defaultOptions: this._options
   };
   return requestFactory(parameters, responseFormatter(callback));
 };
@@ -146,9 +146,11 @@ ConceptExpansion.prototype.expand = function(params, callback) {
       var status = _status.state;
       //if Awaiting Work or In Flight
       if (status === 'A' || status === 'G') {
+
         setTimeout(function() {
           self.getStatus(job,processStatus);
-        }, 4000);
+        }, params.delay || 4000);
+
       } else if (status === 'R' ) { // If retrieved
         callback({error: 'retrieved'});
       } else if (status === 'F' ) { // If fail

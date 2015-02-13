@@ -21,12 +21,12 @@ var requestFactory = require('../../lib/requestwrapper');
 
 function TextToSpeech(options) {
   // Default URL
-  var default_option = {
+  var serviceDefaults = {
     url: 'https://stream.watsonplatform.net/text-to-speech-beta/api'
   };
 
   // Replace default options with user provided
-  this._options = extend(default_option, options);
+  this._options = extend(serviceDefaults, options);
 }
 
 /**
@@ -36,11 +36,11 @@ TextToSpeech.prototype.synthesize = function(params, callback) {
   var parameters = {
     options: {
       method: 'GET',
-      url: this._options.url + '/v1/synthesize',
+      url: '/v1/synthesize',
       qs: params
     },
     requiredParams: ['text','accept','voice'],
-    default_options: this._options
+    defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };
@@ -52,10 +52,10 @@ TextToSpeech.prototype.voices = function(params, callback) {
   var parameters = {
     options: {
       method: 'GET',
-      url: this._options.url + '/v1/voices',
+      url: '/v1/voices',
       json: true
     },
-    default_options: this._options
+    defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };

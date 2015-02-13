@@ -47,12 +47,12 @@ function formatChunk(chunk) {
  */
 function SpeechToText(options) {
   // Default URL
-  var default_option = {
+  var serviceDefaults = {
     url: 'https://stream.watsonplatform.net/speech-to-text-beta/api'
   };
 
   // Replace default options with user provided
-  this._options = extend(default_option, options);
+  this._options = extend(serviceDefaults, options);
 }
 
 
@@ -77,11 +77,11 @@ SpeechToText.prototype.recognize = function(params, callback) {
   var parameters = {
     options: {
       method: 'POST',
-      url: this._options.url + '/v1/models/WatsonModel/recognize',
+      url: '/v1/recognize',
       headers: { 'Content-type': params.content_type},
       json: true,
     },
-    default_options: this._options
+    defaultOptions: this._options
   };
   return params.audio.pipe(requestFactory(parameters, callback));
 };
@@ -130,19 +130,27 @@ SpeechToText.prototype.recognize = function(params, callback) {
  * otherwise it waits for the next recognition.
  *
  * @param {String} [params.session_id] Session used in the recognition.
+ * @param {String} [params.cookie_session] The cookie session
+ *                                         used in the Cookie header.
  * @param {boolean} [params.interim_results] If true,
  * interim results will be returned. Default: false.
  */
-SpeechToText.prototype.observe_result = function(params, callback) {
+SpeechToText.prototype.observeResult = function(params, callback) {
+  var missingParams = helper.getMissingParams(params, ['session_id','cookie_session']);
+  if (missingParams){
+    callback(new Error('Missing required parameters: ' + missingParams.join(', ')));
+    return;
+  }
+
   var parameters = {
     options: {
       method: 'GET',
-      url: this._options.url + '/v1/sessions/{session}/observeResult',
-      qs: {interim_results: params.interim_results},
+      url: '/v1/sessions/'+ params.session_id +'/observeResult',
+      qs: { interim_results: (params.interim_results == true)},
       json: true,
       headers: { 'Cookie': 'SESSIONID=' + params.cookie_session }
     },
-    default_options: this._options
+    defaultOptions: this._options
   };
   var req = requestFactory(parameters);
 
@@ -171,16 +179,17 @@ SpeechToText.prototype.observe_result = function(params, callback) {
  *
  * @param {String} [params.session_id] Session used in the recognition.
  */
-SpeechToText.prototype.recognize_status = function(params, callback) {
+SpeechToText.prototype.getRecognizeStatus = function(params, callback) {
+  var path = params || {};
   var parameters = {
     options: {
       method: 'GET',
-      url: this._options.url + '/v1/sessions/{session_id}/recognize',
-      path: params,
+      url: '/v1/sessions/'+ path.session_id +'/recognize',
+      path: path,
       json: true
     },
     requiredParams: ['session_id'],
-    default_options: this._options
+    defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };
@@ -189,15 +198,15 @@ SpeechToText.prototype.recognize_status = function(params, callback) {
  * List of models available.
  *
  */
-SpeechToText.prototype.get_models = function(params, callback) {
+SpeechToText.prototype.getModels = function(params, callback) {
   var parameters = {
     options: {
       method: 'GET',
-      url: this._options.url + '/v1/models',
+      url: '/v1/models',
       path: params,
       json: true
     },
-    default_options: this._options
+    defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };
@@ -207,16 +216,18 @@ SpeechToText.prototype.get_models = function(params, callback) {
  * @param {String} [params.model_id] The desired model
  *
  */
-SpeechToText.prototype.get_model = function(params, callback) {
+SpeechToText.prototype.getModel = function(params, callback) {
+  var path = params || {};
+
   var parameters = {
     options: {
       method: 'GET',
-      url: this._options.url + '/v1/models/{model_id}',
-      path: params,
+      url: '/v1/models/'+path.model_id,
+      path: path,
       json: true
     },
     requiredParams: ['model_id'],
-    default_options: this._options
+    defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };
@@ -228,15 +239,14 @@ SpeechToText.prototype.get_model = function(params, callback) {
  * The session expires after 15 minutes of inactivity.
  *
  */
-SpeechToText.prototype.create_session = function(params, callback) {
+SpeechToText.prototype.createSession = function(params, callback) {
   var parameters = {
     options: {
       method: 'POST',
-      url: this._options.url + '/v1/sessions',
-      path: params,
+      url: '/v1/sessions',
       json: true
     },
-    default_options: this._options
+    defaultOptions: this._options
   };
 
   // Add the cookie_session to the response
@@ -260,16 +270,17 @@ SpeechToText.prototype.create_session = function(params, callback) {
  *
  * @param {String} [params.session_id] Session id.
  */
-SpeechToText.prototype.delete_session = function(params, callback) {
+SpeechToText.prototype.deleteSession = function(params, callback) {
+  var path = params || {};
   var parameters = {
     options: {
       method: 'DELETE',
-      url: this._options.url + '/v1/sessions/{session_id}',
-      path: params,
+      url: '/v1/sessions/'+path.session_id,
+      path: path,
       json: true
     },
     requiredParams: ['session_id'],
-    default_options: this._options
+    defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };

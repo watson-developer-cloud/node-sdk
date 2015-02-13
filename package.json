@@ -1,6 +1,6 @@
 {
   "name": "watson-developer-cloud-alpha",
-  "version": "0.9.15",
+  "version": "0.10.0",
   "description": "Nodejs Client Alpha Wrapper to use the IBM Watson Services",
   "main": "./lib/index",
   "repository": {
@@ -10,14 +10,20 @@
   "keywords": [
     "ibm",
     "watson",
-    "watson-developer-cloud",
-    "message_resonance",
-    "user_modeling",
-    "machine_translation",
-    "concept_expansion",
-    "question_and_answer",
-    "relationship_extraction",
-    "language_identification"
+    "wdc",
+    "watson developer cloud",
+    "message resonance",
+    "user modeling",
+    "machine translation",
+    "concept expansion",
+    "question and answer",
+    "relationship extraction",
+    "language identification",
+    "visual recognition ",
+    "speech to text ",
+    "text to speech ",
+    "concept insights ",
+    "tradeoff analytics "
   ],
   "author": "IBM Corp.",
   "contributors": [
@@ -44,7 +50,7 @@
   "dependencies": {
     "async": "~0.9.0",
     "extend": "~2.0.0",
-    "request": "~2.51.0",
+    "request": "~2.53.0",
     "cookie": "~0.1.2",
     "string-template": "~0.2.0"
   },

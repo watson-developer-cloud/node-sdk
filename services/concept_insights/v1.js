@@ -21,12 +21,12 @@ var requestFactory = require('../../lib/requestwrapper');
 
 function ConceptInsights(options) {
   // Default URL
-  var defaultOption = {
+  var serviceDefaults = {
     url: 'https://gateway.watsonplatform.net/concept-insights-beta/api'
   };
 
   // Replace default options with user provided
-  this._options = extend(defaultOption, options);
+  this._options = extend(serviceDefaults, options);
 }
 
 /**
@@ -39,7 +39,7 @@ ConceptInsights.prototype.getCorpus = function(params, callback) {
       method: 'GET',
       json: true
     },
-    default_options: this._options
+    defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };
@@ -56,7 +56,7 @@ ConceptInsights.prototype.deleteCorpus = function(params, callback) {
       path: params
     },
     requiredParams: ['user', 'corpus'],
-    default_options: this._options
+    defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };
@@ -74,7 +74,7 @@ ConceptInsights.prototype.getDocumentIds = function(params, callback) {
       path: params
     },
     requiredParams: ['user', 'corpus'],
-    default_options: this._options
+    defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };
@@ -97,7 +97,7 @@ ConceptInsights.prototype.createCorpus = function(params, callback) {
       path: path
     },
     requiredParams: ['user', 'corpus'],
-    default_options: this._options
+    defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };
@@ -114,7 +114,7 @@ ConceptInsights.prototype.deleteDocument = function(params, callback) {
       path: params
     },
     requiredParams: ['user', 'corpus', 'documentid'],
-    default_options: this._options
+    defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };
@@ -131,7 +131,7 @@ ConceptInsights.prototype.getDocument = function(params, callback) {
       path: params
     },
     requiredParams: ['user', 'corpus', 'documentid'],
-    default_options: this._options
+    defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };
@@ -156,7 +156,7 @@ ConceptInsights.prototype.updateDocument = function(params, callback) {
       path: params
     },
     requiredParams: ['user', 'corpus', 'documentid'],
-    default_options: this._options
+    defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };
@@ -181,7 +181,7 @@ ConceptInsights.prototype.createDocument = function(params, callback) {
       path: params
     },
     requiredParams: ['user', 'corpus', 'documentid'],
-    default_options: this._options
+    defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };
@@ -198,7 +198,7 @@ ConceptInsights.prototype.getConceptsMetadata = function(params, callback) {
       qs: extend({func: 'minfo'}, params)
     },
     requiredParams: ['ids'],
-    default_options: this._options
+    defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };
@@ -223,7 +223,7 @@ ConceptInsights.prototype.search_concepts_by_label = function(params, callback) 
       path: path
     },
     requiredParams: ['user', 'graph', 'label'],
-    default_options: this._options
+    defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };
@@ -247,7 +247,7 @@ ConceptInsights.prototype.getRelatedConcept = function(params, callback) {
       path: path
     },
     requiredParams: ['user', 'graph', 'concepts'],
-    default_options: this._options
+    defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };
@@ -271,7 +271,7 @@ ConceptInsights.prototype.annotateText = function(_params, callback) {
       path: path
     },
     requiredParams: ['user', 'graph'],
-    default_options: this._options
+    defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };
@@ -295,7 +295,7 @@ ConceptInsights.prototype.labelSearch = function(params, callback) {
       path: path
     },
     requiredParams: ['user', 'corpus', 'query'],
-    default_options: this._options
+    defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };
@@ -319,7 +319,7 @@ ConceptInsights.prototype.semanticSearch = function(params, callback) {
       path: path
     },
     requiredParams: ['user', 'corpus', 'ids'],
-    default_options: this._options
+    defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };
@@ -337,7 +337,7 @@ ConceptInsights.prototype.getDocumentState = function(params, callback) {
       path: params
     },
     requiredParams: ['user', 'corpus', 'documentid'],
-    default_options: this._options
+    defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };
@@ -360,7 +360,7 @@ ConceptInsights.prototype.getDocumentToConceptScore = function(_params, callback
       path: params
     },
     requiredParams: ['user', 'corpus', 'documentid', 'dest'],
-    default_options: this._options
+    defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };

@@ -2,13 +2,12 @@
 
 var assert = require('assert');
 var watson = require('../lib/index');
-var qs     = require('qs');
-var nock   = require('nock');
-
+var qs = require('qs');
+var nock = require('nock');
 
 describe('relationship_extraction', function() {
   // Test params
-  var noop = function(){};
+  var noop = function() {};
   var service_request = {
     text: 'Messi is the best',
     dataset: 'ie-en-news'
@@ -26,42 +25,46 @@ describe('relationship_extraction', function() {
     version: 'v1'
   };
 
-  before(function(){
+  before(function() {
     nock.disableNetConnect();
     nock(service.url)
-    .persist()
-    .post(service_path, qs.stringify({
+      .persist()
+      .post(service_path, qs.stringify({
         rt: 'json',
         sid: service_request.dataset,
         txt: service_request.text
-    }))
-    .reply(200, service_response);
+      }))
+      .reply(200, service_response);
   });
 
-  after(function(){
+  after(function() {
     nock.cleanAll();
   });
 
   var relationship_extraction = watson.relationship_extraction(service);
 
-  var missingParameter =function(err) {
+  var missingParameter = function(err) {
     assert.ok((err instanceof Error) && /required parameters/.test(err));
   };
 
   it('should check for missing text', function() {
-    var params = {dataset: service_request.dataset};
-    relationship_extraction.extract(params,missingParameter);
+    var params = {
+      dataset: service_request.dataset
+    };
+    relationship_extraction.extract(params, missingParameter);
   });
 
   it('should check for missing dataset', function() {
-    var params = {text: service_request.text};
-    relationship_extraction.extract(params,missingParameter);
+    var params = {
+      text: service_request.text
+    };
+    relationship_extraction.extract(params, missingParameter);
   });
 
   it('should check no parameters provided', function() {
-    relationship_extraction.extract({},missingParameter);
-    relationship_extraction.extract(null,missingParameter);
-    relationship_extraction.extract(undefined,missingParameter);
+    relationship_extraction.extract({}, missingParameter);
+    relationship_extraction.extract(null, missingParameter);
+    relationship_extraction.extract(undefined, missingParameter);
   });
 
   it('should generate a valid payload', function() {
@@ -69,15 +72,15 @@ describe('relationship_extraction', function() {
     var body = new Buffer(req.body).toString('ascii');
     assert.equal(req.uri.href, service.url + service_path);
     assert.equal(body, qs.stringify({
-      rt:'json',
-      sid:service_request.dataset,
-      txt:service_request.text
+      rt: 'json',
+      sid: service_request.dataset,
+      txt: service_request.text
     }));
     assert.equal(req.method, 'POST');
   });
 
   it('should format the response', function(done) {
-    relationship_extraction.extract(service_request,function(err, response){
+    relationship_extraction.extract(service_request, function(err, response) {
       if (err)
         done(err);
       else {

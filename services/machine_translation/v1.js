@@ -37,12 +37,12 @@ var createSid = function(from, to) {
 };
 
 function MachineTranslation(options) {
-  var default_option = {
-    url: 'https://gateway.watsonplatform.net/laser/service/api'
+  var serviceDefaults = {
+    url: 'https://gateway.watsonplatform.net/machine-translation-beta/api'
   };
 
   // Extend default options with user provided options
-  this._options = extend(default_option, options);
+  this._options = extend(serviceDefaults, options);
 }
 
 MachineTranslation.prototype.translate = function(_params, callback) {
@@ -65,14 +65,14 @@ MachineTranslation.prototype.translate = function(_params, callback) {
   var parameters = {
     options: {
       method: 'POST',
-      url: this._options.url + '/v1/smt/0',
+      url: '/v1/smt/0',
       form : {
         sid: sid,
         rt:'text',
         txt: params.text // Change 'text' to 'txt'
       }
     },
-    default_options: this._options
+    defaultOptions: this._options
   };
   return requestFactory(parameters, responseFormatter(callback));
 };

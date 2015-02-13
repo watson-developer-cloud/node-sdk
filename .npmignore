@@ -1,3 +1,5 @@
 test
 node_modules
 coverage
+.jshintignore
+.hshintrc

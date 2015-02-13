@@ -22,25 +22,27 @@ var requestFactory = require('../../lib/requestwrapper');
 var helper = require('../../lib/helper');
 
 function MessageResonance(options) {
-  var default_option = {
-    url: 'https://gateway.watsonplatform.net/messageresonance/service/api',
-    qs: {dataset: options.dataset}
+  var serviceDefaults = {
+    url: 'https://gateway.watsonplatform.net/message-resonance-beta/api'
   };
 
+  if (options.dataset)
+    this.qs = {dataset: options.dataset};
+
   // Extend default options with user provided options
-  this._options = extend(default_option, options);
+  this._options = extend(serviceDefaults, options);
 }
 
-MessageResonance.prototype._resonanceForWord = function(params, callback) {
+MessageResonance.prototype.getResonanceForWord = function(params, callback) {
   var parameters = {
     options: {
       method: 'GET',
-      url: this._options.url + '/v1/ringscore',
+      url: '/v1/ringscore',
       json: true,
       qs: params
     },
     requiredParams: ['dataset','text'],
-    default_options: this._options
+    defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };
@@ -81,7 +83,7 @@ MessageResonance.prototype.resonance = function(_params, callback) {
   // separate the text in individual words and map each with the get_resonance function
   var words_async = params.text.match(/[^ ]+/g).map(function(word) {
     return function (cb) {
-      return self._resonanceForWord({ text:word, dataset: params.dataset}, cb);
+      return self.getResonanceForWord({ text:word, dataset: params.dataset}, cb);
     };
   });
 
@@ -99,10 +101,10 @@ MessageResonance.prototype.datasets = function(params, callback) {
   var parameters = {
     options: {
       method: 'GET',
-      url: this._options.url + '/v1/datasets',
+      url: '/v1/datasets',
       json: true
     },
-    default_option: this._options
+    defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };

@@ -34,17 +34,16 @@ var toContentItems = function(text){
 
 function UserModeling(options) {
   // Default URL
-  var default_option = {
-    url: 'https://gateway.watsonplatform.net/systemu/service/api'
+  var serviceDefaults = {
+    url: 'https://gateway.watsonplatform.net/user-modeling-beta/api'
   };
 
   // Replace default options with user provided
-  this._options = extend(default_option, options);
+  this._options = extend(serviceDefaults, options);
 }
 
 UserModeling.prototype.profile = function(_params, callback) {
-  var body = _params || {},
-    profile_url = this._options.url + '/v2/profile';
+  var body = _params || {};
 
   // If 'text' is specified, build the contentItems object using text
   if (body.text)
@@ -58,11 +57,11 @@ UserModeling.prototype.profile = function(_params, callback) {
   var parameters = {
     options: {
       method: 'POST',
-      url: profile_url,
+      url: '/v2/profile',
       body: body,
       json: true,
     },
-    default_options: this._options
+    defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };
