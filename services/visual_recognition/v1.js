@@ -58,8 +58,8 @@ VisualRecognition.prototype.labels = function(params, callback) {
 VisualRecognition.prototype.recognize = function(params, callback) {
   var formData = params || {};
 
-  if (!formData.imgFile){
-    callback(new Error('Missing required parameters: imgFile'));
+  if (!formData.image_file){
+    callback(new Error('Missing required parameters: image_file'));
     return;
   }
 

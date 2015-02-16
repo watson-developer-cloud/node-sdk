@@ -39,7 +39,7 @@ TextToSpeech.prototype.synthesize = function(params, callback) {
       url: '/v1/synthesize',
       qs: params
     },
-    requiredParams: ['text','accept','voice'],
+    requiredParams: ['text'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);

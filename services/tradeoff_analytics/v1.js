@@ -48,6 +48,7 @@ TradeoffAnalytics.prototype.dilemmas = function(params, callback) {
       body: params,
       json: true,
     },
+    requiredParams: ['columns', 'subject', 'options'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);

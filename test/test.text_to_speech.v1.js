@@ -56,62 +56,69 @@ describe('text_to_speech', function() {
     assert.ok((err instanceof Error) && /required parameters/.test(err));
   };
 
-  it('should check for missing text', function() {
-    var params = {
-      voice: service_request.voice,
-      accept: service_request.accept
-    };
-    text_to_speech.synthesize(params, missingParameter);
-  });
+  describe('synthesize()', function(){
 
-  it('should check for missing voice', function() {
-    var params = {
-      text: service_request.text,
-      accept: service_request.accept
-    };
-    text_to_speech.synthesize(params, missingParameter);
-  });
-
-  it('should check for missing accept', function() {
-    var params = {
-      text: service_request.text,
-      voice: service_request.voice
-    };
-    text_to_speech.synthesize(params, missingParameter);
-  });
-
-  it('should check no parameters provided', function() {
-    text_to_speech.synthesize({}, missingParameter);
-    text_to_speech.synthesize(null, missingParameter);
-    text_to_speech.synthesize(undefined, missingParameter);
-  });
-
-  it('/voices: should generate a valid payload', function() {
-    var checkVoices = function(err, res) {
-      assert.equal(JSON.stringify(res), JSON.stringify(mock_voices));
-    };
-
-    text_to_speech.voices({}, checkVoices);
-    text_to_speech.voices(null, checkVoices);
-    text_to_speech.voices(undefined, checkVoices);
-  });
-
-  it('should generate a valid response', function(done) {
-    text_to_speech.synthesize(service_request, function(err, response) {
-      if (err)
-        done(err);
-      else {
-        assert.notEqual(response,null);
-        assert.notEqual(response,undefined);
-        done();
-      }
+    it('should check for missing text', function() {
+      var params = {
+        voice: service_request.voice,
+        accept: service_request.accept
+      };
+      text_to_speech.synthesize(params, missingParameter);
     });
+
+    it('should check for missing voice', function() {
+      var params = {
+        text: service_request.text,
+        accept: service_request.accept
+      };
+      text_to_speech.synthesize(params, missingParameter);
+    });
+
+    it('should check for missing accept', function() {
+      var params = {
+        text: service_request.text,
+        voice: service_request.voice
+      };
+      text_to_speech.synthesize(params, missingParameter);
+    });
+
+    it('should check no parameters provided', function() {
+      text_to_speech.synthesize({}, missingParameter);
+      text_to_speech.synthesize(null, missingParameter);
+      text_to_speech.synthesize(undefined, missingParameter);
+    });
+
+    it('should generate a valid response', function(done) {
+      text_to_speech.synthesize(service_request, function(err, response) {
+        if (err)
+          done(err);
+        else {
+          assert.notEqual(response, null);
+          assert.notEqual(response, undefined);
+          done();
+        }
+      });
+    });
+
+    it('should generate a valid payload', function() {
+      var req = text_to_speech.synthesize(service_request, noop);
+      assert.equal(req.uri.href, service.url + synthesize_path + '?' + qs.stringify(service_request));
+      assert.equal(req.method, 'GET');
+    });
+
   });
 
-  it('should generate a valid payload', function() {
-    var req = text_to_speech.synthesize(service_request, noop);
-    assert.equal(req.uri.href, service.url + synthesize_path + '?' + qs.stringify(service_request));
-    assert.equal(req.method, 'GET');
-  });
+  describe('voices()', function(){
 
+    it('should generate a valid payload', function() {
+      var checkVoices = function(err, res) {
+        assert.equal(JSON.stringify(res), JSON.stringify(mock_voices));
+      };
+
+      text_to_speech.voices({}, checkVoices);
+      text_to_speech.voices(null, checkVoices);
+      text_to_speech.voices(undefined, checkVoices);
+    });
+
+  });
 });

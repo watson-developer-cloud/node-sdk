@@ -22,7 +22,7 @@ var helper = require('../../lib/helper');
 
 function RelationshipExtraction(options) {
   var serviceDefaults = {
-    url: 'https://gateway.watsonplatform.net/relationship-extranction-beta/api'
+    url: 'https://gateway.watsonplatform.net/relationship-extraction-beta/api'
   };
 
   this.dataset = options.dataset;

@@ -34,7 +34,13 @@ describe('relationship_extraction', function() {
         sid: service_request.dataset,
         txt: service_request.text
       }))
-      .reply(200, service_response);
+      .reply(200, service_response)
+      .post(service_path, qs.stringify({
+        rt: 'json',
+        sid: 'foo',
+        txt: 'bar'
+      }))
+      .reply(400);
   });
 
   after(function() {
@@ -47,24 +53,13 @@ describe('relationship_extraction', function() {
     assert.ok((err instanceof Error) && /required parameters/.test(err));
   };
 
-  it('should check for missing text', function() {
-    var params = {
-      dataset: service_request.dataset
-    };
-    relationship_extraction.extract(params, missingParameter);
-  });
-
-  it('should check for missing dataset', function() {
-    var params = {
-      text: service_request.text
-    };
-    relationship_extraction.extract(params, missingParameter);
-  });
-
   it('should check no parameters provided', function() {
     relationship_extraction.extract({}, missingParameter);
     relationship_extraction.extract(null, missingParameter);
     relationship_extraction.extract(undefined, missingParameter);
+    relationship_extraction.extract({text:''}, missingParameter);
+    relationship_extraction.extract({dataset:''}, missingParameter);
+
   });
 
   it('should generate a valid payload', function() {
@@ -90,4 +85,10 @@ describe('relationship_extraction', function() {
     });
   });
 
+  it('should format errors', function(done) {
+    relationship_extraction.extract({text: 'bar', dataset: 'foo'}, function(err) {
+      assert.equal(err.code,400);
+      done();
+    });
+  });
 });

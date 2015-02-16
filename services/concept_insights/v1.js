@@ -144,7 +144,8 @@ ConceptInsights.prototype.updateDocument = function(params, callback) {
 
   if (params && params.document) {
     new_document = params.document;
-    delete params.document;
+  } else {
+    callback(new Error('Missing required parameters: document'));
   }
 
   var parameters = {
@@ -170,6 +171,8 @@ ConceptInsights.prototype.createDocument = function(params, callback) {
   if (params && params.document) {
     new_document = params.document;
     delete params.document;
+  } else {
+    callback(new Error('Missing required parameters: document'));
   }
 
   var parameters = {
@@ -207,7 +210,7 @@ ConceptInsights.prototype.getConceptsMetadata = function(params, callback) {
 /**
  * Searches for graph concepts by using partial matches
  */
-ConceptInsights.prototype.search_concepts_by_label = function(params, callback) {
+ConceptInsights.prototype.searchConceptByLabel = function(params, callback) {
   var qs = extend({func:'labelSearch'}, params),
     path = { user: qs.user, graph: qs.graph };
 
@@ -258,7 +261,7 @@ ConceptInsights.prototype.getRelatedConcept = function(params, callback) {
 ConceptInsights.prototype.annotateText = function(_params, callback) {
   var params = _params || {},
     qs = {func:'annotateText'},
-    path = { user: params.user, graph: params.graph },
+    path = { user: params.user, graph: params.graph, text: params.text },
     body = params.text;
 
   var parameters = {
@@ -270,7 +273,7 @@ ConceptInsights.prototype.annotateText = function(_params, callback) {
       json: true,
       path: path
     },
-    requiredParams: ['user', 'graph'],
+    requiredParams: ['user', 'graph', 'text'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);

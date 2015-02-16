@@ -133,15 +133,9 @@ ConceptExpansion.prototype.expand = function(params, callback) {
       if (err)
         return callback(err);
 
-      if (job.error)
-        return callback(job);
-
     var processStatus = function(err, _status) {
       if (err)
         return callback(err);
-
-      if (_status  && _status.error)
-        return callback(_status);
 
       var status = _status.state;
       //if Awaiting Work or In Flight

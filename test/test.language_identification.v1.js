@@ -44,7 +44,13 @@ describe('language_identification', function() {
     nock(service.url)
       .persist()
       .post(service_path, qs.stringify(service_request))
-      .reply(200, service_response);
+      .reply(200, service_response)
+      .post(service_path, qs.stringify({
+        sid: 'lid-generic',
+        rt: 'json',
+        txt: 'bar'}))
+      .reply(400);
+
   });
 
   after(function() {
@@ -73,6 +79,13 @@ describe('language_identification', function() {
         assert.equal(JSON.stringify(response), JSON.stringify(wrapper_response));
         done();
       }
+    });
+  });
+
+  it('should format errors', function(done) {
+    language_identification.identify({text: 'bar'}, function(err) {
+      assert.equal(err.code,400);
+      done();
     });
   });
 

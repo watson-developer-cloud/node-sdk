@@ -74,12 +74,19 @@ SpeechToText.prototype.recognize = function(params, callback) {
     return;
   }
 
+  var url = '/v1/recognize';
+  if (params.session_id)
+    url = '/v1/sessions/' + params.session_id + '/recognize';
+
+  var qs  = (params.continuous == true) ? {continuous: true} : null;
+
   var parameters = {
     options: {
       method: 'POST',
-      url: '/v1/recognize',
-      headers: { 'Content-type': params.content_type},
+      url: url,
+      headers: { 'Content-Type': params.content_type},
       json: true,
+      qs: qs
     },
     defaultOptions: this._options
   };
@@ -142,11 +149,13 @@ SpeechToText.prototype.observeResult = function(params, callback) {
     return;
   }
 
+  var qs  = (params.interim_results == true) ? {interim_results: true} : null;
+
   var parameters = {
     options: {
       method: 'GET',
       url: '/v1/sessions/'+ params.session_id +'/observeResult',
-      qs: { interim_results: (params.interim_results == true)},
+      qs: qs,
       json: true,
       headers: { 'Cookie': 'SESSIONID=' + params.cookie_session }
     },

@@ -17,7 +17,7 @@ describe('visual_recognition', function() {
     version: 'v1'
   };
   var service_request = {
-    imgFile: fs.createReadStream(__dirname + '/resources/car.png'),
+    image_file: fs.createReadStream(__dirname + '/resources/car.png'),
     labels_to_check: JSON.stringify({
       label_groups: ['Vehicle']
     })
@@ -60,20 +60,32 @@ describe('visual_recognition', function() {
     assert.ok((err instanceof Error) && /required parameters/.test(err));
   };
 
-  it('should check no parameters provided', function() {
-    visual_recognition.recognize({}, missingParameter);
-    visual_recognition.recognize(null, missingParameter);
-    visual_recognition.recognize(undefined, missingParameter);
+  describe('recognize()', function() {
+
+    it('should check no parameters provided', function() {
+      visual_recognition.recognize({}, missingParameter);
+      visual_recognition.recognize(null, missingParameter);
+      visual_recognition.recognize(undefined, missingParameter);
+    });
+
+    it('should generate a valid payload', function() {
+      var req = visual_recognition.recognize(service_request, noop);
+      assert.equal(req.uri.href, service.url + recognize_path);
+      assert.equal(req.method, 'POST');
+      assert.equal(req.formData.image_file.path, __dirname + '/resources/car.png');
+      assert.equal(req.formData.labels_to_check, JSON.stringify({
+        label_groups: ['Vehicle']
+      }));
+    });
   });
 
-  it('should generate a valid payload', function() {
-    var req = visual_recognition.recognize(service_request, noop);
-    assert.equal(req.uri.href, service.url + recognize_path);
-    assert.equal(req.method, 'POST');
-    assert.equal(req.formData.imgFile.path, __dirname + '/resources/car.png');
-    assert.equal(req.formData.labels_to_check, JSON.stringify({
-      label_groups: ['Vehicle']
-    }));
+  describe('labels()', function() {
 
+    it('should generate a valid payload', function() {
+      var req = visual_recognition.labels({}, noop);
+      assert.equal(req.uri.href, service.url + labels_path);
+      assert.equal(req.method, 'GET');
+    });
   });
+
 });
