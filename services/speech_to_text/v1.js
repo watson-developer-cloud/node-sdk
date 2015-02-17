@@ -20,7 +20,9 @@ var extend = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
 var helper = require('../../lib/helper');
 var cookie = require('cookie');
-
+var url = require('url');
+var https = require('https');
+var http = require('http');
 
 function formatChunk(chunk) {
   // Convert the string into an array
@@ -32,11 +34,11 @@ function formatChunk(chunk) {
     return JSON.parse(result);
 
   // Check if we can parse the response
-  try{
-    result = '[' + result.replace(/}{/g,'},{') + ']';
+  try {
+    result = '[' + result.replace(/}{/g, '},{') + ']';
     result = JSON.parse(result);
-    return result[result.lenght-1];
-  } catch(e){}
+    return result[result.lenght - 1];
+  } catch (e) {}
 
   return result;
 }
@@ -68,23 +70,25 @@ function SpeechToText(options) {
  */
 SpeechToText.prototype.recognize = function(params, callback) {
 
-  var missingParams = helper.getMissingParams(params, ['audio','content_type']);
-  if (missingParams){
+  var missingParams = helper.getMissingParams(params, ['audio', 'content_type']);
+  if (missingParams) {
     callback(new Error('Missing required parameters: ' + missingParams.join(', ')));
     return;
   }
 
-  var url = '/v1/recognize';
-  if (params.session_id)
-    url = '/v1/sessions/' + params.session_id + '/recognize';
+  var _url = '/v1';
+  _url += (params.session_id) ? ('/sessions/' + params.session_id) : '';
+  _url += '/recognize';
 
-  var qs  = (params.continuous == true) ? {continuous: true} : null;
+  var qs = (params.continuous == true) ? { continuous: true } : null;
 
   var parameters = {
     options: {
       method: 'POST',
-      url: url,
-      headers: { 'Content-Type': params.content_type},
+      url: _url,
+      headers: {
+        'Content-Type': params.content_type
+      },
       json: true,
       qs: qs
     },
@@ -93,43 +97,67 @@ SpeechToText.prototype.recognize = function(params, callback) {
   return params.audio.pipe(requestFactory(parameters, callback));
 };
 
-// SpeechToText.prototype.recognize_live = function(params, callback) {
-//   var service_url = this.url + util.format('/v1/sessions/%s/recognize',params.session_id);
-//   var parts = url.parse(service_url);
-//   var options = {
-//     rejectUnauthorized: false,
-//     agent:false,
-//     host: parts.hostname,
-//     port: parts.port,
-//     path: parts.pathname + (params.continuous ? '?continuous=true' : ''),
-//     method: 'POST',
-//     headers: {
-//       'Authorization': this.auth,
-//       'Transfer-Encoding': 'chunked',
-//       'Cookie': 'SESSIONID='+params.cookie_session,
-//       'Content-type': util.format('audio/l16; rate=%s',params.rate || 48000)
-//     }
-//   };
+/**
+ * Creates a HTTP/HTTPS request to /recognize and keep the connection open.
+ * Sets 'Transfer-Encoding': 'chunked' and prepare the connection to send
+ * chunk data
+ *
+ * @param {String} [content_type] The Content-type e.g. audio/l16; rate=48000
+ * @param {String} [cookie_session] The cookie session id
+ * @param {String} [session_id] The session id
+ */
+SpeechToText.prototype.recognizeLive = function(params, callback) {
+  var missingParams = helper.getMissingParams(params, ['session_id', 'content_type', 'cookie_session']);
 
-//   // Create a request to POST to Watson
-//   var recognize_req = https.request(options, function(result) {
-//     result.setEncoding('utf-8');
-//     result.on('data', function(chunk) {
-//       try{
-//         chunk = formatChunk(chunk);
-//       } catch(e){
-//         callback(chunk);
-//         return;
-//       }
-//       callback(null, chunk);
-//     });
-//   });
+  if (missingParams) {
+    callback(new Error('Missing required parameters: ' + missingParams.join(', ')));
+    return;
+  }
 
-//   recognize_req.on('error', function(error) {
-//     callback(error);
-//   });
-//   return recognize_req;
-// };
+  var serviceUrl = [this._options.url, '/v1/sessions/', params.session_id, '/recognize'].join('');
+  var parts = url.parse(serviceUrl);
+  var options = {
+    agent: false,
+    host: parts.hostname,
+    port: parts.port,
+    path: parts.pathname + (params.continuous == 'true' ? '?continuous=true' : ''),
+    method: 'POST',
+    headers: {
+      'Authorization': 'Basic ' + this._options.api_key,
+      'Transfer-Encoding': 'chunked',
+      'Cookie': 'SESSIONID=' + params.cookie_session,
+      'Content-type': params.content_type
+    }
+  };
+
+  var protocol = (parts.protocol === 'https:') ? http : https;
+
+  var recognize_req = protocol.request(options, function(result) {
+    result.setEncoding('utf-8');
+    var transcript = '';
+
+    result.on('data', function(chunk) {
+      transcript += chunk;
+    });
+
+    result.on('end', function(chunk) {
+      transcript += chunk;
+      console.log(chunk);
+      try {
+        transcript = formatChunk(transcript);
+      } catch (e) {
+        callback(transcript);
+        return;
+      }
+      callback(null, transcript);
+    });
+  });
+
+  recognize_req.on('error', function(error) {
+    callback(error);
+  });
+  return recognize_req;
+};
 
 /**
  * Result observer for upcoming or ongoing recognition task in the session.
@@ -143,21 +171,23 @@ SpeechToText.prototype.recognize = function(params, callback) {
  * interim results will be returned. Default: false.
  */
 SpeechToText.prototype.observeResult = function(params, callback) {
-  var missingParams = helper.getMissingParams(params, ['session_id','cookie_session']);
-  if (missingParams){
+  var missingParams = helper.getMissingParams(params, ['session_id', 'cookie_session']);
+  if (missingParams) {
     callback(new Error('Missing required parameters: ' + missingParams.join(', ')));
     return;
   }
 
-  var qs  = (params.interim_results == true) ? {interim_results: true} : null;
+  var qs = (params.interim_results == true) ? { interim_results: true } : null;
 
   var parameters = {
     options: {
       method: 'GET',
-      url: '/v1/sessions/'+ params.session_id +'/observeResult',
+      url: '/v1/sessions/' + params.session_id + '/observeResult',
       qs: qs,
       json: true,
-      headers: { 'Cookie': 'SESSIONID=' + params.cookie_session }
+      headers: {
+        'Cookie': 'SESSIONID=' + params.cookie_session
+      }
     },
     defaultOptions: this._options
   };
@@ -166,7 +196,7 @@ SpeechToText.prototype.observeResult = function(params, callback) {
   req.on('data', function(chunk) {
     try {
       chunk = formatChunk(chunk);
-    } catch(e) {
+    } catch (e) {
       callback(chunk);
       return;
     }
@@ -193,7 +223,7 @@ SpeechToText.prototype.getRecognizeStatus = function(params, callback) {
   var parameters = {
     options: {
       method: 'GET',
-      url: '/v1/sessions/'+ path.session_id +'/recognize',
+      url: '/v1/sessions/' + path.session_id + '/recognize',
       path: path,
       json: true
     },
@@ -231,7 +261,7 @@ SpeechToText.prototype.getModel = function(params, callback) {
   var parameters = {
     options: {
       method: 'GET',
-      url: '/v1/models/'+path.model_id,
+      url: '/v1/models/' + path.model_id,
       path: path,
       json: true
     },
@@ -284,7 +314,7 @@ SpeechToText.prototype.deleteSession = function(params, callback) {
   var parameters = {
     options: {
       method: 'DELETE',
-      url: '/v1/sessions/'+path.session_id,
+      url: '/v1/sessions/' + path.session_id,
       path: path,
       json: true
     },

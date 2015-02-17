@@ -69,10 +69,6 @@ describe('speech_to_text', function() {
 
   describe('deleteSession()', function() {
     var path = '/v1/sessions/foo';
-    nock(service.url)
-      .persist()
-      .delete(path)
-      .reply(200, { bar:'bar'});
 
     it('should check no parameters provided', function() {
       speech_to_text.deleteSession({}, missingParameter);
@@ -141,10 +137,6 @@ describe('speech_to_text', function() {
 
   describe('getRecognizeStatus()', function() {
     var path = '/v1/sessions/foo/recognize';
-    nock(service.url)
-      .persist()
-      .get(path)
-      .reply(200, { bar:'bar'});
 
     it('should check no parameters provided', function() {
       speech_to_text.getRecognizeStatus({}, missingParameter);
@@ -160,10 +152,6 @@ describe('speech_to_text', function() {
 
   describe('observeResult()', function() {
     var path = '/v1/sessions/foo/observeResult';
-    nock(service.url)
-      .persist()
-      .get(path)
-      .reply(200, { bar:'bar'});
 
     it('should check no parameters provided', function() {
       speech_to_text.observeResult({}, missingParameter);
@@ -194,15 +182,6 @@ describe('speech_to_text', function() {
         audio: fs.createReadStream(__dirname + '/resources/audio.wav'),
         content_type: 'audio/l16;rate=41100'
       };
-
-    nock(service.url)
-      .persist()
-      .post(path, payload.audio)
-      .reply(200, { bar:'bar'})
-      .post(session_path, payload.audio)
-      .reply(200, { bar:'bar'})
-      .post(path + '?continuous=true', payload.audio)
-      .reply(200, { bar:'bar'});
 
     it('should check no parameters provided', function() {
       speech_to_text.recognize({}, missingParameter);
@@ -238,6 +217,72 @@ describe('speech_to_text', function() {
       assert.equal(req.headers['Content-Type'], payload.content_type);
       assert.equal(req.src.path, payload.audio.path);
     });
+  });
+
+  describe('recognizeLive()', function() {
+    var path = '/v1/sessions/foo/recognize',
+      audio =  fs.createReadStream(__dirname + '/resources/audio.wav'),
+      payload = {
+        session_id: 'foo',
+        cookie_session: 'foobar',
+        content_type: 'audio/l16; rate=41100'
+      },
+      service_response = {
+        result: [{
+          alternative: [{
+            transcript: 'one two three'
+          }],
+          'final': true
+        }],
+        result_index: 0
+      };
+
+    nock.recorder.rec();
+
+    it('should check no parameters provided', function() {
+      speech_to_text.recognizeLive({}, missingParameter);
+      speech_to_text.recognizeLive(null, missingParameter);
+      speech_to_text.recognizeLive({cookie_session:'foo'}, missingParameter);
+      speech_to_text.recognizeLive({content_type:'bar'}, missingParameter);
+      speech_to_text.recognizeLive({continuous:'false'}, missingParameter);
+
+    });
+
+    it('should generate a valid payload', function() {
+      nock(service.url)
+        .persist()
+        .post(path)
+        .reply(200, service_response);
+
+      var req = speech_to_text.recognizeLive(payload, noop);
+      assert.equal(req.path, path);
+      assert.equal(req.method, 'POST');
+      assert.equal(req._headers['content-type'], payload.content_type);
+      assert.equal(req._headers['transfer-encoding'], 'chunked');
+      assert.equal(req._headers['cookie'], 'SESSIONID=' + payload.cookie_session);
+    });
+
+    it('should generate a valid response', function() {
+      nock(service.url)
+        .persist()
+        .post(path)
+        .delay(3000)
+        .reply(200, service_response);
+
+      var req = speech_to_text.recognizeLive(payload, function(err,res){
+        console.log('err:',err);
+        console.log('response:',res);
+      });
+      req.write(new Buffer('one', 'utf-8'));
+      req.write(new Buffer('two', 'utf-8'));
+      req.write(new Buffer('three', 'utf-8'));
+
+      assert.equal(req.connection,null);
+      req.end();
+      assert.equal(req.method, 'POST');
+      assert.equal(req.path, path);
+    });
+
   });
 
 });
