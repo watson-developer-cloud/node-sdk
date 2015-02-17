@@ -66,22 +66,6 @@ describe('text_to_speech', function() {
       text_to_speech.synthesize(params, missingParameter);
     });
 
-    it('should check for missing voice', function() {
-      var params = {
-        text: service_request.text,
-        accept: service_request.accept
-      };
-      text_to_speech.synthesize(params, missingParameter);
-    });
-
-    it('should check for missing accept', function() {
-      var params = {
-        text: service_request.text,
-        voice: service_request.voice
-      };
-      text_to_speech.synthesize(params, missingParameter);
-    });
-
     it('should check no parameters provided', function() {
       text_to_speech.synthesize({}, missingParameter);
       text_to_speech.synthesize(null, missingParameter);

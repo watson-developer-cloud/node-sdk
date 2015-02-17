@@ -39,15 +39,7 @@ describe('speech_to_text', function() {
         recognize: '#',
         observe_result: '#',
       },
-      new_session_with_cookie = extend(new_session,{
-        cookie_session: 'foobar'
-      });
-    nock(service.url)
-      .persist()
-      .post(path)
-      .reply(200, new_session,{
-        'set-cookie': ['SESSIONID=foobar']
-      });
+      new_session_with_cookie = extend({}, new_session, {cookie_session: 'foobar'});
 
     it('should generate a valid payload', function() {
       var req = speech_to_text.createSession({}, noop);
@@ -56,6 +48,13 @@ describe('speech_to_text', function() {
     });
 
     it('should generate a valid response', function() {
+      nock(service.url)
+        .persist()
+        .post(path)
+        .reply(200, new_session, {
+          'set-cookie': ['SESSIONID=foobar']
+        });
+
       var checkSession = function(err, res) {
         assert.equal(
           JSON.stringify(res),
@@ -91,11 +90,6 @@ describe('speech_to_text', function() {
     var path = '/v1/models',
       models = { models:[{foo:'foo'}, {bar:'bar'}]};
 
-    nock(service.url)
-      .persist()
-      .get(path)
-      .reply(200, models);
-
     it('should generate a valid payload', function() {
       var req = speech_to_text.getModels({}, noop);
       assert.equal(req.uri.href, service.url + path);
@@ -103,6 +97,11 @@ describe('speech_to_text', function() {
     });
 
     it('should generate a valid response', function() {
+      nock(service.url)
+        .persist()
+        .get(path)
+        .reply(200, models);
+
       var checkModels = function(err, res) {
         assert.equal(JSON.stringify(res), JSON.stringify(models));
       };
@@ -116,11 +115,6 @@ describe('speech_to_text', function() {
     var path = '/v1/models/foo',
       model = {foo:'foo', bar:'bar'};
 
-    nock(service.url)
-      .persist()
-      .get(path)
-      .reply(200, model);
-
     it('should check no parameters provided', function() {
       speech_to_text.getModel({}, missingParameter);
       speech_to_text.getModel(null, missingParameter);
@@ -133,6 +127,11 @@ describe('speech_to_text', function() {
     });
 
     it('should generate a valid response', function() {
+      nock(service.url)
+        .persist()
+        .get(path)
+        .reply(200, model);
+
       var checkModel = function(err, res) {
         assert.equal(JSON.stringify(res), JSON.stringify(model));
       };
