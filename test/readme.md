@@ -12,7 +12,14 @@ $ npm test
 ## Run a single test
 
 ```sh
-$ mocha --reporter spec --timeout 4000 --grep 'regexp'
+$ mocha -g 'regexp'
+```
+
+## Debug the http requests
+see [request](https://github.com/request/request) for more information
+
+```sh
+$ NODE_DEBUG=request mocha -g 'regexp'
 ```
 
 ## Generate code coverage reports
@@ -37,14 +44,15 @@ $ mocha --reporter spec --timeout 4000 --grep 'regexp'
     ```
 
 ## Thing we try to test
+  Here is the list of things we try to test for each service.
 
-1. parameters not specified
-1. parameters mis-named
-1. parameters with empty string values
-1. parameters specified twice
-1. parameters with misformatted values
-1. headers not specified
-1. authentication missing
-1. authentication invalid
-1. input too large
-1. input too small
+    1. parameters not specified
+    1. parameters mis-named
+    1. parameters with empty string values
+    1. parameters specified twice
+    1. parameters with misformatted values
+    1. headers not specified
+    1. authentication missing
+    1. authentication invalid
+    1. input too large
+    1. input too small
