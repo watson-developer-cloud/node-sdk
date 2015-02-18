@@ -128,7 +128,7 @@ text_to_speech.synthesize(params).pipe(fs.createWriteStream('output.wav'));
 
 ### Speech to Text
 Example: Use the [Speech to Text][speech_to_text] to recognize the text from a wav file.
-<audio src="http://speech-to-text-demo.mybluemix.net/audio/sample1.wav"></audio>
+
 ```js
 var watson = require('watson-developer-cloud-alpha');
 var request = require('request');
@@ -152,7 +152,31 @@ speech_to_text.recognize(params, function(err, res) {
     console.log(JSON.stringify(res, null, 2));
 });
 ```
+### Concept Insights
+Example: Use the [Concept Insights][concept_insights] to identify words in the text that correspond to concepts in a Wikipedia graph.
+```js
+var watson = require('watson-developer-cloud-alpha');
 
+var concept_insights = watson.concept_insights({
+  username: '<username>',
+  password: '<password>',
+  version: 'v1'
+});
+
+var params = {
+  user: 'wikipedia',
+  graph: 'en-20120601',
+  text: 'IBM Watson won the Jeopardy television show hosted by Alex Trebek'
+};
+
+// Retrieve the concepts for input text
+concept_insights.annotateText(params, function(err, response) {
+  if (err)
+    console.log(err);
+  else
+    console.log(JSON.stringify(response, null, 2));
+});
+```
 ### Message Resonance
 Example: Get resonance information for individual words in a sentence from the [Message Resonance][message_resonance] service.
 
@@ -338,8 +362,9 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/nodejs-wrapper-alph
 [visual_recognition]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/visual-recognition/
 [text_to_speech]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/text-to-speech/
 [speech_to_text]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/speech-to-text/
-[getting_started]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/getstarted.html
+[concept_insights]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/concept-insights/
 
+[getting_started]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/getstarted.html
 [wdc]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/
 [vcap_environment]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/getting_started/index.html#EnvVars
 [bluemix]: https://console.ng.bluemix.net
