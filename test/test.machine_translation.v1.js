@@ -2,8 +2,8 @@
 
 var assert = require('assert');
 var watson = require('../lib/index');
-var qs = require('qs');
-var nock = require('nock');
+var qs     = require('querystring');
+var nock   = require('nock');
 
 describe('machine_translation', function() {
   // Test params

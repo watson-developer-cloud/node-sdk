@@ -2,9 +2,10 @@
 
 var assert = require('assert');
 var watson = require('../lib/index');
-var nock = require('nock');
-var querystring = require('querystring');
+var nock   = require('nock');
+var qs     = require('querystring');
 var extend = require('extend');
+
 describe('concept_insights', function() {
 
   var noop = function() {};
@@ -258,7 +259,7 @@ describe('concept_insights', function() {
 
         var req = concept_insights.getConceptsMetadata(payload, noop);
         assert.equal(req.uri.href, service.url + path + '?' +
-          querystring.stringify(service_request));
+          qs.stringify(service_request));
 
         assert.equal(req.method, 'GET');
     });
@@ -299,7 +300,7 @@ describe('concept_insights', function() {
 
         var req = concept_insights.searchConceptByLabel(payload, noop);
         assert.equal(req.uri.href, service.url + path + '?' +
-          querystring.stringify(service_request));
+          qs.stringify(service_request));
 
         assert.equal(req.method, 'GET');
     });
@@ -340,7 +341,7 @@ describe('concept_insights', function() {
 
         var req = concept_insights.getRelatedConcept(payload, noop);
         assert.equal(req.uri.href, service.url + path + '?' +
-          querystring.stringify(service_request));
+          qs.stringify(service_request));
 
         assert.equal(req.method, 'GET');
     });
@@ -412,7 +413,7 @@ describe('concept_insights', function() {
 
         var req = concept_insights.labelSearch(payload, noop);
         assert.equal(req.uri.href, service.url + path + '?' +
-          querystring.stringify(service_request));
+          qs.stringify(service_request));
 
         assert.equal(req.method, 'GET');
     });
@@ -443,7 +444,7 @@ describe('concept_insights', function() {
 
         var req = concept_insights.semanticSearch(payload, noop);
         assert.equal(req.uri.href, service.url + path + '?' +
-          querystring.stringify(service_request));
+          qs.stringify(service_request));
 
         assert.equal(req.method, 'GET');
     });
@@ -476,7 +477,7 @@ describe('concept_insights', function() {
 
         var req = concept_insights.getDocumentState(payload, noop);
         assert.equal(req.uri.href, service.url + path + '?' +
-          querystring.stringify(service_request));
+          qs.stringify(service_request));
 
         assert.equal(req.method, 'GET');
     });
@@ -506,7 +507,7 @@ describe('concept_insights', function() {
 
         var req = concept_insights.getDocumentToConceptScore(payload, noop);
         assert.equal(req.uri.href, service.url + path + '?' +
-          querystring.stringify(service_request));
+          qs.stringify(service_request));
 
         assert.equal(req.method, 'GET');
     });

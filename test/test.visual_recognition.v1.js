@@ -2,8 +2,8 @@
 
 var assert = require('assert');
 var watson = require('../lib/index');
-var nock = require('nock');
-var fs = require('fs');
+var nock   = require('nock');
+var fs     = require('fs');
 
 describe('visual_recognition', function() {
 

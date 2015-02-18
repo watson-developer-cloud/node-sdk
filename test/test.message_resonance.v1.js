@@ -2,7 +2,7 @@
 
 var assert = require('assert');
 var watson = require('../lib/index');
-var nock = require('nock');
+var nock   = require('nock');
 
 describe('message_resonance', function() {
   // Test params

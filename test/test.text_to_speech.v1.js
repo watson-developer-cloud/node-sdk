@@ -2,8 +2,8 @@
 
 var assert = require('assert');
 var watson = require('../lib/index');
-var nock = require('nock');
-var qs = require('qs');
+var nock   = require('nock');
+var qs     = require('querystring');
 
 describe('text_to_speech', function() {
 

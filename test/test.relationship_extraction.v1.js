@@ -2,8 +2,8 @@
 
 var assert = require('assert');
 var watson = require('../lib/index');
-var qs = require('qs');
-var nock = require('nock');
+var qs     = require('qs');
+var nock   = require('nock');
 
 describe('relationship_extraction', function() {
   // Test params
