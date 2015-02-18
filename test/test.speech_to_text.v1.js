@@ -124,7 +124,6 @@ describe('speech_to_text', function() {
 
     it('should generate a valid response', function() {
       nock(service.url)
-        .persist()
         .get(path)
         .reply(200, model);
 
@@ -221,7 +220,6 @@ describe('speech_to_text', function() {
 
   describe('recognizeLive()', function() {
     var path = '/v1/sessions/foo/recognize',
-      audio =  fs.createReadStream(__dirname + '/resources/audio.wav'),
       payload = {
         session_id: 'foo',
         cookie_session: 'foobar',
@@ -247,45 +245,39 @@ describe('speech_to_text', function() {
 
     });
 
-    // it('should generate a valid payload', function() {
-    //   nock.recorder.rec();
+    it('should generate a valid payload', function(done) {
+      nock(service.url)
+        .post(path)
+        .delay(300) // 1 second
+        .reply(200, service_response);
 
-    //   nock(service.url)
-    //     .persist()
-    //     .post(path)
-    //     .reply(200, service_response);
+      var req = speech_to_text.recognizeLive(payload, function(err,res){
+        assert.equal(JSON.stringify(service_response), JSON.stringify(res));
+        done();
+      });
+      assert.equal(req.path, path);
+      assert.equal(req._headers['content-type'], payload.content_type);
+      assert.equal(req._headers['transfer-encoding'], 'chunked');
+      assert.equal(req._headers['cookie'], 'SESSIONID=' + payload.cookie_session);
+      req.end();
+    });
 
-    //   var req = speech_to_text.recognizeLive(payload, noop);
-    //   assert.equal(req.path, path);
-    //   assert.equal(req.method, 'POST');
-    //   assert.equal(req._headers['content-type'], payload.content_type);
-    //   assert.equal(req._headers['transfer-encoding'], 'chunked');
-    //   assert.equal(req._headers['cookie'], 'SESSIONID=' + payload.cookie_session);
+    it('should generate a valid response', function(done) {
+      nock(service.url)
+        .post(path)
+        .delay(300) // 1 second
+        .reply(200, service_response);
 
-    //   nock.recorder.rec();
-
-    // });
-
-    // it('should generate a valid response', function() {
-    //   nock(service.url)
-    //     .persist()
-    //     .post(path)
-    //     .delay(3000)
-    //     .reply(200, service_response);
-
-    //   var req = speech_to_text.recognizeLive(payload, function(err,res){
-    //     console.log('err:',err);
-    //     console.log('response:',res);
-    //   });
-    //   req.write(new Buffer('one', 'utf-8'));
-    //   req.write(new Buffer('two', 'utf-8'));
-    //   req.write(new Buffer('three', 'utf-8'));
-
-    //   assert.equal(req.connection,null);
-    //   req.end();
-    //   assert.equal(req.method, 'POST');
-    //   assert.equal(req.path, path);
-    // });
+      var req = speech_to_text.recognizeLive(payload, function(err,res){
+        assert.equal(JSON.stringify(service_response), JSON.stringify(res));
+        done();
+      });
+      req.write(new Buffer('one', 'utf-8'));
+      req.write(new Buffer('two', 'utf-8'));
+      req.write(new Buffer('three', 'utf-8'));
+      assert.equal(req.path, path);
+      req.end();
+    });
 
   });
 

@@ -130,8 +130,7 @@ SpeechToText.prototype.recognizeLive = function(params, callback) {
     }
   };
 
-  var protocol = (parts.protocol === 'https:') ? http : https;
-
+  var protocol = (parts.protocol.match('http:')) ? http : https;
   var recognize_req = protocol.request(options, function(result) {
     result.setEncoding('utf-8');
     var transcript = '';
@@ -140,9 +139,7 @@ SpeechToText.prototype.recognizeLive = function(params, callback) {
       transcript += chunk;
     });
 
-    result.on('end', function(chunk) {
-      transcript += chunk;
-      console.log(chunk);
+    result.on('end', function() {
       try {
         transcript = formatChunk(transcript);
       } catch (e) {
