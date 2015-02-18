@@ -73,7 +73,83 @@ question_and_answer_healthcare.ask({ text: 'What is HIV?'}, function (err, respo
   if (err)
     console.log('error:', err);
   else
-    console.log(JSON.stringify(response, undefined, 2));
+    console.log(JSON.stringify(response, null, 2));
+});
+```
+
+### Visual Recognition
+Example: Use the [Visual Recognition][visual_recognition] service to recognize the picture below.
+
+<img src="http://visual-recognition-demo.mybluemix.net/images/horses.jpg" width="150" height="150" />
+
+```js
+var watson = require('watson-developer-cloud-alpha');
+var request = require('request');
+
+var visual_recognition = watson.visual_recognition({
+  username: '<username>',
+  password: '<password>',
+  version: 'v1'
+});
+
+var params = {
+  image_file: request('http://visual-recognition-demo.mybluemix.net/images/horses.jpg')
+};
+visual_recognition.recognize(params, function(err, res) {
+  if (err)
+    console.log(err);
+  else
+    console.log(JSON.stringify(res, 'labels', 2));
+});
+```
+
+### Text to Speech
+Example: Use the [Text to Speech][text_to_speech] to synthesize text into a wav file.
+
+```js
+var watson = require('watson-developer-cloud-alpha');
+var fs = require('fs');
+
+var text_to_speech = watson.text_to_speech({
+  username: '<username>',
+  password: '<password>',
+  version: 'v1'
+});
+
+var params = {
+    text: 'Hello from IBM Watson',
+    voice: 'VoiceEnUsMichael', // optional voice
+    accept: 'audio/wav'
+};
+
+// pipe the synthesized text to a file
+text_to_speech.synthesize(params).pipe(fs.createWriteStream('output.wav'));
+```
+
+### Speech to Text
+Example: Use the [Speech to Text][speech_to_text] to recognize the text from a wav file.
+<audio src="http://speech-to-text-demo.mybluemix.net/audio/sample1.wav"></audio>
+```js
+var watson = require('watson-developer-cloud-alpha');
+var request = require('request');
+
+var speech_to_text = watson.speech_to_text({
+  username: '<username>',
+  password: '<password>',
+  version: 'v1'
+});
+
+var params = {
+  // From file
+  audio: request('http://speech-to-text-demo.mybluemix.net/audio/sample1.wav'),
+  content_type: 'audio/l16; rate=44100'
+};
+
+speech_to_text.recognize(params, function(err, res) {
+  if (err)
+    console.log(err);
+  else
+    console.log(JSON.stringify(res, null, 2));
 });
 ```
 
@@ -92,7 +168,7 @@ message_resonance.resonance({ text: 'IBM Watson Developer Cloud', dataset: 1 }, 
   if (err)
     console.log('error:', err);
   else
-    console.log(response);
+    console.log(JSON.stringify(response, null, 2));
 });
 ```
 
@@ -113,7 +189,7 @@ language_identification.identify({
     if (err)
       console.log('error:', err);
     else
-      console.log(response);
+      console.log(JSON.stringify(response, null, 2));
 });
 ```
 
@@ -135,7 +211,7 @@ machine_translation.translate({
     if (err)
       console.log('error:', err);
     else
-      console.log(response);
+      console.log(JSON.stringify(response, null, 2));
 });
 ```
 
@@ -157,7 +233,7 @@ user_modeling.profile({
     if (err)
       console.log('error:', err);
     else
-      console.log(response);
+      console.log(JSON.stringify(response, null, 2));
 });
 ```
 **Node:** Don't forget to update the `text` variable!
@@ -180,7 +256,7 @@ relationship_extraction.extract({
     if (err)
       console.log('error:', err);
     else
-      console.log(response);
+      console.log(JSON.stringify(response, null, 2));
 });
 ```
 
@@ -204,7 +280,7 @@ concept_expansion.expand(params, function (err, response) {
     if (err)
       console.log('error:', err);
     else
-      console.log(response);
+      console.log(JSON.stringify(response, null, 2));
 });
 ```
 
@@ -259,7 +335,11 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/nodejs-wrapper-alph
 [machine_translation]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/mtapi/
 [concept_expansion]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/glimpseapi/
 [relationship_extraction]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/sireapi/
+[visual_recognition]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/visual-recognition/
+[text_to_speech]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/text-to-speech/
+[speech_to_text]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/speech-to-text/
 [getting_started]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/getstarted.html
+
 [wdc]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/
 [vcap_environment]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/getting_started/index.html#EnvVars
 [bluemix]: https://console.ng.bluemix.net
