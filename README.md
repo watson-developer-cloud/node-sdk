@@ -1,5 +1,5 @@
-# Watson Developer Cloud Nodejs Client - Alpha
-
+Watson Developer Cloud Nodejs Client - Alpha
+============================================
 
 [![Build Status](https://secure.travis-ci.org/watson-developer-cloud/nodejs-wrapper-alpha.png)](http://travis-ci.org/watson-developer-cloud/nodejs-wrapper-alpha)
 [![Dependency Status](https://gemnasium.com/watson-developer-cloud/nodejs-wrapper-alpha.png)](https://gemnasium.com/watson-developer-cloud/nodejs-wrapper-alpha)
@@ -8,9 +8,34 @@
 
 Wrapper to use the [Watson Developer Cloud][wdc] services. A collection of REST APIs and SDKs that use cognitive computing to solve complex problems.
 
-## Alpha
-This is an Alpha release of the `watson-developer-cloud` [npm][npm_link] module. Features might be changed in backward-incompatible ways and is not recommended for production use.
+## Table of Contents
+  * [Watson Developer Cloud Nodejs Client - Alpha](#watson-developer-cloud-nodejs-client---alpha)
+    * [Questions](#questions)
+    * [Installation](#installation)
+    * [Usage](#usage)
+    * [Getting the Service Credentials](#getting-the-service-credentials)
+    * IBM Watson Services
+      * [Question and Answer](#question-and-answer)
+      * [Visual Recognition](#visual-recognition)
+      * [Text to Speech](#text-to-speech)
+      * [Speech to Text](#speech-to-text)
+      * [Concept Insights](#concept-insights)
+      * [Message Resonance](#message-resonance)
+      * [Language Identification](#language-identification)
+      * [Machine Translation](#machine-translation)
+      * [User Modeling](#user-modeling)
+      * [Relationship Extraction](#relationship-extraction)
+      * [Concept Expansion](#concept-expansion)
+    * [Running in Bluemix](#running-in-bluemix)
+    * [Debug](#debug)
+    * [Tests](#tests)
+    * [Open Source @ IBM](#open-source--ibm)
+    * [License](#license)
+    * [Contributing](#contributing)
 
+
+## Alpha
+This is an **Alpha release** of the `watson-developer-cloud` [npm][npm_link] module. Features might be changed in backward-incompatible ways and is not recommended for production use.
 
 ## Questions
 
