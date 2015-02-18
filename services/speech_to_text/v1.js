@@ -16,13 +16,14 @@
 
 'use strict';
 
-var extend = require('extend');
+var extend         = require('extend');
+var helper         = require('../../lib/helper');
+var cookie         = require('cookie');
+var url            = require('url');
+var https          = require('https');
+var http           = require('http');
+var isReadable     = require('isstream').isReadable;
 var requestFactory = require('../../lib/requestwrapper');
-var helper = require('../../lib/helper');
-var cookie = require('cookie');
-var url = require('url');
-var https = require('https');
-var http = require('http');
 
 function formatChunk(chunk) {
   // Convert the string into an array
@@ -73,6 +74,10 @@ SpeechToText.prototype.recognize = function(params, callback) {
   var missingParams = helper.getMissingParams(params, ['audio', 'content_type']);
   if (missingParams) {
     callback(new Error('Missing required parameters: ' + missingParams.join(', ')));
+    return;
+  }
+  if (!isReadable(params.audio)){
+    callback(new Error('audio is not a standard Node.js Stream'));
     return;
   }
 

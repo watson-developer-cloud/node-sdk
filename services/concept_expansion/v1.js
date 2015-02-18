@@ -16,7 +16,8 @@
 
 'use strict';
 
-var extend = require('extend');
+var pick           = require('object.pick');
+var extend         = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
 
 var concept_decode = {
@@ -76,19 +77,18 @@ function ConceptExpansion(options) {
   var serviceDefaults = {
     url: 'https://gateway.watsonplatform.net/concept-expansion-beta/api'
   };
-  this.dataset = options.dataset;
 
   // Extend default options with user provided options
   this._options = extend(serviceDefaults, options);
 }
 
 ConceptExpansion.prototype.createJob = function(params, callback) {
-  var body = extend({dataset: this.dataset}, params);
+  var body = extend({}, this._options, params);
   var parameters = {
     options: {
       method: 'POST',
       url: '/v1/upload',
-      body: body,
+      body: pick(body, ['dataset', 'seeds', 'label']),
       json: true
     },
     requiredParams: ['dataset', 'seeds', 'label'],

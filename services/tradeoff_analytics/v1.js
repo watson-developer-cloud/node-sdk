@@ -16,7 +16,7 @@
 
 'use strict';
 
-var extend = require('extend');
+var extend         = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
 
 function TradeoffAnalytics(options) {

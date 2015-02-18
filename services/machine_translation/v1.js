@@ -16,10 +16,10 @@
 
 'use strict';
 
-var util = require('util');
-var extend = require('extend');
+var util           = require('util');
+var extend         = require('extend');
+var helper         = require('../../lib/helper');
 var requestFactory = require('../../lib/requestwrapper');
-var helper = require('../../lib/helper');
 
 // Wrap the response to format the result.
 var responseFormatter = function(callback) {

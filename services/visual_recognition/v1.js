@@ -16,8 +16,9 @@
 
 'use strict';
 
-var extend = require('extend');
+var extend         = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
+var isReadable     = require('isstream').isReadable;
 
 function VisualRecognition(options) {
   // Default URL
@@ -56,18 +57,23 @@ VisualRecognition.prototype.labels = function(params, callback) {
  * @param  {String} labels_to_check The labels to check
  */
 VisualRecognition.prototype.recognize = function(params, callback) {
-  var formData = params || {};
+  params = params || {};
 
-  if (!formData.image_file){
+  if (!params.image_file){
     callback(new Error('Missing required parameters: image_file'));
     return;
   }
+  if (!isReadable(params.image_file)){
+    callback(new Error('image_file is not a standard Node.js Stream'));
+    return;
+  }
+
 
   var parameters = {
     options: {
       method: 'POST',
       url: '/v1/tag/recognize',
-      formData: formData,
+      formData: params,
       json: true,
     },
     defaultOptions: this._options

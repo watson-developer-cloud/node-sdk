@@ -16,18 +16,16 @@
 
 'use strict';
 
-var async = require('async');
-var extend = require('extend');
+
+var async          = require('async');
+var extend         = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
-var helper = require('../../lib/helper');
+var helper         = require('../../lib/helper');
 
 function MessageResonance(options) {
   var serviceDefaults = {
     url: 'https://gateway.watsonplatform.net/message-resonance-beta/api'
   };
-
-  if (options.dataset)
-    this.qs = {dataset: options.dataset};
 
   // Extend default options with user provided options
   this._options = extend(serviceDefaults, options);
@@ -71,7 +69,7 @@ var formatResonances = function(params, resonances) {
 };
 
 MessageResonance.prototype.resonance = function(_params, callback) {
-  var params = extend(this.qs, _params);
+  var params = extend({}, this._options, _params);
   var self = this;
 
   var missingParams = helper.getMissingParams(params, ['dataset','text']);
@@ -81,14 +79,14 @@ MessageResonance.prototype.resonance = function(_params, callback) {
   }
 
   // separate the text in individual words and map each with the get_resonance function
-  var words_async = params.text.match(/[^ ]+/g).map(function(word) {
+  var getWordResonanceFn = params.text.match(/[^ ]+/g).map(function(word) {
     return function (cb) {
       return self.getResonanceForWord({ text:word, dataset: params.dataset}, cb);
     };
   });
 
   // Execute all async tasks with a limit of 20 request in parallel
-  async.parallelLimit(words_async, 20, function(err, result) {
+  async.parallelLimit(getWordResonanceFn, 20, function(err, result) {
     if (err)
       callback(err);
     else

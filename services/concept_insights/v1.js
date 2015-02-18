@@ -16,7 +16,9 @@
 
 'use strict';
 
-var extend = require('extend');
+var pick           = require('object.pick');
+var omit           = require('object.omit');
+var extend         = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
 
 function ConceptInsights(options) {
@@ -48,7 +50,6 @@ ConceptInsights.prototype.getCorpus = function(params, callback) {
  * Delete a corpus by id
  */
 ConceptInsights.prototype.deleteCorpus = function(params, callback) {
-
   var parameters = {
     options: {
       url: '/v1/corpus/{user}/{corpus}',
@@ -65,7 +66,6 @@ ConceptInsights.prototype.deleteCorpus = function(params, callback) {
  * Retrieves the documents of a corpus
  */
 ConceptInsights.prototype.getDocumentIds = function(params, callback) {
-
   var parameters = {
     options: {
       url: '/v1/corpus/{user}/{corpus}',
@@ -83,18 +83,15 @@ ConceptInsights.prototype.getDocumentIds = function(params, callback) {
  * Creates an empty corpus
  */
 ConceptInsights.prototype.createCorpus = function(params, callback) {
-  var body = params || {},
-    path = { user: body.user, corpus: body.corpus };
+  params = params || {};
 
-  delete body.user;
-  delete body.corpus;
   var parameters = {
     options: {
       url: '/v1/corpus/{user}/{corpus}',
       method: 'PUT',
       json: true,
-      body: body,
-      path: path
+      body: omit(params, ['user', 'corpus']),
+      path: params
     },
     requiredParams: ['user', 'corpus'],
     defaultOptions: this._options
@@ -136,14 +133,12 @@ ConceptInsights.prototype.getDocument = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
-/**
- * Retrieves a document from a corpus
- */
+
 ConceptInsights.prototype.updateDocument = function(params, callback) {
-  var new_document;
+  var documentToUpdate;
 
   if (params && params.document) {
-    new_document = params.document;
+    documentToUpdate = params.document;
   } else {
     callback(new Error('Missing required parameters: document'));
   }
@@ -153,7 +148,7 @@ ConceptInsights.prototype.updateDocument = function(params, callback) {
       url: '/v1/corpus/{user}/{corpus}/{documentid}',
       method: 'POST',
       json: true,
-      body: new_document,
+      body: documentToUpdate,
       path: params
     },
     requiredParams: ['user', 'corpus', 'documentid'],
@@ -166,10 +161,10 @@ ConceptInsights.prototype.updateDocument = function(params, callback) {
  * Creates a document in a corpus
  */
 ConceptInsights.prototype.createDocument = function(params, callback) {
-  var new_document;
+  var newDocument;
 
   if (params && params.document) {
-    new_document = params.document;
+    newDocument = params.document;
     delete params.document;
   } else {
     callback(new Error('Missing required parameters: document'));
@@ -180,7 +175,7 @@ ConceptInsights.prototype.createDocument = function(params, callback) {
       url: '/v1/corpus/{user}/{corpus}/{documentid}',
       method: 'PUT',
       json: true,
-      body: new_document,
+      body: newDocument,
       path: params
     },
     requiredParams: ['user', 'corpus', 'documentid'],
@@ -211,19 +206,14 @@ ConceptInsights.prototype.getConceptsMetadata = function(params, callback) {
  * Searches for graph concepts by using partial matches
  */
 ConceptInsights.prototype.searchConceptByLabel = function(params, callback) {
-  var qs = extend({func:'labelSearch'}, params),
-    path = { user: qs.user, graph: qs.graph };
-
-  delete qs.user;
-  delete qs.graph;
-
+  params = params || {};
   var parameters = {
     options: {
       url: '/v1/graph/{user}/{graph}',
       method: 'GET',
-      qs: qs,
+      qs: extend({func:'labelSearch'}, omit(params, ['user', 'graph'])),
       json: true,
-      path: path
+      path: params
     },
     requiredParams: ['user', 'graph', 'label'],
     defaultOptions: this._options
@@ -235,19 +225,14 @@ ConceptInsights.prototype.searchConceptByLabel = function(params, callback) {
  * Retrieves concepts that are related to a concept
  */
 ConceptInsights.prototype.getRelatedConcept = function(params, callback) {
-  var qs = extend({func:'related'}, params),
-    path = { user: qs.user, graph: qs.graph };
-
-  delete qs.user;
-  delete qs.graph;
-
+  params = params || {};
   var parameters = {
     options: {
       url: '/v1/graph/{user}/{graph}',
       method: 'GET',
-      qs: qs,
+      qs: extend({func:'related'}, omit(params, ['user', 'graph'])),
       json: true,
-      path: path
+      path: params
     },
     requiredParams: ['user', 'graph', 'concepts'],
     defaultOptions: this._options
@@ -258,20 +243,16 @@ ConceptInsights.prototype.getRelatedConcept = function(params, callback) {
 /**
  * Identifies concepts in a piece of text
  */
-ConceptInsights.prototype.annotateText = function(_params, callback) {
-  var params = _params || {},
-    qs = {func:'annotateText'},
-    path = { user: params.user, graph: params.graph, text: params.text },
-    body = params.text;
-
+ConceptInsights.prototype.annotateText = function(params, callback) {
+  params = params || {};
   var parameters = {
     options: {
       url: '/v1/graph/{user}/{graph}',
       method: 'POST',
-      qs: qs,
-      body: body,
+      qs: extend({func:'annotateText'}, omit(params, ['user', 'graph','text'])),
+      body: params.text,
       json: true,
-      path: path
+      path: params
     },
     requiredParams: ['user', 'graph', 'text'],
     defaultOptions: this._options
@@ -283,19 +264,14 @@ ConceptInsights.prototype.annotateText = function(_params, callback) {
  * Performs a fuzzy search of corpus node labels and concept URIs for some text
  */
 ConceptInsights.prototype.labelSearch = function(params, callback) {
-  var qs = extend({func:'labelSearch'}, params),
-    path = { user: qs.user, corpus: qs.corpus };
-
-  delete qs.user;
-  delete qs.corpus;
-
+  params = params || {};
   var parameters = {
     options: {
       url: '/v1/searchable/{user}/{corpus}',
       method: 'GET',
-      qs: qs,
+      qs: extend({func:'labelSearch'}, omit(params, ['user', 'corpus'])),
       json: true,
-      path: path
+      path: params
     },
     requiredParams: ['user', 'corpus', 'query'],
     defaultOptions: this._options
@@ -307,19 +283,14 @@ ConceptInsights.prototype.labelSearch = function(params, callback) {
  * Performs a conceptual search within a corpus
  */
 ConceptInsights.prototype.semanticSearch = function(params, callback) {
-  var qs = extend({func:'semanticSearch'}, params),
-    path = { user: qs.user, corpus: qs.corpus };
-
-  delete qs.user;
-  delete qs.corpus;
-
+  params = params || {};
   var parameters = {
     options: {
       url: '/v1/searchable/{user}/{corpus}',
       method: 'GET',
-      qs: qs,
+      qs: extend({func:'semanticSearch'}, omit(params, ['user', 'corpus'])),
       json: true,
-      path: path
+      path: params
     },
     requiredParams: ['user', 'corpus', 'ids'],
     defaultOptions: this._options
@@ -348,17 +319,13 @@ ConceptInsights.prototype.getDocumentState = function(params, callback) {
 /**
  * Returns a score that denotes how related a document is to a concept
  */
-ConceptInsights.prototype.getDocumentToConceptScore = function(_params, callback) {
-  var params = _params || {},
-  qs = {func:'relScore', dest: params.dest};
-
-  delete params.dest;
-
+ConceptInsights.prototype.getDocumentToConceptScore = function(params, callback) {
+  params = params || {};
   var parameters = {
     options: {
       url: '/v1/searchable/{user}/{corpus}/{documentid}',
       method: 'GET',
-      qs: qs,
+      qs: extend({func:'relScore'}, pick(params, ['dest'])),
       json: true,
       path: params
     },

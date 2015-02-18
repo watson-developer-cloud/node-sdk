@@ -16,7 +16,7 @@
 
 'use strict';
 
-var extend = require('extend');
+var extend         = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
 
 // Wrap the response to format the result.
@@ -45,7 +45,6 @@ function LanguageIdentification(options) {
 }
 
 LanguageIdentification.prototype.identify = function(params, callback) {
-
   if (!params || !params.text){
     callback(new Error('Missing required parameters: text'));
     return;

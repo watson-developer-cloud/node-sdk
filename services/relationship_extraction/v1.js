@@ -16,16 +16,14 @@
 
 'use strict';
 
-var extend = require('extend');
+var extend         = require('extend');
+var helper         = require('../../lib/helper');
 var requestFactory = require('../../lib/requestwrapper');
-var helper = require('../../lib/helper');
 
 function RelationshipExtraction(options) {
   var serviceDefaults = {
     url: 'https://gateway.watsonplatform.net/relationship-extraction-beta/api'
   };
-
-  this.dataset = options.dataset;
 
   // Extend default options with user provided options
   this._options = extend(serviceDefaults, options);
@@ -47,7 +45,7 @@ function responseFormatter(callback) {
 }
 
 RelationshipExtraction.prototype.extract = function(_params, callback) {
-  var params = extend({dataset: this.dataset}, _params);
+  var params = extend(this._options, _params);
 
   var missingParams = helper.getMissingParams(params, ['dataset','text']);
   if (missingParams){

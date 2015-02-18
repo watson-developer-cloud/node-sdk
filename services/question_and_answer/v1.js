@@ -16,18 +16,17 @@
 
 'use strict';
 
-var extend = require('extend');
+var extend         = require('extend');
+var pick           = require('object.pick');
 var requestFactory = require('../../lib/requestwrapper');
 
-var toQuestion = function(params){
+var toQuestion = function(params) {
   return {
-      question: {
-        evidenceRequest: {
-          items: params.items || 5 // the number of anwers, 5 by default
-        },
-        questionText: params.text
-      }
-    };
+    evidenceRequest: {
+      items: params.items || 5 // the number of anwers, 5 by default
+    },
+    questionText: params.text
+  };
 };
 
 
@@ -35,32 +34,37 @@ function QuestionAndAnswer(options) {
   var serviceDefaults = {
     url: 'https://gateway.watsonplatform.net/question-and-answer-beta/api'
   };
-  this.dataset = options.dataset;
 
   // Extend default options with user provided options
   this._options = extend(serviceDefaults, options);
 }
 
 QuestionAndAnswer.prototype.ask = function(_params, callback) {
-  var params = extend({dataset: this.dataset}, _params),
-    dataset = params.dataset;
   // If 'text' is specified, build POST body question using text
-  if (params.text) {
-    params = toQuestion(params);
+  if (_params && _params.text) {
+    _params.question = toQuestion(_params);
+    delete _params.text;
   }
 
-  delete params.dataset;
+  var params = extend(this._options, _params);
+
+  if (!params.question) {
+    callback(new Error('Missing required parameters: text or question'));
+    return;
+  }
 
   var parameters = {
     options: {
       url: '/v1/question/{dataset}',
-      headers: { 'X-synctimeout' : 30 },
+      headers: {
+        'X-synctimeout': 30
+      },
       method: 'POST',
-      body: params,
+      body: pick(params, ['question']),
       json: true,
-      path: {dataset: dataset}
+      path: params
     },
-    requiredParams: ['question','dataset'],
+    requiredParams: ['question', 'dataset'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
