@@ -68,15 +68,15 @@ Example output:
   System-Provided:
   {
   "VCAP_SERVICES": {
-    "user_modeling": [{
+    "visual_recognition": [{
         "credentials": {
           "password": "<password>",
           "url": "<url>",
           "username": "<username>"
         },
-      "label": "user_modeling",
-      "name": "um-service",
-      "plan": "user_modeling_free_plan"
+      "label": "visual_recognition",
+      "name": "visual-recognition-service",
+      "plan": "free"
    }]
   }
   }
@@ -179,6 +179,7 @@ speech_to_text.recognize(params, function(err, res) {
     console.log(JSON.stringify(res, null, 2));
 });
 ```
+
 ### Concept Insights
 Example: Use the [Concept Insights][concept_insights] to identify words in the text that correspond to concepts in a Wikipedia graph.
 ```js
@@ -204,6 +205,7 @@ concept_insights.annotateText(params, function(err, response) {
     console.log(JSON.stringify(response, null, 2));
 });
 ```
+
 ### Message Resonance
 Example: Get resonance information for individual words in a sentence from the [Message Resonance][message_resonance] service.
 
@@ -266,19 +268,19 @@ machine_translation.translate({
 });
 ```
 
-### User Modeling
-Example: Analyze text and get a personality profile using the [User Modeling][user_modeling] service.
+### Personality Insights
+Example: Analyze text and get a personality profile using the [Personality Insights][personality_insights] service.
 
 ```javascript
 var watson = require('watson-developer-cloud-alpha');
 
-var user_modeling = watson.user_modeling({
+var personality_insights = watson.personality_insights({
   username: '<username>',
   password: '<password>',
   version: 'v2'
 });
 
-user_modeling.profile({
+personality_insights.profile({
   text: 'type more than 100 unique words here...' },
   function (err, response) {
     if (err)
@@ -381,7 +383,7 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/nodejs-wrapper-alph
 
 [question_and_answer]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/qaapi/
 [message_resonance]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/mrapi/
-[user_modeling]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/systemuapi/
+[personality_insights]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/personality-insights/
 [language_identification]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/lidapi/
 [machine_translation]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/mtapi/
 [concept_expansion]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/glimpseapi/
