@@ -23,7 +23,7 @@ Wrapper to use the [Watson Developer Cloud][wdc] services. A collection of REST 
       * [Message Resonance](#message-resonance)
       * [Language Identification](#language-identification)
       * [Machine Translation](#machine-translation)
-      * [User Modeling](#user-modeling)
+      * [Personality Insights](#personality-insights)
       * [Relationship Extraction](#relationship-extraction)
       * [Concept Expansion](#concept-expansion)
     * [Running in Bluemix](#running-in-bluemix)

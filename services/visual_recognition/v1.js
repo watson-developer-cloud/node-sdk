@@ -18,7 +18,7 @@
 
 var extend         = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
-var isReadable     = require('isstream').isReadable;
+var isStream       = require('isstream');
 
 function VisualRecognition(options) {
   // Default URL
@@ -63,7 +63,8 @@ VisualRecognition.prototype.recognize = function(params, callback) {
     callback(new Error('Missing required parameters: image_file'));
     return;
   }
-  if (!isReadable(params.image_file)){
+
+  if (!isStream(params.image_file)){
     callback(new Error('image_file is not a standard Node.js Stream'));
     return;
   }

@@ -1,9 +1,10 @@
 'use strict';
 
-var assert = require('assert');
-var watson = require('../lib/index');
-var nock   = require('nock');
-var fs     = require('fs');
+var assert  = require('assert');
+var request = require('request');
+var watson  = require('../lib/index');
+var nock    = require('nock');
+var fs      = require('fs');
 
 describe('visual_recognition', function() {
 
@@ -25,7 +26,7 @@ describe('visual_recognition', function() {
 
   var recognize_path = '/v1/tag/recognize';
   var labels_path = '/v1/tag/labels';
-
+  var aux_path = '/test';
   var mock_recognize = {
     images: [{
       image_id: '0',
@@ -47,7 +48,9 @@ describe('visual_recognition', function() {
       .post(recognize_path, service_request)
       .reply(200, mock_recognize)
       .get(labels_path)
-      .reply(200, mock_labels);
+      .reply(200, mock_labels)
+      .get(aux_path)
+      .reply(200);
   });
 
   after(function() {
@@ -66,6 +69,16 @@ describe('visual_recognition', function() {
       visual_recognition.recognize({}, missingParameter);
       visual_recognition.recognize(null, missingParameter);
       visual_recognition.recognize(undefined, missingParameter);
+      visual_recognition.recognize({image_file: ''}, missingParameter);
+    });
+
+    it('should generate a valid payload with streams', function() {
+      var params = {image_file: request(service.url + aux_path)};
+      var req = visual_recognition.recognize(params, noop);
+      assert.equal(req.uri.href, service.url + recognize_path);
+      assert.equal(req.method, 'POST');
+      assert.equal(req.formData.image_file.path, aux_path);
+      assert.equal(req.formData.labels_to_check, undefined);
     });
 
     it('should generate a valid payload', function() {

@@ -19,10 +19,11 @@
 var extend         = require('extend');
 var helper         = require('../../lib/helper');
 var cookie         = require('cookie');
+var pick           = require('object.pick');
 var url            = require('url');
 var https          = require('https');
 var http           = require('http');
-var isReadable     = require('isstream').isReadable;
+var isStream       = require('isstream');
 var requestFactory = require('../../lib/requestwrapper');
 
 function formatChunk(chunk) {
@@ -61,10 +62,6 @@ function SpeechToText(options) {
 
 /**
  * Speech recognition for given audio using default model.
- * PCM audio has to be LITTLE-ENDIAN with sample rate described
- * in the Content-type header,
- * e.g. Content-type:'audio/l16;rate=16000'.
- *
  *
  * @param {Audio} [audio] Audio to be recognized.
  * @param {String} [content_type] Content-type
@@ -76,7 +73,7 @@ SpeechToText.prototype.recognize = function(params, callback) {
     callback(new Error('Missing required parameters: ' + missingParams.join(', ')));
     return;
   }
-  if (!isReadable(params.audio)){
+  if (!isStream(params.audio)){
     callback(new Error('audio is not a standard Node.js Stream'));
     return;
   }
@@ -84,8 +81,6 @@ SpeechToText.prototype.recognize = function(params, callback) {
   var _url = '/v1';
   _url += (params.session_id) ? ('/sessions/' + params.session_id) : '';
   _url += '/recognize';
-
-  var qs = (params.continuous == true) ? { continuous: true } : null;
 
   var parameters = {
     options: {
@@ -95,7 +90,7 @@ SpeechToText.prototype.recognize = function(params, callback) {
         'Content-Type': params.content_type
       },
       json: true,
-      qs: qs
+      qs: pick(params,['continuous']),
     },
     defaultOptions: this._options
   };
@@ -115,7 +110,8 @@ SpeechToText.prototype.recognize = function(params, callback) {
  * @param {String} [session_id] The session id
  */
 SpeechToText.prototype.recognizeLive = function(params, callback) {
-  var missingParams = helper.getMissingParams(params, ['session_id', 'content_type', 'cookie_session']);
+  var missingParams = helper.getMissingParams(params,
+    ['session_id', 'content_type', 'cookie_session']);
 
   if (missingParams) {
     callback(new Error('Missing required parameters: ' + missingParams.join(', ')));
@@ -182,13 +178,11 @@ SpeechToText.prototype.observeResult = function(params, callback) {
     return;
   }
 
-  var qs = (params.interim_results == true) ? { interim_results: true } : null;
-
   var parameters = {
     options: {
       method: 'GET',
       url: '/v1/sessions/' + params.session_id + '/observeResult',
-      qs: qs,
+      qs: pick(params,['interim_results']),
       json: true,
       headers: {
         'Cookie': 'SESSIONID=' + params.cookie_session
