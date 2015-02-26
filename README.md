@@ -14,18 +14,19 @@ Wrapper to use the [Watson Developer Cloud][wdc] services. A collection of REST 
     * [Installation](#installation)
     * [Usage](#usage)
     * [Getting the Service Credentials](#getting-the-service-credentials)
-    * IBM Watson Services
-      * [Question and Answer](#question-and-answer)
-      * [Visual Recognition](#visual-recognition)
-      * [Text to Speech](#text-to-speech)
-      * [Speech to Text](#speech-to-text)
+    * [IBM Watson Services](#ibm-watson-services)
+      * [Concept Expansion](#concept-expansion)
       * [Concept Insights](#concept-insights)
-      * [Message Resonance](#message-resonance)
       * [Language Identification](#language-identification)
       * [Machine Translation](#machine-translation)
+      * [Message Resonance](#message-resonance)
       * [Personality Insights](#personality-insights)
+      * [Question and Answer](#question-and-answer)
       * [Relationship Extraction](#relationship-extraction)
-      * [Concept Expansion](#concept-expansion)
+      * [Speech to Text](#speech-to-text)
+      * [Text to Speech](#text-to-speech)
+      * [Tradeoff Analytics](#tradeoff-analytics)
+      * [Visual Recognition](#visual-recognition)
     * [Running in Bluemix](#running-in-bluemix)
     * [Debug](#debug)
     * [Tests](#tests)
@@ -84,99 +85,30 @@ Example output:
 
 You need to copy `username`, `password`.
 
-### Question and Answer
-Example: Ask a healthcare-related question to the [Question and Answer][question_and_answer] service.
+## IBM Watson Services
+The Watson Developer Cloud offers a variety of services for building cognitive apps.
 
-```js
+### Concept Expansion
+Example: Map euphemisms or colloquial terms to more commonly understood phrases using the [Concept Expansion][concept_expansion] service.
+
+```javascript
 var watson = require('watson-developer-cloud-alpha');
-var question_and_answer_healthcare = watson.question_and_answer({
-  username: '<username>',
-  password: '<password>',
-  version: 'v1',
-  dataset: 'healthcare' /* The dataset can be specified when creating the service or when calling it */
-});
 
-question_and_answer_healthcare.ask({ text: 'What is HIV?'}, function (err, response) {
-  if (err)
-    console.log('error:', err);
-  else
-    console.log(JSON.stringify(response, null, 2));
-});
-```
-
-### Visual Recognition
-Example: Use the [Visual Recognition][visual_recognition] service to recognize the picture below.
-
-<img src="http://visual-recognition-demo.mybluemix.net/images/horses.jpg" width="150" height="150" />
-
-```js
-var watson = require('watson-developer-cloud-alpha');
-var request = require('request');
-
-var visual_recognition = watson.visual_recognition({
+var concept_expansion = watson.concept_expansion({
   username: '<username>',
   password: '<password>',
   version: 'v1'
 });
-
 var params = {
-  image_file: request('http://visual-recognition-demo.mybluemix.net/images/horses.jpg')
+  seeds: ['motrin','tylenol','aspirin'],
+  dataset: 'mtsamples',
+  label: 'medications'
 };
-visual_recognition.recognize(params, function(err, res) {
-  if (err)
-    console.log(err);
-  else
-    console.log(JSON.stringify(res, 'labels', 2));
-});
-```
-
-### Text to Speech
-Example: Use the [Text to Speech][text_to_speech] to synthesize text into a wav file.
-
-```js
-var watson = require('watson-developer-cloud-alpha');
-var fs = require('fs');
-
-var text_to_speech = watson.text_to_speech({
-  username: '<username>',
-  password: '<password>',
-  version: 'v1'
-});
-
-var params = {
-    text: 'Hello from IBM Watson',
-    voice: 'VoiceEnUsMichael', // optional voice
-    accept: 'audio/wav'
-};
-
-// pipe the synthesized text to a file
-text_to_speech.synthesize(params).pipe(fs.createWriteStream('output.wav'));
-```
-
-### Speech to Text
-Example: Use the [Speech to Text][speech_to_text] to recognize the text from a wav file.
-
-```js
-var watson = require('watson-developer-cloud-alpha');
-var request = require('request');
-
-var speech_to_text = watson.speech_to_text({
-  username: '<username>',
-  password: '<password>',
-  version: 'v1'
-});
-
-var params = {
-  // From file
-  audio: request('http://speech-to-text-demo.mybluemix.net/audio/sample1.wav'),
-  content_type: 'audio/l16; rate=44100'
-};
-
-speech_to_text.recognize(params, function(err, res) {
-  if (err)
-    console.log(err);
-  else
-    console.log(JSON.stringify(res, null, 2));
+concept_expansion.expand(params, function (err, response) {
+    if (err)
+      console.log('error:', err);
+    else
+      console.log(JSON.stringify(response, null, 2));
 });
 ```
 
@@ -201,25 +133,6 @@ var params = {
 concept_insights.annotateText(params, function(err, response) {
   if (err)
     console.log(err);
-  else
-    console.log(JSON.stringify(response, null, 2));
-});
-```
-
-### Message Resonance
-Example: Get resonance information for individual words in a sentence from the [Message Resonance][message_resonance] service.
-
-```js
-var watson = require('watson-developer-cloud-alpha');
-var message_resonance = watson.message_resonance({
-	username:'<username>',
-	password:'<password>',
-	version:'v1'
-});
-
-message_resonance.resonance({ text: 'IBM Watson Developer Cloud', dataset: 1 }, function(err, response) {
-  if (err)
-    console.log('error:', err);
   else
     console.log(JSON.stringify(response, null, 2));
 });
@@ -268,6 +181,25 @@ machine_translation.translate({
 });
 ```
 
+### Message Resonance
+Example: Get resonance information for individual words in a sentence from the [Message Resonance][message_resonance] service.
+
+```js
+var watson = require('watson-developer-cloud-alpha');
+var message_resonance = watson.message_resonance({
+  username:'<username>',
+  password:'<password>',
+  version:'v1'
+});
+
+message_resonance.resonance({ text: 'IBM Watson Developer Cloud', dataset: 1 }, function(err, response) {
+  if (err)
+    console.log('error:', err);
+  else
+    console.log(JSON.stringify(response, null, 2));
+});
+```
+
 ### Personality Insights
 Example: Analyze text and get a personality profile using the [Personality Insights][personality_insights] service.
 
@@ -291,6 +223,26 @@ personality_insights.profile({
 ```
 **Node:** Don't forget to update the `text` variable!
 
+### Question and Answer
+Example: Ask a healthcare-related question to the [Question and Answer][question_and_answer] service.
+
+```js
+var watson = require('watson-developer-cloud-alpha');
+var question_and_answer_healthcare = watson.question_and_answer({
+  username: '<username>',
+  password: '<password>',
+  version: 'v1',
+  dataset: 'healthcare' /* The dataset can be specified when creating the service or when calling it */
+});
+
+question_and_answer_healthcare.ask({ text: 'What is HIV?'}, function (err, response) {
+  if (err)
+    console.log('error:', err);
+  else
+    console.log(JSON.stringify(response, null, 2));
+});
+```
+
 ### Relationship Extraction
 Example: Analyze an English news article and get the relationships between sentence components (nouns, verbs, subjects, objects, etc.) using the [Relationship Extraction][relationship_extraction] service.
 
@@ -313,27 +265,147 @@ relationship_extraction.extract({
 });
 ```
 
-### Concept Expansion
-Example: Map euphemisms or colloquial terms to more commonly understood phrases using the [Concept Expansion][concept_expansion] service.
+### Speech to Text
+Example: Use the [Speech to Text][speech_to_text] to recognize the text from a wav file.
 
-```javascript
+```js
 var watson = require('watson-developer-cloud-alpha');
+var request = require('request');
 
-var concept_expansion = watson.concept_expansion({
+var speech_to_text = watson.speech_to_text({
   username: '<username>',
   password: '<password>',
   version: 'v1'
 });
+
 var params = {
-  seeds: ['motrin','tylenol','aspirin'],
-  dataset: 'mtsamples',
-  label: 'medications'
+  // From file
+  audio: request('http://speech-to-text-demo.mybluemix.net/audio/sample1.wav'),
+  content_type: 'audio/l16; rate=44100'
 };
-concept_expansion.expand(params, function (err, response) {
-    if (err)
-      console.log('error:', err);
-    else
-      console.log(JSON.stringify(response, null, 2));
+
+speech_to_text.recognize(params, function(err, res) {
+  if (err)
+    console.log(err);
+  else
+    console.log(JSON.stringify(res, null, 2));
+});
+```
+
+### Text to Speech
+Example: Use the [Text to Speech][text_to_speech] to synthesize text into a wav file.
+
+```js
+var watson = require('watson-developer-cloud-alpha');
+var fs = require('fs');
+
+var text_to_speech = watson.text_to_speech({
+  username: '<username>',
+  password: '<password>',
+  version: 'v1'
+});
+
+var params = {
+    text: 'Hello from IBM Watson',
+    voice: 'VoiceEnUsMichael', // optional voice
+    accept: 'audio/wav'
+};
+
+// pipe the synthesized text to a file
+text_to_speech.synthesize(params).pipe(fs.createWriteStream('output.wav'));
+```
+
+### Tradeoff Analytics
+Example: Use the [Tradeoff Analytics][tradeoff_analytics] to find the best phone that minimize price and weight and maximize screen size.
+
+```js
+var watson = require('watson-developer-cloud-alpha');
+
+var tradeoff_analytics = watson.tradeoff_analytics({
+  username: '<username>',
+  password: '<password>',
+  version: 'v1'
+});
+
+var params = {
+  'subject': 'phone',
+  'columns': [{
+    'key': 'price',
+    'full_name': 'Price (Eur)',
+    'type': 'NUMERIC',
+    'is_objective': true,
+    'goal': 'MIN'
+  }, {
+    'key': 'RAM',
+    'full_name': 'RAM (MB)',
+    'type': 'NUMERIC',
+    'is_objective': false,
+    'goal': 'MAX'
+  }, {
+    'key': 'weight',
+    'full_name': 'Weight (gr)',
+    'type': 'NUMERIC',
+    'is_objective': true,
+    'goal': 'MIN'
+  }],
+  'options': [{
+    'key': ' 1',
+    'name': 'Samsung Galaxy S4 White',
+    'values': {
+      'weight': 130,
+      'price': 239,
+      'RAM': 2048
+    }
+  }, {
+    'key': '2',
+    'name': 'Samsung Galaxy S4 Black',
+    'values': {
+      'weight': 130,
+      'price': 240,
+      'RAM': 2048
+    }
+  }, {
+    'key': '3',
+    'name': 'Samsung Galaxy S3 White',
+    'values': {
+      'weight': 133,
+      'price': 79,
+      'RAM': 2048
+    }
+  }]
+};
+
+tradeoff_analytics.dilemmas(params, function(err, res) {
+  if (err)
+    console.log(err);
+  else
+    console.log(JSON.stringify(res, null, 2));
+});
+```
+
+### Visual Recognition
+Example: Use the [Visual Recognition][visual_recognition] service to recognize the picture below.
+
+<img src="http://visual-recognition-demo.mybluemix.net/images/horses.jpg" width="150" height="150" />
+
+```js
+var watson = require('watson-developer-cloud-alpha');
+var request = require('request');
+
+var visual_recognition = watson.visual_recognition({
+  username: '<username>',
+  password: '<password>',
+  version: 'v1'
+});
+
+var params = {
+  image_file: request('http://visual-recognition-demo.mybluemix.net/images/horses.jpg')
+};
+visual_recognition.recognize(params, function(err, res) {
+  if (err)
+    console.log(err);
+  else
+    console.log(JSON.stringify(res, 'labels', 2));
 });
 ```
 

@@ -133,7 +133,6 @@ SpeechToText.prototype.recognizeLive = function(params, callback) {
       'Content-type': params.content_type
     }
   };
-
   var protocol = (parts.protocol.match('http:')) ? http : https;
   var recognize_req = protocol.request(options, function(result) {
     result.setEncoding('utf-8');
@@ -177,29 +176,32 @@ SpeechToText.prototype.observeResult = function(params, callback) {
     callback(new Error('Missing required parameters: ' + missingParams.join(', ')));
     return;
   }
-
-  var parameters = {
-    options: {
-      method: 'GET',
-      url: '/v1/sessions/' + params.session_id + '/observeResult',
-      qs: pick(params,['interim_results']),
-      json: true,
-      headers: {
-        'Cookie': 'SESSIONID=' + params.cookie_session
-      }
-    },
-    defaultOptions: this._options
-  };
-  var req = requestFactory(parameters);
-
-  req.on('data', function(chunk) {
-    try {
-      chunk = formatChunk(chunk);
-    } catch (e) {
-      callback(chunk);
-      return;
+  var serviceUrl = [this._options.url, '/v1/sessions/', params.session_id, '/observeResult'].join('');
+  var parts = url.parse(serviceUrl);
+  var options = {
+    agent:false,
+    host: parts.hostname,
+    port: parts.port,
+    path: parts.pathname + (params.interim_results == 'true' ? '?interim_results=true' : ''),
+    method: 'GET',
+    headers: {
+      'Authorization': 'Basic ' + this._options.api_key,
+      'Cookie': 'SESSIONID='+params.cookie_session,
+      'Accept': 'application/json'
     }
-    callback(null, chunk);
+  };
+
+  var req = https.request(options, function(result) {
+    result.setEncoding('utf-8');
+    result.on('data', function(chunk) {
+      try{
+        chunk = formatChunk(chunk);
+      } catch(e) {
+        callback(chunk);
+        return;
+      }
+      callback(null, chunk);
+    });
   });
 
   req.on('error', function(error) {
@@ -207,6 +209,7 @@ SpeechToText.prototype.observeResult = function(params, callback) {
   });
 
   req.end();
+
   return req;
 };
 
