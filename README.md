@@ -1,15 +1,15 @@
-Watson Developer Cloud Nodejs Client - Alpha
+Watson Developer Cloud Nodejs Client
 ============================================
 
-[![Build Status](https://secure.travis-ci.org/watson-developer-cloud/nodejs-wrapper-alpha.png)](http://travis-ci.org/watson-developer-cloud/nodejs-wrapper-alpha)
-[![Dependency Status](https://gemnasium.com/watson-developer-cloud/nodejs-wrapper-alpha.png)](https://gemnasium.com/watson-developer-cloud/nodejs-wrapper-alpha)
-[![Coverage Status](https://img.shields.io/coveralls/watson-developer-cloud/nodejs-wrapper-alpha.svg)](https://coveralls.io/r/watson-developer-cloud/nodejs-wrapper-alpha)
-[![Join the chat at https://gitter.im/watson-developer-cloud/nodejs-wrapper-alpha](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/watson-developer-cloud/nodejs-wrapper-alpha?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build Status](https://secure.travis-ci.org/watson-developer-cloud/nodejs-wrapper.png)](http://travis-ci.org/watson-developer-cloud/nodejs-wrapper)
+[![Dependency Status](https://gemnasium.com/watson-developer-cloud/nodejs-wrapper.png)](https://gemnasium.com/watson-developer-cloud/nodejs-wrapper)
+[![Coverage Status](https://img.shields.io/coveralls/watson-developer-cloud/nodejs-wrapper.svg)](https://coveralls.io/r/watson-developer-cloud/nodejs-wrapper)
+[![Join the chat at https://gitter.im/watson-developer-cloud/nodejs-wrapper](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/watson-developer-cloud/nodejs-wrapper?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Wrapper to use the [Watson Developer Cloud][wdc] services. A collection of REST APIs and SDKs that use cognitive computing to solve complex problems.
 
 ## Table of Contents
-  * [Watson Developer Cloud Nodejs Client - Alpha](#watson-developer-cloud-nodejs-client---alpha)
+  * [Watson Developer Cloud][wdc]
     * [Questions](#questions)
     * [Installation](#installation)
     * [Usage](#usage)
@@ -35,9 +35,6 @@ Wrapper to use the [Watson Developer Cloud][wdc] services. A collection of REST 
     * [Contributing](#contributing)
 
 
-## Alpha
-This is an **Alpha release** of the `watson-developer-cloud` [npm][npm_link] module. Features might be changed in backward-incompatible ways and is not recommended for production use.
-
 ## Questions
 
 If you are having difficulties using the APIs or have a question about the IBM Watson Services, please ask a question on [dW Answers](https://developer.ibm.com/answers/questions/ask/?topics=watson) or [Stack Overflow](http://stackoverflow.com/questions/ask?tags=ibm-watson).
@@ -46,7 +43,7 @@ If you are having difficulties using the APIs or have a question about the IBM W
 ## Installation
 
 ```sh
-$ npm install watson-developer-cloud-alpha --save
+$ npm install watson-developer-cloud --save
 ```
 
 ## Usage
@@ -92,7 +89,7 @@ The Watson Developer Cloud offers a variety of services for building cognitive a
 Example: Map euphemisms or colloquial terms to more commonly understood phrases using the [Concept Expansion][concept_expansion] service.
 
 ```javascript
-var watson = require('watson-developer-cloud-alpha');
+var watson = require('watson-developer-cloud');
 
 var concept_expansion = watson.concept_expansion({
   username: '<username>',
@@ -115,7 +112,7 @@ concept_expansion.expand(params, function (err, response) {
 ### Concept Insights
 Example: Use the [Concept Insights][concept_insights] to identify words in the text that correspond to concepts in a Wikipedia graph.
 ```js
-var watson = require('watson-developer-cloud-alpha');
+var watson = require('watson-developer-cloud');
 
 var concept_insights = watson.concept_insights({
   username: '<username>',
@@ -142,7 +139,7 @@ concept_insights.annotateText(params, function(err, response) {
 Example: Identify a language using the [Language Identification][language_identification] service.
 
 ```javascript
-var watson = require('watson-developer-cloud-alpha');
+var watson = require('watson-developer-cloud');
 
 var language_identification = watson.language_identification({
   username: '<username>',
@@ -163,7 +160,7 @@ language_identification.identify({
 Example: Translate text from one language to another using the [Machine Translation][machine_translation] service.
 
 ```javascript
-var watson = require('watson-developer-cloud-alpha');
+var watson = require('watson-developer-cloud');
 
 var machine_translation = watson.machine_translation({
   username: '<username>',
@@ -185,7 +182,7 @@ machine_translation.translate({
 Example: Get resonance information for individual words in a sentence from the [Message Resonance][message_resonance] service.
 
 ```js
-var watson = require('watson-developer-cloud-alpha');
+var watson = require('watson-developer-cloud');
 var message_resonance = watson.message_resonance({
   username:'<username>',
   password:'<password>',
@@ -204,7 +201,7 @@ message_resonance.resonance({ text: 'IBM Watson Developer Cloud', dataset: 1 }, 
 Example: Analyze text and get a personality profile using the [Personality Insights][personality_insights] service.
 
 ```javascript
-var watson = require('watson-developer-cloud-alpha');
+var watson = require('watson-developer-cloud');
 
 var personality_insights = watson.personality_insights({
   username: '<username>',
@@ -227,7 +224,7 @@ personality_insights.profile({
 Example: Ask a healthcare-related question to the [Question and Answer][question_and_answer] service.
 
 ```js
-var watson = require('watson-developer-cloud-alpha');
+var watson = require('watson-developer-cloud');
 var question_and_answer_healthcare = watson.question_and_answer({
   username: '<username>',
   password: '<password>',
@@ -247,7 +244,7 @@ question_and_answer_healthcare.ask({ text: 'What is HIV?'}, function (err, respo
 Example: Analyze an English news article and get the relationships between sentence components (nouns, verbs, subjects, objects, etc.) using the [Relationship Extraction][relationship_extraction] service.
 
 ```javascript
-var watson = require('watson-developer-cloud-alpha');
+var watson = require('watson-developer-cloud');
 
 var relationship_extraction = watson.relationship_extraction({
   username: '<username>',
@@ -269,7 +266,7 @@ relationship_extraction.extract({
 Example: Use the [Speech to Text][speech_to_text] to recognize the text from a wav file.
 
 ```js
-var watson = require('watson-developer-cloud-alpha');
+var watson = require('watson-developer-cloud');
 var request = require('request');
 
 var speech_to_text = watson.speech_to_text({
@@ -296,7 +293,7 @@ speech_to_text.recognize(params, function(err, res) {
 Example: Use the [Text to Speech][text_to_speech] to synthesize text into a wav file.
 
 ```js
-var watson = require('watson-developer-cloud-alpha');
+var watson = require('watson-developer-cloud');
 var fs = require('fs');
 
 var text_to_speech = watson.text_to_speech({
@@ -319,7 +316,7 @@ text_to_speech.synthesize(params).pipe(fs.createWriteStream('output.wav'));
 Example: Use the [Tradeoff Analytics][tradeoff_analytics] to find the best phone that minimize price and weight and maximize screen size.
 
 ```js
-var watson = require('watson-developer-cloud-alpha');
+var watson = require('watson-developer-cloud');
 
 var tradeoff_analytics = watson.tradeoff_analytics({
   username: '<username>',
@@ -389,7 +386,7 @@ Example: Use the [Visual Recognition][visual_recognition] service to recognize t
 <img src="http://visual-recognition-demo.mybluemix.net/images/horses.jpg" width="150" height="150" />
 
 ```js
-var watson = require('watson-developer-cloud-alpha');
+var watson = require('watson-developer-cloud');
 var request = require('request');
 
 var visual_recognition = watson.visual_recognition({
@@ -413,7 +410,7 @@ visual_recognition.recognize(params, function(err, res) {
 By default the wrapper will try to use the Bluemix `VCAP_SERVICES` to get the credentials for a given service. You can avoid this by using: `use_vcap_services`.
 
 ```javascript
-var watson = require('watson-developer-cloud-alpha');
+var watson = require('watson-developer-cloud');
 
 var concept_expansion = watson.concept_expansion({
   version: 'v1',
@@ -447,10 +444,10 @@ $ mocha -g '<test name>'
 ## License
 
 This library is licensed under Apache 2.0. Full license text is
-available in [COPYING](https://github.com/watson-developer-cloud/nodejs-wrapper-alpha/blob/master/LICENSE).
+available in [COPYING](https://github.com/watson-developer-cloud/nodejs-wrapper/blob/master/LICENSE).
 
 ## Contributing
-See [CONTRIBUTING](https://github.com/watson-developer-cloud/nodejs-wrapper-alpha/blob/master/CONTRIBUTING.md).
+See [CONTRIBUTING](https://github.com/watson-developer-cloud/nodejs-wrapper/blob/master/CONTRIBUTING.md).
 
 
 [question_and_answer]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/qaapi/
@@ -471,5 +468,5 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/nodejs-wrapper-alph
 [wdc]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/
 [vcap_environment]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/getting_started/index.html#EnvVars
 [bluemix]: https://console.ng.bluemix.net
-[npm_link]: https://www.npmjs.com/package/watson-developer-cloud-alpha
+[npm_link]: https://www.npmjs.com/package/watson-developer-cloud
 [mikeal_github]: https://github.com/request/request

@@ -1,6 +1,6 @@
 'use strict';
 
-var watson = require('watson-developer-cloud-alpha');
+var watson = require('watson-developer-cloud');
 
 var concept_insights = watson.concept_insights({
   username: 'INSERT YOUR USERNAME FOR THE CONCEPT INSIGHTS SERVICE HERE',

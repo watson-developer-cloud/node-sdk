@@ -4,7 +4,7 @@ If you are having difficulties using the apis or have a question about the IBM W
 
 # Issues
 
-If you encounter an issue with the nodejs library, you are welcome to submit a [bug report](https://github.com/watson-developer-cloud/nodejs-wrapper-alpha/issues). Before that, please search for similar issues. It's possible somebody has encountered this issue already.
+If you encounter an issue with the nodejs library, you are welcome to submit a [bug report](https://github.com/watson-developer-cloud/nodejs-wrapper/issues). Before that, please search for similar issues. It's possible somebody has encountered this issue already.
 
 # Pull Requests
 

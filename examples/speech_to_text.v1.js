@@ -1,6 +1,6 @@
 'use strict';
 
-var watson = require('watson-developer-cloud-alpha');
+var watson = require('watson-developer-cloud');
 var fs = require('fs');
 
 var speech_to_text = watson.speech_to_text({

@@ -1,6 +1,6 @@
 'use strict';
 
-var watson = require('watson-developer-cloud-alpha');
+var watson = require('watson-developer-cloud');
 
 var tradeoff_analytics = watson.tradeoff_analytics({
   username: 'INSERT YOUR USERNAME FOR THE VISUAL RECOGNITION SERVICE HERE',

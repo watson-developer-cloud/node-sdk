@@ -1,6 +1,6 @@
 'use strict';
 
-var watson = require('watson-developer-cloud-alpha');
+var watson = require('watson-developer-cloud');
 var fs = require('fs');
 
 var visual_recognition = watson.visual_recognition({

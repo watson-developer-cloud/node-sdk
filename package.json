@@ -1,11 +1,11 @@
 {
-  "name": "watson-developer-cloud-alpha",
-  "version": "0.10.7",
-  "description": "Nodejs Client Alpha Wrapper to use the IBM Watson Services",
+  "name": "watson-developer-cloud",
+  "version": "0.9.1",
+  "description": "Nodejs Client Wrapper to use the IBM Watson Services",
   "main": "./lib/index",
   "repository": {
     "type": "git",
-    "url": "https://github.com/watson-developer-cloud/nodejs-wrapper-alpha.git"
+    "url": "https://github.com/watson-developer-cloud/nodejs-wrapper.git"
   },
   "keywords": [
     "ibm",
@@ -38,7 +38,7 @@
   ],
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/watson-developer-cloud/nodejs-wrapper-alpha/issues"
+    "url": "https://github.com/watson-developer-cloud/nodejs-wrapper/issues"
   },
   "devDependencies": {
     "mocha": "~2.1.0",

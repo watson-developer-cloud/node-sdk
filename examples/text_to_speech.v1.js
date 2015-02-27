@@ -1,4 +1,4 @@
-var watson = require('watson-developer-cloud-alpha');
+var watson = require('watson-developer-cloud');
 var fs = require('fs');
 
 var text_to_speech = watson.text_to_speech({
