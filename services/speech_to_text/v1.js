@@ -73,7 +73,7 @@ SpeechToText.prototype.recognize = function(params, callback) {
     callback(new Error('Missing required parameters: ' + missingParams.join(', ')));
     return;
   }
-  if (!isStream(params.audio)){
+  if (!isStream(params.audio)) {
     callback(new Error('audio is not a standard Node.js Stream'));
     return;
   }
@@ -90,7 +90,7 @@ SpeechToText.prototype.recognize = function(params, callback) {
         'Content-Type': params.content_type
       },
       json: true,
-      qs: pick(params,['continuous']),
+      qs: pick(params, ['continuous']),
     },
     defaultOptions: this._options
   };
@@ -124,7 +124,7 @@ SpeechToText.prototype.recognizeLive = function(params, callback) {
     agent: false,
     host: parts.hostname,
     port: parts.port,
-    path: parts.pathname + (params.continuous == 'true' ? '?continuous=true' : ''),
+    path: parts.pathname + (params.continuous == true ? '?continuous=true' : ''),
     method: 'POST',
     headers: {
       'Authorization': 'Basic ' + this._options.api_key,
@@ -176,27 +176,27 @@ SpeechToText.prototype.observeResult = function(params, callback) {
     callback(new Error('Missing required parameters: ' + missingParams.join(', ')));
     return;
   }
-  var serviceUrl = [this._options.url, '/v1/sessions/', params.session_id, '/observeResult'].join('');
+  var serviceUrl = [this._options.url, '/v1/sessions/',
+    params.session_id, '/observeResult'].join('');
   var parts = url.parse(serviceUrl);
   var options = {
-    agent:false,
+    agent: false,
     host: parts.hostname,
     port: parts.port,
-    path: parts.pathname + (params.interim_results == 'true' ? '?interim_results=true' : ''),
+    path: parts.pathname + (params.interim_results == true ? '?interim_results=true' : ''),
     method: 'GET',
     headers: {
       'Authorization': 'Basic ' + this._options.api_key,
-      'Cookie': 'SESSIONID='+params.cookie_session,
+      'Cookie': 'SESSIONID=' + params.cookie_session,
       'Accept': 'application/json'
     }
   };
-
   var req = https.request(options, function(result) {
     result.setEncoding('utf-8');
     result.on('data', function(chunk) {
-      try{
+      try {
         chunk = formatChunk(chunk);
-      } catch(e) {
+      } catch (e) {
         callback(chunk);
         return;
       }
