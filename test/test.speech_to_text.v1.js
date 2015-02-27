@@ -155,27 +155,26 @@ describe('speech_to_text', function() {
       speech_to_text.observeResult(null, missingParameter);
     });
 
-    // it('should generate a valid payload', function() {
-    //   var path = '/v1/sessions/foo/observeResult';
-    //   nock(service.url)
-    //     .get(path)
-    //     .delay(300) // 1 second
-    //     .reply(200, {});
+    it('should generate a valid payload', function() {
+      var path = '/v1/sessions/foo/observeResult';
+      nock(service.url)
+        .get(path)
+        .delay(300) // 1 second
+        .reply(200, {});
 
-    //   var req = speech_to_text.observeResult({
-    //     session_id: 'foo',
-    //     cookie_session:'bar'}, noop);
-    //   assert.equal(req.path, path);
-    //   assert.equal(req.method, 'GET');
-    //   assert.equal(req.headers['Cookie'],'SESSIONID=bar');
-    //   req = speech_to_text.observeResult({
-    //     session_id: 'foo',
-    //     cookie_session:'bar',
-    //     interim_results:true}, noop);
-    //   assert.equal(req.path, path);
-    //   assert.equal(req.method, 'GET');
-    //   assert.equal(req.headers['Cookie'],'SESSIONID=bar');
-    // });
+      var req = speech_to_text.observeResult({
+        session_id: 'foo',
+        cookie_session:'bar'}, noop);
+      assert.equal(req.path, path);
+      assert.equal(req._headers['cookie'],'SESSIONID=bar');
+
+      req = speech_to_text.observeResult({
+        session_id: 'foo',
+        cookie_session:'bar',
+        interim_results:true}, noop);
+      assert.equal(req.path, path + '?interim_results=true');
+      assert.equal(req._headers['cookie'],'SESSIONID=bar');
+    });
   });
 
   describe('recognize()', function() {

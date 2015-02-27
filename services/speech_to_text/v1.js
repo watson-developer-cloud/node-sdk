@@ -191,7 +191,8 @@ SpeechToText.prototype.observeResult = function(params, callback) {
       'Accept': 'application/json'
     }
   };
-  var req = https.request(options, function(result) {
+  var protocol = (parts.protocol.match('http:')) ? http : https;
+  var req = protocol.request(options, function(result) {
     result.setEncoding('utf-8');
     result.on('data', function(chunk) {
       try {
