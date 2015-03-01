@@ -3,7 +3,7 @@
 var assert = require('assert');
 var watson = require('../lib/index');
 var qs     = require('querystring');
-var nock  = require('nock');
+var nock   = require('nock');
 
 describe('language_identification', function() {
   // Test params

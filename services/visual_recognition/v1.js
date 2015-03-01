@@ -59,12 +59,12 @@ VisualRecognition.prototype.labels = function(params, callback) {
 VisualRecognition.prototype.recognize = function(params, callback) {
   params = params || {};
 
-  if (!params.image_file){
+  if (!params.image_file) {
     callback(new Error('Missing required parameters: image_file'));
     return;
   }
 
-  if (!isStream(params.image_file)){
+  if (!isStream(params.image_file)) {
     callback(new Error('image_file is not a standard Node.js Stream'));
     return;
   }
