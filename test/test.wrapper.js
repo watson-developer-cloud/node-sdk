@@ -5,7 +5,16 @@ var watson = require('../lib/index');
 
 describe('wrapper', function() {
 
-  var create_service = watson.message_resonance;
+  var create_service = watson.speech_to_text;
+  var vcap_services = {
+    speech_to_text: [{
+      credentials: {
+        password: 'pass',
+        url: 'http://ibm.com',
+        username: 'user'
+      }
+    }]
+  };
 
   it('should check for missing parameters', function() {
     assert.throws(function() {
@@ -67,4 +76,13 @@ describe('wrapper', function() {
     }));
   });
 
+  it('should use VCAP_SERVICES to get credentials', function() {
+    process.env.VCAP_SERVICES = JSON.stringify(vcap_services);
+    var service = create_service({
+      version: 'v1'
+    });
+
+    // check api_key we get from VCAP_SERVICES
+    assert.equal(service._options.api_key, 'dXNlcjpwYXNz');
+  });
 });
