@@ -3,8 +3,8 @@
 var watson = require('watson-developer-cloud-alpha');
 
 var concept_expansion = watson.concept_expansion({
-  username: 'INSERT YOUR USERNAME FOR THE CONCEPT INSIGHTS SERVICE HERE',
-  password: 'INSERT YOUR PASSWORD FOR THE CONCEPT INSIGHTS PASSWORD HERE',
+  username: 'INSERT YOUR USERNAME FOR THE CONCEPT EXPANSION SERVICE HERE',
+  password: 'INSERT YOUR PASSWORD FOR THE CONCEPT EXPANSION SERVICE HERE',
   version: 'v1'
 });
 var params = {
