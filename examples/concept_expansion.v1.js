@@ -1,6 +1,6 @@
 'use strict';
 
-var watson = require('watson-developer-cloud-alpha');
+var watson = require('watson-developer-cloud');
 
 var concept_expansion = watson.concept_expansion({
   username: 'INSERT YOUR USERNAME FOR THE CONCEPT EXPANSION SERVICE HERE',
