@@ -4,7 +4,7 @@ var watson = require('watson-developer-cloud');
 
 var tradeoff_analytics = watson.tradeoff_analytics({
   username: 'INSERT YOUR USERNAME FOR THE VISUAL RECOGNITION SERVICE HERE',
-  password: 'INSERT YOUR PASSWORD FOR THE VISUAL RECOGNITION PASSWORD HERE',
+  password: 'INSERT YOUR PASSWORD FOR THE VISUAL RECOGNITION SERVICE HERE',
   version: 'v1'
 });
 
