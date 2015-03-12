@@ -5,7 +5,7 @@ var fs = require('fs');
 
 var speech_to_text = watson.speech_to_text({
   username: 'INSERT YOUR USERNAME FOR THE SPEECH TO TEXT SERVICE HERE',
-  password: 'INSERT YOUR PASSWORD FOR THE SPEECH TO TEXT PASSWORD HERE',
+  password: 'INSERT YOUR PASSWORD FOR THE SPEECH TO TEXT SERVICE HERE',
   version: 'v1'
 });
 
