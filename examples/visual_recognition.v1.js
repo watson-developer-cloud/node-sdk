@@ -5,7 +5,7 @@ var fs = require('fs');
 
 var visual_recognition = watson.visual_recognition({
   username: 'INSERT YOUR USERNAME FOR THE VISUAL RECOGNITION SERVICE HERE',
-  password: 'INSERT YOUR PASSWORD FOR THE VISUAL RECOGNITION PASSWORD HERE',
+  password: 'INSERT YOUR PASSWORD FOR THE VISUAL RECOGNITION SERVICE HERE',
   version: 'v1'
 });
 var params = {
