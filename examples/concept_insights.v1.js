@@ -4,7 +4,7 @@ var watson = require('watson-developer-cloud');
 
 var concept_insights = watson.concept_insights({
   username: 'INSERT YOUR USERNAME FOR THE CONCEPT INSIGHTS SERVICE HERE',
-  password: 'INSERT YOUR PASSWORD FOR THE CONCEPT INSIGHTS PASSWORD HERE',
+  password: 'INSERT YOUR PASSWORD FOR THE CONCEPT INSIGHTS SERVICE HERE',
   version: 'v1'
 });
 
