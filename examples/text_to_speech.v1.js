@@ -3,7 +3,7 @@ var fs = require('fs');
 
 var text_to_speech = watson.text_to_speech({
     username: 'INSERT YOUR USERNAME FOR THE SPEECH TO TEXT SERVICE HERE',
-    password: 'INSERT YOUR PASSWORD FOR THE SPEECH TO TEXT PASSWORD HERE',
+    password: 'INSERT YOUR PASSWORD FOR THE SPEECH TO TEXT SERVICE HERE',
     version: 'v1'
 });
 
