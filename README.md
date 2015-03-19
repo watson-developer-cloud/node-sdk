@@ -423,7 +423,7 @@ The example above will fail because you did not provide a username and password 
 This wrapper relies in the `request` npm module writted by [mikeal][mikeal_github] to call the Watson Services. In order to debug add 'request' to the `NODE_DEBUG`:
 
 ```sh
-$ NODE_DEBUG='request' app.js
+$ NODE_DEBUG='request' node app.js
 ```
 where `app.js` is your nodejs file
 
