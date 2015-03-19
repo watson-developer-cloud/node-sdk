@@ -438,15 +438,51 @@ describe('concept_insights', function() {
             'timestamp': '2014-03-31T20:04:57.74-04:00'
           };
 
+        // format the service_request params the way the actual API expects
+        service_request.ids = JSON.stringify(service_request.ids);
+
         nock(service.url).persist()
         .get(path, service_request)
         .reply(200, service_response);
 
+
         var req = concept_insights.semanticSearch(payload, noop);
-        assert.equal(req.uri.href, service.url + path + '?' +
-          qs.stringify(service_request));
+        var actual = req.uri.href,
+            expected = service.url + path + '?' + qs.stringify(service_request);
+        console.log(actual, expected);
+        assert.equal(actual, expected);
 
         assert.equal(req.method, 'GET');
+    });
+
+    it('should still allow pre-stringified ids for backwards compatibility', function() {
+      var path = '/v1/searchable/public/test',
+        ids = ['bar', 'foo'],
+        payload = {user:'public', corpus:'test', ids: JSON.stringify(ids)},
+        service_request = {func: 'semanticSearch', ids:payload.ids},
+        service_response = {
+          'stage': 'ready',
+          'status': 'done',
+          'timestamp': '2014-03-31T20:04:57.74-04:00'
+        };
+
+      // format the service_request params the way the actual API expects
+      service_request.ids = JSON.stringify(ids);
+
+      nock(service.url).persist()
+        .get(path, service_request)
+        .reply(200, service_response);
+
+
+      var req = concept_insights.semanticSearch(payload, noop);
+      var actual = req.uri.href,
+        expected = service.url + path + '?' + qs.stringify(service_request);
+      assert.equal(actual, expected);
+      assert.equal(req.method, 'GET');
+    });
+
+    it('should not accept a single string for the ids', function() {
+      concept_insights.semanticSearch({user:'public', corpus:'test', ids: 'foo'}, missingParameter);
     });
   });
 
