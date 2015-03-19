@@ -284,6 +284,22 @@ ConceptInsights.prototype.labelSearch = function(params, callback) {
  */
 ConceptInsights.prototype.semanticSearch = function(params, callback) {
   params = params || {};
+
+  // Initially, we expected the user to supply JSON.stringify'd ids. Now we expect an array of strings that we'll JSON.stringify our self.
+  // We still support the old version for backwards compatibility, BUT we don't want to accept any old string, only a valid JSON array, so we parse and check it to be sure.
+  if (!Array.isArray(params.ids)) {
+    try {
+      params.ids = JSON.parse(params.ids);
+    } catch (ex) {
+      // if it wasn't valid JSON, then it still won't be an array and we'll throw an error when we check that in a couple of lines
+    }
+    if (!Array.isArray(params.ids)) {
+      return process.nextTick(callback.bind(null, new Error("Invalid or missing required parameters: the ids param be an array of strings")));
+    }
+  }
+
+  params.ids = JSON.stringify(params.ids);
+
   var parameters = {
     options: {
       url: '/v1/searchable/{user}/{corpus}',
