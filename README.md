@@ -387,7 +387,7 @@ Example: Use the [Visual Recognition][visual_recognition] service to recognize t
 
 ```js
 var watson = require('watson-developer-cloud');
-var request = require('request');
+var fs = require('fs');
 
 var visual_recognition = watson.visual_recognition({
   username: '<username>',
@@ -396,7 +396,7 @@ var visual_recognition = watson.visual_recognition({
 });
 
 var params = {
-  image_file: request('http://visual-recognition-demo.mybluemix.net/images/horses.jpg')
+  image_file: fs.createReadStream('horses.jpg') // make sure horses.jsp exists
 };
 visual_recognition.recognize(params, function(err, res) {
   if (err)
