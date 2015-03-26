@@ -383,7 +383,7 @@ tradeoff_analytics.dilemmas(params, function(err, res) {
 ### Visual Recognition
 Example: Use the [Visual Recognition][visual_recognition] service to recognize the picture below.
 
-<img src="http://visual-recognition-demo.mybluemix.net/images/horses.jpg" width="150" height="150" />
+<img src="http://visual-recognition-demo.mybluemix.net/images/73388.jpg" width="150" />
 
 ```js
 var watson = require('watson-developer-cloud');
@@ -394,9 +394,9 @@ var visual_recognition = watson.visual_recognition({
   password: '<password>',
   version: 'v1'
 });
-
 var params = {
-  image_file: fs.createReadStream('horses.jpg') // make sure horses.jsp exists
+  // From file
+  image_file: fs.createReadStream('car.png')
 };
 visual_recognition.recognize(params, function(err, res) {
   if (err)
