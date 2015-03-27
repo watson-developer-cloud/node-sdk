@@ -233,12 +233,16 @@ describe('concept_insights', function() {
 
     it('should check no parameters provided', function() {
       concept_insights.getConceptsMetadata({}, missingParameter);
+      concept_insights.getConceptsMetadata({ids:'asd'}, missingParameter);
     });
 
     it('should generate a valid payload', function() {
         var path = '/v1/graph',
           payload = {ids:['foo','bar']},
-          service_request = extend({func: 'minfo'}, payload),
+          service_request = extend(
+            {func: 'minfo'},
+            payload,
+            { ids:JSON.stringify(payload.ids) }),
           service_response = [{
             'abstract': 'a1',
             'id': 'id1',
@@ -318,9 +322,9 @@ describe('concept_insights', function() {
 
     it('should generate a valid payload', function() {
         var path = '/v1/graph/public/test',
-          payload = {concepts: 'foo', user:'public', graph:'test'},
+          payload = {concepts: ['foo'], user:'public', graph:'test'},
           service_request = extend({func: 'related'},
-            {concepts: payload.concepts}),
+            {concepts: JSON.stringify(payload.concepts)}),
           service_response = [{
             'abstract': 'a1',
             'id': 'id1',
@@ -449,9 +453,7 @@ describe('concept_insights', function() {
         var req = concept_insights.semanticSearch(payload, noop);
         var actual = req.uri.href,
             expected = service.url + path + '?' + qs.stringify(service_request);
-        console.log(actual, expected);
         assert.equal(actual, expected);
-
         assert.equal(req.method, 'GET');
     });
 
