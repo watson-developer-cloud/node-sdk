@@ -12,7 +12,7 @@ If you want to contribute to the repository, here's a quick guide:
 
 1. Fork the repo.
 
-2. develop and test your code changes: `npm install -d && npm test`
+2. Develop and test your code changes: `npm install -d && npm test`
 
 3. Add a test for your change. Only refactoring and documentation changes
 require no new tests.
