@@ -8,7 +8,7 @@ If you encounter an issue with the nodejs library, you are welcome to submit a [
 
 # Pull Requests
 
-If you want to contribute to the reporistoy, here's a quick guide:
+If you want to contribute to the repository, here's a quick guide:
 
 1. Fork the repo.
 
