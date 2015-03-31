@@ -4,14 +4,14 @@ var watson = require('watson-developer-cloud');
 var fs = require('fs');
 
 var speech_to_text = watson.speech_to_text({
-  username: 'INSERT YOUR USERNAME FOR THE SPEECH TO TEXT SERVICE HERE',
-  password: 'INSERT YOUR PASSWORD FOR THE SPEECH TO TEXT SERVICE HERE',
+  username: 'INSERT YOUR USERNAME FOR THE CONCEPT EXPANSION SERVICE HERE',
+  password: 'INSERT YOUR PASSWORD FOR THE CONCEPT EXPANSION SERVICE HERE',
   version: 'v1'
 });
 
 var params = {
   // From file
-  audio: fs.createReadStream('speech.wav'),
+  audio: fs.createReadStream('./resources/speech.wav'),
   content_type: 'audio/l16; rate=44100'
 };
 
@@ -20,5 +20,4 @@ speech_to_text.recognize(params, function(err, res) {
     console.log(err);
   else
     console.log(JSON.stringify(res, null, 2));
-
 });
