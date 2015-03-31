@@ -388,7 +388,7 @@ var tradeoff_analytics = watson.tradeoff_analytics({
 });
 
 // From file
-var params = require('./resources/problem');
+var params = require('./resources/problem.json');
 
 tradeoff_analytics.dilemmas(params, function(err, res) {
   if (err)
