@@ -3,13 +3,13 @@
 var watson = require('watson-developer-cloud');
 
 var tradeoff_analytics = watson.tradeoff_analytics({
-  username: 'INSERT YOUR USERNAME FOR THE CONCEPT EXPANSION SERVICE HERE',
-  password: 'INSERT YOUR PASSWORD FOR THE CONCEPT EXPANSION SERVICE HERE',
+  username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
+  password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
   version: 'v1'
 });
 
 // From file
-var params = require('./resources/problem');
+var params = require('./resources/problem.json');
 
 tradeoff_analytics.dilemmas(params, function(err, res) {
   if (err)

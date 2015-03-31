@@ -4,8 +4,8 @@ var watson = require('watson-developer-cloud');
 var fs = require('fs');
 
 var text_to_speech = watson.text_to_speech({
-  username: 'INSERT YOUR USERNAME FOR THE CONCEPT EXPANSION SERVICE HERE',
-  password: 'INSERT YOUR PASSWORD FOR THE CONCEPT EXPANSION SERVICE HERE',
+  username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
+  password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
   version: 'v1'
 });
 

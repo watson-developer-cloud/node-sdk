@@ -3,8 +3,8 @@
 var watson = require('watson-developer-cloud');
 
 var machine_translation = watson.machine_translation({
-  username: 'INSERT YOUR USERNAME FOR THE CONCEPT EXPANSION SERVICE HERE',
-  password: 'INSERT YOUR PASSWORD FOR THE CONCEPT EXPANSION SERVICE HERE',
+  username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
+  password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
   version: 'v1'
 });
 
