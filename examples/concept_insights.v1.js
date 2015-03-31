@@ -3,14 +3,12 @@
 var watson = require('watson-developer-cloud');
 
 var concept_insights = watson.concept_insights({
-  username: 'INSERT YOUR USERNAME FOR THE CONCEPT INSIGHTS SERVICE HERE',
-  password: 'INSERT YOUR PASSWORD FOR THE CONCEPT INSIGHTS SERVICE HERE',
+  username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
+  password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
   version: 'v1'
 });
 
-///////////////////
-// Annotate text //
-///////////////////
+/*** Annotate Text ***/
 
 var params = {
   user: 'wikipedia',
@@ -22,14 +20,13 @@ var params = {
 concept_insights.annotateText(params, function(err, res) {
   if (err)
     console.log(err);
-  else
+  else {
+    console.log("\n*** Annotate Text ***\n");
     console.log(JSON.stringify(res, null, 2));
+  }
 });
 
-
-/////////////////////
-// Semantic Search //
-/////////////////////
+/*** Semantic Search ***/
 
 var payload = {
   func: 'semanticSearch',
@@ -46,6 +43,8 @@ var payload = {
 concept_insights.semanticSearch(payload, function(error, results) {
   if (error)
     console.log(error);
-  else
+  else {
+    console.log("\n*** Semantic Search ***\n");
     console.log(JSON.stringify(results, null, 2));
+  }
 });
