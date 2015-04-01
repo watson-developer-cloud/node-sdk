@@ -37,7 +37,6 @@ var payload = {
   corpus: 'ibmresearcher',
   user: 'public',
   limit: 5
-
 };
 
 concept_insights.semanticSearch(payload, function(error, results) {
