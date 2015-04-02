@@ -21,6 +21,32 @@ var omit           = require('object.omit');
 var extend         = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
 
+/**
+ * Format the ids into a JSON array if is a string array
+ * @param  {Array or string} ids the concept identifiers
+ * @return {String}     The concept ids as JSON array
+ */
+function formatConceptIds(ids) {
+  // Initially, we expected the user to supply JSON.stringify'd ids.
+  // Now we expect an array of strings that we'll JSON.stringify our self.
+  // We still support the old version for backwards compatibility,
+  // BUT we don't want to accept any old string, only a valid JSON array,
+  // so we parse and check it to be sure.
+
+  if (!Array.isArray(ids)) {
+    try {
+      ids = JSON.parse(ids);
+    } catch (ex) {
+      // if it wasn't valid JSON, then it still won't be an array and
+      // we'll throw an error when we check that in a couple of lines
+    }
+    if (!Array.isArray(ids)) {
+      return null;
+    }
+  }
+  return JSON.stringify(ids);
+}
+
 function ConceptInsights(options) {
   // Default URL
   var serviceDefaults = {
@@ -188,6 +214,13 @@ ConceptInsights.prototype.createDocument = function(params, callback) {
  * Retrieves the metadata for multiple concepts
  */
 ConceptInsights.prototype.getConceptsMetadata = function(params, callback) {
+  params = params || {};
+  params.ids = formatConceptIds(params.ids);
+
+  if (params.ids === null) {
+    callback(new Error('Missing or invalid required parameters: ids needs to be an array of strings'));
+  }
+
   var parameters = {
     options: {
       url: '/v1/graph',
@@ -226,6 +259,12 @@ ConceptInsights.prototype.searchConceptByLabel = function(params, callback) {
  */
 ConceptInsights.prototype.getRelatedConcept = function(params, callback) {
   params = params || {};
+  params.concepts = formatConceptIds(params.concepts);
+
+  if (params.concepts === null) {
+    callback(new Error('Missing or invalid required parameters: concepts needs to be an array of strings'));
+  }
+
   var parameters = {
     options: {
       url: '/v1/graph/{user}/{graph}',
@@ -249,7 +288,7 @@ ConceptInsights.prototype.annotateText = function(params, callback) {
     options: {
       url: '/v1/graph/{user}/{graph}',
       method: 'POST',
-      qs: extend({func:'annotateText'}, omit(params, ['user', 'graph','text'])),
+      qs: extend({func:'annotateText'}, omit(params, ['user', 'graph', 'text'])),
       body: params.text,
       json: true,
       path: params
@@ -284,21 +323,11 @@ ConceptInsights.prototype.labelSearch = function(params, callback) {
  */
 ConceptInsights.prototype.semanticSearch = function(params, callback) {
   params = params || {};
+  params.ids = formatConceptIds(params.ids);
 
-  // Initially, we expected the user to supply JSON.stringify'd ids. Now we expect an array of strings that we'll JSON.stringify our self.
-  // We still support the old version for backwards compatibility, BUT we don't want to accept any old string, only a valid JSON array, so we parse and check it to be sure.
-  if (!Array.isArray(params.ids)) {
-    try {
-      params.ids = JSON.parse(params.ids);
-    } catch (ex) {
-      // if it wasn't valid JSON, then it still won't be an array and we'll throw an error when we check that in a couple of lines
-    }
-    if (!Array.isArray(params.ids)) {
-      return process.nextTick(callback.bind(null, new Error("Invalid or missing required parameters: the ids param be an array of strings")));
-    }
+  if (params.ids === null) {
+    callback(new Error('Missing or invalid required parameters: ids needs to be an array of strings'));
   }
-
-  params.ids = JSON.stringify(params.ids);
 
   var parameters = {
     options: {
