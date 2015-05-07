@@ -8,8 +8,7 @@ var concept_insights = watson.concept_insights({
   version: 'v1'
 });
 
-/*** Annotate Text ***/
-
+// Annotate Text
 var params = {
   user: 'wikipedia',
   graph: 'en-20120601',
@@ -21,13 +20,12 @@ concept_insights.annotateText(params, function(err, res) {
   if (err)
     console.log(err);
   else {
-    console.log("\n*** Annotate Text ***\n");
+    console.log('Annotate Text');
     console.log(JSON.stringify(res, null, 2));
   }
 });
 
-/*** Semantic Search ***/
-
+// Semantic Search
 var payload = {
   func: 'semanticSearch',
   ids: [
@@ -43,7 +41,7 @@ concept_insights.semanticSearch(payload, function(error, results) {
   if (error)
     console.log(error);
   else {
-    console.log("\n*** Semantic Search ***\n");
+    console.log('Semantic Search');
     console.log(JSON.stringify(results, null, 2));
   }
 });
