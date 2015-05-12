@@ -1,6 +1,6 @@
 {
   "name": "watson-developer-cloud",
-  "version": "0.9.10",
+  "version": "0.9.11",
   "description": "Nodejs Client Wrapper to use the IBM Watson Services",
   "main": "./lib/index",
   "repository": {
@@ -20,10 +20,11 @@
     "relationship extraction",
     "language identification",
     "visual recognition ",
-    "speech to text ",
-    "text to speech ",
-    "concept insights ",
-    "tradeoff analytics "
+    "speech to text",
+    "text to speech",
+    "concept insights",
+    "tradeoff analytics",
+    "natural language classifier"
   ],
   "author": "IBM Corp.",
   "contributors": [
