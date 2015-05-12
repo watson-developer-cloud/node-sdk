@@ -24,6 +24,7 @@ APIs and SDKs that use cognitive computing to solve complex problems.
       * [Language Identification](#language-identification)
       * [Machine Translation](#machine-translation)
       * [Message Resonance](#message-resonance)
+      * [Natural Language Classifier](#natural-language-classifier)
       * [Personality Insights](#personality-insights)
       * [Question and Answer](#question-and-answer)
       * [Relationship Extraction](#relationship-extraction)
@@ -247,6 +248,32 @@ message_resonance.resonance({
       console.log(JSON.stringify(response, null, 2));
 });
 ```
+
+### Natural Language Classifier
+
+Use [Natural Language Classifier](http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/nl-classifier/) service to create a classifier instance by providing a set of representative strings and a set of one or more correct classes for each as training. Then use the trained classifier to classify your new question for best matching answers or to retrieve next actions for your application.
+
+```javascript
+var watson = require('natural-language-classifier');
+
+var natural_language_classifier = watson.natural_language_classifier({
+  username: '<username>',
+  password: '<password>',
+  version:'v1'
+});
+
+natural_language_classifier.classify({
+  text: 'Is it sunny?',
+  classifier: '<classifier-id>' },
+  function(err, response) {
+    if (err)
+      console.log('error:', err);
+    else
+      console.log(JSON.stringify(response, null, 2));
+});
+```
+
+For the command line interface and tutorial, See [Natural Language Classifier CLI](http://github.com/watson-developer-cloud/natural-language-classifier-nodejs-cli)
 
 ### Personality Insights
 Analyze text and get a personality profile by using the
