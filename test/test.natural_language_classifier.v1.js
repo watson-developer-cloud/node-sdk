@@ -30,40 +30,14 @@ var goodRequest = function(err) {
   assert.strictEqual(false, check);
 };
 
-var emptyData = {
-  data: ''
-};
-
-var nullData = {
-  data: null
-};
-
-var goodData = {
-  data: 'good'
-};
-
-var emptyClassifier = {
-  classifier: ''
-};
-var nullClassifier = {
-  classifier: null
-};
-var undefinedClassifier = {
-  classifier: undefined
-};
-
-var emptyDataClassifier = {
-  data: '',
-  classifer: ''
-};
-var nullDataClassifier = {
-  data: null,
-  classifer: null
-};
-var goodData = {
-  data: 'good',
-  classifier: 'good'
-};
+var emptyData = { text: '' },
+  nullData = { text: null },
+  emptyClassifier = { classifier: '' },
+  nullClassifier = { classifier: null },
+  undefinedClassifier = { classifier: undefined },
+  emptyDataClassifier = { text: '', classifer: '' },
+  nullDataClassifier = { text: null, classifer: null },
+  goodData = { text: 'good', classifier: 'good' };
 
 describe('natural_language_classifer', function() {
 
