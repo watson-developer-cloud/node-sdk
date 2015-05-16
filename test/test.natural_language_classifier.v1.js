@@ -122,8 +122,6 @@ describe('natural_language_classifer', function() {
   });
 
   it('all other good requests should pass', function() {
-    //natural_language_classifier.classify(goodData, goodRequest);
-    //natural_language_classifier.create(goodData, goodRequest);
     natural_language_classifier.status(goodData, goodRequest);
     natural_language_classifier.remove(goodData, goodRequest);
 
