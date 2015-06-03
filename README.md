@@ -254,7 +254,7 @@ message_resonance.resonance({
 Use [Natural Language Classifier](http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/nl-classifier/) service to create a classifier instance by providing a set of representative strings and a set of one or more correct classes for each as training. Then use the trained classifier to classify your new question for best matching answers or to retrieve next actions for your application.
 
 ```javascript
-var watson = require('natural-language-classifier');
+var watson = require('watson-developer-cloud');
 
 var natural_language_classifier = watson.natural_language_classifier({
   username: '<username>',
