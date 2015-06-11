@@ -76,9 +76,9 @@ describe('relationship_extraction', function() {
 
   it('should format the response', function(done) {
     relationship_extraction.extract(service_request, function(err, response) {
-      if (err)
+      if (err){
         done(err);
-      else {
+      } else {
         assert.equal(response, wrapper_response);
         done();
       }

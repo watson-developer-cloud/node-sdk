@@ -222,6 +222,7 @@ Dialog.prototype.deleteDialog = function(params, callback) {
 
 /**
  * Update a dialog with a new dialog file
+ * @param  Object   params   { dialog_id: '' }
  */
 Dialog.prototype.updateDialog = function(params, callback) {
   params = params || {};
