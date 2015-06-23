@@ -279,14 +279,15 @@ SpeechToText.prototype.getModel = function(params, callback) {
  * Set-cookie header is returned with a cookie that must be used for
  * each request using this session.
  * The session expires after 15 minutes of inactivity.
- *
+ * @param {string} model The model to use during the session
  */
 SpeechToText.prototype.createSession = function(params, callback) {
   var parameters = {
     options: {
       method: 'POST',
       url: '/v1/sessions',
-      json: true
+      json: true,
+      qs: params
     },
     defaultOptions: this._options
   };
