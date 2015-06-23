@@ -43,7 +43,7 @@ RelationshipExtraction.prototype.extract = function(_params, callback) {
       method: 'POST',
       url: '/v1/sire/0',
       form : {
-        rt: 'json',
+        rt: params.format || 'json',
         sid: params.dataset,
         txt: params.text // Change 'text' to 'txt'
       }
