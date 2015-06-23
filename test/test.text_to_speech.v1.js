@@ -4,6 +4,8 @@ var assert = require('assert');
 var watson = require('../lib/index');
 var nock   = require('nock');
 var qs     = require('querystring');
+var pick   = require('object.pick');
+var omit   = require('object.omit');
 
 describe('text_to_speech', function() {
 
@@ -11,8 +13,8 @@ describe('text_to_speech', function() {
 
   // Test params
   var service_request = {
-    voice: 'VoiceEnUsMichael',
     accept: 'audio/ogg; codecs=opus',
+    voice: 'VoiceEnUsMichael',
     text: 'Hi test'
   };
   var service = {
@@ -23,6 +25,7 @@ describe('text_to_speech', function() {
   };
   var synthesize_path = '/v1/synthesize';
   var voices_path = '/v1/voices';
+  var synthesize_request = synthesize_path + '?' + qs.stringify(omit(service_request,'text'));
 
   var mock_voices = [{
     name: 'michael',
@@ -40,7 +43,7 @@ describe('text_to_speech', function() {
     nock.disableNetConnect();
     nock(service.url)
       .persist()
-      .get(synthesize_path + '?' + qs.stringify(service_request))
+      .post(synthesize_request, {text: service_request.text})
       .replyWithFile(200, __dirname + '/resources/audio.ogg')
       .get(voices_path)
       .reply(200, mock_voices);
@@ -86,8 +89,8 @@ describe('text_to_speech', function() {
 
     it('should generate a valid payload', function() {
       var req = text_to_speech.synthesize(service_request, noop);
-      assert.equal(req.uri.href, service.url + synthesize_path + '?' + qs.stringify(service_request));
-      assert.equal(req.method, 'GET');
+      assert.equal(req.uri.href, service.url + synthesize_request);
+      assert.equal(req.method, 'POST');
     });
 
   });

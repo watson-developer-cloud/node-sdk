@@ -23,7 +23,10 @@ var requestFactory = require('../../lib/requestwrapper');
 function TextToSpeech(options) {
   // Default URL
   var serviceDefaults = {
-    url: 'https://stream.watsonplatform.net/text-to-speech-beta/api'
+    url: 'https://stream.watsonplatform.net/text-to-speech-beta/api',
+    headers: {
+      'content-type': 'application/json'
+    }
   };
 
   // Replace default options with user provided
@@ -34,15 +37,19 @@ function TextToSpeech(options) {
  * Streaming speech synthesis of the text in a query parameter
  */
 TextToSpeech.prototype.synthesize = function(params, callback) {
-  params = params || {};
+  params = extend({accept:'audio/ogg;codecs=opus'}, params);
+  if (!params.text){
+    callback(new Error('Missing required parameters: text'));
+    return;
+  }
+
   var parameters = {
     options: {
       method: 'POST',
       url: '/v1/synthesize',
-      body: pick(params, ['text']),
+      body: JSON.stringify(pick(params, ['text'])),
       qs: pick(params, ['accept', 'voice'])
     },
-    requiredParams: ['text'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
