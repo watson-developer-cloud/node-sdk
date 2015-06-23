@@ -16,6 +16,7 @@
 
 'use strict';
 
+var pick           = require('object.pick');
 var extend         = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
 
@@ -33,11 +34,13 @@ function TextToSpeech(options) {
  * Streaming speech synthesis of the text in a query parameter
  */
 TextToSpeech.prototype.synthesize = function(params, callback) {
+  params = params || {};
   var parameters = {
     options: {
-      method: 'GET',
+      method: 'POST',
       url: '/v1/synthesize',
-      qs: params
+      body: pick(params, ['text']),
+      qs: pick(params, ['accept', 'voice'])
     },
     requiredParams: ['text'],
     defaultOptions: this._options
