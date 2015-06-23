@@ -13,10 +13,12 @@ describe('relationship_extraction', function() {
     dataset: 'ie-en-news'
   };
   var service_response = {
-    sts: 'OK',
-    xml: '<xml>It works!</xml>'
+    doc: {
+      entities: {
+        entity: ['foo']
+      }
+    }
   };
-  var wrapper_response = service_response.xml;
   var service_path = '/v1/sire/0';
   var service = {
     username: 'batman',
@@ -79,7 +81,7 @@ describe('relationship_extraction', function() {
       if (err){
         done(err);
       } else {
-        assert.equal(response, wrapper_response);
+        assert.equal(JSON.stringify(response), JSON.stringify(service_response));
         done();
       }
     });
