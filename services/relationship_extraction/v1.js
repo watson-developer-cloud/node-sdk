@@ -29,21 +29,6 @@ function RelationshipExtraction(options) {
   this._options = extend(serviceDefaults, options);
 }
 
-// Wrap the response to format the result.
-function responseFormatter(callback) {
-  return function(err, response) {
-    if (err) {
-      return callback && callback(err, response);
-    }
-
-    if (response && response.sts === 'OK')
-      callback(null, response.xml);
-    else
-      callback(new Error('Malformed results'));
-
-  };
-}
-
 RelationshipExtraction.prototype.extract = function(_params, callback) {
   var params = extend(this._options, _params);
 
@@ -65,7 +50,7 @@ RelationshipExtraction.prototype.extract = function(_params, callback) {
     },
     defaultOptions: this._options
   };
-  return requestFactory(parameters, responseFormatter(callback));
+  return requestFactory(parameters, callback);
 };
 
 module.exports = RelationshipExtraction;
