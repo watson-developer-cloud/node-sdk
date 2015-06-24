@@ -56,7 +56,7 @@ LanguageTranslation.prototype.getModels = function(params, callback) {
 };
 
 /**
- * Returns the classification information for a classifier on a phrase
+ * Translate pharagraphs from @param source to @param target.
  */
 LanguageTranslation.prototype.translate = function(params, callback) {
   params = params || {};

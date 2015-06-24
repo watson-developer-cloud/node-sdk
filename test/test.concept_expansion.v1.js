@@ -51,7 +51,7 @@ describe('concept_expansion', function() {
         state: 'D'
       })
       .put('/v1/result', {
-        jobid: 2014
+        jobid: '2014'
       })
       .reply(200, service_response);
   });
