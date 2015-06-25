@@ -23,6 +23,7 @@ APIs and SDKs that use cognitive computing to solve complex problems.
       * [Concept Expansion](#concept-expansion)
       * [Concept Insights](#concept-insights)
       * [Language Identification](#language-identification)
+      * [Language Translation](#language-translation)
       * [Machine Translation](#machine-translation)
       * [Message Resonance](#message-resonance)
       * [Natural Language Classifier](#natural-language-classifier)
@@ -231,6 +232,38 @@ language_identification.identify({
     else
       console.log(JSON.stringify(response, null, 2));
 });
+```
+
+### Language Translation
+Translate text from one language to another or idenfity a language using the
+[Language Translation][language_translation] service.
+
+```javascript
+var watson = require('watson-developer-cloud');
+
+var language_translation = watson.language_translation({
+  username: '<username>',
+  password: '<password>',
+  version: 'v2'
+});
+
+language_translation.translate({
+  text: 'A sentence must have a verb', source : 'en', target: 'es' },
+  function (err, translation) {
+    if (err)
+      console.log('error:', err);
+    else
+      console.log(JSON.stringify(translation, null, 2));
+});
+language_identification.identify({
+  text: 'The language translation service takes text input and identifies the language used.' },
+  function (err, language) {
+    if (err)
+      console.log('error:', err);
+    else
+      console.log(JSON.stringify(language, null, 2));
+});
+
 ```
 
 ### Machine Translation
