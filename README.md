@@ -19,6 +19,7 @@ APIs and SDKs that use cognitive computing to solve complex problems.
     * [Usage](#usage)
     * [Getting the Service Credentials](#getting-the-service-credentials)
     * [IBM Watson Services](#ibm-watson-services)
+      * [Authorization](#authorization)
       * [Concept Expansion](#concept-expansion)
       * [Concept Insights](#concept-insights)
       * [Language Identification](#language-identification)
@@ -98,6 +99,35 @@ You need to copy `username` and `password`.
 ## IBM Watson Services
 The Watson Developer Cloud offers a variety of services for building cognitive
 apps.
+
+### Authorization
+Fetch an ephemeral token for use with browser applications using the
+the [Authorization][authorization] service.
+
+The token can then be passed in HTTP headers using the `X-Watson-Authorization-Token` header. Tokens are valid for 1 hour.
+
+```javascript
+var watson = require('watson-developer-cloud');
+
+var authorization = watson.authorization({
+  username: '<username>',
+  password: '<password>',
+  version: 'v1'
+});
+
+var params = {
+  // URL of the resource you wish to access
+  url: 'https://stream.watsonplatform.net/text-to-speech/api
+};
+
+authorization.getToken(params, function (token) {
+  if (!token) {
+    console.log('error:', err);
+  } else {
+    // Use your token here
+  }
+});
+```
 
 ### Concept Expansion
 Map euphemisms or colloquial terms to more commonly understood phrases using
