@@ -117,7 +117,7 @@ var authorization = watson.authorization({
 
 var params = {
   // URL of the resource you wish to access
-  url: 'https://stream.watsonplatform.net/text-to-speech/api
+  url: 'https://stream.watsonplatform.net/text-to-speech/api'
 };
 
 authorization.getToken(params, function (token) {
