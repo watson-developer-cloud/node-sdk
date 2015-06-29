@@ -22,6 +22,7 @@ APIs and SDKs that use cognitive computing to solve complex problems.
       * [Authorization](#authorization)
       * [Concept Expansion](#concept-expansion)
       * [Concept Insights](#concept-insights)
+      * [Dialog](#dialog)
       * [Language Identification](#language-identification)
       * [Machine Translation](#machine-translation)
       * [Message Resonance](#message-resonance)
@@ -210,6 +211,27 @@ concept_insights.semanticSearch(payload, function(error, results) {
 });
 ```
 
+### Dialog
+Use the Dialog service to list all the dialogs you have.
+
+```javascript
+var watson = require('watson-developer-cloud');
+
+var dialog = watson.dialog({
+  username: '<username>',
+  password: '<password>',
+  version: 'v1'
+});
+
+
+dialog.getDialogs({}, function (err, dialogs) {
+    if (err)
+      console.log('error:', err);
+    else
+      console.log(JSON.stringify(dialogs, null, 2));
+});
+```
+
 ### Language Identification
 Identify a language using the [Language Identification][language_identification]
 service.
@@ -289,7 +311,7 @@ var watson = require('watson-developer-cloud');
 var natural_language_classifier = watson.natural_language_classifier({
   username: '<username>',
   password: '<password>',
-  version:'v1'
+  version: 'v1'
 });
 
 natural_language_classifier.classify({
