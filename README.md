@@ -526,6 +526,20 @@ var concept_expansion = watson.concept_expansion({
 This example fails because you did not provide a username and password and
 the wrapper will not look into Bluemix for these values.
 
+## Unauthenticated requests
+By default, the wrapper tries to use Basic Auth and will ask for `api_key` or `username` and `password` and send an `Authorization: Basic XXXXXXX`. You can avoid this by using:
+
+`use_unauthenticated`.
+
+```javascript
+var watson = require('watson-developer-cloud');
+
+var dialog = watson.dialog({
+  version: 'v1',
+  use_unauthenticated: true
+});
+```
+
 ## Debug
 This wrapper relies on the `request` npm module writted by
 [mikeal][mikeal_github] to call the Watson Services. To debug the apps, add
