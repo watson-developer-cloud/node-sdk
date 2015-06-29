@@ -29,6 +29,21 @@ describe('wrapper', function() {
     );
   });
 
+  it('should check for use_unauthenticated', function() {
+    assert.ok(create_service({
+      use_unauthenticated: true,
+      version: 'v1'
+    }));
+    assert.throws(function() {
+      create_service({
+        use_unauthenticated: false,
+        version: 'v1'
+      });
+    },
+      /api_key or username and password were not specified/
+    );
+  });
+
   it('should check for missing version', function() {
     assert.throws(function() {
         create_service({
