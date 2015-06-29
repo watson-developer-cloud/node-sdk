@@ -37,7 +37,7 @@ function TextToSpeech(options) {
  * Streaming speech synthesis of the text in a query parameter
  */
 TextToSpeech.prototype.synthesize = function(params, callback) {
-  params = extend({accept:'audio/ogg;codecs=opus'}, params);
+  params = extend({accept:'audio/ogg; codecs=opus'}, params);
   if (!params.text){
     callback(new Error('Missing required parameters: text'));
     return;
