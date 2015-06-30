@@ -78,6 +78,9 @@ SpeechToText.prototype.recognize = function(params, callback) {
     return;
   }
 
+  var queryParams = pick(params, ['continuous', 'max_alternatives', 'timestamps',
+    'word_confidence','inactivity_timeout']);
+
   var _url = '/v1';
   _url += (params.session_id) ? ('/sessions/' + params.session_id) : '';
   _url += '/recognize';
@@ -90,7 +93,7 @@ SpeechToText.prototype.recognize = function(params, callback) {
         'Content-Type': params.content_type
       },
       json: true,
-      qs: pick(params, ['continuous']),
+      qs: queryParams,
     },
     defaultOptions: this._options
   };
@@ -279,7 +282,7 @@ SpeechToText.prototype.getModel = function(params, callback) {
  * Set-cookie header is returned with a cookie that must be used for
  * each request using this session.
  * The session expires after 15 minutes of inactivity.
- * @param {string} model The model to use during the session
+ * @param string model The model to use during the session
  */
 SpeechToText.prototype.createSession = function(params, callback) {
   var parameters = {

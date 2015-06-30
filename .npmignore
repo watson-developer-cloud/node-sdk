@@ -3,3 +3,8 @@ node_modules
 coverage
 .jshintignore
 .hshintrc
+examples
+.editorconfig
+.jshintrc
+.travis.yml
+.DS_Store
