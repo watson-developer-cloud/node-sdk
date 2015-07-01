@@ -24,6 +24,7 @@ APIs and SDKs that use cognitive computing to solve complex problems.
       * [Concept Insights](#concept-insights)
       * [Dialog](#dialog)
       * [Language Identification](#language-identification)
+      * [Language Translation](#language-translation)
       * [Machine Translation](#machine-translation)
       * [Message Resonance](#message-resonance)
       * [Natural Language Classifier](#natural-language-classifier)
@@ -57,8 +58,7 @@ $ npm install watson-developer-cloud --save
 ## Usage
 
 The examples below assume that you already have service credentials. If not,
-you will have to create and bind the service in [Bluemix][bluemix]. See the
-[Getting Started][getting_started] page for more details.
+you will have to create and bind the service in [Bluemix][bluemix].
 
 If you are running your application in Bluemix, you don't need to specify the
 credentials; the wrapper will get them for you by looking at the `VCAP_SERVICES`
@@ -66,7 +66,7 @@ environment variable.
 
 ### Getting the Service Credentials
 The credentials for the services are stored in the
-[VCAP_SERVICES][vcap_environment] environment variable. To get them, you need
+`VCAP_SERVICES` environment variable. To get them, you need
 to first create and bind the service to your application.
 
 There are two ways to get the credentials. You can use Bluemix to access your
@@ -252,6 +252,38 @@ language_identification.identify({
       console.log('error:', err);
     else
       console.log(JSON.stringify(response, null, 2));
+});
+```
+
+### Language Translation
+
+Translate text from one language to another or idenfity a language using the [Language Translation][language_translation] service.
+
+```javascript
+var watson = require('watson-developer-cloud');
+
+var language_translation = watson.language_translation({
+  username: '<username>',
+  password: '<password>',
+  version: 'v2'
+});
+
+language_translation.translate({
+  text: 'A sentence must have a verb', source : 'en', target: 'es' },
+  function (err, translation) {
+    if (err)
+      console.log('error:', err);
+    else
+      console.log(JSON.stringify(translation, null, 2));
+});
+
+language_identification.identify({
+  text: 'The language translation service takes text input and identifies the language used.' },
+  function (err, language) {
+    if (err)
+      console.log('error:', err);
+    else
+      console.log(JSON.stringify(language, null, 2));
 });
 ```
 
@@ -585,10 +617,9 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/nodejs-wrapper/blob
 [speech_to_text]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/speech-to-text/
 [concept_insights]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/concept-insights/
 [tradeoff_analytics]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/tradeoff-analytics/
+[language_translation]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/language-translation/
 
-[getting_started]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/getstarted.html
 [wdc]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/
-[vcap_environment]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/getting_started/index.html#EnvVars
 [bluemix]: https://console.ng.bluemix.net
 [npm_link]: https://www.npmjs.com/package/watson-developer-cloud
 [mikeal_github]: https://github.com/request/request
