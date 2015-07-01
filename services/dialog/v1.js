@@ -112,7 +112,7 @@ Dialog.prototype.conversation = function(params, callback) {
       formData: omit(params, ['dialog_id']),
       path: params
     },
-    requiredParams: ['dialog_id', 'client_id'],
+    requiredParams: ['dialog_id'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
