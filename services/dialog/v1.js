@@ -109,7 +109,7 @@ Dialog.prototype.conversation = function(params, callback) {
       url: '/v1/dialogs/{dialog_id}/conversation',
       method: 'POST',
       json: true,
-      formData: omit(params, ['dialog_id']),
+      form: omit(params, ['dialog_id']),
       path: params
     },
     requiredParams: ['dialog_id'],
