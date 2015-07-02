@@ -16,18 +16,22 @@
 
 'use strict';
 
-var pick           = require('object.pick');
 var extend         = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
+var url            = require('url');
 
 function Authorization(options) {
   // Default URL
   var serviceDefaults = {
     url: 'https://stream.watsonplatform.net/authorization/api'
   };
-
   // Replace default options with user provided
   this._options = extend(serviceDefaults, options);
+
+  // replace the url to always point to /authorization/api
+  var hostname = url.parse(this._options.url);
+  hostname.pathname = '/authorization/api';
+  this._options.url = url.format(hostname);
 }
 
 /**
@@ -42,8 +46,7 @@ Authorization.prototype.getToken = function(params, callback) {
   var parameters = {
     options: {
       method: 'GET',
-      url: '/v1/token',
-      qs: pick(params, ['url'])
+      url: '/v1/token?url='+params.url,
     },
     defaultOptions: this._options
   };

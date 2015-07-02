@@ -125,12 +125,11 @@ describe('dialog', function() {
 
     it('should generate a valid payload', function() {
       var req = dialog.conversation(params, noop);
+      var body = new Buffer(req.body).toString('ascii');
+
       assert.equal(req.uri.href, service.url + paths.conversation);
       assert.equal(req.method, 'POST');
-      assert.equal(
-        qs.stringify(req.formData),
-        qs.stringify(omit(params, ['dialog_id']))
-      );
+      assert.equal(body, qs.stringify(omit(params,'dialog_id')));
     });
   });
 

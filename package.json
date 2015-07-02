@@ -1,6 +1,6 @@
 {
   "name": "watson-developer-cloud",
-  "version": "0.9.16",
+  "version": "0.9.18",
   "description": "Nodejs Client Wrapper to use the IBM Watson Services",
   "main": "./lib/index",
   "repository": {
@@ -20,6 +20,7 @@
     "question and answer",
     "relationship extraction",
     "language identification",
+    "language translation",
     "visual recognition ",
     "speech to text",
     "text to speech",
@@ -37,6 +38,10 @@
     {
       "name": "Jeff Stylos",
       "email": "jsstylos@us.ibm.com"
+    },
+    {
+      "name": "Eric Bullington",
+      "email": "esbullin@us.ibm.com"
     }
   ],
   "license": "Apache-2.0",
