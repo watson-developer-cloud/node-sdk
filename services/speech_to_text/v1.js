@@ -52,7 +52,7 @@ function formatChunk(chunk) {
 function SpeechToText(options) {
   // Default URL
   var serviceDefaults = {
-    url: 'https://stream.watsonplatform.net/speech-to-text-beta/api'
+    url: 'https://stream.watsonplatform.net/speech-to-text/api'
   };
 
   // Replace default options with user provided
