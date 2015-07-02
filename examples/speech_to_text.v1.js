@@ -6,7 +6,8 @@ var fs = require('fs');
 var speech_to_text = watson.speech_to_text({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
   password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
-  version: 'v1'
+  version: 'v1',
+  url: 'https://stream.watsonplatform.net/speech-to-text/api'
 });
 
 var params = {

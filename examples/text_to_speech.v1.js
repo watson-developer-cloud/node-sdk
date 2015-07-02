@@ -6,12 +6,13 @@ var fs = require('fs');
 var text_to_speech = watson.text_to_speech({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
   password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
-  version: 'v1'
+  version: 'v1',
+  url: 'https://stream.watsonplatform.net/text-to-speech/api'
 });
 
 var params = {
   text: 'Hello from IBM Watson',
-  voice: 'VoiceEnUsMichael', // Optional voice
+  voice: 'en-US_MichaelVoice', // Optional voice
   accept: 'audio/wav'
 };
 
