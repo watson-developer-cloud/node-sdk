@@ -497,7 +497,6 @@ var watson = require('watson-developer-cloud');
 var tradeoff_analytics = watson.tradeoff_analytics({
   username: '<username>',
   password: '<password>',
-  url: 'https://gateway.watsonplatform.net/tradeoff-analytics/api',
   version: 'v1'
 });
 
