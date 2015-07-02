@@ -22,7 +22,7 @@ var requestFactory = require('../../lib/requestwrapper');
 function TradeoffAnalytics(options) {
   // Default URL
   var defaultOptions = {
-    url: 'https://gateway.watsonplatform.net/tradeoff-analytics-beta/api'
+    url: 'https://gateway.watsonplatform.net/tradeoff-analytics/api'
   };
 
   // Replace default options with user provided
