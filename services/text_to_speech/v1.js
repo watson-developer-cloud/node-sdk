@@ -23,7 +23,7 @@ var requestFactory = require('../../lib/requestwrapper');
 function TextToSpeech(options) {
   // Default URL
   var serviceDefaults = {
-    url: 'https://stream.watsonplatform.net/text-to-speech-beta/api',
+    url: 'https://stream.watsonplatform.net/text-to-speech/api',
     headers: {
       'content-type': 'application/json'
     }
