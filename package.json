@@ -1,6 +1,6 @@
 {
   "name": "watson-developer-cloud",
-  "version": "0.9.18",
+  "version": "0.9.19",
   "description": "Nodejs Client Wrapper to use the IBM Watson Services",
   "main": "./lib/index",
   "repository": {
@@ -27,7 +27,8 @@
     "concept insights",
     "tradeoff analytics",
     "natural language classifier",
-    "dialog "
+    "dialog",
+    "tone_analyzer"
   ],
   "author": "IBM Corp.",
   "contributors": [
