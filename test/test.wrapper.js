@@ -111,4 +111,19 @@ describe('wrapper', function() {
     assert.equal(service._options.api_key, 'not-gonna-work');
   });
 
+  it('should not delete parameters', function() {
+    var service = create_service({
+      version: 'v1',
+      api_key: 'not-gonna-work',
+      foo: 'bar',
+      use_vcap_services: false,
+      bar: 'foo'
+    });
+
+    // don't use VCAP_SERVICES if user_vcap_services == false
+    assert.equal(service._options.api_key, 'not-gonna-work');
+    assert.equal(service._options.foo, 'bar');
+    assert.equal(service._options.bar, 'foo');
+  });
+
 });
