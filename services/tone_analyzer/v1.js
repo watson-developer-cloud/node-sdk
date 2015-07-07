@@ -45,7 +45,7 @@ ToneAnalyzer.prototype.tone = function(params, callback) {
     defaultOptions: extend(this._options, {
       headers: {
         'accept':'application/json',
-        'content-type': 'plain/text'
+        'content-type': 'text/plain'
       }
     })
   };
