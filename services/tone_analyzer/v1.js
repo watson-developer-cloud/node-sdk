@@ -29,7 +29,19 @@ function ToneAnalyzer(options) {
   this._options = extend(defaultOptions, options);
 }
 
-
+/**
+ * Main API call. Returns the different tone dimensions of a text.
+ * 
+ * @param params: An object with a string 'text' element. This is the 
+ * only field used. By this API call
+ * 
+ * @return upon success, the callback function is called with an object
+ * containing the different tones (emotion, writing and social), traits
+ * and the evidence words found in the text.
+ * 
+ * @see the API docs for a the full documentation.
+ * 
+ */
 ToneAnalyzer.prototype.tone = function(params, callback) {
   if (!params || !params.text){
     callback(new Error('Missing required parameters: text'));
@@ -53,6 +65,26 @@ ToneAnalyzer.prototype.tone = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
+/**
+ * Returns related words for a given word (or set of words).
+ * 
+ * @param params: An object with an array of strings 'words'. These are
+ * the terms to look for and suggest synonyms. A 'limit' parameter is
+ * also accepted to limit the number of related words suggested.
+ * 
+ * @return upon success, the callback function is called with an object
+ * containing related words to the ones given. Each word comes with
+ * the semantic type and the meaning and sense of the root word, and
+ * a weight associated to a trait. Positive weights would 'level up' 
+ * that particular tone, while negative weights would level it down.
+ * 
+ * For example, if one wants to sound less "angry" on a message, the
+ * suggestions with negative correlation with "Anger" (Emotion Tone)
+ * could be replaced in the txt.
+ * 
+ * @see the API docs for a the full documentation.
+ * 
+ */
 ToneAnalyzer.prototype.synonym = function(params, callback) {
   var parameters = {
     options: {
@@ -62,7 +94,12 @@ ToneAnalyzer.prototype.synonym = function(params, callback) {
       json: true
     },
     requiredParams: ['words', 'limit'],
-    defaultOptions: this._options
+    defaultOptions: extend(this._options, {
+      headers: {
+        'accept':'application/json',
+        'content-type': 'application/json'
+      }
+    })
   };
 
   return requestFactory(parameters, callback);
