@@ -18,6 +18,8 @@
 
 var extend         = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
+var pick           = require('object.pick');
+var omit           = require('object.omit');
 
 function PersonalityInsights(options) {
   // Default URL
@@ -39,10 +41,12 @@ PersonalityInsights.prototype.profile = function(params, callback) {
     options: {
       method: 'POST',
       url: '/v2/profile',
-      body: params.text || params,
+      body: params.text || pick(params, ['contentItems']),
       json: true,
+      qs: pick(params, ['include_raw']),
       headers: {
-        'Content-type' : params.text ? 'text/plain' : 'application/json'
+        'Content-type': params.text ? 'text/plain' : 'application/json',
+        'Content-language': params.language ? params.language : 'en'
       }
     },
     defaultOptions: this._options

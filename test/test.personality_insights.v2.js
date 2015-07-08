@@ -3,6 +3,7 @@
 var assert = require('assert');
 var watson = require('../lib/index');
 var nock   = require('nock');
+var extend = require('extend');
 
 describe('personality_insights', function() {
 
@@ -41,6 +42,8 @@ describe('personality_insights', function() {
       .persist()
       .post(service_path, payload)
       .reply(200, service_response)
+      .post(service_path + '?include_raw=true', payload)
+      .reply(200, service_response)
       .post(service_path, '"'+ service_request.text + '"')
       .reply(200, service_response);
   });
@@ -77,6 +80,18 @@ describe('personality_insights', function() {
       assert.equal(body, JSON.stringify(payload));
       assert.equal(req.method, 'POST');
       assert.equal(req.headers['Content-type'], 'application/json');
+  });
+
+  it('should generate a valid payload with include_raw and language', function() {
+    var params = extend({ language: 'es', include_raw: true}, payload);
+
+      var req = personality_insights.profile(params, noop);
+      var body = new Buffer(req.body).toString('ascii');
+      assert.equal(req.uri.href, service.url + service_path + '?include_raw=true');
+      assert.equal(body, JSON.stringify(payload));
+      assert.equal(req.method, 'POST');
+      assert.equal(req.headers['Content-type'], 'application/json');
+      assert.equal(req.headers['Content-language'], 'es');
   });
 
   it('should format the response', function(done) {
