@@ -16,7 +16,7 @@ ConceptInsightsCorpora.prototype.getRelatedConcepts = function(params, callback)
 ConceptInsightsCorpora.prototype.getRelationScores = function(params, callback) {
 */
 
-describe('concept_insights', function() {
+describe('concept_insights.v2', function() {
 
   var noop = function() {};
 

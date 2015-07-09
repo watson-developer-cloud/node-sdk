@@ -6,7 +6,7 @@ var nock   = require('nock');
 var qs     = require('querystring');
 var extend = require('extend');
 
-describe('concept_insights', function() {
+describe('concept_insights.v1', function() {
 
   var noop = function() {};
 
