@@ -82,8 +82,8 @@ describe('personality_insights', function() {
       assert.equal(req.headers['Content-type'], 'application/json');
   });
 
-  it('should generate a valid payload with include_raw and language', function() {
-    var params = extend({ language: 'es', include_raw: true}, payload);
+  it('should generate a valid payload with include_raw, language and acceptLanguage', function() {
+    var params = extend({ language: 'es', acceptLanguage: 'es', include_raw: true}, payload);
 
       var req = personality_insights.profile(params, noop);
       var body = new Buffer(req.body).toString('ascii');
@@ -92,6 +92,7 @@ describe('personality_insights', function() {
       assert.equal(req.method, 'POST');
       assert.equal(req.headers['Content-type'], 'application/json');
       assert.equal(req.headers['Content-language'], 'es');
+      assert.equal(req.headers['Accept-language'], 'es');
   });
 
   it('should format the response', function(done) {

@@ -31,6 +31,17 @@ function PersonalityInsights(options) {
   this._options = extend(serviceDefaults, options);
 }
 
+/**
+ * @param params An Object representing the parameters for this service call. 
+ *   The accepted parameters are:
+ *     - text: The text to analyze.
+ *     - contentItems: A JSON input (if 'text' not provided).
+ *     - include_raw: ? TODO
+ *     - acceptLanguage : The language expected for the output.
+ *     - language: The language of the input.
+ *             
+ * @param callback The callback.
+ */
 PersonalityInsights.prototype.profile = function(params, callback) {
   if (!params || (!params.text && !params.contentItems)) {
     callback(new Error('Missing required parameters: text or contentItems'));
@@ -45,8 +56,9 @@ PersonalityInsights.prototype.profile = function(params, callback) {
       json: true,
       qs: pick(params, ['include_raw']),
       headers: {
-        'Content-type': params.text ? 'text/plain' : 'application/json',
-        'Content-language': params.language ? params.language : 'en'
+        'Content-type'    : params.text ? 'text/plain' : 'application/json',
+        'Content-language': params.language ? params.language : 'en',
+        'Accept-language' : params.acceptLanguage ? params.acceptLanguage : 'en'
       }
     },
     defaultOptions: this._options
