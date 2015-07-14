@@ -22,7 +22,7 @@ var requestFactory = require('../../lib/requestwrapper');
 function ToneAnalyzer(options) {
   // Default URL
   var defaultOptions = {
-    url: 'https://gateway.watsonplatform.net/tone-analyzer-beta/api'
+    url: 'https://gateway.watsonplatform.net/tone-analyzer-experimental/api'
   };
 
   // Replace default options with user provided
