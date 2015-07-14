@@ -82,6 +82,7 @@ describe('text_to_speech', function() {
         else {
           assert.notEqual(response, null);
           assert.notEqual(response, undefined);
+          assert(response instanceof Buffer);
           done();
         }
       });
