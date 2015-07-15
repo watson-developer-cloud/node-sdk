@@ -360,7 +360,7 @@ natural_language_classifier.classify({
 For the command line interface and tutorial, See [Natural Language Classifier CLI](http://github.com/watson-developer-cloud/natural-language-classifier-nodejs-cli)
 
 ### Personality Insights
-Analyze text and get a personality profile by using the
+Analyze text in english and get a personality profile by using the
 [Personality Insights][personality_insights] service.
 
 ```javascript
@@ -373,7 +373,8 @@ var personality_insights = watson.personality_insights({
 });
 
 personality_insights.profile({
-  text: 'Enter more than 100 unique words here...' },
+  text: 'Enter more than 100 unique words here...',
+  language: 'es' },
   function (err, response) {
     if (err)
       console.log('error:', err);
@@ -382,9 +383,7 @@ personality_insights.profile({
 });
 ```
 
-**Note:** Don't forget to update the `text` variable! Also, if you experience
-authentication errors, remember that the Personality Insights service is not
-a free service.
+**Note:** Don't forget to update the `text` variable!
 
 ### Question and Answer
 Ask a healthcare-related question of the
