@@ -374,7 +374,7 @@ var personality_insights = watson.personality_insights({
 
 personality_insights.profile({
   text: 'Enter more than 100 unique words here...',
-  language: 'es' },
+  language: 'en' },
   function (err, response) {
     if (err)
       console.log('error:', err);
