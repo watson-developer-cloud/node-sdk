@@ -105,4 +105,26 @@ ToneAnalyzer.prototype.synonym = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
+/**
+ * Returns a list of available scorecards.
+ * Scorecards are implementations of Tone evaluations for different domains.
+ * When calling the Tone API, a specific scorecard can be requested to be used.
+ * The default scorecard is "email", for business communications.
+ *
+ * @see the API docs for a the full documentation.
+ *
+ */
+ToneAnalyzer.prototype.scorecards = function(params, callback) {
+  var parameters = {
+    options: {
+      url: '/v1/scorecards',
+      method: 'GET',
+      json: true
+    },
+    defaultOptions: this._options
+  };
+
+  return requestFactory(parameters, callback);
+};
+
 module.exports = ToneAnalyzer;
