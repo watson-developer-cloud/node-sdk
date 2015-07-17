@@ -93,7 +93,7 @@ ToneAnalyzer.prototype.synonym = function(params, callback) {
       body: params,
       json: true
     },
-    requiredParams: ['words', 'limit'],
+    requiredParams: ['words'],
     defaultOptions: extend(this._options, {
       headers: {
         'accept':'application/json',
