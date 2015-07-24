@@ -79,7 +79,7 @@ SpeechToText.prototype.recognize = function(params, callback) {
   }
 
   var queryParams = pick(params, ['continuous', 'max_alternatives', 'timestamps',
-    'word_confidence','inactivity_timeout']);
+    'word_confidence','inactivity_timeout', 'model']);
 
   var _url = '/v1';
   _url += (params.session_id) ? ('/sessions/' + params.session_id) : '';
