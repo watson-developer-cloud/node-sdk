@@ -36,10 +36,10 @@ function PersonalityInsights(options) {
  *   The accepted parameters are:
  *     - text: The text to analyze.
  *     - contentItems: A JSON input (if 'text' not provided).
- *     - include_raw: ? TODO
+ *     - include_raw: include raw results
  *     - acceptLanguage : The language expected for the output.
  *     - language: The language of the input.
- *             
+ *
  * @param callback The callback.
  */
 PersonalityInsights.prototype.profile = function(params, callback) {
