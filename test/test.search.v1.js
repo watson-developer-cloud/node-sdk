@@ -7,24 +7,30 @@ var nock   = require('nock');
 var fs     = require('fs');
 
 describe('search', function() {
-  var clusterId  = 'scffffffff_ffff_ffff_ffff_ffffffffffff';
-  var configName = 'test_config';
+  var clusterId      = 'scffffffff_ffff_ffff_ffff_ffffffffffff';
+  var configName     = 'test_config';
+  var collectionName = 'test_collection';
 
   var solrClustersPath  = '/v1/solr_clusters';
-  var listResponse      = "list response";
-  var deleteAllResponse = "delete all response";
-  var createResponse    = "create response";
+  var listResponse      = 'list response';
+  var deleteAllResponse = 'delete all response';
+  var createResponse    = 'create response';
 
   var solrClusterPath = '/v1/solr_clusters/' + clusterId;
-  var pollResponse    = "poll response";
-  var deleteResponse  = "delete response";
+  var pollResponse    = 'poll response';
+  var deleteResponse  = 'delete response';
 
   var configsPath          = '/v1/solr_clusters/' + clusterId + '/config';
   var configPath           = configsPath + '/' + configName;
-  var configListResponse   = "config list response";
-  var configUploadResponse = "config upload response";
-  var configGetResponse    = "config get response";
-  var configDeleteResponse = "config delete response";
+  var configListResponse   = 'config list response';
+  var configUploadResponse = 'config upload response';
+  var configGetResponse    = 'config get response';
+  var configDeleteResponse = 'config delete response';
+
+  var collectionsPath          = '/v1/solr_clusters/' + clusterId + '/solr/admin/collections';
+  var collectionCreateResponse = 'collection create';
+  var collectionListResponse   = 'collection list';
+  var collectionDeleteResponse = 'collection delete';
 
   var service = {
     username: 'batman',
@@ -38,6 +44,9 @@ describe('search', function() {
   };
   var missingConfigName = function(err) {
     assert.ok((err instanceof Error) && /required parameter: configName/.test(err));
+  };
+  var missingCollectionName = function(err) {
+    assert.ok((err instanceof Error) && /required parameter: collectionName/.test(err));
   };
   var missingConfigZipPath = function(err) {
     assert.ok((err instanceof Error) && /required parameter: configZipPath/.test(err));
@@ -58,7 +67,12 @@ describe('search', function() {
       .get(configsPath).reply(200, configListResponse)
       .post(configPath).reply(200, configUploadResponse)
       .get(configPath).reply(200, configGetResponse)
-      .delete(configPath).reply(200, configDeleteResponse);
+      .delete(configPath).reply(200, configDeleteResponse)
+
+      .get(collectionsPath + '?action=CREATE&name=' + collectionName + '&collection.configName=' + configName)
+        .reply(200, collectionCreateResponse)
+      .get(collectionsPath + '?action=LIST').reply(200, collectionListResponse)
+      .get(collectionsPath + '?action=DELETE&name=' + collectionName).reply(200, collectionDeleteResponse);
   });
 
   after(function() {
@@ -178,5 +192,51 @@ describe('search', function() {
 
   it('returns error when configName is not specified on delete config request', function() {
     search.deleteConfig({clusterId: clusterId}, missingConfigName);
+  });
+
+  it('can create a Solr collection', function(done) {
+    search.createCollection({clusterId: clusterId, collectionName: collectionName, configName: configName},
+      function(error, data) {
+      assert.equal(data, collectionCreateResponse);
+      done();
+    });
+  });
+
+  it('returns error when clusterId is not specified on create collection request', function() {
+    search.createCollection({}, missingClusterId);
+  });
+
+  it('returns error when collectionName is not specified on create collection request', function() {
+    search.createCollection({clusterId: clusterId}, missingCollectionName);
+  });
+
+  it('returns error when configName is not specified on create collection request', function() {
+    search.createCollection({clusterId: clusterId, collectionName: collectionName}, missingConfigName);
+  });
+
+  it('can list Solr collections', function(done) {
+    search.listCollections({clusterId: clusterId}, function(error, data) {
+      assert.equal(data, collectionListResponse);
+      done();
+    });
+  });
+
+  it('returns error when clusterId is not specified on list collection request', function() {
+    search.listCollections({}, missingClusterId);
+  });
+
+  it('can delete a Solr collection', function(done) {
+    search.deleteCollection({clusterId: clusterId, collectionName: collectionName}, function(error, data) {
+      assert.equal(data, collectionDeleteResponse);
+      done();
+    });
+  });
+
+  it('returns error when clusterId is not specified on delete collection request', function() {
+    search.deleteCollection({}, missingClusterId);
+  });
+
+  it('returns error when collectionName is not specified on delete collection request', function() {
+    search.deleteCollection({clusterId: clusterId}, missingCollectionName);
   });
 });

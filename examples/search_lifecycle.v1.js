@@ -1,7 +1,6 @@
 'use strict';
 
-var watson = require('../lib/index');
-var fs     = require('fs');
+var watson = require('watson-developer-cloud');
 var async  = require('async');
 
 var search = watson.search({
@@ -12,8 +11,6 @@ var search = watson.search({
 });
 
 var clusterId;
-var configName    = 'example_config';
-var configZipPath = 'path/to/config.zip';
 
 async.series([
   function deleteExistingClusters(done) {
@@ -45,40 +42,6 @@ async.series([
     });
   },
 
-  function uploadConfig(done) {
-    console.log('Uploading Solr config ' +  configName);
-    search.uploadConfig({clusterId: clusterId, configName: configName, configZipPath: configZipPath},
-      function(err, res) {
-      printResponse(err, 'Error uploading Solr config: ', 'Uploaded Solr config ' + configName, done);
-    });
-  },
-
-  function listConfigs(done) {
-    console.log('Listing Solr configs for cluster ' + clusterId);
-    search.listConfigs({clusterId: clusterId}, function(err, res) {
-      printResponse(err, 'Error listing Solr configs: ', res, done);
-    });
-  },
-
-  function getConfig(done) {
-    console.log('Getting Solr config ' + configName);
-    search.getConfig({clusterId: clusterId, configName: configName}, function(err, res) {
-      if (err) {
-        console.log('Error getting config: ' + JSON.stringify(err, null, 2));
-      } else {
-        // Save response to a local file here
-      }
-      done();
-    });
-  },
-
-  function deleteConfig(done) {
-    console.log('Deleting Solr config ' + configName);
-    search.deleteConfig({clusterId: clusterId, configName: configName}, function(err, res) {
-      printResponse(err, 'Error deleting config: ', 'Deleted Solr config ' + configName, done);
-    });
-  },
-
   function deleteCluster(done) {
     console.log('Deleting Solr cluster ' + clusterId);
     search.deleteCluster({clusterId: clusterId}, function(err, res) {
@@ -89,7 +52,7 @@ async.series([
 
 function waitForCluster(clusterId, callback) {
   search.pollCluster({clusterId: clusterId}, function isReady(err, res) {
-    if(err){
+    if(err) {
       return console.log('Error polling Solr cluster: ' + JSON.stringify(err, null, 2));
     }
 
