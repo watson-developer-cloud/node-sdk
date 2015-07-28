@@ -21,6 +21,16 @@ var requestFactory = require('../../lib/requestwrapper');
 var pick           = require('object.pick');
 var omit           = require('object.omit');
 
+
+/**
+ * Return true if 'text' is html
+ * @param  {String}  text The 'text' to analyze
+ * @return {Boolean}      true if 'text' has html tags
+ */
+function isHTML(text){
+  return /<[a-z][\s\S]*>/i.test(text);
+}
+
 function PersonalityInsights(options) {
   // Default URL
   var serviceDefaults = {
@@ -32,14 +42,13 @@ function PersonalityInsights(options) {
 }
 
 /**
- * @param params An Object representing the parameters for this service call. 
+ * @param params {Object} The parameters to call the service
  *   The accepted parameters are:
  *     - text: The text to analyze.
  *     - contentItems: A JSON input (if 'text' not provided).
- *     - include_raw: ? TODO
  *     - acceptLanguage : The language expected for the output.
  *     - language: The language of the input.
- *             
+ *
  * @param callback The callback.
  */
 PersonalityInsights.prototype.profile = function(params, callback) {
@@ -48,15 +57,22 @@ PersonalityInsights.prototype.profile = function(params, callback) {
     return;
   }
 
+  // Content-Type
+  var content_type = null;
+  if (params.text)
+    content_type = isHTML(params.text) ? 'text/html' : 'text/plain';
+  else
+    content_type = 'application/json'
+
   var parameters = {
     options: {
       method: 'POST',
       url: '/v2/profile',
-      body: params.text || pick(params, ['contentItems']),
+      body: params.text || params.html || pick(params, ['contentItems']),
       json: true,
       qs: pick(params, ['include_raw']),
       headers: {
-        'Content-type'    : params.text ? 'text/plain' : 'application/json',
+        'Content-type'    : content_type,
         'Content-language': params.language ? params.language : 'en',
         'Accept-language' : params.acceptLanguage ? params.acceptLanguage : 'en'
       }
@@ -65,5 +81,4 @@ PersonalityInsights.prototype.profile = function(params, callback) {
   };
   return requestFactory(parameters, callback);
 };
-
 module.exports = PersonalityInsights;
