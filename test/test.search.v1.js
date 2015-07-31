@@ -5,11 +5,13 @@ var watson = require('../lib/index');
 var qs     = require('querystring');
 var nock   = require('nock');
 var fs     = require('fs');
+var url    = require('url');
 
 describe('search', function() {
   var clusterId      = 'scffffffff_ffff_ffff_ffff_ffffffffffff';
   var configName     = 'test_config';
   var collectionName = 'test_collection';
+  var serviceUrl     = 'http://search-service.com/path/to/service';
 
   var solrClustersPath  = '/v1/solr_clusters';
   var listResponse      = 'list response';
@@ -35,7 +37,7 @@ describe('search', function() {
   var service = {
     username: 'batman',
     password: 'bruce-wayne',
-    url: 'http://ibm.com:80',
+    url: serviceUrl,
     version: 'v1'
   };
 
@@ -239,4 +241,34 @@ describe('search', function() {
   it('returns error when collectionName is not specified on delete collection request', function() {
     search.deleteCollection({clusterId: clusterId}, missingCollectionName);
   });
+
+  it('can create a Solr client using passed in params', function() {
+    var solrClient = search.createSolrClient({clusterId: clusterId, collectionName: collectionName});
+    var parsedUrl = url.parse(serviceUrl);
+
+    assert.equal(solrClient.options.host, parsedUrl.hostname);
+    assert.equal(solrClient.options.port, 443);
+    assert.equal(solrClient.options.path, parsedUrl.path + '/v1/solr_clusters/' + clusterId + '/solr');
+    assert.equal(solrClient.options.core, collectionName);
+    assert.equal(solrClient.options.secure, true);
+  });
+
+  it('returns error when clusterId is not specified when building Solr client', function() {
+    assert.throws(
+      function() {
+        search.createSolrClient({});
+      },
+      /required parameter: clusterId/
+    );
+  });
+
+  it('returns error when collectionName is not specified when building Solr client', function() {
+    assert.throws(
+      function() {
+        search.createSolrClient({clusterId: clusterId});
+      },
+      /required parameter: collectionName/
+    );
+  });
+
 });

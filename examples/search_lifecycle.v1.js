@@ -45,7 +45,7 @@ async.series([
   function deleteCluster(done) {
     console.log('Deleting Solr cluster ' + clusterId);
     search.deleteCluster({clusterId: clusterId}, function(err, res) {
-      printResponse(err, 'Error deleting Solr cluster: ', 'Deleted Solr cluster ' + configName, done);
+      printResponse(err, 'Error deleting Solr cluster: ', 'Deleted Solr cluster ' + clusterId, done);
     });
   }
 ]);

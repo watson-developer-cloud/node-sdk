@@ -17,6 +17,7 @@
 'use strict';
 
 var fs             = require('fs');
+var url            = require('url');
 var extend         = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
 var solr           = require('solr-client');
@@ -262,10 +263,18 @@ Search.prototype.deleteCollection = function(params, callback) {
  *     - password: the Bluemix service password
  */
 Search.prototype.createSolrClient = function(params) {
+  if (!params || !params.clusterId) {
+    throw new Error('Missing required parameter: clusterId');
+  } else if (!params.collectionName) {
+    throw new Error('Missing required parameter: collectionName');
+  }
+  var serviceUrl = url.parse(this._options.url);
+  var apiPath = serviceUrl.path === '/' ? '' : serviceUrl.path || '';
+
   var solrClient = solr.createClient({
-    host: 'gateway.watsonplatform.net',
-    path: '/search/api' + solrClusterPath(params.clusterId) + '/solr',
-    port: '443',
+    host: serviceUrl.hostname,
+    path: apiPath + solrClusterPath(params.clusterId) + '/solr',
+    port: serviceUrl.port || '443',
     secure: true,
     core: params.collectionName
   });
