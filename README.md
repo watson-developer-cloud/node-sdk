@@ -102,10 +102,8 @@ The Watson Developer Cloud offers a variety of services for building cognitive
 apps.
 
 ### Authorization
-Fetch an ephemeral token for use with browser applications using the
-the [Authorization][authorization] service.
-
-The token can then be passed in HTTP headers using the `X-Watson-Authorization-Token` header. Tokens are valid for 1 hour.
+The Authorization service can generates tokens, this are useful when it's too cumbersome to provide a username/password pair.  
+Tokens are valid for 1 hour and need to be send using the `X-Watson-Authorization-Token` header. 
 
 ```javascript
 var watson = require('watson-developer-cloud');
