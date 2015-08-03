@@ -3,6 +3,7 @@
 var assert = require('assert');
 var watson = require('../lib/index');
 var nock   = require('nock');
+var fs     = require('fs');
 
 describe('language_translation', function() {
 
@@ -107,6 +108,79 @@ describe('language_translation', function() {
         assert.equal(req.method, 'POST');
         var body = new Buffer(req.body).toString('ascii');
         assert.equal(body, service_request.text);
+    });
+  });
+
+  describe('createModel()', function(){
+
+    it('should check no parameters provided', function() {
+      language_translation.createModel({}, missingParameter);
+      language_translation.createModel(null, missingParameter);
+      language_translation.createModel(undefined, missingParameter);
+    });
+
+    it('should generate a valid payload', function() {
+        var path = '/v2/models';
+        var service_request = {
+          base_model_id: 'foo',
+          forced_glossary: fs.createReadStream(__dirname + '/resources/glossary.tmx'),
+        };
+
+        nock(service.url).persist()
+        .post(path,service_request)
+        .reply(200);
+
+        var req = language_translation.createModel(service_request, noop);
+        assert.equal(req.uri.href, service.url + path+ '?base_model_id=foo');
+        assert.equal(req.method, 'POST');
+    });
+  });
+
+  describe('deleteModel()', function(){
+
+    it('should check no parameters provided', function() {
+      language_translation.deleteModel({}, missingParameter);
+      language_translation.deleteModel(null, missingParameter);
+      language_translation.deleteModel(undefined, missingParameter);
+    });
+
+    it('should generate a valid payload', function() {
+        var path = '/v2/models/foo';
+        var service_request = {
+          model_id: 'foo'
+        };
+
+        nock(service.url).persist()
+        .delete(path,service_request)
+        .reply(200);
+
+        var req = language_translation.deleteModel(service_request, noop);
+        assert.equal(req.uri.href, service.url + path);
+        assert.equal(req.method, 'DELETE');
+    });
+  });
+
+  describe('getModel()', function(){
+
+    it('should check no parameters provided', function() {
+      language_translation.getModel({}, missingParameter);
+      language_translation.getModel(null, missingParameter);
+      language_translation.getModel(undefined, missingParameter);
+    });
+
+    it('should generate a valid payload', function() {
+        var path = '/v2/models/foo';
+        var service_request = {
+          model_id: 'foo'
+        };
+
+        nock(service.url).persist()
+        .get(path,service_request)
+        .reply(200);
+
+        var req = language_translation.getModel(service_request, noop);
+        assert.equal(req.uri.href, service.url + path);
+        assert.equal(req.method, 'GET');
     });
   });
 

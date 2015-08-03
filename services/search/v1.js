@@ -17,8 +17,10 @@
 'use strict';
 
 var fs             = require('fs');
+var url            = require('url');
 var extend         = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
+var solr           = require('solr-client');
 
 function Search(options) {
   var serviceDefaults = {
@@ -78,7 +80,7 @@ Search.prototype.createCluster = function(params, callback) {
  * @param callback The callback.
  */
 Search.prototype.pollCluster = function(params, callback) {
-  if (!params || !params.clusterId){
+  if (!params || !params.clusterId) {
     return callback(new Error('Missing required parameter: clusterId'));
   }
   return sendRequest('GET', solrClusterPath(params.clusterId), this._options, callback);
@@ -94,7 +96,7 @@ Search.prototype.pollCluster = function(params, callback) {
  * @param callback The callback.
  */
 Search.prototype.deleteCluster = function(params, callback) {
-  if (!params || !params.clusterId){
+  if (!params || !params.clusterId) {
     return callback(new Error('Missing required parameter: clusterId'));
   }
   return sendRequest('DELETE', solrClusterPath(params.clusterId), this._options, callback);
@@ -112,7 +114,7 @@ Search.prototype.deleteCluster = function(params, callback) {
  * @param callback The callback.
  */
 Search.prototype.listConfigs = function(params, callback) {
-  if (!params || !params.clusterId){
+  if (!params || !params.clusterId) {
     return callback(new Error('Missing required parameter: clusterId'));
   }
   return sendRequest('GET', solrConfigsPath(params.clusterId), this._options, callback);
@@ -130,7 +132,7 @@ Search.prototype.listConfigs = function(params, callback) {
  * @param callback The callback.
  */
 Search.prototype.uploadConfig = function(params, callback) {
-  if (!params || !params.clusterId){
+  if (!params || !params.clusterId) {
     return callback(new Error('Missing required parameter: clusterId'));
   } else if (!params.configName) {
     return callback(new Error('Missing required parameter: configName'));
@@ -160,7 +162,7 @@ Search.prototype.uploadConfig = function(params, callback) {
  * @param callback The callback.
  */
 Search.prototype.getConfig = function(params, callback) {
-  if (!params || !params.clusterId){
+  if (!params || !params.clusterId) {
     return callback(new Error('Missing required parameter: clusterId'));
   } else if (!params.configName) {
     return callback(new Error('Missing required parameter: configName'));
@@ -179,13 +181,106 @@ Search.prototype.getConfig = function(params, callback) {
  * @param callback The callback.
  */
 Search.prototype.deleteConfig = function(params, callback) {
-  if (!params || !params.clusterId){
+  if (!params || !params.clusterId) {
     return callback(new Error('Missing required parameter: clusterId'));
   } else if (!params.configName) {
     return callback(new Error('Missing required parameter: configName'));
   }
   return sendRequest('DELETE', solrConfigPath(params.clusterId, params.configName), this._options, callback);
 };
+
+// Solr collection operations
+
+/**
+ * List all collections for a given Solr cluster.
+ *
+ * @param params An Object representing the parameters for this service call.
+ *   Required params:
+ *     - clusterId: the ID of the Solr cluster to list collections from
+ *
+ * @param callback The callback.
+ */
+Search.prototype.listCollections = function(params, callback) {
+  if (!params || !params.clusterId) {
+    return callback(new Error('Missing required parameter: clusterId'));
+  }
+  return sendRequest('GET', adminCollectionsPath(params.clusterId, 'LIST'), this._options, callback);
+};
+
+/**
+ * Create a Solr collection.
+ *
+ * @param params An Object representing the parameters for this service call.
+ *   Required params:
+ *     - clusterId: the ID of the Solr cluster to create the collection on
+ *     - collectionName: the name of the collection to create
+ *     - configName: the name of the config in ZooKeeper
+ *
+ * @param callback The callback.
+ */
+Search.prototype.createCollection = function(params, callback) {
+  if (!params || !params.clusterId) {
+    return callback(new Error('Missing required parameter: clusterId'));
+  } else if (!params.collectionName) {
+    return callback(new Error('Missing required parameter: collectionName'));
+  } else if (!params.configName) {
+    return callback(new Error('Missing required parameter: configName'));
+  }
+  var createPath = adminCollectionsPath(params.clusterId, 'CREATE');
+  createPath += '&name=' + params.collectionName + '&collection.configName=' + params.configName;
+  return sendRequest('GET', createPath, this._options, callback);
+};
+
+/**
+ * Delete a Solr collection.
+ *
+ * @param params An Object representing the parameters for this service call.
+ *   Required params:
+ *     - clusterId: the ID of the Solr cluster to delete the collection on
+ *     - collectionName: the name of the collection to delete
+ *
+ * @param callback The callback.
+ */
+Search.prototype.deleteCollection = function(params, callback) {
+  if (!params || !params.clusterId) {
+    return callback(new Error('Missing required parameter: clusterId'));
+  } else if (!params.collectionName) {
+    return callback(new Error('Missing required parameter: collectionName'));
+  }
+  var deletePath = adminCollectionsPath(params.clusterId, 'DELETE') + '&name=' + params.collectionName;
+  return sendRequest('GET', deletePath, this._options, callback);
+};
+
+/**
+ * Get a Solr client for indexing and searching documents.
+ * See https://github.com/lbdremy/solr-node-client for documentation and examples.
+ *
+ * @param params An Object representing the parameters for this service call.
+ *   Required params:
+ *     - clusterId: the ID of the Solr cluster to delete the collection on
+ *     - collectionName: the name of the collection for indexing/searching
+ *     - username: the Bluemix service username
+ *     - password: the Bluemix service password
+ */
+Search.prototype.createSolrClient = function(params) {
+  if (!params || !params.clusterId) {
+    throw new Error('Missing required parameter: clusterId');
+  } else if (!params.collectionName) {
+    throw new Error('Missing required parameter: collectionName');
+  }
+  var serviceUrl = url.parse(this._options.url);
+  var apiPath = serviceUrl.path === '/' ? '' : serviceUrl.path || '';
+
+  var solrClient = solr.createClient({
+    host: serviceUrl.hostname,
+    path: apiPath + solrClusterPath(params.clusterId) + '/solr',
+    port: serviceUrl.port || '443',
+    secure: true,
+    core: params.collectionName
+  });
+  solrClient.basicAuth(params.username, params.password);
+  return solrClient;
+}
 
 // Helper methods
 
@@ -205,7 +300,11 @@ function solrConfigPath(clusterId, configName) {
   return solrConfigsPath(clusterId) + '/' + configName;
 }
 
-function sendRequest(method, url, options, callback){
+function adminCollectionsPath(clusterId, action) {
+  return solrClusterPath(clusterId) + '/solr/admin/collections?action=' + action;
+}
+
+function sendRequest(method, url, options, callback) {
   var parameters = {
     options: {
       method: method,

@@ -16,9 +16,11 @@
 
 'use strict';
 
-var extend = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
-var pick = require('object.pick');
+var extend         = require('extend');
+var pick           = require('object.pick');
+var isStream       = require('isstream');
+var helper         = require('../../lib/helper');
 
 function LanguageTranslation(options) {
   // Default URL
@@ -50,6 +52,80 @@ LanguageTranslation.prototype.getModels = function(params, callback) {
       qs: pick(params,['default','source','target']),
       json: true
     },
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Return the translation model
+ * @param  string   model_id   The model identifier
+ */
+LanguageTranslation.prototype.getModel = function(params, callback) {
+  params = params || {};
+
+  var parameters = {
+    options: {
+      method: 'GET',
+      url: '/v2/models/{model_id}',
+      path: pick(params,['model_id']),
+      json: true
+    },
+    requiredParams: ['model_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Creates a translation model
+ * @param  string   base_model_id   The base model identifier
+ * @param  string   name   The model name
+ * @param  stream   forced_glossary   The tmx stream
+ */
+LanguageTranslation.prototype.createModel = function(params, callback) {
+  params = params || {};
+
+  var missingParams = helper.getMissingParams(params, ['forced_glossary', 'base_model_id']);
+  if (missingParams) {
+    callback(new Error('Missing required parameters: ' + missingParams.join(', ')));
+    return;
+  }
+
+
+  if (!isStream(params.forced_glossary)) {
+    callback(new Error('forced_glossary is not a standard Node.js Stream'));
+    return;
+  }
+
+  var parameters = {
+    options: {
+      method: 'POST',
+      url: '/v2/models',
+      qs: pick(params,['name', 'base_model_id']),
+      formData: pick(params,['forced_glossary']),
+      json: true
+    },
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Deletes a translation model
+ * @param  string   model_id   The model identifier
+ */
+LanguageTranslation.prototype.deleteModel = function(params, callback) {
+  params = params || {};
+
+  var parameters = {
+    options: {
+      method: 'DELETE',
+      url: '/v2/models/{model_id}',
+      path: pick(params,['model_id']),
+      json: true
+    },
+    requiredParams: ['model_id'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
