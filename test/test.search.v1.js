@@ -2,7 +2,6 @@
 
 var assert = require('assert');
 var watson = require('../lib/index');
-var qs     = require('querystring');
 var nock   = require('nock');
 var fs     = require('fs');
 var url    = require('url');
@@ -74,7 +73,8 @@ describe('search', function() {
       .get(collectionsPath + '?action=CREATE&name=' + collectionName + '&collection.configName=' + configName)
         .reply(200, collectionCreateResponse)
       .get(collectionsPath + '?action=LIST').reply(200, collectionListResponse)
-      .get(collectionsPath + '?action=DELETE&name=' + collectionName).reply(200, collectionDeleteResponse);
+      .get(collectionsPath + '?action=DELETE&name=' + collectionName)
+        .reply(200, collectionDeleteResponse);
   });
 
   after(function() {
