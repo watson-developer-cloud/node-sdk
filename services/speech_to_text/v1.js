@@ -39,7 +39,7 @@ function formatChunk(chunk) {
   try {
     result = '[' + result.replace(/}{/g, '},{') + ']';
     result = JSON.parse(result);
-    return result[result.lenght - 1];
+    return result[result.length - 1];
   } catch (e) {}
 
   return result;
