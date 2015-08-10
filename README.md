@@ -119,7 +119,7 @@ var params = {
   url: 'https://stream.watsonplatform.net/text-to-speech/api'
 };
 
-authorization.getToken(params, function (token) {
+authorization.getToken(params, function (err, token) {
   if (!token) {
     console.log('error:', err);
   } else {
