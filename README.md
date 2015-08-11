@@ -355,8 +355,6 @@ natural_language_classifier.classify({
 });
 ```
 
-For the command line interface and tutorial, See [Natural Language Classifier CLI](http://github.com/watson-developer-cloud/natural-language-classifier-nodejs-cli)
-
 ### Personality Insights
 Analyze text in english and get a personality profile by using the
 [Personality Insights][personality_insights] service.
