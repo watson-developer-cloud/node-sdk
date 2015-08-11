@@ -23,7 +23,7 @@ var pick = require('object.pick');
 function NaturalLanguageClassifier(options) {
   // Default URL
   var serviceDefaults = {
-    url: 'https://gateway.watsonplatform.net/natural-language-classifier-experimental/api'
+    url: 'https://gateway.watsonplatform.net/natural-language-classifier/api'
   };
   this._options = extend(serviceDefaults, options);
 }
@@ -38,12 +38,19 @@ NaturalLanguageClassifier.prototype.create = function(params, callback) {
     options: {
       method: 'POST',
       url: '/v1/classifiers',
-      body: params,
-      json: true
     },
-    requiredParams: ['language', 'training_data'],
     defaultOptions: this._options
   };
+
+  if (params.training_metadata) {
+    parameters.options.formData = params;
+    parameters.requiredParams = ['training_data', 'training_metadata'];
+  } else {
+    parameters.options.body = params;
+    parameters.options.json = true;
+    parameters.requiredParams = ['language', 'training_data'];
+  }
+  
   return requestFactory(parameters, callback);
 };
 

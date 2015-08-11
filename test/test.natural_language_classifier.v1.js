@@ -3,6 +3,7 @@
 var assert = require('assert');
 var watson = require('../lib/index');
 var nock = require('nock');
+var fs = require('fs');
 
 var service = {
   username: 'foo',
@@ -37,7 +38,26 @@ var emptyData = { text: '' },
   undefinedClassifier = { classifier: undefined },
   emptyDataClassifier = { text: '', classifer: '' },
   nullDataClassifier = { text: null, classifer: null },
-  goodData = { text: 'good', classifier: 'good' };
+  goodData = { text: 'good', classifier: 'good' },
+  jsonTrainingData,
+  csvTrainingData = {
+    training_metadata: JSON.stringify({ language: 'en', name: 'classifier' }),
+    training_data: { options: { contentType: 'application/octet-stream' }}
+  };
+
+before('load test training_data', function (done) {
+  fs.readFile('test/resources/training_data.json', 'utf8', function (err, data) {
+    if (err) throw err;
+    jsonTrainingData = JSON.parse(data);
+  });
+
+  fs.readFile('test/resources/training_data.csv', 'utf8', function (err, data) {
+    if (err) throw err;
+    csvTrainingData.training_data.value = data;
+  });
+
+  done();
+});
 
 describe('natural_language_classifer', function() {
 
@@ -96,6 +116,9 @@ describe('natural_language_classifer', function() {
   });
 
   it('all other good requests should pass', function() {
+    natural_language_classifier.create(jsonTrainingData, goodRequest);
+    natural_language_classifier.create(csvTrainingData, goodRequest);
+
     natural_language_classifier.status(goodData, goodRequest);
     natural_language_classifier.remove(goodData, goodRequest);
 
