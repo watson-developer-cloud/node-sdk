@@ -19,11 +19,14 @@
 var extend = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
 var pick = require('object.pick');
+var omit = require('object.omit');
+var isStream = require('isstream');
+var toCSV = require('./json-training-to-csv');
 
 function NaturalLanguageClassifier(options) {
   // Default URL
   var serviceDefaults = {
-    url: 'https://gateway.watsonplatform.net/natural-language-classifier/api'
+    url: 'https://gateway.watsonplatform.net/natural-language-classifier-beta/api'
   };
   this._options = extend(serviceDefaults, options);
 }
@@ -34,24 +37,43 @@ function NaturalLanguageClassifier(options) {
 NaturalLanguageClassifier.prototype.create = function(params, callback) {
   params = params || {};
 
-  var parameters = {
-    options: {
-      method: 'POST',
-      url: '/v1/classifiers',
-    },
-    defaultOptions: this._options
-  };
-
-  if (params.training_metadata) {
-    parameters.options.formData = params;
-    parameters.requiredParams = ['training_data', 'training_metadata'];
-  } else {
-    parameters.options.body = params;
-    parameters.options.json = true;
-    parameters.requiredParams = ['language', 'training_data'];
+  if (!params || !params.training_data) {
+    callback(new Error('Missing required parameters: training_data'));
+    return;
   }
-  
-  return requestFactory(parameters, callback);
+  if (!((Array.isArray(params.training_data)) ||
+      (typeof params.training_data === 'string') ||
+      (isStream(params.training_data)))) {
+    callback(new Error('training_data needs to be a String, Array or Stream'));
+    return;
+  }
+
+  var self = this;
+
+  toCSV(params.training_data, function(err, csv) {
+    if (err) {
+      callback(err);
+      return;
+    }
+
+    var parameters = {
+      options: {
+        url: '/v1/classifiers',
+        method: 'POST',
+        json: true,
+        formData: {
+          training_data: csv,
+          training_metadata: JSON.stringify(omit(params, ['training_data']))
+        },
+        // hack to check required parameters.
+        // We don't actually need path parameters
+        path: pick(params, ['language'])
+      },
+      requiredParams: ['language'],
+      defaultOptions: self._options
+    };
+    return requestFactory(parameters, callback);
+  });
 };
 
 /**
