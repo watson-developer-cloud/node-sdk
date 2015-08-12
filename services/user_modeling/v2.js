@@ -16,54 +16,10 @@
 
 'use strict';
 
-var extend         = require('extend');
-var requestFactory = require('../../lib/requestwrapper');
-
-var toContentItems = function(text){
-  return {
-        contentItems : [{
-          userid : 'dummy',
-          id : 'dummyUuid',
-          sourceid : 'freetext',
-          contenttype : 'text/plain',
-          language : 'en',
-          content: text
-        }]
-  };
-};
-
-function UserModeling(options) {
-  // Default URL
-  var serviceDefaults = {
-    url: 'https://gateway.watsonplatform.net/user-modeling-beta/api'
-  };
-
-  // Replace default options with user provided
-  this._options = extend(serviceDefaults, options);
+function UserModeling() {
+  console.warn('WARNING! The User Modeling has been replaced by Personality Insights.');
+  console.warn('See https://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/personality-insights.html');
+  throw Error('Service deprecated');
 }
-
-UserModeling.prototype.profile = function(_params, callback) {
-  var body = _params || {};
-
-  // If 'text' is specified, build the contentItems object using text
-  if (body.text)
-    body = toContentItems(body.text);
-
-  if (!body.contentItems) {
-    callback(new Error('Missing required parameters: text or contentItems'));
-    return;
-  }
-
-  var parameters = {
-    options: {
-      method: 'POST',
-      url: '/v2/profile',
-      body: body,
-      json: true,
-    },
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
 
 module.exports = UserModeling;

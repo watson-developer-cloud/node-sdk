@@ -3,6 +3,8 @@
 var assert = require('assert');
 var watson = require('../lib/index');
 var nock = require('nock');
+var fs = require('fs');
+var extend = require('extend');
 
 var service = {
   username: 'foo',
@@ -30,6 +32,14 @@ var goodRequest = function(err) {
   assert.strictEqual(false, check);
 };
 
+var invalidFormatParameter = function(err) {
+  assert.ok((err instanceof Error) && /Invalid training_data format/.test(err.message));
+};
+
+var invalidParameter = function(err) {
+  assert.ok((err instanceof Error) && /training_data needs to be/.test(err.message));
+};
+
 var emptyData = { text: '' },
   nullData = { text: null },
   emptyClassifier = { classifier: '' },
@@ -37,7 +47,26 @@ var emptyData = { text: '' },
   undefinedClassifier = { classifier: undefined },
   emptyDataClassifier = { text: '', classifer: '' },
   nullDataClassifier = { text: null, classifer: null },
-  goodData = { text: 'good', classifier: 'good' };
+  goodData = { text: 'good', classifier: 'good' },
+  noTrainingData = {language:'en', name:'foo'};
+
+  // training requests
+  // training with a string variable (CSV)
+  var createWithString = extend ({training_data: 'foo'}, noTrainingData);
+
+  // training with a stream variable (CSV)
+  var createWithStream = extend({
+      training_data: fs.createReadStream('./resources/training_data.csv')
+  }, noTrainingData);
+
+  // training with an object variable (JSON)
+  var createWithJson = extend ({
+    training_data: [
+      { text: 'text', classes:['class1'] },
+      { text: 'text2', classes:['class2'] },
+    ]
+  }, noTrainingData);
+
 
 describe('natural_language_classifer', function() {
 
@@ -60,8 +89,6 @@ describe('natural_language_classifer', function() {
   });
 
   it('should fail if no classifier is provided for classify, status and delete requests', function() {
-    natural_language_classifier.create(emptyData, missingParameter);
-    natural_language_classifier.create(nullData, missingParameter);
 
     natural_language_classifier.classify(emptyData, missingParameter);
     natural_language_classifier.classify(emptyClassifier, missingParameter);
@@ -86,6 +113,7 @@ describe('natural_language_classifer', function() {
   });
 
   it('should fail if no data provided create and classify requests', function() {
+    natural_language_classifier.create(noTrainingData, missingParameter);
     natural_language_classifier.create(emptyClassifier, missingParameter);
     natural_language_classifier.create(nullData, missingParameter);
     natural_language_classifier.create(emptyData, missingParameter);
@@ -103,7 +131,32 @@ describe('natural_language_classifer', function() {
     natural_language_classifier.list({}, goodRequest);
     natural_language_classifier.list(null, goodRequest);
     natural_language_classifier.list(undefined, goodRequest);
+
+    // create classifier with string
+    natural_language_classifier.create(createWithString, goodRequest);
+    natural_language_classifier.create(createWithStream, goodRequest);
+    natural_language_classifier.create(createWithJson, goodRequest);
   });
 
+
+  it('should fail if training_data is not json, string or stream', function() {
+    var params = extend({},noTrainingData);
+
+    params.training_data = null;
+    natural_language_classifier.create(params, missingParameter);
+
+    params.training_data = 0;
+    natural_language_classifier.create(params, missingParameter);
+
+    params.training_data = {};
+    natural_language_classifier.create(params, invalidParameter);
+  });
+
+  it('should fail if training_data is not a valid json format', function() {
+    var params = extend({}, noTrainingData);
+
+    params.training_data = [{json:'bad'}];
+    natural_language_classifier.create(params, invalidFormatParameter);
+  });
 
 });
