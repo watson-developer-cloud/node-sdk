@@ -339,6 +339,7 @@ Use [Natural Language Classifier](http://www.ibm.com/smarterplanet/us/en/ibmwats
 var watson = require('watson-developer-cloud');
 
 var natural_language_classifier = watson.natural_language_classifier({
+  url: 'https://gateway.watsonplatform.net/natural-language-classifier/api',
   username: '<username>',
   password: '<password>',
   version: 'v1'
@@ -354,6 +355,8 @@ natural_language_classifier.classify({
       console.log(JSON.stringify(response, null, 2));
 });
 ```
+
+See this [example](https://github.com/watson-developer-cloud/nodejs-wrapper/blob/master/examples/natural_language_classifier.v1.js) to learn how to create a classifier.
 
 ### Personality Insights
 Analyze text in english and get a personality profile by using the
