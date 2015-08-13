@@ -134,6 +134,7 @@ ConceptInsightsGraphs.prototype.getRelatedConcepts = function(params, callback) 
 
   if (params.concepts === null) {
     callback(new Error('Missing or invalid required parameters: concepts needs to be an array of strings'));
+    return;
   }
 
   var parameters = {
@@ -184,6 +185,7 @@ ConceptInsightsGraphs.prototype.getRelationScores = function(params, callback) {
 
   if (params.concepts === null) {
     callback(new Error('Missing or invalid required parameters: concepts needs to be an array of strings'));
+    return;
   }
 
   var parameters = {
@@ -312,6 +314,7 @@ ConceptInsightsCorpora.prototype.createDocument = function(params, callback) {
     delete params.document;
   } else {
     callback(new Error('Missing required parameters: document'));
+    return;
   }
 
   var parameters = {
@@ -338,6 +341,7 @@ ConceptInsightsCorpora.prototype.updateDocument = function(params, callback) {
     documentToUpdate = params.document;
   } else {
     callback(new Error('Missing required parameters: document'));
+    return;
   }
 
   var parameters = {
@@ -456,6 +460,7 @@ ConceptInsightsCorpora.prototype.getRelatedDocuments = function(params, callback
 
   if (params.ids === null) {
     callback(new Error('Missing or invalid required parameters: ids needs to be an array of strings'));
+    return;
   }
 
   var parameters = {
@@ -517,6 +522,7 @@ ConceptInsightsCorpora.prototype.getRelationScores = function(params, callback) 
 
   if (params.concepts === null) {
     callback(new Error('Missing or invalid required parameter: concepts needs to be an array of strings'));
+    return;
   }
 
   var parameters;
