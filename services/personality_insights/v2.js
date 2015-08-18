@@ -63,7 +63,7 @@ PersonalityInsights.prototype.profile = function(params, callback) {
   if (params.text)
     content_type = isHTML(params.text) ? 'text/html' : 'text/plain';
   else
-    content_type = 'application/json'
+    content_type = 'application/json';
 
   var parameters = {
     options: {
