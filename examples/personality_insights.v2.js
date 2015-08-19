@@ -24,7 +24,7 @@ personality_insights.profile({
 /*
  * Spanish example:
  *   'language' parameter is needed in 'es' since our
- *   text content is in Spanish. 
+ *   text content is in Spanish.
  */
 personality_insights.profile({
   text: 'Ingrese un texto de más de 100 palabras aquí...',
@@ -41,13 +41,13 @@ personality_insights.profile({
  *   Following the Spanish Example, now we would like to
  *   obtain the output in Spanish, i.e. all the trait
  *   names and output messages in Spanish. You can specify
- *   the expected language by passing 'acceptLanguage'
+ *   the expected language by passing 'accept_language'
  *   parameter with the locale.
  */
 personality_insights.profile({
   text: 'Ingrese un texto de más de 100 palabras aquí...',
   language: 'es',
-  acceptLanguage: 'es'},
+  accept_language: 'es'},
   function (err, response) {
     if (err)
       console.log('error:', err);

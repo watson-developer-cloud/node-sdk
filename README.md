@@ -23,9 +23,7 @@ APIs and SDKs that use cognitive computing to solve complex problems.
       * [Concept Expansion](#concept-expansion)
       * [Concept Insights](#concept-insights)
       * [Dialog](#dialog)
-      * [Language Identification](#language-identification)
       * [Language Translation](#language-translation)
-      * [Machine Translation](#machine-translation)
       * [Message Resonance](#message-resonance)
       * [Natural Language Classifier](#natural-language-classifier)
       * [Personality Insights](#personality-insights)
@@ -230,29 +228,6 @@ dialog.getDialogs({}, function (err, dialogs) {
 });
 ```
 
-### Language Identification
-Identify a language using the [Language Identification][language_identification]
-service.
-
-```javascript
-var watson = require('watson-developer-cloud');
-
-var language_identification = watson.language_identification({
-  username: '<username>',
-  password: '<password>',
-  version: 'v1'
-});
-
-language_identification.identify({
-  text: 'The language identification service takes text input and identifies the language used.' },
-  function (err, response) {
-    if (err)
-      console.log('error:', err);
-    else
-      console.log(JSON.stringify(response, null, 2));
-});
-```
-
 ### Language Translation
 
 Translate text from one language to another or idenfity a language using the [Language Translation][language_translation] service.
@@ -282,29 +257,6 @@ language_identification.identify({
       console.log('error:', err);
     else
       console.log(JSON.stringify(language, null, 2));
-});
-```
-
-### Machine Translation
-Translate text from one language to another using the
-[Machine Translation][machine_translation] service.
-
-```javascript
-var watson = require('watson-developer-cloud');
-
-var machine_translation = watson.machine_translation({
-  username: '<username>',
-  password: '<password>',
-  version: 'v1'
-});
-
-machine_translation.translate({
-  text: 'A sentence must have a verb', from : 'enus', to: 'eses' },
-  function (err, response) {
-    if (err)
-      console.log('error:', err);
-    else
-      console.log(JSON.stringify(response, null, 2));
 });
 ```
 
@@ -573,7 +525,7 @@ var dialog = watson.dialog({
 
 ## Debug
 This wrapper relies on the `request` npm module writted by
-[mikeal][mikeal_github] to call the Watson Services. To debug the apps, add
+[request][request_github] to call the Watson Services. To debug the apps, add
 'request' to the `NODE_DEBUG` environment variable:
 
 ```sh
@@ -607,8 +559,6 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/nodejs-wrapper/blob
 [question_and_answer]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/qaapi/
 [message_resonance]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/mrapi/
 [personality_insights]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/personality-insights/
-[language_identification]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/lidapi/
-[machine_translation]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/mtapi/
 [concept_expansion]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/glimpseapi/
 [relationship_extraction]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/sireapi/
 [visual_recognition]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/visual-recognition/
@@ -621,4 +571,4 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/nodejs-wrapper/blob
 [wdc]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/
 [bluemix]: https://console.ng.bluemix.net
 [npm_link]: https://www.npmjs.com/package/watson-developer-cloud
-[mikeal_github]: https://github.com/request/request
+[request_github]: https://github.com/request/request
