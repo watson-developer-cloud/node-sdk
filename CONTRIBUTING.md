@@ -9,12 +9,12 @@ or [Stack Overflow](http://stackoverflow.com/questions/ask?tags=ibm-watson).
 
 * The code should follow: https://github.com/airbnb/javascript
 * 2 spaces identation
-* `snake_case` for service arguments and same name as in the Service swagger documentation
-* camelCase for method names. For example:
-
-		personality_insights.getProfile()
-
-
+* `snake_case` for parameters and same name as in swagger
+* camelCase for method names. For example:  
+  ```
+  personality_insights.getProfile()
+  ```
+  
 # Issues
 
 If you encounter an issue with the Node.js library, you are welcome to submit
