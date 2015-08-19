@@ -46,8 +46,8 @@ function PersonalityInsights(options) {
  *   The accepted parameters are:
  *     - text: The text to analyze.
  *     - contentItems: A JSON input (if 'text' not provided).
- *     - includeRaw: include raw results
- *     - acceptLanguage : The language expected for the output.
+ *     - include_raw: include raw results
+ *     - accept_language : The language expected for the output.
  *     - language: The language of the input.
  *
  * @param callback The callback.
@@ -57,17 +57,14 @@ PersonalityInsights.prototype.profile = function(params, callback) {
     callback(new Error('Missing required parameters: text or contentItems'));
     return;
   }
-  // include_raw
-  var queryString = { };
-  if (params.include_raw || params.includeRaw)
-    queryString.include_raw = true;
+  // Accept language
 
   // Content-Type
-  var contentType = null;
+  var content_type = null;
   if (params.text)
-    contentType = isHTML(params.text) ? 'text/html' : 'text/plain';
+    content_type = isHTML(params.text) ? 'text/html' : 'text/plain';
   else
-    contentType = 'application/json';
+    content_type = 'application/json';
 
   var parameters = {
     options: {
@@ -75,11 +72,11 @@ PersonalityInsights.prototype.profile = function(params, callback) {
       url: '/v2/profile',
       body: params.text || params.html || pick(params, ['contentItems']),
       json: true,
-      qs: queryString,
+      qs: pick(params, ['include_raw']),
       headers: {
-        'Content-type'    : contentType,
+        'Content-type'    : content_type,
         'Content-language': params.language ? params.language : 'en',
-        'Accept-language' : params.acceptLanguage ? params.acceptLanguage : 'en'
+        'Accept-language' : params.accept_language || params.acceptLanguage || 'en'
       }
     },
     defaultOptions: this._options
