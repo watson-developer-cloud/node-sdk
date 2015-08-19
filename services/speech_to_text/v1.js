@@ -317,15 +317,21 @@ SpeechToText.prototype.createSession = function(params, callback) {
  * @param {String} [params.session_id] Session id.
  */
 SpeechToText.prototype.deleteSession = function(params, callback) {
-  var path = params || {};
+  var missingParams = helper.getMissingParams(params, ['session_id', 'cookie_session']);
+  if (missingParams) {
+    callback(new Error('Missing required parameters: ' + missingParams.join(', ')));
+    return;
+  }
+
   var parameters = {
     options: {
       method: 'DELETE',
-      url: '/v1/sessions/' + path.session_id,
-      path: path,
-      json: true
+      url: '/v1/sessions/' + params.session_id,
+      json: true,
+      headers: {
+        'Cookie': 'SESSIONID=' + params.cookie_session
+      }
     },
-    requiredParams: ['session_id'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
