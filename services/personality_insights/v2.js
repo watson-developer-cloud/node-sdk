@@ -20,16 +20,8 @@ var extend         = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
 var pick           = require('object.pick');
 var omit           = require('object.omit');
+var herper         = require('../../lib/helper');
 
-
-/**
- * Return true if 'text' is html
- * @param  {String}  text The 'text' to analyze
- * @return {Boolean}      true if 'text' has html tags
- */
-function isHTML(text){
-  return /<[a-z][\s\S]*>/i.test(text);
-}
 
 function PersonalityInsights(options) {
   // Default URL
@@ -62,7 +54,7 @@ PersonalityInsights.prototype.profile = function(params, callback) {
   // Content-Type
   var content_type = null;
   if (params.text)
-    content_type = isHTML(params.text) ? 'text/html' : 'text/plain';
+    content_type = herper.isHTML(params.text) ? 'text/html' : 'text/plain';
   else
     content_type = 'application/json';
 
