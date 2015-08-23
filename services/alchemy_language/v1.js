@@ -21,6 +21,20 @@ var requestFactory = require('../../lib/requestwrapper');
 var endpoints      = require('../../lib/alchemy_endpoints.json');
 var helper         = require('../../lib/helper');
 
+var errorFormatter = function(cb) {
+  return function(err, result) {
+    if (err) {
+      cb(err, result);
+    }
+    else {
+      if (result.status === 'OK')
+        cb(err,result);
+      else
+        cb({error: result.statusInfo, code:400 }, null);
+    }
+  };
+};
+
 function createRequest(method) {
   return function(_params, callback ) {
     var params = _params || {};
@@ -44,15 +58,14 @@ function createRequest(method) {
       },
       defaultOptions: this._options
     };
-    return requestFactory(parameters, callback);
+    return requestFactory(parameters, errorFormatter(callback));
   };
 }
 
 function AlchemyLanguage(options) {
   // Default URL
   var serviceDefaults = {
-    url: 'https://access.alchemyapi.com/calls',
-    alchmemy: true
+    url: 'https://access.alchemyapi.com/calls'
   };
   // Replace default options with user provided
   this._options = extend(serviceDefaults, options);
@@ -78,7 +91,7 @@ AlchemyLanguage.prototype.concepts = createRequest('concepts');
  * Calculates the sentiment for text, a URL or HTML.
  */
 AlchemyLanguage.prototype.sentiment = function(params, callback) {
-  var service = (params && params.target) ? 'sentiment' : 'sentiment_targeted';
+  var service = (params && params.target) ? 'sentiment_targeted' : 'sentiment';
   return createRequest(service).call(this, params, callback);
 };
 /**

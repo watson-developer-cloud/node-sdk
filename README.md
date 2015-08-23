@@ -18,6 +18,8 @@ APIs and SDKs that use cognitive computing to solve complex problems.
     * [Installation](#installation)
     * [Usage](#usage)
     * [Getting the Service Credentials](#getting-the-service-credentials)
+    * [Alchemy Services](#alchemy-services)
+      * [Alchemy Language](#alchemy-language)
     * [IBM Watson Services](#ibm-watson-services)
       * [Authorization](#authorization)
       * [Concept Expansion](#concept-expansion)
@@ -63,9 +65,7 @@ credentials; the wrapper will get them for you by looking at the `VCAP_SERVICES`
 environment variable.
 
 ### Getting the Service Credentials
-The credentials for the services are stored in the
-`VCAP_SERVICES` environment variable. To get them, you need
-to first create and bind the service to your application.
+The credentials for the services are stored in the `VCAP_SERVICES` environment variable. To get them, you need to first create and bind the service to your application.
 
 There are two ways to get the credentials. You can use Bluemix to access your
 app and view the `VCAP_SERVICES` there or you can run:
@@ -94,6 +94,34 @@ Example output:
 ```
 
 You need to copy `username` and `password`.
+
+For Alchemy you only need an `api_key`, you can register for one [here](http://www.alchemyapi.com/api/register.html).
+
+## Alchemy APIs
+
+### Alchemy Language
+[Alchemy Language](alchemy_language) offers 12 API functions as part of its text analysis service, each of which uses sophisticated natural language processing techniques to analyze your content and add high-level semantic information.
+
+Use the [Sentiment Analysis](sentiment_analysis) endpoint to identify positive/negative sentiment within a sample text document.
+
+```javascript
+var watson = require('watson-developer-cloud');
+
+var alchemy_language = watson.alchemy_language({
+  api_key: '<api_key>'
+});
+
+var params = {
+  text: 'IBM Watson won the Jeopardy television show hosted by Alex Trebek'
+};
+
+alchemy_language.sentiment(params, function (err, response) {
+  if (err)
+    console.log('error:', err);
+  else
+    console.log(JSON.stringify(response, null, 2));
+});
+```
 
 ## IBM Watson Services
 The Watson Developer Cloud offers a variety of services for building cognitive
@@ -568,6 +596,8 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/nodejs-wrapper/blob
 [tradeoff_analytics]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/tradeoff-analytics/
 [language_translation]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/language-translation/
 
+[alchemy_language]: http://www.alchemyapi.com/products/alchemylanguage
+[sentiment_analysis]: http://www.alchemyapi.com/products/alchemylanguage/sentiment-analysis
 [wdc]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/
 [bluemix]: https://console.ng.bluemix.net
 [npm_link]: https://www.npmjs.com/package/watson-developer-cloud
