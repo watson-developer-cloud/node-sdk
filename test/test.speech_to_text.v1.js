@@ -73,12 +73,14 @@ describe('speech_to_text', function() {
     it('should check no parameters provided', function() {
       speech_to_text.deleteSession({}, missingParameter);
       speech_to_text.deleteSession(null, missingParameter);
+      speech_to_text.deleteSession({session_id: 'foo'}, missingParameter);
     });
 
     it('should generate a valid payload', function() {
-      var req = speech_to_text.deleteSession({session_id: 'foo'}, noop);
+      var req = speech_to_text.deleteSession({session_id: 'foo', cookie_session:'cooki3'}, noop);
       assert.equal(req.uri.href, service.url + path);
       assert.equal(req.method, 'DELETE');
+      assert.equal(req.headers['Cookie'], 'SESSIONID=cooki3');
     });
   });
 

@@ -18,14 +18,14 @@ APIs and SDKs that use cognitive computing to solve complex problems.
     * [Installation](#installation)
     * [Usage](#usage)
     * [Getting the Service Credentials](#getting-the-service-credentials)
+    * [Alchemy Services](#alchemy-services)
+      * [Alchemy Language](#alchemy-language)
     * [IBM Watson Services](#ibm-watson-services)
       * [Authorization](#authorization)
       * [Concept Expansion](#concept-expansion)
       * [Concept Insights](#concept-insights)
       * [Dialog](#dialog)
-      * [Language Identification](#language-identification)
       * [Language Translation](#language-translation)
-      * [Machine Translation](#machine-translation)
       * [Message Resonance](#message-resonance)
       * [Natural Language Classifier](#natural-language-classifier)
       * [Personality Insights](#personality-insights)
@@ -65,9 +65,7 @@ credentials; the wrapper will get them for you by looking at the `VCAP_SERVICES`
 environment variable.
 
 ### Getting the Service Credentials
-The credentials for the services are stored in the
-`VCAP_SERVICES` environment variable. To get them, you need
-to first create and bind the service to your application.
+The credentials for the services are stored in the `VCAP_SERVICES` environment variable. To get them, you need to first create and bind the service to your application.
 
 There are two ways to get the credentials. You can use Bluemix to access your
 app and view the `VCAP_SERVICES` there or you can run:
@@ -96,6 +94,34 @@ Example output:
 ```
 
 You need to copy `username` and `password`.
+
+For Alchemy you only need an `api_key`, you can register for one [here](http://www.alchemyapi.com/api/register.html).
+
+## Alchemy APIs
+
+### Alchemy Language
+[Alchemy Language](alchemy_language) offers 12 API functions as part of its text analysis service, each of which uses sophisticated natural language processing techniques to analyze your content and add high-level semantic information.
+
+Use the [Sentiment Analysis](sentiment_analysis) endpoint to identify positive/negative sentiment within a sample text document.
+
+```javascript
+var watson = require('watson-developer-cloud');
+
+var alchemy_language = watson.alchemy_language({
+  api_key: '<api_key>'
+});
+
+var params = {
+  text: 'IBM Watson won the Jeopardy television show hosted by Alex Trebek'
+};
+
+alchemy_language.sentiment(params, function (err, response) {
+  if (err)
+    console.log('error:', err);
+  else
+    console.log(JSON.stringify(response, null, 2));
+});
+```
 
 ## IBM Watson Services
 The Watson Developer Cloud offers a variety of services for building cognitive
@@ -230,29 +256,6 @@ dialog.getDialogs({}, function (err, dialogs) {
 });
 ```
 
-### Language Identification
-Identify a language using the [Language Identification][language_identification]
-service.
-
-```javascript
-var watson = require('watson-developer-cloud');
-
-var language_identification = watson.language_identification({
-  username: '<username>',
-  password: '<password>',
-  version: 'v1'
-});
-
-language_identification.identify({
-  text: 'The language identification service takes text input and identifies the language used.' },
-  function (err, response) {
-    if (err)
-      console.log('error:', err);
-    else
-      console.log(JSON.stringify(response, null, 2));
-});
-```
-
 ### Language Translation
 
 Translate text from one language to another or idenfity a language using the [Language Translation][language_translation] service.
@@ -282,29 +285,6 @@ language_identification.identify({
       console.log('error:', err);
     else
       console.log(JSON.stringify(language, null, 2));
-});
-```
-
-### Machine Translation
-Translate text from one language to another using the
-[Machine Translation][machine_translation] service.
-
-```javascript
-var watson = require('watson-developer-cloud');
-
-var machine_translation = watson.machine_translation({
-  username: '<username>',
-  password: '<password>',
-  version: 'v1'
-});
-
-machine_translation.translate({
-  text: 'A sentence must have a verb', from : 'enus', to: 'eses' },
-  function (err, response) {
-    if (err)
-      console.log('error:', err);
-    else
-      console.log(JSON.stringify(response, null, 2));
 });
 ```
 
@@ -573,7 +553,7 @@ var dialog = watson.dialog({
 
 ## Debug
 This wrapper relies on the `request` npm module writted by
-[mikeal][mikeal_github] to call the Watson Services. To debug the apps, add
+[request][request_github] to call the Watson Services. To debug the apps, add
 'request' to the `NODE_DEBUG` environment variable:
 
 ```sh
@@ -607,8 +587,6 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/nodejs-wrapper/blob
 [question_and_answer]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/qaapi/
 [message_resonance]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/mrapi/
 [personality_insights]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/personality-insights/
-[language_identification]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/lidapi/
-[machine_translation]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/mtapi/
 [concept_expansion]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/glimpseapi/
 [relationship_extraction]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/sireapi/
 [visual_recognition]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/visual-recognition/
@@ -618,7 +596,9 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/nodejs-wrapper/blob
 [tradeoff_analytics]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/tradeoff-analytics/
 [language_translation]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/language-translation/
 
+[alchemy_language]: http://www.alchemyapi.com/products/alchemylanguage
+[sentiment_analysis]: http://www.alchemyapi.com/products/alchemylanguage/sentiment-analysis
 [wdc]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/
 [bluemix]: https://console.ng.bluemix.net
 [npm_link]: https://www.npmjs.com/package/watson-developer-cloud
-[mikeal_github]: https://github.com/request/request
+[request_github]: https://github.com/request/request

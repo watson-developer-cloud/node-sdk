@@ -2,6 +2,7 @@
 
 var assert = require('assert');
 var watson = require('../lib/index');
+var helper = require('../lib/helper');
 
 describe('wrapper', function() {
 
@@ -99,6 +100,16 @@ describe('wrapper', function() {
     assert.equal(service._options.api_key, 'dXNlcjpwYXNz');
   });
 
+  it('should use apikey (not documented) for alchemy service', function() {
+    var service = watson.alchemy_language({ apikey: 'not-gonna-work'});
+    assert.equal(service._options.api_key, 'not-gonna-work');
+  });
+
+  it('should use api_key for alchemy service', function() {
+    var service = watson.alchemy_language({ api_key: 'not-gonna-work'});
+    assert.equal(service._options.api_key, 'not-gonna-work');
+  });
+
   it('should not use VCAP_SERVICES if use_vcap_services is false', function() {
     process.env.VCAP_SERVICES = JSON.stringify(vcap_services);
     var service = create_service({
@@ -126,4 +137,13 @@ describe('wrapper', function() {
     assert.equal(service._options.bar, 'foo');
   });
 
+  it('should detect the alchemy format', function() {
+    assert.equal(null, helper.getFormat());
+    assert.equal(null, helper.getFormat(null));
+    assert.equal(null, helper.getFormat(null, null));
+    assert.equal(null, helper.getFormat({}, null));
+    assert.equal(null, helper.getFormat({ foo:'foo', bar:'bar'}, null));
+    assert.equal('foo', helper.getFormat({ foo:'foo'}, ['foo']));
+    assert.equal('bar', helper.getFormat({ foo:'foo', bar:'bar'}, ['bar', 'foo']));
+  });
 });

@@ -20,16 +20,8 @@ var extend         = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
 var pick           = require('object.pick');
 var omit           = require('object.omit');
+var herper         = require('../../lib/helper');
 
-
-/**
- * Return true if 'text' is html
- * @param  {String}  text The 'text' to analyze
- * @return {Boolean}      true if 'text' has html tags
- */
-function isHTML(text){
-  return /<[a-z][\s\S]*>/i.test(text);
-}
 
 function PersonalityInsights(options) {
   // Default URL
@@ -47,7 +39,7 @@ function PersonalityInsights(options) {
  *     - text: The text to analyze.
  *     - contentItems: A JSON input (if 'text' not provided).
  *     - include_raw: include raw results
- *     - acceptLanguage : The language expected for the output.
+ *     - accept_language : The language expected for the output.
  *     - language: The language of the input.
  *
  * @param callback The callback.
@@ -57,11 +49,12 @@ PersonalityInsights.prototype.profile = function(params, callback) {
     callback(new Error('Missing required parameters: text or contentItems'));
     return;
   }
+  // Accept language
 
   // Content-Type
   var content_type = null;
   if (params.text)
-    content_type = isHTML(params.text) ? 'text/html' : 'text/plain';
+    content_type = herper.isHTML(params.text) ? 'text/html' : 'text/plain';
   else
     content_type = 'application/json';
 
@@ -75,7 +68,7 @@ PersonalityInsights.prototype.profile = function(params, callback) {
       headers: {
         'Content-type'    : content_type,
         'Content-language': params.language ? params.language : 'en',
-        'Accept-language' : params.acceptLanguage ? params.acceptLanguage : 'en'
+        'Accept-language' : params.accept_language || params.acceptLanguage || 'en'
       }
     },
     defaultOptions: this._options
