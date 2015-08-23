@@ -1,0 +1,100 @@
+{
+  "entities" : {
+    "url"  : "/url/URLGetRankedNamedEntities",
+    "text" : "/text/TextGetRankedNamedEntities",
+    "html" : "/html/HTMLGetRankedNamedEntities"
+  },
+
+  "keywords": {
+    "url"  : "/url/URLGetRankedKeywords",
+    "text" : "/text/TextGetRankedKeywords",
+    "html" : "/html/HTMLGetRankedKeywords"
+  },
+
+  "concepts": {
+    "url"  : "/url/URLGetRankedKeywords",
+    "text" : "/text/TextGetRankedKeywords",
+    "html" : "/html/HTMLGetRankedKeywords"
+  },
+
+  "sentiment": {
+    "url"  : "/url/URLGetTextSentiment",
+    "text" : "/text/TextGetTextSentiment",
+    "html" : "/html/HTMLGetTextSentiment"
+  },
+
+  "sentiment_targeted": {
+    "url"  : "/url/URLGetTargetedSentiment",
+    "text" : "/text/TextGetTargetedSentiment",
+    "html" : "/html/HTMLGetTargetedSentiment"
+  },
+
+  "category": {
+    "url"  : "/url/URLGetRankedConcepts",
+    "text" : "/text/TextGetRankedConcepts",
+    "html" : "/html/HTMLGetRankedConcepts"
+  },
+
+  "relations": {
+    "url"  : "/url/URLGetRelations",
+    "text" : "/text/TextGetRelations",
+    "html" : "/html/HTMLGetRelations"
+  },
+
+  "language": {
+    "url"  : "/url/URLGetLanguage",
+    "text" : "/text/TextGetLanguage",
+    "html" : "/html/HTMLGetLanguage"
+  },
+
+  "text": {
+    "url"  : "/url/URLGetText",
+    "html" : "/html/HTMLGetText"
+  },
+
+  "text_raw": {
+    "url"  : "/url/URLGetRawText",
+    "html" : "/html/HTMLGetRawText"
+  },
+
+  "authors": {
+    "url"  : "/url/URLGetAuthors",
+    "html" : "/html/HTMLGetAuthors"
+  },
+
+  "feeds": {
+    "url"  : "/url/URLGetFeedLinks",
+    "html" : "/html/HTMLGetFeedLinks"
+  },
+
+  "microformats": {
+    "url"  : "/url/URLGetMicroformatData",
+    "html" : "/html/HTMLGetMicroformatData"
+  },
+
+  "taxonomy": {
+    "url"  : "/url/URLGetRankedTaxonomy",
+    "text" : "/text/TextGetRankedTaxonomy",
+    "html" : "/html/HTMLGetRankedTaxonomy"
+  },
+
+  "combined": {
+    "url"  : "/url/URLGetCombinedData",
+    "text" : "/text/TextGetCombinedData",
+    "html" : "/html/HTMLGetCombinedData"
+  },
+
+  "image": {
+    "url"  : "/url/URLGetImage"
+  },
+
+  "image_keywords": {
+    "url"  : "/url/URLGetRankedImageKeywords",
+    "image" : "/image/ImageGetRankedImageKeywords"
+  },
+
+  "image_face_tag": {
+    "url"  : "/url/URLGetRankedImageFaceTags",
+    "image" : "/image/ImageGetRankedImageFaceTags"
+  }
+}

@@ -18,9 +18,35 @@
 
 var extend         = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
-var pick           = require('object.pick');
-var omit           = require('object.omit');
-var isStream       = require('isstream');
+var endpoints      = require('../../lib/alchemy_endpoints.json');
+var helper         = require('../../lib/helper');
+
+function createRequest(method) {
+  return function(_params, callback ) {
+    var params = _params || {};
+    var accepted_formats = Object.keys(endpoints[method]);
+    var format = helper.getFormat(params, accepted_formats);
+
+    if (format === null) {
+      callback(new Error('Missing required parameters: ' +
+        accepted_formats.join(', ') +
+        ' needs to be specified'));
+      return;
+    }
+
+    var parameters = {
+      options: {
+        url: endpoints[method][format],
+        method: 'POST',
+        json: true,
+        path: params,
+        form: extend({outputMode: 'json'}, params) // change default output to json
+      },
+      defaultOptions: this._options
+    };
+    return requestFactory(parameters, callback);
+  };
+}
 
 function AlchemyLanguage(options) {
   // Default URL
@@ -28,52 +54,85 @@ function AlchemyLanguage(options) {
     url: 'https://access.alchemyapi.com/calls',
     alchmemy: true
   };
-
-  this.paths = {
-    text: 'text/TextGetRankedNamedEntities',
-    url: 'url/URLGetRankedNamedEntities',
-    html: 'html/HTMLGetRankedNamedEntities'
-  };
-
   // Replace default options with user provided
   this._options = extend(serviceDefaults, options);
 }
 
 /**
  * Extracts a grouped, ranked list of named entities (people, companies,
- * organizations, etc.) from within a text, url or html.
+ * organizations, etc.) from text, a URL or HTML.
  */
-AlchemyLanguage.prototype.entities = function(_params, callback) {
-  var params = _params || {};
-  var path = null;
+AlchemyLanguage.prototype.entities = createRequest('entities');
 
-  if (typeof(params.text) === 'undefined' &&
-      typeof(params.url)  === 'undefined' &&
-      typeof(params.html) === 'undefined') {
-    callback(new Error('Missing required parameters: either text, ' +
-      'url or html needs to be specified'));
-    return;
-  }
+/**
+ * Extracts the keywords from text, a URL or HTML.
+ */
+AlchemyLanguage.prototype.keywords = createRequest('keywords');
 
-  if (typeof(params.text) !== 'undefined')
-    path = '/text/TextGetRankedNamedEntities';
-  else if (typeof(params.url) !== 'undefined')
-    path = '/url/URLGetRankedNamedEntities';
-  else
-    path = '/url/HTMLGetRankedNamedEntities';
+/**
+ * Tags the concepts from text, a URL or HTML.
+ */
+AlchemyLanguage.prototype.concepts = createRequest('concepts');
 
-  var parameters = {
-    options: {
-      url: path,
-      method: 'GET',
-      json: true,
-      path: params,
-      qs: extend({outputMode: 'json'}, params) // change default output to json
-    },
-    requiredParams: ['text'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
+/**
+ * Calculates the sentiment for text, a URL or HTML.
+ */
+AlchemyLanguage.prototype.sentiment = function(params, callback) {
+  var service = (params && params.target) ? 'sentiment' : 'sentiment_targeted';
+  return createRequest(service).call(this, params, callback);
 };
+/**
+ * Extracts the cleaned text (removes ads, navigation, etc.) for a URL or HTML.
+ * if raw = true, extracts the cleaned text (removes ads, navigation, etc.).
+ */
+AlchemyLanguage.prototype.text = function(params, callback) {
+  var service = (params && params.raw) ? 'text_raw' : 'text';
+  return createRequest(service).call(this, params, callback);
+};
+
+/**
+ * Extracts the authors from a URL or HTML.
+ */
+AlchemyLanguage.prototype.authors = createRequest('authors');
+
+/**
+ * Detects the language for text, a URL or HTML.
+ */
+AlchemyLanguage.prototype.language = createRequest('language');
+
+/**
+ * Extracts the title for a URL or HTML.
+ */
+AlchemyLanguage.prototype.title = createRequest('title');
+
+/**
+ * Extracts the relations for text, a URL or HTML.
+ */
+AlchemyLanguage.prototype.relations = createRequest('relations');
+
+/**
+ * Categorizes the text for text, a URL or HTML.
+ */
+AlchemyLanguage.prototype.category = createRequest('category');
+
+/**
+ * Detects the RSS/ATOM feeds for a URL or HTML.
+ */
+AlchemyLanguage.prototype.feeds = createRequest('category');
+
+/**
+ * Parses the microformats for a URL or HTML.
+ */
+AlchemyLanguage.prototype.microformats = createRequest('microformats');
+
+/**
+ * Categorized through the taxonomy call for text, HTML, or a URL.
+ */
+AlchemyLanguage.prototype.taxonomy = createRequest('taxonomy');
+
+/**
+ * Categorized through the taxonomy call for text, HTML, or a URL.
+ */
+AlchemyLanguage.prototype.combined = createRequest('combined');
 
 module.exports = AlchemyLanguage;

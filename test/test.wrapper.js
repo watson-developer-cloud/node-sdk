@@ -2,6 +2,7 @@
 
 var assert = require('assert');
 var watson = require('../lib/index');
+var helper = require('../lib/helper');
 
 describe('wrapper', function() {
 
@@ -136,4 +137,13 @@ describe('wrapper', function() {
     assert.equal(service._options.bar, 'foo');
   });
 
+  it('should detect the alchemy format', function() {
+    assert.equal(null, helper.getFormat());
+    assert.equal(null, helper.getFormat(null));
+    assert.equal(null, helper.getFormat(null, null));
+    assert.equal(null, helper.getFormat({}, null));
+    assert.equal(null, helper.getFormat({ foo:'foo', bar:'bar'}, null));
+    assert.equal('foo', helper.getFormat({ foo:'foo'}, ['foo']));
+    assert.equal('bar', helper.getFormat({ foo:'foo', bar:'bar'}, ['bar', 'foo']));
+  });
 });
