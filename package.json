@@ -1,7 +1,7 @@
 {
   "name": "watson-developer-cloud",
   "version": "0.9.28",
-  "description": "Nodejs Client Wrapper to use the IBM Watson Services",
+  "description": "Nodejs Client Wrapper to use the IBM Watson and Services",
   "main": "./lib/index",
   "repository": {
     "type": "git",
@@ -30,13 +30,21 @@
     "tone analyzer",
     "natural language classifier",
     "dialog",
-    "tone_analyzer"
+    "tone_analyzer",
+    "alchemy api",
+    "alchemy vision",
+    "alchemy language",
+    "alchemy data"
   ],
   "author": "IBM Corp.",
   "contributors": [
     {
       "name": "German Attanasio Ruiz",
       "email": "germanatt@us.ibm.com"
+    },
+    {
+      "name": "Nathan Friedly",
+      "email": "nfriedly@us.ibm.com"
     },
     {
       "name": "Jeff Stylos",
@@ -51,18 +59,18 @@
     "mocha": "~2.2.1",
     "coveralls": "~2.11.2",
     "istanbul": "~0.3.15",
-    "nock": "~2.9.1",
+    "nock": "~2.10.0",
     "qs": "~4.0.0"
   },
   "dependencies": {
     "async": "~1.4.0",
-    "cookie": "~0.1.3",
+    "cookie": "~0.2.0",
     "csv-stringify": "~0.0.8",
     "extend": "~3.0.0",
     "isstream": "~0.1.2",
     "object.omit": "~2.0.0",
     "object.pick": "~1.1.1",
-    "request": "~2.60.0",
+    "request": "~2.61.0",
     "solr-client": "~0.5.0",
     "string": "3.3.1"
   },
