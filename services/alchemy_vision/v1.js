@@ -54,24 +54,15 @@ function createRequest(method) {
       return;
     }
 
-    var imageOptions = {};
-
-    if (typeof(_params.image) !== 'string') {
-      params.imagePostMode = 'raw';
-      imageOptions.formData = { attachments: [_params.image] };
-    } else {
-      imageOptions.form = pick(params,['image']);
-    }
-
-    var parameters = extend({
+    var parameters = {
       options: {
         url: endpoints[method][format],
         method: 'POST',
         json: true,
-        qs: extend({outputMode: 'json'}, omit(params,['image'])) // change default output to json
+        qs: extend({outputMode: 'json'}, params) // change default output to json
       },
       defaultOptions: this._options
-    }, imageOptions);
+    };
 
     return requestFactory(parameters, errorFormatter(callback));
   };
@@ -89,7 +80,7 @@ function AlchemyVision(options) {
 /**
  * Extracts images from a URL.
  */
-AlchemyVision.prototype.imageLinks = createRequest('image');
+AlchemyVision.prototype.imageLinks = createRequest('image_link');
 
 /**
  * Tags image with keywords
@@ -97,6 +88,13 @@ AlchemyVision.prototype.imageLinks = createRequest('image');
 AlchemyVision.prototype.imageTags = function(_params, callback) {
   var params = _params || {};
 
+  if (typeof(params.image) !== 'undefined' && typeof(params.image) !== 'string') {
+    callback(new Error('Invalid arguments: image needs to be a filename or base64 image'));
+    return;
+  }
+
+  if (typeof(params.image) !== 'string')
+    params.imagePostMode = 'raw';
 
   return createRequest('image_keywords').call(this, params, callback);
 };
@@ -110,7 +108,7 @@ AlchemyVision.prototype.imageFaces = function(_params, callback) {
   if (typeof(params.image) !== 'string')
     params.imagePostMode = 'raw';
 
-  return createRequest('image_face_tag').call(this, params, callback);
+  return createRequest('image_recognition').call(this, params, callback);
 };
 
 module.exports = AlchemyVision;
