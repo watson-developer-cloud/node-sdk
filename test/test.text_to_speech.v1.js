@@ -4,7 +4,6 @@ var assert = require('assert');
 var watson = require('../lib/index');
 var nock   = require('nock');
 var qs     = require('querystring');
-var pick   = require('object.pick');
 var omit   = require('object.omit');
 
 describe('text_to_speech', function() {

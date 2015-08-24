@@ -3,13 +3,9 @@
 var assert = require('assert');
 var watson = require('../lib/index');
 var nock   = require('nock');
-var qs     = require('querystring');
-var pick   = require('object.pick');
-var omit   = require('object.omit');
 
 describe('authorization', function() {
 
-  var noop = function() {};
 
   // Test params
   var service_request = {
@@ -22,7 +18,6 @@ describe('authorization', function() {
     version: 'v1'
   };
   var token_path = '/v1/token';
-  var token_request = token_path + '?' + qs.stringify(service_request);
 
   var mock_token = 'token';
 

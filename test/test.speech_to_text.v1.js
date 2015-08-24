@@ -80,7 +80,7 @@ describe('speech_to_text', function() {
       var req = speech_to_text.deleteSession({session_id: 'foo', cookie_session:'cooki3'}, noop);
       assert.equal(req.uri.href, service.url + path);
       assert.equal(req.method, 'DELETE');
-      assert.equal(req.headers['Cookie'], 'SESSIONID=cooki3');
+      assert.equal(req.headers.cookie, 'SESSIONID=cooki3');
     });
   });
 
@@ -263,7 +263,7 @@ describe('speech_to_text', function() {
       assert.equal(req.path, path);
       assert.equal(req._headers['content-type'], payload.content_type);
       assert.equal(req._headers['transfer-encoding'], 'chunked');
-      assert.equal(req._headers['cookie'], 'SESSIONID=' + payload.cookie_session);
+      assert.equal(req._headers.cookie, 'SESSIONID=' + payload.cookie_session);
       req.end();
     });
 

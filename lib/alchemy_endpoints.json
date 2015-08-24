@@ -85,7 +85,8 @@
   },
 
   "image": {
-    "url"  : "/url/URLGetImage"
+    "url"  : "/url/URLGetImage",
+    "html" : "/html/HTMLGetImage"
   },
 
   "image_keywords": {

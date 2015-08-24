@@ -44,7 +44,7 @@ async.series([
 
   function deleteCluster(done) {
     console.log('Deleting Solr cluster ' + clusterId);
-    search.deleteCluster({clusterId: clusterId}, function(err, res) {
+    search.deleteCluster({clusterId: clusterId}, function(err) {
       printResponse(err, 'Error deleting Solr cluster: ', 'Deleted Solr cluster ' + clusterId, done);
     });
   }
@@ -57,7 +57,7 @@ function waitForCluster(clusterId, callback) {
     }
 
     console.log('Waiting for Solr cluster ' + clusterId + ' to be ready...');
-    if (res.solr_cluster_status == 'READY') {
+    if (res.solr_cluster_status === 'READY') {
       console.log('Solr cluster ' + clusterId + ' is ready.');
       callback();
     } else {

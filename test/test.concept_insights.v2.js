@@ -294,7 +294,7 @@ describe('concept_insights.v2', function() {
     it('should generate a valid payload', function() {
 	var graphid = '/graphs/wikipedia/en20120601';
         var path = '/v2' + graphid + '/related_concepts',
-          payload = {graph: graphid, concepts: ["foo","bar"] },
+          payload = {graph: graphid, concepts: ['foo','bar'] },
           service_request = extend({concepts: payload.concepts}),
           service_response = {
             'concepts': [ {
@@ -357,7 +357,7 @@ describe('concept_insights.v2', function() {
     it('should generate a valid payload', function() {
 	var conceptid = '/graphs/wikipedia/en20120601/nodes/IBM';
         var path = '/v2' + conceptid + '/relation_scores',
-          payload = {id: conceptid, concepts: ["",""] },
+          payload = {id: conceptid, concepts: ['',''] },
           service_request = {concepts: payload.concepts},
           service_response = { };
 
