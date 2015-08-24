@@ -329,7 +329,7 @@ SpeechToText.prototype.deleteSession = function(params, callback) {
       url: '/v1/sessions/' + params.session_id,
       json: true,
       headers: {
-        'Cookie': 'SESSIONID=' + params.cookie_session
+        'cookie': 'SESSIONID=' + params.cookie_session
       }
     },
     defaultOptions: this._options
