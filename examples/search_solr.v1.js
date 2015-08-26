@@ -28,10 +28,15 @@ var solrClient = search.createSolrClient({
 async.series([
   function uploadConfig(done) {
     console.log('Uploading Solr config ' +  configName);
-    search.uploadConfig({clusterId: clusterId, configName: configName, configZipPath: configZipPath},
-      function(err, res) {
-      printResponse(err, 'Error uploading Solr config: ', 'Uploaded Solr config ' + configName, done);
-    });
+    search.uploadConfig({
+        clusterId: clusterId,
+        configName: configName,
+        configZipPath: configZipPath
+      },
+      function(err) {
+        printResponse(err, 'Error uploading Solr config: ', 'Uploaded Solr config ' + configName, done);
+      });
+
   },
 
   function listConfigs(done) {
@@ -43,7 +48,10 @@ async.series([
 
   function getConfig(done) {
     console.log('Getting Solr config ' + configName);
-    search.getConfig({clusterId: clusterId, configName: configName}, function(err, res) {
+    search.getConfig({
+      clusterId: clusterId,
+      configName: configName
+    }, function(err) {
       if (err) {
         console.log('Error getting config: ' + JSON.stringify(err, null, 2));
       } else {
@@ -51,12 +59,18 @@ async.series([
       }
       done();
     });
+
   },
 
   function createCollection(done) {
-    search.createCollection({clusterId: clusterId, collectionName: collectionName, configName: configName}, function(err, res) {
+    search.createCollection({
+      clusterId: clusterId,
+      collectionName: collectionName,
+      configName: configName
+    }, function(err, res) {
       printResponse(err, 'Error creating Solr collection: ', res, done);
     });
+
   },
 
   function listCollections(done) {
@@ -68,13 +82,13 @@ async.series([
   function indexAndCommit(done) {
     console.log('Indexing a document...');
     var doc = { id : 1234, title_t : 'Hello', text: 'some text' };
-    solrClient.add(doc, function(err, addResponse) {
+    solrClient.add(doc, function(err) {
       if(err) {
         console.log('Error indexing document: ' + err);
         done();
       } else {
         console.log('Indexed a document.');
-        solrClient.commit(function(err, commitResponse) {
+        solrClient.commit(function(err) {
           if(err) {
             console.log('Error committing change: ' + err);
           } else {
@@ -86,7 +100,7 @@ async.series([
     });
   },
 
-  function search(done) {
+  function _search(done) {
     console.log('Searching all documents.');
     var query = solrClient.createQuery();
     query.q({ '*' : '*' });
@@ -103,16 +117,24 @@ async.series([
 
   function deleteCollection(done) {
     console.log('Deleting Solr collection ' + collectionName);
-    search.deleteCollection({clusterId: clusterId, collectionName: collectionName}, function(err, res) {
+    search.deleteCollection({
+      clusterId: clusterId,
+      collectionName: collectionName
+    }, function(err) {
       printResponse(err, 'Error deleting collection: ', 'Deleted Solr collection ' + collectionName, done);
     });
+
   },
 
   function deleteConfig(done) {
     console.log('Deleting Solr config ' + configName);
-    search.deleteConfig({clusterId: clusterId, configName: configName}, function(err, res) {
+    search.deleteConfig({
+      clusterId: clusterId,
+      configName: configName
+    }, function(err) {
       printResponse(err, 'Error deleting config: ', 'Deleted Solr config ' + configName, done);
     });
+
   },
 ]);
 

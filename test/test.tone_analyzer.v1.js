@@ -3,7 +3,6 @@
 var assert = require('assert');
 var watson = require('../lib/index');
 var nock   = require('nock');
-var extend = require('extend');
 
 describe('tone_analyzer', function() {
 
@@ -13,8 +12,8 @@ describe('tone_analyzer', function() {
     text: 'IBM Watson Developer Cloud'
   };
   var synonym_request = {
-	  "words": [ "greece" ],
-	  "limit": 4
+	  'words': ['greece'],
+	  'limit': 4
   };
   var tone_response = {
     tree: {}
@@ -50,9 +49,8 @@ describe('tone_analyzer', function() {
   var missingParameter = function(err) {
     assert.ok((err instanceof Error) && /required parameters/.test(err));
   };
-  
-  // Tone API
 
+  // Tone API
   it('tone API should check no parameters provided', function() {
     tone_analyzer.tone({}, missingParameter);
     tone_analyzer.tone(null, missingParameter);
@@ -105,5 +103,4 @@ describe('tone_analyzer', function() {
       }
     });
   });
-  
 });

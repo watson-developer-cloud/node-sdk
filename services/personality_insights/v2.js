@@ -19,7 +19,6 @@
 var extend         = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
 var pick           = require('object.pick');
-var omit           = require('object.omit');
 var herper         = require('../../lib/helper');
 
 

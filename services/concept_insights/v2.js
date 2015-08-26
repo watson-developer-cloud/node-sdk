@@ -95,7 +95,7 @@ ConceptInsightsGraphs.prototype.getConcept = function(params, callback) {
   params = params || {};
   var parameters = {
     options: {
-      url: '/v2' + params['id'],
+      url: '/v2' + params.id,
       method: 'GET',
       json: true,
       path: params,
@@ -113,7 +113,7 @@ ConceptInsightsGraphs.prototype.searchConceptByLabel = function(params, callback
   params = params || {};
   var parameters = {
     options: {
-      url: '/v2' + params['graph'] + '/label_search',
+      url: '/v2' + params.graph + '/label_search',
       method: 'GET',
       qs: omit(params, ['graph']),
       json: true,
@@ -139,7 +139,7 @@ ConceptInsightsGraphs.prototype.getRelatedConcepts = function(params, callback) 
 
   var parameters = {
     options: {
-      url: '/v2' + params['graph'] + '/related_concepts',
+      url: '/v2' + params.graph + '/related_concepts',
       method: 'GET',
       qs: omit(params, ['graph']),
       json: true,
@@ -158,7 +158,7 @@ ConceptInsightsGraphs.prototype.annotateText = function(params, callback) {
   params = params || {};
   var parameters = {
     options: {
-      url: '/v2' + params['graph'] + '/annotate_text',
+      url: '/v2' + params.graph + '/annotate_text',
       method: 'POST',
       qs: omit(params, ['graph', 'text', 'content_type']),
       body: params.text,
@@ -190,7 +190,7 @@ ConceptInsightsGraphs.prototype.getRelationScores = function(params, callback) {
 
   var parameters = {
     options: {
-      url: '/v2' + params['id'] + '/relation_scores',
+      url: '/v2' + params.id + '/relation_scores',
       method: 'GET',
       qs: omit(params, ['id']),
       json: true,
@@ -223,7 +223,7 @@ ConceptInsightsCorpora.prototype.listCorpora = function(params, callback) {
 ConceptInsightsCorpora.prototype.getCorpus = function(params, callback) {
   var parameters = {
     options: {
-      url: '/v2' + params['corpus'],
+      url: '/v2' + params.corpus,
       method: 'GET',
       path: params
     },
@@ -241,7 +241,7 @@ ConceptInsightsCorpora.prototype.createCorpus = function(params, callback) {
 
   var parameters = {
     options: {
-      url: '/v2' + params['corpus'],
+      url: '/v2' + params.corpus,
       method: 'PUT',
       json: true,
       body: omit(params, ['corpus']),
@@ -259,7 +259,7 @@ ConceptInsightsCorpora.prototype.createCorpus = function(params, callback) {
 ConceptInsightsCorpora.prototype.deleteCorpus = function(params, callback) {
   var parameters = {
     options: {
-      url: '/v2' + params['corpus'],
+      url: '/v2' + params.corpus,
       method: 'DELETE',
       path: params
     },
@@ -275,7 +275,7 @@ ConceptInsightsCorpora.prototype.deleteCorpus = function(params, callback) {
 ConceptInsightsCorpora.prototype.listDocuments = function(params, callback) {
   var parameters = {
     options: {
-      url: '/v2' + params['corpus'] + '/documents',
+      url: '/v2' + params.corpus + '/documents',
       method: 'GET',
       json: true,
       path: params
@@ -292,7 +292,7 @@ ConceptInsightsCorpora.prototype.listDocuments = function(params, callback) {
 ConceptInsightsCorpora.prototype.getDocument = function(params, callback) {
   var parameters = {
     options: {
-      url: '/v2' + params['id'],
+      url: '/v2' + params.id,
       method: 'GET',
       json: true,
       path: params
@@ -319,7 +319,7 @@ ConceptInsightsCorpora.prototype.createDocument = function(params, callback) {
 
   var parameters = {
     options: {
-      url: '/v2' + params['id'],
+      url: '/v2' + params.id,
       method: 'PUT',
       json: true,
       body: newDocument,
@@ -346,7 +346,7 @@ ConceptInsightsCorpora.prototype.updateDocument = function(params, callback) {
 
   var parameters = {
     options: {
-      url: '/v2' + params['id'],
+      url: '/v2' + params.id,
       method: 'POST',
       json: true,
       body: documentToUpdate,
@@ -365,7 +365,7 @@ ConceptInsightsCorpora.prototype.updateDocument = function(params, callback) {
 ConceptInsightsCorpora.prototype.deleteDocument = function(params, callback) {
   var parameters = {
     options: {
-      url: '/v2' + params['id'],
+      url: '/v2' + params.id,
       method: 'DELETE',
       json: true,
       path: params
@@ -382,7 +382,7 @@ ConceptInsightsCorpora.prototype.deleteDocument = function(params, callback) {
 ConceptInsightsCorpora.prototype.getDocumentAnnotations = function(params, callback) {
   var parameters = {
     options: {
-      url: '/v2' + params['id'] + '/annotations',
+      url: '/v2' + params.id + '/annotations',
       method: 'GET',
       json: true,
       path: params
@@ -400,7 +400,7 @@ ConceptInsightsCorpora.prototype.getCorpusProcessingState = function(params, cal
   params = params || {};
   var parameters = {
     options: {
-      url: '/v2' + params['corpus'] + '/processing_state',
+      url: '/v2' + params.corpus + '/processing_state',
       method: 'GET',
       qs: omit(params, ['corpus']),
       json: true,
@@ -419,7 +419,7 @@ ConceptInsightsCorpora.prototype.getCorpusStats = function(params, callback) {
   params = params || {};
   var parameters = {
     options: {
-      url: '/v2' + params['corpus'] + '/stats',
+      url: '/v2' + params.corpus + '/stats',
       method: 'GET',
       qs: omit(params, ['corpus']),
       json: true,
@@ -438,7 +438,7 @@ ConceptInsightsCorpora.prototype.searchByLabel = function(params, callback) {
   params = params || {};
   var parameters = {
     options: {
-      url: '/v2' + params['corpus'] + '/label_search',
+      url: '/v2' + params.corpus + '/label_search',
       method: 'GET',
       qs: omit(params, ['corpus']),
       json: true,
@@ -465,7 +465,7 @@ ConceptInsightsCorpora.prototype.getRelatedDocuments = function(params, callback
 
   var parameters = {
     options: {
-      url: '/v2' + params['corpus'] + '/conceptual_search',
+      url: '/v2' + params.corpus + '/conceptual_search',
       method: 'GET',
       qs: omit(params, ['corpus']),
       json: true,
@@ -486,7 +486,7 @@ ConceptInsightsCorpora.prototype.getRelatedConcepts = function(params, callback)
   if (params.hasOwnProperty('id')) {
     parameters = {
       options: {
-        url: '/v2' + params['id'] + '/related_concepts',
+        url: '/v2' + params.id + '/related_concepts',
         method: 'GET',
         qs: omit(params, ['id']),
         json: true,
@@ -498,7 +498,7 @@ ConceptInsightsCorpora.prototype.getRelatedConcepts = function(params, callback)
   } else {
     parameters = {
       options: {
-        url: '/v2' + params['corpus'] + '/related_concepts',
+        url: '/v2' + params.corpus + '/related_concepts',
         method: 'GET',
         qs: omit(params, ['corpus']),
         json: true,
@@ -529,7 +529,7 @@ ConceptInsightsCorpora.prototype.getRelationScores = function(params, callback) 
   if (params.hasOwnProperty('id')) {
     parameters = {
       options: {
-        url: '/v2' + params['id'] + '/relation_scores',
+        url: '/v2' + params.id + '/relation_scores',
         method: 'GET',
         qs: omit(params, ['id']),
         json: true,
@@ -541,7 +541,7 @@ ConceptInsightsCorpora.prototype.getRelationScores = function(params, callback) 
   } else {
     parameters = {
       options: {
-        url: '/v2' + params['corpus'] + '/relation_scores',
+        url: '/v2' + params.corpus + '/relation_scores',
         method: 'GET',
         qs: omit(params, ['corpus']),
         json: true,
@@ -560,7 +560,7 @@ ConceptInsightsCorpora.prototype.getRelationScores = function(params, callback) 
 ConceptInsightsCorpora.prototype.getDocumentProcessingState = function(params, callback) {
   var parameters = {
     options: {
-      url: '/v2' + params['id'] + '/processing_state',
+      url: '/v2' + params.id + '/processing_state',
       method: 'GET',
       json: true,
       path: params

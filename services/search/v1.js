@@ -280,7 +280,7 @@ Search.prototype.createSolrClient = function(params) {
   });
   solrClient.basicAuth(params.username, params.password);
   return solrClient;
-}
+};
 
 // Helper methods
 

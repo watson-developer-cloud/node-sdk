@@ -22,7 +22,7 @@ var endpoints      = require('../../lib/alchemy_endpoints.json');
 var helper         = require('../../lib/helper');
 
 var errorFormatter = function(cb) {
-  return function(err, result) {
+  return function(err, result, response) {
     if (err) {
       cb(err, result);
     }
@@ -30,7 +30,10 @@ var errorFormatter = function(cb) {
       if (result.status === 'OK')
         cb(err,result);
       else
-        cb({error: result.statusInfo, code:400 }, null);
+        cb({
+          error: result.statusInfo || response['headers']['x-alchemyapi-error-msg'],
+          code: 400
+        }, null);
     }
   };
 };

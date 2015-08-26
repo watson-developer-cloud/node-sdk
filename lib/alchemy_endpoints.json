@@ -84,8 +84,9 @@
     "html" : "/html/HTMLGetCombinedData"
   },
 
-  "image": {
-    "url"  : "/url/URLGetImage"
+  "image_link": {
+    "url"  : "/url/URLGetImage",
+    "html" : "/html/HTMLGetImage"
   },
 
   "image_keywords": {
@@ -93,7 +94,7 @@
     "image" : "/image/ImageGetRankedImageKeywords"
   },
 
-  "image_face_tag": {
+  "image_recognition": {
     "url"  : "/url/URLGetRankedImageFaceTags",
     "image" : "/image/ImageGetRankedImageFaceTags"
   }
