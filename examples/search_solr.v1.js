@@ -1,9 +1,7 @@
 'use strict';
 
 var watson = require('watson-developer-cloud');
-var fs     = require('fs');
 var async  = require('async');
-var solr   = require('solr-client');
 
 var username = 'INSERT YOUR USERNAME FOR THE SERVICE HERE';
 var password = 'INSERT YOUR PASSWORD FOR THE SERVICE HERE';
