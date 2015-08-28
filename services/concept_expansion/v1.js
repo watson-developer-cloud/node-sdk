@@ -52,7 +52,8 @@ var concept_decode = {
 // The concepts are encoded using the concept_decode map
 // Create a regular expression to decode them to a human readable form
 var decoderRegExp = new RegExp('/'+Object.keys(concept_decode).join('|')+'/','g');
-var decodeConcept = function (encoded_concept) {
+
+function decodeConcept(encoded_concept) {
   return {
     prevalence: encoded_concept.prevalence,
     result: encoded_concept.result.replace(decoderRegExp,function(word) {
@@ -61,7 +62,7 @@ var decodeConcept = function (encoded_concept) {
   };
 };
 
-var responseFormatter = function(cb) {
+function responseFormatter(cb) {
   return function(err, result) {
     if (err) {
       cb(err, result);
