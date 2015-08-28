@@ -24,7 +24,7 @@ var pick           = require('object.pick');
 var omit           = require('object.omit');
 var fs             = require('fs');
 
-var errorFormatter = function(cb) {
+function errorFormatter(cb) {
   return function(err, result, response) {
     if (err) {
       cb(err, result);
