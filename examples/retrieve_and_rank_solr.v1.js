@@ -6,11 +6,11 @@ var async  = require('async');
 var username = 'INSERT YOUR USERNAME FOR THE SERVICE HERE';
 var password = 'INSERT YOUR PASSWORD FOR THE SERVICE HERE';
 
-var search = watson.search({
+var retrieve = watson.retrieve_and_rank({
   username: username,
   password: password,
   version: 'v1',
-  url: 'https://gateway.watsonplatform.net/search/api'
+  url: 'https://gateway.watsonplatform.net/retrieve/api'
 });
 
 var clusterId = 'INSERT YOUR CLUSTER ID HERE';
@@ -18,7 +18,7 @@ var collectionName = 'example_collection';
 var configName     = 'example_config';
 var configZipPath = 'path/to/config.zip';
 
-var solrClient = search.createSolrClient({
+var solrClient = retrieve.createSolrClient({
   clusterId: clusterId,
   collectionName: collectionName,
   username: username,
@@ -28,7 +28,7 @@ var solrClient = search.createSolrClient({
 async.series([
   function uploadConfig(done) {
     console.log('Uploading Solr config ' +  configName);
-    search.uploadConfig({
+    retrieve.uploadConfig({
         clusterId: clusterId,
         configName: configName,
         configZipPath: configZipPath
@@ -41,14 +41,14 @@ async.series([
 
   function listConfigs(done) {
     console.log('Listing Solr configs for cluster ' + clusterId);
-    search.listConfigs({clusterId: clusterId}, function(err, res) {
+    retrieve.listConfigs({clusterId: clusterId}, function(err, res) {
       printResponse(err, 'Error listing Solr configs: ', res, done);
     });
   },
 
   function getConfig(done) {
     console.log('Getting Solr config ' + configName);
-    search.getConfig({
+    retrieve.getConfig({
       clusterId: clusterId,
       configName: configName
     }, function(err) {
@@ -63,7 +63,7 @@ async.series([
   },
 
   function createCollection(done) {
-    search.createCollection({
+    retrieve.createCollection({
       clusterId: clusterId,
       collectionName: collectionName,
       configName: configName
@@ -74,7 +74,7 @@ async.series([
   },
 
   function listCollections(done) {
-    search.listCollections({clusterId: clusterId}, function(err, res) {
+    retrieve.listCollections({clusterId: clusterId}, function(err, res) {
       printResponse(err, 'Error listing Solr collections: ', res, done);
     });
   },
@@ -117,7 +117,7 @@ async.series([
 
   function deleteCollection(done) {
     console.log('Deleting Solr collection ' + collectionName);
-    search.deleteCollection({
+    retrieve.deleteCollection({
       clusterId: clusterId,
       collectionName: collectionName
     }, function(err) {
@@ -128,7 +128,7 @@ async.series([
 
   function deleteConfig(done) {
     console.log('Deleting Solr config ' + configName);
-    search.deleteConfig({
+    retrieve.deleteConfig({
       clusterId: clusterId,
       configName: configName
     }, function(err) {
