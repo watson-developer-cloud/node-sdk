@@ -21,7 +21,7 @@ async.series([
   },
 
   function createCluster(done) {
-    retrieve.createCluster({}, function getId(err, res) {
+    retrieve.createCluster({cluster_name: 'example_cluster', cluster_size: '1'}, function getId(err, res) {
       if (err) {
         return console.log('Error creating Solr cluster: ' + JSON.stringify(err));
       }

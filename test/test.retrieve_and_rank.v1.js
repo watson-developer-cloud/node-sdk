@@ -95,11 +95,25 @@ describe('retrieve_and_rank', function() {
     });
   });
 
-  it('can create a Solr cluster', function(done) {
+  it('can create a Solr cluster without specified config', function(done) {
     search.createCluster({}, function(error, data) {
       assert.equal(data, createResponse);
       done();
     });
+  });
+
+  it('sets headers and body of request when creating a Solr cluster based on params', function(done) {
+    var createParams = {
+      cluster_size: '2',
+      cluster_name: 'the_cluster',
+      some_other_option: 'some_other_value'
+    };
+
+    var response = search.createCluster(createParams, function(error, data) {});
+
+    assert.equal(response.headers['Content-Type'], 'application/json');
+    assert.deepEqual(JSON.parse(response.body), createParams);
+    done();
   });
 
   it('can poll a Solr cluster', function(done) {
