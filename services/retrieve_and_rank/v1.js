@@ -22,9 +22,7 @@ var extend         = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
 var solr           = require('solr-client');
 
-function Search(options) {
-  console.warn('WARNING! The Search client has been replaced by the RetrieveAndRank client.');
-
+function RetrieveAndRank(options) {
   var serviceDefaults = {
     version: 'v1',
     url: 'https://gateway.watsonplatform.net/search/api'
@@ -44,7 +42,7 @@ function Search(options) {
  *
  * @param callback The callback.
  */
-Search.prototype.listClusters = function(params, callback) {
+RetrieveAndRank.prototype.listClusters = function(params, callback) {
   return sendRequest('GET', solrClustersPath(), this._options, callback);
 };
 
@@ -56,7 +54,7 @@ Search.prototype.listClusters = function(params, callback) {
  *
  * @param callback The callback.
  */
-Search.prototype.deleteClusters = function(params, callback) {
+RetrieveAndRank.prototype.deleteClusters = function(params, callback) {
   return sendRequest('DELETE', solrClustersPath(), this._options, callback);
 };
 
@@ -68,7 +66,7 @@ Search.prototype.deleteClusters = function(params, callback) {
  *
  * @param callback The callback.
  */
-Search.prototype.createCluster = function(params, callback) {
+RetrieveAndRank.prototype.createCluster = function(params, callback) {
   return sendRequest('POST', solrClustersPath(), this._options, callback);
 };
 
@@ -81,7 +79,7 @@ Search.prototype.createCluster = function(params, callback) {
  *
  * @param callback The callback.
  */
-Search.prototype.pollCluster = function(params, callback) {
+RetrieveAndRank.prototype.pollCluster = function(params, callback) {
   if (!params || !params.clusterId) {
     return callback(new Error('Missing required parameter: clusterId'));
   }
@@ -97,7 +95,7 @@ Search.prototype.pollCluster = function(params, callback) {
  *
  * @param callback The callback.
  */
-Search.prototype.deleteCluster = function(params, callback) {
+RetrieveAndRank.prototype.deleteCluster = function(params, callback) {
   if (!params || !params.clusterId) {
     return callback(new Error('Missing required parameter: clusterId'));
   }
@@ -115,7 +113,7 @@ Search.prototype.deleteCluster = function(params, callback) {
  *
  * @param callback The callback.
  */
-Search.prototype.listConfigs = function(params, callback) {
+RetrieveAndRank.prototype.listConfigs = function(params, callback) {
   if (!params || !params.clusterId) {
     return callback(new Error('Missing required parameter: clusterId'));
   }
@@ -133,7 +131,7 @@ Search.prototype.listConfigs = function(params, callback) {
  *
  * @param callback The callback.
  */
-Search.prototype.uploadConfig = function(params, callback) {
+RetrieveAndRank.prototype.uploadConfig = function(params, callback) {
   if (!params || !params.clusterId) {
     return callback(new Error('Missing required parameter: clusterId'));
   } else if (!params.configName) {
@@ -163,7 +161,7 @@ Search.prototype.uploadConfig = function(params, callback) {
  *
  * @param callback The callback.
  */
-Search.prototype.getConfig = function(params, callback) {
+RetrieveAndRank.prototype.getConfig = function(params, callback) {
   if (!params || !params.clusterId) {
     return callback(new Error('Missing required parameter: clusterId'));
   } else if (!params.configName) {
@@ -182,7 +180,7 @@ Search.prototype.getConfig = function(params, callback) {
  *
  * @param callback The callback.
  */
-Search.prototype.deleteConfig = function(params, callback) {
+RetrieveAndRank.prototype.deleteConfig = function(params, callback) {
   if (!params || !params.clusterId) {
     return callback(new Error('Missing required parameter: clusterId'));
   } else if (!params.configName) {
@@ -202,7 +200,7 @@ Search.prototype.deleteConfig = function(params, callback) {
  *
  * @param callback The callback.
  */
-Search.prototype.listCollections = function(params, callback) {
+RetrieveAndRank.prototype.listCollections = function(params, callback) {
   if (!params || !params.clusterId) {
     return callback(new Error('Missing required parameter: clusterId'));
   }
@@ -220,7 +218,7 @@ Search.prototype.listCollections = function(params, callback) {
  *
  * @param callback The callback.
  */
-Search.prototype.createCollection = function(params, callback) {
+RetrieveAndRank.prototype.createCollection = function(params, callback) {
   if (!params || !params.clusterId) {
     return callback(new Error('Missing required parameter: clusterId'));
   } else if (!params.collectionName) {
@@ -243,7 +241,7 @@ Search.prototype.createCollection = function(params, callback) {
  *
  * @param callback The callback.
  */
-Search.prototype.deleteCollection = function(params, callback) {
+RetrieveAndRank.prototype.deleteCollection = function(params, callback) {
   if (!params || !params.clusterId) {
     return callback(new Error('Missing required parameter: clusterId'));
   } else if (!params.collectionName) {
@@ -264,7 +262,7 @@ Search.prototype.deleteCollection = function(params, callback) {
  *     - username: the Bluemix service username
  *     - password: the Bluemix service password
  */
-Search.prototype.createSolrClient = function(params) {
+RetrieveAndRank.prototype.createSolrClient = function(params) {
   if (!params || !params.clusterId) {
     throw new Error('Missing required parameter: clusterId');
   } else if (!params.collectionName) {
@@ -317,4 +315,4 @@ function sendRequest(method, url, options, callback) {
   return requestFactory(parameters, callback);
 }
 
-module.exports = Search;
+module.exports = RetrieveAndRank;

@@ -3,7 +3,7 @@
 var watson = require('watson-developer-cloud');
 var async  = require('async');
 
-var search = watson.search({
+var retrieve = watson.retrieve_and_rank({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
   password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
   version: 'v1',
@@ -15,13 +15,13 @@ var clusterId;
 async.series([
   function deleteExistingClusters(done) {
     console.log('Deleting exisiting Solr clusters.');
-    search.deleteClusters({}, function(err, res) {
+    retrieve.deleteClusters({}, function(err, res) {
       printResponse(err, 'Error deleting exisiting Solr clusters: ', res, done);
     });
   },
 
   function createCluster(done) {
-    search.createCluster({}, function getId(err, res) {
+    retrieve.createCluster({}, function getId(err, res) {
       if (err) {
         return console.log('Error creating Solr cluster: ' + JSON.stringify(err));
       }
@@ -37,21 +37,21 @@ async.series([
 
   function listClusters(done) {
     console.log('Listing Solr clusters.');
-    search.listClusters({}, function(err, res) {
+    retrieve.listClusters({}, function(err, res) {
       printResponse(err, 'Error listing Solr clusters: ', res, done);
     });
   },
 
   function deleteCluster(done) {
     console.log('Deleting Solr cluster ' + clusterId);
-    search.deleteCluster({clusterId: clusterId}, function(err) {
+    retrieve.deleteCluster({clusterId: clusterId}, function(err) {
       printResponse(err, 'Error deleting Solr cluster: ', 'Deleted Solr cluster ' + clusterId, done);
     });
   }
 ]);
 
 function waitForCluster(clusterId, callback) {
-  search.pollCluster({clusterId: clusterId}, function isReady(err, res) {
+  retrieve.pollCluster({clusterId: clusterId}, function isReady(err, res) {
     if(err) {
       return console.log('Error polling Solr cluster: ' + JSON.stringify(err, null, 2));
     }
