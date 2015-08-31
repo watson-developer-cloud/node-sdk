@@ -100,9 +100,9 @@ For Alchemy you only need an `api_key`, you can register for one [here](http://w
 ## Alchemy APIs
 
 ### Alchemy Language
-[Alchemy Language](alchemy_language) offers 12 API functions as part of its text analysis service, each of which uses sophisticated natural language processing techniques to analyze your content and add high-level semantic information.
+[Alchemy Language][alchemy_language] offers 12 API functions as part of its text analysis service, each of which uses sophisticated natural language processing techniques to analyze your content and add high-level semantic information.
 
-Use the [Sentiment Analysis](sentiment_analysis) endpoint to identify positive/negative sentiment within a sample text document.
+Use the [Sentiment Analysis][sentiment_analysis] endpoint to identify positive/negative sentiment within a sample text document.
 
 ```javascript
 var watson = require('watson-developer-cloud');
