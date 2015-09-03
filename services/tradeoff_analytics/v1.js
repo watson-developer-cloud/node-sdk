@@ -35,20 +35,44 @@ function TradeoffAnalytics(options) {
  * The resolution contains a set of optimal options,
  * their analytical characteristics, and representation on a 2D space.
  *
- * @param  {Array}  params.columns List of possible objectives
- * @param  {String} params.subject Name of the decision problem
- * @param  {String} params.options A list of options. Typically, the rows in a
+ * @param  {Array}  requestBody.columns List of possible objectives
+ * @param  {String} requestBody.subject Name of the decision problem
+ * @param  {String} requestBody.options A list of options. Typically, the rows in a
  *                                 table representation of your data
+ * @param  {String} metadataHeader Value of the x-watson-metadata header to be forwarded
+ * 								   for analytics purposes
  */
-TradeoffAnalytics.prototype.dilemmas = function(params, callback) {
+TradeoffAnalytics.prototype.dilemmas = function(requestBody, callback, metadataHeader) {
   var parameters = {
     options: {
       method: 'POST',
       url: '/v1/dilemmas',
-      body: params,
-      json: true,
+      body: requestBody,
+      headers: {
+    	'x-watson-metadata' : metadataHeader
+      },
+      json: true
     },
     requiredParams: ['columns', 'subject', 'options'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Forward events from the Tradeoff Analytics widget to the service
+ */
+TradeoffAnalytics.prototype.events = function(requestBody, callback, metadataHeader) {
+  var parameters = {
+    options: {
+      method: 'POST',
+      url: '/v1/events',
+      body: requestBody,
+      headers: {
+    	'x-watson-metadata' : metadataHeader
+      },
+      json: true
+    },
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
