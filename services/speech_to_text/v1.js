@@ -225,15 +225,23 @@ SpeechToText.prototype.observeResult = function(params, callback) {
  * @param {String} [params.session_id] Session used in the recognition.
  */
 SpeechToText.prototype.getRecognizeStatus = function(params, callback) {
+  var missingParams = helper.getMissingParams(params, ['session_id', 'cookie_session']);
+  if (missingParams) {
+    callback(new Error('Missing required parameters: ' + missingParams.join(', ')));
+    return;
+  }
+
   var path = params || {};
   var parameters = {
     options: {
       method: 'GET',
       url: '/v1/sessions/' + path.session_id + '/recognize',
       path: path,
-      json: true
+      json: true,
+      headers: {
+      'Cookie': 'SESSIONID=' + params.cookie_session,
+      }
     },
-    requiredParams: ['session_id'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);

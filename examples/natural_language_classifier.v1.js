@@ -29,7 +29,7 @@ natural_language_classifier.create(params, function(err, response) {
 // Using a classifier
 natural_language_classifier.classify({
   text: 'Is it sunny?',
-  classifier: '<classifier-id>' }, // from the previous command
+  classifier_id: '<classifier-id>' }, // from the previous command
   function(err, response) {
     if (err)
       console.log('error:', err);

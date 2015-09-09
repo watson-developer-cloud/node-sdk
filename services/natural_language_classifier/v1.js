@@ -26,7 +26,7 @@ var toCSV = require('./json-training-to-csv');
 function NaturalLanguageClassifier(options) {
   // Default URL
   var serviceDefaults = {
-    url: 'https://gateway.watsonplatform.net/natural-language-classifier-beta/api'
+    url: 'https://gateway.watsonplatform.net/natural-language-classifier/api'
   };
   this._options = extend(serviceDefaults, options);
 }
@@ -82,15 +82,19 @@ NaturalLanguageClassifier.prototype.create = function(params, callback) {
 NaturalLanguageClassifier.prototype.classify = function(params, callback) {
   params = params || {};
 
+  // #84: use classifier_id not classifier.
+  if (!params.classifier_id)
+    params.classifier_id = params.classifier;
+
   var parameters = {
     options: {
-      url: '/v1/classifiers/{classifier}/classify',
+      url: '/v1/classifiers/{classifier_id}/classify',
       method: 'POST',
       json: true,
-      path: pick(params, ['classifier']),
+      path: pick(params, ['classifier_id']),
       body: pick(params, ['text'])
     },
-    requiredParams: ['classifier', 'text'],
+    requiredParams: ['classifier_id', 'text'],
     defaultOptions: this._options
   };
 
@@ -103,14 +107,18 @@ NaturalLanguageClassifier.prototype.classify = function(params, callback) {
 NaturalLanguageClassifier.prototype.status = function(params, callback) {
   params = params || {};
 
+  // #84: use classifier_id not classifier.
+  if (!params.classifier_id)
+    params.classifier_id = params.classifier;
+
   var parameters = {
     options: {
-      url: '/v1/classifiers/{classifier}',
+      url: '/v1/classifiers/{classifier_id}',
       method: 'GET',
       json: true,
       path: params
     },
-    requiredParams: ['classifier'],
+    requiredParams: ['classifier_id'],
     defaultOptions: this._options
   };
 
@@ -139,14 +147,18 @@ NaturalLanguageClassifier.prototype.list = function(params, callback) {
 NaturalLanguageClassifier.prototype.remove = function(params, callback) {
   params = params || {};
 
+  // #84: use classifier_id not classifier.
+  if (!params.classifier_id)
+    params.classifier_id = params.classifier;
+
   var parameters = {
     options: {
-      url: '/v1/classifiers/{classifier}',
+      url: '/v1/classifiers/{classifier_id}',
       method: 'DELETE',
       path: params,
       json: true
     },
-    requiredParams: ['classifier'],
+    requiredParams: ['classifier_id'],
     defaultOptions: this._options
   };
 

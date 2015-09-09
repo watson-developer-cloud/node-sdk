@@ -1,7 +1,6 @@
 'use strict';
 
 var assert  = require('assert');
-var request = require('request');
 var extend  = require('extend');
 var pick    = require('object.pick');
 var omit    = require('object.omit');
