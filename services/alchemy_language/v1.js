@@ -36,7 +36,7 @@ function errorFormatter(cb) {
         }, null);
     }
   };
-};
+}
 
 function createRequest(method) {
   return function(_params, callback ) {
