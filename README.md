@@ -301,7 +301,7 @@ var natural_language_classifier = watson.natural_language_classifier({
 
 natural_language_classifier.classify({
   text: 'Is it sunny?',
-  classifier: '<classifier-id>' },
+  classifier_id: '<classifier-id>' },
   function(err, response) {
     if (err)
       console.log('error:', err);

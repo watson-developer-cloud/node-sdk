@@ -48,6 +48,7 @@ var emptyData = { text: '' },
   emptyDataClassifier = { text: '', classifer: '' },
   nullDataClassifier = { text: null, classifer: null },
   goodData = { text: 'good', classifier: 'good' },
+  goodDataWithClassifierId = { text: 'good', classifier_id: 'good' },
   noTrainingData = {language:'en', name:'foo'};
 
   // training requests
@@ -127,6 +128,8 @@ describe('natural_language_classifer', function() {
     natural_language_classifier.status(goodData, goodRequest);
     natural_language_classifier.remove(goodData, goodRequest);
 
+    natural_language_classifier.status(goodDataWithClassifierId, goodRequest);
+    natural_language_classifier.remove(goodDataWithClassifierId, goodRequest);
     //list doesn't need params
     natural_language_classifier.list({}, goodRequest);
     natural_language_classifier.list(null, goodRequest);
