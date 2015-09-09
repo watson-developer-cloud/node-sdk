@@ -151,7 +151,7 @@ describe('search', function() {
 
   it('can upload a Solr config', function(done) {
     var mockConfigFile = 'test/resources/mock_solr_config_file.zip';
-    var response = search.uploadConfig({clusterId: clusterId, configName: configName, configZipPath: mockConfigFile},
+    search.uploadConfig({clusterId: clusterId, configName: configName, configZipPath: mockConfigFile},
       function(error, data) {
       assert.equal(data, configUploadResponse);
       done();
@@ -161,7 +161,7 @@ describe('search', function() {
   it('sets headers and body of request when uploading a Solr config', function(done) {
     var mockConfigFile = 'test/resources/mock_solr_config_file.zip';
     var response = search.uploadConfig({clusterId: clusterId, configName: configName, configZipPath: mockConfigFile},
-      function(error, data) {});
+      function(/*error, data*/) {});
 
     assert.equal(response.headers['Content-Type'], 'application/zip');
     assert.deepEqual(response.body, fs.readFileSync(mockConfigFile));

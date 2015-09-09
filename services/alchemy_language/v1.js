@@ -21,7 +21,7 @@ var requestFactory = require('../../lib/requestwrapper');
 var endpoints      = require('../../lib/alchemy_endpoints.json');
 var helper         = require('../../lib/helper');
 
-var errorFormatter = function(cb) {
+function errorFormatter(cb) {
   return function(err, result, response) {
     if (err) {
       cb(err, result);

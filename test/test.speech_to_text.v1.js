@@ -142,12 +142,15 @@ describe('speech_to_text', function() {
     it('should check no parameters provided', function() {
       speech_to_text.getRecognizeStatus({}, missingParameter);
       speech_to_text.getRecognizeStatus(null, missingParameter);
+      speech_to_text.getRecognizeStatus({session_id: 'foo'}, missingParameter);
+
     });
 
     it('should generate a valid payload', function() {
-      var req = speech_to_text.getRecognizeStatus({session_id: 'foo'}, noop);
+      var req = speech_to_text.getRecognizeStatus({session_id: 'foo', cookie_session:'bar'}, noop);
       assert.equal(req.uri.href, service.url + path);
       assert.equal(req.method, 'GET');
+      assert.equal(req.headers['Cookie'],'SESSIONID=bar');
     });
   });
 
