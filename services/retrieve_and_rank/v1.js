@@ -62,12 +62,22 @@ RetrieveAndRank.prototype.deleteClusters = function(params, callback) {
  * Creates a Solr cluster.
  *
  * @param params An Object representing the parameters for this service call.
- *   This request currently does not require any parameters.
+ *   Optional params
+ *     - cluster_name: name to use for identifying the cluster in responses
+ *     - cluster_size: size of the cluster to create
  *
  * @param callback The callback.
  */
 RetrieveAndRank.prototype.createCluster = function(params, callback) {
-  return sendRequest('POST', solrClustersPath(), this._options, callback);
+  // Avoid modifying the global options by making a deep copy
+  var createOptions = JSON.parse(JSON.stringify(this._options));
+  createOptions.body = JSON.stringify(params || {});
+  if (createOptions.headers === undefined) {
+    createOptions.headers = {};
+  }
+  createOptions.headers['Content-Type'] = 'application/json';
+
+  return sendRequest('POST', solrClustersPath(), createOptions, callback);
 };
 
 /**
