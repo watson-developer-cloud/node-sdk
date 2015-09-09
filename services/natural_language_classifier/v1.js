@@ -26,7 +26,7 @@ var toCSV = require('./json-training-to-csv');
 function NaturalLanguageClassifier(options) {
   // Default URL
   var serviceDefaults = {
-    url: 'https://gateway.watsonplatform.net/natural-language-classifier-beta/api'
+    url: 'https://gateway.watsonplatform.net/natural-language-classifier/api'
   };
   this._options = extend(serviceDefaults, options);
 }
