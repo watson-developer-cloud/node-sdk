@@ -109,7 +109,7 @@ describe('search', function() {
       some_other_option: 'some_other_value'
     };
 
-    var response = search.createCluster(createParams, function(error, data) {});
+    var response = search.createCluster(createParams, function() {});
 
     assert.equal(response.headers['Content-Type'], 'application/json');
     assert.deepEqual(JSON.parse(response.body), createParams);
