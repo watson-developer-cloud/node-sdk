@@ -96,11 +96,7 @@ ToneAnalyzer.prototype.synonym = function(params, callback) {
       qs: params,
       json: true
     },
-    defaultOptions: extend(this._options, {
-      headers: {
-        'accept':'application/json'
-      }
-    })
+    defaultOptions: extend(this._options, {})
   };
 
   return requestFactory(parameters, callback);
@@ -121,13 +117,10 @@ ToneAnalyzer.prototype.scorecards = function(params, callback) {
   var parameters = {
     options: {
       url: '/v2/scorecards',
-      method: 'GET'
+      method: 'GET',
+      json: true
     },
-    defaultOptions: extend(this._options, {
-      headers: {
-        'accept':'application/json'
-      }
-    })
+    defaultOptions: extend(this._options, {})
   };
 
   return requestFactory(parameters, callback);
