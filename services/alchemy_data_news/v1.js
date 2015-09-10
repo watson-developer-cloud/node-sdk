@@ -83,9 +83,9 @@ AlchemyDataNews.prototype.getNews = function(params, callback ) {
     var parameters = {
       options: {
         url: '/data/GetNews',
-        method: 'POST',
+        method: 'GET',
         json: true,
-        form: extend({}, params, {outputMode: 'json'}) // change default output to json
+        qs: extend({}, params, {outputMode: 'json'}) // change default output to json
       },
       requiredParams: ['end','start'],
       defaultOptions: this._options
