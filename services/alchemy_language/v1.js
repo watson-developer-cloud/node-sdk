@@ -56,8 +56,7 @@ function createRequest(method) {
         url: endpoints[method][format],
         method: 'POST',
         json: true,
-        path: params,
-        form: extend({outputMode: 'json'}, params) // change default output to json
+        form: extend({}, params, {outputMode: 'json'}) // change default output to json
       },
       defaultOptions: this._options
     };
