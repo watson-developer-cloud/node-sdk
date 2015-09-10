@@ -20,7 +20,7 @@ var extend         = require('extend');
 var pick           = require('object.pick');
 var requestFactory = require('../../lib/requestwrapper');
 
-var toQuestion = function(params) {
+function toQuestion(params) {
   return {
     evidenceRequest: {
       items: params.items || 5 // the number of anwers, 5 by default
