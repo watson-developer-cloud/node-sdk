@@ -91,7 +91,7 @@ ToneAnalyzer.prototype.tone = function(params, callback) {
 ToneAnalyzer.prototype.synonym = function(params, callback) {
   var parameters = {
     options: {
-      url: '/v2/synonym',
+      url: '/v2/synonyms',
       method: 'GET',
       qs: params,
       json: true

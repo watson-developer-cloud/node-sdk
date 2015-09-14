@@ -21,7 +21,7 @@ describe('tone_analyzer.v2', function() {
   var synonym_response = [ { headword: 'x' } ];
 
   var tone_path = '/v2/tone',
-	synonym_path = '/v2/synonym';
+	synonym_path = '/v2/synonyms';
 
   var service = {
     username: 'batman',
