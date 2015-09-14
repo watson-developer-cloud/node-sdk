@@ -252,7 +252,7 @@ language_translation.translate({
       console.log(JSON.stringify(translation, null, 2));
 });
 
-language_identification.identify({
+language_translation.identify({
   text: 'The language translation service takes text input and identifies the language used.' },
   function (err, language) {
     if (err)
