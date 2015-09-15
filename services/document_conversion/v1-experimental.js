@@ -381,8 +381,6 @@ DocumentConversion.prototype.getBatchDocument = function(params, callback) {
 /**
  * Creates a job to convert a batch of documents
  *
- * todo: config (?)
- *
  * @param params.name
  * @param params.batch_id
  * @param params.conversion_target
