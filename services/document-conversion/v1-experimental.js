@@ -122,6 +122,7 @@ DocumentConversion.prototype.getBatch = function(params, callback) {
 
 /**
  * Updates an existing batch
+ * @param {String} batch_id the batch identifier
  *
  */
 DocumentConversion.prototype.updateBatch = function(params, callback) {
@@ -150,6 +151,7 @@ DocumentConversion.prototype.updateBatch = function(params, callback) {
 /**
  * Gets a list of existing documents in the batch
  *
+ * @param {String} batch_id the batch identifier
  */
 DocumentConversion.prototype.getBatchDocuments = function(params, callback) {
 
@@ -181,7 +183,6 @@ function fixupContentType(params) {
     };
   }
 }
-
 
 /**
  * One-off convert an attached document OR convert a previously uploaded document by ID
@@ -231,7 +232,7 @@ DocumentConversion.prototype.convert = function(params, callback) {
  *
  * @param  {ReadableStream} params.file The document file to convert.
  */
-DocumentConversion.prototype.upload = function(params, callback) {
+DocumentConversion.prototype.uploadDocument = function(params, callback) {
   params = params || {};
 
   if (!params.file) {
