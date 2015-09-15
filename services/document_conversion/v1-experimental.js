@@ -19,6 +19,8 @@
 var extend         = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
 var isStream       = require('isstream');
+var pick           = require('object.pick');
+var omit           = require('object.omit');
 
 function DocumentConversion(options) {
   // Default URL
@@ -109,7 +111,6 @@ DocumentConversion.prototype.getBatch = function(params, callback) {
     options: {
       method: 'GET',
       url: '/v1/batches/{batch_id}',
-      qs: params,
       path: params,
       json: true
     },
@@ -126,23 +127,15 @@ DocumentConversion.prototype.getBatch = function(params, callback) {
  *
  */
 DocumentConversion.prototype.updateBatch = function(params, callback) {
-
-  if (!params.batch_id) {
-    callback(new Error('batch_id is required'));
-    return;
-  }
-
-  var id = params.batch_id;
-  var pcopy = extend ({}, params);
-  delete pcopy.batch_id;
-
   var parameters = {
     options: {
       method: 'PUT',
-      url: '/v1/batches/' + id,
-      body: pcopy,
+      url: '/v1/batches/{batch_id}',
+      body: omit(params,['batch_id']),
+      path: pick(params,['batch_id']),
       json: true
     },
+    requiredParams:['batch_id'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
@@ -154,19 +147,15 @@ DocumentConversion.prototype.updateBatch = function(params, callback) {
  * @param {String} batch_id the batch identifier
  */
 DocumentConversion.prototype.getBatchDocuments = function(params, callback) {
-
-  if (!params.batch_id) {
-    callback(new Error('batch_id is required'));
-    return;
-  }
-
   var parameters = {
     options: {
       method: 'GET',
-      url: '/v1/batches/' + params.batch_id + '/documents',
-      qs: params,
+      url: '/v1/batches/{batch_id}/documents',
+      qs: omit(params,['batch_id']),
+      path: pick(params,['batch_id']),
       json: true
     },
+    requiredParams: ['batch_id'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
@@ -195,9 +184,11 @@ function fixupContentType(params) {
  */
 DocumentConversion.prototype.convert = function(params, callback) {
   params = params || {};
-
   if (!params.conversion_target || !DocumentConversion.prototype.conversion_target[params.conversion_target]) {
-    callback(new Error('Missing required parameter: params.conversion_target'));
+    var keys = Object.keys(DocumentConversion.prototype.conversion_target);
+    var values = keys.map(function(v) { return DocumentConversion.prototype.conversion_target[v]; });
+
+    callback(new Error('Missing required parameter: conversion_target. Possible values are: ' + values.join(', ')));
     return;
   }
 
@@ -211,17 +202,22 @@ DocumentConversion.prototype.convert = function(params, callback) {
     return;
   }
 
-  fixupContentType(params);
-
   var parameters = {
     options: {
       method: 'POST',
       url: '/v1/convert_document',
-      formData: params,
       json: true
     },
     defaultOptions: this._options
   };
+
+  // send the parameters in the body or as formData depending on the request
+  if (params.file) {
+  fixupContentType(params);
+    parameters.options.formData = params;
+  } else {
+    parameters.options.body = params;
+  }
 
   return requestFactory(parameters, callback);
 };
@@ -297,7 +293,8 @@ DocumentConversion.prototype.getDocument = function(params, callback) {
     options: {
       method: 'GET',
       url: '/v1/documents/{id}',
-      json: true
+      json: true,
+      path: params
     },
     requiredParams:['id'],
     defaultOptions: this._options
