@@ -28,13 +28,15 @@
     "concept insights",
     "tradeoff analytics",
     "tone analyzer",
+    "retrieve and rank",
     "natural language classifier",
     "dialog",
     "tone_analyzer",
-    "alchemy api",
+    "alchemy",
+    "alchemyapi",
     "alchemy vision",
     "alchemy language",
-    "alchemy data"
+    "alchemy datanews "
   ],
   "author": "IBM Corp.",
   "contributors": [
@@ -60,6 +62,7 @@
     "coveralls": "~2.11.2",
     "istanbul": "~0.3.15",
     "nock": "~2.10.0",
+    "jshint": "~2.8.0",
     "qs": "~4.0.0"
   },
   "dependencies": {
@@ -68,7 +71,6 @@
     "csv-stringify": "~0.0.8",
     "extend": "~3.0.0",
     "isstream": "~0.1.2",
-    "jshint": "^2.8.0",
     "object.omit": "~2.0.0",
     "object.pick": "~1.1.1",
     "request": "~2.61.0",

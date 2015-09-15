@@ -77,10 +77,9 @@ describe('speech_to_text', function() {
     });
 
     it('should generate a valid payload', function() {
-      var req = speech_to_text.deleteSession({session_id: 'foo', cookie_session:'cooki3'}, noop);
+      var req = speech_to_text.deleteSession({session_id: 'foo'}, noop);
       assert.equal(req.uri.href, service.url + path);
       assert.equal(req.method, 'DELETE');
-      assert.equal(req.headers.cookie, 'SESSIONID=cooki3');
     });
   });
 
@@ -147,10 +146,9 @@ describe('speech_to_text', function() {
     });
 
     it('should generate a valid payload', function() {
-      var req = speech_to_text.getRecognizeStatus({session_id: 'foo', cookie_session:'bar'}, noop);
+      var req = speech_to_text.getRecognizeStatus({session_id: 'foo'}, noop);
       assert.equal(req.uri.href, service.url + path);
       assert.equal(req.method, 'GET');
-      assert.equal(req.headers['Cookie'],'SESSIONID=bar');
     });
   });
 
@@ -171,14 +169,14 @@ describe('speech_to_text', function() {
         session_id: 'foo',
         cookie_session:'bar'}, noop);
       assert.equal(req.path, path);
-      assert.equal(req._headers['cookie'],'SESSIONID=bar');
+      assert.ok(req._headers['cookie'].indexOf('SESSIONID=bar') !== -1);
 
       req = speech_to_text.observeResult({
         session_id: 'foo',
         cookie_session:'bar',
         interim_results:true}, noop);
       assert.equal(req.path, path + '?interim_results=true');
-      assert.equal(req._headers['cookie'],'SESSIONID=bar');
+      assert.ok(req._headers['cookie'].indexOf('SESSIONID=bar') !== -1);
     });
   });
 
@@ -266,7 +264,8 @@ describe('speech_to_text', function() {
       assert.equal(req.path, path);
       assert.equal(req._headers['content-type'], payload.content_type);
       assert.equal(req._headers['transfer-encoding'], 'chunked');
-      assert.equal(req._headers.cookie, 'SESSIONID=' + payload.cookie_session);
+      assert.ok(req._headers['cookie'].indexOf('SESSIONID=' + payload.cookie_session) !== -1);
+
       req.end();
     });
 

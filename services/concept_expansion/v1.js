@@ -60,7 +60,7 @@ function decodeConcept(encoded_concept) {
       return concept_decode[word];
     })
   };
-};
+}
 
 function responseFormatter(cb) {
   return function(err, result) {
@@ -72,7 +72,7 @@ function responseFormatter(cb) {
       cb(null, result);
     }
   };
-};
+}
 
 function ConceptExpansion(options) {
   var serviceDefaults = {
