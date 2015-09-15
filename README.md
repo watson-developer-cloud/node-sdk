@@ -25,6 +25,7 @@ APIs and SDKs that use cognitive computing to solve complex problems.
       * [Concept Expansion](#concept-expansion)
       * [Concept Insights](#concept-insights)
       * [Dialog](#dialog)
+      * [Document Conversion](#document-conversion)
       * [Language Translation](#language-translation)
       * [Message Resonance](#message-resonance)
       * [Natural Language Classifier](#natural-language-classifier)
@@ -221,12 +222,37 @@ var dialog = watson.dialog({
   version: 'v1'
 });
 
-
 dialog.getDialogs({}, function (err, dialogs) {
-    if (err)
-      console.log('error:', err);
-    else
-      console.log(JSON.stringify(dialogs, null, 2));
+  if (err)
+    console.log('error:', err);
+  else
+    console.log(JSON.stringify(dialogs, null, 2));
+});
+```
+
+### Document Conversion
+
+```javascript
+var watson = require('watson-developer-cloud');
+var fs = require('fs');
+
+var document_conversion = watson.document_conversion({
+  username: '<username>',
+  password: '<password>',
+  version: 'v1-experimental'
+});
+
+// convert a single document
+document_conversion.convert({
+  // (JSON) ANSWER_UNITS, NORMALIZED_HTML, or NORMALIZED_TEXT
+  file: fs.createReadStream('sample-docx.docx'),
+  conversion_target: document_conversion.conversion_target.ANSWER_UNITS
+}, function (err, response) {
+  if (err) {
+    console.error(err);
+  } else {
+    console.log(JSON.stringify(response, null, 2));
+  }
 });
 ```
 
