@@ -31,10 +31,11 @@
     "natural language classifier",
     "dialog",
     "tone_analyzer",
-    "alchemy api",
+    "alchemy",
+    "alchemyapi",
     "alchemy vision",
     "alchemy language",
-    "alchemy data"
+    "alchemy datanews "
   ],
   "author": "IBM Corp.",
   "contributors": [
