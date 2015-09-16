@@ -213,8 +213,16 @@ DocumentConversion.prototype.convert = function(params, callback) {
 
   // send the parameters in the body or as formData depending on the request
   if (params.file) {
-  fixupContentType(params);
-    parameters.options.formData = params;
+    fixupContentType(params);
+    parameters.options.formData = {
+      file: params.file,
+      config: {
+        value: JSON.stringify(omit(params,['file'])),
+        options: {
+          contentType: 'application/json; charset=utf-8'
+        }
+      }
+    };
   } else {
     parameters.options.body = params;
   }
