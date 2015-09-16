@@ -18,6 +18,8 @@
 
 var extend         = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
+var omit = require('object.omit');
+var pick = require('object.pick');
 
 function TradeoffAnalytics(options) {
   // Default URL
@@ -35,21 +37,21 @@ function TradeoffAnalytics(options) {
  * The resolution contains a set of optimal options,
  * their analytical characteristics, and representation on a 2D space.
  *
- * @param  {Array}  requestBody.columns List of possible objectives
- * @param  {String} requestBody.subject Name of the decision problem
- * @param  {String} requestBody.options A list of options. Typically, the rows in a
+ * @param  {Array}  params.columns List of possible objectives
+ * @param  {String} params.subject Name of the decision problem
+ * @param  {String} params.options A list of options. Typically, the rows in a
  *                                 table representation of your data
- * @param  {String} metadataHeader Value of the x-watson-metadata header to be forwarded
+ * @param  {String} params.metadataHeader Value of the x-watson-metadata header to be forwarded
  * 								   for analytics purposes
  */
-TradeoffAnalytics.prototype.dilemmas = function(requestBody, callback, metadataHeader) {
+TradeoffAnalytics.prototype.dilemmas = function(params, callback) {
   var parameters = {
     options: {
       method: 'POST',
       url: '/v1/dilemmas',
-      body: requestBody,
+      body: omit(params,['metadataHeader']),
       headers: {
-    	'x-watson-metadata' : metadataHeader
+    	'x-watson-metadata' : pick(params,['metadataHeader'])
       },
       json: true
     },
@@ -60,16 +62,24 @@ TradeoffAnalytics.prototype.dilemmas = function(requestBody, callback, metadataH
 };
 
 /**
- * Forward events from the Tradeoff Analytics widget to the service
+ *
  */
-TradeoffAnalytics.prototype.events = function(requestBody, callback, metadataHeader) {
+	
+ /**
+ * Forward events from the Tradeoff Analytics widget to the service
+ *
+ * @param  {String} params - the array of events to forward to the service
+ * @param  {String} params.metadataHeader Value of the x-watson-metadata header to be forwarded
+ * 								   for analytics purposes
+ */
+TradeoffAnalytics.prototype.events = function(params, callback) {
   var parameters = {
     options: {
       method: 'POST',
       url: '/v1/events',
-      body: requestBody,
+      body: omit(params,['metadataHeader']),
       headers: {
-    	'x-watson-metadata' : metadataHeader
+    	'x-watson-metadata' : pick(params,['metadataHeader'])
       },
       json: true
     },
