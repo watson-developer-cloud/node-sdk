@@ -21,7 +21,7 @@ var requestFactory = require('../../lib/requestwrapper');
 var endpoints      = require('../../lib/alchemy_endpoints.json');
 var helper         = require('../../lib/helper');
 
-var errorFormatter = function(cb) {
+function errorFormatter(cb) {
   return function(err, result, response) {
     if (err) {
       cb(err, result);
@@ -36,7 +36,7 @@ var errorFormatter = function(cb) {
         }, null);
     }
   };
-};
+}
 
 function createRequest(method) {
   return function(_params, callback ) {
@@ -56,8 +56,7 @@ function createRequest(method) {
         url: endpoints[method][format],
         method: 'POST',
         json: true,
-        path: params,
-        form: extend({outputMode: 'json'}, params) // change default output to json
+        form: extend({}, params, {outputMode: 'json'}) // change default output to json
       },
       defaultOptions: this._options
     };

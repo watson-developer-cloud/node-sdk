@@ -109,7 +109,6 @@ SpeechToText.prototype.recognize = function(params, callback) {
  * chunk data
  *
  * @param {String} [content_type] The Content-type e.g. audio/l16; rate=48000
- * @param {String} [cookie_session] The cookie session id
  * @param {String} [session_id] The session id
  */
 SpeechToText.prototype.recognizeLive = function(params, callback) {
@@ -132,7 +131,7 @@ SpeechToText.prototype.recognizeLive = function(params, callback) {
     headers: {
       'Authorization': 'Basic ' + this._options.api_key,
       'Transfer-Encoding': 'chunked',
-      'Cookie': 'SESSIONID=' + params.cookie_session,
+      'cookie': 'SESSIONID=' + params.cookie_session,
       'Content-type': params.content_type
     }
   };
@@ -168,8 +167,6 @@ SpeechToText.prototype.recognizeLive = function(params, callback) {
  * otherwise it waits for the next recognition.
  *
  * @param {String} [params.session_id] Session used in the recognition.
- * @param {String} [params.cookie_session] The cookie session
- *                                         used in the Cookie header.
  * @param {boolean} [params.interim_results] If true,
  * interim results will be returned. Default: false.
  */
@@ -190,7 +187,7 @@ SpeechToText.prototype.observeResult = function(params, callback) {
     method: 'GET',
     headers: {
       'Authorization': 'Basic ' + this._options.api_key,
-      'Cookie': 'SESSIONID=' + params.cookie_session,
+      'cookie': 'SESSIONID=' + params.cookie_session,
       'Accept': 'application/json'
     }
   };
@@ -225,6 +222,12 @@ SpeechToText.prototype.observeResult = function(params, callback) {
  * @param {String} [params.session_id] Session used in the recognition.
  */
 SpeechToText.prototype.getRecognizeStatus = function(params, callback) {
+  var missingParams = helper.getMissingParams(params, ['session_id']);
+  if (missingParams) {
+    callback(new Error('Missing required parameters: ' + missingParams.join(', ')));
+    return;
+  }
+
   var path = params || {};
   var parameters = {
     options: {
@@ -233,7 +236,6 @@ SpeechToText.prototype.getRecognizeStatus = function(params, callback) {
       path: path,
       json: true
     },
-    requiredParams: ['session_id'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
@@ -317,7 +319,7 @@ SpeechToText.prototype.createSession = function(params, callback) {
  * @param {String} [params.session_id] Session id.
  */
 SpeechToText.prototype.deleteSession = function(params, callback) {
-  var missingParams = helper.getMissingParams(params, ['session_id', 'cookie_session']);
+  var missingParams = helper.getMissingParams(params, ['session_id']);
   if (missingParams) {
     callback(new Error('Missing required parameters: ' + missingParams.join(', ')));
     return;
@@ -327,10 +329,7 @@ SpeechToText.prototype.deleteSession = function(params, callback) {
     options: {
       method: 'DELETE',
       url: '/v1/sessions/' + params.session_id,
-      json: true,
-      headers: {
-        'cookie': 'SESSIONID=' + params.cookie_session
-      }
+      json: true
     },
     defaultOptions: this._options
   };

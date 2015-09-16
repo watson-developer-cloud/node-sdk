@@ -95,11 +95,25 @@ describe('search', function() {
     });
   });
 
-  it('can create a Solr cluster', function(done) {
+  it('can create a Solr cluster without specified config', function(done) {
     search.createCluster({}, function(error, data) {
       assert.equal(data, createResponse);
       done();
     });
+  });
+
+  it('sets headers and body of request when creating a Solr cluster based on params', function(done) {
+    var createParams = {
+      cluster_size: '2',
+      cluster_name: 'the_cluster',
+      some_other_option: 'some_other_value'
+    };
+
+    var response = search.createCluster(createParams, function() {});
+
+    assert.equal(response.headers['Content-Type'], 'application/json');
+    assert.deepEqual(JSON.parse(response.body), createParams);
+    done();
   });
 
   it('can poll a Solr cluster', function(done) {
@@ -137,7 +151,7 @@ describe('search', function() {
 
   it('can upload a Solr config', function(done) {
     var mockConfigFile = 'test/resources/mock_solr_config_file.zip';
-    var response = search.uploadConfig({clusterId: clusterId, configName: configName, configZipPath: mockConfigFile},
+    search.uploadConfig({clusterId: clusterId, configName: configName, configZipPath: mockConfigFile},
       function(error, data) {
       assert.equal(data, configUploadResponse);
       done();
@@ -147,7 +161,7 @@ describe('search', function() {
   it('sets headers and body of request when uploading a Solr config', function(done) {
     var mockConfigFile = 'test/resources/mock_solr_config_file.zip';
     var response = search.uploadConfig({clusterId: clusterId, configName: configName, configZipPath: mockConfigFile},
-      function(error, data) {});
+      function(/*error, data*/) {});
 
     assert.equal(response.headers['Content-Type'], 'application/zip');
     assert.deepEqual(response.body, fs.readFileSync(mockConfigFile));

@@ -15,8 +15,7 @@
   },
 
   "node" : true,
-  "es5" : true,
-  "browser" : true,
+  "browser" : false,
 
   "boss" : false,
   "curly": false,
@@ -26,7 +25,6 @@
   "evil": true,
   "forin": false,
   "immed": true,
-  "maxlen": 100,
   "indent": 2,
   "quotmark": "single",
   "laxbreak": false,

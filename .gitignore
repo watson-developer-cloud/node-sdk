@@ -2,3 +2,8 @@ node_modules/*
 npm-debug.log
 coverage
 .DS_Store
+test/resources/auth.js
+test/resources/mobydick.txt
+test/test.all-services.js
+test/resources/tts-output.ogg
+test/resources/face.jpg

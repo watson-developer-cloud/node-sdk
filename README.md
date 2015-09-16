@@ -25,6 +25,7 @@ APIs and SDKs that use cognitive computing to solve complex problems.
       * [Concept Expansion](#concept-expansion)
       * [Concept Insights](#concept-insights)
       * [Dialog](#dialog)
+      * [Document Conversion](#document-conversion)
       * [Language Translation](#language-translation)
       * [Message Resonance](#message-resonance)
       * [Natural Language Classifier](#natural-language-classifier)
@@ -191,14 +192,11 @@ var watson = require('watson-developer-cloud');
 var concept_insights = watson.concept_insights({
   username: '<username>',
   password: '<password>',
-  version: 'v1'
+  version: 'v2'
 });
 
-/*** Annotate Text ***/
-
 var params = {
-  user: 'wikipedia',
-  graph: 'en-20120601',
+  graph: '/graphs/wikipedia/en20120601',
   text: 'IBM Watson won the Jeopardy television show hosted by Alex Trebek'
 };
 
@@ -207,30 +205,7 @@ concept_insights.annotateText(params, function(err, res) {
   if (err)
     console.log(err);
   else {
-    console.log("\n*** Annotate Text ***\n");
     console.log(JSON.stringify(res, null, 2));
-  }
-});
-
-/*** Semantic Search ***/
-
-var payload = {
-  func: 'semanticSearch',
-  ids: [
-    '/graph/wikipedia/en-20120601/Software_development_process',
-    '/graph/wikipedia/en-20120601/Programming_tool'
-  ],
-  corpus: 'ibmresearcher',
-  user: 'public',
-  limit: 5
-};
-
-concept_insights.semanticSearch(payload, function(error, results) {
-  if (error)
-    console.log(error);
-  else {
-    console.log("\n*** Semantic Search ***\n");
-    console.log(JSON.stringify(results, null, 2));
   }
 });
 ```
@@ -247,12 +222,37 @@ var dialog = watson.dialog({
   version: 'v1'
 });
 
-
 dialog.getDialogs({}, function (err, dialogs) {
-    if (err)
-      console.log('error:', err);
-    else
-      console.log(JSON.stringify(dialogs, null, 2));
+  if (err)
+    console.log('error:', err);
+  else
+    console.log(JSON.stringify(dialogs, null, 2));
+});
+```
+
+### Document Conversion
+
+```javascript
+var watson = require('watson-developer-cloud');
+var fs = require('fs');
+
+var document_conversion = watson.document_conversion({
+  username: '<username>',
+  password: '<password>',
+  version: 'v1-experimental'
+});
+
+// convert a single document
+document_conversion.convert({
+  // (JSON) ANSWER_UNITS, NORMALIZED_HTML, or NORMALIZED_TEXT
+  file: fs.createReadStream('sample-docx.docx'),
+  conversion_target: document_conversion.conversion_target.ANSWER_UNITS
+}, function (err, response) {
+  if (err) {
+    console.error(err);
+  } else {
+    console.log(JSON.stringify(response, null, 2));
+  }
 });
 ```
 
@@ -278,7 +278,7 @@ language_translation.translate({
       console.log(JSON.stringify(translation, null, 2));
 });
 
-language_identification.identify({
+language_translation.identify({
   text: 'The language translation service takes text input and identifies the language used.' },
   function (err, language) {
     if (err)
@@ -327,7 +327,7 @@ var natural_language_classifier = watson.natural_language_classifier({
 
 natural_language_classifier.classify({
   text: 'Is it sunny?',
-  classifier: '<classifier-id>' },
+  classifier_id: '<classifier-id>' },
   function(err, response) {
     if (err)
       console.log('error:', err);
