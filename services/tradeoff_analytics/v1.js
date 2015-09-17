@@ -45,6 +45,7 @@ function TradeoffAnalytics(options) {
  * 								   for analytics purposes
  */
 TradeoffAnalytics.prototype.dilemmas = function(params, callback) {
+  params = params || {};
   var parameters = {
     options: {
       method: 'POST',
@@ -73,6 +74,7 @@ TradeoffAnalytics.prototype.dilemmas = function(params, callback) {
  * 								   for analytics purposes
  */
 TradeoffAnalytics.prototype.events = function(params, callback) {
+  params = params || {};
   var parameters = {
     options: {
       method: 'POST',
