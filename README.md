@@ -37,6 +37,7 @@ APIs and SDKs that use cognitive computing to solve complex problems.
       * [Speech to Text](#speech-to-text)
       * [Text to Speech](#text-to-speech)
       * [Tradeoff Analytics](#tradeoff-analytics)
+      * [Visual Insights](#visual-insights)
       * [Visual Recognition](#visual-recognition)
     * [Running in Bluemix](#running-in-bluemix)
     * [Debug](#debug)
@@ -542,6 +543,31 @@ tradeoff_analytics.dilemmas(params, function(err, res) {
 });
 ```
 
+### Visual Insights
+Use the [Visual Insights][visual_insights] to get insight into the themes present in a collection of images based on their visual appearance/content.
+
+```js
+var watson = require('watson-developer-cloud');
+var fs = require('fs');
+
+var visual_insights = watson.visual_insights({
+  username: '<username>',
+  password: '<password>',
+  version: 'v1'
+});
+
+var params = {
+  images_file: fs.createReadStream('./resources/images.zip')
+};
+
+visual_insights.summary(params, function(err, res) {
+  if (err)
+    console.log(err);
+  else
+    console.log(JSON.stringify(res, null, 2));
+});
+```
+
 ### Visual Recognition
 Use the [Visual Recognition][visual_recognition] service to recognize the
 following picture.
@@ -641,6 +667,8 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/nodejs-wrapper/blob
 [concept_expansion]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/glimpseapi/
 [relationship_extraction]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/sireapi/
 [visual_recognition]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/visual-recognition/
+[visual_insights]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/visual-insights/
+
 [text_to_speech]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/text-to-speech/
 [speech_to_text]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/speech-to-text/
 [concept_insights]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/concept-insights/
