@@ -20,6 +20,8 @@ APIs and SDKs that use cognitive computing to solve complex problems.
     * [Getting the Service Credentials](#getting-the-service-credentials)
     * [Alchemy Services](#alchemy-services)
       * [Alchemy Language](#alchemy-language)
+      * [Alchemy Vision](#alchemy-vision)
+      * [Alchemy Data News](#alchemy-data-news)
     * [IBM Watson Services](#ibm-watson-services)
       * [Authorization](#authorization)
       * [Concept Expansion](#concept-expansion)
@@ -35,6 +37,7 @@ APIs and SDKs that use cognitive computing to solve complex problems.
       * [Speech to Text](#speech-to-text)
       * [Text to Speech](#text-to-speech)
       * [Tradeoff Analytics](#tradeoff-analytics)
+      * [Visual Insights](#visual-insights)
       * [Visual Recognition](#visual-recognition)
     * [Running in Bluemix](#running-in-bluemix)
     * [Debug](#debug)
@@ -121,6 +124,55 @@ alchemy_language.sentiment(params, function (err, response) {
     console.log('error:', err);
   else
     console.log(JSON.stringify(response, null, 2));
+});
+```
+
+### Alchemy Vision
+[Alchemy Vision][alchemy_vision] uses deep learning innovations to understand a picture's content and context. It sees complex visual scenes in their entirety —without needing any textual clues— leveraging a holistic approach to understanding the multiple objects and surroundings.
+
+Example: Extract keywords from an image.
+
+```javascript
+var watson = require('watson-developer-cloud');
+var fs = require('fs');
+
+var alchemy_vision = watson.alchemy_vision({
+  api_key: '<api_key>'
+});
+
+var params = {
+  image: fs.fs.createReadStream('src/test/resources/obama.jpg')
+};
+
+alchemy_vision.getImageKeywords(params, function (err, keywords) {
+  if (err)
+    console.log('error:', err);
+  else
+    console.log(JSON.stringify(keywords, null, 2));
+});
+```
+
+### Alchemy Data News
+[Alchemy Data News][alchemy_data_news] indexes 250k to 300k English language news and blog articles every day with historical search available for the past 60 days.
+Example: Get the volume data from the last 7 days using 12hs of time slice.
+
+```javascript
+var watson = require('watson-developer-cloud');
+
+var alchemy_data_news = watson.alchemy_data_news({
+  api_key: '<api_key>'
+});
+
+var params = {
+  start: 'now-1d',
+  end: 'now'
+};
+
+alchemy_data_news.getNews(params, function (err, news) {
+  if (err)
+    console.log('error:', err);
+  else
+    console.log(JSON.stringify(news, null, 2));
 });
 ```
 
@@ -491,6 +543,31 @@ tradeoff_analytics.dilemmas(params, function(err, res) {
 });
 ```
 
+### Visual Insights
+Use the [Visual Insights][visual_insights] to get insight into the themes present in a collection of images based on their visual appearance/content.
+
+```js
+var watson = require('watson-developer-cloud');
+var fs = require('fs');
+
+var visual_insights = watson.visual_insights({
+  username: '<username>',
+  password: '<password>',
+  version: 'v1'
+});
+
+var params = {
+  images_file: fs.createReadStream('./resources/images.zip')
+};
+
+visual_insights.summary(params, function(err, res) {
+  if (err)
+    console.log(err);
+  else
+    console.log(JSON.stringify(res, null, 2));
+});
+```
+
 ### Visual Recognition
 Use the [Visual Recognition][visual_recognition] service to recognize the
 following picture.
@@ -590,6 +667,8 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/nodejs-wrapper/blob
 [concept_expansion]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/glimpseapi/
 [relationship_extraction]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/sireapi/
 [visual_recognition]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/visual-recognition/
+[visual_insights]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/visual-insights/
+
 [text_to_speech]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/text-to-speech/
 [speech_to_text]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/speech-to-text/
 [concept_insights]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/concept-insights/
@@ -598,6 +677,9 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/nodejs-wrapper/blob
 
 [alchemy_language]: http://www.alchemyapi.com/products/alchemylanguage
 [sentiment_analysis]: http://www.alchemyapi.com/products/alchemylanguage/sentiment-analysis
+[alchemy_vision]: http://www.alchemyapi.com/products/alchemyvision
+[alchemy_data_news]: http://www.alchemyapi.com/products/alchemydata-news
+
 [wdc]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/
 [bluemix]: https://console.ng.bluemix.net
 [npm_link]: https://www.npmjs.com/package/watson-developer-cloud

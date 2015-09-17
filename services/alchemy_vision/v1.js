@@ -81,14 +81,13 @@ function AlchemyVision(options) {
 /**
  * Extracts images from a URL or html
  */
-AlchemyVision.prototype.imageLinks = function(_params, callback ) {
+AlchemyVision.prototype.getImageLinks = function(_params, callback ) {
   var params = _params || {};
   var accepted_formats = Object.keys(endpoints['image_link']);
   var format = helper.getFormat(params, accepted_formats);
 
   if (format === null) {
-    callback(new Error('Missing required parameters: ' +
-      accepted_formats.join(', ') + ' needs to be specified'));
+    callback(new Error('Missing required parameters: ' + accepted_formats.join(', ') + ' needs to be specified'));
     return;
   }
 
@@ -97,7 +96,7 @@ AlchemyVision.prototype.imageLinks = function(_params, callback ) {
       url: endpoints['image_link'][format],
       method: 'POST',
       json: true,
-      qs: extend({outputMode: 'json'}, params) // change default output to json
+      qs: extend({}, params,{outputMode: 'json'}) // change default output to json
     },
     defaultOptions: this._options
   };
@@ -108,44 +107,46 @@ AlchemyVision.prototype.imageLinks = function(_params, callback ) {
 /**
  * Tags image with keywords
  */
-AlchemyVision.prototype.imageKeywords = function(_params, callback) {
-  var params = _params || {};
+AlchemyVision.prototype.getImageKeywords = function(_params, callback) {
+  var params = extend({}, _params);
   var accepted_formats = Object.keys(endpoints['image_keywords']);
   var format = helper.getFormat(params, accepted_formats);
-  var image = null;
+
   if (format === null) {
-    callback(new Error('Missing required parameters: ' +
-      accepted_formats.join(', ') + ' needs to be specified'));
+    callback(new Error('Missing required parameters: ' + accepted_formats.join(', ') + ' needs to be specified'));
     return;
   }
 
+  var parameters = {
+    options: {
+      url: endpoints['image_keywords'][format],
+      method: 'POST',
+      json: true,
+      qs: {outputMode: 'json'} // change default output to json
+    },
+    defaultOptions: this._options
+  };
 
   if (typeof(params.image) !== 'undefined') {
+
     // check if image is stream or string
-    if (typeof(params.image) !== 'string' && !isStream(params.image)) {
+    if ((typeof(params.image) !== 'string') && !isStream(params.image)) {
       callback(new Error('Invalid arguments: image needs to be a stream or base64'));
       return;
     }
 
     if (isStream(params.image)) {
       params.imagePostMode = 'raw';
-      image = params.image;
-      delete params.image;
+      // handle raw images
+      parameters.options.body = params.image;
+
     } else {
       params.imagePostMode = 'not-raw';
+      parameters.options.formData = params;
     }
+  } else {
+    parameters.options.formData = params;
   }
-
-  var parameters = {
-    options: {
-      url: endpoints['image_links'][format],
-      method: 'POST',
-      json: true,
-      body: image,
-      qs: extend({outputMode: 'json'}, params) // change default output to json
-    },
-    defaultOptions: this._options
-  };
 
   return requestFactory(parameters, errorFormatter(callback));
 };
@@ -156,7 +157,7 @@ AlchemyVision.prototype.imageKeywords = function(_params, callback) {
 AlchemyVision.prototype.recognizeFaces = function(_params, callback) {
   var params = _params || {};
 
-  if (typeof(params.image) !== 'string')
+  if (params.image && typeof(params.image) !== 'string')
     params.imagePostMode = 'raw';
 
   return createRequest('image_recognition').call(this, params, callback);

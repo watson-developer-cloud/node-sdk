@@ -12,9 +12,9 @@
   },
 
   "concepts": {
-    "url"  : "/url/URLGetRankedKeywords",
-    "text" : "/text/TextGetRankedKeywords",
-    "html" : "/html/HTMLGetRankedKeywords"
+    "url"  : "/url/URLGetRankedConcepts",
+    "text" : "/text/TextGetRankedConcepts",
+    "html" : "/html/HTMLGetRankedConcepts"
   },
 
   "sentiment": {
@@ -27,12 +27,6 @@
     "url"  : "/url/URLGetTargetedSentiment",
     "text" : "/text/TextGetTargetedSentiment",
     "html" : "/html/HTMLGetTargetedSentiment"
-  },
-
-  "category": {
-    "url"  : "/url/URLGetRankedConcepts",
-    "text" : "/text/TextGetRankedConcepts",
-    "html" : "/html/HTMLGetRankedConcepts"
   },
 
   "relations": {
@@ -50,6 +44,16 @@
   "text": {
     "url"  : "/url/URLGetText",
     "html" : "/html/HTMLGetText"
+  },
+
+  "category": {
+    "url"  : "/url/URLGetCategory",
+    "text" : "/text/TextGetCategory"
+  },
+
+  "publication_date": {
+    "url"  : "/url/URLGetPubDate",
+    "html" : "/html/HTMLGetPubDate"
   },
 
   "text_raw": {
@@ -86,7 +90,7 @@
 
   "image_link": {
     "url"  : "/url/URLGetImage",
-    "html" : "/html/HTMLGetImage"
+    "html" : "/url/HTMLGetImage"
   },
 
   "image_keywords": {

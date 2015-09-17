@@ -18,8 +18,6 @@
 
 var extend         = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
-var endpoints      = require('../../lib/alchemy_endpoints.json');
-var helper         = require('../../lib/helper');
 
 function errorFormatter(cb) {
   return function(err, result, response) {
@@ -35,32 +33,6 @@ function errorFormatter(cb) {
           code: 400
         }, null);
     }
-  };
-}
-
-function createRequest(method) {
-  return function(_params, callback ) {
-    var params = _params || {};
-    var accepted_formats = Object.keys(endpoints[method]);
-    var format = helper.getFormat(params, accepted_formats);
-
-    if (format === null) {
-      callback(new Error('Missing required parameters: ' +
-        accepted_formats.join(', ') +
-        ' needs to be specified'));
-      return;
-    }
-
-    var parameters = {
-      options: {
-        url: endpoints[method][format],
-        method: 'POST',
-        json: true,
-        form: extend({outputMode: 'json'}, params) // change default output to json
-      },
-      defaultOptions: this._options
-    };
-    return requestFactory(parameters, errorFormatter(callback));
   };
 }
 
