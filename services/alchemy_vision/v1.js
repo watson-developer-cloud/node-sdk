@@ -108,7 +108,7 @@ AlchemyVision.prototype.imageLinks = function(_params, callback ) {
 /**
  * Tags image with keywords
  */
-AlchemyVision.prototype.imageKeywords = function(_params, callback) {
+AlchemyVision.prototype.getImageKeywords = function(_params, callback) {
   var params = _params || {};
   var accepted_formats = Object.keys(endpoints['image_keywords']);
   var format = helper.getFormat(params, accepted_formats);
