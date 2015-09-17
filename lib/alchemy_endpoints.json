@@ -46,6 +46,16 @@
     "html" : "/html/HTMLGetText"
   },
 
+  "category": {
+    "url"  : "/url/URLGetCategory",
+    "text" : "/text/TextGetCategory"
+  },
+
+  "publication_date": {
+    "url"  : "/url/URLGetPubDate",
+    "html" : "/html/HTMLGetPubDate"
+  },
+
   "text_raw": {
     "url"  : "/url/URLGetRawText",
     "html" : "/html/HTMLGetRawText"
@@ -80,7 +90,7 @@
 
   "image_link": {
     "url"  : "/url/URLGetImage",
-    "html" : "/html/HTMLGetImage"
+    "html" : "/url/HTMLGetImage"
   },
 
   "image_keywords": {

@@ -131,9 +131,14 @@ AlchemyLanguage.prototype.relations = createRequest('relations');
 AlchemyLanguage.prototype.category = createRequest('category');
 
 /**
+ * Categorizes the text for text, a URL or HTML.
+ */
+AlchemyLanguage.prototype.publicationDate = createRequest('publication_date');
+
+/**
  * Detects the RSS/ATOM feeds for a URL or HTML.
  */
-AlchemyLanguage.prototype.feeds = createRequest('category');
+AlchemyLanguage.prototype.feeds = createRequest('feeds');
 
 /**
  * Parses the microformats for a URL or HTML.
