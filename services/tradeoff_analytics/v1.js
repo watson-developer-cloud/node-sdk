@@ -52,7 +52,7 @@ TradeoffAnalytics.prototype.dilemmas = function(params, callback) {
       url: '/v1/dilemmas',
       body: omit(params,['metadataHeader']),
       headers: {
-    	'x-watson-metadata' : pick(params,['metadataHeader'])
+        'x-watson-metadata' : pick(params,['metadataHeader'])
       },
       json: true
     },
@@ -62,10 +62,6 @@ TradeoffAnalytics.prototype.dilemmas = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
-/**
- *
- */
-	
  /**
  * Forward events from the Tradeoff Analytics widget to the service
  *
@@ -81,7 +77,7 @@ TradeoffAnalytics.prototype.events = function(params, callback) {
       url: '/v1/events',
       body: omit(params,['metadataHeader']),
       headers: {
-    	'x-watson-metadata' : pick(params,['metadataHeader'])
+        'x-watson-metadata' : pick(params,['metadataHeader'])
       },
       json: true
     },
