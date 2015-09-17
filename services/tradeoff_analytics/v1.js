@@ -18,8 +18,7 @@
 
 var extend         = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
-var omit = require('object.omit');
-var pick = require('object.pick');
+var omit           = require('object.omit');
 
 function TradeoffAnalytics(options) {
   // Default URL
@@ -46,13 +45,14 @@ function TradeoffAnalytics(options) {
  */
 TradeoffAnalytics.prototype.dilemmas = function(params, callback) {
   params = params || {};
+  
   var parameters = {
     options: {
       method: 'POST',
       url: '/v1/dilemmas',
-      body: omit(params,['metadataHeader']),
+      body: omit(params,['metadata_header']),
       headers: {
-        'x-watson-metadata' : pick(params,['metadataHeader'])
+        'x-watson-metadata' : params.metadata_header
       },
       json: true
     },
@@ -71,13 +71,14 @@ TradeoffAnalytics.prototype.dilemmas = function(params, callback) {
  */
 TradeoffAnalytics.prototype.events = function(params, callback) {
   params = params || {};
+  
   var parameters = {
     options: {
       method: 'POST',
       url: '/v1/events',
-      body: omit(params,['metadataHeader']),
+      body: omit(params,['metadata_header']),
       headers: {
-        'x-watson-metadata' : pick(params,['metadataHeader'])
+        'x-watson-metadata' : params.metadata_header
       },
       json: true
     },
