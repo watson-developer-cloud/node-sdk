@@ -12,9 +12,9 @@
   },
 
   "concepts": {
-    "url"  : "/url/URLGetRankedKeywords",
-    "text" : "/text/TextGetRankedKeywords",
-    "html" : "/html/HTMLGetRankedKeywords"
+    "url"  : "/url/URLGetRankedConcepts",
+    "text" : "/text/TextGetRankedConcepts",
+    "html" : "/html/HTMLGetRankedConcepts"
   },
 
   "sentiment": {
@@ -27,12 +27,6 @@
     "url"  : "/url/URLGetTargetedSentiment",
     "text" : "/text/TextGetTargetedSentiment",
     "html" : "/html/HTMLGetTargetedSentiment"
-  },
-
-  "category": {
-    "url"  : "/url/URLGetRankedConcepts",
-    "text" : "/text/TextGetRankedConcepts",
-    "html" : "/html/HTMLGetRankedConcepts"
   },
 
   "relations": {
