@@ -14,7 +14,7 @@ var params = {
 };
 
 // Retrieve the concepts for input text
-concept_insights.annotateText(params, function(err, res) {
+concept_insights.graphs.annotateText(params, function(err, res) {
   if (err)
     console.log(err);
   else {
