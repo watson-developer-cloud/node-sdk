@@ -21,7 +21,6 @@ var requestFactory = require('../../lib/requestwrapper');
 var endpoints      = require('../../lib/alchemy_endpoints.json');
 var helper         = require('../../lib/helper');
 var isStream       = require('isstream');
-var pick           = require('object.pick');
 var omit           = require('object.omit');
 var fs             = require('fs');
 
@@ -54,18 +53,33 @@ function createRequest(method) {
         ' needs to be specified'));
       return;
     }
+    // always return json
+    params.outputMode = 'json';
 
     var parameters = {
       options: {
         url: endpoints[method][format],
-        method: 'POST',
-        json: true,
-        qs: extend({outputMode: 'json'}, params) // change default output to json
+        method: 'POST'
       },
       defaultOptions: this._options
     };
 
-    return requestFactory(parameters, errorFormatter(callback));
+    if (!params.image || !isStream(params.image)) {
+      // url or base64 images are considered 'not-raw'
+      params.imagePostMode = 'not-raw';
+      // send the parameters as form url-encoded
+      parameters.options.form = params;
+      return requestFactory(parameters, errorFormatter(callback));
+    } else {
+      params.imagePostMode = 'raw';
+      // send the parameters as query parameters
+      parameters.options.qs = omit(params,['image']);
+      // add the content-length to the headers
+      parameters.options.headers = {
+        'Content-Length': fs.statSync(params.image.path).size
+      };
+      return params.image.pipe(requestFactory(parameters, errorFormatter(callback)));
+    }
   };
 }
 
@@ -81,86 +95,16 @@ function AlchemyVision(options) {
 /**
  * Extracts images from a URL or html
  */
-AlchemyVision.prototype.getImageLinks = function(_params, callback ) {
-  var params = _params || {};
-  var accepted_formats = Object.keys(endpoints['image_link']);
-  var format = helper.getFormat(params, accepted_formats);
-
-  if (format === null) {
-    callback(new Error('Missing required parameters: ' + accepted_formats.join(', ') + ' needs to be specified'));
-    return;
-  }
-
-  var parameters = {
-    options: {
-      url: endpoints['image_link'][format],
-      method: 'POST',
-      json: true,
-      qs: extend({}, params,{outputMode: 'json'}) // change default output to json
-    },
-    defaultOptions: this._options
-  };
-
-  return requestFactory(parameters, errorFormatter(callback));
-};
+AlchemyVision.prototype.getImageLinks = createRequest('image_link');
 
 /**
  * Tags image with keywords
  */
-AlchemyVision.prototype.getImageKeywords = function(_params, callback) {
-  var params = extend({}, _params);
-  var accepted_formats = Object.keys(endpoints['image_keywords']);
-  var format = helper.getFormat(params, accepted_formats);
-
-  if (format === null) {
-    callback(new Error('Missing required parameters: ' + accepted_formats.join(', ') + ' needs to be specified'));
-    return;
-  }
-
-  var parameters = {
-    options: {
-      url: endpoints['image_keywords'][format],
-      method: 'POST',
-      json: true,
-      qs: {outputMode: 'json'} // change default output to json
-    },
-    defaultOptions: this._options
-  };
-
-  if (typeof(params.image) !== 'undefined') {
-
-    // check if image is stream or string
-    if ((typeof(params.image) !== 'string') && !isStream(params.image)) {
-      callback(new Error('Invalid arguments: image needs to be a stream or base64'));
-      return;
-    }
-
-    if (isStream(params.image)) {
-      params.imagePostMode = 'raw';
-      // handle raw images
-      parameters.options.body = params.image;
-
-    } else {
-      params.imagePostMode = 'not-raw';
-      parameters.options.formData = params;
-    }
-  } else {
-    parameters.options.formData = params;
-  }
-
-  return requestFactory(parameters, errorFormatter(callback));
-};
+AlchemyVision.prototype.getImageKeywords = createRequest('image_keywords');
 
 /**
  * Face detection and Recognition
  */
-AlchemyVision.prototype.recognizeFaces = function(_params, callback) {
-  var params = _params || {};
-
-  if (params.image && typeof(params.image) !== 'string')
-    params.imagePostMode = 'raw';
-
-  return createRequest('image_recognition').call(this, params, callback);
-};
+AlchemyVision.prototype.recognizeFaces = createRequest('image_recognition');
 
 module.exports = AlchemyVision;
