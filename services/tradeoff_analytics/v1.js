@@ -18,6 +18,7 @@
 
 var extend         = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
+var omit           = require('object.omit');
 
 function TradeoffAnalytics(options) {
   // Default URL
@@ -39,16 +40,48 @@ function TradeoffAnalytics(options) {
  * @param  {String} params.subject Name of the decision problem
  * @param  {String} params.options A list of options. Typically, the rows in a
  *                                 table representation of your data
+ * @param  {String} params.metadataHeader Value of the x-watson-metadata header to be forwarded
+ * 								   for analytics purposes
  */
 TradeoffAnalytics.prototype.dilemmas = function(params, callback) {
+  params = params || {};
+  
   var parameters = {
     options: {
       method: 'POST',
       url: '/v1/dilemmas',
-      body: params,
-      json: true,
+      body: omit(params,['metadata_header']),
+      headers: {
+        'x-watson-metadata' : params.metadata_header
+      },
+      json: true
     },
     requiredParams: ['columns', 'subject', 'options'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+ /**
+ * Forward events from the Tradeoff Analytics widget to the service
+ *
+ * @param  {String} params - the array of events to forward to the service
+ * @param  {String} params.metadataHeader Value of the x-watson-metadata header to be forwarded
+ * 								   for analytics purposes
+ */
+TradeoffAnalytics.prototype.events = function(params, callback) {
+  params = params || {};
+  
+  var parameters = {
+    options: {
+      method: 'POST',
+      url: '/v1/events',
+      body: omit(params,['metadata_header']),
+      headers: {
+        'x-watson-metadata' : params.metadata_header
+      },
+      json: true
+    },
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
