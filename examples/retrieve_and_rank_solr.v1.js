@@ -10,7 +10,7 @@ var retrieve = watson.retrieve_and_rank({
   username: username,
   password: password,
   version: 'v1',
-  url: 'https://gateway.watsonplatform.net/retrieve/api'
+  url: 'https://gateway.watsonplatform.net/retrieve-and-rank/api'
 });
 
 var clusterId = 'INSERT YOUR CLUSTER ID HERE';

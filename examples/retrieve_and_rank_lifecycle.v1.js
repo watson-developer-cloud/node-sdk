@@ -7,18 +7,12 @@ var retrieve = watson.retrieve_and_rank({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
   password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
   version: 'v1',
-  url: 'https://gateway.watsonplatform.net/search/api'
+  url: 'https://gateway.watsonplatform.net/retrieve-and-rank/api'
 });
 
 var clusterId;
 
 async.series([
-  function deleteExistingClusters(done) {
-    console.log('Deleting exisiting Solr clusters.');
-    retrieve.deleteClusters({}, function(err, res) {
-      printResponse(err, 'Error deleting exisiting Solr clusters: ', res, done);
-    });
-  },
 
   function createCluster(done) {
     retrieve.createCluster({cluster_name: 'example_cluster', cluster_size: '1'}, function getId(err, res) {

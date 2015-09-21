@@ -16,7 +16,6 @@ describe('retrieve_and_rank', function() {
 
   var solrClustersPath = '/v1/solr_clusters';
   var listResponse = 'list response';
-  var deleteAllResponse = 'delete all response';
   var createResponse = 'create response';
 
   var solrClusterPath = '/v1/solr_clusters/' + clusterId;
@@ -61,7 +60,6 @@ describe('retrieve_and_rank', function() {
     nock.disableNetConnect();
     nock(service.url).persist()
       .get(solrClustersPath).reply(200, listResponse)
-      .delete(solrClustersPath).reply(200, deleteAllResponse)
       .post(solrClustersPath).reply(200, createResponse)
 
     .get(solrClusterPath).reply(200, pollResponse)
@@ -86,13 +84,6 @@ describe('retrieve_and_rank', function() {
   it('can list Solr clusters', function(done) {
     search.listClusters({}, function(error, data) {
       assert.equal(data, listResponse);
-      done();
-    });
-  });
-
-  it('can delete all Solr clusters', function(done) {
-    search.deleteClusters({}, function(error, data) {
-      assert.equal(data, deleteAllResponse);
       done();
     });
   });
