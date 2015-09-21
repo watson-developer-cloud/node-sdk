@@ -47,18 +47,6 @@ RetrieveAndRank.prototype.listClusters = function(params, callback) {
 };
 
 /**
- * Deletes all Solr clusters currently associated with the service instance.
- *
- * @param params An Object representing the parameters for this service call.
- *   This request currently does not require any parameters.
- *
- * @param callback The callback.
- */
-RetrieveAndRank.prototype.deleteClusters = function(params, callback) {
-  return sendRequest('DELETE', solrClustersPath(), this._options, callback);
-};
-
-/**
  * Creates a Solr cluster.
  *
  * @param params An Object representing the parameters for this service call.
