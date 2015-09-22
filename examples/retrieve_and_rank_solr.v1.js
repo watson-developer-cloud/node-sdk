@@ -16,7 +16,7 @@ var retrieve = watson.retrieve_and_rank({
 var clusterId = 'INSERT YOUR CLUSTER ID HERE';
 var collectionName = 'example_collection';
 var configName     = 'example_config';
-var configZipPath = 'path/to/config.zip';
+var configZipPath = 'examples/resources/example_solr_config.zip';
 
 var solrClient = retrieve.createSolrClient({
   clusterId: clusterId,
@@ -81,7 +81,7 @@ async.series([
 
   function indexAndCommit(done) {
     console.log('Indexing a document...');
-    var doc = { id : 1234, title_t : 'Hello', text: 'some text' };
+    var doc = { id : 1234, title_t : 'Hello', text_field_s: 'some text' };
     solrClient.add(doc, function(err) {
       if(err) {
         console.log('Error indexing document: ' + err);
