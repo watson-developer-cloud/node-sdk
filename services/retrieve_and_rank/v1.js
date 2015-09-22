@@ -83,20 +83,20 @@ RetrieveAndRank.prototype.createRanker = function(params, callback) {
 RetrieveAndRank.prototype.rank = function(params, callback) {
   params = params || {};
 
-  if (!params || !params.training_data) {
-    callback(new Error('Missing required parameters: training_data'));
+  if (!params || !params.answer_data) {
+    callback(new Error('Missing required parameters: answer_data'));
     return;
   }
-  if (!((Array.isArray(params.training_data)) ||
-      (typeof params.training_data === 'string') ||
-      (isStream(params.training_data)))) {
-    callback(new Error('training_data needs to be a String, Array or Stream'));
+  if (!((Array.isArray(params.answer_data)) ||
+      (typeof params.answer_data === 'string') ||
+      (isStream(params.answer_data)))) {
+    callback(new Error('answer_data needs to be a String, Array or Stream'));
     return;
   }
 
   var self = this;
 
-  toCSV(params.training_data, function(err, csv) {
+  toCSV(params.answer_data, function(err, csv) {
     if (err) {
       callback(err);
       return;
