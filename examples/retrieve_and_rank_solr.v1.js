@@ -19,8 +19,8 @@ var configName     = 'example_config';
 var configZipPath = 'examples/resources/example_solr_config.zip';
 
 var solrClient = retrieve.createSolrClient({
-  clusterId: clusterId,
-  collectionName: collectionName,
+  cluster_id: clusterId,
+  collection_name: collectionName,
   username: username,
   password: password
 });
@@ -29,9 +29,9 @@ async.series([
   function uploadConfig(done) {
     console.log('Uploading Solr config ' +  configName);
     retrieve.uploadConfig({
-        clusterId: clusterId,
-        configName: configName,
-        configZipPath: configZipPath
+        cluster_id: clusterId,
+        config_name: configName,
+        config_zip_path: configZipPath
       },
       function(err) {
         printResponse(err, 'Error uploading Solr config: ', 'Uploaded Solr config ' + configName, done);
@@ -41,7 +41,7 @@ async.series([
 
   function listConfigs(done) {
     console.log('Listing Solr configs for cluster ' + clusterId);
-    retrieve.listConfigs({clusterId: clusterId}, function(err, res) {
+    retrieve.listConfigs({cluster_id: clusterId}, function(err, res) {
       printResponse(err, 'Error listing Solr configs: ', res, done);
     });
   },
@@ -49,8 +49,8 @@ async.series([
   function getConfig(done) {
     console.log('Getting Solr config ' + configName);
     retrieve.getConfig({
-      clusterId: clusterId,
-      configName: configName
+      cluster_id: clusterId,
+      config_name: configName
     }, function(err) {
       if (err) {
         console.log('Error getting config: ' + JSON.stringify(err, null, 2));
@@ -64,9 +64,9 @@ async.series([
 
   function createCollection(done) {
     retrieve.createCollection({
-      clusterId: clusterId,
-      collectionName: collectionName,
-      configName: configName
+      cluster_id: clusterId,
+      collection_name: collectionName,
+      config_name: configName
     }, function(err, res) {
       printResponse(err, 'Error creating Solr collection: ', res, done);
     });
@@ -74,7 +74,7 @@ async.series([
   },
 
   function listCollections(done) {
-    retrieve.listCollections({clusterId: clusterId}, function(err, res) {
+    retrieve.listCollections({cluster_id: clusterId}, function(err, res) {
       printResponse(err, 'Error listing Solr collections: ', res, done);
     });
   },
@@ -118,8 +118,8 @@ async.series([
   function deleteCollection(done) {
     console.log('Deleting Solr collection ' + collectionName);
     retrieve.deleteCollection({
-      clusterId: clusterId,
-      collectionName: collectionName
+      cluster_id: clusterId,
+      collection_name: collectionName
     }, function(err) {
       printResponse(err, 'Error deleting collection: ', 'Deleted Solr collection ' + collectionName, done);
     });
@@ -129,8 +129,8 @@ async.series([
   function deleteConfig(done) {
     console.log('Deleting Solr config ' + configName);
     retrieve.deleteConfig({
-      clusterId: clusterId,
-      configName: configName
+      cluster_id: clusterId,
+      config_name: configName
     }, function(err) {
       printResponse(err, 'Error deleting config: ', 'Deleted Solr config ' + configName, done);
     });
