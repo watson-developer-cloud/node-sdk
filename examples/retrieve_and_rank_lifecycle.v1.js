@@ -44,14 +44,14 @@ async.series([
 
   function deleteCluster(done) {
     console.log('Deleting Solr cluster ' + clusterId);
-    retrieve.deleteCluster({clusterId: clusterId}, function(err) {
+    retrieve.deleteCluster({cluster_id: clusterId}, function(err) {
       printResponse(err, 'Error deleting Solr cluster: ', 'Deleted Solr cluster ' + clusterId, done);
     });
   }
 ]);
 
 function waitForCluster(clusterId, callback) {
-  retrieve.pollCluster({clusterId: clusterId}, function isReady(err, res) {
+  retrieve.pollCluster({cluster_id: clusterId}, function isReady(err, res) {
     if(err) {
       return console.log('Error polling Solr cluster: ' + JSON.stringify(err, null, 2));
     }
