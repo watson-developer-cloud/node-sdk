@@ -46,35 +46,24 @@ RetrieveAndRank.prototype.createRanker = function(params, callback) {
     callback(new Error('Missing required parameters: training_data'));
     return;
   }
-  if (!((Array.isArray(params.training_data)) ||
-      (typeof params.training_data === 'string') ||
-      (isStream(params.training_data)))) {
-    callback(new Error('training_data needs to be a String, Array or Stream'));
+  if ((typeof params.training_data !== 'string') || (!isStream(params.training_data))) {
+    callback(new Error('training_data needs to be a String or Stream'));
     return;
   }
 
-  var self = this;
-
-  toCSV(params.training_data, function(err, csv) {
-    if (err) {
-      callback(err);
-      return;
-    }
-
-    var parameters = {
-      options: {
-        url: '/v1/rankers',
-        method: 'POST',
-        json: true,
-        formData: {
-          training_data: csv,
-          training_metadata: JSON.stringify(omit(params, ['training_data']))
-        }
-      },
-      defaultOptions: self._options
-    };
-    return requestFactory(parameters, callback);
-  });
+  var parameters = {
+    options: {
+      url: '/v1/rankers',
+      method: 'POST',
+      json: true,
+      formData: {
+        training_data: params.training_data,
+        training_metadata: JSON.stringify(omit(params, ['training_data']))
+      }
+    },
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
 };
 
 /**
@@ -87,37 +76,27 @@ RetrieveAndRank.prototype.rank = function(params, callback) {
     callback(new Error('Missing required parameters: answer_data'));
     return;
   }
-  if (!((Array.isArray(params.answer_data)) ||
-      (typeof params.answer_data === 'string') ||
-      (isStream(params.answer_data)))) {
-    callback(new Error('answer_data needs to be a String, Array or Stream'));
+  if ((typeof params.answer_data !== 'string') || (!isStream(params.answer_data))) {
+    callback(new Error('answer_data needs to be a String or Stream'));
     return;
   }
 
-  var self = this;
 
-  toCSV(params.answer_data, function(err, csv) {
-    if (err) {
-      callback(err);
-      return;
-    }
-
-    var parameters = {
-      options: {
-        url: '/v1/rankers/{ranker_id}/rank',
-        method: 'POST',
-        json: true,
-        formData: {
-          answer_data: csv, //add csv transformation
-          answer_metadata: JSON.stringify(omit(params, ['answer_data']))
-        },
-        path: pick(params, ['ranker_id'])
+  var parameters = {
+    options: {
+      url: '/v1/rankers/{ranker_id}/rank',
+      method: 'POST',
+      json: true,
+      formData: {
+        answer_data: params.answer_data,
+        answer_metadata: JSON.stringify(omit(params, ['answer_data']))
       },
-      requiredParams: ['ranker_id'],
-      defaultOptions: self._options
-    };
-    return requestFactory(parameters, callback);
-  });
+      path: pick(params, ['ranker_id'])
+    },
+    requiredParams: ['ranker_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
 };
 
 /**
