@@ -69,7 +69,7 @@ Dialog.prototype.updateProfile = function(params, callback) {
       qs: pick(params, ['client_id']),
       path: params
     },
-    requiredParams: ['dialog_id', 'client_id', 'name_values'],
+    requiredParams: ['dialog_id', 'name_values'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
