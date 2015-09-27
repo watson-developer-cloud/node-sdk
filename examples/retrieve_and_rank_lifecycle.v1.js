@@ -12,10 +12,16 @@ var retrieve = watson.retrieve_and_rank({
 
 var clusterId;
 
+// Label to identify your cluster in responses.
+var clusterName = 'example_cluster';
+
+// The empty string will create a free cluster. Input an integer to create a cluster of that many units.
+var clusterSize = '';
+
 async.series([
 
   function createCluster(done) {
-    retrieve.createCluster({cluster_name: 'example_cluster', cluster_size: '1'}, function getId(err, res) {
+    retrieve.createCluster({cluster_name: clusterName, cluster_size: clusterSize}, function getId(err, res) {
       if (err) {
         return console.log('Error creating Solr cluster: ' + JSON.stringify(err));
       }
@@ -38,14 +44,14 @@ async.series([
 
   function deleteCluster(done) {
     console.log('Deleting Solr cluster ' + clusterId);
-    retrieve.deleteCluster({clusterId: clusterId}, function(err) {
+    retrieve.deleteCluster({cluster_id: clusterId}, function(err) {
       printResponse(err, 'Error deleting Solr cluster: ', 'Deleted Solr cluster ' + clusterId, done);
     });
   }
 ]);
 
 function waitForCluster(clusterId, callback) {
-  retrieve.pollCluster({clusterId: clusterId}, function isReady(err, res) {
+  retrieve.pollCluster({cluster_id: clusterId}, function isReady(err, res) {
     if(err) {
       return console.log('Error polling Solr cluster: ' + JSON.stringify(err, null, 2));
     }

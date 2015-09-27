@@ -50,7 +50,7 @@ function formatConceptIds(ids) {
 function ConceptInsights(options) {
   // Default URL
   var serviceDefaults = {
-    url: 'https://gateway.watsonplatform.net/concept-insights-beta/api'
+    url: 'https://gateway.watsonplatform.net/concept-insights/api'
   };
 
   // Replace default options with user provided
