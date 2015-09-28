@@ -276,7 +276,11 @@ RetrieveAndRank.prototype.createSolrClient = function(params) {
     secure: true,
     core: params.collection_name
   });
-  solrClient.basicAuth(params.username, params.password);
+
+  if (this._options.api_key) {
+    var auth = new Buffer(this._options.api_key, 'base64').toString('ascii').split(':');
+    solrClient.basicAuth(auth[0], auth[1]);
+  }
   return solrClient;
 };
 
