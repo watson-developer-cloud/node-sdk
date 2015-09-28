@@ -257,8 +257,6 @@ RetrieveAndRank.prototype.deleteCollection = function(params, callback) {
  *   Required params:
  *     - cluster_id: the ID of the Solr cluster to delete the collection on
  *     - collection_name: the name of the collection for indexing/searching
- *     - username: the Bluemix service username
- *     - password: the Bluemix service password
  */
 RetrieveAndRank.prototype.createSolrClient = function(params) {
   if (!params || !params.cluster_id) {
