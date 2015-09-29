@@ -21,13 +21,16 @@ var pick           = require('object.pick');
 var requestFactory = require('../../lib/requestwrapper');
 
 function toQuestion(params) {
-  return {
+  var question = {
     evidenceRequest: {
       items: params.items || 5 // the number of answers, 5 by default
     },
     questionText: params.text,
-    formattedAnswer: (params.formattedAnswer) ? params.formattedAnswer : false
   };
+  if (params.formattedAnswer)
+    question.formattedAnswer = true;
+
+  return question;
 };
 
 
