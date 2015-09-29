@@ -16,7 +16,6 @@
 
 'use strict';
 
-var pick = require('object.pick');
 var omit = require('object.omit');
 var extend = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
