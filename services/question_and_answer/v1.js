@@ -23,9 +23,10 @@ var requestFactory = require('../../lib/requestwrapper');
 function toQuestion(params) {
   return {
     evidenceRequest: {
-      items: params.items || 5 // the number of anwers, 5 by default
+      items: params.items || 5 // the number of answers, 5 by default
     },
-    questionText: params.text
+    questionText: params.text,
+    formattedAnswer: (params.formattedAnswer) ? params.formattedAnswer : false
   };
 };
 
