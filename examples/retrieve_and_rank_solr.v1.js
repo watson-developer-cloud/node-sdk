@@ -3,12 +3,9 @@
 var watson = require('watson-developer-cloud');
 var async  = require('async');
 
-var username = 'INSERT YOUR USERNAME FOR THE SERVICE HERE';
-var password = 'INSERT YOUR PASSWORD FOR THE SERVICE HERE';
-
 var retrieve = watson.retrieve_and_rank({
-  username: username,
-  password: password,
+  username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
+  password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
   version: 'v1',
   url: 'https://gateway.watsonplatform.net/retrieve-and-rank/api'
 });
@@ -20,9 +17,7 @@ var configZipPath = 'examples/resources/example_solr_config.zip';
 
 var solrClient = retrieve.createSolrClient({
   cluster_id: clusterId,
-  collection_name: collectionName,
-  username: username,
-  password: password
+  collection_name: collectionName
 });
 
 async.series([
