@@ -75,7 +75,8 @@
     "object.pick": "~1.1.1",
     "request": "~2.61.0",
     "solr-client": "~0.5.0",
-    "string": "3.3.1"
+    "string": "3.3.1",
+    "vcap_services": "^0.1.4"
   },
   "engines": {
     "node": ">=0.10"
