@@ -21,6 +21,9 @@ var url            = require('url');
 var extend         = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
 var solr           = require('solr-client');
+var pick           = require('object.pick');
+var omit           = require('object.omit');
+var isStream       = require('isstream');
 
 function RetrieveAndRank(options) {
   var serviceDefaults = {
@@ -31,6 +34,124 @@ function RetrieveAndRank(options) {
   // Extend default options with user provided options
   this._options = extend(serviceDefaults, options);
 }
+
+/**
+ * Creates a ranker
+ */
+RetrieveAndRank.prototype.createRanker = function(params, callback) {
+  params = params || {};
+
+  if (!params || !params.training_data) {
+    callback(new Error('Missing required parameters: training_data'));
+    return;
+  }
+  if ((typeof params.training_data !== 'string') || (!isStream(params.training_data))) {
+    callback(new Error('training_data needs to be a String or Stream'));
+    return;
+  }
+
+  var parameters = {
+    options: {
+      url: '/v1/rankers',
+      method: 'POST',
+      json: true,
+      formData: {
+        training_data: params.training_data,
+        training_metadata: JSON.stringify(omit(params, ['training_data']))
+      }
+    },
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Returns the ranked candidates
+ */
+RetrieveAndRank.prototype.rank = function(params, callback) {
+  params = params || {};
+
+  if (!params || !params.answer_data) {
+    callback(new Error('Missing required parameters: answer_data'));
+    return;
+  }
+  if ((typeof params.answer_data !== 'string') || (!isStream(params.answer_data))) {
+    callback(new Error('answer_data needs to be a String or Stream'));
+    return;
+  }
+
+  var parameters = {
+    options: {
+      url: '/v1/rankers/{ranker_id}/rank',
+      method: 'POST',
+      json: true,
+      formData: {
+        answer_data: params.answer_data,
+        answer_metadata: JSON.stringify(omit(params, ['answer_data']))
+      },
+      path: pick(params, ['ranker_id'])
+    },
+    requiredParams: ['ranker_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Returns the training status of the ranker
+ */
+RetrieveAndRank.prototype.rankerStatus = function(params, callback) {
+  params = params || {};
+
+  var parameters = {
+    options: {
+      url: '/v1/rankers/{ranker_id}',
+      method: 'GET',
+      json: true,
+      path: params
+    },
+    requiredParams: ['ranker_id'],
+    defaultOptions: this._options
+  };
+
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Retrieves the list of rankers for the user
+ */
+RetrieveAndRank.prototype.listRankers = function(params, callback) {
+  var parameters = {
+    options: {
+      url: '/v1/rankers',
+      method: 'GET',
+      json: true
+    },
+    defaultOptions: this._options
+  };
+
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Deletes a ranker
+ */
+RetrieveAndRank.prototype.deleteRanker = function(params, callback) {
+  params = params || {};
+
+  var parameters = {
+    options: {
+      url: '/v1/rakers/{ranker_id}',
+      method: 'DELETE',
+      path: params,
+      json: true
+    },
+    requiredParams: ['ranker_id'],
+    defaultOptions: this._options
+  };
+
+  return requestFactory(parameters, callback);
+};
 
 // Solr cluster lifecycle operations
 
