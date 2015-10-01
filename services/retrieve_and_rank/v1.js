@@ -25,7 +25,7 @@ var solr           = require('solr-client');
 function RetrieveAndRank(options) {
   var serviceDefaults = {
     version: 'v1',
-    url: 'https://gateway.watsonplatform.net/search/api'
+    url: 'https://gateway.watsonplatform.net/retrieve-and-rank/api'
   };
 
   // Extend default options with user provided options
