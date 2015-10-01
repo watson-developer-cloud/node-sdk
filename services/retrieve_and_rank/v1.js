@@ -25,7 +25,7 @@ var solr           = require('solr-client');
 function RetrieveAndRank(options) {
   var serviceDefaults = {
     version: 'v1',
-    url: 'https://gateway.watsonplatform.net/search/api'
+    url: 'https://gateway.watsonplatform.net/retrieve-and-rank/api'
   };
 
   // Extend default options with user provided options
@@ -35,7 +35,7 @@ function RetrieveAndRank(options) {
 // Solr cluster lifecycle operations
 
 /**
- * Lists all Solr clusters currently associated with the service instance.
+ * Lists all Solr clusters associated with the service instance.
  *
  * @param params An Object representing the parameters for this service call.
  *   This request currently does not require any parameters.
@@ -85,7 +85,7 @@ RetrieveAndRank.prototype.pollCluster = function(params, callback) {
 };
 
 /**
- * Deletes an existing Solr cluster.
+ * Deletes a Solr cluster.
  *
  * @param params An Object representing the parameters for this service call.
  *   Required params:
@@ -150,7 +150,7 @@ RetrieveAndRank.prototype.uploadConfig = function(params, callback) {
 };
 
 /**
- * Get a configuration set from ZooKeeper as a ZIP file.
+ * Get a configuration set from ZooKeeper as a .zip file.
  *
  * @param params An Object representing the parameters for this service call.
  *   Required params:
@@ -190,7 +190,7 @@ RetrieveAndRank.prototype.deleteConfig = function(params, callback) {
 // Solr collection operations
 
 /**
- * List all collections for a given Solr cluster.
+ * List all collections for a Solr cluster.
  *
  * @param params An Object representing the parameters for this service call.
  *   Required params:
