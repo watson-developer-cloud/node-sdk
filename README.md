@@ -42,7 +42,7 @@ APIs and SDKs that use cognitive computing to solve complex problems.
     * [Running in Bluemix](#running-in-bluemix)
     * [Debug](#debug)
     * [Tests](#tests)
-    * [Open Source @ IBM](#open-source--ibm)
+    * [Open Source @ IBM](#open-source-ibm)
     * [License](#license)
     * [Contributing](#contributing)
 
@@ -182,7 +182,7 @@ apps.
 
 ### Authorization
 The Authorization service can generates tokens, this are useful when it's too cumbersome to provide a username/password pair.  
-Tokens are valid for 1 hour and need to be send using the `X-Watson-Authorization-Token` header. 
+Tokens are valid for 1 hour and need to be send using the `X-Watson-Authorization-Token` header.
 
 ```javascript
 var watson = require('watson-developer-cloud');
