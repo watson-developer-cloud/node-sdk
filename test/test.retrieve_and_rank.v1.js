@@ -70,10 +70,10 @@ describe('retrieve_and_rank', function() {
       .get(configPath).reply(200, configGetResponse)
       .delete(configPath).reply(200, configDeleteResponse)
 
-    .get(collectionsPath + '?action=CREATE&name=' + collectionName + '&collection.configName=' + configName)
+    .get(collectionsPath + '?action=CREATE&wt=json&name=' + collectionName + '&collection.configName=' + configName)
       .reply(200, collectionCreateResponse)
-      .get(collectionsPath + '?action=LIST').reply(200, collectionListResponse)
-      .get(collectionsPath + '?action=DELETE&name=' + collectionName)
+      .get(collectionsPath + '?action=LIST&wt=json').reply(200, collectionListResponse)
+      .get(collectionsPath + '?action=DELETE&wt=json&name=' + collectionName)
       .reply(200, collectionDeleteResponse);
   });
 
