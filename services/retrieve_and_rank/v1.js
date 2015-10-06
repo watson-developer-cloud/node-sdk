@@ -57,7 +57,7 @@ RetrieveAndRank.prototype.createRanker = function(params, callback) {
       json: true,
       formData: {
         training_data: params.training_data,
-        training_metadata: JSON.stringify(omit(params, ['training_data']))
+        training_metadata: params.training_metadata || JSON.stringify(omit(params, ['training_data']))
       }
     },
     defaultOptions: this._options
