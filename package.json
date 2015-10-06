@@ -58,25 +58,25 @@
     "url": "https://github.com/watson-developer-cloud/nodejs-wrapper/issues"
   },
   "devDependencies": {
-    "mocha": "~2.2.1",
-    "coveralls": "~2.11.2",
-    "istanbul": "~0.3.15",
-    "nock": "~2.10.0",
+    "mocha": "~2.2.5",
+    "coveralls": "~2.11.4",
+    "istanbul": "~0.3.22",
+    "nock": "~2.13.0",
     "jshint": "~2.8.0",
-    "qs": "~4.0.0"
+    "qs": "~5.1.0"
   },
   "dependencies": {
-    "async": "~1.4.0",
-    "cookie": "~0.2.0",
+    "async": "~1.4.2",
+    "cookie": "~0.2.2",
     "csv-stringify": "~0.0.8",
     "extend": "~3.0.0",
     "isstream": "~0.1.2",
     "object.omit": "~2.0.0",
     "object.pick": "~1.1.1",
-    "request": "~2.61.0",
+    "request": "~2.64.0",
     "solr-client": "~0.5.0",
     "string": "3.3.1",
-    "vcap_services": "^0.1.4"
+    "vcap_services": "^0.1.7"
   },
   "engines": {
     "node": ">=0.10"
