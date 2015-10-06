@@ -45,7 +45,7 @@ RetrieveAndRank.prototype.createRanker = function(params, callback) {
     callback(new Error('Missing required parameters: training_data'));
     return;
   }
-  if ((typeof params.training_data !== 'string') || (!isStream(params.training_data))) {
+  if ((typeof params.training_data !== 'string') && (!isStream(params.training_data))) {
     callback(new Error('training_data needs to be a String or Stream'));
     return;
   }
@@ -75,7 +75,7 @@ RetrieveAndRank.prototype.rank = function(params, callback) {
     callback(new Error('Missing required parameters: answer_data'));
     return;
   }
-  if ((typeof params.answer_data !== 'string') || (!isStream(params.answer_data))) {
+  if ((typeof params.answer_data !== 'string') && (!isStream(params.answer_data))) {
     callback(new Error('answer_data needs to be a String or Stream'));
     return;
   }
