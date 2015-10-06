@@ -1,7 +1,7 @@
 Watson Developer Cloud Node.js Client
 ============================================
 [![Codacy Badge](https://www.codacy.com/project/badge/9d457db455d846649457bb97b6dea290)](https://www.codacy.com/app/germanattanasio/nodejs-wrapper)
-[![Build Status](https://secure.travis-ci.org/watson-developer-cloud/nodejs-wrapper.png)](http://travis-ci.org/watson-developer-cloud/nodejs-wrapper)
+[![Build Status](https://secure.travis-ci.org/watson-developer-cloud/nodejs-wrapper.svg)](http://travis-ci.org/watson-developer-cloud/nodejs-wrapper)
 [![Dependency Status](https://gemnasium.com/watson-developer-cloud/nodejs-wrapper.png)](https://gemnasium.com/watson-developer-cloud/nodejs-wrapper)
 [![Coverage Status](https://img.shields.io/coveralls/watson-developer-cloud/nodejs-wrapper.svg)](https://coveralls.io/r/watson-developer-cloud/nodejs-wrapper)
 
