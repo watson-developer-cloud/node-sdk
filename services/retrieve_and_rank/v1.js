@@ -141,7 +141,7 @@ RetrieveAndRank.prototype.deleteRanker = function(params, callback) {
 
   var parameters = {
     options: {
-      url: '/v1/rakers/{ranker_id}',
+      url: '/v1/rankers/{ranker_id}',
       method: 'DELETE',
       path: params,
       json: true
