@@ -42,7 +42,7 @@ APIs and SDKs that use cognitive computing to solve complex problems.
     * [Running in Bluemix](#running-in-bluemix)
     * [Debug](#debug)
     * [Tests](#tests)
-    * [Open Source @ IBM](#open-source-ibm)
+    * [Open Source @ IBM](#open-source--ibm)
     * [License](#license)
     * [Contributing](#contributing)
 
@@ -248,7 +248,7 @@ var concept_insights = watson.concept_insights({
 });
 
 var params = {
-  graph: '/graphs/wikipedia/en20120601',
+  graph: '/graphs/wikipedia/en-20120601',
   text: 'IBM Watson won the Jeopardy television show hosted by Alex Trebek'
 };
 

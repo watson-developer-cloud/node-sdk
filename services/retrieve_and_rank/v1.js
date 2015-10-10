@@ -316,6 +316,8 @@ RetrieveAndRank.prototype.deleteConfig = function(params, callback) {
  * @param params An Object representing the parameters for this service call.
  *   Required params:
  *     - cluster_id: the ID of the Solr cluster to list collections from
+ *   Optional params:
+ *     - wt: the writer type for the response, defaults to 'json'
  *
  * @param callback The callback.
  */
@@ -323,7 +325,8 @@ RetrieveAndRank.prototype.listCollections = function(params, callback) {
   if (!params || !params.cluster_id) {
     return callback(new Error('Missing required parameter: cluster_id'));
   }
-  return sendRequest('GET', adminCollectionsPath(params.cluster_id, 'LIST'), this._options, callback);
+  var listPath = adminCollectionsPath(params.cluster_id, 'LIST', getWriterType(params));
+  return sendRequest('GET', listPath, this._options, callback);
 };
 
 /**
@@ -334,6 +337,8 @@ RetrieveAndRank.prototype.listCollections = function(params, callback) {
  *     - cluster_id: the ID of the Solr cluster to create the collection on
  *     - collection_name: the name of the collection to create
  *     - config_name: the name of the config in ZooKeeper
+ *   Optional params:
+ *     - wt: the writer type for the response, defaults to 'json'
  *
  * @param callback The callback.
  */
@@ -345,7 +350,7 @@ RetrieveAndRank.prototype.createCollection = function(params, callback) {
   } else if (!params.config_name) {
     return callback(new Error('Missing required parameter: config_name'));
   }
-  var createPath = adminCollectionsPath(params.cluster_id, 'CREATE');
+  var createPath = adminCollectionsPath(params.cluster_id, 'CREATE', getWriterType(params));
   createPath += '&name=' + params.collection_name + '&collection.configName=' + params.config_name;
   return sendRequest('GET', createPath, this._options, callback);
 };
@@ -357,6 +362,8 @@ RetrieveAndRank.prototype.createCollection = function(params, callback) {
  *   Required params:
  *     - cluster_id: the ID of the Solr cluster to delete the collection on
  *     - collection_name: the name of the collection to delete
+ *   Optional params:
+ *     - wt: the writer type for the response, defaults to 'json'
  *
  * @param callback The callback.
  */
@@ -366,7 +373,8 @@ RetrieveAndRank.prototype.deleteCollection = function(params, callback) {
   } else if (!params.collection_name) {
     return callback(new Error('Missing required parameter: collection_name'));
   }
-  var deletePath = adminCollectionsPath(params.cluster_id, 'DELETE') + '&name=' + params.collection_name;
+  var deletePath = adminCollectionsPath(params.cluster_id, 'DELETE', getWriterType(params)) +
+    '&name=' + params.collection_name;
   return sendRequest('GET', deletePath, this._options, callback);
 };
 
@@ -421,8 +429,15 @@ function solrConfigPath(clusterId, configName) {
   return solrConfigsPath(clusterId) + '/' + configName;
 }
 
-function adminCollectionsPath(clusterId, action) {
-  return solrClusterPath(clusterId) + '/solr/admin/collections?action=' + action;
+function adminCollectionsPath(clusterId, action, wt) {
+  return solrClusterPath(clusterId) + '/solr/admin/collections?action=' + action + '&wt=' + wt;
+}
+
+function getWriterType(params) {
+  if (params && params.wt) {
+    return params.wt;
+  }
+  return 'json';
 }
 
 function sendRequest(method, url, options, callback) {
