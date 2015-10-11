@@ -2,7 +2,7 @@ Watson Developer Cloud Node.js Client
 ============================================
 [![Codacy Badge](https://www.codacy.com/project/badge/9d457db455d846649457bb97b6dea290)](https://www.codacy.com/app/germanattanasio/node-sdk)
 [![Build Status](https://secure.travis-ci.org/watson-developer-cloud/node-sdk.svg)](http://travis-ci.org/watson-developer-cloud/node-sdk)
-[![Dependency Status](https://gemnasium.com/watson-developer-cloud/node-sdk.png)](https://gemnasium.com/watson-developer-cloud/node-sdk)
+[![Dependency Status](https://gemnasium.com/watson-developer-cloud/node-sdk.svg)](https://gemnasium.com/watson-developer-cloud/node-sdk)
 [![Coverage Status](https://img.shields.io/coveralls/watson-developer-cloud/node-sdk.svg)](https://coveralls.io/r/watson-developer-cloud/node-sdk)
 
 [![npm-version](https://img.shields.io/npm/v/watson-developer-cloud.svg)](https://www.npmjs.com/package/watson-developer-cloud)
