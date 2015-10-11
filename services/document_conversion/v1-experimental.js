@@ -188,17 +188,17 @@ DocumentConversion.prototype.convert = function(params, callback) {
     var keys = Object.keys(DocumentConversion.prototype.conversion_target);
     var values = keys.map(function(v) { return DocumentConversion.prototype.conversion_target[v]; });
 
-    callback(new Error('Missing required parameter: conversion_target. Possible values are: ' + values.join(', ')));
+    callback(new Error('Missing required parameters: conversion_target. Possible values are: ' + values.join(', ')));
     return;
   }
 
   if (!params.file && !params.document_id) {
-    callback(new Error('Missing required parameter: either params.file or params.document_id must be specified'));
+    callback(new Error('Missing required parameters: either params.file or params.document_id must be specified'));
     return;
   }
 
   if (params.file && !isStream(params.file) && !params.file.value) {
-    callback(new Error('file is not a standard Node.js Stream'));
+    callback(new Error('Missing required parameters: file is not a standard Node.js Stream'));
     return;
   }
 
