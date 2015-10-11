@@ -3,7 +3,6 @@
 var assert = require('assert');
 var watson = require('../lib/index');
 var nock = require('nock');
-var fs = require('fs');
 var url = require('url');
 
 var noop = function() {};
