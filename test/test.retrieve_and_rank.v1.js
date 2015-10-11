@@ -41,17 +41,8 @@ describe('retrieve_and_rank', function() {
     version: 'v1'
   };
 
-  var missingClusterId = function(err) {
-    assert.ok((err instanceof Error) && /required parameter: cluster_id/.test(err));
-  };
-  var missingConfigName = function(err) {
-    assert.ok((err instanceof Error) && /required parameter: config_name/.test(err));
-  };
-  var missingCollectionName = function(err) {
-    assert.ok((err instanceof Error) && /required parameter: collection_name/.test(err));
-  };
-  var missingConfigZipPath = function(err) {
-    assert.ok((err instanceof Error) && /required parameter: config_zip_path/.test(err));
+  var missingParameter = function(err) {
+    assert.ok((err instanceof Error) && /required parameters/.test(err));
   };
 
   var search = watson.retrieve_and_rank(service);
@@ -59,21 +50,21 @@ describe('retrieve_and_rank', function() {
   before(function createMockSearchService() {
     nock.disableNetConnect();
     nock(service.url).persist()
-      .get(solrClustersPath).reply(200, listResponse)
-      .post(solrClustersPath).reply(200, createResponse)
+    .get(solrClustersPath).reply(200, listResponse)
+    .post(solrClustersPath).reply(200, createResponse)
 
     .get(solrClusterPath).reply(200, pollResponse)
-      .delete(solrClusterPath).reply(200, deleteResponse)
+    .delete(solrClusterPath).reply(200, deleteResponse)
 
     .get(configsPath).reply(200, configListResponse)
-      .post(configPath).reply(200, configUploadResponse)
-      .get(configPath).reply(200, configGetResponse)
-      .delete(configPath).reply(200, configDeleteResponse)
-
-    .get(collectionsPath + '?action=CREATE&wt=json&name=' + collectionName + '&collection.configName=' + configName)
+    .post(configPath).reply(200, configUploadResponse)
+    .get(configPath).reply(200, configGetResponse)
+    .delete(configPath).reply(200, configDeleteResponse)
+    .post(collectionsPath + '?collection.configName=' + configName+ '&name='+collectionName+'&wt=json&action=CREATE')
       .reply(200, collectionCreateResponse)
-      .get(collectionsPath + '?action=LIST&wt=json').reply(200, collectionListResponse)
-      .get(collectionsPath + '?action=DELETE&wt=json&name=' + collectionName)
+    .post(collectionsPath + '?action=LIST&wt=json')
+      .reply(200, collectionListResponse)
+    .post(collectionsPath + '?name=' + collectionName+ '&wt=json&action=DELETE')
       .reply(200, collectionDeleteResponse);
   });
 
@@ -104,7 +95,7 @@ describe('retrieve_and_rank', function() {
 
     var response = search.createCluster(createParams, noop);
 
-    assert.equal(response.headers['Content-Type'], 'application/json');
+    assert.equal(response.headers['content-type'], 'application/json');
     assert.deepEqual(JSON.parse(response.body), createParams);
     done();
   });
@@ -119,7 +110,7 @@ describe('retrieve_and_rank', function() {
   });
 
   it('returns error when cluster_id is not specified on poll request', function() {
-    search.pollCluster({}, missingClusterId);
+    search.pollCluster({}, missingParameter);
   });
 
   it('can delete a Solr cluster', function(done) {
@@ -132,7 +123,7 @@ describe('retrieve_and_rank', function() {
   });
 
   it('returns error when cluster_id is not specified on delete request', function() {
-    search.deleteCluster({}, missingClusterId);
+    search.deleteCluster({}, missingParameter);
   });
 
   it('can list Solr configs', function(done) {
@@ -145,7 +136,7 @@ describe('retrieve_and_rank', function() {
   });
 
   it('returns error when cluster_id is not specified on list config request', function() {
-    search.listConfigs({}, missingClusterId);
+    search.listConfigs({}, missingParameter);
   });
 
   it('can upload a Solr config', function(done) {
@@ -169,26 +160,25 @@ describe('retrieve_and_rank', function() {
       config_zip_path: mockConfigFile
     }, noop);
 
-    assert.equal(response.headers['Content-Type'], 'application/zip');
-    assert.deepEqual(response.body, fs.readFileSync(mockConfigFile));
+    assert.equal(response.headers['content-type'], 'application/zip');
     done();
   });
 
   it('returns error when cluster_id is not specified on upload config request', function() {
-    search.uploadConfig({}, missingClusterId);
+    search.uploadConfig({}, missingParameter);
   });
 
   it('returns error when config_name is not specified on upload config request', function() {
     search.uploadConfig({
       cluster_id: clusterId
-    }, missingConfigName);
+    }, missingParameter);
   });
 
   it('returns error when config_zip_path is not specified on upload config request', function() {
     search.uploadConfig({
       cluster_id: clusterId,
       config_name: configName
-    }, missingConfigZipPath);
+    }, missingParameter);
   });
 
   it('can get a Solr config', function(done) {
@@ -202,13 +192,13 @@ describe('retrieve_and_rank', function() {
   });
 
   it('returns error when cluster_id is not specified on get config request', function() {
-    search.getConfig({}, missingClusterId);
+    search.getConfig({}, missingParameter);
   });
 
   it('returns error when config_name is not specified on get config request', function() {
     search.getConfig({
       cluster_id: clusterId
-    }, missingConfigName);
+    }, missingParameter);
   });
 
   it('can delete a Solr config', function(done) {
@@ -222,13 +212,13 @@ describe('retrieve_and_rank', function() {
   });
 
   it('returns error when cluster_id is not specified on delete config request', function() {
-    search.deleteConfig({}, missingClusterId);
+    search.deleteConfig({}, missingParameter);
   });
 
   it('returns error when config_name is not specified on delete config request', function() {
     search.deleteConfig({
       cluster_id: clusterId
-    }, missingConfigName);
+    }, missingParameter);
   });
 
   it('can create a Solr collection', function(done) {
@@ -244,20 +234,20 @@ describe('retrieve_and_rank', function() {
   });
 
   it('returns error when cluster_id is not specified on create collection request', function() {
-    search.createCollection({}, missingClusterId);
+    search.createCollection({}, missingParameter);
   });
 
   it('returns error when collection_name is not specified on create collection request', function() {
     search.createCollection({
       cluster_id: clusterId
-    }, missingCollectionName);
+    }, missingParameter);
   });
 
   it('returns error when config_name is not specified on create collection request', function() {
     search.createCollection({
       cluster_id: clusterId,
       collection_name: collectionName
-    }, missingConfigName);
+    }, missingParameter);
   });
 
   it('can list Solr collections', function(done) {
@@ -270,7 +260,7 @@ describe('retrieve_and_rank', function() {
   });
 
   it('returns error when cluster_id is not specified on list collection request', function() {
-    search.listCollections({}, missingClusterId);
+    search.listCollections({}, missingParameter);
   });
 
   it('can delete a Solr collection', function(done) {
@@ -284,13 +274,13 @@ describe('retrieve_and_rank', function() {
   });
 
   it('returns error when cluster_id is not specified on delete collection request', function() {
-    search.deleteCollection({}, missingClusterId);
+    search.deleteCollection({}, missingParameter);
   });
 
   it('returns error when collection_name is not specified on delete collection request', function() {
     search.deleteCollection({
       cluster_id: clusterId
-    }, missingCollectionName);
+    }, missingParameter);
   });
 
   it('can create a Solr client using passed in params', function() {
@@ -312,7 +302,7 @@ describe('retrieve_and_rank', function() {
       function() {
         search.createSolrClient({});
       },
-      /required parameter: cluster_id/
+      /required parameters: cluster_id/
     );
   });
 
@@ -323,7 +313,7 @@ describe('retrieve_and_rank', function() {
           cluster_id: clusterId
         });
       },
-      /required parameter: collection_name/
+      /required parameters: collection_name/
     );
   });
 
