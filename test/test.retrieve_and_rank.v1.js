@@ -60,11 +60,11 @@ describe('retrieve_and_rank', function() {
     .post(configPath).reply(200, configUploadResponse)
     .get(configPath).reply(200, configGetResponse)
     .delete(configPath).reply(200, configDeleteResponse)
-    .post(collectionsPath + '?collection.configName=' + configName+ '&name='+collectionName+'&wt=json&action=CREATE')
+    .get(collectionsPath + '?collection.configName=' + configName+ '&name='+collectionName+'&wt=json&action=CREATE')
       .reply(200, collectionCreateResponse)
-    .post(collectionsPath + '?action=LIST&wt=json')
+    .get(collectionsPath + '?action=LIST&wt=json')
       .reply(200, collectionListResponse)
-    .post(collectionsPath + '?name=' + collectionName+ '&wt=json&action=DELETE')
+    .get(collectionsPath + '?name=' + collectionName+ '&wt=json&action=DELETE')
       .reply(200, collectionDeleteResponse);
   });
 
