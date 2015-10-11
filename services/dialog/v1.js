@@ -25,7 +25,7 @@ var isStream       = require('isstream');
 function Dialog(options) {
   // Default URL
   var serviceDefaults = {
-    url: 'https://gateway.watsonplatform.net/dialog-experimental/api'
+    url: 'https://gateway.watsonplatform.net/dialog/api'
   };
 
   // Replace default options with user provided
@@ -180,7 +180,7 @@ Dialog.prototype.createDialog = function(params, callback) {
       url: '/v1/dialogs',
       method: 'POST',
       json: true,
-      formData: params
+      formData: pick(params,['name','file'])
     },
     requiredParams: ['name'],
     defaultOptions: this._options
