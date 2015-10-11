@@ -14,7 +14,7 @@ var natural_language_classifier = watson.natural_language_classifier({
 var params = {
   language: 'en',
   name: 'my-classifier',
-  training_data: fs.createReadStream('./resources/training_data.csv')
+  training_data: fs.createReadStream('./resources/weather_data_train')
 };
 
 natural_language_classifier.create(params, function(err, response) {

@@ -57,7 +57,7 @@ var emptyData = { text: '' },
 
   // training with a stream variable (CSV)
   var createWithStream = extend({
-      training_data: fs.createReadStream('./resources/training_data.csv')
+      training_data: fs.createReadStream('./resources/weather_data_train.csv')
   }, noTrainingData);
 
   // training with an object variable (JSON)

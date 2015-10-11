@@ -165,7 +165,7 @@ describe('dialog', function() {
 
   describe('createDialog()', function() {
     var params = {
-      file: fs.createReadStream(__dirname + '/resources/dialog_file.mct'),
+      file: fs.createReadStream(__dirname + '/resources/pizza.xml'),
       name: 'foo'
     };
 
@@ -211,7 +211,7 @@ describe('dialog', function() {
 
   describe('updateDialog()', function() {
     var params = {
-      file: fs.createReadStream(__dirname + '/resources/dialog_file.mct'),
+      file: fs.createReadStream(__dirname + '/resources/pizza.xml'),
       dialog_id: payload.dialog_id
     };
 
