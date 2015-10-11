@@ -2,4 +2,6 @@ node_modules/*
 npm-debug.log
 coverage
 .DS_Store
-test/integration/*
+test/resources/auth.js
+test/integration/
+test/resources/tts-output.ogg
