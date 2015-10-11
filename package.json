@@ -1,11 +1,11 @@
 {
   "name": "watson-developer-cloud",
   "version": "0.10.5",
-  "description": "Nodejs Client Wrapper to use the IBM Watson and Services",
+  "description": "Client library to use the IBM Watson Services and AlchemyAPI",
   "main": "./lib/index",
   "repository": {
     "type": "git",
-    "url": "https://github.com/watson-developer-cloud/nodejs-wrapper.git"
+    "url": "https://github.com/watson-developer-cloud/node-sdk.git"
   },
   "keywords": [
     "ibm",
@@ -55,15 +55,15 @@
   ],
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/watson-developer-cloud/nodejs-wrapper/issues"
+    "url": "https://github.com/watson-developer-cloud/node-sdk/issues"
   },
   "devDependencies": {
-    "mocha": "~2.2.5",
-    "coveralls": "~2.11.4",
-    "istanbul": "~0.3.22",
-    "nock": "~2.13.0",
-    "jshint": "~2.8.0",
-    "qs": "~5.1.0"
+    "mocha": "^2.3.3",
+    "coveralls": "^2.11.4",
+    "istanbul": "^0.3.22",
+    "nock": "^2.15.0",
+    "jshint": "^2.8.0",
+    "qs": "^5.2.0"
   },
   "dependencies": {
     "async": "~1.4.2",
@@ -74,9 +74,9 @@
     "object.omit": "~2.0.0",
     "object.pick": "~1.1.1",
     "request": "~2.64.0",
-    "solr-client": "~0.5.0",
+    "solr-client": "~0.6.0",
     "string": "3.3.1",
-    "vcap_services": "^0.1.7"
+    "vcap_services": "~0.1.7"
   },
   "engines": {
     "node": ">=0.10"

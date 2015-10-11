@@ -14,11 +14,11 @@ or [Stack Overflow](http://stackoverflow.com/questions/ask?tags=ibm-watson).
   ```
   personality_insights.getProfile()
   ```
-  
+
 # Issues
 
 If you encounter an issue with the Node.js library, you are welcome to submit
-a [bug report](https://github.com/watson-developer-cloud/nodejs-wrapper/issues).
+a [bug report](https://github.com/watson-developer-cloud/node-sdk/issues).
 Before that, please search for similar issues. It's possible somebody has
 already encountered this issue.
 

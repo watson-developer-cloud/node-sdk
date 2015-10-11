@@ -1,28 +1,27 @@
 Watson Developer Cloud Node.js Client
 ============================================
-[![Codacy Badge](https://www.codacy.com/project/badge/9d457db455d846649457bb97b6dea290)](https://www.codacy.com/app/germanattanasio/nodejs-wrapper)
-[![Build Status](https://secure.travis-ci.org/watson-developer-cloud/nodejs-wrapper.svg)](http://travis-ci.org/watson-developer-cloud/nodejs-wrapper)
-[![Dependency Status](https://gemnasium.com/watson-developer-cloud/nodejs-wrapper.png)](https://gemnasium.com/watson-developer-cloud/nodejs-wrapper)
-[![Coverage Status](https://img.shields.io/coveralls/watson-developer-cloud/nodejs-wrapper.svg)](https://coveralls.io/r/watson-developer-cloud/nodejs-wrapper)
+[![Codacy Badge](https://www.codacy.com/project/badge/9d457db455d846649457bb97b6dea290)](https://www.codacy.com/app/germanattanasio/node-sdk)
+[![Build Status](https://secure.travis-ci.org/watson-developer-cloud/node-sdk.svg)](http://travis-ci.org/watson-developer-cloud/node-sdk)
+[![Dependency Status](https://gemnasium.com/watson-developer-cloud/node-sdk.png)](https://gemnasium.com/watson-developer-cloud/node-sdk)
+[![Coverage Status](https://img.shields.io/coveralls/watson-developer-cloud/node-sdk.svg)](https://coveralls.io/r/watson-developer-cloud/node-sdk)
 
 [![npm-version](https://img.shields.io/npm/v/watson-developer-cloud.svg)](https://www.npmjs.com/package/watson-developer-cloud)
 [![npm-downloads](https://img.shields.io/npm/dm/watson-developer-cloud.svg)](https://www.npmjs.com/package/watson-developer-cloud)
-[![Join the chat at https://gitter.im/watson-developer-cloud/nodejs-wrapper](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/watson-developer-cloud/nodejs-wrapper?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Wrapper to use the [Watson Developer Cloud][wdc] services, a collection of REST
+Node client library to use the [Watson Developer Cloud][wdc] services, a collection of REST
 APIs and SDKs that use cognitive computing to solve complex problems.
 
 ## Table of Contents
   * [Watson Developer Cloud][wdc]
-    * [Questions](#questions)
     * [Installation](#installation)
     * [Usage](#usage)
     * [Getting the Service Credentials](#getting-the-service-credentials)
-    * [Alchemy Services](#alchemy-services)
+    * [Questions](#questions)
+    * [Examples](#examples)
+    * [IBM Watson Services](#ibm-watson-services)
       * [Alchemy Language](#alchemy-language)
       * [Alchemy Vision](#alchemy-vision)
       * [Alchemy Data News](#alchemy-data-news)
-    * [IBM Watson Services](#ibm-watson-services)
       * [Authorization](#authorization)
       * [Concept Expansion](#concept-expansion)
       * [Concept Insights](#concept-insights)
@@ -46,13 +45,6 @@ APIs and SDKs that use cognitive computing to solve complex problems.
     * [License](#license)
     * [Contributing](#contributing)
 
-## Questions
-
-If you are having difficulties using the APIs or have a question about the IBM
-Watson Services, please ask a question on
-[dW Answers](https://developer.ibm.com/answers/questions/ask/?topics=watson)
-or [Stack Overflow](http://stackoverflow.com/questions/ask?tags=ibm-watson).
-
 ## Installation
 
 ```sh
@@ -62,46 +54,40 @@ $ npm install watson-developer-cloud --save
 ## Usage
 
 The examples below assume that you already have service credentials. If not,
-you will have to create and bind the service in [Bluemix][bluemix].
+you will have to create a service in [Bluemix][bluemix].
 
 If you are running your application in Bluemix, you don't need to specify the
-credentials; the wrapper will get them for you by looking at the `VCAP_SERVICES`
-environment variable.
+credentials; the library will get them for you by looking at the `VCAP_SERVICES` environment variable.
 
-### Getting the Service Credentials
-The credentials for the services are stored in the `VCAP_SERVICES` environment variable. To get them, you need to first create and bind the service to your application.
+## Getting the Service Credentials
+You will need the `username` and `password` (`api_key` for AlchemyAPI) credentials for each service. Service credentials are different from your Bluemix account username and password.
 
-There are two ways to get the credentials. You can use Bluemix to access your
-app and view the `VCAP_SERVICES` there or you can run:
+To get your service credentials, follow these steps:
+ 1. Log in to Bluemix at https://bluemix.net.
 
-```sh
-$ cf env <application-name>
-```
+ 1. Create an instance of the service:
+     1. In the Bluemix **Catalog**, select the service you want to use.
+     1. Under **Add Service**, type a unique name for the service instance in the Service name field. For example, type `my-service-name`. Leave the default values for the other options.
+     1. Click **Create**.
 
-Example output:
-```sh
-  System-Provided:
-  {
-  "VCAP_SERVICES": {
-    "visual_recognition": [{
-        "credentials": {
-          "password": "<password>",
-          "url": "<url>",
-          "username": "<username>"
-        },
-      "label": "visual_recognition",
-      "name": "visual-recognition-service",
-      "plan": "free"
-   }]
-  }
-  }
-```
+ 1. Copy your credentials:
+     1. On the left side of the page, click **Service Credentials** to view your service credentials.
+     1. Copy `username` and `password`(`api_key` for AlchemyAPI).
 
-You need to copy `username` and `password`.
+## Questions
 
-For Alchemy you only need an `api_key`, you can register for one [here](http://www.alchemyapi.com/api/register.html).
+If you are having difficulties using the APIs or have a question about the IBM
+Watson Services, please ask a question on
+[dW Answers](https://developer.ibm.com/answers/questions/ask/?topics=watson)
+or [Stack Overflow](http://stackoverflow.com/questions/ask?tags=ibm-watson).
 
-## Alchemy APIs
+## Examples
+The [examples][examples] folder has basic and advanced examples.
+
+
+## IBM Watson Services
+The Watson Developer Cloud offers a variety of services for building cognitive
+apps.
 
 ### Alchemy Language
 [Alchemy Language][alchemy_language] offers 12 API functions as part of its text analysis service, each of which uses sophisticated natural language processing techniques to analyze your content and add high-level semantic information.
@@ -141,7 +127,7 @@ var alchemy_vision = watson.alchemy_vision({
 });
 
 var params = {
-  image: fs.fs.createReadStream('src/test/resources/obama.jpg')
+  image: fs.createReadStream('src/test/resources/obama.jpg')
 };
 
 alchemy_vision.getImageKeywords(params, function (err, keywords) {
@@ -175,10 +161,6 @@ alchemy_data_news.getNews(params, function (err, news) {
     console.log(JSON.stringify(news, null, 2));
 });
 ```
-
-## IBM Watson Services
-The Watson Developer Cloud offers a variety of services for building cognitive
-apps.
 
 ### Authorization
 The Authorization service can generates tokens, this are useful when it's too cumbersome to provide a username/password pair.  
@@ -388,7 +370,7 @@ natural_language_classifier.classify({
 });
 ```
 
-See this [example](https://github.com/watson-developer-cloud/nodejs-wrapper/blob/master/examples/natural_language_classifier.v1.js) to learn how to create a classifier.
+See this [example](https://github.com/watson-developer-cloud/node-sdk/blob/master/examples/natural_language_classifier.v1.js) to learn how to create a classifier.
 
 ### Personality Insights
 Analyze text in english and get a personality profile by using the
@@ -476,8 +458,7 @@ var fs = require('fs');
 var speech_to_text = watson.speech_to_text({
   username: '<username>',
   password: '<password>',
-  version: 'v1',
-  url: 'https://stream.watsonplatform.net/speech-to-text/api'
+  version: 'v1'
 });
 
 var params = {
@@ -505,8 +486,7 @@ var fs = require('fs');
 var text_to_speech = watson.text_to_speech({
   username: '<username>',
   password: '<password>',
-  version: 'v1',
-  url: 'https://stream.watsonplatform.net/text-to-speech/api'
+  version: 'v1'
 });
 
 var params = {
@@ -598,7 +578,7 @@ visual_recognition.recognize(params, function(err, res) {
 ```
 
 ## Running in Bluemix
-By default, the wrapper tries to use the Bluemix `VCAP_SERVICES` environment
+By default, the library tries to use the Bluemix `VCAP_SERVICES` environment
 variable to get the credentials for a given service. You can avoid this by
 using:
 `use_vcap_services`.
@@ -612,10 +592,10 @@ var concept_expansion = watson.concept_expansion({
 });
 ```
 This example fails because you did not provide a username and password and
-the wrapper will not look into Bluemix for these values.
+the library will not look into Bluemix for these values.
 
 ## Unauthenticated requests
-By default, the wrapper tries to use Basic Auth and will ask for `api_key` or `username` and `password` and send an `Authorization: Basic XXXXXXX`. You can avoid this by using:
+By default, the library tries to use Basic Auth and will ask for `api_key` or `username` and `password` and send an `Authorization: Basic XXXXXXX`. You can avoid this by using:
 
 `use_unauthenticated`.
 
@@ -629,7 +609,7 @@ var dialog = watson.dialog({
 ```
 
 ## Debug
-This wrapper relies on the `request` npm module writted by
+This library relies on the `request` npm module writted by
 [request][request_github] to call the Watson Services. To debug the apps, add
 'request' to the `NODE_DEBUG` environment variable:
 
@@ -655,10 +635,10 @@ $ mocha -g '<test name>'
 ## License
 
 This library is licensed under Apache 2.0. Full license text is available in
-[COPYING](https://github.com/watson-developer-cloud/nodejs-wrapper/blob/master/LICENSE).
+[COPYING][license].
 
 ## Contributing
-See [CONTRIBUTING](https://github.com/watson-developer-cloud/nodejs-wrapper/blob/master/CONTRIBUTING.md).
+See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/master/CONTRIBUTING.md).
 
 
 [question_and_answer]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/qaapi/
@@ -684,3 +664,5 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/nodejs-wrapper/blob
 [bluemix]: https://console.ng.bluemix.net
 [npm_link]: https://www.npmjs.com/package/watson-developer-cloud
 [request_github]: https://github.com/request/request
+[examples]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples
+[license]: http://www.apache.org/licenses/LICENSE-2.0

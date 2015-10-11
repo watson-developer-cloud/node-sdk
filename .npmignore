@@ -8,3 +8,7 @@ examples
 .jshintrc
 .travis.yml
 .DS_Store
+# documentation files
+LICENSE
+CONTRIBUTING.md
+RELEASE.md
