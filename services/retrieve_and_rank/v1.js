@@ -444,7 +444,7 @@ RetrieveAndRank.prototype.createCollection = function(params, callback) {
   var parameters = {
     options: {
       url: '/v1/solr_clusters/{cluster_id}/solr/admin/collections',
-      method: 'GET',
+      method: 'POST',
       qs: queryParams,
       path: pick(params,['cluster_id']),
       json: true
@@ -485,7 +485,7 @@ RetrieveAndRank.prototype.deleteCollection = function(params, callback) {
   var parameters = {
     options: {
       url: '/v1/solr_clusters/{cluster_id}/solr/admin/collections',
-      method: 'GET',
+      method: 'POST',
       qs: queryParams,
       path: pick(params,['cluster_id']),
       json: true
