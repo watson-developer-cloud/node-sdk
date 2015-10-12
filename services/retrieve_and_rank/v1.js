@@ -21,6 +21,7 @@ var url            = require('url');
 var extend         = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
 var solr           = require('solr-client');
+var helper         = require('../../lib/helper');
 var pick           = require('object.pick');
 var omit           = require('object.omit');
 var isStream       = require('isstream');
@@ -164,7 +165,18 @@ RetrieveAndRank.prototype.deleteRanker = function(params, callback) {
  * @param callback The callback.
  */
 RetrieveAndRank.prototype.listClusters = function(params, callback) {
-  return sendRequest('GET', solrClustersPath(), this._options, callback);
+  params = params || {};
+
+  var parameters = {
+    options: {
+      url: '/v1/solr_clusters',
+      method: 'GET',
+      json: true
+    },
+    defaultOptions: this._options
+  };
+
+  return requestFactory(parameters, callback);
 };
 
 /**
@@ -178,15 +190,19 @@ RetrieveAndRank.prototype.listClusters = function(params, callback) {
  * @param callback The callback.
  */
 RetrieveAndRank.prototype.createCluster = function(params, callback) {
-  // Avoid modifying the global options by making a deep copy
-  var createOptions = JSON.parse(JSON.stringify(this._options));
-  createOptions.body = JSON.stringify(params || {});
-  if (createOptions.headers === undefined) {
-    createOptions.headers = {};
-  }
-  createOptions.headers['Content-Type'] = 'application/json';
+  params = params || {};
 
-  return sendRequest('POST', solrClustersPath(), createOptions, callback);
+  var parameters = {
+    options: {
+      url: '/v1/solr_clusters',
+      method: 'POST',
+      json: true,
+      body: params
+    },
+    defaultOptions: this._options
+  };
+
+  return requestFactory(parameters, callback);
 };
 
 /**
@@ -199,10 +215,20 @@ RetrieveAndRank.prototype.createCluster = function(params, callback) {
  * @param callback The callback.
  */
 RetrieveAndRank.prototype.pollCluster = function(params, callback) {
-  if (!params || !params.cluster_id) {
-    return callback(new Error('Missing required parameter: cluster_id'));
-  }
-  return sendRequest('GET', solrClusterPath(params.cluster_id), this._options, callback);
+  params = params || {};
+
+  var parameters = {
+    options: {
+      url: '/v1/solr_clusters/{cluster_id}',
+      method: 'GET',
+      path: params,
+      json: true
+    },
+    requiredParams: ['cluster_id'],
+    defaultOptions: this._options
+  };
+
+  return requestFactory(parameters, callback);
 };
 
 /**
@@ -215,10 +241,20 @@ RetrieveAndRank.prototype.pollCluster = function(params, callback) {
  * @param callback The callback.
  */
 RetrieveAndRank.prototype.deleteCluster = function(params, callback) {
-  if (!params || !params.cluster_id) {
-    return callback(new Error('Missing required parameter: cluster_id'));
-  }
-  return sendRequest('DELETE', solrClusterPath(params.cluster_id), this._options, callback);
+  params = params || {};
+
+  var parameters = {
+    options: {
+      url: '/v1/solr_clusters/{cluster_id}',
+      method: 'DELETE',
+      path: params,
+      json: true
+    },
+    requiredParams: ['cluster_id'],
+    defaultOptions: this._options
+  };
+
+  return requestFactory(parameters, callback);
 };
 
 // Solr config operations
@@ -233,10 +269,20 @@ RetrieveAndRank.prototype.deleteCluster = function(params, callback) {
  * @param callback The callback.
  */
 RetrieveAndRank.prototype.listConfigs = function(params, callback) {
-  if (!params || !params.cluster_id) {
-    return callback(new Error('Missing required parameter: cluster_id'));
-  }
-  return sendRequest('GET', solrConfigsPath(params.cluster_id), this._options, callback);
+  params = params || {};
+
+  var parameters = {
+    options: {
+      url: '/v1/solr_clusters/{cluster_id}/config',
+      method: 'GET',
+      path: params,
+      json: true
+    },
+    requiredParams: ['cluster_id'],
+    defaultOptions: this._options
+  };
+
+  return requestFactory(parameters, callback);
 };
 
 /**
@@ -251,23 +297,32 @@ RetrieveAndRank.prototype.listConfigs = function(params, callback) {
  * @param callback The callback.
  */
 RetrieveAndRank.prototype.uploadConfig = function(params, callback) {
-  if (!params || !params.cluster_id) {
-    return callback(new Error('Missing required parameter: cluster_id'));
-  } else if (!params.config_name) {
-    return callback(new Error('Missing required parameter: config_name'));
-  } else if (!params.config_zip_path) {
-    return callback(new Error('Missing required parameter: config_zip_path'));
+  params = params || {};
+
+  var configFile = params.config_zip_path;
+  if (!params.config_zip_path) {
+    callback(new Error('Missing required parameters: config_zip_path'));
+    return;
+  } else if (typeof(params.config_zip_path) === 'string') {
+    configFile = fs.createReadStream(params.config_zip_path);
   }
 
-  // Avoid modifying the global options by making a deep copy
-  var uploadOptions = JSON.parse(JSON.stringify(this._options));
-  uploadOptions.body = fs.readFileSync(params.config_zip_path);
-  if (uploadOptions.headers === undefined) {
-    uploadOptions.headers = {};
-  }
-  uploadOptions.headers['Content-Type'] = 'application/zip';
+  var parameters = {
+    options: {
+      url: '/v1/solr_clusters/{cluster_id}/config/{config_name}',
+      method: 'POST',
+      path: params,
+      json: true,
+      body: configFile,
+      headers: {
+        'content-type': 'application/zip'
+      }
+    },
+    requiredParams: ['cluster_id', 'config_name'],
+    defaultOptions: this._options
+  };
 
-  return sendRequest('POST', solrConfigPath(params.cluster_id, params.config_name), uploadOptions, callback);
+  return requestFactory(parameters, callback);
 };
 
 /**
@@ -281,12 +336,20 @@ RetrieveAndRank.prototype.uploadConfig = function(params, callback) {
  * @param callback The callback.
  */
 RetrieveAndRank.prototype.getConfig = function(params, callback) {
-  if (!params || !params.cluster_id) {
-    return callback(new Error('Missing required parameter: cluster_id'));
-  } else if (!params.config_name) {
-    return callback(new Error('Missing required parameter: config_name'));
-  }
-  return sendRequest('GET', solrConfigPath(params.cluster_id, params.config_name), this._options, callback);
+  params = params || {};
+
+  var parameters = {
+    options: {
+      url: '/v1/solr_clusters/{cluster_id}/config/{config_name}',
+      method: 'GET',
+      path: params,
+      json: true
+    },
+    requiredParams: ['cluster_id', 'config_name'],
+    defaultOptions: this._options
+  };
+
+  return requestFactory(parameters, callback);
 };
 
 /**
@@ -300,12 +363,20 @@ RetrieveAndRank.prototype.getConfig = function(params, callback) {
  * @param callback The callback.
  */
 RetrieveAndRank.prototype.deleteConfig = function(params, callback) {
-  if (!params || !params.cluster_id) {
-    return callback(new Error('Missing required parameter: cluster_id'));
-  } else if (!params.config_name) {
-    return callback(new Error('Missing required parameter: config_name'));
-  }
-  return sendRequest('DELETE', solrConfigPath(params.cluster_id, params.config_name), this._options, callback);
+  params = params || {};
+
+  var parameters = {
+    options: {
+      url: '/v1/solr_clusters/{cluster_id}/config/{config_name}',
+      method: 'DELETE',
+      path: params,
+      json: true
+    },
+    requiredParams: ['cluster_id', 'config_name'],
+    defaultOptions: this._options
+  };
+
+  return requestFactory(parameters, callback);
 };
 
 // Solr collection operations
@@ -322,11 +393,23 @@ RetrieveAndRank.prototype.deleteConfig = function(params, callback) {
  * @param callback The callback.
  */
 RetrieveAndRank.prototype.listCollections = function(params, callback) {
-  if (!params || !params.cluster_id) {
-    return callback(new Error('Missing required parameter: cluster_id'));
-  }
-  var listPath = adminCollectionsPath(params.cluster_id, 'LIST', getWriterType(params));
-  return sendRequest('GET', listPath, this._options, callback);
+  params = params || {};
+  var parameters = {
+    options: {
+      url: '/v1/solr_clusters/{cluster_id}/solr/admin/collections',
+      method: 'GET',
+      qs: {
+        action: 'LIST',
+        wt: params.wt || 'json'
+      },
+      path: params,
+      json: true
+    },
+    requiredParams: ['cluster_id'],
+    defaultOptions: this._options
+  };
+
+  return requestFactory(parameters, callback);
 };
 
 /**
@@ -343,16 +426,33 @@ RetrieveAndRank.prototype.listCollections = function(params, callback) {
  * @param callback The callback.
  */
 RetrieveAndRank.prototype.createCollection = function(params, callback) {
-  if (!params || !params.cluster_id) {
-    return callback(new Error('Missing required parameter: cluster_id'));
-  } else if (!params.collection_name) {
-    return callback(new Error('Missing required parameter: collection_name'));
-  } else if (!params.config_name) {
-    return callback(new Error('Missing required parameter: config_name'));
+  params = params || {};
+
+  var missingParams = helper.getMissingParams(params, ['cluster_id', 'collection_name', 'config_name']);
+  if (missingParams){
+    callback(new Error('Missing required parameters: ' + missingParams.join(', ')));
+    return;
   }
-  var createPath = adminCollectionsPath(params.cluster_id, 'CREATE', getWriterType(params));
-  createPath += '&name=' + params.collection_name + '&collection.configName=' + params.config_name;
-  return sendRequest('GET', createPath, this._options, callback);
+
+  var queryParams = {
+    'collection.configName': params.config_name,
+    name: params.collection_name,
+    wt: params.wt || 'json',
+    action: 'CREATE'
+  };
+
+  var parameters = {
+    options: {
+      url: '/v1/solr_clusters/{cluster_id}/solr/admin/collections',
+      method: 'POST',
+      qs: queryParams,
+      path: pick(params,['cluster_id']),
+      json: true
+    },
+    defaultOptions: this._options
+  };
+
+  return requestFactory(parameters, callback);
 };
 
 /**
@@ -368,14 +468,32 @@ RetrieveAndRank.prototype.createCollection = function(params, callback) {
  * @param callback The callback.
  */
 RetrieveAndRank.prototype.deleteCollection = function(params, callback) {
-  if (!params || !params.cluster_id) {
-    return callback(new Error('Missing required parameter: cluster_id'));
-  } else if (!params.collection_name) {
-    return callback(new Error('Missing required parameter: collection_name'));
+  params = params || {};
+
+  var missingParams = helper.getMissingParams(params, ['cluster_id', 'collection_name']);
+  if (missingParams){
+    callback(new Error('Missing required parameters: ' + missingParams.join(', ')));
+    return;
   }
-  var deletePath = adminCollectionsPath(params.cluster_id, 'DELETE', getWriterType(params)) +
-    '&name=' + params.collection_name;
-  return sendRequest('GET', deletePath, this._options, callback);
+
+  var queryParams = {
+    name: params.collection_name,
+    wt: params.wt || 'json',
+    action: 'DELETE'
+  };
+
+  var parameters = {
+    options: {
+      url: '/v1/solr_clusters/{cluster_id}/solr/admin/collections',
+      method: 'POST',
+      qs: queryParams,
+      path: pick(params,['cluster_id']),
+      json: true
+    },
+    defaultOptions: this._options
+  };
+
+  return requestFactory(parameters, callback);
 };
 
 /**
@@ -388,17 +506,19 @@ RetrieveAndRank.prototype.deleteCollection = function(params, callback) {
  *     - collection_name: the name of the collection for indexing/searching
  */
 RetrieveAndRank.prototype.createSolrClient = function(params) {
-  if (!params || !params.cluster_id) {
-    throw new Error('Missing required parameter: cluster_id');
-  } else if (!params.collection_name) {
-    throw new Error('Missing required parameter: collection_name');
+  params = params || {};
+
+  var missingParams = helper.getMissingParams(params, ['cluster_id', 'collection_name']);
+  if (missingParams){
+    throw new Error('Missing required parameters: ' + missingParams.join(', '));
   }
+
   var serviceUrl = url.parse(this._options.url);
   var apiPath = serviceUrl.path === '/' ? '' : serviceUrl.path || '';
 
   var solrClient = solr.createClient({
     host: serviceUrl.hostname,
-    path: apiPath + solrClusterPath(params.cluster_id) + '/solr',
+    path: apiPath + '/v1/solr_clusters/' + params.cluster_id + '/solr',
     port: serviceUrl.port || '443',
     secure: true,
     core: params.collection_name
@@ -410,45 +530,5 @@ RetrieveAndRank.prototype.createSolrClient = function(params) {
   }
   return solrClient;
 };
-
-// Helper methods
-
-function solrClustersPath() {
-  return '/v1/solr_clusters';
-}
-
-function solrClusterPath(clusterId) {
-  return solrClustersPath() +'/' + clusterId;
-}
-
-function solrConfigsPath(clusterId) {
-  return solrClusterPath(clusterId) + '/config';
-}
-
-function solrConfigPath(clusterId, configName) {
-  return solrConfigsPath(clusterId) + '/' + configName;
-}
-
-function adminCollectionsPath(clusterId, action, wt) {
-  return solrClusterPath(clusterId) + '/solr/admin/collections?action=' + action + '&wt=' + wt;
-}
-
-function getWriterType(params) {
-  if (params && params.wt) {
-    return params.wt;
-  }
-  return 'json';
-}
-
-function sendRequest(method, url, options, callback) {
-  var parameters = {
-    options: {
-      method: method,
-      url: url
-    },
-    defaultOptions: options
-  };
-  return requestFactory(parameters, callback);
-}
 
 module.exports = RetrieveAndRank;
