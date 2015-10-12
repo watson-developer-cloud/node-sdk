@@ -73,7 +73,7 @@
     "isstream": "~0.1.2",
     "object.omit": "~2.0.0",
     "object.pick": "~1.1.1",
-    "request": "~2.64.0",
+    "request": "~2.65.0",
     "solr-client": "~0.6.0",
     "string": "3.3.1",
     "vcap_services": "~0.1.7"
