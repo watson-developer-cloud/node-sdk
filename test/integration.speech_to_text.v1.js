@@ -22,9 +22,10 @@ if (fs.existsSync(__dirname + '/resources/auth.js')) {
     describe('createRecognizeStream()', function () {
       it('should recognize the supplied audio', function (done) {
         this.timeout(10000);
+        var recognizeStream = speech_to_text.createRecognizeStream({content_type: 'audio/l16; rate=44100'});
+        recognizeStream.setEncoding('utf8');
         fs.createReadStream(__dirname + '/resources/audio.wav')
-          .pipe(speech_to_text.createRecognizeStream({content_type: 'audio/l16; rate=44100'}))
-          .setEncoding('utf8')
+          .pipe(recognizeStream)
           .on('error', done)
           .pipe(concat(function (transcription) {
             assert.equal(transcription.trim(), 'thunderstorms could produce large hail isolated tornadoes and heavy rain');
