@@ -391,14 +391,13 @@ function RecognizeStream(options){
 
   var token = options.token;
   queryParams.model = options.model || 'en-US_BroadbandModel';
-  var openingMessage = {action: 'start'};
+  var openingMessage = {action: 'start', "content-type": 'audio/l16; rate=44100', "continuous" : true, "interim_results" : true, "inactivity_timeout": 30};
   var closingMessage = {action: 'stop'};
 
   var url = options.base_url.replace(/^http/, 'ws') + '/v1/recognize?' + qs.stringify(queryParams);
   console.log('url', url);
 
-  //requestUrl, protocols, origin, headers, extraRequestOptions
-  var client = this.client = new WebSocketClient(url, null, null, options.headers, null);
+  var client = this.client = new WebSocketClient();
   var self = this;
 
   self.on('finish', function() {
@@ -465,7 +464,9 @@ function RecognizeStream(options){
     connection.sendUTF(JSON.stringify(openingMessage));
     self.emit('connect', connection);
   });
-  client.connect(url);
+
+  //requestUrl, protocols, origin, headers, extraRequestOptions
+  client.connect(url, null, null, options.headers, null);
 }
 util.inherits(RecognizeStream, Duplex);
 
@@ -502,7 +503,7 @@ SpeechToText.prototype.createRecognizeStream = function(params) {
 
   params.headers = extend({
     'User-Agent': pkg.name + '-nodejs-'+ pkg.version,
-    //Authorization:  'Basic ' + this._options.api_key // todo: figure out why this isn't working
+    Authorization:  'Basic ' + this._options.api_key // todo: figure out why this isn't working
   }, params.headers);
 
   console.log(params.headers);
