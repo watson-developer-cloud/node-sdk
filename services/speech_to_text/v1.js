@@ -25,6 +25,11 @@ var https          = require('https');
 var http           = require('http');
 var isStream       = require('isstream');
 var requestFactory = require('../../lib/requestwrapper');
+var qs             = require('querystring');
+var Duplex         = require('stream').Duplex;
+var util           = require('util');
+var WebSocketClient = require('websocket').client;
+var pkg         = require('../../package.json');
 
 function formatChunk(chunk) {
   // Convert the string into an array
@@ -58,7 +63,48 @@ function SpeechToText(options) {
   // Replace default options with user provided
   this._options = extend(serviceDefaults, options);
 }
+/**
+ * Replaces recognizeLive & friends with a single 2-way stream over websockets
+ * @param params
+ * @param callback
+ * @returns {*}
+ */
+SpeechToText.prototype.recognizeWs = function(params, callback) {
 
+  var missingParams = helper.getMissingParams(params, ['audio', 'content_type']);
+  if (missingParams) {
+    callback(new Error('Missing required parameters: ' + missingParams.join(', ')));
+    return;
+  }
+  if (!isStream(params.audio)) {
+    callback(new Error('audio is not a standard Node.js Stream'));
+    return;
+  }
+
+  var queryParams = pick(params, ['continuous', 'max_alternatives', 'timestamps',
+    'word_confidence','inactivity_timeout', 'model']);
+
+  var _url = '/v1';
+  _url += (params.session_id) ? ('/sessions/' + params.session_id) : '';
+  _url += '/recognize';
+
+  var parameters = {
+    options: {
+      method: 'POST',
+      url: _url,
+      headers: {
+        'Content-Type': params.content_type
+      },
+      json: true,
+      qs: queryParams,
+    },
+    defaultOptions: this._options
+  };
+  return params.audio.on('response', function(response) {
+    // Replace content-type
+    response.headers['content-type'] = params.content_type;
+  }).pipe(requestFactory(parameters, callback));
+};
 
 /**
  * Speech recognition for given audio using default model.
@@ -335,5 +381,141 @@ SpeechToText.prototype.deleteSession = function(params, callback) {
   };
   return requestFactory(parameters, callback);
 };
+
+
+function RecognizeStream(options){
+  Duplex.call(this, extend(options, { readableObjectMode : true }));
+
+  var queryParams = pick(options, ['continuous', 'max_alternatives', 'timestamps',
+    'word_confidence','inactivity_timeout', 'model', 'X-WDC-PL-OPT-OUT', 'watson-token']);
+
+  var token = options.token;
+  queryParams.model = options.model || 'en-US_BroadbandModel';
+  var openingMessage = {action: 'start'};
+  var closingMessage = {action: 'stop'};
+
+  var url = options.base_url.replace(/^http/, 'ws') + '/v1/recognize?' + qs.stringify(queryParams);
+  console.log('url', url);
+
+  //requestUrl, protocols, origin, headers, extraRequestOptions
+  var client = this.client = new WebSocketClient(url, null, null, options.headers, null);
+  var self = this;
+
+  self.on('finish', function() {
+    if (self.connection) {
+      console.log('sending closing message');
+      self.connection.sendUTF(JSON.stringify(closingMessage));
+    } else {
+      this.once('connect', function () {
+        console.log('sending delayed closing message');
+        self.connection.sendUTF(JSON.stringify(closingMessage));
+      });
+    }
+  });
+
+  this.client.on('connectFailed', function(error) {
+    console.log("Connection Error: ", error);
+    self.emit('error', error);
+  });
+  this.listening = false;
+  this.client.on('connect', function(connection) {
+    self.connection = connection;
+    console.log('WebSocket Client Connected');
+    connection.on('error', function(error) {
+      console.log("Connection Error: ", error);
+      self.listening = false;
+      self.emit('error', error);
+    });
+    connection.on('close', function(reasonCode, description) {
+      // reasonCode 1006 means invalid auth - get a new token
+      console.log('echo-protocol Connection Closed', reasonCode, description);
+      self.listening = false;
+      self.push('null');
+    });
+    connection.on('message', function(envelope) {
+      if (envelope.type === 'utf8') {
+        console.log("Received: '" + envelope.utf8Data + "'");
+        try {
+          var msg = JSON.parse(envelope.utf8Data);
+          if (msg.error) {
+            var err = new Error(msg.error);
+            err.raw = msg;
+            self.emit('error', err);
+          } else {
+            if(msg.state == 'listening') {
+              self.listening = true;
+              self.emit('listening');
+            } else {
+              self.push(msg);
+            }
+          }
+        } catch (jsonEx) {
+          jsonEx.message = 'Invalid JSON recieved from service: ' +jsonEx.message;
+          jsonEx.raw = envelope;
+          console.log(envelope);
+          self.emit('error', jsonEx);
+        }
+      } else {
+        var binaryErr = new Error('Unexpected binary data received from server');
+        binaryErr.raw = envelope;
+        self.emit('error', binaryErr);
+      }
+
+    });
+    connection.sendUTF(JSON.stringify(openingMessage));
+    self.emit('connect', connection);
+  });
+  client.connect(url);
+}
+util.inherits(RecognizeStream, Duplex);
+
+
+RecognizeStream.prototype._read = function(size) {
+  // because the underlying websocket library doesn't behave like a node.js stream, there's no easy way to control reads
+  // so, the best we can do here is a no-op
+};
+
+RecognizeStream.prototype._write = function(chunk, encoding, callback) {
+  var self = this;
+  if (this.listening) {
+    console.log('sending chunk', chunk == null || chunk.length);
+    this.connection.sendBytes(chunk, callback);
+  } else {
+    console.log('buffering chunk');
+    this.once('listening', function() {
+      console.log('sending buffered chunk');
+      self.connection.sendBytes(chunk, callback);
+    });
+  }
+};
+
+/**
+ * Replaces recognizeLive & friends with a single 2-way stream over websockets
+ * @param params
+ * @param callback
+ * @returns {*}
+ */
+SpeechToText.prototype.createRecognizeStream = function(params) {
+
+  // todo: validate params
+  params.base_url = params.base_url || this._options.url;
+
+  params.headers = extend({
+    'User-Agent': pkg.name + '-nodejs-'+ pkg.version,
+    //Authorization:  'Basic ' + this._options.api_key // todo: figure out why this isn't working
+  }, params.headers);
+
+  console.log(params.headers);
+
+  return new RecognizeStream(params);
+
+};
+
+// set up a clear error message for the deprecated methods
+['recognizeLive', 'observeResult', 'getRecognizeStatus', 'createSession', 'deleteSession'].forEach(function(name) {
+  SpeechToText.prototype[name] = function deprecated() {
+    throw new Error('IBM Watson Speech to Text no longer supports the ' + name + '() method, please use createRecognizeStream() instead.');
+  };
+});
 
 module.exports = SpeechToText;

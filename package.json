@@ -76,7 +76,8 @@
     "request": "~2.65.0",
     "solr-client": "~0.6.0",
     "string": "3.3.1",
-    "vcap_services": "~0.1.7"
+    "vcap_services": "~0.1.7",
+    "websocket": "^1.0.22"
   },
   "engines": {
     "node": ">=0.10"
