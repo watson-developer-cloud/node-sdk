@@ -58,11 +58,12 @@
     "url": "https://github.com/watson-developer-cloud/node-sdk/issues"
   },
   "devDependencies": {
-    "mocha": "^2.3.3",
+    "concat-stream": "^1.5.0",
     "coveralls": "^2.11.4",
     "istanbul": "^0.3.22",
-    "nock": "^2.15.0",
     "jshint": "^2.8.0",
+    "mocha": "^2.3.3",
+    "nock": "^2.15.0",
     "qs": "^5.2.0"
   },
   "dependencies": {

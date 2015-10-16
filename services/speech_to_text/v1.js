@@ -511,7 +511,7 @@ RecognizeStream.prototype._write = function(chunk, encoding, callback) {
  * @returns {*}
  */
 SpeechToText.prototype.createRecognizeStream = function(params) {
-
+  params = params || {};
   params.base_url = this._options.url;
 
   if (params.content_type && !params['content-type']) {
@@ -530,7 +530,7 @@ SpeechToText.prototype.createRecognizeStream = function(params) {
 ['recognizeLive', 'observeResult', 'getRecognizeStatus', 'createSession', 'deleteSession'].forEach(function(name) {
   var original = SpeechToText.prototype[name];
   SpeechToText.prototype[name] = function deprecated(params) {
-    if (!params.silent && !this._options.silent) {
+    if (!(params||{}).silent && !this._options.silent) {
       console.log(new Error('The ' + name + '() method is deprecated and will be removed from a future version of the watson-developer-cloud SDK. ' +
         'Please use createRecognizeStream() instead.\n(Set {silent: true} to hide this message.)'));
     }

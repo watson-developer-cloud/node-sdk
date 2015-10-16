@@ -5,6 +5,7 @@ var watson = require('../lib/index');
 var nock   = require('nock');
 var fs     = require('fs');
 var extend = require('extend');
+var isStream = require('isstream');
 
 describe('speech_to_text', function() {
 
@@ -14,7 +15,8 @@ describe('speech_to_text', function() {
     username: 'batman',
     password: 'bruce-wayne',
     url: 'http://ibm.com:80',
-    version: 'v1'
+    version: 'v1',
+    silent: true // hide deprecation warnings for recognizeLive and friends
   };
 
   before(function() {
@@ -286,6 +288,13 @@ describe('speech_to_text', function() {
       req.end();
     });
 
+  });
+
+
+  describe('createRecognizeStream()', function() {
+    it('should return a stream', function() {
+      assert(isStream(speech_to_text.createRecognizeStream()));
+    });
   });
 
 });
