@@ -163,7 +163,7 @@ alchemy_data_news.getNews(params, function (err, news) {
 ```
 
 ### Authorization
-The Authorization service can generates tokens, this are useful when it's too cumbersome to provide a username/password pair.  
+The Authorization service can generates tokens, this are useful when it's too cumbersome to provide a username/password pair.
 Tokens are valid for 1 hour and need to be send using the `X-Watson-Authorization-Token` header.
 
 ```javascript
@@ -473,6 +473,11 @@ speech_to_text.recognize(params, function(err, res) {
   else
     console.log(JSON.stringify(res, null, 2));
 });
+
+// or streaming
+fs.createReadStream('./resources/speech.wav')
+  .pipe(speech_to_text.createRecognizeStream({ content_type: 'audio/l16; rate=44100' })
+  .pipe(fs.createWriteStream('./transcription.txt'));
 ```
 
 ### Text to Speech
