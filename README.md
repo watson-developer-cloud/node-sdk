@@ -84,6 +84,22 @@ or [Stack Overflow](http://stackoverflow.com/questions/ask?tags=ibm-watson).
 ## Examples
 The [examples][examples] folder has basic and advanced examples.
 
+### Document Conversion integration with Retrieve and Rank
+
+The [Document Conversion integration example](https://github.com/watson-developer-cloud/node-sdk/blob/master/examples/document_conversion_integration.v1-experimental.js) shows how to convert a document into Answer Units by using the Document Conversion Service and upload it to
+the Retrieve and Rank Service to make the Answer Units searchable.
+
+ 1. Create a solr cluster, upload the solr configuration and create a collection
+    1. In the files [retrieve_and_ran_lifecycle.v1.js](https://github.com/watson-developer-cloud/node-sdk/blob/master/examples/retrieve_and_ran_lifecycle.v1.js) and
+ [retrieve_and_rank_solr.v1.js](https://github.com/watson-developer-cloud/node-sdk/blob/master/examples/retrieve_and_rank_solr.v1.js)
+ you will find example functions on how to perform these steps.
+    1. IMPORTANT: When uploading the solr configuration, use the [answer_unit_config.zip](https://github.com/watson-developer-cloud/node-sdk/blob/master/examples/resources/answer_unit_config.zip), which includes a schema.xml that
+defines the fields that will be indexed.
+ 1. Edit the file [document_conversion_integration.v1-experimental.js](https://github.com/watson-developer-cloud/node-sdk/blob/master/examples/document_conversion_integration.v1-experimental.js) and enter the following:
+    1. service credentials for both the Document Conversion and the Retrieve and Rank services
+    1. clusterId (obtained when creating the cluster)
+    1. collectionName and inputDocument if you are using a different value from the default
+ 1. Run `node document_conversion_integration.v1-experimental.js`
 
 ## IBM Watson Services
 The Watson Developer Cloud offers a variety of services for building cognitive
@@ -163,7 +179,7 @@ alchemy_data_news.getNews(params, function (err, news) {
 ```
 
 ### Authorization
-The Authorization service can generates tokens, this are useful when it's too cumbersome to provide a username/password pair.  
+The Authorization service can generates tokens, this are useful when it's too cumbersome to provide a username/password pair.
 Tokens are valid for 1 hour and need to be send using the `X-Watson-Authorization-Token` header.
 
 ```javascript

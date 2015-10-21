@@ -1,0 +1,120 @@
+'use strict';
+
+var watson = require('watson-developer-cloud');
+var async  = require('async');
+var fs = require('fs');
+
+var retrieve = watson.retrieve_and_rank({
+  username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
+  password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
+  version: 'v1',
+  url: 'https://gateway.watsonplatform.net/retrieve-and-rank/api'
+});
+
+var document_conversion = watson.document_conversion({
+  username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
+  password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
+  version: 'v1-experimental'
+});
+
+var clusterId = 'INSERT YOUR CLUSTER ID HERE';
+
+var inputDocument = '/resources/watson-wikipedia.html';
+var collectionName = 'example_collection';
+
+var solrClient = retrieve.createSolrClient({
+  cluster_id: clusterId,
+  collection_name: collectionName
+});
+
+async.waterfall([
+
+  function convert(done){
+    // convert a single document
+    document_conversion.convert({
+      // (JSON) ANSWER_UNITS, NORMALIZED_HTML, or NORMALIZED_TEXT
+      file: fs.createReadStream(__dirname + inputDocument),
+      conversion_target: document_conversion.conversion_target.ANSWER_UNITS
+    }, function (err, response) {
+      if (err) {
+        console.error(err);
+      } else {
+         done(null, response);
+      }
+    });
+  },
+
+  function indexAndCommit(response, done) {
+    console.log('Indexing a document...');
+    var doc = mapAnswerUnits2SolrDocs(response);
+    solrClient.add(doc, function(err) {
+      if(err) {
+        console.log('Error indexing document: ' + err);
+        done();
+      } else {
+        console.log('Indexed a document.');
+        solrClient.commit(function(err) {
+          if(err) {
+            console.log('Error committing change: ' + err);
+          } else {
+            console.log('Successfully committed changes.');
+          }
+          done();
+        });
+      }
+    });
+  },
+
+  function _search(done) {
+    console.log('Searching all documents.');
+    var query = solrClient.createQuery();
+    // This query searches for the term 'psychological' in the content_text field.
+    // For a wildcard query use:
+    // query.q({ '*' : '*' });
+    query.q({ 'content_text' : 'psychological' });
+
+    solrClient.search(query, function(err, searchResponse) {
+      if(err) {
+        console.log('Error searching for documents: ' + err);
+      } else {
+        console.log('Found ' + searchResponse.response.numFound + ' document(s).');
+        console.log('First document: ' + JSON.stringify(searchResponse.response.docs[0], null, 2));
+      }
+      done();
+    });
+  }
+]);
+
+function mapAnswerUnits2SolrDocs(data) {
+  var answerUnits = data.answer_units;
+  var solrDocList = [];
+  answerUnits.forEach(function(value, index){
+    var solrDoc = convertAnswerUnit2SolrDoc(value);
+    solrDocList.push(solrDoc);
+  });
+  return solrDocList;
+}
+
+function convertAnswerUnit2SolrDoc(au) {
+  var solrDoc;
+  var auContents = au.content;
+  auContents.forEach(function(auContent, index){
+    if(auContent.media_type === 'text/plain') {
+      solrDoc = { id : au.id, title: au.title, type: au.type, media_type: auContent.media_type, content_text: auContent.text };
+    }
+  });
+  return solrDoc;
+}
+
+function printResponse(error, errorMessage, response, callback) {
+  if (error) {
+    if (error.code) {
+      console.log(errorMessage + JSON.stringify(error, null, 2));
+    } else {
+      console.log(errorMessage + error);
+    }
+  } else {
+    console.log(response);
+  }
+  callback();
+}
