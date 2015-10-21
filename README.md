@@ -84,23 +84,6 @@ or [Stack Overflow](http://stackoverflow.com/questions/ask?tags=ibm-watson).
 ## Examples
 The [examples][examples] folder has basic and advanced examples.
 
-### Document Conversion integration with Retrieve and Rank
-
-The [Document Conversion integration example](https://github.com/watson-developer-cloud/node-sdk/blob/master/examples/document_conversion_integration.v1-experimental.js) shows how to convert a document into Answer Units by using the Document Conversion Service and upload it to
-the Retrieve and Rank Service to make the Answer Units searchable.
-
- 1. Create a solr cluster, upload the solr configuration and create a collection
-    1. In the files [retrieve_and_ran_lifecycle.v1.js](https://github.com/watson-developer-cloud/node-sdk/blob/master/examples/retrieve_and_ran_lifecycle.v1.js) and
- [retrieve_and_rank_solr.v1.js](https://github.com/watson-developer-cloud/node-sdk/blob/master/examples/retrieve_and_rank_solr.v1.js)
- you will find example functions on how to perform these steps.
-    1. IMPORTANT: When uploading the solr configuration, use the [answer_unit_config.zip](https://github.com/watson-developer-cloud/node-sdk/blob/master/examples/resources/answer_unit_config.zip), which includes a schema.xml that
-defines the fields that will be indexed.
- 1. Edit the file [document_conversion_integration.v1-experimental.js](https://github.com/watson-developer-cloud/node-sdk/blob/master/examples/document_conversion_integration.v1-experimental.js) and enter the following:
-    1. service credentials for both the Document Conversion and the Retrieve and Rank services
-    1. clusterId (obtained when creating the cluster)
-    1. collectionName and inputDocument if you are using a different value from the default
- 1. Run `node document_conversion_integration.v1-experimental.js`
-
 ## IBM Watson Services
 The Watson Developer Cloud offers a variety of services for building cognitive
 apps.
@@ -305,6 +288,9 @@ document_conversion.convert({
   }
 });
 ```
+
+See the [Document Conversion integration example][document_conversion_integration_example] about how to integrate the Document Conversion service
+with the Retrieve and Rank service.
 
 ### Language Translation
 
@@ -681,4 +667,5 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/maste
 [npm_link]: https://www.npmjs.com/package/watson-developer-cloud
 [request_github]: https://github.com/request/request
 [examples]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples
+[document_conversion_integration_example]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/document_conversion_integration.v1-experimental.js
 [license]: http://www.apache.org/licenses/LICENSE-2.0
