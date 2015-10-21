@@ -10,7 +10,7 @@ or [Stack Overflow](http://stackoverflow.com/questions/ask?tags=ibm-watson).
 * The code should follow: https://github.com/airbnb/javascript
 * 2 spaces identation
 * `snake_case` for parameters and same name as in swagger
-* camelCase for method names. For example:  
+* camelCase for method names. For example:
   ```
   personality_insights.getProfile()
   ```
@@ -27,9 +27,10 @@ already encountered this issue.
 If you want to contribute to the repository, follow these steps:
 
 1. Fork the repo.
-2. Develop and test your code changes: `npm install -d && npm test`. Make sure you work in the `dev` branch. PLEASE don't do your work in `master`
-3. Add a test for your changes. Only refactoring and documentation changes
-require no new tests.
-4. Make the test pass.
-5. Commit your changes.
-6. Push to your fork and submit a pull request.
+1. Develop and test your code changes: `npm install -d && npm test`. Make sure you work in the `dev` branch. PLEASE don't do your work in `master`.
+1. In order to run the tests locally you should comment out `test.integration-all-services.js` because the integration tests require you to have service credentials for all the services.
+Travis will run the integration tests for all services once the changes are merged in.
+1. Add a test for your changes. Only refactoring and documentation changes require no new tests.
+1. Make the test pass.
+1. Commit your changes.
+1. Push to your fork and submit a pull request.
