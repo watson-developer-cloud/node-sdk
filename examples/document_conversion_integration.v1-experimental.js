@@ -126,7 +126,7 @@ function mapAnswerUnits2SolrDocs(data) {
 function convertAnswerUnit2SolrDoc(au) {
   var solrDoc;
   var auContents = au.content;
-  auContents.forEach(function(auContent, index){
+  auContents.forEach(function(auContent){
     if(auContent.media_type === 'text/plain') {
       solrDoc = { id : au.id, title: au.title, type: au.type, media_type: auContent.media_type, content_text: auContent.text };
     }
