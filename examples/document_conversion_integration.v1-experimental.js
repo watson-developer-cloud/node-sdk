@@ -39,7 +39,6 @@ var retrieve = watson.retrieve_and_rank({
 Insert the credentials for your Document Conversion service instance
 NOTE: you cannot use your Bluemix account credentials here
 */
-var
 var document_conversion = watson.document_conversion({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
   password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
@@ -117,7 +116,7 @@ async.waterfall([
 function mapAnswerUnits2SolrDocs(data) {
   var answerUnits = data.answer_units;
   var solrDocList = [];
-  answerUnits.forEach(function(value, index){
+  answerUnits.forEach(function(value){
     var solrDoc = convertAnswerUnit2SolrDoc(value);
     solrDocList.push(solrDoc);
   });
@@ -133,17 +132,4 @@ function convertAnswerUnit2SolrDoc(au) {
     }
   });
   return solrDoc;
-}
-
-function printResponse(error, errorMessage, response, callback) {
-  if (error) {
-    if (error.code) {
-      console.log(errorMessage + JSON.stringify(error, null, 2));
-    } else {
-      console.log(errorMessage + error);
-    }
-  } else {
-    console.log(response);
-  }
-  callback();
 }
