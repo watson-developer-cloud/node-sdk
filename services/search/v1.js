@@ -23,7 +23,9 @@ var requestFactory = require('../../lib/requestwrapper');
 var solr           = require('solr-client');
 
 function Search(options) {
-  console.warn('WARNING! The Search client has been replaced by the RetrieveAndRank client.');
+  if (!options.silent) {
+    console.warn('WARNING! The Search client has been replaced by the RetrieveAndRank client. (Pass {silent: true} to disable this message.)');
+  }
 
   var serviceDefaults = {
     version: 'v1',

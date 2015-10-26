@@ -37,7 +37,8 @@ describe('search', function() {
     username: 'batman',
     password: 'bruce-wayne',
     url: serviceUrl,
-    version: 'v1'
+    version: 'v1',
+    silent: true
   };
 
   var missingClusterId = function(err) {
