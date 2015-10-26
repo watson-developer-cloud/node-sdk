@@ -3,9 +3,8 @@
 var assert = require('assert');
 var watson = require('../lib/index');
 var nock   = require('nock');
-var qs = require('qs');
 
-describe('tone_analyzer.v2', function() {
+describe('tone_analyzer.v1', function() {
 
   var noop = function() {};
 
@@ -13,21 +12,22 @@ describe('tone_analyzer.v2', function() {
     text: 'IBM Watson Developer Cloud'
   };
   var synonym_request = {
-	  'word': 'product'
+	  'words': ['greece'],
+	  'limit': 4
   };
   var tone_response = {
     tree: {}
   };
   var synonym_response = [ { headword: 'x' } ];
 
-  var tone_path = '/v2/tone',
-	synonym_path = '/v2/synonyms';
+  var tone_path = '/v1/tone',
+	synonym_path = '/v1/synonym';
 
   var service = {
     username: 'batman',
     password: 'bruce-wayne',
     url: 'http://ibm.com:86',
-    version: 'v2'
+    version: 'v1-experimental'
   };
 
   before(function() {
@@ -36,7 +36,7 @@ describe('tone_analyzer.v2', function() {
       .persist()
       .post(tone_path, tone_request.text)
       .reply(200, tone_response)
-      .get(synonym_path + '?' + qs.stringify(synonym_request))
+      .post(synonym_path, synonym_request)
       .reply(200, synonym_response);
   });
 
@@ -85,12 +85,13 @@ describe('tone_analyzer.v2', function() {
     tone_analyzer.synonym(undefined, missingParameter);
   });
 
-  it('synonym API should generate a valid payload with content', function() {      
+  it('synonym API should generate a valid payload with content', function() {
       var req = tone_analyzer.synonym(synonym_request, noop);
-      var myquery = qs.stringify(synonym_request);
-      assert.equal(req.uri.href, service.url + synonym_path + '?' + myquery);
-      assert.equal(req.uri.query, myquery);
-      assert.equal(req.method, 'GET');
+      var body = new Buffer(req.body).toString('ascii');
+      assert.equal(req.uri.href, service.url + synonym_path);
+      assert.equal(body, JSON.stringify(synonym_request));
+      assert.equal(req.method, 'POST');
+      assert.equal(req.headers['content-type'], 'application/json');
   });
   it('synonym API should format the response', function(done) {
     tone_analyzer.synonym(synonym_request, function(err, response) {

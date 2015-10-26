@@ -24,7 +24,7 @@ describe('relationship_extraction', function() {
     username: 'batman',
     password: 'bruce-wayne',
     url: 'http://ibm.com:80',
-    version: 'v1'
+    version: 'v1-beta'
   };
 
   before(function() {

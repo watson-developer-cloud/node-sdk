@@ -199,7 +199,7 @@ var watson = require('watson-developer-cloud');
 var concept_expansion = watson.concept_expansion({
   username: '<username>',
   password: '<password>',
-  version: 'v1'
+  version: 'v1-beta'
 });
 
 var params = {
@@ -408,7 +408,7 @@ var watson = require('watson-developer-cloud');
 var question_and_answer_healthcare = watson.question_and_answer({
   username: '<username>',
   password: '<password>',
-  version: 'v1',
+  version: 'v1-beta',
   dataset: 'healthcare' /* The dataset can be specified when creating
                          * the service or when calling it */
 });
@@ -433,7 +433,7 @@ var watson = require('watson-developer-cloud');
 var relationship_extraction = watson.relationship_extraction({
   username: '<username>',
   password: '<password>',
-  version: 'v1'
+  version: 'v1-beta'
 });
 
 relationship_extraction.extract({
@@ -538,7 +538,7 @@ var fs = require('fs');
 var visual_insights = watson.visual_insights({
   username: '<username>',
   password: '<password>',
-  version: 'v1'
+  version: 'v1-experimental'
 });
 
 var params = {
@@ -566,7 +566,7 @@ var fs = require('fs');
 var visual_recognition = watson.visual_recognition({
   username: '<username>',
   password: '<password>',
-  version: 'v1'
+  version: 'v1-beta'
 });
 
 var params = {
@@ -592,7 +592,7 @@ using:
 var watson = require('watson-developer-cloud');
 
 var concept_expansion = watson.concept_expansion({
-  version: 'v1',
+  version: 'v1-beta',
   use_vcap_services: false
 });
 ```
