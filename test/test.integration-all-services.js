@@ -64,6 +64,10 @@ describe('integration-all-services', function() {
       };
       question_and_answer.ask(params, failIfError.bind(failIfError, done));
     });
+
+    it('datasets()', function(done) {
+      question_and_answer.datasets(null, failIfError.bind(failIfError, done));
+    });
   });
 
   describe('functional_tone_analyzer', function() {
