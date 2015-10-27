@@ -28,7 +28,6 @@ APIs and SDKs that use cognitive computing to solve complex problems.
       * [Dialog](#dialog)
       * [Document Conversion](#document-conversion)
       * [Language Translation](#language-translation)
-      * [Message Resonance](#message-resonance)
       * [Natural Language Classifier](#natural-language-classifier)
       * [Personality Insights](#personality-insights)
       * [Question and Answer](#question-and-answer)
@@ -319,29 +318,6 @@ language_translation.identify({
       console.log('error:', err);
     else
       console.log(JSON.stringify(language, null, 2));
-});
-```
-
-### Message Resonance
-Get resonance information for individual words in a sentence from the
-[Message Resonance][message_resonance] service.
-
-```javascript
-var watson = require('watson-developer-cloud');
-
-var message_resonance = watson.message_resonance({
-  username: '<username>',
-  password: '<password>',
-  version:'v1'
-});
-
-message_resonance.resonance({
-  text: 'IBM Watson Developer Cloud', dataset: 1 },
-  function(err, response) {
-    if (err)
-      console.log('error:', err);
-    else
-      console.log(JSON.stringify(response, null, 2));
 });
 ```
 
@@ -647,7 +623,6 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/maste
 
 
 [question_and_answer]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/qaapi/
-[message_resonance]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/mrapi/
 [personality_insights]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/personality-insights/
 [concept_expansion]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/glimpseapi/
 [relationship_extraction]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/sireapi/
