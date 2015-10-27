@@ -12,37 +12,63 @@ Node client library to use the [Watson Developer Cloud][wdc] services, a collect
 APIs and SDKs that use cognitive computing to solve complex problems.
 
 ## Table of Contents
-  * [Watson Developer Cloud][wdc]
-    * [Installation](#installation)
-    * [Usage](#usage)
-    * [Getting the Service Credentials](#getting-the-service-credentials)
-    * [Questions](#questions)
-    * [Examples](#examples)
-    * [IBM Watson Services](#ibm-watson-services)
-      * [Alchemy Language](#alchemy-language)
-      * [Alchemy Vision](#alchemy-vision)
-      * [Alchemy Data News](#alchemy-data-news)
-      * [Authorization](#authorization)
-      * [Concept Expansion](#concept-expansion)
-      * [Concept Insights](#concept-insights)
-      * [Dialog](#dialog)
-      * [Document Conversion](#document-conversion)
-      * [Language Translation](#language-translation)
-      * [Natural Language Classifier](#natural-language-classifier)
-      * [Personality Insights](#personality-insights)
-      * [Question and Answer](#question-and-answer)
-      * [Relationship Extraction](#relationship-extraction)
-      * [Speech to Text](#speech-to-text)
-      * [Text to Speech](#text-to-speech)
-      * [Tradeoff Analytics](#tradeoff-analytics)
-      * [Visual Insights](#visual-insights)
-      * [Visual Recognition](#visual-recognition)
-    * [Running in Bluemix](#running-in-bluemix)
-    * [Debug](#debug)
-    * [Tests](#tests)
-    * [Open Source @ IBM](#open-source--ibm)
-    * [License](#license)
-    * [Contributing](#contributing)
+  * [Breaking Changes for v1.0](#breaking-changes-for-v10)   
+  * [Installation](#installation)
+  * [Usage](#usage)
+  * [Getting the Service Credentials](#getting-the-service-credentials)
+  * [Questions](#questions)
+  * [Examples](#examples)
+  * [IBM Watson Services](#ibm-watson-services)
+    * [Alchemy Language](#alchemy-language)
+    * [Alchemy Vision](#alchemy-vision)
+    * [Alchemy Data News](#alchemy-data-news)
+    * [Authorization](#authorization)
+    * [Concept Expansion](#concept-expansion)
+    * [Concept Insights](#concept-insights)
+    * [Dialog](#dialog)
+    * [Document Conversion](#document-conversion)
+    * [Language Translation](#language-translation)
+    * [Natural Language Classifier](#natural-language-classifier)
+    * [Personality Insights](#personality-insights)
+    * [Question and Answer](#question-and-answer)
+    * [Relationship Extraction](#relationship-extraction)
+    * [Speech to Text](#speech-to-text)
+    * [Text to Speech](#text-to-speech)
+    * [Tradeoff Analytics](#tradeoff-analytics)
+    * [Visual Insights](#visual-insights)
+    * [Visual Recognition](#visual-recognition)
+  * [Running in Bluemix](#running-in-bluemix)
+  * [Debug](#debug)
+  * [Tests](#tests)
+  * [Open Source @ IBM](#open-source--ibm)
+  * [License](#license)
+  * [Contributing](#contributing)
+
+## Breaking Changes for v1.0
+
+Several breaking changes were introduced with the v1.0.0 release:
+
+  * Experimental and Beta services now require the appropriate tag to be added to their version:
+    * Concept Expansion `v1` is now `v1-beta`
+    * Question and Answer `v1` is now `v1-beta`
+    * Relationship Extraction `v1` is now `v1-beta`
+    * Tone Analyzer `v2` is now `v2-experimental`
+    * Visual Insights `v1` is now `v1-experimental`
+    * Visual Recognition `v1` is now `v1-beta`
+  * Speech to Text gained a new `createRecognizeStream()` method replacing the existing live streaming methods with a simpler Read/Write stream. 
+    The older methods are still avaliable in v1.0 but each log a deprecation warning (unless `{silent: true}` is passed in) and will be removed from a future release. 
+    The affected methods are:
+    * `recognizeLive()`
+    * `observeResult()`
+    * `getRecognizeStatus()`
+    * `createSession()`
+    * `deleteSession()`
+  * The Document Conversion API has been reduced to a single `convert()` method; it no longer offers batch conversion or cloud storage of files.
+  * Several deprecated services have been removed:
+    * Message Resonance
+    * Tone Analyzer v1 (replaced by v2-experimental)
+    * Search (replaced by Retrieve and Rank)
+
 
 ## Installation
 
