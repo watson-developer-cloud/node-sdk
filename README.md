@@ -1,4 +1,4 @@
-Watson Developer Cloud Node.js Client
+Watson Developer Cloud Node.js SDK
 ============================================
 [![Codacy Badge](https://www.codacy.com/project/badge/9d457db455d846649457bb97b6dea290)](https://www.codacy.com/app/germanattanasio/node-sdk)
 [![Build Status](https://secure.travis-ci.org/watson-developer-cloud/node-sdk.svg)](http://travis-ci.org/watson-developer-cloud/node-sdk)
