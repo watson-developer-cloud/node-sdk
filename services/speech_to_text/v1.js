@@ -223,7 +223,7 @@ SpeechToText.prototype.observeResult = function(params, callback) {
     return;
   }
   var serviceUrl = [this._options.url, '/v1/sessions/',
-    params.session_id, '/observeResult'].join('');
+    params.session_id, '/observe_result'].join('');
   var parts = url.parse(serviceUrl);
   var options = {
     agent: false,
@@ -386,7 +386,7 @@ SpeechToText.prototype.deleteSession = function(params, callback) {
 function RecognizeStream(options){
   Duplex.call(this, options);
 
-  var queryParams = extend({model: 'en-US_BroadbandModel'}, pick(options, ['model', 'X-WDC-PL-OPT-OUT', 'watson-token']));
+  var queryParams = extend({model: 'en-US_BroadbandModel'}, pick(options, ['model', 'X-Watson-Learning-Opt-Out', 'watson-token']));
 
   var openingMessage = extend({
     // todo: confirm the mixed underscores/hyphens and/or get it fixed
@@ -514,8 +514,13 @@ SpeechToText.prototype.createRecognizeStream = function(params) {
   params = params || {};
   params.base_url = this._options.url;
 
+  // todo: apply these corrections to other methods (?)
   if (params.content_type && !params['content-type']) {
     params['content-type'] = params.content_type;
+  }
+
+  if (params['X-WDC-PL-OPT-OUT'] && !params['X-Watson-Learning-Opt-Out']) {
+    params['X-Watson-Learning-Opt-Out'] = params['X-WDC-PL-OPT-OUT'];
   }
 
   params.headers = extend({
@@ -527,7 +532,7 @@ SpeechToText.prototype.createRecognizeStream = function(params) {
 };
 
 // set up a warning message for the deprecated methods
-['recognizeLive', 'observeResult', 'getRecognizeStatus'].forEach(function(name) {
+['recognizeLive', 'observeResult'].forEach(function(name) {
   var original = SpeechToText.prototype[name];
   SpeechToText.prototype[name] = function deprecated(params) {
     if (!(params||{}).silent && !this._options.silent) {

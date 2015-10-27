@@ -161,7 +161,7 @@ describe('speech_to_text', function() {
     });
 
     it('should generate a valid payload', function() {
-      var path = '/v1/sessions/foo/observeResult';
+      var path = '/v1/sessions/foo/observe_result';
       nock(service.url)
         .get(path)
         .delay(300) // 1 second
