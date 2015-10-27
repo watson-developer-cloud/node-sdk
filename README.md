@@ -107,7 +107,6 @@ or [Stack Overflow](http://stackoverflow.com/questions/ask?tags=ibm-watson).
 ## Examples
 The [examples][examples] folder has basic and advanced examples.
 
-
 ## IBM Watson Services
 The Watson Developer Cloud offers a variety of services for building cognitive
 apps.
@@ -312,6 +311,9 @@ document_conversion.convert({
   }
 });
 ```
+
+See the [Document Conversion integration example][document_conversion_integration_example] about how to integrate the Document Conversion service
+with the Retrieve and Rank service.
 
 ### Language Translation
 
@@ -669,4 +671,5 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/maste
 [npm_link]: https://www.npmjs.com/package/watson-developer-cloud
 [request_github]: https://github.com/request/request
 [examples]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples
+[document_conversion_integration_example]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/document_conversion_integration.v1-experimental.js
 [license]: http://www.apache.org/licenses/LICENSE-2.0
