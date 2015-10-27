@@ -12,7 +12,7 @@ Node client library to use the [Watson Developer Cloud][wdc] services, a collect
 APIs and SDKs that use cognitive computing to solve complex problems.
 
 ## Table of Contents
-  * [Breaking Changes for v1.0](#breaking-changes-for-v10)   
+  * [Breaking Changes for v1.0](#breaking-changes-for-v10)
   * [Installation](#installation)
   * [Usage](#usage)
   * [Getting the Service Credentials](#getting-the-service-credentials)
@@ -55,14 +55,12 @@ Several breaking changes were introduced with the v1.0.0 release:
     * Tone Analyzer `v2` is now `v2-experimental`
     * Visual Insights `v1` is now `v1-experimental`
     * Visual Recognition `v1` is now `v1-beta`
-  * Speech to Text gained a new `createRecognizeStream()` method replacing the existing live streaming methods with a simpler Read/Write stream. 
-    The older methods are still avaliable in v1.0 but each log a deprecation warning (unless `{silent: true}` is passed in) and will be removed from a future release. 
+  * Speech to Text gained a new `createRecognizeStream()` method replacing the existing live streaming methods with a simpler Read/Write stream.
+    The older methods are still avaliable in v1.0 but each log a deprecation warning (unless `{silent: true}` is passed in) and will be removed from a future release.
     The affected methods are:
     * `recognizeLive()`
     * `observeResult()`
-    * `getRecognizeStatus()`
-    * `createSession()`
-    * `deleteSession()`
+    * `getRecognizeStatus()`]
   * The Document Conversion API has been reduced to a single `convert()` method; it no longer offers batch conversion or cloud storage of files.
   * Several deprecated services have been removed:
     * Message Resonance

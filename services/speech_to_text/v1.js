@@ -527,7 +527,7 @@ SpeechToText.prototype.createRecognizeStream = function(params) {
 };
 
 // set up a warning message for the deprecated methods
-['recognizeLive', 'observeResult', 'getRecognizeStatus', 'createSession', 'deleteSession'].forEach(function(name) {
+['recognizeLive', 'observeResult', 'getRecognizeStatus'].forEach(function(name) {
   var original = SpeechToText.prototype[name];
   SpeechToText.prototype[name] = function deprecated(params) {
     if (!(params||{}).silent && !this._options.silent) {
