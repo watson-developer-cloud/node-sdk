@@ -60,14 +60,14 @@
   "devDependencies": {
     "concat-stream": "^1.5.0",
     "coveralls": "^2.11.4",
-    "istanbul": "^0.3.22",
+    "istanbul": "^0.4.0",
     "jshint": "^2.8.0",
     "mocha": "^2.3.3",
     "nock": "^2.15.0",
     "qs": "^5.2.0"
   },
   "dependencies": {
-    "async": "~1.4.2",
+    "async": "~1.5.0",
     "cookie": "~0.2.2",
     "csv-stringify": "~0.0.8",
     "extend": "~3.0.0",
