@@ -109,7 +109,7 @@ DocumentConversion.prototype.convert = function(params, callback) {
 
 
 
-// set up a warning message for the deprecated methods
+// give a clear error message for the deprecated methods
 ['getOutput', 'getOutputs', 'getJobLog', 'getJobs', 'getJob', 'createJob', 'getBatchDocument', 'getBatchDocuments',
   'addDocumentToBatch', 'getDocument', 'getDocuments', 'uploadDocument', 'getBatchDocuments', 'updateBatch', 'getBatch', 'createBatch', 'getBatches'].forEach(function(name) {
     DocumentConversion.prototype[name] = function deprecated() {
