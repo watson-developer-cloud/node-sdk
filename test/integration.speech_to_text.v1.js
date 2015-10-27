@@ -5,6 +5,7 @@ var watson = require('../lib/index');
 var fs     = require('fs');
 var concat = require('concat-stream');
 var nock   = require('nock');
+var TWENTY_SECONDS = 20000;
 
 if (fs.existsSync(__dirname + '/resources/auth.js')) {
 
@@ -21,7 +22,7 @@ if (fs.existsSync(__dirname + '/resources/auth.js')) {
 
     describe('createRecognizeStream()', function () {
       it('should recognize the supplied audio', function (done) {
-        this.timeout(10000);
+        this.timeout(TWENTY_SECONDS);
         var recognizeStream = speech_to_text.createRecognizeStream({content_type: 'audio/l16; rate=44100'});
         recognizeStream.setEncoding('utf8');
         fs.createReadStream(__dirname + '/resources/audio.wav')

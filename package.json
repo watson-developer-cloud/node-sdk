@@ -84,7 +84,7 @@
     "node": ">=0.10"
   },
   "scripts": {
-    "test": "jshint --exclude node_modules/ **/*.js && mocha --reporter spec --timeout 4000",
+    "test": "jshint --exclude ./node_modules/ && mocha --reporter spec --timeout 4000",
     "prepare": "npm test && npm version patch",
     "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha --reporter spec --timeout 4000",
     "coveralls": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
