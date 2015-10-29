@@ -137,6 +137,61 @@ describe('wrapper', function() {
     assert.equal(service._options.bar, 'foo');
   });
 
+
+  it('should throw an error when creating a search service instance', function(done) {
+    try {
+      watson.search({version: 'v1', api_key:''});
+      done('Depracated service should not be created');
+    } catch(e) {
+      done();
+    }
+  });
+
+  it('should throw an error when creating a message_resonance service instance', function(done) {
+    try {
+      watson.message_resonance({version: 'v1', api_key:''});
+      done('Depracated service should not be created');
+    } catch(e) {
+      done();
+    }
+  });
+
+  it('should throw an error when creating a inexistent service', function(done) {
+    try {
+      watson.not_a_real_service({version: 'v1', api_key:''});
+      done('Inexistent service');
+    } catch(e) {
+      done();
+    }
+  });
+
+  it('should ask for api_key when using an alchemy service', function(done) {
+    try {
+      watson.alchemy_language({version: 'v1'});
+      done('service created without an api_key');
+    } catch(e) {
+      done();
+    }
+  });
+
+  it('should alert users when trying to use a version without plan', function(done) {
+    try {
+      watson.question_and_answer({version: 'v1', api_key:''});
+      done('service created without a proper version being specified');
+    } catch(e) {
+      done();
+    }
+  });
+
+  it('should throw an error when creating a tone_analyzer v1 service instance', function(done) {
+    try {
+      watson.tone_analyzer({version: 'v1', api_key:''});
+      done('Depracated service should not be created');
+    } catch(e) {
+      done();
+    }
+  });
+
   it('should detect the alchemy format', function() {
     assert.equal(null, helper.getFormat());
     assert.equal(null, helper.getFormat(null));

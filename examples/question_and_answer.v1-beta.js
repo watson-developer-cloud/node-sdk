@@ -5,7 +5,7 @@ var watson = require('watson-developer-cloud');
 var question_and_answer_healthcare = watson.question_and_answer({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
   password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
-  version: 'v1',
+  version: 'v1-beta',
   dataset: 'healthcare' /* The dataset can be specified when creating
                          * the service or when calling it */
 });

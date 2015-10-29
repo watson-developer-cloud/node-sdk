@@ -4,7 +4,7 @@ var assert = require('assert');
 var watson = require('../lib/index');
 var nock = require('nock');
 var url = require('url');
-
+var fs = require('fs');
 var noop = function() {};
 
 describe('retrieve_and_rank', function() {
@@ -33,6 +33,17 @@ describe('retrieve_and_rank', function() {
   var collectionListResponse = 'collection list';
   var collectionDeleteResponse = 'collection delete';
 
+  var rankerPath = '/v1/rankers';
+  var rankerId = 'foo';
+  var rankPath = rankerPath + '/' + rankerId;
+  var rankerData =  fs.createReadStream(__dirname + '/resources/ranker_test.csv');
+  var rankerTrainData =  fs.createReadStream(__dirname + '/resources/ranker_train.csv');
+
+  var createRankerResponse = 'rank created';
+  var deleteRankerResponse = 'rank deleted';
+  var getRankerResponse = 'rank status';
+  var rankResponse = 'ranking';
+
   var service = {
     username: 'batman',
     password: 'bruce-wayne',
@@ -59,12 +70,25 @@ describe('retrieve_and_rank', function() {
     .post(configPath).reply(200, configUploadResponse)
     .get(configPath).reply(200, configGetResponse)
     .delete(configPath).reply(200, configDeleteResponse)
+
     .post(collectionsPath + '?collection.configName=' + configName+ '&name='+collectionName+'&wt=json&action=CREATE')
       .reply(200, collectionCreateResponse)
     .get(collectionsPath + '?action=LIST&wt=json')
       .reply(200, collectionListResponse)
     .post(collectionsPath + '?name=' + collectionName+ '&wt=json&action=DELETE')
-      .reply(200, collectionDeleteResponse);
+      .reply(200, collectionDeleteResponse)
+
+    .post(rankerPath)
+      .reply(200, createRankerResponse)
+    .get(rankerPath)
+      .reply(200, getRankerResponse)
+    .delete(rankPath)
+      .reply(200, deleteRankerResponse)
+    .post(rankPath)
+      .reply(200, rankResponse)
+    .get(rankPath)
+      .reply(200, getRankerResponse);
+
   });
 
   after(function() {
@@ -314,6 +338,56 @@ describe('retrieve_and_rank', function() {
       },
       /required parameters: collection_name/
     );
+  });
+
+  it('generate valid request when creating a ranker', function() {
+    search.uploadConfig({}, missingParameter);
+  });
+  it('check missing parameters', function() {
+    search.createRanker({}, missingParameter);
+    search.createRanker(null, missingParameter);
+
+    search.rankerStatus({}, missingParameter);
+    search.rankerStatus(null, missingParameter);
+
+    search.deleteRanker({}, missingParameter);
+    search.deleteRanker(null, missingParameter);
+
+    search.rank({ranker_id: 'ranker1'}, missingParameter);
+    search.rank({ranker_id: 'ranker1', answer_metadata: rankerData }, missingParameter);
+  });
+
+  it('should generate a valid payload when creating a ranker', function(done) {
+    var req = search.createRanker({
+      training_data: rankerTrainData,
+      name: 'ranker1',
+      language: 'en'
+    }, function(error, data) {
+      assert.equal(data, createRankerResponse);
+      assert.equal(req.method, 'POST');
+      done();
+    });
+  });
+  it('should generate a valid payload when getting the rankers', function(done) {
+    var req = search.listRankers(null, function(error, data) {
+      assert.equal(data, getRankerResponse);
+      assert.equal(req.method, 'GET');
+      done();
+    });
+  });
+  it('should generate a valid payload when getting the ranker status', function(done) {
+    var req = search.rankerStatus({ranker_id : rankerId}, function(error, data) {
+      assert.equal(data, getRankerResponse);
+      assert.equal(req.method, 'GET');
+      done();
+    });
+  });
+  it('should generate a valid payload when deleting a ranker', function(done) {
+    var req = search.deleteRanker({ranker_id : rankerId}, function(error, data) {
+      assert.equal(data, deleteRankerResponse);
+      assert.equal(req.method, 'DELETE');
+      done();
+    });
   });
 
 });

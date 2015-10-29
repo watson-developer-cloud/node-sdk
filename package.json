@@ -1,6 +1,6 @@
 {
   "name": "watson-developer-cloud",
-  "version": "0.10.6",
+  "version": "1.0.0-beta.1",
   "description": "Client library to use the IBM Watson Services and AlchemyAPI",
   "main": "./lib/index",
   "repository": {
@@ -58,11 +58,12 @@
     "url": "https://github.com/watson-developer-cloud/node-sdk/issues"
   },
   "devDependencies": {
-    "mocha": "^2.3.3",
+    "concat-stream": "^1.5.0",
     "coveralls": "^2.11.4",
     "istanbul": "^0.4.0",
-    "nock": "^2.15.0",
     "jshint": "^2.8.0",
+    "mocha": "^2.3.3",
+    "nock": "^2.15.0",
     "qs": "^5.2.0"
   },
   "dependencies": {
@@ -76,13 +77,14 @@
     "request": "~2.65.0",
     "solr-client": "~0.6.0",
     "string": "3.3.1",
-    "vcap_services": "~0.1.7"
+    "vcap_services": "~0.1.7",
+    "websocket": "^1.0.22"
   },
   "engines": {
     "node": ">=0.10"
   },
   "scripts": {
-    "test": "jshint --exclude node_modules/ **/*.js && mocha --reporter spec --timeout 4000",
+    "test": "jshint --exclude ./node_modules/ && mocha --reporter spec --timeout 4000",
     "prepare": "npm test && npm version patch",
     "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha --reporter spec --timeout 4000",
     "coveralls": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"

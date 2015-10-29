@@ -5,7 +5,7 @@ var watson = require('watson-developer-cloud');
 var concept_expansion = watson.concept_expansion({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
   password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
-  version: 'v1'
+  version: 'v1-beta'
 });
 
 var params = {

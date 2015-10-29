@@ -5,4 +5,3 @@ coverage
 test/resources/auth.js
 test/integration/
 test/resources/tts-output.ogg
-test/test.integration-all-services.js

@@ -27,11 +27,11 @@ function toQuestion(params) {
     },
     questionText: params.text,
   };
-  if (params.formattedAnswer)
+  if (params.formatted_answer || params.formattedAnswer)
     question.formattedAnswer = true;
 
   return question;
-};
+}
 
 
 function QuestionAndAnswer(options) {
@@ -61,7 +61,7 @@ QuestionAndAnswer.prototype.ask = function(_params, callback) {
     options: {
       url: '/v1/question/{dataset}',
       headers: {
-        'X-synctimeout': 30
+        'X-Synctimeout': 30
       },
       method: 'POST',
       body: pick(params, ['question']),

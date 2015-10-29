@@ -155,4 +155,9 @@ AlchemyLanguage.prototype.taxonomy = createRequest('taxonomy');
  */
 AlchemyLanguage.prototype.combined = createRequest('combined');
 
+/**
+ * Extracts images from a URL or html
+ */
+AlchemyLanguage.prototype.getImageLinks = createRequest('image_link');
+
 module.exports = AlchemyLanguage;

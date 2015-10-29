@@ -16,7 +16,7 @@ describe('tradeoff_analytics', function() {
 
   var service_path = '/v1/dilemmas';
   var events_path = '/v1/events';
-  
+
   var service = {
     username: 'batman',
     password: 'bruce-wayne',
@@ -34,7 +34,7 @@ describe('tradeoff_analytics', function() {
       .persist()
       .post(events_path, events_request)
       .reply(200);
- 
+
   });
 
   after(function() {
@@ -51,12 +51,12 @@ describe('tradeoff_analytics', function() {
     tradeoff_analytics.dilemmas({}, missingParameter);
     tradeoff_analytics.dilemmas(null, missingParameter);
     tradeoff_analytics.dilemmas(undefined, missingParameter);
-    
+
     tradeoff_analytics.events({}, missingParameter);
     tradeoff_analytics.events(null, missingParameter);
     tradeoff_analytics.events(undefined, missingParameter);
   });
-  
+
   it('should generate a valid payload', function() {
 	  var params = extend({}, service_request);
 	  params.metadata_header = 'test_header_content';
@@ -68,7 +68,7 @@ describe('tradeoff_analytics', function() {
       assert.equal(req.headers['x-watson-metadata'], params.metadata_header);
       assert.equal(req.method, 'POST');
   });
-  
+
   it('should forward the events correctly', function() {
 	  var params = extend({}, events_request);
 	  params.metadata_header = 'test_header_content';

@@ -12,7 +12,7 @@ var text_to_speech = watson.text_to_speech({
 
 var params = {
   text: 'Hello from IBM Watson',
-  voice: 'en-US_MichaelVoice', // Optional voice
+  voice: 'en-US_AllisonVoice', // Optional voice
   accept: 'audio/wav'
 };
 
