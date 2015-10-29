@@ -44,11 +44,16 @@ function PersonalityInsights(options) {
  * @param callback The callback.
  */
 PersonalityInsights.prototype.profile = function(params, callback) {
-  if (!params || (!params.text && !params.contentItems)) {
-    callback(new Error('Missing required parameters: text or contentItems'));
+  params = params || {};
+
+  // support for the new snake_case
+  if (params.content_items)
+    params.contentItems = params.content_items;
+
+  if ((!params.text && !params.contentItems)) {
+    callback(new Error('Missing required parameters: text or content_items'));
     return;
   }
-  // Accept language
 
   // Content-Type
   var content_type = null;
@@ -61,7 +66,7 @@ PersonalityInsights.prototype.profile = function(params, callback) {
     options: {
       method: 'POST',
       url: '/v2/profile',
-      body: params.text || params.html || pick(params, ['contentItems']),
+      body: params.text || pick(params, ['contentItems']),
       json: true,
       qs: pick(params, ['include_raw']),
       headers: {

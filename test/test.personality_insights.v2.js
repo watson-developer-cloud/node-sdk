@@ -82,6 +82,16 @@ describe('personality_insights', function() {
       assert.equal(req.headers['Content-type'], 'application/json');
   });
 
+  it('should generate a valid payload with content_items', function() {
+      var payload_with_content_items = { content_items: payload.contentItems};
+      var req = personality_insights.profile(payload_with_content_items, noop);
+      var body = new Buffer(req.body).toString('ascii');
+      assert.equal(req.uri.href, service.url + service_path);
+      assert.equal(body, JSON.stringify(payload));
+      assert.equal(req.method, 'POST');
+      assert.equal(req.headers['Content-type'], 'application/json');
+  });
+
   it('should generate a valid payload with html', function() {
       var html_req = { text:'<div>test</div>' };
       var req = personality_insights.profile(html_req, noop);
