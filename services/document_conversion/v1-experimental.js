@@ -56,7 +56,6 @@ function fixupContentType(params) {
  * To convert a previously uploaded document, set params.document_id
  *
  * @param  {Object} params.conversion_target Must be set to one of ['ANSWER_UNITS', 'NORMALIZED_HTML', 'NORMALIZED_TEXT']
- * @param  {Object} [params.document_id] Id of previously uploaded document to convert
  * @param  {ReadableStream} [params.file] The document file to convert.
  */
 DocumentConversion.prototype.convert = function(params, callback) {
