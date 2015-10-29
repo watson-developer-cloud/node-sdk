@@ -2,15 +2,16 @@
 
 var watson = require('watson-developer-cloud');
 
-var message_resonance = watson.message_resonance({
+var relationship_extraction = watson.relationship_extraction({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
   password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
-  version:'v1'
+  version: 'v1-beta'
 });
 
-message_resonance.resonance({
-  text: 'IBM Watson Developer Cloud', dataset: 1 },
-  function(err, response) {
+relationship_extraction.extract({
+  text: 'IBM Watson developer cloud',
+  dataset: 'ie-en-news' },
+  function (err, response) {
     if (err)
       console.log('error:', err);
     else

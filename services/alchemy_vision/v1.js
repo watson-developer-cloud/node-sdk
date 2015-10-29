@@ -93,11 +93,6 @@ function AlchemyVision(options) {
 }
 
 /**
- * Extracts images from a URL or html
- */
-AlchemyVision.prototype.getImageLinks = createRequest('image_link');
-
-/**
  * Tags image with keywords
  */
 AlchemyVision.prototype.getImageKeywords = createRequest('image_keywords');

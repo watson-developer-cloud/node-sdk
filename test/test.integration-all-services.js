@@ -11,6 +11,8 @@ var TWENTY_SECONDS = 20000;
 var TEN_SECONDS = 10000;
 var FIVE_SECONDS = 5000;
 
+if (fs.existsSync(__dirname + '/resources/auth.js')) {
+
 describe('integration-all-services', function() {
 
   var failIfError = function(done, err) {
@@ -26,19 +28,6 @@ describe('integration-all-services', function() {
 
   after(function() {
     nock.disableNetConnect();
-  });
-
-  describe('functional_message_resonance', function() {
-    this.timeout(FIVE_SECONDS);
-    var message_resonance = watson.message_resonance(auth.message_resonance);
-
-    it('resonance()', function(done) {
-      var params = {
-        text: 'IBM Watson developer cloud',
-        dataset: 1
-      };
-      message_resonance.resonance(params, failIfError.bind(failIfError, done));
-    });
   });
 
   describe('functional_relationship_extraction', function() {
@@ -74,6 +63,10 @@ describe('integration-all-services', function() {
         }
       };
       question_and_answer.ask(params, failIfError.bind(failIfError, done));
+    });
+
+    it('datasets()', function(done) {
+      question_and_answer.datasets(null, failIfError.bind(failIfError, done));
     });
   });
 
@@ -178,13 +171,13 @@ describe('integration-all-services', function() {
     it('recognize()', function(done) {
       var params = {
         audio: fs.createReadStream(__dirname + '/resources/audio.wav'),
-        content_type: 'audio/l16;rate=44100'
+        content_type: 'audio/wav'
       };
       speech_to_text.recognize(params, failIfError.bind(failIfError, done));
     });
 
-    it('recognize()', function(done) {
-      speech_to_text.getModels(null, failIfError.bind(failIfError, done));
+    it('getModels()', function(done) {
+      speech_to_text.getModels({}, failIfError.bind(failIfError, done));
     });
   });
 
@@ -386,6 +379,19 @@ describe('integration-all-services', function() {
       }, failIfError.bind(failIfError, done));
     });
 
+
+    it('getImageLinks() with url', function(done) {
+      alchemy_language.getImageLinks({
+        url: 'http://www.alchemyapi.com/products/alchemylanguage/microformats-parsing'
+      }, failIfError.bind(failIfError, done));
+    });
+
+    it('getImageLinks() with html', function(done) {
+      alchemy_language.getImageLinks({
+        html: '<div><img src="http://visual-recognition-demo.mybluemix.net/images/horses.jpg" /></div>'
+      }, failIfError.bind(failIfError, done));
+    });
+
     it('combined()', function(done) {
       alchemy_language.combined({
         text: text
@@ -408,12 +414,6 @@ describe('integration-all-services', function() {
     this.timeout(TWENTY_SECONDS);
     var alchemy_vision = watson.alchemy_vision(auth.alchemy);
     var imageFile = fs.createReadStream(__dirname + '/resources/obama.jpg');
-
-    it('getImageLinks()', function(done) {
-      alchemy_vision.getImageLinks({
-        url: 'http://www.alchemyapi.com/products/alchemylanguage/microformats-parsing'
-      }, failIfError.bind(failIfError, done));
-    });
 
     it('getImageKeywordsWithFile()', function(done) {
       alchemy_vision.getImageKeywords({image: imageFile}, failIfError.bind(failIfError, done));
@@ -439,50 +439,16 @@ describe('integration-all-services', function() {
 
   describe('functional_document_conversion', function() {
     this.timeout(TWENTY_SECONDS);
-    var document_conversion = watson.document_conversion(omit(auth.document_conversion,['document_id']));
-    var document_id = auth.document_conversion.document_id;
-
-    it('getBatches()', function(done) {
-      document_conversion.getBatches({}, failIfError.bind(failIfError, done));
-    });
-
-    it('createBatch()', function(done) {
-      document_conversion.createBatch({name:'my-batch'}, failIfError.bind(failIfError, done));
-    });
-
+    var document_conversion = watson.document_conversion(auth.document_conversion);
     it('convertFile()', function(done) {
       document_conversion.convert({
         file: fs.createReadStream(__dirname + '/resources/sampleWORD.docx'),
         conversion_target: 'ANSWER_UNITS'
       }, failIfError.bind(failIfError, done));
     });
-
-    it('convertDocumentId()', function(done) {
-      document_conversion.convert({
-        document_id: document_id,
-        conversion_target: 'ANSWER_UNITS'
-      }, failIfError.bind(failIfError, done));
-    });
-    it('uploadDocument()', function(done) {
-      document_conversion.uploadDocument({
-        file: fs.createReadStream(__dirname + '/resources/sampleWORD.docx')
-      }, failIfError.bind(failIfError, done));
-    });
-
-    it('getDocuments()', function(done) {
-      document_conversion.getDocuments({}, failIfError.bind(failIfError, done));
-    });
-
-    it('getJobs()', function(done) {
-      document_conversion.getJobs({}, failIfError.bind(failIfError, done));
-    });
-
-    it('getOutputs()', function(done) {
-      document_conversion.getOutputs({}, failIfError.bind(failIfError, done));
-    });
-
-    it('getDocument()', function(done) {
-      document_conversion.getDocument({ id: document_id}, failIfError.bind(failIfError, done));
-    });
   });
 });
+
+} else {
+  console.warn('no test/reosources/auth.js, skipping integration tests');
+}

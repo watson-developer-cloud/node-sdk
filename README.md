@@ -1,4 +1,4 @@
-Watson Developer Cloud Node.js Client
+Watson Developer Cloud Node.js SDK
 ============================================
 [![Codacy Badge](https://www.codacy.com/project/badge/9d457db455d846649457bb97b6dea290)](https://www.codacy.com/app/germanattanasio/node-sdk)
 [![Build Status](https://secure.travis-ci.org/watson-developer-cloud/node-sdk.svg)](http://travis-ci.org/watson-developer-cloud/node-sdk)
@@ -12,38 +12,61 @@ Node client library to use the [Watson Developer Cloud][wdc] services, a collect
 APIs and SDKs that use cognitive computing to solve complex problems.
 
 ## Table of Contents
-  * [Watson Developer Cloud][wdc]
-    * [Installation](#installation)
-    * [Usage](#usage)
-    * [Getting the Service Credentials](#getting-the-service-credentials)
-    * [Questions](#questions)
-    * [Examples](#examples)
-    * [IBM Watson Services](#ibm-watson-services)
-      * [Alchemy Language](#alchemy-language)
-      * [Alchemy Vision](#alchemy-vision)
-      * [Alchemy Data News](#alchemy-data-news)
-      * [Authorization](#authorization)
-      * [Concept Expansion](#concept-expansion)
-      * [Concept Insights](#concept-insights)
-      * [Dialog](#dialog)
-      * [Document Conversion](#document-conversion)
-      * [Language Translation](#language-translation)
-      * [Message Resonance](#message-resonance)
-      * [Natural Language Classifier](#natural-language-classifier)
-      * [Personality Insights](#personality-insights)
-      * [Question and Answer](#question-and-answer)
-      * [Relationship Extraction](#relationship-extraction)
-      * [Speech to Text](#speech-to-text)
-      * [Text to Speech](#text-to-speech)
-      * [Tradeoff Analytics](#tradeoff-analytics)
-      * [Visual Insights](#visual-insights)
-      * [Visual Recognition](#visual-recognition)
-    * [Running in Bluemix](#running-in-bluemix)
-    * [Debug](#debug)
-    * [Tests](#tests)
-    * [Open Source @ IBM](#open-source--ibm)
-    * [License](#license)
-    * [Contributing](#contributing)
+  * [Breaking Changes for v1.0](#breaking-changes-for-v10)
+  * [Installation](#installation)
+  * [Usage](#usage)
+  * [Getting the Service Credentials](#getting-the-service-credentials)
+  * [Questions](#questions)
+  * [Examples](#examples)
+  * [IBM Watson Services](#ibm-watson-services)
+    * [Alchemy Language](#alchemy-language)
+    * [Alchemy Vision](#alchemy-vision)
+    * [Alchemy Data News](#alchemy-data-news)
+    * [Authorization](#authorization)
+    * [Concept Expansion](#concept-expansion)
+    * [Concept Insights](#concept-insights)
+    * [Dialog](#dialog)
+    * [Document Conversion](#document-conversion)
+    * [Language Translation](#language-translation)
+    * [Natural Language Classifier](#natural-language-classifier)
+    * [Personality Insights](#personality-insights)
+    * [Question and Answer](#question-and-answer)
+    * [Relationship Extraction](#relationship-extraction)
+    * [Speech to Text](#speech-to-text)
+    * [Text to Speech](#text-to-speech)
+    * [Tradeoff Analytics](#tradeoff-analytics)
+    * [Visual Insights](#visual-insights)
+    * [Visual Recognition](#visual-recognition)
+  * [Running in Bluemix](#running-in-bluemix)
+  * [Debug](#debug)
+  * [Tests](#tests)
+  * [Open Source @ IBM](#open-source--ibm)
+  * [License](#license)
+  * [Contributing](#contributing)
+
+## Breaking Changes for v1.0
+
+Several breaking changes were introduced with the v1.0.0 release:
+
+  * Experimental and Beta services now require the appropriate tag to be added to their version:
+    * Concept Expansion `v1` is now `v1-beta`
+    * Question and Answer `v1` is now `v1-beta`
+    * Relationship Extraction `v1` is now `v1-beta`
+    * Tone Analyzer `v2` is now `v2-experimental`
+    * Visual Insights `v1` is now `v1-experimental`
+    * Visual Recognition `v1` is now `v1-beta`
+  * Speech to Text gained a new `createRecognizeStream()` method replacing the existing live streaming methods with a simpler Read/Write stream.
+    The older methods are still avaliable in v1.0 but each log a deprecation warning (unless `{silent: true}` is passed in) and will be removed from a future release.
+    The affected methods are:
+    * `recognizeLive()`
+    * `observeResult()`
+    * `getRecognizeStatus()`]
+  * The Document Conversion API has been reduced to a single `convert()` method; it no longer offers batch conversion or cloud storage of files.
+  * Several deprecated services have been removed:
+    * Message Resonance
+    * Tone Analyzer v1 (replaced by v2-experimental)
+    * Search (replaced by Retrieve and Rank)
+
 
 ## Installation
 
@@ -198,7 +221,7 @@ var watson = require('watson-developer-cloud');
 var concept_expansion = watson.concept_expansion({
   username: '<username>',
   password: '<password>',
-  version: 'v1'
+  version: 'v1-beta'
 });
 
 var params = {
@@ -324,29 +347,6 @@ language_translation.identify({
 });
 ```
 
-### Message Resonance
-Get resonance information for individual words in a sentence from the
-[Message Resonance][message_resonance] service.
-
-```javascript
-var watson = require('watson-developer-cloud');
-
-var message_resonance = watson.message_resonance({
-  username: '<username>',
-  password: '<password>',
-  version:'v1'
-});
-
-message_resonance.resonance({
-  text: 'IBM Watson Developer Cloud', dataset: 1 },
-  function(err, response) {
-    if (err)
-      console.log('error:', err);
-    else
-      console.log(JSON.stringify(response, null, 2));
-});
-```
-
 ### Natural Language Classifier
 
 Use [Natural Language Classifier](http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/nl-classifier/) service to create a classifier instance by providing a set of representative strings and a set of one or more correct classes for each as training. Then use the trained classifier to classify your new question for best matching answers or to retrieve next actions for your application.
@@ -410,7 +410,7 @@ var watson = require('watson-developer-cloud');
 var question_and_answer_healthcare = watson.question_and_answer({
   username: '<username>',
   password: '<password>',
-  version: 'v1',
+  version: 'v1-beta',
   dataset: 'healthcare' /* The dataset can be specified when creating
                          * the service or when calling it */
 });
@@ -435,7 +435,7 @@ var watson = require('watson-developer-cloud');
 var relationship_extraction = watson.relationship_extraction({
   username: '<username>',
   password: '<password>',
-  version: 'v1'
+  version: 'v1-beta'
 });
 
 relationship_extraction.extract({
@@ -475,6 +475,11 @@ speech_to_text.recognize(params, function(err, res) {
   else
     console.log(JSON.stringify(res, null, 2));
 });
+
+// or streaming
+fs.createReadStream('./resources/speech.wav')
+  .pipe(speech_to_text.createRecognizeStream({ content_type: 'audio/l16; rate=44100' })
+  .pipe(fs.createWriteStream('./transcription.txt'));
 ```
 
 ### Text to Speech
@@ -493,7 +498,7 @@ var text_to_speech = watson.text_to_speech({
 
 var params = {
   text: 'Hello from IBM Watson',
-  voice: 'en-US_MichaelVoice', // Optional voice
+  voice: 'en-US_AllisonVoice', // Optional voice
   accept: 'audio/wav'
 };
 
@@ -535,7 +540,7 @@ var fs = require('fs');
 var visual_insights = watson.visual_insights({
   username: '<username>',
   password: '<password>',
-  version: 'v1'
+  version: 'v1-experimental'
 });
 
 var params = {
@@ -563,7 +568,7 @@ var fs = require('fs');
 var visual_recognition = watson.visual_recognition({
   username: '<username>',
   password: '<password>',
-  version: 'v1'
+  version: 'v1-beta'
 });
 
 var params = {
@@ -589,7 +594,7 @@ using:
 var watson = require('watson-developer-cloud');
 
 var concept_expansion = watson.concept_expansion({
-  version: 'v1',
+  version: 'v1-beta',
   use_vcap_services: false
 });
 ```
@@ -644,7 +649,6 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/maste
 
 
 [question_and_answer]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/qaapi/
-[message_resonance]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/mrapi/
 [personality_insights]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/personality-insights/
 [concept_expansion]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/glimpseapi/
 [relationship_extraction]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/sireapi/

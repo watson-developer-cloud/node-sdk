@@ -15,7 +15,7 @@ describe('visual_recognition', function() {
     username: 'batman',
     password: 'bruce-wayne',
     url: 'http://ibm.com:80',
-    version: 'v1'
+    version: 'v1-beta'
   };
   var service_request = {
     image_file: fs.createReadStream(__dirname + '/resources/car.png'),
