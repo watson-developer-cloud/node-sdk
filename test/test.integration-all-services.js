@@ -4,7 +4,6 @@ var nock = require('nock');
 var watson = require('../lib/index');
 var auth = require('./resources/auth');
 var fs = require('fs');
-var omit = require('object.omit');
 
 var mobydick = fs.readFileSync(__dirname + '/resources/mobydick.txt', 'utf8');
 var TWENTY_SECONDS = 20000;

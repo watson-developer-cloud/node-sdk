@@ -391,9 +391,9 @@ function RecognizeStream(options){
   var openingMessage = extend({
     // todo: confirm the mixed underscores/hyphens and/or get it fixed
     action: 'start',
-    "content-type": 'audio/wav', // todo: try to determine content-type from the file extension if available
-    "continuous": false,
-    "interim_results": true
+    'content-type': 'audio/wav', // todo: try to determine content-type from the file extension if available
+    'continuous': false,
+    'interim_results': true
   }, pick(options, ['continuous', 'max_alternatives', 'timestamps',
     'word_confidence', 'inactivity_timeout', 'content-type', 'interim_results']));
 
@@ -459,7 +459,7 @@ function RecognizeStream(options){
 
       if (data.error) {
         emitError(data.error, frame);
-      } else if(data.state == 'listening') {
+      } else if(data.state === 'listening') {
         // this is emitted both when the server is ready for audio, and after we send the close message to indicate that it's done processing
         if (!self.listening) {
           self.listening = true;

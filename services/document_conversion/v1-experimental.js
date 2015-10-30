@@ -19,7 +19,6 @@
 var extend         = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
 var isStream       = require('isstream');
-var pick           = require('object.pick');
 var omit           = require('object.omit');
 
 function DocumentConversion(options) {
@@ -113,7 +112,7 @@ DocumentConversion.prototype.convert = function(params, callback) {
   'addDocumentToBatch', 'getDocument', 'getDocuments', 'uploadDocument', 'getBatchDocuments', 'updateBatch', 'getBatch', 'createBatch', 'getBatches'].forEach(function(name) {
     DocumentConversion.prototype[name] = function deprecated() {
       throw new Error('The DocumentConversion.' + name + '() method was deprecated and is no longer available, please use convert() instead.');
-  }
+  };
 });
 
 
