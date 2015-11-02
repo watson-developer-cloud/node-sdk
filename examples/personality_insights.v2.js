@@ -54,3 +54,14 @@ personality_insights.profile({
     else
       console.log(JSON.stringify(response, null, 2));
 });
+
+
+/*
+ * CSV output example:
+ * https://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/personality-insights/output.shtml#outputCSV
+ */
+personality_insights.profile({
+    text: 'Enter more than 100 unique words here...',
+    csv: true,
+    csv_headers: true
+  }).pipe(fs.createWriteStream('./output.csv'));

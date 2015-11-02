@@ -19,7 +19,7 @@
 var extend         = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
 var pick           = require('object.pick');
-var herper         = require('../../lib/helper');
+var helper         = require('../../lib/helper');
 
 
 function PersonalityInsights(options) {
@@ -58,7 +58,7 @@ PersonalityInsights.prototype.profile = function(params, callback) {
   // Content-Type
   var content_type = null;
   if (params.text)
-    content_type = herper.isHTML(params.text) ? 'text/html' : 'text/plain';
+    content_type = helper.isHTML(params.text) ? 'text/html' : 'text/plain';
   else
     content_type = 'application/json';
 
@@ -77,6 +77,14 @@ PersonalityInsights.prototype.profile = function(params, callback) {
     },
     defaultOptions: this._options
   };
+
+  if (params.csv) {
+    parameters.options.headers.Accept = 'text/csv';
+    if (params.csv_headers) {
+      parameters.options.qs.headers = 'true';
+    }
+  }
+
   return requestFactory(parameters, callback);
 };
 module.exports = PersonalityInsights;

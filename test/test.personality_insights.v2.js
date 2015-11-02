@@ -115,6 +115,24 @@ describe('personality_insights', function() {
       assert.equal(req.headers['Accept-language'], 'es');
   });
 
+  it('should generate a valid request with {csv: true}', function() {
+    var params = extend({ csv: true}, payload);
+    var req = personality_insights.profile(params, noop);
+    var body = new Buffer(req.body).toString('ascii');
+    assert.equal(req.uri.href, service.url + service_path);
+    assert.equal(body, JSON.stringify(payload));
+    assert.equal(req.headers['Accept'], 'text/csv');
+  });
+
+  it('should generate a valid request with {csv: true, csv_headers: true}', function() {
+    var params = extend({ csv: true, csv_headers: true}, payload);
+    var req = personality_insights.profile(params, noop);
+    var body = new Buffer(req.body).toString('ascii');
+    assert.equal(req.uri.href, service.url + service_path + '?headers=true');
+    assert.equal(body, JSON.stringify(payload));
+    assert.equal(req.headers['Accept'], 'text/csv');
+  });
+
   it('should format the response', function(done) {
     personality_insights.profile(service_request, function(err, response) {
       if (err)
