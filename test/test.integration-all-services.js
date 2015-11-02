@@ -4,15 +4,20 @@ var nock = require('nock');
 var watson = require('../lib/index');
 var auth = require('./resources/auth');
 var fs = require('fs');
+var assert = require('assert');
 
 var mobydick = fs.readFileSync(__dirname + '/resources/mobydick.txt', 'utf8');
+var concat = require('concat-stream');
 var TWENTY_SECONDS = 20000;
 var TEN_SECONDS = 10000;
 var FIVE_SECONDS = 5000;
+var TWO_SECONDS = 2000;
 
 if (fs.existsSync(__dirname + '/resources/auth.js')) {
 
 describe('integration-all-services', function() {
+
+  this.slow(TWO_SECONDS); // this controls when the tests get a colored warning for taking too long
 
   var failIfError = function(done, err) {
     if (err)
@@ -178,7 +183,19 @@ describe('integration-all-services', function() {
     it('getModels()', function(done) {
       speech_to_text.getModels({}, failIfError.bind(failIfError, done));
     });
-  });
+
+    it('createRecognizeStream()',  function (done) {
+      var recognizeStream = speech_to_text.createRecognizeStream({content_type: 'audio/l16; rate=44100'});
+      recognizeStream.setEncoding('utf8');
+      fs.createReadStream(__dirname + '/resources/audio.wav')
+        .pipe(recognizeStream)
+        .on('error', done)
+        .pipe(concat(function (transcription) {
+          assert.equal(transcription.trim(), 'thunderstorms could produce large hail isolated tornadoes and heavy rain');
+          done();
+        }));
+      });
+    });
 
   describe('functional_dialog', function() {
     this.timeout(TWENTY_SECONDS);
