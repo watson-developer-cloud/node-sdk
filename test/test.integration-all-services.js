@@ -53,10 +53,6 @@ describe('integration-all-services', function() {
 
     it('ask()', function(done) {
       var params = {
-        text: 'What is HIV?',
-        dataset: 'healthcare'
-      };
-      params = {
         dataset: 'healthcare',
         question: {
           questionText: 'Why should I take aspirin?',
