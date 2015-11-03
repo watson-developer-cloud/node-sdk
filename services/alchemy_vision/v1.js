@@ -66,7 +66,8 @@ function createRequest(method) {
 
     if (!params.image || !isStream(params.image)) {
       // url or base64 images are considered 'not-raw'
-      params.imagePostMode = 'not-raw';
+      if (params.image)
+        params.imagePostMode = 'not-raw';
       // send the parameters as form url-encoded
       parameters.options.form = params;
       return requestFactory(parameters, errorFormatter(callback));
@@ -101,5 +102,11 @@ AlchemyVision.prototype.getImageKeywords = createRequest('image_keywords');
  * Face detection and Recognition
  */
 AlchemyVision.prototype.recognizeFaces = createRequest('image_recognition');
+
+/**
+ * Extracts images from a URL or html
+ */
+AlchemyVision.prototype.getImageLinks = createRequest('image_link');
+
 
 module.exports = AlchemyVision;

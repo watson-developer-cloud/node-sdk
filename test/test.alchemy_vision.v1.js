@@ -83,8 +83,7 @@ describe('alchemy_vision', function() {
       var body = new Buffer(req.body).toString('ascii');
       var expectedBody = qs.stringify({
         url : 'http://bat.com/foo.png',
-        outputMode: 'json',
-        imagePostMode: 'not-raw'
+        outputMode: 'json'
       });
       assert.equal(body, expectedBody);
     });
