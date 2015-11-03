@@ -378,19 +378,6 @@ describe('integration-all-services', function() {
       }, failIfError.bind(failIfError, done));
     });
 
-
-    it('getImageLinks() with url', function(done) {
-      alchemy_language.getImageLinks({
-        url: 'http://www.alchemyapi.com/products/alchemylanguage/microformats-parsing'
-      }, failIfError.bind(failIfError, done));
-    });
-
-    it('getImageLinks() with html', function(done) {
-      alchemy_language.getImageLinks({
-        html: '<div><img src="http://visual-recognition-demo.mybluemix.net/images/horses.jpg" /></div>'
-      }, failIfError.bind(failIfError, done));
-    });
-
     it('combined()', function(done) {
       alchemy_language.combined({
         text: text
@@ -413,6 +400,18 @@ describe('integration-all-services', function() {
     this.timeout(TWENTY_SECONDS);
     var alchemy_vision = watson.alchemy_vision(auth.alchemy);
     var imageFile = fs.createReadStream(__dirname + '/resources/obama.jpg');
+
+    it('getImageLinks() with url', function(done) {
+      alchemy_vision.getImageLinks({
+        url: 'http://www.alchemyapi.com/products/alchemylanguage/microformats-parsing'
+      }, failIfError.bind(failIfError, done));
+    });
+
+    it('getImageLinks() with html', function(done) {
+      alchemy_vision.getImageLinks({
+        html: '<div><img src="http://visual-recognition-demo.mybluemix.net/images/horses.jpg" /></div>'
+      }, failIfError.bind(failIfError, done));
+    });
 
     it('getImageKeywordsWithFile()', function(done) {
       alchemy_vision.getImageKeywords({image: imageFile}, failIfError.bind(failIfError, done));
