@@ -17,6 +17,7 @@ describe('question_and_answer', function() {
 
   var healthcare_path = '/v1/question/healthcare';
   var travel_path = '/v1/question/travel';
+  var feedback_path = '/v1/feedback';
 
   var payload = {
     question: {
@@ -43,6 +44,11 @@ describe('question_and_answer', function() {
       .persist()
       .post(travel_path)
       .reply(200, service_response);
+
+    nock(service.url)
+      .persist()
+      .put(feedback_path)
+      .reply(201, {});
 
   });
 
@@ -131,4 +137,20 @@ describe('question_and_answer', function() {
     });
   });
 
+  it('should generate a valid payload when calling /feedback ', function(done) {
+    var payload = {
+      questionId: 'q-id',
+      questionText: 'q-text',
+      answerId: 'a-id',
+      answerText: 'a-text'
+    };
+    question_and_answer.feedback(payload, function(err, response) {
+      if (err)
+        done(err);
+      else {
+        assert.equal(JSON.stringify({}), JSON.stringify(response));
+        done();
+      }
+    });
+  });
 });

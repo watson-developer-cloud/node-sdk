@@ -74,13 +74,27 @@ QuestionAndAnswer.prototype.ask = function(_params, callback) {
   return requestFactory(parameters, callback);
 };
 
-QuestionAndAnswer.prototype.datasets = function(_params, callback) {
+QuestionAndAnswer.prototype.datasets = function(params, callback) {
   var parameters = {
     options: {
       url: '/v1/services',
       method: 'GET',
       json: true
     },
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+QuestionAndAnswer.prototype.feedback = function(params, callback) {
+  var parameters = {
+    options: {
+      url: '/v1/feedback',
+      method: 'PUT',
+      body: params,
+      json: true
+    },
+    requiredParams: ['questionId', 'questionText', 'answerId', 'answerText'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
