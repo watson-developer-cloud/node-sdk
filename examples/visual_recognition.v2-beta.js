@@ -4,17 +4,18 @@ var watson = require('watson-developer-cloud');
 var fs = require('fs');
 
 var visual_recognition = watson.visual_recognition({
+  //url: 'https://gateway-d.watsonplatform.net/visual-recognition-beta/api',
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
   password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
-  version: 'v1-beta'
+  version: 'v2-beta'
 });
 
 var params = {
-  // From file
-  image_file: fs.createReadStream('./resources/car.png')
+  // must be a .zip file containing images
+  images_file: fs.createReadStream('./resources/images.zip')
 };
 
-visual_recognition.recognize(params, function(err, res) {
+visual_recognition.classify(params, function(err, res) {
   if (err)
     console.log(err);
   else

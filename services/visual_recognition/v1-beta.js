@@ -49,11 +49,11 @@ VisualRecognition.prototype.labels = function(params, callback) {
 };
 
 /**
- * Classifies @param imgFile against @param labels_to_check classifiers.
+ * Classifies @param image_file against @param labels_to_check classifiers.
  * The response includes a score for a label if the score meets the minimum
  * threshold of 0.5
  *
- * @param  {ReadStream} imgFile The image file to analyze.
+ * @param  {ReadStream} image_file The image file to analyze.
  * @param  {String} labels_to_check The labels to check
  */
 VisualRecognition.prototype.recognize = function(params, callback) {
