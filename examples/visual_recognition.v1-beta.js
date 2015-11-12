@@ -18,5 +18,5 @@ visual_recognition.recognize(params, function(err, res) {
   if (err)
     console.log(err);
   else
-    console.log(JSON.stringify(res, 'labels', 2));
+    console.log(JSON.stringify(res, null, 2));
 });
