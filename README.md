@@ -60,7 +60,7 @@ Several breaking changes were introduced with the v1.0.0 release:
     The affected methods are:
     * `recognizeLive()`
     * `observeResult()`
-    * `getRecognizeStatus()`]
+    * `getRecognizeStatus()`
   * The Document Conversion API has been reduced to a single `convert()` method; it no longer offers batch conversion or cloud storage of files.
   * Several deprecated services have been removed:
     * Message Resonance
