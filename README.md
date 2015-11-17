@@ -66,7 +66,7 @@ Several breaking changes were introduced with the v1.0.0 release:
     * Message Resonance
     * Tone Analyzer v1 (replaced by v2-experimental)
     * Search (replaced by Retrieve and Rank)
-  * Dropped support for node.js v0.10.x (For reference: now officially support the latest 0.12, LTS, and Stable releases of Node.js.)
+  * Dropped support for node.js v0.10.x (For reference: the WDC Node.js SDK now officially support the latest 0.12, LTS, and Stable releases of Node.js.)
 
 
 ## Installation
