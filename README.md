@@ -569,7 +569,7 @@ var fs = require('fs');
 var visual_recognition = watson.visual_recognition({
   username: '<username>',
   password: '<password>',
-  version: 'v1'
+  version: 'v1-beta'
 });
 
 var params = {
