@@ -39,7 +39,7 @@ function errorFormatter(cb) {
 function AlchemyDataNews(options) {
   // Default URL
   var serviceDefaults = {
-    url: ' https://gateway-a.watsonplatform.net/calls'
+    url: 'https://gateway-a.watsonplatform.net/calls'
   };
   // Replace default options with user provided
   this._options = extend(serviceDefaults, options);
