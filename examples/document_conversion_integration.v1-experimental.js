@@ -62,7 +62,8 @@ async.waterfall([
     document_conversion.convert({
       // (JSON) ANSWER_UNITS, NORMALIZED_HTML, or NORMALIZED_TEXT
       file: fs.createReadStream(__dirname + inputDocument),
-      conversion_target: document_conversion.conversion_target.ANSWER_UNITS
+      conversion_target: document_conversion.conversion_target.ANSWER_UNITS,
+      config: {"html_to_html":{"specify_content_to_extract":{"enabled":true,"xpaths":["//h3"]}}}
     }, function (err, response) {
       if (err) {
         console.error(err);
