@@ -450,10 +450,17 @@ describe('integration-all-services', function() {
       }, failIfError.bind(failIfError, done));
     });
 
-    it('sentiment_multiple_targets()', function(done) {
+    it('sentiment_multiple_targets_with_pipe()', function(done) {
       alchemy_language.sentiment({
         text: text,
         targets: 'United States|Peter Higgs'
+      }, failIfError.bind(failIfError, done));
+    });
+
+    it('sentiment_multiple_targets_with_array()', function(done) {
+      alchemy_language.sentiment({
+        text: text,
+        targets: ['United States','Peter Higgs']
       }, failIfError.bind(failIfError, done));
     });
 

@@ -17,6 +17,7 @@
 'use strict';
 
 var extend         = require('extend');
+var util           = require('util');
 var requestFactory = require('../../lib/requestwrapper');
 var endpoints      = require('../../lib/alchemy_endpoints.json');
 var helper         = require('../../lib/helper');
@@ -93,8 +94,12 @@ AlchemyLanguage.prototype.concepts = createRequest('concepts');
  * Calculates the sentiment for text, a URL or HTML.
  */
 AlchemyLanguage.prototype.sentiment = function(params, callback) {
-  var service = (params && (params.target || params.targets )) ? 'sentiment_targeted' : 'sentiment';
-  return createRequest(service).call(this, params, callback);
+  var _params = extend({}, params);
+  var service = (params.target || params.targets) ? 'sentiment_targeted' : 'sentiment';
+  if (util.isArray(_params.targets))
+    _params.targets = _params.targets.join('|');
+
+  return createRequest(service).call(this, _params, callback);
 };
 /**
  * Extracts the cleaned text (removes ads, navigation, etc.) for a URL or HTML.
