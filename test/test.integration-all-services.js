@@ -538,7 +538,10 @@ describe('integration-all-services', function() {
     it('getNews()', function(done) {
       alchemy_data_news.getNews({
         start: 'now-1d',
-        end: 'now'
+        end: 'now',
+        count: 100,
+        'q.enriched.url.enrichedTitle.relations.relation': '|action.verb.text=acquire,object.entities.entity.type=Company|',
+        return: 'enriched.url.title'
       }, failIfError.bind(failIfError, done));
     });
   });
