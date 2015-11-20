@@ -93,7 +93,7 @@ AlchemyLanguage.prototype.concepts = createRequest('concepts');
  * Calculates the sentiment for text, a URL or HTML.
  */
 AlchemyLanguage.prototype.sentiment = function(params, callback) {
-  var service = (params && params.target) ? 'sentiment_targeted' : 'sentiment';
+  var service = (params && (params.target || params.targets )) ? 'sentiment_targeted' : 'sentiment';
   return createRequest(service).call(this, params, callback);
 };
 /**

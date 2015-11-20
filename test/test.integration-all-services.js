@@ -7,6 +7,7 @@ var fs = require('fs');
 var assert = require('assert');
 
 var mobydick = fs.readFileSync(__dirname + '/resources/mobydick.txt', 'utf8');
+
 var concat = require('concat-stream');
 var TWENTY_SECONDS = 20000;
 var TEN_SECONDS = 10000;
@@ -414,7 +415,7 @@ describe('integration-all-services', function() {
 
   describe('functional_alchemy_language', function() {
     var alchemy_language = watson.alchemy_language(auth.alchemy);
-    var text = mobydick.split(' ').slice(0, 100).join(' ');
+    var text = fs.readFileSync(__dirname + '/resources/alchemy-text.txt', 'utf8');
 
     it('entities()', function(done) {
       alchemy_language.entities({
@@ -445,7 +446,14 @@ describe('integration-all-services', function() {
     it('sentiment_targeted()', function(done) {
       alchemy_language.sentiment({
         text: text,
-        target: 'Ishmael'
+        target: 'Peter Higgs'
+      }, failIfError.bind(failIfError, done));
+    });
+
+    it('sentiment_multiple_targets()', function(done) {
+      alchemy_language.sentiment({
+        text: text,
+        targets: 'United States|Peter Higgs'
       }, failIfError.bind(failIfError, done));
     });
 
