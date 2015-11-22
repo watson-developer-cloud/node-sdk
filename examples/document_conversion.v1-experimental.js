@@ -12,8 +12,14 @@ var document_conversion = watson.document_conversion({
 // convert a single document
 document_conversion.convert({
   // (JSON) ANSWER_UNITS, NORMALIZED_HTML, or NORMALIZED_TEXT
-  file: fs.createReadStream(__dirname + '/resources/document_conversion/sample-docx.docx'),
-  conversion_target: document_conversion.conversion_target.ANSWER_UNITS
+  file: fs.createReadStream(__dirname + '/resources/example.html'),
+  conversion_target: document_conversion.conversion_target.ANSWER_UNITS,
+  config: { 
+    // split the html file by "h2", "h3" and "h4" tags
+    html_to_answer_units: {
+      selectors: [ 'h2','h3', 'h4']
+    }
+  }
 }, function (err, response) {
   if (err) {
     console.error(err);
