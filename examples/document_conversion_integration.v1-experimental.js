@@ -21,7 +21,7 @@ Document Conversion Service and upload it to the Retrieve and Rank Service to ma
 */
 
 var watson = require('watson-developer-cloud');
-var async  = require('async');
+var async = require('async');
 var fs = require('fs');
 
 /*
@@ -57,18 +57,25 @@ var solrClient = retrieve.createSolrClient({
 
 async.waterfall([
 
-  function convert(done){
+  function convert(done) {
     // convert a single document
     document_conversion.convert({
       // (JSON) ANSWER_UNITS, NORMALIZED_HTML, or NORMALIZED_TEXT
       file: fs.createReadStream(__dirname + inputDocument),
       conversion_target: document_conversion.conversion_target.ANSWER_UNITS,
-      config: {"html_to_html":{"specify_content_to_extract":{"enabled":true,"xpaths":["//h3"]}}}
-    }, function (err, response) {
+      config: {
+        html_to_html: {
+          specify_content_to_extract: {
+            enabled: true,
+            xpaths: ['//h3']
+          }
+        }
+      }
+    }, function(err, response) {
       if (err) {
         console.error(err);
       } else {
-         done(null, response);
+        done(null, response);
       }
     });
   },
@@ -77,13 +84,13 @@ async.waterfall([
     console.log('Indexing a document...');
     var doc = mapAnswerUnits2SolrDocs(response);
     solrClient.add(doc, function(err) {
-      if(err) {
+      if (err) {
         console.log('Error indexing document: ' + err);
         done();
       } else {
         console.log('Indexed a document.');
         solrClient.commit(function(err) {
-          if(err) {
+          if (err) {
             console.log('Error committing change: ' + err);
           } else {
             console.log('Successfully committed changes.');
@@ -100,10 +107,12 @@ async.waterfall([
     // This query searches for the term 'psychological' in the content_text field.
     // For a wildcard query use:
     // query.q({ '*' : '*' });
-    query.q({ 'content_text' : 'psychological' });
+    query.q({
+      'content_text': 'psychological'
+    });
 
     solrClient.search(query, function(err, searchResponse) {
-      if(err) {
+      if (err) {
         console.log('Error searching for documents: ' + err);
       } else {
         console.log('Found ' + searchResponse.response.numFound + ' document(s).');
@@ -117,7 +126,7 @@ async.waterfall([
 function mapAnswerUnits2SolrDocs(data) {
   var answerUnits = data.answer_units;
   var solrDocList = [];
-  answerUnits.forEach(function(value){
+  answerUnits.forEach(function(value) {
     var solrDoc = convertAnswerUnit2SolrDoc(value);
     solrDocList.push(solrDoc);
   });
@@ -127,9 +136,15 @@ function mapAnswerUnits2SolrDocs(data) {
 function convertAnswerUnit2SolrDoc(au) {
   var solrDoc;
   var auContents = au.content;
-  auContents.forEach(function(auContent){
-    if(auContent.media_type === 'text/plain') {
-      solrDoc = { id : au.id, title: au.title, type: au.type, media_type: auContent.media_type, content_text: auContent.text };
+  auContents.forEach(function(auContent) {
+    if (auContent.media_type === 'text/plain') {
+      solrDoc = {
+        id: au.id,
+        title: au.title,
+        type: au.type,
+        media_type: auContent.media_type,
+        content_text: auContent.text
+      };
     }
   });
   return solrDoc;
