@@ -17,24 +17,47 @@
 'use strict';
 
 var extend = require('extend');
-var requestFactory = require('../../lib/requestwrapper');
 var pick = require('object.pick');
+var omit = require('object.omit');
 var isStream = require('isstream');
+var requestFactory = require('../../lib/requestwrapper');
+
+/**
+ * Verifies that the variable is a valid stream
+ * @param  {Object} value   Variable value
+ * @param  {String} name Variable name
+ */
+function verifyStream(value, name) {
+  if (!value) {
+    throw new Error('Missing required parameters: ' + name);
+  }
+
+  if (!isStream(value)) {
+    throw new Error(name + ' is not a standard Node.js Stream');
+  }
+}
 
 function VisualRecognition(options) {
+  // Check if 'version_date' was provided
+  if (typeof options.version_date === 'undefined') {
+    throw new Error('Argument error: version_date was not specified, use 2015-11-24');
+  }
+
   // Default URL
   var serviceDefaults = {
-    url: 'https://gateway.watsonplatform.net/visual-recognition-beta/api'
+    url: 'https://gateway.watsonplatform.net/visual-recognition-beta/api',
+    qs: {
+      version: options.version_date
+    }
   };
 
   // Replace default options with user provided
-  this._options = extend(serviceDefaults, options);
+  this._options = extend(serviceDefaults, omit(options, ['version_date']));
 }
 
 /**
- * Returns a classifier
+ * Retrieves information about a specific classifier.
  * @param classifier_id The classifier id
- *
  */
 VisualRecognition.prototype.getClassifier = function(params, callback) {
   var parameters = {
@@ -42,7 +65,7 @@ VisualRecognition.prototype.getClassifier = function(params, callback) {
       method: 'GET',
       url: '/v2/classifiers/{classifier_id}',
       path: params,
-      json: true,
+      json: true
     },
     requiredParams: ['classifier_id'],
     defaultOptions: this._options
@@ -51,7 +74,7 @@ VisualRecognition.prototype.getClassifier = function(params, callback) {
 };
 
 /**
- * Deletes a classifier
+ * Deletes a custom classifier with the specified classifier id.
  * @param classifier_id The classifier id
  *
  */
@@ -70,27 +93,23 @@ VisualRecognition.prototype.deleteClassifier = function(params, callback) {
 };
 
 /**
- * Creates a classifiers
- * Train a new classifier on the uploaded image data.
- * The upload should be a.zip file with a folder named 'train' and
- * another named 'test'.Each of those should have a folder named
- * after the name of the desired new classifier, for example 'tiger'.
- * train/tiger and test/tiger should contain images(.jpg, .png, .gif files)
- * showing tigers.Other folders under train and test will be assumed to
- * contain negative examples(leopards, dogs, horses, etc).
+ * Train a new classifier from example images which are uploaded.
  * @param name The desired short name of the new classifier.
- * @param images_file A compressed (.zip) file of images.
+ * @param positive_examples A compressed (.zip) file of images which prominently
+ *                            depict the visual subject for a new classifier.
+ * @param negative_examples A compressed (.zip) file of images which di not
+ *                            prominently depict the visual subject for a new
+ *                            classifier.
+ * @param name The desired name of the new classifier.
  */
 VisualRecognition.prototype.createClassifier = function(params, callback) {
   params = params || {};
 
-  if (!params.images_file) {
-    callback(new Error('Missing required parameters: images_file'));
-    return;
-  }
-
-  if (!isStream(params.images_file)) {
-    callback(new Error('images_file is not a standard Node.js Stream'));
+  try {
+    verifyStream(params.positive_examples, 'positive_examples');
+    verifyStream(params.negative_examples, 'negative_examples');
+  } catch (e) {
+    callback(e);
     return;
   }
 
@@ -99,7 +118,7 @@ VisualRecognition.prototype.createClassifier = function(params, callback) {
       url: '/v2/classifiers',
       method: 'POST',
       json: true,
-      formData: pick(params, ['name', 'images_file'])
+      formData: pick(params, ['name', 'positive_examples', 'negative_examples'])
     },
     requiredParams: ['name'],
     defaultOptions: this._options
@@ -108,15 +127,17 @@ VisualRecognition.prototype.createClassifier = function(params, callback) {
 };
 
 /**
- * Returns the classifiers
- *
+ * Retrieve a list of all classifiers, including built-in and
+ * user-created classifiers.
+ * @param verbose If verbose is present and not equal to "0",
+ * return detailed results for each classifier.
  */
 VisualRecognition.prototype.listClassifiers = function(params, callback) {
   var parameters = {
     options: {
       method: 'GET',
       url: '/v2/classifiers',
-      qs: pick(params, ['name']),
+      qs: pick(params, ['verbose']),
       json: true,
     },
     defaultOptions: this._options
@@ -131,17 +152,18 @@ VisualRecognition.prototype.listClassifiers = function(params, callback) {
  * of relevant classifier scores for each image.
  *
  * @param  {ReadStream} images_file The image/s to analyze.
+ * @param  {ReadStream} classifier_ids The ids of the classifier
+ *                                     to check images against.
+ *                                     Omit this parameter to use
+ *                                     all classifiers.
  */
 VisualRecognition.prototype.classify = function(params, callback) {
   params = params || {};
 
-  if (!params.images_file) {
-    callback(new Error('Missing required parameters: images_file'));
-    return;
-  }
-
-  if (!isStream(params.images_file)) {
-    callback(new Error('images_file is not a standard Node.js Stream'));
+  try {
+    verifyStream(params.images_file, 'images_file');
+  } catch (e) {
+    callback(e);
     return;
   }
 
@@ -150,7 +172,7 @@ VisualRecognition.prototype.classify = function(params, callback) {
       url: '/v2/classify',
       method: 'POST',
       json: true,
-      formData: pick(params, ['images_file'])
+      formData: pick(params, ['images_file', 'classifier_ids'])
     },
     defaultOptions: this._options
   };
