@@ -7,6 +7,7 @@ var fs = require('fs');
 var assert = require('assert');
 
 var mobydick = fs.readFileSync(__dirname + '/resources/mobydick.txt', 'utf8');
+
 var concat = require('concat-stream');
 var TWENTY_SECONDS = 20000;
 var TEN_SECONDS = 10000;
@@ -135,14 +136,133 @@ describe('integration-all-services', function() {
 
   describe('functional_concept_insights', function() {
     this.timeout(TEN_SECONDS);
+
+    var sample = {
+      concept: '/graphs/wikipedia/en-20120601/concepts/IBM',
+      document: '/corpora/public/ibmresearcher/documents/il-AHARONA',
+      corpus : '/corpora/public/ibmresearcher',
+      graph: '/graphs/wikipedia/en-20120601'
+    };
+
     var concept_insights = watson.concept_insights(auth.concept_insights);
 
     it('listCorpora()', function(done) {
       concept_insights.corpora.listCorpora({}, failIfError.bind(failIfError, done));
     });
 
+    it('listCorporaWithAccountId()', function(done) {
+      concept_insights.corpora.listCorpora({
+        account_id: auth.concept_insights.account_id
+      }, failIfError.bind(failIfError, done));
+    });
+
     it('getAccountsInfo()', function(done) {
       concept_insights.accounts.getAccountsInfo({}, failIfError.bind(failIfError, done));
+    });
+
+    // to update
+    it('getConcept()', function(done) {
+      concept_insights.graphs.getConcept({
+        id: sample.concept
+      }, failIfError.bind(failIfError, done));
+    });
+
+    it('searchConceptByLabel()', function(done) {
+      concept_insights.graphs.searchConceptByLabel({
+        graph: sample.graph,
+        query: 'ibm'
+      }, failIfError.bind(failIfError, done));
+    });
+
+    it('getRelatedConcepts()', function(done) {
+      concept_insights.graphs.getRelatedConcepts({
+        graph: sample.graph,
+        concepts: [sample.concept]
+      }, failIfError.bind(failIfError, done));
+    });
+
+    it('annotateText()', function(done) {
+      concept_insights.graphs.annotateText({
+        graph: sample.graph,
+        text: 'Nizar Magboul Alseddeg is currently living in Austin Texas'
+      }, failIfError.bind(failIfError, done));
+    });
+
+    it('getRelationScores()', function(done) {
+      concept_insights.graphs.getRelationScores({
+        id: sample.concept,
+        concepts: ['/graphs/wikipedia/en-20120601/concepts/Cloud_computing',
+        '/graphs/wikipedia/en-20120601/concepts/Web_services']
+      }, failIfError.bind(failIfError, done));
+    });
+
+    it('getCorpus()', function(done) {
+      concept_insights.corpora.getCorpus({
+        corpus: sample.corpus
+      }, failIfError.bind(failIfError, done));
+    });
+
+    it('listDocuments()', function(done) {
+      concept_insights.corpora.listDocuments({
+        corpus: sample.corpus
+      }, failIfError.bind(failIfError, done));
+    });
+
+    it('getDocument()', function(done) {
+      concept_insights.corpora.getDocument({
+        id: sample.document
+      }, failIfError.bind(failIfError, done));
+    });
+
+    it('getDocumentAnnotations()', function(done) {
+      concept_insights.corpora.getDocumentAnnotations({
+        id: sample.document
+      }, failIfError.bind(failIfError, done));
+    });
+
+    it('getCorpusProcessingState()', function(done) {
+      concept_insights.corpora.getCorpusProcessingState({
+        corpus: sample.corpus
+      }, failIfError.bind(failIfError, done));
+    });
+
+    it('getCorpusStats()', function(done) {
+      concept_insights.corpora.getCorpusStats({
+        corpus: sample.corpus
+      }, failIfError.bind(failIfError, done));
+    });
+
+    it('searchByLabel()', function(done) {
+      concept_insights.corpora.searchByLabel({
+        corpus: sample.corpus,
+        query: 'ibm'
+      }, failIfError.bind(failIfError, done));
+    });
+
+    it('getRelatedDocuments()', function(done) {
+      concept_insights.corpora.getRelatedDocuments({
+        corpus: sample.corpus,
+        ids: [sample.concept]
+      }, failIfError.bind(failIfError, done));
+    });
+
+    it('getRelatedConcepts()', function(done) {
+      concept_insights.corpora.getRelatedConcepts({
+        id: sample.concept
+      }, failIfError.bind(failIfError, done));
+    });
+
+    it('getRelatedConcepts()', function(done) {
+      concept_insights.corpora.getRelatedConcepts({
+        concepts: [sample.concept],
+        id: sample.concept
+      }, failIfError.bind(failIfError, done));
+    });
+
+    it('getDocumentProcessingState()', function(done) {
+      concept_insights.corpora.getDocumentProcessingState({
+        id: sample.document
+      }, failIfError.bind(failIfError, done));
     });
   });
 
@@ -295,7 +415,7 @@ describe('integration-all-services', function() {
 
   describe('functional_alchemy_language', function() {
     var alchemy_language = watson.alchemy_language(auth.alchemy);
-    var text = mobydick.split(' ').slice(0, 100).join(' ');
+    var text = fs.readFileSync(__dirname + '/resources/alchemy-text.txt', 'utf8');
 
     it('entities()', function(done) {
       alchemy_language.entities({
@@ -326,7 +446,21 @@ describe('integration-all-services', function() {
     it('sentiment_targeted()', function(done) {
       alchemy_language.sentiment({
         text: text,
-        target: 'Ishmael'
+        target: 'Peter Higgs'
+      }, failIfError.bind(failIfError, done));
+    });
+
+    it('sentiment_multiple_targets_with_pipe()', function(done) {
+      alchemy_language.sentiment({
+        text: text,
+        targets: 'United States|Peter Higgs'
+      }, failIfError.bind(failIfError, done));
+    });
+
+    it('sentiment_multiple_targets_with_array()', function(done) {
+      alchemy_language.sentiment({
+        text: text,
+        targets: ['United States','Peter Higgs']
       }, failIfError.bind(failIfError, done));
     });
 
@@ -404,7 +538,10 @@ describe('integration-all-services', function() {
     it('getNews()', function(done) {
       alchemy_data_news.getNews({
         start: 'now-1d',
-        end: 'now'
+        end: 'now',
+        count: 100,
+        'q.enriched.url.enrichedTitle.relations.relation': '|action.verb.text=acquire,object.entities.entity.type=Company|',
+        return: 'enriched.url.title'
       }, failIfError.bind(failIfError, done));
     });
   });

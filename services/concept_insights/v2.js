@@ -205,9 +205,13 @@ ConceptInsightsGraphs.prototype.getRelationScores = function(params, callback) {
  * Retrieves the available corpora
  */
 ConceptInsightsCorpora.prototype.listCorpora = function(params, callback) {
+  var path = '/v2/corpora';
+  if (params && params.account_id)
+    path += '/' + params.account_id;
+
   var parameters = {
     options: {
-      url: '/v2/corpora',
+      url: path,
       method: 'GET',
       json: true
     },

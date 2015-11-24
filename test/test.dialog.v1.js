@@ -84,10 +84,9 @@ describe('dialog', function() {
     });
 
     it('should generate a valid payload', function() {
-      var clientQuery = qs.stringify(pick(payload,['client_id']));
 
       var req = dialog.updateProfile(params, noop);
-      assert.equal(req.uri.href, service.url + paths.profile + '?' + clientQuery);
+      assert.equal(req.uri.href, service.url + paths.profile);
       assert.equal(req.method, 'PUT');
     });
   });

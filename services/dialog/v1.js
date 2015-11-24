@@ -65,8 +65,7 @@ Dialog.prototype.updateProfile = function(params, callback) {
       url: '/v1/dialogs/{dialog_id}/profile',
       method: 'PUT',
       json: true,
-      body: pick(params, ['name_values']),
-      qs: pick(params, ['client_id']),
+      body: pick(params, ['name_values','client_id']),
       path: params
     },
     requiredParams: ['dialog_id', 'name_values'],
