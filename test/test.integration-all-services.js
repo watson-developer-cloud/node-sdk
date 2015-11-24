@@ -48,29 +48,6 @@ describe('integration-all-services', function() {
     });
   });
 
-  describe('functional_question_and_answer', function() {
-    this.timeout(FIVE_SECONDS);
-    var question_and_answer = watson.question_and_answer(auth.question_and_answer);
-
-    it('ask()', function(done) {
-      var params = {
-        dataset: 'healthcare',
-        question: {
-          questionText: 'Why should I take aspirin?',
-          items: 2, // number of answers
-          evidenceRequest: {
-            items: 5 // number of evidences
-          }
-        }
-      };
-      question_and_answer.ask(params, failIfError.bind(failIfError, done));
-    });
-
-    it('datasets()', function(done) {
-      question_and_answer.datasets(null, failIfError.bind(failIfError, done));
-    });
-  });
-
   describe('functional_tone_analyzer', function() {
     this.timeout(TEN_SECONDS);
     var tone_analyzer = watson.tone_analyzer(auth.tone_analyzer);
@@ -105,17 +82,38 @@ describe('integration-all-services', function() {
 });
 
   describe('functional_visual_recognition', function() {
-    this.timeout(TWENTY_SECONDS);
-    var visual_recognition = watson.visual_recognition(auth.visual_recognition);
+    describe('v1-beta', function() {
+      this.timeout(TWENTY_SECONDS);
+      var visual_recognition = watson.visual_recognition(auth.visual_recognition.v1);
 
-    it('recognize()', function(done) {
-      var params = {
-        image_file: fs.createReadStream(__dirname + '/resources/car.png'),
-        labels_to_check: JSON.stringify({
-          label_groups: ['Vehicle']
-        })
-      };
-      visual_recognition.recognize(params, failIfError.bind(failIfError, done));
+      it('recognize()', function(done) {
+        var params = {
+          image_file: fs.createReadStream(__dirname + '/resources/car.png'),
+          labels_to_check: JSON.stringify({
+            label_groups: ['Vehicle']
+          })
+        };
+        visual_recognition.recognize(params, failIfError.bind(failIfError, done));
+      });
+    });
+    describe('v2-beta', function() {
+      this.timeout(TWENTY_SECONDS);
+      var visual_recognition = watson.visual_recognition(auth.visual_recognition.v2);
+
+      it('getClassifier()', function(done) {
+        visual_recognition.getClassifier({classifier_id: 'Black'}, failIfError.bind(failIfError, done));
+      });
+
+      it('listClassifiers()', function(done) {
+        visual_recognition.listClassifiers({}, failIfError.bind(failIfError, done));
+      });
+
+      it('classify()', function(done) {
+        var params = {
+          images_file: fs.createReadStream(__dirname + '/resources/car.png'),
+        };
+        visual_recognition.listClassifiers(params, failIfError.bind(failIfError, done));
+      });
     });
   });
 
