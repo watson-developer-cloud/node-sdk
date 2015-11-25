@@ -18,6 +18,7 @@
 
 var extend = require('extend');
 var pick = require('object.pick');
+var util = require('util');
 var omit = require('object.omit');
 var isStream = require('isstream');
 var requestFactory = require('../../lib/requestwrapper');
@@ -158,21 +159,25 @@ VisualRecognition.prototype.listClassifiers = function(params, callback) {
  *                                     all classifiers.
  */
 VisualRecognition.prototype.classify = function(params, callback) {
-  params = params || {};
+  var formData = extend(true, {}, params);
 
   try {
-    verifyStream(params.images_file, 'images_file');
+    verifyStream(formData.images_file, 'images_file');
   } catch (e) {
     callback(e);
     return;
   }
+
+  // if is an array we wrap it in a `classifier_ids` element
+  if (formData.classifier_ids && util.isArray(formData.classifier_ids))
+    formData.classifier_ids = JSON.stringify(pick(formData,['classifier_ids']));
 
   var parameters = {
     options: {
       url: '/v2/classify',
       method: 'POST',
       json: true,
-      formData: pick(params, ['images_file', 'classifier_ids'])
+      formData: pick(formData, ['images_file', 'classifier_ids'])
     },
     defaultOptions: this._options
   };

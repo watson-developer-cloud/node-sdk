@@ -24,7 +24,9 @@ describe('visual_recognition', function() {
   var fake_file = fs.createReadStream(__dirname + '/resources/car.png');
   var service_request = {
     images_file: fake_file,
-    classifier_ids: ['foo', 'bar']
+    classifier_ids: {
+      classifier_ids: ['foo', 'bar']
+    }
   };
 
   var classify_path = '/v2/classify?' + version_qs;
@@ -117,11 +119,16 @@ describe('visual_recognition', function() {
     });
 
     it('should generate a valid payload', function() {
-      var req = visual_recognition.classify(service_request, noop);
+      var params = {
+        images_file: fake_file,
+        classifier_ids: ['foo','bar']
+      };
+
+      var req = visual_recognition.classify(params, noop);
       assert.equal(req.uri.href, service.url + classify_path);
       assert.equal(req.method, 'POST');
-      assert.equal(req.formData.images_file.path, __dirname + '/resources/car.png');
-      assert.deepEqual(req.formData.classifier_ids, service_request.classifier_ids);
+      assert.equal(req.formData.images_file.path, fake_file.path);
+      assert.equal(req.formData.classifier_ids, JSON.stringify(service_request.classifier_ids));
     });
   });
 
@@ -143,12 +150,11 @@ describe('visual_recognition', function() {
     });
 
     it('should generate a valid payload with streams', function() {
-      var fake_file = fs.createReadStream(__dirname + '/resources/car.png'),
-        params = {
-          positive_examples: fake_file,
-          negative_examples: fake_file,
-          name: 'test-c'
-        };
+      var params = {
+        positive_examples: fake_file,
+        negative_examples: fake_file,
+        name: 'test-c'
+      };
 
       var req = visual_recognition.createClassifier(params, noop);
       assert.equal(req.uri.href, service.url + classifiers_path);

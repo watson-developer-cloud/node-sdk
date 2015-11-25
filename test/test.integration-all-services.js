@@ -111,6 +111,7 @@ describe('integration-all-services', function() {
       it('classify()', function(done) {
         var params = {
           images_file: fs.createReadStream(__dirname + '/resources/car.png'),
+          classifier_ids: ['Red','Car']
         };
         visual_recognition.listClassifiers(params, failIfError.bind(failIfError, done));
       });
