@@ -17,7 +17,7 @@ describe('visual_recognition', function() {
     password: 'bruce-wayne',
     url: 'http://ibm.com:80',
     version: 'v2-beta',
-    version_date: '2015-11-24'
+    version_date: '2015-12-02'
   };
 
   var version_qs = 'version=' + service.version_date;

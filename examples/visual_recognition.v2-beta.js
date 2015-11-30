@@ -8,7 +8,7 @@ var visual_recognition = watson.visual_recognition({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
   password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
   version: 'v2-beta',
-  version_date: '2015-11-24'
+  version_date: '2015-12-02'
 });
 
 var params = {
