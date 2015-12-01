@@ -1,9 +1,12 @@
 'use strict';
 
+var fs = require('fs');
+
+if (fs.existsSync(__dirname + '/resources/auth.js')) {
+
 var nock = require('nock');
 var watson = require('../lib/index');
 var auth = require('./resources/auth');
-var fs = require('fs');
 var assert = require('assert');
 
 var mobydick = fs.readFileSync(__dirname + '/resources/mobydick.txt', 'utf8');
@@ -13,8 +16,6 @@ var TWENTY_SECONDS = 20000;
 var TEN_SECONDS = 10000;
 var FIVE_SECONDS = 5000;
 var TWO_SECONDS = 2000;
-
-if (fs.existsSync(__dirname + '/resources/auth.js')) {
 
 describe('integration-all-services', function() {
 
