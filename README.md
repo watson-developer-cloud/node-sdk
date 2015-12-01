@@ -303,7 +303,16 @@ var document_conversion = watson.document_conversion({
 document_conversion.convert({
   // (JSON) ANSWER_UNITS, NORMALIZED_HTML, or NORMALIZED_TEXT
   file: fs.createReadStream('sample-docx.docx'),
-  conversion_target: document_conversion.conversion_target.ANSWER_UNITS
+  conversion_target: document_conversion.conversion_target.ANSWER_UNITS,
+  // Add custom configuration properties or omit for defaults
+  word: {
+    heading: {
+      fonts: [
+        { level: 1, min_size: 24 },
+        { level: 2, min_size: 16, max_size: 24 }
+      ]
+    }
+  }
 }, function (err, response) {
   if (err) {
     console.error(err);

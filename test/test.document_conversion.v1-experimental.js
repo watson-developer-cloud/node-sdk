@@ -21,6 +21,14 @@ describe('document_conversion', function() {
 
   var payload = {
     conversion_target: 'ANSWER_UNITS',
+    word: {
+      heading: {
+        fonts: [
+          { level: 1, min_size: 24 },
+          { level: 2, min_size: 16, max_size: 24 }
+        ]
+      }
+    },
     file: fs.createReadStream(__dirname + '/resources/sampleWORD.docx'),
   };
 
@@ -67,6 +75,12 @@ describe('document_conversion', function() {
       assert.equal(req.uri.href, service.url + convertPath);
       assert.equal(req.method, 'POST');
       assert(req.formData);
+    });
+
+    it('should send extra config params', function() {
+      var req = servInstance.convert(payload, noop);
+      var config = JSON.parse(req.formData.config.value);
+      assert(config.word.heading.fonts);
     });
   });
 });
