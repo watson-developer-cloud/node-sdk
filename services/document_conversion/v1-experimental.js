@@ -29,6 +29,12 @@ function DocumentConversion(options) {
     qs: { version: moment.utc().subtract(1, 'd').format('YYYY-MM-DD') }
   };
 
+  // Warn if not specifying version date
+  if(!options || !options.qs || !options.qs.version) {
+    console.warn("[DocumentConversion] WARNING: Not specifying a version query parameter may result in code instability. " +
+                 "e.g. watson.document_conversion({ qs: { version: '2015-12-01' } })")
+  }
+
   // Replace default options with user provided
   this._options = extend(serviceDefaults, options);
 }
