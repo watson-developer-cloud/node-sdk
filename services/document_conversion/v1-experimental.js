@@ -20,11 +20,13 @@ var extend         = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
 var isStream       = require('isstream');
 var omit           = require('object.omit');
+var moment         = require('moment');
 
 function DocumentConversion(options) {
   // Default URL
   var serviceDefaults = {
-    url: 'https://gateway.watsonplatform.net/document-conversion-experimental/api'
+    url: 'https://gateway.watsonplatform.net/document-conversion-experimental/api',
+    qs: { version: moment.utc().subtract(1, 'd').format('YYYY-MM-DD') }
   };
 
   // Replace default options with user provided
