@@ -91,7 +91,7 @@ describe('document_conversion', function() {
     });
 
     it('should allow the version query param to be overridden', function() {
-      var custServInstance = watson.document_conversion(extend(service_options, { qs: { version: "2015-11-30"} }));
+      var custServInstance = watson.document_conversion(extend(service_options, { version_date: "2015-11-30"}));
       var req = custServInstance.convert(payload, noop);
       assert(req.uri.query.indexOf("version=2015-11-30" > -1));
     });

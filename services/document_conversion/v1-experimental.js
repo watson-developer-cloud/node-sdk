@@ -20,20 +20,22 @@ var extend         = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
 var isStream       = require('isstream');
 var omit           = require('object.omit');
-var moment         = require('moment');
 
 function DocumentConversion(options) {
+  // Warn if not specifying version date
+  var version_date = "2015-12-01"
+  if(options && options.version_date) {
+    version_date = options.version_date
+  } else {
+    console.warn("[DocumentConversion] WARNING: No version_date specified. Using a (possibly old) default. " +
+                 "e.g. watson.document_conversion({ version_date: '2015-12-01' })")
+  }
+
   // Default URL
   var serviceDefaults = {
     url: 'https://gateway.watsonplatform.net/document-conversion-experimental/api',
-    qs: { version: moment.utc().subtract(1, 'd').format('YYYY-MM-DD') }
+    qs: { version: version_date }
   };
-
-  // Warn if not specifying version date
-  if(!options || !options.qs || !options.qs.version) {
-    console.warn("[DocumentConversion] WARNING: Not specifying a version query parameter may result in code instability. " +
-                 "e.g. watson.document_conversion({ qs: { version: '2015-12-01' } })")
-  }
 
   // Replace default options with user provided
   this._options = extend(serviceDefaults, options);
