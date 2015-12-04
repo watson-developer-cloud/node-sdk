@@ -294,9 +294,10 @@ var watson = require('watson-developer-cloud');
 var fs = require('fs');
 
 var document_conversion = watson.document_conversion({
-  username: '<username>',
-  password: '<password>',
-  version: 'v1-experimental'
+  username:     '<username>',
+  password:     '<password>',
+  version:      'v1-experimental',
+  version_date: '2015-12-01'
 });
 
 // convert a single document
