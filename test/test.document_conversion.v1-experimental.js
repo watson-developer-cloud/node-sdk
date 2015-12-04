@@ -73,7 +73,8 @@ describe('document_conversion', function() {
 
     it('should generate a valid payload', function() {
       var req = servInstance.convert(payload, noop);
-      assert(req.uri.href.startsWith(service_options.url + convertPath));
+      var url = service_options.url + convertPath;
+      assert.equal(req.uri.href.slice(0, url.length), url);
       assert.equal(req.method, 'POST');
       assert(req.formData);
     });
