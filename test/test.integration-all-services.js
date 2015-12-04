@@ -558,7 +558,7 @@ describe('integration-all-services', function() {
 
     it('getImageLinks() with html', function(done) {
       alchemy_vision.getImageLinks({
-        html: '<div><img src="http://visual-recognition-demo.mybluemix.net/images/horses.jpg" /></div>'
+        html: '<div><img src="https://visual-recognition-demo.mybluemix.net/images/samples/6.jpg" /></div>'
       }, failIfError.bind(failIfError, done));
     });
 
