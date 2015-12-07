@@ -41,7 +41,7 @@ function verifyStream(value, name) {
 function VisualRecognition(options) {
   // Check if 'version_date' was provided
   if (typeof options.version_date === 'undefined') {
-    throw new Error('Argument error: version_date was not specified, use 2015-11-24');
+    throw new Error('Argument error: version_date was not specified, use 2015-12-02');
   }
 
   // Default URL

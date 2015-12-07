@@ -28,8 +28,8 @@ If you want to contribute to the repository, follow these steps:
 
 1. Fork the repo.
 1. Develop and test your code changes: `npm install -d && npm test`. Make sure you work in the `dev` branch. PLEASE don't do your work in `master`.
-1. In order to run the tests locally you should comment out `test.integration-all-services.js` because the integration tests require you to have service credentials for all the services.
-Travis will run the integration tests for all services once the changes are merged in.
+1. Travis-CI will run the integration tests for all services once your changes are merged.
+If you wish to run integration tests locally you must provide service credentials for all the services. See `test/test.integration-all-services.js`.
 1. Add a test for your changes. Only refactoring and documentation changes require no new tests.
 1. Make the test pass.
 1. Commit your changes.
