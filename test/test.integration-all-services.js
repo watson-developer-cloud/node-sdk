@@ -1,9 +1,12 @@
 'use strict';
 
+var fs = require('fs');
+
+if (fs.existsSync(__dirname + '/resources/auth.js')) {
+
 var nock = require('nock');
 var watson = require('../lib/index');
 var auth = require('./resources/auth');
-var fs = require('fs');
 var assert = require('assert');
 
 var mobydick = fs.readFileSync(__dirname + '/resources/mobydick.txt', 'utf8');
@@ -13,8 +16,6 @@ var TWENTY_SECONDS = 20000;
 var TEN_SECONDS = 10000;
 var FIVE_SECONDS = 5000;
 var TWO_SECONDS = 2000;
-
-if (fs.existsSync(__dirname + '/resources/auth.js')) {
 
 describe('integration-all-services', function() {
 
@@ -558,7 +559,7 @@ describe('integration-all-services', function() {
 
     it('getImageLinks() with html', function(done) {
       alchemy_vision.getImageLinks({
-        html: '<div><img src="http://visual-recognition-demo.mybluemix.net/images/horses.jpg" /></div>'
+        html: '<div><img src="https://visual-recognition-demo.mybluemix.net/images/samples/6.jpg" /></div>'
       }, failIfError.bind(failIfError, done));
     });
 
@@ -590,7 +591,15 @@ describe('integration-all-services', function() {
     it('convertFile()', function(done) {
       document_conversion.convert({
         file: fs.createReadStream(__dirname + '/resources/sampleWORD.docx'),
-        conversion_target: 'ANSWER_UNITS'
+        conversion_target: 'ANSWER_UNITS',
+        word: {
+          heading: {
+            fonts: [
+              { level: 1, min_size: 24 },
+              { level: 2, min_size: 16, max_size: 24 }
+            ]
+          }
+        }
       }, failIfError.bind(failIfError, done));
     });
   });
