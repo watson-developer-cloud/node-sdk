@@ -13,6 +13,7 @@ var mobydick = fs.readFileSync(__dirname + '/resources/mobydick.txt', 'utf8');
 
 var concat = require('concat-stream');
 var TWENTY_SECONDS = 20000;
+var THIRTY_SECONDS = 30000;
 var TEN_SECONDS = 10000;
 var FIVE_SECONDS = 5000;
 var TWO_SECONDS = 2000;
@@ -314,7 +315,7 @@ describe('integration-all-services', function() {
     });
 
   describe('functional_dialog', function() {
-    this.timeout(TWENTY_SECONDS);
+    this.timeout(THIRTY_SECONDS);
     var dialog = watson.dialog(auth.dialog);
     var dialog_id = auth.dialog.dialog_id;
     var client_id = 31;
