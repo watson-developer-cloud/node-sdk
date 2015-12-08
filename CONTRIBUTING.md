@@ -14,7 +14,11 @@ or [Stack Overflow](http://stackoverflow.com/questions/ask?tags=ibm-watson).
   ```
   personality_insights.getProfile()
   ```
-
+* commits should start with the service name and end with the issue #  
+  ```
+  [DC] Add conversion to html #13
+  ``` 
+  
 # Issues
 
 If you encounter an issue with the Node.js library, you are welcome to submit
