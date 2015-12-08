@@ -593,14 +593,14 @@ describe('integration-all-services', function() {
       document_conversion.convert({
         file: fs.createReadStream(__dirname + '/resources/sampleWORD.docx'),
         conversion_target: 'ANSWER_UNITS',
-        word: {
-          heading: {
-            fonts: [
-              { level: 1, min_size: 24 },
-              { level: 2, min_size: 16, max_size: 24 }
-            ]
-          }
-        }
+        // word: {
+        //   heading: {
+        //     fonts: [
+        //       { level: 1, min_size: 24 },
+        //       { level: 2, min_size: 16, max_size: 24 }
+        //     ]
+        //   }
+        // }
       }, failIfError.bind(failIfError, done));
     });
   });

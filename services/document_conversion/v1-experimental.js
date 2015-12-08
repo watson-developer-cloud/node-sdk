@@ -23,12 +23,12 @@ var omit           = require('object.omit');
 
 function DocumentConversion(options) {
   // Warn if not specifying version date
-  var version_date = "2015-12-01"
+  var version_date = '2015-12-01';
   if(options && options.version_date) {
-    version_date = options.version_date
+    version_date = options.version_date;
   } else {
-    console.warn("[DocumentConversion] WARNING: No version_date specified. Using a (possibly old) default. " +
-                 "e.g. watson.document_conversion({ version_date: '2015-12-01' })")
+    console.warn('[DocumentConversion] WARNING: No version_date specified. Using a (possibly old) default. ' +
+                  'e.g. watson.document_conversion({ version_date: "2015-12-01" })');
   }
 
   // Default URL
