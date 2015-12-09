@@ -1,6 +1,7 @@
 'use strict';
 
 var watson = require('watson-developer-cloud');
+var fs     = require('fs');
 
 var personality_insights = watson.personality_insights({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
