@@ -88,6 +88,21 @@ ConceptInsightsAccounts.prototype.getAccountsInfo = function(params, callback) {
 };
 
 /**
+ * Returns a list of graphs that the authenticated user has read access to
+ */
+ConceptInsightsGraphs.prototype.listGraphs = function(params, callback) {
+  var parameters = {
+    options: {
+      url: '/v2/graphs',
+      method: 'GET',
+      json: true
+    },
+    defaultOptions: this._parent._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
  * Retrieves the metadata for one concept
  */
 ConceptInsightsGraphs.prototype.getConcept = function(params, callback) {
