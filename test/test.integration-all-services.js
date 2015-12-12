@@ -209,6 +209,10 @@ describe('integration-all-services', function() {
       }, failIfError.bind(failIfError, done));
     });
 
+    it('listGraphs()', function(done) {
+      concept_insights.graphs.listGraphs({}, failIfError.bind(failIfError, done));
+    });
+
     it('getDocument()', function(done) {
       concept_insights.corpora.getDocument({
         id: sample.document
