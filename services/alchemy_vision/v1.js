@@ -85,7 +85,7 @@ function createRequest(method) {
 }
 
 /**
- * 
+ *
  * @param options
  * @constructor
  */
