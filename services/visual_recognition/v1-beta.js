@@ -20,7 +20,12 @@ var extend         = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
 var isStream       = require('isstream');
 
-function VisualRecognition(options) {
+/**
+ *
+ * @param options
+ * @constructor
+ */
+function VisualRecognitionV1Beta(options) {
   // Default URL
   var serviceDefaults = {
     url: 'https://gateway.watsonplatform.net/visual-recognition-beta/api'
@@ -35,7 +40,7 @@ function VisualRecognition(options) {
  * which are available for use with the recognize method
  *
  */
-VisualRecognition.prototype.labels = function(params, callback) {
+VisualRecognitionV1Beta.prototype.labels = function(params, callback) {
   var parameters = {
     options: {
       method: 'GET',
@@ -56,7 +61,7 @@ VisualRecognition.prototype.labels = function(params, callback) {
  * @param  {ReadStream} image_file The image file to analyze.
  * @param  {String} labels_to_check The labels to check
  */
-VisualRecognition.prototype.recognize = function(params, callback) {
+VisualRecognitionV1Beta.prototype.recognize = function(params, callback) {
   params = params || {};
 
   if (!params.image_file) {
@@ -82,4 +87,4 @@ VisualRecognition.prototype.recognize = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
-module.exports = VisualRecognition;
+module.exports = VisualRecognitionV1Beta;

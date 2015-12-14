@@ -33,7 +33,11 @@ function toQuestion(params) {
   return question;
 }
 
-
+/**
+ *
+ * @param options
+ * @constructor
+ */
 function QuestionAndAnswer(options) {
   var serviceDefaults = {
     url: 'https://gateway.watsonplatform.net/question-and-answer-beta/api'

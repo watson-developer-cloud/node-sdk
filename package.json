@@ -61,6 +61,7 @@
     "concat-stream": "^1.5.0",
     "coveralls": "^2.11.4",
     "istanbul": "^0.4.0",
+    "jsdoc": "^3.4.0",
     "jshint": "^2.8.0",
     "mocha": "^2.3.4",
     "nock": "^3.4.0",
@@ -86,6 +87,8 @@
   "scripts": {
     "test": "jshint --exclude ./node_modules/ && mocha --reporter spec --timeout 4000",
     "prepare": "npm test && npm version patch",
+    "doc": "jsdoc -c .jsdoc.json",
+    "watch-doc": "nodemon --watch lib/ --watch services/ --watch .jsdoc.json --watch package.json --exec npm run doc",
     "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha --reporter spec --timeout 4000",
     "coveralls": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   }

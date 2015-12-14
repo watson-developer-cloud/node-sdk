@@ -22,8 +22,9 @@ var requestFactory = require('../../lib/requestwrapper');
 
 /**
  * Format the ids into a JSON array if is a string array
- * @param  {Array or string} ids the concept identifiers
+ * @param  {Array|String} ids the concept identifiers
  * @return {String}     The concept ids as JSON array
+ * @private
  */
 function formatConceptIds(ids) {
   // Initially, we expected the user to supply JSON.stringify'd ids.
@@ -46,6 +47,11 @@ function formatConceptIds(ids) {
   return JSON.stringify(ids);
 }
 
+/**
+ *
+ * @param options
+ * @constructor
+ */
 function ConceptInsights(options) {
   // Default URL
   var serviceDefaults = {

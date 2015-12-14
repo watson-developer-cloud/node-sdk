@@ -20,6 +20,11 @@ var extend         = require('extend');
 var helper         = require('../../lib/helper');
 var requestFactory = require('../../lib/requestwrapper');
 
+/**
+ *
+ * @param options
+ * @constructor
+ */
 function RelationshipExtraction(options) {
   var serviceDefaults = {
     url: 'https://gateway.watsonplatform.net/relationship-extraction-beta/api'

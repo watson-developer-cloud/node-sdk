@@ -20,6 +20,11 @@ var extend         = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
 var isStream       = require('isstream');
 
+/**
+ *
+ * @param options
+ * @constructor
+ */
 function VisualInsights(options) {
   // Default URL
   var serviceDefaults = {

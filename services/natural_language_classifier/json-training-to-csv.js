@@ -28,8 +28,8 @@ function toCSVArray(data) {
 
 /**
  * IF traning is json, convert it to csv.
- * @param  {[type]} jsonData the training_data as a json array
- * @param  {[type]} cb the error first callback
+ * @param  {Object[]} jsonData the training_data as a json array
+ * @param  {Function} cb the error first callback
  */
 module.exports = function toCSV(training, cb) {
   if (Array.isArray(training)) {

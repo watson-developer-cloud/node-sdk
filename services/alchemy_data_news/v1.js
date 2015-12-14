@@ -36,6 +36,10 @@ function errorFormatter(cb) {
   };
 }
 
+/**
+ * @param options
+ * @constructor
+ */
 function AlchemyDataNews(options) {
   // Default URL
   var serviceDefaults = {
@@ -48,6 +52,10 @@ function AlchemyDataNews(options) {
 /**
  * Extracts a grouped, ranked list of named entities (people, companies,
  * organizations, etc.) from text, a URL or HTML.
+ * @param {Object} params
+ * @param params.end
+ * @param params.start
+ * @param {Function} callback
  */
 AlchemyDataNews.prototype.getNews = function(params, callback ) {
     params = params || {};

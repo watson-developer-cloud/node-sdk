@@ -20,6 +20,11 @@ var extend         = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
 var omit           = require('object.omit');
 
+/**
+ *
+ * @param options
+ * @constructor
+ */
 function TradeoffAnalytics(options) {
   // Default URL
   var defaultOptions = {

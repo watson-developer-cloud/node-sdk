@@ -50,10 +50,10 @@ function formatChunk(chunk) {
   return result;
 }
 
-/**
- * Speech Recognition API Wrapper
- *
- */
+///**
+// * Speech Recognition API Wrapper
+// * @lends speech_to_text
+// */
 function SpeechToText(options) {
   // Default URL
   var serviceDefaults = {

@@ -1,0 +1,10 @@
+{
+  "source": {
+    "include": [ "lib/", "services/" ]
+  },
+  "opts": {
+    "package": "package.json",
+    "recurse": true,
+    "destination": "./doc/"
+  }
+}

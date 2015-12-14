@@ -22,6 +22,11 @@ var pick           = require('object.pick');
 var isStream       = require('isstream');
 var helper         = require('../../lib/helper');
 
+/**
+ *
+ * @param options
+ * @constructor
+ */
 function LanguageTranslation(options) {
   // Default URL
   var serviceDefaults = {
