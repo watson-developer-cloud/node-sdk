@@ -23,6 +23,11 @@ var omit = require('object.omit');
 var isStream = require('isstream');
 var toCSV = require('./json-training-to-csv');
 
+/**
+ *
+ * @param options
+ * @constructor
+ */
 function NaturalLanguageClassifier(options) {
   // Default URL
   var serviceDefaults = {

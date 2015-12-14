@@ -21,6 +21,11 @@ var requestFactory = require('../../lib/requestwrapper');
 var isStream       = require('isstream');
 var omit           = require('object.omit');
 
+/**
+ *
+ * @param options
+ * @constructor
+ */
 function DocumentConversion(options) {
   // Warn if not specifying version date
   var version_date = '2015-12-01';

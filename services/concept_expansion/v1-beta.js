@@ -74,6 +74,11 @@ function responseFormatter(cb) {
   };
 }
 
+/**
+ *
+ * @param options
+ * @constructor
+ */
 function ConceptExpansion(options) {
   var serviceDefaults = {
     url: 'https://gateway.watsonplatform.net/concept-expansion-beta/api'

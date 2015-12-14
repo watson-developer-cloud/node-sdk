@@ -16,7 +16,7 @@ or [Stack Overflow](http://stackoverflow.com/questions/ask?tags=ibm-watson).
   ```
 * commits should start with the service name and end with the issue #  
   ```
-  [DC] Add conversion to html #13
+  [concept-insights] Added functionality to list the graphs #135
   ``` 
   
 # Issues

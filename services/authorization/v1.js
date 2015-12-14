@@ -20,6 +20,11 @@ var extend         = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
 var url            = require('url');
 
+/**
+ *
+ * @param options
+ * @constructor
+ */
 function Authorization(options) {
   // Default URL
   var serviceDefaults = {

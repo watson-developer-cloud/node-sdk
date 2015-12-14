@@ -26,6 +26,11 @@ var pick           = require('object.pick');
 var omit           = require('object.omit');
 var isStream       = require('isstream');
 
+/**
+ *
+ * @param options
+ * @constructor
+ */
 function RetrieveAndRank(options) {
   var serviceDefaults = {
     version: 'v1',
