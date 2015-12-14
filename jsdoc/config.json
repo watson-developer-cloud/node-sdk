@@ -4,7 +4,9 @@
   },
   "opts": {
     "package": "package.json",
+    "readme": "README.md",
     "recurse": true,
+    "template": "jsdoc/template",
     "destination": "./doc/"
   }
 }
