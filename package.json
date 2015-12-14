@@ -81,7 +81,7 @@
     "websocket": "^1.0.22"
   },
   "engines": {
-    "node": ">=0.10"
+    "node": ">=0.12"
   },
   "scripts": {
     "test": "jshint --exclude ./node_modules/ && mocha --reporter spec --timeout 4000",
