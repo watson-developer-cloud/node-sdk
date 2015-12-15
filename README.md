@@ -296,7 +296,7 @@ var fs = require('fs');
 var document_conversion = watson.document_conversion({
   username:     '<username>',
   password:     '<password>',
-  version:      'v1-experimental',
+  version:      'v1',
   version_date: '2015-12-01'
 });
 
@@ -682,5 +682,5 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/maste
 [npm_link]: https://www.npmjs.com/package/watson-developer-cloud
 [request_github]: https://github.com/request/request
 [examples]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples
-[document_conversion_integration_example]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/document_conversion_integration.v1-experimental.js
+[document_conversion_integration_example]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/document_conversion_integration.v1.js
 [license]: http://www.apache.org/licenses/LICENSE-2.0
