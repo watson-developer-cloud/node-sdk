@@ -34,6 +34,7 @@ APIs and SDKs that use cognitive computing to solve complex problems.
     * [Relationship Extraction](#relationship-extraction)
     * [Speech to Text](#speech-to-text)
     * [Text to Speech](#text-to-speech)
+    * [Tone Analyzer](#tone-analyzer)
     * [Tradeoff Analytics](#tradeoff-analytics)
     * [Visual Insights](#visual-insights)
     * [Visual Recognition](#visual-recognition)
