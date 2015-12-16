@@ -17,13 +17,14 @@ if [ "$TRAVIS_REPO_SLUG" == "watson-developer-cloud/node-sdk" ] && [ "$TRAVIS_PU
     rm -rf $TRAVIS_BRANCH
     mkdir $TRAVIS_BRANCH
     cp -Rf ../doc/watson-developer-cloud/*/* ./$TRAVIS_BRANCH
+
+    ../jsdoc/generate_index_html.sh > index.html
+
+    git add -f .
+    git commit -m "JSDdoc for $TRAVIS_BRANCH ($TRAVIS_COMMIT)"
+    git push -fq origin gh-pages > /dev/null
+
   popd
-
-  ./generate_index_html.sh > index.html
-
-  git add -f .
-  git commit -m "JSDdoc for $TRAVIS_BRANCH ($TRAVIS_COMMIT)"
-  git push -fq origin gh-pages > /dev/null
 
   echo -e "Published JSDoc for $TRAVIS_BRANCH to gh-pages.\n"
 
