@@ -261,10 +261,11 @@ describe('speech_to_text', function() {
     it('should have expected _events', function(done) {
       assert.equal(true, recognizeStream.hasOwnProperty('_events'));
       assert.equal(true, recognizeStream._events.hasOwnProperty('connect'));
-      assert.equal(true, recognizeStream._events.hasOwnProperty('connection-close'));
+      assert.equal(true, recognizeStream._events.hasOwnProperty('end'));
       assert.equal(true, recognizeStream._events.hasOwnProperty('results'));
       assert.equal(true, recognizeStream._events.hasOwnProperty('error'));
       assert.equal(true, recognizeStream._events.hasOwnProperty('finish'));
+      assert.equal(true, recognizeStream._events.hasOwnProperty('listening'));
       done();
     });
 
