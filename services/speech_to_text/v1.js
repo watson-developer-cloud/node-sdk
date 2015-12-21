@@ -31,6 +31,9 @@ var util           = require('util');
 var WebSocketClient = require('websocket').client;
 var pkg         = require('../../package.json');
 
+const PARAMS_ALLOWED = ['continuous', 'max_alternatives', 'timestamps', 'word_confidence', 'inactivity_timeout',
+  'model', 'content-type', 'interim_results', 'keywords', 'keywords_threshold', 'word_alternatives_threshold' ];
+
 function formatChunk(chunk) {
   // Convert the string into an array
   var result = chunk;
@@ -394,8 +397,7 @@ function RecognizeStream(options){
     'content-type': 'audio/wav', // todo: try to determine content-type from the file extension if available
     'continuous': false,
     'interim_results': true
-  }, pick(options, ['continuous', 'max_alternatives', 'timestamps',
-    'word_confidence', 'inactivity_timeout', 'content-type', 'interim_results']));
+  }, pick(options, [PARAMS_ALLOWED]));
 
   var closingMessage = {action: 'stop'};
 

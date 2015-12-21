@@ -39,7 +39,7 @@ describe('speech_to_text', function() {
         session_id: 'foo',
         new_session_uri: '#',
         recognize: '#',
-        observe_result: '#',
+        observe_result: '#'
       },
       new_session_with_cookie = extend({}, new_session, {cookie_session: 'foobar'});
 
@@ -225,6 +225,75 @@ describe('speech_to_text', function() {
       assert.equal(req.src.path, payload.audio.path);
     });
   });
+
+  describe('recognizeStream()', function() {
+    var path = '/v1/sessions/foo/recognize',
+      payload = {
+        session_id: 'foo',
+        cookie_session: 'foobar',
+        content_type: 'audio/l16; rate=41100'
+      },
+      service_response = {
+        result: [{
+          alternative: [{
+            transcript: 'one two three'
+          }],
+          'final': true
+        }],
+        result_index: 0
+      };
+
+    var options = {
+      content_type: 'audio/l16;rate=41100',
+      "continuous": true,
+      "timestamps":true,
+      "inactivity_timeout": -1,
+      "max_alternatives": 1,
+      "interim_results": false,
+      "keywords": ['one', 'Three'],
+      "keywords_threshold": 0.9,
+      "word_alternatives_threshold": 0.25
+    };
+    var recognizeStream = speech_to_text.createRecognizeStream(options);
+    var DEBUG = fs.createReadStream(__dirname + '/resources/audio.wav').pipe(recognizeStream);
+    recognizeStream.setEncoding('utf8');
+
+    it('should have expected _events', function(done) {
+      assert.equal(true, recognizeStream.hasOwnProperty('_events'));
+      assert.equal(true, recognizeStream._events.hasOwnProperty('connect'));
+      assert.equal(true, recognizeStream._events.hasOwnProperty('connection-close'));
+      assert.equal(true, recognizeStream._events.hasOwnProperty('results'));
+      assert.equal(true, recognizeStream._events.hasOwnProperty('error'));
+      assert.equal(true, recognizeStream._events.hasOwnProperty('finish'));
+    });
+
+    recognizeStream.on('connect', function(socket){
+      it('should have a socket connection with a correct config', function(done){
+        assert.notStrictEqual(socket, socket.config, socket.config.fragmentOutgoingMessages);
+        assert.notStrictEqual(socket, socket.config, socket.config.fragmentOutgoingMessages);
+      });
+    });
+
+    recognizeStream.on('error', function(err){
+      it('should throw ECONNRESET with bad credentials', function(done){
+        assert.equal(err.code, 'ECONNRESET');
+        assert.equal(err.errno, 'ECONNRESET');
+      })
+    });
+
+    recognizeStream.on('connection-close', function(reasonCode, description){
+      console.log(139, reasonCode);
+      console.log(140, description);
+    });
+
+    recognizeStream.on('results', function(obj){
+      console.log(JSON.stringify(obj));
+      it('should generate a valid response', function(done) {
+        assert.equal(obj, service_response);
+      });
+    });
+  });
+
 
   describe('recognizeLive()', function() {
     var path = '/v1/sessions/foo/recognize',
