@@ -265,12 +265,14 @@ describe('speech_to_text', function() {
       assert.equal(true, recognizeStream._events.hasOwnProperty('results'));
       assert.equal(true, recognizeStream._events.hasOwnProperty('error'));
       assert.equal(true, recognizeStream._events.hasOwnProperty('finish'));
+      done();
     });
 
     recognizeStream.on('connect', function(socket){
       it('should have a socket connection with a correct config', function(done){
         assert.notStrictEqual(socket, socket.config, socket.config.fragmentOutgoingMessages);
         assert.notStrictEqual(socket, socket.config, socket.config.fragmentOutgoingMessages);
+        done();
       });
     });
 
@@ -278,18 +280,15 @@ describe('speech_to_text', function() {
       it('should throw ECONNRESET with bad credentials', function(done){
         assert.equal(err.code, 'ECONNRESET');
         assert.equal(err.errno, 'ECONNRESET');
-      })
-    });
-
-    recognizeStream.on('connection-close', function(reasonCode, description){
-      console.log(139, reasonCode);
-      console.log(140, description);
+        done();
+      });
     });
 
     recognizeStream.on('results', function(obj){
       console.log(JSON.stringify(obj));
       it('should generate a valid response', function(done) {
         assert.equal(obj, service_response);
+        done();
       });
     });
   });
