@@ -570,7 +570,7 @@ visual_insights.summary(params, function(err, res) {
 Use the [Visual Recognition][visual_recognition] service to recognize the
 following picture.
 
-<img src="http://visual-recognition-demo.mybluemix.net/images/73388.jpg" width="150" />
+<img src="https://visual-recognition-demo.mybluemix.net/images/samples/5.jpg" width="150" />
 
 ```js
 var watson = require('watson-developer-cloud');
@@ -579,19 +579,19 @@ var fs = require('fs');
 var visual_recognition = watson.visual_recognition({
   username: '<username>',
   password: '<password>',
-  version: 'v1-beta'
+  version: 'v2-beta',
+  version_date: '2015-12-02'
 });
 
 var params = {
-  // From file
-  image_file: fs.createReadStream('./resources/car.png')
+  images_file: fs.createReadStream('./resources/car.png')
 };
 
-visual_recognition.recognize(params, function(err, res) {
+visual_recognition.classify(params, function(err, res) {
   if (err)
     console.log(err);
   else
-    console.log(JSON.stringify(res, 'labels', 2));
+    console.log(JSON.stringify(res, null, 2));
 });
 ```
 
