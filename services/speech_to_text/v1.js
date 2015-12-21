@@ -31,7 +31,7 @@ var util           = require('util');
 var WebSocketClient = require('websocket').client;
 var pkg         = require('../../package.json');
 
-const PARAMS_ALLOWED = ['continuous', 'max_alternatives', 'timestamps', 'word_confidence', 'inactivity_timeout',
+var PARAMS_ALLOWED = ['continuous', 'max_alternatives', 'timestamps', 'word_confidence', 'inactivity_timeout',
   'model', 'content-type', 'interim_results', 'keywords', 'keywords_threshold', 'word_alternatives_threshold' ];
 
 function formatChunk(chunk) {
