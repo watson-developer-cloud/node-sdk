@@ -46,7 +46,9 @@ function TradeoffAnalytics(options) {
  * @param  {String} params.options A list of options. Typically, the rows in a
  *                                 table representation of your data
  * @param  {String} params.metadataHeader Value of the x-watson-metadata header to be forwarded
- * 								   for analytics purposes
+ * 								                        for analytics purposes
+ * @param  {String} params.generate_visualization Boolean (default = true). if false, the algorithm 
+ *                                                will not create the "map" visualization, and will typically run much faster 
  */
 TradeoffAnalytics.prototype.dilemmas = function(params, callback) {
   params = params || {};
@@ -55,10 +57,11 @@ TradeoffAnalytics.prototype.dilemmas = function(params, callback) {
     options: {
       method: 'POST',
       url: '/v1/dilemmas',
-      body: omit(params,['metadata_header']),
+      body: omit(params,['metadata_header','generate_visualization']),
       headers: {
         'x-watson-metadata' : params.metadata_header
       },
+      qs: params.generate_visualization === false ? {'generate_visualization': false} : undefined,
       json: true
     },
     requiredParams: ['columns', 'subject', 'options'],
