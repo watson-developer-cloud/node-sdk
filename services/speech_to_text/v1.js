@@ -391,13 +391,7 @@ function RecognizeStream(options){
 
   var queryParams = extend({model: 'en-US_BroadbandModel'}, pick(options, ['model', 'X-Watson-Learning-Opt-Out', 'watson-token']));
 
-  var openingMessage = extend({
-    // todo: confirm the mixed underscores/hyphens and/or get it fixed
-    action: 'start',
-    'content-type': 'audio/wav', // todo: try to determine content-type from the file extension if available
-    'continuous': false,
-    'interim_results': true
-  }, pick(options, [PARAMS_ALLOWED]));
+  var openingMessage = pick(options, [PARAMS_ALLOWED]);
 
   var closingMessage = {action: 'stop'};
 
