@@ -53,10 +53,11 @@ function formatChunk(chunk) {
   return result;
 }
 
-///**
-// * Speech Recognition API Wrapper
-// * @lends speech_to_text
-// */
+/**
+ * Speech Recognition API Wrapper
+ * @constructor
+ * @param options
+ */
 function SpeechToText(options) {
   // Default URL
   var serviceDefaults = {
@@ -66,48 +67,6 @@ function SpeechToText(options) {
   // Replace default options with user provided
   this._options = extend(serviceDefaults, options);
 }
-/**
- * Replaces recognizeLive & friends with a single 2-way stream over websockets
- * @param params
- * @param callback
- * @returns {*}
- */
-SpeechToText.prototype.recognizeWs = function(params, callback) {
-
-  var missingParams = helper.getMissingParams(params, ['audio', 'content_type']);
-  if (missingParams) {
-    callback(new Error('Missing required parameters: ' + missingParams.join(', ')));
-    return;
-  }
-  if (!isStream(params.audio)) {
-    callback(new Error('audio is not a standard Node.js Stream'));
-    return;
-  }
-
-  var queryParams = pick(params, ['continuous', 'max_alternatives', 'timestamps',
-    'word_confidence','inactivity_timeout', 'model']);
-
-  var _url = '/v1';
-  _url += (params.session_id) ? ('/sessions/' + params.session_id) : '';
-  _url += '/recognize';
-
-  var parameters = {
-    options: {
-      method: 'POST',
-      url: _url,
-      headers: {
-        'Content-Type': params.content_type
-      },
-      json: true,
-      qs: queryParams,
-    },
-    defaultOptions: this._options
-  };
-  return params.audio.on('response', function(response) {
-    // Replace content-type
-    response.headers['content-type'] = params.content_type;
-  }).pipe(requestFactory(parameters, callback));
-};
 
 /**
  * Speech recognition for given audio using default model.
@@ -159,6 +118,7 @@ SpeechToText.prototype.recognize = function(params, callback) {
  *
  * @param {String} [content_type] The Content-type e.g. audio/l16; rate=48000
  * @param {String} [session_id] The session id
+ * @deprecated use createRecognizeStream instead
  */
 SpeechToText.prototype.recognizeLive = function(params, callback) {
   var missingParams = helper.getMissingParams(params,
@@ -216,8 +176,8 @@ SpeechToText.prototype.recognizeLive = function(params, callback) {
  * otherwise it waits for the next recognition.
  *
  * @param {String} [params.session_id] Session used in the recognition.
- * @param {boolean} [params.interim_results] If true,
- * interim results will be returned. Default: false.
+ * @param {boolean} [params.interim_results] If true, interim results will be returned. Default: false.
+ * @deprecated use createRecognizeStream instead
  */
 SpeechToText.prototype.observeResult = function(params, callback) {
   var missingParams = helper.getMissingParams(params, ['session_id', 'cookie_session']);
@@ -269,6 +229,7 @@ SpeechToText.prototype.observeResult = function(params, callback) {
  * The returned state has to be 'initialized' to be able to do recognize POST.
  *
  * @param {String} [params.session_id] Session used in the recognition.
+ * @deprecated use createRecognizeStream instead
  */
 SpeechToText.prototype.getRecognizeStatus = function(params, callback) {
   var missingParams = helper.getMissingParams(params, ['session_id']);
@@ -385,7 +346,16 @@ SpeechToText.prototype.deleteSession = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
-
+/**
+ * pipe()-able Node.js Readable/Writeable stream - accepts binary audio and emits text in it's `data` events.
+ * Also emits `results` events with interim results and other data.
+ *
+ * Cannot be instantiated directly, instead reated by calling #createRecognizeStream()
+ *
+ * Uses WebSockets under the hood. For audio with no recognizable speech, no `data` events are emitted.
+ * @param options
+ * @constructor
+ */
 function RecognizeStream(options){
   Duplex.call(this, options);
 
@@ -419,6 +389,9 @@ function RecognizeStream(options){
     }
   });
 
+  /**
+   * @event RecognizeStream#error
+   */
   function emitError(msg, frame, err) {
     if (err) {
       err.message = msg + ' ' + err.message;
@@ -444,6 +417,11 @@ function RecognizeStream(options){
     connection.on('close', function(reasonCode, description) {
       self.listening = false;
       self.push(null);
+      /**
+       * @event RecognizeStream#connection-close
+       * @param {Number} reasonCode
+       * @param {String} description
+       */
       self.emit('connection-close', reasonCode, description);
     });
 
@@ -470,9 +448,19 @@ function RecognizeStream(options){
           connection.close();
         }
       } else if (data.results) {
+        /**
+         * Object with interim or final results, including possible alternatives. May have no results at all for empty audio files.
+         * @event RecognizeStream#results
+         * @param {Object} results
+         */
         self.emit('results', data);
         // note: currently there is always either no entries or exactly 1 entry in the results array. However, this may change in the future.
         if(data.results[0] && data.results[0].final && data.results[0].alternatives) {
+          /**
+           * Finalized text
+           * @event RecognizeStream#data
+           * @param {String} transcript
+           */
           self.push(data.results[0].alternatives[0].transcript, 'utf8'); // this is the "data" event that can be easily piped to other streams
         }
       } else {
@@ -510,7 +498,7 @@ RecognizeStream.prototype._write = function(chunk, encoding, callback) {
 /**
  * Replaces recognizeLive & friends with a single 2-way stream over websockets
  * @param params
- * @returns {*}
+ * @returns {RecognizeStream}
  */
 SpeechToText.prototype.createRecognizeStream = function(params) {
   params = params || {};
