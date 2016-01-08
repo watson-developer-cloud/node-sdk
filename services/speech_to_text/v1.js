@@ -465,8 +465,8 @@ function RecognizeStream(options){
         }
       } else if (data.results) {
         self.emit('results', data);
-        // note: currently there is always exactly 1 entry in the results array. However, this may change in the future.
-        if(data.results[0].final && data.results[0].alternatives) {
+        // note: usually exactly 1 entry in results. Edge case: zero entries. E.g., silent audio sent from pipeline
+        if(data.results[0] && data.results[0].final && data.results[0].alternatives) {
           self.push(data.results[0].alternatives[0].transcript, 'utf8'); // this is the "data" event that can be easily piped to other streams
         }
       } else {
