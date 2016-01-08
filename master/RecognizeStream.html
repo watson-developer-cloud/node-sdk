@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Class: AlchemyVision | Watson Developer Cloud Node.js SDK Documentation</title>
+    <title>Class: RecognizeStream | Watson Developer Cloud Node.js SDK Documentation</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: AlchemyVision</h1>
+    <h1 class="page-title">Class: RecognizeStream</h1>
 
     
 
@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2>AlchemyVision</h2>
+        <h2>RecognizeStream</h2>
         
     
 </header>
@@ -41,12 +41,21 @@
     
 
     
-        <h4 class="name" id="AlchemyVision">watson.alchemy_vision({version: 'v1', ...});</h4>
+        <h4 class="name" id="RecognizeStream">watson.speech_to_text({version: 'v1', ...});</h4>
     
 
     
 
 
+
+<div class="description">
+    pipe()-able Node.js Readable/Writeable stream - accepts binary audio and emits text in it's `data` events.
+Also emits `results` events with interim results and other data.
+
+Cannot be instantiated directly, instead reated by calling #createRecognizeStream()
+
+Uses WebSockets under the hood. For audio with no recognizable speech, no `data` events are emitted.
+</div>
 
 
 
@@ -133,7 +142,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_alchemy_vision_v1.js.html">services/alchemy_vision/v1.js</a>, <a href="services_alchemy_vision_v1.js.html#line92">line 92</a>
+        <a href="services_speech_to_text_v1.js.html">services/speech_to_text/v1.js</a>, <a href="services_speech_to_text_v1.js.html#line359">line 359</a>
     </li></ul></dd>
     
 
@@ -173,18 +182,317 @@
     
 
     
-        <h3 class="subsection-title">Members</h3>
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Events</h3>
 
         
             
-<h4 class="name" id="getImageKeywords"><span class="type-signature"></span>getImageKeywords<span class="type-signature"></span></h4>
 
+    
+
+    
+        <h4 class="name" id="event:connection-close">connection-close</h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>reasonCode</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_speech_to_text_v1.js.html">services/speech_to_text/v1.js</a>, <a href="services_speech_to_text_v1.js.html#line420">line 420</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+        <h4 class="name" id="event:data">data</h4>
+    
+
+    
 
 
 
 <div class="description">
-    Tags image with keywords
+    Finalized text
 </div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>transcript</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_speech_to_text_v1.js.html">services/speech_to_text/v1.js</a>, <a href="services_speech_to_text_v1.js.html#line459">line 459</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+        <h4 class="name" id="event:error">error</h4>
+    
+
+    
+
+
+
+
+
+
+
+
 
 
 
@@ -221,7 +529,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_alchemy_vision_v1.js.html">services/alchemy_vision/v1.js</a>, <a href="services_alchemy_vision_v1.js.html#line104">line 104</a>
+        <a href="services_speech_to_text_v1.js.html">services/speech_to_text/v1.js</a>, <a href="services_speech_to_text_v1.js.html#line392">line 392</a>
     </li></ul></dd>
     
 
@@ -237,17 +545,88 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
         
             
-<h4 class="name" id="getImageLinks"><span class="type-signature"></span>getImageLinks<span class="type-signature"></span></h4>
 
+    
+
+    
+        <h4 class="name" id="event:results">results</h4>
+    
+
+    
 
 
 
 <div class="description">
-    Extracts images from a URL or html
+    Object with interim or final results, including possible alternatives. May have no results at all for empty audio files.
 </div>
 
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>results</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -283,7 +662,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_alchemy_vision_v1.js.html">services/alchemy_vision/v1.js</a>, <a href="services_alchemy_vision_v1.js.html#line114">line 114</a>
+        <a href="services_speech_to_text_v1.js.html">services/speech_to_text/v1.js</a>, <a href="services_speech_to_text_v1.js.html#line451">line 451</a>
     </li></ul></dd>
     
 
@@ -299,62 +678,10 @@
 
 
 
-        
-            
-<h4 class="name" id="recognizeFaces"><span class="type-signature"></span>recognizeFaces<span class="type-signature"></span></h4>
 
 
 
 
-<div class="description">
-    Face detection and Recognition
-</div>
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_alchemy_vision_v1.js.html">services/alchemy_vision/v1.js</a>, <a href="services_alchemy_vision_v1.js.html#line109">line 109</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
 
 
 
@@ -362,12 +689,6 @@
 
 
         
-    
-
-    
-
-    
-
     
 </article>
 
