@@ -315,8 +315,20 @@ describe('integration-all-services', function() {
           assert.equal(transcription.trim(), 'thunderstorms could produce large hail isolated tornadoes and heavy rain');
           done();
         }));
-      });
     });
+
+    it('createRecognizeStream() - no words',  function (done) {
+      var recognizeStream = speech_to_text.createRecognizeStream({content_type: 'audio/l16; rate=44100'});
+      recognizeStream.setEncoding('utf8');
+      fs.createReadStream(__dirname + '/resources/blank.wav')
+        .pipe(recognizeStream)
+        .on('error', done)
+        .on('data', function(text) {
+          assert(!text, 'no text expected for an audio file with no words')
+        })
+        .on('end', done);
+    });
+  });
 
   describe('functional_dialog', function() {
     this.timeout(THIRTY_SECONDS);
