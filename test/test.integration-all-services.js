@@ -121,7 +121,7 @@ describe('integration-all-services', function() {
   });
 
   describe('functional_tradeoff_analytics', function() {
-    this.timeout(TEN_SECONDS);
+    this.timeout(TWENTY_SECONDS);
     var tradeoff_analytics = watson.tradeoff_analytics(auth.tradeoff_analytics);
 
     it('dilemmas()', function(done) {
