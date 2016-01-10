@@ -59,16 +59,16 @@
   },
   "devDependencies": {
     "concat-stream": "^1.5.0",
-    "coveralls": "^2.11.5",
-    "istanbul": "^0.4.0",
+    "coveralls": "^2.11.6",
+    "istanbul": "^0.4.1",
     "jsdoc": "^3.4.0",
     "jshint": "^2.8.0",
     "mocha": "^2.3.4",
-    "nock": "^3.4.0",
+    "nock": "^5.2.1",
     "qs": "^5.2.0"
   },
   "dependencies": {
-    "async": "~1.5.0",
+    "async": "~1.5.2",
     "cookie": "~0.2.2",
     "csv-stringify": "~0.0.8",
     "extend": "~3.0.0",
@@ -79,7 +79,7 @@
     "solr-client": "~0.6.0",
     "string": "3.3.1",
     "vcap_services": "~0.1.7",
-    "websocket": "^1.0.22"
+    "websocket": "~1.0.22"
   },
   "engines": {
     "node": ">=0.12"
