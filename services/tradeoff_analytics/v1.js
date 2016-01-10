@@ -47,8 +47,8 @@ function TradeoffAnalytics(options) {
  *                                 table representation of your data
  * @param  {String} params.metadataHeader Value of the x-watson-metadata header to be forwarded
  * 								                        for analytics purposes
- * @param  {String} params.generate_visualization Boolean (default = true). if false, the algorithm 
- *                                                will not create the "map" visualization, and will typically run much faster 
+ * @param  {String} params.generate_visualization Boolean (default = true). if false, the algorithm
+ *                                                will not create the "map" visualization, and will typically run much faster
  */
 TradeoffAnalytics.prototype.dilemmas = function(params, callback) {
   params = params || {};
@@ -61,7 +61,7 @@ TradeoffAnalytics.prototype.dilemmas = function(params, callback) {
       headers: {
         'x-watson-metadata' : params.metadata_header
       },
-      qs: pick(params, ['generate_visualization']),
+      qs: params.generate_visualization === false ? { 'generate_visualization' : false} : {},
       json: true
     },
     requiredParams: ['columns', 'subject', 'options'],
@@ -88,7 +88,6 @@ TradeoffAnalytics.prototype.events = function(params, callback) {
       headers: {
         'x-watson-metadata' : params.metadata_header
       },
-      qs: pick(params, ['generate_visualization']),
       json: true
     },
     defaultOptions: this._options
