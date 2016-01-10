@@ -57,11 +57,11 @@ TradeoffAnalytics.prototype.dilemmas = function(params, callback) {
     options: {
       method: 'POST',
       url: '/v1/dilemmas',
-      body: omit(params,['metadata_header','generate_visualization']),
+      body: omit(params,['metadata_header', 'generate_visualization']),
       headers: {
         'x-watson-metadata' : params.metadata_header
       },
-      qs: params.generate_visualization === false ? {'generate_visualization': false} : undefined,
+      qs: pick(params, ['generate_visualization']),
       json: true
     },
     requiredParams: ['columns', 'subject', 'options'],
@@ -84,10 +84,11 @@ TradeoffAnalytics.prototype.events = function(params, callback) {
     options: {
       method: 'POST',
       url: '/v1/events',
-      body: omit(params,['metadata_header']),
+      body: omit(params,['metadata_header', 'generate_visualization']),
       headers: {
         'x-watson-metadata' : params.metadata_header
       },
+      qs: pick(params, ['generate_visualization']),
       json: true
     },
     defaultOptions: this._options
