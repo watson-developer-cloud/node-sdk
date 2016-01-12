@@ -365,9 +365,9 @@ function RecognizeStream(options){
     // todo: confirm the mixed underscores/hyphens and/or get it fixed
     action: 'start',
     'content-type': 'audio/wav', // todo: try to determine content-type from the file extension if available
-    'continuous': false,
+    'continuous': true,
     'interim_results': true
-  }, pick(options, [PARAMS_ALLOWED]));
+  }, pick(options, PARAMS_ALLOWED));
 
   var closingMessage = {action: 'stop'};
 
