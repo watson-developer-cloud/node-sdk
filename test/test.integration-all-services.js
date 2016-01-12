@@ -331,7 +331,7 @@ describe('integration-all-services', function() {
   });
 
   describe('functional_dialog', function() {
-    this.timeout(THIRTY_SECONDS);
+    this.timeout(THIRTY_SECONDS * 3);
     var dialog = watson.dialog(auth.dialog);
     var dialog_id = auth.dialog.dialog_id;
     var client_id = 31;
@@ -360,7 +360,6 @@ describe('integration-all-services', function() {
     });
 
     it('getConversation()', function(done) {
-      this.timeout(TWENTY_SECONDS * 2);
       var params = {
         dialog_id: dialog_id,
         client_id: client_id,
