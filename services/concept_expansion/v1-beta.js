@@ -97,7 +97,7 @@ ConceptExpansion.prototype.createJob = function(params, callback) {
       body: pick(body, ['dataset', 'seeds', 'label']),
       json: true
     },
-    requiredParams: ['dataset', 'seeds', 'label'],
+    requiredParams: ['seeds'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
