@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Source: services/visual_recognition/v2-beta.js | Watson Developer Cloud Node.js SDK Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: services/visual_recognition/v2-beta.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Copyright 2014 IBM Corp. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+var extend = require('extend');
+var pick = require('object.pick');
+var util = require('util');
+var omit = require('object.omit');
+var isStream = require('isstream');
+var requestFactory = require('../../lib/requestwrapper');
+
+/**
+ * Verifies that the variable is a valid stream
+ * @param  {Object} value   Variable value
+ * @param  {String} name Variable name
+ * @private
+ */
+function verifyStream(value, name) {
+  if (!value) {
+    throw new Error('Missing required parameters: ' + name);
+  }
+
+  if (!isStream(value)) {
+    throw new Error(name + ' is not a standard Node.js Stream');
+  }
+}
+
+/**
+ *
+ * @param options
+ * @constructor
+ */
+function VisualRecognitionV2Beta(options) {
+  // Check if 'version_date' was provided
+  if (typeof options.version_date === 'undefined') {
+    throw new Error('Argument error: version_date was not specified, use 2015-12-02');
+  }
+
+  // Default URL
+  var serviceDefaults = {
+    url: 'https://gateway.watsonplatform.net/visual-recognition-beta/api',
+    qs: {
+      version: options.version_date
+    }
+  };
+
+  // Replace default options with user provided
+  this._options = extend(serviceDefaults, omit(options, ['version_date']));
+}
+
+/**
+ * Retrieves information about a specific classifier.
+ * @param classifier_id The classifier id
+ */
+VisualRecognitionV2Beta.prototype.getClassifier = function(params, callback) {
+  var parameters = {
+    options: {
+      method: 'GET',
+      url: '/v2/classifiers/{classifier_id}',
+      path: params,
+      json: true
+    },
+    requiredParams: ['classifier_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Deletes a custom classifier with the specified classifier id.
+ * @param classifier_id The classifier id
+ *
+ */
+VisualRecognitionV2Beta.prototype.deleteClassifier = function(params, callback) {
+  var parameters = {
+    options: {
+      method: 'DELETE',
+      url: '/v2/classifiers/{classifier_id}',
+      path: params,
+      json: true,
+    },
+    requiredParams: ['classifier_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Train a new classifier from example images which are uploaded.
+ * @param name The desired short name of the new classifier.
+ * @param positive_examples A compressed (.zip) file of images which prominently
+ *                            depict the visual subject for a new classifier.
+ * @param negative_examples A compressed (.zip) file of images which di not
+ *                            prominently depict the visual subject for a new
+ *                            classifier.
+ * @param name The desired name of the new classifier.
+ */
+VisualRecognitionV2Beta.prototype.createClassifier = function(params, callback) {
+  params = params || {};
+
+  try {
+    verifyStream(params.positive_examples, 'positive_examples');
+    verifyStream(params.negative_examples, 'negative_examples');
+  } catch (e) {
+    callback(e);
+    return;
+  }
+
+  var parameters = {
+    options: {
+      url: '/v2/classifiers',
+      method: 'POST',
+      json: true,
+      formData: pick(params, ['name', 'positive_examples', 'negative_examples'])
+    },
+    requiredParams: ['name'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Retrieve a list of all classifiers, including built-in and
+ * user-created classifiers.
+ * @param verbose If verbose is present and not equal to "0",
+ * return detailed results for each classifier.
+ */
+VisualRecognitionV2Beta.prototype.listClassifiers = function(params, callback) {
+  var parameters = {
+    options: {
+      method: 'GET',
+      url: '/v2/classifiers',
+      qs: pick(params, ['verbose']),
+      json: true,
+    },
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Accepts either a single image file or a zip file with multiple
+ * images (.jpeg, .png, .gif) and scores every available classifier
+ * on each image. It then applies a threshold and returns the list
+ * of relevant classifier scores for each image.
+ *
+ * @param  {ReadStream} images_file The image/s to analyze.
+ * @param  {ReadStream} classifier_ids The ids of the classifier
+ *                                     to check images against.
+ *                                     Omit this parameter to use
+ *                                     all classifiers.
+ */
+VisualRecognitionV2Beta.prototype.classify = function(params, callback) {
+  var formData = extend(true, {}, params);
+
+  try {
+    verifyStream(formData.images_file, 'images_file');
+  } catch (e) {
+    callback(e);
+    return;
+  }
+
+  // if is an array we wrap it in a `classifier_ids` element
+  if (formData.classifier_ids &amp;&amp; util.isArray(formData.classifier_ids))
+    formData.classifier_ids = JSON.stringify(pick(formData,['classifier_ids']));
+
+  var parameters = {
+    options: {
+      url: '/v2/classify',
+      method: 'POST',
+      json: true,
+      formData: pick(formData, ['images_file', 'classifier_ids'])
+    },
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+module.exports = VisualRecognitionV2Beta;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AlchemyDataNews.html">AlchemyDataNews</a></li><li><a href="AlchemyLanguage.html">AlchemyLanguage</a></li><li><a href="AlchemyVision.html">AlchemyVision</a></li><li><a href="Authorization.html">Authorization</a></li><li><a href="ConceptExpansion.html">ConceptExpansion</a></li><li><a href="ConceptInsights.html">ConceptInsights</a></li><li><a href="Dialog.html">Dialog</a></li><li><a href="DocumentConversion.html">DocumentConversion</a></li><li><a href="LanguageTranslation.html">LanguageTranslation</a></li><li><a href="NaturalLanguageClassifier.html">NaturalLanguageClassifier</a></li><li><a href="PersonalityInsights.html">PersonalityInsights</a></li><li><a href="QuestionAndAnswer.html">QuestionAndAnswer</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RelationshipExtraction.html">RelationshipExtraction</a></li><li><a href="RetrieveAndRank.html">RetrieveAndRank</a></li><li><a href="SpeechToText.html">SpeechToText</a></li><li><a href="TextToSpeech.html">TextToSpeech</a></li><li><a href="ToneAnalyzer.html">ToneAnalyzer</a></li><li><a href="TradeoffAnalytics.html">TradeoffAnalytics</a></li><li><a href="VisualInsights.html">VisualInsights</a></li><li><a href="VisualRecognitionV1Beta.html">VisualRecognitionV1Beta</a></li><li><a href="VisualRecognitionV2Beta.html">VisualRecognitionV2Beta</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:connection-close">connection-close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li></ul><h3>Namespaces</h3><ul><li><a href="watson.html">watson</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu Jan 21 2016 17:04:07 GMT+0000 (UTC)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+<script>
+    (function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,"script","//www.google-analytics.com/analytics.js","ga");
+    ga("create", "UA-59827755-9", "auto");
+    ga("send", "pageview");
+</script>
+</body>
+</html>
