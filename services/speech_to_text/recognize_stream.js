@@ -22,7 +22,7 @@ var qs             = require('querystring');
 var util           = require('util');
 var extend         = require('extend');
 var pick           = require('object.pick');
-var WebSocketClient = require('websocket').client;
+var W3CWebSocket = require('websocket').w3cwebsocket;
 
 
 var PARAMS_ALLOWED = ['continuous', 'max_alternatives', 'timestamps', 'word_confidence', 'inactivity_timeout',
@@ -55,21 +55,44 @@ function RecognizeStream(options){
 
   var url = options.base_url.replace(/^http/, 'ws') + '/v1/recognize?' + qs.stringify(queryParams);
 
-  this.listening = false;
-
-  var client = this.client = new WebSocketClient();
   var self = this;
+
+  //node params: requestUrl, protocols, origin, headers, extraRequestOptions
+  // browser params: requestUrl, protocols (all others ignored)
+  var socket = this.socket = new W3CWebSocket(url, null, null, options.headers, null);
 
   // when the input stops, let the service know that we're done
   self.on('finish', function() {
-    if (self.connection) {
-      self.connection.sendUTF(JSON.stringify(closingMessage));
+    if (self.socket) {
+      self.socket.send(JSON.stringify(closingMessage));
     } else {
       this.once('connect', function () {
-        self.connection.sendUTF(JSON.stringify(closingMessage));
+        self.socket.send(JSON.stringify(closingMessage));
       });
     }
   });
+
+  socket.onerror = function(error) {
+    self.listening = false;
+    self.emit('error', error);
+  };
+
+
+  this.socket.onopen = function() {
+    socket.send(JSON.stringify(openingMessage));
+    self.emit('connect');
+  };
+
+  this.socket.onclose = function(reasonCode, description) {
+    self.listening = false;
+    self.push(null);
+    /**
+     * @event RecognizeStream#socket-close
+     * @param {Number} reasonCode
+     * @param {String} description
+     */
+    self.emit('socket-close', reasonCode, description);
+  };
 
   /**
    * @event RecognizeStream#error
@@ -84,79 +107,50 @@ function RecognizeStream(options){
     self.emit('error', err);
   }
 
-  this.client.on('connectFailed', function(error) {
-    self.emit('error', error);
-  });
+  socket.onmessage = function(frame) {
+    if (typeof frame.data !== 'string') {
+      return emitError('Unexpected binary data received from server', frame);
+    }
 
-  this.client.on('connect', function(connection) {
-    self.connection = connection;
+    var data;
+    try {
+      data = JSON.parse(frame.data);
+    } catch (jsonEx) {
+      return emitError('Invalid JSON received from service:', frame, jsonEx);
+    }
 
-    connection.on('error', function(error) {
-      self.listening = false;
-      self.emit('error', error);
-    });
-
-    connection.on('close', function(reasonCode, description) {
-      self.listening = false;
-      self.push(null);
-      /**
-       * @event RecognizeStream#connection-close
-       * @param {Number} reasonCode
-       * @param {String} description
-       */
-      self.emit('connection-close', reasonCode, description);
-    });
-
-    connection.on('message', function(frame) {
-      if (frame.type !== 'utf8') {
-        return emitError('Unexpected binary data received from server', frame);
-      }
-
-      var data;
-      try {
-        data = JSON.parse(frame.utf8Data);
-      } catch (jsonEx) {
-        return emitError('Invalid JSON received from service:', frame, jsonEx);
-      }
-
-      if (data.error) {
-        emitError(data.error, frame);
-      } else if(data.state === 'listening') {
-        // this is emitted both when the server is ready for audio, and after we send the close message to indicate that it's done processing
-        if (!self.listening) {
-          self.listening = true;
-          self.emit('listening');
-        } else {
-          connection.close();
-        }
-      } else if (data.results) {
-        /**
-         * Object with interim or final results, including possible alternatives. May have no results at all for empty audio files.
-         * @event RecognizeStream#results
-         * @param {Object} results
-         */
-        self.emit('results', data);
-        // note: currently there is always either no entries or exactly 1 entry in the results array. However, this may change in the future.
-        if(data.results[0] && data.results[0].final && data.results[0].alternatives) {
-          /**
-           * Finalized text
-           * @event RecognizeStream#data
-           * @param {String} transcript
-           */
-          self.push(data.results[0].alternatives[0].transcript, 'utf8'); // this is the "data" event that can be easily piped to other streams
-        }
+    if (data.error) {
+      emitError(data.error, frame);
+    } else if (data.state === 'listening') {
+      // this is emitted both when the server is ready for audio, and after we send the close message to indicate that it's done processing
+      if (!self.listening) {
+        self.listening = true;
+        self.emit('listening');
       } else {
-        emitError('Unrecognised message from server', frame);
+        self.listening = false;
+        socket.close();
       }
-    });
+    } else if (data.results) {
+      /**
+       * Object with interim or final results, including possible alternatives. May have no results at all for empty audio files.
+       * @event RecognizeStream#results
+       * @param {Object} results
+       */
+      self.emit('results', data);
+      // note: currently there is always either no entries or exactly 1 entry in the results array. However, this may change in the future.
+      if (data.results[0] && data.results[0].final && data.results[0].alternatives) {
+        /**
+         * Finalized text
+         * @event RecognizeStream#data
+         * @param {String} transcript
+         */
+        self.push(data.results[0].alternatives[0].transcript, 'utf8'); // this is the "data" event that can be easily piped to other streams
+      }
+    } else {
+      emitError('Unrecognised message from server', frame);
+    }
+  }
 
-    connection.sendUTF(JSON.stringify(openingMessage));
-
-    self.emit('connect', connection);
-  });
-
-  //requestUrl, protocols, origin, headers, extraRequestOptions
-  client.connect(url, null, null, options.headers, null);
 }
 util.inherits(RecognizeStream, Duplex);
 
@@ -168,11 +162,13 @@ RecognizeStream.prototype._read = function(size) {
 
 RecognizeStream.prototype._write = function(chunk, encoding, callback) {
   var self = this;
-  if (this.listening) {
-    this.connection.sendBytes(chunk, callback);
+  if (self.listening) {
+    self.socket.send(chunk);
+    callback();
   } else {
     this.once('listening', function() {
-      self.connection.sendBytes(chunk, callback);
+      self.socket.send(chunk);
+      callback();
     });
   }
 };
