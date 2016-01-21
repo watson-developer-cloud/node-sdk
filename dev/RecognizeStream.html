@@ -41,7 +41,7 @@
     
 
     
-        <h4 class="name" id="RecognizeStream">watson.speech_to_text({version: 'v1', ...});</h4>
+        <h4 class="name" id="RecognizeStream">watson.speech_to_text({version: 'recognize_stream', ...});</h4>
     
 
     
@@ -142,7 +142,7 @@ Uses WebSockets under the hood. For audio with no recognizable speech, no `data`
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_speech_to_text_v1.js.html">services/speech_to_text/v1.js</a>, <a href="services_speech_to_text_v1.js.html#line359">line 359</a>
+        <a href="services_speech_to_text_recognize_stream.js.html">services/speech_to_text/recognize_stream.js</a>, <a href="services_speech_to_text_recognize_stream.js.html#line41">line 41</a>
     </li></ul></dd>
     
 
@@ -189,158 +189,6 @@ Uses WebSockets under the hood. For audio with no recognizable speech, no `data`
 
     
         <h3 class="subsection-title">Events</h3>
-
-        
-            
-
-    
-
-    
-        <h4 class="name" id="event:connection-close">connection-close</h4>
-    
-
-    
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>reasonCode</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>description</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_speech_to_text_v1.js.html">services/speech_to_text/v1.js</a>, <a href="services_speech_to_text_v1.js.html#line420">line 420</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         
             
@@ -449,7 +297,7 @@ Uses WebSockets under the hood. For audio with no recognizable speech, no `data`
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_speech_to_text_v1.js.html">services/speech_to_text/v1.js</a>, <a href="services_speech_to_text_v1.js.html#line459">line 459</a>
+        <a href="services_speech_to_text_recognize_stream.js.html">services/speech_to_text/recognize_stream.js</a>, <a href="services_speech_to_text_recognize_stream.js.html#line142">line 142</a>
     </li></ul></dd>
     
 
@@ -529,7 +377,7 @@ Uses WebSockets under the hood. For audio with no recognizable speech, no `data`
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_speech_to_text_v1.js.html">services/speech_to_text/v1.js</a>, <a href="services_speech_to_text_v1.js.html#line392">line 392</a>
+        <a href="services_speech_to_text_recognize_stream.js.html">services/speech_to_text/recognize_stream.js</a>, <a href="services_speech_to_text_recognize_stream.js.html#line97">line 97</a>
     </li></ul></dd>
     
 
@@ -662,7 +510,159 @@ Uses WebSockets under the hood. For audio with no recognizable speech, no `data`
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_speech_to_text_v1.js.html">services/speech_to_text/v1.js</a>, <a href="services_speech_to_text_v1.js.html#line451">line 451</a>
+        <a href="services_speech_to_text_recognize_stream.js.html">services/speech_to_text/recognize_stream.js</a>, <a href="services_speech_to_text_recognize_stream.js.html#line134">line 134</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+        <h4 class="name" id="event:socket-close">socket-close</h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>reasonCode</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_speech_to_text_recognize_stream.js.html">services/speech_to_text/recognize_stream.js</a>, <a href="services_speech_to_text_recognize_stream.js.html#line89">line 89</a>
     </li></ul></dd>
     
 
@@ -700,13 +700,13 @@ Uses WebSockets under the hood. For audio with no recognizable speech, no `data`
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AlchemyDataNews.html">AlchemyDataNews</a></li><li><a href="AlchemyLanguage.html">AlchemyLanguage</a></li><li><a href="AlchemyVision.html">AlchemyVision</a></li><li><a href="Authorization.html">Authorization</a></li><li><a href="ConceptExpansion.html">ConceptExpansion</a></li><li><a href="ConceptInsights.html">ConceptInsights</a></li><li><a href="Dialog.html">Dialog</a></li><li><a href="DocumentConversion.html">DocumentConversion</a></li><li><a href="LanguageTranslation.html">LanguageTranslation</a></li><li><a href="NaturalLanguageClassifier.html">NaturalLanguageClassifier</a></li><li><a href="PersonalityInsights.html">PersonalityInsights</a></li><li><a href="QuestionAndAnswer.html">QuestionAndAnswer</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RelationshipExtraction.html">RelationshipExtraction</a></li><li><a href="RetrieveAndRank.html">RetrieveAndRank</a></li><li><a href="SpeechToText.html">SpeechToText</a></li><li><a href="TextToSpeech.html">TextToSpeech</a></li><li><a href="ToneAnalyzer.html">ToneAnalyzer</a></li><li><a href="TradeoffAnalytics.html">TradeoffAnalytics</a></li><li><a href="VisualInsights.html">VisualInsights</a></li><li><a href="VisualRecognitionV1Beta.html">VisualRecognitionV1Beta</a></li><li><a href="VisualRecognitionV2Beta.html">VisualRecognitionV2Beta</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:connection-close">connection-close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li></ul><h3>Namespaces</h3><ul><li><a href="watson.html">watson</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AlchemyDataNews.html">AlchemyDataNews</a></li><li><a href="AlchemyLanguage.html">AlchemyLanguage</a></li><li><a href="AlchemyVision.html">AlchemyVision</a></li><li><a href="Authorization.html">Authorization</a></li><li><a href="ConceptExpansion.html">ConceptExpansion</a></li><li><a href="ConceptInsights.html">ConceptInsights</a></li><li><a href="Dialog.html">Dialog</a></li><li><a href="DocumentConversion.html">DocumentConversion</a></li><li><a href="LanguageTranslation.html">LanguageTranslation</a></li><li><a href="NaturalLanguageClassifier.html">NaturalLanguageClassifier</a></li><li><a href="PersonalityInsights.html">PersonalityInsights</a></li><li><a href="QuestionAndAnswer.html">QuestionAndAnswer</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RelationshipExtraction.html">RelationshipExtraction</a></li><li><a href="RetrieveAndRank.html">RetrieveAndRank</a></li><li><a href="SpeechToText.html">SpeechToText</a></li><li><a href="TextToSpeech.html">TextToSpeech</a></li><li><a href="ToneAnalyzer.html">ToneAnalyzer</a></li><li><a href="TradeoffAnalytics.html">TradeoffAnalytics</a></li><li><a href="VisualInsights.html">VisualInsights</a></li><li><a href="VisualRecognitionV1Beta.html">VisualRecognitionV1Beta</a></li><li><a href="VisualRecognitionV2Beta.html">VisualRecognitionV2Beta</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li><li><a href="RecognizeStream.html#event:socket-close">socket-close</a></li></ul><h3>Namespaces</h3><ul><li><a href="watson.html">watson</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu Jan 21 2016 16:59:52 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu Jan 21 2016 19:42:45 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>
