@@ -327,7 +327,8 @@ describe('integration-all-services', function() {
     it('getProfile()', function(done) {
       var params = {
         dialog_id: dialog_id,
-        client_id: client_id
+        client_id: client_id,
+        name: ['size', 'method']
       };
       dialog.getProfile(params, failIfError.bind(failIfError, done));
     });

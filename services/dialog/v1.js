@@ -50,7 +50,7 @@ Dialog.prototype.getProfile = function(params, callback) {
       method: 'GET',
       json: true,
       path: params,
-      qs: pick(params, ['client_id'])
+      qs: pick(params, ['client_id', 'name'])
     },
     requiredParams: ['dialog_id', 'client_id'],
     defaultOptions: this._options
