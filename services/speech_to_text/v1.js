@@ -353,16 +353,7 @@ SpeechToText.prototype.deleteSession = function(params, callback) {
  */
 SpeechToText.prototype.createRecognizeStream = function(params) {
   params = params || {};
-  params.base_url = this._options.url;
-
-  // todo: apply these corrections to other methods (?)
-  if (params.content_type && !params['content-type']) {
-    params['content-type'] = params.content_type;
-  }
-
-  if (params['X-WDC-PL-OPT-OUT'] && !params['X-Watson-Learning-Opt-Out']) {
-    params['X-Watson-Learning-Opt-Out'] = params['X-WDC-PL-OPT-OUT'];
-  }
+  params.url = this._options.url;
 
   params.headers = extend({
     'user-agent': pkg.name + '-nodejs-'+ pkg.version,

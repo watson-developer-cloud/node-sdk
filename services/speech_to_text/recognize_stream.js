@@ -18,15 +18,16 @@
 
 
 var Duplex         = require('stream').Duplex;
-var qs             = require('querystring');
 var util           = require('util');
 var extend         = require('extend');
 var pick           = require('object.pick');
 var W3CWebSocket = require('websocket').w3cwebsocket;
 
 
-var PARAMS_ALLOWED = ['continuous', 'max_alternatives', 'timestamps', 'word_confidence', 'inactivity_timeout',
-  'model', 'content-type', 'interim_results', 'keywords', 'keywords_threshold', 'word_alternatives_threshold' ];
+var OPENING_MESSAGE_PARAMS_ALLOWED = ['continuous', 'max_alternatives', 'timestamps', 'word_confidence', 'inactivity_timeout',
+  'content-type', 'interim_results', 'keywords', 'keywords_threshold', 'word_alternatives_threshold' ];
+
+var QUERY_PARAMS_ALLOWED = ['model', 'X-Watson-Learning-Opt-Out', 'watson-token'];
 
 /**
  * pipe()-able Node.js Readable/Writeable stream - accepts binary audio and emits text in it's `data` events.
@@ -40,20 +41,47 @@ var PARAMS_ALLOWED = ['continuous', 'max_alternatives', 'timestamps', 'word_conf
  */
 function RecognizeStream(options){
   Duplex.call(this, options);
+  this.options = options;
+  this.listening = false;
+  this.initialized = false;
+}
+util.inherits(RecognizeStream, Duplex);
 
-  var queryParams = extend({model: 'en-US_BroadbandModel'}, pick(options, ['model', 'X-Watson-Learning-Opt-Out', 'watson-token']));
+
+RecognizeStream.prototype.initialize = function() {
+  var options = this.options;
+
+  // todo: apply these corrections to other methods (?)
+  if (options.token && !options['watson-token']) {
+    options['watson-token'] = options.token;
+  }
+  if (options.content_type && !options['content-type']) {
+    options['content-type'] = options.content_type;
+  }
+  if (options['X-WDC-PL-OPT-OUT'] && !options['X-Watson-Learning-Opt-Out']) {
+    options['X-Watson-Learning-Opt-Out'] = options['X-WDC-PL-OPT-OUT'];
+  }
+
+  var queryParams = extend({model: 'en-US_BroadbandModel'}, pick(options, QUERY_PARAMS_ALLOWED));
+  var queryString = Object.keys(queryParams).map(function(key) {
+    return key + '=' + (key == 'watson-token' ? queryParams[key] : encodeURIComponent(queryParams[key])); // our server chokes if the token is correctly url-encoded
+  }).join('&');
+
+  var url = (options.url || "wss://stream.watsonplatform.net/speech-to-text/api").replace(/^http/, 'ws') + '/v1/recognize?' + queryString;
 
   var openingMessage = extend({
-    // todo: confirm the mixed underscores/hyphens and/or get it fixed
     action: 'start',
-    'content-type': 'audio/wav', // todo: try to determine content-type from the file extension if available
-    'continuous': true,
-    'interim_results': true
-  }, pick(options, PARAMS_ALLOWED));
+    'content-type': 'audio/wav',
+    continuous: true,
+    interim_results: true,
+    word_confidence: true,
+    timestamps: true,
+    max_alternatives: 3,
+    inactivity_timeout: 600
+  }, pick(options, OPENING_MESSAGE_PARAMS_ALLOWED));
 
   var closingMessage = {action: 'stop'};
 
-  var url = options.base_url.replace(/^http/, 'ws') + '/v1/recognize?' + qs.stringify(queryParams);
 
   var self = this;
 
@@ -83,15 +111,15 @@ function RecognizeStream(options){
     self.emit('connect');
   };
 
-  this.socket.onclose = function(reasonCode, description) {
+  this.socket.onclose = function(e) {
     self.listening = false;
     self.push(null);
     /**
-     * @event RecognizeStream#socket-close
+     * @event RecognizeStream#connection-close
      * @param {Number} reasonCode
      * @param {String} description
      */
-    self.emit('socket-close', reasonCode, description);
+    self.emit('close', e.code, e.reason);
   };
 
   /**
@@ -149,10 +177,10 @@ function RecognizeStream(options){
     } else {
       emitError('Unrecognised message from server', frame);
     }
-  }
+  };
 
-}
-util.inherits(RecognizeStream, Duplex);
+  this.initialized = true;
+};
 
 
 RecognizeStream.prototype._read = function(size) {
@@ -164,14 +192,46 @@ RecognizeStream.prototype._write = function(chunk, encoding, callback) {
   var self = this;
   if (self.listening) {
     self.socket.send(chunk);
-    callback();
+    this.afterSend(callback);
   } else {
+    if (!this.initialized) {
+      if (!this.options['content-type']) {
+        this.options['content-type'] = RecognizeStream.getContentType(chunk);
+      }
+      this.initialize();
+    }
     this.once('listening', function() {
       self.socket.send(chunk);
-      callback();
+      this.afterSend(callback);
     });
   }
 };
 
+// flow control - don't ask for more data until we've finished what we have
+// todo: see if this can be improved
+RecognizeStream.prototype.afterSend = function afterSend(next) {
+  if (this.socket.bufferedAmount <= this._writableState.highWaterMark || 0) {
+    next();
+  } else {
+    setTimeout(this.afterSend.bind(this, next), 10);
+  }
+};
+
+RecognizeStream.prototype.stop = function() {
+  this.emit('stopping');
+  this.listening = false;
+  this.socket.close();
+};
+
+// quick/dumb way to determine content type from a supported file format
+var headerToContentType = {
+  'fLaC': 'audio/flac',
+  'RIFF': 'audio/wav',
+  'OggS': 'audio/ogg; codecs=opus'
+};
+RecognizeStream.getContentType = function(buffer) {
+  var header = buffer.slice(0,4).toString();
+  return headerToContentType[header];
+};
 
 module.exports = RecognizeStream;
