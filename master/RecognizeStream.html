@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Class: RecognizeStream | Watson Developer Cloud Node.js SDK Documentation</title>
+    <title>JSDoc: Class: RecognizeStream</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -40,9 +40,7 @@
 
     
 
-    
-        <h4 class="name" id="RecognizeStream">watson.speech_to_text({version: 'v1', ...});</h4>
-    
+    <h4 class="name" id="RecognizeStream"><span class="type-signature"></span>new RecognizeStream<span class="signature">(options)</span><span class="type-signature"></span></h4>
 
     
 
@@ -101,7 +99,389 @@ Uses WebSockets under the hood. For audio with no recognizable speech, no `data`
 
             
 
-            <td class="description last"></td>
+            <td class="description last">
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>model</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    'en-US_BroadbandModel'
+                
+                </td>
+            
+
+            <td class="description last">voice model to use. Microphone streaming only supports broadband models.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>url</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    'wss://stream.watsonplatform.net/speech-to-text/api'
+                
+                </td>
+            
+
+            <td class="description last">base URL for service</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>content-type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    'audio/wav'
+                
+                </td>
+            
+
+            <td class="description last">content type of audio; should be automatically determined in most cases</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>interim_results</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
+
+            <td class="description last">Send back non-final previews of each "sentence" as it is being processed</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>continuous</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
+
+            <td class="description last">set to false to automatically stop the transcription after the first "sentence"</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>word_confidence</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
+
+            <td class="description last">include confidence scores with results</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>timestamps</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
+
+            <td class="description last">include timestamps with results</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>max_alternatives</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    3
+                
+                </td>
+            
+
+            <td class="description last">maximum number of alternative transcriptions to include</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>inactivity_timeout</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    30
+                
+                </td>
+            
+
+            <td class="description last">how many seconds of silence before automatically closing the stream (even if continuous is true). use -1 for infinity
+//todo: investigate other options at http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/apis/#!/speech-to-text/recognizeSessionless</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
         </tr>
 
     
@@ -142,7 +522,7 @@ Uses WebSockets under the hood. For audio with no recognizable speech, no `data`
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_speech_to_text_v1.js.html">services/speech_to_text/v1.js</a>, <a href="services_speech_to_text_v1.js.html#line359">line 359</a>
+        <a href="recognize-stream.js.html">recognize-stream.js</a>, <a href="recognize-stream.js.html#line55">line 55</a>
     </li></ul></dd>
     
 
@@ -195,9 +575,7 @@ Uses WebSockets under the hood. For audio with no recognizable speech, no `data`
 
     
 
-    
-        <h4 class="name" id="event:connection-close">connection-close</h4>
-    
+    <h4 class="name" id="event:connection-close">connection-close</h4>
 
     
 
@@ -316,7 +694,7 @@ Uses WebSockets under the hood. For audio with no recognizable speech, no `data`
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_speech_to_text_v1.js.html">services/speech_to_text/v1.js</a>, <a href="services_speech_to_text_v1.js.html#line420">line 420</a>
+        <a href="recognize-stream.js.html">recognize-stream.js</a>, <a href="recognize-stream.js.html#line136">line 136</a>
     </li></ul></dd>
     
 
@@ -347,9 +725,7 @@ Uses WebSockets under the hood. For audio with no recognizable speech, no `data`
 
     
 
-    
-        <h4 class="name" id="event:data">data</h4>
-    
+    <h4 class="name" id="event:data">data</h4>
 
     
 
@@ -449,7 +825,7 @@ Uses WebSockets under the hood. For audio with no recognizable speech, no `data`
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_speech_to_text_v1.js.html">services/speech_to_text/v1.js</a>, <a href="services_speech_to_text_v1.js.html#line459">line 459</a>
+        <a href="recognize-stream.js.html">recognize-stream.js</a>, <a href="recognize-stream.js.html#line201">line 201</a>
     </li></ul></dd>
     
 
@@ -480,9 +856,7 @@ Uses WebSockets under the hood. For audio with no recognizable speech, no `data`
 
     
 
-    
-        <h4 class="name" id="event:error">error</h4>
-    
+    <h4 class="name" id="event:error">error</h4>
 
     
 
@@ -529,7 +903,7 @@ Uses WebSockets under the hood. For audio with no recognizable speech, no `data`
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_speech_to_text_v1.js.html">services/speech_to_text/v1.js</a>, <a href="services_speech_to_text_v1.js.html#line392">line 392</a>
+        <a href="recognize-stream.js.html">recognize-stream.js</a>, <a href="recognize-stream.js.html#line144">line 144</a>
     </li></ul></dd>
     
 
@@ -560,9 +934,140 @@ Uses WebSockets under the hood. For audio with no recognizable speech, no `data`
 
     
 
+    <h4 class="name" id="event:results">results</h4>
+
     
-        <h4 class="name" id="event:results">results</h4>
+
+
+
+<div class="description">
+    Object with interim or final results, including possible alternatives. May have no results at all for empty audio files.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
     
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>results</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <dt class="important tag-deprecated">Deprecated:</dt><dd><ul class="dummy"><li>- use the 'result' event (singular) instead</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="recognize-stream.js.html">recognize-stream.js</a>, <a href="recognize-stream.js.html#line184">line 184</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="event:results">results</h4>
 
     
 
@@ -662,7 +1167,7 @@ Uses WebSockets under the hood. For audio with no recognizable speech, no `data`
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_speech_to_text_v1.js.html">services/speech_to_text/v1.js</a>, <a href="services_speech_to_text_v1.js.html#line451">line 451</a>
+        <a href="recognize-stream.js.html">recognize-stream.js</a>, <a href="recognize-stream.js.html#line194">line 194</a>
     </li></ul></dd>
     
 
@@ -700,24 +1205,16 @@ Uses WebSockets under the hood. For audio with no recognizable speech, no `data`
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AlchemyDataNews.html">AlchemyDataNews</a></li><li><a href="AlchemyLanguage.html">AlchemyLanguage</a></li><li><a href="AlchemyVision.html">AlchemyVision</a></li><li><a href="Authorization.html">Authorization</a></li><li><a href="ConceptExpansion.html">ConceptExpansion</a></li><li><a href="ConceptInsights.html">ConceptInsights</a></li><li><a href="Dialog.html">Dialog</a></li><li><a href="DocumentConversion.html">DocumentConversion</a></li><li><a href="LanguageTranslation.html">LanguageTranslation</a></li><li><a href="NaturalLanguageClassifier.html">NaturalLanguageClassifier</a></li><li><a href="PersonalityInsights.html">PersonalityInsights</a></li><li><a href="QuestionAndAnswer.html">QuestionAndAnswer</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RelationshipExtraction.html">RelationshipExtraction</a></li><li><a href="RetrieveAndRank.html">RetrieveAndRank</a></li><li><a href="SpeechToText.html">SpeechToText</a></li><li><a href="TextToSpeech.html">TextToSpeech</a></li><li><a href="ToneAnalyzer.html">ToneAnalyzer</a></li><li><a href="TradeoffAnalytics.html">TradeoffAnalytics</a></li><li><a href="VisualInsights.html">VisualInsights</a></li><li><a href="VisualRecognitionV1Beta.html">VisualRecognitionV1Beta</a></li><li><a href="VisualRecognitionV2Beta.html">VisualRecognitionV2Beta</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:connection-close">connection-close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li></ul><h3>Namespaces</h3><ul><li><a href="watson.html">watson</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="FormatStream.html">FormatStream</a></li><li><a href="MediaElementAudioStream.html">MediaElementAudioStream</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li></ul><h3>Events</h3><ul><li><a href="MicrophoneStream.html#event:data">data</a></li><li><a href="MicrophoneStream.html#event:raw">raw</a></li><li><a href="RecognizeStream.html#event:connection-close">connection-close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li></ul><h3>Global</h3><ul><li><a href="global.html#MAX_WAV">MAX_WAV</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu Jan 21 2016 17:07:52 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Jan 29 2016 23:40:23 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>
 <script src="scripts/linenumber.js"> </script>
-<script>
-    (function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,"script","//www.google-analytics.com/analytics.js","ga");
-    ga("create", "UA-59827755-9", "auto");
-    ga("send", "pageview");
-</script>
 </body>
 </html>
