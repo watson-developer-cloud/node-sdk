@@ -54,12 +54,11 @@ ToneAnalyzer.prototype.tone = function(params, callback) {
       method: 'POST',
       body: params.text
     },
-    defaultOptions: extend(this._options, {
-      headers: {
-        'accept':'application/json',
-        'content-type': 'text/plain'
-      }
-    })
+    headers: {
+       'accept': 'application/json',
+       'content-type': 'text/plain'
+    },
+    defaultOptions: this._options
   };
 
   return requestFactory(parameters, callback);
