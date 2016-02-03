@@ -21,7 +21,7 @@ describe('tone_analyzer.v3', function() {
     username: 'batman',
     password: 'bruce-wayne',
     url: 'http://ibm.com:86',
-    version: 'v3-experimental'
+    version: 'v3-beta'
   };
 
   before(function() {
@@ -56,6 +56,7 @@ describe('tone_analyzer.v3', function() {
       assert.equal(body, tone_request.text);
       assert.equal(req.method, 'POST');
       assert.equal(req.headers['content-type'], 'text/plain');
+      assert.equal(req.headers['accept'], 'application/json');
   });
 
   it('tone API should format the response', function(done) {
