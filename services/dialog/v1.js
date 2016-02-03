@@ -22,6 +22,11 @@ var pick           = require('object.pick');
 var omit           = require('object.omit');
 var isStream       = require('isstream');
 
+/**
+ *
+ * @param options
+ * @constructor
+ */
 function Dialog(options) {
   // Default URL
   var serviceDefaults = {
@@ -34,7 +39,7 @@ function Dialog(options) {
 
 /**
  * Retreives the values for profile variables for specific client ID
- * @param  Object   params   { client_id: '', dialog_id: '', name:''}
+ * @param  {Object}   params   { client_id: '', dialog_id: '', name:''}
  */
 Dialog.prototype.getProfile = function(params, callback) {
   params = params || {};
@@ -45,7 +50,7 @@ Dialog.prototype.getProfile = function(params, callback) {
       method: 'GET',
       json: true,
       path: params,
-      qs: pick(params, ['client_id'])
+      qs: pick(params, ['client_id', 'name'])
     },
     requiredParams: ['dialog_id', 'client_id'],
     defaultOptions: this._options
@@ -55,7 +60,7 @@ Dialog.prototype.getProfile = function(params, callback) {
 
 /**
  * Sets the values for profile variables
- * @param  Object   params   { client_id: '', dialog_id: '', name_values:''}
+ * @param  {Object}   params   { client_id: '', dialog_id: '', name_values:''}
  */
 Dialog.prototype.updateProfile = function(params, callback) {
   params = params || {};
@@ -76,7 +81,7 @@ Dialog.prototype.updateProfile = function(params, callback) {
 
 /**
  * Returns a chat session data dump for a given date.
- * @param  Object   params   { client_id: '', dialog_id: '', name_values:''}
+ * @param  {Object}   params   { client_id: '', dialog_id: '', name_values:''}
  */
 Dialog.prototype.getConversation = function(params, callback) {
   params = params || {};
@@ -98,7 +103,7 @@ Dialog.prototype.getConversation = function(params, callback) {
 /**
  * Returns a response for a submitted input message.
  * Also used to start new conversations.
- * @param  Object   params   { client_id: '', dialog_id: '' }
+ * @param  {Object}   params   { client_id: '', dialog_id: '' }
  */
 Dialog.prototype.conversation = function(params, callback) {
   params = params || {};
@@ -119,7 +124,7 @@ Dialog.prototype.conversation = function(params, callback) {
 
 /**
  * Updates content for specified nodes.
- * @param  Object   params   { dialog_id: '' }
+ * @param  {Object}   params   { dialog_id: '' }
  */
 Dialog.prototype.updateContent = function(params, callback) {
   params = params || {};
@@ -139,7 +144,7 @@ Dialog.prototype.updateContent = function(params, callback) {
 
 /**
  * Gets content for nodes.
- * @param  Object   params   { dialog_id: '' }
+ * @param  {Object}   params   { dialog_id: '' }
  */
 Dialog.prototype.getContent = function(params, callback) {
   params = params || {};
@@ -159,7 +164,7 @@ Dialog.prototype.getContent = function(params, callback) {
 
 /**
  * Create a dialog based on a file and name
- * @param  Object   params   { name: '', file:'' }
+ * @param  {Object}   params   { name: '', file:'' }
  */
 Dialog.prototype.createDialog = function(params, callback) {
   params = params || {};
@@ -221,7 +226,7 @@ Dialog.prototype.deleteDialog = function(params, callback) {
 
 /**
  * Update a dialog with a new dialog file
- * @param  Object   params   { dialog_id: '' }
+ * @param  {Object}   params   { dialog_id: '' }
  */
 Dialog.prototype.updateDialog = function(params, callback) {
   params = params || {};

@@ -1,6 +1,6 @@
 {
   "name": "watson-developer-cloud",
-  "version": "1.0.6",
+  "version": "1.2.1",
   "description": "Client library to use the IBM Watson Services and AlchemyAPI",
   "main": "./lib/index",
   "repository": {
@@ -59,15 +59,15 @@
   },
   "devDependencies": {
     "concat-stream": "^1.5.0",
-    "coveralls": "^2.11.4",
-    "istanbul": "^0.4.0",
+    "coveralls": "^2.11.6",
+    "istanbul": "^0.4.2",
+    "jsdoc": "^3.4.0",
     "jshint": "^2.8.0",
     "mocha": "^2.3.4",
-    "nock": "^3.4.0",
-    "qs": "^5.2.0"
+    "nock": "^5.2.1",
+    "qs": "^6.0.2"
   },
   "dependencies": {
-    "async": "~1.5.0",
     "cookie": "~0.2.2",
     "csv-stringify": "~0.0.8",
     "extend": "~3.0.0",
@@ -78,7 +78,7 @@
     "solr-client": "~0.6.0",
     "string": "3.3.1",
     "vcap_services": "~0.1.7",
-    "websocket": "^1.0.22"
+    "websocket": "~1.0.22"
   },
   "engines": {
     "node": ">=0.12"
@@ -86,6 +86,8 @@
   "scripts": {
     "test": "jshint --exclude ./node_modules/ && mocha --reporter spec --timeout 4000",
     "prepare": "npm test && npm version patch",
+    "doc": "jsdoc -c jsdoc/config.json",
+    "watch-doc": "nodemon --watch lib/ --watch services/ --watch jsdoc/ --watch package.json --ext js,tmpl --exec npm run doc",
     "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha --reporter spec --timeout 4000",
     "coveralls": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   }

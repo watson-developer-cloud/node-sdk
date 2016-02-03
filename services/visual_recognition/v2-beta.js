@@ -27,6 +27,7 @@ var requestFactory = require('../../lib/requestwrapper');
  * Verifies that the variable is a valid stream
  * @param  {Object} value   Variable value
  * @param  {String} name Variable name
+ * @private
  */
 function verifyStream(value, name) {
   if (!value) {
@@ -38,7 +39,12 @@ function verifyStream(value, name) {
   }
 }
 
-function VisualRecognition(options) {
+/**
+ *
+ * @param options
+ * @constructor
+ */
+function VisualRecognitionV2Beta(options) {
   // Check if 'version_date' was provided
   if (typeof options.version_date === 'undefined') {
     throw new Error('Argument error: version_date was not specified, use 2015-12-02');
@@ -60,7 +66,7 @@ function VisualRecognition(options) {
  * Retrieves information about a specific classifier.
  * @param classifier_id The classifier id
  */
-VisualRecognition.prototype.getClassifier = function(params, callback) {
+VisualRecognitionV2Beta.prototype.getClassifier = function(params, callback) {
   var parameters = {
     options: {
       method: 'GET',
@@ -79,7 +85,7 @@ VisualRecognition.prototype.getClassifier = function(params, callback) {
  * @param classifier_id The classifier id
  *
  */
-VisualRecognition.prototype.deleteClassifier = function(params, callback) {
+VisualRecognitionV2Beta.prototype.deleteClassifier = function(params, callback) {
   var parameters = {
     options: {
       method: 'DELETE',
@@ -103,7 +109,7 @@ VisualRecognition.prototype.deleteClassifier = function(params, callback) {
  *                            classifier.
  * @param name The desired name of the new classifier.
  */
-VisualRecognition.prototype.createClassifier = function(params, callback) {
+VisualRecognitionV2Beta.prototype.createClassifier = function(params, callback) {
   params = params || {};
 
   try {
@@ -133,7 +139,7 @@ VisualRecognition.prototype.createClassifier = function(params, callback) {
  * @param verbose If verbose is present and not equal to "0",
  * return detailed results for each classifier.
  */
-VisualRecognition.prototype.listClassifiers = function(params, callback) {
+VisualRecognitionV2Beta.prototype.listClassifiers = function(params, callback) {
   var parameters = {
     options: {
       method: 'GET',
@@ -158,7 +164,7 @@ VisualRecognition.prototype.listClassifiers = function(params, callback) {
  *                                     Omit this parameter to use
  *                                     all classifiers.
  */
-VisualRecognition.prototype.classify = function(params, callback) {
+VisualRecognitionV2Beta.prototype.classify = function(params, callback) {
   var formData = extend(true, {}, params);
 
   try {
@@ -184,4 +190,4 @@ VisualRecognition.prototype.classify = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
-module.exports = VisualRecognition;
+module.exports = VisualRecognitionV2Beta;

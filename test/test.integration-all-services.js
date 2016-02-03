@@ -121,7 +121,7 @@ describe('integration-all-services', function() {
   });
 
   describe('functional_tradeoff_analytics', function() {
-    this.timeout(TEN_SECONDS);
+    this.timeout(TWENTY_SECONDS);
     var tradeoff_analytics = watson.tradeoff_analytics(auth.tradeoff_analytics);
 
     it('dilemmas()', function(done) {
@@ -315,11 +315,23 @@ describe('integration-all-services', function() {
           assert.equal(transcription.trim(), 'thunderstorms could produce large hail isolated tornadoes and heavy rain');
           done();
         }));
-      });
     });
 
+    it('createRecognizeStream() - no words',  function (done) {
+      var recognizeStream = speech_to_text.createRecognizeStream({content_type: 'audio/l16; rate=44100'});
+      recognizeStream.setEncoding('utf8');
+      fs.createReadStream(__dirname + '/resources/blank.wav')
+        .pipe(recognizeStream)
+        .on('error', done)
+        .on('data', function(text) {
+          assert(!text, 'no text expected for an audio file with no words')
+        })
+        .on('end', done);
+    });
+  });
+
   describe('functional_dialog', function() {
-    this.timeout(THIRTY_SECONDS);
+    this.timeout(THIRTY_SECONDS * 3);
     var dialog = watson.dialog(auth.dialog);
     var dialog_id = auth.dialog.dialog_id;
     var client_id = 31;
@@ -327,7 +339,8 @@ describe('integration-all-services', function() {
     it('getProfile()', function(done) {
       var params = {
         dialog_id: dialog_id,
-        client_id: client_id
+        client_id: client_id,
+        name: ['size', 'method']
       };
       dialog.getProfile(params, failIfError.bind(failIfError, done));
     });
@@ -348,7 +361,6 @@ describe('integration-all-services', function() {
     });
 
     it('getConversation()', function(done) {
-      this.timeout(TWENTY_SECONDS * 2);
       var params = {
         dialog_id: dialog_id,
         client_id: client_id,
@@ -592,20 +604,39 @@ describe('integration-all-services', function() {
 
   describe('functional_document_conversion', function() {
     this.timeout(TWENTY_SECONDS);
-    var document_conversion = watson.document_conversion(auth.document_conversion);
-    it('convertFile()', function(done) {
-      document_conversion.convert({
-        file: fs.createReadStream(__dirname + '/resources/sampleWORD.docx'),
-        conversion_target: 'ANSWER_UNITS',
-        // word: {
-        //   heading: {
-        //     fonts: [
-        //       { level: 1, min_size: 24 },
-        //       { level: 2, min_size: 16, max_size: 24 }
-        //     ]
-        //   }
-        // }
-      }, failIfError.bind(failIfError, done));
+    describe('v1-experimental', function() {
+      it('convertFile()', function(done) {
+        var document_conversion = watson.document_conversion(auth.document_conversion['v1-experimental']);
+        document_conversion.convert({
+          file: fs.createReadStream(__dirname + '/resources/sampleWORD.docx'),
+          conversion_target: 'ANSWER_UNITS',
+          // word: {
+          //   heading: {
+          //     fonts: [
+          //       { level: 1, min_size: 24 },
+          //       { level: 2, min_size: 16, max_size: 24 }
+          //     ]
+          //   }
+          // }
+        }, failIfError.bind(failIfError, done));
+      });
+    });
+    describe('v1', function() {
+      it('convertFile()', function(done) {
+        var document_conversion = watson.document_conversion(auth.document_conversion.v1);
+        document_conversion.convert({
+          file: fs.createReadStream(__dirname + '/resources/sampleWORD.docx'),
+          conversion_target: 'ANSWER_UNITS',
+          // word: {
+          //   heading: {
+          //     fonts: [
+          //       { level: 1, min_size: 24 },
+          //       { level: 2, min_size: 16, max_size: 24 }
+          //     ]
+          //   }
+          // }
+        }, failIfError.bind(failIfError, done));
+      });
     });
   });
 });

@@ -20,6 +20,11 @@ var pick           = require('object.pick');
 var extend         = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
 
+/**
+ *
+ * @param options
+ * @constructor
+ */
 function TextToSpeech(options) {
   // Default URL
   var serviceDefaults = {

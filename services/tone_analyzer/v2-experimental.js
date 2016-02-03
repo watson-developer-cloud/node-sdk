@@ -19,6 +19,11 @@
 var extend         = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
 
+/**
+ *
+ * @param options
+ * @constructor
+ */
 function ToneAnalyzer(options) {
   // Default URL
   var defaultOptions = {
@@ -72,7 +77,7 @@ ToneAnalyzer.prototype.tone = function(params, callback) {
  * a property "word", the term to look up.
  * Alternatively, one can specify a "context" (part of a phrase) and an
  * "index" (of the word to lookup, within "context").
- * A 'limit' parameter is also accepted to limit the number of related 
+ * A 'limit' parameter is also accepted to limit the number of related
  * words suggested.
  *
  * @return upon success, the callback function is called with an object
@@ -107,7 +112,7 @@ ToneAnalyzer.prototype.synonym = function(params, callback) {
 /**
  * Returns the different scorecards implemented by the service.
  * This is an array of objects with a "name" and "description" properties.
- * 
+ *
  * As a first version, only a "business email" scorecard is implemented.
  *
  * @see the API docs for a the full documentation.

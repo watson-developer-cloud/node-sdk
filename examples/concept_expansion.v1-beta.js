@@ -9,9 +9,8 @@ var concept_expansion = watson.concept_expansion({
 });
 
 var params = {
-  seeds: ['motrin','tylenol','aspirin'],
-  dataset: 'mtsamples',
-  label: 'medications'
+  seeds: ['nyc', 'dc', 'london', 'big cities'],
+  label: 'cities'
 };
 
 concept_expansion.expand(params, function (err, response) {

@@ -84,6 +84,11 @@ function createRequest(method) {
   };
 }
 
+/**
+ *
+ * @param options
+ * @constructor
+ */
 function AlchemyVision(options) {
   // Default URL
   var serviceDefaults = {

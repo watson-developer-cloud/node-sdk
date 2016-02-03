@@ -26,10 +26,12 @@ var http           = require('http');
 var isStream       = require('isstream');
 var requestFactory = require('../../lib/requestwrapper');
 var qs             = require('querystring');
-var Duplex         = require('stream').Duplex;
 var util           = require('util');
-var WebSocketClient = require('websocket').client;
+var RecognizeStream = require('./recognize_stream');
 var pkg         = require('../../package.json');
+
+var PARAMS_ALLOWED = ['continuous', 'max_alternatives', 'timestamps', 'word_confidence', 'inactivity_timeout',
+  'model', 'content-type', 'interim_results', 'keywords', 'keywords_threshold', 'word_alternatives_threshold' ];
 
 function formatChunk(chunk) {
   // Convert the string into an array
@@ -52,7 +54,8 @@ function formatChunk(chunk) {
 
 /**
  * Speech Recognition API Wrapper
- *
+ * @constructor
+ * @param options
  */
 function SpeechToText(options) {
   // Default URL
@@ -63,48 +66,6 @@ function SpeechToText(options) {
   // Replace default options with user provided
   this._options = extend(serviceDefaults, options);
 }
-/**
- * Replaces recognizeLive & friends with a single 2-way stream over websockets
- * @param params
- * @param callback
- * @returns {*}
- */
-SpeechToText.prototype.recognizeWs = function(params, callback) {
-
-  var missingParams = helper.getMissingParams(params, ['audio', 'content_type']);
-  if (missingParams) {
-    callback(new Error('Missing required parameters: ' + missingParams.join(', ')));
-    return;
-  }
-  if (!isStream(params.audio)) {
-    callback(new Error('audio is not a standard Node.js Stream'));
-    return;
-  }
-
-  var queryParams = pick(params, ['continuous', 'max_alternatives', 'timestamps',
-    'word_confidence','inactivity_timeout', 'model']);
-
-  var _url = '/v1';
-  _url += (params.session_id) ? ('/sessions/' + params.session_id) : '';
-  _url += '/recognize';
-
-  var parameters = {
-    options: {
-      method: 'POST',
-      url: _url,
-      headers: {
-        'Content-Type': params.content_type
-      },
-      json: true,
-      qs: queryParams,
-    },
-    defaultOptions: this._options
-  };
-  return params.audio.on('response', function(response) {
-    // Replace content-type
-    response.headers['content-type'] = params.content_type;
-  }).pipe(requestFactory(parameters, callback));
-};
 
 /**
  * Speech recognition for given audio using default model.
@@ -156,6 +117,7 @@ SpeechToText.prototype.recognize = function(params, callback) {
  *
  * @param {String} [content_type] The Content-type e.g. audio/l16; rate=48000
  * @param {String} [session_id] The session id
+ * @deprecated use createRecognizeStream instead
  */
 SpeechToText.prototype.recognizeLive = function(params, callback) {
   var missingParams = helper.getMissingParams(params,
@@ -213,8 +175,8 @@ SpeechToText.prototype.recognizeLive = function(params, callback) {
  * otherwise it waits for the next recognition.
  *
  * @param {String} [params.session_id] Session used in the recognition.
- * @param {boolean} [params.interim_results] If true,
- * interim results will be returned. Default: false.
+ * @param {boolean} [params.interim_results] If true, interim results will be returned. Default: false.
+ * @deprecated use createRecognizeStream instead
  */
 SpeechToText.prototype.observeResult = function(params, callback) {
   var missingParams = helper.getMissingParams(params, ['session_id', 'cookie_session']);
@@ -266,6 +228,7 @@ SpeechToText.prototype.observeResult = function(params, callback) {
  * The returned state has to be 'initialized' to be able to do recognize POST.
  *
  * @param {String} [params.session_id] Session used in the recognition.
+ * @deprecated use createRecognizeStream instead
  */
 SpeechToText.prototype.getRecognizeStatus = function(params, callback) {
   var missingParams = helper.getMissingParams(params, ['session_id']);
@@ -383,145 +346,14 @@ SpeechToText.prototype.deleteSession = function(params, callback) {
 };
 
 
-function RecognizeStream(options){
-  Duplex.call(this, options);
-
-  var queryParams = extend({model: 'en-US_BroadbandModel'}, pick(options, ['model', 'X-Watson-Learning-Opt-Out', 'watson-token']));
-
-  var openingMessage = extend({
-    // todo: confirm the mixed underscores/hyphens and/or get it fixed
-    action: 'start',
-    'content-type': 'audio/wav', // todo: try to determine content-type from the file extension if available
-    'continuous': false,
-    'interim_results': true
-  }, pick(options, ['continuous', 'max_alternatives', 'timestamps',
-    'word_confidence', 'inactivity_timeout', 'content-type', 'interim_results']));
-
-  var closingMessage = {action: 'stop'};
-
-  var url = options.base_url.replace(/^http/, 'ws') + '/v1/recognize?' + qs.stringify(queryParams);
-
-  this.listening = false;
-
-  var client = this.client = new WebSocketClient();
-  var self = this;
-
-  // when the input stops, let the service know that we're done
-  self.on('finish', function() {
-    if (self.connection) {
-      self.connection.sendUTF(JSON.stringify(closingMessage));
-    } else {
-      this.once('connect', function () {
-        self.connection.sendUTF(JSON.stringify(closingMessage));
-      });
-    }
-  });
-
-  function emitError(msg, frame, err) {
-    if (err) {
-      err.message = msg + ' ' + err.message;
-    } else {
-      err = new Error(msg);
-    }
-    err.raw = frame;
-    self.emit('error', err);
-  }
-
-  this.client.on('connectFailed', function(error) {
-    self.emit('error', error);
-  });
-
-  this.client.on('connect', function(connection) {
-    self.connection = connection;
-
-    connection.on('error', function(error) {
-      self.listening = false;
-      self.emit('error', error);
-    });
-
-    connection.on('close', function(reasonCode, description) {
-      self.listening = false;
-      self.push(null);
-      self.emit('connection-close', reasonCode, description);
-    });
-
-    connection.on('message', function(frame) {
-      if (frame.type !== 'utf8') {
-        return emitError('Unexpected binary data received from server', frame);
-      }
-
-      var data;
-      try {
-        data = JSON.parse(frame.utf8Data);
-      } catch (jsonEx) {
-        return emitError('Invalid JSON received from service:', frame, jsonEx);
-      }
-
-      if (data.error) {
-        emitError(data.error, frame);
-      } else if(data.state === 'listening') {
-        // this is emitted both when the server is ready for audio, and after we send the close message to indicate that it's done processing
-        if (!self.listening) {
-          self.listening = true;
-          self.emit('listening');
-        } else {
-          connection.close();
-        }
-      } else if (data.results) {
-        self.emit('results', data);
-        // note: currently there is always exactly 1 entry in the results array. However, this may change in the future.
-        if(data.results[0].final && data.results[0].alternatives) {
-          self.push(data.results[0].alternatives[0].transcript, 'utf8'); // this is the "data" event that can be easily piped to other streams
-        }
-      } else {
-        emitError('Unrecognised message from server', frame);
-      }
-    });
-
-    connection.sendUTF(JSON.stringify(openingMessage));
-
-    self.emit('connect', connection);
-  });
-
-  //requestUrl, protocols, origin, headers, extraRequestOptions
-  client.connect(url, null, null, options.headers, null);
-}
-util.inherits(RecognizeStream, Duplex);
-
-
-RecognizeStream.prototype._read = function(size) {
-  // there's no easy way to control reads from the underlying library
-  // so, the best we can do here is a no-op
-};
-
-RecognizeStream.prototype._write = function(chunk, encoding, callback) {
-  var self = this;
-  if (this.listening) {
-    this.connection.sendBytes(chunk, callback);
-  } else {
-    this.once('listening', function() {
-      self.connection.sendBytes(chunk, callback);
-    });
-  }
-};
-
 /**
  * Replaces recognizeLive & friends with a single 2-way stream over websockets
  * @param params
- * @returns {*}
+ * @returns {RecognizeStream}
  */
 SpeechToText.prototype.createRecognizeStream = function(params) {
   params = params || {};
-  params.base_url = this._options.url;
-
-  // todo: apply these corrections to other methods (?)
-  if (params.content_type && !params['content-type']) {
-    params['content-type'] = params.content_type;
-  }
-
-  if (params['X-WDC-PL-OPT-OUT'] && !params['X-Watson-Learning-Opt-Out']) {
-    params['X-Watson-Learning-Opt-Out'] = params['X-WDC-PL-OPT-OUT'];
-  }
+  params.url = this._options.url;
 
   params.headers = extend({
     'user-agent': pkg.name + '-nodejs-'+ pkg.version,

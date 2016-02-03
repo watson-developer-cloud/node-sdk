@@ -21,7 +21,11 @@ var requestFactory = require('../../lib/requestwrapper');
 var pick           = require('object.pick');
 var helper         = require('../../lib/helper');
 
-
+/**
+ *
+ * @param options
+ * @constructor
+ */
 function PersonalityInsights(options) {
   // Default URL
   var serviceDefaults = {

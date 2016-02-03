@@ -65,6 +65,11 @@ function createRequest(method) {
   };
 }
 
+/**
+ *
+ * @param options
+ * @constructor
+ */
 function AlchemyLanguage(options) {
   // Default URL
   var serviceDefaults = {

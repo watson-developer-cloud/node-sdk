@@ -74,6 +74,11 @@ function responseFormatter(cb) {
   };
 }
 
+/**
+ *
+ * @param options
+ * @constructor
+ */
 function ConceptExpansion(options) {
   var serviceDefaults = {
     url: 'https://gateway.watsonplatform.net/concept-expansion-beta/api'
@@ -92,7 +97,7 @@ ConceptExpansion.prototype.createJob = function(params, callback) {
       body: pick(body, ['dataset', 'seeds', 'label']),
       json: true
     },
-    requiredParams: ['dataset', 'seeds', 'label'],
+    requiredParams: ['seeds'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);

@@ -11,7 +11,7 @@ var speech_to_text = watson.speech_to_text({
 });
 
 var params = {
-  content_type: 'audio/wav',
+  content_type: 'audio/wav'
 };
 
 // create the stream

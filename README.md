@@ -227,9 +227,8 @@ var concept_expansion = watson.concept_expansion({
 });
 
 var params = {
-  seeds: ['motrin','tylenol','aspirin'],
-  dataset: 'mtsamples',
-  label: 'medications'
+  seeds: ['nyc', 'dc', 'london', 'big cities'],
+  label: 'cities'
 };
 
 concept_expansion.expand(params, function (err, response) {
@@ -297,7 +296,7 @@ var fs = require('fs');
 var document_conversion = watson.document_conversion({
   username:     '<username>',
   password:     '<password>',
-  version:      'v1-experimental',
+  version:      'v1',
   version_date: '2015-12-01'
 });
 
@@ -590,7 +589,7 @@ visual_insights.summary(params, function(err, res) {
 Use the [Visual Recognition][visual_recognition] service to recognize the
 following picture.
 
-<img src="http://visual-recognition-demo.mybluemix.net/images/73388.jpg" width="150" />
+<img src="https://visual-recognition-demo.mybluemix.net/images/samples/5.jpg" width="150" />
 
 ```js
 var watson = require('watson-developer-cloud');
@@ -599,19 +598,19 @@ var fs = require('fs');
 var visual_recognition = watson.visual_recognition({
   username: '<username>',
   password: '<password>',
-  version: 'v1-beta'
+  version: 'v2-beta',
+  version_date: '2015-12-02'
 });
 
 var params = {
-  // From file
-  image_file: fs.createReadStream('./resources/car.png')
+  images_file: fs.createReadStream('./resources/car.png')
 };
 
-visual_recognition.recognize(params, function(err, res) {
+visual_recognition.classify(params, function(err, res) {
   if (err)
     console.log(err);
   else
-    console.log(JSON.stringify(res, 'labels', 2));
+    console.log(JSON.stringify(res, null, 2));
 });
 ```
 
@@ -703,5 +702,5 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/maste
 [npm_link]: https://www.npmjs.com/package/watson-developer-cloud
 [request_github]: https://github.com/request/request
 [examples]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples
-[document_conversion_integration_example]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/document_conversion_integration.v1-experimental.js
+[document_conversion_integration_example]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/document_conversion_integration.v1.js
 [license]: http://www.apache.org/licenses/LICENSE-2.0
