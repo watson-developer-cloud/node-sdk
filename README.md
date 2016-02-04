@@ -34,6 +34,7 @@ APIs and SDKs that use cognitive computing to solve complex problems.
     * [Relationship Extraction](#relationship-extraction)
     * [Speech to Text](#speech-to-text)
     * [Text to Speech](#text-to-speech)
+    * [Tone Analyzer](#tone-analyzer)
     * [Tradeoff Analytics](#tradeoff-analytics)
     * [Visual Insights](#visual-insights)
     * [Visual Recognition](#visual-recognition)
@@ -516,6 +517,25 @@ var params = {
 text_to_speech.synthesize(params).pipe(fs.createWriteStream('output.wav'));
 ```
 
+### Tone Analyzer
+Use the [Tone Analyzer][tone_analyzer] service to analyze the
+emotion, writing and social tones of a text.
+
+```js
+var watson = require('watson-developer-cloud');
+
+var tone_analyzer = watson.tone_analyzer({
+  username: '<username>',
+  password: '<password>',
+  version: 'v3-beta'
+});
+
+var tones = tone_analyzer.tone({
+  text: 'Greetings from Watson Developer Cloud!'
+});
+```
+
+
 ### Tradeoff Analytics
 Use the [Tradeoff Analytics][tradeoff_analytics] service to find the best
 phone that minimizes price and weight and maximizes screen size.
@@ -665,6 +685,7 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/maste
 [visual_recognition]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/visual-recognition/
 [visual_insights]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/visual-insights/
 
+[tone_analyzer]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/tone-analyzer.html
 [text_to_speech]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/text-to-speech/
 [speech_to_text]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/speech-to-text/
 [concept_insights]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/concept-insights/
