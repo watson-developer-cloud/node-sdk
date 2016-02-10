@@ -165,4 +165,10 @@ AlchemyLanguage.prototype.taxonomy = createRequest('taxonomy');
  */
 AlchemyLanguage.prototype.combined = createRequest('combined');
 
+/**
+ * Detects emotions (anger, digust, fear, joy, and sadness)
+ * for text, HTML, or a URL.
+ */
+AlchemyLanguage.prototype.emotion = createRequest('emotion');
+
 module.exports = AlchemyLanguage;

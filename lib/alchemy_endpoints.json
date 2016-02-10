@@ -88,6 +88,12 @@
     "html" : "/html/HTMLGetCombinedData"
   },
 
+  "emotion": {
+    "url"  : "/url/URLGetEmotion",
+    "text" : "/text/TextGetEmotion",
+    "html" : "/html/HTMLGetEmotion"
+  },
+
   "image_link": {
     "url"  : "/url/URLGetImage",
     "html" : "/html/HTMLGetImage"
