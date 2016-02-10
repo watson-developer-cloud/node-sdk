@@ -21,14 +21,15 @@ describe('tone_analyzer.v3', function() {
     username: 'batman',
     password: 'bruce-wayne',
     url: 'http://ibm.com:86',
-    version: 'v3-beta'
+    version: 'v3-beta',
+    version_date: '2016-02-11'
   };
 
   before(function() {
     nock.disableNetConnect();
     nock(service.url)
       .persist()
-      .post(tone_path, tone_request.text)
+      .post(tone_path + '?version=2016-02-11', tone_request.text)
       .reply(200, tone_response);
   });
 
@@ -52,7 +53,7 @@ describe('tone_analyzer.v3', function() {
   it('tone API should generate a valid payload with text', function() {
       var req = tone_analyzer.tone(tone_request, noop);
       var body = new Buffer(req.body).toString('ascii');
-      assert.equal(req.uri.href, service.url + tone_path);
+      assert.equal(req.uri.href, service.url + tone_path + '?version=2016-02-11');
       assert.equal(body, tone_request.text);
       assert.equal(req.method, 'POST');
       assert.equal(req.headers['content-type'], 'text/plain');

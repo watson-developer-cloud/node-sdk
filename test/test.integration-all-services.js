@@ -54,10 +54,6 @@ describe('integration-all-services', function() {
     this.timeout(TEN_SECONDS);
     var tone_analyzer = watson.tone_analyzer(auth.tone_analyzer);
 
-    it('scorecards()', function(done) {
-      tone_analyzer.scorecards(null, failIfError.bind(failIfError, done));
-    });
-
     it('tone()', function(done) {
       tone_analyzer.tone({text: mobydick}, failIfError.bind(failIfError, done));
     });
@@ -453,6 +449,11 @@ describe('integration-all-services', function() {
       }, failIfError.bind(failIfError, done));
     });
 
+    it('emotion()', function(done) {
+      alchemy_language.emotion({
+        text: text
+      }, failIfError.bind(failIfError, done));
+    });
 
     it('sentiment()', function(done) {
       alchemy_language.sentiment({
@@ -604,26 +605,9 @@ describe('integration-all-services', function() {
 
   describe('functional_document_conversion', function() {
     this.timeout(TWENTY_SECONDS);
-    describe('v1-experimental', function() {
-      it('convertFile()', function(done) {
-        var document_conversion = watson.document_conversion(auth.document_conversion['v1-experimental']);
-        document_conversion.convert({
-          file: fs.createReadStream(__dirname + '/resources/sampleWORD.docx'),
-          conversion_target: 'ANSWER_UNITS',
-          // word: {
-          //   heading: {
-          //     fonts: [
-          //       { level: 1, min_size: 24 },
-          //       { level: 2, min_size: 16, max_size: 24 }
-          //     ]
-          //   }
-          // }
-        }, failIfError.bind(failIfError, done));
-      });
-    });
     describe('v1', function() {
       it('convertFile()', function(done) {
-        var document_conversion = watson.document_conversion(auth.document_conversion.v1);
+        var document_conversion = watson.document_conversion(auth.document_conversion);
         document_conversion.convert({
           file: fs.createReadStream(__dirname + '/resources/sampleWORD.docx'),
           conversion_target: 'ANSWER_UNITS',

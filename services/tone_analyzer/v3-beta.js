@@ -20,13 +20,21 @@ var extend         = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
 
 function ToneAnalyzer(options) {
+  // Check if 'version_date' was provided
+  if (typeof options.version_date === 'undefined') {
+    throw new Error('Argument error: version_date was not specified, use 2016-02-11');
+  }
+
   // Default URL
-  var defaultOptions = {
-    url: 'https://gateway.watsonplatform.net/tone-analyzer-experimental/api'
+  var serviceDefaults = {
+    url: 'https://gateway.watsonplatform.net/tone-analyzer-beta/api',
+    qs: {
+      version: options.version_date
+    }
   };
 
   // Replace default options with user provided
-  this._options = extend(defaultOptions, options);
+  this._options = extend(serviceDefaults, options);
 }
 
 /**
