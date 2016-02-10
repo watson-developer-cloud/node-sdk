@@ -124,6 +124,8 @@ describe('language_translation', function() {
         var service_request = {
           base_model_id: 'foo',
           forced_glossary: fs.createReadStream(__dirname + '/resources/glossary.tmx'),
+          parallel_corpus: fs.createReadStream(__dirname + '/resources/glossary.tmx'),
+          monolingual_corpus: fs.createReadStream(__dirname + '/resources/glossary.tmx')
         };
 
         nock(service.url).persist()

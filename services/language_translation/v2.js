@@ -24,7 +24,9 @@ var helper         = require('../../lib/helper');
 
 /**
  *
- * @param options
+ * @param {string} [somebody=https://gateway.watsonplatform.net/language-translation/api] The service URL.
+ * @param {string} username Username
+ * @param {string} password Password
  * @constructor
  */
 function LanguageTranslation(options) {
@@ -41,11 +43,11 @@ function LanguageTranslation(options) {
 
 /**
  * Return the translation models
- * @param  string   default   Query filters to check if the model is
+ * @param  {string}   default   Query filters to check if the model is
  *                            the default one used when only source
  *                            and target languages are specified.
- * @param  string   source   Filter by source language
- * @param  string   target   Filter by target language
+ * @param  {string}   source   Filter by source language
+ * @param  {string}   target   Filter by target language
  */
 LanguageTranslation.prototype.getModels = function(params, callback) {
   params = params || {};
@@ -64,7 +66,7 @@ LanguageTranslation.prototype.getModels = function(params, callback) {
 
 /**
  * Return the translation model
- * @param  string   model_id   The model identifier
+ * @param  {string}   model_id   The model identifier
  */
 LanguageTranslation.prototype.getModel = function(params, callback) {
   params = params || {};
@@ -84,23 +86,30 @@ LanguageTranslation.prototype.getModel = function(params, callback) {
 
 /**
  * Creates a translation model
- * @param  string   base_model_id   The base model identifier
- * @param  string   name   The model name
- * @param  stream   forced_glossary   The tmx stream
+ * @param  {string}   base_model_id   The base model identifier
+ * @param  {string}   name   The model name
+ * @param  {stream}   forced_glossary   A UTF-8 encoded TMX file that contains pairs of matching terms in the source and target language that are seen as absolute by the system. This file completely overwrites the original domain data.
+ * @param  {stream}   parallel_corpus   A UTF-8 encoded TMX file that contains matching phrases in the source and target language that serve as examples for Watson. Parallel corpora differ from glossaries because they do not overwrite the original domain data.
+ * @param  {stream}   monolingual_corpus A UTF-8 encoded plain text file that contains a body of text in the target language that is related to what you are translating. A monolingual corpus helps improve literal translations to be more fluent and human.
  */
 LanguageTranslation.prototype.createModel = function(params, callback) {
   params = params || {};
 
-  var missingParams = helper.getMissingParams(params, ['forced_glossary', 'base_model_id']);
+  var missingParams = helper.getMissingParams(params, ['base_model_id']);
   if (missingParams) {
     callback(new Error('Missing required parameters: ' + missingParams.join(', ')));
     return;
   }
 
+  var inputTypes = ['forced_glossary', 'parallel_corpus', 'monolingual_corpus'];
 
-  if (!isStream(params.forced_glossary)) {
-    callback(new Error('forced_glossary is not a standard Node.js Stream'));
-    return;
+  for (var type in inputTypes) {
+    if (inputTypes.hasOwnProperty(type)) {
+      if (params[inputTypes[type]] && !isStream(params[inputTypes[type]])) {
+        callback(new Error(inputTypes[type] + ' is not a standard Node.js Stream'));
+        return;
+      }
+    }
   }
 
   var parameters = {
@@ -108,7 +117,7 @@ LanguageTranslation.prototype.createModel = function(params, callback) {
       method: 'POST',
       url: '/v2/models',
       qs: pick(params,['name', 'base_model_id']),
-      formData: pick(params,['forced_glossary']),
+      formData: pick(params, inputTypes),
       json: true
     },
     defaultOptions: this._options
@@ -117,8 +126,8 @@ LanguageTranslation.prototype.createModel = function(params, callback) {
 };
 
 /**
- * Deletes a translation model
- * @param  string   model_id   The model identifier
+ * Deletes a model
+ * @param  {string}   model_id   The model identifier
  */
 LanguageTranslation.prototype.deleteModel = function(params, callback) {
   params = params || {};
@@ -137,7 +146,9 @@ LanguageTranslation.prototype.deleteModel = function(params, callback) {
 };
 
 /**
- * Translate pharagraphs from @param source to @param target.
+ * Translate pharagraphs from one language into another
+ * @param {string} source Source language
+ * @param {string} target Target language
  */
 LanguageTranslation.prototype.translate = function(params, callback) {
   params = params || {};
@@ -180,7 +191,7 @@ LanguageTranslation.prototype.getIdentifiableLanguages = function(params, callba
 
 /**
  * Identify the text based on the identifiable languages
- * @param  string   text   text to identify
+ * @param  [string]   text   text to identify
  */
 LanguageTranslation.prototype.identify = function(params, callback) {
   if (!params || !params.text){
