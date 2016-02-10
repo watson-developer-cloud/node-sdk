@@ -49,7 +49,9 @@ function formatConceptIds(ids) {
 
 /**
  *
- * @param options
+ * @param {string} [somebody=https://gateway.watsonplatform.net/concept-insights/api] The service URL.
+ * @param {string} username Username
+ * @param {string} password Password
  * @constructor
  */
 function ConceptInsights(options) {
