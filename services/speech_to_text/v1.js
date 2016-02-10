@@ -25,10 +25,8 @@ var https          = require('https');
 var http           = require('http');
 var isStream       = require('isstream');
 var requestFactory = require('../../lib/requestwrapper');
-var qs             = require('querystring');
-var util           = require('util');
 var RecognizeStream = require('./recognize_stream');
-var pkg         = require('../../package.json');
+var pkg            = require('../../package.json');
 
 var PARAMS_ALLOWED = ['continuous', 'max_alternatives', 'timestamps', 'word_confidence', 'inactivity_timeout',
   'model', 'content-type', 'interim_results', 'keywords', 'keywords_threshold', 'word_alternatives_threshold' ];
@@ -85,8 +83,7 @@ SpeechToText.prototype.recognize = function(params, callback) {
     return;
   }
 
-  var queryParams = pick(params, ['continuous', 'max_alternatives', 'timestamps',
-    'word_confidence','inactivity_timeout', 'model']);
+  var queryParams = pick(params, PARAMS_ALLOWED);
 
   var _url = '/v1';
   _url += (params.session_id) ? ('/sessions/' + params.session_id) : '';

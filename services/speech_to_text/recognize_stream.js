@@ -64,10 +64,10 @@ RecognizeStream.prototype.initialize = function() {
 
   var queryParams = extend({model: 'en-US_BroadbandModel'}, pick(options, QUERY_PARAMS_ALLOWED));
   var queryString = Object.keys(queryParams).map(function(key) {
-    return key + '=' + (key == 'watson-token' ? queryParams[key] : encodeURIComponent(queryParams[key])); // our server chokes if the token is correctly url-encoded
+    return key + '=' + (key === 'watson-token' ? queryParams[key] : encodeURIComponent(queryParams[key])); // our server chokes if the token is correctly url-encoded
   }).join('&');
 
-  var url = (options.url || "wss://stream.watsonplatform.net/speech-to-text/api").replace(/^http/, 'ws') + '/v1/recognize?' + queryString;
+  var url = (options.url || 'wss://stream.watsonplatform.net/speech-to-text/api').replace(/^http/, 'ws') + '/v1/recognize?' + queryString;
 
   var openingMessage = extend({
     action: 'start',
