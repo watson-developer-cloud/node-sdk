@@ -6,7 +6,8 @@ var fs = require('fs');
 var document_conversion = watson.document_conversion({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
   password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
-  version: 'v1'
+  version: 'v1',
+  version_date: '2015-12-01'
 });
 
 // convert a single document

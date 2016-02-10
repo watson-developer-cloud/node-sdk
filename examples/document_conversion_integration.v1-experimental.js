@@ -42,7 +42,8 @@ NOTE: you cannot use your Bluemix account credentials here
 var document_conversion = watson.document_conversion({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
   password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
-  version: 'v1-experimental'
+  version: 'v1-experimental',
+  version_date: '2015-12-01'
 });
 
 var clusterId = 'INSERT YOUR CLUSTER ID HERE';

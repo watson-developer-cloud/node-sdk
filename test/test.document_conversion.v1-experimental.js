@@ -16,7 +16,8 @@ describe('document_conversion', function() {
     username: 'batman',
     password: 'bruce-wayne',
     url: 'http://ibm.com:80',
-    version: 'v1-experimental'
+    version: 'v1-experimental',
+    version_date: '2015-12-01'
   };
   var convertPath = '/v1/convert_document';
 
