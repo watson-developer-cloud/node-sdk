@@ -85,7 +85,7 @@
 
         <tr>
             
-                <td class="name"><code>somebody</code></td>
+                <td class="name"><code>params.url</code></td>
             
 
             <td class="type">
@@ -124,7 +124,7 @@
 
         <tr>
             
-                <td class="name"><code>username</code></td>
+                <td class="name"><code>params.username</code></td>
             
 
             <td class="type">
@@ -159,7 +159,7 @@
 
         <tr>
             
-                <td class="name"><code>password</code></td>
+                <td class="name"><code>params.password</code></td>
             
 
             <td class="type">
@@ -278,7 +278,7 @@
     
 
     
-        <h4 class="name" id="createModel"><span class="type-signature"></span>createModel<span class="signature">(base_model_id, name, forced_glossary, parallel_corpus, monolingual_corpus)</span><span class="type-signature"></span></h4>
+        <h4 class="name" id="createModel"><span class="type-signature"></span>createModel<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -322,7 +322,7 @@
 
         <tr>
             
-                <td class="name"><code>base_model_id</code></td>
+                <td class="name"><code>params.base_model_id</code></td>
             
 
             <td class="type">
@@ -345,7 +345,7 @@
 
         <tr>
             
-                <td class="name"><code>name</code></td>
+                <td class="name"><code>params.name</code></td>
             
 
             <td class="type">
@@ -368,7 +368,7 @@
 
         <tr>
             
-                <td class="name"><code>forced_glossary</code></td>
+                <td class="name"><code>params.forced_glossary</code></td>
             
 
             <td class="type">
@@ -391,7 +391,7 @@
 
         <tr>
             
-                <td class="name"><code>parallel_corpus</code></td>
+                <td class="name"><code>params.parallel_corpus</code></td>
             
 
             <td class="type">
@@ -414,7 +414,7 @@
 
         <tr>
             
-                <td class="name"><code>monolingual_corpus</code></td>
+                <td class="name"><code>params.monolingual_corpus</code></td>
             
 
             <td class="type">
@@ -503,7 +503,7 @@
     
 
     
-        <h4 class="name" id="deleteModel"><span class="type-signature"></span>deleteModel<span class="signature">(model_id)</span><span class="type-signature"></span></h4>
+        <h4 class="name" id="deleteModel"><span class="type-signature"></span>deleteModel<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -547,7 +547,7 @@
 
         <tr>
             
-                <td class="name"><code>model_id</code></td>
+                <td class="name"><code>params.model_id</code></td>
             
 
             <td class="type">
@@ -720,7 +720,7 @@
     
 
     
-        <h4 class="name" id="getModel"><span class="type-signature"></span>getModel<span class="signature">(model_id)</span><span class="type-signature"></span></h4>
+        <h4 class="name" id="getModel"><span class="type-signature"></span>getModel<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -764,7 +764,7 @@
 
         <tr>
             
-                <td class="name"><code>model_id</code></td>
+                <td class="name"><code>params.model_id</code></td>
             
 
             <td class="type">
@@ -853,7 +853,7 @@
     
 
     
-        <h4 class="name" id="getModels"><span class="type-signature"></span>getModels<span class="signature">(default, source, target)</span><span class="type-signature"></span></h4>
+        <h4 class="name" id="getModels"><span class="type-signature"></span>getModels<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -897,7 +897,7 @@
 
         <tr>
             
-                <td class="name"><code>default</code></td>
+                <td class="name"><code>params.default</code></td>
             
 
             <td class="type">
@@ -922,7 +922,7 @@
 
         <tr>
             
-                <td class="name"><code>source</code></td>
+                <td class="name"><code>params.source</code></td>
             
 
             <td class="type">
@@ -945,7 +945,7 @@
 
         <tr>
             
-                <td class="name"><code>target</code></td>
+                <td class="name"><code>params.target</code></td>
             
 
             <td class="type">
@@ -1034,7 +1034,7 @@
     
 
     
-        <h4 class="name" id="identify"><span class="type-signature"></span>identify<span class="signature">(string<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+        <h4 class="name" id="identify"><span class="type-signature"></span>identify<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -1066,8 +1066,6 @@
         <th>Type</th>
 
         
-        <th>Attributes</th>
-        
 
         
 
@@ -1080,28 +1078,23 @@
 
         <tr>
             
-                <td class="name"><code>string</code></td>
+                <td class="name"><code>params.text</code></td>
             
 
             <td class="type">
             
+                
+<span class="param-type">string</span>
+
+
+            
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
 
             
 
-            <td class="description last">text   text to identify</td>
+            <td class="description last">text to identify</td>
         </tr>
 
     
@@ -1174,7 +1167,7 @@
     
 
     
-        <h4 class="name" id="translate"><span class="type-signature"></span>translate<span class="signature">(source, target)</span><span class="type-signature"></span></h4>
+        <h4 class="name" id="translate"><span class="type-signature"></span>translate<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -1218,7 +1211,7 @@
 
         <tr>
             
-                <td class="name"><code>source</code></td>
+                <td class="name"><code>params.source</code></td>
             
 
             <td class="type">
@@ -1241,7 +1234,7 @@
 
         <tr>
             
-                <td class="name"><code>target</code></td>
+                <td class="name"><code>params.target</code></td>
             
 
             <td class="type">
@@ -1346,7 +1339,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu Feb 11 2016 04:24:45 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu Feb 11 2016 04:47:28 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>
