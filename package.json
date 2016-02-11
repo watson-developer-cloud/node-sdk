@@ -58,23 +58,23 @@
     "url": "https://github.com/watson-developer-cloud/node-sdk/issues"
   },
   "devDependencies": {
-    "concat-stream": "^1.5.0",
+    "concat-stream": "^1.5.1",
     "coveralls": "^2.11.6",
     "istanbul": "^0.4.2",
     "jsdoc": "^3.4.0",
-    "jshint": "^2.8.0",
-    "mocha": "^2.3.4",
-    "nock": "^5.2.1",
-    "qs": "^6.0.2"
+    "jshint": "^2.9.1",
+    "mocha": "^2.4.5",
+    "nock": "^7.0.2",
+    "qs": "^6.1.0"
   },
   "dependencies": {
-    "cookie": "~0.2.2",
-    "csv-stringify": "~0.0.8",
+    "cookie": "~0.2.3",
+    "csv-stringify": "~1.0.2",
     "extend": "~3.0.0",
     "isstream": "~0.1.2",
     "object.omit": "~2.0.0",
     "object.pick": "~1.1.1",
-    "request": "~2.67.0",
+    "request": "~2.69.0",
     "solr-client": "~0.6.0",
     "string": "3.3.1",
     "vcap_services": "~0.1.7",
