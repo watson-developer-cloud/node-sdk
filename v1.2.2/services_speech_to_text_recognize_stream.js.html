@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Source: services/speech_to_text/recognize_stream.js | Watson Developer Cloud Node.js SDK Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: services/speech_to_text/recognize_stream.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Copyright 2014 IBM Corp. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+
+var Duplex         = require('stream').Duplex;
+var util           = require('util');
+var extend         = require('extend');
+var pick           = require('object.pick');
+var W3CWebSocket = require('websocket').w3cwebsocket;
+
+
+var OPENING_MESSAGE_PARAMS_ALLOWED = ['continuous', 'max_alternatives', 'timestamps', 'word_confidence', 'inactivity_timeout',
+  'content-type', 'interim_results', 'keywords', 'keywords_threshold', 'word_alternatives_threshold' ];
+
+var QUERY_PARAMS_ALLOWED = ['model', 'X-Watson-Learning-Opt-Out', 'watson-token'];
+
+/**
+ * pipe()-able Node.js Readable/Writeable stream - accepts binary audio and emits text in it's `data` events.
+ * Also emits `results` events with interim results and other data.
+ *
+ * Cannot be instantiated directly, instead reated by calling #createRecognizeStream()
+ *
+ * Uses WebSockets under the hood. For audio with no recognizable speech, no `data` events are emitted.
+ * @param options
+ * @constructor
+ */
+function RecognizeStream(options){
+  Duplex.call(this, options);
+  this.options = options;
+  this.listening = false;
+  this.initialized = false;
+}
+util.inherits(RecognizeStream, Duplex);
+
+
+RecognizeStream.prototype.initialize = function() {
+  var options = this.options;
+
+  // todo: apply these corrections to other methods (?)
+  if (options.token &amp;&amp; !options['watson-token']) {
+    options['watson-token'] = options.token;
+  }
+  if (options.content_type &amp;&amp; !options['content-type']) {
+    options['content-type'] = options.content_type;
+  }
+  if (options['X-WDC-PL-OPT-OUT'] &amp;&amp; !options['X-Watson-Learning-Opt-Out']) {
+    options['X-Watson-Learning-Opt-Out'] = options['X-WDC-PL-OPT-OUT'];
+  }
+
+  var queryParams = extend({model: 'en-US_BroadbandModel'}, pick(options, QUERY_PARAMS_ALLOWED));
+  var queryString = Object.keys(queryParams).map(function(key) {
+    return key + '=' + (key === 'watson-token' ? queryParams[key] : encodeURIComponent(queryParams[key])); // our server chokes if the token is correctly url-encoded
+  }).join('&amp;');
+
+  var url = (options.url || 'wss://stream.watsonplatform.net/speech-to-text/api').replace(/^http/, 'ws') + '/v1/recognize?' + queryString;
+
+  var openingMessage = extend({
+    action: 'start',
+    'content-type': 'audio/wav',
+    continuous: true,
+    interim_results: true,
+    word_confidence: true,
+    timestamps: true,
+    max_alternatives: 3,
+    inactivity_timeout: 600
+  }, pick(options, OPENING_MESSAGE_PARAMS_ALLOWED));
+
+  var closingMessage = {action: 'stop'};
+
+
+  var self = this;
+
+  //node params: requestUrl, protocols, origin, headers, extraRequestOptions
+  // browser params: requestUrl, protocols (all others ignored)
+  var socket = this.socket = new W3CWebSocket(url, null, null, options.headers, null);
+
+  // when the input stops, let the service know that we're done
+  self.on('finish', function() {
+    if (self.socket) {
+      self.socket.send(JSON.stringify(closingMessage));
+    } else {
+      this.once('connect', function () {
+        self.socket.send(JSON.stringify(closingMessage));
+      });
+    }
+  });
+
+  socket.onerror = function(error) {
+    self.listening = false;
+    self.emit('error', error);
+  };
+
+
+  this.socket.onopen = function() {
+    socket.send(JSON.stringify(openingMessage));
+    self.emit('connect');
+  };
+
+  this.socket.onclose = function(e) {
+    self.listening = false;
+    self.push(null);
+    /**
+     * @event RecognizeStream#connection-close
+     * @param {Number} reasonCode
+     * @param {String} description
+     */
+    self.emit('close', e.code, e.reason);
+  };
+
+  /**
+   * @event RecognizeStream#error
+   */
+  function emitError(msg, frame, err) {
+    if (err) {
+      err.message = msg + ' ' + err.message;
+    } else {
+      err = new Error(msg);
+    }
+    err.raw = frame;
+    self.emit('error', err);
+  }
+
+  socket.onmessage = function(frame) {
+    if (typeof frame.data !== 'string') {
+      return emitError('Unexpected binary data received from server', frame);
+    }
+
+    var data;
+    try {
+      data = JSON.parse(frame.data);
+    } catch (jsonEx) {
+      return emitError('Invalid JSON received from service:', frame, jsonEx);
+    }
+
+    if (data.error) {
+      emitError(data.error, frame);
+    } else if (data.state === 'listening') {
+      // this is emitted both when the server is ready for audio, and after we send the close message to indicate that it's done processing
+      if (!self.listening) {
+        self.listening = true;
+        self.emit('listening');
+      } else {
+        self.listening = false;
+        socket.close();
+      }
+    } else if (data.results) {
+      /**
+       * Object with interim or final results, including possible alternatives. May have no results at all for empty audio files.
+       * @event RecognizeStream#results
+       * @param {Object} results
+       */
+      self.emit('results', data);
+      // note: currently there is always either no entries or exactly 1 entry in the results array. However, this may change in the future.
+      if (data.results[0] &amp;&amp; data.results[0].final &amp;&amp; data.results[0].alternatives) {
+        /**
+         * Finalized text
+         * @event RecognizeStream#data
+         * @param {String} transcript
+         */
+        self.push(data.results[0].alternatives[0].transcript, 'utf8'); // this is the "data" event that can be easily piped to other streams
+      }
+    } else {
+      emitError('Unrecognised message from server', frame);
+    }
+  };
+
+  this.initialized = true;
+};
+
+
+RecognizeStream.prototype._read = function(size) {
+  // there's no easy way to control reads from the underlying library
+  // so, the best we can do here is a no-op
+};
+
+RecognizeStream.prototype._write = function(chunk, encoding, callback) {
+  var self = this;
+  if (self.listening) {
+    self.socket.send(chunk);
+    this.afterSend(callback);
+  } else {
+    if (!this.initialized) {
+      if (!this.options['content-type']) {
+        this.options['content-type'] = RecognizeStream.getContentType(chunk);
+      }
+      this.initialize();
+    }
+    this.once('listening', function() {
+      self.socket.send(chunk);
+      this.afterSend(callback);
+    });
+  }
+};
+
+// flow control - don't ask for more data until we've finished what we have
+// todo: see if this can be improved
+RecognizeStream.prototype.afterSend = function afterSend(next) {
+  if (this.socket.bufferedAmount &lt;= this._writableState.highWaterMark || 0) {
+    next();
+  } else {
+    setTimeout(this.afterSend.bind(this, next), 10);
+  }
+};
+
+RecognizeStream.prototype.stop = function() {
+  this.emit('stopping');
+  this.listening = false;
+  this.socket.close();
+};
+
+// quick/dumb way to determine content type from a supported file format
+var headerToContentType = {
+  'fLaC': 'audio/flac',
+  'RIFF': 'audio/wav',
+  'OggS': 'audio/ogg; codecs=opus'
+};
+RecognizeStream.getContentType = function(buffer) {
+  var header = buffer.slice(0,4).toString();
+  return headerToContentType[header];
+};
+
+module.exports = RecognizeStream;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AlchemyDataNews.html">AlchemyDataNews</a></li><li><a href="AlchemyLanguage.html">AlchemyLanguage</a></li><li><a href="AlchemyVision.html">AlchemyVision</a></li><li><a href="Authorization.html">Authorization</a></li><li><a href="ConceptExpansion.html">ConceptExpansion</a></li><li><a href="ConceptInsights.html">ConceptInsights</a></li><li><a href="Dialog.html">Dialog</a></li><li><a href="DocumentConversion.html">DocumentConversion</a></li><li><a href="LanguageTranslation.html">LanguageTranslation</a></li><li><a href="NaturalLanguageClassifier.html">NaturalLanguageClassifier</a></li><li><a href="PersonalityInsights.html">PersonalityInsights</a></li><li><a href="QuestionAndAnswer.html">QuestionAndAnswer</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RelationshipExtraction.html">RelationshipExtraction</a></li><li><a href="RetrieveAndRank.html">RetrieveAndRank</a></li><li><a href="SpeechToText.html">SpeechToText</a></li><li><a href="TextToSpeech.html">TextToSpeech</a></li><li><a href="ToneAnalyzer.html">ToneAnalyzer</a></li><li><a href="TradeoffAnalytics.html">TradeoffAnalytics</a></li><li><a href="VisualInsights.html">VisualInsights</a></li><li><a href="VisualRecognitionV1Beta.html">VisualRecognitionV1Beta</a></li><li><a href="VisualRecognitionV2Beta.html">VisualRecognitionV2Beta</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:connection-close">connection-close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li></ul><h3>Namespaces</h3><ul><li><a href="watson.html">watson</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu Feb 11 2016 04:55:58 GMT+0000 (UTC)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+<script>
+    (function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,"script","//www.google-analytics.com/analytics.js","ga");
+    ga("create", "UA-59827755-9", "auto");
+    ga("send", "pageview");
+</script>
+</body>
+</html>
