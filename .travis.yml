@@ -11,7 +11,9 @@ after_success:
 - npm run coveralls
 - jsdoc/publish.sh
 before_install:
-- '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && openssl aes-256-cbc -K $encrypted_cb4d3d070e32_key -iv $encrypted_cb4d3d070e32_iv -in auth.js.enc -out test/resources/auth.js -d || true'
+- ! '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && openssl aes-256-cbc -K $encrypted_d4f181ef7c79_key
+  -iv $encrypted_d4f181ef7c79_iv -in auth.js.enc -out test/resources/auth.js -d ||
+  true'
 env:
   global:
     secure: I50FnfubwiZlol5Qs9tXPVACGbs+SG2dJLjpbzeio0Hl666d/hDuvf7IFwqqaRjQkmK2TdIjaGLMOgHxh/GGAoYf7LfZqjDID/tAhgoFOYiZwiPj66Z82F9P9cega2nkNW+125NzPuU3rhSCByG8+K/PMH/5JxPwPMoAYNLQjWc=
