@@ -69,6 +69,7 @@
   },
   "dependencies": {
     "cookie": "~0.2.3",
+    "codecov": ">1.0.0",
     "csv-stringify": "~1.0.2",
     "extend": "~3.0.0",
     "isstream": "~0.1.2",
@@ -84,11 +85,13 @@
     "node": ">=0.12"
   },
   "scripts": {
-    "test": "jshint --exclude ./node_modules/ && mocha --reporter spec --timeout 4000",
+    "test": "npm run jshint && (npm run codecov || true)",
+    "jshint": "jshint --exclude ./node_modules/",
     "prepare": "npm test && npm version patch",
     "doc": "jsdoc -c jsdoc/config.json",
     "watch-doc": "nodemon --watch lib/ --watch services/ --watch jsdoc/ --watch package.json --ext js,tmpl --exec npm run doc",
     "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha --reporter spec --timeout 4000",
+    "codecov": "istanbul cover ./node_modules/mocha/bin/_mocha && codecov",
     "coveralls": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   }
 }
