@@ -17,6 +17,7 @@
 'use strict';
 
 var extend         = require('extend');
+var pick           = require('object.pick');
 var requestFactory = require('../../lib/requestwrapper');
 
 function ToneAnalyzer(options) {
@@ -60,7 +61,8 @@ ToneAnalyzer.prototype.tone = function(params, callback) {
     options: {
       url: '/v3/tone',
       method: 'POST',
-      body: params.text
+      body: params.text,
+      qs: pick(params, ['tone', 'sentences'])
     },
     defaultOptions: extend(this._options, {
     headers: {
