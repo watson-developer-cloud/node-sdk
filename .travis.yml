@@ -8,7 +8,6 @@ script:
 - npm test
 - npm run doc
 after_success:
-- npm run coveralls
 - jsdoc/publish.sh
 before_install:
 - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && openssl aes-256-cbc -K $encrypted_d4f181ef7c79_key
