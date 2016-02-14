@@ -60,6 +60,7 @@
   "devDependencies": {
     "concat-stream": "^1.5.1",
     "coveralls": "^2.11.6",
+    "codecov": ">1.0.0",
     "istanbul": "^0.4.2",
     "jsdoc": "^3.4.0",
     "jshint": "^2.9.1",
@@ -69,7 +70,6 @@
   },
   "dependencies": {
     "cookie": "~0.2.3",
-    "codecov": ">1.0.0",
     "csv-stringify": "~1.0.2",
     "extend": "~3.0.0",
     "isstream": "~0.1.2",
