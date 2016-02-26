@@ -214,30 +214,7 @@ authorization.getToken(params, function (err, token) {
 ```
 
 ### Concept Expansion
-Map euphemisms or colloquial terms to more commonly understood phrases using
-the [Concept Expansion][concept_expansion] service.
-
-```javascript
-var watson = require('watson-developer-cloud');
-
-var concept_expansion = watson.concept_expansion({
-  username: '<username>',
-  password: '<password>',
-  version: 'v1-beta'
-});
-
-var params = {
-  seeds: ['nyc', 'dc', 'london', 'big cities'],
-  label: 'cities'
-};
-
-concept_expansion.expand(params, function (err, response) {
-  if (err)
-    console.log('error:', err);
-  else
-    console.log(JSON.stringify(response, null, 2));
-});
-```
+The Watson [Concept Expansion][concept_expansion] Service will be withdrawn. The Watson Concept Expansion Service tile will be removed from the Bluemix catalog on Sunday, March 6, 2016, after which you cannot provision new instances of this service. However, existing provisioned instances will continue to be usable until March 30, 2016.
 
 ### Concept Insights
 Use the [Concept Insights][concept_insights] service to identify words in the
