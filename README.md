@@ -31,6 +31,7 @@ APIs and SDKs that use cognitive computing to solve complex problems.
     * [Personality Insights](#personality-insights)
     * [Question and Answer](#question-and-answer)
     * [Relationship Extraction](#relationship-extraction)
+    * [Retrieve and Rank](#retrieve-and-rank)
     * [Speech to Text](#speech-to-text)
     * [Text to Speech](#text-to-speech)
     * [Tone Analyzer](#tone-analyzer)
@@ -459,6 +460,52 @@ relationship_extraction.extract({
 });
 ```
 
+### Retrieve and Rank
+Use the [Retrieve and Rank][retrieve_and_rank] service to enhance search results with machine learning.
+
+```javascript
+var retrieve = watson.retrieve_and_rank({
+  username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
+  password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
+  version: 'v1',
+  url: 'https://gateway.watsonplatform.net/retrieve-and-rank/api'
+});
+
+var solrClient = retrieve.createSolrClient({
+  cluster_id: 'INSERT YOUR CLUSTER ID HERE',
+  collection_name: 'example_collection'
+});
+
+// add a document
+var doc = { id : 1234, title_t : 'Hello', text_field_s: 'some text' };
+solrClient.add(doc, function(err) {
+  if(err) {
+    console.log('Error indexing document: ' + err);
+  } else {
+    console.log('Indexed a document.');
+    solrClient.commit(function(err) {
+      if(err) {
+        console.log('Error committing change: ' + err);
+      } else {
+        console.log('Successfully commited changes.');
+      }
+    });
+  }
+});
+
+// search all documents
+var query = solrClient.createQuery();
+query.q({ '*' : '*' });
+solrClient.search(query, function(err, searchResponse) {
+  if(err) {
+    console.log('Error searching for documents: ' + err);
+  } else {
+    console.log('Found ' + searchResponse.response.numFound + ' document(s).');
+    console.log('First document: ' + JSON.stringify(searchResponse.response.docs[0], null, 2));
+  }
+});
+```
+
 ### Speech to Text
 Use the [Speech to Text][speech_to_text] service to recognize the text from a
 .wav file.
@@ -686,6 +733,7 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/maste
 [personality_insights]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/personality-insights/
 [concept_expansion]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/glimpseapi/
 [relationship_extraction]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/sireapi/
+[retrieve_and_rank]: http://watson.stage1.mybluemix.net/smarterplanet/us/en/ibmwatson/developercloud/retrieve-rank.html
 [visual_recognition]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/visual-recognition/
 [visual_insights]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/visual-insights/
 
