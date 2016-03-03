@@ -13,7 +13,7 @@ var retrieve = watson.retrieve_and_rank({
 var clusterId = 'INSERT YOUR CLUSTER ID HERE';
 var collectionName = 'example_collection';
 var configName     = 'example_config';
-var configZipPath = 'examples/resources/example_solr_config.zip';
+var configZipPath = __dirname + '/resources/example_solr_config.zip';
 
 var solrClient = retrieve.createSolrClient({
   cluster_id: clusterId,

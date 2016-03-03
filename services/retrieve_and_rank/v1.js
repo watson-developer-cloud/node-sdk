@@ -304,20 +304,20 @@ RetrieveAndRank.prototype.listConfigs = function(params, callback) {
 RetrieveAndRank.prototype.uploadConfig = function(params, callback) {
   params = params || {};
 
-  var configFile = params.config_zip_path;
   if (!params.config_zip_path) {
     callback(new Error('Missing required parameters: config_zip_path'));
     return;
-  } else if (typeof(params.config_zip_path) === 'string') {
-    configFile = fs.createReadStream(params.config_zip_path);
+  } else if (!typeof(params.config_zip_path) === 'string') {
+    callback(new Error('Parameters config_zip_path is not a string'));
+    return;
   }
+  var configFile = fs.readFileSync(params.config_zip_path);
 
   var parameters = {
     options: {
       url: '/v1/solr_clusters/{cluster_id}/config/{config_name}',
       method: 'POST',
       path: params,
-      json: true,
       body: configFile,
       headers: {
         'content-type': 'application/zip'
