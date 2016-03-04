@@ -57,7 +57,7 @@ Several breaking changes were introduced with the v1.0.0 release:
     * Visual Insights `v1` is now `v1-experimental`
     * Visual Recognition `v1` is now `v1-beta`
   * Speech to Text gained a new `createRecognizeStream()` method replacing the existing live streaming methods with a simpler Read/Write stream.
-    The older methods are still avaliable in v1.0 but each log a deprecation warning (unless `{silent: true}` is passed in) and will be removed from a future release.
+    The older methods are still available in v1.0 but each log a deprecation warning (unless `{silent: true}` is passed in) and will be removed from a future release.
     The affected methods are:
     * `recognizeLive()`
     * `observeResult()`
@@ -703,7 +703,7 @@ This library is licensed under Apache 2.0. Full license text is available in
 [COPYING][license].
 
 ## Contributing
-See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/master/CONTRIBUTING.md).
+See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/master/.github/CONTRIBUTING.md).
 
 
 [question_and_answer]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/qaapi/
