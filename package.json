@@ -86,7 +86,7 @@
     "node": ">=0.12"
   },
   "scripts": {
-    "test": "npm run jshint && (npm run codecov || true)",
+    "test": "npm run jshint && npm run codecov",
     "jshint": "jshint --exclude ./node_modules/",
     "prepare": "npm test && npm version patch",
     "doc": "jsdoc -c jsdoc/config.json",
