@@ -1,4 +1,5 @@
 'use strict';
+/*eslint no-redeclare: 0*/
 
 var watson = require('watson-developer-cloud');
 var fs = require('fs');
@@ -9,7 +10,7 @@ var alchemy_vision = watson.alchemy_vision({
 
 // Image keywords
 var params = {
-  image: fs.createReadStream('resources/car.png')
+  image: fs.createReadStream('resources/car.png'),
   forceShowAll: 1 // Includes lower confidence tags
 };
 
@@ -33,7 +34,7 @@ alchemy_vision.getImageKeywords(params, function (err, keywords) {
 
 // Face recognize
 var params = {
-  knowledgeGraph: 1 // Include knowledge graph information in the the results.
+  knowledgeGraph: 1, // Include knowledge graph information in the the results.
   url: 'https://upload.wikimedia.org/wikipedia/commons/0/00/Scarlett_Johansson_-_Captain_America_2_press_conference_%28retouched%29_2.jpg'
 };
 

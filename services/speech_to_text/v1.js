@@ -45,7 +45,7 @@ function formatChunk(chunk) {
     result = '[' + result.replace(/}{/g, '},{') + ']';
     result = JSON.parse(result);
     return result[result.length - 1];
-  } catch (e) {}
+  } catch (e) {} // eslint-disable-line no-empty
 
   return result;
 }
@@ -365,6 +365,7 @@ SpeechToText.prototype.createRecognizeStream = function(params) {
   var original = SpeechToText.prototype[name];
   SpeechToText.prototype[name] = function deprecated(params) {
     if (!(params||{}).silent && !this._options.silent) {
+      // eslint-disable-next-line no-console
       console.log(new Error('The ' + name + '() method is deprecated and will be removed from a future version of the watson-developer-cloud SDK. ' +
         'Please use createRecognizeStream() instead.\n(Set {silent: true} to hide this message.)'));
     }

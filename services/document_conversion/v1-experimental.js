@@ -32,6 +32,7 @@ function DocumentConversion(options) {
   if(options && options.version_date) {
     version_date = options.version_date;
   } else {
+    // eslint-disable-next-line no-console
     console.warn('[DocumentConversion] WARNING: No version_date specified. Using a (possibly old) default. ' +
                   'e.g. watson.document_conversion({ version_date: "2015-12-01" })');
   }

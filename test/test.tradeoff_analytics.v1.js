@@ -35,7 +35,7 @@ describe('tradeoff_analytics', function() {
       .persist()
       .post(service_path_no_viz, service_request)
       .reply(200, service_response);
-   nock(service.url)
+    nock(service.url)
       .persist()
       .post(events_path, events_request)
       .reply(200);
@@ -63,17 +63,17 @@ describe('tradeoff_analytics', function() {
   });
 
   it('should generate a valid payload', function() {
-	  var params = extend({}, service_request);
-	  params.metadata_header = 'test_header_content';
-      var req = tradeoff_analytics.dilemmas(params, noop);
-      var body = new Buffer(req.body).toString('ascii');
-      assert.equal(req.uri.href, service.url + service_path);
-      assert.equal(body, JSON.stringify(service_request));
-      assert.notEqual(body, JSON.stringify(params));
-      assert.equal(req.headers['x-watson-metadata'], params.metadata_header);
-      assert.equal(req.method, 'POST');
+    var params = extend({}, service_request);
+    params.metadata_header = 'test_header_content';
+    var req = tradeoff_analytics.dilemmas(params, noop);
+    var body = new Buffer(req.body).toString('ascii');
+    assert.equal(req.uri.href, service.url + service_path);
+    assert.equal(body, JSON.stringify(service_request));
+    assert.notEqual(body, JSON.stringify(params));
+    assert.equal(req.headers['x-watson-metadata'], params.metadata_header);
+    assert.equal(req.method, 'POST');
   });
-  
+
   it('should append generate_visualization=false query param to url if (and only if) needed', function() {
     // check with generate_visualization = false
     var params = extend({}, service_request);
@@ -86,20 +86,20 @@ describe('tradeoff_analytics', function() {
     params.generate_visualization = true;
     req = tradeoff_analytics.dilemmas(params, noop);
     assert.equal(req.uri.href, service.url + service_path);
-    
+
     // check with generate_visualization = 'sdfsd' - should be same as 'true'
     params = extend({}, service_request);
     params.generate_visualization = 'sdfsd';
     req = tradeoff_analytics.dilemmas(params, noop);
     assert.equal(req.uri.href, service.url + service_path);
-    
+
     // check without generate_visualization- should be same as 'true'
     params = extend({}, service_request);
     req = tradeoff_analytics.dilemmas(params, noop);
     assert.equal(req.uri.href, service.url + service_path);
   });
 
-  
+
   it('should forward the events correctly', function() {
     var params = extend({}, events_request);
     params.metadata_header = 'test_header_content';

@@ -1,7 +1,6 @@
 'use strict';
 
 var assert  = require('assert');
-var request = require('request');
 var watson  = require('../lib/index');
 var nock    = require('nock');
 var fs      = require('fs');

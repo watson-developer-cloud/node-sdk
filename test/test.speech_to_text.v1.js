@@ -226,14 +226,9 @@ describe('speech_to_text', function() {
     });
   });
 
+  // this test is severely broken
   describe('recognizeStream()', function() {
-    var path = '/v1/sessions/foo/recognize',
-      payload = {
-        session_id: 'foo',
-        cookie_session: 'foobar',
-        content_type: 'audio/l16; rate=41100'
-      },
-      service_response = {
+    var service_response = {
         result: [{
           alternative: [{
             transcript: 'one two three'
@@ -255,7 +250,7 @@ describe('speech_to_text', function() {
       "word_alternatives_threshold": 0.25
     };
     var recognizeStream = speech_to_text.createRecognizeStream(options);
-    var DEBUG = fs.createReadStream(__dirname + '/resources/audio.wav').pipe(recognizeStream);
+    fs.createReadStream(__dirname + '/resources/audio.wav').pipe(recognizeStream);
     recognizeStream.setEncoding('utf8');
 
     it('should have expected _events', function(done) {
@@ -269,6 +264,7 @@ describe('speech_to_text', function() {
       done();
     });
 
+    // note: none of these tests actually run (or even register with mocha), but the callbacks let the previous test pass :(
     recognizeStream.on('connect', function(socket){
       it('should have a socket connection with a correct config', function(done){
         assert.notStrictEqual(socket, socket.config, socket.config.fragmentOutgoingMessages);
@@ -286,7 +282,7 @@ describe('speech_to_text', function() {
     });
 
     recognizeStream.on('results', function(obj){
-      console.log(JSON.stringify(obj));
+      console.log(JSON.stringify(obj)); //eslint-disable-line no-console
       it('should generate a valid response', function(done) {
         assert.equal(obj, service_response);
         done();

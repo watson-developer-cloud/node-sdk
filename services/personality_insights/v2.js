@@ -47,7 +47,7 @@ function PersonalityInsights(options) {
  *
  * @param callback The callback.
  */
-PersonalityInsights.prototype.profile = function(params, callback) {
+PersonalityInsights.prototype.profile = function(params, callback) { // eslint-disable-line complexity
   params = params || {};
 
   // support for the new snake_case

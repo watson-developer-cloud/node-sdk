@@ -58,12 +58,12 @@
     "url": "https://github.com/watson-developer-cloud/node-sdk/issues"
   },
   "devDependencies": {
+    "codecov": ">1.0.0",
     "concat-stream": "^1.5.1",
     "coveralls": "^2.11.6",
-    "codecov": ">1.0.0",
+    "eslint": "^2.2.0",
     "istanbul": "^0.4.2",
     "jsdoc": "^3.4.0",
-    "jshint": "^2.9.1",
     "mocha": "^2.4.5",
     "nock": "^7.0.2",
     "qs": "^6.1.0",
@@ -86,8 +86,9 @@
     "node": ">=0.12"
   },
   "scripts": {
-    "test": "npm run jshint && npm run codecov",
-    "jshint": "jshint --exclude ./node_modules/",
+    "test": "npm run lint && npm run codecov",
+    "lint": "eslint .",
+    "autofix": "eslint . --fix",
     "prepare": "npm test && npm version patch",
     "doc": "jsdoc -c jsdoc/config.json",
     "watch-doc": "nodemon --watch lib/ --watch services/ --watch jsdoc/ --watch package.json --ext js,tmpl --exec npm run doc",

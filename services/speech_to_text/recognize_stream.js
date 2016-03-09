@@ -183,7 +183,7 @@ RecognizeStream.prototype.initialize = function() {
 };
 
 
-RecognizeStream.prototype._read = function(size) {
+RecognizeStream.prototype._read = function(/*size*/) {
   // there's no easy way to control reads from the underlying library
   // so, the best we can do here is a no-op
 };
