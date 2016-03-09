@@ -1,6 +1,6 @@
 {
   "name": "watson-developer-cloud",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "Client library to use the IBM Watson Services and AlchemyAPI",
   "main": "./lib/index",
   "repository": {
