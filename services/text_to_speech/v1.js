@@ -54,6 +54,9 @@ TextToSpeech.prototype.synthesize = function(params, callback) {
       url: '/v1/synthesize',
       body: JSON.stringify(pick(params, ['text'])),
       qs: pick(params, ['accept', 'voice']),
+      headers: {
+        'content-type': 'application/json'
+      },
       encoding: null
     },
     defaultOptions: this._options

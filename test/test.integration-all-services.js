@@ -8,6 +8,7 @@ var nock = require('nock');
 var watson = require('../lib/index');
 var auth = require('./resources/auth');
 var assert = require('assert');
+var wav = require('wav');
 
 var mobydick = fs.readFileSync(__dirname + '/resources/mobydick.txt', 'utf8');
 
@@ -277,11 +278,14 @@ describe('integration-all-services', function() {
 
     it('synthesize()', function(done) {
       var params = {
-        text: 'Hi this is Watson',
+        text: 'test',
+        accept: 'audio/wav'
       };
+      // wav.Reader parses the wav header and will throw if it isn't valid
+      var reader = new wav.Reader();
       text_to_speech.synthesize(params)
-        .on('response', done.bind(null,null))
-        .pipe(fs.createWriteStream(__dirname + '/resources/tts-output.ogg'));
+        .pipe(reader)
+        .on('format', done.bind(null,null));
     });
   });
 
