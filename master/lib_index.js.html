@@ -134,13 +134,6 @@ function createServiceAPI(serviceName) {
         if (serviceName === 'search') {
           throw new Error('The search service has been replaced by retrieve_and_rank');
         }
-        if (serviceName === 'message_resonance') {
-          throw new Error('The message_resonance service is no longer available');
-        }
-        if (serviceName === 'question_and_answer') {
-          console.log('The question_and_answer service is deprecated'); // eslint-disable-line no-console
-        }
-
         if (serviceName === 'tone_analyzer' &amp;&amp; path.basename(version) === 'v1') {
           throw new Error('tone_analyzer v1 has been replaced by v2-experimental');
         }
@@ -174,13 +167,6 @@ var watson = {
    * @returns  {ConceptExpansion}
    */
   concept_expansion: createServiceAPI('concept_expansion'),
-
-  /**
-   * @function
-   * @param {{}} options
-   * @returns  {QuestionAndAnswer}
-   */
-  question_and_answer: createServiceAPI('question_and_answer'),
 
   /**
    * @function
@@ -296,14 +282,6 @@ var watson = {
    */
   search: createServiceAPI('search'),
 
-  /**
-   * @function
-   * @param {{}} options
-   * @returns  {MessageResonance}
-   * @deprecated
-   */
-  message_resonance: createServiceAPI('message_resonance'),
-
   // alchemy
   /**
    * @function
@@ -324,10 +302,22 @@ var watson = {
    * @param {{}} options
    * @returns  {AlchemyDataNews}
    */
-  alchemy_data_news: createServiceAPI('alchemy_data_news')
+  alchemy_data_news: createServiceAPI('alchemy_data_news'),
 };
 
-
+// removed services
+// we don't want these services listed (so non-enumerable), but we do want a clear error message
+// if old code happens to try using one
+['message_resonance', 'question_and_answer'].forEach(function(serviceName) {
+  Object.defineProperty(watson, serviceName, {
+    enumerable: false,
+    configurable: true,
+    writable: true,
+    value: function() {
+      throw new Error('The ' + serviceName + ' service is no longer available');
+    }
+  });
+});
 
 module.exports = watson;
 </code></pre>
@@ -340,13 +330,13 @@ module.exports = watson;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AlchemyDataNews.html">AlchemyDataNews</a></li><li><a href="AlchemyLanguage.html">AlchemyLanguage</a></li><li><a href="AlchemyVision.html">AlchemyVision</a></li><li><a href="Authorization.html">Authorization</a></li><li><a href="ConceptExpansion.html">ConceptExpansion</a></li><li><a href="ConceptInsights.html">ConceptInsights</a></li><li><a href="Dialog.html">Dialog</a></li><li><a href="DocumentConversion.html">DocumentConversion</a></li><li><a href="LanguageTranslation.html">LanguageTranslation</a></li><li><a href="NaturalLanguageClassifier.html">NaturalLanguageClassifier</a></li><li><a href="PersonalityInsights.html">PersonalityInsights</a></li><li><a href="QuestionAndAnswer.html">QuestionAndAnswer</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RelationshipExtraction.html">RelationshipExtraction</a></li><li><a href="RetrieveAndRank.html">RetrieveAndRank</a></li><li><a href="SpeechToText.html">SpeechToText</a></li><li><a href="TextToSpeech.html">TextToSpeech</a></li><li><a href="ToneAnalyzer.html">ToneAnalyzer</a></li><li><a href="TradeoffAnalytics.html">TradeoffAnalytics</a></li><li><a href="VisualInsights.html">VisualInsights</a></li><li><a href="VisualRecognitionV1Beta.html">VisualRecognitionV1Beta</a></li><li><a href="VisualRecognitionV2Beta.html">VisualRecognitionV2Beta</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:connection-close">connection-close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li></ul><h3>Namespaces</h3><ul><li><a href="watson.html">watson</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AlchemyDataNews.html">AlchemyDataNews</a></li><li><a href="AlchemyLanguage.html">AlchemyLanguage</a></li><li><a href="AlchemyVision.html">AlchemyVision</a></li><li><a href="Authorization.html">Authorization</a></li><li><a href="ConceptExpansion.html">ConceptExpansion</a></li><li><a href="ConceptInsights.html">ConceptInsights</a></li><li><a href="Dialog.html">Dialog</a></li><li><a href="DocumentConversion.html">DocumentConversion</a></li><li><a href="LanguageTranslation.html">LanguageTranslation</a></li><li><a href="NaturalLanguageClassifier.html">NaturalLanguageClassifier</a></li><li><a href="PersonalityInsights.html">PersonalityInsights</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RelationshipExtraction.html">RelationshipExtraction</a></li><li><a href="RetrieveAndRank.html">RetrieveAndRank</a></li><li><a href="SpeechToText.html">SpeechToText</a></li><li><a href="TextToSpeech.html">TextToSpeech</a></li><li><a href="ToneAnalyzer.html">ToneAnalyzer</a></li><li><a href="TradeoffAnalytics.html">TradeoffAnalytics</a></li><li><a href="VisualInsights.html">VisualInsights</a></li><li><a href="VisualRecognitionV1Beta.html">VisualRecognitionV1Beta</a></li><li><a href="VisualRecognitionV2Beta.html">VisualRecognitionV2Beta</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:connection-close">connection-close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li></ul><h3>Namespaces</h3><ul><li><a href="watson.html">watson</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed Mar 09 2016 19:31:46 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Mar 11 2016 21:17:07 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>
