@@ -29,7 +29,6 @@ APIs and SDKs that use cognitive computing to solve complex problems.
     * [Language Translation](#language-translation)
     * [Natural Language Classifier](#natural-language-classifier)
     * [Personality Insights](#personality-insights)
-    * [Question and Answer](#question-and-answer)
     * [Relationship Extraction](#relationship-extraction)
     * [Retrieve and Rank](#retrieve-and-rank)
     * [Speech to Text](#speech-to-text)
@@ -388,29 +387,6 @@ personality_insights.profile({
 
 **Note:** Don't forget to update the `text` variable!
 
-### Question and Answer
-Ask a healthcare-related question of the
-[Question and Answer][question_and_answer] service.
-
-```javascript
-var watson = require('watson-developer-cloud');
-
-var question_and_answer_healthcare = watson.question_and_answer({
-  username: '<username>',
-  password: '<password>',
-  version: 'v1-beta',
-  dataset: 'healthcare' /* The dataset can be specified when creating
-                         * the service or when calling it */
-});
-
-question_and_answer_healthcare.ask({
-  text: 'What is HIV?'}, function (err, response) {
-    if (err)
-      console.log('error:', err);
-    else
-      console.log(JSON.stringify(response, null, 2));
-});
-```
 
 ### Relationship Extraction
 Analyze an English news article and get the relationships between sentence
@@ -706,7 +682,6 @@ This library is licensed under Apache 2.0. Full license text is available in
 See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/master/.github/CONTRIBUTING.md).
 
 
-[question_and_answer]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/qaapi/
 [personality_insights]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/personality-insights/
 [concept_expansion]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/glimpseapi/
 [relationship_extraction]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/sireapi/
