@@ -488,7 +488,7 @@ speech_to_text.recognize(params, function(err, res) {
 
 // or streaming
 fs.createReadStream('./resources/speech.wav')
-  .pipe(speech_to_text.createRecognizeStream({ content_type: 'audio/l16; rate=44100' })
+  .pipe(speech_to_text.createRecognizeStream({ content_type: 'audio/l16; rate=44100' }))
   .pipe(fs.createWriteStream('./transcription.txt'));
 ```
 
