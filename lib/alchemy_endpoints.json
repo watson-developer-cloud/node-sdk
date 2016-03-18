@@ -107,5 +107,10 @@
   "image_recognition": {
     "url"  : "/url/URLGetRankedImageFaceTags",
     "image" : "/image/ImageGetRankedImageFaceTags"
+  },
+  
+  "image_scene_text": {
+    "url": "/url/URLGetRankedImageSceneText",
+    "image": "/image/ImageGetRankedImageSceneText"
   }
 }

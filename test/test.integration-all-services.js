@@ -605,6 +605,11 @@ describe('integration-all-services', function() {
       }, failIfError.bind(failIfError, done));
     });
 
+    it('getImageSceneText()', function(done) {
+      alchemy_vision.getImageSceneText({
+        url: 'http://itsopen.co.uk/site/wp-content/themes/its-open/assets/images/logo-its-open-social-media.png'
+      }, failIfError.bind(failIfError, done));
+    });
   });
 
   describe('functional_document_conversion', function() {

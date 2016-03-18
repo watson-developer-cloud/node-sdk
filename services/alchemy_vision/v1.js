@@ -113,5 +113,9 @@ AlchemyVision.prototype.recognizeFaces = createRequest('image_recognition');
  */
 AlchemyVision.prototype.getImageLinks = createRequest('image_link');
 
+/**
+ * Identifies  text in an image
+ */
+AlchemyVision.prototype.getImageSceneText = createRequest('image_scene_text');
 
 module.exports = AlchemyVision;
