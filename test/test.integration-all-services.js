@@ -19,7 +19,12 @@ var TEN_SECONDS = 10000;
 var FIVE_SECONDS = 5000;
 var TWO_SECONDS = 2000;
 
-describe('integration-all-services', function() {
+// for integration tests, we retry up to MAX_RETRIES times and call it a pass if any of them succeed
+// because some failures can happen for reasons outside the scope of this package
+// see https://www.npmjs.com/package/mocha-retry
+var MAX_RETRIES = 3;
+
+describe(MAX_RETRIES, 'integration-all-services', function() {
 
   this.slow(TWO_SECONDS); // this controls when the tests get a colored warning for taking too long
 

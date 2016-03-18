@@ -65,6 +65,7 @@
     "istanbul": "^0.4.2",
     "jsdoc": "^3.4.0",
     "mocha": "^2.4.5",
+    "mocha-retry": "^0.1.0",
     "nock": "^7.0.2",
     "qs": "^6.1.0",
     "wav": "^1.0.0"
@@ -92,8 +93,6 @@
     "prepare": "npm test && npm version patch",
     "doc": "jsdoc -c jsdoc/config.json",
     "watch-doc": "nodemon --watch lib/ --watch services/ --watch jsdoc/ --watch package.json --ext js,tmpl --exec npm run doc",
-    "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha --reporter spec --timeout 4000",
-    "codecov": "istanbul cover ./node_modules/mocha/bin/_mocha && codecov",
-    "coveralls": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+    "codecov": "istanbul cover ./node_modules/.bin/mocha -- --ui mocha-retry && codecov"
   }
 }
