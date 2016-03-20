@@ -60,13 +60,12 @@
   "devDependencies": {
     "codecov": ">1.0.0",
     "concat-stream": "^1.5.1",
-    "coveralls": "^2.11.6",
     "eslint": "^2.2.0",
     "istanbul": "^0.4.2",
     "jsdoc": "^3.4.0",
     "mocha": "^2.4.5",
     "mocha-retry": "^0.1.0",
-    "nock": "^7.0.2",
+    "nock": "^7.5.0",
     "qs": "^6.1.0",
     "wav": "^1.0.0"
   },
