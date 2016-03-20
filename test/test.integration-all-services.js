@@ -29,10 +29,9 @@ describe(MAX_RETRIES, 'integration-all-services', function() {
   this.slow(TWO_SECONDS); // this controls when the tests get a colored warning for taking too long
 
   var failIfError = function(done, err) {
-    if (err) {
-      console.log(err);
+    if (err)
       return done(err);
-    } else
+    else
       return done();
   };
 
