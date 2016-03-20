@@ -66,6 +66,18 @@ PersonalityInsights.prototype.profile = function(params, callback) { // eslint-d
   else
     content_type = 'application/json';
 
+  var headers = {
+    'Content-type'    : content_type,
+    'Accept-language' : params.accept_language || params.acceptLanguage || 'en'
+  };
+
+  // service bug: language in header overrides language in each JSON content item, so we can't set it on those requests
+  // (also, content-language doesn't really make sense on JSON)
+  if (params.language || params.text) {
+    headers['Content-language'] = params.language || 'en'
+  }
+
+
   var parameters = {
     options: {
       method: 'POST',
@@ -73,11 +85,7 @@ PersonalityInsights.prototype.profile = function(params, callback) { // eslint-d
       body: params.text || pick(params, ['contentItems']),
       json: true,
       qs: pick(params, ['include_raw']),
-      headers: {
-        'Content-type'    : content_type,
-        'Content-language': params.language ? params.language : 'en',
-        'Accept-language' : params.accept_language || params.acceptLanguage || 'en'
-      }
+      headers: headers
     },
     defaultOptions: this._options
   };

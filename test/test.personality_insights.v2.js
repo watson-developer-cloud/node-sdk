@@ -79,6 +79,7 @@ describe('personality_insights', function() {
       assert.equal(req.uri.href, service.url + service_path);
       assert.equal(body, JSON.stringify(payload));
       assert.equal(req.method, 'POST');
+      assert.equal(req.headers['Content-language'], undefined); // service bug: content-language header overrides the language specified in JSON for each content item, so it must not be set
       assert.equal(req.headers['Content-type'], 'application/json');
   });
 
@@ -89,6 +90,7 @@ describe('personality_insights', function() {
       assert.equal(req.uri.href, service.url + service_path);
       assert.equal(body, JSON.stringify(payload));
       assert.equal(req.method, 'POST');
+      assert.equal(req.headers['Content-language'], undefined); // service bug: content-language header overrides the language specified in JSON for each content item, so it must not be set
       assert.equal(req.headers['Content-type'], 'application/json');
   });
 
