@@ -29,9 +29,10 @@ describe(MAX_RETRIES, 'integration-all-services', function() {
   this.slow(TWO_SECONDS); // this controls when the tests get a colored warning for taking too long
 
   var failIfError = function(done, err) {
-    if (err)
+    if (err) {
+      console.log(err);
       return done(err);
-    else
+    } else
       return done();
   };
 
@@ -329,7 +330,7 @@ describe(MAX_RETRIES, 'integration-all-services', function() {
         .pipe(recognizeStream)
         .on('error', done)
         .on('data', function(text) {
-          assert(!text, 'no text expected for an audio file with no words')
+          assert(!text, 'no text expected for an audio file with no words');
         })
         .on('end', done);
     });
@@ -586,7 +587,7 @@ describe(MAX_RETRIES, 'integration-all-services', function() {
 
     it('getImageLinks() with html', function(done) {
       alchemy_vision.getImageLinks({
-        html: '<div><img src="https://visual-recognition-demo.mybluemix.net/images/samples/6.jpg" /></div>'
+        html: '<div><img src="https://watson-test-resources.mybluemix.net/resources/obama.jpg" /></div>'
       }, failIfError.bind(failIfError, done));
     });
 
@@ -596,7 +597,7 @@ describe(MAX_RETRIES, 'integration-all-services', function() {
 
     it('getImageKeywordsWithUrl()', function(done) {
       alchemy_vision.getImageKeywords({
-        url: 'http://www.washingtonpost.com/wp-srv/special/lifestyle/the-age-of-obama/img/obama-v2/obama09.jpg'
+        url: 'https://watson-test-resources.mybluemix.net/resources/obama.jpg'
       }, failIfError.bind(failIfError, done));
     });
 
@@ -606,13 +607,13 @@ describe(MAX_RETRIES, 'integration-all-services', function() {
 
     it('recognizeFacesWithUrl()', function(done) {
       alchemy_vision.recognizeFaces({
-        url: 'http://www.washingtonpost.com/wp-srv/special/lifestyle/the-age-of-obama/img/obama-v2/obama09.jpg'
+        url: 'https://watson-test-resources.mybluemix.net/resources/obama.jpg'
       }, failIfError.bind(failIfError, done));
     });
 
     it('getImageSceneText()', function(done) {
       alchemy_vision.getImageSceneText({
-        url: 'http://itsopen.co.uk/site/wp-content/themes/its-open/assets/images/logo-its-open-social-media.png'
+        url: 'https://watson-test-resources.mybluemix.net/resources/open.png'
       }, failIfError.bind(failIfError, done));
     });
   });
