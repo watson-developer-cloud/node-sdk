@@ -29,7 +29,8 @@ if [ "$TRAVIS_REPO_SLUG" == "watson-developer-cloud/node-sdk" ] && [ "$TRAVIS_PU
     # generate an incdex file listing all of the versions
     ../jsdoc/generate_index_html.sh > index.html
 
-    git add -f .
+    # add all changes to git, including deleted files
+    git add -f -A .
     git commit -m "JSDdoc for $TRAVIS_BRANCH ($TRAVIS_COMMIT)"
     git push -fq origin gh-pages > /dev/null
 
