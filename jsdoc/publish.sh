@@ -23,7 +23,7 @@ if [ "$TRAVIS_REPO_SLUG" == "watson-developer-cloud/node-sdk" ] && [ "$TRAVIS_PU
     # on tagged builds, $TRAVIS_TAG is set to the tag, but it's blank on regular builds, unlike $TRAVIS_BRANCH
     if [ $TRAVIS_TAG ]; then
       rm latest
-      ln -s $TRAVIS_TAG latest
+      ln -s ./$TRAVIS_TAG latest
     fi
 
     # generate an incdex file listing all of the versions
