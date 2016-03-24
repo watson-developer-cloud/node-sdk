@@ -13,11 +13,20 @@ if [ "$TRAVIS_REPO_SLUG" == "watson-developer-cloud/node-sdk" ] && [ "$TRAVIS_PU
   git clone --quiet --branch=gh-pages https://${GH_TOKEN}@github.com/watson-developer-cloud/node-sdk gh-pages > /dev/null
 
   pushd gh-pages
+    # make a directory named after the branch/tag for the current build, replacing the previous one if present
     # on tagged builds, $TRAVIS_BRANCH is the tag (e.g. v1.2.3), otherwise it's the branch name (e.g. master)
     rm -rf $TRAVIS_BRANCH
     mkdir $TRAVIS_BRANCH
     cp -Rf ../doc/watson-developer-cloud/*/* ./$TRAVIS_BRANCH
 
+    # update the latest/ symlink
+    # on tagged builds, $TRAVIS_TAG is set to the tag, but it's blank on regular builds, unlike $TRAVIS_BRANCH
+    if ["$TRAVIS_TAG" != ""]; then
+      rm latest
+      ln -s $TRAVIS_TAG latest
+    fi
+
+    # generate an incdex file listing all of the versions
     ../jsdoc/generate_index_html.sh > index.html
 
     git add -f .
