@@ -316,7 +316,7 @@ var language_translation = watson.language_translation({
 });
 
 language_translation.translate({
-  text: 'A sentence must have a verb', source : 'en', target: 'es' },
+  text: 'A sentence must have a verb', source : 'en', target: 'es', model_id: '<model-id>' },
   function (err, translation) {
     if (err)
       console.log('error:', err);
