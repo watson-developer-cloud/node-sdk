@@ -348,7 +348,10 @@ RetrieveAndRank.prototype.getConfig = function(params, callback) {
       url: '/v1/solr_clusters/{cluster_id}/config/{config_name}',
       method: 'GET',
       path: params,
-      json: true
+      json: true,
+      headers: {
+        'accept' : 'application/zip'
+      }
     },
     requiredParams: ['cluster_id', 'config_name'],
     defaultOptions: this._options
