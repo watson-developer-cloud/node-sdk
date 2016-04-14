@@ -311,14 +311,12 @@ RetrieveAndRank.prototype.uploadConfig = function(params, callback) {
     callback(new Error('Parameters config_zip_path is not a string'));
     return;
   }
-  var configFile = fs.readFileSync(params.config_zip_path);
-
   var parameters = {
     options: {
       url: '/v1/solr_clusters/{cluster_id}/config/{config_name}',
       method: 'POST',
       path: params,
-      body: configFile,
+      body: params.configFile,
       headers: {
         'content-type': 'application/zip'
       }
