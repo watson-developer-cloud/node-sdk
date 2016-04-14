@@ -2,6 +2,7 @@
 
 var watson = require('watson-developer-cloud');
 var async  = require('async');
+var fs     = require('fs');
 
 var retrieve = watson.retrieve_and_rank({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
@@ -14,6 +15,7 @@ var clusterId = 'INSERT YOUR CLUSTER ID HERE';
 var collectionName = 'example_collection';
 var configName     = 'example_config';
 var configZipPath = __dirname + '/resources/example_solr_config.zip';
+var jsonDocsFilePath = __dirname + '/resources/solr_docs.json';
 
 var solrClient = retrieve.createSolrClient({
   cluster_id: clusterId,
@@ -74,7 +76,28 @@ async.series([
     });
   },
 
-  function indexAndCommit(done) {
+  function indexAndCommitJsonFileDocs(done) {
+    console.log('Indexing documents via JSON file...');
+    var jsonDocs = JSON.parse(fs.readFileSync(jsonDocsFilePath, 'utf8'));
+    solrClient.add(jsonDocs, function(err) {
+      if(err) {
+        console.log('Error indexing document: ' + err);
+        done();
+      } else {
+        console.log('Indexed JSON documents.');
+        solrClient.commit(function(err) {
+          if(err) {
+            console.log('Error committing change: ' + err);
+          } else {
+            console.log('Successfully commited changes.');
+          }
+          done();
+        });
+      }
+    });
+  },
+
+  function indexAndCommitDocObject(done) {
     console.log('Indexing a document...');
     var doc = { id : 1234, title_t : 'Hello', text_field_s: 'some text' };
     solrClient.add(doc, function(err) {
