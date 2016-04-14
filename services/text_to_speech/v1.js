@@ -28,10 +28,7 @@ var requestFactory = require('../../lib/requestwrapper');
 function TextToSpeech(options) {
   // Default URL
   var serviceDefaults = {
-    url: 'https://stream.watsonplatform.net/text-to-speech/api',
-    headers: {
-      'content-type': 'application/json'
-    }
+    url: 'https://stream.watsonplatform.net/text-to-speech/api'
   };
 
   // Replace default options with user provided
@@ -40,6 +37,13 @@ function TextToSpeech(options) {
 
 /**
  * Streaming speech synthesis of the text in a query parameter
+ *
+ * @param {Object} options
+ * @param {String} options.text
+ * @param {String} [options.voice]
+ * @param {String} [options.accept]
+ * @param {Boolean} [options.X-Watson-Learning-Opt-Out]
+ * @param {Function} callback
  */
 TextToSpeech.prototype.synthesize = function(params, callback) {
   params = extend({accept:'audio/ogg; codecs=opus'}, params);
@@ -54,9 +58,9 @@ TextToSpeech.prototype.synthesize = function(params, callback) {
       url: '/v1/synthesize',
       body: JSON.stringify(pick(params, ['text'])),
       qs: pick(params, ['accept', 'voice']),
-      headers: {
+      headers: extend({
         'content-type': 'application/json'
-      },
+      }, pick(params, ['X-Watson-Learning-Opt-Out'])),
       encoding: null
     },
     defaultOptions: this._options

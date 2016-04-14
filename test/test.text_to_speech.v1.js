@@ -94,6 +94,12 @@ describe('text_to_speech', function() {
       assert.equal(req.headers['content-type'], 'application/json');
     });
 
+    it('should support the X-Watson-Learning-Opt-Out option', function() {
+      var params = {'X-Watson-Learning-Opt-Out': true, text: 'test'};
+      var req = text_to_speech.synthesize(params, noop);
+      assert.equal(req.headers['X-Watson-Learning-Opt-Out'], '1');
+    });
+
   });
 
   describe('voices()', function(){
