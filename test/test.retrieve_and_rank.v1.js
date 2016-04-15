@@ -98,14 +98,14 @@ describe('retrieve_and_rank', function() {
   it('can list Solr clusters', function(done) {
     search.listClusters({}, function(error, data) {
       assert.equal(data, listResponse);
-      done();
+      done(error);
     });
   });
 
   it('can create a Solr cluster without specified config', function(done) {
     search.createCluster({}, function(error, data) {
       assert.equal(data, createResponse);
-      done();
+      done(error);
     });
   });
 
@@ -171,7 +171,7 @@ describe('retrieve_and_rank', function() {
       },
       function(error, data) {
         assert.equal(data, configUploadResponse);
-        done();
+        done(error);
       });
   });
 
@@ -210,7 +210,7 @@ describe('retrieve_and_rank', function() {
       config_name: configName
     }, function(error, data) {
       assert.equal(data, configGetResponse);
-      done();
+      done(error);
     });
   });
 
@@ -230,7 +230,7 @@ describe('retrieve_and_rank', function() {
       config_name: configName
     }, function(error, data) {
       assert.equal(data, configDeleteResponse);
-      done();
+      done(error);
     });
   });
 
@@ -252,7 +252,7 @@ describe('retrieve_and_rank', function() {
       },
       function(error, data) {
         assert.equal(data, collectionCreateResponse);
-        done();
+        done(error);
       });
   });
 
@@ -278,7 +278,7 @@ describe('retrieve_and_rank', function() {
       cluster_id: clusterId
     }, function(error, data) {
       assert.equal(data, collectionListResponse);
-      done();
+      done(error);
     });
   });
 
@@ -292,7 +292,7 @@ describe('retrieve_and_rank', function() {
       collection_name: collectionName
     }, function(error, data) {
       assert.equal(data, collectionDeleteResponse);
-      done();
+      done(error);
     });
   });
 
@@ -365,28 +365,28 @@ describe('retrieve_and_rank', function() {
     }, function(error, data) {
       assert.equal(data, createRankerResponse);
       assert.equal(req.method, 'POST');
-      done();
+      done(error);
     });
   });
   it('should generate a valid payload when getting the rankers', function(done) {
     var req = search.listRankers(null, function(error, data) {
       assert.equal(data, getRankerResponse);
       assert.equal(req.method, 'GET');
-      done();
+      done(error);
     });
   });
   it('should generate a valid payload when getting the ranker status', function(done) {
     var req = search.rankerStatus({ranker_id : rankerId}, function(error, data) {
       assert.equal(data, getRankerResponse);
       assert.equal(req.method, 'GET');
-      done();
+      done(error);
     });
   });
   it('should generate a valid payload when deleting a ranker', function(done) {
     var req = search.deleteRanker({ranker_id : rankerId}, function(error, data) {
       assert.equal(data, deleteRankerResponse);
       assert.equal(req.method, 'DELETE');
-      done();
+      done(error);
     });
   });
 

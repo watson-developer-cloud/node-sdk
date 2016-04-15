@@ -322,17 +322,17 @@ RetrieveAndRank.prototype.uploadConfig = function(params, callback) {
     options: {
       url: '/v1/solr_clusters/{cluster_id}/config/{config_name}',
       method: 'POST',
-      path: params,
-      body: configFile,
-      headers: {
-        'content-type': 'application/zip'
-      }
+      path: params
     },
     requiredParams: ['cluster_id', 'config_name'],
     defaultOptions: this._options
   };
 
-  return requestFactory(parameters, callback);
+  return configFile.on('response', function(response) {
+    // Replace content-type
+    response.headers['content-type'] = 'application/zip';
+  }).pipe(requestFactory(parameters, callback));
+
 };
 
 /**
