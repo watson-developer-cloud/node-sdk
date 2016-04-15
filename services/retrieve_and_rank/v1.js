@@ -304,14 +304,19 @@ RetrieveAndRank.prototype.listConfigs = function(params, callback) {
 RetrieveAndRank.prototype.uploadConfig = function(params, callback) {
   params = params || {};
 
-  if (!params.config_zip_path) {
+  if (!params || !params.config_zip_path) {
     callback(new Error('Missing required parameters: config_zip_path'));
     return;
-  } else if (!typeof(params.config_zip_path) === 'string') {
-    callback(new Error('Parameters config_zip_path is not a string'));
+  }
+  var configFile = null;
+  if (typeof params.config_zip_path === 'string') {
+    configFile = fs.createReadStream(params.config_zip_path);
+  } else if (isStream(params.config_zip_path)) {
+    configFile = params.config_zip_path;
+  } else {
+    callback(new Error('config_zip_path needs to be a String or Stream'));
     return;
   }
-  var configFile = fs.readFileSync(params.config_zip_path);
 
   var parameters = {
     options: {
