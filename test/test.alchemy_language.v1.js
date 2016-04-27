@@ -74,6 +74,28 @@ describe('alchemy_language', function() {
       var expectedBody = qs.stringify({ text: payload.text, outputMode: 'json'});
       assert.equal(body, expectedBody);
     });
+    
+    it('should use /text/ endpoint if the text parameter is passed', function() {
+      var req = alchemy.sentiment({text: payload.text, url:'www.ibm.com'}, noop);
+      var sentimenPath = service.url + '/text/TextGetTextSentiment?apikey=' + service.api_key;
+      assert.equal(req.uri.href, sentimenPath);
+      assert.equal(req.method, 'POST');
+      assert(req.form);
+      var body = new Buffer(req.body).toString('ascii');
+      var expectedBody = qs.stringify({ text: payload.text, url:'www.ibm.com', outputMode: 'json'});
+      assert.equal(body, expectedBody);
+    });
+
+    it('should use /html/ endpoint if the html parameter is passed', function() {
+      var req = alchemy.sentiment({html: '<html><body>test</body></html>', url:'www.ibm.com'}, noop);
+      var sentimenPath = service.url + '/html/HTMLGetTextSentiment?apikey=' + service.api_key;
+      assert.equal(req.uri.href, sentimenPath);
+      assert.equal(req.method, 'POST');
+      assert(req.form);
+      var body = new Buffer(req.body).toString('ascii');
+      var expectedBody = qs.stringify({html: '<html><body>test</body></html>', url:'www.ibm.com', outputMode: 'json'});
+      assert.equal(body, expectedBody);
+    });
 
   });
 });
