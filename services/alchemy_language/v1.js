@@ -19,6 +19,10 @@
 var extend         = require('extend');
 var util           = require('util');
 var requestFactory = require('../../lib/requestwrapper');
+// IMPORTANT: 
+// Due to the current design, the URL must be the last key on each endpoint or 
+// it could inadvertently clobber a url query param in the users request.
+// see #236
 var endpoints      = require('../../lib/alchemy_endpoints.json');
 var helper         = require('../../lib/helper');
 
