@@ -12,6 +12,7 @@
     "watson",
     "wdc",
     "watson developer cloud",
+    "chatbot",
     "message resonance",
     "user modeling",
     "dialog",
@@ -36,7 +37,8 @@
     "alchemyapi",
     "alchemy vision",
     "alchemy language",
-    "alchemy datanews "
+    "alchemy datanews",
+    "conversation"
   ],
   "author": "IBM Corp.",
   "contributors": [
