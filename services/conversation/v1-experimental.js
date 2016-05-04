@@ -43,10 +43,6 @@ function Conversation(options) {
   this._options = extend(serviceDefaults, options);
 }
 
-/**
- * Retrieves the values for profile variables for specific client ID
- * @param  {Object}   params   { client_id: '', dialog_id: '', name:''}
- */
 Conversation.prototype.workspaces = function(params, callback) {
   params = params || {};
 
@@ -62,7 +58,22 @@ Conversation.prototype.workspaces = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
-Conversation.prototype.createWorkspace;
+Conversation.prototype.createWorkspace = function(params, callback) {
+  params = params || {};
+
+  var parameters = {
+    options: {
+      url: '/v1/workspaces/',
+      method: 'POST',
+      json: true,
+      body: pick(params, ['name', 'description', 'language', 'metadata'])
+    },
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+
 Conversation.prototype.deleteWorkspace;
 Conversation.prototype.getWorkspace;
 Conversation.prototype.updateWorkspace;
