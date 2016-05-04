@@ -100,12 +100,29 @@ Conversation.prototype.getWorkspace = function(params, callback) {
       path: params,
       qs: pick(params, ['export'])
     },
+    requiredParams: ['workspace_id'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };
 
-Conversation.prototype.updateWorkspace;
+Conversation.prototype.updateWorkspace = function(params, callback) {
+  params = params || {};
+
+  var parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}',
+      method: 'POST',
+      json: true,
+      body: pick(params, ['name', 'description', 'language', 'metadata']),
+      path: params
+    },
+    requiredParams: ['workspace_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
 Conversation.prototype.message;
 
 module.exports = Dialog;
