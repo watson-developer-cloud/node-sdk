@@ -73,8 +73,23 @@ Conversation.prototype.createWorkspace = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
+Conversation.prototype.deleteWorkspace = function(params, callback) {
+  params = params || {};
 
-Conversation.prototype.deleteWorkspace;
+  var parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}',
+      method: 'DELETE',
+      json: true,
+      path: params
+    },
+    requiredParams: ['workspace_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+
 Conversation.prototype.getWorkspace;
 Conversation.prototype.updateWorkspace;
 Conversation.prototype.message;
