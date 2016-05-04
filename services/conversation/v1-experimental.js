@@ -89,8 +89,22 @@ Conversation.prototype.deleteWorkspace = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
+Conversation.prototype.getWorkspace = function(params, callback) {
+  params = params || {};
 
-Conversation.prototype.getWorkspace;
+  var parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}',
+      method: 'GET',
+      json: true,
+      path: params,
+      qs: pick(params, ['export'])
+    },
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
 Conversation.prototype.updateWorkspace;
 Conversation.prototype.message;
 
