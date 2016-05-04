@@ -123,6 +123,21 @@ Conversation.prototype.updateWorkspace = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
-Conversation.prototype.message;
+Conversation.prototype.message = function() {
+  params = params || {};
+
+  var parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/message',
+      method: 'POST',
+      json: true,
+      body: pick(params, ['input', 'context']),
+      path: params
+    },
+    requiredParams: ['workspace_id', 'input', 'context'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
 
 module.exports = Dialog;
