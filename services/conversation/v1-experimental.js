@@ -140,4 +140,4 @@ Conversation.prototype.message = function() {
   return requestFactory(parameters, callback);
 };
 
-module.exports = Dialog;
+module.exports = Conversation;
