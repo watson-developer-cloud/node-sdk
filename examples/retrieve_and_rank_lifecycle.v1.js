@@ -42,6 +42,13 @@ async.series([
     });
   },
 
+  function getClusterStats(done) {
+    console.log('Getting stats from Solr cluster ' + clusterId);
+    retrieve.getClusterStats({cluster_id: clusterId}, function(err, res) {
+      printResponse(err, 'Error getting Solr cluster stats: ', res, done);
+    });
+  },
+
   function deleteCluster(done) {
     console.log('Deleting Solr cluster ' + clusterId);
     retrieve.deleteCluster({cluster_id: clusterId}, function(err) {

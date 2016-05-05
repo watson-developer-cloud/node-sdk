@@ -20,6 +20,7 @@ describe('retrieve_and_rank', function() {
   var solrClusterPath = '/v1/solr_clusters/' + clusterId;
   var pollResponse = 'poll response';
   var deleteResponse = 'delete response';
+  var statsResponse = 'stats response';
 
   var configsPath = '/v1/solr_clusters/' + clusterId + '/config';
   var configPath = configsPath + '/' + configName;
@@ -65,6 +66,7 @@ describe('retrieve_and_rank', function() {
 
     .get(solrClusterPath).reply(200, pollResponse)
     .delete(solrClusterPath).reply(200, deleteResponse)
+    .get(solrClusterPath + '/stats').reply(200, statsResponse)
 
     .get(configsPath).reply(200, configListResponse)
     .post(configPath).reply(200, configUploadResponse)
@@ -147,6 +149,19 @@ describe('retrieve_and_rank', function() {
 
   it('returns error when cluster_id is not specified on delete request', function() {
     search.deleteCluster({}, missingParameter);
+  });
+
+  it('can get a Solr clusters stats', function(done) {
+    search.getClusterStats({
+      cluster_id: clusterId
+    }, function(error, data) {
+      assert.equal(data, statsResponse);
+      done();
+    });
+  });
+
+  it('returns error when cluster_id is not specified on delete request', function() {
+    search.getClusterStats({}, missingParameter);
   });
 
   it('can list Solr configs', function(done) {
