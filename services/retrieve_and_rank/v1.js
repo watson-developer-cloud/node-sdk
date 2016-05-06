@@ -262,6 +262,32 @@ RetrieveAndRank.prototype.deleteCluster = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
+/**
+ * Get memory and disk usage stats from a Solr cluster
+ *
+ * @param params An Object representing the parameters for this service call.
+ *   Required params:
+ *     - cluster_id: the ID of the Solr cluster to get stats from
+ *
+ * @param callback The callback.
+ */
+RetrieveAndRank.prototype.getClusterStats = function(params, callback) {
+  params = params || {};
+
+  var parameters = {
+    options: {
+      url: '/v1/solr_clusters/{cluster_id}/stats',
+      method: 'GET',
+      path: params,
+      json: true
+    },
+    requiredParams: ['cluster_id'],
+    defaultOptions: this._options
+  };
+
+  return requestFactory(parameters, callback);
+};
+
 // Solr config operations
 
 /**
