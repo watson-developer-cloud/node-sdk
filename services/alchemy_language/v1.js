@@ -131,7 +131,7 @@ AlchemyLanguage.prototype.language = createRequest('language');
 
 /**
  * Extracts the title for a URL or HTML.
- * 
+ *
  * @see http://www.alchemyapi.com/api/text/proc.html
  */
 AlchemyLanguage.prototype.title = createRequest('title');
