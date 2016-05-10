@@ -15,11 +15,7 @@ describe('alchemy_language', function() {
     url: 'http://ibm.com:80/calls',
     version: 'v1'
   };
-  var apiPath = '/text/TextGetRankedNamedEntities';
 
-  var payload = {
-    text: 'sample text'
-  };
 
   before(function() {
     nock.disableNetConnect();
@@ -36,6 +32,12 @@ describe('alchemy_language', function() {
   };
 
   describe('entities()', function() {
+
+    var apiPath = '/text/TextGetRankedNamedEntities';
+
+    var payload = {
+      text: 'sample text'
+    };
 
     it('should check missing parameters', function() {
       alchemy.entities({}, missingParameter);
@@ -74,7 +76,7 @@ describe('alchemy_language', function() {
       var expectedBody = qs.stringify({ text: payload.text, outputMode: 'json'});
       assert.equal(body, expectedBody);
     });
-    
+
     it('should use /text/ endpoint if the text parameter is passed', function() {
       var req = alchemy.sentiment({text: payload.text, url:'www.ibm.com'}, noop);
       var sentimenPath = service.url + '/text/TextGetTextSentiment?apikey=' + service.api_key;
@@ -98,4 +100,49 @@ describe('alchemy_language', function() {
     });
 
   });
+
+  describe('title()', function() {
+
+    it('should check missing parameters', function() {
+      alchemy.entities({}, missingParameter);
+      alchemy.entities(null, missingParameter);
+      alchemy.entities(undefined, missingParameter);
+      alchemy.entities({foo: 'bar'}, missingParameter);
+    });
+
+    describe('url', function() {
+      var apiPath = '/url/URLGetTitle';
+
+      var payload = {
+        url: 'http://example.com/'
+      };
+
+      it('should generate a valid payload', function() {
+        var req = alchemy.title(payload, noop);
+        assert.equal(req.uri.href, service.url + apiPath + '?apikey=' + service.api_key);
+        assert.equal(req.method, 'POST');
+        assert(req.form);
+        var body = new Buffer(req.body).toString('ascii');
+        assert.equal(body, qs.stringify({ url: 'http://example.com/', outputMode: 'json'}));
+      });
+    });
+
+    describe('html', function() {
+      var apiPath = '/html/HTMLGetTitle';
+
+      var payload = {
+        html: 'sample text'
+      };
+
+      it('should generate a valid payload', function() {
+        var req = alchemy.title(payload, noop);
+        assert.equal(req.uri.href, service.url + apiPath + '?apikey=' + service.api_key);
+        assert.equal(req.method, 'POST');
+        assert(req.form);
+        var body = new Buffer(req.body).toString('ascii');
+        assert.equal(body, qs.stringify({ html: 'sample text', outputMode: 'json'}));
+      });
+    });
+
+  })
 });
