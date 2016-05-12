@@ -31,7 +31,7 @@ describe('document_conversion', function() {
         ]
       }
     },
-    file: fs.createReadStream(__dirname + '/resources/sampleWORD.docx'),
+    file: fs.createReadStream(__dirname + '/resources/sampleWord.docx'),
   };
 
   before(function() {
