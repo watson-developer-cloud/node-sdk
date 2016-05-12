@@ -86,7 +86,7 @@ describe(MAX_RETRIES, 'integration-all-services', function() {
 });
 
   describe('functional_visual_recognition', function() {
-    describe('v1-beta', function() {
+    xdescribe('v1-beta', function() {
       this.timeout(TWENTY_SECONDS);
       var visual_recognition = watson.visual_recognition(auth.visual_recognition.v1);
 
