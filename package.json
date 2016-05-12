@@ -65,7 +65,7 @@
     "jsdoc": "^3.4.0",
     "mocha": "^2.4.5",
     "mocha-retry": "^0.1.0",
-    "nock": "^7.5.0",
+    "nock": "^8.0.0",
     "qs": "^6.1.0",
     "wav": "^1.0.0"
   },
@@ -76,7 +76,7 @@
     "isstream": "~0.1.2",
     "object.omit": "~2.0.0",
     "object.pick": "~1.1.1",
-    "request": "~2.69.0",
+    "request": "~2.72.0",
     "solr-client": "~0.6.0",
     "string": "3.3.1",
     "vcap_services": "~0.1.7",
