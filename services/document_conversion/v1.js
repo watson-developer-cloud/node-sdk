@@ -82,8 +82,8 @@ function fixupContentType(params) {
  *
  * @param  {Object} params
  * @param  {Object} params.conversion_target Must be set to one of ['ANSWER_UNITS', 'NORMALIZED_HTML', 'NORMALIZED_TEXT']
- * @param  {ReadableStream} [params.file] The document file to convert.
- * @param  {String} [params.content_type] Overrides the default content-type determined from the file name.
+ * @param  {ReadableStream} [params.file] The document file to convert. May be a ReadableStream or Buffer
+ * @param  {String} [params.content_type] Set this when the content type cannot be determined from the filename (params.file.path)
  * @param  {Function} callback
  */
 DocumentConversion.prototype.convert = function(params, callback) {
@@ -101,8 +101,8 @@ DocumentConversion.prototype.convert = function(params, callback) {
     return;
   }
 
-  if (params.file && !isStream(params.file) && !params.file.value) {
-    callback(new Error('Missing required parameters: file is not a standard Node.js Stream'));
+  if (params.file && !isStream(params.file) && !Buffer.isBuffer(params.file) && !params.file.value) {
+    callback(new Error('Missing required parameters: file is not a standard Node.js Stream or Buffer'));
     return;
   }
 

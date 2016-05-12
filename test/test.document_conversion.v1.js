@@ -86,7 +86,7 @@ describe('document_conversion', function() {
     function hexToString(body) {
       try {
         // newer node.js versions prefer using the Buffer.from constructor because it handles a couple of edge cases better
-        return Buffer.from(body, 'hex').toString()
+        return Buffer.from(body, 'hex').toString();
       } catch(ex) {
         // older node.js versions either don't have Buffer.from (0v.12), or have a broken Buffer.from implementation (v4.4.4 throws TypeError: hex is not a function)
         return new Buffer(body, 'hex').toString();
@@ -100,7 +100,8 @@ describe('document_conversion', function() {
         var expectation = nock('http://ibm.com:80')
           .post('/v1/convert_document?version=2015-12-01', function(body) {
             var re = new RegExp('Content-Type: ' + contentType);
-            return re.exec(body) || re.exec(hexToString(body));
+            // if the first character is a - then it's ascii, other wise assume hex
+            return body[0] == '-' ? re.exec(body) : re.exec(hexToString(body));
           })
           .reply(201, '');
 
@@ -154,6 +155,14 @@ describe('document_conversion', function() {
       }, 'text/plain');
     });
 
+    it ('should accept Buffers', function() {
+      return checkContentType({
+        conversion_target: 'ANSWER_UNITS',
+        file: fs.readFileSync(__dirname + '/resources/sampleHtml.htm'),
+        content_type: 'text/plain'
+      }, 'text/plain');
+    });
+
     it('should send extra config params', function() {
       var req = servInstance.convert(payload, noop);
       var config = JSON.parse(req.formData.config.value);
@@ -171,5 +180,7 @@ describe('document_conversion', function() {
       var req = custServInstance.convert(payload, noop);
       assert(req.uri.query.indexOf("version=2015-11-30" > -1));
     });
+
+
   });
 });
