@@ -620,10 +620,11 @@ describe(MAX_RETRIES, 'integration-all-services', function() {
   describe('functional_document_conversion', function() {
     this.timeout(TWENTY_SECONDS);
     describe('v1', function() {
+      var document_conversion = watson.document_conversion(auth.document_conversion);
+
       it('convertFile()', function(done) {
-        var document_conversion = watson.document_conversion(auth.document_conversion);
         document_conversion.convert({
-          file: fs.createReadStream(__dirname + '/resources/sampleWORD.docx'),
+          file: fs.createReadStream(__dirname + '/resources/sampleWord.docx'),
           conversion_target: 'ANSWER_UNITS',
           // word: {
           //   heading: {
@@ -635,6 +636,14 @@ describe(MAX_RETRIES, 'integration-all-services', function() {
           // }
         }, failIfError.bind(failIfError, done));
       });
+
+      it('convertFile() with overridden content-type', function(done) {
+        document_conversion.convert({
+          conversion_target: 'ANSWER_UNITS',
+            file: fs.createReadStream(__dirname + '/resources/sampleWordWrongExtension.html'),
+          content_type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+        }, failIfError.bind(failIfError, done));
+      })
     });
   });
 });

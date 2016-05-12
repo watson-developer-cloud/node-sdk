@@ -54,8 +54,18 @@ DocumentConversion.prototype.conversion_target = {
   NORMALIZED_TEXT: 'NORMALIZED_TEXT'
 };
 
+// this sets up the content type "headers" in the form/multipart body (not in the actual headers)
 function fixupContentType(params) {
-  if (params.file && params.file.path && /.html?$/.test(params.file.path)) {
+  if (params.content_type) {
+    params.file = {
+      value: params.file,
+      options: {
+        contentType: params.content_type
+      }
+    };
+  }
+  else if (params.file.path && /.html?$/.test(params.file.path)) {
+    // for HTML, the service requires that a utf-8 charset be specified in the content-type
     params.file = {
       value: params.file,
       options: {
@@ -70,8 +80,11 @@ function fixupContentType(params) {
  *
  * To convert a previously uploaded document, set params.document_id
  *
+ * @param  {Object} params
  * @param  {Object} params.conversion_target Must be set to one of ['ANSWER_UNITS', 'NORMALIZED_HTML', 'NORMALIZED_TEXT']
  * @param  {ReadableStream} [params.file] The document file to convert.
+ * @param  {String} [params.content_type] Overrides the default content-type determined from the file name.
+ * @param  {Function} callback
  */
 DocumentConversion.prototype.convert = function(params, callback) {
   params = params || {};
@@ -108,7 +121,7 @@ DocumentConversion.prototype.convert = function(params, callback) {
     parameters.options.formData = {
       file: params.file,
       config: {
-        value: JSON.stringify(omit(params,['file'])),
+        value: JSON.stringify(omit(params,['file', 'content_type'])),
         options: {
           contentType: 'application/json; charset=utf-8'
         }
