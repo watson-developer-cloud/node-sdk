@@ -83,6 +83,16 @@ describe('document_conversion', function() {
       assert(req.formData);
     });
 
+    function hexToString(body) {
+      try {
+        // newer node.js versions prefer using the Buffer.from constructor because it handles a couple of edge cases better
+        return Buffer.from(body, 'hex').toString()
+      } catch(ex) {
+        // older node.js versions either don't have Buffer.from (0v.12), or have a broken Buffer.from implementation (v4.4.4 throws TypeError: hex is not a function)
+        return new Buffer(body, 'hex').toString();
+      }
+    }
+
     function checkContentType(params, contentType) {
       return new Promise(function(resolve, reject) {
         // the file content-type is in the body for form/multipart POST requests
@@ -90,7 +100,7 @@ describe('document_conversion', function() {
         var expectation = nock('http://ibm.com:80')
           .post('/v1/convert_document?version=2015-12-01', function(body) {
             var re = new RegExp('Content-Type: ' + contentType);
-            return re.exec(body) || re.exec(Buffer.from(body, 'hex').toString());
+            return re.exec(body) || re.exec(hexToString(body));
           })
           .reply(201, '');
 
