@@ -29,7 +29,7 @@ var RecognizeStream = require('./recognize_stream');
 var pkg            = require('../../package.json');
 
 var PARAMS_ALLOWED = ['continuous', 'max_alternatives', 'timestamps', 'word_confidence', 'inactivity_timeout',
-  'model', 'content-type', 'interim_results', 'keywords', 'keywords_threshold', 'word_alternatives_threshold' ];
+  'model', 'content-type', 'interim_results', 'keywords', 'keywords_threshold', 'word_alternatives_threshold', 'profanity_filter' ];
 
 function formatChunk(chunk) {
   // Convert the string into an array
