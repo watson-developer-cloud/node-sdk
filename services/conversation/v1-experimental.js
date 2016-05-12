@@ -18,6 +18,8 @@
 
 var extend         = require('extend');
 var requestFactory = require('../../lib/requestwrapper');
+var pick           = require('object.pick');
+var omit           = require('object.omit');
 
 /**
  *
@@ -123,7 +125,11 @@ Conversation.prototype.updateWorkspace = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
-Conversation.prototype.message = function() {
+/**
+ * Returns a response to a user utterance.
+ * @param  {Object}   params   { workspace_id: '',  }
+ */
+Conversation.prototype.message = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -132,7 +138,7 @@ Conversation.prototype.message = function() {
       method: 'POST',
       json: true,
       body: pick(params, ['input', 'context']),
-      path: params
+      path: pick(params, ['workspace_id'])
     },
     requiredParams: ['workspace_id', 'input', 'context'],
     defaultOptions: this._options
