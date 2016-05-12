@@ -649,5 +649,5 @@ describe(MAX_RETRIES, 'integration-all-services', function() {
 });
 
 } else {
-  console.warn('no test/reosources/auth.js, skipping integration tests'); // eslint-disable-line no-console
+  console.warn('no test/resources/auth.js, skipping integration tests'); // eslint-disable-line no-console
 }
