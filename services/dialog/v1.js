@@ -38,7 +38,7 @@ function Dialog(options) {
 }
 
 /**
- * Retreives the values for profile variables for specific client ID
+ * Retrieves the values for profile variables for specific client ID
  * @param  {Object}   params   { client_id: '', dialog_id: '', name:''}
  */
 Dialog.prototype.getProfile = function(params, callback) {
