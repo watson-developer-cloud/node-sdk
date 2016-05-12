@@ -49,14 +49,13 @@ describe('conversation-v1-experimental', function() {
   
   describe('conversation()', function() {
     var reqPayload = {input:'foo',context:'rab'};
-    var params = extend({},reqPayload, payload);
+    var params = extend({}, reqPayload, payload);
 
     it('should check no parameters provided', function() {
       conversation.message({}, missingParameter);
       conversation.message(null, missingParameter);
       conversation.message(undefined, missingParameter);
       conversation.message(pick(params,['workspace_id']), missingParameter);
-      conversation.message(omit(params,['workspace_id']), missingParameter);
     });
 
     it('should generate a valid payload', function(done) {

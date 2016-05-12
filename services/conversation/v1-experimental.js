@@ -140,7 +140,7 @@ Conversation.prototype.message = function(params, callback) {
       body: pick(params, ['input', 'context']),
       path: pick(params, ['workspace_id'])
     },
-    requiredParams: ['workspace_id', 'input', 'context'],
+    requiredParams: ['workspace_id'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
