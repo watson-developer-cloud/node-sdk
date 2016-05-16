@@ -4,9 +4,7 @@ var assert = require('assert');
 var watson = require('../lib/index');
 var nock   = require('nock');
 var extend = require('extend');
-var qs     = require('querystring');
 var pick   = require('object.pick');
-var omit   = require('object.omit');
 
 describe('conversation-v1-experimental', function() {
   
