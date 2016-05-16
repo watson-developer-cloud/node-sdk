@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Class: PersonalityInsights | Watson Developer Cloud Node.js SDK Documentation</title>
+    <title>Class: Conversation | Watson Developer Cloud Node.js SDK Documentation</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: PersonalityInsights</h1>
+    <h1 class="page-title">Class: Conversation</h1>
 
     
 
@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2>PersonalityInsights</h2>
+        <h2>Conversation</h2>
         
     
 </header>
@@ -41,7 +41,7 @@
     
 
     
-        <h4 class="name" id="PersonalityInsights">watson.personality_insights({version: 'v2', ...});</h4>
+        <h4 class="name" id="Conversation">watson.conversation({version: 'v1-experimental', ...});</h4>
     
 
     
@@ -133,7 +133,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_personality_insights_v2.js.html">services/personality_insights/v2.js</a>, <a href="services_personality_insights_v2.js.html#line29">line 29</a>
+        <a href="services_conversation_v1-experimental.js.html">services/conversation/v1-experimental.js</a>, <a href="services_conversation_v1-experimental.js.html#line28">line 28</a>
     </li></ul></dd>
     
 
@@ -183,12 +183,16 @@
     
 
     
-        <h4 class="name" id="profile"><span class="type-signature"></span>profile<span class="signature">(params, callback)</span><span class="type-signature"></span></h4>
+        <h4 class="name" id="message"><span class="type-signature"></span>message<span class="signature">(params)</span><span class="type-signature"></span></h4>
     
 
     
 
 
+
+<div class="description">
+    Returns a response to a user utterance.
+</div>
 
 
 
@@ -239,31 +243,7 @@
 
             
 
-            <td class="description last">The parameters to call the service
-  The accepted parameters are:
-    - text: The text to analyze.
-    - contentItems: A JSON input (if 'text' not provided).
-    - include_raw: include raw results
-    - accept_language : The language expected for the output.
-    - language: The language of the input.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>callback</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The callback.</td>
+            <td class="description last">{ workspace_id: '',  }</td>
         </tr>
 
     
@@ -304,7 +284,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_personality_insights_v2.js.html">services/personality_insights/v2.js</a>, <a href="services_personality_insights_v2.js.html#line50">line 50</a>
+        <a href="services_conversation_v1-experimental.js.html">services/conversation/v1-experimental.js</a>, <a href="services_conversation_v1-experimental.js.html#line51">line 51</a>
     </li></ul></dd>
     
 
