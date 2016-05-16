@@ -52,7 +52,7 @@ Several breaking changes were introduced with the v1.0.0 release:
     * Concept Expansion `v1` is now `v1-beta`
     * Question and Answer `v1` is now `v1-beta`
     * Relationship Extraction `v1` is now `v1-beta`
-    * Tone Analyzer `v2` is now `v2-experimental`
+    * Tone Analyzer `v3` is now `v3` (latest) or `v3-beta` (compatibility with old Beta plan)
     * Visual Insights `v1` is now `v1-experimental`
     * Visual Recognition `v1` is now `v1-beta`
   * Speech to Text gained a new `createRecognizeStream()` method replacing the existing live streaming methods with a simpler Read/Write stream.
@@ -64,7 +64,7 @@ Several breaking changes were introduced with the v1.0.0 release:
   * The Document Conversion API has been reduced to a single `convert()` method; it no longer offers batch conversion or cloud storage of files.
   * Several deprecated services have been removed:
     * Message Resonance
-    * Tone Analyzer v1 (replaced by v2-experimental)
+    * Tone Analyzer v1 and v2 (replaced by v3)
     * Search (replaced by Retrieve and Rank)
   * Dropped support for node.js v0.10.x (For reference: the WDC Node.js SDK now officially support the latest 0.12, LTS, and Stable releases of Node.js.)
 
@@ -526,8 +526,8 @@ var watson = require('watson-developer-cloud');
 var tone_analyzer = watson.tone_analyzer({
   username: '<username>',
   password: '<password>',
-  version: 'v3-beta',
-  version_date: '2016-02-11'
+  version: 'v3',
+  version_date: '2016-05-19'
 });
 
 tone_analyzer.tone({ text: 'Greetings from Watson Developer Cloud!' },
