@@ -7,3 +7,4 @@ test/integration/
 test/resources/tts-output.ogg
 .idea
 doc/
+.vscode/
