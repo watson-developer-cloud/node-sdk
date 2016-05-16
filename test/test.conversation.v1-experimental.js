@@ -16,7 +16,7 @@ describe('conversation-v1-experimental', function() {
     password: 'bruce-wayne',
     url: 'http://ibm.com:80',
     version: 'v1-experimental',
-    version_date: '2016-01-24'
+    version_date: '2016-05-19'
   };
   
   var payload = {
