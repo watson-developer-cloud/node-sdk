@@ -108,9 +108,14 @@
     "image" : "/image/ImageGetRankedImageFaceTags",
     "url"  : "/url/URLGetRankedImageFaceTags"
   },
-  
+
   "image_scene_text": {
     "image": "/image/ImageGetRankedImageSceneText",
     "url": "/url/URLGetRankedImageSceneText"
+  },
+
+  "title": {
+    "url": "/url/URLGetTitle",
+    "html": "/html/HTMLGetTitle"
   }
 }

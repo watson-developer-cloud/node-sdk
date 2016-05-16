@@ -253,17 +253,6 @@ describe('speech_to_text', function() {
     fs.createReadStream(__dirname + '/resources/audio.wav').pipe(recognizeStream);
     recognizeStream.setEncoding('utf8');
 
-    it('should have expected _events', function(done) {
-      assert.equal(true, recognizeStream.hasOwnProperty('_events'));
-      assert.equal(true, recognizeStream._events.hasOwnProperty('connect'));
-      assert.equal(true, recognizeStream._events.hasOwnProperty('end'));
-      assert.equal(true, recognizeStream._events.hasOwnProperty('results'));
-      assert.equal(true, recognizeStream._events.hasOwnProperty('error'));
-      assert.equal(true, recognizeStream._events.hasOwnProperty('finish'));
-      assert.equal(true, recognizeStream._events.hasOwnProperty('listening'));
-      done();
-    });
-
     // note: none of these tests actually run (or even register with mocha), but the callbacks let the previous test pass :(
     recognizeStream.on('connect', function(socket){
       it('should have a socket connection with a correct config', function(done){
