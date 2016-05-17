@@ -93,7 +93,7 @@ APIs and SDKs that use cognitive computing to solve complex problems.</p>
 <li>Concept Expansion <code>v1</code> is now <code>v1-beta</code></li>
 <li>Question and Answer <code>v1</code> is now <code>v1-beta</code></li>
 <li>Relationship Extraction <code>v1</code> is now <code>v1-beta</code></li>
-<li>Tone Analyzer <code>v2</code> is now <code>v2-experimental</code></li>
+<li>Tone Analyzer <code>v3</code> is now <code>v3</code> (latest) or <code>v3-beta</code> (compatibility with old Beta plan)</li>
 <li>Visual Insights <code>v1</code> is now <code>v1-experimental</code></li>
 <li>Visual Recognition <code>v1</code> is now <code>v1-beta</code></li>
 </ul>
@@ -109,7 +109,7 @@ The affected methods are:<ul>
 <li>The Document Conversion API has been reduced to a single <code>convert()</code> method; it no longer offers batch conversion or cloud storage of files.</li>
 <li>Several deprecated services have been removed:<ul>
 <li>Message Resonance</li>
-<li>Tone Analyzer v1 (replaced by v2-experimental)</li>
+<li>Tone Analyzer v1 and v2 (replaced by v3)</li>
 <li>Search (replaced by Retrieve and Rank)</li>
 </ul>
 </li>
@@ -462,8 +462,8 @@ emotion, writing and social tones of a text.</p>
 var tone_analyzer = watson.tone_analyzer({
   username: '&lt;username>',
   password: '&lt;password>',
-  version: 'v3-beta',
-  version_date: '2016-02-11'
+  version: 'v3',
+  version_date: '2016-05-19'
 });
 
 tone_analyzer.tone({ text: 'Greetings from Watson Developer Cloud!' },
@@ -569,13 +569,13 @@ var dialog = watson.dialog({
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AlchemyDataNews.html">AlchemyDataNews</a></li><li><a href="AlchemyLanguage.html">AlchemyLanguage</a></li><li><a href="AlchemyVision.html">AlchemyVision</a></li><li><a href="Authorization.html">Authorization</a></li><li><a href="ConceptExpansion.html">ConceptExpansion</a></li><li><a href="ConceptInsights.html">ConceptInsights</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Dialog.html">Dialog</a></li><li><a href="DocumentConversion.html">DocumentConversion</a></li><li><a href="LanguageTranslation.html">LanguageTranslation</a></li><li><a href="NaturalLanguageClassifier.html">NaturalLanguageClassifier</a></li><li><a href="PersonalityInsights.html">PersonalityInsights</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RelationshipExtraction.html">RelationshipExtraction</a></li><li><a href="RetrieveAndRank.html">RetrieveAndRank</a></li><li><a href="SpeechToText.html">SpeechToText</a></li><li><a href="TextToSpeech.html">TextToSpeech</a></li><li><a href="ToneAnalyzer.html">ToneAnalyzer</a></li><li><a href="TradeoffAnalytics.html">TradeoffAnalytics</a></li><li><a href="VisualInsights.html">VisualInsights</a></li><li><a href="VisualRecognitionV1Beta.html">VisualRecognitionV1Beta</a></li><li><a href="VisualRecognitionV2Beta.html">VisualRecognitionV2Beta</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:connection-close">connection-close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li></ul><h3>Namespaces</h3><ul><li><a href="watson.html">watson</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AlchemyDataNews.html">AlchemyDataNews</a></li><li><a href="AlchemyLanguage.html">AlchemyLanguage</a></li><li><a href="AlchemyVision.html">AlchemyVision</a></li><li><a href="Authorization.html">Authorization</a></li><li><a href="ConceptExpansion.html">ConceptExpansion</a></li><li><a href="ConceptInsights.html">ConceptInsights</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Dialog.html">Dialog</a></li><li><a href="DocumentConversion.html">DocumentConversion</a></li><li><a href="LanguageTranslation.html">LanguageTranslation</a></li><li><a href="NaturalLanguageClassifier.html">NaturalLanguageClassifier</a></li><li><a href="PersonalityInsights.html">PersonalityInsights</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RelationshipExtraction.html">RelationshipExtraction</a></li><li><a href="RetrieveAndRank.html">RetrieveAndRank</a></li><li><a href="SpeechToText.html">SpeechToText</a></li><li><a href="TextToSpeech.html">TextToSpeech</a></li><li><a href="TradeoffAnalytics.html">TradeoffAnalytics</a></li><li><a href="VisualInsights.html">VisualInsights</a></li><li><a href="VisualRecognitionV1Beta.html">VisualRecognitionV1Beta</a></li><li><a href="VisualRecognitionV2Beta.html">VisualRecognitionV2Beta</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:connection-close">connection-close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li></ul><h3>Namespaces</h3><ul><li><a href="watson.html">watson</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue May 17 2016 14:38:45 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue May 17 2016 15:04:07 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>

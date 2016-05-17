@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Source: lib/helper.js | Watson Developer Cloud Node.js SDK Documentation</title>
+    <title>Source: services/tone_analyzer/v3.js | Watson Developer Cloud Node.js SDK Documentation</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: lib/helper.js</h1>
+    <h1 class="page-title">Source: services/tone_analyzer/v3.js</h1>
 
     
 
@@ -27,7 +27,7 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * Copyright 2014 IBM Corp. All Rights Reserved.
+ * Copyright 2015 IBM Corp. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,56 +44,76 @@
 
 'use strict';
 
-module.exports = {
+var extend         = require('extend');
+var pick           = require('object.pick');
+var requestFactory = require('../../lib/requestwrapper');
 
-  stripTrailingSlash: function(url) {
-    // Match a forward slash / at the end of the string ($)
-    return url.replace(/\/$/, '');
-  },
-
-  getMissingParams: function(params, requires) {
-
-    if (!requires) {
-      return null;
-    } else if (!params) {
-      return requires;
-    }
-
-    var missing = [];
-
-    requires.forEach(function(require) {
-      if (!params[require])
-        missing.push(require);
-    });
-    return missing.length > 0 ? missing : null;
-  },
-
-  /**
-   * Return true if 'text' is html
-   * @param  {String}  text The 'text' to analyze
-   * @return {Boolean}      true if 'text' has html tags
-   */
-  isHTML: function (text){
-    return /&lt;[a-z][\s\S]*>/i.test(text);
-  },
-
-  /**
-   * Returns the first match from formats that is key the params map
-   * otherwise null
-   * @param  {Object}  params   The parameters
-   * @param  {Array}  requires The keys we want to check
-    */
-  getFormat: function(params, formats) {
-    if (!formats || !params)
-      return null;
-
-    for(var i = 0; i &lt; formats.length; i++) {
-      if (formats[i] in params)
-        return formats[i];
-    }
-    return null;
+function ToneAnalyzer(options) {
+  // Check if 'version_date' was provided
+  if (typeof options.version_date === 'undefined') {
+    throw new Error('Argument error: version_date was not specified, use 2016-05-19');
   }
+
+  // Default URL
+  var serviceDefaults = {
+    url: 'https://gateway.watsonplatform.net/tone-analyzer/api',
+    qs: {
+      version: options.version_date
+    }
+  };
+
+  // Replace default options with user provided
+  this._options = extend(serviceDefaults, options);
+}
+
+/**
+ * Main API call. Returns the different tone dimensions of a text.
+ *
+ * @param params: An object with a string 'text' element.
+ *
+ * Additional arguments on `params` object are optional, they include:
+ *
+ * - `tones`: A Comma-separated list of tones. Only these will be computed
+ *    in this API call. Allowed values are 'social', 'emotion', 'language'.
+ *    It defaults to 'all of them'.
+ * - `sentences`: A boolean, telling if sentence-level analysis (which is
+ *    slower than just document-level) needs to be computed. It defaults
+ *    to true.
+ * - `isHTML`: A boolean value telling that the `params.text` argument is
+ *    to be trated as HTML contents. On HTML input, the services does
+ *    cleanup of tags and performs the analysis on the text contents only.
+ *
+ * @return upon success, the callback function is called with an object
+ * containing the different tones (emotion, writing and social) analyzed.
+ *
+ * @see the API docs for a the full documentation.
+ *
+ */
+ToneAnalyzer.prototype.tone = function(params, callback) {
+  if (!params || !params.text){
+    callback(new Error('Missing required parameters: text'));
+    return;
+  }
+  var contentType = params.isHTML ? "text/html" : "text/plain";
+  var parameters = {
+    options: {
+      url: '/v3/tone',
+      method: 'POST',
+      body: params.text,
+      qs: pick(params, ['tones', 'sentences'])
+    },
+    defaultOptions: extend(this._options, {
+    headers: {
+       'accept': 'application/json',
+       'content-type': contentType
+    }
+    }),
+  };
+
+  return requestFactory(parameters, callback);
 };
+
+module.exports = ToneAnalyzer;
 </code></pre>
         </article>
     </section>
