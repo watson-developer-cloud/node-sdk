@@ -177,4 +177,11 @@ AlchemyLanguage.prototype.combined = createRequest('combined');
  */
 AlchemyLanguage.prototype.emotion = createRequest('emotion');
 
+/**
+ * Finds entities and their relationships
+ * for text, HTML, or a URL.
+ */
+AlchemyLanguage.prototype.typedRelations = createRequest('typed_relations');
+
+
 module.exports = AlchemyLanguage;

@@ -117,5 +117,11 @@
   "title": {
     "url": "/url/URLGetTitle",
     "html": "/html/HTMLGetTitle"
+  },
+
+  "typed_relations": {
+    "url": "/url/URLGetTypedRelations",
+    "text": "/text/TextGetTypedRelations",
+    "html": "/html/HTMLGetTypedRelations"
   }
 }
