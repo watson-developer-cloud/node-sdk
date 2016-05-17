@@ -557,6 +557,19 @@ describe(MAX_RETRIES, 'integration-all-services', function() {
         text: text
       }, failIfError.bind(failIfError, done));
     });
+
+    it('typedRelationsWithHtml()', function(done) {
+      alchemy_language.typedRelations({
+        html: text
+      }, failIfError.bind(failIfError, done));
+    });
+
+    it('typedRelationsWithText()', function(done) {
+      alchemy_language.typedRelations({
+        text: text
+      }, failIfError.bind(failIfError, done));
+    });
+
   });
 
   describe('functional_alchemy_data_news', function() {
