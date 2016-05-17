@@ -54,9 +54,10 @@ function VisualRecognitionV3(options) {
   // url:
   var serviceDefaults = {
     url: 'http://gateway-a.watsonplatform.net/visual-recognition/api',
+    alchemy: true,
     qs: {
-      api_key: options.api_key,
-      version: options.version_date
+      version: options.version_date,
+      api_key: options.api_key
     }
   };
 
