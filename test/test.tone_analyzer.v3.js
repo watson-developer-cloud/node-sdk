@@ -4,7 +4,7 @@ var assert = require('assert');
 var watson = require('../lib/index');
 var nock   = require('nock');
 
-describe('tone_analyzer.v3-beta', function() {
+describe('tone_analyzer.v3', function() {
 
   var noop = function() {};
 
@@ -21,15 +21,15 @@ describe('tone_analyzer.v3-beta', function() {
     username: 'batman',
     password: 'bruce-wayne',
     url: 'http://ibm.com:86',
-    version: 'v3-beta',
-    version_date: '2016-02-11'
+    version: 'v3',
+    version_date: '2016-05-19'
   };
 
   before(function() {
     nock.disableNetConnect();
     nock(service.url)
       .persist()
-      .post(tone_path + '?version=2016-02-11', tone_request.text)
+      .post(tone_path + '?version=2016-05-19', tone_request.text)
       .reply(200, tone_response);
   });
 
@@ -53,7 +53,7 @@ describe('tone_analyzer.v3-beta', function() {
   it('tone API should generate a valid payload with text', function() {
       var req = tone_analyzer.tone(tone_request, noop);
       var body = new Buffer(req.body).toString('ascii');
-      assert.equal(req.uri.href, service.url + tone_path + '?version=2016-02-11');
+      assert.equal(req.uri.href, service.url + tone_path + '?version=2016-05-19');
       assert.equal(body, tone_request.text);
       assert.equal(req.method, 'POST');
       assert.equal(req.headers['content-type'], 'text/plain');
@@ -64,10 +64,21 @@ describe('tone_analyzer.v3-beta', function() {
       var options = {text: tone_request.text, tones: 'emotion', sentences: true};
       var req = tone_analyzer.tone(options, noop);
       var body = new Buffer(req.body).toString('ascii');
-      assert.equal(req.uri.href, service.url + tone_path + '?version=2016-02-11&tones=emotion&sentences=true');
+      assert.equal(req.uri.href, service.url + tone_path + '?version=2016-05-19&tones=emotion&sentences=true');
       assert.equal(body, tone_request.text);
       assert.equal(req.method, 'POST');
       assert.equal(req.headers['content-type'], 'text/plain');
+      assert.equal(req.headers['accept'], 'application/json');
+  });
+
+  it('tone API should set HTML content-type', function() {
+      var options = {text: tone_request.text, isHTML: true};
+      var req = tone_analyzer.tone(options, noop);
+      var body = new Buffer(req.body).toString('ascii');
+      assert.equal(req.uri.href, service.url + tone_path + '?version=2016-05-19');
+      assert.equal(body, tone_request.text);
+      assert.equal(req.method, 'POST');
+      assert.equal(req.headers['content-type'], 'text/html');
       assert.equal(req.headers['accept'], 'application/json');
   });
 
