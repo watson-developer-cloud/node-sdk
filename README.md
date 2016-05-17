@@ -526,7 +526,7 @@ var watson = require('watson-developer-cloud');
 var tone_analyzer = watson.tone_analyzer({
   username: '<username>',
   password: '<password>',
-  version: 'v3',
+  version: 'v3-beta',
   version_date: '2016-05-19'
 });
 
