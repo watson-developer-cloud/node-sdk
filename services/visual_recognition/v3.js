@@ -110,7 +110,7 @@ VisualRecognitionV3.prototype.deleteClassifier = function(params, callback) {
  * classifier.
  *
  * @param name The desired short name of the new classifier.
- * @param *_positive_examples A compressed (.zip) file of images which prominently
+ * @param positive_examples A compressed (.zip) file of images which prominently
  *                            depict the visual subject for a new classifier.
  *                            each class has a name that is prefixed to the _positive_examples
  *                            parameter name.  For example, two classes apples and pears
