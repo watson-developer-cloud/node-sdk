@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Source: services/visual_recognition/v2-beta.js | Watson Developer Cloud Node.js SDK Documentation</title>
+    <title>Source: services/visual_recognition/v3.js | Watson Developer Cloud Node.js SDK Documentation</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: services/visual_recognition/v2-beta.js</h1>
+    <h1 class="page-title">Source: services/visual_recognition/v3.js</h1>
 
     
 
@@ -72,17 +72,20 @@ function verifyStream(value, name) {
  * @param options
  * @constructor
  */
-function VisualRecognitionV2Beta(options) {
+function VisualRecognitionV3(options) {
   // Check if 'version_date' was provided
   if (typeof options.version_date === 'undefined') {
     throw new Error('Argument error: version_date was not specified, use 2015-12-02');
   }
 
   // Default URL
+  // url:
   var serviceDefaults = {
-    url: 'https://gateway.watsonplatform.net/visual-recognition-beta/api',
+    url: 'http://gateway-a.watsonplatform.net/visual-recognition/api',
+    alchemy: true,
     qs: {
-      version: options.version_date
+      version: options.version_date,
+      api_key: options.api_key
     }
   };
 
@@ -94,15 +97,15 @@ function VisualRecognitionV2Beta(options) {
  * Retrieves information about a specific classifier.
  * @param classifier_id The classifier id
  */
-VisualRecognitionV2Beta.prototype.getClassifier = function(params, callback) {
+VisualRecognitionV3.prototype.getClassifier = function(params, callback) {
   var parameters = {
     options: {
       method: 'GET',
-      url: '/v2/classifiers/{classifier_id}',
+      url: '/v3/classifiers/{classifier_id}',
       path: params,
       json: true
     },
-    requiredParams: ['classifier_id'],
+    requiredParams: ['classifier_id', 'api_key'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
@@ -113,11 +116,11 @@ VisualRecognitionV2Beta.prototype.getClassifier = function(params, callback) {
  * @param classifier_id The classifier id
  *
  */
-VisualRecognitionV2Beta.prototype.deleteClassifier = function(params, callback) {
+VisualRecognitionV3.prototype.deleteClassifier = function(params, callback) {
   var parameters = {
     options: {
       method: 'DELETE',
-      url: '/v2/classifiers/{classifier_id}',
+      url: '/v3/classifiers/{classifier_id}',
       path: params,
       json: true,
     },
@@ -129,31 +132,42 @@ VisualRecognitionV2Beta.prototype.deleteClassifier = function(params, callback) 
 
 /**
  * Train a new classifier from example images which are uploaded.
+ * This call returns before training has completed.  You'll need to use the
+ * getClassifer method to make sure the classifier has completed training and
+ * was successful before you can classify any images with the newly created
+ * classifier.
+ *
  * @param name The desired short name of the new classifier.
  * @param positive_examples A compressed (.zip) file of images which prominently
  *                            depict the visual subject for a new classifier.
- * @param negative_examples A compressed (.zip) file of images which di not
+ *                            each class has a name that is prefixed to the _positive_examples
+ *                            parameter name.  For example, two classes apples and pears
+ *                            would be passed in as apples_positive_examples and pears_positive_examples
+ * @param negative_examples A compressed (.zip) file of images which did not
  *                            prominently depict the visual subject for a new
- *                            classifier.
+ *                            classifier. Negative examples are optional.
  * @param name The desired name of the new classifier.
  */
-VisualRecognitionV2Beta.prototype.createClassifier = function(params, callback) {
+VisualRecognitionV3.prototype.createClassifier = function(params, callback) {
   params = params || {};
 
   try {
-    verifyStream(params.positive_examples, 'positive_examples');
     verifyStream(params.negative_examples, 'negative_examples');
   } catch (e) {
     callback(e);
     return;
   }
 
+  var allowed_keys = Object.keys(params).filter(function(item) {
+    return item == 'name' || item.match(/^.*_positive_examples$/);
+  });
+
   var parameters = {
     options: {
-      url: '/v2/classifiers',
+      url: '/v3/classifiers',
       method: 'POST',
       json: true,
-      formData: pick(params, ['name', 'positive_examples', 'negative_examples'])
+      formData: pick(params, allowed_keys)
     },
     requiredParams: ['name'],
     defaultOptions: this._options
@@ -167,11 +181,11 @@ VisualRecognitionV2Beta.prototype.createClassifier = function(params, callback) 
  * @param verbose If verbose is present and not equal to "0",
  * return detailed results for each classifier.
  */
-VisualRecognitionV2Beta.prototype.listClassifiers = function(params, callback) {
+VisualRecognitionV3.prototype.listClassifiers = function(params, callback) {
   var parameters = {
     options: {
       method: 'GET',
-      url: '/v2/classifiers',
+      url: '/v3/classifiers',
       qs: pick(params, ['verbose']),
       json: true,
     },
@@ -192,7 +206,7 @@ VisualRecognitionV2Beta.prototype.listClassifiers = function(params, callback) {
  *                                     Omit this parameter to use
  *                                     all classifiers.
  */
-VisualRecognitionV2Beta.prototype.classify = function(params, callback) {
+VisualRecognitionV3.prototype.classify = function(params, callback) {
   var formData = extend(true, {}, params);
 
   try {
@@ -208,7 +222,7 @@ VisualRecognitionV2Beta.prototype.classify = function(params, callback) {
 
   var parameters = {
     options: {
-      url: '/v2/classify',
+      url: '/v3/classify',
       method: 'POST',
       json: true,
       formData: pick(formData, ['images_file', 'classifier_ids'])
@@ -218,7 +232,69 @@ VisualRecognitionV2Beta.prototype.classify = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
-module.exports = VisualRecognitionV2Beta;
+/**
+ * Accepts either a single image file or a zip file with multiple
+ * images (.jpeg, .png, .gif) and attempts to extract faces and
+ * identities. It then applies a threshold
+ * and returns the list of relevant identities, locations, and metadata
+ * for found faces for each image.
+ *
+ * @param  {ReadStream} images_file The image/s to analyze.
+ */
+VisualRecognitionV3.prototype.classify = function(params, callback) {
+  var formData = extend(true, {}, params);
+
+  try {
+    verifyStream(formData.images_file, 'images_file');
+  } catch (e) {
+    callback(e);
+    return;
+  }
+
+  var parameters = {
+    options: {
+      url: '/v3/detect_faces',
+      method: 'POST',
+      json: true,
+      formData: pick(formData, ['images_file'])
+    },
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Accepts either a single image file or a zip file with multiple
+ * images (.jpeg, .png, .gif) and attempts to recognize text
+ * found in the image. It then applies a threshold
+ * and returns the list of relevant locations, strings,  and metadata
+ * for discovered text in each image.
+ *
+ * @param  {ReadStream} images_file The image/s to search for text.
+ */
+VisualRecognitionV3.prototype.classify = function(params, callback) {
+  var formData = extend(true, {}, params);
+
+  try {
+    verifyStream(formData.images_file, 'images_file');
+  } catch (e) {
+    callback(e);
+    return;
+  }
+
+  var parameters = {
+    options: {
+      url: '/v3/recognize_text',
+      method: 'POST',
+      json: true,
+      formData: pick(formData, ['images_file'])
+    },
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+module.exports = VisualRecognitionV3;
 </code></pre>
         </article>
     </section>

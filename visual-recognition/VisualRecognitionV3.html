@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Class: VisualRecognitionV2Beta | Watson Developer Cloud Node.js SDK Documentation</title>
+    <title>Class: VisualRecognitionV3 | Watson Developer Cloud Node.js SDK Documentation</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: VisualRecognitionV2Beta</h1>
+    <h1 class="page-title">Class: VisualRecognitionV3</h1>
 
     
 
@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2>VisualRecognitionV2Beta</h2>
+        <h2>VisualRecognitionV3</h2>
         
     
 </header>
@@ -41,7 +41,7 @@
     
 
     
-        <h4 class="name" id="VisualRecognitionV2Beta">watson.visual_recognition({version: 'v2-beta', ...});</h4>
+        <h4 class="name" id="VisualRecognitionV3">watson.visual_recognition({version: 'v3', ...});</h4>
     
 
     
@@ -133,7 +133,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_visual_recognition_v2-beta.js.html">services/visual_recognition/v2-beta.js</a>, <a href="services_visual_recognition_v2-beta.js.html#line47">line 47</a>
+        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line47">line 47</a>
     </li></ul></dd>
     
 
@@ -176,6 +176,280 @@
 
     
         <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+        <h4 class="name" id="classify"><span class="type-signature"></span>classify<span class="signature">(images_file)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Accepts either a single image file or a zip file with multiple
+images (.jpeg, .png, .gif) and attempts to recognize text
+found in the image. It then applies a threshold
+and returns the list of relevant locations, strings,  and metadata
+for discovered text in each image.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>images_file</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">ReadStream</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The image/s to search for text.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line247">line 247</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+        <h4 class="name" id="classify"><span class="type-signature"></span>classify<span class="signature">(images_file)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Accepts either a single image file or a zip file with multiple
+images (.jpeg, .png, .gif) and attempts to extract faces and
+identities. It then applies a threshold
+and returns the list of relevant identities, locations, and metadata
+for found faces for each image.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>images_file</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">ReadStream</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The image/s to analyze.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line216">line 216</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         
             
@@ -313,7 +587,7 @@ of relevant classifier scores for each image.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_visual_recognition_v2-beta.js.html">services/visual_recognition/v2-beta.js</a>, <a href="services_visual_recognition_v2-beta.js.html#line167">line 167</a>
+        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line181">line 181</a>
     </li></ul></dd>
     
 
@@ -354,6 +628,10 @@ of relevant classifier scores for each image.
 
 <div class="description">
     Train a new classifier from example images which are uploaded.
+This call returns before training has completed.  You'll need to use the
+getClassifer method to make sure the classifier has completed training and
+was successful before you can classify any images with the newly created
+classifier.
 </div>
 
 
@@ -419,7 +697,10 @@ of relevant classifier scores for each image.
             
 
             <td class="description last">A compressed (.zip) file of images which prominently
-                           depict the visual subject for a new classifier.</td>
+                           depict the visual subject for a new classifier.
+                           each class has a name that is prefixed to the _positive_examples
+                           parameter name.  For example, two classes apples and pears
+                           would be passed in as apples_positive_examples and pears_positive_examples</td>
         </tr>
 
     
@@ -437,9 +718,9 @@ of relevant classifier scores for each image.
 
             
 
-            <td class="description last">A compressed (.zip) file of images which di not
+            <td class="description last">A compressed (.zip) file of images which did not
                            prominently depict the visual subject for a new
-                           classifier.</td>
+                           classifier. Negative examples are optional.</td>
         </tr>
 
     
@@ -498,7 +779,7 @@ of relevant classifier scores for each image.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_visual_recognition_v2-beta.js.html">services/visual_recognition/v2-beta.js</a>, <a href="services_visual_recognition_v2-beta.js.html#line112">line 112</a>
+        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line123">line 123</a>
     </li></ul></dd>
     
 
@@ -626,7 +907,7 @@ of relevant classifier scores for each image.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_visual_recognition_v2-beta.js.html">services/visual_recognition/v2-beta.js</a>, <a href="services_visual_recognition_v2-beta.js.html#line88">line 88</a>
+        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line91">line 91</a>
     </li></ul></dd>
     
 
@@ -754,7 +1035,7 @@ of relevant classifier scores for each image.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_visual_recognition_v2-beta.js.html">services/visual_recognition/v2-beta.js</a>, <a href="services_visual_recognition_v2-beta.js.html#line69">line 69</a>
+        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line72">line 72</a>
     </li></ul></dd>
     
 
@@ -884,7 +1165,7 @@ return detailed results for each classifier.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_visual_recognition_v2-beta.js.html">services/visual_recognition/v2-beta.js</a>, <a href="services_visual_recognition_v2-beta.js.html#line142">line 142</a>
+        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line156">line 156</a>
     </li></ul></dd>
     
 
