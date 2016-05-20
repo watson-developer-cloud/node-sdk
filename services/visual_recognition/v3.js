@@ -213,7 +213,7 @@ VisualRecognitionV3.prototype.classify = function(params, callback) {
  *
  * @param  {ReadStream} images_file The image/s to analyze.
  */
-VisualRecognitionV3.prototype.classify = function(params, callback) {
+VisualRecognitionV3.prototype.detectFaces = function(params, callback) {
   var formData = extend(true, {}, params);
 
   try {
@@ -244,7 +244,7 @@ VisualRecognitionV3.prototype.classify = function(params, callback) {
  *
  * @param  {ReadStream} images_file The image/s to search for text.
  */
-VisualRecognitionV3.prototype.classify = function(params, callback) {
+VisualRecognitionV3.prototype.recognizeText = function(params, callback) {
   var formData = extend(true, {}, params);
 
   try {
