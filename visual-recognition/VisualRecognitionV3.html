@@ -183,280 +183,6 @@
     
 
     
-        <h4 class="name" id="classify"><span class="type-signature"></span>classify<span class="signature">(images_file)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Accepts either a single image file or a zip file with multiple
-images (.jpeg, .png, .gif) and attempts to recognize text
-found in the image. It then applies a threshold
-and returns the list of relevant locations, strings,  and metadata
-for discovered text in each image.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>images_file</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">ReadStream</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The image/s to search for text.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line247">line 247</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    
-        <h4 class="name" id="classify"><span class="type-signature"></span>classify<span class="signature">(images_file)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Accepts either a single image file or a zip file with multiple
-images (.jpeg, .png, .gif) and attempts to extract faces and
-identities. It then applies a threshold
-and returns the list of relevant identities, locations, and metadata
-for found faces for each image.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>images_file</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">ReadStream</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The image/s to analyze.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line216">line 216</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    
         <h4 class="name" id="classify"><span class="type-signature"></span>classify<span class="signature">(images_file, classifier_ids)</span><span class="type-signature"></span></h4>
     
 
@@ -939,6 +665,143 @@ classifier.
     
 
     
+        <h4 class="name" id="detectFaces"><span class="type-signature"></span>detectFaces<span class="signature">(images_file)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Accepts either a single image file or a zip file with multiple
+images (.jpeg, .png, .gif) and attempts to extract faces and
+identities. It then applies a threshold
+and returns the list of relevant identities, locations, and metadata
+for found faces for each image.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>images_file</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">ReadStream</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The image/s to analyze.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line216">line 216</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
         <h4 class="name" id="getClassifier"><span class="type-signature"></span>getClassifier<span class="signature">(classifier_id)</span><span class="type-signature"></span></h4>
     
 
@@ -1192,6 +1055,143 @@ return detailed results for each classifier.</td>
 
 
         
+            
+
+    
+
+    
+        <h4 class="name" id="recognizeText"><span class="type-signature"></span>recognizeText<span class="signature">(images_file)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Accepts either a single image file or a zip file with multiple
+images (.jpeg, .png, .gif) and attempts to recognize text
+found in the image. It then applies a threshold
+and returns the list of relevant locations, strings,  and metadata
+for discovered text in each image.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>images_file</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">ReadStream</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The image/s to search for text.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line247">line 247</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
     
 
     
@@ -1213,7 +1213,7 @@ return detailed results for each classifier.</td>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri May 20 2016 20:07:12 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri May 20 2016 20:16:51 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>
