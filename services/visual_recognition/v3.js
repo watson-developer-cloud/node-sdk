@@ -50,14 +50,16 @@ function VisualRecognitionV3(options) {
     throw new Error('Argument error: version_date was not specified, use 2015-12-02');
   }
 
+  delete options.apikey; // if set, lib/index.js should have already copied this over to options.api_key
+
   // Default URL
   // url:
   var serviceDefaults = {
     url: 'http://gateway-a.watsonplatform.net/visual-recognition/api',
     alchemy: true,
     qs: {
-      version: options.version_date,
-      api_key: options.api_key
+      api_key: options.api_key,
+      version: options.version_date
     }
   };
 
