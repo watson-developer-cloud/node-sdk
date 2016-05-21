@@ -1,3 +1,4 @@
+#!/usr/env mocha
 'use strict';
 
 var fs = require('fs');
@@ -114,7 +115,346 @@ describe('integration-all-services', function() {
           images_file: fs.createReadStream(__dirname + '/resources/car.png'),
           classifier_ids: ['Red','Car']
         };
-        visual_recognition.listClassifiers(params, failIfError.bind(failIfError, done));
+        visual_recognition.classify(params, failIfError.bind(failIfError, done));
+      });
+    });
+    
+    describe('v3', function() {
+      this.timeout(TWENTY_SECONDS);
+      var visual_recognition = watson.visual_recognition(auth.visual_recognition.v3);
+
+      describe('classify()', function() {
+        it('should classify an uploaded image', function(done) {
+          var expected = {
+              "images": [
+                {
+                  "classifiers": [
+                    {
+                      "classes": [
+                        {
+                          "class": "car",
+                          "score": 0.992608,
+                          "type_hierarchy": "/vehicles/car"
+                        },
+                        {
+                          "class": "race",
+                          "score": 0.924142,
+                          "type_hierarchy": "/concepts/factors/characteristics/race"
+                        },
+                        {
+                          "class": "racing",
+                          "score": 0.890903
+                        },
+                        {
+                          "class": "motorsport",
+                          "score": 0.75026,
+                          "type_hierarchy": "/activities/sports/motorsport"
+                        }
+                      ],
+                      "classifier_id": "default",
+                      "name": "default"
+                    }
+                  ],
+                  "image": "car.png"
+                }
+              ],
+              "images_processed": 1
+            };
+
+          var params = {
+            images_file: fs.createReadStream(__dirname + '/resources/car.png')
+          };
+          visual_recognition.classify(params, function(err, actual) {
+            if (err) {
+              return done(err);
+            }
+            // console.log(JSON.stringify(actual, null, 2));
+            // assert(actual.images);
+            // assert.equal(actual.images.length, 1);
+            // assert(actual.images[0].classifiers);
+            // assert(actual.images[0].classifiers.length);
+            // assert.equal(actual.images_processed, 1);
+
+            assert.deepEqual(actual, expected);
+
+            done();
+          });
+        });
+
+        it('should classify an image via url', function(done) {
+          var expected = {
+            "images": [
+              {
+                "classifiers": [
+                  {
+                    "classes": [
+                      {
+                        "class": "car",
+                        "score": 0.992608,
+                        "type_hierarchy": "/vehicles/car"
+                      },
+                      {
+                        "class": "race",
+                        "score": 0.924142,
+                        "type_hierarchy": "/concepts/factors/characteristics/race"
+                      },
+                      {
+                        "class": "racing",
+                        "score": 0.890903
+                      },
+                      {
+                        "class": "motorsport",
+                        "score": 0.75026,
+                        "type_hierarchy": "/activities/sports/motorsport"
+                      }
+                    ],
+                    "classifier_id": "default",
+                    "name": "default"
+                  }
+                ],
+                "resolved_url": "https://watson-test-resources.mybluemix.net/resources/car.png",
+                "source_url": "https://watson-test-resources.mybluemix.net/resources/car.png"
+              }
+            ],
+            "images_processed": 1
+          };
+          var params = {
+            url: 'https://watson-test-resources.mybluemix.net/resources/car.png'
+          };
+          visual_recognition.classify(params, function(err, actual) {
+            if (err) {
+              return done(err);
+            }
+            // console.log(JSON.stringify(actual, null, 2));
+            // assert(actual.images);
+            // assert.equal(actual.images.length, 1);
+            // assert(actual.images[0].classifiers);
+            // assert(actual.images[0].classifiers.length);
+            // assert.equal(actual.images_processed, 1);
+
+            assert.deepEqual(actual, expected);
+
+            done();
+          });
+        });
+      });
+
+      describe('detectFaces()', function() {
+        it('should detect faces in an uploaded image', function(done) {
+          var expected = {
+            "images": [
+              {
+                "faces": [
+                  {
+                    "age": {
+                      "max": 54,
+                      "min": 45,
+                      "score": 0.40459
+                    },
+                    "face_location": {
+                      "height": 131,
+                      "left": 80,
+                      "top": 68,
+                      "width": 123
+                    },
+                    "gender": {
+                      "gender": "MALE",
+                      "score": 0.993307
+                    },
+                    "identity": {
+                      "name": "Barack Obama",
+                      "score": 0.970688,
+                      "type_hierarchy": "/people/politicians/democrats/barack obama"
+                    }
+                  }
+                ],
+                "image": "obama.jpg"
+              }
+            ],
+            "images_processed": 1
+          };
+          var params = {
+            images_file: fs.createReadStream(__dirname + '/resources/obama.jpg')
+          };
+          visual_recognition.detectFaces(params, function(err, actual) {
+            if (err) {
+              return done(err);
+            }
+            //console.log(JSON.stringify(result, null, 2));
+            assert.deepEqual(actual, expected);
+            done();
+          });
+        });
+
+        it('should detect faces in an image via url', function(done) {
+          var expected = {
+            "images": [
+              {
+                "faces": [
+                  {
+                    "age": {
+                      "max": 54,
+                      "min": 45,
+                      "score": 0.40459
+                    },
+                    "face_location": {
+                      "height": 131,
+                      "left": 80,
+                      "top": 68,
+                      "width": 123
+                    },
+                    "gender": {
+                      "gender": "MALE",
+                      "score": 0.993307
+                    },
+                    "identity": {
+                      "name": "Barack Obama",
+                      "score": 0.970688,
+                      "type_hierarchy": "/people/politicians/democrats/barack obama"
+                    }
+                  }
+                ],
+                "resolved_url": "https://watson-test-resources.mybluemix.net/resources/obama.jpg",
+                "source_url": "https://watson-test-resources.mybluemix.net/resources/obama.jpg"
+              }
+            ],
+            "images_processed": 1
+          };
+          var params = {
+            url: 'https://watson-test-resources.mybluemix.net/resources/obama.jpg'
+          };
+          visual_recognition.detectFaces(params, function(err, actual) {
+            if (err) {
+              return done(err);
+            }
+            //console.log(JSON.stringify(result, null, 2));
+            assert.deepEqual(actual, expected);
+            done();
+          });
+        });
+      });
+
+      describe('recognizeText()', function() {
+        it('read text in an uploaded image', function(done) {
+          var expected = {
+              "images": [
+                {
+                  "classifiers": [
+                    {
+                      "classes": [
+                        {
+                          "class": "car",
+                          "score": 0.992608,
+                          "type_hierarchy": "/vehicles/car"
+                        },
+                        {
+                          "class": "race",
+                          "score": 0.924142,
+                          "type_hierarchy": "/concepts/factors/characteristics/race"
+                        },
+                        {
+                          "class": "racing",
+                          "score": 0.890903
+                        },
+                        {
+                          "class": "motorsport",
+                          "score": 0.75026,
+                          "type_hierarchy": "/activities/sports/motorsport"
+                        }
+                      ],
+                      "classifier_id": "default",
+                      "name": "default"
+                    }
+                  ],
+                  "image": "car.png"
+                }
+              ],
+              "images_processed": 1
+            };
+
+          var params = {
+            images_file: fs.createReadStream(__dirname + '/resources/car.png')
+          };
+          visual_recognition.classify(params, function(err, actual) {
+            if (err) {
+              return done(err);
+            }
+
+            // console.log(JSON.stringify(actual, null, 2));
+
+            assert.deepEqual(actual, expected);
+
+            done();
+          });
+        });
+
+        it('read text an image via url', function(done) {
+          var expected = {
+            "images": [
+              {
+                "classifiers": [
+                  {
+                    "classes": [
+                      {
+                        "class": "car",
+                        "score": 0.992608,
+                        "type_hierarchy": "/vehicles/car"
+                      },
+                      {
+                        "class": "race",
+                        "score": 0.924142,
+                        "type_hierarchy": "/concepts/factors/characteristics/race"
+                      },
+                      {
+                        "class": "racing",
+                        "score": 0.890903
+                      },
+                      {
+                        "class": "motorsport",
+                        "score": 0.75026,
+                        "type_hierarchy": "/activities/sports/motorsport"
+                      }
+                    ],
+                    "classifier_id": "default",
+                    "name": "default"
+                  }
+                ],
+                "resolved_url": "https://watson-test-resources.mybluemix.net/resources/car.png",
+                "source_url": "https://watson-test-resources.mybluemix.net/resources/car.png"
+              }
+            ],
+            "images_processed": 1
+          };
+          var params = {
+            url: 'https://watson-test-resources.mybluemix.net/resources/car.png'
+          };
+          visual_recognition.classify(params, function(err, actual) {
+            if (err) {
+              return done(err);
+            }
+            // console.log(JSON.stringify(actual, null, 2));
+
+            assert.deepEqual(actual, expected);
+
+            done();
+          });
+        });
+      });
+
+      describe('listClassifiers()', function() {
+        it('should return the list of classifiers', function(done) {
+          visual_recognition.listClassifiers({}, function(err, result) {
+            if (err) {
+              return done(err);
+            }
+            assert(result.classifiers);
+            assert(result.classifiers.length);
+            assert(result.classifiers[0].classifier_id);
+            assert(result.classifiers[0].name);
+            assert(result.classifiers[0].status);
+            done();
+          });
+        });
       });
     });
   });
