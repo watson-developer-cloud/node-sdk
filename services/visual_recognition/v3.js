@@ -408,13 +408,6 @@ VisualRecognitionV3.prototype.deleteClassifier = function(params, callback) {
 VisualRecognitionV3.prototype.createClassifier = function(params, callback) {
   params = params || {};
 
-  try {
-    verifyStream(params.negative_examples, 'negative_examples');
-  } catch (e) {
-    callback(e);
-    return;
-  }
-
   var allowed_keys = Object.keys(params).filter(function(item) {
     return item == 'name' || item.match(/^.*_positive_examples$/);
   });
