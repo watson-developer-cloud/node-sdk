@@ -100,6 +100,7 @@ describe('visual_recognition', function() {
 
   describe('classify()', function() {
 
+    //todo: fix this test to be asyc
     it('should check no parameters provided', function() {
       visual_recognition.classify({}, missingParameter);
       visual_recognition.classify(null, missingParameter);
@@ -108,7 +109,6 @@ describe('visual_recognition', function() {
     });
 
     it('should generate a valid payload with streams', function() {
-
       var params = { images_file: fake_file };
       var req = visual_recognition.classify(params, noop);
       assert.equal(req.uri.href, service.url + classify_path);
@@ -150,19 +150,25 @@ describe('visual_recognition', function() {
     });
 
     // todo: fix this test
-    xit('should generate a valid payload with streams', function() {
+    it('should generate a valid payload with streams', function(done) {
       var params = {
-        positive_examples: fake_file,
+        foo_positive_examples: fake_file,
         negative_examples: fake_file,
         name: 'test-c'
       };
 
-      var req = visual_recognition.createClassifier(params, noop);
+      // todo: make this not half async half sync
+      var req = visual_recognition.createClassifier(params, function(err) {
+        if (err) {
+          done(err);
+        }
+      });
       assert.equal(req.uri.href, service.url + classifiers_path);
       assert.equal(req.method, 'POST');
-      assert.ok(req.formData.positive_examples);
+      assert.ok(req.formData.foo_positive_examples);
       assert.ok(req.formData.negative_examples);
       assert.equal(req.formData.name, params.name);
+      done();
     });
   });
 

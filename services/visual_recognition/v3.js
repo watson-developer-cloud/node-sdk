@@ -39,6 +39,8 @@ function xor(a, b) {
  *
  * also gracefully handles cases of image_file instead of images_file
  *
+ * @todo: allow for file to be a Buffer if a content_type parameter is also set
+ *
  * @private
  */
 function verifyParams(params) {
@@ -54,24 +56,6 @@ function verifyParams(params) {
     throw new Error('images_file param must be a standard Node.js Stream');
   }
 }
-
-/**
- * Verifies that the variable is a valid stream
- * @param  {Object} value   Variable value
- * @param  {String} name Variable name
- * @private
- */
-function verifyStream(value, name) {
-  if (!value) {
-    throw new Error('Missing required parameters: ' + name);
-  }
-
-  if (!isStream(value)) {
-    throw new Error(name + ' is not a standard Node.js Stream');
-  }
-}
-
-
 
 /**
  *
@@ -307,6 +291,44 @@ VisualRecognitionV3.prototype.detectFaces = function(params, callback) {
  * and returns the list of relevant locations, strings,  and metadata
  * for discovered text in each image.
  *
+ * Example output:
+{
+  "images": [
+    {
+      "classifiers": [
+        {
+          "classes": [
+            {
+              "class": "car",
+              "score": 0.992608,
+              "type_hierarchy": "/vehicles/car"
+            },
+            {
+              "class": "race",
+              "score": 0.924142,
+              "type_hierarchy": "/concepts/factors/characteristics/race"
+            },
+            {
+              "class": "racing",
+              "score": 0.890903
+            },
+            {
+              "class": "motorsport",
+              "score": 0.75026,
+              "type_hierarchy": "/activities/sports/motorsport"
+            }
+          ],
+          "classifier_id": "default",
+          "name": "default"
+        }
+      ],
+      "resolved_url": "https://watson-test-resources.mybluemix.net/resources/car.png",
+      "source_url": "https://watson-test-resources.mybluemix.net/resources/car.png"
+    }
+  ],
+  "images_processed": 1
+}
+ *
  * @parma {Object} params
  * @param {ReadStream} [params.images_file] The image file (.jpg, .png, .gif) or compressed (.zip) file of images to classify. The total number of images is limited to 100. Either images_file or url must be specified.
  * @param {String} [params.url] The URL of an image (.jpg, .png, .gif). Redirects are followed, so you can use shortened URLs. The resolved URL is returned in the response. Either images_file or url must be specified.
@@ -349,6 +371,95 @@ VisualRecognitionV3.prototype.recognizeText = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
+var NEGATIVE_EXAMPLES = 'negative_examples';
+/**
+ * Train a new classifier from example images which are uploaded.
+ * This call returns before training has completed.  You'll need to use the
+ * getClassifer method to make sure the classifier has completed training and
+ * was successful before you can classify any images with the newly created
+ * classifier.
+ *
+ * Example output:
+ {
+     "classifier_id": "fruit_679357912",
+     "name": "fruit",
+     "owner": "a3a48ea7-492b-448b-87d7-9dade8bde5a9",
+     "status": "training",
+     "created": "2016-05-23T21:50:41.680Z",
+     "classes": [
+         {"class": "banana"},
+         {"class": "apple"}
+     ]
+ }
+ *
+ * @param {Object} params
+ * @param {String} params.name The desired short name of the new classifier.
+ * @param {ReadStream} params.classname_positive_examples <your_class_name>_positive_examples One or more compressed (.zip) files of images that depict the visual subject for a class within the new classifier. Must contain a minimum of 10 images. You may supply multiple files with different class names in the key.
+ * @param {ReadStream} [params.negative_examples] A compressed (.zip) file of images that do not depict the visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images. Required if only one positive set is provided.
+ *
+ * @returns {ReadableStream|undefined}
+ */
+VisualRecognitionV3.prototype.createClassifier = function(params, callback) {
+  params = params || {};
+
+  var example_keys = Object.keys(params).filter(function(key) {
+    return key === NEGATIVE_EXAMPLES || key.match(/^.+_positive_examples$/);
+  });
+
+  if (example_keys.length <2) {
+    callback(new Error('Invalid parameters: either two *_positive_examples or one *_positive_examples and one negative_examples must be provided.'));
+    return;
+  }
+
+  // todo: validate that all *_examples are streams
+
+  var allowed_keys = ['name', NEGATIVE_EXAMPLES].concat(example_keys);
+
+  var parameters = {
+    options: {
+      url: '/v3/classifiers',
+      method: 'POST',
+      json: true,
+      formData: pick(params, allowed_keys)
+    },
+    requiredParams: ['name'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Retrieve a list of all classifiers, including built-in and
+ * user-created classifiers.
+ * @param verbose If verbose is present and not equal to "0",
+ * return detailed results for each classifier.
+ *
+ * Example output:
+ {"classifiers": [
+    {
+        "classifier_id": "fruit_679357912",
+        "name": "fruit",
+        "status": "ready"
+    },
+    {
+        "classifier_id": "Dogs_2017013066",
+        "name": "Dogs",
+        "status": "ready"
+    }
+]}
+ */
+VisualRecognitionV3.prototype.listClassifiers = function(params, callback) {
+  var parameters = {
+    options: {
+      method: 'GET',
+      url: '/v3/classifiers',
+      qs: pick(params, ['verbose']),
+      json: true,
+    },
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
 
 /**
  * Retrieves information about a specific classifier.
@@ -382,63 +493,6 @@ VisualRecognitionV3.prototype.deleteClassifier = function(params, callback) {
       json: true,
     },
     requiredParams: ['classifier_id'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Train a new classifier from example images which are uploaded.
- * This call returns before training has completed.  You'll need to use the
- * getClassifer method to make sure the classifier has completed training and
- * was successful before you can classify any images with the newly created
- * classifier.
- *
- * @param name The desired short name of the new classifier.
- * @param positive_examples A compressed (.zip) file of images which prominently
- *                            depict the visual subject for a new classifier.
- *                            each class has a name that is prefixed to the _positive_examples
- *                            parameter name.  For example, two classes apples and pears
- *                            would be passed in as apples_positive_examples and pears_positive_examples
- * @param negative_examples A compressed (.zip) file of images which did not
- *                            prominently depict the visual subject for a new
- *                            classifier. Negative examples are optional.
- * @param name The desired name of the new classifier.
- */
-VisualRecognitionV3.prototype.createClassifier = function(params, callback) {
-  params = params || {};
-
-  var allowed_keys = Object.keys(params).filter(function(item) {
-    return item == 'name' || item.match(/^.*_positive_examples$/);
-  });
-
-  var parameters = {
-    options: {
-      url: '/v3/classifiers',
-      method: 'POST',
-      json: true,
-      formData: pick(params, allowed_keys)
-    },
-    requiredParams: ['name'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Retrieve a list of all classifiers, including built-in and
- * user-created classifiers.
- * @param verbose If verbose is present and not equal to "0",
- * return detailed results for each classifier.
- */
-VisualRecognitionV3.prototype.listClassifiers = function(params, callback) {
-  var parameters = {
-    options: {
-      method: 'GET',
-      url: '/v3/classifiers',
-      qs: pick(params, ['verbose']),
-      json: true,
-    },
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);

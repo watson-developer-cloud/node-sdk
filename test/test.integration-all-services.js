@@ -118,7 +118,7 @@ describe('integration-all-services', function() {
         visual_recognition.classify(params, failIfError.bind(failIfError, done));
       });
     });
-    
+
     describe('v3', function() {
       this.timeout(TWENTY_SECONDS);
       var visual_recognition = watson.visual_recognition(auth.visual_recognition.v3);
@@ -455,6 +455,10 @@ describe('integration-all-services', function() {
             done();
           });
         });
+      });
+
+      describe('createClassifier()', function() {
+
       });
     });
   });
