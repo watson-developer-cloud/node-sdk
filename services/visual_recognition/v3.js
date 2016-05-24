@@ -379,6 +379,21 @@ var NEGATIVE_EXAMPLES = 'negative_examples';
  * was successful before you can classify any images with the newly created
  * classifier.
  *
+ * Example inputs:
+ *
+{
+  foo_positive_examples: fs.createReadStream('./foo-pics.zip'),
+  negative_examples: fs.createReadStream('./not-foo-pics.zip'),
+  name: 'to-foo-or-not'
+}
+
+{
+ foo_positive_examples: fs.createReadStream('./foo-pics.zip'),
+ bar_positive_examples: fs.createReadStream('./bar-pics.zip'),
+ name: 'foo-vs-bar'
+}
+
+ *
  * Example output:
  {
      "classifier_id": "fruit_679357912",
