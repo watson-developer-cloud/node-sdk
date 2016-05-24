@@ -133,7 +133,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line81">line 81</a>
+        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line65">line 65</a>
     </li></ul></dd>
     
 
@@ -531,7 +531,7 @@ Example response:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line165">line 165</a>
+        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line149">line 149</a>
     </li></ul></dd>
     
 
@@ -584,7 +584,7 @@ Example response:
     
 
     
-        <h4 class="name" id="createClassifier"><span class="type-signature"></span>createClassifier<span class="signature">(name, positive_examples, negative_examples, name)</span><span class="type-signature"></span></h4>
+        <h4 class="name" id="createClassifier"><span class="type-signature"></span>createClassifier<span class="signature">(params)</span><span class="type-signature"> &rarr; {ReadableStream|undefined}</span></h4>
     
 
     
@@ -597,6 +597,40 @@ This call returns before training has completed.  You'll need to use the
 getClassifer method to make sure the classifier has completed training and
 was successful before you can classify any images with the newly created
 classifier.
+
+Example inputs:
+
+{
+  foo_positive_examples: fs.createReadStream('./foo-pics.zip'),
+  negative_examples: fs.createReadStream('./not-foo-pics.zip'),
+  name: 'to-foo-or-not'
+}
+
+{
+ foo_positive_examples: fs.createReadStream('./foo-pics.zip'),
+ bar_positive_examples: fs.createReadStream('./bar-pics.zip'),
+ name: 'foo-vs-bar'
+}
+
+{
+ foo_positive_examples: fs.createReadStream('./foo-pics.zip'),
+ bar_positive_examples: fs.createReadStream('./bar-pics.zip'),
+ negative_examples: fs.createReadStream('./not-foo-pics.zip'),
+ name: 'foo-bar-not'
+}
+
+Example output:
+ {
+     "classifier_id": "fruit_679357912",
+     "name": "fruit",
+     "owner": "a3a48ea7-492b-448b-87d7-9dade8bde5a9",
+     "status": "training",
+     "created": "2016-05-23T21:50:41.680Z",
+     "classes": [
+         {"class": "banana"},
+         {"class": "apple"}
+     ]
+ }
 </div>
 
 
@@ -632,13 +666,70 @@ classifier.
 
         <tr>
             
+                <td class="name"><code>params</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
                 <td class="name"><code>name</code></td>
             
 
             <td class="type">
             
+                
+<span class="param-type">String</span>
+
+
+            
             </td>
 
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
             
 
             
@@ -650,22 +741,31 @@ classifier.
 
         <tr>
             
-                <td class="name"><code>positive_examples</code></td>
+                <td class="name"><code>classname_positive_examples</code></td>
             
 
             <td class="type">
             
+                
+<span class="param-type">ReadStream</span>
+
+
+            
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
 
             
 
-            <td class="description last">A compressed (.zip) file of images which prominently
-                           depict the visual subject for a new classifier.
-                           each class has a name that is prefixed to the _positive_examples
-                           parameter name.  For example, two classes apples and pears
-                           would be passed in as apples_positive_examples and pears_positive_examples</td>
+            <td class="description last"><your_class_name>_positive_examples One or more compressed (.zip) files of images that depict the visual subject for a class within the new classifier. Must contain a minimum of 10 images. You may supply multiple files with different class names in the key.</td>
         </tr>
 
     
@@ -677,33 +777,35 @@ classifier.
 
             <td class="type">
             
+                
+<span class="param-type">ReadStream</span>
+
+
+            
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
 
             
 
-            <td class="description last">A compressed (.zip) file of images which did not
-                           prominently depict the visual subject for a new
-                           classifier. Negative examples are optional.</td>
+            <td class="description last">A compressed (.zip) file of images that do not depict the visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images. Required if only one positive set is provided.</td>
         </tr>
 
     
+    </tbody>
+</table>
 
-        <tr>
-            
-                <td class="name"><code>name</code></td>
-            
-
-            <td class="type">
-            
             </td>
-
-            
-
-            
-
-            <td class="description last">The desired name of the new classifier.</td>
         </tr>
 
     
@@ -744,7 +846,7 @@ classifier.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line408">line 408</a>
+        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line425">line 425</a>
     </li></ul></dd>
     
 
@@ -767,6 +869,27 @@ classifier.
 
 
 
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">ReadableStream</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -776,7 +899,7 @@ classifier.
     
 
     
-        <h4 class="name" id="deleteClassifier"><span class="type-signature"></span>deleteClassifier<span class="signature">(classifier_id)</span><span class="type-signature"></span></h4>
+        <h4 class="name" id="deleteClassifier"><span class="type-signature"></span>deleteClassifier<span class="signature">(params, callback)</span><span class="type-signature"> &rarr; {ReadableStream|undefined}</span></h4>
     
 
     
@@ -820,10 +943,57 @@ classifier.
 
         <tr>
             
+                <td class="name"><code>params</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
                 <td class="name"><code>classifier_id</code></td>
             
 
             <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
             
             </td>
 
@@ -832,6 +1002,36 @@ classifier.
             
 
             <td class="description last">The classifier id</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
         </tr>
 
     
@@ -872,7 +1072,7 @@ classifier.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line376">line 376</a>
+        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line535">line 535</a>
     </li></ul></dd>
     
 
@@ -895,6 +1095,27 @@ classifier.
 
 
 
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">ReadableStream</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -1120,7 +1341,7 @@ Example output:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line267">line 267</a>
+        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line251">line 251</a>
     </li></ul></dd>
     
 
@@ -1173,7 +1394,7 @@ Example output:
     
 
     
-        <h4 class="name" id="getClassifier"><span class="type-signature"></span>getClassifier<span class="signature">(classifier_id)</span><span class="type-signature"></span></h4>
+        <h4 class="name" id="getClassifier"><span class="type-signature"></span>getClassifier<span class="signature">(params, callback)</span><span class="type-signature"> &rarr; {ReadableStream|undefined}</span></h4>
     
 
     
@@ -1182,6 +1403,19 @@ Example output:
 
 <div class="description">
     Retrieves information about a specific classifier.
+
+Example output:
+{
+  classifier_id: 'fruit_679357912',
+  name: 'fruit',
+  owner: 'a3a48ea7-492b-448b-87d7-9dade8bde5a9',
+  status: 'ready',
+  created: '2016-05-23T21:50:41.680Z',
+  classes: [
+    { class: 'banana' },
+    { class: 'apple' }
+  ]
+}
 </div>
 
 
@@ -1194,6 +1428,48 @@ Example output:
 
     <h5>Parameters:</h5>
     
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>params</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <h6>Properties</h6>
+                
 
 <table class="params">
     <thead>
@@ -1222,6 +1498,11 @@ Example output:
 
             <td class="type">
             
+                
+<span class="param-type">Boolean</span>
+
+
+            
             </td>
 
             
@@ -1229,6 +1510,36 @@ Example output:
             
 
             <td class="description last">The classifier id</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
         </tr>
 
     
@@ -1269,7 +1580,7 @@ Example output:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line357">line 357</a>
+        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line513">line 513</a>
     </li></ul></dd>
     
 
@@ -1292,6 +1603,27 @@ Example output:
 
 
 
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">ReadableStream</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -1301,7 +1633,7 @@ Example output:
     
 
     
-        <h4 class="name" id="listClassifiers"><span class="type-signature"></span>listClassifiers<span class="signature">(verbose)</span><span class="type-signature"></span></h4>
+        <h4 class="name" id="listClassifiers"><span class="type-signature"></span>listClassifiers<span class="signature">(params, callback)</span><span class="type-signature"> &rarr; {ReadableStream|undefined}</span></h4>
     
 
     
@@ -1311,6 +1643,21 @@ Example output:
 <div class="description">
     Retrieve a list of all classifiers, including built-in and
 user-created classifiers.
+
+Example output:
+
+ {"classifiers": [
+    {
+        "classifier_id": "fruit_679357912",
+        "name": "fruit",
+        "status": "ready"
+    },
+    {
+        "classifier_id": "Dogs_2017013066",
+        "name": "Dogs",
+        "status": "ready"
+    }
+]}
 </div>
 
 
@@ -1346,10 +1693,15 @@ user-created classifiers.
 
         <tr>
             
-                <td class="name"><code>verbose</code></td>
+                <td class="name"><code>params</code></td>
             
 
             <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
             
             </td>
 
@@ -1357,8 +1709,99 @@ user-created classifiers.
 
             
 
-            <td class="description last">If verbose is present and not equal to "0",
-return detailed results for each classifier.</td>
+            <td class="description last">
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>verbose</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
         </tr>
 
     
@@ -1399,7 +1842,7 @@ return detailed results for each classifier.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line441">line 441</a>
+        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line479">line 479</a>
     </li></ul></dd>
     
 
@@ -1422,6 +1865,27 @@ return detailed results for each classifier.</td>
 
 
 
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">ReadableStream</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -1444,6 +1908,44 @@ images (.jpeg, .png, .gif) and attempts to recognize text
 found in the image. It then applies a threshold
 and returns the list of relevant locations, strings,  and metadata
 for discovered text in each image.
+
+Example output:
+{
+  "images": [
+    {
+      "classifiers": [
+        {
+          "classes": [
+            {
+              "class": "car",
+              "score": 0.992608,
+              "type_hierarchy": "/vehicles/car"
+            },
+            {
+              "class": "race",
+              "score": 0.924142,
+              "type_hierarchy": "/concepts/factors/characteristics/race"
+            },
+            {
+              "class": "racing",
+              "score": 0.890903
+            },
+            {
+              "class": "motorsport",
+              "score": 0.75026,
+              "type_hierarchy": "/activities/sports/motorsport"
+            }
+          ],
+          "classifier_id": "default",
+          "name": "default"
+        }
+      ],
+      "resolved_url": "https://watson-test-resources.mybluemix.net/resources/car.png",
+      "source_url": "https://watson-test-resources.mybluemix.net/resources/car.png"
+    }
+  ],
+  "images_processed": 1
+}
 </div>
 
 
@@ -1612,7 +2114,7 @@ for discovered text in each image.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line317">line 317</a>
+        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line339">line 339</a>
     </li></ul></dd>
     
 
@@ -1681,7 +2183,7 @@ for discovered text in each image.
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Sat May 21 2016 00:58:37 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue May 24 2016 21:38:23 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>
