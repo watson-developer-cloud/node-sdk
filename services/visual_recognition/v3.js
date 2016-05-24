@@ -393,6 +393,14 @@ var NEGATIVE_EXAMPLES = 'negative_examples';
  name: 'foo-vs-bar'
 }
 
+{
+ foo_positive_examples: fs.createReadStream('./foo-pics.zip'),
+ bar_positive_examples: fs.createReadStream('./bar-pics.zip'),
+ negative_examples: fs.createReadStream('./not-foo-pics.zip'),
+ name: 'foo-bar-not'
+}
+
+
  *
  * Example output:
  {
@@ -422,11 +430,16 @@ VisualRecognitionV3.prototype.createClassifier = function(params, callback) {
   });
 
   if (example_keys.length <2) {
-    callback(new Error('Invalid parameters: either two *_positive_examples or one *_positive_examples and one negative_examples must be provided.'));
+    callback(new Error('Missing required parameters: either two *_positive_examples or one *_positive_examples and one negative_examples must be provided.'));
     return;
   }
+  // todo: validate that all *_examples are streams or else objects with buffers and content-types
 
-  // todo: validate that all *_examples are streams
+  if (!params.name) {
+    callback(new Error('Missing required parameter: name'));
+    return;
+  }
+  
 
   var allowed_keys = ['name', NEGATIVE_EXAMPLES].concat(example_keys);
 

@@ -142,14 +142,16 @@ describe('visual_recognition', function() {
 
   describe('createClassifier()', function() {
 
-    it('should check no parameters provided', function() {
+    it('should check no/insufficient parameters provided', function() {
       visual_recognition.createClassifier({}, missingParameter);
       visual_recognition.createClassifier(null, missingParameter);
       visual_recognition.createClassifier(undefined, missingParameter);
-      visual_recognition.createClassifier({positive_examples: ''}, missingParameter);
+      visual_recognition.createClassifier({positive_examples: '', name: 'foo'}, missingParameter);
+      visual_recognition.createClassifier({foo_positive_examples: '', name: 'foo'}, missingParameter);
+      visual_recognition.createClassifier({positive_examples: '', negative_examples: '', name: 'foo'}, missingParameter); // positive examples must include a tag
+      visual_recognition.createClassifier({foo_positive_examples: '', negative_examples: ''}, missingParameter); // missing name
     });
-
-    // todo: fix this test
+    
     it('should generate a valid payload with streams', function(done) {
       var params = {
         foo_positive_examples: fake_file,
@@ -157,7 +159,7 @@ describe('visual_recognition', function() {
         name: 'test-c'
       };
 
-      // todo: make this not half async half sync
+      // todo: make this fully async
       var req = visual_recognition.createClassifier(params, function(err) {
         if (err) {
           done(err);
