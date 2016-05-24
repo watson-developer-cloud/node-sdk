@@ -66,7 +66,6 @@
     "istanbul": "^0.4.2",
     "jsdoc": "^3.4.0",
     "mocha": "^2.4.5",
-    "mocha-retry": "^0.1.0",
     "nock": "^8.0.0",
     "qs": "^6.1.0",
     "wav": "^1.0.0"
@@ -94,6 +93,7 @@
     "prepare": "npm test && npm version patch",
     "doc": "jsdoc -c jsdoc/config.json",
     "watch-doc": "nodemon --watch lib/ --watch services/ --watch jsdoc/ --watch package.json --ext js,tmpl --exec npm run doc",
-    "codecov": "istanbul cover ./node_modules/.bin/mocha -- --ui mocha-retry && codecov"
+    "codecov": "istanbul cover ./node_modules/.bin/mocha && codecov",
+    "test-integration": "mocha test/test.integration-all-services.js"
   }
 }
