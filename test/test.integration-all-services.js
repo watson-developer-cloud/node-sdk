@@ -457,8 +457,22 @@ describe('integration-all-services', function() {
         });
       });
 
-      describe('createClassifier()', function() {
-
+      describe('getClassifier()', function() {
+        it('should retrieve the classifier', function(done) {
+          var expected = { classifier_id: 'fruit_679357912',
+            name: 'fruit',
+            owner: 'a3a48ea7-492b-448b-87d7-9dade8bde5a9',
+            status: 'ready',
+            created: '2016-05-23T21:50:41.680Z',
+            classes: [ { class: 'banana' }, { class: 'apple' } ] };
+          visual_recognition.getClassifier({classifier_id: 'fruit_679357912'}, function(err, classifier){
+            if (err) {
+              return done(err);
+            }
+            assert.deepEqual(classifier, expected);
+            done();
+          });
+        });
       });
     });
   });
@@ -1018,7 +1032,6 @@ describe('integration-all-services', function() {
           if (err) {
             return done(err);
           }
-          console.log(res); // eslint-disable-line no-console
           assert(res);
           assert(res.media_type_detected, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
           assert(res.answer_units);

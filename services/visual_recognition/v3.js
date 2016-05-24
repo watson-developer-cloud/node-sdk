@@ -435,11 +435,7 @@ VisualRecognitionV3.prototype.createClassifier = function(params, callback) {
   }
   // todo: validate that all *_examples are streams or else objects with buffers and content-types
 
-  if (!params.name) {
-    callback(new Error('Missing required parameter: name'));
-    return;
-  }
-  
+
 
   var allowed_keys = ['name', NEGATIVE_EXAMPLES].concat(example_keys);
 
@@ -459,10 +455,9 @@ VisualRecognitionV3.prototype.createClassifier = function(params, callback) {
 /**
  * Retrieve a list of all classifiers, including built-in and
  * user-created classifiers.
- * @param verbose If verbose is present and not equal to "0",
- * return detailed results for each classifier.
  *
  * Example output:
+
  {"classifiers": [
     {
         "classifier_id": "fruit_679357912",
@@ -475,6 +470,11 @@ VisualRecognitionV3.prototype.createClassifier = function(params, callback) {
         "status": "ready"
     }
 ]}
+
+ * @param {Object} params
+ * @param {Boolean} [params.verbose=false]
+ * @param {Function} callback
+ * @return {ReadableStream|undefined}
  */
 VisualRecognitionV3.prototype.listClassifiers = function(params, callback) {
   var parameters = {
@@ -491,7 +491,24 @@ VisualRecognitionV3.prototype.listClassifiers = function(params, callback) {
 
 /**
  * Retrieves information about a specific classifier.
- * @param classifier_id The classifier id
+ *
+ * Example output:
+{
+  classifier_id: 'fruit_679357912',
+  name: 'fruit',
+  owner: 'a3a48ea7-492b-448b-87d7-9dade8bde5a9',
+  status: 'ready',
+  created: '2016-05-23T21:50:41.680Z',
+  classes: [
+    { class: 'banana' },
+    { class: 'apple' }
+  ]
+}
+
+ * @param {Object} params
+ * @param {Boolean} params.classifier_id The classifier id
+ * @param {Function} callback
+ * @return {ReadableStream|undefined}
  */
 VisualRecognitionV3.prototype.getClassifier = function(params, callback) {
   var parameters = {
@@ -501,7 +518,7 @@ VisualRecognitionV3.prototype.getClassifier = function(params, callback) {
       path: params,
       json: true
     },
-    requiredParams: ['classifier_id', 'api_key'],
+    requiredParams: ['classifier_id'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
@@ -509,8 +526,11 @@ VisualRecognitionV3.prototype.getClassifier = function(params, callback) {
 
 /**
  * Deletes a custom classifier with the specified classifier id.
- * @param classifier_id The classifier id
  *
+ * @param {Object} params
+ * @param {String} params.classifier_id The classifier id
+ * @param {Function} callback
+ * @returns {ReadableStream|undefined}
  */
 VisualRecognitionV3.prototype.deleteClassifier = function(params, callback) {
   var parameters = {

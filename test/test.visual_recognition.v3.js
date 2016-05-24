@@ -13,7 +13,7 @@ describe('visual_recognition', function() {
   // Test params
   var service = {
     api_key: 'batman',
-    url: 'http://ibm.com:80',
+    url: 'http://ibm.com:80/visual-recognition/api',
     version: 'v3',
     version_date: '2016-05-20'
   };
@@ -151,7 +151,7 @@ describe('visual_recognition', function() {
       visual_recognition.createClassifier({positive_examples: '', negative_examples: '', name: 'foo'}, missingParameter); // positive examples must include a tag
       visual_recognition.createClassifier({foo_positive_examples: '', negative_examples: ''}, missingParameter); // missing name
     });
-    
+
     it('should generate a valid payload with streams', function(done) {
       var params = {
         foo_positive_examples: fake_file,
@@ -189,6 +189,23 @@ describe('visual_recognition', function() {
       assert.equal(req.uri.href, service.url + foo_classifiers_path);
       assert.equal(req.method, 'DELETE');
     });
+
+    it('should make a DELETE request and return the result', function(done) {
+      var scope = nock('http://ibm.com:80', {"encodedQueryParams":true})
+        .delete('/visual-recognition/api/v3/classifiers/foo_123')
+        .query({"api_key":"batman","version":"2016-05-20"})
+        .reply(200, {});
+
+      visual_recognition.deleteClassifier({
+        classifier_id: 'foo_123'
+      }, function(err) {
+        if (err) {
+          return done(err);
+        }
+        assert(scope.isDone());
+        done();
+      });
+    });
   });
 
   describe('getClassifier()', function() {
@@ -205,6 +222,32 @@ describe('visual_recognition', function() {
       var req = visual_recognition.getClassifier(params, noop);
       assert.equal(req.uri.href, service.url + foo_classifiers_path);
       assert.equal(req.method, 'GET');
+    });
+
+    it('should make a GET request and return the result', function(done) {
+      var expected = {
+        "classifier_id":"fruit_679357912",
+        "name":"fruit",
+        "owner":"a3a48ea7-492b-448b-87d7-9dade8bde5a9",
+        "status":"ready",
+        "created":"2016-05-23T21:50:41.680Z",
+        "classes":[{"class":"banana"},{"class":"apple"}]
+      };
+      var scope = nock('http://ibm.com:80', {"encodedQueryParams":true})
+        .get('/visual-recognition/api/v3/classifiers/fruit_679357912')
+        .query({"api_key":"batman","version":"2016-05-20"})
+        .reply(200, expected);
+
+      visual_recognition.getClassifier({
+        classifier_id: 'fruit_679357912'
+      }, function(err, res) {
+        if (err) {
+          return done(err);
+        }
+        assert(scope.isDone());
+        assert.deepEqual(res, expected);
+        done();
+      });
     });
   });
 });
