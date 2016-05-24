@@ -652,8 +652,37 @@ describe('integration-all-services', function() {
           conversion_target: 'ANSWER_UNITS',
             file: fs.createReadStream(__dirname + '/resources/sampleWordWrongExtension.html'),
           content_type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-        }, failIfError.bind(failIfError, done));
-      })
+        }, function(err, res) {
+          if (err) {
+            return done(err);
+          }
+          assert(res);
+          assert(res.media_type_detected, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+          assert(res.answer_units);
+          assert(res.answer_units.length);
+          assert(res.answer_units[0].id);
+          done();
+        });
+      });
+
+      it('convertFile() buffer with content-type', function(done) {
+        document_conversion.convert({
+          conversion_target: 'ANSWER_UNITS',
+          file: new Buffer(fs.readFileSync(__dirname + '/resources/sampleWordWrongExtension.html')),
+          content_type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+        }, function(err, res) {
+          if (err) {
+            return done(err);
+          }
+          console.log(res); // eslint-disable-line no-console
+          assert(res);
+          assert(res.media_type_detected, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+          assert(res.answer_units);
+          assert(res.answer_units.length);
+          assert(res.answer_units[0].id);
+          done();
+        });
+      });
     });
   });
 });
