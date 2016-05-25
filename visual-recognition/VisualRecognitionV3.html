@@ -846,7 +846,7 @@ Example output:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line425">line 425</a>
+        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line433">line 433</a>
     </li></ul></dd>
     
 
@@ -1072,7 +1072,7 @@ Example output:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line535">line 535</a>
+        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line543">line 543</a>
     </li></ul></dd>
     
 
@@ -1580,7 +1580,7 @@ Example output:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line513">line 513</a>
+        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line521">line 521</a>
     </li></ul></dd>
     
 
@@ -1842,7 +1842,7 @@ Example output:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line479">line 479</a>
+        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line487">line 487</a>
     </li></ul></dd>
     
 
@@ -1910,42 +1910,50 @@ and returns the list of relevant locations, strings,  and metadata
 for discovered text in each image.
 
 Example output:
-{
-  "images": [
-    {
-      "classifiers": [
-        {
-          "classes": [
-            {
-              "class": "car",
-              "score": 0.992608,
-              "type_hierarchy": "/vehicles/car"
-            },
-            {
-              "class": "race",
-              "score": 0.924142,
-              "type_hierarchy": "/concepts/factors/characteristics/race"
-            },
-            {
-              "class": "racing",
-              "score": 0.890903
-            },
-            {
-              "class": "motorsport",
-              "score": 0.75026,
-              "type_hierarchy": "/activities/sports/motorsport"
-            }
-          ],
-          "classifier_id": "default",
-          "name": "default"
-        }
-      ],
-      "resolved_url": "https://watson-test-resources.mybluemix.net/resources/car.png",
-      "source_url": "https://watson-test-resources.mybluemix.net/resources/car.png"
-    }
-  ],
-  "images_processed": 1
-}
+ {
+   "images": [
+     {
+       "image": "car.png",
+       "text": "3 jag [brio]",
+       "words": [
+         {
+           "line_number": 0,
+           "location": {
+             "height": 53,
+             "left": 204,
+             "top": 294,
+             "width": 27
+           },
+           "score": 0.50612,
+           "word": "3"
+         },
+         {
+           "line_number": 0,
+           "location": {
+             "height": 32,
+             "left": 264,
+             "top": 288,
+             "width": 56
+           },
+           "score": 0.958628,
+           "word": "jag"
+         },
+         {
+           "line_number": 0,
+           "location": {
+             "height": 40,
+             "left": 324,
+             "top": 288,
+             "width": 92
+           },
+           "score": 0.00165806,
+           "word": "brio"
+         }
+       ]
+     }
+   ],
+   "images_processed": 1
+ }
 </div>
 
 
@@ -2114,7 +2122,7 @@ Example output:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line339">line 339</a>
+        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line347">line 347</a>
     </li></ul></dd>
     
 
@@ -2177,13 +2185,13 @@ Example output:
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AlchemyDataNews.html">AlchemyDataNews</a></li><li><a href="AlchemyLanguage.html">AlchemyLanguage</a></li><li><a href="AlchemyVision.html">AlchemyVision</a></li><li><a href="Authorization.html">Authorization</a></li><li><a href="ConceptExpansion.html">ConceptExpansion</a></li><li><a href="ConceptInsights.html">ConceptInsights</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Dialog.html">Dialog</a></li><li><a href="DocumentConversion.html">DocumentConversion</a></li><li><a href="LanguageTranslation.html">LanguageTranslation</a></li><li><a href="NaturalLanguageClassifier.html">NaturalLanguageClassifier</a></li><li><a href="PersonalityInsights.html">PersonalityInsights</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RelationshipExtraction.html">RelationshipExtraction</a></li><li><a href="RetrieveAndRank.html">RetrieveAndRank</a></li><li><a href="SpeechToText.html">SpeechToText</a></li><li><a href="TextToSpeech.html">TextToSpeech</a></li><li><a href="TradeoffAnalytics.html">TradeoffAnalytics</a></li><li><a href="VisualInsights.html">VisualInsights</a></li><li><a href="VisualRecognitionV1Beta.html">VisualRecognitionV1Beta</a></li><li><a href="VisualRecognitionV2Beta.html">VisualRecognitionV2Beta</a></li><li><a href="VisualRecognitionV3.html">VisualRecognitionV3</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:connection-close">connection-close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li></ul><h3>Namespaces</h3><ul><li><a href="watson.html">watson</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AlchemyDataNews.html">AlchemyDataNews</a></li><li><a href="AlchemyLanguage.html">AlchemyLanguage</a></li><li><a href="AlchemyVision.html">AlchemyVision</a></li><li><a href="Authorization.html">Authorization</a></li><li><a href="ConceptExpansion.html">ConceptExpansion</a></li><li><a href="ConceptInsights.html">ConceptInsights</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Dialog.html">Dialog</a></li><li><a href="DocumentConversion.html">DocumentConversion</a></li><li><a href="LanguageTranslation.html">LanguageTranslation</a></li><li><a href="NaturalLanguageClassifier.html">NaturalLanguageClassifier</a></li><li><a href="PersonalityInsights.html">PersonalityInsights</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RelationshipExtraction.html">RelationshipExtraction</a></li><li><a href="RetrieveAndRank.html">RetrieveAndRank</a></li><li><a href="SpeechToText.html">SpeechToText</a></li><li><a href="TextToSpeech.html">TextToSpeech</a></li><li><a href="TradeoffAnalytics.html">TradeoffAnalytics</a></li><li><a href="VisualInsights.html">VisualInsights</a></li><li><a href="VisualRecognitionV2Beta.html">VisualRecognitionV2Beta</a></li><li><a href="VisualRecognitionV3.html">VisualRecognitionV3</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:connection-close">connection-close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li></ul><h3>Namespaces</h3><ul><li><a href="watson.html">watson</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue May 24 2016 21:38:23 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed May 25 2016 20:08:19 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>
