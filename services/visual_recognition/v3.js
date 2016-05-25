@@ -292,42 +292,50 @@ VisualRecognitionV3.prototype.detectFaces = function(params, callback) {
  * for discovered text in each image.
  *
  * Example output:
-{
-  "images": [
-    {
-      "classifiers": [
-        {
-          "classes": [
-            {
-              "class": "car",
-              "score": 0.992608,
-              "type_hierarchy": "/vehicles/car"
-            },
-            {
-              "class": "race",
-              "score": 0.924142,
-              "type_hierarchy": "/concepts/factors/characteristics/race"
-            },
-            {
-              "class": "racing",
-              "score": 0.890903
-            },
-            {
-              "class": "motorsport",
-              "score": 0.75026,
-              "type_hierarchy": "/activities/sports/motorsport"
-            }
-          ],
-          "classifier_id": "default",
-          "name": "default"
-        }
-      ],
-      "resolved_url": "https://watson-test-resources.mybluemix.net/resources/car.png",
-      "source_url": "https://watson-test-resources.mybluemix.net/resources/car.png"
-    }
-  ],
-  "images_processed": 1
-}
+ {
+   "images": [
+     {
+       "image": "car.png",
+       "text": "3 jag [brio]",
+       "words": [
+         {
+           "line_number": 0,
+           "location": {
+             "height": 53,
+             "left": 204,
+             "top": 294,
+             "width": 27
+           },
+           "score": 0.50612,
+           "word": "3"
+         },
+         {
+           "line_number": 0,
+           "location": {
+             "height": 32,
+             "left": 264,
+             "top": 288,
+             "width": 56
+           },
+           "score": 0.958628,
+           "word": "jag"
+         },
+         {
+           "line_number": 0,
+           "location": {
+             "height": 40,
+             "left": 324,
+             "top": 288,
+             "width": 92
+           },
+           "score": 0.00165806,
+           "word": "brio"
+         }
+       ]
+     }
+   ],
+   "images_processed": 1
+ }
  *
  * @parma {Object} params
  * @param {ReadStream} [params.images_file] The image file (.jpg, .png, .gif) or compressed (.zip) file of images to classify. The total number of images is limited to 100. Either images_file or url must be specified.
