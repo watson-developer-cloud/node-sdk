@@ -1,3 +1,4 @@
+#!/usr/env mocha
 'use strict';
 
 var fs = require('fs');
@@ -83,20 +84,7 @@ describe('integration-all-services', function() {
 });
 
   describe('functional_visual_recognition', function() {
-    xdescribe('v1-beta', function() {
-      this.timeout(TWENTY_SECONDS);
-      var visual_recognition = watson.visual_recognition(auth.visual_recognition.v1);
 
-      it('recognize()', function(done) {
-        var params = {
-          image_file: fs.createReadStream(__dirname + '/resources/car.png'),
-          labels_to_check: JSON.stringify({
-            label_groups: ['Vehicle']
-          })
-        };
-        visual_recognition.recognize(params, failIfError.bind(failIfError, done));
-      });
-    });
     describe('v2-beta', function() {
       this.timeout(TWENTY_SECONDS);
       var visual_recognition = watson.visual_recognition(auth.visual_recognition.v2);
@@ -114,7 +102,176 @@ describe('integration-all-services', function() {
           images_file: fs.createReadStream(__dirname + '/resources/car.png'),
           classifier_ids: ['Red','Car']
         };
-        visual_recognition.listClassifiers(params, failIfError.bind(failIfError, done));
+        visual_recognition.classify(params, failIfError.bind(failIfError, done));
+      });
+    });
+
+    describe.only('v3', function() {
+      this.timeout(TWENTY_SECONDS);
+      var visual_recognition = watson.visual_recognition(auth.visual_recognition.v3);
+
+      describe('classify()', function() {
+        it('should classify an uploaded image', function(done) {
+          var params = {
+            images_file: fs.createReadStream(__dirname + '/resources/car.png')
+          };
+          visual_recognition.classify(params, function(err, result) {
+            if (err) {
+              return done(err);
+            }
+            //console.log(JSON.stringify(result, null, 2));
+            assert.equal(result.images_processed, 1);
+            assert.equal(result.images[0].image, 'car.png');
+            assert(result.images[0].classifiers.length);
+            assert(result.images[0].classifiers[0].classes.some(function(c) {
+              return c.class === 'car'
+            }));
+
+            done();
+          });
+        });
+
+        it('should classify an image via url', function(done) {
+          var params = {
+            url: 'https://watson-test-resources.mybluemix.net/resources/car.png'
+          };
+          visual_recognition.classify(params, function(err, result) {
+            if (err) {
+              return done(err);
+            }
+            //console.log(JSON.stringify(result, null, 2));
+            assert.equal(result.images_processed, 1);
+            assert.equal(result.images[0].resolved_url, 'https://watson-test-resources.mybluemix.net/resources/car.png');
+            assert.equal(result.images[0].source_url, 'https://watson-test-resources.mybluemix.net/resources/car.png');
+            assert(result.images[0].classifiers.length);
+            assert(result.images[0].classifiers[0].classes.some(function(c) {
+              return c.class === 'car'
+            }));
+
+            done();
+          });
+        });
+      });
+
+      describe('detectFaces()', function() {
+        this.retries(5);
+
+        it('should detect faces in an uploaded image', function(done) {
+          var params = {
+            images_file: fs.createReadStream(__dirname + '/resources/obama.jpg')
+          };
+          visual_recognition.detectFaces(params, function(err, result) {
+            if (err) {
+              return done(err);
+            }
+            //console.log(JSON.stringify(result, null, 2));
+            assert.equal(result.images_processed, 1);
+            assert.equal(result.images[0].image, 'obama.jpg');
+            assert.equal(result.images[0].faces.length, 1, 'There should be exactly one face detected'); // note: the api was sometimes failing to detect any faces right after the release
+            var face = result.images[0].faces[0];
+            assert.equal(face.gender.gender, 'MALE');
+            assert.equal(face.identity.name, 'Barack Obama');
+            done();
+          });
+        });
+
+        it('should detect faces in an image via url', function(done) {
+          var params = {
+            url: 'https://watson-test-resources.mybluemix.net/resources/obama.jpg'
+          };
+          visual_recognition.detectFaces(params, function(err, result) {
+            if (err) {
+              return done(err);
+            }
+            //console.log(JSON.stringify(result, null, 2));
+            assert.equal(result.images_processed, 1);
+            assert.equal(result.images[0].resolved_url, 'https://watson-test-resources.mybluemix.net/resources/obama.jpg');
+            assert.equal(result.images[0].source_url, 'https://watson-test-resources.mybluemix.net/resources/obama.jpg');
+            assert.equal(result.images[0].faces.length, 1, 'There should be exactly one face detected'); // note: the api was sometimes failing to detect any faces right after the release
+            var face = result.images[0].faces[0];
+            assert.equal(face.gender.gender, 'MALE');
+            assert.equal(face.identity.name, 'Barack Obama');
+            done();
+          });
+        });
+      });
+
+      describe('recognizeText()', function() {
+        it('read text in an uploaded image', function(done) {
+
+          var params = {
+            images_file: fs.createReadStream(__dirname + '/resources/car.png')
+          };
+          visual_recognition.recognizeText(params, function(err, result) {
+            if (err) {
+              return done(err);
+            }
+
+            //console.log(JSON.stringify(actual, null, 2));
+
+            assert.equal(result.images_processed, 1);
+            assert.equal(result.images[0].image, 'car.png');
+            assert(result.images[0].text);
+            assert(result.images[0].words.length);
+
+            done();
+          });
+        });
+
+        it('read text an image via url', function(done) {
+
+          var params = {
+            url: 'https://watson-test-resources.mybluemix.net/resources/car.png'
+          };
+          visual_recognition.recognizeText(params, function(err, result) {
+            if (err) {
+              return done(err);
+            }
+            //console.log(JSON.stringify(result, null, 2));
+
+            assert.equal(result.images_processed, 1);
+            assert.equal(result.images[0].resolved_url, 'https://watson-test-resources.mybluemix.net/resources/car.png');
+            assert.equal(result.images[0].source_url, 'https://watson-test-resources.mybluemix.net/resources/car.png');
+            assert(result.images[0].text);
+            assert(result.images[0].words.length);
+
+            done();
+          });
+        });
+      });
+
+      describe('listClassifiers()', function() {
+        it('should return the list of classifiers', function(done) {
+          visual_recognition.listClassifiers({}, function(err, result) {
+            if (err) {
+              return done(err);
+            }
+            assert(result.classifiers);
+            assert(result.classifiers.length);
+            assert(result.classifiers[0].classifier_id);
+            assert(result.classifiers[0].name);
+            assert(result.classifiers[0].status);
+            done();
+          });
+        });
+      });
+
+      describe('getClassifier()', function() {
+        it('should retrieve the classifier', function(done) {
+          var expected = { classifier_id: 'fruit_679357912',
+            name: 'fruit',
+            owner: 'a3a48ea7-492b-448b-87d7-9dade8bde5a9',
+            status: 'ready',
+            created: '2016-05-23T21:50:41.680Z',
+            classes: [ { class: 'banana' }, { class: 'apple' } ] };
+          visual_recognition.getClassifier({classifier_id: 'fruit_679357912'}, function(err, classifier){
+            if (err) {
+              return done(err);
+            }
+            assert.deepEqual(classifier, expected);
+            done();
+          });
+        });
       });
     });
   });
@@ -674,7 +831,6 @@ describe('integration-all-services', function() {
           if (err) {
             return done(err);
           }
-          console.log(res); // eslint-disable-line no-console
           assert(res);
           assert(res.media_type_detected, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
           assert(res.answer_units);
