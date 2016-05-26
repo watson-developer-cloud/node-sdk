@@ -68,6 +68,7 @@ function createServiceAPI(serviceName) {
   return function(user_options) {
     var options = extend({}, user_options);
     var alchemy = (serviceName.indexOf('alchemy_') === 0);
+    var vrv3 = (serviceName === 'visual_recognition' &amp;&amp; user_options.version === 'v3');
 
     // For Alchemy we use 'v1' by default,
     // and check if `apikey` was specified.
@@ -75,6 +76,9 @@ function createServiceAPI(serviceName) {
     if (alchemy) {
       options.alchemy = true;
       options.version = 'v1';
+      options.api_key = options.apikey || options.api_key;
+    } else if (vrv3) {
+      // Visual Recognition v3 similarly uses an API key instead of username + password
       options.api_key = options.apikey || options.api_key;
     } else {
       options.jar = request.jar();
@@ -104,7 +108,7 @@ function createServiceAPI(serviceName) {
       // Check if 'api_key' or 'username' and 'password' were provided
       if (typeof api_key === 'undefined') {
         if (typeof user === 'undefined' || typeof pass === 'undefined') {
-          if (alchemy)
+          if (alchemy || vrv3)
             throw new Error('Argument error: api_key was not specified');
           else
             throw new Error('Argument error: api_key or username and password were not specified');
@@ -178,7 +182,7 @@ var watson = {
   /**
    * @function
    * @param {{}} options
-   * @returns  {VisualRecognitionV1Beta|VisualRecognitionV2Beta}
+   * @returns  {VisualRecognitionV1Beta|VisualRecognitionV2Beta|VisualRecognitionV3}
    */
   visual_recognition: createServiceAPI('visual_recognition'),
 
@@ -303,7 +307,7 @@ var watson = {
    * @returns  {AlchemyDataNews}
    */
   alchemy_data_news: createServiceAPI('alchemy_data_news'),
-  
+
   /**
    * @function
    * @param {{}} options
@@ -337,13 +341,13 @@ module.exports = watson;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AlchemyDataNews.html">AlchemyDataNews</a></li><li><a href="AlchemyLanguage.html">AlchemyLanguage</a></li><li><a href="AlchemyVision.html">AlchemyVision</a></li><li><a href="Authorization.html">Authorization</a></li><li><a href="ConceptExpansion.html">ConceptExpansion</a></li><li><a href="ConceptInsights.html">ConceptInsights</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Dialog.html">Dialog</a></li><li><a href="DocumentConversion.html">DocumentConversion</a></li><li><a href="LanguageTranslation.html">LanguageTranslation</a></li><li><a href="NaturalLanguageClassifier.html">NaturalLanguageClassifier</a></li><li><a href="PersonalityInsights.html">PersonalityInsights</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RelationshipExtraction.html">RelationshipExtraction</a></li><li><a href="RetrieveAndRank.html">RetrieveAndRank</a></li><li><a href="SpeechToText.html">SpeechToText</a></li><li><a href="TextToSpeech.html">TextToSpeech</a></li><li><a href="TradeoffAnalytics.html">TradeoffAnalytics</a></li><li><a href="VisualInsights.html">VisualInsights</a></li><li><a href="VisualRecognitionV1Beta.html">VisualRecognitionV1Beta</a></li><li><a href="VisualRecognitionV2Beta.html">VisualRecognitionV2Beta</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:connection-close">connection-close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li></ul><h3>Namespaces</h3><ul><li><a href="watson.html">watson</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AlchemyDataNews.html">AlchemyDataNews</a></li><li><a href="AlchemyLanguage.html">AlchemyLanguage</a></li><li><a href="AlchemyVision.html">AlchemyVision</a></li><li><a href="Authorization.html">Authorization</a></li><li><a href="ConceptExpansion.html">ConceptExpansion</a></li><li><a href="ConceptInsights.html">ConceptInsights</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Dialog.html">Dialog</a></li><li><a href="DocumentConversion.html">DocumentConversion</a></li><li><a href="LanguageTranslation.html">LanguageTranslation</a></li><li><a href="NaturalLanguageClassifier.html">NaturalLanguageClassifier</a></li><li><a href="PersonalityInsights.html">PersonalityInsights</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RelationshipExtraction.html">RelationshipExtraction</a></li><li><a href="RetrieveAndRank.html">RetrieveAndRank</a></li><li><a href="SpeechToText.html">SpeechToText</a></li><li><a href="TextToSpeech.html">TextToSpeech</a></li><li><a href="TradeoffAnalytics.html">TradeoffAnalytics</a></li><li><a href="VisualInsights.html">VisualInsights</a></li><li><a href="VisualRecognitionV2Beta.html">VisualRecognitionV2Beta</a></li><li><a href="VisualRecognitionV3.html">VisualRecognitionV3</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:connection-close">connection-close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li></ul><h3>Namespaces</h3><ul><li><a href="watson.html">watson</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue May 24 2016 20:28:06 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu May 26 2016 13:56:42 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>
