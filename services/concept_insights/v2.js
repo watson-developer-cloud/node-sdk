@@ -18,6 +18,7 @@
 
 var omit = require('object.omit');
 var extend = require('extend');
+var pick = require('object.pick');
 var requestFactory = require('../../lib/requestwrapper');
 
 /**
@@ -297,6 +298,12 @@ ConceptInsightsCorpora.prototype.deleteCorpus = function(params, callback) {
 
 /**
  * Retrieves the document ids of a corpus
+ *
+ * @param {Object} params
+ * @param {String} params.corpus
+ * @param {Number} [params.limit=20]
+ * @param {Function} callback
+ * @returns {ReadableStream|undefined}
  */
 ConceptInsightsCorpora.prototype.listDocuments = function(params, callback) {
   var parameters = {
@@ -304,7 +311,8 @@ ConceptInsightsCorpora.prototype.listDocuments = function(params, callback) {
       url: '/v2' + params.corpus + '/documents',
       method: 'GET',
       json: true,
-      path: params
+      path: params,
+      qs: pick(params, ['limit'])
     },
     requiredParams: ['corpus'],
     defaultOptions: this._parent._options

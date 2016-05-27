@@ -51,7 +51,7 @@ describe('concept_insights.v2', function() {
       var corpus = {},
         path = '/v2' + corpusid;
 
-      nock(service.url).persist()
+      nock(service.url)
         .get(path)
         .reply(200, corpus);
 
@@ -71,7 +71,7 @@ describe('concept_insights.v2', function() {
       var corpusid = '/corpora/testa/testu';
       var path = '/v2' + corpusid;
 
-      nock(service.url).persist()
+      nock(service.url)
         .delete(path)
         .reply(200);
 
@@ -93,7 +93,7 @@ describe('concept_insights.v2', function() {
       var corpusid = '/corpora/testa/testu';
       var path = '/v2' + corpusid + '/documents';
 
-      nock(service.url).persist()
+      nock(service.url)
         .get(path)
         .reply(200);
 
@@ -102,6 +102,26 @@ describe('concept_insights.v2', function() {
       }, noop);
       assert.equal(req.uri.href, service.url + path);
       assert.equal(req.method, 'GET');
+    });
+
+    it('should allow arbitrary limit values', function(done) {
+      var corpusid = '/corpora/testa/testu';
+
+      var scope = nock('http://ibm.com:80', {"encodedQueryParams":true})
+        .get('/v2/corpora/testa/testu/documents')
+        .query({"limit":"123"})
+        .reply(204);
+
+      concept_insights.corpora.listDocuments({
+        corpus: corpusid,
+        limit: 123
+      }, function(err) {
+        if (err) {
+          return done(err);
+        }
+        assert(scope.isDone());
+        done();
+      });
     });
   });
 
