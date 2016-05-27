@@ -106,7 +106,7 @@ describe('integration-all-services', function() {
       });
     });
 
-    describe.only('v3', function() {
+    describe('v3', function() {
       this.timeout(TWENTY_SECONDS);
       var visual_recognition = watson.visual_recognition(auth.visual_recognition.v3);
 
