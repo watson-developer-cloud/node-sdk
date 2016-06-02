@@ -86,6 +86,41 @@ describe('visual_recognition', function() {
     assert((err instanceof Error) && /parameter/.test(err), 'Expected error to mention "parameter" but got "' + (err && err.message || err) + '"');
   };
 
+  describe('credentials', function() {
+    var env;
+    before(function() {
+      env = process.env;
+      process.env = {
+        VCAP_SERVICES: JSON.stringify({
+          "watson_vision_combined": [
+            {
+              "name": "Visual Recognition-mj",
+              "label": "watson_vision_combined",
+              "plan": "free",
+              "credentials": {
+                "url": "https://gateway-a.watsonplatform.net/visual-recognition/api",
+                "note": "It may take up to 5 minutes for this key to become active",
+                "api_key": "foo"
+              }
+            }
+          ]
+        })
+      };
+    });
+    after(function() {
+      process.env = env;
+    });
+
+    it('should read credentials from cf/bluemix environment properties', function() {
+      var instance = watson.visual_recognition({
+        version: 'v3',
+        version_date: '2016-05-20'
+      });
+      assert(instance._options.qs.api_key, 'foo');
+    });
+  });
+
+
   describe('version_date', function() {
     it('should check no version_date provided', function(done) {
       try {
