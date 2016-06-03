@@ -163,14 +163,13 @@ VisualRecognitionV3.prototype.classify = function(params, callback) {
   var parameters;
 
   if(params.images_file) {
-    var stream = params.images_file || params.image_file;
 
     parameters = {
       options: {
         url: '/v3/classify',
         method: 'POST',
         formData: {
-          images_file: stream,
+          images_file: params.images_file,
           parameters: {
             value: JSON.stringify(pick(params, ['classifier_ids', 'owners', 'threshold'])),
             options: {
