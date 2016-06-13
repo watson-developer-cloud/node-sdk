@@ -110,6 +110,20 @@ describe('integration-all-services', function() {
       this.timeout(TWENTY_SECONDS);
       var visual_recognition = watson.visual_recognition(auth.visual_recognition.v3);
 
+      it('should return error when invalid api_key', function(done) {
+        var constructor = auth.visual_recognition.v3;
+        constructor.api_key = 'not-a-valid-key';
+        var recognition = watson.visual_recognition(constructor);
+
+        recognition.listClassifiers({}, function(err) {
+          if (err) {
+            return done();
+          } else {
+            return done('Should return an error');
+          }
+        });
+      });
+
       describe('classify()', function() {
         it('should classify an uploaded image', function(done) {
           var params = {
