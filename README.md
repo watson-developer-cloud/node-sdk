@@ -212,9 +212,6 @@ authorization.getToken(params, function (err, token) {
 });
 ```
 
-### Concept Expansion
-The Watson [Concept Expansion][concept_expansion] Service will be withdrawn. The Watson Concept Expansion Service tile will be removed from the Bluemix catalog on Sunday, March 6, 2016, after which you cannot provision new instances of this service. However, existing provisioned instances will continue to be usable until March 30, 2016.
-
 ### Concept Insights
 Use the [Concept Insights][concept_insights] service to identify words in the
 text that correspond to concepts in a Wikipedia graph.
@@ -565,29 +562,7 @@ tradeoff_analytics.dilemmas(params, function(err, res) {
 ```
 
 ### Visual Insights
-Use the [Visual Insights][visual_insights] to get insight into the themes present in a collection of images based on their visual appearance/content.
-
-```js
-var watson = require('watson-developer-cloud');
-var fs = require('fs');
-
-var visual_insights = watson.visual_insights({
-  username: '<username>',
-  password: '<password>',
-  version: 'v1-experimental'
-});
-
-var params = {
-  images_file: fs.createReadStream('./resources/images.zip')
-};
-
-visual_insights.summary(params, function(err, res) {
-  if (err)
-    console.log(err);
-  else
-    console.log(JSON.stringify(res, null, 2));
-});
-```
+The Watson [Visual Insights][visual_insights] Service will be withdrawn. The Watson Visual Insights Service tile will be removed from the Bluemix catalog on July 3, 2016, after which you cannot provision new instances of this service.
 
 ### Visual Recognition
 Use the [Visual Recognition][visual_recognition] service to recognize the
@@ -600,10 +575,9 @@ var watson = require('watson-developer-cloud');
 var fs = require('fs');
 
 var visual_recognition = watson.visual_recognition({
-  username: '<username>',
-  password: '<password>',
-  version: 'v2-beta',
-  version_date: '2015-12-02'
+  api_key: '<api_key>',
+  version: 'v3',
+  version_date: '2016-05-19'
 });
 
 var params = {
@@ -683,7 +657,6 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/maste
 
 
 [personality_insights]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/personality-insights/
-[concept_expansion]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/glimpseapi/
 [relationship_extraction]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/sireapi/
 [retrieve_and_rank]: http://watson.stage1.mybluemix.net/smarterplanet/us/en/ibmwatson/developercloud/retrieve-rank.html
 [visual_recognition]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/visual-recognition/
