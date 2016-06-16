@@ -25,7 +25,7 @@ var requestFactory = require('../../lib/requestwrapper');
 // see #236
 var endpoints      = require('../../lib/alchemy_endpoints.json');
 var helper         = require('../../lib/helper');
-
+var pick           = require('object.pick');
 function errorFormatter(cb) {
   return function(err, result, response) {
     if (err) {
@@ -61,6 +61,7 @@ function createRequest(method) {
         url: endpoints[method][format],
         method: 'POST',
         json: true,
+        qs: pick(params, ['model']),
         form: extend({}, params, {outputMode: 'json'}) // change default output to json
       },
       defaultOptions: this._options
