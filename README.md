@@ -22,7 +22,6 @@ APIs and SDKs that use cognitive computing to solve complex problems.
     * [Alchemy Vision](#alchemy-vision)
     * [Alchemy Data News](#alchemy-data-news)
     * [Authorization](#authorization)
-    * [Concept Expansion](#concept-expansion)
     * [Concept Insights](#concept-insights)
     * [Dialog](#dialog)
     * [Document Conversion](#document-conversion)
@@ -37,7 +36,7 @@ APIs and SDKs that use cognitive computing to solve complex problems.
     * [Tradeoff Analytics](#tradeoff-analytics)
     * [Visual Insights](#visual-insights)
     * [Visual Recognition](#visual-recognition)
-  * [Running in Bluemix](#running-in-bluemix)
+  * [Running in Bluemix with Alternate Credentials](#running-in-bluemix-with-alternate-credentials)
   * [Debug](#debug)
   * [Tests](#tests)
   * [Open Source @ IBM](#open-source--ibm)
@@ -592,22 +591,19 @@ visual_recognition.classify(params, function(err, res) {
 });
 ```
 
-## Running in Bluemix
-By default, the library tries to use the Bluemix `VCAP_SERVICES` environment
-variable to get the credentials for a given service. You can avoid this by
-using:
-`use_vcap_services`.
+## Running in Bluemix with Alternate Credentials
+By default, the library tries to use the Bluemix `VCAP_SERVICES` environment variable to get the credentials for a given
+service, and if found, it prefers these over user-supplied credentials.
+You can disable this by setting `use_vcap_services` to `false`:
 
 ```javascript
 var watson = require('watson-developer-cloud');
 
-var concept_expansion = watson.concept_expansion({
-  version: 'v1-beta',
-  use_vcap_services: false
+var tone_analyzer = watson.tone_analyzer({
+  use_vcap_services: false,
+  /* ... */
 });
 ```
-This example fails because you did not provide a username and password and
-the library will not look into Bluemix for these values.
 
 ## Unauthenticated requests
 By default, the library tries to use Basic Auth and will ask for `api_key` or `username` and `password` and send an `Authorization: Basic XXXXXXX`. You can avoid this by using:
