@@ -85,27 +85,6 @@ describe('integration-all-services', function() {
 
   describe('functional_visual_recognition', function() {
 
-    describe('v2-beta', function() {
-      this.timeout(TWENTY_SECONDS);
-      var visual_recognition = watson.visual_recognition(auth.visual_recognition.v2);
-
-      it('getClassifier()', function(done) {
-        visual_recognition.getClassifier({classifier_id: 'Black'}, failIfError.bind(failIfError, done));
-      });
-
-      it('listClassifiers()', function(done) {
-        visual_recognition.listClassifiers({}, failIfError.bind(failIfError, done));
-      });
-
-      it('classify()', function(done) {
-        var params = {
-          images_file: fs.createReadStream(__dirname + '/resources/car.png'),
-          classifier_ids: ['Red','Car']
-        };
-        visual_recognition.classify(params, failIfError.bind(failIfError, done));
-      });
-    });
-
     describe('v3', function() {
       this.timeout(TWENTY_SECONDS);
       var visual_recognition = watson.visual_recognition(auth.visual_recognition.v3);

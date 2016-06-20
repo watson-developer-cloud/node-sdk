@@ -4,11 +4,10 @@ var watson = require('watson-developer-cloud');
 var fs = require('fs');
 
 var visual_recognition = watson.visual_recognition({
-  //url: 'https://gateway-d.watsonplatform.net/visual-recognition-beta/api',
-  username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
-  password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
-  version: 'v2-beta',
-  version_date: '2015-12-02'
+  url: 'https://gateway-a.watsonplatform.net/visual-recognition/api',
+  api_key: 'INSERT YOUR API KEY HERE',
+  version: 'v3',
+  version_date: '2016-05-19'
 });
 
 var params = {
