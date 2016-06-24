@@ -709,7 +709,7 @@ describe('integration-all-services', function() {
       }, failIfError.bind(failIfError, done));
     });
 
-    describe.only('typedRelations()', function() {
+    describe('typedRelations()', function() {
       it('should process html', function(done) {
         alchemy_language.typedRelations({
           html: text,
