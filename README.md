@@ -25,7 +25,7 @@ APIs and SDKs that use cognitive computing to solve complex problems.
     * [Concept Insights](#concept-insights)
     * [Dialog](#dialog)
     * [Document Conversion](#document-conversion)
-    * [Language Translation](#language-translation)
+    * [Language Translator](#language-translator)
     * [Natural Language Classifier](#natural-language-classifier)
     * [Personality Insights](#personality-insights)
     * [Relationship Extraction](#relationship-extraction)
@@ -298,20 +298,20 @@ document_conversion.convert({
 See the [Document Conversion integration example][document_conversion_integration_example] about how to integrate the Document Conversion service
 with the Retrieve and Rank service.
 
-### Language Translation
+### Language Translator
 
-Translate text from one language to another or idenfity a language using the [Language Translation][language_translation] service.
+Translate text from one language to another or idenfity a language using the [Language Translator][language_translator] service.
 
 ```javascript
 var watson = require('watson-developer-cloud');
 
-var language_translation = watson.language_translation({
+var language_translator = watson.language_translator({
   username: '<username>',
   password: '<password>',
   version: 'v2'
 });
 
-language_translation.translate({
+language_translator.translate({
   text: 'A sentence must have a verb', source : 'en', target: 'es' },
   function (err, translation) {
     if (err)
@@ -320,8 +320,8 @@ language_translation.translate({
       console.log(JSON.stringify(translation, null, 2));
 });
 
-language_translation.identify({
-  text: 'The language translation service takes text input and identifies the language used.' },
+language_translator.identify({
+  text: 'The language translator service takes text input and identifies the language used.' },
   function (err, language) {
     if (err)
       console.log('error:', err);
@@ -663,7 +663,7 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/maste
 [speech_to_text]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/speech-to-text/
 [concept_insights]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/concept-insights/
 [tradeoff_analytics]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/tradeoff-analytics/
-[language_translation]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/language-translation/
+[language_translator]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/language-translation/
 
 [alchemy_language]: http://www.alchemyapi.com/products/alchemylanguage
 [sentiment_analysis]: http://www.alchemyapi.com/products/alchemylanguage/sentiment-analysis
