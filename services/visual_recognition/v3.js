@@ -61,20 +61,20 @@ function verifyParams(params) {
  * @private
  */
 function errorFormatter(cb) {
+  var callback = typeof cb === 'function' ? cb : function() { /* no op */};
   return function(err, result) {
     if (err) {
-      cb(err, result);
-    }
-    else {
+      callback(err, result);
+    } else {
       if (result.status === 'ERROR') {
         if (result.statusInfo === 'invalid-api-key') {
-          cb({
+          callback({
             error: result.statusInfo,
             code: result.statusInfo === 'invalid-api-key' ? 401 : 400
           }, null);
         }
       } else {
-        cb(err, result);
+        callback(err, result);
       }
     }
   };
