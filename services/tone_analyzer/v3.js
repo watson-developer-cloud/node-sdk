@@ -74,11 +74,11 @@ ToneAnalyzer.prototype.tone = function(params, callback) {
       body: params.text,
       qs: pick(params, ['tones', 'sentences'])
     },
-    defaultOptions: extend(this._options, {
-    headers: {
+    defaultOptions: extend(true, this._options, {
+      headers: {
        'accept': 'application/json',
        'content-type': contentType
-    }
+      }
     }),
   };
 
