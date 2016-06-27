@@ -3,6 +3,7 @@
 var assert = require('assert');
 var watson = require('../lib/index');
 var nock   = require('nock');
+var extend = require('extend');
 
 describe('tone_analyzer.v3', function() {
 
@@ -24,6 +25,12 @@ describe('tone_analyzer.v3', function() {
     version: 'v3',
     version_date: '2016-05-19'
   };
+  var service_es = extend(service, {
+    headers: {
+      'accept-language': 'es',
+      'x-custom-header': 'foo'
+    }
+  });
 
   before(function() {
     nock.disableNetConnect();
@@ -38,6 +45,7 @@ describe('tone_analyzer.v3', function() {
   });
 
   var tone_analyzer = watson.tone_analyzer(service);
+  var tone_analyzer_es = watson.tone_analyzer(service_es);
 
   var missingParameter = function(err) {
     assert.ok((err instanceof Error) && /required parameters/.test(err));
@@ -91,6 +99,19 @@ describe('tone_analyzer.v3', function() {
         done();
       }
     });
+  });
+
+  it('tone API should honor headers passed by client', function() {
+      var options = {text: tone_request.text, isHTML: true };
+      var req = tone_analyzer_es.tone(options, noop);
+      var body = new Buffer(req.body).toString('ascii');
+      assert.equal(req.uri.href, service.url + tone_path + '?version=2016-05-19');
+      assert.equal(body, tone_request.text);
+      assert.equal(req.method, 'POST');
+      assert.equal(req.headers['content-type'], 'text/html');
+      assert.equal(req.headers['accept'], 'application/json');
+      assert.equal(req.headers['x-custom-header'], 'foo');
+      assert.equal(req.headers['accept-language'], 'es');
   });
 
 });
