@@ -115,7 +115,7 @@ RecognizeStream.prototype.initialize = function() {
     self.listening = false;
     self.push(null);
     /**
-     * @event RecognizeStream#connection-close
+     * @event RecognizeStream#close
      * @param {Number} reasonCode
      * @param {String} description
      */
