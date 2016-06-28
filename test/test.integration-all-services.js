@@ -713,14 +713,14 @@ describe('integration-all-services', function() {
       it('should process html', function(done) {
         alchemy_language.typedRelations({
           html: text,
-          //model: "ie-en-news" // todo: remove model once the API regression is fixed
+          model: "ie-en-news" // todo: remove model once the API regression is fixed
         }, failIfError.bind(failIfError, done));
       });
 
       it('should process text', function(done) {
         alchemy_language.typedRelations({
           text: text,
-          //model: "ie-en-news" // todo: remove model once the API regression is fixed
+          model: "ie-en-news" // todo: remove model once the API regression is fixed
         }, failIfError.bind(failIfError, done));
       });
     });
