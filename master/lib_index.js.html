@@ -139,8 +139,8 @@ function createServiceAPI(serviceName) {
         if (serviceName === 'search') {
           throw new Error('The search service has been replaced by retrieve_and_rank');
         }
-        if (serviceName === 'tone_analyzer' &amp;&amp; path.basename(version) === 'v1') {
-          throw new Error('tone_analyzer v1 has been replaced by v2-experimental');
+        if (serviceName === 'tone_analyzer' &amp;&amp; path.basename(version) === 'v3-beta') {
+          throw new Error('tone_analyzer v3-beta has been replaced by v3');
         }
 
         // for the v1.0 breaking change of requiring experimental/beta in the module name, try to offer a helpful error message.
@@ -165,14 +165,6 @@ function createServiceAPI(serviceName) {
  * @namespace
  */
 var watson = {
-
-  /**
-   * @function
-   * @param {{}} options
-   * @returns  {ConceptExpansion}
-   */
-  concept_expansion: createServiceAPI('concept_expansion'),
-
   /**
    * @function
    * @param {{}} options
@@ -241,7 +233,7 @@ var watson = {
    * @param {{}} options
    * @returns  {LanguageTranslation}
    */
-  language_translation: createServiceAPI('language_translation'),
+  language_translator: createServiceAPI('language_translator'),
 
   /**
    * @function
@@ -270,13 +262,6 @@ var watson = {
    * @returns  {DocumentConversion}
    */
   document_conversion: createServiceAPI('document_conversion'),
-
-  /**
-   * @function
-   * @param {{}} options
-   * @returns  {VisualInsights}
-   */
-  visual_insights: createServiceAPI('visual_insights'),
 
   // deprecated
   /**
@@ -320,7 +305,7 @@ var watson = {
 // removed services
 // we don't want these services listed (so non-enumerable), but we do want a clear error message
 // if old code happens to try using one
-['message_resonance', 'question_and_answer'].forEach(function(serviceName) {
+['message_resonance', 'question_and_answer', 'visual_insights', 'concept_expansion'].forEach(function(serviceName) {
   Object.defineProperty(watson, serviceName, {
     enumerable: false,
     configurable: true,
@@ -329,6 +314,19 @@ var watson = {
       throw new Error('The ' + serviceName + ' service is no longer available');
     }
   });
+});
+
+Object.defineProperty(watson, 'language_translation', {
+  enumerable: false,
+  configurable: true,
+  writable: true,
+  value: function(options) {
+    if (!options.silent) {
+      //eslint-disable-next-line no-console
+      console.warn(new Error("Watson language_translation is now language_translator. Set {silent: true} to disable this message.").stack)
+    }
+    return watson.language_translator(options);
+  }
 });
 
 module.exports = watson;
@@ -342,13 +340,13 @@ module.exports = watson;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AlchemyDataNews.html">AlchemyDataNews</a></li><li><a href="AlchemyLanguage.html">AlchemyLanguage</a></li><li><a href="AlchemyVision.html">AlchemyVision</a></li><li><a href="Authorization.html">Authorization</a></li><li><a href="ConceptExpansion.html">ConceptExpansion</a></li><li><a href="ConceptInsights.html">ConceptInsights</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Dialog.html">Dialog</a></li><li><a href="DocumentConversion.html">DocumentConversion</a></li><li><a href="LanguageTranslation.html">LanguageTranslation</a></li><li><a href="NaturalLanguageClassifier.html">NaturalLanguageClassifier</a></li><li><a href="PersonalityInsights.html">PersonalityInsights</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RelationshipExtraction.html">RelationshipExtraction</a></li><li><a href="RetrieveAndRank.html">RetrieveAndRank</a></li><li><a href="SpeechToText.html">SpeechToText</a></li><li><a href="TextToSpeech.html">TextToSpeech</a></li><li><a href="TradeoffAnalytics.html">TradeoffAnalytics</a></li><li><a href="VisualInsights.html">VisualInsights</a></li><li><a href="VisualRecognitionV2Beta.html">VisualRecognitionV2Beta</a></li><li><a href="VisualRecognitionV3.html">VisualRecognitionV3</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:connection-close">connection-close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li></ul><h3>Namespaces</h3><ul><li><a href="watson.html">watson</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AlchemyDataNews.html">AlchemyDataNews</a></li><li><a href="AlchemyLanguage.html">AlchemyLanguage</a></li><li><a href="AlchemyVision.html">AlchemyVision</a></li><li><a href="Authorization.html">Authorization</a></li><li><a href="ConceptInsights.html">ConceptInsights</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Dialog.html">Dialog</a></li><li><a href="DocumentConversion.html">DocumentConversion</a></li><li><a href="LanguageTranslation.html">LanguageTranslation</a></li><li><a href="NaturalLanguageClassifier.html">NaturalLanguageClassifier</a></li><li><a href="PersonalityInsights.html">PersonalityInsights</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RelationshipExtraction.html">RelationshipExtraction</a></li><li><a href="RetrieveAndRank.html">RetrieveAndRank</a></li><li><a href="SpeechToText.html">SpeechToText</a></li><li><a href="TextToSpeech.html">TextToSpeech</a></li><li><a href="TradeoffAnalytics.html">TradeoffAnalytics</a></li><li><a href="VisualRecognitionV3.html">VisualRecognitionV3</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:connection-close">connection-close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li></ul><h3>Namespaces</h3><ul><li><a href="watson.html">watson</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Jun 03 2016 20:51:07 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue Jun 28 2016 14:23:01 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>

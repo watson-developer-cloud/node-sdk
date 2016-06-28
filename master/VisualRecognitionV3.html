@@ -133,7 +133,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line65">line 65</a>
+        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line88">line 88</a>
     </li></ul></dd>
     
 
@@ -183,7 +183,7 @@
     
 
     
-        <h4 class="name" id="classify"><span class="type-signature"></span>classify<span class="signature">(callback)</span><span class="type-signature"> &rarr; {ReadableStream|undefined}</span></h4>
+        <h4 class="name" id="classify"><span class="type-signature"></span>classify<span class="signature">(params, callback)</span><span class="type-signature"> &rarr; {ReadableStream|undefined}</span></h4>
     
 
     
@@ -195,45 +195,6 @@
 images (.jpeg, .png, .gif) and scores every available classifier
 on each image. It then applies a threshold and returns the list
 of relevant classifier scores for each image.
-
-Example response:
-
-{
-    "images": [
-        {
-            "classifiers": [
-                {
-                    "classes": [
-                        {
-                            "class": "animal",
-                            "score": 0.998771,
-                            "type_hierarchy": "/animals"
-                        },
-                        {
-                            "class": "mammal",
-                            "score": 0.998499,
-                            "type_hierarchy": "/animals/mammal"
-                        },
-                        {
-                            "class": "dog",
-                            "score": 0.900249,
-                            "type_hierarchy": "/animals/pets/dog"
-                        },
-                        {
-                            "class": "puppy",
-                            "score": 0.5,
-                            "type_hierarchy": "/animals/pets/puppy"
-                        }
-                    ],
-                    "classifier_id": "default",
-                    "name": "default"
-                }
-            ],
-            "image": "dog.jpg"
-        }
-    ],
-    "images_processed": 1
-}
 </div>
 
 
@@ -246,6 +207,48 @@ Example response:
 
     <h5>Parameters:</h5>
     
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>params</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <h6>Properties</h6>
+                
 
 <table class="params">
     <thead>
@@ -273,7 +276,7 @@ Example response:
 
         <tr>
             
-                <td class="name"><code>params.images_file</code></td>
+                <td class="name"><code>images_file</code></td>
             
 
             <td class="type">
@@ -310,7 +313,7 @@ Example response:
 
         <tr>
             
-                <td class="name"><code>params.url</code></td>
+                <td class="name"><code>url</code></td>
             
 
             <td class="type">
@@ -347,7 +350,7 @@ Example response:
 
         <tr>
             
-                <td class="name"><code>params.classifier_ids</code></td>
+                <td class="name"><code>classifier_ids</code></td>
             
 
             <td class="type">
@@ -386,7 +389,7 @@ Example response:
 
         <tr>
             
-                <td class="name"><code>params.owners</code></td>
+                <td class="name"><code>owners</code></td>
             
 
             <td class="type">
@@ -425,7 +428,7 @@ Example response:
 
         <tr>
             
-                <td class="name"><code>params.threshold</code></td>
+                <td class="name"><code>threshold</code></td>
             
 
             <td class="type">
@@ -459,6 +462,13 @@ Example response:
         </tr>
 
     
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
 
         <tr>
             
@@ -475,19 +485,7 @@ Example response:
             </td>
 
             
-                <td class="attributes">
-                
 
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
             
 
             <td class="description last"></td>
@@ -531,7 +529,7 @@ Example response:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line149">line 149</a>
+        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line158">line 158</a>
     </li></ul></dd>
     
 
@@ -577,6 +575,37 @@ Example response:
     
 
 
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>* {
+  "images": [{
+    "classifiers": [{
+      "classes": [{
+        "class": "animal",
+        "score": 0.998771,
+        "type_hierarchy": "/animals"
+      }, {
+        "class": "mammal",
+        "score": 0.998499,
+        "type_hierarchy": "/animals/mammal"
+      }, {
+        "class": "dog",
+        "score": 0.900249,
+        "type_hierarchy": "/animals/pets/dog"
+      }, {
+        "class": "puppy",
+        "score": 0.5,
+        "type_hierarchy": "/animals/pets/puppy"
+      }],
+      "classifier_id": "default",
+      "name": "default"
+    }],
+    "image": "dog.jpg"
+  }],
+  "images_processed": 1
+}</code></pre>
+
+
 
         
             
@@ -597,40 +626,6 @@ This call returns before training has completed.  You'll need to use the
 getClassifer method to make sure the classifier has completed training and
 was successful before you can classify any images with the newly created
 classifier.
-
-Example inputs:
-
-{
-  foo_positive_examples: fs.createReadStream('./foo-pics.zip'),
-  negative_examples: fs.createReadStream('./not-foo-pics.zip'),
-  name: 'to-foo-or-not'
-}
-
-{
- foo_positive_examples: fs.createReadStream('./foo-pics.zip'),
- bar_positive_examples: fs.createReadStream('./bar-pics.zip'),
- name: 'foo-vs-bar'
-}
-
-{
- foo_positive_examples: fs.createReadStream('./foo-pics.zip'),
- bar_positive_examples: fs.createReadStream('./bar-pics.zip'),
- negative_examples: fs.createReadStream('./not-foo-pics.zip'),
- name: 'foo-bar-not'
-}
-
-Example output:
- {
-     "classifier_id": "fruit_679357912",
-     "name": "fruit",
-     "owner": "a3a48ea7-492b-448b-87d7-9dade8bde5a9",
-     "status": "training",
-     "created": "2016-05-23T21:50:41.680Z",
-     "classes": [
-         {"class": "banana"},
-         {"class": "apple"}
-     ]
- }
 </div>
 
 
@@ -846,7 +841,7 @@ Example output:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line432">line 432</a>
+        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line425">line 425</a>
     </li></ul></dd>
     
 
@@ -890,6 +885,41 @@ Example output:
 </dl>
 
     
+
+
+    <h5>Examples</h5>
+    
+    <pre class="prettyprint"><code>{
+  foo_positive_examples: fs.createReadStream('./foo-pics.zip'),
+  negative_examples: fs.createReadStream('./not-foo-pics.zip'),
+  name: 'to-foo-or-not'
+}</code></pre>
+
+    <pre class="prettyprint"><code>{
+ foo_positive_examples: fs.createReadStream('./foo-pics.zip'),
+ bar_positive_examples: fs.createReadStream('./bar-pics.zip'),
+ name: 'foo-vs-bar'
+}</code></pre>
+
+    <pre class="prettyprint"><code>{
+ foo_positive_examples: fs.createReadStream('./foo-pics.zip'),
+ bar_positive_examples: fs.createReadStream('./bar-pics.zip'),
+ negative_examples: fs.createReadStream('./not-foo-pics.zip'),
+ name: 'foo-bar-not'
+}</code></pre>
+
+    <pre class="prettyprint"><code>{
+  "classifier_id": "fruit_679357912",
+  "name": "fruit",
+  "owner": "a3a48ea7-492b-448b-87d7-9dade8bde5a9",
+  "status": "training",
+  "created": "2016-05-23T21:50:41.680Z",
+  "classes": [{
+    "class": "banana"
+  }, {
+    "class": "apple"
+  }]
+}</code></pre>
 
 
 
@@ -1072,7 +1102,7 @@ Example output:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line542">line 542</a>
+        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line531">line 531</a>
     </li></ul></dd>
     
 
@@ -1125,7 +1155,7 @@ Example output:
     
 
     
-        <h4 class="name" id="detectFaces"><span class="type-signature"></span>detectFaces<span class="signature">(callback)</span><span class="type-signature"> &rarr; {ReadableStream|undefined}</span></h4>
+        <h4 class="name" id="detectFaces"><span class="type-signature"></span>detectFaces<span class="signature">(params, callback)</span><span class="type-signature"> &rarr; {ReadableStream|undefined}</span></h4>
     
 
     
@@ -1138,41 +1168,6 @@ images (.jpeg, .png, .gif) and attempts to extract faces and
 identities. It then applies a threshold
 and returns the list of relevant identities, locations, and metadata
 for found faces for each image.
-
-Example output:
-
-{
-  "images": [
-    {
-      "faces": [
-        {
-          "age": {
-            "max": 54,
-            "min": 45,
-            "score": 0.40459
-          },
-          "face_location": {
-            "height": 131,
-            "left": 80,
-            "top": 68,
-            "width": 123
-          },
-          "gender": {
-            "gender": "MALE",
-            "score": 0.993307
-          },
-          "identity": {
-            "name": "Barack Obama",
-            "score": 0.970688,
-            "type_hierarchy": "/people/politicians/democrats/barack obama"
-          }
-        }
-      ],
-      "image": "obama.jpg"
-    }
-  ],
-  "images_processed": 1
-}
 </div>
 
 
@@ -1185,6 +1180,48 @@ Example output:
 
     <h5>Parameters:</h5>
     
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>params</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <h6>Properties</h6>
+                
 
 <table class="params">
     <thead>
@@ -1210,7 +1247,7 @@ Example output:
 
         <tr>
             
-                <td class="name"><code>params.images_file</code></td>
+                <td class="name"><code>images_file</code></td>
             
 
             <td class="type">
@@ -1243,7 +1280,7 @@ Example output:
 
         <tr>
             
-                <td class="name"><code>params.url</code></td>
+                <td class="name"><code>url</code></td>
             
 
             <td class="type">
@@ -1273,6 +1310,13 @@ Example output:
         </tr>
 
     
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
 
         <tr>
             
@@ -1288,14 +1332,6 @@ Example output:
             
             </td>
 
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
             
 
             
@@ -1341,7 +1377,7 @@ Example output:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line250">line 250</a>
+        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line252">line 252</a>
     </li></ul></dd>
     
 
@@ -1387,6 +1423,38 @@ Example output:
     
 
 
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>{
+  "images": [{
+    "faces": [{
+      "age": {
+        "max": 54,
+        "min": 45,
+        "score": 0.40459
+      },
+      "face_location": {
+        "height": 131,
+        "left": 80,
+        "top": 68,
+        "width": 123
+      },
+      "gender": {
+        "gender": "MALE",
+        "score": 0.993307
+      },
+      "identity": {
+        "name": "Barack Obama",
+        "score": 0.970688,
+        "type_hierarchy": "/people/politicians/democrats/barack obama"
+      }
+    }],
+    "image": "obama.jpg"
+  }],
+  "images_processed": 1
+}</code></pre>
+
+
 
         
             
@@ -1403,19 +1471,6 @@ Example output:
 
 <div class="description">
     Retrieves information about a specific classifier.
-
-Example output:
-{
-  classifier_id: 'fruit_679357912',
-  name: 'fruit',
-  owner: 'a3a48ea7-492b-448b-87d7-9dade8bde5a9',
-  status: 'ready',
-  created: '2016-05-23T21:50:41.680Z',
-  classes: [
-    { class: 'banana' },
-    { class: 'apple' }
-  ]
-}
 </div>
 
 
@@ -1580,7 +1635,7 @@ Example output:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line520">line 520</a>
+        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line509">line 509</a>
     </li></ul></dd>
     
 
@@ -1626,6 +1681,22 @@ Example output:
     
 
 
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>{
+  "classifier_id": "fruit_679357912",
+  "name": "fruit",
+  "owner": "a3a42ea7-492b-448b-87d7-9dfde8bde519 ",
+  "status": "ready",
+  "created": "2016-05-23T21:50:41.680Z",
+  "classes": [{
+    "class": "banana"
+  }, {
+    "class": "apple"
+  }]
+}</code></pre>
+
+
 
         
             
@@ -1643,21 +1714,6 @@ Example output:
 <div class="description">
     Retrieve a list of all classifiers, including built-in and
 user-created classifiers.
-
-Example output:
-
- {"classifiers": [
-    {
-        "classifier_id": "fruit_679357912",
-        "name": "fruit",
-        "status": "ready"
-    },
-    {
-        "classifier_id": "Dogs_2017013066",
-        "name": "Dogs",
-        "status": "ready"
-    }
-]}
 </div>
 
 
@@ -1842,7 +1898,7 @@ Example output:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line486">line 486</a>
+        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line474">line 474</a>
     </li></ul></dd>
     
 
@@ -1888,6 +1944,21 @@ Example output:
     
 
 
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>{
+  "classifiers": [{
+    "classifier_id": "fruit_679357912",
+    "name": "fruit",
+    "status": "ready"
+  }, {
+    "classifier_id": "Dogs_2017013066",
+    "name": "Dogs",
+    "status": "ready"
+  }]
+}</code></pre>
+
+
 
         
             
@@ -1895,7 +1966,7 @@ Example output:
     
 
     
-        <h4 class="name" id="recognizeText"><span class="type-signature"></span>recognizeText<span class="signature">(callback)</span><span class="type-signature"> &rarr; {ReadableStream|undefined}</span></h4>
+        <h4 class="name" id="recognizeText"><span class="type-signature"></span>recognizeText<span class="signature">(params, callback)</span><span class="type-signature"> &rarr; {ReadableStream|undefined}</span></h4>
     
 
     
@@ -1908,52 +1979,6 @@ images (.jpeg, .png, .gif) and attempts to recognize text
 found in the image. It then applies a threshold
 and returns the list of relevant locations, strings,  and metadata
 for discovered text in each image.
-
-Example output:
- {
-   "images": [
-     {
-       "image": "car.png",
-       "text": "3 jag [brio]",
-       "words": [
-         {
-           "line_number": 0,
-           "location": {
-             "height": 53,
-             "left": 204,
-             "top": 294,
-             "width": 27
-           },
-           "score": 0.50612,
-           "word": "3"
-         },
-         {
-           "line_number": 0,
-           "location": {
-             "height": 32,
-             "left": 264,
-             "top": 288,
-             "width": 56
-           },
-           "score": 0.958628,
-           "word": "jag"
-         },
-         {
-           "line_number": 0,
-           "location": {
-             "height": 40,
-             "left": 324,
-             "top": 288,
-             "width": 92
-           },
-           "score": 0.00165806,
-           "word": "brio"
-         }
-       ]
-     }
-   ],
-   "images_processed": 1
- }
 </div>
 
 
@@ -1966,6 +1991,48 @@ Example output:
 
     <h5>Parameters:</h5>
     
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>params</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <h6>Properties</h6>
+                
 
 <table class="params">
     <thead>
@@ -1991,7 +2058,7 @@ Example output:
 
         <tr>
             
-                <td class="name"><code>params.images_file</code></td>
+                <td class="name"><code>images_file</code></td>
             
 
             <td class="type">
@@ -2024,7 +2091,7 @@ Example output:
 
         <tr>
             
-                <td class="name"><code>params.url</code></td>
+                <td class="name"><code>url</code></td>
             
 
             <td class="type">
@@ -2054,6 +2121,13 @@ Example output:
         </tr>
 
     
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
 
         <tr>
             
@@ -2069,14 +2143,6 @@ Example output:
             
             </td>
 
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
             
 
             
@@ -2122,7 +2188,7 @@ Example output:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line346">line 346</a>
+        <a href="services_visual_recognition_v3.js.html">services/visual_recognition/v3.js</a>, <a href="services_visual_recognition_v3.js.html#line342">line 342</a>
     </li></ul></dd>
     
 
@@ -2168,6 +2234,48 @@ Example output:
     
 
 
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>{
+  "images": [{
+    "image": "car.png",
+    "text": "3 jag [brio]",
+    "words": [{
+      "line_number": 0,
+      "location": {
+        "height": 53,
+        "left": 204,
+        "top": 294,
+        "width": 27
+      },
+      "score": 0.50612,
+      "word": "3"
+    }, {
+      "line_number": 0,
+      "location": {
+        "height": 32,
+        "left": 264,
+        "top": 288,
+        "width": 56
+      },
+      "score": 0.958628,
+      "word": "jag"
+    }, {
+      "line_number": 0,
+      "location": {
+        "height": 40,
+        "left": 324,
+        "top": 288,
+        "width": 92
+      },
+      "score": 0.00165806,
+      "word": "brio"
+    }]
+  }],
+  "images_processed": 1
+}</code></pre>
+
+
 
         
     
@@ -2185,13 +2293,13 @@ Example output:
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AlchemyDataNews.html">AlchemyDataNews</a></li><li><a href="AlchemyLanguage.html">AlchemyLanguage</a></li><li><a href="AlchemyVision.html">AlchemyVision</a></li><li><a href="Authorization.html">Authorization</a></li><li><a href="ConceptExpansion.html">ConceptExpansion</a></li><li><a href="ConceptInsights.html">ConceptInsights</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Dialog.html">Dialog</a></li><li><a href="DocumentConversion.html">DocumentConversion</a></li><li><a href="LanguageTranslation.html">LanguageTranslation</a></li><li><a href="NaturalLanguageClassifier.html">NaturalLanguageClassifier</a></li><li><a href="PersonalityInsights.html">PersonalityInsights</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RelationshipExtraction.html">RelationshipExtraction</a></li><li><a href="RetrieveAndRank.html">RetrieveAndRank</a></li><li><a href="SpeechToText.html">SpeechToText</a></li><li><a href="TextToSpeech.html">TextToSpeech</a></li><li><a href="TradeoffAnalytics.html">TradeoffAnalytics</a></li><li><a href="VisualInsights.html">VisualInsights</a></li><li><a href="VisualRecognitionV2Beta.html">VisualRecognitionV2Beta</a></li><li><a href="VisualRecognitionV3.html">VisualRecognitionV3</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:connection-close">connection-close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li></ul><h3>Namespaces</h3><ul><li><a href="watson.html">watson</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AlchemyDataNews.html">AlchemyDataNews</a></li><li><a href="AlchemyLanguage.html">AlchemyLanguage</a></li><li><a href="AlchemyVision.html">AlchemyVision</a></li><li><a href="Authorization.html">Authorization</a></li><li><a href="ConceptInsights.html">ConceptInsights</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Dialog.html">Dialog</a></li><li><a href="DocumentConversion.html">DocumentConversion</a></li><li><a href="LanguageTranslation.html">LanguageTranslation</a></li><li><a href="NaturalLanguageClassifier.html">NaturalLanguageClassifier</a></li><li><a href="PersonalityInsights.html">PersonalityInsights</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RelationshipExtraction.html">RelationshipExtraction</a></li><li><a href="RetrieveAndRank.html">RetrieveAndRank</a></li><li><a href="SpeechToText.html">SpeechToText</a></li><li><a href="TextToSpeech.html">TextToSpeech</a></li><li><a href="TradeoffAnalytics.html">TradeoffAnalytics</a></li><li><a href="VisualRecognitionV3.html">VisualRecognitionV3</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:connection-close">connection-close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li></ul><h3>Namespaces</h3><ul><li><a href="watson.html">watson</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Jun 03 2016 20:51:07 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue Jun 28 2016 14:23:01 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>
