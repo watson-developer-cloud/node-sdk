@@ -115,6 +115,8 @@ describe('document_conversion', function() {
       });
     }
 
+    // todo: check for flakyness in this test.
+    // It faild on me once, but the error message included the full file contents, which were longer than the scroll-back in my console, so I couldn't see the actual error.
     it('should set a default content type based on the file extension', function() {
       return checkContentType({
         conversion_target: 'ANSWER_UNITS',
