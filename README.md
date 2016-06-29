@@ -253,7 +253,7 @@ var conversation = watson.conversation({
   username: '<username>',
   password: '<password>',
   version: 'v1',
-  version_date: '2016-07-04'
+  version_date: '2016-07-01'
 });
 
 conversation.message({

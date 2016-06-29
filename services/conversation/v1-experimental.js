@@ -31,6 +31,11 @@ function Conversation(options) {
   if (typeof options.version_date === 'undefined') {
     throw new Error('Argument error: version_date was not specified, use 2016-05-19');
   }
+  
+  if (!options.silent) {
+    // eslint-disable-next-line no-console
+    console.warn(new Error("Watson Conversation v1-experimental is sunset as of 2016-08-01. Please upgrade to v1. Set {silent: true} to disable this message.").stack);
+  }
 
   // Default URL
   var serviceDefaults = {
