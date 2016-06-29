@@ -34,7 +34,7 @@ function Conversation(options) {
 
   // Default URL
   var serviceDefaults = {
-    url: 'https://gateway.watsonplatform.net/conversation-v1/api',
+    url: 'https://gateway.watsonplatform.net/conversation/api',
     qs: {
       version: options.version_date
     }
