@@ -278,7 +278,7 @@ var dialog = watson.dialog({
   username: '<username>',
   password: '<password>',
   version: 'v1',
-   version_date: '2015-12-01'
+  version_date: '2015-12-01'
 });
 
 dialog.getDialogs({}, function (err, dialogs) {
