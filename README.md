@@ -23,6 +23,7 @@ APIs and SDKs that use cognitive computing to solve complex problems.
     * [Alchemy Data News](#alchemy-data-news)
     * [Authorization](#authorization)
     * [Concept Insights](#concept-insights)
+    * [Conversation](#conversation)
     * [Dialog](#dialog)
     * [Document Conversion](#document-conversion)
     * [Language Translator](#language-translator)
@@ -239,6 +240,34 @@ concept_insights.graphs.annotateText(params, function(err, res) {
 });
 ```
 
+### Conversation
+
+Use the [Conversation](http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/conversation.html) service to determine the intent of a message.
+
+Note: you must first create a workspace via Bluemix. See [the documentation](http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/conversation/overview.shtml) for details.
+
+```js
+var watson = require('watson-developer-cloud');
+
+var conversation = watson.conversation({
+  username: '<username>',
+  password: '<password>',
+  version: 'v1',
+  version_date: '2016-07-01'
+});
+
+conversation.message({
+  input: 'What\'s the weather?',
+  workspace_id: '<workspace id>'
+ }, function(err, response) {
+     if (err) {
+       console.error(err);
+     } else {
+       console.log(JSON.stringify(response, null, 2));
+     }
+});
+```
+
 ### Dialog
 Use the Dialog service to list all the dialogs you have.
 
@@ -248,7 +277,8 @@ var watson = require('watson-developer-cloud');
 var dialog = watson.dialog({
   username: '<username>',
   password: '<password>',
-  version: 'v1'
+  version: 'v1',
+  version_date: '2015-12-01'
 });
 
 dialog.getDialogs({}, function (err, dialogs) {
