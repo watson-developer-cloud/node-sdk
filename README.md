@@ -257,7 +257,7 @@ var conversation = watson.conversation({
 });
 
 conversation.message({
-  input: 'What's the weather?',
+  input: 'What\'s the weather?',
   workspace_id: '<workspace id>'
  }, function(err, response) {
      if (err) {
