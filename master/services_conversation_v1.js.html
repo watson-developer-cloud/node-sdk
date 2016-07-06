@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Source: services/conversation/v1-experimental.js | Watson Developer Cloud Node.js SDK Documentation</title>
+    <title>Source: services/conversation/v1.js | Watson Developer Cloud Node.js SDK Documentation</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: services/conversation/v1-experimental.js</h1>
+    <h1 class="page-title">Source: services/conversation/v1.js</h1>
 
     
 
@@ -54,20 +54,15 @@ var pick           = require('object.pick');
  * @constructor
  */
 function Conversation(options) {
-    
+
   // Check if 'version_date' was provided
   if (typeof options.version_date === 'undefined') {
-    throw new Error('Argument error: version_date was not specified, use 2016-05-19');
-  }
-  
-  if (!options.silent) {
-    // eslint-disable-next-line no-console
-    console.warn(new Error("Watson Conversation v1-experimental is sunset as of 2016-08-01. Please upgrade to v1. Set {silent: true} to disable this message.").stack);
+    throw new Error('Argument error: version_date was not specified, use 2016-07-01');
   }
 
   // Default URL
   var serviceDefaults = {
-    url: 'https://gateway.watsonplatform.net/conversation-experimental/api',
+    url: 'https://gateway.watsonplatform.net/conversation/api',
     qs: {
       version: options.version_date
     }

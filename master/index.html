@@ -26,7 +26,7 @@
     
 
 
-    <h3>watson-developer-cloud 1.10.0</h3>
+    <h3>watson-developer-cloud 1.11.0</h3>
 
 
 
@@ -64,6 +64,7 @@ APIs and SDKs that use cognitive computing to solve complex problems.</p>
 <li><a href="#alchemy-data-news">Alchemy Data News</a></li>
 <li><a href="#authorization">Authorization</a></li>
 <li><a href="#concept-insights">Concept Insights</a></li>
+<li><a href="#conversation">Conversation</a></li>
 <li><a href="#dialog">Dialog</a></li>
 <li><a href="#document-conversion">Document Conversion</a></li>
 <li><a href="#language-translator">Language Translator</a></li>
@@ -240,13 +241,34 @@ concept_insights.graphs.annotateText(params, function(err, res) {
   else {
     console.log(JSON.stringify(res, null, 2));
   }
+});</code></pre><h3>Conversation</h3><p>Use the <a href="http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/conversation.html">Conversation</a> service to determine the intent of a message.</p>
+<p>Note: you must first create a workspace via Bluemix. See <a href="http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/conversation/overview.shtml">the documentation</a> for details.</p>
+<pre class="prettyprint source lang-js"><code>var watson = require('watson-developer-cloud');
+
+var conversation = watson.conversation({
+  username: '&lt;username>',
+  password: '&lt;password>',
+  version: 'v1',
+  version_date: '2016-07-01'
+});
+
+conversation.message({
+  input: 'What\'s the weather?',
+  workspace_id: '&lt;workspace id>'
+ }, function(err, response) {
+     if (err) {
+       console.error(err);
+     } else {
+       console.log(JSON.stringify(response, null, 2));
+     }
 });</code></pre><h3>Dialog</h3><p>Use the Dialog service to list all the dialogs you have.</p>
 <pre class="prettyprint source lang-javascript"><code>var watson = require('watson-developer-cloud');
 
 var dialog = watson.dialog({
   username: '&lt;username>',
   password: '&lt;password>',
-  version: 'v1'
+  version: 'v1',
+  version_date: '2015-12-01'
 });
 
 dialog.getDialogs({}, function (err, dialogs) {
@@ -545,13 +567,13 @@ var dialog = watson.dialog({
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AlchemyDataNews.html">AlchemyDataNews</a></li><li><a href="AlchemyLanguage.html">AlchemyLanguage</a></li><li><a href="AlchemyVision.html">AlchemyVision</a></li><li><a href="Authorization.html">Authorization</a></li><li><a href="ConceptInsights.html">ConceptInsights</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Dialog.html">Dialog</a></li><li><a href="DocumentConversion.html">DocumentConversion</a></li><li><a href="LanguageTranslation.html">LanguageTranslation</a></li><li><a href="NaturalLanguageClassifier.html">NaturalLanguageClassifier</a></li><li><a href="PersonalityInsights.html">PersonalityInsights</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RelationshipExtraction.html">RelationshipExtraction</a></li><li><a href="RetrieveAndRank.html">RetrieveAndRank</a></li><li><a href="SpeechToText.html">SpeechToText</a></li><li><a href="TextToSpeech.html">TextToSpeech</a></li><li><a href="TradeoffAnalytics.html">TradeoffAnalytics</a></li><li><a href="VisualRecognitionV3.html">VisualRecognitionV3</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:connection-close">connection-close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li></ul><h3>Namespaces</h3><ul><li><a href="watson.html">watson</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AlchemyDataNews.html">AlchemyDataNews</a></li><li><a href="AlchemyLanguage.html">AlchemyLanguage</a></li><li><a href="AlchemyVision.html">AlchemyVision</a></li><li><a href="Authorization.html">Authorization</a></li><li><a href="ConceptInsights.html">ConceptInsights</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Dialog.html">Dialog</a></li><li><a href="DocumentConversion.html">DocumentConversion</a></li><li><a href="LanguageTranslation.html">LanguageTranslation</a></li><li><a href="NaturalLanguageClassifier.html">NaturalLanguageClassifier</a></li><li><a href="PersonalityInsights.html">PersonalityInsights</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RelationshipExtraction.html">RelationshipExtraction</a></li><li><a href="RetrieveAndRank.html">RetrieveAndRank</a></li><li><a href="SpeechToText.html">SpeechToText</a></li><li><a href="TextToSpeech.html">TextToSpeech</a></li><li><a href="TradeoffAnalytics.html">TradeoffAnalytics</a></li><li><a href="VisualRecognitionV3.html">VisualRecognitionV3</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:close">close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li></ul><h3>Namespaces</h3><ul><li><a href="watson.html">watson</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue Jun 28 2016 14:23:01 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed Jul 06 2016 18:10:10 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>
