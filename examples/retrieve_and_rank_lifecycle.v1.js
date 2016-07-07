@@ -16,7 +16,7 @@ var clusterId;
 var clusterName = 'example_cluster';
 
 // The empty string will create a free cluster. Input an integer to create a cluster of that many units.
-var clusterSize = '';
+var clusterSize = 1;
 
 async.series([
 
@@ -39,6 +39,20 @@ async.series([
     console.log('Listing Solr clusters.');
     retrieve.listClusters({}, function(err, res) {
       printResponse(err, 'Error listing Solr clusters: ', res, done);
+    });
+  },
+
+  function resizeCluster(done) {
+    console.log('Resizing Solr cluster.');
+    retrieve.resizeCluster({cluster_id: clusterId, cluster_size: 2}, function(err, res) {
+      printResponse(err, 'Error resizing Solr cluster: ', res, done);
+    });
+  },
+
+  function getResizeStatus(done) {
+    console.log('Getting Solr cluster\'s resize status.');
+    retrieve.getResizeStatus({cluster_id: clusterId}, function(err, res) {
+      printResponse(err, 'Error getting resize status: ', res, done);
     });
   },
 
