@@ -21,6 +21,7 @@ describe('retrieve_and_rank', function() {
   var pollResponse = 'poll response';
   var deleteResponse = 'delete response';
   var statsResponse = 'stats response';
+  var resizeResponse = 'resize response';
 
   var configsPath = '/v1/solr_clusters/' + clusterId + '/config';
   var configPath = configsPath + '/' + configName;
@@ -67,6 +68,9 @@ describe('retrieve_and_rank', function() {
     .get(solrClusterPath).reply(200, pollResponse)
     .delete(solrClusterPath).reply(200, deleteResponse)
     .get(solrClusterPath + '/stats').reply(200, statsResponse)
+
+    .get(solrClusterPath + '/cluster_size').reply(200, resizeResponse)
+    .put(solrClusterPath + '/cluster_size').reply(200, resizeResponse)
 
     .get(configsPath).reply(200, configListResponse)
     .post(configPath).reply(200, configUploadResponse)
@@ -160,8 +164,39 @@ describe('retrieve_and_rank', function() {
     });
   });
 
-  it('returns error when cluster_id is not specified on delete request', function() {
+  it('returns error when cluster_id is not specified on stats request', function() {
     search.getClusterStats({}, missingParameter);
+  });
+
+  it('can resize a Solr cluster', function(done) {
+    search.resizeCluster({
+      cluster_id: clusterId,
+      cluster_size: 1
+    }, function(error, data) {
+      assert.equal(data, resizeResponse);
+      done();
+    });
+  });
+
+  it('returns error when cluster_id is not specified on resize request', function() {
+    search.resizeCluster({cluster_size: 1}, missingParameter);
+  });
+
+  it('returns error when cluster_size is not specified on resize request', function() {
+    search.resizeCluster({cluster_id: 'any_id'}, missingParameter);
+  });
+
+  it('can get a cluster\'s resize status', function(done) {
+    search.getResizeStatus({
+      cluster_id: clusterId
+    }, function(error, data) {
+      assert.equal(data, resizeResponse);
+      done();
+    });
+  });
+
+  it('returns error when cluster_id is not specified on resize status request', function() {
+    search.getResizeStatus({}, missingParameter);
   });
 
   it('can list Solr configs', function(done) {

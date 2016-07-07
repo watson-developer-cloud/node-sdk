@@ -237,6 +237,60 @@ RetrieveAndRank.prototype.pollCluster = function(params, callback) {
 };
 
 /**
+ * Change the size of the Solr cluster.
+
+ * @param params An Object representing the parameters for this service call.
+ *   Required params:
+ *     - cluster_id: the ID of the Solr cluster to poll
+ *     - cluster_size: the integer size to resize the cluster to
+ *
+ * @param callback The callback.
+ */
+RetrieveAndRank.prototype.resizeCluster = function(params, callback) {
+  params = params || {};
+
+  var parameters = {
+    options: {
+      url: '/v1/solr_clusters/{cluster_id}/cluster_size',
+      method: 'PUT',
+      body: { cluster_size: params.cluster_size },
+      path: params,
+      json: true
+    },
+    requiredParams: ['cluster_id', 'cluster_size'],
+    defaultOptions: this._options
+  };
+
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Get the status of a resize request.
+
+ * @param params An Object representing the parameters for this service call.
+ *   Required params:
+ *     - cluster_id: the ID of the Solr cluster to poll
+ *
+ * @param callback The callback.
+ */
+RetrieveAndRank.prototype.getResizeStatus = function(params, callback) {
+  params = params || {};
+
+  var parameters = {
+    options: {
+      url: '/v1/solr_clusters/{cluster_id}/cluster_size',
+      method: 'GET',
+      path: params,
+      json: true
+    },
+    requiredParams: ['cluster_id'],
+    defaultOptions: this._options
+  };
+
+  return requestFactory(parameters, callback);
+};
+
+/**
  * Deletes a Solr cluster.
  *
  * @param params An Object representing the parameters for this service call.
