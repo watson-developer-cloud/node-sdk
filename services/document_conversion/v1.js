@@ -134,6 +134,103 @@ DocumentConversion.prototype.convert = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
+/**
+ * One-off convert and index a document via index_document API
+ *
+ * NOTE: A SOLR cluster and search collection will have to be created through the Retrieve and Rank
+ *       service prior to using this API if actual indexing is performed (dry_run=false).
+ *
+ * @param  {Object} params
+ * @param  {ReadableStream} [params.file] The document file to convert. May be a ReadableStream or Buffer
+ * @param  {Object} params.metadata Metadata array of Object's where each object contains 'name' and 'value'
+ * @param  {Object} params.config Configuration for the conversion and indexing. The conversion config needs
+                      to be in a 'convert_document' object. This can include configuration for 'pdf', 'word'
+                      and 'normalized_html' phases of the conversion process. The indexing config needs to be
+                      in a 'retrieve_and_rank' object. The 'retrieve_and_rank' object has the following fields:
+                      'dry_run' - boolean value, true if a dry run is to be performed, false to actually index,
+                      'service_instance_id' - The serviceGuid of your instance of the retrieve and rank
+                      service (required if dry_run=false), 'cluster_id' - The Solr cluster id for your retrieve
+                      and rank service instance (required if dry_run=false), 'search_collection' - The name of
+                      your Solr search collection from your retrieve and rank service instance (required if
+                      dry_run=false), and 'fields' - Configuration information for field 'mappings', fields
+                      to 'include', and fields to 'exclude' during indexing (exclude takes precedence over include)
+ * @param  {Function} callback
+ */
+DocumentConversion.prototype.index = function(params, callback) {
+  params = params || {};
+  if (!params.file && !params.metadata) {
+    callback(new Error('Missing required parameters: file or metadata. At least one of those is required.'));
+    return;
+  }
+  if (params.file && !isStream(params.file) && !Buffer.isBuffer(params.file) && !params.file.value) {
+    callback(new Error('Missing required parameters: file is not a standard Node.js Stream or Buffer'));
+    return;
+  }
+  if (!params.config) {
+    callback(new Error('Missing required parameters: file or metadata. At least one of those is required.'));
+    return;
+  }
+
+  var parameters = {
+    options: {
+      method: 'POST',
+      url: '/v1/index_document',
+      json: true
+    },
+    defaultOptions: this._options
+  };
+
+  // send the parameters as formData
+  if (params.file && params.metadata) {
+    fixupContentType(params);
+    parameters.options.formData = {
+      file: params.file,
+      config: {
+        value: JSON.stringify(params.config),
+        options: {
+          contentType: 'application/json; charset=utf-8'
+        }
+      },
+      metadata: {
+        value: JSON.stringify(params.metadata),
+        options: {
+          contentType: 'application/json; charset=utf-8'
+        }
+      }
+    };
+  } else if (params.file) {
+    fixupContentType(params);
+    parameters.options.formData = {
+      file: params.file,
+      config: {
+        value: JSON.stringify(params.config),
+        options: {
+          contentType: 'application/json; charset=utf-8'
+        }
+      }
+    };
+  } else if (params.metadata) {
+    parameters.options.formData = {
+      config: {
+        value: JSON.stringify(params.config),
+        options: {
+          contentType: 'application/json; charset=utf-8'
+        }
+      },
+      metadata: {
+        value: JSON.stringify(params.metadata),
+        options: {
+          contentType: 'application/json; charset=utf-8'
+        }
+      }
+    };
+  } else {
+    callback(new Error('Missing required parameters: file or metadata. At least one of those is required.'));
+    return;
+  }
+
+  return requestFactory(parameters, callback);
+};
 
 
 // give a clear error message for the deprecated methods
