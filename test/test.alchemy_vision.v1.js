@@ -1,7 +1,7 @@
 'use strict';
 
 var assert    = require('assert');
-var watson    = require('../lib/index');
+var watson    = require('../index');
 var nock      = require('nock');
 var qs        = require('querystring');
 var fs        = require('fs');

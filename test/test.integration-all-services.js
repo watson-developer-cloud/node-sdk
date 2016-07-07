@@ -6,7 +6,7 @@ var fs = require('fs');
 if (fs.existsSync(__dirname + '/resources/auth.js')) {
 
 var nock = require('nock');
-var watson = require('../lib/index');
+var watson = require('../index');
 var auth = require('./resources/auth');
 var assert = require('assert');
 var wav = require('wav');

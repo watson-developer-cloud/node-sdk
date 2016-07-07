@@ -3,7 +3,7 @@
 var assert  = require('assert');
 var pick    = require('object.pick');
 var extend  = require('extend');
-var watson  = require('../lib/index');
+var watson  = require('../index');
 var nock    = require('nock');
 var fs      = require('fs');
 
