@@ -18,7 +18,7 @@ describe('visual_recognition', function() {
     version_date: '2016-05-20'
   };
 
-  var api_key_qs = 'api_key=' + service.api_key;
+  var api_key_qs = 'apikey=' + service.api_key;
   var version_qs = 'version=' + service.version_date;
   var fake_file = fs.createReadStream(__dirname + '/resources/car.png');
   var service_request = {
@@ -116,7 +116,7 @@ describe('visual_recognition', function() {
         version: 'v3',
         version_date: '2016-05-20'
       });
-      assert(instance._options.qs.api_key, 'foo');
+      assert(instance._options.api_key, 'foo');
     });
   });
 
@@ -228,7 +228,7 @@ describe('visual_recognition', function() {
     it('should make a DELETE request and return the result', function(done) {
       var scope = nock('http://ibm.com:80', {"encodedQueryParams":true})
         .delete('/visual-recognition/api/v3/classifiers/foo_123')
-        .query({"api_key":"batman","version":"2016-05-20"})
+        .query({"apikey":"batman","version":"2016-05-20"})
         .reply(200, {});
 
       visual_recognition.deleteClassifier({
@@ -270,7 +270,7 @@ describe('visual_recognition', function() {
       };
       var scope = nock('http://ibm.com:80', {"encodedQueryParams":true})
         .get('/visual-recognition/api/v3/classifiers/fruit_679357912')
-        .query({"api_key":"batman","version":"2016-05-20"})
+        .query({"apikey":"batman","version":"2016-05-20"})
         .reply(200, expected);
 
       visual_recognition.getClassifier({

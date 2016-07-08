@@ -22,7 +22,7 @@ var TWO_SECONDS = 2000;
 
 describe('integration-all-services', function() {
 
-  this.retries(3);
+  this.retries(1);
 
   this.slow(TWO_SECONDS); // this controls when the tests get a colored warning for taking too long
 
@@ -123,7 +123,7 @@ describe('integration-all-services', function() {
             done();
           });
         });
-
+        
         it('should classify an image via url', function(done) {
           var params = {
             url: 'https://watson-test-resources.mybluemix.net/resources/car.png'

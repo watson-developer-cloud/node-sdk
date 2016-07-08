@@ -93,7 +93,7 @@ function VisualRecognitionV3(options) {
   if (typeof this._options.version_date === 'undefined') {
     throw new Error('Argument error: version_date was not specified, use 2016-05-19');
   }
-  this._options.qs.api_key = this._options.api_key;
+  //this._options.qs.api_key = this._options.api_key;
   this._options.qs.version = this._options.version_date; // todo: confirm service expects version not version_date
 }
 util.inherits(VisualRecognitionV3, BaseService);
@@ -101,7 +101,7 @@ VisualRecognitionV3.prototype.name = 'visual_recognition';
 VisualRecognitionV3.prototype.version = 'v3';
 VisualRecognitionV3.prototype.serviceDefaults = {
   url: 'http://gateway-a.watsonplatform.net/visual-recognition/api',
-  //alchemy: true
+  alchemy: true
 };
 
 /**
