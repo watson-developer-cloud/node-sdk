@@ -16,44 +16,42 @@
 
 'use strict';
 
-var extend         = require('extend');
 var requestFactory = require('../lib/requestwrapper');
 var pick           = require('object.pick');
+var util = require('util');
+var BaseService = require('../lib/base_service');
 
 /**
  *
  * @param options
  * @constructor
  */
-function Conversation(options) {
-    
-  // Check if 'version_date' was provided
-  if (typeof options.version_date === 'undefined') {
-    throw new Error('Argument error: version_date was not specified, use 2016-05-19');
-  }
-  
-  if (!options.silent) {
+function ConversationV1Experimental(options) {
+  BaseService.call(this, options);
+
+  if (!this._options.silent) {
     // eslint-disable-next-line no-console
     console.warn(new Error("Watson Conversation v1-experimental is sunset as of 2016-08-01. Please upgrade to v1. Set {silent: true} to disable this message.").stack);
   }
 
-  // Default URL
-  var serviceDefaults = {
-    url: 'https://gateway.watsonplatform.net/conversation-experimental/api',
-    qs: {
-      version: options.version_date
-    }
-  };
-
-  // Replace default options with user provided
-  this._options = extend(serviceDefaults, options);
+  // Check if 'version_date' was provided
+  if (typeof this._options.version_date === 'undefined') {
+    throw new Error('Argument error: version_date was not specified, use 2016-05-19');
+  }
+  this._options.qs.version = options.version_date;
 }
+util.inherits(ConversationV1Experimental, BaseService);
+ConversationV1Experimental.prototype.name = 'conversation';
+ConversationV1Experimental.prototype.version = 'v1-experimental';
+ConversationV1Experimental.prototype.serviceDefaults = {
+  url: 'https://gateway.watsonplatform.net/conversation-experimental/api'
+};
 
 /**
  * Returns a response to a user utterance.
  * @param  {Object}   params   { workspace_id: '',  }
  */
-Conversation.prototype.message = function(params, callback) {
+ConversationV1Experimental.prototype.message = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -70,4 +68,4 @@ Conversation.prototype.message = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
-module.exports = Conversation;
+module.exports = ConversationV1Experimental;

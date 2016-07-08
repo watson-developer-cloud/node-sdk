@@ -6,27 +6,27 @@ var nock   = require('nock');
 var extend = require('extend');
 var pick   = require('object.pick');
 
-describe('conversation-v1-experimental', function() {
-  
+describe('conversation-v1', function() {
+
   var noop = function() {};
-  
+
   // Test params
   var service = {
     username: 'batman',
     password: 'bruce-wayne',
     url: 'http://ibm.com:80',
-    version: 'v1-experimental',
+    version: 'v1',
     version_date: '2016-05-19'
   };
-  
+
   var payload = {
     workspace_id: 'workspace1'
   };
-  
+
   var paths = {
     message : '/v1/workspaces/' + payload.workspace_id + '/message'
   };
-  
+
   before(function() {
     nock.disableNetConnect();
     nock(service.url)
@@ -38,13 +38,13 @@ describe('conversation-v1-experimental', function() {
   after(function() {
     nock.cleanAll();
   });
-  
+
   var missingParameter = function(err) {
     assert.ok((err instanceof Error) && /required parameters/.test(err));
   };
-  
+
   var conversation = watson.conversation(service);
-  
+
   describe('conversation()', function() {
     var reqPayload = {input:'foo',context:'rab'};
     var params = extend({}, reqPayload, payload);

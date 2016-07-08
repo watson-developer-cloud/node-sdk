@@ -17,7 +17,8 @@
 'use strict';
 
 var extend         = require('extend');
-var util           = require('util');
+var util = require('util');
+var BaseService = require('../lib/base_service');
 var requestFactory = require('../lib/requestwrapper');
 // IMPORTANT:
 // Due to the current design, the URL must be the last key on each endpoint or
@@ -75,35 +76,36 @@ function createRequest(method) {
  * @param options
  * @constructor
  */
-function AlchemyLanguage(options) {
-  // Default URL
-  var serviceDefaults = {
-    url: 'https://access.alchemyapi.com/calls'
-  };
-  // Replace default options with user provided
-  this._options = extend(serviceDefaults, options);
+function AlchemyLanguageV1(options) {
+  BaseService.call(this, options);
 }
+util.inherits(AlchemyLanguageV1, BaseService);
+AlchemyLanguageV1.prototype.name = 'alchemy_language';
+AlchemyLanguageV1.prototype.version = 'v1';
+AlchemyLanguageV1.prototype.serviceDefaults = {
+  url: 'https://access.alchemyapi.com/calls'
+};
 
 /**
  * Extracts a grouped, ranked list of named entities (people, companies,
  * organizations, etc.) from text, a URL or HTML.
  */
-AlchemyLanguage.prototype.entities = createRequest('entities');
+AlchemyLanguageV1.prototype.entities = createRequest('entities');
 
 /**
  * Extracts the keywords from text, a URL or HTML.
  */
-AlchemyLanguage.prototype.keywords = createRequest('keywords');
+AlchemyLanguageV1.prototype.keywords = createRequest('keywords');
 
 /**
  * Tags the concepts from text, a URL or HTML.
  */
-AlchemyLanguage.prototype.concepts = createRequest('concepts');
+AlchemyLanguageV1.prototype.concepts = createRequest('concepts');
 
 /**
  * Calculates the sentiment for text, a URL or HTML.
  */
-AlchemyLanguage.prototype.sentiment = function(params, callback) {
+AlchemyLanguageV1.prototype.sentiment = function(params, callback) {
   var _params = extend({}, params);
   var service = (params.target || params.targets) ? 'sentiment_targeted' : 'sentiment';
   if (util.isArray(_params.targets))
@@ -115,7 +117,7 @@ AlchemyLanguage.prototype.sentiment = function(params, callback) {
  * Extracts the cleaned text (removes ads, navigation, etc.) for a URL or HTML.
  * if raw = true, extracts the cleaned text (removes ads, navigation, etc.).
  */
-AlchemyLanguage.prototype.text = function(params, callback) {
+AlchemyLanguageV1.prototype.text = function(params, callback) {
   var service = (params && params.raw) ? 'text_raw' : 'text';
   return createRequest(service).call(this, params, callback);
 };
@@ -123,34 +125,34 @@ AlchemyLanguage.prototype.text = function(params, callback) {
 /**
  * Extracts the authors from a URL or HTML.
  */
-AlchemyLanguage.prototype.authors = createRequest('authors');
+AlchemyLanguageV1.prototype.authors = createRequest('authors');
 
 /**
  * Detects the language for text, a URL or HTML.
  */
-AlchemyLanguage.prototype.language = createRequest('language');
+AlchemyLanguageV1.prototype.language = createRequest('language');
 
 /**
  * Extracts the title for a URL or HTML.
  *
  * @see http://www.alchemyapi.com/api/text/proc.html
  */
-AlchemyLanguage.prototype.title = createRequest('title');
+AlchemyLanguageV1.prototype.title = createRequest('title');
 
 /**
  * Extracts the relations for text, a URL or HTML.
  */
-AlchemyLanguage.prototype.relations = createRequest('relations');
+AlchemyLanguageV1.prototype.relations = createRequest('relations');
 
 /**
  * Categorizes the text for text, a URL or HTML.
  */
-AlchemyLanguage.prototype.category = createRequest('category');
+AlchemyLanguageV1.prototype.category = createRequest('category');
 
 /**
  * Extracts the publication date from a webpage or HTML file.
  */
-AlchemyLanguage.prototype.publicationDate = createRequest('publication_date');
+AlchemyLanguageV1.prototype.publicationDate = createRequest('publication_date');
 
 /**
  * Finds dates in the source text, including relative dates like "next Tuesday"
@@ -161,34 +163,34 @@ AlchemyLanguage.prototype.dates = createRequest('extract_dates');
 /**
  * Detects the RSS/ATOM feeds for a URL or HTML.
  */
-AlchemyLanguage.prototype.feeds = createRequest('feeds');
+AlchemyLanguageV1.prototype.feeds = createRequest('feeds');
 
 /**
  * Parses the microformats for a URL or HTML.
  */
-AlchemyLanguage.prototype.microformats = createRequest('microformats');
+AlchemyLanguageV1.prototype.microformats = createRequest('microformats');
 
 /**
  * Categorized through the taxonomy call for text, HTML, or a URL.
  */
-AlchemyLanguage.prototype.taxonomy = createRequest('taxonomy');
+AlchemyLanguageV1.prototype.taxonomy = createRequest('taxonomy');
 
 /**
  * Combines multiple API operations into a single call.
  */
-AlchemyLanguage.prototype.combined = createRequest('combined');
+AlchemyLanguageV1.prototype.combined = createRequest('combined');
 
 /**
  * Detects emotions (anger, digust, fear, joy, and sadness)
  * for text, HTML, or a URL.
  */
-AlchemyLanguage.prototype.emotion = createRequest('emotion');
+AlchemyLanguageV1.prototype.emotion = createRequest('emotion');
 
 /**
  * Finds entities and their relationships
  * for text, HTML, or a URL.
  */
-AlchemyLanguage.prototype.typedRelations = createRequest('typed_relations');
+AlchemyLanguageV1.prototype.typedRelations = createRequest('typed_relations');
 
 
-module.exports = AlchemyLanguage;
+module.exports = AlchemyLanguageV1;

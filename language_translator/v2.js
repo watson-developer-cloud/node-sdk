@@ -21,6 +21,8 @@ var extend         = require('extend');
 var pick           = require('object.pick');
 var isStream       = require('isstream');
 var helper         = require('../lib/helper');
+var util = require('util');
+var BaseService = require('../lib/base_service');
 
 /**
  *
@@ -29,13 +31,15 @@ var helper         = require('../lib/helper');
  * @param {string} params.password Password
  * @constructor
  */
-function LanguageTranslator(options) {
-  // Default URL
-  var serviceDefaults = {
-    url: 'https://gateway.watsonplatform.net/language-translation/api'
-  };
-  this._options = extend(serviceDefaults, options);
+function LanguageTranslatorV2(options) {
+  BaseService.call(this, options);
 }
+util.inherits(LanguageTranslatorV2, BaseService);
+LanguageTranslatorV2.prototype.name = 'language_translator';
+LanguageTranslatorV2.prototype.version = 'v2';
+LanguageTranslatorV2.prototype.serviceDefaults = {
+  url: 'https://gateway.watsonplatform.net/language-translation/api'
+};
 
 /**
  * Return the translation models
@@ -49,7 +53,7 @@ function LanguageTranslator(options) {
  * @param  {string}   params.source   Filter by source language
  * @param  {string}   params.target   Filter by target language
  */
-LanguageTranslator.prototype.getModels = function(params, callback) {
+LanguageTranslatorV2.prototype.getModels = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -68,7 +72,7 @@ LanguageTranslator.prototype.getModels = function(params, callback) {
  * Return the translation model
  * @param  {string}   params.model_id   The model identifier
  */
-LanguageTranslator.prototype.getModel = function(params, callback) {
+LanguageTranslatorV2.prototype.getModel = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -92,7 +96,8 @@ LanguageTranslator.prototype.getModel = function(params, callback) {
  * @param  {stream}   params.parallel_corpus   A UTF-8 encoded TMX file that contains matching phrases in the source and target language that serve as examples for Watson. Parallel corpora differ from glossaries because they do not overwrite the original domain data.
  * @param  {stream}   params.monolingual_corpus A UTF-8 encoded plain text file that contains a body of text in the target language that is related to what you are translating. A monolingual corpus helps improve literal translations to be more fluent and human.
  */
-LanguageTranslator.prototype.createModel = function(params, callback) {
+
+LanguageTranslatorV2.prototype.createModel = function(params, callback) {
   params = params || {};
 
   var missingParams = helper.getMissingParams(params, ['base_model_id']);
@@ -129,7 +134,7 @@ LanguageTranslator.prototype.createModel = function(params, callback) {
  * Deletes a model
  * @param  {string}   params.model_id   The model identifier
  */
-LanguageTranslator.prototype.deleteModel = function(params, callback) {
+LanguageTranslatorV2.prototype.deleteModel = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -150,7 +155,7 @@ LanguageTranslator.prototype.deleteModel = function(params, callback) {
  * @param {string} params.source Source language
  * @param {string} params.target Target language
  */
-LanguageTranslator.prototype.translate = function(params, callback) {
+LanguageTranslatorV2.prototype.translate = function(params, callback) {
   params = params || {};
 
   if (!(params.model_id || (params.source && params.target))){
@@ -174,7 +179,7 @@ LanguageTranslator.prototype.translate = function(params, callback) {
 /**
  * Returns the identifiable languages
  */
-LanguageTranslator.prototype.getIdentifiableLanguages = function(params, callback) {
+LanguageTranslatorV2.prototype.getIdentifiableLanguages = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -193,7 +198,7 @@ LanguageTranslator.prototype.getIdentifiableLanguages = function(params, callbac
  * Identify the text based on the identifiable languages
  * @param  {string} params.text  text to identify
  */
-LanguageTranslator.prototype.identify = function(params, callback) {
+LanguageTranslatorV2.prototype.identify = function(params, callback) {
   if (!params || !params.text){
     callback(new Error('Missing required parameters: text'));
     return;
@@ -216,4 +221,4 @@ LanguageTranslator.prototype.identify = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
-module.exports = LanguageTranslator;
+module.exports = LanguageTranslatorV2;

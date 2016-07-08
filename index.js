@@ -16,287 +16,88 @@
 
 'use strict';
 
-var path         = require('path');
-var fs           = require('fs');
-var util         = require('util');
-var extend       = require('extend');
-var vcapServices = require('vcap_services');
-var helper       = require('./lib/helper');
-var omit         = require('object.omit');
-var request      = require('request');
-
-function encodeBase64(creds) {
-  return new Buffer(creds.username + ':' + creds.password).toString('base64');
-}
-
 /**
- * @private
- * @param serviceName
- * @returns {Function}
+ * @module watson-developer-cloud
  */
-function createServiceAPI(serviceName) {
-  // this function is about twice as complex as our rules allow!
-  // eslint-disable-next-line complexity
-  return function(user_options) {
-    var alchemy = (serviceName.indexOf('alchemy_') === 0);
+exports.AlchemyDataNewsV1 = require('./alchemy_data_news/v1');
+exports.AlchemyLanguageV1 = require('./alchemy_language/v1');
+exports.AlchemyVisionV1 = require('./alchemy_vision/v1');
 
-    // backwards-compatibility for services that have migrated to v3 API
-    var keys = Object.keys(watson);
-    for (var key in keys) {
-      if (watson[key] && watson[key].prototype.name === serviceName && (alchemy || watson[key].prototype.version === user_options.version) ) {
-        return new watson[key](user_options);
-      }
-    }
+exports.AuthorizationV1 = require('./authorization/v1');
 
-    // todo: move all modules to new API and then delete the rest of this method
-    var options = extend({}, user_options);
+exports.ConceptInsightsV2 = require('./concept_insights/v2');
 
-    var vrv3 = (serviceName === 'visual_recognition' && user_options.version === 'v3');
+exports.ConversationV1 = require('./conversation/v1');
+exports.ConversationV1Experimental = require('./conversation/v1-experimental');
+
+exports.DialogV1 = require('./dialog/v1');
+
+exports.DocumentConversionV1 = require('./document_conversion/v1');
+
+exports.LanguageTranslatorV2 = require('./language_translator/v2');
+
+exports.NaturalLanguageClassifierV1 = require('./natural_language_classifier/v1');
+
+exports.PersonalityInsightsV2 = require('./personality_insights/v2');
+
+exports.RelationshipExtractionV1Beta = require('./relationship_extraction/v1-beta');
+
+exports.RetrieveAndRankV1 = require('./retrieve_and_rank/v1');
+
+exports.SpeechToTextV1 = require('./speech_to_text/v1');
+
+exports.TextToSpeechV1 = require('./text_to_speech/v1');
+
+exports.ToneAnalyzerV3 = require('./tone_analyzer/v3');
+
+exports.TradeoffAnalyticsV1 = require('./tradeoff_analytics/v1');
+
+exports.VisualRecognitionV3 = require('./visual_recognition/v3');
 
 
 
-    // For Alchemy we use 'v1' by default,
-    // and check if `apikey` was specified.
-    // We don't use VCAP_SERVICES
-    if (alchemy) {
-      options.alchemy = true;
-      options.version = 'v1';
-      options.api_key = options.apikey || options.api_key;
-    } else if (vrv3) {
-      // Visual Recognition v3 similarly uses an API key instead of username + password
-      options.api_key = options.apikey || options.api_key;
-    } else {
-      options.jar = request.jar();
-    }
+// adding shim constructors for backwards compatibility
 
-    // Check if 'version' was provided
-    var version = options.version;
-    if (typeof version === 'undefined') {
-      throw new Error('Argument error: version was not specified');
-    }
+// 2-d map of snake_case service names & version => constructor function
+// e.g. servicesByVersion.text_to_speech.v1 === exports.TextToSpeechV1;
+var servicesByVersion = {};
+Object.keys(exports).forEach(function(key) {
+  var Service = exports[key];
+  var name = Service.prototype.name;
+  var version = Service.prototype.version;
+  servicesByVersion[name] = servicesByVersion[name] || {};
+  servicesByVersion[name][version] = Service;
+});
 
-    // Get credentials from Bluemix
-    if (options.use_vcap_services !== false) {
-      var vcap_services_name = vrv3 ?  'watson_vision_combined' : serviceName;
-      var credentials = vcapServices.getCredentials(vcap_services_name);
-      if (serviceName === 'language_translator' && !Object.keys(credentials).length) {
-        // the language translation service was renamed to language translator, but there are still old instances floating around with credentials specifying the old name
-        credentials = vcapServices.getCredentials('language_translation');
-      }
-      if (credentials.username && credentials.password) {
-        credentials.api_key = encodeBase64(credentials);
-      }
-      options = extend({}, options, credentials);
-    }
+Object.keys(servicesByVersion).forEach(function(serviceName) {
+    Object.defineProperty(exports, serviceName, {
+      enumerable: false,
+      configurable: true,
+      writable: true,
+      value: function(options) {
+        options = options || {};
 
-    // Use api_key or username and password as Authorization
-    var user = options.username,
-      pass = options.password,
-      api_key = options.api_key;
-
-    if (!options.use_unauthenticated) {
-      // Check if 'api_key' or 'username' and 'password' were provided
-      if (typeof api_key === 'undefined') {
-        if (typeof user === 'undefined' || typeof pass === 'undefined') {
-          if (alchemy || vrv3)
-            throw new Error('Argument error: api_key was not specified');
-          else
-            throw new Error('Argument error: api_key or username and password were not specified');
+        // previously, AlchemyAPI did not require a version to be specified
+        if(serviceName.indexOf('alchemy_') === 0) {
+          options.version = 'v1';
         }
 
-        // Calculate and add api_key
-        options.api_key = new Buffer(user + ':' + pass).toString('base64');
+        var Service = servicesByVersion[serviceName][options.version];
+
+        if (!Service) {
+          throw new Error('Unable to find ' + serviceName + ' version ' + options.version);
+        }
+
+        return new Service(options);
       }
-    }
-
-    options = omit(options, ['version', 'username', 'password',
-      'use_vcap_services', 'use_unauthenticated', 'apikey']);
-
-    if (options.url)
-      options.url = helper.stripTrailingSlash(options.url);
-
-    try {
-      // Build the path to the service file based on the service name and api version
-      var servicePath = path.join(__dirname, serviceName, path.basename(version));
-      var Service = require(servicePath);
-      var s = new Service(options);
-      return Object.freeze(s);
-    } catch (e) {
-      if (e.code === 'MODULE_NOT_FOUND') {
-
-        // give a clear error message for services that have been sunset, with the replacement when possible
-        if (serviceName === 'search') {
-          throw new Error('The search service has been replaced by retrieve_and_rank');
-        }
-        if (serviceName === 'tone_analyzer' && path.basename(version) === 'v3-beta') {
-          throw new Error('tone_analyzer v3-beta has been replaced by v3');
-        }
-
-        // for the v1.0 breaking change of requiring experimental/beta in the module name, try to offer a helpful error message.
-        // https://github.com/watson-developer-cloud/node-sdk/issues/43
-        var msg = 'Service %s %s not found.';
-        if (fs.existsSync(path.join(__dirname, serviceName, path.basename(version) + '-beta.js'))) {
-          msg += ' Did you mean ' + path.basename(version) + '-beta?';
-        }
-        if (fs.existsSync(path.join(__dirname, serviceName, path.basename(version) + '-experimental.js'))) {
-          msg += ' Did you mean ' + path.basename(version) + '-experimental?';
-        }
-
-        throw new Error(util.format(msg, serviceName, version));
-      } else {
-        throw e;
-      }
-    }
-  };
-}
-
-/**
- * @namespace
- */
-var watson = {
-  /**
-   * @function
-   * @param {{}} options
-   * @returns  {RelationshipExtraction}
-   */
-  relationship_extraction: createServiceAPI('relationship_extraction'),
-
-  /**
-   * @function
-   * @param {{}} options
-   * @returns  {VisualRecognitionV1Beta|VisualRecognitionV2Beta|VisualRecognitionV3}
-   */
-  visual_recognition: createServiceAPI('visual_recognition'),
-
-  /**
-   * @function
-   * @param {{}} options
-   * @returns  {SpeechToText}
-   */
-  speech_to_text: createServiceAPI('speech_to_text'),
-
-  /**
-   * @function
-   * @param {{}} options
-   * @returns  {TextToSpeech}
-   */
-  text_to_speech: createServiceAPI('text_to_speech'),
-
-  /**
-   * @function
-   * @param {{}} options
-   * @returns  {ConceptInsights}
-   */
-  concept_insights: createServiceAPI('concept_insights'),
-
-  /**
-   * @function
-   * @param {{}} options
-   * @returns  {TradeoffAnalytics}
-   */
-  tradeoff_analytics: createServiceAPI('tradeoff_analytics'),
-
-  /**
-   * @function
-   * @param {{}} options
-   * @returns  {PersonalityInsights}
-   */
-  personality_insights: createServiceAPI('personality_insights'),
-
-  /**
-   * @function
-   * @param {{}} options
-   * @returns  {NaturalLanguageClassifier}
-   */
-  natural_language_classifier: createServiceAPI('natural_language_classifier'),
-
-  /**
-   * @function
-   * @param {{}} options
-   * @returns  {Authorization}
-   */
-  authorization: createServiceAPI('authorization'),
-
-  /**
-   * @function
-   * @param {{}} options
-   * @returns  {LanguageTranslator}
-   */
-  language_translator: createServiceAPI('language_translator'),
-
-  /**
-   * @function
-   * @param {{}} options
-   * @returns  {ToneAnalyzer}
-   */
-  tone_analyzer: createServiceAPI('tone_analyzer'),
-
-  /**
-   * @function
-   * @param {{}} options
-   * @returns  {Dialog}
-   */
-  dialog: createServiceAPI('dialog'),
-
-  /**
-   * @function
-   * @param {{}} options
-   * @returns  {RetrieveAndRank}
-   */
-  retrieve_and_rank: createServiceAPI('retrieve_and_rank'),
-
-  /**
-   * @function
-   * @param {{}} options
-   * @returns  {DocumentConversion}
-   */
-  document_conversion: createServiceAPI('document_conversion'),
-
-  // deprecated
-  /**
-   * @function
-   * @param {{}} options
-   * @returns  {Search}
-   * @deprecated Replaced by {@link RetrieveAndRank}
-   */
-  search: createServiceAPI('search'),
-
-  // alchemy
-  /**
-   * @function
-   * @param {{}} options
-   * @returns  {AlchemyLanguage}
-   */
-  alchemy_language: createServiceAPI('alchemy_language'),
-
-  /**
-   * @function
-   * @param {{}} options
-   * @returns  {AlchemyVision}
-   */
-  alchemy_vision: createServiceAPI('alchemy_vision'),
-
-  /**
-   * @function
-   * @param {{}} options
-   * @returns  {AlchemyDataNewsV1}
-   */
-  alchemy_data_news: createServiceAPI('alchemy_data_news'),
-  AlchemyDataNewsV1: require('./alchemy_data_news/v1'),
-
-  /**
-   * @function
-   * @param {{}} options
-   * @returns  {ConceptExpansion}
-   */
-  conversation: createServiceAPI('conversation')
-};
+  });
+});
 
 // removed services
 // we don't want these services listed (so non-enumerable), but we do want a clear error message
 // if old code happens to try using one
 ['message_resonance', 'question_and_answer', 'visual_insights', 'concept_expansion'].forEach(function(serviceName) {
-  Object.defineProperty(watson, serviceName, {
+  Object.defineProperty(exports, serviceName, {
     enumerable: false,
     configurable: true,
     writable: true,
@@ -306,7 +107,7 @@ var watson = {
   });
 });
 
-Object.defineProperty(watson, 'language_translation', {
+Object.defineProperty(exports, 'language_translation', {
   enumerable: false,
   configurable: true,
   writable: true,
@@ -315,8 +116,6 @@ Object.defineProperty(watson, 'language_translation', {
       //eslint-disable-next-line no-console
       console.warn(new Error("Watson language_translation is now language_translator. Set {silent: true} to disable this message.").stack)
     }
-    return watson.language_translator(options);
+    return exports.language_translator(options);
   }
 });
-
-module.exports = watson;

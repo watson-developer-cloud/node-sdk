@@ -16,13 +16,14 @@
 
 'use strict';
 
-var extend         = require('extend');
 var requestFactory = require('../lib/requestwrapper');
 var endpoints      = require('../lib/alchemy_endpoints.json');
 var helper         = require('../lib/helper');
 var isStream       = require('isstream');
 var omit           = require('object.omit');
 var fs             = require('fs');
+var util = require('util');
+var BaseService = require('../lib/base_service');
 
 function errorFormatter(cb) {
   return function(err, result, response) {
@@ -84,38 +85,40 @@ function createRequest(method) {
   };
 }
 
+
 /**
  *
  * @param options
  * @constructor
  */
-function AlchemyVision(options) {
-  // Default URL
-  var serviceDefaults = {
-    url: 'https://access.alchemyapi.com/calls'
-  };
-  // Replace default options with user provided
-  this._options = extend(serviceDefaults, options);
+function AlchemyVisionV1(options) {
+  BaseService.call(this, options);
 }
+util.inherits(AlchemyVisionV1, BaseService);
+AlchemyVisionV1.prototype.name = 'alchemy_vision';
+AlchemyVisionV1.prototype.version = 'v1';
+AlchemyVisionV1.prototype.serviceDefaults = {
+  url: 'https://access.alchemyapi.com/calls'
+};
 
 /**
  * Tags image with keywords
  */
-AlchemyVision.prototype.getImageKeywords = createRequest('image_keywords');
+AlchemyVisionV1.prototype.getImageKeywords = createRequest('image_keywords');
 
 /**
  * Face detection and Recognition
  */
-AlchemyVision.prototype.recognizeFaces = createRequest('image_recognition');
+AlchemyVisionV1.prototype.recognizeFaces = createRequest('image_recognition');
 
 /**
  * Extracts images from a URL or html
  */
-AlchemyVision.prototype.getImageLinks = createRequest('image_link');
+AlchemyVisionV1.prototype.getImageLinks = createRequest('image_link');
 
 /**
  * Identifies  text in an image
  */
-AlchemyVision.prototype.getImageSceneText = createRequest('image_scene_text');
+AlchemyVisionV1.prototype.getImageSceneText = createRequest('image_scene_text');
 
-module.exports = AlchemyVision;
+module.exports = AlchemyVisionV1;

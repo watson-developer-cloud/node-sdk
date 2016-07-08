@@ -18,33 +18,34 @@
 
 var fs             = require('fs');
 var url            = require('url');
-var extend         = require('extend');
 var requestFactory = require('../lib/requestwrapper');
 var solr           = require('solr-client');
 var helper         = require('../lib/helper');
 var pick           = require('object.pick');
 var omit           = require('object.omit');
 var isStream       = require('isstream');
+var util = require('util');
+var BaseService = require('../lib/base_service');
 
 /**
  *
  * @param options
  * @constructor
  */
-function RetrieveAndRank(options) {
-  var serviceDefaults = {
-    version: 'v1',
-    url: 'https://gateway.watsonplatform.net/retrieve-and-rank/api'
-  };
-
-  // Extend default options with user provided options
-  this._options = extend(serviceDefaults, options);
+function RetrieveAndRankV1(options) {
+  BaseService.call(this, options);
 }
+util.inherits(RetrieveAndRankV1, BaseService);
+RetrieveAndRankV1.prototype.name = 'retrieve_and_rank';
+RetrieveAndRankV1.prototype.version = 'v1';
+RetrieveAndRankV1.prototype.serviceDefaults = {
+  url: 'https://gateway.watsonplatform.net/retrieve-and-rank/api'
+};
 
 /**
  * Creates a ranker
  */
-RetrieveAndRank.prototype.createRanker = function(params, callback) {
+RetrieveAndRankV1.prototype.createRanker = function(params, callback) {
   params = params || {};
 
   if (!params || !params.training_data) {
@@ -74,7 +75,7 @@ RetrieveAndRank.prototype.createRanker = function(params, callback) {
 /**
  * Returns the ranked candidates
  */
-RetrieveAndRank.prototype.rank = function(params, callback) {
+RetrieveAndRankV1.prototype.rank = function(params, callback) {
   params = params || {};
 
   if (!params || !params.answer_data) {
@@ -106,7 +107,7 @@ RetrieveAndRank.prototype.rank = function(params, callback) {
 /**
  * Returns the training status of the ranker
  */
-RetrieveAndRank.prototype.rankerStatus = function(params, callback) {
+RetrieveAndRankV1.prototype.rankerStatus = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -126,7 +127,7 @@ RetrieveAndRank.prototype.rankerStatus = function(params, callback) {
 /**
  * Retrieves the list of rankers for the user
  */
-RetrieveAndRank.prototype.listRankers = function(params, callback) {
+RetrieveAndRankV1.prototype.listRankers = function(params, callback) {
   var parameters = {
     options: {
       url: '/v1/rankers',
@@ -142,7 +143,7 @@ RetrieveAndRank.prototype.listRankers = function(params, callback) {
 /**
  * Deletes a ranker
  */
-RetrieveAndRank.prototype.deleteRanker = function(params, callback) {
+RetrieveAndRankV1.prototype.deleteRanker = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -169,7 +170,7 @@ RetrieveAndRank.prototype.deleteRanker = function(params, callback) {
  *
  * @param callback The callback.
  */
-RetrieveAndRank.prototype.listClusters = function(params, callback) {
+RetrieveAndRankV1.prototype.listClusters = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -194,7 +195,7 @@ RetrieveAndRank.prototype.listClusters = function(params, callback) {
  *
  * @param callback The callback.
  */
-RetrieveAndRank.prototype.createCluster = function(params, callback) {
+RetrieveAndRankV1.prototype.createCluster = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -219,7 +220,7 @@ RetrieveAndRank.prototype.createCluster = function(params, callback) {
  *
  * @param callback The callback.
  */
-RetrieveAndRank.prototype.pollCluster = function(params, callback) {
+RetrieveAndRankV1.prototype.pollCluster = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -246,7 +247,7 @@ RetrieveAndRank.prototype.pollCluster = function(params, callback) {
  *
  * @param callback The callback.
  */
-RetrieveAndRank.prototype.resizeCluster = function(params, callback) {
+RetrieveAndRankV1.prototype.resizeCluster = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -273,7 +274,7 @@ RetrieveAndRank.prototype.resizeCluster = function(params, callback) {
  *
  * @param callback The callback.
  */
-RetrieveAndRank.prototype.getResizeStatus = function(params, callback) {
+RetrieveAndRankV1.prototype.getResizeStatus = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -299,7 +300,7 @@ RetrieveAndRank.prototype.getResizeStatus = function(params, callback) {
  *
  * @param callback The callback.
  */
-RetrieveAndRank.prototype.deleteCluster = function(params, callback) {
+RetrieveAndRankV1.prototype.deleteCluster = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -325,7 +326,7 @@ RetrieveAndRank.prototype.deleteCluster = function(params, callback) {
  *
  * @param callback The callback.
  */
-RetrieveAndRank.prototype.getClusterStats = function(params, callback) {
+RetrieveAndRankV1.prototype.getClusterStats = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -353,7 +354,7 @@ RetrieveAndRank.prototype.getClusterStats = function(params, callback) {
  *
  * @param callback The callback.
  */
-RetrieveAndRank.prototype.listConfigs = function(params, callback) {
+RetrieveAndRankV1.prototype.listConfigs = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -381,7 +382,7 @@ RetrieveAndRank.prototype.listConfigs = function(params, callback) {
  *
  * @param callback The callback.
  */
-RetrieveAndRank.prototype.uploadConfig = function(params, callback) {
+RetrieveAndRankV1.prototype.uploadConfig = function(params, callback) {
   params = params || {};
 
   if (!params || !params.config_zip_path) {
@@ -425,7 +426,7 @@ RetrieveAndRank.prototype.uploadConfig = function(params, callback) {
  *
  * @param callback The callback.
  */
-RetrieveAndRank.prototype.getConfig = function(params, callback) {
+RetrieveAndRankV1.prototype.getConfig = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -455,7 +456,7 @@ RetrieveAndRank.prototype.getConfig = function(params, callback) {
  *
  * @param callback The callback.
  */
-RetrieveAndRank.prototype.deleteConfig = function(params, callback) {
+RetrieveAndRankV1.prototype.deleteConfig = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -485,7 +486,7 @@ RetrieveAndRank.prototype.deleteConfig = function(params, callback) {
  *
  * @param callback The callback.
  */
-RetrieveAndRank.prototype.listCollections = function(params, callback) {
+RetrieveAndRankV1.prototype.listCollections = function(params, callback) {
   params = params || {};
   var parameters = {
     options: {
@@ -518,7 +519,7 @@ RetrieveAndRank.prototype.listCollections = function(params, callback) {
  *
  * @param callback The callback.
  */
-RetrieveAndRank.prototype.createCollection = function(params, callback) {
+RetrieveAndRankV1.prototype.createCollection = function(params, callback) {
   params = params || {};
 
   var missingParams = helper.getMissingParams(params, ['cluster_id', 'collection_name', 'config_name']);
@@ -560,7 +561,7 @@ RetrieveAndRank.prototype.createCollection = function(params, callback) {
  *
  * @param callback The callback.
  */
-RetrieveAndRank.prototype.deleteCollection = function(params, callback) {
+RetrieveAndRankV1.prototype.deleteCollection = function(params, callback) {
   params = params || {};
 
   var missingParams = helper.getMissingParams(params, ['cluster_id', 'collection_name']);
@@ -598,7 +599,7 @@ RetrieveAndRank.prototype.deleteCollection = function(params, callback) {
  *     - cluster_id: the ID of the Solr cluster to delete the collection on
  *     - collection_name: the name of the collection for indexing/searching
  */
-RetrieveAndRank.prototype.createSolrClient = function(params) {
+RetrieveAndRankV1.prototype.createSolrClient = function(params) {
   params = params || {};
 
   var missingParams = helper.getMissingParams(params, ['cluster_id', 'collection_name']);
@@ -624,4 +625,4 @@ RetrieveAndRank.prototype.createSolrClient = function(params) {
   return solrClient;
 };
 
-module.exports = RetrieveAndRank;
+module.exports = RetrieveAndRankV1;

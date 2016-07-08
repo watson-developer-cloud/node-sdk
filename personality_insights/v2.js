@@ -16,25 +16,26 @@
 
 'use strict';
 
-var extend         = require('extend');
 var requestFactory = require('../lib/requestwrapper');
 var pick           = require('object.pick');
 var helper         = require('../lib/helper');
+var util = require('util');
+var BaseService = require('../lib/base_service');
 
 /**
  *
  * @param options
  * @constructor
  */
-function PersonalityInsights(options) {
-  // Default URL
-  var serviceDefaults = {
-    url: 'https://gateway.watsonplatform.net/personality-insights/api'
-  };
-
-  // Replace default options with user provided
-  this._options = extend(serviceDefaults, options);
+function PersonalityInsightsV1(options) {
+  BaseService.call(this, options);
 }
+util.inherits(PersonalityInsightsV1, BaseService);
+PersonalityInsightsV1.prototype.name = 'personality_insights';
+PersonalityInsightsV1.prototype.version = 'v2';
+PersonalityInsightsV1.prototype.serviceDefaults = {
+  url: 'https://gateway.watsonplatform.net/personality-insights/api'
+};
 
 /**
  * @param params {Object} The parameters to call the service
@@ -47,7 +48,7 @@ function PersonalityInsights(options) {
  *
  * @param callback The callback.
  */
-PersonalityInsights.prototype.profile = function(params, callback) { // eslint-disable-line complexity
+PersonalityInsightsV1.prototype.profile = function(params, callback) { // eslint-disable-line complexity
   params = params || {};
 
   // support for the new snake_case
@@ -99,4 +100,4 @@ PersonalityInsights.prototype.profile = function(params, callback) { // eslint-d
 
   return requestFactory(parameters, callback);
 };
-module.exports = PersonalityInsights;
+module.exports = PersonalityInsightsV1;

@@ -17,9 +17,10 @@
 'use strict';
 
 var omit = require('object.omit');
-var extend = require('extend');
 var pick = require('object.pick');
 var requestFactory = require('../lib/requestwrapper');
+var util = require('util');
+var BaseService = require('../lib/base_service');
 
 /**
  * Format the ids into a JSON array if is a string array
@@ -55,19 +56,19 @@ function formatConceptIds(ids) {
  * @param {string} password Password
  * @constructor
  */
-function ConceptInsights(options) {
-  // Default URL
-  var serviceDefaults = {
-    url: 'https://gateway.watsonplatform.net/concept-insights/api'
-  };
-
-  // Replace default options with user provided
-  this._options = extend(serviceDefaults, options);
+function ConceptInsightsV2(options) {
+  BaseService.call(this, options);
 
   this.accounts = new ConceptInsightsAccounts(this);
   this.graphs = new ConceptInsightsGraphs(this);
   this.corpora = new ConceptInsightsCorpora(this);
 }
+util.inherits(ConceptInsightsV2, BaseService);
+ConceptInsightsV2.prototype.name = 'concept_insights';
+ConceptInsightsV2.prototype.version = 'v2';
+ConceptInsightsV2.prototype.serviceDefaults = {
+  url: 'https://gateway.watsonplatform.net/concept-insights/api'
+};
 
 function ConceptInsightsAccounts(parent) {
   this._parent = parent;
@@ -605,4 +606,4 @@ ConceptInsightsCorpora.prototype.getDocumentProcessingState = function(params, c
   return requestFactory(parameters, callback);
 };
 
-module.exports = ConceptInsights;
+module.exports = ConceptInsightsV2;

@@ -94,6 +94,8 @@
     "doc": "jsdoc -c jsdoc/config.json",
     "watch-doc": "nodemon --watch lib/ --watch services/ --watch jsdoc/ --watch package.json --ext js,tmpl --exec npm run doc",
     "codecov": "istanbul cover ./node_modules/.bin/mocha && codecov",
-    "test-integration": "mocha test/test.integration-all-services.js"
+    "test-integration": "mocha test/test.integration-all-services.js",
+    "test-unit": "npm run lint && mocha --fgrep integration --invert",
+    "watch": "npm run test-unit -- --watch"
   }
 }

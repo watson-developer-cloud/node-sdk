@@ -3,7 +3,7 @@
 
 var fs = require('fs');
 
-if (fs.existsSync(__dirname + '/resources/auth.js')) {
+//if (fs.existsSync(__dirname + '/resources/auth.js')) {
 
 var nock = require('nock');
 var watson = require('../index');
@@ -42,7 +42,7 @@ describe('integration-all-services', function() {
   });
 
   describe('functional_relationship_extraction', function() {
-    this.timeout(FIVE_SECONDS);
+    this.timeout(FIVE_SECONDS* 4);
     var relationship_extraction = watson.relationship_extraction(auth.relationship_extraction);
 
     it('extract()', function(done) {
@@ -847,6 +847,6 @@ describe('integration-all-services', function() {
   });
 });
 
-} else {
-  console.warn('no test/resources/auth.js, skipping integration tests'); // eslint-disable-line no-console
-}
+// } else {
+//   console.warn('no test/resources/auth.js, skipping integration tests'); // eslint-disable-line no-console
+// }

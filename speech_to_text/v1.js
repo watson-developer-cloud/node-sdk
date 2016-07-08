@@ -27,6 +27,8 @@ var isStream       = require('isstream');
 var requestFactory = require('../lib/requestwrapper');
 var RecognizeStream = require('./recognize_stream');
 var pkg            = require('../package.json'); // todo: consider using env properties here instead (to enable webpack support without requiring a plugin)
+var util = require('util');
+var BaseService = require('../lib/base_service');
 
 var PARAMS_ALLOWED = ['continuous', 'max_alternatives', 'timestamps', 'word_confidence', 'inactivity_timeout',
   'model', 'content-type', 'interim_results', 'keywords', 'keywords_threshold', 'word_alternatives_threshold', 'profanity_filter', 'smart_formatting' ];
@@ -55,15 +57,15 @@ function formatChunk(chunk) {
  * @constructor
  * @param options
  */
-function SpeechToText(options) {
-  // Default URL
-  var serviceDefaults = {
-    url: 'https://stream.watsonplatform.net/speech-to-text/api'
-  };
-
-  // Replace default options with user provided
-  this._options = extend(serviceDefaults, options);
+function SpeechToTextV1(options) {
+  BaseService.call(this, options);
 }
+util.inherits(SpeechToTextV1, BaseService);
+SpeechToTextV1.prototype.name = 'speech_to_text';
+SpeechToTextV1.prototype.version = 'v1';
+SpeechToTextV1.prototype.serviceDefaults = {
+  url: 'https://stream.watsonplatform.net/speech-to-text/api'
+};
 
 /**
  * Speech recognition for given audio using default model.
@@ -71,7 +73,7 @@ function SpeechToText(options) {
  * @param {Audio} [audio] Audio to be recognized.
  * @param {String} [content_type] Content-type
  */
-SpeechToText.prototype.recognize = function(params, callback) {
+SpeechToTextV1.prototype.recognize = function(params, callback) {
 
   var missingParams = helper.getMissingParams(params, ['audio', 'content_type']);
   if (missingParams) {
@@ -116,7 +118,7 @@ SpeechToText.prototype.recognize = function(params, callback) {
  * @param {String} [session_id] The session id
  * @deprecated use createRecognizeStream instead
  */
-SpeechToText.prototype.recognizeLive = function(params, callback) {
+SpeechToTextV1.prototype.recognizeLive = function(params, callback) {
   var missingParams = helper.getMissingParams(params,
     ['session_id', 'content_type', 'cookie_session']);
 
@@ -175,7 +177,7 @@ SpeechToText.prototype.recognizeLive = function(params, callback) {
  * @param {boolean} [params.interim_results] If true, interim results will be returned. Default: false.
  * @deprecated use createRecognizeStream instead
  */
-SpeechToText.prototype.observeResult = function(params, callback) {
+SpeechToTextV1.prototype.observeResult = function(params, callback) {
   var missingParams = helper.getMissingParams(params, ['session_id', 'cookie_session']);
   if (missingParams) {
     callback(new Error('Missing required parameters: ' + missingParams.join(', ')));
@@ -227,7 +229,7 @@ SpeechToText.prototype.observeResult = function(params, callback) {
  * @param {String} [params.session_id] Session used in the recognition.
  * @deprecated use createRecognizeStream instead
  */
-SpeechToText.prototype.getRecognizeStatus = function(params, callback) {
+SpeechToTextV1.prototype.getRecognizeStatus = function(params, callback) {
   var missingParams = helper.getMissingParams(params, ['session_id']);
   if (missingParams) {
     callback(new Error('Missing required parameters: ' + missingParams.join(', ')));
@@ -251,7 +253,7 @@ SpeechToText.prototype.getRecognizeStatus = function(params, callback) {
  * List of models available.
  *
  */
-SpeechToText.prototype.getModels = function(params, callback) {
+SpeechToTextV1.prototype.getModels = function(params, callback) {
   var parameters = {
     options: {
       method: 'GET',
@@ -269,7 +271,7 @@ SpeechToText.prototype.getModels = function(params, callback) {
  * @param {String} [params.model_id] The desired model
  *
  */
-SpeechToText.prototype.getModel = function(params, callback) {
+SpeechToTextV1.prototype.getModel = function(params, callback) {
   var path = params || {};
 
   var parameters = {
@@ -292,7 +294,7 @@ SpeechToText.prototype.getModel = function(params, callback) {
  * The session expires after 15 minutes of inactivity.
  * @param string model The model to use during the session
  */
-SpeechToText.prototype.createSession = function(params, callback) {
+SpeechToTextV1.prototype.createSession = function(params, callback) {
   var parameters = {
     options: {
       method: 'POST',
@@ -324,7 +326,7 @@ SpeechToText.prototype.createSession = function(params, callback) {
  *
  * @param {String} [params.session_id] Session id.
  */
-SpeechToText.prototype.deleteSession = function(params, callback) {
+SpeechToTextV1.prototype.deleteSession = function(params, callback) {
   var missingParams = helper.getMissingParams(params, ['session_id']);
   if (missingParams) {
     callback(new Error('Missing required parameters: ' + missingParams.join(', ')));
@@ -348,7 +350,7 @@ SpeechToText.prototype.deleteSession = function(params, callback) {
  * @param params
  * @returns {RecognizeStream}
  */
-SpeechToText.prototype.createRecognizeStream = function(params) {
+SpeechToTextV1.prototype.createRecognizeStream = function(params) {
   params = params || {};
   params.url = this._options.url;
 
@@ -362,8 +364,8 @@ SpeechToText.prototype.createRecognizeStream = function(params) {
 
 // set up a warning message for the deprecated methods
 ['recognizeLive', 'observeResult'].forEach(function(name) {
-  var original = SpeechToText.prototype[name];
-  SpeechToText.prototype[name] = function deprecated(params) {
+  var original = SpeechToTextV1.prototype[name];
+  SpeechToTextV1.prototype[name] = function deprecated(params) {
     if (!(params||{}).silent && !this._options.silent) {
       // eslint-disable-next-line no-console
       console.log(new Error('The ' + name + '() method is deprecated and will be removed from a future version of the watson-developer-cloud SDK. ' +
@@ -373,4 +375,4 @@ SpeechToText.prototype.createRecognizeStream = function(params) {
   };
 });
 
-module.exports = SpeechToText;
+module.exports = SpeechToTextV1;

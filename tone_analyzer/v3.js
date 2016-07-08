@@ -19,24 +19,24 @@
 var extend         = require('extend');
 var pick           = require('object.pick');
 var requestFactory = require('../lib/requestwrapper');
+var util = require('util');
+var BaseService = require('../lib/base_service');
 
-function ToneAnalyzer(options) {
+function ToneAnalyzerV3(options) {
+  BaseService.call(this, options);
   // Check if 'version_date' was provided
-  if (typeof options.version_date === 'undefined') {
+  if (typeof this._options.version_date === 'undefined') {
     throw new Error('Argument error: version_date was not specified, use 2016-05-19');
   }
-
-  // Default URL
-  var serviceDefaults = {
-    url: 'https://gateway.watsonplatform.net/tone-analyzer/api',
-    qs: {
-      version: options.version_date
-    }
-  };
-
-  // Replace default options with user provided
-  this._options = extend(serviceDefaults, options);
+  // todo: confirm that the service wants version, not version_date
+  this._options.qs.version = this._options.version_date;
 }
+util.inherits(ToneAnalyzerV3, BaseService);
+ToneAnalyzerV3.prototype.name = 'tone_analyzer';
+ToneAnalyzerV3.prototype.version = 'v3';
+ToneAnalyzerV3.prototype.serviceDefaults = {
+  url: 'https://gateway.watsonplatform.net/tone-analyzer/api',
+};
 
 /**
  * Main API call. Returns the different tone dimensions of a text.
@@ -61,7 +61,7 @@ function ToneAnalyzer(options) {
  * @see the API docs for a the full documentation.
  *
  */
-ToneAnalyzer.prototype.tone = function(params, callback) {
+ToneAnalyzerV3.prototype.tone = function(params, callback) {
   if (!params || !params.text){
     callback(new Error('Missing required parameters: text'));
     return;
@@ -85,4 +85,4 @@ ToneAnalyzer.prototype.tone = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
-module.exports = ToneAnalyzer;
+module.exports = ToneAnalyzerV3;

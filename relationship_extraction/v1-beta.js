@@ -19,22 +19,25 @@
 var extend         = require('extend');
 var helper         = require('../lib/helper');
 var requestFactory = require('../lib/requestwrapper');
+var util = require('util');
+var BaseService = require('../lib/base_service');
 
 /**
  *
  * @param options
  * @constructor
  */
-function RelationshipExtraction(options) {
-  var serviceDefaults = {
-    url: 'https://gateway.watsonplatform.net/relationship-extraction-beta/api'
-  };
-
-  // Extend default options with user provided options
-  this._options = extend(serviceDefaults, options);
+function RelationshipExtractionV1Beta(options) {
+  BaseService.call(this, options);
 }
+util.inherits(RelationshipExtractionV1Beta, BaseService);
+RelationshipExtractionV1Beta.prototype.name = 'relationship_extraction';
+RelationshipExtractionV1Beta.prototype.version = 'v1-beta';
+RelationshipExtractionV1Beta.prototype.serviceDefaults = {
+  url: 'https://gateway.watsonplatform.net/relationship-extraction-beta/api'
+};
 
-RelationshipExtraction.prototype.extract = function(_params, callback) {
+RelationshipExtractionV1Beta.prototype.extract = function(_params, callback) {
   var params = extend(this._options, _params);
 
   var missingParams = helper.getMissingParams(params, ['dataset','text']);
@@ -58,4 +61,4 @@ RelationshipExtraction.prototype.extract = function(_params, callback) {
   return requestFactory(parameters, callback);
 };
 
-module.exports = RelationshipExtraction;
+module.exports = RelationshipExtractionV1Beta;

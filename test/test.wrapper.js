@@ -21,12 +21,12 @@ describe('wrapper', function() {
     assert.throws(function() {
         create_service(undefined);
       },
-      /version was not specified/
+      /version/
     );
     assert.throws(function() {
         create_service({});
       },
-      /version was not specified/
+      /version/
     );
   });
 
@@ -52,14 +52,14 @@ describe('wrapper', function() {
           password: 'pass'
         });
       },
-      /version was not specified/
+      /version/
     );
     assert.throws(function() {
         create_service({
           api_key: 'keykeykey'
         });
       },
-      /version was not specified/
+      /version/
     );
   });
 

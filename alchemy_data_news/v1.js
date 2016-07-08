@@ -44,18 +44,14 @@ function errorFormatter(cb) {
  */
 function AlchemyDataNewsV1(options) {
   BaseService.call(this, options);
-  
-  // Default URL
-  var serviceDefaults = {
-    url: 'https://gateway-a.watsonplatform.net/calls'
-  };
-  // Replace default options with user provided
-  this._options = extend(serviceDefaults, options);
 }
 util.inherits(AlchemyDataNewsV1, BaseService);
 
 AlchemyDataNewsV1.prototype.name = 'alchemy_data_news';
 AlchemyDataNewsV1.prototype.version = 'v1';
+AlchemyDataNewsV1.prototype.serviceDefaults = {
+  url: 'https://gateway-a.watsonplatform.net/calls'
+};
 
 /**
  * Extracts a grouped, ranked list of named entities (people, companies,

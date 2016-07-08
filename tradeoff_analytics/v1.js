@@ -16,24 +16,25 @@
 
 'use strict';
 
-var extend         = require('extend');
 var requestFactory = require('../lib/requestwrapper');
 var omit           = require('object.omit');
+var util = require('util');
+var BaseService = require('../lib/base_service');
 
 /**
  *
  * @param options
  * @constructor
  */
-function TradeoffAnalytics(options) {
-  // Default URL
-  var defaultOptions = {
-    url: 'https://gateway.watsonplatform.net/tradeoff-analytics/api'
-  };
-
-  // Replace default options with user provided
-  this._options = extend(defaultOptions, options);
+function TradeoffAnalyticsV1(options) {
+  BaseService.call(this, options);
 }
+util.inherits(TradeoffAnalyticsV1, BaseService);
+TradeoffAnalyticsV1.prototype.name = 'tradeoff_analytics';
+TradeoffAnalyticsV1.prototype.version = 'v1';
+TradeoffAnalyticsV1.prototype.serviceDefaults = {
+  url: 'https://gateway.watsonplatform.net/tradeoff-analytics/api'
+};
 
 /**
  * Returns a dilemma that contains the problem and a resolution.
@@ -50,7 +51,7 @@ function TradeoffAnalytics(options) {
  * @param  {String} params.generate_visualization Boolean (default = true). if false, the algorithm
  *                                                will not create the "map" visualization, and will typically run much faster
  */
-TradeoffAnalytics.prototype.dilemmas = function(params, callback) {
+TradeoffAnalyticsV1.prototype.dilemmas = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -77,7 +78,7 @@ TradeoffAnalytics.prototype.dilemmas = function(params, callback) {
  * @param  {String} params.metadataHeader Value of the x-watson-metadata header to be forwarded
  * 								   for analytics purposes
  */
-TradeoffAnalytics.prototype.events = function(params, callback) {
+TradeoffAnalyticsV1.prototype.events = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -95,4 +96,4 @@ TradeoffAnalytics.prototype.events = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
-module.exports = TradeoffAnalytics;
+module.exports = TradeoffAnalyticsV1;

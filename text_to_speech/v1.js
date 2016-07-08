@@ -19,21 +19,23 @@
 var pick           = require('object.pick');
 var extend         = require('extend');
 var requestFactory = require('../lib/requestwrapper');
+var util = require('util');
+var BaseService = require('../lib/base_service');
 
 /**
  *
  * @param options
  * @constructor
  */
-function TextToSpeech(options) {
-  // Default URL
-  var serviceDefaults = {
-    url: 'https://stream.watsonplatform.net/text-to-speech/api'
-  };
-
-  // Replace default options with user provided
-  this._options = extend(serviceDefaults, options);
+function TextToSpeechV1(options) {
+  BaseService.call(this, options);
 }
+util.inherits(TextToSpeechV1, BaseService);
+TextToSpeechV1.prototype.name = 'text_to_speech';
+TextToSpeechV1.prototype.version = 'v1';
+TextToSpeechV1.prototype.serviceDefaults = {
+  url: 'https://stream.watsonplatform.net/text-to-speech/api'
+};
 
 /**
  * Streaming speech synthesis of the text in a query parameter
@@ -45,7 +47,7 @@ function TextToSpeech(options) {
  * @param {Boolean} [options.X-Watson-Learning-Opt-Out]
  * @param {Function} callback
  */
-TextToSpeech.prototype.synthesize = function(params, callback) {
+TextToSpeechV1.prototype.synthesize = function(params, callback) {
   params = extend({accept:'audio/ogg; codecs=opus'}, params);
   if (!params.text){
     callback(new Error('Missing required parameters: text'));
@@ -71,7 +73,7 @@ TextToSpeech.prototype.synthesize = function(params, callback) {
 /**
  * Retrieves the voices available for speech synthesis
  */
-TextToSpeech.prototype.voices = function(params, callback) {
+TextToSpeechV1.prototype.voices = function(params, callback) {
   var parameters = {
     options: {
       method: 'GET',
@@ -183,7 +185,7 @@ API-11 	GET 	/api/v1/pronunciation?text=aword&voice=voiceModel&format=ipa|spr 	G
  500 Service internal error
 
 */
-TextToSpeech.prototype.createCustomizations = function(params, callback) {
+TextToSpeechV1.prototype.createCustomizations = function(params, callback) {
   var parameters = {
     options: {
       method: 'POST',
@@ -1126,4 +1128,4 @@ TextToSpeech.prototype.createCustomizations = function(params, callback) {
   */
 
 
-module.exports = TextToSpeech;
+module.exports = TextToSpeechV1;

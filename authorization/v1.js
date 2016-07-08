@@ -16,33 +16,35 @@
 
 'use strict';
 
-var extend         = require('extend');
 var requestFactory = require('../lib/requestwrapper');
 var url            = require('url');
+var util = require('util');
+var BaseService = require('../lib/base_service');
 
 /**
  *
  * @param options
  * @constructor
  */
-function Authorization(options) {
-  // Default URL
-  var serviceDefaults = {
-    url: 'https://stream.watsonplatform.net/authorization/api'
-  };
-  // Replace default options with user provided
-  this._options = extend(serviceDefaults, options);
+function AuthorizationV1(options) {
+  BaseService.call(this, options);
 
   // replace the url to always point to /authorization/api
   var hostname = url.parse(this._options.url);
   hostname.pathname = '/authorization/api';
   this._options.url = url.format(hostname);
 }
+util.inherits(AuthorizationV1, BaseService);
+AuthorizationV1.prototype.name = 'authorization';
+AuthorizationV1.prototype.version = 'v1';
+AuthorizationV1.prototype.serviceDefaults = {
+  url: 'https://stream.watsonplatform.net/authorization/api'
+};
 
 /**
  * Get authorization token based on resource query string param
  */
-Authorization.prototype.getToken = function(params, callback) {
+AuthorizationV1.prototype.getToken = function(params, callback) {
   if (!params.url){
     callback(new Error('Missing required parameters: url'));
     return;
@@ -59,4 +61,4 @@ Authorization.prototype.getToken = function(params, callback) {
 };
 
 
-module.exports = Authorization;
+module.exports = AuthorizationV1;

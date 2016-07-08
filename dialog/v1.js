@@ -21,27 +21,29 @@ var requestFactory = require('../lib/requestwrapper');
 var pick           = require('object.pick');
 var omit           = require('object.omit');
 var isStream       = require('isstream');
+var util = require('util');
+var BaseService = require('../lib/base_service');
 
 /**
  *
  * @param options
  * @constructor
  */
-function Dialog(options) {
-  // Default URL
-  var serviceDefaults = {
-    url: 'https://gateway.watsonplatform.net/dialog/api'
-  };
-
-  // Replace default options with user provided
-  this._options = extend(serviceDefaults, options);
+function DialogV1(options) {
+  BaseService.call(this, options);
 }
+util.inherits(DialogV1, BaseService);
+DialogV1.prototype.name = 'dialog';
+DialogV1.prototype.version = 'v1';
+DialogV1.prototype.serviceDefaults = {
+  url: 'https://gateway.watsonplatform.net/dialog/api'
+};
 
 /**
  * Retrieves the values for profile variables for specific client ID
  * @param  {Object}   params   { client_id: '', dialog_id: '', name:''}
  */
-Dialog.prototype.getProfile = function(params, callback) {
+DialogV1.prototype.getProfile = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -62,7 +64,7 @@ Dialog.prototype.getProfile = function(params, callback) {
  * Sets the values for profile variables
  * @param  {Object}   params   { client_id: '', dialog_id: '', name_values:''}
  */
-Dialog.prototype.updateProfile = function(params, callback) {
+DialogV1.prototype.updateProfile = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -83,7 +85,7 @@ Dialog.prototype.updateProfile = function(params, callback) {
  * Returns a chat session data dump for a given date.
  * @param  {Object}   params   { client_id: '', dialog_id: '', name_values:''}
  */
-Dialog.prototype.getConversation = function(params, callback) {
+DialogV1.prototype.getConversation = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -105,7 +107,7 @@ Dialog.prototype.getConversation = function(params, callback) {
  * Also used to start new conversations.
  * @param  {Object}   params   { client_id: '', dialog_id: '' }
  */
-Dialog.prototype.conversation = function(params, callback) {
+DialogV1.prototype.conversation = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -126,7 +128,7 @@ Dialog.prototype.conversation = function(params, callback) {
  * Updates content for specified nodes.
  * @param  {Object}   params   { dialog_id: '' }
  */
-Dialog.prototype.updateContent = function(params, callback) {
+DialogV1.prototype.updateContent = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -146,7 +148,7 @@ Dialog.prototype.updateContent = function(params, callback) {
  * Gets content for nodes.
  * @param  {Object}   params   { dialog_id: '' }
  */
-Dialog.prototype.getContent = function(params, callback) {
+DialogV1.prototype.getContent = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -166,7 +168,7 @@ Dialog.prototype.getContent = function(params, callback) {
  * Create a dialog based on a file and name
  * @param  {Object}   params   { name: '', file:'' }
  */
-Dialog.prototype.createDialog = function(params, callback) {
+DialogV1.prototype.createDialog = function(params, callback) {
   params = params || {};
 
   if (!params.file) {
@@ -195,7 +197,7 @@ Dialog.prototype.createDialog = function(params, callback) {
 /**
  * Returns the dialogs associated with a service instance
  */
-Dialog.prototype.getDialogs = function(params, callback) {
+DialogV1.prototype.getDialogs = function(params, callback) {
   var parameters = {
     options: {
       url: '/v1/dialogs',
@@ -210,7 +212,7 @@ Dialog.prototype.getDialogs = function(params, callback) {
 /**
  * Delete a dialog and removes all associated data
  */
-Dialog.prototype.deleteDialog = function(params, callback) {
+DialogV1.prototype.deleteDialog = function(params, callback) {
   var parameters = {
     options: {
       url: '/v1/dialogs/{dialog_id}',
@@ -228,7 +230,7 @@ Dialog.prototype.deleteDialog = function(params, callback) {
  * Update a dialog with a new dialog file
  * @param  {Object}   params   { dialog_id: '' }
  */
-Dialog.prototype.updateDialog = function(params, callback) {
+DialogV1.prototype.updateDialog = function(params, callback) {
   params = params || {};
 
   if (!params.file) {
@@ -255,4 +257,4 @@ Dialog.prototype.updateDialog = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
-module.exports = Dialog;
+module.exports = DialogV1;

@@ -22,24 +22,30 @@ var pick = require('object.pick');
 var omit = require('object.omit');
 var isStream = require('isstream');
 var toCSV = require('./json-training-to-csv');
+var util = require('util');
+var BaseService = require('../lib/base_service');
 
 /**
  *
  * @param options
  * @constructor
  */
-function NaturalLanguageClassifier(options) {
+function NaturalLanguageClassifierV1(options) {
+  BaseService.call(this, options);
   // Default URL
   var serviceDefaults = {
     url: 'https://gateway.watsonplatform.net/natural-language-classifier/api'
   };
   this._options = extend(serviceDefaults, options);
 }
+util.inherits(NaturalLanguageClassifierV1, BaseService);
+NaturalLanguageClassifierV1.prototype.name = 'natural_language_classifier';
+NaturalLanguageClassifierV1.prototype.version = 'v1';
 
 /**
  * Creates a classifier
  */
-NaturalLanguageClassifier.prototype.create = function(params, callback) {
+NaturalLanguageClassifierV1.prototype.create = function(params, callback) {
   params = params || {};
 
   if (!params || !params.training_data) {
@@ -84,7 +90,7 @@ NaturalLanguageClassifier.prototype.create = function(params, callback) {
 /**
  * Returns the classification information for a classifier on a phrase
  */
-NaturalLanguageClassifier.prototype.classify = function(params, callback) {
+NaturalLanguageClassifierV1.prototype.classify = function(params, callback) {
   params = params || {};
 
   // #84: use classifier_id not classifier.
@@ -109,7 +115,7 @@ NaturalLanguageClassifier.prototype.classify = function(params, callback) {
 /**
  * Returns the training status of the classifier
  */
-NaturalLanguageClassifier.prototype.status = function(params, callback) {
+NaturalLanguageClassifierV1.prototype.status = function(params, callback) {
   params = params || {};
 
   // #84: use classifier_id not classifier.
@@ -133,7 +139,7 @@ NaturalLanguageClassifier.prototype.status = function(params, callback) {
 /**
  * Retrieves the list of classifiers for the user
  */
-NaturalLanguageClassifier.prototype.list = function(params, callback) {
+NaturalLanguageClassifierV1.prototype.list = function(params, callback) {
   var parameters = {
     options: {
       url: '/v1/classifiers',
@@ -149,7 +155,7 @@ NaturalLanguageClassifier.prototype.list = function(params, callback) {
 /**
  * Deletes a classifier
  */
-NaturalLanguageClassifier.prototype.remove = function(params, callback) {
+NaturalLanguageClassifierV1.prototype.remove = function(params, callback) {
   params = params || {};
 
   // #84: use classifier_id not classifier.
@@ -170,4 +176,4 @@ NaturalLanguageClassifier.prototype.remove = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
-module.exports = NaturalLanguageClassifier;
+module.exports = NaturalLanguageClassifierV1;

@@ -16,39 +16,37 @@
 
 'use strict';
 
-var extend         = require('extend');
 var requestFactory = require('../lib/requestwrapper');
 var pick           = require('object.pick');
+var util = require('util');
+var BaseService = require('../lib/base_service');
 
 /**
  *
  * @param options
  * @constructor
  */
-function Conversation(options) {
+function ConversationV1(options) {
+  BaseService.call(this, options);
 
   // Check if 'version_date' was provided
-  if (typeof options.version_date === 'undefined') {
+  if (typeof this._options.version_date === 'undefined') {
     throw new Error('Argument error: version_date was not specified, use 2016-07-01');
   }
-
-  // Default URL
-  var serviceDefaults = {
-    url: 'https://gateway.watsonplatform.net/conversation/api',
-    qs: {
-      version: options.version_date
-    }
-  };
-
-  // Replace default options with user provided
-  this._options = extend(serviceDefaults, options);
+  this._options.qs.version = options.version_date;
 }
+util.inherits(ConversationV1, BaseService);
+ConversationV1.prototype.name = 'conversation';
+ConversationV1.prototype.version = 'v1';
+ConversationV1.prototype.serviceDefaults = {
+  url: 'https://gateway.watsonplatform.net/conversation/api'
+};
 
 /**
  * Returns a response to a user utterance.
  * @param  {Object}   params   { workspace_id: '',  }
  */
-Conversation.prototype.message = function(params, callback) {
+ConversationV1.prototype.message = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -65,4 +63,4 @@ Conversation.prototype.message = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
-module.exports = Conversation;
+module.exports = ConversationV1;
