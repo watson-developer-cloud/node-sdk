@@ -30,6 +30,46 @@ describe('language_translator', function() {
     assert.ok((err instanceof Error) && /required parameters/.test(err));
   };
 
+  describe('VCAP_SERVICES', function() {
+
+    var details = [
+      {
+        "credentials": {
+          "password": "FAKE_PASSWORD",
+          "url": "https://gateway.watsonplatform.net/language-translation/api",
+          "username": "FAKE_USERNAME"
+        },
+        "label": "language_translation",
+        "name": "Language Translation-4t",
+        "plan": "standard",
+        "provider": null,
+        "syslog_drain_url": null,
+        "tags": [
+          "watson",
+          "ibm_created",
+          "ibm_dedicated_public"
+        ]
+      }
+    ];
+
+    it('should initialize with old-style VCAP_SERVICES credentials', function() {
+      process.env.VCAP_SERVICES = JSON.stringify({
+        "language_translation": details
+      });
+      var instance = watson.language_translator({version: 'v2', version_date: '2016-07-01'});
+      assert(instance._options.api_key);
+    });
+
+    it('should initialize with new-style VCAP_SERVICES credentials', function() {
+      process.env.VCAP_SERVICES = JSON.stringify({
+        "language_translator": details
+      });
+      var instance = watson.language_translator({version: 'v2', version_date: '2016-07-01'});
+      assert(instance._options.api_key);
+    });
+  });
+
+
   describe('getModels()', function(){
 
     it('should generate a valid payload', function() {
