@@ -18,7 +18,7 @@
 
 var extend         = require('extend');
 var util = require('util');
-var BaseService = require('../lib/base_service');
+var BaseServiceAlchemy = require('../lib/base_service_alchemy');
 var requestFactory = require('../lib/requestwrapper');
 // IMPORTANT:
 // Due to the current design, the URL must be the last key on each endpoint or
@@ -77,9 +77,9 @@ function createRequest(method) {
  * @constructor
  */
 function AlchemyLanguageV1(options) {
-  BaseService.call(this, options);
+  BaseServiceAlchemy.call(this, options);
 }
-util.inherits(AlchemyLanguageV1, BaseService);
+util.inherits(AlchemyLanguageV1, BaseServiceAlchemy);
 AlchemyLanguageV1.prototype.name = 'alchemy_language';
 AlchemyLanguageV1.prototype.version = 'v1';
 AlchemyLanguageV1.prototype.serviceDefaults = {

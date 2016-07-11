@@ -32,6 +32,15 @@ describe('language_translator', function() {
 
   describe('VCAP_SERVICES', function() {
 
+    var env;
+    before(function() {
+      env = process.env;
+      process.env = {};
+    });
+    after(function() {
+      process.env = env;
+    });
+
     var details = [
       {
         "credentials": {

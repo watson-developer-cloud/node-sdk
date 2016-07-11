@@ -92,35 +92,47 @@ describe('wrapper', function() {
     }));
   });
 
-  it('should use VCAP_SERVICES to get credentials', function() {
-    process.env.VCAP_SERVICES = JSON.stringify(vcap_services);
-    var service = create_service({ version: 'v1', api_key: 'not-gonna-work'});
-
-    // check api_key we get from VCAP_SERVICES
-    assert.equal(service._options.api_key, 'dXNlcjpwYXNz');
-  });
-
-  it('should use apikey (not documented) for alchemy service', function() {
-    var service = watson.alchemy_language({ apikey: 'not-gonna-work'});
-    assert.equal(service._options.api_key, 'not-gonna-work');
-  });
-
-  it('should use api_key for alchemy service', function() {
-    var service = watson.alchemy_language({ api_key: 'not-gonna-work'});
-    assert.equal(service._options.api_key, 'not-gonna-work');
-  });
-
-  it('should not use VCAP_SERVICES if use_vcap_services is false', function() {
-    process.env.VCAP_SERVICES = JSON.stringify(vcap_services);
-    var service = create_service({
-      version: 'v1',
-      api_key: 'not-gonna-work',
-      use_vcap_services: false
+  describe('env', function() {
+    var env;
+    before(function() {
+      env = process.env;
+      process.env = {};
+    });
+    after(function() {
+      process.env = env;
     });
 
-    // don't use VCAP_SERVICES if user_vcap_services == false
-    assert.equal(service._options.api_key, 'not-gonna-work');
+    it('should use VCAP_SERVICES to get credentials', function() {
+      process.env.VCAP_SERVICES = JSON.stringify(vcap_services);
+      var service = create_service({ version: 'v1', api_key: 'not-gonna-work'});
+
+      // check api_key we get from VCAP_SERVICES
+      assert.equal(service._options.api_key, 'not-gonna-work');
+    });
+
+    it('should use apikey (not documented) for alchemy service', function() {
+      var service = watson.alchemy_language({ apikey: 'not-gonna-work'});
+      assert.equal(service._options.api_key, 'not-gonna-work');
+    });
+
+    it('should use api_key for alchemy service', function() {
+      var service = watson.alchemy_language({ api_key: 'not-gonna-work'});
+      assert.equal(service._options.api_key, 'not-gonna-work');
+    });
+
+    it('should not use VCAP_SERVICES if use_vcap_services is false', function() {
+      process.env.VCAP_SERVICES = JSON.stringify(vcap_services);
+      var service = create_service({
+        version: 'v1',
+        api_key: 'not-gonna-work',
+        use_vcap_services: false
+      });
+
+      // don't use VCAP_SERVICES if user_vcap_services == false
+      assert.equal(service._options.api_key, 'not-gonna-work');
+    });
   });
+
 
   it('should not delete parameters', function() {
     var service = create_service({

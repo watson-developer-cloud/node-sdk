@@ -5,15 +5,16 @@ var nock = require('nock');
 var watson = require('../index');
 var assert = require('assert');
 var wav = require('wav');
-
 var concat = require('concat-stream');
-var TWENTY_SECONDS = 20000;
-var THIRTY_SECONDS = 30000;
-var TEN_SECONDS = 10000;
-var FIVE_SECONDS = 5000;
-var TWO_SECONDS = 2000;
 
 describe('integration-all-services', function() {
+
+  var TWENTY_SECONDS = 20000;
+  var THIRTY_SECONDS = 30000;
+  var TEN_SECONDS = 10000;
+  var FIVE_SECONDS = 5000;
+  var TWO_SECONDS = 2000;
+
   // these tests depend on service credentials in auth.js
   // of that file is not present (expected on pull requests and such), skip these tests
   if (!fs.existsSync(__dirname + '/resources/auth.js')) {
@@ -327,8 +328,7 @@ describe('integration-all-services', function() {
       }, failIfError.bind(failIfError, done));
     });
 
-    it('searchConceptByLabel()', function(done) {
-      this.timeout(THIRTY_SECONDS);
+    it.skip('searchConceptByLabel()', function(done) {
       concept_insights.graphs.searchConceptByLabel({
         graph: sample.graph,
         query: 'ibm'
@@ -397,7 +397,7 @@ describe('integration-all-services', function() {
       }, failIfError.bind(failIfError, done));
     });
 
-    it('searchByLabel()', function(done) {
+    it.skip('searchByLabel()', function(done) {
       this.timeout(THIRTY_SECONDS);
       concept_insights.corpora.searchByLabel({
         corpus: sample.corpus,
@@ -405,7 +405,7 @@ describe('integration-all-services', function() {
       }, failIfError.bind(failIfError, done));
     });
 
-    it('getRelatedDocuments()', function(done) {
+    it.skip('getRelatedDocuments()', function(done) {
       this.timeout(THIRTY_SECONDS);
       concept_insights.corpora.getRelatedDocuments({
         corpus: sample.corpus,
@@ -598,6 +598,7 @@ describe('integration-all-services', function() {
   describe('functional_alchemy_language', function() {
     var alchemy_language = watson.alchemy_language(auth.alchemy);
     var text = fs.readFileSync(__dirname + '/resources/alchemy-text.txt', 'utf8');
+    this.timeout(FIVE_SECONDS);
 
     it('entities()', function(done) {
       alchemy_language.entities({

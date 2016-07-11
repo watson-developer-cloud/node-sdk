@@ -23,7 +23,7 @@ var isStream       = require('isstream');
 var omit           = require('object.omit');
 var fs             = require('fs');
 var util = require('util');
-var BaseService = require('../lib/base_service');
+var BaseServiceAlchemy = require('../lib/base_service_alchemy');
 
 function errorFormatter(cb) {
   return function(err, result, response) {
@@ -92,9 +92,9 @@ function createRequest(method) {
  * @constructor
  */
 function AlchemyVisionV1(options) {
-  BaseService.call(this, options);
+  BaseServiceAlchemy.call(this, options);
 }
-util.inherits(AlchemyVisionV1, BaseService);
+util.inherits(AlchemyVisionV1, BaseServiceAlchemy);
 AlchemyVisionV1.prototype.name = 'alchemy_vision';
 AlchemyVisionV1.prototype.version = 'v1';
 AlchemyVisionV1.prototype.serviceDefaults = {

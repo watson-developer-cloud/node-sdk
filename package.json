@@ -60,6 +60,7 @@
     "url": "https://github.com/watson-developer-cloud/node-sdk/issues"
   },
   "devDependencies": {
+    "browserify": "^13.0.1",
     "codecov": ">1.0.0",
     "concat-stream": "^1.5.1",
     "eslint": "^2.2.0",
@@ -68,6 +69,8 @@
     "mocha": "^2.4.5",
     "nock": "^8.0.0",
     "qs": "^6.1.0",
+    "uglify-js": "^2.7.0",
+    "watchify": "^3.7.0",
     "wav": "^1.0.0"
   },
   "dependencies": {

@@ -21,7 +21,7 @@ var pick = require('object.pick');
 var isStream = require('isstream');
 var requestFactory = require('../lib/requestwrapper');
 var util = require('util');
-var BaseService = require('../lib/base_service');
+var BaseServiceAlchemy = require('../lib/base_service_alchemy');
 
 var NEGATIVE_EXAMPLES = 'negative_examples';
 
@@ -88,7 +88,7 @@ function errorFormatter(cb) {
  * @constructor
  */
 function VisualRecognitionV3(options) {
-  BaseService.call(this, options);
+  BaseServiceAlchemy.call(this, options);
   // Check if 'version_date' was provided
   if (typeof this._options.version_date === 'undefined') {
     throw new Error('Argument error: version_date was not specified, use 2016-05-19');
@@ -96,12 +96,23 @@ function VisualRecognitionV3(options) {
   //this._options.qs.api_key = this._options.api_key;
   this._options.qs.version = this._options.version_date; // todo: confirm service expects version not version_date
 }
-util.inherits(VisualRecognitionV3, BaseService);
+util.inherits(VisualRecognitionV3, BaseServiceAlchemy);
 VisualRecognitionV3.prototype.name = 'visual_recognition';
 VisualRecognitionV3.prototype.version = 'v3';
 VisualRecognitionV3.prototype.serviceDefaults = {
   url: 'http://gateway-a.watsonplatform.net/visual-recognition/api',
   alchemy: true
+};
+
+VisualRecognitionV3.prototype.initCredentials = function(options) {
+  options = extend(
+    {},
+    BaseServiceAlchemy.prototype.getCredentialsFromEnvironment.call(this, 'watson_vision_combined'), // grr @ bluemix
+    BaseServiceAlchemy.prototype.getCredentialsFromEnvironment.call(this, this.name), // for forward-compatibility (both if bluemix fixes the name and if we add support for non-JSON env properties)
+    options
+  );
+  return BaseServiceAlchemy.prototype.initCredentials.call(this, options); // hard-coded credentials override all env properties
+
 };
 
 /**

@@ -19,7 +19,7 @@
 var extend         = require('extend');
 var requestFactory = require('../lib/requestwrapper');
 var util = require('util');
-var BaseService = require('../lib/base_service');
+var BaseServiceAlchemy = require('../lib/base_service_alchemy');
 
 function errorFormatter(cb) {
   return function(err, result, response) {
@@ -43,9 +43,9 @@ function errorFormatter(cb) {
  * @constructor
  */
 function AlchemyDataNewsV1(options) {
-  BaseService.call(this, options);
+  BaseServiceAlchemy.call(this, options);
 }
-util.inherits(AlchemyDataNewsV1, BaseService);
+util.inherits(AlchemyDataNewsV1, BaseServiceAlchemy);
 
 AlchemyDataNewsV1.prototype.name = 'alchemy_data_news';
 AlchemyDataNewsV1.prototype.version = 'v1';
