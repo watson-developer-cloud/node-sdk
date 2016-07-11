@@ -156,7 +156,7 @@ AlchemyLanguage.prototype.publicationDate = createRequest('publication_date');
  * Finds dates in the source text, including relative dates like "next Tuesday"
  * if an anchorDate is set.
  */
-AlchemyLanguage.prototype.extractDates = createRequest('extract_dates');
+AlchemyLanguage.prototype.dates = createRequest('extract_dates');
 
 /**
  * Detects the RSS/ATOM feeds for a URL or HTML.
