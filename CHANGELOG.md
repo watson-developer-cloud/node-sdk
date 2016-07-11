@@ -1,0 +1,31 @@
+# v2.0.0
+
+* Breaking: prefer programatic (user-supplied) credentials over bluemix-provided ones (VCAP_SERVICES)
+* New preferred method of instantiating services: `new watson.PersonalityInsightsV2({/*...*/});` instead of `watson.personality_insights({/*...*/});`. Older method still works
+* Restructured code to support client-side usage via tools such as Browserify and Webpack. Most services support CORS; this will be documented and the remaining service teams will be nagged.
+* Added a changelog to capture both major breaking changes and smaller
+
+
+## Breaking Changes for v1.0
+
+Several breaking changes were introduced with the v1.0.0 release:
+
+  * Experimental and Beta services now require the appropriate tag to be added to their version:
+    * Concept Expansion `v1` is now `v1-beta`
+    * Question and Answer `v1` is now `v1-beta`
+    * Relationship Extraction `v1` is now `v1-beta`
+    * Tone Analyzer `v3` is now `v3` (latest) or `v3-beta` (compatibility with old Beta plan)
+    * Visual Insights `v1` is now `v1-experimental`
+    * Visual Recognition `v1` is now `v1-beta`
+  * Speech to Text gained a new `createRecognizeStream()` method replacing the existing live streaming methods with a simpler Read/Write stream.
+    The older methods are still available in v1.0 but each log a deprecation warning (unless `{silent: true}` is passed in) and will be removed from a future release.
+    The affected methods are:
+    * `recognizeLive()`
+    * `observeResult()`
+    * `getRecognizeStatus()`
+  * The Document Conversion API has been reduced to a single `convert()` method; it no longer offers batch conversion or cloud storage of files.
+  * Several deprecated services have been removed:
+    * Message Resonance
+    * Tone Analyzer v1 and v2 (replaced by v3)
+    * Search (replaced by Retrieve and Rank)
+  * Dropped support for node.js v0.10.x (For reference: the WDC Node.js SDK now officially support the latest 0.12, LTS, and Stable releases of Node.js.)
