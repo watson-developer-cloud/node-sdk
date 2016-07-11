@@ -143,6 +143,24 @@ describe('alchemy_language', function() {
         assert.equal(body, qs.stringify({ html: 'sample text', outputMode: 'json'}));
       });
     });
-
   })
+
+  describe('dates()', function() {
+    var apiPath = '/text/TextExtractDates';
+
+    var payload = {
+      text: 'Set a reminder for my appointment next Tuesday',
+      anchorDate: '2016-03-22 00:00:00'
+    };
+
+    it('should generate a valid payload', function() {
+      var req = alchemy.dates(payload, noop);
+      assert.equal(req.uri.href, service.url + apiPath + '?apikey=' + service.api_key);
+      assert.equal(req.method, 'POST');
+      assert(req.form);
+      var body = new Buffer(req.body).toString('ascii');
+      assert.equal(body, qs.stringify({ text: 'Set a reminder for my appointment next Tuesday', anchorDate: '2016-03-22 00:00:00', outputMode: 'json'}));
+    });
+  });
+
 });
