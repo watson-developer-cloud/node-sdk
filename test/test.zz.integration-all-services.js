@@ -292,7 +292,7 @@ describe('integration-all-services', function() {
     });
   });
 
-  describe.only('functional_concept_insights', function() {
+  describe('functional_concept_insights', function() {
     this.timeout(TEN_SECONDS);
 
     var sample = {
