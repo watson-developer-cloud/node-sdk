@@ -60,12 +60,18 @@
     "url": "https://github.com/watson-developer-cloud/node-sdk/issues"
   },
   "devDependencies": {
+    "brfs": "^1.4.3",
     "browserify": "^13.0.1",
     "codecov": ">1.0.0",
     "concat-stream": "^1.5.1",
     "eslint": "^2.2.0",
     "istanbul": "^0.4.2",
     "jsdoc": "^3.4.0",
+    "karma": "^1.1.1",
+    "karma-browserify": "^5.0.5",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-firefox-launcher": "^1.0.0",
+    "karma-mocha": "^1.1.1",
     "mocha": "^2.4.5",
     "nock": "^8.0.0",
     "qs": "^6.1.0",
@@ -99,6 +105,11 @@
     "codecov": "istanbul cover ./node_modules/.bin/mocha && codecov",
     "test-integration": "mocha test/test.zz.integration-all-services.js",
     "test-unit": "npm run lint && mocha --fgrep integration --invert",
-    "watch": "npm run test-unit -- --watch"
+    "test-browser": "karma start --single-run",
+    "watch": "npm run test-unit -- --watch",
+    "browserify": "browserify index.js --standalone Watson --outfile dist/watson.js",
+    "watchify": "watchify index.js --standalone Watson --outfile dist/watson.js --debug --verbose",
+    "minify": "uglifyjs --compress --mangle --screw-ie8 dist/watson.js --output dist/watson.min.js --preamble \"// Watson Developer Cloud\n// JavaScript SDK$npm_package_version\n// Generated at `date`\n// Copyright IBM ($npm_package_license)\n// $npm_package_homepage\"",
+    "build": "npm run browserify && npm run minify"
   }
 }
