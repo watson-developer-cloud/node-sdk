@@ -148,9 +148,15 @@ AlchemyLanguage.prototype.relations = createRequest('relations');
 AlchemyLanguage.prototype.category = createRequest('category');
 
 /**
- * Categorizes the text for text, a URL or HTML.
+ * Extracts the publication date from a webpage or HTML file.
  */
 AlchemyLanguage.prototype.publicationDate = createRequest('publication_date');
+
+/**
+ * Finds dates in the source text, including relative dates like "next Tuesday"
+ * if an anchorDate is set.
+ */
+AlchemyLanguage.prototype.extractDates = createRequest('extract_dates');
 
 /**
  * Detects the RSS/ATOM feeds for a URL or HTML.
@@ -168,7 +174,7 @@ AlchemyLanguage.prototype.microformats = createRequest('microformats');
 AlchemyLanguage.prototype.taxonomy = createRequest('taxonomy');
 
 /**
- * Categorized through the taxonomy call for text, HTML, or a URL.
+ * Combines multiple API operations into a single call.
  */
 AlchemyLanguage.prototype.combined = createRequest('combined');
 
