@@ -2,16 +2,10 @@
 'use strict';
 
 var fs = require('fs');
-
-//if (fs.existsSync(__dirname + '/resources/auth.js')) {
-
 var nock = require('nock');
 var watson = require('../index');
-var auth = require('./resources/auth');
 var assert = require('assert');
 var wav = require('wav');
-
-var mobydick = fs.readFileSync(__dirname + '/resources/mobydick.txt', 'utf8');
 
 var concat = require('concat-stream');
 var TWENTY_SECONDS = 20000;
@@ -21,6 +15,15 @@ var FIVE_SECONDS = 5000;
 var TWO_SECONDS = 2000;
 
 describe('integration-all-services', function() {
+  // these tests depend on service credentials in auth.js
+  // of that file is not present (expected on pull requests and such), skip these tests
+  if (!fs.existsSync(__dirname + '/resources/auth.js')) {
+    console.warn('no test/resources/auth.js, skipping integration tests'); // eslint-disable-line no-console
+    return;
+  }
+
+  var auth = require('./resources/auth');
+  var mobydick = fs.readFileSync(__dirname + '/resources/mobydick.txt', 'utf8');
 
   this.retries(1);
 
@@ -849,7 +852,3 @@ describe('integration-all-services', function() {
     });
   });
 });
-
-// } else {
-//   console.warn('no test/resources/auth.js, skipping integration tests'); // eslint-disable-line no-console
-// }
