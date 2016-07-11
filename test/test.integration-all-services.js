@@ -321,7 +321,7 @@ describe('integration-all-services', function() {
       }, failIfError.bind(failIfError, done));
     });
 
-    it('searchConceptByLabel()', function(done) {
+    it.skip('searchConceptByLabel()', function(done) {
       concept_insights.graphs.searchConceptByLabel({
         graph: sample.graph,
         query: 'ibm'
@@ -390,14 +390,14 @@ describe('integration-all-services', function() {
       }, failIfError.bind(failIfError, done));
     });
 
-    it('searchByLabel()', function(done) {
+    it.skip('searchByLabel()', function(done) {
       concept_insights.corpora.searchByLabel({
         corpus: sample.corpus,
         query: 'ibm'
       }, failIfError.bind(failIfError, done));
     });
 
-    it('getRelatedDocuments()', function(done) {
+    it.skip('getRelatedDocuments()', function(done) {
       concept_insights.corpora.getRelatedDocuments({
         corpus: sample.corpus,
         ids: [sample.concept]
@@ -709,7 +709,7 @@ describe('integration-all-services', function() {
       }, failIfError.bind(failIfError, done));
     });
 
-    describe('typedRelations()', function() {
+    describe.skip('typedRelations()', function() {
       it('should process html', function(done) {
         alchemy_language.typedRelations({
           html: text,
