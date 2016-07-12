@@ -56,6 +56,12 @@
     "url"  : "/url/URLGetPubDate"
   },
 
+  "extract_dates": {
+    "html" : "/html/HTMLExtractDates",
+    "url"  : "/url/URLExtractDates",
+    "text"  : "/text/TextExtractDates"
+  },
+
   "text_raw": {
     "html" : "/html/HTMLGetRawText",
     "url"  : "/url/URLGetRawText"
