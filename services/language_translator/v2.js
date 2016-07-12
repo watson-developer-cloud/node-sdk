@@ -29,7 +29,7 @@ var helper         = require('../../lib/helper');
  * @param {string} params.password Password
  * @constructor
  */
-function LanguageTranslation(options) {
+function LanguageTranslator(options) {
   // Default URL
   var serviceDefaults = {
     url: 'https://gateway.watsonplatform.net/language-translation/api'
@@ -49,7 +49,7 @@ function LanguageTranslation(options) {
  * @param  {string}   params.source   Filter by source language
  * @param  {string}   params.target   Filter by target language
  */
-LanguageTranslation.prototype.getModels = function(params, callback) {
+LanguageTranslator.prototype.getModels = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -68,7 +68,7 @@ LanguageTranslation.prototype.getModels = function(params, callback) {
  * Return the translation model
  * @param  {string}   params.model_id   The model identifier
  */
-LanguageTranslation.prototype.getModel = function(params, callback) {
+LanguageTranslator.prototype.getModel = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -92,7 +92,7 @@ LanguageTranslation.prototype.getModel = function(params, callback) {
  * @param  {stream}   params.parallel_corpus   A UTF-8 encoded TMX file that contains matching phrases in the source and target language that serve as examples for Watson. Parallel corpora differ from glossaries because they do not overwrite the original domain data.
  * @param  {stream}   params.monolingual_corpus A UTF-8 encoded plain text file that contains a body of text in the target language that is related to what you are translating. A monolingual corpus helps improve literal translations to be more fluent and human.
  */
-LanguageTranslation.prototype.createModel = function(params, callback) {
+LanguageTranslator.prototype.createModel = function(params, callback) {
   params = params || {};
 
   var missingParams = helper.getMissingParams(params, ['base_model_id']);
@@ -129,7 +129,7 @@ LanguageTranslation.prototype.createModel = function(params, callback) {
  * Deletes a model
  * @param  {string}   params.model_id   The model identifier
  */
-LanguageTranslation.prototype.deleteModel = function(params, callback) {
+LanguageTranslator.prototype.deleteModel = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -150,7 +150,7 @@ LanguageTranslation.prototype.deleteModel = function(params, callback) {
  * @param {string} params.source Source language
  * @param {string} params.target Target language
  */
-LanguageTranslation.prototype.translate = function(params, callback) {
+LanguageTranslator.prototype.translate = function(params, callback) {
   params = params || {};
 
   if (!(params.model_id || (params.source && params.target))){
@@ -174,7 +174,7 @@ LanguageTranslation.prototype.translate = function(params, callback) {
 /**
  * Returns the identifiable languages
  */
-LanguageTranslation.prototype.getIdentifiableLanguages = function(params, callback) {
+LanguageTranslator.prototype.getIdentifiableLanguages = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -193,7 +193,7 @@ LanguageTranslation.prototype.getIdentifiableLanguages = function(params, callba
  * Identify the text based on the identifiable languages
  * @param  {string} params.text  text to identify
  */
-LanguageTranslation.prototype.identify = function(params, callback) {
+LanguageTranslator.prototype.identify = function(params, callback) {
   if (!params || !params.text){
     callback(new Error('Missing required parameters: text'));
     return;
@@ -216,4 +216,4 @@ LanguageTranslation.prototype.identify = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
-module.exports = LanguageTranslation;
+module.exports = LanguageTranslator;
