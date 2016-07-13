@@ -16,7 +16,7 @@ describe('document_conversion', function() {
     username: 'batman',
     password: 'bruce-wayne',
     url: 'http://ibm.com:80',
-    version_date: '2015-12-01',
+    version_date: '2015-12-15',
     version: 'v1'
   };
   var convertPath = '/v1/convert_document';
@@ -98,7 +98,7 @@ describe('document_conversion', function() {
         // the file content-type is in the body for form/multipart POST requests
         // so we're having nock intercept the request, check the body, then send a fake response
         var expectation = nock('http://ibm.com:80')
-          .post('/v1/convert_document?version=2015-12-01', function(body) {
+          .post('/v1/convert_document?version=2015-12-15', function(body) {
             var re = new RegExp('Content-Type: ' + contentType);
             // if the first character is a - then it's ascii, other wise assume hex
             return body[0] == '-' ? re.exec(body) : re.exec(hexToString(body));

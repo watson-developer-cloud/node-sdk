@@ -28,13 +28,13 @@ var omit           = require('object.omit');
  */
 function DocumentConversion(options) {
   // Warn if not specifying version date
-  var version_date = '2015-12-01';
+  var version_date = '2015-12-15';
   if(options && options.version_date) {
     version_date = options.version_date;
   } else {
     // eslint-disable-next-line no-console
     console.warn('[DocumentConversion] WARNING: No version_date specified. Using a (possibly old) default. ' +
-                  'e.g. watson.document_conversion({ version_date: "2015-12-01" })');
+                  'e.g. watson.document_conversion({ version_date: "2015-12-15" })');
   }
 
   // Default URL
@@ -81,7 +81,7 @@ function fixupContentType(params) {
  * To convert a previously uploaded document, set params.document_id
  *
  * @param  {Object} params
- * @param  {Object} params.conversion_target Must be set to one of ['ANSWER_UNITS', 'NORMALIZED_HTML', 'NORMALIZED_TEXT']
+ * @param  {Object} params.conversion_target Must be set to one of ['answer_units', 'normalized_html', 'normalized_text']
  * @param  {ReadableStream} [params.file] The document file to convert. May be a ReadableStream or Buffer
  * @param  {String} [params.content_type] Set this when the content type cannot be determined from the filename (params.file.path)
  * @param  {Function} callback
