@@ -108,7 +108,7 @@ var parameters = {
   url: 'http://www.twitter.com/ibmwatson'
 };
 
-alchemy_language.feeds(parameters, function (err, response) {
+alchemy_language.keywords(parameters, function (err, response) {
   if (err)
     console.log('error:', err);
   else
@@ -168,7 +168,7 @@ var parameters = {
   url: 'http://techcrunch.com'
 };
 
-alchemy_language.relations(parameters, function (err, response) {
+alchemy_language.typedRelations(parameters, function (err, response) {
   if (err)
     console.log('error:', err);
   else
