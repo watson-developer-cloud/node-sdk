@@ -49,9 +49,9 @@ function DocumentConversion(options) {
 
 
 DocumentConversion.prototype.conversion_target = {
-  ANSWER_UNITS: 'ANSWER_UNITS',
-  NORMALIZED_HTML: 'NORMALIZED_HTML',
-  NORMALIZED_TEXT: 'NORMALIZED_TEXT'
+  ANSWER_UNITS: 'answer_units',
+  NORMALIZED_HTML: 'normalized_html',
+  NORMALIZED_TEXT: 'normalized_text'
 };
 
 // this sets up the content type "headers" in the form/multipart body (not in the actual headers)
@@ -88,6 +88,9 @@ function fixupContentType(params) {
  */
 DocumentConversion.prototype.convert = function(params, callback) {
   params = params || {};
+  if (typeof params.conversion_target === 'string') {
+    params.conversion_target = params.conversion_target.toLowerCase();
+  }
   if (!params.conversion_target || !DocumentConversion.prototype.conversion_target[params.conversion_target]) {
     var keys = Object.keys(DocumentConversion.prototype.conversion_target);
     var values = keys.map(function(v) { return DocumentConversion.prototype.conversion_target[v]; });
