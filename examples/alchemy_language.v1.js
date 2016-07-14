@@ -29,8 +29,7 @@ fs.readFile('example.html', 'utf8', function (err, data) {
     return console.log(err);
   }
   parameters = {
-    'html': data,
-    'showSourceText': 1,
+    'html': data
   };
   alchemy_language.authors(parameters, function (error, response) {
     if (error)
