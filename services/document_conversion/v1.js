@@ -28,13 +28,13 @@ var omit           = require('object.omit');
  */
 function DocumentConversion(options) {
   // Warn if not specifying version date
-  var version_date = '2015-12-01';
+  var version_date = '2015-12-15';
   if(options && options.version_date) {
     version_date = options.version_date;
   } else {
     // eslint-disable-next-line no-console
     console.warn('[DocumentConversion] WARNING: No version_date specified. Using a (possibly old) default. ' +
-                  'e.g. watson.document_conversion({ version_date: "2015-12-01" })');
+                  'e.g. watson.document_conversion({ version_date: "2015-12-15" })');
   }
 
   // Default URL
@@ -49,9 +49,9 @@ function DocumentConversion(options) {
 
 
 DocumentConversion.prototype.conversion_target = {
-  ANSWER_UNITS: 'ANSWER_UNITS',
-  NORMALIZED_HTML: 'NORMALIZED_HTML',
-  NORMALIZED_TEXT: 'NORMALIZED_TEXT'
+  ANSWER_UNITS: 'answer_units',
+  NORMALIZED_HTML: 'normalized_html',
+  NORMALIZED_TEXT: 'normalized_text'
 };
 
 // this sets up the content type "headers" in the form/multipart body (not in the actual headers)
@@ -81,17 +81,19 @@ function fixupContentType(params) {
  * To convert a previously uploaded document, set params.document_id
  *
  * @param  {Object} params
- * @param  {Object} params.conversion_target Must be set to one of ['ANSWER_UNITS', 'NORMALIZED_HTML', 'NORMALIZED_TEXT']
+ * @param  {Object} params.conversion_target Must be set to one of ['answer_units', 'normalized_html', 'normalized_text']
  * @param  {ReadableStream} [params.file] The document file to convert. May be a ReadableStream or Buffer
  * @param  {String} [params.content_type] Set this when the content type cannot be determined from the filename (params.file.path)
  * @param  {Function} callback
  */
 DocumentConversion.prototype.convert = function(params, callback) {
   params = params || {};
-  if (!params.conversion_target || !DocumentConversion.prototype.conversion_target[params.conversion_target]) {
-    var keys = Object.keys(DocumentConversion.prototype.conversion_target);
-    var values = keys.map(function(v) { return DocumentConversion.prototype.conversion_target[v]; });
-
+  if (typeof params.conversion_target === 'string') {
+    params.conversion_target = params.conversion_target.toLowerCase();
+  }
+  var keys = Object.keys(DocumentConversion.prototype.conversion_target);
+  var values = keys.map(function(v) { return DocumentConversion.prototype.conversion_target[v]; });
+  if (values.indexOf(params.conversion_target) == -1) {
     callback(new Error('Missing required parameters: conversion_target. Possible values are: ' + values.join(', ')));
     return;
   }

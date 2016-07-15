@@ -16,13 +16,13 @@ describe('document_conversion', function() {
     username: 'batman',
     password: 'bruce-wayne',
     url: 'http://ibm.com:80',
-    version_date: '2015-12-01',
+    version_date: '2015-12-15',
     version: 'v1'
   };
   var convertPath = '/v1/convert_document';
 
   var payload = {
-    conversion_target: 'ANSWER_UNITS',
+    conversion_target: 'answer_units',
     word: {
       heading: {
         fonts: [
@@ -67,6 +67,13 @@ describe('document_conversion', function() {
       }, missingParameter);
     });
 
+    it('should validate uppercase conversion_target', function() {
+      servInstance.convert({
+        file: payload.file,
+        conversion_target: 'ANSWER_UNITS'
+      }, missingParameter);
+    });
+
     it('should validate file as Stream', function() {
       servInstance.convert({
         file: 'not a file',
@@ -98,7 +105,7 @@ describe('document_conversion', function() {
         // the file content-type is in the body for form/multipart POST requests
         // so we're having nock intercept the request, check the body, then send a fake response
         var expectation = nock('http://ibm.com:80')
-          .post('/v1/convert_document?version=2015-12-01', function(body) {
+          .post('/v1/convert_document?version=2015-12-15', function(body) {
             var re = new RegExp('Content-Type: ' + contentType);
             // if the first character is a - then it's ascii, other wise assume hex
             return body[0] == '-' ? re.exec(body) : re.exec(hexToString(body));
@@ -116,17 +123,17 @@ describe('document_conversion', function() {
     }
 
     // todo: check for flakyness in this test.
-    // It faild on me once, but the error message included the full file contents, which were longer than the scroll-back in my console, so I couldn't see the actual error.
+    // It failed on me once, but the error message included the full file contents, which were longer than the scroll-back in my console, so I couldn't see the actual error.
     it('should set a default content type based on the file extension', function() {
       return checkContentType({
-        conversion_target: 'ANSWER_UNITS',
+        conversion_target: 'answer_units',
         file: fs.createReadStream(__dirname + '/resources/sampleWord.docx')
       }, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
     });
 
     it('should allow the content type to be manually set', function() {
       return checkContentType({
-        conversion_target: 'ANSWER_UNITS',
+        conversion_target: 'answer_units',
         file: fs.createReadStream(__dirname + '/resources/sampleWordWrongExtension.html'),
         content_type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
       }, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
@@ -136,7 +143,7 @@ describe('document_conversion', function() {
     // and only accepts utf-8
     it('should add the charset to the content-type for .htm files', function() {
       return checkContentType({
-        conversion_target: 'ANSWER_UNITS',
+        conversion_target: 'answer_units',
         file: fs.createReadStream(__dirname + '/resources/sampleHtml.htm')
       }, 'text/html; charset=utf-8');
     });
@@ -144,14 +151,14 @@ describe('document_conversion', function() {
     // same as above, except with .html instead of .htm
     it('should add the charset to the content-type for .html files', function() {
       return checkContentType({
-        conversion_target: 'ANSWER_UNITS',
+        conversion_target: 'answer_units',
         file: fs.createReadStream(__dirname + '/resources/sampleHtml.html')
       }, 'text/html; charset=utf-8');
     });
 
     it('should not override the user-set content-type for html files', function() {
       return checkContentType({
-        conversion_target: 'ANSWER_UNITS',
+        conversion_target: 'answer_units',
         file: fs.createReadStream(__dirname + '/resources/sampleHtml.htm'),
         content_type: 'text/plain'
       }, 'text/plain');
@@ -159,7 +166,7 @@ describe('document_conversion', function() {
 
     it ('should accept Buffers', function() {
       return checkContentType({
-        conversion_target: 'ANSWER_UNITS',
+        conversion_target: 'answer_units',
         file: fs.readFileSync(__dirname + '/resources/sampleHtml.htm'),
         content_type: 'text/plain'
       }, 'text/plain');
