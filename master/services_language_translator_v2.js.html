@@ -57,7 +57,7 @@ var helper         = require('../../lib/helper');
  * @param {string} params.password Password
  * @constructor
  */
-function LanguageTranslation(options) {
+function LanguageTranslator(options) {
   // Default URL
   var serviceDefaults = {
     url: 'https://gateway.watsonplatform.net/language-translation/api'
@@ -77,7 +77,7 @@ function LanguageTranslation(options) {
  * @param  {string}   params.source   Filter by source language
  * @param  {string}   params.target   Filter by target language
  */
-LanguageTranslation.prototype.getModels = function(params, callback) {
+LanguageTranslator.prototype.getModels = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -96,7 +96,7 @@ LanguageTranslation.prototype.getModels = function(params, callback) {
  * Return the translation model
  * @param  {string}   params.model_id   The model identifier
  */
-LanguageTranslation.prototype.getModel = function(params, callback) {
+LanguageTranslator.prototype.getModel = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -120,7 +120,7 @@ LanguageTranslation.prototype.getModel = function(params, callback) {
  * @param  {stream}   params.parallel_corpus   A UTF-8 encoded TMX file that contains matching phrases in the source and target language that serve as examples for Watson. Parallel corpora differ from glossaries because they do not overwrite the original domain data.
  * @param  {stream}   params.monolingual_corpus A UTF-8 encoded plain text file that contains a body of text in the target language that is related to what you are translating. A monolingual corpus helps improve literal translations to be more fluent and human.
  */
-LanguageTranslation.prototype.createModel = function(params, callback) {
+LanguageTranslator.prototype.createModel = function(params, callback) {
   params = params || {};
 
   var missingParams = helper.getMissingParams(params, ['base_model_id']);
@@ -157,7 +157,7 @@ LanguageTranslation.prototype.createModel = function(params, callback) {
  * Deletes a model
  * @param  {string}   params.model_id   The model identifier
  */
-LanguageTranslation.prototype.deleteModel = function(params, callback) {
+LanguageTranslator.prototype.deleteModel = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -178,7 +178,7 @@ LanguageTranslation.prototype.deleteModel = function(params, callback) {
  * @param {string} params.source Source language
  * @param {string} params.target Target language
  */
-LanguageTranslation.prototype.translate = function(params, callback) {
+LanguageTranslator.prototype.translate = function(params, callback) {
   params = params || {};
 
   if (!(params.model_id || (params.source &amp;&amp; params.target))){
@@ -202,7 +202,7 @@ LanguageTranslation.prototype.translate = function(params, callback) {
 /**
  * Returns the identifiable languages
  */
-LanguageTranslation.prototype.getIdentifiableLanguages = function(params, callback) {
+LanguageTranslator.prototype.getIdentifiableLanguages = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -221,7 +221,7 @@ LanguageTranslation.prototype.getIdentifiableLanguages = function(params, callba
  * Identify the text based on the identifiable languages
  * @param  {string} params.text  text to identify
  */
-LanguageTranslation.prototype.identify = function(params, callback) {
+LanguageTranslator.prototype.identify = function(params, callback) {
   if (!params || !params.text){
     callback(new Error('Missing required parameters: text'));
     return;
@@ -244,7 +244,7 @@ LanguageTranslation.prototype.identify = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
-module.exports = LanguageTranslation;
+module.exports = LanguageTranslator;
 </code></pre>
         </article>
     </section>
@@ -255,13 +255,13 @@ module.exports = LanguageTranslation;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AlchemyDataNews.html">AlchemyDataNews</a></li><li><a href="AlchemyLanguage.html">AlchemyLanguage</a></li><li><a href="AlchemyVision.html">AlchemyVision</a></li><li><a href="Authorization.html">Authorization</a></li><li><a href="ConceptInsights.html">ConceptInsights</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Dialog.html">Dialog</a></li><li><a href="DocumentConversion.html">DocumentConversion</a></li><li><a href="LanguageTranslation.html">LanguageTranslation</a></li><li><a href="NaturalLanguageClassifier.html">NaturalLanguageClassifier</a></li><li><a href="PersonalityInsights.html">PersonalityInsights</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RelationshipExtraction.html">RelationshipExtraction</a></li><li><a href="RetrieveAndRank.html">RetrieveAndRank</a></li><li><a href="SpeechToText.html">SpeechToText</a></li><li><a href="TextToSpeech.html">TextToSpeech</a></li><li><a href="TradeoffAnalytics.html">TradeoffAnalytics</a></li><li><a href="VisualRecognitionV3.html">VisualRecognitionV3</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:close">close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li></ul><h3>Namespaces</h3><ul><li><a href="watson.html">watson</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AlchemyDataNews.html">AlchemyDataNews</a></li><li><a href="AlchemyLanguage.html">AlchemyLanguage</a></li><li><a href="AlchemyVision.html">AlchemyVision</a></li><li><a href="Authorization.html">Authorization</a></li><li><a href="ConceptInsights.html">ConceptInsights</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Dialog.html">Dialog</a></li><li><a href="DocumentConversion.html">DocumentConversion</a></li><li><a href="LanguageTranslator.html">LanguageTranslator</a></li><li><a href="NaturalLanguageClassifier.html">NaturalLanguageClassifier</a></li><li><a href="PersonalityInsights.html">PersonalityInsights</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RelationshipExtraction.html">RelationshipExtraction</a></li><li><a href="RetrieveAndRank.html">RetrieveAndRank</a></li><li><a href="SpeechToText.html">SpeechToText</a></li><li><a href="TextToSpeech.html">TextToSpeech</a></li><li><a href="TradeoffAnalytics.html">TradeoffAnalytics</a></li><li><a href="VisualRecognitionV3.html">VisualRecognitionV3</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:close">close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li></ul><h3>Namespaces</h3><ul><li><a href="watson.html">watson</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue Jul 12 2016 01:45:22 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Jul 15 2016 17:30:27 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>
