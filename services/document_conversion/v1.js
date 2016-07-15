@@ -91,10 +91,9 @@ DocumentConversion.prototype.convert = function(params, callback) {
   if (typeof params.conversion_target === 'string') {
     params.conversion_target = params.conversion_target.toLowerCase();
   }
-  if (!params.conversion_target || !DocumentConversion.prototype.conversion_target[params.conversion_target]) {
-    var keys = Object.keys(DocumentConversion.prototype.conversion_target);
-    var values = keys.map(function(v) { return DocumentConversion.prototype.conversion_target[v]; });
-
+  var keys = Object.keys(DocumentConversion.prototype.conversion_target);
+  var values = keys.map(function(v) { return DocumentConversion.prototype.conversion_target[v]; });
+  if (values.indexOf(params.conversion_target) == -1) {
     callback(new Error('Missing required parameters: conversion_target. Possible values are: ' + values.join(', ')));
     return;
   }
