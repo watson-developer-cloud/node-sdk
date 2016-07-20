@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Source: services/tradeoff_analytics/v1.js | Watson Developer Cloud Node.js SDK Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: services/tradeoff_analytics/v1.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Copyright 2014 IBM Corp. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+var extend         = require('extend');
+var requestFactory = require('../../lib/requestwrapper');
+var omit           = require('object.omit');
+
+/**
+ *
+ * @param options
+ * @constructor
+ */
+function TradeoffAnalytics(options) {
+  // Default URL
+  var defaultOptions = {
+    url: 'https://gateway.watsonplatform.net/tradeoff-analytics/api'
+  };
+
+  // Replace default options with user provided
+  this._options = extend(defaultOptions, options);
+}
+
+/**
+ * Returns a dilemma that contains the problem and a resolution.
+ * The problem contains a set of options and objectives.
+ * The resolution contains a set of optimal options,
+ * their analytical characteristics, and representation on a 2D space.
+ *
+ * @param  {Array}  params.columns List of possible objectives
+ * @param  {String} params.subject Name of the decision problem
+ * @param  {String} params.options A list of options. Typically, the rows in a
+ *                                 table representation of your data
+ * @param  {String} params.metadataHeader Value of the x-watson-metadata header to be forwarded
+ * 								                        for analytics purposes
+ * @param  {String} params.generate_visualization Boolean (default = true). if false, the algorithm
+ *                                                will not create the "map" visualization, and will typically run much faster
+ */
+TradeoffAnalytics.prototype.dilemmas = function(params, callback) {
+  params = params || {};
+
+  var parameters = {
+    options: {
+      method: 'POST',
+      url: '/v1/dilemmas',
+      body: omit(params,['metadata_header', 'generate_visualization']),
+      headers: {
+        'x-watson-metadata' : params.metadata_header
+      },
+      qs: params.generate_visualization === false ? { 'generate_visualization' : false} : {},
+      json: true
+    },
+    requiredParams: ['columns', 'subject', 'options'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+ /**
+ * Forward events from the Tradeoff Analytics widget to the service
+ *
+ * @param  {String} params - the array of events to forward to the service
+ * @param  {String} params.metadataHeader Value of the x-watson-metadata header to be forwarded
+ * 								   for analytics purposes
+ */
+TradeoffAnalytics.prototype.events = function(params, callback) {
+  params = params || {};
+
+  var parameters = {
+    options: {
+      method: 'POST',
+      url: '/v1/events',
+      body: omit(params,['metadata_header', 'generate_visualization']),
+      headers: {
+        'x-watson-metadata' : params.metadata_header
+      },
+      json: true
+    },
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+module.exports = TradeoffAnalytics;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AlchemyDataNews.html">AlchemyDataNews</a></li><li><a href="AlchemyLanguage.html">AlchemyLanguage</a></li><li><a href="AlchemyVision.html">AlchemyVision</a></li><li><a href="Authorization.html">Authorization</a></li><li><a href="ConceptInsights.html">ConceptInsights</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Dialog.html">Dialog</a></li><li><a href="DocumentConversion.html">DocumentConversion</a></li><li><a href="LanguageTranslator.html">LanguageTranslator</a></li><li><a href="NaturalLanguageClassifier.html">NaturalLanguageClassifier</a></li><li><a href="PersonalityInsights.html">PersonalityInsights</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RelationshipExtraction.html">RelationshipExtraction</a></li><li><a href="RetrieveAndRank.html">RetrieveAndRank</a></li><li><a href="SpeechToText.html">SpeechToText</a></li><li><a href="TextToSpeech.html">TextToSpeech</a></li><li><a href="TradeoffAnalytics.html">TradeoffAnalytics</a></li><li><a href="VisualRecognitionV3.html">VisualRecognitionV3</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:close">close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li></ul><h3>Namespaces</h3><ul><li><a href="watson.html">watson</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed Jul 20 2016 19:45:54 GMT+0000 (UTC)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+<script>
+    (function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,"script","//www.google-analytics.com/analytics.js","ga");
+    ga("create", "UA-59827755-9", "auto");
+    ga("send", "pageview");
+</script>
+</body>
+</html>
