@@ -235,7 +235,9 @@ describe('integration-all-services', function() {
         });
       });
 
-      describe('listClassifiers()', function() {
+      // there are currently too many classifiers on the account
+      // disabling this test until we can get separate credentials for the SDK
+      describe.skip('listClassifiers()', function() {
         it('should return the list of classifiers', function(done) {
           visual_recognition.listClassifiers({}, function(err, result) {
             if (err) {
