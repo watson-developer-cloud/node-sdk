@@ -189,7 +189,9 @@ describe('integration-all-services', function() {
         });
       });
 
-      describe('recognizeText()', function() {
+      // this endpoint is flaky.
+      // reported the issue to the team, but disabling the test for now.
+      describe.skip('recognizeText()', function() {
         it('read text in an uploaded image', function(done) {
 
           var params = {
