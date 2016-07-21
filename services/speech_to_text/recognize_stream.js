@@ -211,8 +211,8 @@ RecognizeStream.prototype._write = function(chunk, encoding, callback) {
 // todo: see if this can be improved
 RecognizeStream.prototype.afterSend = function afterSend(next) {
   // note: bufferedAmount is currently always 0
-  // see https://github.com/watson-developer-cloud/node-sdk/issues/285
-  if (this.socket.bufferedAmount <= this._writableState.highWaterMark || 0) {
+  // see https://github.com/theturtle32/WebSocket-Node/issues/243
+  if (this.socket.bufferedAmount <= (this._writableState.highWaterMark || 0)) {
     process.nextTick(next);
   } else {
     setTimeout(this.afterSend.bind(this, next), 10);
