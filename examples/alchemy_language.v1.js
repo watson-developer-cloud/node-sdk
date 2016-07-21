@@ -165,7 +165,7 @@ alchemy_language.relations(parameters, function (err, response) {
 
 // Typed Relations
 var parameters = {
-  url: 'http://techcrunch.com'
+  url: 'http://www.huffingtonpost.com/2010/06/22/iphone-4-review-the-worst_n_620714.html'
 };
 
 alchemy_language.typedRelations(parameters, function (err, response) {
