@@ -46,17 +46,10 @@ DocumentConversionV1.prototype.serviceDefaults = {
 };
 
 
-<<<<<<< ca53af91c355fda21deed6c78d7f879e4f74eb86
-DocumentConversion.prototype.conversion_target = {
+DocumentConversionV1.prototype.conversion_target = {
   ANSWER_UNITS: 'answer_units',
   NORMALIZED_HTML: 'normalized_html',
   NORMALIZED_TEXT: 'normalized_text'
-=======
-DocumentConversionV1.prototype.conversion_target = {
-  ANSWER_UNITS: 'ANSWER_UNITS',
-  NORMALIZED_HTML: 'NORMALIZED_HTML',
-  NORMALIZED_TEXT: 'NORMALIZED_TEXT'
->>>>>>> handled defaults. Unit tests pass but some integration tests are failing
 };
 
 // this sets up the content type "headers" in the form/multipart body (not in the actual headers)
@@ -93,19 +86,12 @@ function fixupContentType(params) {
  */
 DocumentConversionV1.prototype.convert = function(params, callback) {
   params = params || {};
-<<<<<<< ca53af91c355fda21deed6c78d7f879e4f74eb86
   if (typeof params.conversion_target === 'string') {
     params.conversion_target = params.conversion_target.toLowerCase();
   }
-  var keys = Object.keys(DocumentConversion.prototype.conversion_target);
-  var values = keys.map(function(v) { return DocumentConversion.prototype.conversion_target[v]; });
+  var keys = Object.keys(DocumentConversionV1.prototype.conversion_target);
+  var values = keys.map(function(v) { return DocumentConversionV1.prototype.conversion_target[v]; });
   if (values.indexOf(params.conversion_target) == -1) {
-=======
-  if (!params.conversion_target || !DocumentConversionV1.prototype.conversion_target[params.conversion_target]) {
-    var keys = Object.keys(DocumentConversionV1.prototype.conversion_target);
-    var values = keys.map(function(v) { return DocumentConversionV1.prototype.conversion_target[v]; });
-
->>>>>>> handled defaults. Unit tests pass but some integration tests are failing
     callback(new Error('Missing required parameters: conversion_target. Possible values are: ' + values.join(', ')));
     return;
   }
