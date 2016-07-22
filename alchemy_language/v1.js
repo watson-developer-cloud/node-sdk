@@ -89,16 +89,25 @@ AlchemyLanguageV1.prototype.serviceDefaults = {
 /**
  * Extracts a grouped, ranked list of named entities (people, companies,
  * organizations, etc.) from text, a URL or HTML.
+ * @method
+ * @param {Object} params
+ * @param {Function} callback
  */
 AlchemyLanguageV1.prototype.entities = createRequest('entities');
 
 /**
  * Extracts the keywords from text, a URL or HTML.
+ * @method
+ * @param {Object} params
+ * @param {Function} callback
  */
 AlchemyLanguageV1.prototype.keywords = createRequest('keywords');
 
 /**
  * Tags the concepts from text, a URL or HTML.
+ * @method
+ * @param {Object} params
+ * @param {Function} callback
  */
 AlchemyLanguageV1.prototype.concepts = createRequest('concepts');
 
@@ -124,11 +133,17 @@ AlchemyLanguageV1.prototype.text = function(params, callback) {
 
 /**
  * Extracts the authors from a URL or HTML.
+ * @method
+ * @param {Object} params
+ * @param {Function} callback
  */
 AlchemyLanguageV1.prototype.authors = createRequest('authors');
 
 /**
  * Detects the language for text, a URL or HTML.
+ * @method
+ * @param {Object} params
+ * @param {Function} callback
  */
 AlchemyLanguageV1.prototype.language = createRequest('language');
 
@@ -136,59 +151,92 @@ AlchemyLanguageV1.prototype.language = createRequest('language');
  * Extracts the title for a URL or HTML.
  *
  * @see http://www.alchemyapi.com/api/text/proc.html
+ * @method
+ * @param {Object} params
+ * @param {Function} callback
  */
 AlchemyLanguageV1.prototype.title = createRequest('title');
 
 /**
  * Extracts the relations for text, a URL or HTML.
+ * @method
+ * @param {Object} params
+ * @param {Function} callback
  */
 AlchemyLanguageV1.prototype.relations = createRequest('relations');
 
 /**
  * Categorizes the text for text, a URL or HTML.
+ * @method
+ * @param {Object} params
+ * @param {Function} callback
  */
 AlchemyLanguageV1.prototype.category = createRequest('category');
 
 /**
  * Extracts the publication date from a webpage or HTML file.
+ * @method
+ * @param {Object} params
+ * @param {Function} callback
  */
 AlchemyLanguageV1.prototype.publicationDate = createRequest('publication_date');
 
 /**
  * Finds dates in the source text, including relative dates like "next Tuesday"
  * if an anchorDate is set.
+ * @method
+ * @param {Object} params
+ * @param {Function} callback
  */
 AlchemyLanguageV1.prototype.dates = createRequest('extract_dates');
 
 /**
  * Detects the RSS/ATOM feeds for a URL or HTML.
+ * @method
+ * @param {Object} params
+ * @param {Function} callback
  */
 AlchemyLanguageV1.prototype.feeds = createRequest('feeds');
 
 /**
  * Parses the microformats for a URL or HTML.
+ * @method
+ * @param {Object} params
+ * @param {Function} callback
  */
 AlchemyLanguageV1.prototype.microformats = createRequest('microformats');
 
 /**
  * Categorized through the taxonomy call for text, HTML, or a URL.
+ * @method
+ * @param {Object} params
+ * @param {Function} callback
  */
 AlchemyLanguageV1.prototype.taxonomy = createRequest('taxonomy');
 
 /**
  * Combines multiple API operations into a single call.
+ * @method
+ * @param {Object} params
+ * @param {Function} callback
  */
 AlchemyLanguageV1.prototype.combined = createRequest('combined');
 
 /**
  * Detects emotions (anger, digust, fear, joy, and sadness)
  * for text, HTML, or a URL.
+ * @method
+ * @param {Object} params
+ * @param {Function} callback
  */
 AlchemyLanguageV1.prototype.emotion = createRequest('emotion');
 
 /**
  * Finds entities and their relationships
  * for text, HTML, or a URL.
+ * @method
+ * @param {Object} params
+ * @param {Function} callback
  */
 AlchemyLanguageV1.prototype.typedRelations = createRequest('typed_relations');
 

@@ -101,7 +101,7 @@
     "autofix": "eslint . --fix",
     "prepare": "npm test && npm version patch",
     "doc": "jsdoc -c jsdoc/config.json",
-    "watch-doc": "nodemon --watch lib/ --watch services/ --watch jsdoc/ --watch package.json --ext js,tmpl --exec npm run doc",
+    "watch-doc": "nodemon --watch ./ --ext js,tmpl,json --ignore dist/ --ignore doc/ --ignore test/ --ignore examples/ --exec npm run doc",
     "codecov": "istanbul cover ./node_modules/.bin/mocha && codecov",
     "test-integration": "mocha test/test.zz.integration-all-services.js",
     "test-unit": "npm run lint && mocha --fgrep integration --invert",
