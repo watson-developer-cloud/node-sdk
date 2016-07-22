@@ -98,6 +98,19 @@ To get your service credentials, follow these steps:
      1. On the left side of the page, click **Service Credentials** to view your service credentials.
      1. Copy `username` and `password`(`api_key` for AlchemyAPI).
 
+### Data collection opt-out
+
+By default, [all requests are logged](http://www.ibm.com/watson/developercloud/doc/getting_started/gs-logging.shtml). This can be disabled of by setting the `X-Watson-Learning-Opt-Out` header when creating the service instance:
+
+```js
+var myInstance = watson.whatever_service({
+  /* username, password, version, etc... */
+  headers: {
+    "X-Watson-Learning-Opt-Out": "1"
+  }
+});
+```
+
 ## Questions
 
 If you are having difficulties using the APIs or have a question about the IBM
