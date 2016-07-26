@@ -83,6 +83,7 @@
     "cookie": "~0.2.3",
     "csv-stringify": "~1.0.2",
     "extend": "~3.0.0",
+    "is-in-browser": "^1.0.1",
     "isstream": "~0.1.2",
     "object.omit": "~2.0.0",
     "object.pick": "~1.1.1",

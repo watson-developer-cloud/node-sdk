@@ -150,8 +150,6 @@ describe('integration-all-services', function() {
       });
 
       describe('detectFaces()', function() {
-        this.retries(5);
-
         it('should detect faces in an uploaded image', function(done) {
           var params = {
             images_file: fs.createReadStream(__dirname + '/resources/obama.jpg')
