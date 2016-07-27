@@ -104,15 +104,23 @@ VisualRecognitionV3.prototype.serviceDefaults = {
   alchemy: true
 };
 
-VisualRecognitionV3.prototype.initCredentials = function(options) {
-  options = extend(
-    {},
-    BaseServiceAlchemy.prototype.getCredentialsFromEnvironment.call(this, 'watson_vision_combined'), // grr @ bluemix
-    BaseServiceAlchemy.prototype.getCredentialsFromEnvironment.call(this, this.name), // for forward-compatibility (both if bluemix fixes the name and if we add support for non-JSON env properties)
-    options
-  );
-  return BaseServiceAlchemy.prototype.initCredentials.call(this, options); // hard-coded credentials override all env properties
+/**
+ * Bluemix uses a different naming convention for VR v3 than for other services
+ * @returns {*}
+ */
+VisualRecognitionV3.prototype.getCredentialsFromBluemix = function() {
+  return BaseServiceAlchemy.prototype.getCredentialsFromBluemix.call(this, 'watson_vision_combined');
+};
 
+/**
+ * Pulls api_key from VISUAL_RECOGNITION_API_KEY env property
+ *
+ * @returns {{api_key: String|undefined}}
+ */
+VisualRecognitionV3.prototype.getCredentialsFromEnvironment = function() {
+  return {
+    api_key: process.env.VISUAL_RECOGNITION_API_KEY
+  }
 };
 
 /**

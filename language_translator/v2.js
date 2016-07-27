@@ -39,12 +39,13 @@ LanguageTranslatorV2.prototype.name = 'language_translator';
 LanguageTranslatorV2.prototype.version = 'v2';
 LanguageTranslatorV2.URL = 'https://gateway.watsonplatform.net/language-translation/api';
 
-LanguageTranslatorV2.prototype.getCredentialsFromEnvironment = function(name) {
+LanguageTranslatorV2.prototype.getCredentialsFromBluemix = function(name) {
   return extend(
     {},
-    // the Language Translator service was formerly named Language Translation, and there are still old instances floating around with credentials that specifying the old name
-    BaseService.prototype.getCredentialsFromEnvironment.call(this, 'language_translation'),
-    BaseService.prototype.getCredentialsFromEnvironment.call(this, name)
+    // the Language Translator service was formerly named Language Translation,
+    // and there are still old instances floating around with credentials that specify the old name
+    BaseService.prototype.getCredentialsFromBluemix.call(this, 'language_translation'),
+    BaseService.prototype.getCredentialsFromBluemix.call(this, name)
   );
 };
 
