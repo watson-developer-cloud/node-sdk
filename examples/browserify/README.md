@@ -25,6 +25,6 @@ The following services support CORS
 
 The following services do not support CORS
 
-  * Language Translator
-  * Visual Recognition (partial support)
-  * Retrieve and Rank
+ * Language Translator
+ * Visual Recognition (partial support)
+ * Retrieve and Rank
