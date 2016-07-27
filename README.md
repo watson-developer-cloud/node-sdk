@@ -11,7 +11,7 @@ Node client library to use the [Watson Developer Cloud][wdc] services, a collect
 APIs and SDKs that use cognitive computing to solve complex problems.
 
 ## Table of Contents
-  * [Breaking Changes for v1.0](#breaking-changes-for-v10)
+  * [Major Changes for v2](#breaking-changes-for-v2)
   * [Installation](#installation)
   * [Usage](#usage)
   * [Getting the Service Credentials](#getting-the-service-credentials)
@@ -45,6 +45,33 @@ APIs and SDKs that use cognitive computing to solve complex problems.
   * [Contributing](#contributing)
 
 
+## Major Changes for v2
+
+* **Breaking**: user-supplied credentials are now preferred over Bluemix-supplied credentials.
+  The order of preference is now:
+
+  1. User-supplied credentials passed to the service constructor
+  2. SERVICE_NAME_USERNAME/PASSWORD environment properties (or _API_KEY when appropriate)
+  3. Bluemix-supplied credentials (via the VCAP_SERVICES JSON-encoded environment property)
+
+* Client-side support via [Browserify](http://browserify.org/)
+
+  `examples/browserify/` shows an example app that generates tokens server-side and uses the SDK client-side via browserify.
+
+  Note: Not all services currently support CORS, and therefore not all services can be used client-side.
+  Of those that do, most require an auth token to be generated server-side via the [Authorization Service](#authorization)
+
+* New recommended method for instantiating services:
+
+  ```js
+  var ToneAnalyzerV3 = require('watson-developer-cloud/tone_analyzer/v3');
+
+  var toneAnalyzer = new ToneAnalyzerV3({/*...*/});
+  ```
+
+  This was primarily done to enable smaller bundles for client-side usage, but also gives a small performance boost for server-side usage.
+
+  The older method (`watson.tone_analyzer({/*...*.});`) continues to work as well, and still appears in some documentation and examples.
 
 ## Installation
 
@@ -65,7 +92,7 @@ credentials; the library will get them for you by looking at the `VCAP_SERVICES`
 By default, [all requests are logged](http://www.ibm.com/watson/developercloud/doc/getting_started/gs-logging.shtml). This can be disabled of by setting the `X-Watson-Learning-Opt-Out` header when creating the service instance:
 
 ```js
-var myInstance = watson.whatever_service({
+var myInstance = new watson.WhateverServiceV1({
   /* username, password, version, etc... */
   headers: {
     "X-Watson-Learning-Opt-Out": "1"
@@ -203,32 +230,7 @@ authorization.getToken(params, function (err, token) {
 ```
 
 ### Concept Insights
-Use the [Concept Insights][concept_insights] service to identify words in the
-text that correspond to concepts in a Wikipedia graph.
-
-```javascript
-var watson = require('watson-developer-cloud');
-
-var concept_insights = watson.concept_insights({
-  username: '<username>',
-  password: '<password>',
-  version: 'v2'
-});
-
-var params = {
-  graph: '/graphs/wikipedia/en-20120601',
-  text: 'IBM Watson won the Jeopardy television show hosted by Alex Trebek'
-};
-
-// Retrieve the concepts for input text
-concept_insights.graphs.annotateText(params, function(err, res) {
-  if (err)
-    console.log(err);
-  else {
-    console.log(JSON.stringify(res, null, 2));
-  }
-});
-```
+Concept Insights is deprecated as of July 12, 2016. The service will be removed on August 19th, 2016.
 
 ### Conversation
 
