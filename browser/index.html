@@ -52,7 +52,7 @@
 <p>Node client library to use the <a href="http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/">Watson Developer Cloud</a> services, a collection of REST
 APIs and SDKs that use cognitive computing to solve complex problems.</p>
 <h2>Table of Contents</h2><ul>
-<li><a href="#breaking-changes-for-v10">Breaking Changes for v1.0</a></li>
+<li><a href="#breaking-changes-for-v2">Major Changes for v2</a></li>
 <li><a href="#installation">Installation</a></li>
 <li><a href="#usage">Usage</a></li>
 <li><a href="#getting-the-service-credentials">Getting the Service Credentials</a></li>
@@ -87,11 +87,44 @@ APIs and SDKs that use cognitive computing to solve complex problems.</p>
 <li><a href="#license">License</a></li>
 <li><a href="#contributing">Contributing</a></li>
 </ul>
+<h2>Major Changes for v2</h2><ul>
+<li><p><strong>Breaking</strong>: user-supplied credentials are now preferred over Bluemix-supplied credentials.
+The order of preference is now:</p>
+<ol>
+<li>User-supplied credentials passed to the service constructor</li>
+<li>SERVICE_NAME_USERNAME/PASSWORD environment properties (or _API_KEY when appropriate)</li>
+<li>Bluemix-supplied credentials (via the VCAP_SERVICES JSON-encoded environment property)</li>
+</ol>
+</li>
+<li><p>Client-side support via <a href="http://browserify.org/">Browserify</a></p>
+<p><code>examples/browserify/</code> shows an example app that generates tokens server-side and uses the SDK client-side via browserify.</p>
+<p>Note: Not all services currently support CORS, and therefore not all services can be used client-side.
+Of those that do, most require an auth token to be generated server-side via the <a href="#authorization">Authorization Service</a></p>
+</li>
+<li><p>New recommended method for instantiating services:</p>
+<pre class="prettyprint source lang-js"><code>var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
+
+var toneAnalyzer = new ToneAnalyzerV3({/*...*/});</code></pre><p>This was primarily done to enable smaller bundles for client-side usage, but also gives a small performance boost for server-side usage by only loading the portion of the library that is actually needed.</p>
+<p>The following methods will also work, but cause the entire library to be loaded:</p>
+<pre class="prettyprint source lang-js"><code>// Alternate methods using the library.
+// Not recommended, especially for client-side JS.
+var watson = require('watson-developer-cloud');
+
+var toneAnalyzer = new watson.ToneAnalyzerV3({/*...*/});
+
+var tone_analyzer = watson.tone_analyzer({version: 'v3', /*...*/});</code></pre></li>
+</ul>
 <h2>Installation</h2><pre class="prettyprint source lang-sh"><code>$ npm install watson-developer-cloud --save</code></pre><h2>Usage</h2><p>The examples below assume that you already have service credentials. If not,
 you will have to create a service in <a href="https://console.ng.bluemix.net">Bluemix</a>.</p>
 <p>If you are running your application in Bluemix, you don't need to specify the
 credentials; the library will get them for you by looking at the <code>VCAP_SERVICES</code> environment variable.</p>
-<h2>Getting the Service Credentials</h2><p>You will need the <code>username</code> and <code>password</code> (<code>api_key</code> for AlchemyAPI) credentials for each service. Service credentials are different from your Bluemix account username and password.</p>
+<h3>Data collection opt-out</h3><p>By default, <a href="http://www.ibm.com/watson/developercloud/doc/getting_started/gs-logging.shtml">all requests are logged</a>. This can be disabled of by setting the <code>X-Watson-Learning-Opt-Out</code> header when creating the service instance:</p>
+<pre class="prettyprint source lang-js"><code>var myInstance = new watson.WhateverServiceV1({
+  /* username, password, version, etc... */
+  headers: {
+    &quot;X-Watson-Learning-Opt-Out&quot;: &quot;1&quot;
+  }
+});</code></pre><h2>Getting the Service Credentials</h2><p>You will need the <code>username</code> and <code>password</code> (<code>api_key</code> for AlchemyAPI) credentials for each service. Service credentials are different from your Bluemix account username and password.</p>
 <p>To get your service credentials, follow these steps:</p>
 <ol>
 <li><p>Log in to Bluemix at https://bluemix.net.</p>
@@ -191,29 +224,8 @@ authorization.getToken(params, function (err, token) {
   } else {
     // Use your token here
   }
-});</code></pre><h3>Concept Insights</h3><p>Use the <a href="http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/concept-insights/">Concept Insights</a> service to identify words in the
-text that correspond to concepts in a Wikipedia graph.</p>
-<pre class="prettyprint source lang-javascript"><code>var watson = require('watson-developer-cloud');
-
-var concept_insights = watson.concept_insights({
-  username: '&lt;username>',
-  password: '&lt;password>',
-  version: 'v2'
-});
-
-var params = {
-  graph: '/graphs/wikipedia/en-20120601',
-  text: 'IBM Watson won the Jeopardy television show hosted by Alex Trebek'
-};
-
-// Retrieve the concepts for input text
-concept_insights.graphs.annotateText(params, function(err, res) {
-  if (err)
-    console.log(err);
-  else {
-    console.log(JSON.stringify(res, null, 2));
-  }
-});</code></pre><h3>Conversation</h3><p>Use the <a href="http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/conversation.html">Conversation</a> service to determine the intent of a message.</p>
+});</code></pre><h3>Concept Insights</h3><p>Concept Insights is deprecated as of July 12, 2016. The service will be removed on August 19th, 2016.</p>
+<h3>Conversation</h3><p>Use the <a href="http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/conversation.html">Conversation</a> service to determine the intent of a message.</p>
 <p>Note: you must first create a workspace via Bluemix. See <a href="http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/conversation/overview.shtml">the documentation</a> for details.</p>
 <pre class="prettyprint source lang-js"><code>var watson = require('watson-developer-cloud');
 
@@ -545,7 +557,7 @@ var dialog = watson.dialog({
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Jul 22 2016 13:43:33 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed Jul 27 2016 19:29:32 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>
