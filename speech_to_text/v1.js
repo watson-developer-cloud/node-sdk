@@ -63,9 +63,7 @@ function SpeechToTextV1(options) {
 util.inherits(SpeechToTextV1, BaseService);
 SpeechToTextV1.prototype.name = 'speech_to_text';
 SpeechToTextV1.prototype.version = 'v1';
-SpeechToTextV1.prototype.serviceDefaults = {
-  url: 'https://stream.watsonplatform.net/speech-to-text/api'
-};
+SpeechToTextV1.URL = 'https://stream.watsonplatform.net/speech-to-text/api';
 
 /**
  * Speech recognition for given audio using default model.

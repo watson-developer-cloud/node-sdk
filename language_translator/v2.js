@@ -37,9 +37,7 @@ function LanguageTranslatorV2(options) {
 util.inherits(LanguageTranslatorV2, BaseService);
 LanguageTranslatorV2.prototype.name = 'language_translator';
 LanguageTranslatorV2.prototype.version = 'v2';
-LanguageTranslatorV2.prototype.serviceDefaults = {
-  url: 'https://gateway.watsonplatform.net/language-translation/api'
-};
+LanguageTranslatorV2.URL = 'https://gateway.watsonplatform.net/language-translation/api';
 
 LanguageTranslatorV2.prototype.getCredentialsFromEnvironment = function(name) {
   return extend(

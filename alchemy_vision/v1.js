@@ -97,9 +97,7 @@ function AlchemyVisionV1(options) {
 util.inherits(AlchemyVisionV1, BaseServiceAlchemy);
 AlchemyVisionV1.prototype.name = 'alchemy_vision';
 AlchemyVisionV1.prototype.version = 'v1';
-AlchemyVisionV1.prototype.serviceDefaults = {
-  url: 'https://access.alchemyapi.com/calls'
-};
+AlchemyVisionV1.URL = 'https://access.alchemyapi.com/calls';
 
 /**
  * Tags image with keywords

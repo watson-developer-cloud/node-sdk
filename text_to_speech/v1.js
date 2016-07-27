@@ -33,9 +33,7 @@ function TextToSpeechV1(options) {
 util.inherits(TextToSpeechV1, BaseService);
 TextToSpeechV1.prototype.name = 'text_to_speech';
 TextToSpeechV1.prototype.version = 'v1';
-TextToSpeechV1.prototype.serviceDefaults = {
-  url: 'https://stream.watsonplatform.net/text-to-speech/api'
-};
+TextToSpeechV1.URL = 'https://stream.watsonplatform.net/text-to-speech/api';
 
 /**
  * Streaming speech synthesis of the text in a query parameter

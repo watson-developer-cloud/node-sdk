@@ -33,9 +33,7 @@ function RelationshipExtractionV1Beta(options) {
 util.inherits(RelationshipExtractionV1Beta, BaseService);
 RelationshipExtractionV1Beta.prototype.name = 'relationship_extraction';
 RelationshipExtractionV1Beta.prototype.version = 'v1-beta';
-RelationshipExtractionV1Beta.prototype.serviceDefaults = {
-  url: 'https://gateway.watsonplatform.net/relationship-extraction-beta/api'
-};
+RelationshipExtractionV1Beta.URL = 'https://gateway.watsonplatform.net/relationship-extraction-beta/api';
 
 RelationshipExtractionV1Beta.prototype.extract = function(_params, callback) {
   var params = extend(this._options, _params);

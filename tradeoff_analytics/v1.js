@@ -32,9 +32,7 @@ function TradeoffAnalyticsV1(options) {
 util.inherits(TradeoffAnalyticsV1, BaseService);
 TradeoffAnalyticsV1.prototype.name = 'tradeoff_analytics';
 TradeoffAnalyticsV1.prototype.version = 'v1';
-TradeoffAnalyticsV1.prototype.serviceDefaults = {
-  url: 'https://gateway.watsonplatform.net/tradeoff-analytics/api'
-};
+TradeoffAnalyticsV1.URL = 'https://gateway.watsonplatform.net/tradeoff-analytics/api';
 
 /**
  * Returns a dilemma that contains the problem and a resolution.

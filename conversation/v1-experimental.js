@@ -43,9 +43,7 @@ function ConversationV1Experimental(options) {
 util.inherits(ConversationV1Experimental, BaseService);
 ConversationV1Experimental.prototype.name = 'conversation';
 ConversationV1Experimental.prototype.version = 'v1-experimental';
-ConversationV1Experimental.prototype.serviceDefaults = {
-  url: 'https://gateway.watsonplatform.net/conversation-experimental/api'
-};
+ConversationV1Experimental.URL = 'https://gateway.watsonplatform.net/conversation-experimental/api';
 
 /**
  * Returns a response to a user utterance.

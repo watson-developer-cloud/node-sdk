@@ -66,9 +66,7 @@ function ConceptInsightsV2(options) {
 util.inherits(ConceptInsightsV2, BaseService);
 ConceptInsightsV2.prototype.name = 'concept_insights';
 ConceptInsightsV2.prototype.version = 'v2';
-ConceptInsightsV2.prototype.serviceDefaults = {
-  url: 'https://gateway.watsonplatform.net/concept-insights/api'
-};
+ConceptInsightsV2.URL = 'https://gateway.watsonplatform.net/concept-insights/api';
 
 function ConceptInsightsAccounts(parent) {
   this._parent = parent;

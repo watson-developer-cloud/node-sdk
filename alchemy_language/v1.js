@@ -82,9 +82,7 @@ function AlchemyLanguageV1(options) {
 util.inherits(AlchemyLanguageV1, BaseServiceAlchemy);
 AlchemyLanguageV1.prototype.name = 'alchemy_language';
 AlchemyLanguageV1.prototype.version = 'v1';
-AlchemyLanguageV1.prototype.serviceDefaults = {
-  url: 'https://access.alchemyapi.com/calls'
-};
+AlchemyLanguageV1.URL = 'https://access.alchemyapi.com/calls';
 
 /**
  * Extracts a grouped, ranked list of named entities (people, companies,

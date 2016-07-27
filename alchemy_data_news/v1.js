@@ -49,9 +49,7 @@ util.inherits(AlchemyDataNewsV1, BaseServiceAlchemy);
 
 AlchemyDataNewsV1.prototype.name = 'alchemy_data_news';
 AlchemyDataNewsV1.prototype.version = 'v1';
-AlchemyDataNewsV1.prototype.serviceDefaults = {
-  url: 'https://gateway-a.watsonplatform.net/calls'
-};
+AlchemyDataNewsV1.URL = 'https://gateway-a.watsonplatform.net/calls';
 
 /**
  * Extracts a grouped, ranked list of named entities (people, companies,

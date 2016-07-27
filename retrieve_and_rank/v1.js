@@ -38,9 +38,7 @@ function RetrieveAndRankV1(options) {
 util.inherits(RetrieveAndRankV1, BaseService);
 RetrieveAndRankV1.prototype.name = 'retrieve_and_rank';
 RetrieveAndRankV1.prototype.version = 'v1';
-RetrieveAndRankV1.prototype.serviceDefaults = {
-  url: 'https://gateway.watsonplatform.net/retrieve-and-rank/api'
-};
+RetrieveAndRankV1.URL = 'https://gateway.watsonplatform.net/retrieve-and-rank/api';
 
 /**
  * Creates a ranker

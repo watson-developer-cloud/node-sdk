@@ -38,9 +38,7 @@ function ConversationV1(options) {
 util.inherits(ConversationV1, BaseService);
 ConversationV1.prototype.name = 'conversation';
 ConversationV1.prototype.version = 'v1';
-ConversationV1.prototype.serviceDefaults = {
-  url: 'https://gateway.watsonplatform.net/conversation/api'
-};
+ConversationV1.URL = 'https://gateway.watsonplatform.net/conversation/api';
 
 /**
  * Returns a response to a user utterance.

@@ -33,9 +33,7 @@ function PersonalityInsightsV1(options) {
 util.inherits(PersonalityInsightsV1, BaseService);
 PersonalityInsightsV1.prototype.name = 'personality_insights';
 PersonalityInsightsV1.prototype.version = 'v2';
-PersonalityInsightsV1.prototype.serviceDefaults = {
-  url: 'https://gateway.watsonplatform.net/personality-insights/api'
-};
+PersonalityInsightsV1.URL = 'https://gateway.watsonplatform.net/personality-insights/api';
 
 /**
  * @param params {Object} The parameters to call the service

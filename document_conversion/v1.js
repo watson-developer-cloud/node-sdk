@@ -40,8 +40,8 @@ function DocumentConversionV1(options) {
 util.inherits(DocumentConversionV1, BaseService);
 DocumentConversionV1.prototype.name = 'document_conversion';
 DocumentConversionV1.prototype.version = 'v1';
+DocumentConversionV1.URL = 'https://gateway.watsonplatform.net/document-conversion/api';
 DocumentConversionV1.prototype.serviceDefaults = {
-  url: 'https://gateway.watsonplatform.net/document-conversion/api',
   qs: { version: '2015-12-15' }
 };
 

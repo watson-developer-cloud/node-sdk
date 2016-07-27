@@ -32,15 +32,11 @@ var BaseService = require('../lib/base_service');
  */
 function NaturalLanguageClassifierV1(options) {
   BaseService.call(this, options);
-  // Default URL
-  var serviceDefaults = {
-    url: 'https://gateway.watsonplatform.net/natural-language-classifier/api'
-  };
-  this._options = extend(serviceDefaults, options);
 }
 util.inherits(NaturalLanguageClassifierV1, BaseService);
 NaturalLanguageClassifierV1.prototype.name = 'natural_language_classifier';
 NaturalLanguageClassifierV1.prototype.version = 'v1';
+NaturalLanguageClassifierV1.URL = 'https://gateway.watsonplatform.net/natural-language-classifier/api';
 
 /**
  * Creates a classifier

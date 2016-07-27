@@ -34,9 +34,7 @@ function ToneAnalyzerV3(options) {
 util.inherits(ToneAnalyzerV3, BaseService);
 ToneAnalyzerV3.prototype.name = 'tone_analyzer';
 ToneAnalyzerV3.prototype.version = 'v3';
-ToneAnalyzerV3.prototype.serviceDefaults = {
-  url: 'https://gateway.watsonplatform.net/tone-analyzer/api',
-};
+ToneAnalyzerV3.URL = 'https://gateway.watsonplatform.net/tone-analyzer/api';
 
 /**
  * Main API call. Returns the different tone dimensions of a text.

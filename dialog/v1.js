@@ -35,9 +35,7 @@ function DialogV1(options) {
 util.inherits(DialogV1, BaseService);
 DialogV1.prototype.name = 'dialog';
 DialogV1.prototype.version = 'v1';
-DialogV1.prototype.serviceDefaults = {
-  url: 'https://gateway.watsonplatform.net/dialog/api'
-};
+DialogV1.URL = 'https://gateway.watsonplatform.net/dialog/api';
 
 /**
  * Retrieves the values for profile variables for specific client ID
