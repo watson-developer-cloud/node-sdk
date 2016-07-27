@@ -19,7 +19,12 @@ The following services support CORS
  * Tone Analyzer
  * Speech to Text
  * Text to Speech
+ * Personality Insights
+ * Document Conversion
+ * All Alchemy services
 
 The following services do not support CORS
 
   * Language Translator
+  * Visual Recognition (partial support)
+  * Retrieve and Rank
