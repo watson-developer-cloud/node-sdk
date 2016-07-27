@@ -69,9 +69,19 @@ APIs and SDKs that use cognitive computing to solve complex problems.
   var toneAnalyzer = new ToneAnalyzerV3({/*...*/});
   ```
 
-  This was primarily done to enable smaller bundles for client-side usage, but also gives a small performance boost for server-side usage.
+  This was primarily done to enable smaller bundles for client-side usage, but also gives a small performance boost for server-side usage by only loading the portion of the library that is actually needed.
 
-  The older method (`watson.tone_analyzer({/*...*.});`) continues to work as well, and still appears in some documentation and examples.
+  The following methods will also work, but cause the entire library to be loaded:
+
+  ```js
+  // Alternate methods using the library.
+  // Not recommended, especially for client-side JS.
+  var watson = require('watson-developer-cloud');
+
+  var toneAnalyzer = new watson.ToneAnalyzerV3({/*...*/});
+
+  var tone_analyzer = watson.tone_analyzer({version: 'v3', /*...*/});
+  ```
 
 ## Installation
 
