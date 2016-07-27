@@ -1,0 +1,17 @@
+{
+  "name": "watson-developer-cloud-browserify-example",
+  "version": "1.0.0",
+  "description": "Use the Watson JS SDK in browsers via browserify",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "dotenv": "^2.0.0",
+    "express": "^4.14.0",
+    "express-browserify": "^1.0.2"
+  },
+  "devDependencies": {}
+}
