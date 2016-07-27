@@ -294,7 +294,7 @@ describe('integration-all-services', function() {
   });
 
   describe('functional_concept_insights', function() {
-    this.timeout(TEN_SECONDS);
+    this.timeout(THIRTY_SECONDS);
 
     var sample = {
       concept: '/graphs/wikipedia/en-20120601/concepts/IBM',
@@ -326,17 +326,39 @@ describe('integration-all-services', function() {
       }, failIfError.bind(failIfError, done));
     });
 
-    it.skip('searchConceptByLabel()', function(done) {
+    it('searchConceptByLabel()', function(done) {
       concept_insights.graphs.searchConceptByLabel({
         graph: sample.graph,
         query: 'ibm'
       }, failIfError.bind(failIfError, done));
     });
 
-    it('getRelatedConcepts()', function(done) {
+    // these tests are currently failing due to service issues
+    it.skip('getRelatedConcepts()', function(done) {
+      concept_insights.corpora.getRelatedConcepts({
+        id: sample.concept
+      }, failIfError.bind(failIfError, done));
+    });
+
+    it.skip('getRelatedConcepts() with custom concepts', function(done) {
+      concept_insights.corpora.getRelatedConcepts({
+        concepts: [sample.concept],
+        id: sample.concept
+      }, failIfError.bind(failIfError, done));
+    });
+
+    it.skip('getRelatedConcepts() with graph', function(done) {
       concept_insights.graphs.getRelatedConcepts({
         graph: sample.graph,
         concepts: [sample.concept]
+      }, failIfError.bind(failIfError, done));
+    });
+
+    it.skip('getRelationScores()', function(done) {
+      concept_insights.graphs.getRelationScores({
+        id: sample.concept,
+        concepts: ['/graphs/wikipedia/en-20120601/concepts/Cloud_computing',
+          '/graphs/wikipedia/en-20120601/concepts/Web_services']
       }, failIfError.bind(failIfError, done));
     });
 
@@ -347,13 +369,6 @@ describe('integration-all-services', function() {
       }, failIfError.bind(failIfError, done));
     });
 
-    it('getRelationScores()', function(done) {
-      concept_insights.graphs.getRelationScores({
-        id: sample.concept,
-        concepts: ['/graphs/wikipedia/en-20120601/concepts/Cloud_computing',
-        '/graphs/wikipedia/en-20120601/concepts/Web_services']
-      }, failIfError.bind(failIfError, done));
-    });
 
     it('getCorpus()', function(done) {
       concept_insights.corpora.getCorpus({
@@ -396,7 +411,6 @@ describe('integration-all-services', function() {
     });
 
     it.skip('searchByLabel()', function(done) {
-      this.timeout(THIRTY_SECONDS);
       concept_insights.corpora.searchByLabel({
         corpus: sample.corpus,
         query: 'ibm'
@@ -404,23 +418,9 @@ describe('integration-all-services', function() {
     });
 
     it.skip('getRelatedDocuments()', function(done) {
-      this.timeout(THIRTY_SECONDS);
       concept_insights.corpora.getRelatedDocuments({
         corpus: sample.corpus,
         ids: [sample.concept]
-      }, failIfError.bind(failIfError, done));
-    });
-
-    it('getRelatedConcepts()', function(done) {
-      concept_insights.corpora.getRelatedConcepts({
-        id: sample.concept
-      }, failIfError.bind(failIfError, done));
-    });
-
-    it('getRelatedConcepts()', function(done) {
-      concept_insights.corpora.getRelatedConcepts({
-        concepts: [sample.concept],
-        id: sample.concept
       }, failIfError.bind(failIfError, done));
     });
 
@@ -717,18 +717,16 @@ describe('integration-all-services', function() {
       }, failIfError.bind(failIfError, done));
     });
 
-    describe.skip('typedRelations()', function() {
+    describe('typedRelations()', function() {
       it('should process html', function(done) {
         alchemy_language.typedRelations({
-          html: text,
-          model: "ie-en-news" // todo: remove model once the API regression is fixed
+          html: text
         }, failIfError.bind(failIfError, done));
       });
 
       it('should process text', function(done) {
         alchemy_language.typedRelations({
-          text: text,
-          model: "ie-en-news" // todo: remove model once the API regression is fixed
+          text: text
         }, failIfError.bind(failIfError, done));
       });
     });
