@@ -19,40 +19,40 @@
 /**
  * @module watson-developer-cloud
  */
-exports.AlchemyDataNewsV1 = require('./alchemy_data_news/v1');
-exports.AlchemyLanguageV1 = require('./alchemy_language/v1');
-exports.AlchemyVisionV1 = require('./alchemy_vision/v1');
+exports.AlchemyDataNewsV1 = require('./alchemy-data-news/v1');
+exports.AlchemyLanguageV1 = require('./alchemy-language/v1');
+exports.AlchemyVisionV1 = require('./alchemy-vision/v1');
 
 exports.AuthorizationV1 = require('./authorization/v1');
 
-exports.ConceptInsightsV2 = require('./concept_insights/v2');
+exports.ConceptInsightsV2 = require('./concept-insights/v2');
 
 exports.ConversationV1 = require('./conversation/v1');
 exports.ConversationV1Experimental = require('./conversation/v1-experimental');
 
 exports.DialogV1 = require('./dialog/v1');
 
-exports.DocumentConversionV1 = require('./document_conversion/v1');
+exports.DocumentConversionV1 = require('./document-conversion/v1');
 
-exports.LanguageTranslatorV2 = require('./language_translator/v2');
+exports.LanguageTranslatorV2 = require('./language-translator/v2');
 
 exports.NaturalLanguageClassifierV1 = require('./natural_language_classifier/v1');
 
-exports.PersonalityInsightsV2 = require('./personality_insights/v2');
+exports.PersonalityInsightsV2 = require('./personality-insights/v2');
 
-exports.RelationshipExtractionV1Beta = require('./relationship_extraction/v1-beta');
+exports.RelationshipExtractionV1Beta = require('./relationship-extraction/v1-beta');
 
-exports.RetrieveAndRankV1 = require('./retrieve_and_rank/v1');
+exports.RetrieveAndRankV1 = require('./retrieve-and-rank/v1');
 
-exports.SpeechToTextV1 = require('./speech_to_text/v1');
+exports.SpeechToTextV1 = require('./speech-to-text/v1');
 
-exports.TextToSpeechV1 = require('./text_to_speech/v1');
+exports.TextToSpeechV1 = require('./text-to-speech/v1');
 
-exports.ToneAnalyzerV3 = require('./tone_analyzer/v3');
+exports.ToneAnalyzerV3 = require('./tone-analyzer/v3');
 
-exports.TradeoffAnalyticsV1 = require('./tradeoff_analytics/v1');
+exports.TradeoffAnalyticsV1 = require('./tradeoff-analytics/v1');
 
-exports.VisualRecognitionV3 = require('./visual_recognition/v3');
+exports.VisualRecognitionV3 = require('./visual-recognition/v3');
 
 
 

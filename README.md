@@ -64,7 +64,7 @@ APIs and SDKs that use cognitive computing to solve complex problems.
 * New recommended method for instantiating services:
 
   ```js
-  var ToneAnalyzerV3 = require('watson-developer-cloud/tone_analyzer/v3');
+  var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
 
   var toneAnalyzer = new ToneAnalyzerV3({/*...*/});
   ```

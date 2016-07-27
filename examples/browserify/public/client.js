@@ -9,7 +9,7 @@
 //
 // * fetch() is a modern version of XMLHttpRequest. A pollyfill is available for older browsers: https://github.com/github/fetch
 
-var ToneAnalyzerV3 = require('watson-developer-cloud/tone_analyzer/v3');
+var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
 
 var btn = document.getElementById('analyze-btn');
 var input = document.getElementById('input');
