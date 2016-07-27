@@ -23,12 +23,15 @@ var BaseService = require('../lib/base_service');
 
 /**
  *
- * @param options
+ * @param {Object} options
+ * @param {String} options.username
+ * @param {String} options.password
+ * @param {String} [options.url] url of the service for which auth tokens are being generated
  * @constructor
  */
 function AuthorizationV1(options) {
   BaseService.call(this, options);
-
+  this.target_url = options.url;
   // replace the url to always point to /authorization/api
   var hostname = url.parse(this._options.url);
   hostname.pathname = '/authorization/api';
@@ -37,14 +40,20 @@ function AuthorizationV1(options) {
 util.inherits(AuthorizationV1, BaseService);
 AuthorizationV1.prototype.name = 'authorization';
 AuthorizationV1.prototype.version = 'v1';
-AuthorizationV1.prototype.serviceDefaults = {
-  url: 'https://stream.watsonplatform.net/authorization/api'
-};
+AuthorizationV1.URL = 'https://stream.watsonplatform.net/authorization/api';
 
 /**
- * Get authorization token based on resource query string param
+ * Get a percent-encoded authorization token based on resource query string param
+ *
+ * @param {Object} [options]
+ * @param {String} [options.url] defaults to url supplied to constructor (if any)
+ * @param {Function(err, token)} callback - called with a %-encoded token
  */
 AuthorizationV1.prototype.getToken = function(params, callback) {
+  if (typeof params === 'function') {
+    callback = params;
+    params = {url: this.target_url};
+  }
   if (!params.url){
     callback(new Error('Missing required parameters: url'));
     return;
@@ -53,7 +62,7 @@ AuthorizationV1.prototype.getToken = function(params, callback) {
   var parameters = {
     options: {
       method: 'GET',
-      url: '/v1/token?url='+params.url,
+      url: '/v1/token?url='+params.url
     },
     defaultOptions: this._options
   };
