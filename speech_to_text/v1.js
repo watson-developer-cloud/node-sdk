@@ -131,7 +131,7 @@ SpeechToTextV1.prototype.recognizeLive = function(params, callback) {
     agent: false,
     host: parts.hostname,
     port: parts.port,
-    path: parts.pathname + (params.continuous == true ? '?continuous=true' : ''),
+    path: parts.pathname + (params.continuous ? '?continuous=true' : ''),
     method: 'POST',
     headers: {
       'Authorization': 'Basic ' + this._options.api_key,
@@ -188,7 +188,7 @@ SpeechToTextV1.prototype.observeResult = function(params, callback) {
     agent: false,
     host: parts.hostname,
     port: parts.port,
-    path: parts.pathname + (params.interim_results == true ? '?interim_results=true' : ''),
+    path: parts.pathname + (params.interim_results ? '?interim_results=true' : ''),
     method: 'GET',
     headers: {
       'Authorization': 'Basic ' + this._options.api_key,

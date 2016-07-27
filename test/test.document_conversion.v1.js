@@ -108,7 +108,7 @@ describe('document_conversion', function() {
           .post('/v1/convert_document?version=2015-12-15', function(body) {
             var re = new RegExp('Content-Type: ' + contentType);
             // if the first character is a - then it's ascii, other wise assume hex
-            return body[0] == '-' ? re.exec(body) : re.exec(hexToString(body));
+            return body[0] === '-' ? re.exec(body) : re.exec(hexToString(body));
           })
           .reply(201, '');
 

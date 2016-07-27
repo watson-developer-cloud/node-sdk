@@ -91,7 +91,7 @@ DocumentConversionV1.prototype.convert = function(params, callback) {
   }
   var keys = Object.keys(DocumentConversionV1.prototype.conversion_target);
   var values = keys.map(function(v) { return DocumentConversionV1.prototype.conversion_target[v]; });
-  if (values.indexOf(params.conversion_target) == -1) {
+  if (values.indexOf(params.conversion_target) === -1) {
     callback(new Error('Missing required parameters: conversion_target. Possible values are: ' + values.join(', ')));
     return;
   }
