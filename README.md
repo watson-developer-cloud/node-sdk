@@ -245,9 +245,9 @@ Concept Insights is deprecated as of July 12, 2016. The service will be removed 
 
 ### Conversation
 
-Use the [Conversation](http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/conversation.html) service to determine the intent of a message.
+Use the [Conversation](http://www.ibm.com/watson/developercloud/conversation.html) service to determine the intent of a message.
 
-Note: you must first create a workspace via Bluemix. See [the documentation](http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/conversation/overview.shtml) for details.
+Note: you must first create a workspace via Bluemix. See [the documentation](http://www.ibm.com/watson/developercloud/doc/conversation/overview.shtml) for details.
 
 ```js
 var watson = require('watson-developer-cloud');
@@ -365,7 +365,7 @@ language_translator.identify({
 
 ### Natural Language Classifier
 
-Use [Natural Language Classifier](http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/nl-classifier/) service to create a classifier instance by providing a set of representative strings and a set of one or more correct classes for each as training. Then use the trained classifier to classify your new question for best matching answers or to retrieve next actions for your application.
+Use [Natural Language Classifier](http://www.ibm.com/watson/developercloud/doc/nl-classifier/) service to create a classifier instance by providing a set of representative strings and a set of one or more correct classes for each as training. Then use the trained classifier to classify your new question for best matching answers or to retrieve next actions for your application.
 
 ```javascript
 var watson = require('watson-developer-cloud');
@@ -671,25 +671,25 @@ This library is licensed under Apache 2.0. Full license text is available in
 See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/master/.github/CONTRIBUTING.md).
 
 
-[personality_insights]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/personality-insights/
-[relationship_extraction]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/sireapi/
-[retrieve_and_rank]: http://watson.stage1.mybluemix.net/smarterplanet/us/en/ibmwatson/developercloud/retrieve-rank.html
-[visual_recognition]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/visual-recognition/
-[visual_insights]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/visual-insights/
+[personality_insights]: http://www.ibm.com/watson/developercloud/doc/personality-insights/
+[relationship_extraction]: http://www.ibm.com/watson/developercloud/doc/sireapi/
+[retrieve_and_rank]: http://watson.stage1.mybluemix.net/watson/developercloud/retrieve-rank.html
+[visual_recognition]: http://www.ibm.com/watson/developercloud/doc/visual-recognition/
+[visual_insights]: http://www.ibm.com/watson/developercloud/doc/visual-insights/
 
-[tone_analyzer]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/tone-analyzer.html
-[text_to_speech]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/text-to-speech/
-[speech_to_text]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/speech-to-text/
-[concept_insights]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/concept-insights/
-[tradeoff_analytics]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/tradeoff-analytics/
-[language_translator]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/language-translation/
+[tone_analyzer]: http://www.ibm.com/watson/developercloud/tone-analyzer.html
+[text_to_speech]: http://www.ibm.com/watson/developercloud/doc/text-to-speech/
+[speech_to_text]: http://www.ibm.com/watson/developercloud/doc/speech-to-text/
+[concept_insights]: http://www.ibm.com/watson/developercloud/doc/concept-insights/
+[tradeoff_analytics]: http://www.ibm.com/watson/developercloud/doc/tradeoff-analytics/
+[language_translator]: http://www.ibm.com/watson/developercloud/doc/language-translation/
 
 [alchemy_language]: http://www.alchemyapi.com/products/alchemylanguage
 [sentiment_analysis]: http://www.alchemyapi.com/products/alchemylanguage/sentiment-analysis
 [alchemy_vision]: http://www.alchemyapi.com/products/alchemyvision
 [alchemy_data_news]: http://www.alchemyapi.com/products/alchemydata-news
 
-[wdc]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/
+[wdc]: http://www.ibm.com/watson/developercloud/
 [bluemix]: https://console.ng.bluemix.net
 [npm_link]: https://www.npmjs.com/package/watson-developer-cloud
 [request_github]: https://github.com/request/request
