@@ -11,7 +11,7 @@ Node client library to use the [Watson Developer Cloud][wdc] services, a collect
 APIs and SDKs that use cognitive computing to solve complex problems.
 
 ## Table of Contents
-  * [Major Changes for v2](#breaking-changes-for-v2)
+  * [Major Changes for v2](#major-changes-for-v2)
   * [Installation](#installation)
   * [Usage](#usage)
   * [Getting the Service Credentials](#getting-the-service-credentials)
@@ -37,7 +37,6 @@ APIs and SDKs that use cognitive computing to solve complex problems.
     * [Tradeoff Analytics](#tradeoff-analytics)
     * [Visual Insights](#visual-insights)
     * [Visual Recognition](#visual-recognition)
-  * [Running in Bluemix with Alternate Credentials](#running-in-bluemix-with-alternate-credentials)
   * [Debug](#debug)
   * [Tests](#tests)
   * [Open Source @ IBM](#open-source--ibm)
@@ -50,9 +49,11 @@ APIs and SDKs that use cognitive computing to solve complex problems.
 * **Breaking**: user-supplied credentials are now preferred over Bluemix-supplied credentials.
   The order of preference is now:
 
-  1. User-supplied credentials passed to the service constructor
-  2. SERVICE_NAME_USERNAME/PASSWORD environment properties (or _API_KEY when appropriate)
-  3. Bluemix-supplied credentials (via the VCAP_SERVICES JSON-encoded environment property)
+  1) User-supplied credentials passed to the service constructor
+  
+  2) `SERVICE_NAME_USERNAME` and `SERVICE_NAME_PASSWORD` environment properties (or `SERVICE_NAME_API_KEY` when appropriate)
+  
+  3) Bluemix-supplied credentials (via the `VCAP_SERVICES` JSON-encoded environment property)
 
 * Client-side support via [Browserify](http://browserify.org/)
 
@@ -74,7 +75,7 @@ APIs and SDKs that use cognitive computing to solve complex problems.
   The following methods will also work, but cause the entire library to be loaded:
 
   ```js
-  // Alternate methods using the library.
+  // Alternate methods of using the library.
   // Not recommended, especially for client-side JS.
   var watson = require('watson-developer-cloud');
 
@@ -620,20 +621,6 @@ visual_recognition.classify(params, function(err, res) {
     console.log(err);
   else
     console.log(JSON.stringify(res, null, 2));
-});
-```
-
-## Running in Bluemix with Alternate Credentials
-By default, the library tries to use the Bluemix `VCAP_SERVICES` environment variable to get the credentials for a given
-service, and if found, it prefers these over user-supplied credentials.
-You can disable this by setting `use_vcap_services` to `false`:
-
-```javascript
-var watson = require('watson-developer-cloud');
-
-var tone_analyzer = watson.tone_analyzer({
-  use_vcap_services: false,
-  /* ... */
 });
 ```
 
