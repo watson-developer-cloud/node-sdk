@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: RecognizeStream</title>
+    <title>JSDoc: Class: TradeoffAnalyticsV1</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: RecognizeStream</h1>
+    <h1 class="page-title">Class: TradeoffAnalyticsV1</h1>
 
     
 
@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2>RecognizeStream</h2>
+        <h2>TradeoffAnalyticsV1</h2>
         
     
 </header>
@@ -40,20 +40,11 @@
 
     
 
-    <h4 class="name" id="RecognizeStream"><span class="type-signature"></span>new RecognizeStream<span class="signature">(options)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="TradeoffAnalyticsV1"><span class="type-signature"></span>new TradeoffAnalyticsV1<span class="signature">(options)</span><span class="type-signature"></span></h4>
 
     
 
 
-
-<div class="description">
-    pipe()-able Node.js Readable/Writeable stream - accepts binary audio and emits text in it's `data` events.
-Also emits `results` events with interim results and other data.
-
-Cannot be instantiated directly, instead reated by calling #createRecognizeStream()
-
-Uses WebSockets under the hood. For audio with no recognizable speech, no `data` events are emitted.
-</div>
 
 
 
@@ -140,7 +131,7 @@ Uses WebSockets under the hood. For audio with no recognizable speech, no `data`
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_recognize_stream.js.html">speech-to-text/recognize_stream.js</a>, <a href="speech-to-text_recognize_stream.js.html#line42">line 42</a>
+        <a href="tradeoff-analytics_v1.js.html">tradeoff-analytics/v1.js</a>, <a href="tradeoff-analytics_v1.js.html#line29">line 29</a>
     </li></ul></dd>
     
 
@@ -182,175 +173,24 @@ Uses WebSockets under the hood. For audio with no recognizable speech, no `data`
     
 
     
-
-    
-
-    
-        <h3 class="subsection-title">Events</h3>
+        <h3 class="subsection-title">Methods</h3>
 
         
             
 
     
 
-    <h4 class="name" id="event:close">close</h4>
-
-    
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>reasonCode</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>description</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_recognize_stream.js.html">speech-to-text/recognize_stream.js</a>, <a href="speech-to-text_recognize_stream.js.html#line117">line 117</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="event:data">data</h4>
+    <h4 class="name" id="dilemmas"><span class="type-signature"></span>dilemmas<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Finalized text
+    Returns a dilemma that contains the problem and a resolution.
+The problem contains a set of options and objectives.
+The resolution contains a set of optimal options,
+their analytical characteristics, and representation on a 2D space.
 </div>
 
 
@@ -386,7 +226,30 @@ Uses WebSockets under the hood. For audio with no recognizable speech, no `data`
 
         <tr>
             
-                <td class="name"><code>transcript</code></td>
+                <td class="name"><code>params.columns</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">List of possible objectives</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>params.subject</code></td>
             
 
             <td class="type">
@@ -402,7 +265,79 @@ Uses WebSockets under the hood. For audio with no recognizable speech, no `data`
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Name of the decision problem</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>params.options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">A list of options. Typically, the rows in a
+                                table representation of your data</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>params.metadataHeader</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Value of the x-watson-metadata header to be forwarded
+								                        for analytics purposes</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>params.generate_visualization</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Boolean (default = true). if false, the algorithm
+                                               will not create the "map" visualization, and will typically run much faster</td>
         </tr>
 
     
@@ -443,7 +378,7 @@ Uses WebSockets under the hood. For audio with no recognizable speech, no `data`
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_recognize_stream.js.html">speech-to-text/recognize_stream.js</a>, <a href="speech-to-text_recognize_stream.js.html#line170">line 170</a>
+        <a href="tradeoff-analytics_v1.js.html">tradeoff-analytics/v1.js</a>, <a href="tradeoff-analytics_v1.js.html#line52">line 52</a>
     </li></ul></dd>
     
 
@@ -474,92 +409,14 @@ Uses WebSockets under the hood. For audio with no recognizable speech, no `data`
 
     
 
-    <h4 class="name" id="event:error">error</h4>
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_recognize_stream.js.html">speech-to-text/recognize_stream.js</a>, <a href="speech-to-text_recognize_stream.js.html#line125">line 125</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="event:results">results</h4>
+    <h4 class="name" id="events"><span class="type-signature"></span>events<span class="signature">(params)</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Object with interim or final results, including possible alternatives. May have no results at all for empty audio files.
+    Forward events from the Tradeoff Analytics widget to the service
 </div>
 
 
@@ -595,13 +452,13 @@ Uses WebSockets under the hood. For audio with no recognizable speech, no `data`
 
         <tr>
             
-                <td class="name"><code>results</code></td>
+                <td class="name"><code>params</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Object</span>
+<span class="param-type">String</span>
 
 
             
@@ -611,7 +468,57 @@ Uses WebSockets under the hood. For audio with no recognizable speech, no `data`
 
             
 
-            <td class="description last"></td>
+            <td class="description last">the array of events to forward to the service
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>metadataHeader</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Value of the x-watson-metadata header to be forwarded
+								   for analytics purposes</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
         </tr>
 
     
@@ -652,7 +559,7 @@ Uses WebSockets under the hood. For audio with no recognizable speech, no `data`
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_recognize_stream.js.html">speech-to-text/recognize_stream.js</a>, <a href="speech-to-text_recognize_stream.js.html#line162">line 162</a>
+        <a href="tradeoff-analytics_v1.js.html">tradeoff-analytics/v1.js</a>, <a href="tradeoff-analytics_v1.js.html#line79">line 79</a>
     </li></ul></dd>
     
 
@@ -679,6 +586,10 @@ Uses WebSockets under the hood. For audio with no recognizable speech, no `data`
 
 
         
+    
+
+    
+
     
 </article>
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: RecognizeStream</title>
+    <title>JSDoc: Class: AlchemyVisionV1</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: RecognizeStream</h1>
+    <h1 class="page-title">Class: AlchemyVisionV1</h1>
 
     
 
@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2>RecognizeStream</h2>
+        <h2>AlchemyVisionV1</h2>
         
     
 </header>
@@ -40,20 +40,11 @@
 
     
 
-    <h4 class="name" id="RecognizeStream"><span class="type-signature"></span>new RecognizeStream<span class="signature">(options)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="AlchemyVisionV1"><span class="type-signature"></span>new AlchemyVisionV1<span class="signature">(options)</span><span class="type-signature"></span></h4>
 
     
 
 
-
-<div class="description">
-    pipe()-able Node.js Readable/Writeable stream - accepts binary audio and emits text in it's `data` events.
-Also emits `results` events with interim results and other data.
-
-Cannot be instantiated directly, instead reated by calling #createRecognizeStream()
-
-Uses WebSockets under the hood. For audio with no recognizable speech, no `data` events are emitted.
-</div>
 
 
 
@@ -140,7 +131,7 @@ Uses WebSockets under the hood. For audio with no recognizable speech, no `data`
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_recognize_stream.js.html">speech-to-text/recognize_stream.js</a>, <a href="speech-to-text_recognize_stream.js.html#line42">line 42</a>
+        <a href="alchemy-vision_v1.js.html">alchemy-vision/v1.js</a>, <a href="alchemy-vision_v1.js.html#line94">line 94</a>
     </li></ul></dd>
     
 
@@ -180,177 +171,17 @@ Uses WebSockets under the hood. For audio with no recognizable speech, no `data`
     
 
     
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Events</h3>
+        <h3 class="subsection-title">Members</h3>
 
         
             
+<h4 class="name" id="getImageKeywords"><span class="type-signature"></span>getImageKeywords<span class="type-signature"></span></h4>
 
-    
-
-    <h4 class="name" id="event:close">close</h4>
-
-    
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>reasonCode</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>description</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_recognize_stream.js.html">speech-to-text/recognize_stream.js</a>, <a href="speech-to-text_recognize_stream.js.html#line117">line 117</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="event:data">data</h4>
-
-    
 
 
 
 <div class="description">
-    Finalized text
+    Tags image with keywords
 </div>
 
 
@@ -359,61 +190,6 @@ Uses WebSockets under the hood. For audio with no recognizable speech, no `data`
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>transcript</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
 <dl class="details">
 
     
@@ -443,7 +219,7 @@ Uses WebSockets under the hood. For audio with no recognizable speech, no `data`
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_recognize_stream.js.html">speech-to-text/recognize_stream.js</a>, <a href="speech-to-text_recognize_stream.js.html#line170">line 170</a>
+        <a href="alchemy-vision_v1.js.html">alchemy-vision/v1.js</a>, <a href="alchemy-vision_v1.js.html#line105">line 105</a>
     </li></ul></dd>
     
 
@@ -459,107 +235,15 @@ Uses WebSockets under the hood. For audio with no recognizable speech, no `data`
 
 
 
-
-
-
-
-
-
-
-
-
-
         
             
+<h4 class="name" id="getImageLinks"><span class="type-signature"></span>getImageLinks<span class="type-signature"></span></h4>
 
-    
-
-    <h4 class="name" id="event:error">error</h4>
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_recognize_stream.js.html">speech-to-text/recognize_stream.js</a>, <a href="speech-to-text_recognize_stream.js.html#line125">line 125</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="event:results">results</h4>
-
-    
 
 
 
 <div class="description">
-    Object with interim or final results, including possible alternatives. May have no results at all for empty audio files.
+    Extracts images from a URL or html
 </div>
 
 
@@ -568,55 +252,62 @@ Uses WebSockets under the hood. For audio with no recognizable speech, no `data`
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>results</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
+<dl class="details">
 
     
-    </tbody>
-</table>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="alchemy-vision_v1.js.html">alchemy-vision/v1.js</a>, <a href="alchemy-vision_v1.js.html#line115">line 115</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="getImageSceneText"><span class="type-signature"></span>getImageSceneText<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Identifies  text in an image
+</div>
+
 
 
 
@@ -652,7 +343,7 @@ Uses WebSockets under the hood. For audio with no recognizable speech, no `data`
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_recognize_stream.js.html">speech-to-text/recognize_stream.js</a>, <a href="speech-to-text_recognize_stream.js.html#line162">line 162</a>
+        <a href="alchemy-vision_v1.js.html">alchemy-vision/v1.js</a>, <a href="alchemy-vision_v1.js.html#line120">line 120</a>
     </li></ul></dd>
     
 
@@ -668,10 +359,62 @@ Uses WebSockets under the hood. For audio with no recognizable speech, no `data`
 
 
 
+        
+            
+<h4 class="name" id="recognizeFaces"><span class="type-signature"></span>recognizeFaces<span class="type-signature"></span></h4>
 
 
 
 
+<div class="description">
+    Face detection and Recognition
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="alchemy-vision_v1.js.html">alchemy-vision/v1.js</a>, <a href="alchemy-vision_v1.js.html#line110">line 110</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
 
 
 
@@ -679,6 +422,12 @@ Uses WebSockets under the hood. For audio with no recognizable speech, no `data`
 
 
         
+    
+
+    
+
+    
+
     
 </article>
 
@@ -696,7 +445,7 @@ Uses WebSockets under the hood. For audio with no recognizable speech, no `data`
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Jul 29 2016 15:50:46 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Jul 29 2016 15:50:45 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>

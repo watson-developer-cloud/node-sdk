@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: lib/helper.js</title>
+    <title>JSDoc: Source: personality-insights/v2.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: lib/helper.js</h1>
+    <h1 class="page-title">Source: personality-insights/v2.js</h1>
 
     
 
@@ -44,56 +44,89 @@
 
 'use strict';
 
-module.exports = {
+var requestFactory = require('../lib/requestwrapper');
+var pick           = require('object.pick');
+var helper         = require('../lib/helper');
+var util = require('util');
+var BaseService = require('../lib/base_service');
 
-  stripTrailingSlash: function(url) {
-    // Match a forward slash / at the end of the string ($)
-    return url.replace(/\/$/, '');
-  },
+/**
+ *
+ * @param options
+ * @constructor
+ */
+function PersonalityInsightsV1(options) {
+  BaseService.call(this, options);
+}
+util.inherits(PersonalityInsightsV1, BaseService);
+PersonalityInsightsV1.prototype.name = 'personality_insights';
+PersonalityInsightsV1.prototype.version = 'v2';
+PersonalityInsightsV1.URL = 'https://gateway.watsonplatform.net/personality-insights/api';
 
-  getMissingParams: function(params, requires) {
+/**
+ * @param params {Object} The parameters to call the service
+ *   The accepted parameters are:
+ *     - text: The text to analyze.
+ *     - contentItems: A JSON input (if 'text' not provided).
+ *     - include_raw: include raw results
+ *     - accept_language : The language expected for the output.
+ *     - language: The language of the input.
+ *
+ * @param callback The callback.
+ */
+PersonalityInsightsV1.prototype.profile = function(params, callback) { // eslint-disable-line complexity
+  params = params || {};
 
-    if (!requires) {
-      return null;
-    } else if (!params) {
-      return requires;
-    }
+  // support for the new snake_case
+  if (params.content_items)
+    params.contentItems = params.content_items;
 
-    var missing = [];
-
-    requires.forEach(function(require) {
-      if (!params[require])
-        missing.push(require);
-    });
-    return missing.length > 0 ? missing : null;
-  },
-
-  /**
-   * Return true if 'text' is html
-   * @param  {String}  text The 'text' to analyze
-   * @return {Boolean}      true if 'text' has html tags
-   */
-  isHTML: function (text){
-    return /&lt;[a-z][\s\S]*>/i.test(text);
-  },
-
-  /**
-   * Returns the first match from formats that is key the params map
-   * otherwise null
-   * @param  {Object}  params   The parameters
-   * @param  {Array}  requires The keys we want to check
-    */
-  getFormat: function(params, formats) {
-    if (!formats || !params)
-      return null;
-
-    for(var i = 0; i &lt; formats.length; i++) {
-      if (formats[i] in params)
-        return formats[i];
-    }
-    return null;
+  if ((!params.text &amp;&amp; !params.contentItems)) {
+    callback(new Error('Missing required parameters: text or content_items'));
+    return;
   }
+
+  // Content-Type
+  var content_type = null;
+  if (params.text)
+    content_type = helper.isHTML(params.text) ? 'text/html' : 'text/plain';
+  else
+    content_type = 'application/json';
+
+  var headers = {
+    'Content-type'    : content_type,
+    'Accept-language' : params.accept_language || params.acceptLanguage || 'en'
+  };
+
+  // service bug: language in header overrides language in each JSON content item, so we can't set it on those requests
+  // (also, content-language doesn't really make sense on JSON)
+  if (params.language || params.text) {
+    headers['Content-language'] = params.language || 'en'
+  }
+
+
+  var parameters = {
+    options: {
+      method: 'POST',
+      url: '/v2/profile',
+      body: params.text || pick(params, ['contentItems']),
+      json: true,
+      qs: pick(params, ['include_raw']),
+      headers: headers
+    },
+    defaultOptions: this._options
+  };
+
+  if (params.csv) {
+    parameters.options.headers.Accept = 'text/csv';
+    if (params.csv_headers) {
+      parameters.options.qs.headers = 'true';
+    }
+  }
+
+  return requestFactory(parameters, callback);
 };
+module.exports = PersonalityInsightsV1;
 </code></pre>
         </article>
     </section>

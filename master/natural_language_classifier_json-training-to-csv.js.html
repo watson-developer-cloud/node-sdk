@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: lib/helper.js</title>
+    <title>JSDoc: Source: natural_language_classifier/json-training-to-csv.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: lib/helper.js</h1>
+    <h1 class="page-title">Source: natural_language_classifier/json-training-to-csv.js</h1>
 
     
 
@@ -27,72 +27,47 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * Copyright 2014 IBM Corp. All Rights Reserved.
+ * Copyright 2015 IBM Corp. All Rights Reserved.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 
 'use strict';
 
-module.exports = {
+var stringify = require('csv-stringify');
 
-  stripTrailingSlash: function(url) {
-    // Match a forward slash / at the end of the string ($)
-    return url.replace(/\/$/, '');
-  },
+function toCSVArray(data) {
+  if (data.text &amp;&amp; data.classes &amp;&amp; data.classes.length > 0)
+    return [data.text].concat(data.classes);
+  else
+    throw Error('Invalid training_data format, it needs to be: '+
+      '[{ text: "my-text", classes:["my-class1", "my-class2",...]}, {}, ...]');
+}
 
-  getMissingParams: function(params, requires) {
-
-    if (!requires) {
-      return null;
-    } else if (!params) {
-      return requires;
+/**
+ * IF traning is json, convert it to csv.
+ * @param  {Object[]} jsonData the training_data as a json array
+ * @param  {Function} cb the error first callback
+ */
+module.exports = function toCSV(training, cb) {
+  if (Array.isArray(training)) {
+    try {
+      stringify(training.map(toCSVArray), cb);
+    } catch (e) {
+      cb(e);
     }
-
-    var missing = [];
-
-    requires.forEach(function(require) {
-      if (!params[require])
-        missing.push(require);
-    });
-    return missing.length > 0 ? missing : null;
-  },
-
-  /**
-   * Return true if 'text' is html
-   * @param  {String}  text The 'text' to analyze
-   * @return {Boolean}      true if 'text' has html tags
-   */
-  isHTML: function (text){
-    return /&lt;[a-z][\s\S]*>/i.test(text);
-  },
-
-  /**
-   * Returns the first match from formats that is key the params map
-   * otherwise null
-   * @param  {Object}  params   The parameters
-   * @param  {Array}  requires The keys we want to check
-    */
-  getFormat: function(params, formats) {
-    if (!formats || !params)
-      return null;
-
-    for(var i = 0; i &lt; formats.length; i++) {
-      if (formats[i] in params)
-        return formats[i];
-    }
-    return null;
-  }
+  } else
+    cb(null, training);
 };
 </code></pre>
         </article>

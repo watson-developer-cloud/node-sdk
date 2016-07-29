@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: lib/helper.js</title>
+    <title>JSDoc: Source: relationship-extraction/v1-beta.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: lib/helper.js</h1>
+    <h1 class="page-title">Source: relationship-extraction/v1-beta.js</h1>
 
     
 
@@ -44,56 +44,50 @@
 
 'use strict';
 
-module.exports = {
+var extend         = require('extend');
+var helper         = require('../lib/helper');
+var requestFactory = require('../lib/requestwrapper');
+var util = require('util');
+var BaseService = require('../lib/base_service');
 
-  stripTrailingSlash: function(url) {
-    // Match a forward slash / at the end of the string ($)
-    return url.replace(/\/$/, '');
-  },
+/**
+ *
+ * @param options
+ * @constructor
+ */
+function RelationshipExtractionV1Beta(options) {
+  BaseService.call(this, options);
+}
+util.inherits(RelationshipExtractionV1Beta, BaseService);
+RelationshipExtractionV1Beta.prototype.name = 'relationship_extraction';
+RelationshipExtractionV1Beta.prototype.version = 'v1-beta';
+RelationshipExtractionV1Beta.URL = 'https://gateway.watsonplatform.net/relationship-extraction-beta/api';
 
-  getMissingParams: function(params, requires) {
+RelationshipExtractionV1Beta.prototype.extract = function(_params, callback) {
+  var params = extend(this._options, _params);
 
-    if (!requires) {
-      return null;
-    } else if (!params) {
-      return requires;
-    }
-
-    var missing = [];
-
-    requires.forEach(function(require) {
-      if (!params[require])
-        missing.push(require);
-    });
-    return missing.length > 0 ? missing : null;
-  },
-
-  /**
-   * Return true if 'text' is html
-   * @param  {String}  text The 'text' to analyze
-   * @return {Boolean}      true if 'text' has html tags
-   */
-  isHTML: function (text){
-    return /&lt;[a-z][\s\S]*>/i.test(text);
-  },
-
-  /**
-   * Returns the first match from formats that is key the params map
-   * otherwise null
-   * @param  {Object}  params   The parameters
-   * @param  {Array}  requires The keys we want to check
-    */
-  getFormat: function(params, formats) {
-    if (!formats || !params)
-      return null;
-
-    for(var i = 0; i &lt; formats.length; i++) {
-      if (formats[i] in params)
-        return formats[i];
-    }
-    return null;
+  var missingParams = helper.getMissingParams(params, ['dataset','text']);
+  if (missingParams){
+    callback(new Error('Missing required parameters: ' + missingParams.join(', ')));
+    return;
   }
+
+  var parameters = {
+    options: {
+      method: 'POST',
+      url: '/v1/sire/0',
+      form : {
+        rt: params.format || 'json',
+        sid: params.dataset,
+        txt: params.text // Change 'text' to 'txt'
+      }
+    },
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
 };
+
+module.exports = RelationshipExtractionV1Beta;
 </code></pre>
         </article>
     </section>

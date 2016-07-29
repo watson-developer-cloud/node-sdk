@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: lib/helper.js</title>
+    <title>JSDoc: Source: authorization/v1.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: lib/helper.js</h1>
+    <h1 class="page-title">Source: authorization/v1.js</h1>
 
     
 
@@ -27,7 +27,7 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * Copyright 2014 IBM Corp. All Rights Reserved.
+ * Copyright 2015 IBM Corp. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,56 +44,61 @@
 
 'use strict';
 
-module.exports = {
+var requestFactory = require('../lib/requestwrapper');
+var url            = require('url');
+var util = require('util');
+var BaseService = require('../lib/base_service');
 
-  stripTrailingSlash: function(url) {
-    // Match a forward slash / at the end of the string ($)
-    return url.replace(/\/$/, '');
-  },
+/**
+ *
+ * @param {Object} options
+ * @param {String} options.username
+ * @param {String} options.password
+ * @param {String} [options.url] url of the service for which auth tokens are being generated
+ * @constructor
+ */
+function AuthorizationV1(options) {
+  BaseService.call(this, options);
+  this.target_url = options.url;
+  // replace the url to always point to /authorization/api
+  var hostname = url.parse(this._options.url);
+  hostname.pathname = '/authorization/api';
+  this._options.url = url.format(hostname);
+}
+util.inherits(AuthorizationV1, BaseService);
+AuthorizationV1.prototype.name = 'authorization';
+AuthorizationV1.prototype.version = 'v1';
+AuthorizationV1.URL = 'https://stream.watsonplatform.net/authorization/api';
 
-  getMissingParams: function(params, requires) {
-
-    if (!requires) {
-      return null;
-    } else if (!params) {
-      return requires;
-    }
-
-    var missing = [];
-
-    requires.forEach(function(require) {
-      if (!params[require])
-        missing.push(require);
-    });
-    return missing.length > 0 ? missing : null;
-  },
-
-  /**
-   * Return true if 'text' is html
-   * @param  {String}  text The 'text' to analyze
-   * @return {Boolean}      true if 'text' has html tags
-   */
-  isHTML: function (text){
-    return /&lt;[a-z][\s\S]*>/i.test(text);
-  },
-
-  /**
-   * Returns the first match from formats that is key the params map
-   * otherwise null
-   * @param  {Object}  params   The parameters
-   * @param  {Array}  requires The keys we want to check
-    */
-  getFormat: function(params, formats) {
-    if (!formats || !params)
-      return null;
-
-    for(var i = 0; i &lt; formats.length; i++) {
-      if (formats[i] in params)
-        return formats[i];
-    }
-    return null;
+/**
+ * Get a percent-encoded authorization token based on resource query string param
+ *
+ * @param {Object} [options]
+ * @param {String} [options.url] defaults to url supplied to constructor (if any)
+ * @param {Function(err, token)} callback - called with a %-encoded token
+ */
+AuthorizationV1.prototype.getToken = function(params, callback) {
+  if (typeof params === 'function') {
+    callback = params;
+    params = {url: this.target_url};
   }
+  if (!params.url){
+    callback(new Error('Missing required parameters: url'));
+    return;
+  }
+
+  var parameters = {
+    options: {
+      method: 'GET',
+      url: '/v1/token?url='+params.url
+    },
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
 };
+
+
+module.exports = AuthorizationV1;
 </code></pre>
         </article>
     </section>

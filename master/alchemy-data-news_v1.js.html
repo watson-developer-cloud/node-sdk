@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: lib/helper.js</title>
+    <title>JSDoc: Source: alchemy-data-news/v1.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: lib/helper.js</h1>
+    <h1 class="page-title">Source: alchemy-data-news/v1.js</h1>
 
     
 
@@ -27,7 +27,7 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * Copyright 2014 IBM Corp. All Rights Reserved.
+ * Copyright 2015 IBM Corp. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,56 +44,66 @@
 
 'use strict';
 
-module.exports = {
+var extend         = require('extend');
+var requestFactory = require('../lib/requestwrapper');
+var util = require('util');
+var BaseServiceAlchemy = require('../lib/base_service_alchemy');
 
-  stripTrailingSlash: function(url) {
-    // Match a forward slash / at the end of the string ($)
-    return url.replace(/\/$/, '');
-  },
-
-  getMissingParams: function(params, requires) {
-
-    if (!requires) {
-      return null;
-    } else if (!params) {
-      return requires;
+function errorFormatter(cb) {
+  return function(err, result, response) {
+    if (err) {
+      cb(err, result);
     }
-
-    var missing = [];
-
-    requires.forEach(function(require) {
-      if (!params[require])
-        missing.push(require);
-    });
-    return missing.length > 0 ? missing : null;
-  },
-
-  /**
-   * Return true if 'text' is html
-   * @param  {String}  text The 'text' to analyze
-   * @return {Boolean}      true if 'text' has html tags
-   */
-  isHTML: function (text){
-    return /&lt;[a-z][\s\S]*>/i.test(text);
-  },
-
-  /**
-   * Returns the first match from formats that is key the params map
-   * otherwise null
-   * @param  {Object}  params   The parameters
-   * @param  {Array}  requires The keys we want to check
-    */
-  getFormat: function(params, formats) {
-    if (!formats || !params)
-      return null;
-
-    for(var i = 0; i &lt; formats.length; i++) {
-      if (formats[i] in params)
-        return formats[i];
+    else {
+      if (result.status === 'OK')
+        cb(err,result);
+      else
+        cb({
+          error: result.statusInfo || response['headers']['x-alchemyapi-error-msg'],
+          code: 400
+        }, null);
     }
-    return null;
-  }
-};
+  };
+}
+
+/**
+ * @param options
+ * @constructor
+ */
+function AlchemyDataNewsV1(options) {
+  BaseServiceAlchemy.call(this, options);
+}
+util.inherits(AlchemyDataNewsV1, BaseServiceAlchemy);
+
+AlchemyDataNewsV1.prototype.name = 'alchemy_data_news';
+AlchemyDataNewsV1.prototype.version = 'v1';
+AlchemyDataNewsV1.URL = 'https://gateway-a.watsonplatform.net/calls';
+
+/**
+ * Extracts a grouped, ranked list of named entities (people, companies,
+ * organizations, etc.) from text, a URL or HTML.
+ * @param {Object} params
+ * @param params.end
+ * @param params.start
+ * @param {Function} callback
+ */
+AlchemyDataNewsV1.prototype.getNews = function(params, callback ) {
+    params = params || {};
+
+    var parameters = {
+      options: {
+        url: '/data/GetNews',
+        method: 'GET',
+        json: true,
+        qs: extend({}, params, {outputMode: 'json'}) // change default output to json
+      },
+      requiredParams: ['end','start'],
+      defaultOptions: this._options
+    };
+    return requestFactory(parameters, errorFormatter(callback));
+  };
+
+module.exports = AlchemyDataNewsV1;
 </code></pre>
         </article>
     </section>

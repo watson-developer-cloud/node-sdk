@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: lib/helper.js</title>
+    <title>JSDoc: Source: tradeoff-analytics/v1.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: lib/helper.js</h1>
+    <h1 class="page-title">Source: tradeoff-analytics/v1.js</h1>
 
     
 
@@ -44,56 +44,85 @@
 
 'use strict';
 
-module.exports = {
+var requestFactory = require('../lib/requestwrapper');
+var omit           = require('object.omit');
+var util = require('util');
+var BaseService = require('../lib/base_service');
 
-  stripTrailingSlash: function(url) {
-    // Match a forward slash / at the end of the string ($)
-    return url.replace(/\/$/, '');
-  },
+/**
+ *
+ * @param options
+ * @constructor
+ */
+function TradeoffAnalyticsV1(options) {
+  BaseService.call(this, options);
+}
+util.inherits(TradeoffAnalyticsV1, BaseService);
+TradeoffAnalyticsV1.prototype.name = 'tradeoff_analytics';
+TradeoffAnalyticsV1.prototype.version = 'v1';
+TradeoffAnalyticsV1.URL = 'https://gateway.watsonplatform.net/tradeoff-analytics/api';
 
-  getMissingParams: function(params, requires) {
+/**
+ * Returns a dilemma that contains the problem and a resolution.
+ * The problem contains a set of options and objectives.
+ * The resolution contains a set of optimal options,
+ * their analytical characteristics, and representation on a 2D space.
+ *
+ * @param  {Array}  params.columns List of possible objectives
+ * @param  {String} params.subject Name of the decision problem
+ * @param  {String} params.options A list of options. Typically, the rows in a
+ *                                 table representation of your data
+ * @param  {String} params.metadataHeader Value of the x-watson-metadata header to be forwarded
+ * 								                        for analytics purposes
+ * @param  {String} params.generate_visualization Boolean (default = true). if false, the algorithm
+ *                                                will not create the "map" visualization, and will typically run much faster
+ */
+TradeoffAnalyticsV1.prototype.dilemmas = function(params, callback) {
+  params = params || {};
 
-    if (!requires) {
-      return null;
-    } else if (!params) {
-      return requires;
-    }
-
-    var missing = [];
-
-    requires.forEach(function(require) {
-      if (!params[require])
-        missing.push(require);
-    });
-    return missing.length > 0 ? missing : null;
-  },
-
-  /**
-   * Return true if 'text' is html
-   * @param  {String}  text The 'text' to analyze
-   * @return {Boolean}      true if 'text' has html tags
-   */
-  isHTML: function (text){
-    return /&lt;[a-z][\s\S]*>/i.test(text);
-  },
-
-  /**
-   * Returns the first match from formats that is key the params map
-   * otherwise null
-   * @param  {Object}  params   The parameters
-   * @param  {Array}  requires The keys we want to check
-    */
-  getFormat: function(params, formats) {
-    if (!formats || !params)
-      return null;
-
-    for(var i = 0; i &lt; formats.length; i++) {
-      if (formats[i] in params)
-        return formats[i];
-    }
-    return null;
-  }
+  var parameters = {
+    options: {
+      method: 'POST',
+      url: '/v1/dilemmas',
+      body: omit(params,['metadata_header', 'generate_visualization']),
+      headers: {
+        'x-watson-metadata' : params.metadata_header
+      },
+      qs: params.generate_visualization === false ? { 'generate_visualization' : false} : {},
+      json: true
+    },
+    requiredParams: ['columns', 'subject', 'options'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
 };
+
+ /**
+ * Forward events from the Tradeoff Analytics widget to the service
+ *
+ * @param  {String} params - the array of events to forward to the service
+ * @param  {String} params.metadataHeader Value of the x-watson-metadata header to be forwarded
+ * 								   for analytics purposes
+ */
+TradeoffAnalyticsV1.prototype.events = function(params, callback) {
+  params = params || {};
+
+  var parameters = {
+    options: {
+      method: 'POST',
+      url: '/v1/events',
+      body: omit(params,['metadata_header', 'generate_visualization']),
+      headers: {
+        'x-watson-metadata' : params.metadata_header
+      },
+      json: true
+    },
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+module.exports = TradeoffAnalyticsV1;
 </code></pre>
         </article>
     </section>
