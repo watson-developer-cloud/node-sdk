@@ -1,12 +1,24 @@
 {
   "source": {
-    "include": [ "lib/", "services/" ]
+    "include": [ "./" ],
+    "exclude": [
+      "./.github/",
+      "./coverage/",
+      "./dist/",
+      "./doc/",
+      "./examples/",
+      "./jsdoc/",
+      "./node_modules/",
+      "./test/",
+      "./eslintrc.js",
+      "./karma.conf.js",
+      "./transform.js"
+    ]
   },
   "opts": {
     "package": "package.json",
     "readme": "README.md",
     "recurse": true,
-    "template": "jsdoc/template",
     "destination": "./doc/"
   }
 }

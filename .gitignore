@@ -9,3 +9,6 @@ test/resources/tts-output.ogg
 doc/
 .vscode/
 dist/
+.env
+examples/browserify/node_modules/
+

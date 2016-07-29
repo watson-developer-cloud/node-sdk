@@ -1,7 +1,7 @@
 'use strict';
 
 var assert = require('assert');
-var watson = require('../lib/index');
+var watson = require('../index');
 var nock   = require('nock');
 var fs     = require('fs');
 
@@ -31,6 +31,15 @@ describe('language_translator', function() {
   };
 
   describe('VCAP_SERVICES', function() {
+
+    var env;
+    before(function() {
+      env = process.env;
+      process.env = {};
+    });
+    after(function() {
+      process.env = env;
+    });
 
     var details = [
       {

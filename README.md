@@ -11,7 +11,7 @@ Node client library to use the [Watson Developer Cloud][wdc] services, a collect
 APIs and SDKs that use cognitive computing to solve complex problems.
 
 ## Table of Contents
-  * [Breaking Changes for v1.0](#breaking-changes-for-v10)
+  * [Major Changes for v2](#breaking-changes-for-v2)
   * [Installation](#installation)
   * [Usage](#usage)
   * [Getting the Service Credentials](#getting-the-service-credentials)
@@ -44,30 +44,44 @@ APIs and SDKs that use cognitive computing to solve complex problems.
   * [License](#license)
   * [Contributing](#contributing)
 
-## Breaking Changes for v1.0
 
-Several breaking changes were introduced with the v1.0.0 release:
+## Major Changes for v2
 
-  * Experimental and Beta services now require the appropriate tag to be added to their version:
-    * Concept Expansion `v1` is now `v1-beta`
-    * Question and Answer `v1` is now `v1-beta`
-    * Relationship Extraction `v1` is now `v1-beta`
-    * Tone Analyzer `v3` is now `v3` (latest) or `v3-beta` (compatibility with old Beta plan)
-    * Visual Insights `v1` is now `v1-experimental`
-    * Visual Recognition `v1` is now `v1-beta`
-  * Speech to Text gained a new `createRecognizeStream()` method replacing the existing live streaming methods with a simpler Read/Write stream.
-    The older methods are still available in v1.0 but each log a deprecation warning (unless `{silent: true}` is passed in) and will be removed from a future release.
-    The affected methods are:
-    * `recognizeLive()`
-    * `observeResult()`
-    * `getRecognizeStatus()`
-  * The Document Conversion API has been reduced to a single `convert()` method; it no longer offers batch conversion or cloud storage of files.
-  * Several deprecated services have been removed:
-    * Message Resonance
-    * Tone Analyzer v1 and v2 (replaced by v3)
-    * Search (replaced by Retrieve and Rank)
-  * Dropped support for node.js v0.10.x (For reference: the WDC Node.js SDK now officially support the latest 0.12, LTS, and Stable releases of Node.js.)
+* **Breaking**: user-supplied credentials are now preferred over Bluemix-supplied credentials.
+  The order of preference is now:
 
+  1. User-supplied credentials passed to the service constructor
+  2. SERVICE_NAME_USERNAME/PASSWORD environment properties (or _API_KEY when appropriate)
+  3. Bluemix-supplied credentials (via the VCAP_SERVICES JSON-encoded environment property)
+
+* Client-side support via [Browserify](http://browserify.org/)
+
+  `examples/browserify/` shows an example app that generates tokens server-side and uses the SDK client-side via browserify.
+
+  Note: Not all services currently support CORS, and therefore not all services can be used client-side.
+  Of those that do, most require an auth token to be generated server-side via the [Authorization Service](#authorization)
+
+* New recommended method for instantiating services:
+
+  ```js
+  var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
+
+  var toneAnalyzer = new ToneAnalyzerV3({/*...*/});
+  ```
+
+  This was primarily done to enable smaller bundles for client-side usage, but also gives a small performance boost for server-side usage by only loading the portion of the library that is actually needed.
+
+  The following methods will also work, but cause the entire library to be loaded:
+
+  ```js
+  // Alternate methods using the library.
+  // Not recommended, especially for client-side JS.
+  var watson = require('watson-developer-cloud');
+
+  var toneAnalyzer = new watson.ToneAnalyzerV3({/*...*/});
+
+  var tone_analyzer = watson.tone_analyzer({version: 'v3', /*...*/});
+  ```
 
 ## Installation
 
@@ -88,7 +102,7 @@ credentials; the library will get them for you by looking at the `VCAP_SERVICES`
 By default, [all requests are logged](http://www.ibm.com/watson/developercloud/doc/getting_started/gs-logging.shtml). This can be disabled of by setting the `X-Watson-Learning-Opt-Out` header when creating the service instance:
 
 ```js
-var myInstance = watson.whatever_service({
+var myInstance = new watson.WhateverServiceV1({
   /* username, password, version, etc... */
   headers: {
     "X-Watson-Learning-Opt-Out": "1"
@@ -226,32 +240,7 @@ authorization.getToken(params, function (err, token) {
 ```
 
 ### Concept Insights
-Use the [Concept Insights][concept_insights] service to identify words in the
-text that correspond to concepts in a Wikipedia graph.
-
-```javascript
-var watson = require('watson-developer-cloud');
-
-var concept_insights = watson.concept_insights({
-  username: '<username>',
-  password: '<password>',
-  version: 'v2'
-});
-
-var params = {
-  graph: '/graphs/wikipedia/en-20120601',
-  text: 'IBM Watson won the Jeopardy television show hosted by Alex Trebek'
-};
-
-// Retrieve the concepts for input text
-concept_insights.graphs.annotateText(params, function(err, res) {
-  if (err)
-    console.log(err);
-  else {
-    console.log(JSON.stringify(res, null, 2));
-  }
-});
-```
+Concept Insights is deprecated as of July 12, 2016. The service will be removed on August 19th, 2016.
 
 ### Conversation
 
