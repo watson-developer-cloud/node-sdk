@@ -501,7 +501,7 @@ VisualRecognitionV3.prototype.retrainClassifier = function(params, callback) {
 
   var parameters = {
     options: {
-      url: '/v3/classifier/{params.classifier_id}',
+      url: '/v3/classifiers/{params.classifier_id}',
       method: 'POST',
       json: true,
       formData: pick(params, allowed_keys)
