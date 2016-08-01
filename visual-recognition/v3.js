@@ -493,15 +493,13 @@ VisualRecognitionV3.prototype.createClassifier = function(params, callback) {
 VisualRecognitionV3.prototype.retrainClassifier = function(params, callback) {
   params = params || {};
 
-  var example_keys = Object.keys(params).filter(function(key) {
+  var allowed_keys = Object.keys(params).filter(function(key) {
     return key === NEGATIVE_EXAMPLES || key.match(/^.+_positive_examples$/);
   });
 
-  var allowed_keys = NEGATIVE_EXAMPLES.concat(example_keys);
-
   var parameters = {
     options: {
-      url: '/v3/classifiers/{params.classifier_id}',
+      url: '/v3/classifiers/' + params.classifier_id,
       method: 'POST',
       json: true,
       formData: pick(params, allowed_keys)
