@@ -1094,7 +1094,7 @@ classifier.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line545">line 545</a>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line592">line 592</a>
     </li></ul></dd>
     
 
@@ -1623,7 +1623,7 @@ for found faces for each image.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line523">line 523</a>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line570">line 570</a>
     </li></ul></dd>
     
 
@@ -2084,7 +2084,7 @@ user-created classifiers.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line488">line 488</a>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line535">line 535</a>
     </li></ul></dd>
     
 
@@ -2462,6 +2462,270 @@ for discovered text in each image.
 
 
         
+            
+
+    
+
+    <h4 class="name" id="retrainClassifier"><span class="type-signature"></span>retrainClassifier<span class="signature">(params)</span><span class="type-signature"> &rarr; {ReadableStream|undefined}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Retrain a existing classifier from example images which are uploaded.
+This call returns before retraining has completed.  You'll need to use the
+getClassifer method to make sure the classifier has completed retraining and
+was successful before you can classify any images with the retrained
+classifier.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>params</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>classname_positive_examples</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">ReadStream</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><your_class_name>_positive_examples One or more compressed (.zip) files of images that depict the visual subject for a class within the classifier. You may supply multiple files with different class names in the key.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>negative_examples</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">ReadStream</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">A compressed (.zip) file of images that do not depict the visual subject of any of the classes of the classifier.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line493">line 493</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">ReadableStream</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>{
+  "classifier_id": "fruit_679357912",
+  "name": "fruit",
+  "owner": "a3a48ea7-492b-448b-87d7-9dade8bde5a9",
+  "status": "training",
+  "created": "2016-05-23T21:50:41.680Z",
+  "classes": [{
+    "class": "banana"
+  }, {
+    "class": "apple"
+  }]
+}</code></pre>
+
+
+
+        
     
 
     
@@ -2483,7 +2747,7 @@ for discovered text in each image.
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Aug 01 2016 17:09:30 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Aug 01 2016 19:54:47 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>
