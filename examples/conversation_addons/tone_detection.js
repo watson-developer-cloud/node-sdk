@@ -16,7 +16,7 @@
 
 'use strict';
 
-var watson = require('watson-developer-cloud');  // watson sdk
+var watson = require('watson-developer-cloud');
 var Promise = require('bluebird');
 
 /**
@@ -44,13 +44,101 @@ module.exports = {
   invokeToneAsync
 };
 
+
+
+function invokeToneAsync(payload, tone_analyzer) {
+	return new Promise(
+		function (resolve, reject){
+			tone_analyzer.tone(
+				{text: payload.input.text}, 
+	    		(error, data) => {
+	    			if (error){
+	    				reject(error);
+	    			}else {
+	    				resolve(data);
+	    			}
+	    		});
+		});  
+  };
+
+
+
+/**
+ * updateUserTone processes the Tone Analyzer payload, if not erroneous, to pull out the emotion, language and social
+ * tones, and further processes this data to identify the meaningful tones (i.e., those tones that meet a 
+ * specified threshold).  The user json object is updated to includes these tones.
+ * @param user
+ * @param toneAnalyzerPayload
+ * @returns
+ */
+function updateUserTone (payload, toneAnalyzerPayload) {
+    var emotionTone = null;
+    var languageTone = null;
+    var socialTone = null;
+
+  
+    if(typeof payload.context === 'undefined')
+    {
+    	payload.context = {};
+    } 
+    
+    if(typeof payload.context.user === 'undefined')
+    {
+    	payload.context = initUser();
+    } 
+    
+    if (toneAnalyzerPayload && toneAnalyzerPayload.document_tone) {
+      toneAnalyzerPayload.document_tone.tone_categories.forEach(function(toneCategory) {
+        if (toneCategory.category_id === EMOTION_TONE_LABEL) {
+          emotionTone = toneCategory;
+        }
+        if (toneCategory.category_id === LANGUAGE_TONE_LABEL) {
+          languageTone = toneCategory;
+        }
+        if (toneCategory.category_id === SOCIAL_TONE_LABEL) {
+          socialTone = toneCategory;
+        }
+      });
+
+      var emotionProfile = getEmotionProfile(emotionTone);
+      
+      
+      payload.context.user.tone.emotion.current = emotionProfile;
+      
+      if (typeof payload.context.user.tone.emotion.history === 'undefined') {
+    	  payload.context.user.tone.emotion.history = [emotionProfile];
+      } else {
+    	  payload.context.user.tone.emotion.history.push(emotionProfile);
+      }
+
+
+      var languageProfile = getLanguageProfile(languageTone);
+      payload.context.user.tone.language.current = languageProfile;
+      if (typeof payload.context.user.tone.language.history === 'undefined') {
+    	  payload.user.tone.language.history = [languageProfile];
+      } else {
+    	  payload.context.user.tone.language.history.push(languageProfile);
+      }
+
+      var socialProfile = getSocialProfile(socialTone);
+      payload.context.user.tone.social.current = socialProfile;
+      if (typeof payload.context.user.tone.social.history === 'undefined') {
+    	  payload.context.user.tone.social.history = [socialProfile];
+      } else {
+    	  payload.context.user.tone.social.history.push(socialProfile);
+      }
+    }
+    return payload;
+}; 
+
+
 /**
  * initToneContext initializes a user object containing tone data (from the Watson Tone Analyzer)
  * @returns user json object with the emotion, language and social tones.  The current
  * tone identifies the tone for a specific conversation turn, and the history provides the conversation for 
  * all tones up to the current tone for a conversation instance with a user.
  */
-function initToneContext() {
+function initUser() {
     return {
       'user': {
         'tone': {
@@ -71,92 +159,6 @@ function initToneContext() {
     };
 };
 
-  function invokeToneAsync(payload, tone_analyzer) {
-	  return new Promise(
-		   function (resolve, reject){
-			   tone_analyzer.tone(
-					{text: payload.input}, 
-	    			(error, data) => {
-	    			if (error){
-	    				reject(error);
-	    			}else {
-	    				resolve(data);
-	    			}
-	    		});
-		   });
-		  
-  };
-
-
-
-/**
- * updateUserTone processes the Tone Analyzer payload, if not erroneous, to pull out the emotion, language and social
- * tones, and further processes this data to identify the meaningful tones (i.e., those tones that meet a 
- * specified threshold).  The user json object is updated to includes these tones.
- * @param user
- * @param toneAnalyzerPayload
- * @returns
- */
-function updateUserTone (payload, toneAnalyzerPayload) {
-    var emotionTone = null;
-    var languageTone = null;
-    var socialTone = null;
-  
-    if(payload.context.user === 'undefined')
-    {
-	payload.context.user = initToneContext();
-    } 
-
-    var user = payload.context.user;
-    console.log(JSON.stringify(user,2,null));
-    
-    if (toneAnalyzerPayload && toneAnalyzerPayload.document_tone) {
-      toneAnalyzerPayload.document_tone.tone_categories.forEach(function(toneCategory) {
-        if (toneCategory.category_id === EMOTION_TONE_LABEL) {
-          emotionTone = toneCategory;
-        }
-        if (toneCategory.category_id === LANGUAGE_TONE_LABEL) {
-          languageTone = toneCategory;
-        }
-        if (toneCategory.category_id === SOCIAL_TONE_LABEL) {
-          socialTone = toneCategory;
-        }
-      });
-
-      console.log(1);
-      var emotionProfile = getEmotionProfile(emotionTone);
-      console.log(JSON.stringify(emotionProfile, 2, null));
-      user.tone.emotion.current = emotionProfile;
-      console.log(1.2);
-      if (typeof user.tone.emotion.history === 'undefined') {
-        user.tone.emotion.history = [emotionProfile];
-      } else {
-        user.tone.emotion.history.push(emotionProfile);
-      }
-      console.log(2);
-
-      var languageProfile = getLanguageProfile(languageTone);
-      user.tone.language.current = languageProfile;
-      if (typeof user.tone.language.history === 'undefined') {
-        user.tone.language.history = [languageProfile];
-      } else {
-        user.tone.language.history.push(languageProfile);
-      }
-      console.log(3);
-
-      var socialProfile = getSocialProfile(socialTone);
-      user.tone.social.current = socialProfile;
-      if (typeof user.tone.social.history === 'undefined') {
-        user.tone.social.history = [socialProfile];
-      } else {
-        user.tone.social.history.push(socialProfile);
-      }
-    }
-      console.log(4);
-    
-    console.log(JSON.stringify(user, 2, null)); 
-    return user;
-};  
   
 /**
  * getEmotionProfile identifies the primary emotion in the emotion tones in the payload returned by the Tone Analyzer
@@ -170,14 +172,14 @@ function getEmotionProfile(emotionTone) {
 
   emotionTone.tones.forEach(function(emotion) {
     if (emotion.score > maxScore) {
-      maxScore = emotion.score;
-      primaryEmotion = emotion.tone_name.toLowerCase();
+    	maxScore = emotion.score;
+    	primaryEmotion = emotion.tone_name.toLowerCase();
     }
   });
 
     // There is a primary emotion only if the highest score is > 0.5
   if (maxScore <= EMOTION_SCORE_THRESHOLD) {
-    primaryEmotion = 'neutral';
+	  primaryEmotion = 'neutral';
   }
 
   return primaryEmotion;
