@@ -16,28 +16,8 @@
 
 'use strict';
 
-require('dotenv').config({silent: true});
 var watson = require('watson-developer-cloud');  // watson sdk
 var Promise = require('bluebird');
-
-//var watson_promisified = Promise.nodeify('watson-developer-cloud');
-
-/**
- * Instantiate the Watson Tone Analyzer
- * Credentials can be found on the Bluemix Platform.
- */
-var tone_analyzer = watson.tone_analyzer({
-	url: 'https://gateway.watsonplatform.net/tone-analyzer/api',
-	username: process.env.TONE_ANALYZER_USERNAME,
-	password: process.env.TONE_ANALYZER_PASSWORD,  
-	version_date: '2016-05-19',
-	version: 'v3'
-});
-
-/*
- * ERROR - can't promisify tone_analyzer!
- */
-//var promisifiedToneAnalyzer = Promise.promisifyAll(tone_analyzer);
 
 /**
  * Thresholds for identifying meaningful tones returned by the Watson Tone Analyzer.
@@ -60,8 +40,6 @@ var SOCIAL_TONE_LABEL = "social_tone";
  * Public functions for this module
  */
 module.exports = {
-  initToneContext,
-  invokeTone,
   updateUserTone,
   invokeToneAsync
 };
@@ -93,53 +71,11 @@ function initToneContext() {
     };
 };
 
-/**
- * invokeTone calls the Watson Tone Analyzer with the (input) text and passes the payload returned by the 
- * Tone Analyzer to the callback function.
- * @param text - the input text provided by a user during a conversation turn
- * @param callback - the callback function to invoke after the Watson Tone Analyzer has processed the (input) text and returned a payload
- * @returns none
- */
-function invokeTone(text, callback) {
-
-	tone_analyzer.tone({text:text},
-	    function(err, data) {
-	      if (err) {
-	        callback(null);
-	      } else {
-	        callback(data);
-	      }
-    });
-  };
-
-  
- 
-  
- //ERROR: TypeError: Cannot read property '_options' of undefined
-  /*
- var tonePromisified = Promise.promisify(tone_analyzer.tone);
- function invokeTonePromisified(text){
-	 console.log("invokeTonePromisified called " + text);
-	 return tonePromisified({text:text});
- };
- */
- 
- /*
- var tone_analyzer_promisified = Promise.denodeify(fs.writeFile):
-
-	  writeFile(filename, content)
-	    .then(addDBUser)
-  */
- 
- 
-  //invokeToneAsync?? - check examples (AW Aug 5)
-  function invokeToneAsync(text) {
-	  console.log("invokeTonePromisified called " + text);
-	  
+  function invokeToneAsync(payload, tone_analyzer) {
 	  return new Promise(
 		   function (resolve, reject){
 			   tone_analyzer.tone(
-					{text: text}, 
+					{text: payload.input}, 
 	    			(error, data) => {
 	    			if (error){
 	    				reject(error);
@@ -165,13 +101,15 @@ function updateUserTone (payload, toneAnalyzerPayload) {
     var emotionTone = null;
     var languageTone = null;
     var socialTone = null;
-    
-    //added this in - Aug 5
+  
+    if(payload.context.user === 'undefined')
+    {
+	payload.context.user = initToneContext();
+    } 
+
     var user = payload.context.user;
+    console.log(JSON.stringify(user,2,null));
     
-    console.log(JSON.stringify(toneAnalyzerPayload,2,null));
-
-
     if (toneAnalyzerPayload && toneAnalyzerPayload.document_tone) {
       toneAnalyzerPayload.document_tone.tone_categories.forEach(function(toneCategory) {
         if (toneCategory.category_id === EMOTION_TONE_LABEL) {
@@ -185,13 +123,17 @@ function updateUserTone (payload, toneAnalyzerPayload) {
         }
       });
 
+      console.log(1);
       var emotionProfile = getEmotionProfile(emotionTone);
+      console.log(JSON.stringify(emotionProfile, 2, null));
       user.tone.emotion.current = emotionProfile;
+      console.log(1.2);
       if (typeof user.tone.emotion.history === 'undefined') {
         user.tone.emotion.history = [emotionProfile];
       } else {
         user.tone.emotion.history.push(emotionProfile);
       }
+      console.log(2);
 
       var languageProfile = getLanguageProfile(languageTone);
       user.tone.language.current = languageProfile;
@@ -200,6 +142,7 @@ function updateUserTone (payload, toneAnalyzerPayload) {
       } else {
         user.tone.language.history.push(languageProfile);
       }
+      console.log(3);
 
       var socialProfile = getSocialProfile(socialTone);
       user.tone.social.current = socialProfile;
@@ -209,9 +152,10 @@ function updateUserTone (payload, toneAnalyzerPayload) {
         user.tone.social.history.push(socialProfile);
       }
     }
+      console.log(4);
     
-    //return user;
-    return payload;
+    console.log(JSON.stringify(user, 2, null)); 
+    return user;
 };  
   
 /**
