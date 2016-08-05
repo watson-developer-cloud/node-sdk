@@ -103,14 +103,10 @@ app.post('/api/message', function(req, res) {
 
 function invokeAddOns_Tone(payload,req,res)
 {
-	
 	tone_detection.invokeToneAsync(req.body.input.text)
 		.then(tone => {
-			//tone_detection.updateUserTone(payload.context.user, tone);
 			tone_detection.updateUserTone(payload, tone);
-			// Send the input to the conversation service
-		
-		conversation.message(payload, function(err, data) {
+			conversation.message(payload, function(err, data) {
 				if (err) {
 					return res.status(err.code || 500).json(err);
 				}
@@ -121,8 +117,11 @@ function invokeAddOns_Tone(payload,req,res)
 					});
 				}
 			});
-	});	
-}
+		})
+		.catch(function(err){
+			console.log("ERROR: " + JSON.stringify(err,2,null));
+		})
+};
 
 
 
