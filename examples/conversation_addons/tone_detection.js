@@ -18,6 +18,9 @@
 
 require('dotenv').config({silent: true});
 var watson = require('watson-developer-cloud');  // watson sdk
+var Promise = require('bluebird');
+
+//var watson_promisified = Promise.nodeify('watson-developer-cloud');
 
 /**
  * Instantiate the Watson Tone Analyzer
@@ -30,6 +33,11 @@ var tone_analyzer = watson.tone_analyzer({
 	version_date: '2016-05-19',
 	version: 'v3'
 });
+
+/*
+ * ERROR - can't promisify tone_analyzer!
+ */
+//var promisifiedToneAnalyzer = Promise.promisifyAll(tone_analyzer);
 
 /**
  * Thresholds for identifying meaningful tones returned by the Watson Tone Analyzer.
@@ -54,7 +62,8 @@ var SOCIAL_TONE_LABEL = "social_tone";
 module.exports = {
   initToneContext,
   invokeTone,
-  updateUserTone
+  updateUserTone,
+  invokeToneAsync
 };
 
 /**
@@ -92,19 +101,56 @@ function initToneContext() {
  * @returns none
  */
 function invokeTone(text, callback) {
-	var toneAnalyzerPayload = {
-      text: text
-    };
 
-	tone_analyzer.tone(toneAnalyzerPayload,
-	    function(err, tone) {
+	tone_analyzer.tone({text:text},
+	    function(err, data) {
 	      if (err) {
 	        callback(null);
 	      } else {
-	        callback(tone);
+	        callback(data);
 	      }
     });
   };
+
+  
+ 
+  
+ //ERROR: TypeError: Cannot read property '_options' of undefined
+  /*
+ var tonePromisified = Promise.promisify(tone_analyzer.tone);
+ function invokeTonePromisified(text){
+	 console.log("invokeTonePromisified called " + text);
+	 return tonePromisified({text:text});
+ };
+ */
+ 
+ /*
+ var tone_analyzer_promisified = Promise.denodeify(fs.writeFile):
+
+	  writeFile(filename, content)
+	    .then(addDBUser)
+  */
+ 
+ 
+  //invokeToneAsync?? - check examples (AW Aug 5)
+  function invokeToneAsync(text) {
+	  console.log("invokeTonePromisified called " + text);
+	  
+	  return new Promise(
+		   function (resolve, reject){
+			   tone_analyzer.tone(
+					{text: text}, 
+	    			(error, data) => {
+	    			if (error){
+	    				reject(error);
+	    			}else {
+	    				resolve(data);
+	    			}
+	    		});
+		   });
+		  
+  };
+
 
 
 /**
@@ -115,10 +161,13 @@ function invokeTone(text, callback) {
  * @param toneAnalyzerPayload
  * @returns
  */
-function updateUserTone (user, toneAnalyzerPayload) {
+function updateUserTone (payload, toneAnalyzerPayload) {
     var emotionTone = null;
     var languageTone = null;
     var socialTone = null;
+    
+    //added this in - Aug 5
+    var user = payload.context.user;
     
     console.log(JSON.stringify(toneAnalyzerPayload,2,null));
 
@@ -160,7 +209,9 @@ function updateUserTone (user, toneAnalyzerPayload) {
         user.tone.social.history.push(socialProfile);
       }
     }
-    return user;
+    
+    //return user;
+    return payload;
 };  
   
 /**
@@ -207,7 +258,7 @@ function getLanguageProfile(languageTone) {
 };
 
 /**
- * getSocialProfile 
+ * getSocialProfile identifies the language tones that are greater than the LANGUAGE_SCORE_THRESHOLD
  * @param socialTone a json object containing the social tones in the payload returned by the Tone Analyzer
  * @returns a space-separated string containing the social tones that have a score that meets or exceeds the
  * SOCIAL_SCORE_THRESHOLD
