@@ -28,8 +28,7 @@
  */
 var watson = require('watson-developer-cloud');
 var tone_detection = require("./conversation_addons/tone_detection.js");
-require('dotenv').config({silent: true});
-
+require('dotenv').config({silent: true})
 /**
  * Instantiate the Watson Conversation Service
  */
@@ -70,8 +69,8 @@ var payload = {
  * @param payload a json object containing the basic information needed to converse with the Conversation Service's
  *        message endpoint.  
  * 
- * Note: the print statements can be replaced with code to process the err or data object returned in the Conversation
- *       Service's response.  
+ * Note: as indicated below, the console.log statements can be replaced with application-specific code to process 
+ * 		 the err or data object returned by the Conversation Service.
  */
  function invokeToneConversation(payload)
  {
@@ -80,15 +79,17 @@ var payload = {
 	      tone_detection.updateUserTone(payload, tone);
 	      conversation.message(payload, function(err, data) {
 	    	  if (err) {
-	    		  console.error(JSON.stringify(err,2,null));
+	    		  // APPLICATION-SPECIFIC CODE TO PROCESS THE ERROR FROM CONVERSATION SERVICE
+	    		  console.error(JSON.stringify(err, 2, null));
 	    	  }
 	    	  else {
+	    		  // APPLICATION-SPECIFIC CODE TO PROCESS THE RESPONSE PAYLOAD FROM CONVERSATION SERVICE
 	    		  console.log(JSON.stringify(data, 2, null));
 	    	  }
 	      });
      })
      .catch(function(err){
-    	 console.log(JSON.stringify(err,2,null));
+    	 console.log(JSON.stringify(err, 2, null));
      })
  } 
 
