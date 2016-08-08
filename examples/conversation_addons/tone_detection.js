@@ -21,9 +21,9 @@ var Promise = require('bluebird');
 
 /**
  * Thresholds for identifying meaningful tones returned by the Watson Tone Analyzer.  Current values are
- * based on the recommendations made by the Watson Tone Analyzer.
- * See https://www.ibm.com/watson/developercloud/doc/tone-analyzer/understanding-tone.shtml
- * These can be adjusted to client/application requirements.
+ * based on the recommendations made by the Watson Tone Analyzer at
+ * https://www.ibm.com/watson/developercloud/doc/tone-analyzer/understanding-tone.shtml
+ * These thresholds can be adjusted to client/domain requirements.
  */
 var PRIMARY_EMOTION_SCORE_THRESHOLD = 0.50;
 var EMOTION_HIGH_SCORE_THRESHOLD = 0.75;
@@ -34,7 +34,7 @@ var SOCIAL_HIGH_SCORE_THRESHOLD = 0.75;
 var SOCIAL_LOW_SCORE_THRESHOLD = 0.75;
 
 /**
- * Labels for the different tones returned by the Watson Tone Analyzer
+ * Labels for the tone categories returned by the Watson Tone Analyzer
  */
 var EMOTION_TONE_LABEL = "emotion_tone";
 var LANGUAGE_TONE_LABEL = "language_tone";
@@ -49,10 +49,11 @@ module.exports = {
 };
 
 /**
- *
+ * invokeToneAsync is an asynchronous function that calls the Tone Analyzer service and returns a Promise 
  * @param conversationPayload json object returned by the Watson Conversation Service
  * @param tone_analyzer an instance of the Watson Tone Analyzer service
- * @returns
+ * @returns a Promise for the result of calling the tone_analyzer with the conversationPayload
+ * (which contains the user's input text) 
  */
 function invokeToneAsync(conversationPayload, tone_analyzer) {
 	return new Promise(
@@ -71,11 +72,11 @@ function invokeToneAsync(conversationPayload, tone_analyzer) {
 
 /**
  * updateUserTone processes the Tone Analyzer payload to pull out the emotion, language and social
- * tones, and further processes this data to identify the meaningful tones (i.e., those tones that meet a
- * specified threshold).  The conversationPayload json object is updated to include these tones.
- * @param conversationPayload
- * @param toneAnalyzerPayload
- * @returns conversationPayload
+ * tones, and identify the meaningful tones (i.e., those tones that meet the specified thresholds).  
+ * The conversationPayload json object is updated to include these tones.
+ * @param conversationPayload json object returned by the Watson Conversation Service
+ * @param toneAnalyzerPayload json object returned by the Watson Tone Analyzer Service
+ * @returns conversationPayload user object in the conversationPayload's context has been updated with tone information 
  */
 function updateUserTone (conversationPayload, toneAnalyzerPayload) {
     var emotionTone = null;
