@@ -569,11 +569,21 @@ tone_analyzer.tone({ text: 'Greetings from Watson Developer Cloud!' },
 ```
 
 ##### Integration of Tone Analyzer with Conversation
-Sample code for integrating [Tone Analyzer][tone_analyzer] and [Conversation][conversation] is provided in the examples directory[tone_conversation_integration_example]:
+Sample code for integrating [Tone Analyzer][tone_analyzer] and [Conversation][conversation] is provided in the [examples directory][examples]:
 
-  * [examples/conversation_addons/tone_detection.js][tone_conversation_integration_example_tone_detection] - sample code to initialize a user object (including tone) in the conversation payload's context, to call Tone Analyzer to retrieve tone for a user's input, and to update tone (current and history) in the user object in the conversation payload's context.
+  * [examples/conversation_addons/tone_detection.js][tone_conversation_integration_example_tone_detection] - sample code to initialize a user object (initUser) in the conversation payload's context, to call Tone Analyzer to retrieve tone for a user's input (invokeToneAsync), and to update tone in the user object in the conversation payload's context (updateUserTone).
   
   * [examples/tone_conversation_integration.v1.js][tone_conversation_integration_example] - sample code to use tone_detection.js to get and add tone to the payload and send a request to the Conversation Service's message endpoint. 
+
+Command to run the example code
+
+``node examples/tone_conversation_integration.v1.js``
+
+Requirements to run the example code
+
+  * [Tone Analyzer Service credentials][bluemix_tone_analyzer_service]
+  * [Conversation Service credentials][bluemix_conversation_service]
+  * [Workspace id][conversation_simple_workspace]
 
 
 
@@ -680,6 +690,10 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/maste
 
 [conversation]: https://www.ibm.com/watson/developercloud/conversation.html
 
+[bluemix_conversation_service]: https://console.ng.bluemix.net/catalog/services/conversation/
+[bluemix_tone_analyzer_service]: https://console.ng.bluemix.net/catalog/services/tone-analyzer/
+[conversation_simple_workspace]: https://github.com/watson-developer-cloud/conversation-simple#workspace
+
 [personality_insights]: http://www.ibm.com/watson/developercloud/doc/personality-insights/
 [relationship_extraction]: http://www.ibm.com/watson/developercloud/doc/sireapi/
 [retrieve_and_rank]: http://watson.stage1.mybluemix.net/watson/developercloud/retrieve-rank.html
@@ -704,6 +718,6 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/maste
 [request_github]: https://github.com/request/request
 [examples]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples
 [document_conversion_integration_example]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/document_conversion_integration.v1.js
-[tone_conversation_integration_example_integration]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/tone_conversation_integration.v1.js
+[tone_conversation_integration_example]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/tone_conversation_integration.v1.js
 [tone_conversation_integration_example_tone_detection]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/conversation_addons/tone_detection.js
 [license]: http://www.apache.org/licenses/LICENSE-2.0
