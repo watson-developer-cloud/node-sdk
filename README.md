@@ -37,7 +37,7 @@ APIs and SDKs that use cognitive computing to solve complex problems.
     * [Tradeoff Analytics](#tradeoff-analytics)
     * [Visual Insights](#visual-insights)
     * [Visual Recognition](#visual-recognition)
-  * [Composing Services](#compose)
+  * [Composing Services](#composing-services)
   * [Debug](#debug)
   * [Tests](#tests)
   * [Open Source @ IBM](#open-source--ibm)
