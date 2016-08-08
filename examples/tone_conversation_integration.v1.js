@@ -44,7 +44,7 @@ var conversation = watson.conversation({
 /**
  * Instantiate the Watson Tone Analyzer Service
  */
-var tone_analyzer = new watson.ToneAnalyzerV3({
+var tone_analyzer = new watson.tone_analyzer({
    username: process.env.TONE_ANALYZER_USERNAME || '<tone_analyzer_username>',
    password: process.env.TONE_ANALYZER_PASSWORD || '<tone_analyzer_password>',
    version_date: '2016-05-19',
