@@ -83,7 +83,7 @@ var payload = {
 	    		  console.error(JSON.stringify(err,2,null));
 	    	  }
 	    	  else {
-	    		  console.log(JSON.stringify(data, null, 2));
+	    		  console.log(JSON.stringify(data, 2, null));
 	    	  }
 	      });
      })
