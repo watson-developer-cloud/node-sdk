@@ -571,19 +571,20 @@ tone_analyzer.tone({ text: 'Greetings from Watson Developer Cloud!' },
 ##### Integration of Tone Analyzer with Conversation
 Sample code for integrating [Tone Analyzer][tone_analyzer] and [Conversation][conversation] is provided in the [examples directory][examples]:
 
-  * [examples/conversation_addons/tone_detection.js][tone_conversation_integration_example_tone_detection] - sample code to initialize a user object (initUser) in the conversation payload's context, to call Tone Analyzer to retrieve tone for a user's input (invokeToneAsync), and to update tone in the user object in the conversation payload's context (updateUserTone).
+  * [examples/conversation_addons/tone_detection.js][tone_conversation_integration_example_tone_detection] - sample code to initialize a user object in the conversation payload's context (initUser), to call Tone Analyzer to retrieve tone for a user's input (invokeToneAsync), and to update tone in the user object in the conversation payload's context (updateUserTone).
   
   * [examples/tone_conversation_integration.v1.js][tone_conversation_integration_example] - sample code to use tone_detection.js to get and add tone to the payload and send a request to the Conversation Service's message endpoint. 
 
-Command to run the example code
+Command to run the sample code
 
 ``node examples/tone_conversation_integration.v1.js``
 
-Requirements to run the example code
+Requirements to run the sample code
 
   * [Tone Analyzer Service credentials][bluemix_tone_analyzer_service]
   * [Conversation Service credentials][bluemix_conversation_service]
   * [Workspace id][conversation_simple_workspace]
+  * credentials can be added directly to the [code][tone_conversation_integration_example] or to a .env file in the [examples directory][examples]
 
 
 
