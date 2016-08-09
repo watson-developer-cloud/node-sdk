@@ -118,7 +118,6 @@ function updateUserTone (conversationPayload, toneAnalyzerPayload) {
 	}
 
 	conversationPayload.context.user = user;
-	console.log(JSON.stringify(conversationPayload,2,null));
 	
 	return conversationPayload;
 };
