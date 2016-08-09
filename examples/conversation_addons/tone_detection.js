@@ -116,7 +116,7 @@ function updateUserTone (conversationPayload, toneAnalyzerPayload) {
 	}
 
 	conversationPayload.context.user = user;
-	
+
 	return conversationPayload;
 };
 
@@ -159,11 +159,11 @@ function updateEmotionTone(user, emotionTone) {
 	var primaryEmotion = null;
 	var primaryEmotionScore = null;
 
-	emotionTone.tones.forEach(function(emotion) {
-		if (parseFloat(emotion.score) > parseFloat(maxScore)) {
-			maxScore = emotion.score;
-			primaryEmotion = emotion.tone_name.toLowerCase();
-			primaryEmotionScore = emotion.score;
+	emotionTone.tones.forEach(function(tone) {
+		if (parseFloat(tone.score) > parseFloat(maxScore)) {
+			maxScore = tone.score;
+			primaryEmotion = tone.tone_name.toLowerCase();
+			primaryEmotionScore = tone.score;
 		}
 	});
 
@@ -176,10 +176,9 @@ function updateEmotionTone(user, emotionTone) {
 	if (typeof user.tone.emotion.history === 'undefined') {
 		user.tone.emotion.history = [];
 	} 
-	
+
 	// update user emotion tone
 	user.tone.emotion.current = primaryEmotion;
-
 
 	user.tone.emotion.history.push({
 		"tone_name": primaryEmotion,
@@ -189,8 +188,7 @@ function updateEmotionTone(user, emotionTone) {
 
 
 /**
- * updateLanguageTone updates the user language tone with the language tones that are identified as either greater than or 
- * equal to the LANGUAGE_HIGH_SCORE_THRESHOLD 
+ * updateLanguageTone updates the user with the language tones interpreted based on the specified thresholds  
  * @param user a json object representing user information (tone) to be used in conversing with the Conversation Service
  * @param languageTone a json object containing the language tones in the payload returned by the Tone Analyzer
  */
@@ -200,26 +198,26 @@ function updateLanguageTone(user, languageTone) {
 	var currentLanguageObject = [];
 
 	// Process each language tone and determine if it is high or low
-	languageTone.tones.forEach(function(lang) {
-		if (parseFloat(lang.score) >= LANGUAGE_HIGH_SCORE_THRESHOLD) {
-			currentLanguage.push(lang.tone_name.toLowerCase() + '_high');
+	languageTone.tones.forEach(function(tone) {
+		if (parseFloat(tone.score) >= LANGUAGE_HIGH_SCORE_THRESHOLD) {
+			currentLanguage.push(tone.tone_name.toLowerCase() + '_high');
 			currentLanguageObject.push({
-				"tone_name": lang.tone_name.toLowerCase(),
-				"score": lang.score,
+				"tone_name": tone.tone_name.toLowerCase(),
+				"score": tone.score,
 				"interpretation": "likely high"
 			});
 		}
-		else if(parseFloat(lang.score) <= LANGUAGE_NO_SCORE_THRESHOLD) {
+		else if(parseFloat(tone.score) <= LANGUAGE_NO_SCORE_THRESHOLD) {
 			currentLanguageObject.push({
-				"tone_name": lang.tone_name.toLowerCase(),
-				"score": lang.score,
+				"tone_name": tone.tone_name.toLowerCase(),
+				"score": tone.score,
 				"interpretation": "no evidence"
 			});
 		}
 		else {
 			currentLanguageObject.push({
-				"tone_name": lang.tone_name.toLowerCase(),
-				"score": lang.score,
+				"tone_name": tone.tone_name.toLowerCase(),
+				"score": tone.score,
 				"interpretation": "likely medium"
 			});
 		}
@@ -236,8 +234,7 @@ function updateLanguageTone(user, languageTone) {
 
 
 /**
- * updateSocialTone updates the user social tone with the social tones that are identified as either greater than or 
- * equal to the SOCIAL_HIGH_SCORE_THRESHOLD or lower than or equal to the SOCIAL_LOW_SCORE_THRESHOLD 
+ * updateSocialTone updates the user with the social tones interpreted based on the specified thresholds 
  * @param user a json object representing user information (tone) to be used in conversing with the Conversation Service
  * @param socialTone a json object containing the social tones in the payload returned by the Tone Analyzer
  */
@@ -272,7 +269,7 @@ function updateSocialTone(user, socialTone) {
 			});
 		}
 	});
-	
+
 	if (typeof user.tone.social.history === 'undefined') {
 		user.tone.social.history = [];
 	}
