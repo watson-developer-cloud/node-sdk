@@ -26,28 +26,30 @@
  * Run the code using the command:
  *   node tone_conversation_integration.v1.js
  */
+
 var watson = require('watson-developer-cloud');
 var tone_detection = require("./conversation_addons/tone_detection.js");
 require('dotenv').config({silent: true})
+
 /**
  * Instantiate the Watson Conversation Service
  */
 var conversation = watson.conversation({
-	  url: 'https://gateway.watsonplatform.net/conversation/api',
-	  username: process.env.CONVERSATION_USERNAME || '<conversation_username>',
-	  password: process.env.CONVERSATION_PASSWORD || '<conversation_password>',
-	  version_date: '2016-07-11',
-	  version: 'v1'
-	});
+	url: 'https://gateway.watsonplatform.net/conversation/api',
+	username: process.env.CONVERSATION_USERNAME || '<conversation_username>',
+	password: process.env.CONVERSATION_PASSWORD || '<conversation_password>',
+	version_date: '2016-07-11',
+	version: 'v1'
+});
 
 /**
  * Instantiate the Watson Tone Analyzer Service
  */
 var tone_analyzer = new watson.tone_analyzer({
-   username: process.env.TONE_ANALYZER_USERNAME || '<tone_analyzer_username>',
-   password: process.env.TONE_ANALYZER_PASSWORD || '<tone_analyzer_password>',
-   version_date: '2016-05-19',
-   version: 'v3'
+	username: process.env.TONE_ANALYZER_USERNAME || '<tone_analyzer_username>',
+	password: process.env.TONE_ANALYZER_PASSWORD || '<tone_analyzer_password>',
+	version_date: '2016-05-19',
+	version: 'v3'
 });
 
 
@@ -56,11 +58,11 @@ var tone_analyzer = new watson.tone_analyzer({
  * <workspace-id> and user input text required.
  */
 var payload = {
-    workspace_id: process.env.WORKSPACE_ID || '<workspace-id>',
-    input: {
-    	text: "I am not happy today :("			
-    }
- };
+		workspace_id: process.env.WORKSPACE_ID || '<workspace-id>',
+		input: {
+			text: "I am not happy today :("			
+		}
+};
 
 /**
  * invokeToneConversation calls the invokeToneAsync function to get the tone information for the user's
@@ -72,25 +74,27 @@ var payload = {
  * Note: as indicated below, the console.log statements can be replaced with application-specific code to process 
  * 		 the err or data object returned by the Conversation Service.
  */
- function invokeToneConversation(payload)
- {
-   tone_detection.invokeToneAsync(payload,tone_analyzer)
-     .then(tone => {
-	      tone_detection.updateUserTone(payload, tone);
-	      conversation.message(payload, function(err, data) {
-	    	  if (err) {
-	    		  // APPLICATION-SPECIFIC CODE TO PROCESS THE ERROR FROM CONVERSATION SERVICE
-	    		  console.error(JSON.stringify(err, 2, null));
-	    	  }
-	    	  else {
-	    		  // APPLICATION-SPECIFIC CODE TO PROCESS THE RESPONSE PAYLOAD FROM CONVERSATION SERVICE
-	    		  console.log(JSON.stringify(data, 2, null));
-	    	  }
-	      });
-     })
-     .catch(function(err){
-    	 console.log(JSON.stringify(err, 2, null));
-     })
- } 
+function invokeToneConversation(payload)
+{
+	tone_detection.invokeToneAsync(payload,tone_analyzer)
+	.then(tone => {
+		tone_detection.updateUserTone(payload, tone);
+		conversation.message(payload, function(err, data) {
+			if (err) {
+				// APPLICATION-SPECIFIC CODE TO PROCESS THE ERROR 
+				// FROM CONVERSATION SERVICE
+				console.error(JSON.stringify(err, 2, null));
+			}
+			else {
+				// APPLICATION-SPECIFIC CODE TO PROCESS THE DATA
+				// FROM CONVERSATION SERVICE
+				console.log(JSON.stringify(data, 2, null));
+			}
+		});
+	})
+	.catch(function(err){
+		console.log(JSON.stringify(err, 2, null));
+	})
+}; 
 
- invokeToneConversation(payload);
+invokeToneConversation(payload);
