@@ -25,18 +25,18 @@ var Promise = require('bluebird');
  * https://www.ibm.com/watson/developercloud/doc/tone-analyzer/understanding-tone.shtml
  * These thresholds can be adjusted to client/domain requirements.
  */
-var PRIMARY_EMOTION_SCORE_THRESHOLD = parseFloat("0.5");
-var LANGUAGE_HIGH_SCORE_THRESHOLD = parseFloat("0.75");
-var LANGUAGE_NO_SCORE_THRESHOLD = parseFloat("0.0");
-var SOCIAL_HIGH_SCORE_THRESHOLD = parseFloat("0.75");
-var SOCIAL_LOW_SCORE_THRESHOLD = parseFloat("0.25");
+var PRIMARY_EMOTION_SCORE_THRESHOLD = parseFloat('0.5');
+var LANGUAGE_HIGH_SCORE_THRESHOLD = parseFloat('0.75');
+var LANGUAGE_NO_SCORE_THRESHOLD = parseFloat('0.0');
+var SOCIAL_HIGH_SCORE_THRESHOLD = parseFloat('0.75');
+var SOCIAL_LOW_SCORE_THRESHOLD = parseFloat('0.25');
 
 /**
  * Labels for the tone categories returned by the Watson Tone Analyzer
  */
-var EMOTION_TONE_LABEL = "emotion_tone";
-var LANGUAGE_TONE_LABEL = "language_tone";
-var SOCIAL_TONE_LABEL = "social_tone";
+var EMOTION_TONE_LABEL = 'emotion_tone';
+var LANGUAGE_TONE_LABEL = 'language_tone';
+var SOCIAL_TONE_LABEL = 'social_tone';
 
 /**
  * Public functions for this module
@@ -81,13 +81,11 @@ function updateUserTone (conversationPayload, toneAnalyzerPayload) {
   var languageTone = null;
   var socialTone = null;
 
-  if(typeof conversationPayload.context === 'undefined')
-  {
+  if(typeof conversationPayload.context === 'undefined'){
     conversationPayload.context = {};
   }
 
-  if(typeof conversationPayload.context.user === 'undefined')
-  {
+  if(typeof conversationPayload.context.user === 'undefined'){
     conversationPayload.context = initUser();
   }
 
@@ -181,8 +179,8 @@ function updateEmotionTone(user, emotionTone) {
   user.tone.emotion.current = primaryEmotion;
 
   user.tone.emotion.history.push({
-    "tone_name": primaryEmotion,
-    "score": primaryEmotionScore
+    'tone_name': primaryEmotion,
+    'score': primaryEmotionScore
   });
 };
 
@@ -202,23 +200,23 @@ function updateLanguageTone(user, languageTone) {
     if (parseFloat(tone.score) >= LANGUAGE_HIGH_SCORE_THRESHOLD) {
       currentLanguage.push(tone.tone_name.toLowerCase() + '_high');
       currentLanguageObject.push({
-        "tone_name": tone.tone_name.toLowerCase(),
-        "score": tone.score,
-        "interpretation": "likely high"
+        'tone_name': tone.tone_name.toLowerCase(),
+        'score': tone.score,
+        'interpretation': 'likely high'
       });
     }
     else if(parseFloat(tone.score) <= LANGUAGE_NO_SCORE_THRESHOLD) {
       currentLanguageObject.push({
-        "tone_name": tone.tone_name.toLowerCase(),
-        "score": tone.score,
-        "interpretation": "no evidence"
+        'tone_name': tone.tone_name.toLowerCase(),
+        'score': tone.score,
+        'interpretation': 'no evidence'
       });
     }
     else {
       currentLanguageObject.push({
-        "tone_name": tone.tone_name.toLowerCase(),
-        "score": tone.score,
-        "interpretation": "likely medium"
+        'tone_name': tone.tone_name.toLowerCase(),
+        'score': tone.score,
+        'interpretation': 'likely medium'
       });
     }
   });
@@ -248,24 +246,24 @@ function updateSocialTone(user, socialTone) {
     if (parseFloat(tone.score) >= SOCIAL_HIGH_SCORE_THRESHOLD) {
       currentSocial.push(tone.tone_name.toLowerCase() + '_high');
       currentSocialObject.push({
-        "tone_name": tone.tone_name.toLowerCase(),
-        "score": tone.score,
-        "interpretation": "likely high"
+        'tone_name': tone.tone_name.toLowerCase(),
+        'score': tone.score,
+        'interpretation': 'likely high'
       });
     }
     else if (parseFloat(tone.score) <= SOCIAL_LOW_SCORE_THRESHOLD) {
       currentSocial.push(tone.tone_name.toLowerCase() + '_low');
       currentSocialObject.push({
-        "tone_name": tone.tone_name.toLowerCase(),
-        "score": tone.score,
-        "interpretation": "likely low"
+        'tone_name': tone.tone_name.toLowerCase(),
+        'score': tone.score,
+        'interpretation': 'likely low'
       });
     }
     else  {
       currentSocialObject.push({
-        "tone_name": tone.tone_name.toLowerCase(),
-        "score": tone.score,
-        "interpretation": "likely medium"
+        'tone_name': tone.tone_name.toLowerCase(),
+        'score': tone.score,
+        'interpretation': 'likely medium'
       });
     }
   });
