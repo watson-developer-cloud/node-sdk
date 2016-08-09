@@ -42,8 +42,8 @@ var SOCIAL_TONE_LABEL = "social_tone";
  * Public functions for this module
  */
 module.exports = {
-		updateUserTone,
-		invokeToneAsync
+    updateUserTone,
+    invokeToneAsync
 };
 
 /**
@@ -54,18 +54,18 @@ module.exports = {
  * (which contains the user's input text) 
  */
 function invokeToneAsync(conversationPayload, tone_analyzer) {
-	return new Promise(
-			function (resolve, reject){
-				tone_analyzer.tone(
-						{text: conversationPayload.input.text},
-						(error, data) => {
-							if (error){
-								reject(error);
-							}else {
-								resolve(data);
-							}
-						});
-			});
+  return new Promise(
+      function (resolve, reject){
+        tone_analyzer.tone(
+            {text: conversationPayload.input.text},
+            (error, data) => {
+              if (error){
+                reject(error);
+              }else {
+                resolve(data);
+              }
+            });
+      });
 };
 
 /**
@@ -77,47 +77,47 @@ function invokeToneAsync(conversationPayload, tone_analyzer) {
  * @returns conversationPayload where the user object has been updated with tone information from the toneAnalyzerPayload 
  */
 function updateUserTone (conversationPayload, toneAnalyzerPayload) {
-	var emotionTone = null;
-	var languageTone = null;
-	var socialTone = null;
+  var emotionTone = null;
+  var languageTone = null;
+  var socialTone = null;
 
-	if(typeof conversationPayload.context === 'undefined')
-	{
-		conversationPayload.context = {};
-	}
+  if(typeof conversationPayload.context === 'undefined')
+  {
+    conversationPayload.context = {};
+  }
 
-	if(typeof conversationPayload.context.user === 'undefined')
-	{
-		conversationPayload.context = initUser();
-	}
+  if(typeof conversationPayload.context.user === 'undefined')
+  {
+    conversationPayload.context = initUser();
+  }
 
-	// For convenience sake, define a variable for the user object
-	var user = conversationPayload.context.user;
+  // For convenience sake, define a variable for the user object
+  var user = conversationPayload.context.user;
 
-	// Extract the tones - emotion, language and social
-	if (toneAnalyzerPayload && toneAnalyzerPayload.document_tone) {
-		toneAnalyzerPayload.document_tone.tone_categories.forEach(
-				function(toneCategory) {
-					if (toneCategory.category_id === EMOTION_TONE_LABEL) {
-						emotionTone = toneCategory;
-					}
-					if (toneCategory.category_id === LANGUAGE_TONE_LABEL) {
-						languageTone = toneCategory;
-					}
-					if (toneCategory.category_id === SOCIAL_TONE_LABEL) {
-						socialTone = toneCategory;
-					}
-				});
+  // Extract the tones - emotion, language and social
+  if (toneAnalyzerPayload && toneAnalyzerPayload.document_tone) {
+    toneAnalyzerPayload.document_tone.tone_categories.forEach(
+        function(toneCategory) {
+          if (toneCategory.category_id === EMOTION_TONE_LABEL) {
+            emotionTone = toneCategory;
+          }
+          if (toneCategory.category_id === LANGUAGE_TONE_LABEL) {
+            languageTone = toneCategory;
+          }
+          if (toneCategory.category_id === SOCIAL_TONE_LABEL) {
+            socialTone = toneCategory;
+          }
+        });
 
-		updateEmotionTone(user, emotionTone);
-		updateLanguageTone(user, languageTone);
-		updateSocialTone(user, socialTone);
+    updateEmotionTone(user, emotionTone);
+    updateLanguageTone(user, languageTone);
+    updateSocialTone(user, socialTone);
 
-	}
+  }
 
-	conversationPayload.context.user = user;
+  conversationPayload.context.user = user;
 
-	return conversationPayload;
+  return conversationPayload;
 };
 
 /**
@@ -127,24 +127,24 @@ function updateUserTone (conversationPayload, toneAnalyzerPayload) {
  * all tones up to the current tone for a conversation instance with a user.
  */
 function initUser() {
-	return {
-		'user': {
-			'tone': {
-				'emotion': {
-					'current': null,
-					'history': []
-				},
-				'language': {
-					'current': null,
-					'history': []
-				},
-				'social': {
-					'current': null,
-					'history': []
-				}
-			}
-		}
-	};
+  return {
+    'user': {
+      'tone': {
+        'emotion': {
+          'current': null,
+          'history': []
+        },
+        'language': {
+          'current': null,
+          'history': []
+        },
+        'social': {
+          'current': null,
+          'history': []
+        }
+      }
+    }
+  };
 };
 
 /**
@@ -155,35 +155,35 @@ function initUser() {
  */
 function updateEmotionTone(user, emotionTone) {
 
-	var maxScore = 0;
-	var primaryEmotion = null;
-	var primaryEmotionScore = null;
+  var maxScore = 0;
+  var primaryEmotion = null;
+  var primaryEmotionScore = null;
 
-	emotionTone.tones.forEach(function(tone) {
-		if (parseFloat(tone.score) > parseFloat(maxScore)) {
-			maxScore = tone.score;
-			primaryEmotion = tone.tone_name.toLowerCase();
-			primaryEmotionScore = tone.score;
-		}
-	});
+  emotionTone.tones.forEach(function(tone) {
+    if (parseFloat(tone.score) > parseFloat(maxScore)) {
+      maxScore = tone.score;
+      primaryEmotion = tone.tone_name.toLowerCase();
+      primaryEmotionScore = tone.score;
+    }
+  });
 
-	if (parseFloat(maxScore) <= PRIMARY_EMOTION_SCORE_THRESHOLD) {
-		primaryEmotion = 'neutral';
-		primaryEmotionScore = null;
-	}
+  if (parseFloat(maxScore) <= PRIMARY_EMOTION_SCORE_THRESHOLD) {
+    primaryEmotion = 'neutral';
+    primaryEmotionScore = null;
+  }
 
 
-	if (typeof user.tone.emotion.history === 'undefined') {
-		user.tone.emotion.history = [];
-	} 
+  if (typeof user.tone.emotion.history === 'undefined') {
+    user.tone.emotion.history = [];
+  } 
 
-	// update user emotion tone
-	user.tone.emotion.current = primaryEmotion;
+  // update user emotion tone
+  user.tone.emotion.current = primaryEmotion;
 
-	user.tone.emotion.history.push({
-		"tone_name": primaryEmotion,
-		"score": primaryEmotionScore
-	});
+  user.tone.emotion.history.push({
+    "tone_name": primaryEmotion,
+    "score": primaryEmotionScore
+  });
 };
 
 
@@ -194,42 +194,42 @@ function updateEmotionTone(user, emotionTone) {
  */
 function updateLanguageTone(user, languageTone) {
 
-	var currentLanguage = [];
-	var currentLanguageObject = [];
+  var currentLanguage = [];
+  var currentLanguageObject = [];
 
-	// Process each language tone and determine if it is high or low
-	languageTone.tones.forEach(function(tone) {
-		if (parseFloat(tone.score) >= LANGUAGE_HIGH_SCORE_THRESHOLD) {
-			currentLanguage.push(tone.tone_name.toLowerCase() + '_high');
-			currentLanguageObject.push({
-				"tone_name": tone.tone_name.toLowerCase(),
-				"score": tone.score,
-				"interpretation": "likely high"
-			});
-		}
-		else if(parseFloat(tone.score) <= LANGUAGE_NO_SCORE_THRESHOLD) {
-			currentLanguageObject.push({
-				"tone_name": tone.tone_name.toLowerCase(),
-				"score": tone.score,
-				"interpretation": "no evidence"
-			});
-		}
-		else {
-			currentLanguageObject.push({
-				"tone_name": tone.tone_name.toLowerCase(),
-				"score": tone.score,
-				"interpretation": "likely medium"
-			});
-		}
-	});
+  // Process each language tone and determine if it is high or low
+  languageTone.tones.forEach(function(tone) {
+    if (parseFloat(tone.score) >= LANGUAGE_HIGH_SCORE_THRESHOLD) {
+      currentLanguage.push(tone.tone_name.toLowerCase() + '_high');
+      currentLanguageObject.push({
+        "tone_name": tone.tone_name.toLowerCase(),
+        "score": tone.score,
+        "interpretation": "likely high"
+      });
+    }
+    else if(parseFloat(tone.score) <= LANGUAGE_NO_SCORE_THRESHOLD) {
+      currentLanguageObject.push({
+        "tone_name": tone.tone_name.toLowerCase(),
+        "score": tone.score,
+        "interpretation": "no evidence"
+      });
+    }
+    else {
+      currentLanguageObject.push({
+        "tone_name": tone.tone_name.toLowerCase(),
+        "score": tone.score,
+        "interpretation": "likely medium"
+      });
+    }
+  });
 
-	if (typeof user.tone.language.history === 'undefined') {
-		user.tone.language.history = [];
-	}
+  if (typeof user.tone.language.history === 'undefined') {
+    user.tone.language.history = [];
+  }
 
-	// update user language tone
-	user.tone.language.current = currentLanguage;
-	user.tone.language.history.push(currentLanguageObject);
+  // update user language tone
+  user.tone.language.current = currentLanguage;
+  user.tone.language.history.push(currentLanguageObject);
 };
 
 
@@ -240,42 +240,42 @@ function updateLanguageTone(user, languageTone) {
  */
 function updateSocialTone(user, socialTone) {
 
-	var currentSocial = [];
-	var currentSocialObject = [];
+  var currentSocial = [];
+  var currentSocialObject = [];
 
-	// Process each social tone and determine if it is high or low
-	socialTone.tones.forEach(function(tone) {
-		if (parseFloat(tone.score) >= SOCIAL_HIGH_SCORE_THRESHOLD) {
-			currentSocial.push(tone.tone_name.toLowerCase() + '_high');
-			currentSocialObject.push({
-				"tone_name": tone.tone_name.toLowerCase(),
-				"score": tone.score,
-				"interpretation": "likely high"
-			});
-		}
-		else if (parseFloat(tone.score) <= SOCIAL_LOW_SCORE_THRESHOLD) {
-			currentSocial.push(tone.tone_name.toLowerCase() + '_low');
-			currentSocialObject.push({
-				"tone_name": tone.tone_name.toLowerCase(),
-				"score": tone.score,
-				"interpretation": "likely low"
-			});
-		}
-		else  {
-			currentSocialObject.push({
-				"tone_name": tone.tone_name.toLowerCase(),
-				"score": tone.score,
-				"interpretation": "likely medium"
-			});
-		}
-	});
+  // Process each social tone and determine if it is high or low
+  socialTone.tones.forEach(function(tone) {
+    if (parseFloat(tone.score) >= SOCIAL_HIGH_SCORE_THRESHOLD) {
+      currentSocial.push(tone.tone_name.toLowerCase() + '_high');
+      currentSocialObject.push({
+        "tone_name": tone.tone_name.toLowerCase(),
+        "score": tone.score,
+        "interpretation": "likely high"
+      });
+    }
+    else if (parseFloat(tone.score) <= SOCIAL_LOW_SCORE_THRESHOLD) {
+      currentSocial.push(tone.tone_name.toLowerCase() + '_low');
+      currentSocialObject.push({
+        "tone_name": tone.tone_name.toLowerCase(),
+        "score": tone.score,
+        "interpretation": "likely low"
+      });
+    }
+    else  {
+      currentSocialObject.push({
+        "tone_name": tone.tone_name.toLowerCase(),
+        "score": tone.score,
+        "interpretation": "likely medium"
+      });
+    }
+  });
 
-	if (typeof user.tone.social.history === 'undefined') {
-		user.tone.social.history = [];
-	}
+  if (typeof user.tone.social.history === 'undefined') {
+    user.tone.social.history = [];
+  }
 
-	// update user social tone
-	user.tone.social.current = currentSocial;
-	user.tone.social.history.push(currentSocialObject);
+  // update user social tone
+  user.tone.social.current = currentSocial;
+  user.tone.social.history.push(currentSocialObject);
 };
 
