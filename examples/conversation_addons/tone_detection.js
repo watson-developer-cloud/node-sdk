@@ -59,7 +59,7 @@ function invokeToneAsync(conversationPayload, tone_analyzer) {
         tone_analyzer.tone(
             {text: conversationPayload.input.text},
             (error, data) => {
-              if (error){
+              if (error) {
                 reject(error);
               }else {
                 resolve(data);
@@ -205,7 +205,7 @@ function updateLanguageTone(user, languageTone) {
         'interpretation': 'likely high'
       });
     }
-    else if(parseFloat(tone.score) <= LANGUAGE_NO_SCORE_THRESHOLD) {
+    else if (parseFloat(tone.score) <= LANGUAGE_NO_SCORE_THRESHOLD) {
       currentLanguageObject.push({
         'tone_name': tone.tone_name.toLowerCase(),
         'score': tone.score,
