@@ -25,13 +25,11 @@ var Promise = require('bluebird');
  * https://www.ibm.com/watson/developercloud/doc/tone-analyzer/understanding-tone.shtml
  * These thresholds can be adjusted to client/domain requirements.
  */
-var PRIMARY_EMOTION_SCORE_THRESHOLD = 0.5;
-var EMOTION_HIGH_SCORE_THRESHOLD = 0.75;
-var EMOTION_LOW_SCORE_THRESHOLD = 0.5;
-var LANGUAGE_HIGH_SCORE_THRESHOLD = 0.75;
-var LANGUAGE_LOW_SCORE_THRESHOLD = 0.25;
-var SOCIAL_HIGH_SCORE_THRESHOLD = 0.75;
-var SOCIAL_LOW_SCORE_THRESHOLD = 0.75;
+var PRIMARY_EMOTION_SCORE_THRESHOLD = parseFloat("0.5");
+var LANGUAGE_HIGH_SCORE_THRESHOLD = parseFloat("0.75");
+var LANGUAGE_NO_SCORE_THRESHOLD = parseFloat("0.0");
+var SOCIAL_HIGH_SCORE_THRESHOLD = parseFloat("0.75");
+var SOCIAL_LOW_SCORE_THRESHOLD = parseFloat("0.25");
 
 /**
  * Labels for the tone categories returned by the Watson Tone Analyzer
@@ -162,14 +160,14 @@ function updateEmotionTone(user, emotionTone) {
 	var primaryEmotionScore = null;
 
 	emotionTone.tones.forEach(function(emotion) {
-		if (emotion.score > maxScore) {
+		if (parseFloat(emotion.score) > parseFloat(maxScore)) {
 			maxScore = emotion.score;
 			primaryEmotion = emotion.tone_name.toLowerCase();
 			primaryEmotionScore = emotion.score;
 		}
 	});
 
-	if (maxScore <= PRIMARY_EMOTION_SCORE_THRESHOLD) {
+	if (parseFloat(maxScore) <= PRIMARY_EMOTION_SCORE_THRESHOLD) {
 		primaryEmotion = 'neutral';
 		primaryEmotionScore = null;
 	}
@@ -181,6 +179,8 @@ function updateEmotionTone(user, emotionTone) {
 	
 	// update user emotion tone
 	user.tone.emotion.current = primaryEmotion;
+
+
 	user.tone.emotion.history.push({
 		"tone_name": primaryEmotion,
 		"score": primaryEmotionScore
@@ -190,7 +190,7 @@ function updateEmotionTone(user, emotionTone) {
 
 /**
  * updateLanguageTone updates the user language tone with the language tones that are identified as either greater than or 
- * equal to the LANGUAGE_HIGH_SCORE_THRESHOLD or lower than or equal to the LANGUAGE_LOW_SCORE_THRESHOLD 
+ * equal to the LANGUAGE_HIGH_SCORE_THRESHOLD 
  * @param user a json object representing user information (tone) to be used in conversing with the Conversation Service
  * @param languageTone a json object containing the language tones in the payload returned by the Tone Analyzer
  */
@@ -201,20 +201,26 @@ function updateLanguageTone(user, languageTone) {
 
 	// Process each language tone and determine if it is high or low
 	languageTone.tones.forEach(function(lang) {
-		if (lang.score >= LANGUAGE_HIGH_SCORE_THRESHOLD) {
+		if (parseFloat(lang.score) >= LANGUAGE_HIGH_SCORE_THRESHOLD) {
 			currentLanguage.push(lang.tone_name.toLowerCase() + '_high');
 			currentLanguageObject.push({
 				"tone_name": lang.tone_name.toLowerCase(),
 				"score": lang.score,
-				"interpretation": "high"
+				"interpretation": "likely high"
 			});
 		}
-		if (lang.score <= LANGUAGE_LOW_SCORE_THRESHOLD) {
-			currentLanguage.push(lang.tone_name.toLowerCase() + '_low');
+		else if(parseFloat(lang.score) <= LANGUAGE_NO_SCORE_THRESHOLD) {
 			currentLanguageObject.push({
 				"tone_name": lang.tone_name.toLowerCase(),
 				"score": lang.score,
-				"interpretation": "low"
+				"interpretation": "no evidence"
+			});
+		}
+		else {
+			currentLanguageObject.push({
+				"tone_name": lang.tone_name.toLowerCase(),
+				"score": lang.score,
+				"interpretation": "likely medium"
 			});
 		}
 	});
@@ -242,20 +248,27 @@ function updateSocialTone(user, socialTone) {
 
 	// Process each social tone and determine if it is high or low
 	socialTone.tones.forEach(function(tone) {
-		if (tone.score >= SOCIAL_HIGH_SCORE_THRESHOLD) {
+		if (parseFloat(tone.score) >= SOCIAL_HIGH_SCORE_THRESHOLD) {
 			currentSocial.push(tone.tone_name.toLowerCase() + '_high');
 			currentSocialObject.push({
 				"tone_name": tone.tone_name.toLowerCase(),
 				"score": tone.score,
-				"interpretation": "high"
+				"interpretation": "likely high"
 			});
 		}
-		if (tone.score <= SOCIAL_LOW_SCORE_THRESHOLD) {
+		else if (parseFloat(tone.score) <= SOCIAL_LOW_SCORE_THRESHOLD) {
 			currentSocial.push(tone.tone_name.toLowerCase() + '_low');
 			currentSocialObject.push({
 				"tone_name": tone.tone_name.toLowerCase(),
 				"score": tone.score,
-				"interpretation": "low"
+				"interpretation": "likely low"
+			});
+		}
+		else  {
+			currentSocialObject.push({
+				"tone_name": tone.tone_name.toLowerCase(),
+				"score": tone.score,
+				"interpretation": "likely medium"
 			});
 		}
 	});
