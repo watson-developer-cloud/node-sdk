@@ -25,7 +25,7 @@ var Promise = require('bluebird');
  * https://www.ibm.com/watson/developercloud/doc/tone-analyzer/understanding-tone.shtml
  * These thresholds can be adjusted to client/domain requirements.
  */
-var PRIMARY_EMOTION_SCORE_THRESHOLD = 0.50;
+var PRIMARY_EMOTION_SCORE_THRESHOLD = 0.5;
 var EMOTION_HIGH_SCORE_THRESHOLD = 0.75;
 var EMOTION_LOW_SCORE_THRESHOLD = 0.5;
 var LANGUAGE_HIGH_SCORE_THRESHOLD = 0.75;
@@ -44,8 +44,8 @@ var SOCIAL_TONE_LABEL = "social_tone";
  * Public functions for this module
  */
 module.exports = {
-	updateUserTone,
-	invokeToneAsync
+		updateUserTone,
+		invokeToneAsync
 };
 
 /**
@@ -57,17 +57,17 @@ module.exports = {
  */
 function invokeToneAsync(conversationPayload, tone_analyzer) {
 	return new Promise(
-		function (resolve, reject){
-			tone_analyzer.tone(
-				{text: conversationPayload.input.text},
-				(error, data) => {
-					if (error){
-						reject(error);
-					}else {
-						resolve(data);
-					}
-				});
-		});
+			function (resolve, reject){
+				tone_analyzer.tone(
+						{text: conversationPayload.input.text},
+						(error, data) => {
+							if (error){
+								reject(error);
+							}else {
+								resolve(data);
+							}
+						});
+			});
 };
 
 /**
@@ -76,68 +76,51 @@ function invokeToneAsync(conversationPayload, tone_analyzer) {
  * The conversationPayload json object is updated to include these tones.
  * @param conversationPayload json object returned by the Watson Conversation Service
  * @param toneAnalyzerPayload json object returned by the Watson Tone Analyzer Service
- * @returns conversationPayload user object in the conversationPayload's context has been updated with tone information 
+ * @returns conversationPayload where the user object has been updated with tone information from the toneAnalyzerPayload 
  */
 function updateUserTone (conversationPayload, toneAnalyzerPayload) {
-    var emotionTone = null;
-    var languageTone = null;
-    var socialTone = null;
+	var emotionTone = null;
+	var languageTone = null;
+	var socialTone = null;
 
-    if(typeof conversationPayload.context === 'undefined')
-    {
-    	conversationPayload.context = {};
-    }
+	if(typeof conversationPayload.context === 'undefined')
+	{
+		conversationPayload.context = {};
+	}
 
-    if(typeof conversationPayload.context.user === 'undefined')
-    {
-    	conversationPayload.context = initUser();
-    }
+	if(typeof conversationPayload.context.user === 'undefined')
+	{
+		conversationPayload.context = initUser();
+	}
 
-    // For convenience sake, define a variable for the user object
-    var user = conversationPayload.context.user;
+	// For convenience sake, define a variable for the user object
+	var user = conversationPayload.context.user;
 
-    // Extract the tones - emotion, language and social
-    if (toneAnalyzerPayload && toneAnalyzerPayload.document_tone) {
-    	toneAnalyzerPayload.document_tone.tone_categories.forEach(
-    		function(toneCategory) {
-	    		if (toneCategory.category_id === EMOTION_TONE_LABEL) {
-	    			emotionTone = toneCategory;
-	    		}
-	    		if (toneCategory.category_id === LANGUAGE_TONE_LABEL) {
-	    			languageTone = toneCategory;
-	    		}
-	    		if (toneCategory.category_id === SOCIAL_TONE_LABEL) {
-	    			socialTone = toneCategory;
-	    		}
-    		});
+	// Extract the tones - emotion, language and social
+	if (toneAnalyzerPayload && toneAnalyzerPayload.document_tone) {
+		toneAnalyzerPayload.document_tone.tone_categories.forEach(
+				function(toneCategory) {
+					if (toneCategory.category_id === EMOTION_TONE_LABEL) {
+						emotionTone = toneCategory;
+					}
+					if (toneCategory.category_id === LANGUAGE_TONE_LABEL) {
+						languageTone = toneCategory;
+					}
+					if (toneCategory.category_id === SOCIAL_TONE_LABEL) {
+						socialTone = toneCategory;
+					}
+				});
 
-	      var emotionProfile = getEmotionProfile(emotionTone);
-	      user.tone.emotion.current = emotionProfile;
-	      if (typeof user.tone.emotion.history === 'undefined') {
-	    	  user.tone.emotion.history = [emotionProfile];
-	      } else {
-	    	  user.tone.emotion.history.push(emotionProfile);
-	      }
+		updateEmotionTone(user, emotionTone);
+		updateLanguageTone(user, languageTone);
+		updateSocialTone(user, socialTone);
 
-	      var languageProfile = getLanguageProfile(languageTone);
-	      user.tone.language.current = languageProfile;
-	      if (typeof user.tone.language.history === 'undefined') {
-	    	  user.tone.language.history = [languageProfile];
-	      } else {
-	    	  user.tone.language.history.push(languageProfile);
-	      }
+	}
 
-	      var socialProfile = getSocialProfile(socialTone);
-	      user.tone.social.current = socialProfile;
-	      if (typeof user.tone.social.history === 'undefined') {
-	    	  user.tone.social.history = [socialProfile];
-	      } else {
-	    	  user.tone.social.history.push(socialProfile);
-	      }
-    }
-    
-    conversationPayload.context.user = user;
-    return conversationPayload;
+	conversationPayload.context.user = user;
+	console.log(JSON.stringify(conversationPayload,2,null));
+	
+	return conversationPayload;
 };
 
 /**
@@ -147,91 +130,143 @@ function updateUserTone (conversationPayload, toneAnalyzerPayload) {
  * all tones up to the current tone for a conversation instance with a user.
  */
 function initUser() {
-    return {
-      'user': {
-        'tone': {
-          'emotion': {
-            'current': null,
-            'history': []
-          },
-          'language': {
-            'current': null,
-            'history': []
-          },
-          'social': {
-            'current': null,
-            'history': []
-          }
-        }
-      }
-    };
+	return {
+		'user': {
+			'tone': {
+				'emotion': {
+					'current': null,
+					'history': []
+				},
+				'language': {
+					'current': null,
+					'history': []
+				},
+				'social': {
+					'current': null,
+					'history': []
+				}
+			}
+		}
+	};
 };
 
-
 /**
- * getEmotionProfile identifies the primary emotion in the emotion tones in the payload returned by the Tone Analyzer
+ * updateEmotionTone updates the user emotion tone with the primary emotion - the emotion tone that has
+ * a score greater than or equal to the EMOTION_SCORE_THRESHOLD; otherwise primary emotion will be 'neutral' 
+ * @param user a json object representing user information (tone) to be used in conversing with the Conversation Service
  * @param emotionTone a json object containing the emotion tones in the payload returned by the Tone Analyzer
- * @returns the primary emotion if one of the emotion tones has a score that is greater than or equal to the
- * EMOTION_SCORE_THRESHOLD; otherwise, 'neutral'
  */
-function getEmotionProfile(emotionTone) {
-  var maxScore = 0;
-  var primaryEmotion = null;
+function updateEmotionTone(user, emotionTone) {
 
-  emotionTone.tones.forEach(function(emotion) {
-    if (emotion.score > maxScore) {
-    	maxScore = emotion.score;
-    	primaryEmotion = emotion.tone_name.toLowerCase();
-    }
-  });
+	var maxScore = 0;
+	var primaryEmotion = null;
+	var primaryEmotionScore = null;
 
-  if (maxScore <= PRIMARY_EMOTION_SCORE_THRESHOLD) {
-	  primaryEmotion = 'neutral';
-  }
+	emotionTone.tones.forEach(function(emotion) {
+		if (emotion.score > maxScore) {
+			maxScore = emotion.score;
+			primaryEmotion = emotion.tone_name.toLowerCase();
+			primaryEmotionScore = emotion.score;
+		}
+	});
 
-  return primaryEmotion;
-}
+	if (maxScore <= PRIMARY_EMOTION_SCORE_THRESHOLD) {
+		primaryEmotion = 'neutral';
+		primaryEmotionScore = null;
+	}
+
+
+	if (typeof user.tone.emotion.history === 'undefined') {
+		user.tone.emotion.history = [];
+	} 
+	
+	// update user emotion tone
+	user.tone.emotion.current = primaryEmotion;
+	user.tone.emotion.history.push({
+		"tone_name": primaryEmotion,
+		"score": primaryEmotionScore
+	});
+};
+
 
 /**
- * getLanguageProfile identifies the language tones that are greater or equal to the LANGUAGE_HIGH_SCORE_THRESHOLD or
- * lower than or equal to the LANGUAGE_LOW_SCORE_THRESHOLD
+ * updateLanguageTone updates the user language tone with the language tones that are identified as either greater than or 
+ * equal to the LANGUAGE_HIGH_SCORE_THRESHOLD or lower than or equal to the LANGUAGE_LOW_SCORE_THRESHOLD 
+ * @param user a json object representing user information (tone) to be used in conversing with the Conversation Service
  * @param languageTone a json object containing the language tones in the payload returned by the Tone Analyzer
- * @returns an array containing the language tones that have a high or low score as defined by the user-defined
- * thresholds
  */
-function getLanguageProfile(languageTone) {
-  var languageToneProfile = [];
+function updateLanguageTone(user, languageTone) {
 
-  languageTone.tones.forEach(function(lang) {
-    if (lang.score >= LANGUAGE_HIGH_SCORE_THRESHOLD) {
-    	languageToneProfile.push(lang.tone_name.toLowerCase() + '_high');
-    }
-    if (lang.score <= LANGUAGE_LOW_SCORE_THRESHOLD) {
-    	languageToneProfile.push(lang.tone_name.toLowerCase() + '_low');
-    }
-  });
+	var currentLanguage = [];
+	var currentLanguageObject = [];
 
-  return languageToneProfile;
+	// Process each language tone and determine if it is high or low
+	languageTone.tones.forEach(function(lang) {
+		if (lang.score >= LANGUAGE_HIGH_SCORE_THRESHOLD) {
+			currentLanguage.push(lang.tone_name.toLowerCase() + '_high');
+			currentLanguageObject.push({
+				"tone_name": lang.tone_name.toLowerCase(),
+				"score": lang.score,
+				"interpretation": "high"
+			});
+		}
+		if (lang.score <= LANGUAGE_LOW_SCORE_THRESHOLD) {
+			currentLanguage.push(lang.tone_name.toLowerCase() + '_low');
+			currentLanguageObject.push({
+				"tone_name": lang.tone_name.toLowerCase(),
+				"score": lang.score,
+				"interpretation": "low"
+			});
+		}
+	});
+
+	if (typeof user.tone.language.history === 'undefined') {
+		user.tone.language.history = [];
+	}
+
+	// update user language tone
+	user.tone.language.current = currentLanguage;
+	user.tone.language.history.push(currentLanguageObject);
 };
+
 
 /**
- * getSocialProfile identifies the language tones that are greater than the SOCIAL_HIGH_SCORE_THRESHOLD or
- * lower than or equal to the SOCIAL_LOW_SCORE_THRESHOLD
+ * updateSocialTone updates the user social tone with the social tones that are identified as either greater than or 
+ * equal to the SOCIAL_HIGH_SCORE_THRESHOLD or lower than or equal to the SOCIAL_LOW_SCORE_THRESHOLD 
+ * @param user a json object representing user information (tone) to be used in conversing with the Conversation Service
  * @param socialTone a json object containing the social tones in the payload returned by the Tone Analyzer
- * @returns an array containing the social tones that have a high or low score as defined by the user-defined
- * thresholds
  */
-function getSocialProfile(socialTone) {
-  var socialToneProfile = [];
+function updateSocialTone(user, socialTone) {
 
-  socialTone.tones.forEach(function(social) {
-    if (social.score >= SOCIAL_HIGH_SCORE_THRESHOLD) {
-    	socialToneProfile.push(social.tone_name.toLowerCase() + '_high');
-    }
-    if (social.score <= SOCIAL_LOW_SCORE_THRESHOLD) {
-    	socialToneProfile.push(social.tone_name.toLowerCase() + '_low');
-    }
-  });
+	var currentSocial = [];
+	var currentSocialObject = [];
 
-  return socialToneProfile;
+	// Process each social tone and determine if it is high or low
+	socialTone.tones.forEach(function(tone) {
+		if (tone.score >= SOCIAL_HIGH_SCORE_THRESHOLD) {
+			currentSocial.push(tone.tone_name.toLowerCase() + '_high');
+			currentSocialObject.push({
+				"tone_name": tone.tone_name.toLowerCase(),
+				"score": tone.score,
+				"interpretation": "high"
+			});
+		}
+		if (tone.score <= SOCIAL_LOW_SCORE_THRESHOLD) {
+			currentSocial.push(tone.tone_name.toLowerCase() + '_low');
+			currentSocialObject.push({
+				"tone_name": tone.tone_name.toLowerCase(),
+				"score": tone.score,
+				"interpretation": "low"
+			});
+		}
+	});
+	
+	if (typeof user.tone.social.history === 'undefined') {
+		user.tone.social.history = [];
+	}
+
+	// update user social tone
+	user.tone.social.current = currentSocial;
+	user.tone.social.history.push(currentSocialObject);
 };
+
