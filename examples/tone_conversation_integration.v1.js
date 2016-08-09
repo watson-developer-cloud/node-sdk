@@ -58,7 +58,7 @@ var tone_analyzer = new watson.tone_analyzer({
  * <workspace-id> and user input text required.
  */
 var payload = {
-		workspace_id: process.env.WORKSPACE_ID || '<workspace-id>',
+		workspace_id: process.env.WORKSPACE_ID || '<workspace_id>',
 		input: {
 			text: "I am not happy today :("			
 		}
