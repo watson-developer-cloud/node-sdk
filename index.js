@@ -25,8 +25,6 @@ exports.AlchemyVisionV1 = require('./alchemy-vision/v1');
 
 exports.AuthorizationV1 = require('./authorization/v1');
 
-exports.ConceptInsightsV2 = require('./concept-insights/v2');
-
 exports.ConversationV1 = require('./conversation/v1');
 exports.ConversationV1Experimental = require('./conversation/v1-experimental');
 
@@ -39,8 +37,6 @@ exports.LanguageTranslatorV2 = require('./language-translator/v2');
 exports.NaturalLanguageClassifierV1 = require('./natural_language_classifier/v1');
 
 exports.PersonalityInsightsV2 = require('./personality-insights/v2');
-
-exports.RelationshipExtractionV1Beta = require('./relationship-extraction/v1-beta');
 
 exports.RetrieveAndRankV1 = require('./retrieve-and-rank/v1');
 
@@ -96,7 +92,8 @@ Object.keys(servicesByVersion).forEach(function(serviceName) {
 // removed services
 // we don't want these services listed (so non-enumerable), but we do want a clear error message
 // if old code happens to try using one
-['message_resonance', 'question_and_answer', 'visual_insights', 'concept_expansion'].forEach(function(serviceName) {
+['concept_insights', 'relationship_extraction', 'message_resonance', 'question_and_answer',
+'visual_insights', 'concept_expansion'].forEach(function(serviceName) {
   Object.defineProperty(exports, serviceName, {
     enumerable: false,
     configurable: true,
