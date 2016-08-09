@@ -83,17 +83,17 @@ function invokeToneConversation(payload)
 			if (err) {
 				// APPLICATION-SPECIFIC CODE TO PROCESS THE ERROR 
 				// FROM CONVERSATION SERVICE
-				console.error(JSON.stringify(err, 2, null));
+				console.error(JSON.stringify(err, null, 2));
 			}
 			else {
 				// APPLICATION-SPECIFIC CODE TO PROCESS THE DATA
 				// FROM CONVERSATION SERVICE
-				console.log(JSON.stringify(data, 2, null));
+				console.log(JSON.stringify(data, null, 2));
 			}
 		});
 	})
 	.catch(function(err){
-		console.log(JSON.stringify(err, 2, null));
+		console.log(JSON.stringify(err, null, 2));
 	})
 }; 
 
