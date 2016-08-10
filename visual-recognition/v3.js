@@ -99,7 +99,7 @@ function VisualRecognitionV3(options) {
 util.inherits(VisualRecognitionV3, BaseServiceAlchemy);
 VisualRecognitionV3.prototype.name = 'visual_recognition';
 VisualRecognitionV3.prototype.version = 'v3';
-VisualRecognitionV3.URL = 'http://gateway-a.watsonplatform.net/visual-recognition/api';
+VisualRecognitionV3.URL = 'https://gateway-a.watsonplatform.net/visual-recognition/api';
 VisualRecognitionV3.prototype.serviceDefaults = {
   alchemy: true
 };
