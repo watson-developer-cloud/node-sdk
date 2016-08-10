@@ -51,9 +51,9 @@ APIs and SDKs that use cognitive computing to solve complex problems.
   The order of preference is now:
 
   1) User-supplied credentials passed to the service constructor
-  
+
   2) `SERVICE_NAME_USERNAME` and `SERVICE_NAME_PASSWORD` environment properties (or `SERVICE_NAME_API_KEY` when appropriate)
-  
+
   3) Bluemix-supplied credentials (via the `VCAP_SERVICES` JSON-encoded environment property)
 
 * Client-side support via [Browserify](http://browserify.org/)
@@ -242,7 +242,9 @@ authorization.getToken(params, function (err, token) {
 ```
 
 ### Concept Insights
-Concept Insights is deprecated as of July 12, 2016. The service will be removed on August 19th, 2016.
+
+The [Concept Insights][concept_insights] has been deprecated, AlchemyLanguage's concept function can be used as a replacement for most Concept Insights use cases; therefore, we encourage existing Concept Insights service users to migrate to AlchemyLanguage.
+
 
 ### Conversation
 
@@ -419,29 +421,8 @@ personality_insights.profile({
 
 
 ### Relationship Extraction
-Analyze an English news article and get the relationships between sentence
-components (nouns, verbs, subjects, objects, etc.) by using the
-[Relationship Extraction][relationship_extraction] service.
+Relationship Extraction has been deprecated. If you want to continue using Relationship Extraction models, you can now access them with AlchemyLanguage. See the [migration guide][re_migration] for details.
 
-```javascript
-var watson = require('watson-developer-cloud');
-
-var relationship_extraction = watson.relationship_extraction({
-  username: '<username>',
-  password: '<password>',
-  version: 'v1-beta'
-});
-
-relationship_extraction.extract({
-  text: 'IBM Watson developer cloud',
-  dataset: 'ie-en-news' },
-  function (err, response) {
-    if (err)
-      console.log('error:', err);
-    else
-      console.log(JSON.stringify(response, null, 2));
-});
-```
 
 ### Retrieve and Rank
 Use the [Retrieve and Rank][retrieve_and_rank] service to enhance search results with machine learning.
@@ -709,6 +690,7 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/maste
 [concept_insights]: http://www.ibm.com/watson/developercloud/doc/concept-insights/
 [tradeoff_analytics]: http://www.ibm.com/watson/developercloud/doc/tradeoff-analytics/
 [language_translator]: http://www.ibm.com/watson/developercloud/doc/language-translation/
+[re_migration]: http://www.ibm.com/watson/developercloud/doc/alchemylanguage/migration.shtml
 
 [alchemy_language]: http://www.alchemyapi.com/products/alchemylanguage
 [sentiment_analysis]: http://www.alchemyapi.com/products/alchemylanguage/sentiment-analysis
