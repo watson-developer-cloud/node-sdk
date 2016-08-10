@@ -1,3 +1,19 @@
+# v2.0.3
+* Use actual Error instances for errors (#298)
+
+# v2.0.2
+
+* Added support for the `intents`, `entities` and `output` parameters in ConveersationV1.message()
+* Removed sunset services: Concept Insights and Relationship Extraction
+* Dependency bump
+
+
+# v2.0.1
+
+* Added VisualRecognitionV3.retrainClassifier() to facilitate updating of existing custom classifiers
+* Added support for `alternate_intents` parameter in ConveersationV1.message()
+
+
 # v2.0.0
 
 * Breaking: prefer programatic (user-supplied) credentials over bluemix-provided ones (VCAP_SERVICES)
