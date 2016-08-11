@@ -165,11 +165,11 @@ describe('alchemy_language', function() {
 
   describe('emotion()', function() {
     var payload = {
-      text: 'I love coding! I hate busywork.'
+      text: 'I love coding. I hate busywork.'
     };
 
     var target_payload = {
-      text: 'I love coding! I hate busywork.',
+      text: 'I love coding. I hate busywork.',
       targets: [
         'coding',
         'busywork'
