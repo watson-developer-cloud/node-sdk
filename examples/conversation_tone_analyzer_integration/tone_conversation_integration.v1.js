@@ -31,29 +31,26 @@
 /*eslint-env es6*/
 
 var watson = require('watson-developer-cloud');
-var tone_detection = require("./conversation_addons/tone_detection.js");
-require('dotenv').config({silent: true})
+var tone_detection = require("./tone_detection.js");
+require('dotenv').config({silent: true});
 
 
 /**
  * Instantiate the Watson Conversation Service
  */
-var conversation = watson.conversation({
-  url: 'https://gateway.watsonplatform.net/conversation/api',
+var conversation = new watson.ConversationV1({
   username: process.env.CONVERSATION_USERNAME || '<conversation_username>',
   password: process.env.CONVERSATION_PASSWORD || '<conversation_password>',
-  version_date: '2016-07-11',
-  version: 'v1'
+  version_date: '2016-07-11'
 });
 
 /**
  * Instantiate the Watson Tone Analyzer Service
  */
-var tone_analyzer = watson.tone_analyzer({
+var tone_analyzer = new watson.ToneAnalyzerV3({
   username: process.env.TONE_ANALYZER_USERNAME || '<tone_analyzer_username>',
   password: process.env.TONE_ANALYZER_PASSWORD || '<tone_analyzer_password>',
-  version_date: '2016-05-19',
-  version: 'v3'
+  version_date: '2016-05-19'
 });
 
 
