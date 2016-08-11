@@ -1,12 +1,11 @@
 'use strict';
 
-var watson = require('watson-developer-cloud');
+var LanguageTranslatorV2 = require('watson-developer-cloud/language_translator/v2');
 var fs     = require('fs');
 
-var language_translator = watson.language_translator({
+var language_translator = new LanguageTranslatorV2({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
-  password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
-  version: 'v2'
+  password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE'
 });
 
 language_translator.translate({

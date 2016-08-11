@@ -1,9 +1,9 @@
 'use strict';
 
-var watson = require('watson-developer-cloud');
+var NaturalLanguageClassifierV1 = require('watson-developer-cloud/natural_language_classifier/v1');
 var fs     = require('fs');
 
-var natural_language_classifier = watson.natural_language_classifier({
+var natural_language_classifier = new NaturalLanguageClassifierV1({
   url: 'https://gateway.watsonplatform.net/natural-language-classifier/api',
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
   password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',

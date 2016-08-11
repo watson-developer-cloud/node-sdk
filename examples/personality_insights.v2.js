@@ -1,12 +1,11 @@
 'use strict';
 
-var watson = require('watson-developer-cloud');
+var PersonalityInsightsV2 = require('watson-developer-cloud/personality-insights/v2');
 var fs     = require('fs');
 
-var personality_insights = watson.personality_insights({
+var personality_insights = new PersonalityInsightsV2({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
-  password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
-  version: 'v2'
+  password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE'
 });
 
 /*

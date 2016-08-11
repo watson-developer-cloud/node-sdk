@@ -1,12 +1,10 @@
 'use strict';
 
-var watson = require('watson-developer-cloud');
+var VisualRecognitionV3 = require('watson-developer-cloud/visual-recognition/v3');
 var fs = require('fs');
 
-var visual_recognition = watson.visual_recognition({
-  url: 'https://gateway-a.watsonplatform.net/visual-recognition/api',
+var visual_recognition = new VisualRecognitionV3({
   api_key: 'INSERT YOUR API KEY HERE',
-  version: 'v3',
   version_date: '2016-05-19'
 });
 
