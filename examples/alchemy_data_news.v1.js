@@ -1,8 +1,8 @@
 'use strict';
 
-var watson = require('watson-developer-cloud');
+var AlchemyDataNewsV1 = require('watson-developer-cloud/alchemy-data-news/v1');
 
-var alchemy_data_news = watson.alchemy_data_news({
+var alchemy_data_news = new AlchemyDataNewsV1({
   api_key: '<api_key>'
 });
 

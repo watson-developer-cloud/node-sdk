@@ -1,3 +1,8 @@
+# v2.1.0
+* Updated AlchemyLanguageV1.emotion() to support new targeted_emotion parameter & endpoint
+* Added Conversation/Tone Analyzer integration example
+* Updated Readme & Examples to use newer constructor style
+
 # v2.0.3
 * Use actual Error instances for errors (#298)
 

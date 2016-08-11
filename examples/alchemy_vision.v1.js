@@ -1,10 +1,10 @@
 'use strict';
 /*eslint no-redeclare: 0*/
 
-var watson = require('watson-developer-cloud');
+var AlchemyVisionV1 = require('watson-developer-cloud/alchemy-vision/v1');
 var fs = require('fs');
 
-var alchemy_vision = watson.alchemy_vision({
+var alchemy_vision = new AlchemyVisionV1({
   api_key: '<api_key>'
 });
 

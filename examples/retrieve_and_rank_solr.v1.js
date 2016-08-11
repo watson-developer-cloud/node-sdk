@@ -1,14 +1,12 @@
 'use strict';
 
-var watson = require('watson-developer-cloud');
+var RetrieveAndRankV1 = require('watson-developer-cloud/retrieve-and-rank/v1');
 var async  = require('async');
 var fs     = require('fs');
 
-var retrieve = watson.retrieve_and_rank({
+var retrieve = new RetrieveAndRankV1({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
-  password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
-  version: 'v1',
-  url: 'https://gateway.watsonplatform.net/retrieve-and-rank/api'
+  password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE'
 });
 
 var clusterId = 'INSERT YOUR CLUSTER ID HERE';
