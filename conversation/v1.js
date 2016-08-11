@@ -52,7 +52,7 @@ ConversationV1.prototype.message = function(params, callback) {
       url: '/v1/workspaces/{workspace_id}/message',
       method: 'POST',
       json: true,
-      body: pick(params, ['input', 'context', 'alternate_intents']),
+      body: pick(params, ['input', 'context', 'alternate_intents', 'output', 'entities', 'intents']),
       path: pick(params, ['workspace_id'])
     },
     requiredParams: ['workspace_id'],

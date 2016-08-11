@@ -1,6 +1,6 @@
 {
   "name": "watson-developer-cloud",
-  "version": "2.0.1",
+  "version": "2.0.3",
   "description": "Client library to use the IBM Watson Services and AlchemyAPI",
   "main": "./lib/index",
   "repository": {
@@ -80,17 +80,17 @@
     "wav": "^1.0.0"
   },
   "dependencies": {
-    "cookie": "~0.2.3",
+    "cookie": "~0.3.1",
     "csv-stringify": "~1.0.2",
     "extend": "~3.0.0",
     "is-in-browser": "^1.0.1",
     "isstream": "~0.1.2",
     "object.omit": "~2.0.0",
     "object.pick": "~1.1.1",
-    "request": "~2.72.0",
+    "request": "~2.74.0",
     "solr-client": "~0.6.0",
     "string": "3.3.1",
-    "vcap_services": "~0.1.7",
+    "vcap_services": "~0.2.0",
     "websocket": "~1.0.22"
   },
   "engines": {
