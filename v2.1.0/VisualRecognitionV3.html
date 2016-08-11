@@ -1,0 +1,2756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Class: VisualRecognitionV3</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Class: VisualRecognitionV3</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>VisualRecognitionV3</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+
+    <h4 class="name" id="VisualRecognitionV3"><span class="type-signature"></span>new VisualRecognitionV3<span class="signature">(options)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line90">line 90</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="classify"><span class="type-signature"></span>classify<span class="signature">(params, callback)</span><span class="type-signature"> &rarr; {ReadableStream|undefined}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Accepts either a url, a single image file, or a zip file with multiple
+images (.jpeg, .png, .gif) and scores every available classifier
+on each image. It then applies a threshold and returns the list
+of relevant classifier scores for each image.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>params</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>images_file</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">ReadStream</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">The image file (.jpg, .png, .gif) or compressed (.zip) file of images to classify. The total number of images is limited to 100. Either images_file or url must be specified.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>url</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">The URL of an image (.jpg, .png, .gif). Redirects are followed, so you can use shortened URLs. The resolved URL is returned in the response. Either images_file or url must be specified.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>classifier_ids</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ['default']
+                
+                </td>
+            
+
+            <td class="description last">An array of classifier IDs to classify the images against.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>owners</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ['me','IBM']
+                
+                </td>
+            
+
+            <td class="description last">An array with the value(s) "IBM" and/or "me" to specify which classifiers to run.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>threshold</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">A floating point value that specifies the minimum score a class must have to be displayed in the response.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line172">line 172</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">ReadableStream</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>* {
+  "images": [{
+    "classifiers": [{
+      "classes": [{
+        "class": "animal",
+        "score": 0.998771,
+        "type_hierarchy": "/animals"
+      }, {
+        "class": "mammal",
+        "score": 0.998499,
+        "type_hierarchy": "/animals/mammal"
+      }, {
+        "class": "dog",
+        "score": 0.900249,
+        "type_hierarchy": "/animals/pets/dog"
+      }, {
+        "class": "puppy",
+        "score": 0.5,
+        "type_hierarchy": "/animals/pets/puppy"
+      }],
+      "classifier_id": "default",
+      "name": "default"
+    }],
+    "image": "dog.jpg"
+  }],
+  "images_processed": 1
+}</code></pre>
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="createClassifier"><span class="type-signature"></span>createClassifier<span class="signature">(params)</span><span class="type-signature"> &rarr; {ReadableStream|undefined}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Train a new classifier from example images which are uploaded.
+This call returns before training has completed.  You'll need to use the
+getClassifer method to make sure the classifier has completed training and
+was successful before you can classify any images with the newly created
+classifier.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>params</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The desired short name of the new classifier.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>classname_positive_examples</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">ReadStream</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><your_class_name>_positive_examples One or more compressed (.zip) files of images that depict the visual subject for a class within the new classifier. Must contain a minimum of 10 images. You may supply multiple files with different class names in the key.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>negative_examples</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">ReadStream</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">A compressed (.zip) file of images that do not depict the visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images. Required if only one positive set is provided.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line439">line 439</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">ReadableStream</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+    <h5>Examples</h5>
+    
+    <pre class="prettyprint"><code>{
+  foo_positive_examples: fs.createReadStream('./foo-pics.zip'),
+  negative_examples: fs.createReadStream('./not-foo-pics.zip'),
+  name: 'to-foo-or-not'
+}</code></pre>
+
+    <pre class="prettyprint"><code>{
+ foo_positive_examples: fs.createReadStream('./foo-pics.zip'),
+ bar_positive_examples: fs.createReadStream('./bar-pics.zip'),
+ name: 'foo-vs-bar'
+}</code></pre>
+
+    <pre class="prettyprint"><code>{
+ foo_positive_examples: fs.createReadStream('./foo-pics.zip'),
+ bar_positive_examples: fs.createReadStream('./bar-pics.zip'),
+ negative_examples: fs.createReadStream('./not-foo-pics.zip'),
+ name: 'foo-bar-not'
+}</code></pre>
+
+    <pre class="prettyprint"><code>{
+  "classifier_id": "fruit_679357912",
+  "name": "fruit",
+  "owner": "a3a48ea7-492b-448b-87d7-9dade8bde5a9",
+  "status": "training",
+  "created": "2016-05-23T21:50:41.680Z",
+  "classes": [{
+    "class": "banana"
+  }, {
+    "class": "apple"
+  }]
+}</code></pre>
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="deleteClassifier"><span class="type-signature"></span>deleteClassifier<span class="signature">(params, callback)</span><span class="type-signature"> &rarr; {ReadableStream|undefined}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Deletes a custom classifier with the specified classifier id.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>params</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>classifier_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The classifier id</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line592">line 592</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">ReadableStream</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="detectFaces"><span class="type-signature"></span>detectFaces<span class="signature">(params, callback)</span><span class="type-signature"> &rarr; {ReadableStream|undefined}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Accepts either a url, a single image file, or a zip file with multiple
+images (.jpeg, .png, .gif) and attempts to extract faces and
+identities. It then applies a threshold
+and returns the list of relevant identities, locations, and metadata
+for found faces for each image.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>params</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>images_file</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">ReadStream</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The image file (.jpg, .png, .gif) or compressed (.zip) file of images to classify. The total number of images is limited to 100. Either images_file or url must be specified.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>url</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The URL of an image (.jpg, .png, .gif). Redirects are followed, so you can use shortened URLs. The resolved URL is returned in the response. Either images_file or url must be specified.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line266">line 266</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">ReadableStream</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>{
+  "images": [{
+    "faces": [{
+      "age": {
+        "max": 54,
+        "min": 45,
+        "score": 0.40459
+      },
+      "face_location": {
+        "height": 131,
+        "left": 80,
+        "top": 68,
+        "width": 123
+      },
+      "gender": {
+        "gender": "MALE",
+        "score": 0.993307
+      },
+      "identity": {
+        "name": "Barack Obama",
+        "score": 0.970688,
+        "type_hierarchy": "/people/politicians/democrats/barack obama"
+      }
+    }],
+    "image": "obama.jpg"
+  }],
+  "images_processed": 1
+}</code></pre>
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getClassifier"><span class="type-signature"></span>getClassifier<span class="signature">(params, callback)</span><span class="type-signature"> &rarr; {ReadableStream|undefined}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Retrieves information about a specific classifier.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>params</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>classifier_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The classifier id</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line570">line 570</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">ReadableStream</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>{
+  "classifier_id": "fruit_679357912",
+  "name": "fruit",
+  "owner": "a3a42ea7-492b-448b-87d7-9dfde8bde519 ",
+  "status": "ready",
+  "created": "2016-05-23T21:50:41.680Z",
+  "classes": [{
+    "class": "banana"
+  }, {
+    "class": "apple"
+  }]
+}</code></pre>
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getCredentialsFromBluemix"><span class="type-signature"></span>getCredentialsFromBluemix<span class="signature">()</span><span class="type-signature"> &rarr; {*}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Bluemix uses a different naming convention for VR v3 than for other services
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line111">line 111</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">*</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getCredentialsFromEnvironment"><span class="type-signature"></span>getCredentialsFromEnvironment<span class="signature">()</span><span class="type-signature"> &rarr; {Object}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Pulls api_key from VISUAL_RECOGNITION_API_KEY env property
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line120">line 120</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Object</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="listClassifiers"><span class="type-signature"></span>listClassifiers<span class="signature">(params, callback)</span><span class="type-signature"> &rarr; {ReadableStream|undefined}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Retrieve a list of all classifiers, including built-in and
+user-created classifiers.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>params</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>verbose</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line535">line 535</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">ReadableStream</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>{
+  "classifiers": [{
+    "classifier_id": "fruit_679357912",
+    "name": "fruit",
+    "status": "ready"
+  }, {
+    "classifier_id": "Dogs_2017013066",
+    "name": "Dogs",
+    "status": "ready"
+  }]
+}</code></pre>
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="recognizeText"><span class="type-signature"></span>recognizeText<span class="signature">(params, callback)</span><span class="type-signature"> &rarr; {ReadableStream|undefined}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Accepts either a url, single image file, or a zip file with multiple
+images (.jpeg, .png, .gif) and attempts to recognize text
+found in the image. It then applies a threshold
+and returns the list of relevant locations, strings,  and metadata
+for discovered text in each image.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>params</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>images_file</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">ReadStream</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The image file (.jpg, .png, .gif) or compressed (.zip) file of images to classify. The total number of images is limited to 100. Either images_file or url must be specified.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>url</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The URL of an image (.jpg, .png, .gif). Redirects are followed, so you can use shortened URLs. The resolved URL is returned in the response. Either images_file or url must be specified.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line356">line 356</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">ReadableStream</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>{
+  "images": [{
+    "image": "car.png",
+    "text": "3 jag [brio]",
+    "words": [{
+      "line_number": 0,
+      "location": {
+        "height": 53,
+        "left": 204,
+        "top": 294,
+        "width": 27
+      },
+      "score": 0.50612,
+      "word": "3"
+    }, {
+      "line_number": 0,
+      "location": {
+        "height": 32,
+        "left": 264,
+        "top": 288,
+        "width": 56
+      },
+      "score": 0.958628,
+      "word": "jag"
+    }, {
+      "line_number": 0,
+      "location": {
+        "height": 40,
+        "left": 324,
+        "top": 288,
+        "width": 92
+      },
+      "score": 0.00165806,
+      "word": "brio"
+    }]
+  }],
+  "images_processed": 1
+}</code></pre>
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="retrainClassifier"><span class="type-signature"></span>retrainClassifier<span class="signature">(params)</span><span class="type-signature"> &rarr; {ReadableStream|undefined}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Retrain a existing classifier from example images which are uploaded.
+This call returns before retraining has completed.  You'll need to use the
+getClassifer method to make sure the classifier has completed retraining and
+was successful before you can classify any images with the retrained
+classifier.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>params</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>classname_positive_examples</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">ReadStream</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><your_class_name>_positive_examples One or more compressed (.zip) files of images that depict the visual subject for a class within the classifier. You may supply multiple files with different class names in the key.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>negative_examples</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">ReadStream</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">A compressed (.zip) file of images that do not depict the visual subject of any of the classes of the classifier.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line493">line 493</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">ReadableStream</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>{
+  "classifier_id": "fruit_679357912",
+  "name": "fruit",
+  "owner": "a3a48ea7-492b-448b-87d7-9dade8bde5a9",
+  "status": "training",
+  "created": "2016-05-23T21:50:41.680Z",
+  "classes": [{
+    "class": "banana"
+  }, {
+    "class": "apple"
+  }]
+}</code></pre>
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-watson-developer-cloud.html">watson-developer-cloud</a></li></ul><h3>Classes</h3><ul><li><a href="AlchemyDataNewsV1.html">AlchemyDataNewsV1</a></li><li><a href="AlchemyLanguageV1.html">AlchemyLanguageV1</a></li><li><a href="AlchemyVisionV1.html">AlchemyVisionV1</a></li><li><a href="AuthorizationV1.html">AuthorizationV1</a></li><li><a href="ConversationV1.html">ConversationV1</a></li><li><a href="ConversationV1Experimental.html">ConversationV1Experimental</a></li><li><a href="DialogV1.html">DialogV1</a></li><li><a href="LanguageTranslatorV2.html">LanguageTranslatorV2</a></li><li><a href="NaturalLanguageClassifierV1.html">NaturalLanguageClassifierV1</a></li><li><a href="PersonalityInsightsV1.html">PersonalityInsightsV1</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RetrieveAndRankV1.html">RetrieveAndRankV1</a></li><li><a href="SpeechToTextV1.html">SpeechToTextV1</a></li><li><a href="TextToSpeechV1.html">TextToSpeechV1</a></li><li><a href="TradeoffAnalyticsV1.html">TradeoffAnalyticsV1</a></li><li><a href="VisualRecognitionV3.html">VisualRecognitionV3</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:close">close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu Aug 11 2016 23:16:58 GMT+0000 (UTC)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
