@@ -18,6 +18,7 @@ Credentials & the Workspace ID can be set in environment properties, a .env file
 
 Command to run the sample code
 
+`npm install # just once, to download dependencies`
 `node tone_conversation_integration.v1.js`
 
 [conversation]: https://www.ibm.com/watson/developercloud/conversation.html
