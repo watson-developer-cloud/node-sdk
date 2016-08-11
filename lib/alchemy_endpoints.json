@@ -100,6 +100,12 @@
     "url"  : "/url/URLGetEmotion"
   },
 
+  "emotion_targeted": {
+    "text" : "/text/TextGetTargetedEmotion",
+    "html" : "/html/HTMLGetTargetedEmotion",
+    "url"  : "/url/URLGetTargetedEmotion"
+  },
+
   "image_link": {
     "html" : "/html/HTMLGetImage",
     "url"  : "/url/URLGetImage"
