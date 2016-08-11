@@ -64,7 +64,7 @@ APIs and SDKs that use cognitive computing to solve complex problems.
   Of those that do, most require an auth token to be generated server-side via the [Authorization Service](#authorization)
 
 * New recommended method for instantiating services:
-
+  
   ```js
   var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
 
@@ -147,10 +147,10 @@ apps.
 Use the [Sentiment Analysis][sentiment_analysis] endpoint to identify positive/negative sentiment within a sample text document.
 
 ```javascript
-var watson = require('watson-developer-cloud');
+var AlchemyLanguageV1 = require('watson-developer-cloud/alchemy-language/v1');
 
-var alchemy_language = watson.alchemy_language({
-  api_key: '<api_key>'
+var alchemy_language = new AlchemyLanguageV1({
+  api_key: 'API_KEY'
 });
 
 var params = {
@@ -171,10 +171,10 @@ alchemy_language.sentiment(params, function (err, response) {
 Example: Extract keywords from an image.
 
 ```javascript
-var watson = require('watson-developer-cloud');
+var AlchemyVisionV1 = require('watson-developer-cloud/alchemy-vision/v1');
 var fs = require('fs');
 
-var alchemy_vision = watson.alchemy_vision({
+var alchemy_vision = new AlchemyVisionV1({
   api_key: '<api_key>'
 });
 
@@ -195,9 +195,9 @@ alchemy_vision.getImageKeywords(params, function (err, keywords) {
 Example: Get the volume data from the last 7 days using 12hs of time slice.
 
 ```javascript
-var watson = require('watson-developer-cloud');
+var AlchemyDataNewsV1 = require('watson-developer-cloud/alchemy-data-news/v1');
 
-var alchemy_data_news = watson.alchemy_data_news({
+var alchemy_data_news = new AlchemyDataNewsV1({
   api_key: '<api_key>'
 });
 
@@ -215,24 +215,22 @@ alchemy_data_news.getNews(params, function (err, news) {
 ```
 
 ### Authorization
-The Authorization service can generates tokens, this are useful when it's too cumbersome to provide a username/password pair.
-Tokens are valid for 1 hour and need to be send using the `X-Watson-Authorization-Token` header.
+The Authorization service can generates auth tokens for situations where providing the service username/password is undesirable.
+
+Tokens are valid for 1 hour and may be sent using the `X-Watson-Authorization-Token` header or the `watson-token` query param. 
+
+Note that the token is supplied URL-encoded, and will not be accepted if it is double-encoded in a querystring.
 
 ```javascript
 var watson = require('watson-developer-cloud');
 
-var authorization = watson.authorization({
-  username: '<username>',
-  password: '<password>',
-  version: 'v1'
+var authorization = new watson.AuthorizationV1({
+  username: '<Text to Speech username>',
+  password: '<Text to Speech password>'
+  url: watson.TextToSpeechV1.URL
 });
 
-var params = {
-  // URL of the resource you wish to access
-  url: 'https://stream.watsonplatform.net/text-to-speech/api'
-};
-
-authorization.getToken(params, function (err, token) {
+authorization.getToken(function (err, token) {
   if (!token) {
     console.log('error:', err);
   } else {
@@ -253,12 +251,11 @@ Use the [Conversation][conversation] service to determine the intent of a messag
 Note: you must first create a workspace via Bluemix. See [the documentation](http://www.ibm.com/watson/developercloud/doc/conversation/overview.shtml) for details.
 
 ```js
-var watson = require('watson-developer-cloud');
+var ConversationV1 = require('watson-developer-cloud/conversation/v1');
 
-var conversation = watson.conversation({
+var conversation = new ConversationV1({
   username: '<username>',
   password: '<password>',
-  version: 'v1',
   version_date: '2016-07-01'
 });
 
@@ -278,12 +275,11 @@ conversation.message({
 Use the Dialog service to list all the dialogs you have.
 
 ```javascript
-var watson = require('watson-developer-cloud');
+var DialogV1 = require('watson-developer-cloud/dialog/v1');
 
-var dialog = watson.dialog({
+var dialog = new DialogV1({
   username: '<username>',
   password: '<password>',
-  version: 'v1',
   version_date: '2015-12-01'
 });
 
@@ -298,13 +294,12 @@ dialog.getDialogs({}, function (err, dialogs) {
 ### Document Conversion
 
 ```javascript
-var watson = require('watson-developer-cloud');
+var DocumentConversionV1 = require('watson-developer-cloud/document-conversion/v1');
 var fs = require('fs');
 
-var document_conversion = watson.document_conversion({
+var document_conversion = new DocumentConversionV1({
   username:     '<username>',
   password:     '<password>',
-  version:      'v1',
   version_date: '2015-12-01'
 });
 
@@ -339,12 +334,11 @@ with the Retrieve and Rank service.
 Translate text from one language to another or idenfity a language using the [Language Translator][language_translator] service.
 
 ```javascript
-var watson = require('watson-developer-cloud');
+var LanguageTranslatorV2 = require('watson-developer-cloud/language_translator/v2');
 
-var language_translator = watson.language_translator({
+var language_translator = new LanguageTranslatorV2({
   username: '<username>',
-  password: '<password>',
-  version: 'v2'
+  password: '<password>'
 });
 
 language_translator.translate({
@@ -371,13 +365,11 @@ language_translator.identify({
 Use [Natural Language Classifier](http://www.ibm.com/watson/developercloud/doc/nl-classifier/) service to create a classifier instance by providing a set of representative strings and a set of one or more correct classes for each as training. Then use the trained classifier to classify your new question for best matching answers or to retrieve next actions for your application.
 
 ```javascript
-var watson = require('watson-developer-cloud');
+var NaturalLanguageClassifierV1 = require('watson-developer-cloud/natural_language_classifier/v1');
 
-var natural_language_classifier = watson.natural_language_classifier({
-  url: 'https://gateway.watsonplatform.net/natural-language-classifier/api',
+var natural_language_classifier = new NaturalLanguageClassifierV1({
   username: '<username>',
-  password: '<password>',
-  version: 'v1'
+  password: '<password>'
 });
 
 natural_language_classifier.classify({
@@ -398,12 +390,11 @@ Analyze text in english and get a personality profile by using the
 [Personality Insights][personality_insights] service.
 
 ```javascript
-var watson = require('watson-developer-cloud');
+var PersonalityInsightsV2 = require('watson-developer-cloud/personality-insights/v2');
 
-var personality_insights = watson.personality_insights({
+var personality_insights = new PersonalityInsightsV2({
   username: '<username>',
-  password: '<password>',
-  version: 'v2'
+  password: '<password>'
 });
 
 personality_insights.profile({
@@ -428,11 +419,11 @@ Relationship Extraction has been deprecated. If you want to continue using Relat
 Use the [Retrieve and Rank][retrieve_and_rank] service to enhance search results with machine learning.
 
 ```javascript
-var retrieve = watson.retrieve_and_rank({
-  username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
-  password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
-  version: 'v1',
-  url: 'https://gateway.watsonplatform.net/retrieve-and-rank/api'
+var RetrieveAndRankV1 = require('watson-developer-cloud/retrieve-and-rank/v1');
+
+var retrieve = new RetrieveAndRankV1({
+  username: '<username>',
+  password: '<password>',
 });
 
 var solrClient = retrieve.createSolrClient({
@@ -471,17 +462,15 @@ solrClient.search(query, function(err, searchResponse) {
 ```
 
 ### Speech to Text
-Use the [Speech to Text][speech_to_text] service to recognize the text from a
-.wav file.
+Use the [Speech to Text][speech_to_text] service to recognize the text from a .wav file.
 
 ```javascript
-var watson = require('watson-developer-cloud');
+var SpeechToTextV1 = require('watson-developer-cloud/speech-to-text/v1');
 var fs = require('fs');
 
-var speech_to_text = watson.speech_to_text({
+var speech_to_text = new SpeechToTextV1({
   username: '<username>',
-  password: '<password>',
-  version: 'v1'
+  password: '<password>'
 });
 
 var params = {
@@ -504,17 +493,15 @@ fs.createReadStream('./resources/speech.wav')
 ```
 
 ### Text to Speech
-Use the [Text to Speech][text_to_speech] service to synthesize text into a
-.wav file.
+Use the [Text to Speech][text_to_speech] service to synthesize text into a .wav file.
 
 ```js
-var watson = require('watson-developer-cloud');
+var TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
 var fs = require('fs');
 
-var text_to_speech = watson.text_to_speech({
+var text_to_speech = new TextToSpeechV1({
   username: '<username>',
-  password: '<password>',
-  version: 'v1'
+  password: '<password>'
 });
 
 var params = {
@@ -532,12 +519,11 @@ Use the [Tone Analyzer][tone_analyzer] service to analyze the
 emotion, writing and social tones of a text.
 
 ```js
-var watson = require('watson-developer-cloud');
+var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
 
-var tone_analyzer = watson.tone_analyzer({
+var tone_analyzer = new ToneAnalyzerV3({
   username: '<username>',
   password: '<password>',
-  version: 'v3',
   version_date: '2016-05-19'
 });
 
@@ -555,12 +541,11 @@ Use the [Tradeoff Analytics][tradeoff_analytics] service to find the best
 phone that minimizes price and weight and maximizes screen size.
 
 ```javascript
-var watson = require('watson-developer-cloud');
+var TradeoffAnalyticsV1 = require('watson-developer-cloud/tradeoff-analytics/v1');
 
-var tradeoff_analytics = watson.tradeoff_analytics({
+var tradeoff_analytics = new TradeoffAnalyticsV1({
   username: '<username>',
-  password: '<password>',
-  version: 'v1'
+  password: '<password>'
 });
 
 // From file
@@ -584,12 +569,11 @@ following picture.
 <img src="https://visual-recognition-demo.mybluemix.net/images/samples/5.jpg" width="150" />
 
 ```js
-var watson = require('watson-developer-cloud');
+var VisualRecognitionV3 = require('watson-developer-cloud/visual-recognition/v3');
 var fs = require('fs');
 
-var visual_recognition = watson.visual_recognition({
+var visual_recognition = new VisualRecognitionV3({
   api_key: '<api_key>',
-  version: 'v3',
   version_date: '2016-05-19'
 });
 
@@ -622,8 +606,7 @@ By default, the library tries to use Basic Auth and will ask for `api_key` or `u
 ```javascript
 var watson = require('watson-developer-cloud');
 
-var dialog = watson.dialog({
-  version: 'v1',
+var dialog = new watson.DialogV1({
   use_unauthenticated: true
 });
 ```
