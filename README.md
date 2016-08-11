@@ -37,6 +37,7 @@ APIs and SDKs that use cognitive computing to solve complex problems.
     * [Tradeoff Analytics](#tradeoff-analytics)
     * [Visual Insights](#visual-insights)
     * [Visual Recognition](#visual-recognition)
+  * [Composing Services](#composing-services)
   * [Debug](#debug)
   * [Tests](#tests)
   * [Open Source @ IBM](#open-source--ibm)
@@ -549,7 +550,6 @@ tone_analyzer.tone({ text: 'Greetings from Watson Developer Cloud!' },
 });
 ```
 
-
 ### Tradeoff Analytics
 Use the [Tradeoff Analytics][tradeoff_analytics] service to find the best
 phone that minimizes price and weight and maximizes screen size.
@@ -605,6 +605,27 @@ visual_recognition.classify(params, function(err, res) {
 });
 ```
 
+## Composing Services
+
+### Integration of Tone Analyzer with Conversation
+Sample code for integrating [Tone Analyzer][tone_analyzer] and [Conversation][conversation] is provided in the [examples directory][examples]:
+
+  * [examples/conversation_addons/tone_detection.js][tone_conversation_integration_example_tone_detection] - sample code to initialize a user object in the conversation payload's context (initUser), to call Tone Analyzer to retrieve tone for a user's input (invokeToneAsync), and to update tone in the user object in the conversation payload's context (updateUserTone).
+  
+  * [examples/tone_conversation_integration.v1.js][tone_conversation_integration_example] - sample code to use tone_detection.js to get and add tone to the payload and send a request to the Conversation Service's message endpoint. 
+
+Command to run the sample code
+
+``node examples/tone_conversation_integration.v1.js``
+
+Requirements to run the sample code
+
+  * [Tone Analyzer Service credentials][bluemix_tone_analyzer_service]
+  * [Conversation Service credentials][bluemix_conversation_service]
+  * [Workspace id][conversation_simple_workspace]
+  * credentials can be added directly to the [code][tone_conversation_integration_example] or to a .env file in the [examples directory][examples]
+
+
 ## Unauthenticated requests
 By default, the library tries to use Basic Auth and will ask for `api_key` or `username` and `password` and send an `Authorization: Basic XXXXXXX`. You can avoid this by using:
 
@@ -651,6 +672,11 @@ This library is licensed under Apache 2.0. Full license text is available in
 ## Contributing
 See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/master/.github/CONTRIBUTING.md).
 
+[conversation]: https://www.ibm.com/watson/developercloud/conversation.html
+
+[bluemix_conversation_service]: https://console.ng.bluemix.net/catalog/services/conversation/
+[bluemix_tone_analyzer_service]: https://console.ng.bluemix.net/catalog/services/tone-analyzer/
+[conversation_simple_workspace]: https://github.com/watson-developer-cloud/conversation-simple#workspace
 
 [personality_insights]: http://www.ibm.com/watson/developercloud/doc/personality-insights/
 [relationship_extraction]: http://www.ibm.com/watson/developercloud/doc/sireapi/
@@ -677,4 +703,6 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/maste
 [request_github]: https://github.com/request/request
 [examples]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples
 [document_conversion_integration_example]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/document_conversion_integration.v1.js
+[tone_conversation_integration_example]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/tone_conversation_integration.v1.js
+[tone_conversation_integration_example_tone_detection]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/conversation_addons/tone_detection.js
 [license]: http://www.apache.org/licenses/LICENSE-2.0
