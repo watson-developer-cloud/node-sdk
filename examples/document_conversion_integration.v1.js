@@ -20,7 +20,7 @@ Document Conversion Service and upload it to the Retrieve and Rank Service to ma
       node document_conversion_integration.v1.js
 */
 
-var RetrieveAndRankV1 = require('watson-developer-cloud/retrieve-and-rank/v1');
+var watson = require('watson-developer-cloud');
 var async = require('async');
 var fs = require('fs');
 
@@ -28,7 +28,7 @@ var fs = require('fs');
 Insert the credentials for your Retrieve and Rank service instance
 NOTE: you cannot use your Bluemix account credentials here
 */
-var retrieve = new RetrieveAndRankV1({
+var retrieve = new watson.RetrieveAndRankV1({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
   password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE'
 });
@@ -37,10 +37,9 @@ var retrieve = new RetrieveAndRankV1({
 Insert the credentials for your Document Conversion service instance
 NOTE: you cannot use your Bluemix account credentials here
 */
-var document_conversion = watson.document_conversion({
+var document_conversion = new watson.DocumentConversionV1({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
   password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
-  version: 'v1',
   version_date: '2015-12-01'
 });
 
