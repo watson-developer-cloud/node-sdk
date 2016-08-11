@@ -15,8 +15,8 @@
  */
 
 'use strict';
+/*eslint-env es6*/
 
-var watson = require('watson-developer-cloud');
 var Promise = require('bluebird');
 
 /**
@@ -42,16 +42,16 @@ var SOCIAL_TONE_LABEL = 'social_tone';
  * Public functions for this module
  */
 module.exports = {
-    updateUserTone,
-    invokeToneAsync
+    updateUserTone: updateUserTone,
+    invokeToneAsync: invokeToneAsync
 };
 
 /**
- * invokeToneAsync is an asynchronous function that calls the Tone Analyzer service and returns a Promise 
+ * invokeToneAsync is an asynchronous function that calls the Tone Analyzer service and returns a Promise
  * @param conversationPayload json object returned by the Watson Conversation Service
  * @param tone_analyzer an instance of the Watson Tone Analyzer service
  * @returns a Promise for the result of calling the tone_analyzer with the conversationPayload
- * (which contains the user's input text) 
+ * (which contains the user's input text)
  */
 function invokeToneAsync(conversationPayload, tone_analyzer) {
   return new Promise(
@@ -66,17 +66,18 @@ function invokeToneAsync(conversationPayload, tone_analyzer) {
               }
             });
       });
-};
+}
 
 /**
  * updateUserTone processes the Tone Analyzer payload to pull out the emotion, language and social
- * tones, and identify the meaningful tones (i.e., those tones that meet the specified thresholds).  
+ * tones, and identify the meaningful tones (i.e., those tones that meet the specified thresholds).
  * The conversationPayload json object is updated to include these tones.
  * @param conversationPayload json object returned by the Watson Conversation Service
  * @param toneAnalyzerPayload json object returned by the Watson Tone Analyzer Service
- * @returns conversationPayload where the user object has been updated with tone information from the toneAnalyzerPayload 
+ * @returns conversationPayload where the user object has been updated with tone information from the toneAnalyzerPayload
  */
 function updateUserTone (conversationPayload, toneAnalyzerPayload) {
+
   var emotionTone = null;
   var languageTone = null;
   var socialTone = null;
@@ -116,7 +117,7 @@ function updateUserTone (conversationPayload, toneAnalyzerPayload) {
   conversationPayload.context.user = user;
 
   return conversationPayload;
-};
+}
 
 /**
  * initToneContext initializes a user object containing tone data (from the Watson Tone Analyzer)
@@ -143,17 +144,17 @@ function initUser() {
       }
     }
   };
-};
+}
 
 /**
  * updateEmotionTone updates the user emotion tone with the primary emotion - the emotion tone that has
- * a score greater than or equal to the EMOTION_SCORE_THRESHOLD; otherwise primary emotion will be 'neutral' 
+ * a score greater than or equal to the EMOTION_SCORE_THRESHOLD; otherwise primary emotion will be 'neutral'
  * @param user a json object representing user information (tone) to be used in conversing with the Conversation Service
  * @param emotionTone a json object containing the emotion tones in the payload returned by the Tone Analyzer
  */
 function updateEmotionTone(user, emotionTone) {
 
-  var maxScore = 0;
+  var maxScore = 0.0;
   var primaryEmotion = null;
   var primaryEmotionScore = null;
 
@@ -173,7 +174,7 @@ function updateEmotionTone(user, emotionTone) {
 
   if (typeof user.tone.emotion.history === 'undefined') {
     user.tone.emotion.history = [];
-  } 
+  }
 
   // update user emotion tone
   user.tone.emotion.current = primaryEmotion;
@@ -182,11 +183,11 @@ function updateEmotionTone(user, emotionTone) {
     'tone_name': primaryEmotion,
     'score': primaryEmotionScore
   });
-};
+}
 
 
 /**
- * updateLanguageTone updates the user with the language tones interpreted based on the specified thresholds  
+ * updateLanguageTone updates the user with the language tones interpreted based on the specified thresholds
  * @param user a json object representing user information (tone) to be used in conversing with the Conversation Service
  * @param languageTone a json object containing the language tones in the payload returned by the Tone Analyzer
  */
@@ -228,11 +229,11 @@ function updateLanguageTone(user, languageTone) {
   // update user language tone
   user.tone.language.current = currentLanguage;
   user.tone.language.history.push(currentLanguageObject);
-};
+}
 
 
 /**
- * updateSocialTone updates the user with the social tones interpreted based on the specified thresholds 
+ * updateSocialTone updates the user with the social tones interpreted based on the specified thresholds
  * @param user a json object representing user information (tone) to be used in conversing with the Conversation Service
  * @param socialTone a json object containing the social tones in the payload returned by the Tone Analyzer
  */
@@ -275,5 +276,5 @@ function updateSocialTone(user, socialTone) {
   // update user social tone
   user.tone.social.current = currentSocial;
   user.tone.social.history.push(currentSocialObject);
-};
+}
 
