@@ -163,4 +163,40 @@ describe('alchemy_language', function() {
     });
   });
 
+  describe('emotion()', function() {
+    var payload = {
+      text: 'I love coding! I hate busywork.'
+    };
+
+    var target_payload = {
+      text: 'I love coding! I hate busywork.',
+      targets: [
+        'coding',
+        'busywork'
+      ]
+    };
+
+    it('should get document-level emotion if no target is passed', function() {
+      var req = alchemy.emotion(payload, noop);
+      var emotionPath = service.url + '/text/TextGetEmotion?apikey=' + service.api_key;
+      assert.equal(req.uri.href, emotionPath);
+      assert.equal(req.method, 'POST');
+      assert(req.form);
+      var body = new Buffer(req.body).toString('ascii');
+      var expectedBody = qs.stringify({ text: payload.text, outputMode: 'json'});
+      assert.equal(body, expectedBody);
+    });
+
+
+    it('should get targeted emotion if targets are passed', function() {
+      var req = alchemy.emotion(target_payload, noop);
+      var targetedEmotionPath = service.url + '/text/TextGetTargetedEmotion?apikey=' + service.api_key;
+      assert.equal(req.uri.href, targetedEmotionPath);
+      assert.equal(req.method, 'POST');
+      assert(req.form);
+      var body = new Buffer(req.body).toString('ascii');
+      var expectedBody = qs.stringify({ text: payload.text, targets: 'coding|busywork', outputMode: 'json'});
+      assert.equal(body, expectedBody);
+    });
+  });
 });

@@ -16,7 +16,7 @@
 
 'use strict';
 
-var extend          require('extend');
+var extend = require('extend');
 var util = require('util');
 var BaseServiceAlchemy = require('../lib/base_service_alchemy');
 var requestFactory = require('../lib/requestwrapper');
