@@ -150,10 +150,10 @@ or <a href="http://stackoverflow.com/questions/ask?tags=ibm-watson">Stack Overfl
 apps.</p>
 <h3>Alchemy Language</h3><p><a href="http://www.alchemyapi.com/products/alchemylanguage">Alchemy Language</a> offers 12 API functions as part of its text analysis service, each of which uses sophisticated natural language processing techniques to analyze your content and add high-level semantic information.</p>
 <p>Use the <a href="http://www.alchemyapi.com/products/alchemylanguage/sentiment-analysis">Sentiment Analysis</a> endpoint to identify positive/negative sentiment within a sample text document.</p>
-<pre class="prettyprint source lang-javascript"><code>var watson = require('watson-developer-cloud');
+<pre class="prettyprint source lang-javascript"><code>var AlchemyLanguageV1 = require('watson-developer-cloud/alchemy-language/v1');
 
-var alchemy_language = watson.alchemy_language({
-  api_key: '&lt;api_key>'
+var alchemy_language = new AlchemyLanguageV1({
+  api_key: 'API_KEY'
 });
 
 var params = {
@@ -167,10 +167,10 @@ alchemy_language.sentiment(params, function (err, response) {
     console.log(JSON.stringify(response, null, 2));
 });</code></pre><h3>Alchemy Vision</h3><p><a href="http://www.alchemyapi.com/products/alchemyvision">Alchemy Vision</a> uses deep learning innovations to understand a picture's content and context. It sees complex visual scenes in their entirety —without needing any textual clues— leveraging a holistic approach to understanding the multiple objects and surroundings.</p>
 <p>Example: Extract keywords from an image.</p>
-<pre class="prettyprint source lang-javascript"><code>var watson = require('watson-developer-cloud');
+<pre class="prettyprint source lang-javascript"><code>var AlchemyVisionV1 = require('watson-developer-cloud/alchemy-vision/v1');
 var fs = require('fs');
 
-var alchemy_vision = watson.alchemy_vision({
+var alchemy_vision = new AlchemyVisionV1({
   api_key: '&lt;api_key>'
 });
 
@@ -185,9 +185,9 @@ alchemy_vision.getImageKeywords(params, function (err, keywords) {
     console.log(JSON.stringify(keywords, null, 2));
 });</code></pre><h3>Alchemy Data News</h3><p><a href="http://www.alchemyapi.com/products/alchemydata-news">Alchemy Data News</a> indexes 250k to 300k English language news and blog articles every day with historical search available for the past 60 days.
 Example: Get the volume data from the last 7 days using 12hs of time slice.</p>
-<pre class="prettyprint source lang-javascript"><code>var watson = require('watson-developer-cloud');
+<pre class="prettyprint source lang-javascript"><code>var AlchemyDataNewsV1 = require('watson-developer-cloud/alchemy-data-news/v1');
 
-var alchemy_data_news = watson.alchemy_data_news({
+var alchemy_data_news = new AlchemyDataNewsV1({
   api_key: '&lt;api_key>'
 });
 
@@ -201,22 +201,18 @@ alchemy_data_news.getNews(params, function (err, news) {
     console.log('error:', err);
   else
     console.log(JSON.stringify(news, null, 2));
-});</code></pre><h3>Authorization</h3><p>The Authorization service can generates tokens, this are useful when it's too cumbersome to provide a username/password pair.
-Tokens are valid for 1 hour and need to be send using the <code>X-Watson-Authorization-Token</code> header.</p>
+});</code></pre><h3>Authorization</h3><p>The Authorization service can generates auth tokens for situations where providing the service username/password is undesirable.</p>
+<p>Tokens are valid for 1 hour and may be sent using the <code>X-Watson-Authorization-Token</code> header or the <code>watson-token</code> query param. </p>
+<p>Note that the token is supplied URL-encoded, and will not be accepted if it is double-encoded in a querystring.</p>
 <pre class="prettyprint source lang-javascript"><code>var watson = require('watson-developer-cloud');
 
-var authorization = watson.authorization({
-  username: '&lt;username>',
-  password: '&lt;password>',
-  version: 'v1'
+var authorization = new watson.AuthorizationV1({
+  username: '&lt;Text to Speech username>',
+  password: '&lt;Text to Speech password>'
+  url: watson.TextToSpeechV1.URL
 });
 
-var params = {
-  // URL of the resource you wish to access
-  url: 'https://stream.watsonplatform.net/text-to-speech/api'
-};
-
-authorization.getToken(params, function (err, token) {
+authorization.getToken(function (err, token) {
   if (!token) {
     console.log('error:', err);
   } else {
@@ -225,12 +221,11 @@ authorization.getToken(params, function (err, token) {
 });</code></pre><h3>Concept Insights</h3><p>The <a href="http://www.ibm.com/watson/developercloud/doc/concept-insights/">Concept Insights</a> has been deprecated, AlchemyLanguage's concept function can be used as a replacement for most Concept Insights use cases; therefore, we encourage existing Concept Insights service users to migrate to AlchemyLanguage.</p>
 <h3>Conversation</h3><p>Use the <a href="https://www.ibm.com/watson/developercloud/conversation.html">Conversation</a> service to determine the intent of a message.</p>
 <p>Note: you must first create a workspace via Bluemix. See <a href="http://www.ibm.com/watson/developercloud/doc/conversation/overview.shtml">the documentation</a> for details.</p>
-<pre class="prettyprint source lang-js"><code>var watson = require('watson-developer-cloud');
+<pre class="prettyprint source lang-js"><code>var ConversationV1 = require('watson-developer-cloud/conversation/v1');
 
-var conversation = watson.conversation({
+var conversation = new ConversationV1({
   username: '&lt;username>',
   password: '&lt;password>',
-  version: 'v1',
   version_date: '2016-07-01'
 });
 
@@ -244,12 +239,11 @@ conversation.message({
        console.log(JSON.stringify(response, null, 2));
      }
 });</code></pre><h3>Dialog</h3><p>Use the Dialog service to list all the dialogs you have.</p>
-<pre class="prettyprint source lang-javascript"><code>var watson = require('watson-developer-cloud');
+<pre class="prettyprint source lang-javascript"><code>var DialogV1 = require('watson-developer-cloud/dialog/v1');
 
-var dialog = watson.dialog({
+var dialog = new DialogV1({
   username: '&lt;username>',
   password: '&lt;password>',
-  version: 'v1',
   version_date: '2015-12-01'
 });
 
@@ -258,13 +252,12 @@ dialog.getDialogs({}, function (err, dialogs) {
     console.log('error:', err);
   else
     console.log(JSON.stringify(dialogs, null, 2));
-});</code></pre><h3>Document Conversion</h3><pre class="prettyprint source lang-javascript"><code>var watson = require('watson-developer-cloud');
+});</code></pre><h3>Document Conversion</h3><pre class="prettyprint source lang-javascript"><code>var DocumentConversionV1 = require('watson-developer-cloud/document-conversion/v1');
 var fs = require('fs');
 
-var document_conversion = watson.document_conversion({
+var document_conversion = new DocumentConversionV1({
   username:     '&lt;username>',
   password:     '&lt;password>',
-  version:      'v1',
   version_date: '2015-12-01'
 });
 
@@ -291,12 +284,11 @@ document_conversion.convert({
 });</code></pre><p>See the <a href="https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/document_conversion_integration.v1.js">Document Conversion integration example</a> about how to integrate the Document Conversion service
 with the Retrieve and Rank service.</p>
 <h3>Language Translator</h3><p>Translate text from one language to another or idenfity a language using the <a href="http://www.ibm.com/watson/developercloud/doc/language-translation/">Language Translator</a> service.</p>
-<pre class="prettyprint source lang-javascript"><code>var watson = require('watson-developer-cloud');
+<pre class="prettyprint source lang-javascript"><code>var LanguageTranslatorV2 = require('watson-developer-cloud/language_translator/v2');
 
-var language_translator = watson.language_translator({
+var language_translator = new LanguageTranslatorV2({
   username: '&lt;username>',
-  password: '&lt;password>',
-  version: 'v2'
+  password: '&lt;password>'
 });
 
 language_translator.translate({
@@ -316,13 +308,11 @@ language_translator.identify({
     else
       console.log(JSON.stringify(language, null, 2));
 });</code></pre><h3>Natural Language Classifier</h3><p>Use <a href="http://www.ibm.com/watson/developercloud/doc/nl-classifier/">Natural Language Classifier</a> service to create a classifier instance by providing a set of representative strings and a set of one or more correct classes for each as training. Then use the trained classifier to classify your new question for best matching answers or to retrieve next actions for your application.</p>
-<pre class="prettyprint source lang-javascript"><code>var watson = require('watson-developer-cloud');
+<pre class="prettyprint source lang-javascript"><code>var NaturalLanguageClassifierV1 = require('watson-developer-cloud/natural_language_classifier/v1');
 
-var natural_language_classifier = watson.natural_language_classifier({
-  url: 'https://gateway.watsonplatform.net/natural-language-classifier/api',
+var natural_language_classifier = new NaturalLanguageClassifierV1({
   username: '&lt;username>',
-  password: '&lt;password>',
-  version: 'v1'
+  password: '&lt;password>'
 });
 
 natural_language_classifier.classify({
@@ -336,12 +326,11 @@ natural_language_classifier.classify({
 });</code></pre><p>See this <a href="https://github.com/watson-developer-cloud/node-sdk/blob/master/examples/natural_language_classifier.v1.js">example</a> to learn how to create a classifier.</p>
 <h3>Personality Insights</h3><p>Analyze text in english and get a personality profile by using the
 <a href="http://www.ibm.com/watson/developercloud/doc/personality-insights/">Personality Insights</a> service.</p>
-<pre class="prettyprint source lang-javascript"><code>var watson = require('watson-developer-cloud');
+<pre class="prettyprint source lang-javascript"><code>var PersonalityInsightsV2 = require('watson-developer-cloud/personality-insights/v2');
 
-var personality_insights = watson.personality_insights({
+var personality_insights = new PersonalityInsightsV2({
   username: '&lt;username>',
-  password: '&lt;password>',
-  version: 'v2'
+  password: '&lt;password>'
 });
 
 personality_insights.profile({
@@ -355,11 +344,11 @@ personality_insights.profile({
 });</code></pre><p><strong>Note:</strong> Don't forget to update the <code>text</code> variable!</p>
 <h3>Relationship Extraction</h3><p>Relationship Extraction has been deprecated. If you want to continue using Relationship Extraction models, you can now access them with AlchemyLanguage. See the <a href="http://www.ibm.com/watson/developercloud/doc/alchemylanguage/migration.shtml">migration guide</a> for details.</p>
 <h3>Retrieve and Rank</h3><p>Use the <a href="http://watson.stage1.mybluemix.net/watson/developercloud/retrieve-rank.html">Retrieve and Rank</a> service to enhance search results with machine learning.</p>
-<pre class="prettyprint source lang-javascript"><code>var retrieve = watson.retrieve_and_rank({
-  username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
-  password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
-  version: 'v1',
-  url: 'https://gateway.watsonplatform.net/retrieve-and-rank/api'
+<pre class="prettyprint source lang-javascript"><code>var RetrieveAndRankV1 = require('watson-developer-cloud/retrieve-and-rank/v1');
+
+var retrieve = new RetrieveAndRankV1({
+  username: '&lt;username>',
+  password: '&lt;password>',
 });
 
 var solrClient = retrieve.createSolrClient({
@@ -394,15 +383,13 @@ solrClient.search(query, function(err, searchResponse) {
     console.log('Found ' + searchResponse.response.numFound + ' document(s).');
     console.log('First document: ' + JSON.stringify(searchResponse.response.docs[0], null, 2));
   }
-});</code></pre><h3>Speech to Text</h3><p>Use the <a href="http://www.ibm.com/watson/developercloud/doc/speech-to-text/">Speech to Text</a> service to recognize the text from a
-.wav file.</p>
-<pre class="prettyprint source lang-javascript"><code>var watson = require('watson-developer-cloud');
+});</code></pre><h3>Speech to Text</h3><p>Use the <a href="http://www.ibm.com/watson/developercloud/doc/speech-to-text/">Speech to Text</a> service to recognize the text from a .wav file.</p>
+<pre class="prettyprint source lang-javascript"><code>var SpeechToTextV1 = require('watson-developer-cloud/speech-to-text/v1');
 var fs = require('fs');
 
-var speech_to_text = watson.speech_to_text({
+var speech_to_text = new SpeechToTextV1({
   username: '&lt;username>',
-  password: '&lt;password>',
-  version: 'v1'
+  password: '&lt;password>'
 });
 
 var params = {
@@ -421,15 +408,13 @@ speech_to_text.recognize(params, function(err, res) {
 // or streaming
 fs.createReadStream('./resources/speech.wav')
   .pipe(speech_to_text.createRecognizeStream({ content_type: 'audio/l16; rate=44100' }))
-  .pipe(fs.createWriteStream('./transcription.txt'));</code></pre><h3>Text to Speech</h3><p>Use the <a href="http://www.ibm.com/watson/developercloud/doc/text-to-speech/">Text to Speech</a> service to synthesize text into a
-.wav file.</p>
-<pre class="prettyprint source lang-js"><code>var watson = require('watson-developer-cloud');
+  .pipe(fs.createWriteStream('./transcription.txt'));</code></pre><h3>Text to Speech</h3><p>Use the <a href="http://www.ibm.com/watson/developercloud/doc/text-to-speech/">Text to Speech</a> service to synthesize text into a .wav file.</p>
+<pre class="prettyprint source lang-js"><code>var TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
 var fs = require('fs');
 
-var text_to_speech = watson.text_to_speech({
+var text_to_speech = new TextToSpeechV1({
   username: '&lt;username>',
-  password: '&lt;password>',
-  version: 'v1'
+  password: '&lt;password>'
 });
 
 var params = {
@@ -441,12 +426,11 @@ var params = {
 // Pipe the synthesized text to a file
 text_to_speech.synthesize(params).pipe(fs.createWriteStream('output.wav'));</code></pre><h3>Tone Analyzer</h3><p>Use the <a href="http://www.ibm.com/watson/developercloud/tone-analyzer.html">Tone Analyzer</a> service to analyze the
 emotion, writing and social tones of a text.</p>
-<pre class="prettyprint source lang-js"><code>var watson = require('watson-developer-cloud');
+<pre class="prettyprint source lang-js"><code>var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
 
-var tone_analyzer = watson.tone_analyzer({
+var tone_analyzer = new ToneAnalyzerV3({
   username: '&lt;username>',
   password: '&lt;password>',
-  version: 'v3',
   version_date: '2016-05-19'
 });
 
@@ -458,12 +442,11 @@ tone_analyzer.tone({ text: 'Greetings from Watson Developer Cloud!' },
       console.log(JSON.stringify(tone, null, 2));
 });</code></pre><h3>Tradeoff Analytics</h3><p>Use the <a href="http://www.ibm.com/watson/developercloud/doc/tradeoff-analytics/">Tradeoff Analytics</a> service to find the best
 phone that minimizes price and weight and maximizes screen size.</p>
-<pre class="prettyprint source lang-javascript"><code>var watson = require('watson-developer-cloud');
+<pre class="prettyprint source lang-javascript"><code>var TradeoffAnalyticsV1 = require('watson-developer-cloud/tradeoff-analytics/v1');
 
-var tradeoff_analytics = watson.tradeoff_analytics({
+var tradeoff_analytics = new TradeoffAnalyticsV1({
   username: '&lt;username>',
-  password: '&lt;password>',
-  version: 'v1'
+  password: '&lt;password>'
 });
 
 // From file
@@ -478,12 +461,11 @@ tradeoff_analytics.dilemmas(params, function(err, res) {
 <h3>Visual Recognition</h3><p>Use the <a href="http://www.ibm.com/watson/developercloud/doc/visual-recognition/">Visual Recognition</a> service to recognize the
 following picture.</p>
 <p><img src="https://visual-recognition-demo.mybluemix.net/images/samples/5.jpg" width="150" /></p>
-<pre class="prettyprint source lang-js"><code>var watson = require('watson-developer-cloud');
+<pre class="prettyprint source lang-js"><code>var VisualRecognitionV3 = require('watson-developer-cloud/visual-recognition/v3');
 var fs = require('fs');
 
-var visual_recognition = watson.visual_recognition({
+var visual_recognition = new VisualRecognitionV3({
   api_key: '&lt;api_key>',
-  version: 'v3',
   version_date: '2016-05-19'
 });
 
@@ -503,8 +485,7 @@ with the Retrieve and Rank service.</p>
 <p><code>use_unauthenticated</code>.</p>
 <pre class="prettyprint source lang-javascript"><code>var watson = require('watson-developer-cloud');
 
-var dialog = watson.dialog({
-  version: 'v1',
+var dialog = new watson.DialogV1({
   use_unauthenticated: true
 });</code></pre><h2>Debug</h2><p>This library relies on the <code>request</code> npm module writted by
 <a href="https://github.com/request/request">request</a> to call the Watson Services. To debug the apps, add
@@ -532,7 +513,7 @@ var dialog = watson.dialog({
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu Aug 11 2016 19:09:47 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu Aug 11 2016 22:05:06 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>
