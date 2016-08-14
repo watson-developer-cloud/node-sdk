@@ -334,7 +334,7 @@ with the Retrieve and Rank service.
 Translate text from one language to another or idenfity a language using the [Language Translator][language_translator] service.
 
 ```javascript
-var LanguageTranslatorV2 = require('watson-developer-cloud/language_translator/v2');
+var LanguageTranslatorV2 = require('watson-developer-cloud/language-translator/v2');
 
 var language_translator = new LanguageTranslatorV2({
   username: '<username>',
@@ -365,7 +365,7 @@ language_translator.identify({
 Use [Natural Language Classifier](http://www.ibm.com/watson/developercloud/doc/nl-classifier/) service to create a classifier instance by providing a set of representative strings and a set of one or more correct classes for each as training. Then use the trained classifier to classify your new question for best matching answers or to retrieve next actions for your application.
 
 ```javascript
-var NaturalLanguageClassifierV1 = require('watson-developer-cloud/natural_language_classifier/v1');
+var NaturalLanguageClassifierV1 = require('watson-developer-cloud/natural-language-classifier/v1');
 
 var natural_language_classifier = new NaturalLanguageClassifierV1({
   username: '<username>',
