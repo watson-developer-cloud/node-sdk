@@ -47,43 +47,46 @@ APIs and SDKs that use cognitive computing to solve complex problems.
 
 ## Major Changes for v2
 
-* **Breaking**: user-supplied credentials are now preferred over Bluemix-supplied credentials.
-  The order of preference is now:
+### BREAKING: user-supplied credentials are now preferred over Bluemix-supplied credentials.
 
-  1) User-supplied credentials passed to the service constructor
+The order of preference is now:
 
-  2) `SERVICE_NAME_USERNAME` and `SERVICE_NAME_PASSWORD` environment properties (or `SERVICE_NAME_API_KEY` when appropriate)
+1. User-supplied credentials passed to the service constructor
 
-  3) Bluemix-supplied credentials (via the `VCAP_SERVICES` JSON-encoded environment property)
+2. `SERVICE_NAME_USERNAME` and `SERVICE_NAME_PASSWORD` environment properties (or `SERVICE_NAME_API_KEY` when appropriate)
 
-* Client-side support via [Browserify](http://browserify.org/)
+3. Bluemix-supplied credentials (via the `VCAP_SERVICES` JSON-encoded environment property)
 
-  `examples/browserify/` shows an example app that generates tokens server-side and uses the SDK client-side via browserify.
+This change also removes the `use_vcap_services` flag.
 
-  Note: Not all services currently support CORS, and therefore not all services can be used client-side.
-  Of those that do, most require an auth token to be generated server-side via the [Authorization Service](#authorization)
+### Client-side support via [Browserify](http://browserify.org/)
 
-* New recommended method for instantiating services:
+`examples/browserify/` shows an example app that generates tokens server-side and uses the SDK client-side via browserify.
+
+Note: not all services currently support CORS, and therefore not all services can be used client-side.
+Of those that do, most require an auth token to be generated server-side via the [Authorization Service](#authorization).
+
+### New recommended method for instantiating services:
   
-  ```js
-  var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
+```js
+var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
 
-  var toneAnalyzer = new ToneAnalyzerV3({/*...*/});
-  ```
+var toneAnalyzer = new ToneAnalyzerV3({/*...*/});
+```
 
-  This was primarily done to enable smaller bundles for client-side usage, but also gives a small performance boost for server-side usage by only loading the portion of the library that is actually needed.
+This was primarily done to enable smaller bundles for client-side usage, but also gives a small performance boost for server-side usage by only loading the portion of the library that is actually needed.
 
-  The following methods will also work, but cause the entire library to be loaded:
+The following methods will also work, but cause the entire library to be loaded:
 
-  ```js
-  // Alternate methods of using the library.
-  // Not recommended, especially for client-side JS.
-  var watson = require('watson-developer-cloud');
+```js
+// Alternate methods of using the library.
+// Not recommended, especially for client-side JS.
+var watson = require('watson-developer-cloud');
 
-  var toneAnalyzer = new watson.ToneAnalyzerV3({/*...*/});
+var toneAnalyzer = new watson.ToneAnalyzerV3({/*...*/});
 
-  var tone_analyzer = watson.tone_analyzer({version: 'v3', /*...*/});
-  ```
+var tone_analyzer = watson.tone_analyzer({version: 'v3', /*...*/});
+```
 
 ## Installation
 
