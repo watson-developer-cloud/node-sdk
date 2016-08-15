@@ -221,7 +221,7 @@ AlchemyLanguageV1.prototype.taxonomy = createRequest('taxonomy');
 AlchemyLanguageV1.prototype.combined = createRequest('combined');
 
 /**
- * Detects emotions (anger, digust, fear, joy, and sadness)
+ * Detects emotions (anger, disgust, fear, joy, and sadness)
  * for text, HTML, or a URL.
  * @method
  * @param {Object} params
