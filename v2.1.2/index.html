@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Home</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Home</h1>
+
+    
+
+
+
+    
+
+
+    <h3>watson-developer-cloud 2.1.2</h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><h1>Watson Developer Cloud Node.js SDK</h1><p><a href="https://www.codacy.com/app/gattana/node-sdk?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=watson-developer-cloud/node-sdk&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/460c1d01a56942dbb7dd15d9ee0da535" alt="Codacy Badge"></a>
+<a href="http://travis-ci.org/watson-developer-cloud/node-sdk"><img src="https://secure.travis-ci.org/watson-developer-cloud/node-sdk.svg" alt="Build Status"></a>
+<a href="https://gemnasium.com/watson-developer-cloud/node-sdk"><img src="https://gemnasium.com/watson-developer-cloud/node-sdk.svg" alt="Dependency Status"></a>
+<a href="https://codecov.io/github/watson-developer-cloud/node-sdk?branch=master"><img src="https://codecov.io/github/watson-developer-cloud/node-sdk/coverage.svg?branch=master" alt="codecov.io"></a>
+<a href="https://www.npmjs.com/package/watson-developer-cloud"><img src="https://img.shields.io/npm/v/watson-developer-cloud.svg" alt="npm-version"></a>
+<a href="https://www.npmjs.com/package/watson-developer-cloud"><img src="https://img.shields.io/npm/dm/watson-developer-cloud.svg" alt="npm-downloads"></a></p>
+<p>Node client library to use the <a href="http://www.ibm.com/watson/developercloud/">Watson Developer Cloud</a> services, a collection of REST
+APIs and SDKs that use cognitive computing to solve complex problems.</p>
+<h2>Table of Contents</h2><ul>
+<li><a href="#major-changes-for-v2">Major Changes for v2</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#usage">Usage</a></li>
+<li><a href="#getting-the-service-credentials">Getting the Service Credentials</a></li>
+<li><a href="#questions">Questions</a></li>
+<li><a href="#examples">Examples</a></li>
+<li><a href="#ibm-watson-services">IBM Watson Services</a><ul>
+<li><a href="#alchemy-language">Alchemy Language</a></li>
+<li><a href="#alchemy-vision">Alchemy Vision</a></li>
+<li><a href="#alchemy-data-news">Alchemy Data News</a></li>
+<li><a href="#authorization">Authorization</a></li>
+<li><a href="#concept-insights">Concept Insights</a></li>
+<li><a href="#conversation">Conversation</a></li>
+<li><a href="#dialog">Dialog</a></li>
+<li><a href="#document-conversion">Document Conversion</a></li>
+<li><a href="#language-translator">Language Translator</a></li>
+<li><a href="#natural-language-classifier">Natural Language Classifier</a></li>
+<li><a href="#personality-insights">Personality Insights</a></li>
+<li><a href="#relationship-extraction">Relationship Extraction</a></li>
+<li><a href="#retrieve-and-rank">Retrieve and Rank</a></li>
+<li><a href="#speech-to-text">Speech to Text</a></li>
+<li><a href="#text-to-speech">Text to Speech</a></li>
+<li><a href="#tone-analyzer">Tone Analyzer</a></li>
+<li><a href="#tradeoff-analytics">Tradeoff Analytics</a></li>
+<li><a href="#visual-insights">Visual Insights</a></li>
+<li><a href="#visual-recognition">Visual Recognition</a></li>
+</ul>
+</li>
+<li><a href="#composing-services">Composing Services</a></li>
+<li><a href="#debug">Debug</a></li>
+<li><a href="#tests">Tests</a></li>
+<li><a href="#open-source--ibm">Open Source @ IBM</a></li>
+<li><a href="#license">License</a></li>
+<li><a href="#contributing">Contributing</a></li>
+</ul>
+<h2>Major Changes for v2</h2><ul>
+<li><p><strong>Breaking</strong>: user-supplied credentials are now preferred over Bluemix-supplied credentials.
+The order of preference is now:</p>
+<p>1) User-supplied credentials passed to the service constructor</p>
+<p>2) <code>SERVICE_NAME_USERNAME</code> and <code>SERVICE_NAME_PASSWORD</code> environment properties (or <code>SERVICE_NAME_API_KEY</code> when appropriate)</p>
+<p>3) Bluemix-supplied credentials (via the <code>VCAP_SERVICES</code> JSON-encoded environment property)</p>
+</li>
+<li><p>Client-side support via <a href="http://browserify.org/">Browserify</a></p>
+<p><code>examples/browserify/</code> shows an example app that generates tokens server-side and uses the SDK client-side via browserify.</p>
+<p>Note: Not all services currently support CORS, and therefore not all services can be used client-side.
+Of those that do, most require an auth token to be generated server-side via the <a href="#authorization">Authorization Service</a></p>
+</li>
+<li><p>New recommended method for instantiating services:</p>
+<pre class="prettyprint source lang-js"><code>var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
+
+var toneAnalyzer = new ToneAnalyzerV3({/*...*/});</code></pre><p>This was primarily done to enable smaller bundles for client-side usage, but also gives a small performance boost for server-side usage by only loading the portion of the library that is actually needed.</p>
+<p>The following methods will also work, but cause the entire library to be loaded:</p>
+<pre class="prettyprint source lang-js"><code>// Alternate methods of using the library.
+// Not recommended, especially for client-side JS.
+var watson = require('watson-developer-cloud');
+
+var toneAnalyzer = new watson.ToneAnalyzerV3({/*...*/});
+
+var tone_analyzer = watson.tone_analyzer({version: 'v3', /*...*/});</code></pre></li>
+</ul>
+<h2>Installation</h2><pre class="prettyprint source lang-sh"><code>$ npm install watson-developer-cloud --save</code></pre><h2>Usage</h2><p>The examples below assume that you already have service credentials. If not,
+you will have to create a service in <a href="https://console.ng.bluemix.net">Bluemix</a>.</p>
+<p>If you are running your application in Bluemix, you don't need to specify the
+credentials; the library will get them for you by looking at the <code>VCAP_SERVICES</code> environment variable.</p>
+<h3>Data collection opt-out</h3><p>By default, <a href="http://www.ibm.com/watson/developercloud/doc/getting_started/gs-logging.shtml">all requests are logged</a>. This can be disabled of by setting the <code>X-Watson-Learning-Opt-Out</code> header when creating the service instance:</p>
+<pre class="prettyprint source lang-js"><code>var myInstance = new watson.WhateverServiceV1({
+  /* username, password, version, etc... */
+  headers: {
+    &quot;X-Watson-Learning-Opt-Out&quot;: &quot;1&quot;
+  }
+});</code></pre><h2>Getting the Service Credentials</h2><p>You will need the <code>username</code> and <code>password</code> (<code>api_key</code> for AlchemyAPI) credentials for each service. Service credentials are different from your Bluemix account username and password.</p>
+<p>To get your service credentials, follow these steps:</p>
+<ol>
+<li><p>Log in to Bluemix at https://bluemix.net.</p>
+</li>
+<li><p>Create an instance of the service:</p>
+<ol>
+<li>In the Bluemix <strong>Catalog</strong>, select the service you want to use.</li>
+<li>Under <strong>Add Service</strong>, type a unique name for the service instance in the Service name field. For example, type <code>my-service-name</code>. Leave the default values for the other options.</li>
+<li>Click <strong>Create</strong>.</li>
+</ol>
+</li>
+<li><p>Copy your credentials:</p>
+<ol>
+<li>On the left side of the page, click <strong>Service Credentials</strong> to view your service credentials.</li>
+<li>Copy <code>username</code> and <code>password</code>(<code>api_key</code> for AlchemyAPI).</li>
+</ol>
+</li>
+</ol>
+<h2>Questions</h2><p>If you are having difficulties using the APIs or have a question about the IBM
+Watson Services, please ask a question on
+<a href="https://developer.ibm.com/answers/questions/ask/?topics=watson">dW Answers</a>
+or <a href="http://stackoverflow.com/questions/ask?tags=ibm-watson">Stack Overflow</a>.</p>
+<h2>Examples</h2><p>The <a href="https://github.com/watson-developer-cloud/node-sdk/tree/master/examples">examples</a> folder has basic and advanced examples.</p>
+<h2>IBM Watson Services</h2><p>The Watson Developer Cloud offers a variety of services for building cognitive
+apps.</p>
+<h3>Alchemy Language</h3><p><a href="http://www.alchemyapi.com/products/alchemylanguage">Alchemy Language</a> offers 12 API functions as part of its text analysis service, each of which uses sophisticated natural language processing techniques to analyze your content and add high-level semantic information.</p>
+<p>Use the <a href="http://www.alchemyapi.com/products/alchemylanguage/sentiment-analysis">Sentiment Analysis</a> endpoint to identify positive/negative sentiment within a sample text document.</p>
+<pre class="prettyprint source lang-javascript"><code>var AlchemyLanguageV1 = require('watson-developer-cloud/alchemy-language/v1');
+
+var alchemy_language = new AlchemyLanguageV1({
+  api_key: 'API_KEY'
+});
+
+var params = {
+  text: 'IBM Watson won the Jeopardy television show hosted by Alex Trebek'
+};
+
+alchemy_language.sentiment(params, function (err, response) {
+  if (err)
+    console.log('error:', err);
+  else
+    console.log(JSON.stringify(response, null, 2));
+});</code></pre><h3>Alchemy Vision</h3><p><a href="http://www.alchemyapi.com/products/alchemyvision">Alchemy Vision</a> uses deep learning innovations to understand a picture's content and context. It sees complex visual scenes in their entirety —without needing any textual clues— leveraging a holistic approach to understanding the multiple objects and surroundings.</p>
+<p>Example: Extract keywords from an image.</p>
+<pre class="prettyprint source lang-javascript"><code>var AlchemyVisionV1 = require('watson-developer-cloud/alchemy-vision/v1');
+var fs = require('fs');
+
+var alchemy_vision = new AlchemyVisionV1({
+  api_key: '&lt;api_key>'
+});
+
+var params = {
+  image: fs.createReadStream('src/test/resources/obama.jpg')
+};
+
+alchemy_vision.getImageKeywords(params, function (err, keywords) {
+  if (err)
+    console.log('error:', err);
+  else
+    console.log(JSON.stringify(keywords, null, 2));
+});</code></pre><h3>Alchemy Data News</h3><p><a href="http://www.alchemyapi.com/products/alchemydata-news">Alchemy Data News</a> indexes 250k to 300k English language news and blog articles every day with historical search available for the past 60 days.
+Example: Get the volume data from the last 7 days using 12hs of time slice.</p>
+<pre class="prettyprint source lang-javascript"><code>var AlchemyDataNewsV1 = require('watson-developer-cloud/alchemy-data-news/v1');
+
+var alchemy_data_news = new AlchemyDataNewsV1({
+  api_key: '&lt;api_key>'
+});
+
+var params = {
+  start: 'now-1d',
+  end: 'now'
+};
+
+alchemy_data_news.getNews(params, function (err, news) {
+  if (err)
+    console.log('error:', err);
+  else
+    console.log(JSON.stringify(news, null, 2));
+});</code></pre><h3>Authorization</h3><p>The Authorization service can generates auth tokens for situations where providing the service username/password is undesirable.</p>
+<p>Tokens are valid for 1 hour and may be sent using the <code>X-Watson-Authorization-Token</code> header or the <code>watson-token</code> query param. </p>
+<p>Note that the token is supplied URL-encoded, and will not be accepted if it is double-encoded in a querystring.</p>
+<pre class="prettyprint source lang-javascript"><code>var watson = require('watson-developer-cloud');
+
+var authorization = new watson.AuthorizationV1({
+  username: '&lt;Text to Speech username>',
+  password: '&lt;Text to Speech password>'
+  url: watson.TextToSpeechV1.URL
+});
+
+authorization.getToken(function (err, token) {
+  if (!token) {
+    console.log('error:', err);
+  } else {
+    // Use your token here
+  }
+});</code></pre><h3>Concept Insights</h3><p>The <a href="http://www.ibm.com/watson/developercloud/doc/concept-insights/">Concept Insights</a> has been deprecated, AlchemyLanguage's concept function can be used as a replacement for most Concept Insights use cases; therefore, we encourage existing Concept Insights service users to migrate to AlchemyLanguage.</p>
+<h3>Conversation</h3><p>Use the <a href="https://www.ibm.com/watson/developercloud/conversation.html">Conversation</a> service to determine the intent of a message.</p>
+<p>Note: you must first create a workspace via Bluemix. See <a href="http://www.ibm.com/watson/developercloud/doc/conversation/overview.shtml">the documentation</a> for details.</p>
+<pre class="prettyprint source lang-js"><code>var ConversationV1 = require('watson-developer-cloud/conversation/v1');
+
+var conversation = new ConversationV1({
+  username: '&lt;username>',
+  password: '&lt;password>',
+  version_date: '2016-07-01'
+});
+
+conversation.message({
+  input: 'What\'s the weather?',
+  workspace_id: '&lt;workspace id>'
+ }, function(err, response) {
+     if (err) {
+       console.error(err);
+     } else {
+       console.log(JSON.stringify(response, null, 2));
+     }
+});</code></pre><h3>Dialog</h3><p>Use the Dialog service to list all the dialogs you have.</p>
+<pre class="prettyprint source lang-javascript"><code>var DialogV1 = require('watson-developer-cloud/dialog/v1');
+
+var dialog = new DialogV1({
+  username: '&lt;username>',
+  password: '&lt;password>',
+  version_date: '2015-12-01'
+});
+
+dialog.getDialogs({}, function (err, dialogs) {
+  if (err)
+    console.log('error:', err);
+  else
+    console.log(JSON.stringify(dialogs, null, 2));
+});</code></pre><h3>Document Conversion</h3><pre class="prettyprint source lang-javascript"><code>var DocumentConversionV1 = require('watson-developer-cloud/document-conversion/v1');
+var fs = require('fs');
+
+var document_conversion = new DocumentConversionV1({
+  username:     '&lt;username>',
+  password:     '&lt;password>',
+  version_date: '2015-12-01'
+});
+
+// convert a single document
+document_conversion.convert({
+  // (JSON) ANSWER_UNITS, NORMALIZED_HTML, or NORMALIZED_TEXT
+  file: fs.createReadStream('sample-docx.docx'),
+  conversion_target: document_conversion.conversion_target.ANSWER_UNITS,
+  // Add custom configuration properties or omit for defaults
+  word: {
+    heading: {
+      fonts: [
+        { level: 1, min_size: 24 },
+        { level: 2, min_size: 16, max_size: 24 }
+      ]
+    }
+  }
+}, function (err, response) {
+  if (err) {
+    console.error(err);
+  } else {
+    console.log(JSON.stringify(response, null, 2));
+  }
+});</code></pre><p>See the <a href="https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/document_conversion_integration.v1.js">Document Conversion integration example</a> about how to integrate the Document Conversion service
+with the Retrieve and Rank service.</p>
+<h3>Language Translator</h3><p>Translate text from one language to another or idenfity a language using the <a href="http://www.ibm.com/watson/developercloud/doc/language-translation/">Language Translator</a> service.</p>
+<pre class="prettyprint source lang-javascript"><code>var LanguageTranslatorV2 = require('watson-developer-cloud/language-translator/v2');
+
+var language_translator = new LanguageTranslatorV2({
+  username: '&lt;username>',
+  password: '&lt;password>'
+});
+
+language_translator.translate({
+  text: 'A sentence must have a verb', source : 'en', target: 'es' },
+  function (err, translation) {
+    if (err)
+      console.log('error:', err);
+    else
+      console.log(JSON.stringify(translation, null, 2));
+});
+
+language_translator.identify({
+  text: 'The language translator service takes text input and identifies the language used.' },
+  function (err, language) {
+    if (err)
+      console.log('error:', err);
+    else
+      console.log(JSON.stringify(language, null, 2));
+});</code></pre><h3>Natural Language Classifier</h3><p>Use <a href="http://www.ibm.com/watson/developercloud/doc/nl-classifier/">Natural Language Classifier</a> service to create a classifier instance by providing a set of representative strings and a set of one or more correct classes for each as training. Then use the trained classifier to classify your new question for best matching answers or to retrieve next actions for your application.</p>
+<pre class="prettyprint source lang-javascript"><code>var NaturalLanguageClassifierV1 = require('watson-developer-cloud/natural-language-classifier/v1');
+
+var natural_language_classifier = new NaturalLanguageClassifierV1({
+  username: '&lt;username>',
+  password: '&lt;password>'
+});
+
+natural_language_classifier.classify({
+  text: 'Is it sunny?',
+  classifier_id: '&lt;classifier-id>' },
+  function(err, response) {
+    if (err)
+      console.log('error:', err);
+    else
+      console.log(JSON.stringify(response, null, 2));
+});</code></pre><p>See this <a href="https://github.com/watson-developer-cloud/node-sdk/blob/master/examples/natural_language_classifier.v1.js">example</a> to learn how to create a classifier.</p>
+<h3>Personality Insights</h3><p>Analyze text in english and get a personality profile by using the
+<a href="http://www.ibm.com/watson/developercloud/doc/personality-insights/">Personality Insights</a> service.</p>
+<pre class="prettyprint source lang-javascript"><code>var PersonalityInsightsV2 = require('watson-developer-cloud/personality-insights/v2');
+
+var personality_insights = new PersonalityInsightsV2({
+  username: '&lt;username>',
+  password: '&lt;password>'
+});
+
+personality_insights.profile({
+  text: 'Enter more than 100 unique words here...',
+  language: 'en' },
+  function (err, response) {
+    if (err)
+      console.log('error:', err);
+    else
+      console.log(JSON.stringify(response, null, 2));
+});</code></pre><p><strong>Note:</strong> Don't forget to update the <code>text</code> variable!</p>
+<h3>Relationship Extraction</h3><p>Relationship Extraction has been deprecated. If you want to continue using Relationship Extraction models, you can now access them with AlchemyLanguage. See the <a href="http://www.ibm.com/watson/developercloud/doc/alchemylanguage/migration.shtml">migration guide</a> for details.</p>
+<h3>Retrieve and Rank</h3><p>Use the <a href="http://watson.stage1.mybluemix.net/watson/developercloud/retrieve-rank.html">Retrieve and Rank</a> service to enhance search results with machine learning.</p>
+<pre class="prettyprint source lang-javascript"><code>var RetrieveAndRankV1 = require('watson-developer-cloud/retrieve-and-rank/v1');
+
+var retrieve = new RetrieveAndRankV1({
+  username: '&lt;username>',
+  password: '&lt;password>',
+});
+
+var solrClient = retrieve.createSolrClient({
+  cluster_id: 'INSERT YOUR CLUSTER ID HERE',
+  collection_name: 'example_collection'
+});
+
+// add a document
+var doc = { id : 1234, title_t : 'Hello', text_field_s: 'some text' };
+solrClient.add(doc, function(err) {
+  if(err) {
+    console.log('Error indexing document: ' + err);
+  } else {
+    console.log('Indexed a document.');
+    solrClient.commit(function(err) {
+      if(err) {
+        console.log('Error committing change: ' + err);
+      } else {
+        console.log('Successfully commited changes.');
+      }
+    });
+  }
+});
+
+// search all documents
+var query = solrClient.createQuery();
+query.q({ '*' : '*' });
+solrClient.search(query, function(err, searchResponse) {
+  if(err) {
+    console.log('Error searching for documents: ' + err);
+  } else {
+    console.log('Found ' + searchResponse.response.numFound + ' document(s).');
+    console.log('First document: ' + JSON.stringify(searchResponse.response.docs[0], null, 2));
+  }
+});</code></pre><h3>Speech to Text</h3><p>Use the <a href="http://www.ibm.com/watson/developercloud/doc/speech-to-text/">Speech to Text</a> service to recognize the text from a .wav file.</p>
+<pre class="prettyprint source lang-javascript"><code>var SpeechToTextV1 = require('watson-developer-cloud/speech-to-text/v1');
+var fs = require('fs');
+
+var speech_to_text = new SpeechToTextV1({
+  username: '&lt;username>',
+  password: '&lt;password>'
+});
+
+var params = {
+  // From file
+  audio: fs.createReadStream('./resources/speech.wav'),
+  content_type: 'audio/l16; rate=44100'
+};
+
+speech_to_text.recognize(params, function(err, res) {
+  if (err)
+    console.log(err);
+  else
+    console.log(JSON.stringify(res, null, 2));
+});
+
+// or streaming
+fs.createReadStream('./resources/speech.wav')
+  .pipe(speech_to_text.createRecognizeStream({ content_type: 'audio/l16; rate=44100' }))
+  .pipe(fs.createWriteStream('./transcription.txt'));</code></pre><h3>Text to Speech</h3><p>Use the <a href="http://www.ibm.com/watson/developercloud/doc/text-to-speech/">Text to Speech</a> service to synthesize text into a .wav file.</p>
+<pre class="prettyprint source lang-js"><code>var TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
+var fs = require('fs');
+
+var text_to_speech = new TextToSpeechV1({
+  username: '&lt;username>',
+  password: '&lt;password>'
+});
+
+var params = {
+  text: 'Hello from IBM Watson',
+  voice: 'en-US_AllisonVoice', // Optional voice
+  accept: 'audio/wav'
+};
+
+// Pipe the synthesized text to a file
+text_to_speech.synthesize(params).pipe(fs.createWriteStream('output.wav'));</code></pre><h3>Tone Analyzer</h3><p>Use the <a href="http://www.ibm.com/watson/developercloud/tone-analyzer.html">Tone Analyzer</a> service to analyze the
+emotion, writing and social tones of a text.</p>
+<pre class="prettyprint source lang-js"><code>var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
+
+var tone_analyzer = new ToneAnalyzerV3({
+  username: '&lt;username>',
+  password: '&lt;password>',
+  version_date: '2016-05-19'
+});
+
+tone_analyzer.tone({ text: 'Greetings from Watson Developer Cloud!' },
+  function(err, tone) {
+    if (err)
+      console.log(err);
+    else
+      console.log(JSON.stringify(tone, null, 2));
+});</code></pre><h3>Tradeoff Analytics</h3><p>Use the <a href="http://www.ibm.com/watson/developercloud/doc/tradeoff-analytics/">Tradeoff Analytics</a> service to find the best
+phone that minimizes price and weight and maximizes screen size.</p>
+<pre class="prettyprint source lang-javascript"><code>var TradeoffAnalyticsV1 = require('watson-developer-cloud/tradeoff-analytics/v1');
+
+var tradeoff_analytics = new TradeoffAnalyticsV1({
+  username: '&lt;username>',
+  password: '&lt;password>'
+});
+
+// From file
+var params = require('./resources/problem.json');
+
+tradeoff_analytics.dilemmas(params, function(err, res) {
+  if (err)
+    console.log(err);
+  else
+    console.log(JSON.stringify(res, null, 2));
+});</code></pre><h3>Visual Insights</h3><p>The Watson <a href="http://www.ibm.com/watson/developercloud/doc/visual-insights/">Visual Insights</a> Service will be withdrawn. The Watson Visual Insights Service tile will be removed from the Bluemix catalog on July 3, 2016, after which you cannot provision new instances of this service.</p>
+<h3>Visual Recognition</h3><p>Use the <a href="http://www.ibm.com/watson/developercloud/doc/visual-recognition/">Visual Recognition</a> service to recognize the
+following picture.</p>
+<p><img src="https://visual-recognition-demo.mybluemix.net/images/samples/5.jpg" width="150" /></p>
+<pre class="prettyprint source lang-js"><code>var VisualRecognitionV3 = require('watson-developer-cloud/visual-recognition/v3');
+var fs = require('fs');
+
+var visual_recognition = new VisualRecognitionV3({
+  api_key: '&lt;api_key>',
+  version_date: '2016-05-19'
+});
+
+var params = {
+  images_file: fs.createReadStream('./resources/car.png')
+};
+
+visual_recognition.classify(params, function(err, res) {
+  if (err)
+    console.log(err);
+  else
+    console.log(JSON.stringify(res, null, 2));
+});</code></pre><h2>Composing Services</h2><h3>Integration of Tone Analyzer with Conversation</h3><p>Sample code for <a href="https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/conversation_tone_analyzer_integration">integrating Tone Analyzer and Conversation</a> is provided in the <a href="https://github.com/watson-developer-cloud/node-sdk/tree/master/examples">examples directory</a>.</p>
+<h2>Integration Document Conversation with Retrieve and Rank</h2><p>See the <a href="https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/document_conversion_integration.v1.js">Document Conversion integration example</a> about how to integrate the Document Conversion service
+with the Retrieve and Rank service.</p>
+<h2>Unauthenticated requests</h2><p>By default, the library tries to use Basic Auth and will ask for <code>api_key</code> or <code>username</code> and <code>password</code> and send an <code>Authorization: Basic XXXXXXX</code>. You can avoid this by using:</p>
+<p><code>use_unauthenticated</code>.</p>
+<pre class="prettyprint source lang-javascript"><code>var watson = require('watson-developer-cloud');
+
+var dialog = new watson.DialogV1({
+  use_unauthenticated: true
+});</code></pre><h2>Debug</h2><p>This library relies on the <code>request</code> npm module writted by
+<a href="https://github.com/request/request">request</a> to call the Watson Services. To debug the apps, add
+'request' to the <code>NODE_DEBUG</code> environment variable:</p>
+<pre class="prettyprint source lang-sh"><code>$ NODE_DEBUG='request' node app.js</code></pre><p>where <code>app.js</code> is your Node.js file.</p>
+<h2>Tests</h2><p>Running all the tests:</p>
+<pre class="prettyprint source lang-sh"><code>$ npm test</code></pre><p>Running a specific test:</p>
+<pre class="prettyprint source lang-sh"><code>$ mocha -g '&lt;test name>'</code></pre><h2>Open Source @ IBM</h2><p><a href="http://ibm.github.io/">Find more open source projects on the IBM Github Page.</a></p>
+<h2>License</h2><p>This library is licensed under Apache 2.0. Full license text is available in
+<a href="http://www.apache.org/licenses/LICENSE-2.0">COPYING</a>.</p>
+<h2>Contributing</h2><p>See <a href="https://github.com/watson-developer-cloud/node-sdk/blob/master/.github/CONTRIBUTING.md">CONTRIBUTING</a>.</p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-watson-developer-cloud.html">watson-developer-cloud</a></li></ul><h3>Classes</h3><ul><li><a href="AlchemyDataNewsV1.html">AlchemyDataNewsV1</a></li><li><a href="AlchemyLanguageV1.html">AlchemyLanguageV1</a></li><li><a href="AlchemyVisionV1.html">AlchemyVisionV1</a></li><li><a href="AuthorizationV1.html">AuthorizationV1</a></li><li><a href="ConversationV1.html">ConversationV1</a></li><li><a href="ConversationV1Experimental.html">ConversationV1Experimental</a></li><li><a href="DialogV1.html">DialogV1</a></li><li><a href="LanguageTranslatorV2.html">LanguageTranslatorV2</a></li><li><a href="NaturalLanguageClassifierV1.html">NaturalLanguageClassifierV1</a></li><li><a href="PersonalityInsightsV1.html">PersonalityInsightsV1</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RetrieveAndRankV1.html">RetrieveAndRankV1</a></li><li><a href="SpeechToTextV1.html">SpeechToTextV1</a></li><li><a href="TextToSpeechV1.html">TextToSpeechV1</a></li><li><a href="TradeoffAnalyticsV1.html">TradeoffAnalyticsV1</a></li><li><a href="VisualRecognitionV3.html">VisualRecognitionV3</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:close">close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Aug 15 2016 14:57:24 GMT+0000 (UTC)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
