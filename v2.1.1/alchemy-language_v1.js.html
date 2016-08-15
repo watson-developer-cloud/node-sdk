@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: alchemy-language/v1.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: alchemy-language/v1.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Copyright 2015 IBM Corp. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+var extend = require('extend');
+var util = require('util');
+var BaseServiceAlchemy = require('../lib/base_service_alchemy');
+var requestFactory = require('../lib/requestwrapper');
+// IMPORTANT:
+// Due to the current design, the URL must be the last key on each endpoint or
+// it could inadvertently clobber a url query param in the users request.
+// see #236
+var endpoints      = require('../lib/alchemy_endpoints.json');
+var helper         = require('../lib/helper');
+var pick           = require('object.pick');
+function errorFormatter(cb) {
+  return function(err, result, response) {
+    if (err) {
+      cb(err, result);
+    }
+    else {
+      if (result.status === 'OK')
+        cb(err,result);
+      else
+        cb({
+          error: result.statusInfo || response['headers']['x-alchemyapi-error-msg'],
+          code: 400
+        }, null);
+    }
+  };
+}
+
+function createRequest(method) {
+  return function(_params, callback ) {
+    var params = _params || {};
+    var accepted_formats = Object.keys(endpoints[method]);
+    var format = helper.getFormat(params, accepted_formats);
+
+    if (format === null) {
+      callback(new Error('Missing required parameters: ' +
+        accepted_formats.join(', ') +
+        ' needs to be specified'));
+      return;
+    }
+
+    var parameters = {
+      options: {
+        url: endpoints[method][format],
+        method: 'POST',
+        json: true,
+        qs: pick(params, ['model']),
+        form: extend({}, params, {outputMode: 'json'}) // change default output to json
+      },
+      defaultOptions: this._options
+    };
+    return requestFactory(parameters, errorFormatter(callback));
+  };
+}
+
+/**
+ *
+ * @param options
+ * @constructor
+ */
+function AlchemyLanguageV1(options) {
+  BaseServiceAlchemy.call(this, options);
+}
+util.inherits(AlchemyLanguageV1, BaseServiceAlchemy);
+AlchemyLanguageV1.prototype.name = 'alchemy_language';
+AlchemyLanguageV1.prototype.version = 'v1';
+AlchemyLanguageV1.URL = 'https://access.alchemyapi.com/calls';
+
+/**
+ * Extracts a grouped, ranked list of named entities (people, companies,
+ * organizations, etc.) from text, a URL or HTML.
+ * @method
+ * @param {Object} params
+ * @param {Function} callback
+ */
+AlchemyLanguageV1.prototype.entities = createRequest('entities');
+
+/**
+ * Extracts the keywords from text, a URL or HTML.
+ * @method
+ * @param {Object} params
+ * @param {Function} callback
+ */
+AlchemyLanguageV1.prototype.keywords = createRequest('keywords');
+
+/**
+ * Tags the concepts from text, a URL or HTML.
+ * @method
+ * @param {Object} params
+ * @param {Function} callback
+ */
+AlchemyLanguageV1.prototype.concepts = createRequest('concepts');
+
+/**
+ * Calculates the sentiment for text, a URL or HTML.
+ */
+AlchemyLanguageV1.prototype.sentiment = function(params, callback) {
+  var _params = extend({}, params);
+  var service = (params.target || params.targets) ? 'sentiment_targeted' : 'sentiment';
+  if (util.isArray(_params.targets))
+    _params.targets = _params.targets.join('|');
+
+  return createRequest(service).call(this, _params, callback);
+};
+/**
+ * Extracts the cleaned text (removes ads, navigation, etc.) for a URL or HTML.
+ * if raw = true, extracts the cleaned text (removes ads, navigation, etc.).
+ */
+AlchemyLanguageV1.prototype.text = function(params, callback) {
+  var service = (params &amp;&amp; params.raw) ? 'text_raw' : 'text';
+  return createRequest(service).call(this, params, callback);
+};
+
+/**
+ * Extracts the authors from a URL or HTML.
+ * @method
+ * @param {Object} params
+ * @param {Function} callback
+ */
+AlchemyLanguageV1.prototype.authors = createRequest('authors');
+
+/**
+ * Detects the language for text, a URL or HTML.
+ * @method
+ * @param {Object} params
+ * @param {Function} callback
+ */
+AlchemyLanguageV1.prototype.language = createRequest('language');
+
+/**
+ * Extracts the title for a URL or HTML.
+ *
+ * @see http://www.alchemyapi.com/api/text/proc.html
+ * @method
+ * @param {Object} params
+ * @param {Function} callback
+ */
+AlchemyLanguageV1.prototype.title = createRequest('title');
+
+/**
+ * Extracts the relations for text, a URL or HTML.
+ * @method
+ * @param {Object} params
+ * @param {Function} callback
+ */
+AlchemyLanguageV1.prototype.relations = createRequest('relations');
+
+/**
+ * Categorizes the text for text, a URL or HTML.
+ * @method
+ * @param {Object} params
+ * @param {Function} callback
+ */
+AlchemyLanguageV1.prototype.category = createRequest('category');
+
+/**
+ * Extracts the publication date from a webpage or HTML file.
+ * @method
+ * @param {Object} params
+ * @param {Function} callback
+ */
+AlchemyLanguageV1.prototype.publicationDate = createRequest('publication_date');
+
+/**
+ * Finds dates in the source text, including relative dates like "next Tuesday"
+ * if an anchorDate is set.
+ * @method
+ * @param {Object} params
+ * @param {Function} callback
+ */
+AlchemyLanguageV1.prototype.dates = createRequest('extract_dates');
+
+/**
+ * Detects the RSS/ATOM feeds for a URL or HTML.
+ * @method
+ * @param {Object} params
+ * @param {Function} callback
+ */
+AlchemyLanguageV1.prototype.feeds = createRequest('feeds');
+
+/**
+ * Parses the microformats for a URL or HTML.
+ * @method
+ * @param {Object} params
+ * @param {Function} callback
+ */
+AlchemyLanguageV1.prototype.microformats = createRequest('microformats');
+
+/**
+ * Categorized through the taxonomy call for text, HTML, or a URL.
+ * @method
+ * @param {Object} params
+ * @param {Function} callback
+ */
+AlchemyLanguageV1.prototype.taxonomy = createRequest('taxonomy');
+
+/**
+ * Combines multiple API operations into a single call.
+ * @method
+ * @param {Object} params
+ * @param {Function} callback
+ */
+AlchemyLanguageV1.prototype.combined = createRequest('combined');
+
+/**
+ * Detects emotions (anger, digust, fear, joy, and sadness)
+ * for text, HTML, or a URL.
+ * @method
+ * @param {Object} params
+ * @param {Function} callback
+ */
+AlchemyLanguageV1.prototype.emotion = function(params, callback) {
+  var _params = extend({}, params);
+  var service = (params.target || params.targets) ? 'emotion_targeted' : 'emotion';
+  if (util.isArray(_params.targets))
+    _params.targets = _params.targets.join('|');
+
+  return createRequest(service).call(this, _params, callback);
+};
+
+/**
+ * Finds entities and their relationships
+ * for text, HTML, or a URL.
+ * @method
+ * @param {Object} params
+ * @param {Function} callback
+ */
+AlchemyLanguageV1.prototype.typedRelations = createRequest('typed_relations');
+
+
+module.exports = AlchemyLanguageV1;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-watson-developer-cloud.html">watson-developer-cloud</a></li></ul><h3>Classes</h3><ul><li><a href="AlchemyDataNewsV1.html">AlchemyDataNewsV1</a></li><li><a href="AlchemyLanguageV1.html">AlchemyLanguageV1</a></li><li><a href="AlchemyVisionV1.html">AlchemyVisionV1</a></li><li><a href="AuthorizationV1.html">AuthorizationV1</a></li><li><a href="ConversationV1.html">ConversationV1</a></li><li><a href="ConversationV1Experimental.html">ConversationV1Experimental</a></li><li><a href="DialogV1.html">DialogV1</a></li><li><a href="LanguageTranslatorV2.html">LanguageTranslatorV2</a></li><li><a href="NaturalLanguageClassifierV1.html">NaturalLanguageClassifierV1</a></li><li><a href="PersonalityInsightsV1.html">PersonalityInsightsV1</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RetrieveAndRankV1.html">RetrieveAndRankV1</a></li><li><a href="SpeechToTextV1.html">SpeechToTextV1</a></li><li><a href="TextToSpeechV1.html">TextToSpeechV1</a></li><li><a href="TradeoffAnalyticsV1.html">TradeoffAnalyticsV1</a></li><li><a href="VisualRecognitionV3.html">VisualRecognitionV3</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:close">close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Aug 15 2016 12:13:44 GMT+0000 (UTC)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
