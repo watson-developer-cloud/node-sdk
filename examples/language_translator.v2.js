@@ -1,6 +1,6 @@
 'use strict';
 
-var LanguageTranslatorV2 = require('watson-developer-cloud/language_translator/v2');
+var LanguageTranslatorV2 = require('watson-developer-cloud/language-translator/v2');
 var fs     = require('fs');
 
 var language_translator = new LanguageTranslatorV2({
