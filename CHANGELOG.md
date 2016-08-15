@@ -1,3 +1,10 @@
+# v2.1.2
+* Added profanity_filter support to STT RecognizeStream
+
+# v2.1.1
+* Corrected some examples to use - instead of _
+* Renamed NLC folder to use - instead of _
+
 # v2.1.0
 * Updated AlchemyLanguageV1.emotion() to support new targeted_emotion parameter & endpoint
 * Added Conversation/Tone Analyzer integration example
