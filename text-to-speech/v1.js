@@ -38,11 +38,12 @@ TextToSpeechV1.URL = 'https://stream.watsonplatform.net/text-to-speech/api';
 /**
  * Streaming speech synthesis of the text in a query parameter
  *
- * @param {Object} options
- * @param {String} options.text
- * @param {String} [options.voice]
- * @param {String} [options.accept]
- * @param {Boolean} [options.X-Watson-Learning-Opt-Out]
+ * @param {Object} params
+ * @param {String} params.text
+ * @param {String} [params.voice=en-US_MichaelVoice] - Call .voices() for a complete list
+ * @param {String} [params.accept=audio/ogg;codecs=opus] - Supported formats are audio/ogg;codecs=opus, audio/wav, audio/flac, audio/l16, audio/basic
+ * @param {Boolean} [params.X-Watson-Learning-Opt-Out]
+ * @param {String} [params.customization_id]
  * @param {Function} callback
  */
 TextToSpeechV1.prototype.synthesize = function(params, callback) {
@@ -57,7 +58,7 @@ TextToSpeechV1.prototype.synthesize = function(params, callback) {
       method: 'POST',
       url: '/v1/synthesize',
       body: JSON.stringify(pick(params, ['text'])),
-      qs: pick(params, ['accept', 'voice']),
+      qs: pick(params, ['accept', 'voice', 'customization_id']),
       headers: extend({
         'content-type': 'application/json'
       }, pick(params, ['X-Watson-Learning-Opt-Out'])),
@@ -68,14 +69,66 @@ TextToSpeechV1.prototype.synthesize = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
+// todo: add websocket support
+// http://www.ibm.com/watson/developercloud/text-to-speech/api/v1/?curl#www_synthesize12
+
+
 /**
  * Retrieves the voices available for speech synthesis
+ * @param {Object} params
+ * @param {Function} callback
  */
 TextToSpeechV1.prototype.voices = function(params, callback) {
   var parameters = {
     options: {
       method: 'GET',
       url: '/v1/voices',
+      json: true
+    },
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Retrieves information about the specified voice
+ *
+ * @param {Object} params
+ * @param {String} params.voice
+ * @param {String} [params.customization_id]
+ */
+TextToSpeechV1.prototype.voice = function(params, callback) {
+  var parameters = {
+    requiredParams: ['voice'],
+    options: {
+      method: 'GET',
+      url: '/v1/voices/{voice}',
+      path: pick(params, ['voice']),
+      qs: pick(params, ['customization_id']),
+      json: true
+    },
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+
+/**
+ * Returns the phonetic pronunciation for the specified word.
+ *
+ * @param {Object} params
+ * @param {String} params.text - a single word
+ * @param {String} [params.format=ipa] - Supported formats are ipa, spr for US English, or spr for other languages
+ * @param {String} [params.voice] - Defaults to en-US_MichaelVoice unless a customization_id is specified. Do not specify both a voice and a customization_id
+ * @param {String} [params.customization_id] - do not specify both a voice and a customization_id
+ */
+TextToSpeechV1.prototype.pronunciation = function(params, callback) {
+  var parameters = {
+    requiredParams: ['text'],
+    options: {
+      method: 'GET',
+      url: '/v1/pronunciation',
+      qs: pick(params, ['text', 'voice', 'format', 'customization_id']),
       json: true
     },
     defaultOptions: this._options
@@ -107,6 +160,7 @@ API-11 	GET 	/api/v1/pronunciation?text=aword&voice=voiceModel&format=ipa|spr 	G
 */
 
 /*
+
 
 
  Create Custom Voice Model

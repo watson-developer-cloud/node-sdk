@@ -299,6 +299,18 @@ describe('integration-all-services', function() {
         .pipe(reader)
         .on('format', done.bind(null,null));
     });
+
+    it('pronunciation()', function(done) {
+      var checkPronunciation = function(err, res) {
+        assert.ifError(err);
+        assert.equal(JSON.stringify(res), JSON.stringify({
+          "pronunciation": ".ˈaɪ .ˈi .ˈi .ˈi"
+        }));
+        done();
+      };
+
+      text_to_speech.pronunciation({text: 'IEEE'}, checkPronunciation);
+    });
   });
 
   describe('functional_speech_to_text', function() {

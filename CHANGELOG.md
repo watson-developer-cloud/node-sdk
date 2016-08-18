@@ -1,3 +1,9 @@
+# v2.1.3
+* Deprecation warning for Dialog
+* Added TTS .voice() and .pronunciation() methods
+* Added support for `customization_id` to existing TTS methods
+* Typo and JSDoc fixes
+
 # v2.1.2
 * Added profanity_filter support to STT RecognizeStream
 
