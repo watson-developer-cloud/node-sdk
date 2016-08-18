@@ -7,7 +7,7 @@ Watson Developer Cloud Node.js SDK
 [![npm-version](https://img.shields.io/npm/v/watson-developer-cloud.svg)](https://www.npmjs.com/package/watson-developer-cloud)
 [![npm-downloads](https://img.shields.io/npm/dm/watson-developer-cloud.svg)](https://www.npmjs.com/package/watson-developer-cloud)
 
-Node client library to use the [Watson Developer Cloud][wdc] services, a collection of APIs that use cognitive computing to solve complex problems.
+Node.js client library to use the [Watson Developer Cloud][wdc] services, a collection of APIs that use cognitive computing to solve complex problems.
 
 ## Table of Contents
   * [Major Changes for v2](#major-changes-for-v2)
