@@ -556,7 +556,7 @@ describe('integration-all-services', function() {
 
     it('feeds()', function(done) {
       alchemy_language.feeds({
-        url: 'http://www.techcrunch.com/'
+        url: 'https://developer.ibm.com/watson/blog/'
       }, failIfError.bind(failIfError, done));
     });
 
