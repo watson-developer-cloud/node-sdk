@@ -3,6 +3,7 @@
 * Added TTS .voice() and .pronunciation() methods
 * Added support for `customization_id` to existing TTS methods
 * Typo and JSDoc fixes
+* Fixed bug with pulling api key from env properties for alchemy services
 
 # v2.1.2
 * Added profanity_filter support to STT RecognizeStream
