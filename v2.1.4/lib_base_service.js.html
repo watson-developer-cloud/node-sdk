@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: lib/base_service.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: lib/base_service.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Copyright 2014 IBM Corp. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+"use strict";
+var extend       = require('extend');
+var vcapServices = require('vcap_services');
+var helper       = require('./helper');
+var omit         = require('object.omit');
+var request      = require('request');
+
+
+/**
+ * Base class that other services inherit from
+ * @private
+ * @param {Object} [options]
+ * @constructor
+ */
+function BaseService(user_options) {
+  if (!(this instanceof BaseService)) {
+    // it might be better to just create a new instance and return that.. but that can't be done here, it has to be done in each individual service. So this is still a good failsafe even in that case.
+    throw new Error('"new" keyword required to create Watson service instances');
+  }
+  var options = extend({}, user_options);
+
+  options = this.initCredentials(options);
+
+  options = omit(options, ['version', 'username', 'password',
+    'use_vcap_services', 'use_unauthenticated', 'apikey']);
+
+  if (options.url)
+    options.url = helper.stripTrailingSlash(options.url);
+
+  this._options = extend({qs: {}, url: this.constructor.URL}, this.serviceDefaults, options);
+}
+
+BaseService.prototype.initCredentials = function(options) {
+  if (options.token) {
+    options.headers = options.headers || {};
+    options.headers['X-Watson-Authorization-Token'] = options.token;
+    return options;
+  }
+
+  options.jar = request.jar();
+
+  // Get credentials from environment properties or Bluemix
+  // but prefer credentials provided pragmatically!
+  options = extend(
+    {},
+    this.getCredentialsFromBluemix(this.name),
+    this.getCredentialsFromEnvironment(this.name),
+    options
+  );
+
+  // Use api_key or username and password as Authorization
+  var user = options.username,
+    pass = options.password,
+    api_key = options.api_key;
+
+  if (!options.use_unauthenticated) {
+    // Check if 'api_key' or 'username' and 'password' were provided
+    if (typeof api_key === 'undefined') {
+      if (typeof user === 'undefined' || typeof pass === 'undefined') {
+          throw new Error('Argument error: api_key or username and password were not specified');
+      }
+
+      // Calculate and add api_key
+      options.api_key = new Buffer(user + ':' + pass).toString('base64');
+    }
+  }
+
+  return options;
+};
+
+/**
+ * Pulls credentials from env properties
+ *
+ * Property checked is uppercase service.name suffixed by _USERNAME and _PASSWORD
+ *
+ * For example, if service.name is speech_to_text, env properties are SPEECH_TO_TEXT_USERNAME and SPEECH_TO_TEXT_PASSWORD
+ *
+ * @param name
+ * @returns {{username: String|undefined, password: String|undefined}}
+ */
+BaseService.prototype.getCredentialsFromEnvironment = function(name) {
+  name = name.toUpperCase();
+  return {
+    username: process.env[name + '_USERNAME'],
+    password: process.env[name + '_PASSWORD']
+  }
+};
+
+/**
+ * Pulls credentials from VCAP_SERVICES env property that bluemix sets
+ *
+ * @private
+ * @returns {{}}
+ */
+BaseService.prototype.getCredentialsFromBluemix = function(vcap_services_name) {
+  return vcapServices.getCredentials(vcap_services_name);
+};
+
+
+
+module.exports = BaseService;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-watson-developer-cloud.html">watson-developer-cloud</a></li></ul><h3>Classes</h3><ul><li><a href="AlchemyDataNewsV1.html">AlchemyDataNewsV1</a></li><li><a href="AlchemyLanguageV1.html">AlchemyLanguageV1</a></li><li><a href="AlchemyVisionV1.html">AlchemyVisionV1</a></li><li><a href="AuthorizationV1.html">AuthorizationV1</a></li><li><a href="ConversationV1.html">ConversationV1</a></li><li><a href="ConversationV1Experimental.html">ConversationV1Experimental</a></li><li><a href="DialogV1.html">DialogV1</a></li><li><a href="LanguageTranslatorV2.html">LanguageTranslatorV2</a></li><li><a href="NaturalLanguageClassifierV1.html">NaturalLanguageClassifierV1</a></li><li><a href="PersonalityInsightsV1.html">PersonalityInsightsV1</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RetrieveAndRankV1.html">RetrieveAndRankV1</a></li><li><a href="SpeechToTextV1.html">SpeechToTextV1</a></li><li><a href="TextToSpeechV1.html">TextToSpeechV1</a></li><li><a href="TradeoffAnalyticsV1.html">TradeoffAnalyticsV1</a></li><li><a href="VisualRecognitionV3.html">VisualRecognitionV3</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:close">close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Sat Aug 20 2016 16:02:46 GMT+0000 (UTC)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

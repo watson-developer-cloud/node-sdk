@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: natural-language-classifier/v1.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: natural-language-classifier/v1.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Copyright 2015 IBM Corp. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
+
+'use strict';
+
+var requestFactory = require('../lib/requestwrapper');
+var pick = require('object.pick');
+var omit = require('object.omit');
+var isStream = require('isstream');
+var toCSV = require('./json-training-to-csv');
+var util = require('util');
+var BaseService = require('../lib/base_service');
+
+/**
+ *
+ * @param options
+ * @constructor
+ */
+function NaturalLanguageClassifierV1(options) {
+  BaseService.call(this, options);
+}
+util.inherits(NaturalLanguageClassifierV1, BaseService);
+NaturalLanguageClassifierV1.prototype.name = 'natural_language_classifier';
+NaturalLanguageClassifierV1.prototype.version = 'v1';
+NaturalLanguageClassifierV1.URL = 'https://gateway.watsonplatform.net/natural-language-classifier/api';
+
+/**
+ * Creates a classifier
+ */
+NaturalLanguageClassifierV1.prototype.create = function(params, callback) {
+  params = params || {};
+
+  if (!params || !params.training_data) {
+    callback(new Error('Missing required parameters: training_data'));
+    return;
+  }
+  if (!((Array.isArray(params.training_data)) ||
+      (typeof params.training_data === 'string') ||
+      (isStream(params.training_data)))) {
+    callback(new Error('training_data needs to be a String, Array or Stream'));
+    return;
+  }
+
+  var self = this;
+
+  toCSV(params.training_data, function(err, csv) {
+    if (err) {
+      callback(err);
+      return;
+    }
+
+    var parameters = {
+      options: {
+        url: '/v1/classifiers',
+        method: 'POST',
+        json: true,
+        formData: {
+          training_data: csv,
+          training_metadata: JSON.stringify(omit(params, ['training_data']))
+        },
+        // hack to check required parameters.
+        // We don't actually need path parameters
+        path: pick(params, ['language'])
+      },
+      requiredParams: ['language'],
+      defaultOptions: self._options
+    };
+    return requestFactory(parameters, callback);
+  });
+};
+
+/**
+ * Returns the classification information for a classifier on a phrase
+ */
+NaturalLanguageClassifierV1.prototype.classify = function(params, callback) {
+  params = params || {};
+
+  // #84: use classifier_id not classifier.
+  if (!params.classifier_id)
+    params.classifier_id = params.classifier;
+
+  var parameters = {
+    options: {
+      url: '/v1/classifiers/{classifier_id}/classify',
+      method: 'POST',
+      json: true,
+      path: pick(params, ['classifier_id']),
+      body: pick(params, ['text'])
+    },
+    requiredParams: ['classifier_id', 'text'],
+    defaultOptions: this._options
+  };
+
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Returns the training status of the classifier
+ */
+NaturalLanguageClassifierV1.prototype.status = function(params, callback) {
+  params = params || {};
+
+  // #84: use classifier_id not classifier.
+  if (!params.classifier_id)
+    params.classifier_id = params.classifier;
+
+  var parameters = {
+    options: {
+      url: '/v1/classifiers/{classifier_id}',
+      method: 'GET',
+      json: true,
+      path: params
+    },
+    requiredParams: ['classifier_id'],
+    defaultOptions: this._options
+  };
+
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Retrieves the list of classifiers for the user
+ */
+NaturalLanguageClassifierV1.prototype.list = function(params, callback) {
+  var parameters = {
+    options: {
+      url: '/v1/classifiers',
+      method: 'GET',
+      json: true
+    },
+    defaultOptions: this._options
+  };
+
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Deletes a classifier
+ */
+NaturalLanguageClassifierV1.prototype.remove = function(params, callback) {
+  params = params || {};
+
+  // #84: use classifier_id not classifier.
+  if (!params.classifier_id)
+    params.classifier_id = params.classifier;
+
+  var parameters = {
+    options: {
+      url: '/v1/classifiers/{classifier_id}',
+      method: 'DELETE',
+      path: params,
+      json: true
+    },
+    requiredParams: ['classifier_id'],
+    defaultOptions: this._options
+  };
+
+  return requestFactory(parameters, callback);
+};
+
+module.exports = NaturalLanguageClassifierV1;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-watson-developer-cloud.html">watson-developer-cloud</a></li></ul><h3>Classes</h3><ul><li><a href="AlchemyDataNewsV1.html">AlchemyDataNewsV1</a></li><li><a href="AlchemyLanguageV1.html">AlchemyLanguageV1</a></li><li><a href="AlchemyVisionV1.html">AlchemyVisionV1</a></li><li><a href="AuthorizationV1.html">AuthorizationV1</a></li><li><a href="ConversationV1.html">ConversationV1</a></li><li><a href="ConversationV1Experimental.html">ConversationV1Experimental</a></li><li><a href="DialogV1.html">DialogV1</a></li><li><a href="LanguageTranslatorV2.html">LanguageTranslatorV2</a></li><li><a href="NaturalLanguageClassifierV1.html">NaturalLanguageClassifierV1</a></li><li><a href="PersonalityInsightsV1.html">PersonalityInsightsV1</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RetrieveAndRankV1.html">RetrieveAndRankV1</a></li><li><a href="SpeechToTextV1.html">SpeechToTextV1</a></li><li><a href="TextToSpeechV1.html">TextToSpeechV1</a></li><li><a href="TradeoffAnalyticsV1.html">TradeoffAnalyticsV1</a></li><li><a href="VisualRecognitionV3.html">VisualRecognitionV3</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:close">close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Sat Aug 20 2016 16:02:46 GMT+0000 (UTC)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
