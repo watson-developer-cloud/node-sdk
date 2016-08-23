@@ -28,21 +28,18 @@ var fs = require('fs');
 Insert the credentials for your Retrieve and Rank service instance
 NOTE: you cannot use your Bluemix account credentials here
 */
-var retrieve = watson.retrieve_and_rank({
+var retrieve = new watson.RetrieveAndRankV1({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
-  password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
-  version: 'v1',
-  url: 'https://gateway.watsonplatform.net/retrieve-and-rank/api'
+  password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE'
 });
 
 /*
 Insert the credentials for your Document Conversion service instance
 NOTE: you cannot use your Bluemix account credentials here
 */
-var document_conversion = watson.document_conversion({
+var document_conversion = new watson.DocumentConversionV1({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
   password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
-  version: 'v1',
   version_date: '2015-12-01'
 });
 

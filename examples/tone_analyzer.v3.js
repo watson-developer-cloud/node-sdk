@@ -1,11 +1,10 @@
 'use strict';
 
-var watson = require('watson-developer-cloud');
+var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
 
-var tone_analyzer = watson.tone_analyzer({
+var tone_analyzer = new ToneAnalyzerV3({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
   password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
-  version: 'v3',
   version_date: '2016-05-19'
 });
 

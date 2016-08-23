@@ -113,17 +113,6 @@ VisualRecognitionV3.prototype.getCredentialsFromBluemix = function() {
 };
 
 /**
- * Pulls api_key from VISUAL_RECOGNITION_API_KEY env property
- *
- * @returns {{api_key: String|undefined}}
- */
-VisualRecognitionV3.prototype.getCredentialsFromEnvironment = function() {
-  return {
-    api_key: process.env.VISUAL_RECOGNITION_API_KEY
-  }
-};
-
-/**
  * Accepts either a url, a single image file, or a zip file with multiple
  * images (.jpeg, .png, .gif) and scores every available classifier
  * on each image. It then applies a threshold and returns the list
@@ -159,7 +148,7 @@ VisualRecognitionV3.prototype.getCredentialsFromEnvironment = function() {
  * }
  *
  * @param {Object} params
- * @param {ReadStream} [params.images_file] The image file (.jpg, .png, .gif) or compressed (.zip) file of images to classify. The total number of images is limited to 100. Either images_file or url must be specified.
+ * @param {ReadStream} [params.images_file] The image file (.jpg, .png, .gif) or compressed (.zip) file of images to classify. The total number of images is limited to 20. Either images_file or url must be specified.
  * @param {String} [params.url] The URL of an image (.jpg, .png, .gif). Redirects are followed, so you can use shortened URLs. The resolved URL is returned in the response. Either images_file or url must be specified.
  * @param {Array} [params.classifier_ids=['default']] An array of classifier IDs to classify the images against.
  * @param {Array} [params.owners=['me','IBM']] An array with the value(s) "IBM" and/or "me" to specify which classifiers to run.
@@ -257,7 +246,7 @@ VisualRecognitionV3.prototype.classify = function(params, callback) {
  * }
  *
  * @param {Object} params
- * @param {ReadStream} [params.images_file] The image file (.jpg, .png, .gif) or compressed (.zip) file of images to classify. The total number of images is limited to 100. Either images_file or url must be specified.
+ * @param {ReadStream} [params.images_file] The image file (.jpg, .png, .gif) or compressed (.zip) file of images to classify. The total number of images is limited to 15. Either images_file or url must be specified.
  * @param {String} [params.url] The URL of an image (.jpg, .png, .gif). Redirects are followed, so you can use shortened URLs. The resolved URL is returned in the response. Either images_file or url must be specified.
  * @param {Function} callback
  *
@@ -347,7 +336,7 @@ VisualRecognitionV3.prototype.detectFaces = function(params, callback) {
  * }
  *
  * @param {Object} params
- * @param {ReadStream} [params.images_file] The image file (.jpg, .png, .gif) or compressed (.zip) file of images to classify. The total number of images is limited to 100. Either images_file or url must be specified.
+ * @param {ReadStream} [params.images_file] The image file (.jpg, .png, .gif) or compressed (.zip) file of images to classify. The total number of images is limited to 10. Either images_file or url must be specified.
  * @param {String} [params.url] The URL of an image (.jpg, .png, .gif). Redirects are followed, so you can use shortened URLs. The resolved URL is returned in the response. Either images_file or url must be specified.
  * @param {Function} callback
  *

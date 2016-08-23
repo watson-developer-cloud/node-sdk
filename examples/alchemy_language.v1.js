@@ -1,7 +1,7 @@
 'use strict';
 
-var watson = require('watson-developer-cloud');
-var alchemy_language = watson.alchemy_language({
+var AlchemyLanguageV1 = require('watson-developer-cloud/alchemy-language/v1');
+var alchemy_language = new AlchemyLanguageV1({
   api_key: 'API_KEY'
 });
 

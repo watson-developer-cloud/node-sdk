@@ -7,8 +7,7 @@ Watson Developer Cloud Node.js SDK
 [![npm-version](https://img.shields.io/npm/v/watson-developer-cloud.svg)](https://www.npmjs.com/package/watson-developer-cloud)
 [![npm-downloads](https://img.shields.io/npm/dm/watson-developer-cloud.svg)](https://www.npmjs.com/package/watson-developer-cloud)
 
-Node client library to use the [Watson Developer Cloud][wdc] services, a collection of REST
-APIs and SDKs that use cognitive computing to solve complex problems.
+Node.js client library to use the [Watson Developer Cloud][wdc] services, a collection of APIs that use cognitive computing to solve complex problems.
 
 ## Table of Contents
   * [Major Changes for v2](#major-changes-for-v2)
@@ -37,6 +36,7 @@ APIs and SDKs that use cognitive computing to solve complex problems.
     * [Tradeoff Analytics](#tradeoff-analytics)
     * [Visual Insights](#visual-insights)
     * [Visual Recognition](#visual-recognition)
+  * [Composing Services](#composing-services)
   * [Debug](#debug)
   * [Tests](#tests)
   * [Open Source @ IBM](#open-source--ibm)
@@ -46,43 +46,46 @@ APIs and SDKs that use cognitive computing to solve complex problems.
 
 ## Major Changes for v2
 
-* **Breaking**: user-supplied credentials are now preferred over Bluemix-supplied credentials.
-  The order of preference is now:
+### BREAKING: user-supplied credentials are now preferred over Bluemix-supplied credentials.
 
-  1) User-supplied credentials passed to the service constructor
+The order of preference is now:
 
-  2) `SERVICE_NAME_USERNAME` and `SERVICE_NAME_PASSWORD` environment properties (or `SERVICE_NAME_API_KEY` when appropriate)
+1. User-supplied credentials passed to the service constructor
 
-  3) Bluemix-supplied credentials (via the `VCAP_SERVICES` JSON-encoded environment property)
+2. `SERVICE_NAME_USERNAME` and `SERVICE_NAME_PASSWORD` environment properties (or `SERVICE_NAME_API_KEY` when appropriate)
 
-* Client-side support via [Browserify](http://browserify.org/)
+3. Bluemix-supplied credentials (via the `VCAP_SERVICES` JSON-encoded environment property)
 
-  `examples/browserify/` shows an example app that generates tokens server-side and uses the SDK client-side via browserify.
+This change also removes the `use_vcap_services` flag.
 
-  Note: Not all services currently support CORS, and therefore not all services can be used client-side.
-  Of those that do, most require an auth token to be generated server-side via the [Authorization Service](#authorization)
+### Client-side support via [Browserify](http://browserify.org/)
 
-* New recommended method for instantiating services:
+`examples/browserify/` shows an example app that generates tokens server-side and uses the SDK client-side via browserify.
 
-  ```js
-  var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
+Note: not all services currently support CORS, and therefore not all services can be used client-side.
+Of those that do, most require an auth token to be generated server-side via the [Authorization Service](#authorization).
 
-  var toneAnalyzer = new ToneAnalyzerV3({/*...*/});
-  ```
+### New recommended method for instantiating services:
 
-  This was primarily done to enable smaller bundles for client-side usage, but also gives a small performance boost for server-side usage by only loading the portion of the library that is actually needed.
+```js
+var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
 
-  The following methods will also work, but cause the entire library to be loaded:
+var toneAnalyzer = new ToneAnalyzerV3({/*...*/});
+```
 
-  ```js
-  // Alternate methods of using the library.
-  // Not recommended, especially for client-side JS.
-  var watson = require('watson-developer-cloud');
+This was primarily done to enable smaller bundles for client-side usage, but also gives a small performance boost for server-side usage by only loading the portion of the library that is actually needed.
 
-  var toneAnalyzer = new watson.ToneAnalyzerV3({/*...*/});
+The following methods will also work, but cause the entire library to be loaded:
 
-  var tone_analyzer = watson.tone_analyzer({version: 'v3', /*...*/});
-  ```
+```js
+// Alternate methods of using the library.
+// Not recommended, especially for client-side JS.
+var watson = require('watson-developer-cloud');
+
+var toneAnalyzer = new watson.ToneAnalyzerV3({/*...*/});
+
+var tone_analyzer = watson.tone_analyzer({version: 'v3', /*...*/});
+```
 
 ## Installation
 
@@ -146,10 +149,10 @@ apps.
 Use the [Sentiment Analysis][sentiment_analysis] endpoint to identify positive/negative sentiment within a sample text document.
 
 ```javascript
-var watson = require('watson-developer-cloud');
+var AlchemyLanguageV1 = require('watson-developer-cloud/alchemy-language/v1');
 
-var alchemy_language = watson.alchemy_language({
-  api_key: '<api_key>'
+var alchemy_language = new AlchemyLanguageV1({
+  api_key: 'API_KEY'
 });
 
 var params = {
@@ -170,10 +173,10 @@ alchemy_language.sentiment(params, function (err, response) {
 Example: Extract keywords from an image.
 
 ```javascript
-var watson = require('watson-developer-cloud');
+var AlchemyVisionV1 = require('watson-developer-cloud/alchemy-vision/v1');
 var fs = require('fs');
 
-var alchemy_vision = watson.alchemy_vision({
+var alchemy_vision = new AlchemyVisionV1({
   api_key: '<api_key>'
 });
 
@@ -194,9 +197,9 @@ alchemy_vision.getImageKeywords(params, function (err, keywords) {
 Example: Get the volume data from the last 7 days using 12hs of time slice.
 
 ```javascript
-var watson = require('watson-developer-cloud');
+var AlchemyDataNewsV1 = require('watson-developer-cloud/alchemy-data-news/v1');
 
-var alchemy_data_news = watson.alchemy_data_news({
+var alchemy_data_news = new AlchemyDataNewsV1({
   api_key: '<api_key>'
 });
 
@@ -214,24 +217,22 @@ alchemy_data_news.getNews(params, function (err, news) {
 ```
 
 ### Authorization
-The Authorization service can generates tokens, this are useful when it's too cumbersome to provide a username/password pair.
-Tokens are valid for 1 hour and need to be send using the `X-Watson-Authorization-Token` header.
+The Authorization service can generates auth tokens for situations where providing the service username/password is undesirable.
+
+Tokens are valid for 1 hour and may be sent using the `X-Watson-Authorization-Token` header or the `watson-token` query param.
+
+Note that the token is supplied URL-encoded, and will not be accepted if it is double-encoded in a querystring.
 
 ```javascript
 var watson = require('watson-developer-cloud');
 
-var authorization = watson.authorization({
-  username: '<username>',
-  password: '<password>',
-  version: 'v1'
+var authorization = new watson.AuthorizationV1({
+  username: '<Text to Speech username>',
+  password: '<Text to Speech password>'
+  url: watson.TextToSpeechV1.URL
 });
 
-var params = {
-  // URL of the resource you wish to access
-  url: 'https://stream.watsonplatform.net/text-to-speech/api'
-};
-
-authorization.getToken(params, function (err, token) {
+authorization.getToken(function (err, token) {
   if (!token) {
     console.log('error:', err);
   } else {
@@ -247,17 +248,16 @@ The [Concept Insights][concept_insights] has been deprecated, AlchemyLanguage's 
 
 ### Conversation
 
-Use the [Conversation](http://www.ibm.com/watson/developercloud/conversation.html) service to determine the intent of a message.
+Use the [Conversation][conversation] service to determine the intent of a message.
 
 Note: you must first create a workspace via Bluemix. See [the documentation](http://www.ibm.com/watson/developercloud/doc/conversation/overview.shtml) for details.
 
 ```js
-var watson = require('watson-developer-cloud');
+var ConversationV1 = require('watson-developer-cloud/conversation/v1');
 
-var conversation = watson.conversation({
+var conversation = new ConversationV1({
   username: '<username>',
   password: '<password>',
-  version: 'v1',
   version_date: '2016-07-01'
 });
 
@@ -274,36 +274,17 @@ conversation.message({
 ```
 
 ### Dialog
-Use the Dialog service to list all the dialogs you have.
-
-```javascript
-var watson = require('watson-developer-cloud');
-
-var dialog = watson.dialog({
-  username: '<username>',
-  password: '<password>',
-  version: 'v1',
-  version_date: '2015-12-01'
-});
-
-dialog.getDialogs({}, function (err, dialogs) {
-  if (err)
-    console.log('error:', err);
-  else
-    console.log(JSON.stringify(dialogs, null, 2));
-});
-```
+The Dialog service was deprecated on August 15, 2016, existing instances of the service will continue to function until August 9, 2017. Users of the Dialog service should migrate their applications to use the Conversation service. See the [migration documentation][dialog_migration] to learn how to migrate your dialogs to the Conversation service.
 
 ### Document Conversion
 
 ```javascript
-var watson = require('watson-developer-cloud');
+var DocumentConversionV1 = require('watson-developer-cloud/document-conversion/v1');
 var fs = require('fs');
 
-var document_conversion = watson.document_conversion({
+var document_conversion = new DocumentConversionV1({
   username:     '<username>',
   password:     '<password>',
-  version:      'v1',
   version_date: '2015-12-01'
 });
 
@@ -338,12 +319,11 @@ with the Retrieve and Rank service.
 Translate text from one language to another or idenfity a language using the [Language Translator][language_translator] service.
 
 ```javascript
-var watson = require('watson-developer-cloud');
+var LanguageTranslatorV2 = require('watson-developer-cloud/language-translator/v2');
 
-var language_translator = watson.language_translator({
+var language_translator = new LanguageTranslatorV2({
   username: '<username>',
-  password: '<password>',
-  version: 'v2'
+  password: '<password>'
 });
 
 language_translator.translate({
@@ -370,13 +350,11 @@ language_translator.identify({
 Use [Natural Language Classifier](http://www.ibm.com/watson/developercloud/doc/nl-classifier/) service to create a classifier instance by providing a set of representative strings and a set of one or more correct classes for each as training. Then use the trained classifier to classify your new question for best matching answers or to retrieve next actions for your application.
 
 ```javascript
-var watson = require('watson-developer-cloud');
+var NaturalLanguageClassifierV1 = require('watson-developer-cloud/natural-language-classifier/v1');
 
-var natural_language_classifier = watson.natural_language_classifier({
-  url: 'https://gateway.watsonplatform.net/natural-language-classifier/api',
+var natural_language_classifier = new NaturalLanguageClassifierV1({
   username: '<username>',
-  password: '<password>',
-  version: 'v1'
+  password: '<password>'
 });
 
 natural_language_classifier.classify({
@@ -397,12 +375,11 @@ Analyze text in english and get a personality profile by using the
 [Personality Insights][personality_insights] service.
 
 ```javascript
-var watson = require('watson-developer-cloud');
+var PersonalityInsightsV2 = require('watson-developer-cloud/personality-insights/v2');
 
-var personality_insights = watson.personality_insights({
+var personality_insights = new PersonalityInsightsV2({
   username: '<username>',
-  password: '<password>',
-  version: 'v2'
+  password: '<password>'
 });
 
 personality_insights.profile({
@@ -427,11 +404,11 @@ Relationship Extraction has been deprecated. If you want to continue using Relat
 Use the [Retrieve and Rank][retrieve_and_rank] service to enhance search results with machine learning.
 
 ```javascript
-var retrieve = watson.retrieve_and_rank({
-  username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
-  password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
-  version: 'v1',
-  url: 'https://gateway.watsonplatform.net/retrieve-and-rank/api'
+var RetrieveAndRankV1 = require('watson-developer-cloud/retrieve-and-rank/v1');
+
+var retrieve = new RetrieveAndRankV1({
+  username: '<username>',
+  password: '<password>',
 });
 
 var solrClient = retrieve.createSolrClient({
@@ -470,17 +447,15 @@ solrClient.search(query, function(err, searchResponse) {
 ```
 
 ### Speech to Text
-Use the [Speech to Text][speech_to_text] service to recognize the text from a
-.wav file.
+Use the [Speech to Text][speech_to_text] service to recognize the text from a .wav file.
 
 ```javascript
-var watson = require('watson-developer-cloud');
+var SpeechToTextV1 = require('watson-developer-cloud/speech-to-text/v1');
 var fs = require('fs');
 
-var speech_to_text = watson.speech_to_text({
+var speech_to_text = new SpeechToTextV1({
   username: '<username>',
-  password: '<password>',
-  version: 'v1'
+  password: '<password>'
 });
 
 var params = {
@@ -503,17 +478,15 @@ fs.createReadStream('./resources/speech.wav')
 ```
 
 ### Text to Speech
-Use the [Text to Speech][text_to_speech] service to synthesize text into a
-.wav file.
+Use the [Text to Speech][text_to_speech] service to synthesize text into a .wav file.
 
 ```js
-var watson = require('watson-developer-cloud');
+var TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
 var fs = require('fs');
 
-var text_to_speech = watson.text_to_speech({
+var text_to_speech = new TextToSpeechV1({
   username: '<username>',
-  password: '<password>',
-  version: 'v1'
+  password: '<password>'
 });
 
 var params = {
@@ -531,12 +504,11 @@ Use the [Tone Analyzer][tone_analyzer] service to analyze the
 emotion, writing and social tones of a text.
 
 ```js
-var watson = require('watson-developer-cloud');
+var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
 
-var tone_analyzer = watson.tone_analyzer({
+var tone_analyzer = new ToneAnalyzerV3({
   username: '<username>',
   password: '<password>',
-  version: 'v3',
   version_date: '2016-05-19'
 });
 
@@ -549,18 +521,16 @@ tone_analyzer.tone({ text: 'Greetings from Watson Developer Cloud!' },
 });
 ```
 
-
 ### Tradeoff Analytics
 Use the [Tradeoff Analytics][tradeoff_analytics] service to find the best
 phone that minimizes price and weight and maximizes screen size.
 
 ```javascript
-var watson = require('watson-developer-cloud');
+var TradeoffAnalyticsV1 = require('watson-developer-cloud/tradeoff-analytics/v1');
 
-var tradeoff_analytics = watson.tradeoff_analytics({
+var tradeoff_analytics = new TradeoffAnalyticsV1({
   username: '<username>',
-  password: '<password>',
-  version: 'v1'
+  password: '<password>'
 });
 
 // From file
@@ -584,12 +554,11 @@ following picture.
 <img src="https://visual-recognition-demo.mybluemix.net/images/samples/5.jpg" width="150" />
 
 ```js
-var watson = require('watson-developer-cloud');
+var VisualRecognitionV3 = require('watson-developer-cloud/visual-recognition/v3');
 var fs = require('fs');
 
-var visual_recognition = watson.visual_recognition({
+var visual_recognition = new VisualRecognitionV3({
   api_key: '<api_key>',
-  version: 'v3',
   version_date: '2016-05-19'
 });
 
@@ -605,6 +574,15 @@ visual_recognition.classify(params, function(err, res) {
 });
 ```
 
+## Composing Services
+
+### Integration of Tone Analyzer with Conversation
+Sample code for [integrating Tone Analyzer and Conversation][conversation_tone_analyzer_example] is provided in the [examples directory][examples].
+
+## Integration Document Conversation with Retrieve and Rank
+See the [Document Conversion integration example][document_conversion_integration_example] about how to integrate the Document Conversion service
+with the Retrieve and Rank service.
+
 ## Unauthenticated requests
 By default, the library tries to use Basic Auth and will ask for `api_key` or `username` and `password` and send an `Authorization: Basic XXXXXXX`. You can avoid this by using:
 
@@ -613,8 +591,7 @@ By default, the library tries to use Basic Auth and will ask for `api_key` or `u
 ```javascript
 var watson = require('watson-developer-cloud');
 
-var dialog = watson.dialog({
-  version: 'v1',
+var dialog = new watson.DialogV1({
   use_unauthenticated: true
 });
 ```
@@ -651,6 +628,7 @@ This library is licensed under Apache 2.0. Full license text is available in
 ## Contributing
 See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/master/.github/CONTRIBUTING.md).
 
+[conversation]: https://www.ibm.com/watson/developercloud/conversation.html
 
 [personality_insights]: http://www.ibm.com/watson/developercloud/doc/personality-insights/
 [relationship_extraction]: http://www.ibm.com/watson/developercloud/doc/sireapi/
@@ -675,6 +653,10 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/maste
 [bluemix]: https://console.ng.bluemix.net
 [npm_link]: https://www.npmjs.com/package/watson-developer-cloud
 [request_github]: https://github.com/request/request
+[dialog_migration]: https://www.ibm.com/watson/developercloud/doc/conversation/migration.shtml
+
 [examples]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples
 [document_conversion_integration_example]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/document_conversion_integration.v1.js
+[conversation_tone_analyzer_example]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/conversation_tone_analyzer_integration
+
 [license]: http://www.apache.org/licenses/LICENSE-2.0

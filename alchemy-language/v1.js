@@ -16,7 +16,7 @@
 
 'use strict';
 
-var extend         = require('extend');
+var extend = require('extend');
 var util = require('util');
 var BaseServiceAlchemy = require('../lib/base_service_alchemy');
 var requestFactory = require('../lib/requestwrapper');
@@ -221,13 +221,20 @@ AlchemyLanguageV1.prototype.taxonomy = createRequest('taxonomy');
 AlchemyLanguageV1.prototype.combined = createRequest('combined');
 
 /**
- * Detects emotions (anger, digust, fear, joy, and sadness)
+ * Detects emotions (anger, disgust, fear, joy, and sadness)
  * for text, HTML, or a URL.
  * @method
  * @param {Object} params
  * @param {Function} callback
  */
-AlchemyLanguageV1.prototype.emotion = createRequest('emotion');
+AlchemyLanguageV1.prototype.emotion = function(params, callback) {
+  var _params = extend({}, params);
+  var service = (params.target || params.targets) ? 'emotion_targeted' : 'emotion';
+  if (util.isArray(_params.targets))
+    _params.targets = _params.targets.join('|');
+
+  return createRequest(service).call(this, _params, callback);
+};
 
 /**
  * Finds entities and their relationships
