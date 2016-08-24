@@ -1,6 +1,5 @@
 'use strict';
 
-var auth = require('../test/resources/auth');
 var TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
 var fs = require('fs');
 
@@ -12,7 +11,7 @@ var textToSpeech = new TextToSpeechV1({
 });
 
 // Synthesize speech and then pipe the results to a file
-text_to_speech.synthesize({
+textToSpeech.synthesize({
   text: 'Hello from IBM Watson',
   voice: 'en-US_AllisonVoice', // Optional voice
   accept: 'audio/wav' // default is audio/ogg; codec=opus

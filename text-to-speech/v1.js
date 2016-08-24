@@ -161,7 +161,6 @@ TextToSpeechV1.prototype.createModel = function(params, callback) {
     },
     defaultOptions: this._options
   };
-  console.log(parameters);
   return requestFactory(parameters, callback);
 };
 
