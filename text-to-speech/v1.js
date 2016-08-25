@@ -145,13 +145,15 @@ TextToSpeechV1.prototype.pronunciation = function(params, callback) {
  *   "customization_id": "abc996ea-86ca-482e-b7ec-0f31c34e5ee9"
  * }
  *
+ *  todo: rename this  & friends to *Customization in order to match API
+ *
  * @param {Object} params
  * @param {String} params.name
  * @param {String} [params.language=en-US] - Currently only en-US is supported
  * @param {String} [params.description]
  * @param {Function} callback
  */
-TextToSpeechV1.prototype.createModel = function(params, callback) {
+TextToSpeechV1.prototype.createCustomization = function(params, callback) {
   var parameters = {
     options: {
       method: 'POST',
@@ -194,7 +196,7 @@ TextToSpeechV1.prototype.createModel = function(params, callback) {
  * @param {Array<Word>} params.words - Array of {word, translation} objects where translation is the phonetic or sounds-like translation for the word. A phonetic translation is based on the SSML format for representing the phonetic string of a word either as an IPA or IBM SPR translation. A sounds-like translation consists of one or more words that, when combined, sound like the word.
  * @param {Function} callback
  */
-TextToSpeechV1.prototype.updateModel = function(params, callback) {
+TextToSpeechV1.prototype.updateCustomization = function(params, callback) {
   var parameters = {
     options: {
       requiredParams: ['customization_id', 'words'],
@@ -244,7 +246,7 @@ TextToSpeechV1.prototype.updateModel = function(params, callback) {
  * @param {String} [params.language] optional filter. Currently only en-US is supported.
  * @param {Function} callback
  */
-TextToSpeechV1.prototype.getModels = function(params, callback) {
+TextToSpeechV1.prototype.getCustomizations = function(params, callback) {
   if (typeof params === 'function' && !callback) {
     callback = params;
     params = {};
@@ -295,7 +297,7 @@ TextToSpeechV1.prototype.getModels = function(params, callback) {
  * @param {String} params.customization_id
  * @param {Function} callback
  */
-TextToSpeechV1.prototype.getModel = function(params, callback) {
+TextToSpeechV1.prototype.getCustomization = function(params, callback) {
   var parameters = {
     options: {
       method: 'GET',
@@ -315,7 +317,7 @@ TextToSpeechV1.prototype.getModel = function(params, callback) {
  * @param {String} params.customization_id
  * @param {Function} callback
  */
-TextToSpeechV1.prototype.deleteModel = function(params, callback) {
+TextToSpeechV1.prototype.deleteCustomization = function(params, callback) {
   var parameters = {
     options: {
       method: 'DELETE',

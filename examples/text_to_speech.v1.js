@@ -48,7 +48,7 @@ textToSpeech.pronunciation({
 });
 
 // create a customization model to change pronunciation of words
-textToSpeech.createModel({
+textToSpeech.createCustomization({
   name: 'my custom alt language pronunciation model',
   language: 'en-US', // currently, only en-US is accepted
   description: 'Test model to try out custom pronunciations'
@@ -65,7 +65,7 @@ textToSpeech.createModel({
 });
 
 // update a customization model
-textToSpeech.updateModel({
+textToSpeech.updateCustomization({
   customization_id: "6666451d-a23e-485c-9bc5-c7ce722550d6",
   name: 'new name', // optional
   description: 'new description', // optional
@@ -81,7 +81,7 @@ textToSpeech.updateModel({
 });
 
 // get a list of custom voice models
-textToSpeech.getModels({
+textToSpeech.getCustomizations({
   language: 'en-US' // optional filter (currently only accepts en-US)
 }, function(err, res){
   if (err) {
@@ -116,7 +116,7 @@ textToSpeech.getModels({
 });
 
 // get details of a custom voice model
-textToSpeech.getModel({
+textToSpeech.getCustomization({
   customization_id: "6666451d-a23e-485c-9bc5-c7ce722550d6"
 }, function(err, res){
   if (err) {
@@ -147,7 +147,7 @@ textToSpeech.getModel({
 });
 
 // delete a custom voice model
-textToSpeech.deleteModel({
+textToSpeech.deleteCustomization({
   customization_id: "9d153f61-a9c4-4b73-8eaf-63951c6dd77d"
 }, function(err){
   if (err) {
@@ -171,7 +171,7 @@ textToSpeech.addWords({
 });
 
 // add a single word to an existing model
-textToSpeech.updateModel({
+textToSpeech.updateCustomization({
   customization_id: "7c7f8ba7-2f83-48f2-ae52-3a70825f9899",
   word:"NCAA",
   translation:"N C double A"
