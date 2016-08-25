@@ -1,5 +1,6 @@
 node_modules
 npm-debug.log
+npm-debug.log.*
 coverage
 .DS_Store
 test/resources/auth.js

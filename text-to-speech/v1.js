@@ -23,6 +23,7 @@ var util = require('util');
 var BaseService = require('../lib/base_service');
 
 /**
+ * Watson Text to Speech service
  *
  * @param options
  * @constructor
