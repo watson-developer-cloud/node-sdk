@@ -54,7 +54,7 @@ var tone_analyzer = new watson.ToneAnalyzerV3({
 });
 
 /**
- * This example stores tone for each user utterance in conversation context. 
+ * This example stores tone for each user utterance in conversation context.
  * Change this to false, if you do not want to maintain history
  */
 var maintainToneHistoryInContext = true;
