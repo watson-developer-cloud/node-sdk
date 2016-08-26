@@ -76,7 +76,11 @@ describe('integration-all-services', function() {
   describe('functional_visual_recognition', function() {
 
     describe('v3', function() {
-      this.timeout(THIRTY_SECONDS * 2);
+
+      // ugh.
+      this.timeout(THIRTY_SECONDS * 4);
+      this.retries(5);
+
       var visual_recognition = watson.visual_recognition(auth.visual_recognition.v3);
 
       it('should return error when invalid api_key', function(done) {
@@ -298,6 +302,18 @@ describe('integration-all-services', function() {
       text_to_speech.synthesize(params)
         .pipe(reader)
         .on('format', done.bind(null,null));
+    });
+
+    it('pronunciation()', function(done) {
+      var checkPronunciation = function(err, res) {
+        assert.ifError(err);
+        assert.equal(JSON.stringify(res), JSON.stringify({
+          "pronunciation": ".ˈaɪ .ˈi .ˈi .ˈi"
+        }));
+        done();
+      };
+
+      text_to_speech.pronunciation({text: 'IEEE'}, checkPronunciation);
     });
   });
 
@@ -544,7 +560,7 @@ describe('integration-all-services', function() {
 
     it('feeds()', function(done) {
       alchemy_language.feeds({
-        url: 'http://www.techcrunch.com/'
+        url: 'https://developer.ibm.com/watson/blog/'
       }, failIfError.bind(failIfError, done));
     });
 

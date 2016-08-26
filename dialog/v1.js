@@ -31,6 +31,11 @@ var BaseService = require('../lib/base_service');
  */
 function DialogV1(options) {
   BaseService.call(this, options);
+
+  if (!options.silent) {
+    //eslint-disable-next-line no-console
+    console.warn('WARNING: The Dialog service was deprecated, existing instances of the service will continue to function until August 9, 2017. See https://www.ibm.com/watson/developercloud/doc/conversation/migration.shtml. Set {silent: true} to disable this message.');
+  }
 }
 util.inherits(DialogV1, BaseService);
 DialogV1.prototype.name = 'dialog';
