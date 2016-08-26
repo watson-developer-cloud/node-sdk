@@ -113,17 +113,6 @@ VisualRecognitionV3.prototype.getCredentialsFromBluemix = function() {
 };
 
 /**
- * Pulls api_key from VISUAL_RECOGNITION_API_KEY env property
- *
- * @returns {{api_key: String|undefined}}
- */
-VisualRecognitionV3.prototype.getCredentialsFromEnvironment = function() {
-  return {
-    api_key: process.env.VISUAL_RECOGNITION_API_KEY
-  }
-};
-
-/**
  * Accepts either a url, a single image file, or a zip file with multiple
  * images (.jpeg, .png, .gif) and scores every available classifier
  * on each image. It then applies a threshold and returns the list

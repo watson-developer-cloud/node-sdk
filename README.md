@@ -7,8 +7,7 @@ Watson Developer Cloud Node.js SDK
 [![npm-version](https://img.shields.io/npm/v/watson-developer-cloud.svg)](https://www.npmjs.com/package/watson-developer-cloud)
 [![npm-downloads](https://img.shields.io/npm/dm/watson-developer-cloud.svg)](https://www.npmjs.com/package/watson-developer-cloud)
 
-Node client library to use the [Watson Developer Cloud][wdc] services, a collection of REST
-APIs and SDKs that use cognitive computing to solve complex problems.
+Node.js client library to use the [Watson Developer Cloud][wdc] services, a collection of APIs that use cognitive computing to solve complex problems.
 
 ## Table of Contents
   * [Major Changes for v2](#major-changes-for-v2)
@@ -67,7 +66,7 @@ Note: not all services currently support CORS, and therefore not all services ca
 Of those that do, most require an auth token to be generated server-side via the [Authorization Service](#authorization).
 
 ### New recommended method for instantiating services:
-  
+
 ```js
 var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
 
@@ -220,7 +219,7 @@ alchemy_data_news.getNews(params, function (err, news) {
 ### Authorization
 The Authorization service can generates auth tokens for situations where providing the service username/password is undesirable.
 
-Tokens are valid for 1 hour and may be sent using the `X-Watson-Authorization-Token` header or the `watson-token` query param. 
+Tokens are valid for 1 hour and may be sent using the `X-Watson-Authorization-Token` header or the `watson-token` query param.
 
 Note that the token is supplied URL-encoded, and will not be accepted if it is double-encoded in a querystring.
 
@@ -275,24 +274,7 @@ conversation.message({
 ```
 
 ### Dialog
-Use the Dialog service to list all the dialogs you have.
-
-```javascript
-var DialogV1 = require('watson-developer-cloud/dialog/v1');
-
-var dialog = new DialogV1({
-  username: '<username>',
-  password: '<password>',
-  version_date: '2015-12-01'
-});
-
-dialog.getDialogs({}, function (err, dialogs) {
-  if (err)
-    console.log('error:', err);
-  else
-    console.log(JSON.stringify(dialogs, null, 2));
-});
-```
+The Dialog service was deprecated on August 15, 2016, existing instances of the service will continue to function until August 9, 2017. Users of the Dialog service should migrate their applications to use the Conversation service. See the [migration documentation][dialog_migration] to learn how to migrate your dialogs to the Conversation service.
 
 ### Document Conversion
 
@@ -671,6 +653,7 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/maste
 [bluemix]: https://console.ng.bluemix.net
 [npm_link]: https://www.npmjs.com/package/watson-developer-cloud
 [request_github]: https://github.com/request/request
+[dialog_migration]: https://www.ibm.com/watson/developercloud/doc/conversation/migration.shtml
 
 [examples]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples
 [document_conversion_integration_example]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/document_conversion_integration.v1.js

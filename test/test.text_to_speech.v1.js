@@ -40,12 +40,6 @@ describe('text_to_speech', function() {
 
   before(function() {
     nock.disableNetConnect();
-    nock(service.url)
-      .persist()
-      .post(synthesize_request, {text: service_request.text})
-      .replyWithFile(200, __dirname + '/resources/audio.ogg')
-      .get(voices_path)
-      .reply(200, mock_voices);
   });
 
   after(function() {
@@ -59,6 +53,12 @@ describe('text_to_speech', function() {
   };
 
   describe('synthesize()', function(){
+
+    beforeEach(function() {
+      nock(service.url)
+        .post(synthesize_request, {text: service_request.text})
+        .replyWithFile(200, __dirname + '/resources/audio.ogg');
+    });
 
     it('should check for missing text', function() {
       var params = {
@@ -100,19 +100,114 @@ describe('text_to_speech', function() {
       assert.equal(req.headers['X-Watson-Learning-Opt-Out'], '1');
     });
 
+    it('should support the customization_id option', function() {
+      var params = {customization_id: 'foo', text: 'test'};
+      var req = text_to_speech.synthesize(params, noop);
+      assert(req.url);
+      assert(req.url.query);
+      assert.equal(qs.parse(req.url.query).customization_id, 'foo');
+    });
+
   });
 
   describe('voices()', function(){
 
-    it('should generate a valid payload', function() {
+    beforeEach(function() {
+      nock(service.url)
+        .post(synthesize_request, {text: service_request.text})
+        .replyWithFile(200, __dirname + '/resources/audio.ogg')
+        .get(voices_path)
+        .reply(200, mock_voices);
+    });
+
+    it('should generate a valid payload', function(done) {
       var checkVoices = function(err, res) {
         assert.equal(JSON.stringify(res), JSON.stringify(mock_voices));
+        done();
       };
 
       text_to_speech.voices({}, checkVoices);
-      text_to_speech.voices(null, checkVoices);
-      text_to_speech.voices(undefined, checkVoices);
     });
 
+  });
+
+
+  describe('voice()', function(){
+
+    beforeEach(function() {
+      nock(service.url)
+        .get('/v1/voices/en-US_MichaelVoice')
+        .reply(200, mock_voices[0]);
+    });
+
+    it('should require a voice parameter', function() {
+      text_to_speech.voice({}, missingParameter);
+      text_to_speech.voice(null, missingParameter);
+      text_to_speech.voice(undefined, missingParameter);
+    });
+
+    it('should generate a valid payload', function(done) {
+      var checkVoice = function(err, res) {
+        assert.ifError(err);
+        assert.equal(JSON.stringify(res), JSON.stringify(mock_voices[0]));
+        done();
+      };
+
+      text_to_speech.voice({voice: 'en-US_MichaelVoice'}, checkVoice);
+    });
+
+    it('should support the customization_id option', function() {
+      var params = {customization_id: 'foo', voice: 'en-US_MichaelVoice'};
+      var req = text_to_speech.voice(params, noop);
+      assert(req.url);
+      assert(req.url.query);
+      assert.equal(qs.parse(req.url.query).customization_id, 'foo');
+    });
+
+  });
+
+  describe('pronunciation()', function(){
+
+    var mock_pronunciation = {
+      "pronunciation": ".ˈaɪ .ˈi .ˈi .ˈi"
+    };
+
+    beforeEach(function() {
+      nock(service.url)
+        .get('/v1/pronunciation?text=IEEE')
+        .reply(200, mock_pronunciation);
+    });
+
+    it('should require a text parameter', function() {
+      text_to_speech.pronunciation({}, missingParameter);
+      text_to_speech.pronunciation(null, missingParameter);
+      text_to_speech.pronunciation(undefined, missingParameter);
+    });
+
+    it('should generate a valid payload', function(done) {
+      var checkPronunciation = function(err, res) {
+        assert.ifError(err);
+        assert.equal(JSON.stringify(res), JSON.stringify(mock_pronunciation));
+        done();
+      };
+
+      text_to_speech.pronunciation({text: 'IEEE'}, checkPronunciation);
+    });
+
+    it('should support the voice option', function() {
+      var params = {text: 'IEEE', voice: 'en-US_MichaelVoice'};
+      var req = text_to_speech.pronunciation(params, noop);
+      assert(req.url);
+      assert(req.url.query);
+      assert.equal(qs.parse(req.url.query).voice, 'en-US_MichaelVoice');
+    });
+
+    it('should support the customization_id option', function() {
+      var params = {text: 'IEEE', customization_id: 'foo'};
+      var req = text_to_speech.pronunciation(params, noop);
+      assert(req.url);
+      assert(req.url.query);
+      assert.equal(qs.parse(req.url.query).customization_id, 'foo');
+    });
   });
 });

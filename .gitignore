@@ -1,5 +1,6 @@
-node_modules/*
+node_modules
 npm-debug.log
+npm-debug.log.*
 coverage
 .DS_Store
 test/resources/auth.js
@@ -10,5 +11,3 @@ doc/
 .vscode/
 dist/
 .env
-examples/browserify/node_modules/
-
