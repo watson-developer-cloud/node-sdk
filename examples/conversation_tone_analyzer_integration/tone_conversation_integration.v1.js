@@ -53,6 +53,11 @@ var tone_analyzer = new watson.ToneAnalyzerV3({
   version_date: '2016-05-19'
 });
 
+/**
+ * This example stores tone for each user utterance in conversation context.
+ * Change this to false, if you do not want to maintain history
+ */
+var maintainToneHistoryInContext = true;
 
 /**
  * Payload for the Watson Conversation Service
@@ -75,11 +80,11 @@ var payload = {
  * Note: as indicated below, the console.log statements can be replaced with application-specific code to process
  * 		 the err or data object returned by the Conversation Service.
  */
-function invokeToneConversation(payload)
+function invokeToneConversation(payload,maintainToneHistoryInContext)
 {
   tone_detection.invokeToneAsync(payload,tone_analyzer)
   .then( (tone) => {
-    tone_detection.updateUserTone(payload, tone);
+    tone_detection.updateUserTone(payload, tone, maintainToneHistoryInContext);
     conversation.message(payload, function(err, data) {
       if (err) {
         // APPLICATION-SPECIFIC CODE TO PROCESS THE ERROR
@@ -98,4 +103,4 @@ function invokeToneConversation(payload)
   })
 }
 
-invokeToneConversation(payload);
+invokeToneConversation(payload,maintainToneHistoryInContext);

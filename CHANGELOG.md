@@ -1,3 +1,6 @@
+# v2.2.0
+* Added support for creating and managing TTS Customizations
+
 # v2.1.3
 * Deprecation warning for Dialog
 * Added TTS .voice() and .pronunciation() methods
