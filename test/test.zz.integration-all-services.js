@@ -76,7 +76,11 @@ describe('integration-all-services', function() {
   describe('functional_visual_recognition', function() {
 
     describe('v3', function() {
-      this.timeout(THIRTY_SECONDS * 2);
+
+      // ugh.
+      this.timeout(THIRTY_SECONDS * 4);
+      this.retries(5);
+
       var visual_recognition = watson.visual_recognition(auth.visual_recognition.v3);
 
       it('should return error when invalid api_key', function(done) {
