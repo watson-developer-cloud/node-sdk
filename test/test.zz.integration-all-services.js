@@ -712,4 +712,28 @@ describe('integration-all-services', function() {
       });
     });
   });
+  
+  describe('functional_conversation', function() {
+    this.timeout(TEN_SECONDS);
+    var conversation = watson.conversation(auth.conversation);
+
+    it('message()', function(done) {
+      var params = {
+          input: {
+            text: 'Turn on the lights'
+          },
+          alternate_intents: true,
+          workspace_id: auth.conversation.workspace_id
+      };
+
+      conversation.message(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.alternate_intents, true);
+        done();
+      });
+    });
+  });
+  
 });

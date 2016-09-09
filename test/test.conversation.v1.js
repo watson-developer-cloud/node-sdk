@@ -16,7 +16,14 @@ describe('conversation-v1', function() {
     password: 'bruce-wayne',
     url: 'http://ibm.com:80',
     version: 'v1',
-    version_date: '2016-05-19'
+    version_date: '2016-07-11'
+  };
+
+  var service1 = {
+    password: 'bruce-wayne',
+    url: 'http://ibm.com:80',
+    version: 'v1',
+    username: 'batman'
   };
 
   var payload = {
@@ -47,22 +54,45 @@ describe('conversation-v1', function() {
 
   describe('conversation()', function() {
     var reqPayload = {input:'foo',context:'rab'};
+    var reqPayload1 = {output:'foo',alternate_intents:true,entities:'1entity',intents:'1intent',junk:'junk'};
+    var reqPayload2 = {output:'foo',alternate_intents:true,entities:'1entity',intents:'1intent'};
     var params = extend({}, reqPayload, payload);
+    var params1 = extend({}, reqPayload1, payload);
 
-    it('should check no parameters provided', function() {
+    it('should generate a valid payload', function() {
+        var req = conversation.message(params,noop);
+        var body = new Buffer(req.body).toString('ascii');
+        assert.equal(req.uri.href, service.url + paths.message + '?version=' + service.version_date);
+        assert.equal(req.method, 'POST');
+        assert.deepEqual(JSON.parse(body), reqPayload);
+      });
+
+    it('should generate a valid payload but parse out the junk option', function() {
+        var req = conversation.message(params1,noop);
+        var body = new Buffer(req.body).toString('ascii');
+        assert.equal(req.uri.href, service.url + paths.message + '?version=' + service.version_date);
+        assert.equal(req.method, 'POST');
+        assert.deepEqual(JSON.parse(body), reqPayload2);
+      });
+
+    it('should check no parameters provided (negative test)', function() {
       conversation.message({}, missingParameter);
       conversation.message(null, missingParameter);
       conversation.message(undefined, missingParameter);
       conversation.message(pick(params,['workspace_id']), missingParameter);
+      conversation.message(pick(params,['input']), missingParameter);
     });
 
-    it('should generate a valid payload', function(done) {
-      var req = conversation.message(params,noop);
-      var body = new Buffer(req.body).toString('ascii');
-      assert.equal(req.uri.href, service.url + paths.message + '?version=' + service.version_date);
-      assert.equal(req.method, 'POST');
-      assert.deepEqual(JSON.parse(body), reqPayload);
-      done();
+    it('should generate version_date was not specified (negative test)', function() {
+      var threw = false;
+      try {
+        watson.conversation(service1);
+      }
+      catch(err) {
+        threw = true;
+        assert.equal(err.message, 'Argument error: version_date was not specified, use 2016-07-11');
+      }
+      assert(threw, "should throw an error")
     });
   });
 
