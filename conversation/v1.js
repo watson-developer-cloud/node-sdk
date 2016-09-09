@@ -31,7 +31,7 @@ function ConversationV1(options) {
 
   // Check if 'version_date' was provided
   if (typeof this._options.version_date === 'undefined') {
-    throw new Error('Argument error: version_date was not specified, use 2016-07-01');
+    throw new Error('Argument error: version_date was not specified, use 2016-07-11');
   }
   this._options.qs.version = options.version_date;
 }
