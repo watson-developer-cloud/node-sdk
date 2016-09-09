@@ -1,4 +1,3 @@
-debugger
 'use strict';
 
 var assert = require('assert');
@@ -26,7 +25,7 @@ describe('conversation-v1', function() {
     version: 'v1',
     username: 'batman'
   };
-  
+
   var payload = {
     workspace_id: 'workspace1'
   };
@@ -52,14 +51,14 @@ describe('conversation-v1', function() {
   };
 
   var conversation = watson.conversation(service);
-   
+
   describe('conversation()', function() {
     var reqPayload = {input:'foo',context:'rab'};
     var reqPayload1 = {output:'foo',alternate_intents:true,entities:'1entity',intents:'1intent',junk:'junk'};
     var reqPayload2 = {output:'foo',alternate_intents:true,entities:'1entity',intents:'1intent'};
     var params = extend({}, reqPayload, payload);
     var params1 = extend({}, reqPayload1, payload);
-    
+
     it('should generate a valid payload', function() {
         var req = conversation.message(params,noop);
         var body = new Buffer(req.body).toString('ascii');
@@ -67,7 +66,7 @@ describe('conversation-v1', function() {
         assert.equal(req.method, 'POST');
         assert.deepEqual(JSON.parse(body), reqPayload);
       });
-    
+
     it('should generate a valid payload but parse out the junk option', function() {
         var req = conversation.message(params1,noop);
         var body = new Buffer(req.body).toString('ascii');
@@ -75,7 +74,7 @@ describe('conversation-v1', function() {
         assert.equal(req.method, 'POST');
         assert.deepEqual(JSON.parse(body), reqPayload2);
       });
-    
+
     it('should check no parameters provided (negative test)', function() {
       conversation.message({}, missingParameter);
       conversation.message(null, missingParameter);
@@ -83,15 +82,17 @@ describe('conversation-v1', function() {
       conversation.message(pick(params,['workspace_id']), missingParameter);
       conversation.message(pick(params,['input']), missingParameter);
     });
-    
-    it('should generate version_date was not specified (negative test)', function(done) {
+
+    it('should generate version_date was not specified (negative test)', function() {
+      var threw = false;
       try {
-        var conversation1 = watson.conversation(service1);
+        watson.conversation(service1);
       }
       catch(err) {
-        assert.equal(err.message, 'Argument error: version_date was not specified, use 2016-07-11'); 
+        threw = true;
+        assert.equal(err.message, 'Argument error: version_date was not specified, use 2016-07-11');
       }
-      done();
+      assert(threw, "should throw an error")
     });
   });
 
