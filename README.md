@@ -17,9 +17,9 @@ Node.js client library to use the [Watson Developer Cloud][wdc] services, a coll
   * [Questions](#questions)
   * [Examples](#examples)
   * [IBM Watson Services](#ibm-watson-services)
-    * [Alchemy Language](#alchemy-language)
-    * [Alchemy Vision](#alchemy-vision)
-    * [Alchemy Data News](#alchemy-data-news)
+    * [AlchemyLanguage](#alchemylanguage)
+    * [AlchemyVision](#alchemyvision)
+    * [AlchemyData News](#alchemydata-news)
     * [Authorization](#authorization)
     * [Concept Insights](#concept-insights)
     * [Conversation](#conversation)
@@ -143,8 +143,8 @@ The [examples][examples] folder has basic and advanced examples.
 The Watson Developer Cloud offers a variety of services for building cognitive
 apps.
 
-### Alchemy Language
-[Alchemy Language][alchemy_language] offers 12 API functions as part of its text analysis service, each of which uses sophisticated natural language processing techniques to analyze your content and add high-level semantic information.
+### AlchemyLanguage
+[AlchemyLanguage][alchemy_language] offers 12 API functions as part of its text analysis service, each of which uses sophisticated natural language processing techniques to analyze your content and add high-level semantic information.
 
 Use the [Sentiment Analysis][sentiment_analysis] endpoint to identify positive/negative sentiment within a sample text document.
 
@@ -167,32 +167,10 @@ alchemy_language.sentiment(params, function (err, response) {
 });
 ```
 
-### Alchemy Vision
-[Alchemy Vision][alchemy_vision] uses deep learning innovations to understand a picture's content and context. It sees complex visual scenes in their entirety —without needing any textual clues— leveraging a holistic approach to understanding the multiple objects and surroundings.
+### AlchemyVision
+The AlchemyVision service has been replace by the [Visual Recognition](#visual-recognition) service. Existing users have until May 20, 2017 to migrate to the new service, and no new instances may be created.
 
-Example: Extract keywords from an image.
-
-```javascript
-var AlchemyVisionV1 = require('watson-developer-cloud/alchemy-vision/v1');
-var fs = require('fs');
-
-var alchemy_vision = new AlchemyVisionV1({
-  api_key: '<api_key>'
-});
-
-var params = {
-  image: fs.createReadStream('src/test/resources/obama.jpg')
-};
-
-alchemy_vision.getImageKeywords(params, function (err, keywords) {
-  if (err)
-    console.log('error:', err);
-  else
-    console.log(JSON.stringify(keywords, null, 2));
-});
-```
-
-### Alchemy Data News
+### AlchemyData News
 [Alchemy Data News][alchemy_data_news] indexes 250k to 300k English language news and blog articles every day with historical search available for the past 60 days.
 Example: Get the volume data from the last 7 days using 12hs of time slice.
 
