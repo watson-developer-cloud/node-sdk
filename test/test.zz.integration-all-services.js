@@ -731,7 +731,6 @@ describe('integration-all-services', function() {
         if (err) {
           return done(err);
         }
-        console.log(result)
         assert.equal(result.alternate_intents, true);
         done();
       });
