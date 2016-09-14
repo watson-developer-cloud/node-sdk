@@ -72,6 +72,11 @@ RetrieveAndRankV1.prototype.createRanker = function(params, callback) {
 
 /**
  * Returns the ranked candidates
+ *
+ * @param {Object} params - everything except answer_data and answers will be passed in as answer_metadata
+ * @param {String|ReadableStream} params.answer_data
+ * @param {Number} [params.answers] - number of answers to return
+ * @param {Function} callback
  */
 RetrieveAndRankV1.prototype.rank = function(params, callback) {
   params = params || {};
