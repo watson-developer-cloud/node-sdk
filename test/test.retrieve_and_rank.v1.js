@@ -402,9 +402,6 @@ describe('retrieve_and_rank', function() {
 
     search.deleteRanker({}, missingParameter);
     search.deleteRanker(null, missingParameter);
-
-    search.rank({ranker_id: 'ranker1'}, missingParameter);
-    search.rank({ranker_id: 'ranker1', answer_metadata: rankerData }, missingParameter);
   });
 
   it('should generate a valid payload when creating a ranker', function(done) {
@@ -439,5 +436,26 @@ describe('retrieve_and_rank', function() {
       done(error);
     });
   });
+
+  describe('rank()', function() {
+    it('check missing parameters', function() {
+      search.rank({ranker_id: 'ranker1'}, missingParameter);
+      search.rank({ranker_id: 'ranker1', answer_metadata: rankerData }, missingParameter);
+    });
+
+    it('should support the answers parameter', function(done) {
+      nock(service.url)
+        .post(rankPath + '/rank')
+        .reply(200, rankResponse);
+      var req = search.rank({ranker_id: 'foo', answers: 3, answer_data: 'bar'}, function(err){
+        if (err) {
+          return done(err);
+        }
+      });
+      assert.equal(req.formData.answers, 3);
+      done();
+    });
+  });
+
 
 });

@@ -85,15 +85,16 @@ RetrieveAndRankV1.prototype.rank = function(params, callback) {
     return;
   }
 
+  var topLevelParams = ['answer_data', 'answers'];
+  var formData = pick(params, topLevelParams);
+  formData.answer_metadata =  JSON.stringify(omit(params, topLevelParams));
+
   var parameters = {
     options: {
       url: '/v1/rankers/{ranker_id}/rank',
       method: 'POST',
       json: true,
-      formData: {
-        answer_data: params.answer_data,
-        answer_metadata: JSON.stringify(omit(params, ['answer_data']))
-      },
+      formData: formData,
       path: pick(params, ['ranker_id'])
     },
     requiredParams: ['ranker_id'],

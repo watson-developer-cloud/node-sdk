@@ -1,3 +1,6 @@
+# v2.3.0
+* Add support for RetrieveAndRankV1.rank() answers param
+
 # v2.2.0
 * Added support for creating and managing TTS Customizations
 
