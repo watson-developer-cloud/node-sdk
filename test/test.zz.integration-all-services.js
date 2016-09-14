@@ -712,12 +712,13 @@ describe('integration-all-services', function() {
       });
     });
   });
-  
+
   describe('functional_conversation', function() {
     this.timeout(TEN_SECONDS);
     var conversation = watson.conversation(auth.conversation);
 
-    it('message()', function(done) {
+    // disabling until https://github.ibm.com/watson-engagement-advisor/wea-backlog/issues/2388 is resolved
+    it.skip('message()', function(done) {
       var params = {
           input: {
             text: 'Turn on the lights'
@@ -730,10 +731,11 @@ describe('integration-all-services', function() {
         if (err) {
           return done(err);
         }
+        console.log(result)
         assert.equal(result.alternate_intents, true);
         done();
       });
     });
   });
-  
+
 });
