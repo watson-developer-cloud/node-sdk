@@ -240,7 +240,7 @@ var conversation = new ConversationV1({
 });
 
 conversation.message({
-  input: 'What\'s the weather?',
+  input: { text: 'What\'s the weather?' },
   workspace_id: '<workspace id>'
  }, function(err, response) {
      if (err) {
