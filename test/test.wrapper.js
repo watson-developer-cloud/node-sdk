@@ -41,7 +41,7 @@ describe('wrapper', function() {
         version: 'v1'
       });
     },
-      /api_key or username and password were not specified/
+      /use_unauthenticated/
     );
   });
 
@@ -70,7 +70,7 @@ describe('wrapper', function() {
           username: 'user'
         });
       },
-      /api_key or username and password were not specified/
+      /password/
     );
     assert.throws(function() {
         create_service({
@@ -78,13 +78,9 @@ describe('wrapper', function() {
           password: 'pass'
         });
       },
-      /api_key or username and password were not specified/
+      /username/
     );
 
-    assert.ok(create_service({
-      api_key: 'keykeykey',
-      version: 'v1'
-    }));
     assert.ok(create_service({
       password: 'pass',
       username: 'user',
@@ -138,6 +134,8 @@ describe('wrapper', function() {
     var service = create_service({
       version: 'v1',
       api_key: 'not-gonna-work',
+      username: 'foo',
+      password: 'bar',
       foo: 'bar',
       use_vcap_services: false,
       bar: 'foo'

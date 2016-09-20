@@ -1,3 +1,7 @@
+# v2.4.0
+* Added support for Visual Recognition similarity search beta
+* Refactored handling of credentials to support constraints in similarity search
+
 # v2.3.0
 * Add support for RetrieveAndRankV1.rank() answers param
 

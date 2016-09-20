@@ -48,7 +48,7 @@ describe('alchemy_language', function() {
 
     it('should generate a valid payload', function() {
       var req = alchemy.entities(payload, noop);
-      assert.equal(req.uri.href, service.url + apiPath + '?apikey=' + service.api_key);
+      assert.equal(req.uri.href, service.url + apiPath + '?api_key=' + service.api_key);
       assert.equal(req.method, 'POST');
       assert(req.form);
       var body = new Buffer(req.body).toString('ascii');
@@ -57,7 +57,7 @@ describe('alchemy_language', function() {
 
     it('should use sentiment_target if target is specified', function() {
       var req = alchemy.sentiment({text: payload.text, target:'bat'}, noop);
-      var sentimenTargetPath = service.url + '/text/TextGetTargetedSentiment?apikey=' + service.api_key;
+      var sentimenTargetPath = service.url + '/text/TextGetTargetedSentiment?api_key=' + service.api_key;
       assert.equal(req.uri.href, sentimenTargetPath);
       assert.equal(req.method, 'POST');
       assert(req.form);
@@ -68,7 +68,7 @@ describe('alchemy_language', function() {
 
     it('should use sentiment if target is not specified', function() {
       var req = alchemy.sentiment(payload, noop);
-      var sentimenPath = service.url + '/text/TextGetTextSentiment?apikey=' + service.api_key;
+      var sentimenPath = service.url + '/text/TextGetTextSentiment?api_key=' + service.api_key;
       assert.equal(req.uri.href, sentimenPath);
       assert.equal(req.method, 'POST');
       assert(req.form);
@@ -79,7 +79,7 @@ describe('alchemy_language', function() {
 
     it('should use /text/ endpoint if the text parameter is passed', function() {
       var req = alchemy.sentiment({text: payload.text, url:'www.ibm.com'}, noop);
-      var sentimenPath = service.url + '/text/TextGetTextSentiment?apikey=' + service.api_key;
+      var sentimenPath = service.url + '/text/TextGetTextSentiment?api_key=' + service.api_key;
       assert.equal(req.uri.href, sentimenPath);
       assert.equal(req.method, 'POST');
       assert(req.form);
@@ -90,7 +90,7 @@ describe('alchemy_language', function() {
 
     it('should use /html/ endpoint if the html parameter is passed', function() {
       var req = alchemy.sentiment({html: '<html><body>test</body></html>', url:'www.ibm.com'}, noop);
-      var sentimenPath = service.url + '/html/HTMLGetTextSentiment?apikey=' + service.api_key;
+      var sentimenPath = service.url + '/html/HTMLGetTextSentiment?api_key=' + service.api_key;
       assert.equal(req.uri.href, sentimenPath);
       assert.equal(req.method, 'POST');
       assert(req.form);
@@ -119,7 +119,7 @@ describe('alchemy_language', function() {
 
       it('should generate a valid payload', function() {
         var req = alchemy.title(payload, noop);
-        assert.equal(req.uri.href, service.url + apiPath + '?apikey=' + service.api_key);
+        assert.equal(req.uri.href, service.url + apiPath + '?api_key=' + service.api_key);
         assert.equal(req.method, 'POST');
         assert(req.form);
         var body = new Buffer(req.body).toString('ascii');
@@ -136,7 +136,7 @@ describe('alchemy_language', function() {
 
       it('should generate a valid payload', function() {
         var req = alchemy.title(payload, noop);
-        assert.equal(req.uri.href, service.url + apiPath + '?apikey=' + service.api_key);
+        assert.equal(req.uri.href, service.url + apiPath + '?api_key=' + service.api_key);
         assert.equal(req.method, 'POST');
         assert(req.form);
         var body = new Buffer(req.body).toString('ascii');
@@ -155,7 +155,7 @@ describe('alchemy_language', function() {
 
     it('should generate a valid payload', function() {
       var req = alchemy.dates(payload, noop);
-      assert.equal(req.uri.href, service.url + apiPath + '?apikey=' + service.api_key);
+      assert.equal(req.uri.href, service.url + apiPath + '?api_key=' + service.api_key);
       assert.equal(req.method, 'POST');
       assert(req.form);
       var body = new Buffer(req.body).toString('ascii');
@@ -178,7 +178,7 @@ describe('alchemy_language', function() {
 
     it('should get document-level emotion if no target is passed', function() {
       var req = alchemy.emotion(payload, noop);
-      var emotionPath = service.url + '/text/TextGetEmotion?apikey=' + service.api_key;
+      var emotionPath = service.url + '/text/TextGetEmotion?api_key=' + service.api_key;
       assert.equal(req.uri.href, emotionPath);
       assert.equal(req.method, 'POST');
       assert(req.form);
@@ -190,7 +190,7 @@ describe('alchemy_language', function() {
 
     it('should get targeted emotion if targets are passed', function() {
       var req = alchemy.emotion(target_payload, noop);
-      var targetedEmotionPath = service.url + '/text/TextGetTargetedEmotion?apikey=' + service.api_key;
+      var targetedEmotionPath = service.url + '/text/TextGetTargetedEmotion?api_key=' + service.api_key;
       assert.equal(req.uri.href, targetedEmotionPath);
       assert.equal(req.method, 'POST');
       assert(req.form);
