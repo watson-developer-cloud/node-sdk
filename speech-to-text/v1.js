@@ -354,7 +354,7 @@ SpeechToTextV1.prototype.createRecognizeStream = function(params) {
 
   params.headers = extend({
     'user-agent': pkg.name + '-nodejs-'+ pkg.version,
-    authorization:  'Basic ' + this._options.api_key
+    authorization:  this._options.headers.Authorization
   }, params.headers);
 
   return new RecognizeStream(params);

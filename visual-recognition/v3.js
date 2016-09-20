@@ -91,9 +91,8 @@ function VisualRecognitionV3(options) {
   BaseServiceAlchemy.call(this, options);
   // Check if 'version_date' was provided
   if (typeof this._options.version_date === 'undefined') {
-    throw new Error('Argument error: version_date was not specified, use 2016-05-19');
+    throw new Error('Argument error: version_date was not specified, use 2016-05-20');
   }
-  //this._options.qs.api_key = this._options.api_key;
   this._options.qs.version = this._options.version_date; // todo: confirm service expects version not version_date
 }
 util.inherits(VisualRecognitionV3, BaseServiceAlchemy);
@@ -587,6 +586,432 @@ VisualRecognitionV3.prototype.deleteClassifier = function(params, callback) {
       json: true,
     },
     requiredParams: ['classifier_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, errorFormatter(callback));
+};
+
+
+// collections & similarity search
+
+/**
+ * Create a collection
+ * Beta. Create a new collection of images to search. You can create a maximum of 5 collections.
+ *
+ * Example response:
+
+   { collection_id: 'integration_test_1474313373701_d9665f',
+     name: 'integration_test_1474313373701',
+     status: 'available',
+     created: '2016-09-19T19:29:34.019Z',
+     images: 0,
+     capacity: 1000000 }
+
+ * @param {Object} params
+ * @param {String} params.name The name of the new collection. The name can be a maximum of 128 UTF8 characters, with no spaces.
+ * @param {Function} callback
+ */
+VisualRecognitionV3.prototype.createCollection = function(params, callback) {
+  params = params || {};
+
+  var parameters = {
+    options: {
+      url: '/v3/collections',
+      method: 'POST',
+      json: true,
+      formData: pick(params, ['name'])
+    },
+    requiredParams: ['name'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, errorFormatter(callback));
+};
+
+
+/**
+ * Retrieve collection details
+ * Beta. Retrieve information about a specific collection.
+ *
+ * Example response:
+
+ { collection_id: 'integration_test_1474313373701_d9665f',
+   name: 'integration_test_1474313373701',
+   status: 'available',
+   created: '2016-09-19T19:29:34.019Z',
+   images: 0,
+   capacity: 1000000 }
+
+ * @param {Object} params
+ * @param {String} params.collection_id
+ * @param {Function} callback
+ */
+VisualRecognitionV3.prototype.getCollection = function(params, callback) {
+  params = params || {};
+
+  var parameters = {
+    options: {
+      url: '/v3/collections/{collection_id}',
+      method: 'GET',
+      json: true,
+      path: params
+    },
+    requiredParams: ['collection_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, errorFormatter(callback));
+};
+
+
+
+/**
+ * List collections
+ * Beta. List all custom collections.
+ *
+ * Example response:
+
+ { collections:
+   [ { collection_id: 'integration_test_1474313967414_0e320b',
+       name: 'integration_test_1474313967414',
+       status: 'available',
+       created: '2016-09-19T19:39:27.811Z',
+       images: 0,
+       capacity: 1000000 } ] }
+
+ * @param {Object} [params]
+ * @param {Function} callback
+ */
+VisualRecognitionV3.prototype.listCollections = function(params, callback) {
+  if (typeof params === 'function' && !callback) {
+    callback = params;
+  }
+
+  var parameters = {
+    options: {
+      url: '/v3/collections',
+      method: 'GET',
+      json: true
+    },
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, errorFormatter(callback));
+};
+
+
+
+/**
+ * Delete a collection
+ * Beta. Delete a user created collection.
+ *
+ * @param {Object} params
+ * @param {String} params.collection_id
+ * @param {Function} callback
+ */
+VisualRecognitionV3.prototype.deleteCollection = function(params, callback) {
+  params = params || {};
+
+  var parameters = {
+    options: {
+      url: '/v3/collections/{collection_id}',
+      method: 'DELETE',
+      json: true,
+      path: params
+    },
+    requiredParams: ['collection_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, errorFormatter(callback));
+};
+
+
+
+/**
+ * Add an image to a collection
+ * Beta. Add images to a collection. Each collection can contain 1000000 images.
+ *
+ * Example Response:
+
+ {
+   "images": [
+     {
+       "image_id": "9725bc",
+       "image_file": "obama.jpg",
+       "created": "2016-09-20T14:41:49.927Z",
+       "metadata": {
+         "foo": "bar"
+       }
+     }
+   ],
+   "images_processed": 1
+ }
+
+ * @param {Object} params
+ * @param {String} params.collection_id
+ * @param {ReadableStream} params.image_file The image file (.jpg or .png) of the image to add to the collection. Maximum file size of 2 MB.
+ * @param {Object} [params.metadata] optional arbitrary metadata. This can be anything that can be specified in a JSON object. For example, key-value pairs. Maximum 2 KB of metadata for each image.
+ * @param {Function} callback
+ */
+VisualRecognitionV3.prototype.addImage = function(params, callback) {
+  params = params || {};
+
+
+  if (!params.image_file || !isStream(params.image_file)) {
+    throw new Error('image_file param must be a standard Node.js Stream');
+  }
+
+  var parameters = {
+    options: {
+      url: '/v3/collections/{collection_id}/images',
+      method: 'POST',
+      json: true,
+      path: params,
+      formData: {
+        image_file: params.image_file,
+        metadata: {
+          value: JSON.stringify(params.metadata || {}),
+          options: {
+            contentType: 'application/json',
+            filename: 'metadata.json' // it doesn't matter what the filename is, but the service requires that *some* filename be set or else it gives a confusing "Missing multipart/form-data" error
+          }
+        }
+      }
+    },
+    requiredParams: ['collection_id', 'image_file'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, errorFormatter(callback));
+};
+
+/**
+ * List images in a collection
+ * Beta. List the first 100 images in a collection. Each collection can contain 1000000 images.
+ *
+ * Example Response:
+
+{ images:
+  [ { image_id: '83f3ff',
+     image_file: 'obama.jpg',
+     created: '2016-09-19T21:07:15.141Z' } ] }
+ *
+ * @param {Object} params
+ * @param {String} params.collection_id
+ * @param {ReadableStream} params.image_file The image file (.jpg or .png) of the image to add to the collection. Maximum file size of 2 MB.
+ * @param {Object} [params.metadata] optional arbitrary metadata. This can be anything that can be specified in a JSON object. For example, key-value pairs. Maximum 2 KB of metadata for each image.
+ * @param {Function} callback
+ */
+VisualRecognitionV3.prototype.listImages = function(params, callback) {
+  params = params || {};
+
+  var parameters = {
+    options: {
+      url: '/v3/collections/{collection_id}/images',
+      method: 'GET',
+      json: true,
+      path: params
+    },
+    requiredParams: ['collection_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, errorFormatter(callback));
+};
+
+/**
+ * Get image details
+ * Beta. List details about a specific image in a collection.
+ *
+ * Example Response:
+
+{ image_id: '83f3ff',
+  image_file: 'obama.jpg',
+  created: '2016-09-19T21:07:15.141Z'
+
+ * @param {Object} params
+ * @param {String} params.collection_id
+ * @param {String} params.image_id
+ * @param {Function} callback
+ */
+VisualRecognitionV3.prototype.getImage = function(params, callback) {
+  params = params || {};
+
+  var parameters = {
+    options: {
+      url: '/v3/collections/{collection_id}/images/{image_id}',
+      method: 'GET',
+      json: true,
+      path: params
+    },
+    requiredParams: ['collection_id', 'image_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, errorFormatter(callback));
+};
+
+/**
+ * Delete an image
+ * Beta. Delete an image from a collection.
+ *
+ * @param {Object} params
+ * @param {String} params.collection_id
+ * @param {String} params.image_id
+ * @param {Function} callback
+ */
+VisualRecognitionV3.prototype.deleteImage = function(params, callback) {
+  params = params || {};
+
+  var parameters = {
+    options: {
+      url: '/v3/collections/{collection_id}/images/{image_id}',
+      method: 'DELETE',
+      json: true,
+      path: params
+    },
+    requiredParams: ['collection_id', 'image_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, errorFormatter(callback));
+};
+
+/**
+ * Add or update metadata
+ * Beta. Add metadata to a specific image in a collection.
+ *
+ * @param {Object} params
+ * @param {String} params.collection_id
+ * @param {String} params.image_id
+ * @param {Object} params.metadata Can be anything that can be specified in a JSON object. For example, key-value pairs. Maximum 2 KB of metadata for each image.
+ * @param {Function} callback
+ */
+VisualRecognitionV3.prototype.setImageMetadata = function(params, callback) {
+  params = params || {};
+
+  var parameters = {
+    options: {
+      url: '/v3/collections/{collection_id}/images/{image_id}/metadata',
+      method: 'PUT',
+      json: true,
+      path: params,
+      headers: {"Content-Type": "multipart/form-data"},
+      // todo: manually create a body string that looks like a POST form data body even though it's a PUT
+      formData: {
+        metadata: {
+          value: JSON.stringify(params.metadata || {}),
+          options: {
+            contentType: 'application/json',
+            filename: 'metadata.json' // it doesn't matter what the filename is, but the service requires that *some* filename be set or else it gives a confusing "Missing multipart/form-data" error
+          }
+        }
+      }
+    },
+    requiredParams: ['collection_id', 'image_id', 'metadata'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, errorFormatter(callback));
+};
+
+
+/**
+ * Get image metadata
+ * Beta. View the metadata for a specific image in a collection.
+ *
+ * Example Response:
+
+ {"foo": "bar"}
+
+ *
+ * @param {Object} params
+ * @param {String} params.collection_id
+ * @param {ReadableStream} params.image_id
+ * @param {Function} callback
+ */
+VisualRecognitionV3.prototype.getImageMetadata = function(params, callback) {
+  params = params || {};
+
+  var parameters = {
+    options: {
+      url: '/v3/collections/{collection_id}/images/{image_id}/metadata',
+      method: 'GET',
+      json: true,
+      path: params
+    },
+    requiredParams: ['collection_id', 'image_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, errorFormatter(callback));
+};
+
+
+/**
+ * Delete image metadata
+ * Beta. Delete all metadata associated with an image.
+ *
+ * @param {Object} params
+ * @param {String} params.collection_id
+ * @param {ReadableStream} params.image_id
+ * @param {Function} callback
+ */
+VisualRecognitionV3.prototype.deleteImageMetadata = function(params, callback) {
+  params = params || {};
+
+  var parameters = {
+    options: {
+      url: '/v3/collections/{collection_id}/images/{image_id}/metadata',
+      method: 'DELETE',
+      json: true,
+      path: params
+    },
+    requiredParams: ['collection_id', 'image_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, errorFormatter(callback));
+};
+
+
+/**
+ * Find similar images
+ * Beta. Upload an image to find similar images in your custom collection.
+ *
+ * Example response:
+
+ {
+    "similar_images":[
+       {
+          "image_id":"dresses_1257263",
+          "created":"2016-09-04T21:49:16.908Z",
+          "metadata":{
+             "weight":10,
+             "cut":"a line",
+             "color":"red"
+          },
+          "score":"0.79"
+       }
+    ],
+    "image_file":"red_dress.jpg",
+    "images_processed": 1
+ }
+
+ * @param {Object} params
+ * @param {String} params.classifier_id The classifier id
+ * @param {ReadableStream} params.image_file The image file (.jpg or .png) of the image to search against the collection.
+ * @param {Number} [params.limit=10]  limit The number of similar results you want returned. Default limit is 10 results, you can specify a maximum limit of 100 results.
+ * @param {Function} callback
+ * @returns {ReadableStream|undefined}
+ */
+VisualRecognitionV3.prototype.findSimilar = function(params, callback) {
+  params = params || {};
+
+  if (!params.image_file || !isStream(params.image_file)) {
+    throw new Error('image_file param must be a standard Node.js Stream');
+  }
+
+  var parameters = {
+    options: {
+      url: '/v3/collections/{collection_id}/find_similar',
+      method: 'POST',
+      json: true,
+      qs: pick(params, ['limit']),
+      formData: pick(params, ['image_file']),
+      path: pick(params, ['collection_id'])
+    },
+    requiredParams: ['collection_id', 'image_file'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, errorFormatter(callback));

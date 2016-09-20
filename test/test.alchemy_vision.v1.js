@@ -50,7 +50,7 @@ describe('alchemy_vision', function() {
       assert.equal(req.method, 'POST');
       assert(req.form);
       var query = qs.stringify({
-        apikey: 'foobar',
+        api_key: 'foobar',
         outputMode: 'json',
         imagePostMode: 'raw'
       });
@@ -64,7 +64,7 @@ describe('alchemy_vision', function() {
       var req = alchemy.recognizeFaces({image: 'base64img'}, noop);
       assert.equal(req.method, 'POST');
       assert(req.form);
-      assert.equal(req.uri.href, service.url + apiPath + '?apikey=foobar');
+      assert.equal(req.uri.href, service.url + apiPath + '?api_key=foobar');
       var body = new Buffer(req.body).toString('ascii');
       var expectedBody = qs.stringify({
         image: 'base64img',
@@ -76,7 +76,7 @@ describe('alchemy_vision', function() {
 
     it('should generate a valid payload with a url', function() {
       var req = alchemy.recognizeFaces({url : 'http://bat.com/foo.png'}, noop);
-      var imagePath = service.url + '/url/URLGetRankedImageFaceTags?apikey=foobar';
+      var imagePath = service.url + '/url/URLGetRankedImageFaceTags?api_key=foobar';
       assert.equal(req.uri.href, imagePath);
       assert.equal(req.method, 'POST');
       assert(req.form);

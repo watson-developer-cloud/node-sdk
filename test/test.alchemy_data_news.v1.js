@@ -5,7 +5,7 @@ var watson    = require('../');
 var nock      = require('nock');
 var qs        = require('querystring');
 
-describe('alchemy_language', function() {
+describe('alchemy_data_news', function() {
 
   var noop = function() {};
 
@@ -51,7 +51,7 @@ describe('alchemy_language', function() {
       var req = alchemy.getNews(payload, noop);
       assert.equal(req.method, 'GET');
       var query = qs.stringify({
-        apikey: 'foobar',
+        api_key: 'foobar',
         start: 'bar',
         end: 'foo',
         q: 'q1.q2',

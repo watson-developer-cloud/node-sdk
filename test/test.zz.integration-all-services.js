@@ -6,6 +6,7 @@ var watson = require('../index');
 var assert = require('assert');
 var wav = require('wav');
 var concat = require('concat-stream');
+var path = require('path');
 
 describe('integration-all-services', function() {
 
@@ -23,7 +24,7 @@ describe('integration-all-services', function() {
   }
 
   var auth = require('./resources/auth');
-  var mobydick = fs.readFileSync(__dirname + '/resources/mobydick.txt', 'utf8');
+  var mobydick = fs.readFileSync(path.join(__dirname, 'resources/mobydick.txt'), 'utf8');
 
   this.retries(1);
 
@@ -266,8 +267,166 @@ describe('integration-all-services', function() {
           });
         });
       });
-    });
-  });
+
+      describe("collections", function() {
+        this.retries(0);
+        var collection_id;
+        var image_id;
+
+        // todo: consider doing some cleanup work and deleting anything older than an hour or so to avoid hitting the 5-collection limit
+
+        it('createCollection()', function(done) {
+          visual_recognition.createCollection({name: "integration_test_" + Date.now()}, function(err, result) {
+            if (err) {
+              return done(err);
+            }
+            assert(result.collection_id);
+            collection_id = result.collection_id;
+            done();
+          });
+        });
+
+        it('listCollections()', function(done) {
+          visual_recognition.listCollections({}, function(err, result) {
+            if (err) {
+              return done(err);
+            }
+            assert(result);
+            assert(result.collections);
+            assert(result.collections.length);
+            // todo: consider looping through collections to assert that collection_id is in the list
+            if (result.collections.length > 1) {
+              //eslint-disable-next-line no-console
+              console.warn("Visual Recognition %s collections found, maximum is 5")
+            }
+            done();
+          });
+        });
+
+
+        it('getCollection()', function(done) {
+          visual_recognition.getCollection({collection_id: collection_id}, function(err, result) {
+            if (err) {
+              return done(err);
+            }
+            assert(result);
+            assert.equal(result.collection_id, collection_id);
+            done();
+          });
+        });
+
+        it('addImage()', function(done) {
+          visual_recognition.addImage({
+            collection_id: collection_id,
+            image_file: fs.createReadStream(path.join(__dirname, 'resources/obama.jpg')),
+            metadata: {foo: 'bar'}
+          }, function(err, response) {
+            if (err) {
+              return done(err);
+            }
+            assert(response);
+            assert.equal(response.images_processed, 1);
+            assert(response.images);
+            assert(response.images.length);
+            assert(response.images[0].image_id);
+            image_id = response.images[0].image_id;
+            assert.equal(response.images[0].image_file, "obama.jpg");
+            assert(response.images[0].metadata);
+            assert.equal(response.images[0].metadata.foo, "bar");
+            done();
+          });
+        });
+
+        it('listImages()', function(done) {
+          visual_recognition.listImages({collection_id: collection_id}, function(err, result) {
+            if (err) {
+              return done(err);
+            }
+            assert(result);
+            assert(result.images);
+            assert(result.images.length);
+            done();
+          });
+        });
+
+        it('getImage()', function(done) {
+          visual_recognition.getImage({
+            collection_id: collection_id,
+            image_id: image_id
+          }, function(err, result) {
+            if (err) {
+              return done(err);
+            }
+            assert(result);
+            assert(result.image_id);
+            done();
+          });
+        });
+
+        it('setImageMetadata', function(done) {
+          visual_recognition.setImageMetadata({
+            collection_id: collection_id,
+            image_id: image_id,
+            metadata: {baz: 'bam'}
+          }, function(err, result) {
+            if (err) {
+              return done(err);
+            }
+            assert(result);
+            assert.equal(result.baz, 'bam');
+            done();
+          });
+        });
+
+        it('getImageMetadata()', function(done) {
+          visual_recognition.getImageMetadata({
+            collection_id: collection_id,
+            image_id: image_id
+          }, function(err, result) {
+            if (err) {
+              return done(err);
+            }
+            assert(result);
+            assert.equal(result.baz, 'bam');
+            done();
+          });
+        });
+
+        it('findSimilar()', function(done) {
+          visual_recognition.findSimilar({
+            collection_id: collection_id,
+            image_file: fs.createReadStream(path.join(__dirname, 'resources/obama2.jpg')),
+          }, function(err, result) {
+            if (err) {
+              return done(err);
+            }
+            assert(result);
+            assert(result.images_processed);
+            assert(result.similar_images);
+            done();
+          });
+        });
+
+        it('deleteImageMetadata()', function(done) {
+          visual_recognition.deleteImageMetadata({
+            collection_id: collection_id,
+            image_id: image_id
+          }, done);
+        });
+
+        it('deleteImage()', function(done) {
+          visual_recognition.deleteImage({
+            collection_id: collection_id,
+            image_id: image_id
+          }, done);
+        });
+
+        it('deleteCollection()', function(done) {
+          visual_recognition.deleteCollection({collection_id: collection_id}, done);
+        });
+      }); // collections
+    }); // v3
+  }); // vr
 
   describe('functional_tradeoff_analytics', function() {
     this.timeout(TWENTY_SECONDS);

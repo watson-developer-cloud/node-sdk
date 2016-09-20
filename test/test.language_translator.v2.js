@@ -66,7 +66,7 @@ describe('language_translator', function() {
         "language_translation": details
       });
       var instance = watson.language_translator({version: 'v2', version_date: '2016-07-01'});
-      assert(instance._options.api_key);
+      assert(instance._options.headers.Authorization);
     });
 
     it('should initialize with new-style VCAP_SERVICES credentials', function() {
@@ -74,7 +74,7 @@ describe('language_translator', function() {
         "language_translator": details
       });
       var instance = watson.language_translator({version: 'v2', version_date: '2016-07-01'});
-      assert(instance._options.api_key);
+      assert(instance._options.headers.Authorization);
     });
   });
 
