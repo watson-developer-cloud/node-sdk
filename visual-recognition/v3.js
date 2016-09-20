@@ -770,7 +770,7 @@ VisualRecognitionV3.prototype.addImage = function(params, callback) {
           value: JSON.stringify(params.metadata || {}),
           options: {
             contentType: 'application/json',
-            filename: 'metadata.json' // it doesn't matter what the filename is, but the service requires that *some* filename be set or else it gives a confusing "Missing multipart/form-data" error
+            filename: 'metadata.json' // it doesn't matter what the filename is, but the service requires that *some* filename be set or else it ignores the metadata
           }
         }
       }
