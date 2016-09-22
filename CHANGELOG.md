@@ -1,3 +1,7 @@
+# v2.4.1
+* Revert part of credential change: Alchemy* services again use `apikey` while visual recognition uses `api_key`
+  (Most endpoints accept either, but this split follows the documented API for each service.)
+
 # v2.4.0
 * Added support for Visual Recognition similarity search beta
 * Refactored handling of credentials to support constraints in similarity search
@@ -40,7 +44,7 @@
 # v2.0.1
 
 * Added VisualRecognitionV3.retrainClassifier() to facilitate updating of existing custom classifiers
-* Added support for `alternate_intents` parameter in ConveersationV1.message()
+* Added support for `alternate_intents` parameter in ConversationV1.message()
 
 
 # v2.0.0

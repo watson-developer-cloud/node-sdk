@@ -46,7 +46,7 @@ describe('integration-all-services', function() {
   });
 
   describe('functional_tone_analyzer', function() {
-    this.timeout(TEN_SECONDS);
+    this.timeout(TWENTY_SECONDS);
     var tone_analyzer = watson.tone_analyzer(auth.tone_analyzer);
 
     it('tone()', function(done) {
@@ -56,7 +56,7 @@ describe('integration-all-services', function() {
   });
 
   describe('functional_personality_insights', function() {
-    this.timeout(FIVE_SECONDS);
+    this.timeout(TWENTY_SECONDS);
     var personality_insights = watson.personality_insights(auth.personality_insights);
 
     it('profile()', function(done) {

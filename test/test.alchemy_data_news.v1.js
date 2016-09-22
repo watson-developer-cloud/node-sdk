@@ -51,7 +51,7 @@ describe('alchemy_data_news', function() {
       var req = alchemy.getNews(payload, noop);
       assert.equal(req.method, 'GET');
       var query = qs.stringify({
-        api_key: 'foobar',
+        apikey: 'foobar',
         start: 'bar',
         end: 'foo',
         q: 'q1.q2',

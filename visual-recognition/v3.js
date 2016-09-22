@@ -21,7 +21,7 @@ var pick = require('object.pick');
 var isStream = require('isstream');
 var requestFactory = require('../lib/requestwrapper');
 var util = require('util');
-var BaseServiceAlchemy = require('../lib/base_service_alchemy');
+var BaseService = require('../lib/base_service');
 
 var NEGATIVE_EXAMPLES = 'negative_examples';
 
@@ -88,14 +88,14 @@ function errorFormatter(cb) {
  * @constructor
  */
 function VisualRecognitionV3(options) {
-  BaseServiceAlchemy.call(this, options);
+  BaseService.call(this, options);
   // Check if 'version_date' was provided
   if (typeof this._options.version_date === 'undefined') {
     throw new Error('Argument error: version_date was not specified, use 2016-05-20');
   }
   this._options.qs.version = this._options.version_date; // todo: confirm service expects version not version_date
 }
-util.inherits(VisualRecognitionV3, BaseServiceAlchemy);
+util.inherits(VisualRecognitionV3, BaseService);
 VisualRecognitionV3.prototype.name = 'visual_recognition';
 VisualRecognitionV3.prototype.version = 'v3';
 VisualRecognitionV3.URL = 'https://gateway-a.watsonplatform.net/visual-recognition/api';
@@ -103,12 +103,50 @@ VisualRecognitionV3.prototype.serviceDefaults = {
   alchemy: true
 };
 
+
+/**
+ * Grab the api key
+ *
+ * @param options
+ * @private
+ */
+VisualRecognitionV3.prototype.initCredentials = function(options) {
+  options.api_key = options.api_key || options.apikey;
+  options = extend(
+    {},
+    this.getCredentialsFromBluemix(this.name), // todo: test if this works
+    this.getCredentialsFromEnvironment(this.name),
+    options
+  );
+  if (!options.use_unauthenticated) {
+    if (!options.api_key) {
+      throw new Error('Argument error: api_key was not specified');
+    }
+    // Per documentation, Alchemy* services use `apikey`, but Visual Recognition uses (`api_key`)
+    // (Either will work in most cases, but the VR Collections & Similarity Search beta only supports `api_key`)
+    options.qs = extend({ api_key : options.api_key }, options.qs);
+  }
+  return options
+};
+
+/**
+ * Pulls api_key from SERVICE_NAME_API_KEY env property
+ *
+ * @param {String} name
+ * @returns {{api_key: String|undefined}}
+ */
+VisualRecognitionV3.prototype.getCredentialsFromEnvironment = function(name) {
+  return {
+    api_key: process.env[name.toUpperCase() + '_API_KEY']
+  }
+};
+
 /**
  * Bluemix uses a different naming convention for VR v3 than for other services
  * @returns {*}
  */
 VisualRecognitionV3.prototype.getCredentialsFromBluemix = function() {
-  return BaseServiceAlchemy.prototype.getCredentialsFromBluemix.call(this, 'watson_vision_combined');
+  return BaseService.prototype.getCredentialsFromBluemix.call(this, 'watson_vision_combined');
 };
 
 /**
