@@ -1,4 +1,4 @@
-# v2.4.2
+# v2.4.3
 * Fix issue with automatically loading Alchemy* credentials from the Bluemix environment
 
 # v2.4.1

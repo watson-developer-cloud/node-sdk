@@ -108,12 +108,12 @@ describe('wrapper', function() {
 
     it('should use apikey (not documented) for alchemy service', function() {
       var service = watson.alchemy_language({ apikey: 'not-gonna-work'});
-      assert.equal(service._options.api_key, 'not-gonna-work');
+      assert.equal(service._options.qs.apikey, 'not-gonna-work');
     });
 
     it('should use api_key for alchemy service', function() {
       var service = watson.alchemy_language({ api_key: 'not-gonna-work'});
-      assert.equal(service._options.api_key, 'not-gonna-work');
+      assert.equal(service._options.qs.apikey, 'not-gonna-work');
     });
 
     it('should not use VCAP_SERVICES if use_vcap_services is false', function() {
