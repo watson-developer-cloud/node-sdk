@@ -1,3 +1,6 @@
+# v2.4.2
+* Fix issue with automatically loading Alchemy* credentials from the Bluemix environment
+
 # v2.4.1
 * Revert part of credential change: Alchemy* services again use `apikey` while visual recognition uses `api_key`
   (Most endpoints accept either, but this split follows the documented API for each service.)
