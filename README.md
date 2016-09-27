@@ -296,12 +296,15 @@ with the Retrieve and Rank service.
 
 Translate text from one language to another or idenfity a language using the [Language Translator][language_translator] service.
 
+**Note:** There is a deprecated Language *Translation* service and a newer Language *Translator* service. The only difference is the pricing structure and the service endpoint. The SDK currently defaults to the older endpoint, but that will change in the near future. **To guarentee compatibility, include the `url` when creating a LanguageTranslatorV2 instance.** See http://www.ibm.com/watson/developercloud/doc/language-translator/migrating.shtml for more details.
+
 ```javascript
 var LanguageTranslatorV2 = require('watson-developer-cloud/language-translator/v2');
 
 var language_translator = new LanguageTranslatorV2({
   username: '<username>',
-  password: '<password>'
+  password: '<password>',
+  url: 'https://gateway.watsonplatform.net/language-translator/api/v2/'
 });
 
 language_translator.translate({
@@ -322,6 +325,21 @@ language_translator.identify({
       console.log(JSON.stringify(language, null, 2));
 });
 ```
+
+To use with the deprecated Language Translation service, pass in the older endpoint:
+
+```javascript
+var LanguageTranslatorV2 = require('watson-developer-cloud/language-translator/v2');
+
+var language_translation = new LanguageTranslatorV2({
+  username: '<username>',
+  password: '<password>',
+  url: 'https://gateway.watsonplatform.net/language-translation/api'
+});
+```
+
+
+
 
 ### Natural Language Classifier
 
