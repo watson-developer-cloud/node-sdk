@@ -1,3 +1,6 @@
+# v2.4.5
+* Fixed bug where credentials could be lost when calling certain methods in Language Translator and Dialog services
+
 # v2.4.4
 * Doc-only changes, focused on Language Translation/Translator differences and temporary workaround
 

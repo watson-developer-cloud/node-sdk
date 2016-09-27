@@ -142,7 +142,7 @@ DialogV1.prototype.updateContent = function(params, callback) {
       path: params
     },
     requiredParams: ['dialog_id'],
-    defaultOptions: extend(this._options, pick(params, ['headers']))
+    defaultOptions: extend(true, {}, this._options, pick(params, ['headers']))
   };
   return requestFactory(parameters, callback);
 };

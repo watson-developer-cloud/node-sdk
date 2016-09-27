@@ -218,7 +218,7 @@ LanguageTranslatorV2.prototype.identify = function(params, callback) {
       method: 'POST',
       body: params.text
     },
-    defaultOptions: extend(this._options, {
+    defaultOptions: extend(true, {}, this._options, {
       headers: {
         'accept':'application/json',
         'content-type': 'plain/text'
