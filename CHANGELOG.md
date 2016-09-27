@@ -1,3 +1,6 @@
+# v2.4.4
+* Doc-only changes, focused on Language Translation/Translator differences and temporary workaround
+
 # v2.4.3
 * Fix issue with automatically loading Alchemy* credentials from the Bluemix environment
 
