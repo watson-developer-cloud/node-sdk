@@ -622,9 +622,8 @@ RetrieveAndRankV1.prototype.createSolrClient = function(params) {
     core: params.collection_name
   });
 
-  if (this._options.api_key) {
-    var auth = new Buffer(this._options.api_key, 'base64').toString('ascii').split(':');
-    solrClient.basicAuth(auth[0], auth[1]);
+  if (this._options.username && this._options.password) {
+    solrClient.basicAuth(this._options.username, this._options.password);
   }
   return solrClient;
 };

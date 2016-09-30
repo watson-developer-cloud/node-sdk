@@ -133,12 +133,11 @@ SpeechToTextV1.prototype.recognizeLive = function(params, callback) {
     port: parts.port,
     path: parts.pathname + (params.continuous ? '?continuous=true' : ''),
     method: 'POST',
-    headers: {
-      'Authorization': 'Basic ' + this._options.api_key,
+    headers: extend({
       'Transfer-Encoding': 'chunked',
       'cookie': 'SESSIONID=' + params.cookie_session,
       'Content-type': params.content_type
-    }
+    }, this._options.headers)
   };
   var protocol = (parts.protocol.match('http:')) ? http : https;
   var recognize_req = protocol.request(options, function(result) {
@@ -190,11 +189,10 @@ SpeechToTextV1.prototype.observeResult = function(params, callback) {
     port: parts.port,
     path: parts.pathname + (params.interim_results ? '?interim_results=true' : ''),
     method: 'GET',
-    headers: {
-      'Authorization': 'Basic ' + this._options.api_key,
+    headers: extend({
       'cookie': 'SESSIONID=' + params.cookie_session,
       'Accept': 'application/json'
-    }
+    }, this._options.headers)
   };
   var protocol = (parts.protocol.match('http:')) ? http : https;
   var req = protocol.request(options, function(result) {

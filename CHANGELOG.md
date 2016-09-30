@@ -1,3 +1,6 @@
+# v2.4.6
+* Fixed credential bugs in R&R and STT
+
 # v2.4.5
 * Fixed bug where credentials could be lost when calling certain methods in Language Translator and Dialog services
 
