@@ -91,7 +91,7 @@ RecognizeStream.prototype.initialize = function() {
 
   // when the input stops, let the service know that we're done
   self.on('finish', function() {
-    if (self.socket) {
+    if (self.socket && self.socket._readyState === W3CWebSocket.OPEN) {
       self.socket.send(JSON.stringify(closingMessage));
     } else {
       this.once('connect', function () {
