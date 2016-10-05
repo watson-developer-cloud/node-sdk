@@ -1,3 +1,6 @@
+# v2.4.7
+* Fixed issue with send data on non-open WebSockets for STT RecognizeStream - see #322
+
 # v2.4.6
 * Fixed credential bugs in R&R and STT
 
