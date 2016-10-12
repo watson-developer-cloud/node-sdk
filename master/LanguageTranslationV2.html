@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: DialogV1</title>
+    <title>JSDoc: Class: LanguageTranslationV2</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: DialogV1</h1>
+    <h1 class="page-title">Class: LanguageTranslationV2</h1>
 
     
 
@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2>DialogV1</h2>
+        <h2>LanguageTranslationV2</h2>
         
     
 </header>
@@ -40,7 +40,7 @@
 
     
 
-    <h4 class="name" id="DialogV1"><span class="type-signature"></span>new DialogV1<span class="signature">(options)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="LanguageTranslationV2"><span class="type-signature"></span>new LanguageTranslationV2<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
@@ -67,7 +67,11 @@
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
+        
+        <th>Default</th>
         
 
         <th class="last">Description</th>
@@ -79,18 +83,109 @@
 
         <tr>
             
-                <td class="name"><code>options</code></td>
+                <td class="name"><code>params.url</code></td>
             
 
             <td class="type">
             
+                
+<span class="param-type">string</span>
+
+
+            
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
 
+                
+
+                
+                </td>
             
 
-            <td class="description last"></td>
+            
+                <td class="default">
+                
+                    https://gateway.watsonplatform.net/language-translation/api
+                
+                </td>
+            
+
+            <td class="description last">The service URL.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>params.username</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">Username</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>params.password</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">Password</td>
         </tr>
 
     
@@ -131,7 +226,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dialog_v1.js.html">dialog/v1.js</a>, <a href="dialog_v1.js.html#line32">line 32</a>
+        <a href="language-translation_v2.js.html">language-translation/v2.js</a>, <a href="language-translation_v2.js.html#line34">line 34</a>
     </li></ul></dd>
     
 
@@ -180,15 +275,14 @@
 
     
 
-    <h4 class="name" id="conversation"><span class="type-signature"></span>conversation<span class="signature">(params)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="createModel"><span class="type-signature"></span>createModel<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Returns a response for a submitted input message.
-Also used to start new conversations.
+    Creates a translation model
 </div>
 
 
@@ -224,13 +318,13 @@ Also used to start new conversations.
 
         <tr>
             
-                <td class="name"><code>params</code></td>
+                <td class="name"><code>params.base_model_id</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Object</span>
+<span class="param-type">string</span>
 
 
             
@@ -240,7 +334,99 @@ Also used to start new conversations.
 
             
 
-            <td class="description last">{ client_id: '', dialog_id: '' }</td>
+            <td class="description last">The base model identifier</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>params.name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The model name</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>params.forced_glossary</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">stream</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">A UTF-8 encoded TMX file that contains pairs of matching terms in the source and target language that are seen as absolute by the system. This file completely overwrites the original domain data.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>params.parallel_corpus</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">stream</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">A UTF-8 encoded TMX file that contains matching phrases in the source and target language that serve as examples for Watson. Parallel corpora differ from glossaries because they do not overwrite the original domain data.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>params.monolingual_corpus</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">stream</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">A UTF-8 encoded plain text file that contains a body of text in the target language that is related to what you are translating. A monolingual corpus helps improve literal translations to be more fluent and human.</td>
         </tr>
 
     
@@ -281,7 +467,7 @@ Also used to start new conversations.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dialog_v1.js.html">dialog/v1.js</a>, <a href="dialog_v1.js.html#line113">line 113</a>
+        <a href="language-translation_v2.js.html">language-translation/v2.js</a>, <a href="language-translation_v2.js.html#line98">line 98</a>
     </li></ul></dd>
     
 
@@ -312,14 +498,14 @@ Also used to start new conversations.
 
     
 
-    <h4 class="name" id="createDialog"><span class="type-signature"></span>createDialog<span class="signature">(params)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="deleteModel"><span class="type-signature"></span>deleteModel<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Create a dialog based on a file and name
+    Deletes a model
 </div>
 
 
@@ -355,13 +541,13 @@ Also used to start new conversations.
 
         <tr>
             
-                <td class="name"><code>params</code></td>
+                <td class="name"><code>params.model_id</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Object</span>
+<span class="param-type">string</span>
 
 
             
@@ -371,7 +557,7 @@ Also used to start new conversations.
 
             
 
-            <td class="description last">{ name: '', file:'' }</td>
+            <td class="description last">The model identifier</td>
         </tr>
 
     
@@ -412,7 +598,7 @@ Also used to start new conversations.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dialog_v1.js.html">dialog/v1.js</a>, <a href="dialog_v1.js.html#line174">line 174</a>
+        <a href="language-translation_v2.js.html">language-translation/v2.js</a>, <a href="language-translation_v2.js.html#line135">line 135</a>
     </li></ul></dd>
     
 
@@ -443,14 +629,14 @@ Also used to start new conversations.
 
     
 
-    <h4 class="name" id="deleteDialog"><span class="type-signature"></span>deleteDialog<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="getIdentifiableLanguages"><span class="type-signature"></span>getIdentifiableLanguages<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Delete a dialog and removes all associated data
+    Returns the identifiable languages
 </div>
 
 
@@ -494,7 +680,7 @@ Also used to start new conversations.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dialog_v1.js.html">dialog/v1.js</a>, <a href="dialog_v1.js.html#line218">line 218</a>
+        <a href="language-translation_v2.js.html">language-translation/v2.js</a>, <a href="language-translation_v2.js.html#line180">line 180</a>
     </li></ul></dd>
     
 
@@ -525,14 +711,14 @@ Also used to start new conversations.
 
     
 
-    <h4 class="name" id="getContent"><span class="type-signature"></span>getContent<span class="signature">(params)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="getModel"><span class="type-signature"></span>getModel<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Gets content for nodes.
+    Return the translation model
 </div>
 
 
@@ -568,13 +754,13 @@ Also used to start new conversations.
 
         <tr>
             
-                <td class="name"><code>params</code></td>
+                <td class="name"><code>params.model_id</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Object</span>
+<span class="param-type">string</span>
 
 
             
@@ -584,7 +770,7 @@ Also used to start new conversations.
 
             
 
-            <td class="description last">{ dialog_id: '' }</td>
+            <td class="description last">The model identifier</td>
         </tr>
 
     
@@ -625,7 +811,7 @@ Also used to start new conversations.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dialog_v1.js.html">dialog/v1.js</a>, <a href="dialog_v1.js.html#line154">line 154</a>
+        <a href="language-translation_v2.js.html">language-translation/v2.js</a>, <a href="language-translation_v2.js.html#line73">line 73</a>
     </li></ul></dd>
     
 
@@ -656,14 +842,14 @@ Also used to start new conversations.
 
     
 
-    <h4 class="name" id="getConversation"><span class="type-signature"></span>getConversation<span class="signature">(params)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="getModels"><span class="type-signature"></span>getModels<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Returns a chat session data dump for a given date.
+    Return the translation models
 </div>
 
 
@@ -699,13 +885,13 @@ Also used to start new conversations.
 
         <tr>
             
-                <td class="name"><code>params</code></td>
+                <td class="name"><code>params.default</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Object</span>
+<span class="param-type">string</span>
 
 
             
@@ -715,7 +901,55 @@ Also used to start new conversations.
 
             
 
-            <td class="description last">{ client_id: '', dialog_id: '', name_values:''}</td>
+            <td class="description last">Query filters to check if the model is
+                           the default one used when only source
+                           and target languages are specified.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>params.source</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Filter by source language</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>params.target</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Filter by target language</td>
         </tr>
 
     
@@ -756,7 +990,7 @@ Also used to start new conversations.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dialog_v1.js.html">dialog/v1.js</a>, <a href="dialog_v1.js.html#line91">line 91</a>
+        <a href="language-translation_v2.js.html">language-translation/v2.js</a>, <a href="language-translation_v2.js.html#line54">line 54</a>
     </li></ul></dd>
     
 
@@ -787,96 +1021,14 @@ Also used to start new conversations.
 
     
 
-    <h4 class="name" id="getDialogs"><span class="type-signature"></span>getDialogs<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="identify"><span class="type-signature"></span>identify<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Returns the dialogs associated with a service instance
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dialog_v1.js.html">dialog/v1.js</a>, <a href="dialog_v1.js.html#line203">line 203</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="getProfile"><span class="type-signature"></span>getProfile<span class="signature">(params)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    Retrieves the values for profile variables for specific client ID
+    Identify the text based on the identifiable languages
 </div>
 
 
@@ -912,13 +1064,13 @@ Also used to start new conversations.
 
         <tr>
             
-                <td class="name"><code>params</code></td>
+                <td class="name"><code>params.text</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Object</span>
+<span class="param-type">string</span>
 
 
             
@@ -928,7 +1080,7 @@ Also used to start new conversations.
 
             
 
-            <td class="description last">{ client_id: '', dialog_id: '', name:''}</td>
+            <td class="description last">text to identify</td>
         </tr>
 
     
@@ -969,7 +1121,7 @@ Also used to start new conversations.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dialog_v1.js.html">dialog/v1.js</a>, <a href="dialog_v1.js.html#line49">line 49</a>
+        <a href="language-translation_v2.js.html">language-translation/v2.js</a>, <a href="language-translation_v2.js.html#line199">line 199</a>
     </li></ul></dd>
     
 
@@ -1000,14 +1152,14 @@ Also used to start new conversations.
 
     
 
-    <h4 class="name" id="updateContent"><span class="type-signature"></span>updateContent<span class="signature">(params)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="translate"><span class="type-signature"></span>translate<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Updates content for specified nodes.
+    Translate pharagraphs from one language into another
 </div>
 
 
@@ -1043,13 +1195,13 @@ Also used to start new conversations.
 
         <tr>
             
-                <td class="name"><code>params</code></td>
+                <td class="name"><code>params.source</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Object</span>
+<span class="param-type">string</span>
 
 
             
@@ -1059,7 +1211,30 @@ Also used to start new conversations.
 
             
 
-            <td class="description last">{ dialog_id: '' }</td>
+            <td class="description last">Source language</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>params.target</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Target language</td>
         </tr>
 
     
@@ -1100,269 +1275,7 @@ Also used to start new conversations.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dialog_v1.js.html">dialog/v1.js</a>, <a href="dialog_v1.js.html#line134">line 134</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="updateDialog"><span class="type-signature"></span>updateDialog<span class="signature">(params)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    Update a dialog with a new dialog file
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>params</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">{ dialog_id: '' }</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dialog_v1.js.html">dialog/v1.js</a>, <a href="dialog_v1.js.html#line236">line 236</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="updateProfile"><span class="type-signature"></span>updateProfile<span class="signature">(params)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    Sets the values for profile variables
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>params</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">{ client_id: '', dialog_id: '', name_values:''}</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dialog_v1.js.html">dialog/v1.js</a>, <a href="dialog_v1.js.html#line70">line 70</a>
+        <a href="language-translation_v2.js.html">language-translation/v2.js</a>, <a href="language-translation_v2.js.html#line156">line 156</a>
     </li></ul></dd>
     
 
