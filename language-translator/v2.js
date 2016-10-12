@@ -40,7 +40,7 @@ function LanguageTranslatorV2(options) {
   // (This probably does't matter since the api didn't change)
   if (!options.url) {
     var err = new Error("LanguageTranslatorV2 currently defaults to the url for LanguageTranslationV2, " +
-      "but this will change in the next major release of the watson-developer-cloud Node.js SDK." +
+      "but this will change in the next major release of the watson-developer-cloud Node.js SDK. " +
       "Please either specify the url https://gateway.watsonplatform.net/language-translator/api/v2/ or else use " +
       "LanguageTranslationV2. " +
       "See http://www.ibm.com/watson/developercloud/doc/language-translator/migrating.shtml for more details.");
