@@ -7,6 +7,7 @@ var assert = require('assert');
 var wav = require('wav');
 var concat = require('concat-stream');
 var path = require('path');
+var async = require('async');
 
 describe('integration-all-services', function() {
 
@@ -273,7 +274,38 @@ describe('integration-all-services', function() {
         var collection_id;
         var image_id;
 
-        // todo: consider doing some cleanup work and deleting anything older than an hour or so to avoid hitting the 5-collection limit
+
+        // there is currently a limit of 5 collections per service instance
+        // so, this automatically deletes any existing collections that are > 15 minutes old
+        // presumably they were left from previous (failed) test runs
+        before(function(done) {
+          visual_recognition.listCollections({}, function(err, result) {
+            if (err) {
+              return done(err);
+            }
+            var cutoff = new Date();
+            cutoff.setMinutes(cutoff.getMinutes() - 15);
+            if (result.collections && Array.isArray(result.collections)) {
+              async.forEach(result.collections, function(col, next) {
+                if (new Date(col.created) < cutoff) {
+                  // eslint-disable-next-line no-console
+                  console.log('Deleting old collection before running tests', col);
+                  visual_recognition.deleteCollection({collection_id: col.collection_id}, function(err) {
+                    if (err) {
+                      // eslint-disable-next-line no-console
+                      console.error('error deleting collection:', err, col);
+                    }
+                    next(); // even if it failed, go to the next step
+                  });
+                } else {
+                  next();
+                }
+              }, done);
+            } else {
+              done();
+            }
+          });
+        });
 
         it('createCollection()', function(done) {
           visual_recognition.createCollection({name: "integration_test_" + Date.now()}, function(err, result) {
@@ -295,10 +327,6 @@ describe('integration-all-services', function() {
             assert(result.collections);
             assert(result.collections.length);
             // todo: consider looping through collections to assert that collection_id is in the list
-            if (result.collections.length > 1) {
-              //eslint-disable-next-line no-console
-              console.warn("Visual Recognition %s collections found, maximum is 5")
-            }
             done();
           });
         });
