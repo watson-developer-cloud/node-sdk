@@ -1,7 +1,7 @@
 'use strict';
 
 var assert = require('assert');
-var watson = require('../index');
+var watson = require('../../index');
 var nock = require('nock');
 var url = require('url');
 var fs = require('fs');
@@ -38,8 +38,8 @@ describe('retrieve_and_rank', function() {
   var rankerPath = '/v1/rankers';
   var rankerId = 'foo';
   var rankPath = rankerPath + '/' + rankerId;
-  var rankerData =  fs.createReadStream(__dirname + '/resources/ranker_test.csv');
-  var rankerTrainData =  fs.createReadStream(__dirname + '/resources/ranker_train.csv');
+  var rankerData =  fs.createReadStream(__dirname + '/../resources/ranker_test.csv');
+  var rankerTrainData =  fs.createReadStream(__dirname + '/../resources/ranker_train.csv');
 
   var createRankerResponse = 'rank created';
   var deleteRankerResponse = 'rank deleted';

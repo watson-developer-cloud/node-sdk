@@ -1,7 +1,7 @@
 'use strict';
 
 var assert = require('assert');
-var watson = require('../index');
+var watson = require('../../index');
 var nock   = require('nock');
 var fs     = require('fs');
 var extend = require('extend');
@@ -186,7 +186,7 @@ describe('speech_to_text', function() {
     var path = '/v1/recognize',
       session_path = '/v1/sessions/foo/recognize',
       payload = {
-        audio: fs.createReadStream(__dirname + '/resources/audio.wav'),
+        audio: fs.createReadStream(__dirname + '/../resources/weather.wav'),
         content_type: 'audio/l16;rate=41100'
       };
 
@@ -250,7 +250,7 @@ describe('speech_to_text', function() {
       "word_alternatives_threshold": 0.25
     };
     var recognizeStream = speech_to_text.createRecognizeStream(options);
-    fs.createReadStream(__dirname + '/resources/audio.wav').pipe(recognizeStream);
+    fs.createReadStream(__dirname + '/../resources/weather.wav').pipe(recognizeStream);
     recognizeStream.setEncoding('utf8');
 
     // note: none of these tests actually run (or even register with mocha), but the callbacks let the previous test pass :(

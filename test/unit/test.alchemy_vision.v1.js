@@ -1,7 +1,7 @@
 'use strict';
 
 var assert    = require('assert');
-var watson    = require('../index');
+var watson    = require('../../index');
 var nock      = require('nock');
 var qs        = require('querystring');
 var fs        = require('fs');
@@ -19,7 +19,7 @@ describe('alchemy_vision', function() {
   var apiPath = '/image/ImageGetRankedImageFaceTags';
 
   var payload = {
-    image: fs.createReadStream(__dirname + '/resources/car.png')
+    image: fs.createReadStream(__dirname + '/../resources/car.png')
   };
 
   before(function() {

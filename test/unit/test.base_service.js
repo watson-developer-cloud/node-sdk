@@ -1,6 +1,6 @@
 // note: this has a lot of overlap with test.wrapper.js
 // many/most of those tests should be moved here
-var BaseService = require('../lib/base_service');
+var BaseService = require('../../lib/base_service');
 var assert = require('assert');
 
 describe('BaseService', function() {

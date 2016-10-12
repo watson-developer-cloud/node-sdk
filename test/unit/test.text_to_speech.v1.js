@@ -1,7 +1,7 @@
 'use strict';
 
 var assert = require('assert');
-var watson = require('../index');
+var watson = require('../../index');
 var nock   = require('nock');
 var qs     = require('querystring');
 var omit   = require('object.omit');
@@ -57,7 +57,7 @@ describe('text_to_speech', function() {
     beforeEach(function() {
       nock(service.url)
         .post(synthesize_request, {text: service_request.text})
-        .replyWithFile(200, __dirname + '/resources/audio.ogg');
+        .replyWithFile(200, __dirname + '/../resources/watson-hi.ogg');
     });
 
     it('should check for missing text', function() {
@@ -115,7 +115,7 @@ describe('text_to_speech', function() {
     beforeEach(function() {
       nock(service.url)
         .post(synthesize_request, {text: service_request.text})
-        .replyWithFile(200, __dirname + '/resources/audio.ogg')
+        .replyWithFile(200, __dirname + '/../resources/watson-hi.ogg')
         .get(voices_path)
         .reply(200, mock_voices);
     });

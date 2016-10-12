@@ -1,7 +1,7 @@
 'use strict';
 
 var assert  = require('assert');
-var watson  = require('../index');
+var watson  = require('../../index');
 var nock    = require('nock');
 var fs      = require('fs');
 var omit    = require('object.omit');
@@ -20,7 +20,7 @@ describe('visual_recognition', function() {
 
   var api_key_qs = 'api_key=' + service.api_key;
   var version_qs = 'version=' + service.version_date;
-  var fake_file = fs.createReadStream(__dirname + '/resources/car.png');
+  var fake_file = fs.createReadStream(__dirname + '/../resources/car.png');
   var service_request = {
     images_file: fake_file,
     classifier_ids: {

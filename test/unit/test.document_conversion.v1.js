@@ -3,7 +3,7 @@
 var assert  = require('assert');
 var pick    = require('object.pick');
 var extend  = require('extend');
-var watson  = require('../index');
+var watson  = require('../../index');
 var nock    = require('nock');
 var fs      = require('fs');
 
@@ -31,7 +31,7 @@ describe('document_conversion', function() {
         ]
       }
     },
-    file: fs.createReadStream(__dirname + '/resources/sampleWord.docx'),
+    file: fs.createReadStream(__dirname + '/../resources/sampleWord.docx'),
   };
 
   before(function() {
@@ -127,14 +127,14 @@ describe('document_conversion', function() {
     it('should set a default content type based on the file extension', function() {
       return checkContentType({
         conversion_target: 'answer_units',
-        file: fs.createReadStream(__dirname + '/resources/sampleWord.docx')
+        file: fs.createReadStream(__dirname + '/../resources/sampleWord.docx')
       }, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
     });
 
     it('should allow the content type to be manually set', function() {
       return checkContentType({
         conversion_target: 'answer_units',
-        file: fs.createReadStream(__dirname + '/resources/sampleWordWrongExtension.html'),
+        file: fs.createReadStream(__dirname + '/../resources/sampleWordWrongExtension.html'),
         content_type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
       }, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
     });
@@ -144,7 +144,7 @@ describe('document_conversion', function() {
     it('should add the charset to the content-type for .htm files', function() {
       return checkContentType({
         conversion_target: 'answer_units',
-        file: fs.createReadStream(__dirname + '/resources/sampleHtml.htm')
+        file: fs.createReadStream(__dirname + '/../resources/sampleHtml.htm')
       }, 'text/html; charset=utf-8');
     });
 
@@ -152,14 +152,14 @@ describe('document_conversion', function() {
     it('should add the charset to the content-type for .html files', function() {
       return checkContentType({
         conversion_target: 'answer_units',
-        file: fs.createReadStream(__dirname + '/resources/sampleHtml.html')
+        file: fs.createReadStream(__dirname + '/../resources/sampleHtml.html')
       }, 'text/html; charset=utf-8');
     });
 
     it('should not override the user-set content-type for html files', function() {
       return checkContentType({
         conversion_target: 'answer_units',
-        file: fs.createReadStream(__dirname + '/resources/sampleHtml.htm'),
+        file: fs.createReadStream(__dirname + '/../resources/sampleHtml.htm'),
         content_type: 'text/plain'
       }, 'text/plain');
     });
@@ -167,7 +167,7 @@ describe('document_conversion', function() {
     it ('should accept Buffers', function() {
       return checkContentType({
         conversion_target: 'answer_units',
-        file: fs.readFileSync(__dirname + '/resources/sampleHtml.htm'),
+        file: fs.readFileSync(__dirname + '/../resources/sampleHtml.htm'),
         content_type: 'text/plain'
       }, 'text/plain');
     });

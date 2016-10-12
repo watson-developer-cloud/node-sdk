@@ -4,7 +4,6 @@ npm-debug.log.*
 coverage
 .DS_Store
 test/resources/auth.js
-test/integration/
 test/resources/tts-output.ogg
 .idea
 doc/

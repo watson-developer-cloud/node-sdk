@@ -1,7 +1,7 @@
 'use strict';
 
 var assert = require('assert');
-var watson = require('../index');
+var watson = require('../../index');
 var nock   = require('nock');
 var fs     = require('fs');
 
@@ -172,9 +172,9 @@ describe('language_translation', function() {
         var path = '/v2/models';
         var service_request = {
           base_model_id: 'foo',
-          forced_glossary: fs.createReadStream(__dirname + '/resources/glossary.tmx'),
-          parallel_corpus: fs.createReadStream(__dirname + '/resources/glossary.tmx'),
-          monolingual_corpus: fs.createReadStream(__dirname + '/resources/glossary.tmx')
+          forced_glossary: fs.createReadStream(__dirname + '/../resources/glossary.tmx'),
+          parallel_corpus: fs.createReadStream(__dirname + '/../resources/glossary.tmx'),
+          monolingual_corpus: fs.createReadStream(__dirname + '/../resources/glossary.tmx')
         };
 
         nock(service.url).persist()

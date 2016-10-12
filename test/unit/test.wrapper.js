@@ -1,8 +1,8 @@
 'use strict';
 
 var assert = require('assert');
-var watson = require('../index');
-var helper = require('../lib/helper');
+var watson = require('../../index');
+var helper = require('../../lib/helper');
 
 describe('wrapper', function() {
 

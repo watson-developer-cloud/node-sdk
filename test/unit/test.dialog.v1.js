@@ -4,7 +4,7 @@ var assert  = require('assert');
 var extend  = require('extend');
 var pick    = require('object.pick');
 var omit    = require('object.omit');
-var watson  = require('../index');
+var watson  = require('../../index');
 var nock    = require('nock');
 var qs      = require('querystring');
 var fs      = require('fs');
@@ -164,7 +164,7 @@ describe('dialog', function() {
 
   describe('createDialog()', function() {
     var params = {
-      file: fs.createReadStream(__dirname + '/resources/pizza.xml'),
+      file: fs.createReadStream(__dirname + '/../resources/pizza.xml'),
       name: 'foo'
     };
 
@@ -210,7 +210,7 @@ describe('dialog', function() {
 
   describe('updateDialog()', function() {
     var params = {
-      file: fs.createReadStream(__dirname + '/resources/pizza.xml'),
+      file: fs.createReadStream(__dirname + '/../resources/pizza.xml'),
       dialog_id: payload.dialog_id
     };
 
