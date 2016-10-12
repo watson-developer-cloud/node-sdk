@@ -185,7 +185,7 @@ describe('integration-all-services', function() {
 
       // this endpoint is flaky.
       // reported the issue to the team, but disabling the test for now.
-      describe.skip('recognizeText()', function() {
+      describe('recognizeText()', function() {
         it('read text in an uploaded image', function(done) {
 
           var params = {
@@ -229,45 +229,65 @@ describe('integration-all-services', function() {
         });
       });
 
-      // there are currently too many classifiers on the account
-      // disabling this test until we can get separate credentials for the SDK
-      describe.skip('listClassifiers()', function() {
-        it('should return the list of classifiers', function(done) {
+
+      // todo: add more tests, consider splitting things between a permanent and a temporary classifier
+      describe("custom classifiers", function() {
+        var classifier_id;
+        this.retries(0);
+
+        it('createClassifier()', function(done) {
+            visual_recognition.createClassifier({
+              name: 'light_dark_test_temporary',
+              light_positive_examples: fs.createReadStream(path.join(__dirname,'resources/light.zip')),
+              dark_positive_examples: fs.createReadStream(path.join(__dirname,'resources/dark.zip'))
+            }, function(err, response) {
+              if (err) {
+                return done(err)
+              }
+              assert(response);
+              assert(response.classifier_id);
+              classifier_id = response.classifier_id;
+              done();
+            });
+        });
+
+        it('listClassifiers()', function(done) {
           visual_recognition.listClassifiers({}, function(err, result) {
             if (err) {
               return done(err);
             }
             assert(result.classifiers);
             assert(result.classifiers.length);
-            assert(result.classifiers[0].classifier_id);
-            assert(result.classifiers[0].name);
-            assert(result.classifiers[0].status);
+            // hack until we're allowed multiple classifiers
+            if (!classifier_id) {
+              classifier_id = result.classifiers[0].classifier_id;
+            }
+            // var permament_classifiers = result.classifiers.filter(function(c) {
+            //   return c.classifier_id === classifier_id;
+            // });
+            // assert(permament_classifiers.length);
             done();
           });
         });
-      });
 
-      describe('getClassifier()', function() {
-        // todo: we need a separate key for the SDK tests.
-        // Right now it's shared with the demo and those classifiers sometimes get deleted :/
-        // disabling this test in the meanwhile
-        it.skip('should retrieve the classifier', function(done) {
-          var expected = {
-              "classifier_id": "MoleskineTypes_1855242529",
-              "name": "Moleskine Types",
-              "owner": "a3a48ea7-492b-448b-87d7-9dade8bde5a9",
-              "status": "ready",
-              "created": "2016-06-21T02:38:57.661Z",
-              "classes": [{ "class": "portrait" }]};
-          visual_recognition.getClassifier({classifier_id: 'MoleskineTypes_1855242529'}, function(err, classifier){
+        it('getClassifier()', function(done) {
+          visual_recognition.getClassifier({classifier_id: classifier_id}, function(err, classifier){
             if (err) {
               return done(err);
             }
-            assert.deepEqual(classifier, expected);
+            assert.equal(classifier.classifier_id, classifier_id);
+            assert.equal(classifier.name, 'light_dark_test_temporary');
+            assert.deepEqual(classifier.classes, [{"class":"light"},{"class":"dark"}]);
             done();
           });
         });
-      });
+
+        it('deleteClassifier()', function(done) {
+          visual_recognition.deleteClassifier({classifier_id: classifier_id}, done);
+        })
+
+    }); // custom classifiers
+
 
       describe("collections", function() {
         this.retries(0);
