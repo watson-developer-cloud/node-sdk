@@ -1,3 +1,7 @@
+# v2.5.0
+* Split LanguageTranslationV2 into a seperate service from LanguageTranslatorV2, added a warning when translator service is used without specifying a url since the default is currently incorrect.
+* Fixed bug with setting user-agent header
+
 # v2.4.7
 * Fixed issue with send data on non-open WebSockets for STT RecognizeStream - see #322
 
