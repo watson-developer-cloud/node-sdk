@@ -616,9 +616,38 @@ describe('integration-all-services', function() {
     });
   });
 
+  describe('functional_language_translation', function() {
+    this.timeout(TWENTY_SECONDS * 2);
+    var language_translation = watson.language_translation(auth.language_translation);
+
+    it('getModels()', function(done) {
+      language_translation.getModels(null, failIfError.bind(failIfError, done));
+    });
+
+    it('translate()', function(done) {
+      var params = {
+        text: 'this is a test',
+        source: 'en',
+        target: 'es'
+      };
+      language_translation.translate(params, failIfError.bind(failIfError, done));
+    });
+
+    it('getIdentifiableLanguages()', function(done) {
+      language_translation.getIdentifiableLanguages(null, failIfError.bind(failIfError, done));
+    });
+
+    it('identify()', function(done) {
+      var params = {
+        text: 'this is an important test that needs to work'
+      };
+      language_translation.identify(params, failIfError.bind(failIfError, done));
+    });
+  });
+
   describe('functional_language_translator', function() {
     this.timeout(TWENTY_SECONDS * 2);
-    var language_translator = watson.language_translator(auth.language_translator || auth.language_translation);
+    var language_translator = watson.language_translator(auth.language_translator);
 
     it('getModels()', function(done) {
       language_translator.getModels(null, failIfError.bind(failIfError, done));

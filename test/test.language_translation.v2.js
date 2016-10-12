@@ -5,7 +5,7 @@ var watson = require('../index');
 var nock   = require('nock');
 var fs     = require('fs');
 
-describe('language_translator', function() {
+describe('language_translation', function() {
 
   var noop = function() {};
 
@@ -24,7 +24,7 @@ describe('language_translator', function() {
     nock.cleanAll();
   });
 
-  var language_translator = watson.language_translator(service);
+  var language_translation = watson.language_translation(service);
 
   var missingParameter = function(err) {
     assert.ok((err instanceof Error) && /required parameters/.test(err));
@@ -45,11 +45,11 @@ describe('language_translator', function() {
       {
         "credentials": {
           "password": "FAKE_PASSWORD",
-          "url": "https://gateway.watsonplatform.net/language-translator/api",
+          "url": "https://gateway.watsonplatform.net/language-translation/api",
           "username": "FAKE_USERNAME"
         },
-        "label": "language_translator",
-        "name": "Language Translator-4t",
+        "label": "language_translation",
+        "name": "Language Translation-4t",
         "plan": "standard",
         "provider": null,
         "syslog_drain_url": null,
@@ -63,17 +63,17 @@ describe('language_translator', function() {
 
     it('should initialize with old-style VCAP_SERVICES credentials', function() {
       process.env.VCAP_SERVICES = JSON.stringify({
-        "language_translator": details
+        "language_translation": details
       });
-      var instance = watson.language_translator({version: 'v2', version_date: '2016-07-01'});
+      var instance = watson.language_translation({version: 'v2', version_date: '2016-07-01'});
       assert(instance._options.headers.Authorization);
     });
 
     it('should initialize with new-style VCAP_SERVICES credentials', function() {
       process.env.VCAP_SERVICES = JSON.stringify({
-        "language_translator": details
+        "language_translation": details
       });
-      var instance = watson.language_translator({version: 'v2', version_date: '2016-07-01'});
+      var instance = watson.language_translation({version: 'v2', version_date: '2016-07-01'});
       assert(instance._options.headers.Authorization);
     });
   });
@@ -89,7 +89,7 @@ describe('language_translator', function() {
         .get(path)
         .reply(200, corpus);
 
-        var req = language_translator.getModels(null, noop);
+        var req = language_translation.getModels(null, noop);
         assert.equal(req.uri.href, service.url + path);
         assert.equal(req.method, 'GET');
     });
@@ -98,10 +98,10 @@ describe('language_translator', function() {
   describe('translate()', function(){
 
     it('should check no parameters provided', function() {
-      language_translator.translate({source:''}, missingParameter);
-      language_translator.translate({target:''}, missingParameter);
-      language_translator.translate({text:''}, missingParameter);
-      language_translator.translate({model_id:''}, missingParameter);
+      language_translation.translate({source:''}, missingParameter);
+      language_translation.translate({target:''}, missingParameter);
+      language_translation.translate({text:''}, missingParameter);
+      language_translation.translate({model_id:''}, missingParameter);
     });
 
     it('should generate a valid payload', function() {
@@ -114,7 +114,7 @@ describe('language_translator', function() {
         .post(path,service_request)
         .reply(200);
 
-        var req = language_translator.translate(service_request, noop);
+        var req = language_translation.translate(service_request, noop);
         assert.equal(req.uri.href, service.url + path);
         assert.equal(req.method, 'POST');
         var body = new Buffer(req.body).toString('ascii');
@@ -131,7 +131,7 @@ describe('language_translator', function() {
         .get(path)
         .reply(200);
 
-        var req = language_translator.getIdentifiableLanguages(null, noop);
+        var req = language_translation.getIdentifiableLanguages(null, noop);
         assert.equal(req.uri.href, service.url + path);
         assert.equal(req.method, 'GET');
     });
@@ -140,9 +140,9 @@ describe('language_translator', function() {
   describe('identify()', function(){
 
     it('should check no parameters provided', function() {
-      language_translator.identify({}, missingParameter);
-      language_translator.identify(null, missingParameter);
-      language_translator.identify(undefined, missingParameter);
+      language_translation.identify({}, missingParameter);
+      language_translation.identify(null, missingParameter);
+      language_translation.identify(undefined, missingParameter);
     });
 
     it('should generate a valid payload', function() {
@@ -152,7 +152,7 @@ describe('language_translator', function() {
         .post(path,service_request)
         .reply(200);
 
-        var req = language_translator.identify(service_request, noop);
+        var req = language_translation.identify(service_request, noop);
         assert.equal(req.uri.href, service.url + path);
         assert.equal(req.method, 'POST');
         var body = new Buffer(req.body).toString('ascii');
@@ -163,9 +163,9 @@ describe('language_translator', function() {
   describe('createModel()', function(){
 
     it('should check no parameters provided', function() {
-      language_translator.createModel({}, missingParameter);
-      language_translator.createModel(null, missingParameter);
-      language_translator.createModel(undefined, missingParameter);
+      language_translation.createModel({}, missingParameter);
+      language_translation.createModel(null, missingParameter);
+      language_translation.createModel(undefined, missingParameter);
     });
 
     it('should generate a valid payload', function() {
@@ -181,7 +181,7 @@ describe('language_translator', function() {
         .post(path,service_request)
         .reply(200);
 
-        var req = language_translator.createModel(service_request, noop);
+        var req = language_translation.createModel(service_request, noop);
         assert.equal(req.uri.href, service.url + path+ '?base_model_id=foo');
         assert.equal(req.method, 'POST');
     });
@@ -190,9 +190,9 @@ describe('language_translator', function() {
   describe('deleteModel()', function(){
 
     it('should check no parameters provided', function() {
-      language_translator.deleteModel({}, missingParameter);
-      language_translator.deleteModel(null, missingParameter);
-      language_translator.deleteModel(undefined, missingParameter);
+      language_translation.deleteModel({}, missingParameter);
+      language_translation.deleteModel(null, missingParameter);
+      language_translation.deleteModel(undefined, missingParameter);
     });
 
     it('should generate a valid payload', function() {
@@ -205,7 +205,7 @@ describe('language_translator', function() {
         .delete(path,service_request)
         .reply(200);
 
-        var req = language_translator.deleteModel(service_request, noop);
+        var req = language_translation.deleteModel(service_request, noop);
         assert.equal(req.uri.href, service.url + path);
         assert.equal(req.method, 'DELETE');
     });
@@ -214,9 +214,9 @@ describe('language_translator', function() {
   describe('getModel()', function(){
 
     it('should check no parameters provided', function() {
-      language_translator.getModel({}, missingParameter);
-      language_translator.getModel(null, missingParameter);
-      language_translator.getModel(undefined, missingParameter);
+      language_translation.getModel({}, missingParameter);
+      language_translation.getModel(null, missingParameter);
+      language_translation.getModel(undefined, missingParameter);
     });
 
     it('should generate a valid payload', function() {
@@ -229,7 +229,7 @@ describe('language_translator', function() {
         .get(path,service_request)
         .reply(200);
 
-        var req = language_translator.getModel(service_request, noop);
+        var req = language_translation.getModel(service_request, noop);
         assert.equal(req.uri.href, service.url + path);
         assert.equal(req.method, 'GET');
     });

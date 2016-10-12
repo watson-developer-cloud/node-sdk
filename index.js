@@ -32,6 +32,7 @@ exports.DialogV1 = require('./dialog/v1');
 
 exports.DocumentConversionV1 = require('./document-conversion/v1');
 
+exports.LanguageTranslationV2 = require('./language-translation/v2');
 exports.LanguageTranslatorV2 = require('./language-translator/v2');
 
 exports.NaturalLanguageClassifierV1 = require('./natural-language-classifier/v1');
@@ -102,17 +103,4 @@ Object.keys(servicesByVersion).forEach(function(serviceName) {
       throw new Error('The ' + serviceName + ' service is no longer available');
     }
   });
-});
-
-Object.defineProperty(exports, 'language_translation', {
-  enumerable: false,
-  configurable: true,
-  writable: true,
-  value: function(options) {
-    if (!options.silent) {
-      //eslint-disable-next-line no-console
-      console.warn(new Error("Watson language_translation is now language_translator. Set {silent: true} to disable this message.").stack)
-    }
-    return exports.language_translator(options);
-  }
 });

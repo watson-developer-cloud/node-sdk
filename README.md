@@ -292,11 +292,32 @@ document_conversion.convert({
 See the [Document Conversion integration example][document_conversion_integration_example] about how to integrate the Document Conversion service
 with the Retrieve and Rank service.
 
+
+### Language Translation
+
+The IBM Watson™ Language Translation service has been rebranded as the Language Translator service.
+The Language Translator service provides the same capabilities as the Language Translation service, but with simpler pricing.
+For information about migrating existing applications from the Language Translation service to the Language Translator service, see the
+[Migration documentation](http://www.ibm.com/watson/developercloud/doc/language-translator/migrating.shtml)
+
+```javascript
+var LanguageTranslationV2 = require('watson-developer-cloud/language-translation/v2');
+
+var language_translation = new LanguageTranslationV2({
+  username: '<username>',
+  password: '<password>'
+});
+```
+
 ### Language Translator
 
 Translate text from one language to another or idenfity a language using the [Language Translator][language_translator] service.
 
-**Note:** There is a deprecated Language *Translation* service and a newer Language *Translator* service. The only difference is the pricing structure and the service endpoint. The SDK currently defaults to the older endpoint, but that will change in the near future. **To guarentee compatibility, include the `url` when creating a LanguageTranslatorV2 instance.** See http://www.ibm.com/watson/developercloud/doc/language-translator/migrating.shtml for more details.
+**Note:** There is a deprecated Language *Translation* service and a newer Language *Translator* service.
+The only difference is the pricing structure and the service endpoint.
+The SDK currently defaults to the older endpoint for both `LanguageTranslationV2` and `LanguageTranslatorV2`, but `LanguageTranslatorV2`'s default endpoint will change in the next major release (3.0.0).
+**To guarantee compatibility, include the `url` when creating a `LanguageTranslatorV2` instance.**
+See http://www.ibm.com/watson/developercloud/doc/language-translator/migrating.shtml for more details.
 
 ```javascript
 var LanguageTranslatorV2 = require('watson-developer-cloud/language-translator/v2');
@@ -325,21 +346,6 @@ language_translator.identify({
       console.log(JSON.stringify(language, null, 2));
 });
 ```
-
-To use with the deprecated Language Translation service, pass in the older endpoint:
-
-```javascript
-var LanguageTranslatorV2 = require('watson-developer-cloud/language-translator/v2');
-
-var language_translation = new LanguageTranslatorV2({
-  username: '<username>',
-  password: '<password>',
-  url: 'https://gateway.watsonplatform.net/language-translation/api'
-});
-```
-
-
-
 
 ### Natural Language Classifier
 

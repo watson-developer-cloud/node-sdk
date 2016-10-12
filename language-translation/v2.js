@@ -31,29 +31,13 @@ var BaseService = require('../lib/base_service');
  * @param {string} params.password Password
  * @constructor
  */
-function LanguageTranslatorV2(options) {
-  // Welp, this is awkward. Originally the rename was *just* a rename, but then (after the SDK was updated,
-  // but before the backend was updated), it was decided that the billing should be simplified at the same time.
-  // That's a solid improvement, but it means that the SDK now needs to support both services independently,
-  // and correcting the default URL here will break older code, so it must be reserved for a major release.
-  // todo: consider checking for options.url === LanguageTranslationV2.URL and also throw this warning then.
-  // (This probably does't matter since the api didn't change)
-  if (!options.url) {
-    var err = new Error("LanguageTranslatorV2 currently defaults to the url for LanguageTranslationV2, " +
-      "but this will change in the next major release of the watson-developer-cloud Node.js SDK." +
-      "Please either specify the url https://gateway.watsonplatform.net/language-translator/api/v2/ or else use " +
-      "LanguageTranslationV2. " +
-      "See http://www.ibm.com/watson/developercloud/doc/language-translator/migrating.shtml for more details.");
-    // eslint-disable-next-line no-console
-    console.warn(err);
-  }
-
+function LanguageTranslationV2(options) {
   BaseService.call(this, options);
 }
-util.inherits(LanguageTranslatorV2, BaseService);
-LanguageTranslatorV2.prototype.name = 'language_translator';
-LanguageTranslatorV2.prototype.version = 'v2';
-LanguageTranslatorV2.URL = 'https://gateway.watsonplatform.net/language-translation/api'; // This is incorrect and will change in v 3.0.0
+util.inherits(LanguageTranslationV2, BaseService);
+LanguageTranslationV2.prototype.name = 'language_translation';
+LanguageTranslationV2.prototype.version = 'v2';
+LanguageTranslationV2.URL = 'https://gateway.watsonplatform.net/language-translation/api';
 
 /**
  * Return the translation models
@@ -67,7 +51,7 @@ LanguageTranslatorV2.URL = 'https://gateway.watsonplatform.net/language-translat
  * @param  {string}   params.source   Filter by source language
  * @param  {string}   params.target   Filter by target language
  */
-LanguageTranslatorV2.prototype.getModels = function(params, callback) {
+LanguageTranslationV2.prototype.getModels = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -86,7 +70,7 @@ LanguageTranslatorV2.prototype.getModels = function(params, callback) {
  * Return the translation model
  * @param  {string}   params.model_id   The model identifier
  */
-LanguageTranslatorV2.prototype.getModel = function(params, callback) {
+LanguageTranslationV2.prototype.getModel = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -111,7 +95,7 @@ LanguageTranslatorV2.prototype.getModel = function(params, callback) {
  * @param  {stream}   params.monolingual_corpus A UTF-8 encoded plain text file that contains a body of text in the target language that is related to what you are translating. A monolingual corpus helps improve literal translations to be more fluent and human.
  */
 
-LanguageTranslatorV2.prototype.createModel = function(params, callback) {
+LanguageTranslationV2.prototype.createModel = function(params, callback) {
   params = params || {};
 
   var missingParams = helper.getMissingParams(params, ['base_model_id']);
@@ -148,7 +132,7 @@ LanguageTranslatorV2.prototype.createModel = function(params, callback) {
  * Deletes a model
  * @param  {string}   params.model_id   The model identifier
  */
-LanguageTranslatorV2.prototype.deleteModel = function(params, callback) {
+LanguageTranslationV2.prototype.deleteModel = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -169,7 +153,7 @@ LanguageTranslatorV2.prototype.deleteModel = function(params, callback) {
  * @param {string} params.source Source language
  * @param {string} params.target Target language
  */
-LanguageTranslatorV2.prototype.translate = function(params, callback) {
+LanguageTranslationV2.prototype.translate = function(params, callback) {
   params = params || {};
 
   if (!(params.model_id || (params.source && params.target))){
@@ -193,7 +177,7 @@ LanguageTranslatorV2.prototype.translate = function(params, callback) {
 /**
  * Returns the identifiable languages
  */
-LanguageTranslatorV2.prototype.getIdentifiableLanguages = function(params, callback) {
+LanguageTranslationV2.prototype.getIdentifiableLanguages = function(params, callback) {
   params = params || {};
 
   var parameters = {
@@ -212,7 +196,7 @@ LanguageTranslatorV2.prototype.getIdentifiableLanguages = function(params, callb
  * Identify the text based on the identifiable languages
  * @param  {string} params.text  text to identify
  */
-LanguageTranslatorV2.prototype.identify = function(params, callback) {
+LanguageTranslationV2.prototype.identify = function(params, callback) {
   if (!params || !params.text){
     callback(new Error('Missing required parameters: text'));
     return;
@@ -235,4 +219,4 @@ LanguageTranslatorV2.prototype.identify = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
-module.exports = LanguageTranslatorV2;
+module.exports = LanguageTranslationV2;
