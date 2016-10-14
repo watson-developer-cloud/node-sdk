@@ -1,3 +1,6 @@
+# v2.6.0
+* Added support for Personality Insights V3
+
 # v2.5.0
 * Split LanguageTranslationV2 into a seperate service from LanguageTranslatorV2, added a warning when translator service is used without specifying a url since the default is currently incorrect.
 * Fixed bug with setting user-agent header
