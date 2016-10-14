@@ -53,7 +53,6 @@ PersonalityInsightsV3.URL = 'https://gateway.watsonplatform.net/personality-insi
  * @param {string} [params.headers.Accept=application/json] - The desired content type of the response: application/json (the default) or text/csv
  * @param {string} [params.text] - The text to analyze.
  * @param {Object} [params.content_items] - A JSON input (if 'text' not provided).
- * @param {string} params.version_date - The version date. Use 2016-10-19.
  * @param {boolean} [params.raw_scores=false] - include raw results.
  * @param {boolean} [params.consumption_preferences=true] - If true, information about consumption preferences is returned with the results.
  *
@@ -84,7 +83,7 @@ PersonalityInsightsV3.prototype.profile = function(_params, callback) { // eslin
       url: '/v3/profile',
       body: params.text || pick(params, ['contentItems']),
       json: true,
-      qs: pick(params, ['csv_headers', 'raw_scores', 'consumption_preferences', 'version_date']),
+      qs: pick(params, ['csv_headers', 'raw_scores', 'consumption_preferences']),
       headers: extend({ 'Content-type': content_type, 'Accept-language': 'en' }, params.headers)
     },
     defaultOptions: this._options
