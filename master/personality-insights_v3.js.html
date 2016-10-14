@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: authorization/v1.js</title>
+    <title>JSDoc: Source: personality-insights/v3.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: authorization/v1.js</h1>
+    <h1 class="page-title">Source: personality-insights/v3.js</h1>
 
     
 
@@ -27,7 +27,7 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * Copyright 2015 IBM Corp. All Rights Reserved.
+ * Copyright 2016 IBM Corp. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,60 +45,81 @@
 'use strict';
 
 var requestFactory = require('../lib/requestwrapper');
-var url            = require('url');
+var pick = require('object.pick');
+var extend = require('extend');
+var helper = require('../lib/helper');
 var util = require('util');
 var BaseService = require('../lib/base_service');
 
 /**
  *
- * @param {Object} options
- * @param {String} options.username
- * @param {String} options.password
- * @param {String} [options.url] url of the service for which auth tokens are being generated
+ * @param options
  * @constructor
  */
-function AuthorizationV1(options) {
+function PersonalityInsightsV3(options) {
   BaseService.call(this, options);
-  this.target_url = options.url;
-  // replace the url to always point to /authorization/api
-  var hostname = url.parse(this._options.url);
-  hostname.pathname = '/authorization/api';
-  this._options.url = url.format(hostname);
+
+  // Check if 'version_date' was provided
+  if (typeof this._options.version_date === 'undefined') {
+    throw new Error('Argument error: version_date was not specified, use 2016-10-19');
+  }
+  this._options.qs.version = options.version_date;
+
 }
-util.inherits(AuthorizationV1, BaseService);
-AuthorizationV1.prototype.name = 'authorization';
-AuthorizationV1.prototype.version = 'v1';
-AuthorizationV1.URL = 'https://stream.watsonplatform.net/authorization/api';
+util.inherits(PersonalityInsightsV3, BaseService);
+PersonalityInsightsV3.prototype.name = 'personality_insights';
+PersonalityInsightsV3.prototype.version = 'v3';
+PersonalityInsightsV3.URL = 'https://gateway.watsonplatform.net/personality-insights/api';
+
 
 /**
- * Get a percent-encoded authorization token based on resource query string param
+ * @param {Object} params The parameters to call the service
+ * @param {Object} [params.headers] - The header parameters.
+ * @param {string} [params.headers.accept-language=en] - The desired language of the response: ar (Arabic), en (English), es (Spanish), or ja (Japanese).
+ * @param {string} [params.headers.content-type=text/plain] - The content type of the request: text/plain (the default), text/html, or application/json.
+ * @param {string} [params.headers.content-language=en] - The language of the input text for the request: ar (Arabic), en (English), es (Spanish), or ja (Japanese)
+ * @param {string} [params.headers.accept=application/json] - The desired content type of the response: application/json (the default) or text/csv
+ * @param {string} [params.text] - The text to analyze.
+ * @param {Object} [params.content_items] - A JSON input (if 'text' not provided).
+ * @param {boolean} [params.raw_scores=false] - include raw results.
+ * @param {boolean} [params.consumption_preferences=true] - If true, information about consumption preferences is returned with the results.
  *
- * @param {Object} [options]
- * @param {String} [options.url] defaults to url supplied to constructor (if any)
- * @param {Function(err, token)} callback - called with a %-encoded token
+ * @param callback The callback.
  */
-AuthorizationV1.prototype.getToken = function(params, callback) {
-  if (typeof params === 'function') {
-    callback = params;
-    params = {url: this.target_url};
+PersonalityInsightsV3.prototype.profile = function(_params, callback) { // eslint-disable-line complexity
+  var params = extend ({}, _params);
+
+  if (params.content_items) {
+    params.contentItems = params.content_items;
   }
-  if (!params.url){
-    callback(new Error('Missing required parameters: url'));
+
+  if ((!params.text &amp;&amp; !params.contentItems)) {
+    callback(new Error('Missing required parameters: text or content_items'));
     return;
   }
 
+  // Content-Type
+  var content_type = null;
+  if (params.text)
+    content_type = helper.isHTML(params.text) ? 'text/html' : 'text/plain';
+  else
+    content_type = 'application/json';
+
   var parameters = {
     options: {
-      method: 'GET',
-      url: '/v1/token?url='+params.url
+      method: 'POST',
+      url: '/v3/profile',
+      body: params.text || pick(params, ['contentItems']),
+      json: true,
+      qs: pick(params, ['csv_headers', 'raw_scores', 'consumption_preferences']),
+      headers: extend({ 'content-type': content_type, 'accept-language': 'en' }, params.headers)
     },
     defaultOptions: this._options
   };
+
   return requestFactory(parameters, callback);
 };
-
-
-module.exports = AuthorizationV1;
+module.exports = PersonalityInsightsV3;
 </code></pre>
         </article>
     </section>
