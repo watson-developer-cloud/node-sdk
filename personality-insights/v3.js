@@ -43,14 +43,19 @@ PersonalityInsightsV3.prototype.name = 'personality_insights';
 PersonalityInsightsV3.prototype.version = 'v3';
 PersonalityInsightsV3.URL = 'https://gateway.watsonplatform.net/personality-insights/api';
 
+
 /**
- * @param params {Object} The parameters to call the service
- *   The accepted parameters are:
- *     - text: The text to analyze.
- *     - content_items: A JSON input (if 'text' not provided).
- *     - raw_scores: include raw results.
- *     - consumption_preferences: If true, information about consumption preferences is returned with the results.
- *     - version_date: The version date. Use 2016-10-19.
+ * @param {Object} params The parameters to call the service
+ * @param {Object} [params.headers] - The header parameters.
+ * @param {string} [params.headers.Accept-Language=en] - The desired language of the response: ar (Arabic), en (English), es (Spanish), or ja (Japanese).
+ * @param {string} [params.headers.Content-Type=text/plain] - The content type of the request: text/plain (the default), text/html, or application/json.
+ * @param {string} [params.headers.Content-Language=en] - The language of the input text for the request: ar (Arabic), en (English), es (Spanish), or ja (Japanese)
+ * @param {string} [params.headers.Accept=application/json] - The desired content type of the response: application/json (the default) or text/csv
+ * @param {string} [params.text] - The text to analyze.
+ * @param {Object} [params.content_items] - A JSON input (if 'text' not provided).
+ * @param {string} params.version_date - The version date. Use 2016-10-19.
+ * @param {boolean} [params.raw_scores=false] - include raw results.
+ * @param {boolean} [params.consumption_preferences=true] - If true, information about consumption preferences is returned with the results.
  *
  * @param callback The callback.
  */
