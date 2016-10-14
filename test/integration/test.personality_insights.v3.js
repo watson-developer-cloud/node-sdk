@@ -52,7 +52,7 @@ describe('personality_insights_v3_integration', function() {
       consumption_preferences: true,
       csv_headers: true,
       headers: {
-        'Accept': 'text/csv'
+        'accept': 'text/csv'
       }
     };
     personality_insights.profile(params, done);

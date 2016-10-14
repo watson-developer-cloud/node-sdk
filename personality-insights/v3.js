@@ -47,10 +47,10 @@ PersonalityInsightsV3.URL = 'https://gateway.watsonplatform.net/personality-insi
 /**
  * @param {Object} params The parameters to call the service
  * @param {Object} [params.headers] - The header parameters.
- * @param {string} [params.headers.Accept-Language=en] - The desired language of the response: ar (Arabic), en (English), es (Spanish), or ja (Japanese).
- * @param {string} [params.headers.Content-Type=text/plain] - The content type of the request: text/plain (the default), text/html, or application/json.
- * @param {string} [params.headers.Content-Language=en] - The language of the input text for the request: ar (Arabic), en (English), es (Spanish), or ja (Japanese)
- * @param {string} [params.headers.Accept=application/json] - The desired content type of the response: application/json (the default) or text/csv
+ * @param {string} [params.headers.accept-language=en] - The desired language of the response: ar (Arabic), en (English), es (Spanish), or ja (Japanese).
+ * @param {string} [params.headers.content-type=text/plain] - The content type of the request: text/plain (the default), text/html, or application/json.
+ * @param {string} [params.headers.content-language=en] - The language of the input text for the request: ar (Arabic), en (English), es (Spanish), or ja (Japanese)
+ * @param {string} [params.headers.accept=application/json] - The desired content type of the response: application/json (the default) or text/csv
  * @param {string} [params.text] - The text to analyze.
  * @param {Object} [params.content_items] - A JSON input (if 'text' not provided).
  * @param {boolean} [params.raw_scores=false] - include raw results.
@@ -84,7 +84,7 @@ PersonalityInsightsV3.prototype.profile = function(_params, callback) { // eslin
       body: params.text || pick(params, ['contentItems']),
       json: true,
       qs: pick(params, ['csv_headers', 'raw_scores', 'consumption_preferences']),
-      headers: extend({ 'Content-type': content_type, 'Accept-language': 'en' }, params.headers)
+      headers: extend({ 'content-type': content_type, 'accept-language': 'en' }, params.headers)
     },
     defaultOptions: this._options
   };
