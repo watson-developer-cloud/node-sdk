@@ -8,11 +8,11 @@ var authHelper = require('./auth_helper.js');
 var auth = authHelper.auth;
 var describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 
-var TWENTY_SECONDS = 20000;
+var TWO_MINUTES = 2*60*10000;
 var TWO_SECONDS = 2000;
 
 describe('alchemy_vision_integration', function() {
-  this.timeout(TWENTY_SECONDS);
+  this.timeout(TWO_MINUTES);
   this.slow(TWO_SECONDS); // this controls when the tests get a colored warning for taking too long
   this.retries(1);
 
