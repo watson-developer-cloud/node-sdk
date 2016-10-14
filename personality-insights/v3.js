@@ -1,5 +1,5 @@
 /**
- * Copyright 2014 IBM Corp. All Rights Reserved.
+ * Copyright 2016 IBM Corp. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +17,9 @@
 'use strict';
 
 var requestFactory = require('../lib/requestwrapper');
-var pick           = require('object.pick');
-var helper         = require('../lib/helper');
+var pick = require('object.pick');
+var extend = require('extend');
+var helper = require('../lib/helper');
 var util = require('util');
 var BaseService = require('../lib/base_service');
 
@@ -27,31 +28,38 @@ var BaseService = require('../lib/base_service');
  * @param options
  * @constructor
  */
-function PersonalityInsightsV2(options) {
+function PersonalityInsightsV3(options) {
   BaseService.call(this, options);
+
+  // Check if 'version_date' was provided
+  if (typeof this._options.version_date === 'undefined') {
+    throw new Error('Argument error: version_date was not specified, use 2016-10-19');
+  }
+  this._options.qs.version = options.version_date;
+
 }
-util.inherits(PersonalityInsightsV2, BaseService);
-PersonalityInsightsV2.prototype.name = 'personality_insights';
-PersonalityInsightsV2.prototype.version = 'v2';
-PersonalityInsightsV2.URL = 'https://gateway.watsonplatform.net/personality-insights/api';
+util.inherits(PersonalityInsightsV3, BaseService);
+PersonalityInsightsV3.prototype.name = 'personality_insights';
+PersonalityInsightsV3.prototype.version = 'v3';
+PersonalityInsightsV3.URL = 'https://gateway.watsonplatform.net/personality-insights/api';
 
 /**
  * @param params {Object} The parameters to call the service
  *   The accepted parameters are:
  *     - text: The text to analyze.
- *     - contentItems: A JSON input (if 'text' not provided).
- *     - include_raw: include raw results
- *     - accept_language : The language expected for the output.
- *     - language: The language of the input.
+ *     - content_items: A JSON input (if 'text' not provided).
+ *     - raw_scores: include raw results.
+ *     - consumption_preferences: If true, information about consumption preferences is returned with the results.
+ *     - version_date: The version date. Use 2016-10-19.
  *
  * @param callback The callback.
  */
-PersonalityInsightsV2.prototype.profile = function(params, callback) { // eslint-disable-line complexity
-  params = params || {};
+PersonalityInsightsV3.prototype.profile = function(_params, callback) { // eslint-disable-line complexity
+  var params = extend ({}, _params);
 
-  // support for the new snake_case
-  if (params.content_items)
+  if (params.content_items) {
     params.contentItems = params.content_items;
+  }
 
   if ((!params.text && !params.contentItems)) {
     callback(new Error('Missing required parameters: text or content_items'));
@@ -65,37 +73,18 @@ PersonalityInsightsV2.prototype.profile = function(params, callback) { // eslint
   else
     content_type = 'application/json';
 
-  var headers = {
-    'Content-type'    : content_type,
-    'Accept-language' : params.accept_language || params.acceptLanguage || 'en'
-  };
-
-  // service bug: language in header overrides language in each JSON content item, so we can't set it on those requests
-  // (also, content-language doesn't really make sense on JSON)
-  if (params.language || params.text) {
-    headers['Content-language'] = params.language || 'en'
-  }
-
-
   var parameters = {
     options: {
       method: 'POST',
-      url: '/v2/profile',
+      url: '/v3/profile',
       body: params.text || pick(params, ['contentItems']),
       json: true,
-      qs: pick(params, ['include_raw']),
-      headers: headers
+      qs: pick(params, ['csv_headers', 'raw_scores', 'consumption_preferences', 'version_date']),
+      headers: extend({ 'Content-type': content_type, 'Accept-language': 'en' }, params.headers)
     },
     defaultOptions: this._options
   };
 
-  if (params.csv) {
-    parameters.options.headers.Accept = 'text/csv';
-    if (params.csv_headers) {
-      parameters.options.qs.headers = 'true';
-    }
-  }
-
   return requestFactory(parameters, callback);
 };
-module.exports = PersonalityInsightsV2;
+module.exports = PersonalityInsightsV3;

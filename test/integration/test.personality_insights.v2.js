@@ -12,7 +12,7 @@ var TWENTY_SECONDS = 20000;
 var TWO_SECONDS = 2000;
 
 
-describe('personality_insights_integration', function() {
+describe('personality_insights_v2_integration', function() {
   this.retries(1);
 
   this.slow(TWO_SECONDS); // this controls when the tests get a colored warning for taking too long
@@ -23,7 +23,7 @@ describe('personality_insights_integration', function() {
 
   before(function() {
     mobydick = fs.readFileSync(path.join(__dirname, '../resources/mobydick.txt'), 'utf8');
-    personality_insights = watson.personality_insights(auth.personality_insights);
+    personality_insights = watson.personality_insights(auth.personality_insights.v2);
     nock.enableNetConnect();
   });
 

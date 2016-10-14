@@ -38,6 +38,7 @@ exports.LanguageTranslatorV2 = require('./language-translator/v2');
 exports.NaturalLanguageClassifierV1 = require('./natural-language-classifier/v1');
 
 exports.PersonalityInsightsV2 = require('./personality-insights/v2');
+exports.PersonalityInsightsV3 = require('./personality-insights/v3');
 
 exports.RetrieveAndRankV1 = require('./retrieve-and-rank/v1');
 
