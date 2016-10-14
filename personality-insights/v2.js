@@ -27,13 +27,13 @@ var BaseService = require('../lib/base_service');
  * @param options
  * @constructor
  */
-function PersonalityInsightsV1(options) {
+function PersonalityInsightsV2(options) {
   BaseService.call(this, options);
 }
-util.inherits(PersonalityInsightsV1, BaseService);
-PersonalityInsightsV1.prototype.name = 'personality_insights';
-PersonalityInsightsV1.prototype.version = 'v2';
-PersonalityInsightsV1.URL = 'https://gateway.watsonplatform.net/personality-insights/api';
+util.inherits(PersonalityInsightsV2, BaseService);
+PersonalityInsightsV2.prototype.name = 'personality_insights';
+PersonalityInsightsV2.prototype.version = 'v2';
+PersonalityInsightsV2.URL = 'https://gateway.watsonplatform.net/personality-insights/api';
 
 /**
  * @param params {Object} The parameters to call the service
@@ -46,7 +46,7 @@ PersonalityInsightsV1.URL = 'https://gateway.watsonplatform.net/personality-insi
  *
  * @param callback The callback.
  */
-PersonalityInsightsV1.prototype.profile = function(params, callback) { // eslint-disable-line complexity
+PersonalityInsightsV2.prototype.profile = function(params, callback) { // eslint-disable-line complexity
   params = params || {};
 
   // support for the new snake_case
@@ -98,4 +98,4 @@ PersonalityInsightsV1.prototype.profile = function(params, callback) { // eslint
 
   return requestFactory(parameters, callback);
 };
-module.exports = PersonalityInsightsV1;
+module.exports = PersonalityInsightsV2;

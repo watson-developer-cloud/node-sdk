@@ -377,16 +377,18 @@ Analyze text in english and get a personality profile by using the
 [Personality Insights][personality_insights] service.
 
 ```javascript
-var PersonalityInsightsV2 = require('watson-developer-cloud/personality-insights/v2');
+var PersonalityInsightsV3 = require('watson-developer-cloud/personality-insights/v3');
 
 var personality_insights = new PersonalityInsightsV2({
   username: '<username>',
-  password: '<password>'
+  password: '<password>',
+  version_date: '2016-10-19'
 });
 
 personality_insights.profile({
   text: 'Enter more than 100 unique words here...',
-  language: 'en' },
+  consumption_preferences: true
+  },
   function (err, response) {
     if (err)
       console.log('error:', err);
