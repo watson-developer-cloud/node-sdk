@@ -236,12 +236,446 @@
             
 
             <td class="description last">The parameters to call the service
-  The accepted parameters are:
-    - text: The text to analyze.
-    - content_items: A JSON input (if 'text' not provided).
-    - raw_scores: include raw results.
-    - consumption_preferences: If true, information about consumption preferences is returned with the results.
-    - version_date: The version date. Use 2016-10-19.</td>
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>headers</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">The header parameters.
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>Accept-Language</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    en
+                
+                </td>
+            
+
+            <td class="description last">The desired language of the response: ar (Arabic), en (English), es (Spanish), or ja (Japanese).</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Content-Type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    text/plain
+                
+                </td>
+            
+
+            <td class="description last">The content type of the request: text/plain (the default), text/html, or application/json.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Content-Language</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    en
+                
+                </td>
+            
+
+            <td class="description last">The language of the input text for the request: ar (Arabic), en (English), es (Spanish), or ja (Japanese)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Accept</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    application/json
+                
+                </td>
+            
+
+            <td class="description last">The desired content type of the response: application/json (the default) or text/csv</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>text</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">The text to analyze.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>content_items</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">A JSON input (if 'text' not provided).</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>version_date</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">The version date. Use 2016-10-19.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>raw_scores</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last">include raw results.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>consumption_preferences</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
+
+            <td class="description last">If true, information about consumption preferences is returned with the results.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
         </tr>
 
     
@@ -300,7 +734,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="personality-insights_v3.js.html">personality-insights/v3.js</a>, <a href="personality-insights_v3.js.html#line57">line 57</a>
+        <a href="personality-insights_v3.js.html">personality-insights/v3.js</a>, <a href="personality-insights_v3.js.html#line62">line 62</a>
     </li></ul></dd>
     
 
@@ -348,7 +782,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Fri Oct 14 2016 19:44:23 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Fri Oct 14 2016 20:04:17 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>
