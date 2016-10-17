@@ -4,6 +4,7 @@ npm-debug.log.*
 coverage
 .DS_Store
 test/resources/auth.js
+test/resources/-auth.js # to make sure tests run without the auth file
 test/resources/tts-output.ogg
 .idea
 doc/
