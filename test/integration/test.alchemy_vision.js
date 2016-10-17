@@ -10,6 +10,7 @@ var describe = authHelper.describe; // this runs describe.skip if there is no au
 
 var TWO_MINUTES = 2*60*10000;
 var TWO_SECONDS = 2000;
+var TWENTY_SECONDS = 20*1000;
 
 describe('alchemy_vision_integration', function() {
   this.timeout(TWO_MINUTES);
