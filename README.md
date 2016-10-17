@@ -379,7 +379,7 @@ Analyze text in english and get a personality profile by using the
 ```javascript
 var PersonalityInsightsV3 = require('watson-developer-cloud/personality-insights/v3');
 
-var personality_insights = new PersonalityInsightsV2({
+var personality_insights = new PersonalityInsightsV3({
   username: '<username>',
   password: '<password>',
   version_date: '2016-10-19'
