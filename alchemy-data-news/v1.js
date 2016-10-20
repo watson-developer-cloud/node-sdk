@@ -59,7 +59,7 @@ AlchemyDataNewsV1.URL = 'https://gateway-a.watsonplatform.net/calls';
  * @param params.start
  * @param {Function} callback
  */
-AlchemyDataNewsV1.prototype.getNews = function(params, callback ) {
+AlchemyDataNewsV1.prototype.getNews = function (params, callback ) {
     params = params || {};
 
     var parameters = {
