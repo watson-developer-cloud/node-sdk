@@ -1,3 +1,7 @@
+# v2.6.1
+* Ensure errors are always instanceof Error
+* Doc improvements
+
 # v2.6.0
 * Added support for Personality Insights V3
 
