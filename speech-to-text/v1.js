@@ -770,8 +770,8 @@ SpeechToTextV1.ERR_NO_CORPORA = 'ERR_NO_CORPORA';
  *
  * @param {Object} params
  * @param {String} params.customization_id
- * @param {Number} [params.interval=1000] - (milliseconds) - how log to wait between status checks
- * @param {Number} [params.times=150] - maximum number of attempts
+ * @param {Number} [params.interval=5000] - (milliseconds) - how log to wait between status checks
+ * @param {Number} [params.times=30] - maximum number of attempts
  */
 SpeechToTextV1.prototype.whenCustomizationReady = function(params, callback) {
   var self = this;
@@ -796,8 +796,8 @@ SpeechToTextV1.prototype.whenCustomizationReady = function(params, callback) {
     // check the customization status repeatedly until it's ready or avaliable
     function(next) {
       var options = extend({
-        interval: 1000,
-        times: 25
+        interval: 5000,
+        times: 30
       }, params);
       options.errorFilter = function(err) {
         return err === 'retry'; // if the error is the string "retry", then getCustomization is called again after params.interval
