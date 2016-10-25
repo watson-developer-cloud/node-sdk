@@ -528,7 +528,7 @@ RetrieveAndRankV1.prototype.createCollection = function(params, callback) {
 
   var missingParams = helper.getMissingParams(params, ['cluster_id', 'collection_name', 'config_name']);
   if (missingParams){
-    callback(new Error('Missing required parameters: ' + missingParams.join(', ')));
+    callback(missingParams);
     return;
   }
 
@@ -570,7 +570,7 @@ RetrieveAndRankV1.prototype.deleteCollection = function(params, callback) {
 
   var missingParams = helper.getMissingParams(params, ['cluster_id', 'collection_name']);
   if (missingParams){
-    callback(new Error('Missing required parameters: ' + missingParams.join(', ')));
+    callback(missingParams);
     return;
   }
 
@@ -608,7 +608,7 @@ RetrieveAndRankV1.prototype.createSolrClient = function(params) {
 
   var missingParams = helper.getMissingParams(params, ['cluster_id', 'collection_name']);
   if (missingParams){
-    throw new Error('Missing required parameters: ' + missingParams.join(', '));
+    throw missingParams;
   }
 
   var serviceUrl = url.parse(this._options.url);
