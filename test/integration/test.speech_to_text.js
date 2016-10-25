@@ -78,7 +78,7 @@ describe('speech_to_text_integration', function() {
     function waitUntilReady(test) {
       return function(done) {
         this.timeout(TWO_MINUTES);
-        speech_to_text.whenCustomizationReady({customization_id: customization_id, interval: 250}, function(err) {
+        speech_to_text.whenCustomizationReady({customization_id: customization_id, interval: 250, times: 120}, function(err) {
           if (err && err.code !== watson.SpeechToTextV1.ERR_NO_CORPORA) {
             return done(err);
           }

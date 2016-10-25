@@ -761,6 +761,7 @@ SpeechToTextV1.prototype.deleteCorpus = function(params, callback) {
 
 
 SpeechToTextV1.ERR_NO_CORPORA = 'ERR_NO_CORPORA';
+SpeechToTextV1.ERR_TIMEOUT = 'ERR_TIMEOUT';
 /**
  * Waits while a customization status is 'pending' or 'training', fires callback once the status is 'ready' or 'available'
  *
@@ -800,14 +801,20 @@ SpeechToTextV1.prototype.whenCustomizationReady = function(params, callback) {
         times: 30
       }, params);
       options.errorFilter = function(err) {
-        return err === 'retry'; // if the error is the string "retry", then getCustomization is called again after params.interval
+        // if it's a timeout error, then getCustomization is called again after params.interval
+        // otherwise the error is passed back to the user
+        // if the params.times limit is reached, the error will be passed to the user regardless
+        return err.code === SpeechToTextV1.ERR_TIMEOUT;
       };
       async.retry(options, function(done) {
         self.getCustomization(params, function(err, customization) {
           if (err) {
             done(err);
           } else if (isPending(customization)) {
-            done('retry'); // errorFilter will see this and continue the tests
+            // if the loop times out, async returns the last error, which will be this one.
+            err = new Error('Customization is still pending, try increasing interval or times params');
+            err.code = SpeechToTextV1.ERR_TIMEOUT;
+            done(err);
           } else if (customization.status === 'ready' || customization.status === 'available') {
             done(null, customization);
           } else if (customization.status === 'failed') {
