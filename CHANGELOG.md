@@ -1,3 +1,6 @@
+# v2.7.0
+* Speech to Text customization support
+
 # v2.6.1
 * Ensure errors are always instanceof Error
 * Doc improvements
