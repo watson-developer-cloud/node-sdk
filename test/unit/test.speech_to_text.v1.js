@@ -30,7 +30,8 @@ describe('speech_to_text', function() {
   var speech_to_text = watson.speech_to_text(service);
 
   var missingParameter = function(err) {
-    assert.ok((err instanceof Error) && /required parameters/.test(err));
+    assert.ok(err instanceof Error);
+    assert.ok(/required parameters/.test(err));
   };
 
   describe('createSession()', function() {
