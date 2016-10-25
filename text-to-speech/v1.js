@@ -146,8 +146,6 @@ TextToSpeechV1.prototype.pronunciation = function(params, callback) {
  *   "customization_id": "abc996ea-86ca-482e-b7ec-0f31c34e5ee9"
  * }
  *
- *  todo: rename this  & friends to *Customization in order to match API
- *
  * @param {Object} params
  * @param {String} params.name
  * @param {String} [params.language=en-US] - Currently only en-US is supported
@@ -265,7 +263,7 @@ TextToSpeechV1.prototype.getCustomizations = function(params, callback) {
 };
 
 /**
- * Get a custom voice models
+ * Get a custom voice model
  *
  * Lists all information about the specified custom voice model.
  * In addition to metadata such as the name and description of the voice model, the output includes the words in the model and their translations as defined in the model.
@@ -312,7 +310,7 @@ TextToSpeechV1.prototype.getCustomization = function(params, callback) {
 };
 
 /**
- * Delete a custom voice models
+ * Delete a custom voice model
  *
  * @param {Object} params
  * @param {String} params.customization_id
