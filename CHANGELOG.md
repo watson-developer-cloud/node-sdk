@@ -1,3 +1,6 @@
+# v2.7.1
+* dependency fix
+
 # v2.7.0
 * Speech to Text customization support
 

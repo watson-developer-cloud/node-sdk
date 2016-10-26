@@ -60,7 +60,6 @@
     "url": "https://github.com/watson-developer-cloud/node-sdk/issues"
   },
   "devDependencies": {
-    "async": "^2.0.1",
     "brfs": "^1.4.3",
     "browserify": "^13.0.1",
     "codecov": ">1.0.0",
@@ -81,6 +80,7 @@
     "wav": "^1.0.0"
   },
   "dependencies": {
+    "async": "^2.0.1",
     "cookie": "~0.3.1",
     "csv-stringify": "~1.0.2",
     "extend": "~3.0.0",
