@@ -60,21 +60,16 @@
     "url": "https://github.com/watson-developer-cloud/node-sdk/issues"
   },
   "devDependencies": {
-    "brfs": "^1.4.3",
     "browserify": "^13.0.1",
     "codecov": ">1.0.0",
     "concat-stream": "^1.5.1",
+    "dependency-lint": "^4.2.0",
     "eslint": "^2.2.0",
     "istanbul": "^0.4.2",
     "jsdoc": "^3.4.0",
     "karma": "^1.1.1",
-    "karma-browserify": "^5.0.5",
-    "karma-chrome-launcher": "^1.0.1",
-    "karma-firefox-launcher": "^1.0.0",
-    "karma-mocha": "^1.1.1",
     "mocha": "^2.4.5",
     "nock": "^8.0.0",
-    "qs": "^6.1.0",
     "uglify-js": "^2.7.0",
     "watchify": "^3.7.0",
     "wav": "^1.0.0"
@@ -98,8 +93,8 @@
   },
   "scripts": {
     "test": "npm run lint && npm run codecov",
-    "lint": "eslint .",
-    "autofix": "eslint . --fix",
+    "lint": "eslint .; dependency-lint",
+    "autofix": "eslint . --fix; dependency-lint --auto-correct; dependency-lint",
     "prepare": "npm test && npm version patch",
     "doc": "jsdoc -c jsdoc/config.json",
     "watch-doc": "nodemon --watch ./ --ext js,tmpl,json --ignore dist/ --ignore doc/ --ignore test/ --ignore examples/ --exec npm run doc",

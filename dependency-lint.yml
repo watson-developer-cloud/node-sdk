@@ -1,0 +1,44 @@
+# See https://github.com/charlierudolph/dependency-lint/blob/v4.2.0/docs/configuration.md
+# for a detailed explanation of the options
+
+executedModules:
+  npmScripts:
+    dev:
+      - lint
+      - lint-depsnpm t
+      - test
+      - autofix
+      - doc
+      - codecov
+      - test-integration
+      - test-unit
+      - test-browser
+      - watch
+      - browserify
+      - watchify
+      - minify
+      - build
+  shellScripts:
+    dev: []
+    ignore: []
+    root: ''
+
+ignoreErrors:
+  missing: []
+  shouldBeDependency: []
+  shouldBeDevDependency: []
+  unused:
+   - karma-*
+
+requiredModules:
+  files:
+    dev:
+      - 'test/{unit,integration}/test.*.js'
+    ignore:
+      - 'node_modules/**/*'
+      - 'examples/**/*'
+      - 'dist/*'
+      - 'jsdoc/**/*'
+    root: '**/*.js'
+  stripLoaders: false
+  transpilers: []
