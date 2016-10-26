@@ -93,7 +93,7 @@
   },
   "scripts": {
     "test": "npm run lint && npm run codecov",
-    "lint": "eslint .; dependency-lint",
+    "lint": "eslint . && dependency-lint",
     "autofix": "eslint . --fix; dependency-lint --auto-correct; dependency-lint",
     "prepare": "npm test && npm version patch",
     "doc": "jsdoc -c jsdoc/config.json",
