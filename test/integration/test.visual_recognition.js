@@ -129,9 +129,8 @@ describe('visual_recognition_integration', function() {
     });
   });
 
-  // this endpoint is flaky.
-  // reported the issue to the team, but disabling the test for now.
-  describe('recognizeText()', function() {
+  // this endpoint is currently experiencing issues
+  describe.skip('recognizeText()', function() {
     it('read text in an uploaded image', function(done) {
 
       var params = {
