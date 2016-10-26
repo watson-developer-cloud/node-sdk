@@ -65,7 +65,8 @@ describe('alchemy_vision_integration', function() {
     }, done);
   });
 
-  it('getImageSceneText()', function(done) {
+  // currently failing due to a service-level issue
+  it.skip('getImageSceneText()', function(done) {
     alchemy_vision.getImageSceneText({
       url: 'https://watson-test-resources.mybluemix.net/resources/open.png'
     }, done);
