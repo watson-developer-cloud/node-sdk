@@ -12,7 +12,7 @@ var TWO_SECONDS = 2000;
 
 
 describe('alchemy_language_integration', function() {
-  this.timeout(THIRTY_SECONDS);
+  this.timeout(THIRTY_SECONDS * 5);
   this.slow(TWO_SECONDS); // this controls when the tests get a colored warning for taking too long
 
   this.retries(1);
