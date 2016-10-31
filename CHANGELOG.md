@@ -1,3 +1,6 @@
+# v2.8.0
+* Added `getCredentials()` method to base service, primarily for use with AuthorizationV1()
+
 # v2.7.1
 * dependency fix
 
