@@ -42,7 +42,7 @@ DiscoveryV1Experimental.prototype.version = 'v1-experimental';
 DiscoveryV1Experimental.URL = 'https://gateway.watsonplatform.net/discovery-experimental/api';
 
 /**
- * Returns a response to a user utterance.
+ * Return the list of environments
  */
 DiscoveryV1Experimental.prototype.getEnvironments = function(params, callback) {
   params = params || {};
