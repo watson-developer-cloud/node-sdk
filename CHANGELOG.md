@@ -1,3 +1,16 @@
+# v2.8.1
+* Added `getCredentials()` method to base service, primarily for use with AuthorizationV1()
+
+# v2.7.1
+* dependency fix
+
+# v2.7.0
+* Speech to Text customization support
+
+# v2.6.1
+* Ensure errors are always instanceof Error
+* Doc improvements
+
 # v2.6.0
 * Added support for Personality Insights V3
 

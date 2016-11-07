@@ -20,23 +20,7 @@ var extend         = require('extend');
 var requestFactory = require('../lib/requestwrapper');
 var util = require('util');
 var BaseServiceAlchemy = require('../lib/base_service_alchemy');
-
-function errorFormatter(cb) {
-  return function(err, result, response) {
-    if (err) {
-      cb(err, result);
-    }
-    else {
-      if (result.status === 'OK')
-        cb(err,result);
-      else
-        cb({
-          error: result.statusInfo || response['headers']['x-alchemyapi-error-msg'],
-          code: 400
-        }, null);
-    }
-  };
-}
+var errorFormatter = require('../lib/alchemy_error_formatter');
 
 /**
  * @param options
@@ -59,7 +43,7 @@ AlchemyDataNewsV1.URL = 'https://gateway-a.watsonplatform.net/calls';
  * @param params.start
  * @param {Function} callback
  */
-AlchemyDataNewsV1.prototype.getNews = function(params, callback ) {
+AlchemyDataNewsV1.prototype.getNews = function (params, callback ) {
     params = params || {};
 
     var parameters = {

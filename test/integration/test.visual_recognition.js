@@ -129,9 +129,8 @@ describe('visual_recognition_integration', function() {
     });
   });
 
-  // this endpoint is flaky.
-  // reported the issue to the team, but disabling the test for now.
-  describe('recognizeText()', function() {
+  // this endpoint is currently experiencing issues
+  describe.skip('recognizeText()', function() {
     it('read text in an uploaded image', function(done) {
 
       var params = {
@@ -175,11 +174,9 @@ describe('visual_recognition_integration', function() {
     });
   });
 
-  // todo: enable after our test key is allowed to have multiple classifiers (Should be done by early November 2016)
-  // this works right now when only testing against one version of node.js, but travis tests run against 3+ versions
-  // simultaneously, so the second and third ones to run all fail
+
   // todo: add more tests, consider splitting things between a permanent and a temporary classifier
-  describe.skip("custom classifiers", function() {
+  describe("custom classifiers", function() {
     var classifier_id;
     this.retries(0);
 
@@ -237,7 +234,6 @@ describe('visual_recognition_integration', function() {
   }); // custom classifiers
 
 
-  // todo: enable after our test key is allowed to have multiple collections (Should be done by early November 2016)
   // todo: consider creating a permanent collection to run most of these against so that a failure in creation will only kill the creation/deletion tests
   describe("collections", function() {
     this.retries(0);

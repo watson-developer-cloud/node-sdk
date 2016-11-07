@@ -1027,7 +1027,7 @@ VisualRecognitionV3.prototype.deleteImageMetadata = function(params, callback) {
  }
 
  * @param {Object} params
- * @param {String} params.classifier_id The classifier id
+ * @param {String} params.collection_id The collection id
  * @param {ReadableStream} params.image_file The image file (.jpg or .png) of the image to search against the collection.
  * @param {Number} [params.limit=10]  limit The number of similar results you want returned. Default limit is 10 results, you can specify a maximum limit of 100 results.
  * @param {Function} callback

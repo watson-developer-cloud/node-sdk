@@ -116,7 +116,7 @@ LanguageTranslatorV2.prototype.createModel = function(params, callback) {
 
   var missingParams = helper.getMissingParams(params, ['base_model_id']);
   if (missingParams) {
-    callback(new Error('Missing required parameters: ' + missingParams.join(', ')));
+    callback(missingParams);
     return;
   }
 

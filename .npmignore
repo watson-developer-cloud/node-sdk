@@ -14,3 +14,7 @@ CONTRIBUTING.md
 RELEASE.md
 jsdoc/
 doc/
+auth.js.enc
+dependency-lint.yml
+karma.conf.js
+transform.js
