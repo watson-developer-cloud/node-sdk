@@ -63,11 +63,10 @@ function fixupContentType(params) {
     };
   }
   else if (params.file.path && /.html?$/.test(params.file.path)) {
-    // for HTML, the service requires that a utf-8 charset be specified in the content-type
     params.file = {
       value: params.file,
       options: {
-        contentType: 'text/html; charset=utf-8'
+        contentType: 'text/html'
       }
     };
   }
