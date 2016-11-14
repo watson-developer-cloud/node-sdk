@@ -39,6 +39,64 @@ describe('speech_to_text_integration', function() {
     speech_to_text.recognize(params, done);
   });
 
+
+  it('recognize() keywords', function(done) {
+    var speech_to_text = watson.speech_to_text(auth.speech_to_text);
+    var params = {
+      audio: fs.createReadStream(path.join(__dirname, '../resources/weather.ogg')),
+      keywords: ['hail', 'tornadoes', 'rain'],
+      keywords_threshold: 0.6,
+      content_type: 'audio/ogg; codec=opus'
+    };
+    speech_to_text.recognize(params, function(err, res) {
+      if (err) {
+        return done(err);
+      }
+
+      assert.deepEqual(res, {
+        "results": [
+          {
+            "keywords_result": {
+              "tornadoes": [
+                {
+                  "normalized_text": "tornadoes",
+                  "start_time": 4.43,
+                  "confidence": 0.954,
+                  "end_time": 5.04
+                }
+              ],
+              "hail": [
+                {
+                  "normalized_text": "hail",
+                  "start_time": 3.36,
+                  "confidence": 0.954,
+                  "end_time": 3.82
+                }
+              ],
+              "rain": [
+                {
+                  "normalized_text": "rain",
+                  "start_time": 5.59,
+                  "confidence": 0.986,
+                  "end_time": 6.14
+                }
+              ]
+            },
+            "alternatives": [
+              {
+                "confidence": 0.991,
+                "transcript": "thunderstorms could produce large hail isolated tornadoes and heavy rain "
+              }
+            ],
+            "final": true
+          }
+        ],
+        "result_index": 0
+      });
+      done();
+    });
+  });
+
   it('getModels()', function(done) {
     var speech_to_text = watson.speech_to_text(auth.speech_to_text);
     speech_to_text.getModels({}, done);

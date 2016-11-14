@@ -86,6 +86,9 @@ SpeechToTextV1.prototype.recognize = function(params, callback) {
   }
 
   var queryParams = pick(params, PARAMS_ALLOWED);
+  if (Array.isArray(queryParams.keywords)) {
+    queryParams.keywords = queryParams.keywords.join(',');
+  }
 
   var _url = '/v1';
   _url += (params.session_id) ? ('/sessions/' + params.session_id) : '';
