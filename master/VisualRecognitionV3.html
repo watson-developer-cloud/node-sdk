@@ -131,7 +131,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line90">line 90</a>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line121">line 121</a>
     </li></ul></dd>
     
 
@@ -443,7 +443,7 @@ Example Response:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line791">line 791</a>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line822">line 822</a>
     </li></ul></dd>
     
 
@@ -573,6 +573,12 @@ of relevant classifier scores for each image.
             
                 
 <span class="param-type">ReadStream</span>
+|
+
+<span class="param-type">Buffer</span>
+|
+
+<span class="param-type">Object</span>
 
 
             
@@ -596,7 +602,7 @@ of relevant classifier scores for each image.
                 </td>
             
 
-            <td class="description last">The image file (.jpg, .png, .gif) or compressed (.zip) file of images to classify. The total number of images is limited to 20. Either images_file or url must be specified.</td>
+            <td class="description last">The image file (.jpg, .png, .gif) or compressed (.zip) file of images to classify. The total number of images is limited to 20. Either images_file or url must be specified. The SDK attempts to determine content-type automatically, but this may be overridden by providing an object: {value: Buffer|Stream, options: {filename: 'file.ext', contentType: 'image/type'}}</td>
         </tr>
 
     
@@ -819,7 +825,7 @@ of relevant classifier scores for each image.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line198">line 198</a>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line229">line 229</a>
     </li></ul></dd>
     
 
@@ -1129,7 +1135,7 @@ classifier.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line465">line 465</a>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line496">line 496</a>
     </li></ul></dd>
     
 
@@ -1398,7 +1404,7 @@ Example response:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line652">line 652</a>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line683">line 683</a>
     </li></ul></dd>
     
 
@@ -1601,7 +1607,7 @@ Example response:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line618">line 618</a>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line649">line 649</a>
     </li></ul></dd>
     
 
@@ -1826,7 +1832,7 @@ Beta. Delete a user created collection.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line747">line 747</a>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line778">line 778</a>
     </li></ul></dd>
     
 
@@ -2053,7 +2059,7 @@ Beta. Delete an image from a collection.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line895">line 895</a>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line926">line 926</a>
     </li></ul></dd>
     
 
@@ -2280,7 +2286,7 @@ Beta. Delete all metadata associated with an image.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line989">line 989</a>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line1020">line 1020</a>
     </li></ul></dd>
     
 
@@ -2532,7 +2538,7 @@ for found faces for each image.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line292">line 292</a>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line323">line 323</a>
     </li></ul></dd>
     
 
@@ -2898,7 +2904,7 @@ Example response:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line1036">line 1036</a>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line1067">line 1067</a>
     </li></ul></dd>
     
 
@@ -3122,7 +3128,7 @@ Example response:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line596">line 596</a>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line627">line 627</a>
     </li></ul></dd>
     
 
@@ -3372,7 +3378,7 @@ Example response:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line686">line 686</a>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line717">line 717</a>
     </li></ul></dd>
     
 
@@ -3454,7 +3460,7 @@ Example response:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line148">line 148</a>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line179">line 179</a>
     </li></ul></dd>
     
 
@@ -3603,7 +3609,7 @@ Example response:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line138">line 138</a>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line169">line 169</a>
     </li></ul></dd>
     
 
@@ -3854,7 +3860,7 @@ Example Response:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line870">line 870</a>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line901">line 901</a>
     </li></ul></dd>
     
 
@@ -4085,7 +4091,7 @@ Example Response:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line963">line 963</a>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line994">line 994</a>
     </li></ul></dd>
     
 
@@ -4309,7 +4315,7 @@ user-created classifiers.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line561">line 561</a>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line592">line 592</a>
     </li></ul></dd>
     
 
@@ -4530,7 +4536,7 @@ Example response:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line721">line 721</a>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line752">line 752</a>
     </li></ul></dd>
     
 
@@ -4815,7 +4821,7 @@ Example Response:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line839">line 839</a>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line870">line 870</a>
     </li></ul></dd>
     
 
@@ -5067,7 +5073,7 @@ for discovered text in each image.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line382">line 382</a>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line413">line 413</a>
     </li></ul></dd>
     
 
@@ -5357,7 +5363,7 @@ classifier.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line519">line 519</a>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line550">line 550</a>
     </li></ul></dd>
     
 
@@ -5644,7 +5650,7 @@ Beta. Add metadata to a specific image in a collection.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line921">line 921</a>
+        <a href="visual-recognition_v3.js.html">visual-recognition/v3.js</a>, <a href="visual-recognition_v3.js.html#line952">line 952</a>
     </li></ul></dd>
     
 
@@ -5686,13 +5692,13 @@ Beta. Add metadata to a specific image in a collection.
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-watson-developer-cloud.html">watson-developer-cloud</a></li></ul><h3>Classes</h3><ul><li><a href="AlchemyDataNewsV1.html">AlchemyDataNewsV1</a></li><li><a href="AlchemyLanguageV1.html">AlchemyLanguageV1</a></li><li><a href="AlchemyVisionV1.html">AlchemyVisionV1</a></li><li><a href="AuthorizationV1.html">AuthorizationV1</a></li><li><a href="ConversationV1.html">ConversationV1</a></li><li><a href="ConversationV1Experimental.html">ConversationV1Experimental</a></li><li><a href="DialogV1.html">DialogV1</a></li><li><a href="DiscoveryV1Experimental.html">DiscoveryV1Experimental</a></li><li><a href="LanguageTranslationV2.html">LanguageTranslationV2</a></li><li><a href="LanguageTranslatorV2.html">LanguageTranslatorV2</a></li><li><a href="NaturalLanguageClassifierV1.html">NaturalLanguageClassifierV1</a></li><li><a href="PersonalityInsightsV2.html">PersonalityInsightsV2</a></li><li><a href="PersonalityInsightsV3.html">PersonalityInsightsV3</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RetrieveAndRankV1.html">RetrieveAndRankV1</a></li><li><a href="SpeechToTextV1.html">SpeechToTextV1</a></li><li><a href="TextToSpeechV1.html">TextToSpeechV1</a></li><li><a href="TradeoffAnalyticsV1.html">TradeoffAnalyticsV1</a></li><li><a href="VisualRecognitionV3.html">VisualRecognitionV3</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:close">close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li></ul><h3><a href="global.html">Global</a></h3>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-watson-developer-cloud.html">watson-developer-cloud</a></li></ul><h3>Classes</h3><ul><li><a href="AlchemyDataNewsV1.html">AlchemyDataNewsV1</a></li><li><a href="AlchemyLanguageV1.html">AlchemyLanguageV1</a></li><li><a href="AlchemyVisionV1.html">AlchemyVisionV1</a></li><li><a href="AuthorizationV1.html">AuthorizationV1</a></li><li><a href="ConversationV1.html">ConversationV1</a></li><li><a href="ConversationV1Experimental.html">ConversationV1Experimental</a></li><li><a href="DialogV1.html">DialogV1</a></li><li><a href="DiscoveryV1Experimental.html">DiscoveryV1Experimental</a></li><li><a href="LanguageTranslationV2.html">LanguageTranslationV2</a></li><li><a href="LanguageTranslatorV2.html">LanguageTranslatorV2</a></li><li><a href="NaturalLanguageClassifierV1.html">NaturalLanguageClassifierV1</a></li><li><a href="PersonalityInsightsV2.html">PersonalityInsightsV2</a></li><li><a href="PersonalityInsightsV3.html">PersonalityInsightsV3</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RetrieveAndRankV1.html">RetrieveAndRankV1</a></li><li><a href="SpeechToTextV1.html">SpeechToTextV1</a></li><li><a href="TextToSpeechV1.html">TextToSpeechV1</a></li><li><a href="TradeoffAnalyticsV1.html">TradeoffAnalyticsV1</a></li><li><a href="VisualRecognitionV3.html">VisualRecognitionV3</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:close">close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li></ul><h3>Global</h3><ul><li><a href="global.html#detectContentType">detectContentType</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Mon Nov 14 2016 16:19:33 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Mon Nov 14 2016 18:14:51 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>
