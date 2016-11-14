@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: lib/helper.js</title>
+    <title>JSDoc: Source: discovery/v1-experimental.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: lib/helper.js</h1>
+    <h1 class="page-title">Source: discovery/v1-experimental.js</h1>
 
     
 
@@ -27,7 +27,7 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * Copyright 2014 IBM Corp. All Rights Reserved.
+ * Copyright 2015 IBM Corp. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,65 +44,50 @@
 
 'use strict';
 
-module.exports = {
+var util = require('util');
+var requestFactory = require('../lib/requestwrapper');
+var BaseService = require('../lib/base_service');
+var pick = require('object.pick');
 
-  stripTrailingSlash: function(url) {
-    // Match a forward slash / at the end of the string ($)
-    return url.replace(/\/$/, '');
-  },
+/**
+ *
+ * @param options
+ * @constructor
+ */
+function DiscoveryV1Experimental(options) {
+  BaseService.call(this, options);
 
-  /**
-   * Validates that all required params are provided
-   * @param params
-   * @param requires
-   * @returns {Error|null}
-   */
-  getMissingParams: function(params, requires) {
-
-    var missing;
-
-    if (!requires) {
-      return null;
-    } else if (!params) {
-      missing = requires;
-    } else {
-      missing = [];
-
-      requires.forEach(function(require) {
-        if (!params[require])
-          missing.push(require);
-      });
-    }
-
-    return missing.length > 0 ? new Error('Missing required parameters: ' + missing.join(', ')) : null;
-  },
-
-  /**
-   * Return true if 'text' is html
-   * @param  {String}  text The 'text' to analyze
-   * @return {Boolean}      true if 'text' has html tags
-   */
-  isHTML: function (text){
-    return /&lt;[a-z][\s\S]*>/i.test(text);
-  },
-
-  /**
-   * Returns the first match from formats that is key the params map
-   * otherwise null
-   * @param  {Object}  params   The parameters
-   * @param  {Array}  requires The keys we want to check
-    */
-  getFormat: function(params, formats) {
-    if (!formats || !params)
-      return null;
-
-    for(var i = 0; i &lt; formats.length; i++) {
-      if (formats[i] in params)
-        return formats[i];
-    }
-    return null;
+  // Check if 'version_date' was provided
+  if (typeof this._options.version_date === 'undefined') {
+    throw new Error('Argument error: version_date was not specified, use 2016-11-07');
   }
+  this._options.qs.version = options.version_date;
+}
+
+util.inherits(DiscoveryV1Experimental, BaseService);
+DiscoveryV1Experimental.prototype.name = 'discovery';
+DiscoveryV1Experimental.prototype.version = 'v1-experimental';
+DiscoveryV1Experimental.URL = 'https://gateway.watsonplatform.net/discovery-experimental/api';
+
+/**
+ * Return the list of environments
+ */
+DiscoveryV1Experimental.prototype.getEnvironments = function(params, callback) {
+  params = params || {};
+
+  var parameters = {
+    options: {
+      url: '/v1/environments',
+      method: 'GET',
+      json: true,
+      qs: pick(params, ['name'])
+    },
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
 };
+
+module.exports = DiscoveryV1Experimental;
 </code></pre>
         </article>
     </section>
