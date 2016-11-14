@@ -1,4 +1,4 @@
-# v2.8.2
+# v2.8.3
 * Fixed issue with formatting multiple keywords for STT recognize() - #261
 
 # v2.8.1
