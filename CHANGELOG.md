@@ -1,3 +1,6 @@
+# v2.8.3
+* Fixed issue with formatting multiple keywords for STT recognize() - #261
+
 # v2.8.1
 * Added `getCredentials()` method to base service, primarily for use with AuthorizationV1()
 

@@ -139,13 +139,12 @@ describe('document_conversion', function() {
       }, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
     });
 
-    // be default, request sets the content-type, but not the charset. the service requires both for html,
-    // and only accepts utf-8
-    it('should add the charset to the content-type for .htm files', function() {
+    // be default, request sets the content-type, but not the charset.
+    it('should NOT add the charset to the content-type for .htm files', function() {
       return checkContentType({
         conversion_target: 'answer_units',
         file: fs.createReadStream(__dirname + '/../resources/sampleHtml.htm')
-      }, 'text/html; charset=utf-8');
+      }, 'text/html');
     });
 
     // same as above, except with .html instead of .htm
@@ -153,7 +152,7 @@ describe('document_conversion', function() {
       return checkContentType({
         conversion_target: 'answer_units',
         file: fs.createReadStream(__dirname + '/../resources/sampleHtml.html')
-      }, 'text/html; charset=utf-8');
+      }, 'text/html');
     });
 
     it('should not override the user-set content-type for html files', function() {
