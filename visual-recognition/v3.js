@@ -38,12 +38,38 @@ function xor(a, b) {
 }
 
 /**
+ * Determine content-type header for .zip, .png, and .jpg files
+ * (The only formats currently supported by the service)
+ *
+ * based on https://github.com/watson-developer-cloud/node-sdk/issues/333
+ *
+ * @param {Buffer} buffer
+ * @returns {String|undefined}
+ */
+function detectContentType(buffer) {
+  var signature = buffer.readUInt32BE();
+  switch(signature) { // eslint-disable-line default-case
+    case 0x504B0304:
+    case 0x504B0506:
+    case 0x504B0708:
+      return 'application/zip';
+    case 0x89504E47:
+      return 'image/png';
+    case 0xFFD8FFE0:
+    case 0xFFD8FFE1:
+    case 0xFFD8FFE8:
+      return 'image/jpeg';
+    // default is `return undefined`
+  }
+}
+
+/**
  * Verifies that a stream images_file or a string url is included
  * also gracefully handles cases of image_file instead of images_file
  *
  * @private
  */
-function verifyParams(params) {
+function fixupImageParam(params) {
   if (params && params.image_file && !params.images_file) {
     params.images_file = params.image_file;
   }
@@ -52,8 +78,13 @@ function verifyParams(params) {
     throw new Error('Watson VisualRecognition.classify() requires either an images_file or a url parameter');
   }
 
-  if (params.images_file && !isStream(params.images_file)) {
-    throw new Error('images_file param must be a standard Node.js Stream');
+  if (Buffer.isBuffer(params.images_file)) {
+    params.images_file = {
+      value: params.images_file,
+      options: {
+        contentType: detectContentType(params.images_file)
+      }
+    }
   }
 }
 
@@ -185,7 +216,7 @@ VisualRecognitionV3.prototype.getCredentialsFromBluemix = function() {
  * }
  *
  * @param {Object} params
- * @param {ReadStream} [params.images_file] The image file (.jpg, .png, .gif) or compressed (.zip) file of images to classify. The total number of images is limited to 20. Either images_file or url must be specified.
+ * @param {ReadStream|Buffer|Object} [params.images_file] The image file (.jpg, .png, .gif) or compressed (.zip) file of images to classify. The total number of images is limited to 20. Either images_file or url must be specified. The SDK attempts to determine content-type automatically, but this may be overridden by providing an object: {value: Buffer|Stream, options: {filename: 'file.ext', contentType: 'image/type'}}
  * @param {String} [params.url] The URL of an image (.jpg, .png, .gif). Redirects are followed, so you can use shortened URLs. The resolved URL is returned in the response. Either images_file or url must be specified.
  * @param {Array} [params.classifier_ids=['default']] An array of classifier IDs to classify the images against.
  * @param {Array} [params.owners=['me','IBM']] An array with the value(s) "IBM" and/or "me" to specify which classifiers to run.
@@ -198,7 +229,7 @@ VisualRecognitionV3.prototype.getCredentialsFromBluemix = function() {
 VisualRecognitionV3.prototype.classify = function(params, callback) {
 
   try {
-    verifyParams(params);
+    fixupImageParam(params);
   } catch (e) {
     callback(e);
     return;
@@ -291,7 +322,7 @@ VisualRecognitionV3.prototype.classify = function(params, callback) {
  */
 VisualRecognitionV3.prototype.detectFaces = function(params, callback) {
   try {
-    verifyParams(params);
+    fixupImageParam(params);
   } catch (e) {
     callback(e);
     return;
@@ -381,7 +412,7 @@ VisualRecognitionV3.prototype.detectFaces = function(params, callback) {
  */
 VisualRecognitionV3.prototype.recognizeText = function(params, callback) {
   try {
-    verifyParams(params);
+    fixupImageParam(params);
   } catch (e) {
     callback(e);
     return;

@@ -66,6 +66,26 @@ describe('visual_recognition_integration', function() {
       });
     });
 
+    it('should classify from a buffer', function(done) {
+      this.retries(0);
+      var params = {
+        images_file: fs.readFileSync(__dirname + '/../resources/car.png')
+      };
+      visual_recognition.classify(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        //console.log(JSON.stringify(result, null, 2));
+        assert.equal(result.images_processed, 1);
+        assert(result.images[0].classifiers.length);
+        assert(result.images[0].classifiers[0].classes.some(function(c) {
+          return c.class === 'car'
+        }));
+
+        done();
+      });
+    });
+
     it('should classify an image via url', function(done) {
       var params = {
         url: 'https://watson-test-resources.mybluemix.net/resources/car.png'
