@@ -62,14 +62,6 @@ function fixupContentType(params) {
       }
     };
   }
-  else if (params.file.path && /.html?$/.test(params.file.path)) {
-    params.file = {
-      value: params.file,
-      options: {
-        contentType: 'text/html'
-      }
-    };
-  }
 }
 
 /**
