@@ -1,3 +1,8 @@
+# v2.9.0
+* Allow VisualRecognitionV3.classify() to accept Buffers (with automatic content-type detection) or Objects with specified filename or content-type
+* Improve Visual Recognition error formatting
+* Document Conversion: Remove forced utf-8 charset header for html files
+
 # v2.8.3
 * Fixed issue with formatting multiple keywords for STT recognize() - #261
 
