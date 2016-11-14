@@ -110,6 +110,7 @@ describe('speech_to_text_integration', function() {
       .pipe(recognizeStream)
       .on('error', done)
       .pipe(concat(function (transcription) {
+        assert.equal(typeof transcription, 'string', 'should return a string transcription');
         assert.equal(transcription.trim(), 'thunderstorms could produce large hail isolated tornadoes and heavy rain');
         done();
       }));
