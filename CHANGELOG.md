@@ -1,3 +1,6 @@
+# v2.9.1
+* Added customization_id support to STT RecognizeStream
+
 # v2.9.0
 * Allow VisualRecognitionV3.classify() to accept Buffers (with automatic content-type detection) or Objects with specified filename or content-type
 * Improve Visual Recognition error formatting
