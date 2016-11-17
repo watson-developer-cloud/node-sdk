@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: PersonalityInsightsV3</title>
+    <title>JSDoc: Class: DocumentConversionV1</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: PersonalityInsightsV3</h1>
+    <h1 class="page-title">Class: DocumentConversionV1</h1>
 
     
 
@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2>PersonalityInsightsV3</h2>
+        <h2>DocumentConversionV1</h2>
         
     
 </header>
@@ -40,11 +40,15 @@
 
     
 
-    <h4 class="name" id="PersonalityInsightsV3"><span class="type-signature"></span>new PersonalityInsightsV3<span class="signature">(options)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="DocumentConversionV1"><span class="type-signature"></span>new DocumentConversionV1<span class="signature">(options)</span><span class="type-signature"></span></h4>
 
     
 
 
+
+<div class="description">
+    Document Conversion service
+</div>
 
 
 
@@ -131,7 +135,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="personality-insights_v3.js.html">personality-insights/v3.js</a>, <a href="personality-insights_v3.js.html#line31">line 31</a>
+        <a href="document-conversion_v1.js.html">document-conversion/v1.js</a>, <a href="document-conversion_v1.js.html#line30">line 30</a>
     </li></ul></dd>
     
 
@@ -180,11 +184,17 @@
 
     
 
-    <h4 class="name" id="profile"><span class="type-signature"></span>profile<span class="signature">(params, callback)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="convert"><span class="type-signature"></span>convert<span class="signature">(params, callback)</span><span class="type-signature"></span></h4>
 
     
 
 
+
+<div class="description">
+    One-off convert an attached document OR convert a previously uploaded document by ID
+
+To convert a previously uploaded document, set params.document_id
+</div>
 
 
 
@@ -235,7 +245,7 @@
 
             
 
-            <td class="description last">The parameters to call the service
+            <td class="description last">
                 <h6>Properties</h6>
                 
 
@@ -253,8 +263,6 @@
         
 
         
-        <th>Default</th>
-        
 
         <th class="last">Description</th>
     </tr>
@@ -265,7 +273,7 @@
 
         <tr>
             
-                <td class="name"><code>headers</code></td>
+                <td class="name"><code>conversion_target</code></td>
             
 
             <td class="type">
@@ -280,8 +288,6 @@
             
                 <td class="attributes">
                 
-                    &lt;optional><br>
-                
 
                 
 
@@ -290,48 +296,21 @@
             
 
             
-                <td class="default">
-                
-                </td>
-            
 
-            <td class="description last">The header parameters.
-                <h6>Properties</h6>
-                
+            <td class="description last">Must be set to one of ['answer_units', 'normalized_html', 'normalized_text']</td>
+        </tr>
 
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-        <th>Default</th>
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
     
 
         <tr>
             
-                <td class="name"><code>accept-language</code></td>
+                <td class="name"><code>file</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">ReadableStream</span>
 
 
             
@@ -350,27 +329,21 @@
             
 
             
-                <td class="default">
-                
-                    en
-                
-                </td>
-            
 
-            <td class="description last">The desired language of the response.</td>
+            <td class="description last">The document file to convert. May be a ReadableStream or Buffer</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>content-type</code></td>
+                <td class="name"><code>content_type</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">String</span>
 
 
             
@@ -389,290 +362,8 @@
             
 
             
-                <td class="default">
-                
-                    text/plain
-                
-                </td>
-            
 
-            <td class="description last">The content type of the request: text/plain (the default), text/html, or application/json.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>content-language</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    en
-                
-                </td>
-            
-
-            <td class="description last">The language of the input text for the request: ar (Arabic), en (English), es (Spanish), or ja (Japanese)</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>accept</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    application/json
-                
-                </td>
-            
-
-            <td class="description last">The desired content type of the response: application/json (the default) or text/csv</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>text</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last">The text to analyze.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>content_items</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last">A JSON input (if 'text' not provided).</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>raw_scores</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    false
-                
-                </td>
-            
-
-            <td class="description last">include raw results.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>csv_headers</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    false
-                
-                </td>
-            
-
-            <td class="description last">If true, column labels are returned with a CSV response; if false (the default), they are not. Applies only when the Accept header is set to text/csv.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>consumption_preferences</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    false
-                
-                </td>
-            
-
-            <td class="description last">If true, information about consumption preferences is returned with the results.</td>
+            <td class="description last">Set this when the content type cannot be determined from the filename (params.file.path)</td>
         </tr>
 
     
@@ -691,13 +382,18 @@
 
             <td class="type">
             
+                
+<span class="param-type">function</span>
+
+
+            
             </td>
 
             
 
             
 
-            <td class="description last">The callback.</td>
+            <td class="description last"></td>
         </tr>
 
     
@@ -738,7 +434,297 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="personality-insights_v3.js.html">personality-insights/v3.js</a>, <a href="personality-insights_v3.js.html#line62">line 62</a>
+        <a href="document-conversion_v1.js.html">document-conversion/v1.js</a>, <a href="document-conversion_v1.js.html#line78">line 78</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="index"><span class="type-signature"></span>index<span class="signature">(params, callback)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    One-off convert and index a document via index_document API
+
+NOTE: A SOLR cluster and search collection will have to be created through the Retrieve and Rank
+      service prior to using this API if actual indexing is performed (dry_run=false).
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>params</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>file</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">ReadableStream</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The document file to convert. May be a ReadableStream or Buffer</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>metadata</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Metadata array of Object's where each object contains 'name' and 'value'</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>config</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Configuration for the conversion and indexing. The conversion config needs
+                      to be in a 'convert_document' object. This can include configuration for 'pdf', 'word'
+                      and 'normalized_html' phases of the conversion process. The indexing config needs to be
+                      in a 'retrieve_and_rank' object. The 'retrieve_and_rank' object has the following fields:
+                      'dry_run' - boolean value, true if a dry run is to be performed, false to actually index,
+                      'service_instance_id' - The serviceGuid of your instance of the retrieve and rank
+                      service (required if dry_run=false), 'cluster_id' - The Solr cluster id for your retrieve
+                      and rank service instance (required if dry_run=false), 'search_collection' - The name of
+                      your Solr search collection from your retrieve and rank service instance (required if
+                      dry_run=false), and 'fields' - Configuration information for field 'mappings', fields
+                      to 'include', and fields to 'exclude' during indexing (exclude takes precedence over include)</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="document-conversion_v1.js.html">document-conversion/v1.js</a>, <a href="document-conversion_v1.js.html#line150">line 150</a>
     </li></ul></dd>
     
 
