@@ -23,7 +23,7 @@ var util = require('util');
 var BaseService = require('../lib/base_service');
 
 /**
- *
+ * Document Conversion service
  * @param options
  * @constructor
  */

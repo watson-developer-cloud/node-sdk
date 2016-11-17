@@ -5,7 +5,7 @@
       "./.github/",
       "./coverage/",
       "./dist/",
-      "./doc/",
+      "./doc/watson-developer-cloud/",
       "./examples/",
       "./jsdoc/",
       "./node_modules/",
