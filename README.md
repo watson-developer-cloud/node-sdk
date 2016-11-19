@@ -206,7 +206,7 @@ var watson = require('watson-developer-cloud');
 
 var authorization = new watson.AuthorizationV1({
   username: '<Text to Speech username>',
-  password: '<Text to Speech password>'
+  password: '<Text to Speech password>',
   url: watson.TextToSpeechV1.URL
 });
 
