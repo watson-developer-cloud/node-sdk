@@ -228,7 +228,7 @@ The [Concept Insights][concept_insights] has been deprecated, AlchemyLanguage's 
 
 Use the [Conversation][conversation] service to determine the intent of a message.
 
-Note: you must first create a workspace via Bluemix. See [the documentation](http://www.ibm.com/watson/developercloud/doc/conversation/overview.shtml) for details.
+Note: you must first create a workspace via Bluemix. See [the documentation](https://www.ibm.com/watson/developercloud/doc/conversation) for details.
 
 ```js
 var ConversationV1 = require('watson-developer-cloud/conversation/v1');
