@@ -636,7 +636,7 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/maste
 
 [personality_insights]: http://www.ibm.com/watson/developercloud/doc/personality-insights/
 [relationship_extraction]: http://www.ibm.com/watson/developercloud/doc/sireapi/
-[retrieve_and_rank]: http://watson.stage1.mybluemix.net/watson/developercloud/retrieve-rank.html
+[retrieve_and_rank]: https://www.ibm.com/watson/developercloud/doc/retrieve-rank/
 [visual_recognition]: http://www.ibm.com/watson/developercloud/doc/visual-recognition/
 [visual_insights]: http://www.ibm.com/watson/developercloud/doc/visual-insights/
 
