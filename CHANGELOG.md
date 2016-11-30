@@ -1,3 +1,6 @@
+# v2.10.0
+* Added version_date constants to ConversationV1, updated jsdoc and error message
+
 # v2.9.1
 * Added customization_id support to STT RecognizeStream
 
