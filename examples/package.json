@@ -5,6 +5,9 @@
   "private": true,
   "license": "Apache-2.0",
   "dependencies": {
-    "watson-developer-cloud":"*"
+    "dotenv": "^2.0.0",
+    "speaker": "^0.3.0",
+    "watson-developer-cloud": "*",
+    "wav": "^1.0.1"
   }
 }
