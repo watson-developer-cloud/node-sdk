@@ -41,7 +41,7 @@ require('dotenv').config({silent: true});
 var conversation = new watson.ConversationV1({
   username: process.env.CONVERSATION_USERNAME || '<conversation_username>',
   password: process.env.CONVERSATION_PASSWORD || '<conversation_password>',
-  version_date: '2016-07-11'
+  version_date: watson.ConversationV1.VERSION_DATE_2016_09_20
 });
 
 /**

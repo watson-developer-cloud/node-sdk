@@ -90,7 +90,7 @@ describe('conversation-v1', function() {
       }
       catch(err) {
         threw = true;
-        assert.equal(err.message, 'Argument error: version_date was not specified, use 2016-07-11');
+        assert.equal(err.message, 'Argument error: version_date was not specified, use ConversationV1.VERSION_DATE_2016_09_20');
       }
       assert(threw, "should throw an error")
     });

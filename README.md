@@ -236,7 +236,7 @@ var ConversationV1 = require('watson-developer-cloud/conversation/v1');
 var conversation = new ConversationV1({
   username: '<username>',
   password: '<password>',
-  version_date: '2016-07-01'
+  version_date: ConversationV1.VERSION_DATE_2016_09_20
 });
 
 conversation.message({
