@@ -6,6 +6,7 @@ var assert = require('assert');
 var authHelper = require('./auth_helper.js');
 var auth = authHelper.auth;
 var describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
+var assign = require('object.assign'); // for node v0.12 compatibility
 var ConversationV1 = require('../../conversation/v1');
 
 var TEN_SECONDS = 10000;
@@ -48,7 +49,7 @@ describe('conversation_integration', function() {
     });
 
     it('dialog_stack with 2016-09-20 version_date', function(done) {
-      var constructorParams = Object.assign({}, auth.conversation, {version_date: ConversationV1.VERSION_DATE_2016_09_20});
+      var constructorParams = assign({}, auth.conversation, {version_date: ConversationV1.VERSION_DATE_2016_09_20});
       var conversation = watson.conversation(constructorParams);
 
       var params = {
@@ -68,7 +69,7 @@ describe('conversation_integration', function() {
     });
 
     it('dialog_stack with 2016-07-11 version_date', function(done) {
-      var constructorParams = Object.assign({}, auth.conversation, {version_date: ConversationV1.VERSION_DATE_2016_07_11});
+      var constructorParams = assign({}, auth.conversation, {version_date: ConversationV1.VERSION_DATE_2016_07_11});
       var conversation = watson.conversation(constructorParams);
 
       var params = {
