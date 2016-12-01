@@ -79,7 +79,7 @@ describe('discovery-v1-experimental', function() {
       }
       catch(err) {
         threw = true;
-        assert.equal(err.message, 'Argument error: version_date was not specified, use 2016-11-07');
+        assert.equal(err.message, 'Argument error: version_date was not specified, use DiscoveryV1Experimental.VERSION_DATE_2016_07_11');
       }
       assert(threw, 'should throw an error')
     });
