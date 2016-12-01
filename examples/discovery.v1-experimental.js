@@ -11,5 +11,5 @@ var discovery = new DiscoveryV1Experimental({
 });
 
 discovery.getEnvironments({}, function(error, data) {
-  console.log(JSON.stringify(data,null,2));
+  console.log(JSON.stringify(data, null ,2));
 });

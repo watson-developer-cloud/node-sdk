@@ -51,60 +51,73 @@ DiscoveryV1Experimental.prototype.getEnvironments = function(params, callback) {
     options: {
       url: '/v1/environments',
       method: 'GET',
-      json: true
+      json: true,
+      qs: pick(params, ['name'])
     },
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };
 
-DiscoveryV1Experimental.prototype.getEnvironment = function(environmentId, callback) {
+DiscoveryV1Experimental.prototype.getEnvironment = function(params, callback) {
+  params = params || {};
+
   var parameters = {
     options: {
-      url: '/v1/environments/' + environmentId,
+      url: '/v1/environments/{environment_id}',
       method: 'GET',
+      path: pick(params, ['environment_id']),
       json: true
     },
+    requiredParams: ['environment_id'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };
 
-DiscoveryV1Experimental.prototype.getCollections = function(environmentId, callback) {
+DiscoveryV1Experimental.prototype.getCollections = function(params, callback) {
+  params = params || {};
+
   var parameters = {
     options: {
-      url: '/v1/environments/' + environmentId + '/collections',
+      url: '/v1/environments/{environment_id}/collections',
       method: 'GET',
+      path: pick(params, ['environment_id']),
       json: true
     },
+    requiredParams: ['environment_id'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };
 
-DiscoveryV1Experimental.prototype.getCollection = function(environmentId, collectionId, callback) {
+DiscoveryV1Experimental.prototype.getCollection = function(params, collectionId, callback) {
+  params = params || {};
+
   var parameters = {
     options: {
-      url: '/v1/environments/' + environmentId + '/collections/' + collectionId,
+      url: '/v1/environments/{environment_id}/collections/{collection_id}',
       method: 'GET',
+      path: pick(params, ['environment_id', 'collection_id']),
       json: true
     },
+    requiredParams: ['environment_id', 'collection_id'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };
 
-DiscoveryV1Experimental.prototype.query = function(environmentId,
-                                                   collectionId,
-                                                   query_opts,
-                                                   callback) {
+DiscoveryV1Experimental.prototype.query = function(params, callback) {
+  params = params || {};
+
   var parameters = {
     options: {
-      url: '/v1/environments/' + environmentId +'/collections/' + collectionId + '/query',
+      url: '/v1/environments/{environment_id}/collections/{collection_id}/query',
       method: 'GET',
       json: true,
-      qs: pick(query_opts,['filter','aggregation','return','count'])
+      qs: pick(params,['filter', 'aggregation', 'return', 'count'])
     },
+    requiredParams: ['environment_id', 'collection_id'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);

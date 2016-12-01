@@ -85,28 +85,35 @@ describe('discovery-v1-experimental', function() {
     });
 
     it('should get an environment information', function() {
-      var req = discovery.getEnvironment('env-guid', noop);
+      var req = discovery.getEnvironment({ environment_id: 'env-guid' }, noop);
       assert.equal(req.uri.href, service.url + paths.environmentinfo + '?version=' + service.version_date);
       assert.equal(req.method, 'GET');
     });
 
     it('should get collections from an environment', function() {
-      var req = discovery.getCollections('env-guid', noop);
+      var req = discovery.getCollections({ environment_id: 'env-guid'}, noop);
       assert.equal(req.uri.href, service.url + paths.collections + '?version=' + service.version_date);
       assert.equal(req.method, 'GET');
     });
 
     it('should get information about a specific collection and environment', function() {
-      var req = discovery.getCollection('env-guid', 'col-guid', noop);
+      var req = discovery.getCollection({
+        environment_id: 'env-guid',
+        collection_id: 'col-guid' }, noop);
       assert.equal(req.uri.href, service.url + paths.collectioninfo + '?version=' + service.version_date);
       assert.equal(req.method, 'GET');
     });
 
     it('should perform a query', function() {
-      var req = discovery.query('env-guid', 'col-guid', {'filter': 'yesplease', 'count': 10}, noop);
+      var req = discovery.query({
+        environment_id: 'env-guid',
+        collection_id: 'col-guid',
+        filter: 'yesplease',
+        count: 10
+      }, noop);
       assert.equal(req.uri.href, service.url + paths.query + '?version=' + service.version_date + '&filter=yesplease&count=10');
       assert.equal(req.method, 'GET');
-      
+
     });
   });
 });
