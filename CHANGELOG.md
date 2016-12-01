@@ -1,3 +1,6 @@
+# v2.11.0
+* Added several methods and a version_date constant to DiscoveryV1Experimental
+
 # v2.10.1
 * Added version_date constants to ConversationV1, updated docs, examples, etc to latest version_date.
 
