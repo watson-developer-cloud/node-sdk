@@ -59,7 +59,7 @@ describe('alchemy_vision_integration', function() {
     alchemy_vision.recognizeFaces({image: imageFile}, done);
   });
 
-  it('recognizeFacesWithUrl()', function(done) {
+  it.skip('recognizeFacesWithUrl()', function(done) {
     alchemy_vision.recognizeFaces({
       url: 'https://watson-test-resources.mybluemix.net/resources/obama.jpg'
     }, done);

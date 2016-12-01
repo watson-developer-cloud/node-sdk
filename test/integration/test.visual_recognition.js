@@ -108,7 +108,7 @@ describe('visual_recognition_integration', function() {
     });
   });
 
-  describe('detectFaces()', function() {
+  describe.skip('detectFaces()', function() {
     it('should detect faces in an uploaded image', function(done) {
       var params = {
         images_file: fs.createReadStream(__dirname + '/../resources/obama.jpg')
