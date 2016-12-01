@@ -102,7 +102,10 @@ describe('speech_to_text_integration', function() {
       assert(res.results);
       assert(res.results[0]);
       assert(res.results[0].keywords_result);
-      assert.deepEqual(Object.keys(res.results[0].keywords_result), ['tornadoes','hail', 'rain']);
+      var keywords_result = res.results[0].keywords_result;
+      assert(keywords_result.tornadoes);
+      assert(keywords_result.hail);
+      assert(keywords_result.rain);
 
       done();
     });
