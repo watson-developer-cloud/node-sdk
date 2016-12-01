@@ -77,14 +77,14 @@ describe('speech_to_text_integration', function() {
                 {
                   "normalized_text": "rain",
                   "start_time": 5.59,
-                  "confidence": 0.986,
+                  "confidence": 0.994,
                   "end_time": 6.14
                 }
               ]
             },
             "alternatives": [
               {
-                "confidence": 0.991,
+                "confidence": 0.992,
                 "transcript": "thunderstorms could produce large hail isolated tornadoes and heavy rain "
               }
             ],
