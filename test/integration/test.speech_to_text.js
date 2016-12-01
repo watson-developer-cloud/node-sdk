@@ -53,7 +53,10 @@ describe('speech_to_text_integration', function() {
         return done(err);
       }
 
-      assert.deepEqual(res, {
+      /*
+      example result
+      as of 12/1/2016, the keywords confidence seems to have some variance between test runs
+      {
         "results": [
           {
             "keywords_result": {
@@ -91,8 +94,16 @@ describe('speech_to_text_integration', function() {
             "final": true
           }
         ],
-        "result_index": 0
-      });
+          "result_index": 0
+      }
+      */
+
+
+      assert(res.results);
+      assert(res.results[0]);
+      assert(res.results[0].keywords_result);
+      assert.deepEqual(Object.keys(res.results[0].keywords_result), ['tornadoes','hail', 'rain']);
+
       done();
     });
   });
