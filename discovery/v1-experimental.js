@@ -115,7 +115,8 @@ DiscoveryV1Experimental.prototype.query = function(params, callback) {
       url: '/v1/environments/{environment_id}/collections/{collection_id}/query',
       method: 'GET',
       json: true,
-      qs: pick(params,['filter', 'aggregation', 'return', 'count'])
+      path: pick(params, ['environment_id', 'collection_id']),
+      qs: pick(params,['filter', 'aggregation', 'return', 'count', 'offset', 'query'])
     },
     requiredParams: ['environment_id', 'collection_id'],
     defaultOptions: this._options
