@@ -25,7 +25,11 @@ describe('discovery-v1-experimental', function() {
   };
 
   var paths = {
-    environments : '/v1/environments'
+    environments : '/v1/environments',
+    environmentinfo : '/v1/environments/env-guid',
+    collections: '/v1/environments/env-guid/collections',
+    collectioninfo: '/v1/environments/env-guid/collections/col-guid',
+    query: '/v1/environments/env-guid/collections/col-guid/query'
   };
 
   before(function() {
@@ -33,7 +37,15 @@ describe('discovery-v1-experimental', function() {
     nock(service.url)
       .persist()
       .post(paths.environments + '?version=' + service.version_date)
-      .reply(200, {});
+      .reply(200, {'environment_id': 'yes'})
+      .get(paths.environmentinfo + '?version=' + service.version_date)
+      .reply(200, {'environment_id': 'info'})
+      .get(paths.collections + '?version=' + service.version_date)
+      .reply(200, {'collection_id': 'yes'})
+      .get(paths.collectioninfo + '?version=' + service.version_date)
+      .reply(200, {'collection_id': 'info'})
+      .get(paths.query + '?version=' + service.version_date)
+      .reply(200, {'query': 'yes'});
   });
 
   after(function() {
@@ -70,6 +82,31 @@ describe('discovery-v1-experimental', function() {
         assert.equal(err.message, 'Argument error: version_date was not specified, use 2016-11-07');
       }
       assert(threw, 'should throw an error')
+    });
+
+    it('should get an environment information', function() {
+      var req = discovery.getEnvironment('env-guid', noop);
+      assert.equal(req.uri.href, service.url + paths.environmentinfo + '?version=' + service.version_date);
+      assert.equal(req.method, 'GET');
+    });
+
+    it('should get collections from an environment', function() {
+      var req = discovery.getCollections('env-guid', noop);
+      assert.equal(req.uri.href, service.url + paths.collections + '?version=' + service.version_date);
+      assert.equal(req.method, 'GET');
+    });
+
+    it('should get information about a specific collection and environment', function() {
+      var req = discovery.getCollection('env-guid', 'col-guid', noop);
+      assert.equal(req.uri.href, service.url + paths.collectioninfo + '?version=' + service.version_date);
+      assert.equal(req.method, 'GET');
+    });
+
+    it('should perform a query', function() {
+      var req = discovery.query('env-guid', 'col-guid', {'filter': 'yesplease', 'count': 10}, noop);
+      assert.equal(req.uri.href, service.url + paths.query + '?version=' + service.version_date + '&filter=yesplease&count=10');
+      assert.equal(req.method, 'GET');
+      
     });
   });
 });

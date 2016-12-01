@@ -51,8 +51,59 @@ DiscoveryV1Experimental.prototype.getEnvironments = function(params, callback) {
     options: {
       url: '/v1/environments',
       method: 'GET',
+      json: true
+    },
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+DiscoveryV1Experimental.prototype.getEnvironment = function(environmentId, callback) {
+  var parameters = {
+    options: {
+      url: '/v1/environments/' + environmentId,
+      method: 'GET',
+      json: true
+    },
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+DiscoveryV1Experimental.prototype.getCollections = function(environmentId, callback) {
+  var parameters = {
+    options: {
+      url: '/v1/environments/' + environmentId + '/collections',
+      method: 'GET',
+      json: true
+    },
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+DiscoveryV1Experimental.prototype.getCollection = function(environmentId, collectionId, callback) {
+  var parameters = {
+    options: {
+      url: '/v1/environments/' + environmentId + '/collections/' + collectionId,
+      method: 'GET',
+      json: true
+    },
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+DiscoveryV1Experimental.prototype.query = function(environmentId,
+                                                   collectionId,
+                                                   query_opts,
+                                                   callback) {
+  var parameters = {
+    options: {
+      url: '/v1/environments/' + environmentId +'/collections/' + collectionId + '/query',
+      method: 'GET',
       json: true,
-      qs: pick(params, ['name'])
+      qs: pick(query_opts,['filter','aggregation','return','count'])
     },
     defaultOptions: this._options
   };
