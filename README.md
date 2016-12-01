@@ -24,6 +24,7 @@ Node.js client library to use the [Watson Developer Cloud][wdc] services, a coll
     * [Concept Insights](#concept-insights)
     * [Conversation](#conversation)
     * [Dialog](#dialog)
+    * [Discovery](#discovery)
     * [Document Conversion](#document-conversion)
     * [Language Translator](#language-translator)
     * [Natural Language Classifier](#natural-language-classifier)
@@ -253,6 +254,32 @@ conversation.message({
 
 ### Dialog
 The Dialog service was deprecated on August 15, 2016, existing instances of the service will continue to function until August 9, 2017. Users of the Dialog service should migrate their applications to use the Conversation service. See the [migration documentation][dialog_migration] to learn how to migrate your dialogs to the Conversation service.
+
+### Discovery
+
+Use the [Discovery Service][discovery] to search and analyize structured and unstructured data.
+
+```javascript
+var DiscoveryV1Experimental = require('watson-developer-cloud/discovery/v1-experimental');
+
+var discovery = new DiscoveryV1Experimental({
+  username: '<username>',
+  password: '<password>',
+  version_date: DiscoveryV1Experimental.VERSION_DATE_2016_07_11
+});
+
+discovery.query({
+    environment_id: '<environment_id>',
+    collection_id: '<collection_id>',
+    query:
+  }, function(err, response) {
+        if (err) {
+          console.error(err);
+        } else {
+          console.log(JSON.stringify(response, null, 2));
+        }
+   });
+```
 
 ### Document Conversion
 
@@ -633,6 +660,8 @@ This library is licensed under Apache 2.0. Full license text is available in
 See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/master/.github/CONTRIBUTING.md).
 
 [conversation]: https://www.ibm.com/watson/developercloud/conversation.html
+
+[discovery]: http://www.ibm.com/watson/developercloud/discovery.html
 
 [personality_insights]: http://www.ibm.com/watson/developercloud/doc/personality-insights/
 [relationship_extraction]: http://www.ibm.com/watson/developercloud/doc/sireapi/

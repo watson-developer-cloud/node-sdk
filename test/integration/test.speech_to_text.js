@@ -53,7 +53,10 @@ describe('speech_to_text_integration', function() {
         return done(err);
       }
 
-      assert.deepEqual(res, {
+      /*
+      example result
+      as of 12/1/2016, the keywords confidence seems to have some variance between test runs
+      {
         "results": [
           {
             "keywords_result": {
@@ -77,22 +80,33 @@ describe('speech_to_text_integration', function() {
                 {
                   "normalized_text": "rain",
                   "start_time": 5.59,
-                  "confidence": 0.986,
+                  "confidence": 0.994,
                   "end_time": 6.14
                 }
               ]
             },
             "alternatives": [
               {
-                "confidence": 0.991,
+                "confidence": 0.992,
                 "transcript": "thunderstorms could produce large hail isolated tornadoes and heavy rain "
               }
             ],
             "final": true
           }
         ],
-        "result_index": 0
-      });
+          "result_index": 0
+      }
+      */
+
+
+      assert(res.results);
+      assert(res.results[0]);
+      assert(res.results[0].keywords_result);
+      var keywords_result = res.results[0].keywords_result;
+      assert(keywords_result.tornadoes);
+      assert(keywords_result.hail);
+      assert(keywords_result.rain);
+
       done();
     });
   });
