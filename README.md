@@ -169,7 +169,7 @@ alchemy_language.sentiment(params, function (err, response) {
 ```
 
 ### AlchemyVision
-The AlchemyVision service has been replace by the [Visual Recognition](#visual-recognition) service. Existing users have until May 20, 2017 to migrate to the new service, and no new instances may be created.
+The AlchemyVision service has been replaced by the [Visual Recognition](#visual-recognition) service. Existing users have until May 20, 2017 to migrate to the new service, and no new instances may be created.
 
 ### AlchemyData News
 [Alchemy Data News][alchemy_data_news] indexes 250k to 300k English language news and blog articles every day with historical search available for the past 60 days.
@@ -196,7 +196,7 @@ alchemy_data_news.getNews(params, function (err, news) {
 ```
 
 ### Authorization
-The Authorization service can generates auth tokens for situations where providing the service username/password is undesirable.
+The Authorization service can generate auth tokens for situations where providing the service username/password is undesirable.
 
 Tokens are valid for 1 hour and may be sent using the `X-Watson-Authorization-Token` header or the `watson-token` query param.
 
@@ -400,7 +400,7 @@ natural_language_classifier.classify({
 See this [example](https://github.com/watson-developer-cloud/node-sdk/blob/master/examples/natural_language_classifier.v1.js) to learn how to create a classifier.
 
 ### Personality Insights
-Analyze text in english and get a personality profile by using the
+Analyze text in English and get a personality profile by using the
 [Personality Insights][personality_insights] service.
 
 ```javascript
