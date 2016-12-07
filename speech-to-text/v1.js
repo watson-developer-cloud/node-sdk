@@ -33,7 +33,7 @@ var async = require('async');
 
 var PARAMS_ALLOWED = ['continuous', 'max_alternatives', 'timestamps', 'word_confidence', 'inactivity_timeout',
   'model', 'content-type', 'interim_results', 'keywords', 'keywords_threshold', 'word_alternatives_threshold',
-  'profanity_filter', 'smart_formatting', 'customization_id' ];
+  'profanity_filter', 'smart_formatting', 'customization_id', 'speaker_labels'];
 
 function formatChunk(chunk) {
   // Convert the string into an array
