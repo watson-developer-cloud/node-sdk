@@ -2,7 +2,7 @@
   "name": "watson-developer-cloud",
   "version": "2.11.0",
   "description": "Client library to use the IBM Watson Services and AlchemyAPI",
-  "main": "./lib/index",
+  "main": "./index",
   "repository": {
     "type": "git",
     "url": "https://github.com/watson-developer-cloud/node-sdk.git"
