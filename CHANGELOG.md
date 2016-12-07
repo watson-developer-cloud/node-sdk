@@ -1,3 +1,7 @@
+# v2.11.1
+* Fixed main file path in package.json
+* added a conversation example
+
 # v2.11.0
 * Added several methods and a version_date constant to DiscoveryV1Experimental
 
