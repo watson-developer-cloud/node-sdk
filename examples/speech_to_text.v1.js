@@ -27,7 +27,7 @@ recognizeStream.pipe(fs.createWriteStream('transcription.txt'));
 
 recognizeStream.setEncoding('utf8'); // to get strings instead of Buffers from `data` events
 
-['data', 'results', 'error', 'connection-close'].forEach(function(eventName) {
+['data', 'results', 'speaker_labels', 'error', 'connection-close'].forEach(function(eventName) {
   recognizeStream.on(eventName, console.log.bind(console, eventName + ' event: '));
 });
 
