@@ -70,10 +70,6 @@ describe('discovery-v1', function() {
     nock.cleanAll();
   });
 
-  var missingParameter = function(err) {
-    assert.ok((err instanceof Error) && /required parameters/.test(err));
-  };
-
   var discovery = new Discovery(service);
 
   describe('discovery()', function() {
@@ -84,12 +80,12 @@ describe('discovery-v1', function() {
     });
 
     it('should generate version_date was not specified (negative test)', function() {
-      assert.throws(
-          () => {
+
+      function doThrowThing() {
         var discovery = new Discovery(service1);
-      },
-          /version_date/
-      )
+        assert(discovery);
+      }
+      assert.throws( doThrowThing, /version_date/);
     });
 
     it('should get an environment information', function() {
