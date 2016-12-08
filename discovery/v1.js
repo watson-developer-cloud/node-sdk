@@ -54,7 +54,6 @@ DiscoveryV1.VERSION_DATE_2016_07_11 = '2016-11-07';
  * Return the list of environments
  *
  * @param {Object} params
- * @param {String} [params.name] search enviroments with the given name
  */
 DiscoveryV1.prototype.getEnvironments = function(params, callback) {
   params = params || {};
@@ -142,8 +141,7 @@ DiscoveryV1.prototype.getConfiguration = function(params, callback) {
  *
  * @param {Object} params
  * @param {String} params.environment_id
- * @param {String} [params.name] Find collections with the given name.
- */
+  */
 DiscoveryV1.prototype.getCollections = function(params, callback) {
   params = params || {};
 
@@ -247,7 +245,7 @@ DiscoveryV1.prototype.deleteCollection = function(params, callback) {
  * @param params
  * @param {String} params.environment_id environment guid for the collection
  * @param {string} params.collection_id the guid of the collection to delete
- * @param {file} params.file a file to post (smaller than 50mb)
+ * @param {Buffer|ReadableStream|Object} params.file a file to post (smaller than 50mb)
  * @param {string} [params.configuration_id] config guid
  * @param {string} [params.metadata] file metadata, including content-type (will infer if missing)
  * @param callback

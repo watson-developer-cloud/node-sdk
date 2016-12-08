@@ -16,8 +16,8 @@ describe('discovery-v1', function() {
     username: 'batman',
     password: 'bruce-wayne',
     url: 'http://ibm.com:80',
-    version: 'v1-experimental',
-    version_date: '2016-11-07'
+    version: 'v1',
+    version_date: '2016-12-15'
   };
 
   var service1 = {
@@ -83,23 +83,13 @@ describe('discovery-v1', function() {
       assert.equal(req.method, 'GET');
     });
 
-    it('should check no parameters provided (negative test)', function() {
-      discovery.getEnvironments({}, missingParameter);
-      discovery.getEnvironments(null, missingParameter);
-      discovery.getEnvironments(undefined, missingParameter);
-    });
-
     it('should generate version_date was not specified (negative test)', function() {
-      var threw = false;
-      try {
-        // eslint-disable-next-line
+      assert.throws(
+          () => {
         var discovery = new Discovery(service1);
-      }
-      catch(err) {
-        threw = true;
-        assert.equal(err.message, 'Argument error: version_date was not specified, use DiscoveryV1.VERSION_DATE_2016_07_11');
-      }
-      assert(threw, 'should throw an error')
+      },
+          /version_date/
+      )
     });
 
     it('should get an environment information', function() {
