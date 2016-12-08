@@ -1,3 +1,6 @@
+# v2.12.0
+* Added Speech to Text speaker_labels support, added new speaker_labels event to RecognizeStream
+
 # v2.11.1
 * Fixed main file path in package.json
 * added a conversation example
