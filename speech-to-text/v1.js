@@ -16,24 +16,25 @@
 
 'use strict';
 
-var extend         = require('extend');
-var helper         = require('../lib/helper');
-var cookie         = require('cookie');
-var pick           = require('object.pick');
-var url            = require('url');
-var https          = require('https');
-var http           = require('http');
-var isStream       = require('isstream');
+var extend = require('extend');
+var helper = require('../lib/helper');
+var cookie = require('cookie');
+var pick = require('object.pick');
+var url = require('url');
+var https = require('https');
+var http = require('http');
+var isStream = require('isstream');
 var requestFactory = require('../lib/requestwrapper');
 var RecognizeStream = require('./recognize_stream');
-var pkg            = require('../package.json'); // todo: consider using env properties here instead (to enable webpack support without requiring a plugin)
+var pkg = require('../package.json'); // todo: consider using env properties here instead (to enable webpack support without requiring a plugin)
 var util = require('util');
 var BaseService = require('../lib/base_service');
 var async = require('async');
 
 var PARAMS_ALLOWED = ['continuous', 'max_alternatives', 'timestamps', 'word_confidence', 'inactivity_timeout',
   'model', 'content-type', 'interim_results', 'keywords', 'keywords_threshold', 'word_alternatives_threshold',
-  'profanity_filter', 'smart_formatting', 'customization_id', 'speaker_labels' ];
+  'profanity_filter', 'smart_formatting', 'customization_id', 'speaker_labels'
+];
 
 function formatChunk(chunk) {
   // Convert the string into an array
@@ -122,8 +123,7 @@ SpeechToTextV1.prototype.recognize = function(params, callback) {
  * @deprecated use createRecognizeStream instead
  */
 SpeechToTextV1.prototype.recognizeLive = function(params, callback) {
-  var missingParams = helper.getMissingParams(params,
-    ['session_id', 'content_type', 'cookie_session']);
+  var missingParams = helper.getMissingParams(params, ['session_id', 'content_type', 'cookie_session']);
 
   if (missingParams) {
     callback(missingParams);
@@ -186,7 +186,8 @@ SpeechToTextV1.prototype.observeResult = function(params, callback) {
     return;
   }
   var serviceUrl = [this._options.url, '/v1/sessions/',
-    params.session_id, '/observe_result'].join('');
+    params.session_id, '/observe_result'
+  ].join('');
   var parts = url.parse(serviceUrl);
   var options = {
     agent: false,
@@ -356,8 +357,8 @@ SpeechToTextV1.prototype.createRecognizeStream = function(params) {
   params.url = this._options.url;
 
   params.headers = extend({
-    'user-agent': pkg.name + '-nodejs-'+ pkg.version,
-    authorization:  this._options.headers.Authorization
+    'user-agent': pkg.name + '-nodejs-' + pkg.version,
+    authorization: this._options.headers.Authorization
   }, params.headers);
 
   return new RecognizeStream(params);
@@ -367,7 +368,7 @@ SpeechToTextV1.prototype.createRecognizeStream = function(params) {
 ['recognizeLive', 'observeResult'].forEach(function(name) {
   var original = SpeechToTextV1.prototype[name];
   SpeechToTextV1.prototype[name] = function deprecated(params) {
-    if (!(params||{}).silent && !this._options.silent) {
+    if (!(params || {}).silent && !this._options.silent) {
       // eslint-disable-next-line no-console
       console.log(new Error('The ' + name + '() method is deprecated and will be removed from a future version of the watson-developer-cloud SDK. ' +
         'Please use createRecognizeStream() instead.\n(Set {silent: true} to hide this message.)'));
@@ -837,6 +838,97 @@ SpeechToTextV1.prototype.whenCustomizationReady = function(params, callback) {
   });
 };
 
+//Check if there is a corpus that is still being processed
+function isProcessing(corporaList) {
+  var recordsBeingProcessed = corporaList.corpora.filter(function(record) {
+    return record['status'] === 'being_processed';
+  });
+  if (recordsBeingProcessed.length === 0) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+//Check if corpora has been analyzed
+function isAnalyzed(corporaList) {
+  var recordsAnalyzed = corporaList.corpora.filter(function(record) {
+    return record['status'] === 'analyzed';
+  });
+  if (recordsAnalyzed.length === corporaList.corpora.length) {
+    return true;
+  } else {
+    return false;
+  }
+}
+/**
+ * Waits while corpora analysis status is 'being_processes', fires callback once the status is 'analyzed'
+ *
+ * Note: the code will throw an error in case there in no corpus in the customization
+ *
+ *
+ * @param {Object} params
+ * @param {String} params.customization_id
+ * @param {Number} [params.interval=5000] - (milliseconds) - how long to wait between status checks
+ * @param {Number} [params.times=30] - maximum number of attempts
+ */
+SpeechToTextV1.prototype.whenCorporaAnalyzed = function(params, callback) {
+  var self = this;
+
+  async.parallel([
+
+    // validate that it has at least one corpus
+    function(next) {
+      self.getCorpora(params, function(err, res) {
+        if (err) {
+          return next(err);
+        }
+        if (!res.corpora.length) {
+          err = new Error('Customization has no corpa and therefore corpus cannot be analyzed');
+          err.code = SpeechToTextV1.ERR_NO_CORPORA;
+          return next(err)
+        }
+        next();
+      })
+    },
+
+    // check the customization status repeatedly until it's available
+    function(next) {
+      var options = extend({
+        interval: 5000,
+        times: 30
+      }, params);
+      options.errorFilter = function(err) {
+        // if it's a timeout error, then getCorpora is called again after params.interval
+        // otherwise the error is passed back to the user
+        // if the params.times limit is reached, the error will be passed to the user regardless
+        return err.code === SpeechToTextV1.ERR_TIMEOUT;
+      };
+      async.retry(options, function(done) {
+        self.getCorpora(params, function(err, corpora) {
+          if (err) {
+            done(err);
+          } else if (isProcessing(corpora)) {
+            // if the loop times out, async returns the last error, which will be this one.
+            err = new Error('Corpora is still being processed, try increasing interval or times params');
+            err.code = SpeechToTextV1.ERR_TIMEOUT;
+            done(err);
+          } else if (isAnalyzed(corpora)) {
+            done(null, corpora);
+          } else {
+            done(new Error('Unexpected corpus analysis status'));
+          }
+        })
+      }, next)
+    }
+
+  ], function(err, res) {
+    if (err) {
+      return callback(err);
+    }
+    callback(null, res[1]); // callback with the final customization object
+  });
+};
 
 /**
  * Add multiple custom words
