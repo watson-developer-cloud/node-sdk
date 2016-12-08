@@ -1,3 +1,7 @@
+# v2.13.0
+* Added STT whenCorporaAnalyzed() helper, #353
+* Bumped dependencies
+
 # v2.12.0
 * Added Speech to Text speaker_labels support, added new speaker_labels event to RecognizeStream
 
