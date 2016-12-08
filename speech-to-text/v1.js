@@ -841,9 +841,9 @@ SpeechToTextV1.prototype.whenCustomizationReady = function(params, callback) {
 //Check if there is a corpus that is still being processed
 function isProcessing(corporaList) {
   var recordsBeingProcessed = corporaList.corpora.filter(function(record) {
-    return record['status'] == 'being_processed';
+    return record['status'] === 'being_processed';
   });
-  if (recordsBeingProcessed.length == 0) {
+  if (recordsBeingProcessed.length === 0) {
     return false;
   } else {
     return true;
@@ -853,9 +853,9 @@ function isProcessing(corporaList) {
 //Check if corpora has been analyzed
 function isAnalyzed(corporaList) {
   var recordsAnalyzed = corporaList.corpora.filter(function(record) {
-    return record['status'] == 'analyzed';
+    return record['status'] === 'analyzed';
   });
-  if (recordsAnalyzed.length == corporaList.corpora.length) {
+  if (recordsAnalyzed.length === corporaList.corpora.length) {
     return true;
   } else {
     return false;
