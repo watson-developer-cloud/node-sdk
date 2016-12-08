@@ -94,7 +94,7 @@
     "websocket": "~1.0.22"
   },
   "engines": {
-    "node": ">=0.12"
+    "node": ">=4"
   },
   "scripts": {
     "test": "npm run lint && npm run codecov",
