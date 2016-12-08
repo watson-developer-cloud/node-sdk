@@ -187,7 +187,7 @@
 
 
 <div class="description">
-    Creates a Solr cluster.
+    <p>Creates a Solr cluster.</p>
 </div>
 
 
@@ -234,10 +234,10 @@
 
             
 
-            <td class="description last">An Object representing the parameters for this service call.
-  Optional params
-    - cluster_name: name to use for identifying the cluster in responses
-    - cluster_size: size of the cluster to create</td>
+            <td class="description last"><p>An Object representing the parameters for this service call.
+  Optional params</p>
+<pre class="prettyprint source"><code>- cluster_name: name to use for identifying the cluster in responses
+- cluster_size: size of the cluster to create</code></pre></td>
         </tr>
 
     
@@ -255,7 +255,7 @@
 
             
 
-            <td class="description last">The callback.</td>
+            <td class="description last"><p>The callback.</p></td>
         </tr>
 
     
@@ -334,7 +334,7 @@
 
 
 <div class="description">
-    Create a Solr collection.
+    <p>Create a Solr collection.</p>
 </div>
 
 
@@ -381,13 +381,12 @@
 
             
 
-            <td class="description last">An Object representing the parameters for this service call.
-  Required params:
-    - cluster_id: the ID of the Solr cluster to create the collection on
-    - collection_name: the name of the collection to create
-    - config_name: the name of the config in ZooKeeper
-  Optional params:
-    - wt: the writer type for the response, defaults to 'json'</td>
+            <td class="description last"><p>An Object representing the parameters for this service call.
+  Required params:</p>
+<pre class="prettyprint source"><code>- cluster_id: the ID of the Solr cluster to create the collection on
+- collection_name: the name of the collection to create
+- config_name: the name of the config in ZooKeeper</code></pre><p>  Optional params:</p>
+<pre class="prettyprint source"><code>- wt: the writer type for the response, defaults to 'json'</code></pre></td>
         </tr>
 
     
@@ -405,7 +404,7 @@
 
             
 
-            <td class="description last">The callback.</td>
+            <td class="description last"><p>The callback.</p></td>
         </tr>
 
     
@@ -484,7 +483,7 @@
 
 
 <div class="description">
-    Creates a ranker
+    <p>Creates a ranker</p>
 </div>
 
 
@@ -566,8 +565,8 @@
 
 
 <div class="description">
-    Get a Solr client for indexing and searching documents.
-See https://github.com/lbdremy/solr-node-client for documentation and examples.
+    <p>Get a Solr client for indexing and searching documents.
+See https://github.com/lbdremy/solr-node-client for documentation and examples.</p>
 </div>
 
 
@@ -614,10 +613,10 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
             
 
-            <td class="description last">An Object representing the parameters for this service call.
-  Required params:
-    - cluster_id: the ID of the Solr cluster to delete the collection on
-    - collection_name: the name of the collection for indexing/searching</td>
+            <td class="description last"><p>An Object representing the parameters for this service call.
+  Required params:</p>
+<pre class="prettyprint source"><code>- cluster_id: the ID of the Solr cluster to delete the collection on
+- collection_name: the name of the collection for indexing/searching</code></pre></td>
         </tr>
 
     
@@ -696,7 +695,7 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
 
 <div class="description">
-    Deletes a Solr cluster.
+    <p>Deletes a Solr cluster.</p>
 </div>
 
 
@@ -743,9 +742,9 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
             
 
-            <td class="description last">An Object representing the parameters for this service call.
-  Required params:
-    - cluster_id: the ID of the Solr cluster to delete</td>
+            <td class="description last"><p>An Object representing the parameters for this service call.
+  Required params:</p>
+<pre class="prettyprint source"><code>- cluster_id: the ID of the Solr cluster to delete</code></pre></td>
         </tr>
 
     
@@ -763,7 +762,7 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
             
 
-            <td class="description last">The callback.</td>
+            <td class="description last"><p>The callback.</p></td>
         </tr>
 
     
@@ -842,7 +841,7 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
 
 <div class="description">
-    Delete a Solr collection.
+    <p>Delete a Solr collection.</p>
 </div>
 
 
@@ -889,12 +888,11 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
             
 
-            <td class="description last">An Object representing the parameters for this service call.
-  Required params:
-    - cluster_id: the ID of the Solr cluster to delete the collection on
-    - collection_name: the name of the collection to delete
-  Optional params:
-    - wt: the writer type for the response, defaults to 'json'</td>
+            <td class="description last"><p>An Object representing the parameters for this service call.
+  Required params:</p>
+<pre class="prettyprint source"><code>- cluster_id: the ID of the Solr cluster to delete the collection on
+- collection_name: the name of the collection to delete</code></pre><p>  Optional params:</p>
+<pre class="prettyprint source"><code>- wt: the writer type for the response, defaults to 'json'</code></pre></td>
         </tr>
 
     
@@ -912,7 +910,7 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
             
 
-            <td class="description last">The callback.</td>
+            <td class="description last"><p>The callback.</p></td>
         </tr>
 
     
@@ -991,7 +989,7 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
 
 <div class="description">
-    Delete a configuration set in ZooKeeper.
+    <p>Delete a configuration set in ZooKeeper.</p>
 </div>
 
 
@@ -1038,10 +1036,10 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
             
 
-            <td class="description last">An Object representing the parameters for this service call.
-  Required params:
-    - cluster_id: the ID of the Solr cluster to delete configuration from
-    - config_name: the name of the config in ZooKeeper</td>
+            <td class="description last"><p>An Object representing the parameters for this service call.
+  Required params:</p>
+<pre class="prettyprint source"><code>- cluster_id: the ID of the Solr cluster to delete configuration from
+- config_name: the name of the config in ZooKeeper</code></pre></td>
         </tr>
 
     
@@ -1059,7 +1057,7 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
             
 
-            <td class="description last">The callback.</td>
+            <td class="description last"><p>The callback.</p></td>
         </tr>
 
     
@@ -1138,7 +1136,7 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
 
 <div class="description">
-    Deletes a ranker
+    <p>Deletes a ranker</p>
 </div>
 
 
@@ -1220,7 +1218,7 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
 
 <div class="description">
-    Get memory and disk usage stats from a Solr cluster
+    <p>Get memory and disk usage stats from a Solr cluster</p>
 </div>
 
 
@@ -1267,9 +1265,9 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
             
 
-            <td class="description last">An Object representing the parameters for this service call.
-  Required params:
-    - cluster_id: the ID of the Solr cluster to get stats from</td>
+            <td class="description last"><p>An Object representing the parameters for this service call.
+  Required params:</p>
+<pre class="prettyprint source"><code>- cluster_id: the ID of the Solr cluster to get stats from</code></pre></td>
         </tr>
 
     
@@ -1287,7 +1285,7 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
             
 
-            <td class="description last">The callback.</td>
+            <td class="description last"><p>The callback.</p></td>
         </tr>
 
     
@@ -1366,7 +1364,7 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
 
 <div class="description">
-    Get a configuration set from ZooKeeper as a .zip file.
+    <p>Get a configuration set from ZooKeeper as a .zip file.</p>
 </div>
 
 
@@ -1413,10 +1411,10 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
             
 
-            <td class="description last">An Object representing the parameters for this service call.
-  Required params:
-    - cluster_id: the ID of the Solr cluster to get configuration from
-    - config_name: the name of the config in ZooKeeper</td>
+            <td class="description last"><p>An Object representing the parameters for this service call.
+  Required params:</p>
+<pre class="prettyprint source"><code>- cluster_id: the ID of the Solr cluster to get configuration from
+- config_name: the name of the config in ZooKeeper</code></pre></td>
         </tr>
 
     
@@ -1434,7 +1432,7 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
             
 
-            <td class="description last">The callback.</td>
+            <td class="description last"><p>The callback.</p></td>
         </tr>
 
     
@@ -1513,7 +1511,7 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
 
 <div class="description">
-    Get the status of a resize request.
+    <p>Get the status of a resize request.</p>
 </div>
 
 
@@ -1560,9 +1558,9 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
             
 
-            <td class="description last">An Object representing the parameters for this service call.
-  Required params:
-    - cluster_id: the ID of the Solr cluster to poll</td>
+            <td class="description last"><p>An Object representing the parameters for this service call.
+  Required params:</p>
+<pre class="prettyprint source"><code>- cluster_id: the ID of the Solr cluster to poll</code></pre></td>
         </tr>
 
     
@@ -1580,7 +1578,7 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
             
 
-            <td class="description last">The callback.</td>
+            <td class="description last"><p>The callback.</p></td>
         </tr>
 
     
@@ -1659,7 +1657,7 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
 
 <div class="description">
-    Lists all Solr clusters associated with the service instance.
+    <p>Lists all Solr clusters associated with the service instance.</p>
 </div>
 
 
@@ -1706,8 +1704,8 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
             
 
-            <td class="description last">An Object representing the parameters for this service call.
-  This request currently does not require any parameters.</td>
+            <td class="description last"><p>An Object representing the parameters for this service call.
+  This request currently does not require any parameters.</p></td>
         </tr>
 
     
@@ -1725,7 +1723,7 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
             
 
-            <td class="description last">The callback.</td>
+            <td class="description last"><p>The callback.</p></td>
         </tr>
 
     
@@ -1804,7 +1802,7 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
 
 <div class="description">
-    List all collections for a Solr cluster.
+    <p>List all collections for a Solr cluster.</p>
 </div>
 
 
@@ -1851,11 +1849,10 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
             
 
-            <td class="description last">An Object representing the parameters for this service call.
-  Required params:
-    - cluster_id: the ID of the Solr cluster to list collections from
-  Optional params:
-    - wt: the writer type for the response, defaults to 'json'</td>
+            <td class="description last"><p>An Object representing the parameters for this service call.
+  Required params:</p>
+<pre class="prettyprint source"><code>- cluster_id: the ID of the Solr cluster to list collections from</code></pre><p>  Optional params:</p>
+<pre class="prettyprint source"><code>- wt: the writer type for the response, defaults to 'json'</code></pre></td>
         </tr>
 
     
@@ -1873,7 +1870,7 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
             
 
-            <td class="description last">The callback.</td>
+            <td class="description last"><p>The callback.</p></td>
         </tr>
 
     
@@ -1952,7 +1949,7 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
 
 <div class="description">
-    Lists the configuration sets in ZooKeeper.
+    <p>Lists the configuration sets in ZooKeeper.</p>
 </div>
 
 
@@ -1999,9 +1996,9 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
             
 
-            <td class="description last">An Object representing the parameters for this service call.
-  Required params:
-    - cluster_id: the ID of the Solr cluster to get configuration from</td>
+            <td class="description last"><p>An Object representing the parameters for this service call.
+  Required params:</p>
+<pre class="prettyprint source"><code>- cluster_id: the ID of the Solr cluster to get configuration from</code></pre></td>
         </tr>
 
     
@@ -2019,7 +2016,7 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
             
 
-            <td class="description last">The callback.</td>
+            <td class="description last"><p>The callback.</p></td>
         </tr>
 
     
@@ -2098,7 +2095,7 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
 
 <div class="description">
-    Retrieves the list of rankers for the user
+    <p>Retrieves the list of rankers for the user</p>
 </div>
 
 
@@ -2180,7 +2177,7 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
 
 <div class="description">
-    Checks whether the specified Solr cluster is ready for use.
+    <p>Checks whether the specified Solr cluster is ready for use.</p>
 </div>
 
 
@@ -2227,9 +2224,9 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
             
 
-            <td class="description last">An Object representing the parameters for this service call.
-  Required params:
-    - cluster_id: the ID of the Solr cluster to poll</td>
+            <td class="description last"><p>An Object representing the parameters for this service call.
+  Required params:</p>
+<pre class="prettyprint source"><code>- cluster_id: the ID of the Solr cluster to poll</code></pre></td>
         </tr>
 
     
@@ -2247,7 +2244,7 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
             
 
-            <td class="description last">The callback.</td>
+            <td class="description last"><p>The callback.</p></td>
         </tr>
 
     
@@ -2326,7 +2323,7 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
 
 <div class="description">
-    Returns the ranked candidates
+    <p>Returns the ranked candidates</p>
 </div>
 
 
@@ -2378,7 +2375,7 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
             
 
-            <td class="description last">everything except answer_data and answers will be passed in as answer_metadata
+            <td class="description last"><p>everything except answer_data and answers will be passed in as answer_metadata</p>
                 <h6>Properties</h6>
                 
 
@@ -2466,7 +2463,7 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
             
 
-            <td class="description last">number of answers to return</td>
+            <td class="description last"><p>number of answers to return</p></td>
         </tr>
 
     
@@ -2575,7 +2572,7 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
 
 <div class="description">
-    Returns the training status of the ranker
+    <p>Returns the training status of the ranker</p>
 </div>
 
 
@@ -2657,7 +2654,7 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
 
 <div class="description">
-    Change the size of the Solr cluster.
+    <p>Change the size of the Solr cluster.</p>
 </div>
 
 
@@ -2704,10 +2701,10 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
             
 
-            <td class="description last">An Object representing the parameters for this service call.
-  Required params:
-    - cluster_id: the ID of the Solr cluster to poll
-    - cluster_size: the integer size to resize the cluster to</td>
+            <td class="description last"><p>An Object representing the parameters for this service call.
+  Required params:</p>
+<pre class="prettyprint source"><code>- cluster_id: the ID of the Solr cluster to poll
+- cluster_size: the integer size to resize the cluster to</code></pre></td>
         </tr>
 
     
@@ -2725,7 +2722,7 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
             
 
-            <td class="description last">The callback.</td>
+            <td class="description last"><p>The callback.</p></td>
         </tr>
 
     
@@ -2804,7 +2801,7 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
 
 <div class="description">
-    Upload a configuration set to ZooKeeper.
+    <p>Upload a configuration set to ZooKeeper.</p>
 </div>
 
 
@@ -2851,11 +2848,11 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
             
 
-            <td class="description last">An Object representing the parameters for this service call.
-  Required params:
-    - cluster_id: the ID of the Solr cluster to upload configuration to
-    - config_name: the name of the config in ZooKeeper referenced when creating a collection
-    - config_zip_path: the ZIP file to upload</td>
+            <td class="description last"><p>An Object representing the parameters for this service call.
+  Required params:</p>
+<pre class="prettyprint source"><code>- cluster_id: the ID of the Solr cluster to upload configuration to
+- config_name: the name of the config in ZooKeeper referenced when creating a collection
+- config_zip_path: the ZIP file to upload</code></pre></td>
         </tr>
 
     
@@ -2873,7 +2870,7 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 
             
 
-            <td class="description last">The callback.</td>
+            <td class="description last"><p>The callback.</p></td>
         </tr>
 
     
@@ -2962,7 +2959,7 @@ See https://github.com/lbdremy/solr-node-client for documentation and examples.
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu Dec 08 2016 18:23:04 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu Dec 08 2016 19:18:36 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>

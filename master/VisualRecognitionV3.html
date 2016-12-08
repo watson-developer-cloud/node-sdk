@@ -187,24 +187,22 @@
 
 
 <div class="description">
-    Add an image to a collection
-Beta. Add images to a collection. Each collection can contain 1000000 images.
-
-Example Response:
-
- {
-   "images": [
+    <p>Add an image to a collection
+Beta. Add images to a collection. Each collection can contain 1000000 images.</p>
+<p>Example Response:</p>
+<p> {
+   &quot;images&quot;: [
      {
-       "image_id": "9725bc",
-       "image_file": "obama.jpg",
-       "created": "2016-09-20T14:41:49.927Z",
-       "metadata": {
-         "foo": "bar"
+       &quot;image_id&quot;: &quot;9725bc&quot;,
+       &quot;image_file&quot;: &quot;obama.jpg&quot;,
+       &quot;created&quot;: &quot;2016-09-20T14:41:49.927Z&quot;,
+       &quot;metadata&quot;: {
+         &quot;foo&quot;: &quot;bar&quot;
        }
      }
    ],
-   "images_processed": 1
- }
+   &quot;images_processed&quot;: 1
+ }</p>
 </div>
 
 
@@ -339,7 +337,7 @@ Example Response:
 
             
 
-            <td class="description last">The image file (.jpg or .png) of the image to add to the collection. Maximum file size of 2 MB.</td>
+            <td class="description last"><p>The image file (.jpg or .png) of the image to add to the collection. Maximum file size of 2 MB.</p></td>
         </tr>
 
     
@@ -372,7 +370,7 @@ Example Response:
 
             
 
-            <td class="description last">optional arbitrary metadata. This can be anything that can be specified in a JSON object. For example, key-value pairs. Maximum 2 KB of metadata for each image.</td>
+            <td class="description last"><p>optional arbitrary metadata. This can be anything that can be specified in a JSON object. For example, key-value pairs. Maximum 2 KB of metadata for each image.</p></td>
         </tr>
 
     
@@ -481,10 +479,10 @@ Example Response:
 
 
 <div class="description">
-    Accepts either a url, a single image file, or a zip file with multiple
+    <p>Accepts either a url, a single image file, or a zip file with multiple
 images (.jpeg, .png, .gif) and scores every available classifier
 on each image. It then applies a threshold and returns the list
-of relevant classifier scores for each image.
+of relevant classifier scores for each image.</p>
 </div>
 
 
@@ -602,7 +600,7 @@ of relevant classifier scores for each image.
                 </td>
             
 
-            <td class="description last">The image file (.jpg, .png, .gif) or compressed (.zip) file of images to classify. The total number of images is limited to 20. Either images_file or url must be specified. The SDK attempts to determine content-type automatically, but this may be overridden by providing an object: {value: Buffer|Stream, options: {filename: 'file.ext', contentType: 'image/type'}}</td>
+            <td class="description last"><p>The image file (.jpg, .png, .gif) or compressed (.zip) file of images to classify. The total number of images is limited to 20. Either images_file or url must be specified. The SDK attempts to determine content-type automatically, but this may be overridden by providing an object: {value: Buffer|Stream, options: {filename: 'file.ext', contentType: 'image/type'}}</p></td>
         </tr>
 
     
@@ -639,7 +637,7 @@ of relevant classifier scores for each image.
                 </td>
             
 
-            <td class="description last">The URL of an image (.jpg, .png, .gif). Redirects are followed, so you can use shortened URLs. The resolved URL is returned in the response. Either images_file or url must be specified.</td>
+            <td class="description last"><p>The URL of an image (.jpg, .png, .gif). Redirects are followed, so you can use shortened URLs. The resolved URL is returned in the response. Either images_file or url must be specified.</p></td>
         </tr>
 
     
@@ -678,7 +676,7 @@ of relevant classifier scores for each image.
                 </td>
             
 
-            <td class="description last">An array of classifier IDs to classify the images against.</td>
+            <td class="description last"><p>An array of classifier IDs to classify the images against.</p></td>
         </tr>
 
     
@@ -717,7 +715,7 @@ of relevant classifier scores for each image.
                 </td>
             
 
-            <td class="description last">An array with the value(s) "IBM" and/or "me" to specify which classifiers to run.</td>
+            <td class="description last"><p>An array with the value(s) &quot;IBM&quot; and/or &quot;me&quot; to specify which classifiers to run.</p></td>
         </tr>
 
     
@@ -754,7 +752,7 @@ of relevant classifier scores for each image.
                 </td>
             
 
-            <td class="description last">A floating point value that specifies the minimum score a class must have to be displayed in the response.</td>
+            <td class="description last"><p>A floating point value that specifies the minimum score a class must have to be displayed in the response.</p></td>
         </tr>
 
     
@@ -915,11 +913,11 @@ of relevant classifier scores for each image.
 
 
 <div class="description">
-    Train a new classifier from example images which are uploaded.
+    <p>Train a new classifier from example images which are uploaded.
 This call returns before training has completed.  You'll need to use the
 getClassifer method to make sure the classifier has completed training and
 was successful before you can classify any images with the newly created
-classifier.
+classifier.</p>
 </div>
 
 
@@ -1023,7 +1021,7 @@ classifier.
 
             
 
-            <td class="description last">The desired short name of the new classifier.</td>
+            <td class="description last"><p>The desired short name of the new classifier.</p></td>
         </tr>
 
     
@@ -1054,7 +1052,7 @@ classifier.
 
             
 
-            <td class="description last"><your_class_name>_positive_examples One or more compressed (.zip) files of images that depict the visual subject for a class within the new classifier. Must contain a minimum of 10 images. You may supply multiple files with different class names in the key.</td>
+            <td class="description last"><p><your_class_name>_positive_examples One or more compressed (.zip) files of images that depict the visual subject for a class within the new classifier. Must contain a minimum of 10 images. You may supply multiple files with different class names in the key.</p></td>
         </tr>
 
     
@@ -1087,7 +1085,7 @@ classifier.
 
             
 
-            <td class="description last">A compressed (.zip) file of images that do not depict the visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images. Required if only one positive set is provided.</td>
+            <td class="description last"><p>A compressed (.zip) file of images that do not depict the visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images. Required if only one positive set is provided.</p></td>
         </tr>
 
     
@@ -1229,17 +1227,15 @@ classifier.
 
 
 <div class="description">
-    Create a collection
-Beta. Create a new collection of images to search. You can create a maximum of 5 collections.
-
-Example response:
-
-   { collection_id: 'integration_test_1474313373701_d9665f',
+    <p>Create a collection
+Beta. Create a new collection of images to search. You can create a maximum of 5 collections.</p>
+<p>Example response:</p>
+<p>   { collection_id: 'integration_test_1474313373701_d9665f',
      name: 'integration_test_1474313373701',
      status: 'available',
      created: '2016-09-19T19:29:34.019Z',
      images: 0,
-     capacity: 1000000 }
+     capacity: 1000000 }</p>
 </div>
 
 
@@ -1333,7 +1329,7 @@ Example response:
 
             
 
-            <td class="description last">The name of the new collection. The name can be a maximum of 128 UTF8 characters, with no spaces.</td>
+            <td class="description last"><p>The name of the new collection. The name can be a maximum of 128 UTF8 characters, with no spaces.</p></td>
         </tr>
 
     
@@ -1442,7 +1438,7 @@ Example response:
 
 
 <div class="description">
-    Deletes a custom classifier with the specified classifier id.
+    <p>Deletes a custom classifier with the specified classifier id.</p>
 </div>
 
 
@@ -1536,7 +1532,7 @@ Example response:
 
             
 
-            <td class="description last">The classifier id</td>
+            <td class="description last"><p>The classifier id</p></td>
         </tr>
 
     
@@ -1666,8 +1662,8 @@ Example response:
 
 
 <div class="description">
-    Delete a collection
-Beta. Delete a user created collection.
+    <p>Delete a collection
+Beta. Delete a user created collection.</p>
 </div>
 
 
@@ -1870,8 +1866,8 @@ Beta. Delete a user created collection.
 
 
 <div class="description">
-    Delete an image
-Beta. Delete an image from a collection.
+    <p>Delete an image
+Beta. Delete an image from a collection.</p>
 </div>
 
 
@@ -2097,8 +2093,8 @@ Beta. Delete an image from a collection.
 
 
 <div class="description">
-    Delete image metadata
-Beta. Delete all metadata associated with an image.
+    <p>Delete image metadata
+Beta. Delete all metadata associated with an image.</p>
 </div>
 
 
@@ -2324,11 +2320,11 @@ Beta. Delete all metadata associated with an image.
 
 
 <div class="description">
-    Accepts either a url, a single image file, or a zip file with multiple
+    <p>Accepts either a url, a single image file, or a zip file with multiple
 images (.jpeg, .png, .gif) and attempts to extract faces and
 identities. It then applies a threshold
 and returns the list of relevant identities, locations, and metadata
-for found faces for each image.
+for found faces for each image.</p>
 </div>
 
 
@@ -2434,7 +2430,7 @@ for found faces for each image.
 
             
 
-            <td class="description last">The image file (.jpg, .png, .gif) or compressed (.zip) file of images to classify. The total number of images is limited to 15. Either images_file or url must be specified.</td>
+            <td class="description last"><p>The image file (.jpg, .png, .gif) or compressed (.zip) file of images to classify. The total number of images is limited to 15. Either images_file or url must be specified.</p></td>
         </tr>
 
     
@@ -2467,7 +2463,7 @@ for found faces for each image.
 
             
 
-            <td class="description last">The URL of an image (.jpg, .png, .gif). Redirects are followed, so you can use shortened URLs. The resolved URL is returned in the response. Either images_file or url must be specified.</td>
+            <td class="description last"><p>The URL of an image (.jpg, .png, .gif). Redirects are followed, so you can use shortened URLs. The resolved URL is returned in the response. Either images_file or url must be specified.</p></td>
         </tr>
 
     
@@ -2629,27 +2625,25 @@ for found faces for each image.
 
 
 <div class="description">
-    Find similar images
-Beta. Upload an image to find similar images in your custom collection.
-
-Example response:
-
- {
-    "similar_images":[
+    <p>Find similar images
+Beta. Upload an image to find similar images in your custom collection.</p>
+<p>Example response:</p>
+<p> {
+    &quot;similar_images&quot;:[
        {
-          "image_id":"dresses_1257263",
-          "created":"2016-09-04T21:49:16.908Z",
-          "metadata":{
-             "weight":10,
-             "cut":"a line",
-             "color":"red"
+          &quot;image_id&quot;:&quot;dresses_1257263&quot;,
+          &quot;created&quot;:&quot;2016-09-04T21:49:16.908Z&quot;,
+          &quot;metadata&quot;:{
+             &quot;weight&quot;:10,
+             &quot;cut&quot;:&quot;a line&quot;,
+             &quot;color&quot;:&quot;red&quot;
           },
-          "score":"0.79"
+          &quot;score&quot;:&quot;0.79&quot;
        }
     ],
-    "image_file":"red_dress.jpg",
-    "images_processed": 1
- }
+    &quot;image_file&quot;:&quot;red_dress.jpg&quot;,
+    &quot;images_processed&quot;: 1
+ }</p>
 </div>
 
 
@@ -2759,7 +2753,7 @@ Example response:
                 </td>
             
 
-            <td class="description last">The collection id</td>
+            <td class="description last"><p>The collection id</p></td>
         </tr>
 
     
@@ -2794,7 +2788,7 @@ Example response:
                 </td>
             
 
-            <td class="description last">The image file (.jpg or .png) of the image to search against the collection.</td>
+            <td class="description last"><p>The image file (.jpg or .png) of the image to search against the collection.</p></td>
         </tr>
 
     
@@ -2833,7 +2827,7 @@ Example response:
                 </td>
             
 
-            <td class="description last">limit The number of similar results you want returned. Default limit is 10 results, you can specify a maximum limit of 100 results.</td>
+            <td class="description last"><p>limit The number of similar results you want returned. Default limit is 10 results, you can specify a maximum limit of 100 results.</p></td>
         </tr>
 
     
@@ -2963,7 +2957,7 @@ Example response:
 
 
 <div class="description">
-    Retrieves information about a specific classifier.
+    <p>Retrieves information about a specific classifier.</p>
 </div>
 
 
@@ -3057,7 +3051,7 @@ Example response:
 
             
 
-            <td class="description last">The classifier id</td>
+            <td class="description last"><p>The classifier id</p></td>
         </tr>
 
     
@@ -3203,17 +3197,15 @@ Example response:
 
 
 <div class="description">
-    Retrieve collection details
-Beta. Retrieve information about a specific collection.
-
-Example response:
-
- { collection_id: 'integration_test_1474313373701_d9665f',
+    <p>Retrieve collection details
+Beta. Retrieve information about a specific collection.</p>
+<p>Example response:</p>
+<p> { collection_id: 'integration_test_1474313373701_d9665f',
    name: 'integration_test_1474313373701',
    status: 'available',
    created: '2016-09-19T19:29:34.019Z',
    images: 0,
-   capacity: 1000000 }
+   capacity: 1000000 }</p>
 </div>
 
 
@@ -3416,7 +3408,7 @@ Example response:
 
 
 <div class="description">
-    Bluemix uses a different naming convention for VR v3 than for other services
+    <p>Bluemix uses a different naming convention for VR v3 than for other services</p>
 </div>
 
 
@@ -3516,7 +3508,7 @@ Example response:
 
 
 <div class="description">
-    Pulls api_key from SERVICE_NAME_API_KEY env property
+    <p>Pulls api_key from SERVICE_NAME_API_KEY env property</p>
 </div>
 
 
@@ -3665,14 +3657,12 @@ Example response:
 
 
 <div class="description">
-    Get image details
-Beta. List details about a specific image in a collection.
-
-Example Response:
-
-{ image_id: '83f3ff',
+    <p>Get image details
+Beta. List details about a specific image in a collection.</p>
+<p>Example Response:</p>
+<p>{ image_id: '83f3ff',
   image_file: 'obama.jpg',
-  created: '2016-09-19T21:07:15.141Z'
+  created: '2016-09-19T21:07:15.141Z'</p>
 </div>
 
 
@@ -3898,12 +3888,10 @@ Example Response:
 
 
 <div class="description">
-    Get image metadata
-Beta. View the metadata for a specific image in a collection.
-
-Example Response:
-
- {"foo": "bar"}
+    <p>Get image metadata
+Beta. View the metadata for a specific image in a collection.</p>
+<p>Example Response:</p>
+<p> {&quot;foo&quot;: &quot;bar&quot;}</p>
 </div>
 
 
@@ -4129,8 +4117,8 @@ Example Response:
 
 
 <div class="description">
-    Retrieve a list of all classifiers, including built-in and
-user-created classifiers.
+    <p>Retrieve a list of all classifiers, including built-in and
+user-created classifiers.</p>
 </div>
 
 
@@ -4389,18 +4377,16 @@ user-created classifiers.
 
 
 <div class="description">
-    List collections
-Beta. List all custom collections.
-
-Example response:
-
- { collections:
+    <p>List collections
+Beta. List all custom collections.</p>
+<p>Example response:</p>
+<p> { collections:
    [ { collection_id: 'integration_test_1474313967414_0e320b',
        name: 'integration_test_1474313967414',
        status: 'available',
        created: '2016-09-19T19:39:27.811Z',
        images: 0,
-       capacity: 1000000 } ] }
+       capacity: 1000000 } ] }</p>
 </div>
 
 
@@ -4574,15 +4560,13 @@ Example response:
 
 
 <div class="description">
-    List images in a collection
-Beta. List the first 100 images in a collection. Each collection can contain 1000000 images.
-
-Example Response:
-
-{ images:
+    <p>List images in a collection
+Beta. List the first 100 images in a collection. Each collection can contain 1000000 images.</p>
+<p>Example Response:</p>
+<p>{ images:
   [ { image_id: '83f3ff',
      image_file: 'obama.jpg',
-     created: '2016-09-19T21:07:15.141Z' } ] }
+     created: '2016-09-19T21:07:15.141Z' } ] }</p>
 </div>
 
 
@@ -4717,7 +4701,7 @@ Example Response:
 
             
 
-            <td class="description last">The image file (.jpg or .png) of the image to add to the collection. Maximum file size of 2 MB.</td>
+            <td class="description last"><p>The image file (.jpg or .png) of the image to add to the collection. Maximum file size of 2 MB.</p></td>
         </tr>
 
     
@@ -4750,7 +4734,7 @@ Example Response:
 
             
 
-            <td class="description last">optional arbitrary metadata. This can be anything that can be specified in a JSON object. For example, key-value pairs. Maximum 2 KB of metadata for each image.</td>
+            <td class="description last"><p>optional arbitrary metadata. This can be anything that can be specified in a JSON object. For example, key-value pairs. Maximum 2 KB of metadata for each image.</p></td>
         </tr>
 
     
@@ -4859,11 +4843,11 @@ Example Response:
 
 
 <div class="description">
-    Accepts either a url, single image file, or a zip file with multiple
+    <p>Accepts either a url, single image file, or a zip file with multiple
 images (.jpeg, .png, .gif) and attempts to recognize text
 found in the image. It then applies a threshold
 and returns the list of relevant locations, strings,  and metadata
-for discovered text in each image.
+for discovered text in each image.</p>
 </div>
 
 
@@ -4969,7 +4953,7 @@ for discovered text in each image.
 
             
 
-            <td class="description last">The image file (.jpg, .png, .gif) or compressed (.zip) file of images to classify. The total number of images is limited to 10. Either images_file or url must be specified.</td>
+            <td class="description last"><p>The image file (.jpg, .png, .gif) or compressed (.zip) file of images to classify. The total number of images is limited to 10. Either images_file or url must be specified.</p></td>
         </tr>
 
     
@@ -5002,7 +4986,7 @@ for discovered text in each image.
 
             
 
-            <td class="description last">The URL of an image (.jpg, .png, .gif). Redirects are followed, so you can use shortened URLs. The resolved URL is returned in the response. Either images_file or url must be specified.</td>
+            <td class="description last"><p>The URL of an image (.jpg, .png, .gif). Redirects are followed, so you can use shortened URLs. The resolved URL is returned in the response. Either images_file or url must be specified.</p></td>
         </tr>
 
     
@@ -5174,11 +5158,11 @@ for discovered text in each image.
 
 
 <div class="description">
-    Retrain a existing classifier from example images which are uploaded.
+    <p>Retrain a existing classifier from example images which are uploaded.
 This call returns before retraining has completed.  You'll need to use the
 getClassifer method to make sure the classifier has completed retraining and
 was successful before you can classify any images with the retrained
-classifier.
+classifier.</p>
 </div>
 
 
@@ -5282,7 +5266,7 @@ classifier.
 
             
 
-            <td class="description last"><your_class_name>_positive_examples One or more compressed (.zip) files of images that depict the visual subject for a class within the classifier. You may supply multiple files with different class names in the key.</td>
+            <td class="description last"><p><your_class_name>_positive_examples One or more compressed (.zip) files of images that depict the visual subject for a class within the classifier. You may supply multiple files with different class names in the key.</p></td>
         </tr>
 
     
@@ -5315,7 +5299,7 @@ classifier.
 
             
 
-            <td class="description last">A compressed (.zip) file of images that do not depict the visual subject of any of the classes of the classifier.</td>
+            <td class="description last"><p>A compressed (.zip) file of images that do not depict the visual subject of any of the classes of the classifier.</p></td>
         </tr>
 
     
@@ -5438,8 +5422,8 @@ classifier.
 
 
 <div class="description">
-    Add or update metadata
-Beta. Add metadata to a specific image in a collection.
+    <p>Add or update metadata
+Beta. Add metadata to a specific image in a collection.</p>
 </div>
 
 
@@ -5579,7 +5563,7 @@ Beta. Add metadata to a specific image in a collection.
 
             
 
-            <td class="description last">Can be anything that can be specified in a JSON object. For example, key-value pairs. Maximum 2 KB of metadata for each image.</td>
+            <td class="description last"><p>Can be anything that can be specified in a JSON object. For example, key-value pairs. Maximum 2 KB of metadata for each image.</p></td>
         </tr>
 
     
@@ -5698,7 +5682,7 @@ Beta. Add metadata to a specific image in a collection.
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu Dec 08 2016 18:23:04 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu Dec 08 2016 19:18:36 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>
