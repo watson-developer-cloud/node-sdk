@@ -388,9 +388,11 @@ SpeechToTextV1.prototype.createRecognizeStream = function(params) {
  *
  * Response looks like:
  *
+ * ```json
  * {
  *   "customization_id": "abc996ea-86ca-482e-b7ec-0f31c34e5ee9"
  * }
+ * ```
  *
  *
  * @param {Object} params
@@ -422,18 +424,14 @@ SpeechToTextV1.prototype.createCustomization = function(params, callback) {
 /**
  * Update voice model
  *
- * Updates information for the specified custom voice model.
- * You can update the metadata such as the name and description of the voice model.
- * You can also update the words in the model and their translations.
- * A custom model can contain no more than 20,000 entries.
- * Only the owner of a custom voice model can use this method to update the model.
- *
  * An example of params.words could be:
  *
+ * ```json
  *  [
  *    {"word":"NCAA", "translation":"N C double A"},
  *    {"word":"iPhone", "translation":"I phone"}
  *  ]
+ * ```
  *
  * @param {Object} params
  * @param {String} params.customization_id
@@ -459,9 +457,9 @@ SpeechToTextV1.prototype.updateCustomization = function(params, callback) {
 /**
  * List all customizations
  *
- * Example response:
- *
- { customizations:
+* Example response:
+```json
+{ customizations:
     [ { owner: '8a6f5bb1-5b2d-4a20-85a9-eaa421d25c88',
         base_model_name: 'en-US_BroadbandModel',
         customization_id: '6a7785a0-9665-11e6-a73a-0da9193a4475',
@@ -489,7 +487,8 @@ SpeechToTextV1.prototype.updateCustomization = function(params, callback) {
         progress: 100,
         language: 'en-US',
         status: 'available' } ] }
- *
+
+```
  *
  * @param {Object} [params]
  * @param {String} [params.language] optional filter. Currently only en-US is supported.
@@ -521,6 +520,7 @@ function isPending(customization) {
  *
  * Example response:
  *
+```json
  { owner: '8a6f5bb1-5b2d-4a20-85a9-eaa421d25c88',
    base_model_name: 'en-US_BroadbandModel',
    customization_id: 'e695ad30-97c1-11e6-be92-bb627d4684b9',
@@ -530,6 +530,7 @@ function isPending(customization) {
    progress: 0,
    language: 'en-US',
    status: 'pending' }
+```
  *
  *
  * @param {Object} params
@@ -552,20 +553,6 @@ SpeechToTextV1.prototype.getCustomization = function(params, callback) {
 
 /**
  * Train a custom model
- *
- * Initiates the training of a custom language model with new corpora, words, or both.
- * After adding training data to the custom model with the corpora or words methods, use this method to begin the actual training of the model on the new data.
- * You can specify whether the custom model is to be trained with all words from its words resources or only with words that were added or modified by the user.
- * Only the owner of a custom model can use this method to train the model.
- *
- * Pre-processing of words and corpa must be complete before initiating training.
- * Use the whenCustomizationReady() method to be notified once pre-processing has completed.
- *
- * Training can take on the order of minutes to complete depending on the amount of data on which the service is being trained and the current load on the service.
- * This method triggers the callback as soon as the training process has begun.
- *
- * Use the whenCustomizationReady() method again to be notified once training has completed.
- *
  *
  * @param {Object} params
  * @param {String} params.customization_id
@@ -590,11 +577,6 @@ SpeechToTextV1.prototype.trainCustomization = function(params, callback) {
 /**
  * Reset a custom model
  *
- * Resets a custom language model by removing all corpora and words from the model.
- * Resetting a custom model initializes the model to its state when it was first created.
- * Metadata such as the name and language of the model are preserved.
- * Only the owner of a custom model can use this method to reset the model.
- *
  * @param {Object} params
  * @param {String} params.customization_id
  * @param {Function} callback
@@ -615,11 +597,6 @@ SpeechToTextV1.prototype.resetCustomization = function(params, callback) {
 
 /**
  * Upgrade a custom model
- *
- * Upgrades a custom language model to the latest release level of the Speech to Text service.
- * The method bases the upgrade on the latest trained data stored for the custom model.
- * If the corpora or words for the model have changed since the model was last trained, you must use the Train a custom model method to train the model on the new data.
- * Only the owner of a custom model can use this method to upgrade the model.
  *
  * Note: This method is not currently implemented. It will be added for a future release of the API.
  *
@@ -667,25 +644,6 @@ SpeechToTextV1.prototype.deleteCustomization = function(params, callback) {
 
 /**
  * Add a corpus to a custom model
-
- Adds a single corpus text file of new training data to the custom language model.
-
- Submit a plain text file that contains sample sentences from the domain of interest to enable the service to extract words in context. The more sentences you add that represent the context in which speakers use words from the domain, the better the service's recognition accuracy. Adding a corpus does not affect the custom model until you train the model for the new data by using the Train a custom model method.
-
- Use the following guidelines to prepare a corpus text file:
-
- * Provide a plain text file that is encoded in UTF-8 if it contains non-ASCII characters. The service assumes UTF-8 encoding if it encounters such characters.
- * Include each sentence of the corpus on its own line, terminating each line with a carriage return. Including multiple sentences on the same line can degrade accuracy.
- * Use consistent capitalization for words in the corpus. The words resource is case-sensitive; mix upper- and lowercase letters and use capitalization only when intended.
- * Beware of typographical errors. The service assumes that typos are new words; unless you correct them before training the model, the service adds them to the model's vocabulary.
-
- The service automatically does the following:
-
- * Converts numbers to their equivalent words. For example, 500 becomes five hundred, and 0.15 becomes zero point fifteen.
- * Removes punctuation and special characters:
- * Ignores phrases enclosed in ( ) (parentheses), < > (angle brackets), [ ] (square brackets), and { } (curly braces).
- * Converts tokens that include certain symbols to meaningful strings. For example, the service converts a $ (dollar sign) followed by a number to its string representation. For example, $100 becomes one hundred dollars.
-
  *
  * @param {Object} params
  * @param {String} params.customization_id - The GUID of the custom language model to which a corpus is to be added. You must make the request with the service credentials of the model's owner.
@@ -719,6 +677,7 @@ SpeechToTextV1.prototype.addCorpus = function(params, callback) {
  * The information includes the total number of words and out-of-vocabulary (OOV) words, name, and status of each corpus.
  *
  * Example Result:
+ * ```json
  * { corpora:
    [ { out_of_vocabulary_words: 0,
        total_words: 233,
@@ -728,6 +687,7 @@ SpeechToTextV1.prototype.addCorpus = function(params, callback) {
        total_words: 0,
        name: 'test_corpus_2',
        status: 'being_processed' } ] }
+ ```
  *
  * @param {Object} params
  * @param {String} params.customization_id
@@ -783,6 +743,7 @@ SpeechToTextV1.ERR_TIMEOUT = 'ERR_TIMEOUT';
  * @param {String} params.customization_id
  * @param {Number} [params.interval=5000] - (milliseconds) - how log to wait between status checks
  * @param {Number} [params.times=30] - maximum number of attempts
+ * @param {Function} callback
  */
 SpeechToTextV1.prototype.whenCustomizationReady = function(params, callback) {
   var self = this;
@@ -877,6 +838,7 @@ function isAnalyzed(corporaList) {
  * @param {String} params.customization_id
  * @param {Number} [params.interval=5000] - (milliseconds) - how long to wait between status checks
  * @param {Number} [params.times=30] - maximum number of attempts
+ * @param {Function} callback
  */
 SpeechToTextV1.prototype.whenCorporaAnalyzed = function(params, callback) {
   var self = this;
@@ -939,40 +901,6 @@ SpeechToTextV1.prototype.whenCorporaAnalyzed = function(params, callback) {
 /**
  * Add multiple custom words
  *
- * Adds one or more custom words to a custom language model.
- * The service populates the words resource for a custom model with out-of-vocabulary (OOV) words found in each corpus added to the model.
- * You can use this method to add additional words or to modify existing words in the words resource.
- * Adding or modifying custom words does not affect the custom model until you train the model for the new data by using the Train a custom model method.
- *
- * You add custom words by providing a Words object, which is an array of Word objects, one per word. You must use the object's word parameter to identify the word that is to be added. You can also provide one or both of the following optional fields for each word:
- *
- * The sounds_like field provides an array of one or more pronunciations for the word. Use the parameter to specify how the word can be pronounced by users.
- *  - Use the parameter for words that are difficult to pronounce, foreign words, acronyms, and so on.
- *  - For example, you might specify that the word IEEE can sound like i triple e.
- *  - You can specify a maximum of five sounds-like pronunciations for a word, and each pronunciation must adhere to the following rules:
- *  - Use English alphabetic characters: a-z and A-Z.
- *  - To pronounce a single letter, use the letter followed by a period, for example, N. C. A. A. for the word NCAA.
- *  - Use real or made-up words that are pronounceable in the native language, for example, shuchensnie for the word Sczcesny.
- *  - Substitute equivalent English letters for non-English letters, for example, s for ç or ny for ñ.
- *  - Substitute non-accented letters for accented letters, for example a for à or e for è.
- *  - Use the spelling of numbers, for example, seventy-five for 75.
- *  - You can include multiple words separated by spaces, but the service enforces a maximum of 40 total characters not including spaces.
- *
- * Yhe display_as field provides an optional different way of spelling the word in a transcript.
- * Use the parameter when you want the word to appear different from its usual representation or from its spelling in corpora training data.
- * For example, you might indicate that the word IBM(trademark) is to be displayed as IBM™.
- *
- * If you add a custom word that already exists in the words resource for the custom model, the new definition overrides the existing data for the word.
- * If the service encounters an error with the input data, it returns a failure code and does not add any of the words to the words resource.
- *
- * The call returns an HTTP 201 response code if the input data is valid.
- * It then asynchronously pre-processes the words to add them to the model's words resource.
- * The time that it takes for the analysis to complete depends on the number of new words that you add but is generally faster than adding a corpus or training a model.
- *
- * You can use the List custom words or List a custom word method to review the words that you add. Words with an invalid sounds_like field include an error field that describes the problem.
- * You can use other words methods to correct errors, eliminate typos, and modify how words are pronounced as needed.
-
- *
  * @param {Object} params
  * @param {String} params.customization_id
  * @param {Array<Word>} params.words - Array of objects: [{word: String, sounds_like: [String, ...], display_as: String}, ...]
@@ -1025,7 +953,8 @@ SpeechToTextV1.prototype.addWord = function(params, callback) {
  * You can list all words from the custom model's words resource, only custom words that were added or modified by the user, or only OOV words that were extracted from corpora.
  *
  * Example response:
- {
+```json
+{
     "words": [
        {
           "word": "hhonors",
@@ -1054,6 +983,7 @@ SpeechToTextV1.prototype.addWord = function(params, callback) {
        }
     ]
  }
+ ```
  *
  * @param {Object} params
  * @param {String} params.customization_id
@@ -1086,11 +1016,13 @@ SpeechToTextV1.prototype.getWords = function(params, callback) {
  *
  * Example output:
  *
+ * ```json
  {
     "sounds_like": ["N. C. A. A.","N. C. double A."],
     "display_as": "NCAA",
     "source": ["corpus3","user"]
  }
+ ```
  *
  * @param {Object} params
  * @param {String} params.customization_id
@@ -1113,10 +1045,6 @@ SpeechToTextV1.prototype.getWord = function(params, callback) {
 
 /**
  * Delete a custom word
- *
- * Deletes a custom word from a custom language model.
- * You can remove any word that you added to the custom model's words resource via any means.
- * However, if the word also exists in the service's base vocabulary, the service removes only the custom pronunciation for the word; the word remains in the base vocabulary.
  *
  * Removing a custom word does not affect the custom model until you train the model with the Train a custom model method.
  *

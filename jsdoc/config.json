@@ -20,5 +20,6 @@
     "readme": "README.md",
     "recurse": true,
     "destination": "./doc/"
-  }
+  },
+  "plugins": ["plugins/markdown"]
 }
