@@ -25,7 +25,8 @@ var W3CWebSocket = require('websocket').w3cwebsocket;
 
 
 var OPENING_MESSAGE_PARAMS_ALLOWED = ['continuous', 'max_alternatives', 'timestamps', 'word_confidence', 'inactivity_timeout',
-  'content-type', 'interim_results', 'keywords', 'keywords_threshold', 'word_alternatives_threshold', 'profanity_filter', 'smart_formatting' ];
+  'content-type', 'interim_results', 'keywords', 'keywords_threshold', 'word_alternatives_threshold', 'profanity_filter',
+  'smart_formatting', 'speaker_labels' ];
 
 var QUERY_PARAMS_ALLOWED = ['model', 'X-Watson-Learning-Opt-Out', 'watson-token', 'customization_id'];
 
@@ -174,6 +175,13 @@ RecognizeStream.prototype.initialize = function() {
          */
         self.push(data.results[0].alternatives[0].transcript, 'utf8'); // this is the "data" event that can be easily piped to other streams
       }
+    } else if (data.speaker_labels) {
+      /**
+       * Speaker labels
+       * @event RecognizeStream#speaker_labels
+       * @param {Object} speaker_labels
+       */
+      self.emit('speaker_labels', data);
     } else {
       emitError('Unrecognised message from server', frame);
     }
