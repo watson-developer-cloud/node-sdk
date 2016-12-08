@@ -254,6 +254,9 @@ SpeechToTextV1.prototype.getRecognizeStatus = function(params, callback) {
 /**
  * List of models available.
  *
+ * @param {Object} params
+ * @param {Function} callback
+ * @returns {ReadableStream|undefined}
  */
 SpeechToTextV1.prototype.getModels = function(params, callback) {
   var parameters = {
@@ -270,8 +273,11 @@ SpeechToTextV1.prototype.getModels = function(params, callback) {
 
 /**
  * Get information about a model based on the given model_id
- * @param {String} [params.model_id] The desired model
  *
+ * @param {Object} params
+ * @param {String} params.model_id The desired model
+ * @param {Function} callback
+ * @returns {ReadableStream|undefined}
  */
 SpeechToTextV1.prototype.getModel = function(params, callback) {
   var path = params || {};
