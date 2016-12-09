@@ -47,7 +47,7 @@
 
 
 <div class="description">
-    <p>Speech Recognition API Wrapper</p>
+    Speech Recognition API Wrapper
 </div>
 
 
@@ -135,7 +135,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line63">line 63</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line62">line 62</a>
     </li></ul></dd>
     
 
@@ -191,7 +191,23 @@
 
 
 <div class="description">
-    <p>Add a corpus to a custom model</p>
+    Add a corpus to a custom model
+
+ Adds a single corpus text file of new training data to the custom language model.
+
+ Submit a plain text file that contains sample sentences from the domain of interest to enable the service to extract words in context. The more sentences you add that represent the context in which speakers use words from the domain, the better the service's recognition accuracy. Adding a corpus does not affect the custom model until you train the model for the new data by using the Train a custom model method.
+
+ Use the following guidelines to prepare a corpus text file:
+Provide a plain text file that is encoded in UTF-8 if it contains non-ASCII characters. The service assumes UTF-8 encoding if it encounters such characters.
+Include each sentence of the corpus on its own line, terminating each line with a carriage return. Including multiple sentences on the same line can degrade accuracy.
+Use consistent capitalization for words in the corpus. The words resource is case-sensitive; mix upper- and lowercase letters and use capitalization only when intended.
+Beware of typographical errors. The service assumes that typos are new words; unless you correct them before training the model, the service adds them to the model's vocabulary.
+
+ The service automatically does the following:
+Converts numbers to their equivalent words. For example, 500 becomes five hundred, and 0.15 becomes zero point fifteen.
+Removes punctuation and special characters:
+Ignores phrases enclosed in ( ) (parentheses), < > (angle brackets), [ ] (square brackets), and { } (curly braces).
+Converts tokens that include certain symbols to meaningful strings. For example, the service converts a $ (dollar sign) followed by a number to its string representation. For example, $100 becomes one hundred dollars.
 </div>
 
 
@@ -295,7 +311,7 @@
 
             
 
-            <td class="description last"><p>The GUID of the custom language model to which a corpus is to be added. You must make the request with the service credentials of the model's owner.</p></td>
+            <td class="description last">The GUID of the custom language model to which a corpus is to be added. You must make the request with the service credentials of the model's owner.</td>
         </tr>
 
     
@@ -334,7 +350,7 @@
 
             
 
-            <td class="description last"><p>the text of the corpus - may be provided as a String, a Buffer, or a ReadableStream. A ReadableStream is recommended when reading a file from disk.</p></td>
+            <td class="description last">the text of the corpus - may be provided as a String, a Buffer, or a ReadableStream. A ReadableStream is recommended when reading a file from disk.</td>
         </tr>
 
     
@@ -405,7 +421,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line655">line 655</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line690">line 690</a>
     </li></ul></dd>
     
 
@@ -443,7 +459,7 @@
 
 
 <div class="description">
-    <p>Add a single custom word</p>
+    Add a single custom word
 </div>
 
 
@@ -713,7 +729,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line934">line 934</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line908">line 908</a>
     </li></ul></dd>
     
 
@@ -751,7 +767,40 @@
 
 
 <div class="description">
-    <p>Add multiple custom words</p>
+    Add multiple custom words
+
+Adds one or more custom words to a custom language model.
+The service populates the words resource for a custom model with out-of-vocabulary (OOV) words found in each corpus added to the model.
+You can use this method to add additional words or to modify existing words in the words resource.
+Adding or modifying custom words does not affect the custom model until you train the model for the new data by using the Train a custom model method.
+
+You add custom words by providing a Words object, which is an array of Word objects, one per word. You must use the object's word parameter to identify the word that is to be added. You can also provide one or both of the following optional fields for each word:
+
+The sounds_like field provides an array of one or more pronunciations for the word. Use the parameter to specify how the word can be pronounced by users.
+ - Use the parameter for words that are difficult to pronounce, foreign words, acronyms, and so on.
+ - For example, you might specify that the word IEEE can sound like i triple e.
+ - You can specify a maximum of five sounds-like pronunciations for a word, and each pronunciation must adhere to the following rules:
+ - Use English alphabetic characters: a-z and A-Z.
+ - To pronounce a single letter, use the letter followed by a period, for example, N. C. A. A. for the word NCAA.
+ - Use real or made-up words that are pronounceable in the native language, for example, shuchensnie for the word Sczcesny.
+ - Substitute equivalent English letters for non-English letters, for example, s for ç or ny for ñ.
+ - Substitute non-accented letters for accented letters, for example a for à or e for è.
+ - Use the spelling of numbers, for example, seventy-five for 75.
+ - You can include multiple words separated by spaces, but the service enforces a maximum of 40 total characters not including spaces.
+
+Yhe display_as field provides an optional different way of spelling the word in a transcript.
+Use the parameter when you want the word to appear different from its usual representation or from its spelling in corpora training data.
+For example, you might indicate that the word IBM(trademark) is to be displayed as IBM™.
+
+If you add a custom word that already exists in the words resource for the custom model, the new definition overrides the existing data for the word.
+If the service encounters an error with the input data, it returns a failure code and does not add any of the words to the words resource.
+
+The call returns an HTTP 201 response code if the input data is valid.
+It then asynchronously pre-processes the words to add them to the model's words resource.
+The time that it takes for the analysis to complete depends on the number of new words that you add but is generally faster than adding a corpus or training a model.
+
+You can use the List custom words or List a custom word method to review the words that you add. Words with an invalid sounds_like field include an error field that describes the problem.
+You can use other words methods to correct errors, eliminate typos, and modify how words are pronounced as needed.
 </div>
 
 
@@ -868,7 +917,7 @@
 
             
 
-            <td class="description last"><p>Array of objects: [{word: String, sounds_like: [String, ...], display_as: String}, ...]</p></td>
+            <td class="description last">Array of objects: [{word: String, sounds_like: [String, ...], display_as: String}, ...]</td>
         </tr>
 
     
@@ -939,7 +988,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line909">line 909</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line883">line 883</a>
     </li></ul></dd>
     
 
@@ -977,11 +1026,13 @@
 
 
 <div class="description">
-    <p>Creates a new empty custom voice model</p>
-<p>Response looks like:</p>
-<pre class="prettyprint source lang-json"><code>{
-  &quot;customization_id&quot;: &quot;abc996ea-86ca-482e-b7ec-0f31c34e5ee9&quot;
-}</code></pre>
+    Creates a new empty custom voice model
+
+Response looks like:
+
+{
+  "customization_id": "abc996ea-86ca-482e-b7ec-0f31c34e5ee9"
+}
 </div>
 
 
@@ -1116,7 +1167,7 @@
 
             
 
-            <td class="description last"><p>for example, en-US_BroadbandModel</p></td>
+            <td class="description last">for example, en-US_BroadbandModel</td>
         </tr>
 
     
@@ -1220,7 +1271,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line404">line 404</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line395">line 395</a>
     </li></ul></dd>
     
 
@@ -1258,7 +1309,7 @@
 
 
 <div class="description">
-    <p>Replaces recognizeLive &amp; friends with a single 2-way stream over websockets</p>
+    Replaces recognizeLive & friends with a single 2-way stream over websockets
 </div>
 
 
@@ -1346,7 +1397,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line361">line 361</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line354">line 354</a>
     </li></ul></dd>
     
 
@@ -1402,10 +1453,10 @@
 
 
 <div class="description">
-    <p>Create a session
+    Create a session
 Set-cookie header is returned with a cookie that must be used for
 each request using this session.
-The session expires after 15 minutes of inactivity.</p>
+The session expires after 15 minutes of inactivity.
 </div>
 
 
@@ -1452,7 +1503,7 @@ The session expires after 15 minutes of inactivity.</p>
 
             
 
-            <td class="description last"><p>model The model to use during the session</p></td>
+            <td class="description last">model The model to use during the session</td>
         </tr>
 
     
@@ -1493,7 +1544,7 @@ The session expires after 15 minutes of inactivity.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line305">line 305</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line298">line 298</a>
     </li></ul></dd>
     
 
@@ -1531,7 +1582,7 @@ The session expires after 15 minutes of inactivity.</p>
 
 
 <div class="description">
-    <p>Delete a corpus</p>
+    Delete a corpus
 </div>
 
 
@@ -1696,7 +1747,7 @@ The session expires after 15 minutes of inactivity.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line718">line 718</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line751">line 751</a>
     </li></ul></dd>
     
 
@@ -1734,7 +1785,7 @@ The session expires after 15 minutes of inactivity.</p>
 
 
 <div class="description">
-    <p>Delete a custom model</p>
+    Delete a custom model
 </div>
 
 
@@ -1899,7 +1950,7 @@ The session expires after 15 minutes of inactivity.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line628">line 628</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line644">line 644</a>
     </li></ul></dd>
     
 
@@ -1937,7 +1988,7 @@ The session expires after 15 minutes of inactivity.</p>
 
 
 <div class="description">
-    <p>Deletes the specified session.</p>
+    Deletes the specified session.
 </div>
 
 
@@ -2001,7 +2052,7 @@ The session expires after 15 minutes of inactivity.</p>
 
             
 
-            <td class="description last"><p>Session id.</p></td>
+            <td class="description last">Session id.</td>
         </tr>
 
     
@@ -2042,7 +2093,7 @@ The session expires after 15 minutes of inactivity.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line337">line 337</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line330">line 330</a>
     </li></ul></dd>
     
 
@@ -2080,8 +2131,13 @@ The session expires after 15 minutes of inactivity.</p>
 
 
 <div class="description">
-    <p>Delete a custom word</p>
-<p>Removing a custom word does not affect the custom model until you train the model with the Train a custom model method.</p>
+    Delete a custom word
+
+Deletes a custom word from a custom language model.
+You can remove any word that you added to the custom model's words resource via any means.
+However, if the word also exists in the service's base vocabulary, the service removes only the custom pronunciation for the word; the word remains in the base vocabulary.
+
+Removing a custom word does not affect the custom model until you train the model with the Train a custom model method.
 </div>
 
 
@@ -2269,7 +2325,7 @@ The session expires after 15 minutes of inactivity.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line1056">line 1056</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line1030">line 1030</a>
     </li></ul></dd>
     
 
@@ -2307,11 +2363,13 @@ The session expires after 15 minutes of inactivity.</p>
 
 
 <div class="description">
-    <p>List corpora</p>
-<p>Lists information about all corpora that have been added to the specified custom language model.
-The information includes the total number of words and out-of-vocabulary (OOV) words, name, and status of each corpus.</p>
-<p>Example Result:</p>
-<pre class="prettyprint source lang-json"><code>{ corpora:
+    List corpora
+
+Lists information about all corpora that have been added to the specified custom language model.
+The information includes the total number of words and out-of-vocabulary (OOV) words, name, and status of each corpus.
+
+Example Result:
+{ corpora:
    [ { out_of_vocabulary_words: 0,
        total_words: 233,
        name: 'test_corpus_1',
@@ -2319,7 +2377,7 @@ The information includes the total number of words and out-of-vocabulary (OOV) w
      { out_of_vocabulary_words: 0,
        total_words: 0,
        name: 'test_corpus_2',
-       status: 'being_processed' } ] }</code></pre>
+       status: 'being_processed' } ] }
 </div>
 
 
@@ -2484,7 +2542,7 @@ The information includes the total number of words and out-of-vocabulary (OOV) w
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line696">line 696</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line729">line 729</a>
     </li></ul></dd>
     
 
@@ -2522,9 +2580,11 @@ The information includes the total number of words and out-of-vocabulary (OOV) w
 
 
 <div class="description">
-    <p>Get customization details</p>
-<p>Example response:</p>
-<pre class="prettyprint source lang-json"><code> { owner: '8a6f5bb1-5b2d-4a20-85a9-eaa421d25c88',
+    Get customization details
+
+Example response:
+
+ { owner: '8a6f5bb1-5b2d-4a20-85a9-eaa421d25c88',
    base_model_name: 'en-US_BroadbandModel',
    customization_id: 'e695ad30-97c1-11e6-be92-bb627d4684b9',
    created: '2016-10-21T19:09:33.443Z',
@@ -2532,7 +2592,7 @@ The information includes the total number of words and out-of-vocabulary (OOV) w
    description: 'Temporary customization to test the JS SDK. Should be automatically deleted within a few minutes.',
    progress: 0,
    language: 'en-US',
-   status: 'pending' }</code></pre>
+   status: 'pending' }
 </div>
 
 
@@ -2697,7 +2757,7 @@ The information includes the total number of words and out-of-vocabulary (OOV) w
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line540">line 540</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line532">line 532</a>
     </li></ul></dd>
     
 
@@ -2735,9 +2795,11 @@ The information includes the total number of words and out-of-vocabulary (OOV) w
 
 
 <div class="description">
-    <p>List all customizations</p>
-<p>Example response:</p>
-<pre class="prettyprint source lang-json"><code>{ customizations:
+    List all customizations
+
+Example response:
+
+ { customizations:
     [ { owner: '8a6f5bb1-5b2d-4a20-85a9-eaa421d25c88',
         base_model_name: 'en-US_BroadbandModel',
         customization_id: '6a7785a0-9665-11e6-a73a-0da9193a4475',
@@ -2764,7 +2826,7 @@ The information includes the total number of words and out-of-vocabulary (OOV) w
         description: '',
         progress: 100,
         language: 'en-US',
-        status: 'available' } ] }</code></pre>
+        status: 'available' } ] }
 </div>
 
 
@@ -2882,7 +2944,7 @@ The information includes the total number of words and out-of-vocabulary (OOV) w
 
             
 
-            <td class="description last"><p>optional filter. Currently only en-US is supported.</p></td>
+            <td class="description last">optional filter. Currently only en-US is supported.</td>
         </tr>
 
     
@@ -2961,7 +3023,7 @@ The information includes the total number of words and out-of-vocabulary (OOV) w
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line497">line 497</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line491">line 491</a>
     </li></ul></dd>
     
 
@@ -2992,14 +3054,14 @@ The information includes the total number of words and out-of-vocabulary (OOV) w
 
     
 
-    <h4 class="name" id="getModel"><span class="type-signature"></span>getModel<span class="signature">(params, callback)</span><span class="type-signature"> &rarr; {ReadableStream|undefined}</span></h4>
+    <h4 class="name" id="getModel"><span class="type-signature"></span>getModel<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    <p>Get information about a model based on the given model_id</p>
+    Get information about a model based on the given model_id
 </div>
 
 
@@ -3023,47 +3085,7 @@ The information includes the total number of words and out-of-vocabulary (OOV) w
         <th>Type</th>
 
         
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>params</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <h6>Properties</h6>
-                
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
+        <th>Attributes</th>
         
 
         
@@ -3077,7 +3099,7 @@ The information includes the total number of words and out-of-vocabulary (OOV) w
 
         <tr>
             
-                <td class="name"><code>model_id</code></td>
+                <td class="name"><code>params.model_id</code></td>
             
 
             <td class="type">
@@ -3090,40 +3112,20 @@ The information includes the total number of words and out-of-vocabulary (OOV) w
             </td>
 
             
-
-            
-
-            <td class="description last"><p>The desired model</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>callback</code></td>
-            
-
-            <td class="type">
-            
+                <td class="attributes">
                 
-<span class="param-type">function</span>
+                    &lt;optional><br>
+                
 
+                
+
+                
+                </td>
+            
 
             
-            </td>
 
-            
-
-            
-
-            <td class="description last"></td>
+            <td class="description last">The desired model</td>
         </tr>
 
     
@@ -3164,7 +3166,7 @@ The information includes the total number of words and out-of-vocabulary (OOV) w
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line282">line 282</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line275">line 275</a>
     </li></ul></dd>
     
 
@@ -3187,27 +3189,6 @@ The information includes the total number of words and out-of-vocabulary (OOV) w
 
 
 
-<h5>Returns:</h5>
-
-        
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">ReadableStream</span>
-|
-
-<span class="param-type">undefined</span>
-
-
-    </dd>
-</dl>
-
-    
 
 
 
@@ -3216,14 +3197,14 @@ The information includes the total number of words and out-of-vocabulary (OOV) w
 
     
 
-    <h4 class="name" id="getModels"><span class="type-signature"></span>getModels<span class="signature">(params, callback)</span><span class="type-signature"> &rarr; {ReadableStream|undefined}</span></h4>
+    <h4 class="name" id="getModels"><span class="type-signature"></span>getModels<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    <p>List of models available.</p>
+    List of models available.
 </div>
 
 
@@ -3234,78 +3215,6 @@ The information includes the total number of words and out-of-vocabulary (OOV) w
 
 
 
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>params</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>callback</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
 
 
 
@@ -3339,7 +3248,7 @@ The information includes the total number of words and out-of-vocabulary (OOV) w
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line261">line 261</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line257">line 257</a>
     </li></ul></dd>
     
 
@@ -3362,27 +3271,6 @@ The information includes the total number of words and out-of-vocabulary (OOV) w
 
 
 
-<h5>Returns:</h5>
-
-        
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">ReadableStream</span>
-|
-
-<span class="param-type">undefined</span>
-
-
-    </dd>
-</dl>
-
-    
 
 
 
@@ -3398,9 +3286,9 @@ The information includes the total number of words and out-of-vocabulary (OOV) w
 
 
 <div class="description">
-    <p>Get the state of the engine to check if recognize is available.
+    Get the state of the engine to check if recognize is available.
 This is the way to check if the session is ready to accept a new recognition task.
-The returned state has to be 'initialized' to be able to do recognize POST.</p>
+The returned state has to be 'initialized' to be able to do recognize POST.
 </div>
 
 
@@ -3464,7 +3352,7 @@ The returned state has to be 'initialized' to be able to do recognize POST.</p>
 
             
 
-            <td class="description last"><p>Session used in the recognition.</p></td>
+            <td class="description last">Session used in the recognition.</td>
         </tr>
 
     
@@ -3507,7 +3395,7 @@ The returned state has to be 'initialized' to be able to do recognize POST.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line234">line 234</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line233">line 233</a>
     </li></ul></dd>
     
 
@@ -3545,14 +3433,17 @@ The returned state has to be 'initialized' to be able to do recognize POST.</p>
 
 
 <div class="description">
-    <p>Get a custom word</p>
-<p>Lists information about a custom word from a custom language model.</p>
-<p>Example output:</p>
-<pre class="prettyprint source lang-json"><code> {
-    &quot;sounds_like&quot;: [&quot;N. C. A. A.&quot;,&quot;N. C. double A.&quot;],
-    &quot;display_as&quot;: &quot;NCAA&quot;,
-    &quot;source&quot;: [&quot;corpus3&quot;,&quot;user&quot;]
- }</code></pre>
+    Get a custom word
+
+Lists information about a custom word from a custom language model.
+
+Example output:
+
+ {
+    "sounds_like": ["N. C. A. A.","N. C. double A."],
+    "display_as": "NCAA",
+    "source": ["corpus3","user"]
+ }
 </div>
 
 
@@ -3740,7 +3631,7 @@ The returned state has to be 'initialized' to be able to do recognize POST.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line1032">line 1032</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line1002">line 1002</a>
     </li></ul></dd>
     
 
@@ -3778,39 +3669,41 @@ The returned state has to be 'initialized' to be able to do recognize POST.</p>
 
 
 <div class="description">
-    <p>List all custom words</p>
-<p>Lists information about all custom words from a custom language model.
-You can list all words from the custom model's words resource, only custom words that were added or modified by the user, or only OOV words that were extracted from corpora.</p>
-<p>Example response:</p>
-<pre class="prettyprint source lang-json"><code>{
-    &quot;words&quot;: [
+    List all custom words
+
+Lists information about all custom words from a custom language model.
+You can list all words from the custom model's words resource, only custom words that were added or modified by the user, or only OOV words that were extracted from corpora.
+
+Example response:
+ {
+    "words": [
        {
-          &quot;word&quot;: &quot;hhonors&quot;,
-          &quot;sounds_like&quot;: [&quot;hilton honors&quot;,&quot;h honors&quot;],
-          &quot;display_as&quot;: &quot;HHonors&quot;,
-          &quot;source&quot;: [&quot;corpus1&quot;]
+          "word": "hhonors",
+          "sounds_like": ["hilton honors","h honors"],
+          "display_as": "HHonors",
+          "source": ["corpus1"]
        },
        {
-          &quot;word&quot;: &quot;ieee&quot;,
-          &quot;sounds_like&quot;: [&quot;i triple e&quot;],
-          &quot;display_as&quot;: &quot;IEEE&quot;,
-          &quot;source&quot;: [&quot;corpus1&quot;,&quot;corpus2&quot;]
+          "word": "ieee",
+          "sounds_like": ["i triple e"],
+          "display_as": "IEEE",
+          "source": ["corpus1","corpus2"]
        },
        {
-          &quot;word&quot;: &quot;tomato&quot;,
-          &quot;sounds_like&quot;: [&quot;tomatoh&quot;,&quot;tomayto&quot;],
-          &quot;display_as&quot;: &quot;&quot;,
-          &quot;source&quot;: [&quot;user&quot;]
+          "word": "tomato",
+          "sounds_like": ["tomatoh","tomayto"],
+          "display_as": "",
+          "source": ["user"]
        },
        {
-          &quot;word&quot;: &quot;$75.00&quot;,
-          &quot;sounds_like&quot;: [&quot;75 dollars&quot;],
-          &quot;display_as&quot;: &quot;&quot;,
-          &quot;source&quot;: [&quot;user&quot;],
-          &quot;error&quot;:&quot; Numbers are not allowed in sounds-like&quot;
+          "word": "$75.00",
+          "sounds_like": ["75 dollars"],
+          "display_as": "",
+          "source": ["user"],
+          "error":" Numbers are not allowed in sounds-like"
        }
     ]
- }</code></pre>
+ }
 </div>
 
 
@@ -3959,7 +3852,7 @@ You can list all words from the custom model's words resource, only custom words
                 </td>
             
 
-            <td class="description last"><p>all|user|corpora - user shows only custom words that were added or modified by the user; corpora shows only OOV that were extracted from corpora.</p></td>
+            <td class="description last">all|user|corpora - user shows only custom words that were added or modified by the user; corpora shows only OOV that were extracted from corpora.</td>
         </tr>
 
     
@@ -4030,7 +3923,7 @@ You can list all words from the custom model's words resource, only custom words
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line993">line 993</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line965">line 965</a>
     </li></ul></dd>
     
 
@@ -4068,9 +3961,9 @@ You can list all words from the custom model's words resource, only custom words
 
 
 <div class="description">
-    <p>Result observer for upcoming or ongoing recognition task in the session.
+    Result observer for upcoming or ongoing recognition task in the session.
 This request has to be started before POST on recognize finishes,
-otherwise it waits for the next recognition.</p>
+otherwise it waits for the next recognition.
 </div>
 
 
@@ -4134,7 +4027,7 @@ otherwise it waits for the next recognition.</p>
 
             
 
-            <td class="description last"><p>Session used in the recognition.</p></td>
+            <td class="description last">Session used in the recognition.</td>
         </tr>
 
     
@@ -4167,7 +4060,7 @@ otherwise it waits for the next recognition.</p>
 
             
 
-            <td class="description last"><p>If true, interim results will be returned. Default: false.</p></td>
+            <td class="description last">If true, interim results will be returned. Default: false.</td>
         </tr>
 
     
@@ -4248,7 +4141,7 @@ otherwise it waits for the next recognition.</p>
 
 
 <div class="description">
-    <p>Speech recognition for given audio using default model.</p>
+    Speech recognition for given audio using default model.
 </div>
 
 
@@ -4312,7 +4205,7 @@ otherwise it waits for the next recognition.</p>
 
             
 
-            <td class="description last"><p>Audio to be recognized.</p></td>
+            <td class="description last">Audio to be recognized.</td>
         </tr>
 
     
@@ -4345,7 +4238,7 @@ otherwise it waits for the next recognition.</p>
 
             
 
-            <td class="description last"><p>Content-type</p></td>
+            <td class="description last">Content-type</td>
         </tr>
 
     
@@ -4386,7 +4279,7 @@ otherwise it waits for the next recognition.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line77">line 77</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line76">line 76</a>
     </li></ul></dd>
     
 
@@ -4424,9 +4317,9 @@ otherwise it waits for the next recognition.</p>
 
 
 <div class="description">
-    <p>Creates a HTTP/HTTPS request to /recognize and keep the connection open.
+    Creates a HTTP/HTTPS request to /recognize and keep the connection open.
 Sets 'Transfer-Encoding': 'chunked' and prepare the connection to send
-chunk data</p>
+chunk data
 </div>
 
 
@@ -4490,7 +4383,7 @@ chunk data</p>
 
             
 
-            <td class="description last"><p>The Content-type e.g. audio/l16; rate=48000</p></td>
+            <td class="description last">The Content-type e.g. audio/l16; rate=48000</td>
         </tr>
 
     
@@ -4523,7 +4416,7 @@ chunk data</p>
 
             
 
-            <td class="description last"><p>The session id</p></td>
+            <td class="description last">The session id</td>
         </tr>
 
     
@@ -4566,7 +4459,7 @@ chunk data</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line125">line 125</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line124">line 124</a>
     </li></ul></dd>
     
 
@@ -4604,7 +4497,12 @@ chunk data</p>
 
 
 <div class="description">
-    <p>Reset a custom model</p>
+    Reset a custom model
+
+Resets a custom language model by removing all corpora and words from the model.
+Resetting a custom model initializes the model to its state when it was first created.
+Metadata such as the name and language of the model are preserved.
+Only the owner of a custom model can use this method to reset the model.
 </div>
 
 
@@ -4769,7 +4667,7 @@ chunk data</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line584">line 584</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line595">line 595</a>
     </li></ul></dd>
     
 
@@ -4807,7 +4705,20 @@ chunk data</p>
 
 
 <div class="description">
-    <p>Train a custom model</p>
+    Train a custom model
+
+Initiates the training of a custom language model with new corpora, words, or both.
+After adding training data to the custom model with the corpora or words methods, use this method to begin the actual training of the model on the new data.
+You can specify whether the custom model is to be trained with all words from its words resources or only with words that were added or modified by the user.
+Only the owner of a custom model can use this method to train the model.
+
+Pre-processing of words and corpa must be complete before initiating training.
+Use the whenCustomizationReady() method to be notified once pre-processing has completed.
+
+Training can take on the order of minutes to complete depending on the amount of data on which the service is being trained and the current load on the service.
+This method triggers the callback as soon as the training process has begun.
+
+Use the whenCustomizationReady() method again to be notified once training has completed.
 </div>
 
 
@@ -4956,7 +4867,7 @@ chunk data</p>
                 </td>
             
 
-            <td class="description last"><p>set to 'user' to train the model only on new words that were added or modified by the user; the model is not trained on new words extracted from corpora.</p></td>
+            <td class="description last">set to 'user' to train the model only on new words that were added or modified by the user; the model is not trained on new words extracted from corpora.</td>
         </tr>
 
     
@@ -5027,7 +4938,7 @@ chunk data</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line562">line 562</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line568">line 568</a>
     </li></ul></dd>
     
 
@@ -5065,12 +4976,20 @@ chunk data</p>
 
 
 <div class="description">
-    <p>Update voice model</p>
-<p>An example of params.words could be:</p>
-<pre class="prettyprint source lang-json"><code> [
-   {&quot;word&quot;:&quot;NCAA&quot;, &quot;translation&quot;:&quot;N C double A&quot;},
-   {&quot;word&quot;:&quot;iPhone&quot;, &quot;translation&quot;:&quot;I phone&quot;}
- ]</code></pre>
+    Update voice model
+
+Updates information for the specified custom voice model.
+You can update the metadata such as the name and description of the voice model.
+You can also update the words in the model and their translations.
+A custom model can contain no more than 20,000 entries.
+Only the owner of a custom voice model can use this method to update the model.
+
+An example of params.words could be:
+
+ [
+   {"word":"NCAA", "translation":"N C double A"},
+   {"word":"iPhone", "translation":"I phone"}
+ ]
 </div>
 
 
@@ -5271,7 +5190,7 @@ chunk data</p>
 
             
 
-            <td class="description last"><p>Array of {word, translation} objects where translation is the phonetic or sounds-like translation for the word. A phonetic translation is based on the SSML format for representing the phonetic string of a word either as an IPA or IBM SPR translation. A sounds-like translation consists of one or more words that, when combined, sound like the word.</p></td>
+            <td class="description last">Array of {word, translation} objects where translation is the phonetic or sounds-like translation for the word. A phonetic translation is based on the SSML format for representing the phonetic string of a word either as an IPA or IBM SPR translation. A sounds-like translation consists of one or more words that, when combined, sound like the word.</td>
         </tr>
 
     
@@ -5342,7 +5261,7 @@ chunk data</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line443">line 443</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line438">line 438</a>
     </li></ul></dd>
     
 
@@ -5380,8 +5299,14 @@ chunk data</p>
 
 
 <div class="description">
-    <p>Upgrade a custom model</p>
-<p>Note: This method is not currently implemented. It will be added for a future release of the API.</p>
+    Upgrade a custom model
+
+Upgrades a custom language model to the latest release level of the Speech to Text service.
+The method bases the upgrade on the latest trained data stored for the custom model.
+If the corpora or words for the model have changed since the model was last trained, you must use the Train a custom model method to train the model on the new data.
+Only the owner of a custom model can use this method to upgrade the model.
+
+Note: This method is not currently implemented. It will be added for a future release of the API.
 </div>
 
 
@@ -5546,7 +5471,7 @@ chunk data</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line607">line 607</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line623">line 623</a>
     </li></ul></dd>
     
 
@@ -5577,15 +5502,18 @@ chunk data</p>
 
     
 
-    <h4 class="name" id="whenCorporaAnalyzed"><span class="type-signature"></span>whenCorporaAnalyzed<span class="signature">(params, callback)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="whenCustomizationReady"><span class="type-signature"></span>whenCustomizationReady<span class="signature">(params)</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    <p>Waits while corpora analysis status is 'being_processes', fires callback once the status is 'analyzed'</p>
-<p>Note: the code will throw an error in case there in no corpus in the customization</p>
+    Waits while a customization status is 'pending' or 'training', fires callback once the status is 'ready' or 'available'
+
+Note: the customization will remain in 'pending' status until at least one corpus is added. Calling this on a customization with no corpa will result in an error.
+
+See http://www.ibm.com/watson/developercloud/speech-to-text/api/v1/#list_models for status details
 </div>
 
 
@@ -5734,7 +5662,7 @@ chunk data</p>
                 </td>
             
 
-            <td class="description last"><p>(milliseconds) - how long to wait between status checks</p></td>
+            <td class="description last">(milliseconds) - how log to wait between status checks</td>
         </tr>
 
     
@@ -5773,7 +5701,7 @@ chunk data</p>
                 </td>
             
 
-            <td class="description last"><p>maximum number of attempts</p></td>
+            <td class="description last">maximum number of attempts</td>
         </tr>
 
     
@@ -5781,29 +5709,6 @@ chunk data</p>
 </table>
 
             </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>callback</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
         </tr>
 
     
@@ -5844,306 +5749,7 @@ chunk data</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line843">line 843</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="whenCustomizationReady"><span class="type-signature"></span>whenCustomizationReady<span class="signature">(params, callback)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Waits while a customization status is 'pending' or 'training', fires callback once the status is 'ready' or 'available'</p>
-<p>Note: the customization will remain in 'pending' status until at least one corpus is added. Calling this on a customization with no corpa will result in an error.</p>
-<p>See http://www.ibm.com/watson/developercloud/speech-to-text/api/v1/#list_models for status details</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>params</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <h6>Properties</h6>
-                
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-        <th>Default</th>
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>customization_id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>interval</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Number</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    5000
-                
-                </td>
-            
-
-            <td class="description last"><p>(milliseconds) - how log to wait between status checks</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>times</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Number</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    30
-                
-                </td>
-            
-
-            <td class="description last"><p>maximum number of attempts</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>callback</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line748">line 748</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line780">line 780</a>
     </li></ul></dd>
     
 
@@ -6185,13 +5791,13 @@ chunk data</p>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-watson-developer-cloud.html">watson-developer-cloud</a></li></ul><h3>Classes</h3><ul><li><a href="AlchemyDataNewsV1.html">AlchemyDataNewsV1</a></li><li><a href="AlchemyLanguageV1.html">AlchemyLanguageV1</a></li><li><a href="AlchemyVisionV1.html">AlchemyVisionV1</a></li><li><a href="AuthorizationV1.html">AuthorizationV1</a></li><li><a href="ConversationV1.html">ConversationV1</a></li><li><a href="ConversationV1Experimental.html">ConversationV1Experimental</a></li><li><a href="DialogV1.html">DialogV1</a></li><li><a href="DiscoveryV1Experimental.html">DiscoveryV1Experimental</a></li><li><a href="DocumentConversionV1.html">DocumentConversionV1</a></li><li><a href="LanguageTranslationV2.html">LanguageTranslationV2</a></li><li><a href="LanguageTranslatorV2.html">LanguageTranslatorV2</a></li><li><a href="NaturalLanguageClassifierV1.html">NaturalLanguageClassifierV1</a></li><li><a href="PersonalityInsightsV2.html">PersonalityInsightsV2</a></li><li><a href="PersonalityInsightsV3.html">PersonalityInsightsV3</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RetrieveAndRankV1.html">RetrieveAndRankV1</a></li><li><a href="SpeechToTextV1.html">SpeechToTextV1</a></li><li><a href="TextToSpeechV1.html">TextToSpeechV1</a></li><li><a href="TradeoffAnalyticsV1.html">TradeoffAnalyticsV1</a></li><li><a href="VisualRecognitionV3.html">VisualRecognitionV3</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:close">close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li><li><a href="RecognizeStream.html#event:speaker_labels">speaker_labels</a></li></ul><h3>Global</h3><ul><li><a href="global.html#detectContentType">detectContentType</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-watson-developer-cloud.html">watson-developer-cloud</a></li></ul><h3>Classes</h3><ul><li><a href="AlchemyDataNewsV1.html">AlchemyDataNewsV1</a></li><li><a href="AlchemyLanguageV1.html">AlchemyLanguageV1</a></li><li><a href="AlchemyVisionV1.html">AlchemyVisionV1</a></li><li><a href="AuthorizationV1.html">AuthorizationV1</a></li><li><a href="ConversationV1.html">ConversationV1</a></li><li><a href="ConversationV1Experimental.html">ConversationV1Experimental</a></li><li><a href="DialogV1.html">DialogV1</a></li><li><a href="DiscoveryV1Experimental.html">DiscoveryV1Experimental</a></li><li><a href="DocumentConversionV1.html">DocumentConversionV1</a></li><li><a href="LanguageTranslationV2.html">LanguageTranslationV2</a></li><li><a href="LanguageTranslatorV2.html">LanguageTranslatorV2</a></li><li><a href="NaturalLanguageClassifierV1.html">NaturalLanguageClassifierV1</a></li><li><a href="PersonalityInsightsV2.html">PersonalityInsightsV2</a></li><li><a href="PersonalityInsightsV3.html">PersonalityInsightsV3</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RetrieveAndRankV1.html">RetrieveAndRankV1</a></li><li><a href="SpeechToTextV1.html">SpeechToTextV1</a></li><li><a href="TextToSpeechV1.html">TextToSpeechV1</a></li><li><a href="TradeoffAnalyticsV1.html">TradeoffAnalyticsV1</a></li><li><a href="VisualRecognitionV3.html">VisualRecognitionV3</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:close">close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li></ul><h3>Global</h3><ul><li><a href="global.html#detectContentType">detectContentType</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu Dec 08 2016 20:05:07 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Dec 09 2016 07:17:29 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>
