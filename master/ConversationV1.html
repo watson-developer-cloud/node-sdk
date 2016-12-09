@@ -225,7 +225,7 @@
 
 
 <div class="description">
-    Initial release
+    <p>Initial release</p>
 </div>
 
 
@@ -297,24 +297,24 @@
 
 
 <div class="description">
-    9/20 update made changes to response format
-
-* context.system.dialog_stack changed from an array of strings to an array of objects
-
-Old:
- "context": {
-    "system": {
-      "dialog_stack": [
-        "root"
+    <p>9/20 update made changes to response format</p>
+<ul>
+<li>context.system.dialog_stack changed from an array of strings to an array of objects</li>
+</ul>
+<p>Old:
+ &quot;context&quot;: {
+    &quot;system&quot;: {
+      &quot;dialog_stack&quot;: [
+        &quot;root&quot;
       ],
 New:
- "context": {
-    "system": {
-      "dialog_stack": [
+ &quot;context&quot;: {
+    &quot;system&quot;: {
+      &quot;dialog_stack&quot;: [
         {
-          "dialog_node": "root"
+          &quot;dialog_node&quot;: &quot;root&quot;
         }
-      ],
+      ],</p>
 </div>
 
 
@@ -403,51 +403,50 @@ New:
 
 
 <div class="description">
-    Returns a response to a user utterance.
-
-Example response for 2016-09-20 version_date:
+    <p>Returns a response to a user utterance.</p>
+<p>Example response for 2016-09-20 version_date:
  {
-   "intents": [
+   &quot;intents&quot;: [
      {
-       "intent": "turn_on",
-       "confidence": 0.999103316650195
+       &quot;intent&quot;: &quot;turn_on&quot;,
+       &quot;confidence&quot;: 0.999103316650195
      }
    ],
-   "entities": [
+   &quot;entities&quot;: [
      {
-       "entity": "appliance",
-       "location": [
+       &quot;entity&quot;: &quot;appliance&quot;,
+       &quot;location&quot;: [
          12,
          18
        ],
-       "value": "light"
+       &quot;value&quot;: &quot;light&quot;
      }
    ],
-   "input": {
-     "text": "Turn on the lights"
+   &quot;input&quot;: {
+     &quot;text&quot;: &quot;Turn on the lights&quot;
    },
-   "output": {
-     "log_messages": [],
-     "text": [
-       "Hi. It looks like a nice drive today. What would you like me to do?"
+   &quot;output&quot;: {
+     &quot;log_messages&quot;: [],
+     &quot;text&quot;: [
+       &quot;Hi. It looks like a nice drive today. What would you like me to do?&quot;
      ],
-     "nodes_visited": [
-       "node_1_1467221909631"
+     &quot;nodes_visited&quot;: [
+       &quot;node_1_1467221909631&quot;
      ]
    },
-   "context": {
-     "conversation_id": "820334ac-ee79-45b5-aa03-7958dcd0fd34",
-     "system": {
-       "dialog_stack": [
+   &quot;context&quot;: {
+     &quot;conversation_id&quot;: &quot;820334ac-ee79-45b5-aa03-7958dcd0fd34&quot;,
+     &quot;system&quot;: {
+       &quot;dialog_stack&quot;: [
          {
-           "dialog_node": "root"
+           &quot;dialog_node&quot;: &quot;root&quot;
          }
        ],
-       "dialog_turn_counter": 1,
-       "dialog_request_counter": 1
+       &quot;dialog_turn_counter&quot;: 1,
+       &quot;dialog_request_counter&quot;: 1
      }
    }
- }
+ }</p>
 </div>
 
 
@@ -499,7 +498,7 @@ Example response for 2016-09-20 version_date:
 
             
 
-            <td class="description last">{ workspace_id: '',  }
+            <td class="description last"><p>{ workspace_id: '',  }</p>
                 <h6>Properties</h6>
                 
 
@@ -650,7 +649,7 @@ Example response for 2016-09-20 version_date:
                 </td>
             
 
-            <td class="description last">includes other lower-confidence intents in the intents array</td>
+            <td class="description last"><p>includes other lower-confidence intents in the intents array</p></td>
         </tr>
 
     
@@ -836,13 +835,13 @@ Example response for 2016-09-20 version_date:
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-watson-developer-cloud.html">watson-developer-cloud</a></li></ul><h3>Classes</h3><ul><li><a href="AlchemyDataNewsV1.html">AlchemyDataNewsV1</a></li><li><a href="AlchemyLanguageV1.html">AlchemyLanguageV1</a></li><li><a href="AlchemyVisionV1.html">AlchemyVisionV1</a></li><li><a href="AuthorizationV1.html">AuthorizationV1</a></li><li><a href="ConversationV1.html">ConversationV1</a></li><li><a href="ConversationV1Experimental.html">ConversationV1Experimental</a></li><li><a href="DialogV1.html">DialogV1</a></li><li><a href="DiscoveryV1Experimental.html">DiscoveryV1Experimental</a></li><li><a href="DocumentConversionV1.html">DocumentConversionV1</a></li><li><a href="LanguageTranslationV2.html">LanguageTranslationV2</a></li><li><a href="LanguageTranslatorV2.html">LanguageTranslatorV2</a></li><li><a href="NaturalLanguageClassifierV1.html">NaturalLanguageClassifierV1</a></li><li><a href="PersonalityInsightsV2.html">PersonalityInsightsV2</a></li><li><a href="PersonalityInsightsV3.html">PersonalityInsightsV3</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RetrieveAndRankV1.html">RetrieveAndRankV1</a></li><li><a href="SpeechToTextV1.html">SpeechToTextV1</a></li><li><a href="TextToSpeechV1.html">TextToSpeechV1</a></li><li><a href="TradeoffAnalyticsV1.html">TradeoffAnalyticsV1</a></li><li><a href="VisualRecognitionV3.html">VisualRecognitionV3</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:close">close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li></ul><h3>Global</h3><ul><li><a href="global.html#detectContentType">detectContentType</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-watson-developer-cloud.html">watson-developer-cloud</a></li></ul><h3>Classes</h3><ul><li><a href="AlchemyDataNewsV1.html">AlchemyDataNewsV1</a></li><li><a href="AlchemyLanguageV1.html">AlchemyLanguageV1</a></li><li><a href="AlchemyVisionV1.html">AlchemyVisionV1</a></li><li><a href="AuthorizationV1.html">AuthorizationV1</a></li><li><a href="ConversationV1.html">ConversationV1</a></li><li><a href="ConversationV1Experimental.html">ConversationV1Experimental</a></li><li><a href="DialogV1.html">DialogV1</a></li><li><a href="DiscoveryV1Experimental.html">DiscoveryV1Experimental</a></li><li><a href="DocumentConversionV1.html">DocumentConversionV1</a></li><li><a href="LanguageTranslationV2.html">LanguageTranslationV2</a></li><li><a href="LanguageTranslatorV2.html">LanguageTranslatorV2</a></li><li><a href="NaturalLanguageClassifierV1.html">NaturalLanguageClassifierV1</a></li><li><a href="PersonalityInsightsV2.html">PersonalityInsightsV2</a></li><li><a href="PersonalityInsightsV3.html">PersonalityInsightsV3</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RetrieveAndRankV1.html">RetrieveAndRankV1</a></li><li><a href="SpeechToTextV1.html">SpeechToTextV1</a></li><li><a href="TextToSpeechV1.html">TextToSpeechV1</a></li><li><a href="TradeoffAnalyticsV1.html">TradeoffAnalyticsV1</a></li><li><a href="VisualRecognitionV3.html">VisualRecognitionV3</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:close">close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li><li><a href="RecognizeStream.html#event:speaker_labels">speaker_labels</a></li></ul><h3>Global</h3><ul><li><a href="global.html#detectContentType">detectContentType</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Dec 09 2016 07:17:29 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Dec 09 2016 21:34:55 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>

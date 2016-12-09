@@ -47,7 +47,7 @@
 
 
 <div class="description">
-    Document Conversion service
+    <p>Document Conversion service</p>
 </div>
 
 
@@ -191,9 +191,8 @@
 
 
 <div class="description">
-    One-off convert an attached document OR convert a previously uploaded document by ID
-
-To convert a previously uploaded document, set params.document_id
+    <p>One-off convert an attached document OR convert a previously uploaded document by ID</p>
+<p>To convert a previously uploaded document, set params.document_id</p>
 </div>
 
 
@@ -297,7 +296,7 @@ To convert a previously uploaded document, set params.document_id
 
             
 
-            <td class="description last">Must be set to one of ['answer_units', 'normalized_html', 'normalized_text']</td>
+            <td class="description last"><p>Must be set to one of ['answer_units', 'normalized_html', 'normalized_text']</p></td>
         </tr>
 
     
@@ -330,7 +329,7 @@ To convert a previously uploaded document, set params.document_id
 
             
 
-            <td class="description last">The document file to convert. May be a ReadableStream or Buffer</td>
+            <td class="description last"><p>The document file to convert. May be a ReadableStream or Buffer</p></td>
         </tr>
 
     
@@ -363,7 +362,7 @@ To convert a previously uploaded document, set params.document_id
 
             
 
-            <td class="description last">Set this when the content type cannot be determined from the filename (params.file.path)</td>
+            <td class="description last"><p>Set this when the content type cannot be determined from the filename (params.file.path)</p></td>
         </tr>
 
     
@@ -472,10 +471,9 @@ To convert a previously uploaded document, set params.document_id
 
 
 <div class="description">
-    One-off convert and index a document via index_document API
-
-NOTE: A SOLR cluster and search collection will have to be created through the Retrieve and Rank
-      service prior to using this API if actual indexing is performed (dry_run=false).
+    <p>One-off convert and index a document via index_document API</p>
+<p>NOTE: A SOLR cluster and search collection will have to be created through the Retrieve and Rank
+      service prior to using this API if actual indexing is performed (dry_run=false).</p>
 </div>
 
 
@@ -581,7 +579,7 @@ NOTE: A SOLR cluster and search collection will have to be created through the R
 
             
 
-            <td class="description last">The document file to convert. May be a ReadableStream or Buffer</td>
+            <td class="description last"><p>The document file to convert. May be a ReadableStream or Buffer</p></td>
         </tr>
 
     
@@ -612,7 +610,7 @@ NOTE: A SOLR cluster and search collection will have to be created through the R
 
             
 
-            <td class="description last">Metadata array of Object's where each object contains 'name' and 'value'</td>
+            <td class="description last"><p>Metadata array of Object's where each object contains 'name' and 'value'</p></td>
         </tr>
 
     
@@ -643,7 +641,7 @@ NOTE: A SOLR cluster and search collection will have to be created through the R
 
             
 
-            <td class="description last">Configuration for the conversion and indexing. The conversion config needs
+            <td class="description last"><p>Configuration for the conversion and indexing. The conversion config needs
                       to be in a 'convert_document' object. This can include configuration for 'pdf', 'word'
                       and 'normalized_html' phases of the conversion process. The indexing config needs to be
                       in a 'retrieve_and_rank' object. The 'retrieve_and_rank' object has the following fields:
@@ -653,7 +651,7 @@ NOTE: A SOLR cluster and search collection will have to be created through the R
                       and rank service instance (required if dry_run=false), 'search_collection' - The name of
                       your Solr search collection from your retrieve and rank service instance (required if
                       dry_run=false), and 'fields' - Configuration information for field 'mappings', fields
-                      to 'include', and fields to 'exclude' during indexing (exclude takes precedence over include)</td>
+                      to 'include', and fields to 'exclude' during indexing (exclude takes precedence over include)</p></td>
         </tr>
 
     
@@ -766,13 +764,13 @@ NOTE: A SOLR cluster and search collection will have to be created through the R
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-watson-developer-cloud.html">watson-developer-cloud</a></li></ul><h3>Classes</h3><ul><li><a href="AlchemyDataNewsV1.html">AlchemyDataNewsV1</a></li><li><a href="AlchemyLanguageV1.html">AlchemyLanguageV1</a></li><li><a href="AlchemyVisionV1.html">AlchemyVisionV1</a></li><li><a href="AuthorizationV1.html">AuthorizationV1</a></li><li><a href="ConversationV1.html">ConversationV1</a></li><li><a href="ConversationV1Experimental.html">ConversationV1Experimental</a></li><li><a href="DialogV1.html">DialogV1</a></li><li><a href="DiscoveryV1Experimental.html">DiscoveryV1Experimental</a></li><li><a href="DocumentConversionV1.html">DocumentConversionV1</a></li><li><a href="LanguageTranslationV2.html">LanguageTranslationV2</a></li><li><a href="LanguageTranslatorV2.html">LanguageTranslatorV2</a></li><li><a href="NaturalLanguageClassifierV1.html">NaturalLanguageClassifierV1</a></li><li><a href="PersonalityInsightsV2.html">PersonalityInsightsV2</a></li><li><a href="PersonalityInsightsV3.html">PersonalityInsightsV3</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RetrieveAndRankV1.html">RetrieveAndRankV1</a></li><li><a href="SpeechToTextV1.html">SpeechToTextV1</a></li><li><a href="TextToSpeechV1.html">TextToSpeechV1</a></li><li><a href="TradeoffAnalyticsV1.html">TradeoffAnalyticsV1</a></li><li><a href="VisualRecognitionV3.html">VisualRecognitionV3</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:close">close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li></ul><h3>Global</h3><ul><li><a href="global.html#detectContentType">detectContentType</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-watson-developer-cloud.html">watson-developer-cloud</a></li></ul><h3>Classes</h3><ul><li><a href="AlchemyDataNewsV1.html">AlchemyDataNewsV1</a></li><li><a href="AlchemyLanguageV1.html">AlchemyLanguageV1</a></li><li><a href="AlchemyVisionV1.html">AlchemyVisionV1</a></li><li><a href="AuthorizationV1.html">AuthorizationV1</a></li><li><a href="ConversationV1.html">ConversationV1</a></li><li><a href="ConversationV1Experimental.html">ConversationV1Experimental</a></li><li><a href="DialogV1.html">DialogV1</a></li><li><a href="DiscoveryV1Experimental.html">DiscoveryV1Experimental</a></li><li><a href="DocumentConversionV1.html">DocumentConversionV1</a></li><li><a href="LanguageTranslationV2.html">LanguageTranslationV2</a></li><li><a href="LanguageTranslatorV2.html">LanguageTranslatorV2</a></li><li><a href="NaturalLanguageClassifierV1.html">NaturalLanguageClassifierV1</a></li><li><a href="PersonalityInsightsV2.html">PersonalityInsightsV2</a></li><li><a href="PersonalityInsightsV3.html">PersonalityInsightsV3</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RetrieveAndRankV1.html">RetrieveAndRankV1</a></li><li><a href="SpeechToTextV1.html">SpeechToTextV1</a></li><li><a href="TextToSpeechV1.html">TextToSpeechV1</a></li><li><a href="TradeoffAnalyticsV1.html">TradeoffAnalyticsV1</a></li><li><a href="VisualRecognitionV3.html">VisualRecognitionV3</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:close">close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li><li><a href="RecognizeStream.html#event:speaker_labels">speaker_labels</a></li></ul><h3>Global</h3><ul><li><a href="global.html#detectContentType">detectContentType</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Dec 09 2016 07:17:29 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Dec 09 2016 21:34:55 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>
