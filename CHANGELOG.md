@@ -1,3 +1,6 @@
+# v2.14.0
+* Added Discovery V1 (general availability release)
+
 # v2.13.0
 * Added STT whenCorporaAnalyzed() helper, #353
 * Bumped dependencies
