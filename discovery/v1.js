@@ -38,8 +38,8 @@ function DiscoveryV1(options) {
 
 util.inherits(DiscoveryV1, BaseService);
 DiscoveryV1.prototype.name = 'discovery';
-DiscoveryV1.prototype.version = 'v1-experimental';
-DiscoveryV1.URL = 'https://gateway.watsonplatform.net/discovery-experimental/api';
+DiscoveryV1.prototype.version = 'v1';
+DiscoveryV1.URL = 'https://gateway.watsonplatform.net/discovery/api';
 
 
 /**
