@@ -1,3 +1,6 @@
+# v2.14.1
+* Fix content type for language translator (#362)
+
 # v2.14.0
 * Added Discovery V1 (general availability release)
 
