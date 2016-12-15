@@ -1,3 +1,6 @@
+# v2.14.2
+* Same fix for language translation
+
 # v2.14.1
 * Fix content type for language translator (#362)
 
