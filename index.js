@@ -30,6 +30,7 @@ exports.ConversationV1Experimental = require('./conversation/v1-experimental');
 
 exports.DialogV1 = require('./dialog/v1');
 
+exports.DiscoveryV1 = require('./discovery/v1');
 exports.DiscoveryV1Experimental = require('./discovery/v1-experimental');
 
 exports.DocumentConversionV1 = require('./document-conversion/v1');
