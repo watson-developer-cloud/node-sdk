@@ -312,11 +312,6 @@ describe('speech_to_text_integration', function() {
       speech_to_text.resetCustomization({customization_id: customization_id}, done);
     }));
 
-    // the service hasn't yet implemented this api
-    it.skip('upgradeCustomization()', waitUntilReady(function(done) {
-      speech_to_text.upgradeCustomization({customization_id: customization_id}, done);
-    }));
-
     it('deleteCustomization()', waitUntilReady(function(done) {
       //var customization_id = '7964f4c0-97ab-11e6-8ac8-6333954f158e';
       speech_to_text.deleteCustomization({customization_id: customization_id}, done);

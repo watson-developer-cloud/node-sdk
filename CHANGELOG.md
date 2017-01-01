@@ -1,3 +1,6 @@
+# 2.14.3
+* Update jsdoc for Speech to text
+
 # v2.14.2
 * Same fix for language translation
 
