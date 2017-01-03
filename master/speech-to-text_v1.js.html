@@ -91,6 +91,7 @@ function formatChunk(chunk) {
 function SpeechToTextV1(options) {
   BaseService.call(this, options);
 }
+
 util.inherits(SpeechToTextV1, BaseService);
 SpeechToTextV1.prototype.name = 'speech_to_text';
 SpeechToTextV1.prototype.version = 'v1';
@@ -99,8 +100,9 @@ SpeechToTextV1.URL = 'https://stream.watsonplatform.net/speech-to-text/api';
 /**
  * Speech recognition for given audio using default model.
  *
- * @param {Audio} [audio] Audio to be recognized.
- * @param {String} [content_type] Content-type
+ * @param {Object} params The parameters
+ * @param {Audio} [params.audio] - Audio to be recognized
+ * @param {String} [params.content_type] - Content-type
  */
 SpeechToTextV1.prototype.recognize = function(params, callback) {
 
@@ -144,10 +146,11 @@ SpeechToTextV1.prototype.recognize = function(params, callback) {
 /**
  * Creates a HTTP/HTTPS request to /recognize and keep the connection open.
  * Sets 'Transfer-Encoding': 'chunked' and prepare the connection to send
- * chunk data
+ * chunk data.
  *
- * @param {String} [content_type] The Content-type e.g. audio/l16; rate=48000
- * @param {String} [session_id] The session id
+ * @param {Object} params The parameters
+ * @param {String} [params.content_type] - The Content-type e.g. audio/l16; rate=48000
+ * @param {String} [params.session_id] - The session id
  * @deprecated use createRecognizeStream instead
  */
 SpeechToTextV1.prototype.recognizeLive = function(params, callback) {
@@ -203,8 +206,9 @@ SpeechToTextV1.prototype.recognizeLive = function(params, callback) {
  * This request has to be started before POST on recognize finishes,
  * otherwise it waits for the next recognition.
  *
- * @param {String} [params.session_id] Session used in the recognition.
- * @param {boolean} [params.interim_results] If true, interim results will be returned. Default: false.
+ * @param {Object} params The parameters
+ * @param {String} [params.session_id] - Session used in the recognition
+ * @param {boolean} [params.interim_results] - If true, interim results will be returned. Default: false
  * @deprecated use createRecognizeStream instead
  */
 SpeechToTextV1.prototype.observeResult = function(params, callback) {
@@ -256,7 +260,8 @@ SpeechToTextV1.prototype.observeResult = function(params, callback) {
  * This is the way to check if the session is ready to accept a new recognition task.
  * The returned state has to be 'initialized' to be able to do recognize POST.
  *
- * @param {String} [params.session_id] Session used in the recognition.
+ * @param {Object} params The parameters
+ * @param {String} [params.session_id] - Session used in the recognition
  * @deprecated use createRecognizeStream instead
  */
 SpeechToTextV1.prototype.getRecognizeStatus = function(params, callback) {
@@ -282,7 +287,7 @@ SpeechToTextV1.prototype.getRecognizeStatus = function(params, callback) {
 /**
  * List of models available.
  *
- * @param {Object} params
+ * @param {Object} params The parameters
  * @param {Function} callback
  * @returns {ReadableStream|undefined}
  */
@@ -302,8 +307,8 @@ SpeechToTextV1.prototype.getModels = function(params, callback) {
 /**
  * Get information about a model based on the given model_id
  *
- * @param {Object} params
- * @param {String} params.model_id The desired model
+ * @param {Object} params The parameters
+ * @param {String} params.model_id - The desired model
  * @param {Function} callback
  * @returns {ReadableStream|undefined}
  */
@@ -328,7 +333,9 @@ SpeechToTextV1.prototype.getModel = function(params, callback) {
  * Set-cookie header is returned with a cookie that must be used for
  * each request using this session.
  * The session expires after 15 minutes of inactivity.
- * @param string model The model to use during the session
+ *
+ * @param {Object} params The parameters
+ * @param {string} params.model - The model to use during the session
  */
 SpeechToTextV1.prototype.createSession = function(params, callback) {
   var parameters = {
@@ -360,7 +367,8 @@ SpeechToTextV1.prototype.createSession = function(params, callback) {
 /**
  * Deletes the specified session.
  *
- * @param {String} [params.session_id] Session id.
+ * @param {Object} params The parameters
+ * @param {String} params.session_id - Session id.
  */
 SpeechToTextV1.prototype.deleteSession = function(params, callback) {
   var missingParams = helper.getMissingParams(params, ['session_id']);
@@ -383,7 +391,8 @@ SpeechToTextV1.prototype.deleteSession = function(params, callback) {
 
 /**
  * Replaces recognizeLive &amp; friends with a single 2-way stream over websockets
- * @param params
+ *
+ * @param {Object} params The parameters
  * @returns {RecognizeStream}
  */
 SpeechToTextV1.prototype.createRecognizeStream = function(params) {
@@ -422,11 +431,10 @@ SpeechToTextV1.prototype.createRecognizeStream = function(params) {
  * }
  * ```
  *
- *
- * @param {Object} params
- * @param {String} params.name
- * @param {String} params.base_model_name - for example, en-US_BroadbandModel
- * @param {String} [params.description]
+ * @param {Object} params The parameters
+ * @param {String} params.base_model_name - The base language model, for example, en-US_BroadbandModel
+ * @param {String} params.name - The customization name
+ * @param {String} [params.description] - The customization description
  * @param {Function} callback
  */
 SpeechToTextV1.prototype.createCustomization = function(params, callback) {
@@ -445,47 +453,15 @@ SpeechToTextV1.prototype.createCustomization = function(params, callback) {
 /**
  * @typedef Word
  * @type {Object}
- * @property {String} word - the word as written
+ * @property {String} word - The word as written
  * @property {String} translation - The phonetic or sounds-like translation for the word. A phonetic translation is based on the SSML format for representing the phonetic string of a word either as an IPA or IBM SPR translation. A sounds-like translation consists of one or more words that, when combined, sound like the word.
  */
 
-/**
- * Update voice model
- *
- * An example of params.words could be:
- *
- * ```json
- *  [
- *    {"word":"NCAA", "translation":"N C double A"},
- *    {"word":"iPhone", "translation":"I phone"}
- *  ]
- * ```
- *
- * @param {Object} params
- * @param {String} params.customization_id
- * @param {String} [params.name]
- * @param {String} [params.description]
- * @param {Array&lt;Word>} params.words - Array of {word, translation} objects where translation is the phonetic or sounds-like translation for the word. A phonetic translation is based on the SSML format for representing the phonetic string of a word either as an IPA or IBM SPR translation. A sounds-like translation consists of one or more words that, when combined, sound like the word.
- * @param {Function} callback
- */
-SpeechToTextV1.prototype.updateCustomization = function(params, callback) {
-  var parameters = {
-    requiredParams: ['customization_id', 'words'],
-    options: {
-      method: 'POST',
-      url: '/v1/customizations/' + params.customization_id,
-      body: pick(params, ['name', 'description', 'words']),
-      json: true
-    },
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
 
 /**
  * List all customizations
  *
-* Example response:
+ * Example response:
 ```json
 { customizations:
     [ { owner: '8a6f5bb1-5b2d-4a20-85a9-eaa421d25c88',
@@ -518,7 +494,7 @@ SpeechToTextV1.prototype.updateCustomization = function(params, callback) {
 
 ```
  *
- * @param {Object} [params]
+ * @param {Object} params The parameters
  * @param {String} [params.language] optional filter. Currently only en-US is supported.
  * @param {Function} callback
  */
@@ -561,8 +537,8 @@ function isPending(customization) {
 ```
  *
  *
- * @param {Object} params
- * @param {String} params.customization_id
+ * @param {Object} params The parameters
+ * @param {String} params.customization_id - The GUID of the custom language model
  * @param {Function} callback
  */
 SpeechToTextV1.prototype.getCustomization = function(params, callback) {
@@ -580,10 +556,10 @@ SpeechToTextV1.prototype.getCustomization = function(params, callback) {
 };
 
 /**
- * Train a custom model
+ * Train a custom model.
  *
- * @param {Object} params
- * @param {String} params.customization_id
+ * @param {Object} params The parameters
+ * @param {String} params.customization_id - The GUID of the custom language model
  * @param {String} [params.word_type_to_add=all] - set to 'user' to train the model only on new words that were added or modified by the user; the model is not trained on new words extracted from corpora.
  * @param {Function} callback
  */
@@ -603,10 +579,10 @@ SpeechToTextV1.prototype.trainCustomization = function(params, callback) {
 };
 
 /**
- * Reset a custom model
+ * Reset a custom model.
  *
- * @param {Object} params
- * @param {String} params.customization_id
+ * @param {Object} params The parameters
+ * @param {String} params.customization_id - The GUID of the custom language model
  * @param {Function} callback
  */
 SpeechToTextV1.prototype.resetCustomization = function(params, callback) {
@@ -624,33 +600,10 @@ SpeechToTextV1.prototype.resetCustomization = function(params, callback) {
 };
 
 /**
- * Upgrade a custom model
+ * Delete a custom model.
  *
- * Note: This method is not currently implemented. It will be added for a future release of the API.
- *
- * @param {Object} params
- * @param {String} params.customization_id
- * @param {Function} callback
- */
-SpeechToTextV1.prototype.upgradeCustomization = function(params, callback) {
-  var parameters = {
-    requiredParams: ['customization_id'],
-    options: {
-      method: 'POST',
-      url: '/v1/customizations/{customization_id}/upgrade_model',
-      path: pick(params, ['customization_id']),
-      json: true
-    },
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Delete a custom model
- *
- * @param {Object} params
- * @param {String} params.customization_id
+ * @param {Object} params The parameters
+ * @param {String} params.customization_id - The GUID of the custom language model
  * @param {Function} callback
  */
 SpeechToTextV1.prototype.deleteCustomization = function(params, callback) {
@@ -667,16 +620,13 @@ SpeechToTextV1.prototype.deleteCustomization = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
-
-
-
 /**
- * Add a corpus to a custom model
+ * Add a corpus to a custom model.
  *
- * @param {Object} params
+ * @param {Object} params The parameters
  * @param {String} params.customization_id - The GUID of the custom language model to which a corpus is to be added. You must make the request with the service credentials of the model's owner.
- * @params {String} params.name - The name of the corpus that is to be added. The name cannot contain spaces and cannot be the string user, which is reserved by the service to denote custom words added or modified by the user.
- * @params {Boolean [parms.allow_overwrite=false] - Indicates whether the specified corpus is to overwrite an existing corpus with the same name. If a corpus with the same name already exists, the request fails unless allow_overwrite is set to true; by default, the parameter is false. The parameter has no effect if a corpus with the same name does not already exist.
+ * @param {String} params.name - The name of the corpus that is to be added. The name cannot contain spaces and cannot be the string user, which is reserved by the service to denote custom words added or modified by the user.
+ * @param {Boolean [parms.allow_overwrite=false] - Indicates whether the specified corpus is to overwrite an existing corpus with the same name. If a corpus with the same name already exists, the request fails unless allow_overwrite is set to true; by default, the parameter is false. The parameter has no effect if a corpus with the same name does not already exist.
  * @param {String|Buffer|ReadStream} [params.corpus] - the text of the corpus - may be provided as a String, a Buffer, or a ReadableStream. A ReadableStream is recommended when reading a file from disk.
  * @param {Function} callback
  */
@@ -705,20 +655,24 @@ SpeechToTextV1.prototype.addCorpus = function(params, callback) {
  * The information includes the total number of words and out-of-vocabulary (OOV) words, name, and status of each corpus.
  *
  * Example Result:
- * ```json
- * { corpora:
-   [ { out_of_vocabulary_words: 0,
-       total_words: 233,
-       name: 'test_corpus_1',
-       status: 'analyzed' },
-     { out_of_vocabulary_words: 0,
-       total_words: 0,
-       name: 'test_corpus_2',
-       status: 'being_processed' } ] }
+ ```json
+ {
+     "corpora": [{
+         "out_of_vocabulary_words": 1,
+         "total_words": 233,
+         "name": "corpus-1",
+         "status": "analyzed"
+     }, {
+         "out_of_vocabulary_words": 3,
+         "total_words": 20,
+         "name": "corpus-2",
+         "status": "being_processed"
+     }]
+ }
  ```
  *
- * @param {Object} params
- * @param {String} params.customization_id
+ * @param {Object} params The parameters
+ * @param {String} params.customization_id - The GUID of the custom language model
  * @param {Function} callback
  */
 SpeechToTextV1.prototype.getCorpora = function(params, callback) {
@@ -736,11 +690,45 @@ SpeechToTextV1.prototype.getCorpora = function(params, callback) {
 };
 
 /**
- * Delete a corpus
+ * Get corpus details
  *
- * @param {Object} params
- * @param {String} params.customization_id
- * @params {String} params.name - The name of the corpus that is to be deleted
+ * Example response:
+ *
+```json
+  {
+    "name": "corpus-1",
+    "total_words": 100,
+    "out_of_vocabulary_words": 5,
+    "status": "analyzed"
+  }
+```
+ *
+ *
+ * @param {Object} params The parameters
+ * @param {String} params.customization_id - The GUID of the custom language model
+ * @param {String} params.name - The corpus name
+ * @param {Function} callback
+ */
+SpeechToTextV1.prototype.getCorpus = function(params, callback) {
+  var parameters = {
+    requiredParams: ['customization_id', 'name'],
+    options: {
+      method: 'GET',
+      url: '/v1/customizations/{customization_id}/corpora/{name}',
+      path: pick(params, ['customization_id', 'name']),
+      json: true
+    },
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Delete a corpus.
+ *
+ * @param {Object} params The parameters
+ * @param {String} params.customization_id - The GUID of the custom language model
+ * @param {String} params.name - The name of the corpus.
  * @param {Function} callback
  */
 SpeechToTextV1.prototype.deleteCorpus = function(params, callback) {
@@ -760,15 +748,16 @@ SpeechToTextV1.prototype.deleteCorpus = function(params, callback) {
 
 SpeechToTextV1.ERR_NO_CORPORA = 'ERR_NO_CORPORA';
 SpeechToTextV1.ERR_TIMEOUT = 'ERR_TIMEOUT';
+
 /**
- * Waits while a customization status is 'pending' or 'training', fires callback once the status is 'ready' or 'available'
+ * Waits while a customization status is 'pending' or 'training', fires callback once the status is 'ready' or 'available'.
  *
  * Note: the customization will remain in 'pending' status until at least one corpus is added. Calling this on a customization with no corpa will result in an error.
  *
- * See http://www.ibm.com/watson/developercloud/speech-to-text/api/v1/#list_models for status details
+ * See http://www.ibm.com/watson/developercloud/speech-to-text/api/v1/#list_models for status details.
  *
- * @param {Object} params
- * @param {String} params.customization_id
+ * @param {Object} params The parameters
+ * @param {String} params.customization_id - The GUID of the custom language model
  * @param {Number} [params.interval=5000] - (milliseconds) - how log to wait between status checks
  * @param {Number} [params.times=30] - maximum number of attempts
  * @param {Function} callback
@@ -833,7 +822,7 @@ SpeechToTextV1.prototype.whenCustomizationReady = function(params, callback) {
   });
 };
 
-//Check if there is a corpus that is still being processed
+// Check if there is a corpus that is still being processed
 function isProcessing(corporaList) {
   var recordsBeingProcessed = corporaList.corpora.filter(function(record) {
     return record['status'] === 'being_processed';
@@ -845,7 +834,7 @@ function isProcessing(corporaList) {
   }
 }
 
-//Check if corpora has been analyzed
+// Check if corpora has been analyzed
 function isAnalyzed(corporaList) {
   var recordsAnalyzed = corporaList.corpora.filter(function(record) {
     return record['status'] === 'analyzed';
@@ -862,8 +851,8 @@ function isAnalyzed(corporaList) {
  * Note: the code will throw an error in case there in no corpus in the customization
  *
  *
- * @param {Object} params
- * @param {String} params.customization_id
+ * @param {Object} params The parameters
+ * @param {String} params.customization_id - The GUID of the custom language model
  * @param {Number} [params.interval=5000] - (milliseconds) - how long to wait between status checks
  * @param {Number} [params.times=30] - maximum number of attempts
  * @param {Function} callback
@@ -927,10 +916,10 @@ SpeechToTextV1.prototype.whenCorporaAnalyzed = function(params, callback) {
 };
 
 /**
- * Add multiple custom words
+ * Add multiple custom words.
  *
- * @param {Object} params
- * @param {String} params.customization_id
+ * @param {Object} params The parameters
+ * @param {String} params.customization_id - The GUID of the custom language model
  * @param {Array&lt;Word>} params.words - Array of objects: [{word: String, sounds_like: [String, ...], display_as: String}, ...]
  * @param {Function} callback
  */
@@ -950,13 +939,13 @@ SpeechToTextV1.prototype.addWords = function(params, callback) {
 };
 
 /**
- * Add a single custom word
+ * Add a single custom word.
  *
- * @param {Object} params
- * @param {String} params.customization_id
- * @param {String} params.word
- * @param {Array&lt;String>} params.sounds_like
- * @param {String} [params.display_as]
+ * @param {Object} params The parameters
+ * @param {String} params.customization_id - The GUID of the custom language model
+ * @param {String} params.word - The custom word that is to be added to the custom model. Do not include spaces in the word. Use a - (dash) or _ (underscore) to connect the tokens of compound words.
+ * @param {Array&lt;String>} params.sounds_like - An array of sounds-like pronunciations for the custom word.
+ * @param {String} [params.display_as] - An alternative spelling for the custom word when it appears in a transcript.
  * @param {Function} callback
  */
 SpeechToTextV1.prototype.addWord = function(params, callback) {
@@ -1013,8 +1002,8 @@ SpeechToTextV1.prototype.addWord = function(params, callback) {
  }
  ```
  *
- * @param {Object} params
- * @param {String} params.customization_id
+ * @param {Object} params The parameters
+ * @param {String} params.customization_id - The GUID of the custom language model
  * @param {String} [params.word_type=all] - all|user|corpora - user shows only custom words that were added or modified by the user; corpora shows only OOV that were extracted from corpora.
  * @param {Function} callback
  */
@@ -1052,9 +1041,9 @@ SpeechToTextV1.prototype.getWords = function(params, callback) {
  }
  ```
  *
- * @param {Object} params
- * @param {String} params.customization_id
- * @param {String} params.word
+ * @param {Object} params The parameters
+ * @param {String} params.customization_id - The GUID of the custom language model
+ * @param {String} params.word - The custom word
  * @param {Function} callback
  */
 SpeechToTextV1.prototype.getWord = function(params, callback) {
@@ -1076,9 +1065,9 @@ SpeechToTextV1.prototype.getWord = function(params, callback) {
  *
  * Removing a custom word does not affect the custom model until you train the model with the Train a custom model method.
  *
- * @param {Object} params
- * @param {String} params.customization_id
- * @param {String} params.word
+ * @param {Object} params The parameters
+ * @param {String} params.customization_id - The GUID of the custom language model
+ * @param {String} params.word - The custom word that is to be deleted.
  * @param {Function} callback
  */
 SpeechToTextV1.prototype.deleteWord = function(params, callback) {
@@ -1114,7 +1103,7 @@ module.exports = SpeechToTextV1;
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu Dec 15 2016 21:27:01 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Tue Jan 03 2017 19:51:23 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>
