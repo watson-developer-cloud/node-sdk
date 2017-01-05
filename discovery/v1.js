@@ -209,6 +209,7 @@ DiscoveryV1.prototype.createCollection = function(params, callback) {
       ],
       json: true
     },
+    originalParams: params,
     requiredParams: ['environment_id', 'configuration_id', 'collection_name'],
     defaultOptions: this._options
   };
