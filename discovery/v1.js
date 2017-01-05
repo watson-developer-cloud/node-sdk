@@ -255,6 +255,22 @@ DiscoveryV1.prototype.addDocument = function(params, callback) {
   params = params || {};
 
   var query_params = pick(params, ['configuration_id'])
+  var formDataParams = pick(params, ['file', 'metadata']);
+
+  // if we get a buffer or object, we need to include stuff about filename for the service
+  if (formDataParams.file) {
+    if (typeof formDataParams.file.filename !== 'string' &&
+          !(formDataParams.file.options &&
+             typeof formDataParams.file.options.filename !== 'string') &&
+          !(formDataParams.file.path &&
+            typeof formDataParams.file.path !== 'string') &&
+          !(formDataParams.file.name &&
+            typeof formDataParams.file.name !== 'string')) {
+      var filedat = formDataParams.file
+      // the filename used below is because the name must exist
+      formDataParams.file = { value: filedat, options: { filename: '_'}};
+    }
+  }
 
   var parameters = {
     options: {
@@ -262,7 +278,7 @@ DiscoveryV1.prototype.addDocument = function(params, callback) {
       method: 'POST',
       path: pick(params, ['environment_id', 'collection_id']),
       qs: query_params,
-      formData: pick(params, ['file', 'metadata']),
+      formData: formDataParams,
       json: true
     },
     requiredParams: ['environment_id', 'collection_id', 'file'],
