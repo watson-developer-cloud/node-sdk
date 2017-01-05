@@ -259,9 +259,16 @@ DiscoveryV1.prototype.addDocument = function(params, callback) {
 
   // if we get a buffer or object, we need to include stuff about filename for the service
   if (formDataParams.file) {
-    if (typeof formDataParams.file.filename !== 'string') {
+    if (typeof formDataParams.file.filename !== 'string' &&
+          !(formDataParams.file.options &&
+             typeof formDataParams.file.options.filename !== 'string') &&
+          !(formDataParams.file.path &&
+            typeof formDataParams.file.path !== 'string') &&
+          !(formDataParams.file.name &&
+            typeof formDataParams.file.name !== 'string')) {
       var filedat = formDataParams.file
-      formDataParams.file = { value: filedat, options: { filename: 'inferedname'}};
+      // the filename used below is because the name must exist
+      formDataParams.file = { value: filedat, options: { filename: '_'}};
     }
   }
 
@@ -315,7 +322,7 @@ DiscoveryV1.prototype.deleteDocument = function(params, callback) {
  * @param {String} [params.query]  A query search returns all possible results, even when it's not very relevant, with the most relevant documents listed first. Use a query search when you want to find the most relevant search results. Results are scored between 0 and 1, with 1 being an exact match and 0 being not a match at all.
  * @param {String} [params.aggregation] An aggregation search uses combinations of filters and query search to return an exact answer. Aggregations are useful for building applications, because you can use them to build lists, tables, and time series. For a full list of possible aggregrations, see the Query reference.
  * @param {Number} [params.count=10] Number of documents to return
- * @param {String} [params.return] A comma sepkarated list of the portion of the document hierarchy to return.
+ * @param {String} [params.return] A comma separated list of the portion of the document hierarchy to return.
  * @param {Number} [params.offset=0] For pagination purposes. Returns additional pages of results. Deep pagination is highly unperformant, and should be avoided.
  */
 DiscoveryV1.prototype.query = function(params, callback) {
