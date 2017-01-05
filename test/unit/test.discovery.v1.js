@@ -48,6 +48,8 @@ describe('discovery-v1', function() {
       .reply(200, {'environment_id': 'yes'})
       .get(paths.environmentinfo + '?version=' + service.version_date)
       .reply(200, {'environment_id': 'info'})
+      .delete(paths.environmentinfo + '?version=' + service.version_date)
+      .reply(200, {'environment_id': 'info'})
       .get(paths.collections + '?version=' + service.version_date)
       .reply(200, {'collection_id': 'yes'})
       .get(paths.collectioninfo + '?version=' + service.version_date)
@@ -88,10 +90,23 @@ describe('discovery-v1', function() {
       assert.throws( doThrowThing, /version_date/);
     });
 
+    it('should create an environment', function() {
+      var req = discovery.createEnvironment({ name: 'new environment',
+                                              description: 'my description' },
+                                              noop);
+      assert.equal(req.method, 'POST');
+    });
+
     it('should get an environment information', function() {
       var req = discovery.getEnvironment({ environment_id: 'env-guid' }, noop);
       assert.equal(req.uri.href, service.url + paths.environmentinfo + '?version=' + service.version_date);
       assert.equal(req.method, 'GET');
+    });
+
+    it('should delete an environment', function() {
+      var req = discovery.deleteEnvironment({ environment_id: 'env-guid' }, noop);
+      assert.equal(req.uri.href, service.url + paths.environmentinfo + '?version=' + service.version_date);
+      assert.equal(req.method, 'DELETE');
     });
 
     it('should get collections from an environment', function() {

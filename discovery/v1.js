@@ -48,8 +48,6 @@ DiscoveryV1.URL = 'https://gateway.watsonplatform.net/discovery/api';
  */
 DiscoveryV1.VERSION_DATE_2016_12_15 = '2016-12-15';
 
-
-
 /**
  * Return the list of environments
  *
@@ -70,6 +68,39 @@ DiscoveryV1.prototype.getEnvironments = function(params, callback) {
 };
 
 /**
+ * Create a new environment
+ * @param {string} name
+ * @param {string} description
+ * @param {int} size (optional)
+ */
+DiscoveryV1.prototype.createEnvironment = function (params, callback) {
+  params = params || {};
+
+  // size is an int of 1,2,3, default 1
+  if (!params.size) {
+    params.size = 1;
+  }
+
+  var parameters = {
+    options: {
+      url: '/v1/environments',
+      method: 'POST',
+      multipart: [
+        {
+          'content-type': 'application/json',
+          body: JSON.stringify(pick(params,['name','description','size']))
+        }
+      ],
+      json: true
+    },
+    originalParams: params,
+    requiredParams: ['name','description'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
  * Get details about an environment
  *
  * @param {Object} params
@@ -82,6 +113,28 @@ DiscoveryV1.prototype.getEnvironment = function(params, callback) {
     options: {
       url: '/v1/environments/{environment_id}',
       method: 'GET',
+      path: pick(params, ['environment_id']),
+      json: true
+    },
+    requiredParams: ['environment_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Get details about an environment
+ *
+ * @param {Object} params
+ * @param {String} params.environment_id
+ */
+DiscoveryV1.prototype.deleteEnvironment = function(params, callback) {
+  params = params || {};
+
+  var parameters = {
+    options: {
+      url: '/v1/environments/{environment_id}',
+      method: 'DELETE',
       path: pick(params, ['environment_id']),
       json: true
     },
