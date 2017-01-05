@@ -8,7 +8,6 @@ var describe = authHelper.describe; // this runs describe.skip if there is no au
 var assert = require('assert');
 
 var THIRTY_SECONDS = 30000;
-var TEN_SECONDS = 10000;
 var TWO_SECONDS = 2000;
 
 
@@ -54,7 +53,6 @@ describe('dialog_integration', function() {
 
   it('should getConfigurations()', function(done) {
     discovery.getConfigurations({environment_id: environment_id}, function(err, res) {
-      console.log(err, res);
       assert.ifError(err);
       assert(Array.isArray(res.configurations));
       assert(res.configurations.length);
@@ -87,7 +85,7 @@ describe('dialog_integration', function() {
       assert.ifError(err); // Error: This operation is invalid for read-only environments. (?)
       //console.log(res);
       // todo: extract collection_id, use it in subsequent tests, delete it
-      done();
+      done(err, res);
     })
   });
 
