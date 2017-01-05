@@ -11,7 +11,7 @@ var THIRTY_SECONDS = 30000;
 var TWO_SECONDS = 2000;
 
 
-describe('dialog_integration', function() {
+describe.skip('dialog_integration', function() {
   this.timeout(THIRTY_SECONDS);
   this.slow(TWO_SECONDS); // this controls when the tests get a colored warning for taking too long
   //this.retries(1);
