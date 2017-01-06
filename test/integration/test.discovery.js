@@ -11,14 +11,14 @@ var THIRTY_SECONDS = 30000;
 var TWO_SECONDS = 2000;
 
 
-describe.skip('dialog_integration', function() {
+describe.skip('discovery_integration', function() {
   this.timeout(THIRTY_SECONDS);
   this.slow(TWO_SECONDS); // this controls when the tests get a colored warning for taking too long
   //this.retries(1);
 
   var discovery;
-  var environment_id = auth.discovery.environment_id;
-  var configuration_id = auth.discovery.configuration_id;
+  var environment_id; // = auth.discovery.environment_id;
+  var configuration_id; // = auth.discovery.configuration_id;
   //var collection_id;
 
   before(function() {
