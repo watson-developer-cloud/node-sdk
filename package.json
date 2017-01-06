@@ -61,11 +61,9 @@
   },
   "devDependencies": {
     "browserify": "^13.0.1",
-    "codecov": ">1.0.0",
     "concat-stream": "^1.5.1",
     "dependency-lint": "^4.2.0",
     "eslint": "^3.11.1",
-    "istanbul": "^0.4.2",
     "jsdoc": "^3.4.0",
     "karma": "^1.1.1",
     "karma-browserify": "^5.0.5",
@@ -97,13 +95,11 @@
     "node": ">=4"
   },
   "scripts": {
-    "test": "npm run lint && npm run codecov",
+    "test": "npm run lint && mocha test/unit test/integration",
     "lint": "eslint . && node test/dependency-lint.js",
     "autofix": "eslint . --fix",
-    "prepare": "npm test && npm version patch",
     "doc": "jsdoc -c jsdoc/config.json",
     "watch-doc": "nodemon --watch ./ --ext js,tmpl,json --ignore dist/ --ignore doc/ --ignore test/ --ignore examples/ --exec npm run doc",
-    "codecov": "istanbul cover mocha test/unit test/integration && codecov",
     "test-integration": "mocha test/integration",
     "test-unit": "npm run lint && mocha test/unit/",
     "test-browser": "karma start --single-run",
