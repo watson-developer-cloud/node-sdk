@@ -148,9 +148,13 @@ RecognizeStream.prototype.initialize = function() {
       return emitError('Invalid JSON received from service:', frame, jsonEx);
     }
 
+    var recognized = false;
     if (data.error) {
       emitError(data.error, frame);
-    } else if (data.state === 'listening') {
+      recognized = true;
+    }
+
+    if (data.state === 'listening') {
       // this is emitted both when the server is ready for audio, and after we send the close message to indicate that it's done processing
       if (!self.listening) {
         self.listening = true;
@@ -159,7 +163,10 @@ RecognizeStream.prototype.initialize = function() {
         self.listening = false;
         socket.close();
       }
-    } else if (data.results) {
+      recognized = true;
+    }
+
+    if (data.results) {
       /**
        * Object with interim or final results, including possible alternatives. May have no results at all for empty audio files.
        * @event RecognizeStream#results
@@ -175,14 +182,22 @@ RecognizeStream.prototype.initialize = function() {
          */
         self.push(data.results[0].alternatives[0].transcript, 'utf8'); // this is the "data" event that can be easily piped to other streams
       }
-    } else if (data.speaker_labels) {
+      recognized = true;
+    }
+
+    // note: some messages will have both results and speaker_labels
+    // this will cause them to be emitted twice - once for each event
+    if (data.speaker_labels) {
       /**
        * Speaker labels
        * @event RecognizeStream#speaker_labels
        * @param {Object} speaker_labels
        */
       self.emit('speaker_labels', data);
-    } else {
+      recognized = true;
+    }
+
+    if (!recognized) {
       emitError('Unrecognised message from server', frame);
     }
   };
