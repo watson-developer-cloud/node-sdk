@@ -74,9 +74,9 @@ PersonalityInsightsV3.prototype.profile = function(_params, callback) { // eslin
   // Content-Type
   var content_type = null;
   if (params.text)
-    content_type = helper.isHTML(params.text) ? 'text/html' : 'text/plain';
+    {content_type = helper.isHTML(params.text) ? 'text/html' : 'text/plain';}
   else
-    content_type = 'application/json';
+    {content_type = 'application/json';}
 
   var parameters = {
     options: {

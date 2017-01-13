@@ -228,7 +228,7 @@ describe('tradeoff_analytics', function() {
   it('should format the response', function(done) {
     tradeoff_analytics.dilemmas(service_request, function(err, response) {
       if (err)
-        done(err);
+        {done(err);}
       else {
         assert.equal(JSON.stringify(response), JSON.stringify(service_response));
         done();

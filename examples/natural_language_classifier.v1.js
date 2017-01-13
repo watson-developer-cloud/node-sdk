@@ -18,10 +18,10 @@ var params = {
 
 natural_language_classifier.create(params, function(err, response) {
   if (err)
-    console.log(err);
+    {console.log(err);}
   else
     // copy the classifier_id from the response
-    console.log(JSON.stringify(response, null, 2));
+    {console.log(JSON.stringify(response, null, 2));}
 });
 
 
@@ -31,7 +31,7 @@ natural_language_classifier.classify({
   classifier_id: '<classifier-id>' }, // from the previous command
   function(err, response) {
     if (err)
-      console.log('error:', err);
+      {console.log('error:', err);}
     else
-      console.log(JSON.stringify(response, null, 2));
+      {console.log(JSON.stringify(response, null, 2));}
 });

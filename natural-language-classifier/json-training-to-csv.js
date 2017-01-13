@@ -20,10 +20,10 @@ var stringify = require('csv-stringify');
 
 function toCSVArray(data) {
   if (data.text && data.classes && data.classes.length > 0)
-    return [data.text].concat(data.classes);
+    {return [data.text].concat(data.classes);}
   else
-    throw Error('Invalid training_data format, it needs to be: '+
-      '[{ text: "my-text", classes:["my-class1", "my-class2",...]}, {}, ...]');
+    {throw Error('Invalid training_data format, it needs to be: '+
+      '[{ text: "my-text", classes:["my-class1", "my-class2",...]}, {}, ...]');}
 }
 
 /**
@@ -39,5 +39,5 @@ module.exports = function toCSV(training, cb) {
       cb(e);
     }
   } else
-    cb(null, training);
+    {cb(null, training);}
 };

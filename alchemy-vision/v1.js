@@ -52,7 +52,7 @@ function createRequest(method) {
     if (!params.image || !isStream(params.image)) {
       // url or base64 images are considered 'not-raw'
       if (params.image)
-        params.imagePostMode = 'not-raw';
+        {params.imagePostMode = 'not-raw';}
       // send the parameters as form url-encoded
       parameters.options.form = params;
       return requestFactory(parameters, errorFormatter(callback));

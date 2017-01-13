@@ -31,7 +31,7 @@ module.exports = {
         ],
         "consistent-return": 0,
         "consistent-this": 0,
-        "curly": 0,
+        "curly": 2,
         "default-case": 2,
         "dot-location": [
             2,

@@ -138,7 +138,7 @@ describe('personality_insights_v2', function() {
   it('should format the response', function(done) {
     personality_insights.profile(service_request, function(err, response) {
       if (err)
-        done(err);
+        {done(err);}
       else {
         assert.equal(JSON.stringify(response), JSON.stringify(service_response));
         done();

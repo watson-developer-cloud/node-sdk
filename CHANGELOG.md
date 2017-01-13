@@ -4,6 +4,24 @@
 # v2.14.2
 * Same fix for language translation
 
+
+# v2.14.6
+* Fix regression in error handler that would incorrectly overwrite error message in some cases
+
+# v2.14.5
+* Fix isue where STT RecognizeStream could fail to emit a speaker_labels events in certain rare circumstances
+* Added Discovery add createEnvironment and deleteEnvironment methods
+* Fix Discovery addDocument when adding a Buffer
+
+# v2.14.4
+* Update JSDOc for speech to Text
+
+# v2.14.3
+* Expose discovery v1 in index.js
+
+# v2.14.2
+* Fix content type for language translation (#362)
+
 # v2.14.1
 * Fix content type for language translator (#362)
 

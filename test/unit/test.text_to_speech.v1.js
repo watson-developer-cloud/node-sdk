@@ -77,7 +77,7 @@ describe('text_to_speech', function() {
     it('should generate a valid response', function(done) {
       text_to_speech.synthesize(service_request, function(err, response) {
         if (err)
-          done(err);
+          {done(err);}
         else {
           assert.notEqual(response, null);
           assert.notEqual(response, undefined);

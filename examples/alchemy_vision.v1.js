@@ -16,9 +16,9 @@ var params = {
 
 alchemy_vision.getImageKeywords(params, function (err, keywords) {
   if (err)
-    console.log('error:', err);
+    {console.log('error:', err);}
   else
-    console.log(JSON.stringify(keywords, null, 2));
+    {console.log(JSON.stringify(keywords, null, 2));}
 });
 
 var params = {
@@ -27,9 +27,9 @@ var params = {
 
 alchemy_vision.getImageKeywords(params, function (err, keywords) {
   if (err)
-    console.log('error:', err);
+    {console.log('error:', err);}
   else
-    console.log(JSON.stringify(keywords, null, 2));
+    {console.log(JSON.stringify(keywords, null, 2));}
 });
 
 // Face recognize
@@ -40,9 +40,9 @@ var params = {
 
 alchemy_vision.recognizeFaces(params, function (err, keywords) {
   if (err)
-    console.log('error:', err);
+    {console.log('error:', err);}
   else
-    console.log(JSON.stringify(keywords, null, 2));
+    {console.log(JSON.stringify(keywords, null, 2));}
 });
 
 var params = {
@@ -51,9 +51,9 @@ var params = {
 
 alchemy_vision.recognizeFaces(params, function (err, keywords) {
   if (err)
-    console.log('error:', err);
+    {console.log('error:', err);}
   else
-    console.log(JSON.stringify(keywords, null, 2));
+    {console.log(JSON.stringify(keywords, null, 2));}
 });
 
 // Get image links
@@ -63,9 +63,9 @@ var params = {
 
 alchemy_vision.getImageLinks(params, function (err, keywords) {
   if (err)
-    console.log('error:', err);
+    {console.log('error:', err);}
   else
-    console.log(JSON.stringify(keywords, null, 2));
+    {console.log(JSON.stringify(keywords, null, 2));}
 });
 
 // Someone needs to fix this - it always returns an error 404.

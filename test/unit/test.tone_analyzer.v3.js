@@ -93,7 +93,7 @@ describe('tone_analyzer.v3', function() {
   it('tone API should format the response', function(done) {
     tone_analyzer.tone(tone_request, function(err, response) {
       if (err)
-        done(err);
+        {done(err);}
       else {
         assert.equal(JSON.stringify(response), JSON.stringify(tone_response));
         done();

@@ -101,7 +101,7 @@ AlchemyLanguageV1.prototype.sentiment = function(params, callback) {
   var _params = extend({}, params);
   var service = (params.target || params.targets) ? 'sentiment_targeted' : 'sentiment';
   if (util.isArray(_params.targets))
-    _params.targets = _params.targets.join('|');
+    {_params.targets = _params.targets.join('|');}
 
   return createRequest(service).call(this, _params, callback);
 };
@@ -216,7 +216,7 @@ AlchemyLanguageV1.prototype.emotion = function(params, callback) {
   var _params = extend({}, params);
   var service = (params.target || params.targets) ? 'emotion_targeted' : 'emotion';
   if (util.isArray(_params.targets))
-    _params.targets = _params.targets.join('|');
+    {_params.targets = _params.targets.join('|');}
 
   return createRequest(service).call(this, _params, callback);
 };

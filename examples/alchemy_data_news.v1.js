@@ -18,7 +18,7 @@ var params = {
 
 alchemy_data_news.getNews(params, function (err, news) {
   if (err)
-    console.log('error:', err);
+    {console.log('error:', err);}
   else
-    console.log(JSON.stringify(news, null, 2));
+    {console.log(JSON.stringify(news, null, 2));}
 });

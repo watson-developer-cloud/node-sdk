@@ -51,7 +51,7 @@ PersonalityInsightsV2.prototype.profile = function(params, callback) { // eslint
 
   // support for the new snake_case
   if (params.content_items)
-    params.contentItems = params.content_items;
+    {params.contentItems = params.content_items;}
 
   if ((!params.text && !params.contentItems)) {
     callback(new Error('Missing required parameters: text or content_items'));
@@ -61,9 +61,9 @@ PersonalityInsightsV2.prototype.profile = function(params, callback) { // eslint
   // Content-Type
   var content_type = null;
   if (params.text)
-    content_type = helper.isHTML(params.text) ? 'text/html' : 'text/plain';
+    {content_type = helper.isHTML(params.text) ? 'text/html' : 'text/plain';}
   else
-    content_type = 'application/json';
+    {content_type = 'application/json';}
 
   var headers = {
     'Content-type'    : content_type,

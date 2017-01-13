@@ -9,7 +9,7 @@ var dialog = new DialogV1({
 
 dialog.getDialogs({}, function (err, dialogs) {
     if (err)
-      console.log('error:', err);
+      {console.log('error:', err);}
     else
-      console.log(JSON.stringify(dialogs, null, 2));
+      {console.log(JSON.stringify(dialogs, null, 2));}
 });

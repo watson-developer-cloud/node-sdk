@@ -90,7 +90,7 @@ NaturalLanguageClassifierV1.prototype.classify = function(params, callback) {
 
   // #84: use classifier_id not classifier.
   if (!params.classifier_id)
-    params.classifier_id = params.classifier;
+    {params.classifier_id = params.classifier;}
 
   var parameters = {
     options: {
@@ -115,7 +115,7 @@ NaturalLanguageClassifierV1.prototype.status = function(params, callback) {
 
   // #84: use classifier_id not classifier.
   if (!params.classifier_id)
-    params.classifier_id = params.classifier;
+    {params.classifier_id = params.classifier;}
 
   var parameters = {
     options: {
@@ -155,7 +155,7 @@ NaturalLanguageClassifierV1.prototype.remove = function(params, callback) {
 
   // #84: use classifier_id not classifier.
   if (!params.classifier_id)
-    params.classifier_id = params.classifier;
+    {params.classifier_id = params.classifier;}
 
   var parameters = {
     options: {

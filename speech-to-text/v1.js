@@ -43,7 +43,7 @@ function formatChunk(chunk) {
   // Check if in the stream doesn't have
   // two results together and parse them
   if (!result || result.indexOf('}{') === -1)
-    return JSON.parse(result);
+    {return JSON.parse(result);}
 
   // Check if we can parse the response
   try {

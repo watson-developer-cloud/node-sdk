@@ -20,9 +20,9 @@ personality_insights.profile({
   },
   function (err, response) {
     if (err)
-      console.log('error:', err);
+      {console.log('error:', err);}
     else
-      console.log(JSON.stringify(response, null, 2));
+      {console.log(JSON.stringify(response, null, 2));}
 });
 
 /*
@@ -36,9 +36,9 @@ personality_insights.profile({
   },
   function (err, response) {
     if (err)
-      console.log('error:', err);
+      {console.log('error:', err);}
     else
-      console.log(JSON.stringify(response, null, 2));
+      {console.log(JSON.stringify(response, null, 2));}
 });
 
 /*
@@ -55,9 +55,9 @@ personality_insights.profile({
   },
   function (err, response) {
     if (err)
-      console.log('error:', err);
+      {console.log('error:', err);}
     else
-      console.log(JSON.stringify(response, null, 2));
+      {console.log(JSON.stringify(response, null, 2));}
 });
 
 

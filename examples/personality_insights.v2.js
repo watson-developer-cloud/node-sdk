@@ -16,9 +16,9 @@ personality_insights.profile({
   text: 'Enter more than 100 unique words here...' },
   function (err, response) {
     if (err)
-      console.log('error:', err);
+      {console.log('error:', err);}
     else
-      console.log(JSON.stringify(response, null, 2));
+      {console.log(JSON.stringify(response, null, 2));}
 });
 
 /*
@@ -31,9 +31,9 @@ personality_insights.profile({
   language: 'es'},
   function (err, response) {
     if (err)
-      console.log('error:', err);
+      {console.log('error:', err);}
     else
-      console.log(JSON.stringify(response, null, 2));
+      {console.log(JSON.stringify(response, null, 2));}
 });
 
 /*
@@ -50,9 +50,9 @@ personality_insights.profile({
   accept_language: 'es'},
   function (err, response) {
     if (err)
-      console.log('error:', err);
+      {console.log('error:', err);}
     else
-      console.log(JSON.stringify(response, null, 2));
+      {console.log(JSON.stringify(response, null, 2));}
 });
 
 
