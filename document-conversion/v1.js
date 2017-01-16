@@ -73,6 +73,7 @@ function fixupContentType(params) {
  * @param  {Object} params.conversion_target Must be set to one of ['answer_units', 'normalized_html', 'normalized_text']
  * @param  {ReadableStream} [params.file] The document file to convert. May be a ReadableStream or Buffer
  * @param  {String} [params.content_type] Set this when the content type cannot be determined from the filename (params.file.path)
+ * @param  {Object} [params.config] Optional configuration option.
  * @param  {Function} callback
  */
 DocumentConversionV1.prototype.convert = function(params, callback) {
@@ -112,7 +113,7 @@ DocumentConversionV1.prototype.convert = function(params, callback) {
     parameters.options.formData = {
       file: params.file,
       config: {
-        value: JSON.stringify(omit(params,['file', 'content_type'])),
+        value: JSON.stringify(params.config || omit(params,['file', 'content_type'])),
         options: {
           contentType: 'application/json; charset=utf-8'
         }
