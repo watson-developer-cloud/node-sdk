@@ -154,6 +154,7 @@ TextToSpeechV1.prototype.pronunciation = function(params, callback) {
  */
 TextToSpeechV1.prototype.createCustomization = function(params, callback) {
   var parameters = {
+    requiredParams: ['name'],
     options: {
       method: 'POST',
       url: '/v1/customizations',
@@ -197,12 +198,13 @@ TextToSpeechV1.prototype.createCustomization = function(params, callback) {
  */
 TextToSpeechV1.prototype.updateCustomization = function(params, callback) {
   var parameters = {
+    requiredParams: ['customization_id', 'words'],
+    originalParams: params,
     options: {
-      requiredParams: ['customization_id', 'words'],
       method: 'POST',
       url: '/v1/customizations/' + params.customization_id,
       body: pick(params, ['name', 'description', 'words']),
-      json: true
+      json: true,
     },
     defaultOptions: this._options
   };
@@ -298,9 +300,10 @@ TextToSpeechV1.prototype.getCustomizations = function(params, callback) {
  */
 TextToSpeechV1.prototype.getCustomization = function(params, callback) {
   var parameters = {
+    requiredParams: ['customization_id'],
+    originalParams: params,
     options: {
       method: 'GET',
-      requiredParams: ['customization_id'],
       url: '/v1/customizations/' + params.customization_id,
       json: true
     },
@@ -318,9 +321,10 @@ TextToSpeechV1.prototype.getCustomization = function(params, callback) {
  */
 TextToSpeechV1.prototype.deleteCustomization = function(params, callback) {
   var parameters = {
+    requiredParams: ['customization_id'],
+    originalParams: params,
     options: {
       method: 'DELETE',
-      requiredParams: ['customization_id'],
       url: '/v1/customizations/' + params.customization_id,
       json: true
     },
@@ -349,8 +353,9 @@ TextToSpeechV1.prototype.deleteCustomization = function(params, callback) {
  */
 TextToSpeechV1.prototype.addWords = function(params, callback) {
   var parameters = {
+    requiredParams: ['customization_id', 'words'],
+    originalParams: params,
     options: {
-      requiredParams: ['customization_id', 'words'],
       method: 'POST',
       url: '/v1/customizations/' + params.customization_id + '/words',
       body: pick(params, ['words']),
@@ -386,8 +391,9 @@ TextToSpeechV1.prototype.addWords = function(params, callback) {
  */
 TextToSpeechV1.prototype.addWord = function(params, callback) {
   var parameters = {
+    requiredParams: ['customization_id', 'word', 'translation'],
+    originalParams: params,
     options: {
-      requiredParams: ['customization_id', 'word', 'translation'],
       method: 'PUT',
       url: '/v1/customizations/' + params.customization_id + '/words/' + params.word,
       body: pick(params, ['translation']),
@@ -442,9 +448,10 @@ TextToSpeechV1.prototype.getWords = function(params, callback) {
     params = {};
   }
   var parameters = {
+    requiredParams: ['customization_id'],
+    originalParams: params,
     options: {
       method: 'GET',
-      requiredParams: ['customization_id'],
       url: '/v1/customizations/' + params.customization_id + '/words',
       qs: pick(params, ['language']),
       json: true
@@ -470,8 +477,9 @@ TextToSpeechV1.prototype.getWords = function(params, callback) {
  */
 TextToSpeechV1.prototype.getWord = function(params, callback) {
   var parameters = {
+    requiredParams: ['customization_id', 'word'],
+    originalParams: params,
     options: {
-      requiredParams: ['customization_id', 'word'],
       method: 'GET',
       url: '/v1/customizations/' + params.customization_id + '/words/' + params.word,
       json: true
@@ -491,8 +499,9 @@ TextToSpeechV1.prototype.getWord = function(params, callback) {
  */
 TextToSpeechV1.prototype.deleteWord = function(params, callback) {
   var parameters = {
+    requiredParams: ['customization_id', 'word'],
+    originalParams: params,
     options: {
-      requiredParams: ['customization_id', 'word'],
       method: 'DELETE',
       url: '/v1/customizations/' + params.customization_id + '/words/' + params.word,
       json: true
