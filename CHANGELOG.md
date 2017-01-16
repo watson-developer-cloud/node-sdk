@@ -1,4 +1,4 @@
-# 2.14.7
+# 2.14.8
 * Fix DocumentConversion#convert() to accept config params as documented in api ref
 * Fix param checking on various TTS customization methods
 

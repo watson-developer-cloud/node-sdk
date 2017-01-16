@@ -64,9 +64,9 @@ describe('text_to_speech_integration', function() {
       text_to_speech.createCustomization({
         name: 'temporary-node-sdk-test',
         language: 'en-US',
-        description: 'Created by Node.js SDK integration tests on ' + (new Date) + '. Should be automatically deleted within 10 minutes.'
+        description: 'Created by Node.js SDK integration tests on ' + (new Date()) + '. Should be automatically deleted within 10 minutes.'
       }, function(err, response) {
-        console.log(JSON.stringify(err || response, null, 2));
+        //console.log(JSON.stringify(err || response, null, 2));
         if (err) {
           return done(err);
         }
@@ -135,7 +135,7 @@ describe('text_to_speech_integration', function() {
     });
 
     it('getWord()', function(done) {
-      text_to_speech.getWord({customization_id, word: 'NCAA'}, function(err, response) {
+      text_to_speech.getWord({customization_id: customization_id, word: 'NCAA'}, function(err, response) {
         if (err) {
           return done(err);
         }
