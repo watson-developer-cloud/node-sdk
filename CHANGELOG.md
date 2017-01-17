@@ -1,3 +1,6 @@
+# v2.15.1
+* Fix slightly-incorrect URL in Language Translator V2 example and error message
+
 # v2.15.0
 * SDK now emits missing parameter errors on returned stream if no callback is supplied (#368 / #377)
 

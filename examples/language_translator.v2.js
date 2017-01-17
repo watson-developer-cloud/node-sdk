@@ -5,7 +5,8 @@ var fs     = require('fs');
 
 var language_translator = new LanguageTranslatorV2({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
-  password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE'
+  password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
+  url: 'https://gateway.watsonplatform.net/language-translator/api/'
 });
 
 language_translator.translate({
