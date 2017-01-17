@@ -3,7 +3,6 @@
 var assert = require('assert');
 var watson = require('../../index');
 var helper = require('../../lib/helper');
-var fs = require('fs');
 
 describe('wrapper', function() {
 
