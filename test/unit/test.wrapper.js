@@ -3,6 +3,7 @@
 var assert = require('assert');
 var watson = require('../../index');
 var helper = require('../../lib/helper');
+var fs = require('fs');
 
 describe('wrapper', function() {
 
@@ -86,6 +87,20 @@ describe('wrapper', function() {
       username: 'user',
       version: 'v1'
     }));
+  });
+  it('should return an stream if callback is null and there is an error', function(done) {
+    var textToSpeech = watson.text_to_speech({
+      username: 'a',
+      password: 'b',
+      version: 'v1',
+    });
+
+    textToSpeech.synthesize({ voice: '', accept: '' })
+      .on('error', function(error) {
+        assert.equal('Error: Missing required parameters: text', error);
+        done();
+      })
+      .pipe(fs.createWriteStream('../resources/tts-output.ogg'));
   });
 
   describe('env', function() {
