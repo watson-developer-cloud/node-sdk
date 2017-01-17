@@ -88,7 +88,7 @@ describe('wrapper', function() {
       version: 'v1'
     }));
   });
-  it('should return an stream if callback is null and there is an error', function(done) {
+  it('should return a stream if callback is null and there is an error', function(done) {
     var textToSpeech = watson.text_to_speech({
       username: 'a',
       password: 'b',
@@ -99,8 +99,7 @@ describe('wrapper', function() {
       .on('error', function(error) {
         assert.equal('Error: Missing required parameters: text', error);
         done();
-      })
-      .pipe(fs.createWriteStream('../resources/tts-output.ogg'));
+      });
   });
 
   describe('env', function() {
