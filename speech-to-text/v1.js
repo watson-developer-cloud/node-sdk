@@ -237,18 +237,12 @@ SpeechToTextV1.prototype.observeResult = function(params, callback) {
  * @deprecated use createRecognizeStream instead
  */
 SpeechToTextV1.prototype.getRecognizeStatus = function(params, callback) {
-  var missingParams = helper.getMissingParams(params, ['session_id']);
-  if (missingParams) {
-    callback(missingParams);
-    return;
-  }
-
-  var path = params || {};
   var parameters = {
+    requiredParams: ['session_id'],
     options: {
       method: 'GET',
-      url: '/v1/sessions/' + path.session_id + '/recognize',
-      path: path,
+      url: '/v1/sessions/{session_id}/recognize',
+      path: pick(params, ['session_id']),
       json: true
     },
     defaultOptions: this._options
@@ -285,16 +279,14 @@ SpeechToTextV1.prototype.getModels = function(params, callback) {
  * @returns {ReadableStream|undefined}
  */
 SpeechToTextV1.prototype.getModel = function(params, callback) {
-  var path = params || {};
-
   var parameters = {
+    requiredParams: ['model_id'],
     options: {
       method: 'GET',
-      url: '/v1/models/' + path.model_id,
-      path: path,
+      url: '/v1/models/{model_id}',
+      path: pick(params, ['model_id']),
       json: true
     },
-    requiredParams: ['model_id'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
@@ -343,17 +335,13 @@ SpeechToTextV1.prototype.createSession = function(params, callback) {
  * @param {String} params.session_id - Session id.
  */
 SpeechToTextV1.prototype.deleteSession = function(params, callback) {
-  var missingParams = helper.getMissingParams(params, ['session_id']);
-  if (missingParams) {
-    callback(missingParams);
-    return;
-  }
-
   var parameters = {
+    requiredParams: ['session_id'],
     options: {
       method: 'DELETE',
-      url: '/v1/sessions/' + params.session_id,
-      json: true
+      url: '/v1/sessions/{session_id}',
+      json: true,
+      path: pick(params, ['session_id']),
     },
     defaultOptions: this._options
   };
@@ -411,6 +399,7 @@ SpeechToTextV1.prototype.createRecognizeStream = function(params) {
  */
 SpeechToTextV1.prototype.createCustomization = function(params, callback) {
   var parameters = {
+    requiredParams: ['base_model_name', 'name'],
     options: {
       method: 'POST',
       url: '/v1/customizations',

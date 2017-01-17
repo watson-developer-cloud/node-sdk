@@ -49,17 +49,15 @@ TextToSpeechV1.URL = 'https://stream.watsonplatform.net/text-to-speech/api';
  */
 TextToSpeechV1.prototype.synthesize = function(params, callback) {
   params = extend({accept:'audio/ogg; codecs=opus'}, params);
-  if (!params.text){
-    callback(new Error('Missing required parameters: text'));
-    return;
-  }
 
   var parameters = {
+    requiredParams: ['text'],
     options: {
       method: 'POST',
       url: '/v1/synthesize',
       body: JSON.stringify(pick(params, ['text'])),
       qs: pick(params, ['accept', 'voice', 'customization_id']),
+      path: pick(params, ['text']),
       headers: extend({
         'content-type': 'application/json'
       }, pick(params, ['X-Watson-Learning-Opt-Out'])),
