@@ -1,7 +1,7 @@
 # Test cases
-[![Build Status](https://secure.travis-ci.org/watson-developer-cloud/nodejs-wrapper-alpha.png)](http://travis-ci.org/watson-developer-cloud/nodejs-wrapper-alpha)
-[![Dependency Status](https://gemnasium.com/watson-developer-cloud/nodejs-wrapper-alpha.png)](https://gemnasium.com/watson-developer-cloud/nodejs-wrapper-alpha)
-[![Coverage Status](https://img.shields.io/coveralls/watson-developer-cloud/nodejs-wrapper-alpha.svg)](https://coveralls.io/r/watson-developer-cloud/nodejs-wrapper-alpha)
+[![Build Status](https://secure.travis-ci.org/watson-developer-cloud/node-sdk.png)](http://travis-ci.org/watson-developer-cloud/node-sdk)
+[![Dependency Status](https://gemnasium.com/watson-developer-cloud/node-sdk.png)](https://gemnasium.com/watson-developer-cloud/node-sdk)
+[![Coverage Status](https://img.shields.io/coveralls/watson-developer-cloud/node-sdk.svg)](https://coveralls.io/r/watson-developer-cloud/node-sdk)
 
 ## Run all the tests
 

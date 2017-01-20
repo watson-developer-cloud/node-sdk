@@ -1,13 +1,11 @@
 'use strict';
 
-var watson = require('watson-developer-cloud');
+var RetrieveAndRankV1 = require('watson-developer-cloud/retrieve-and-rank/v1');
 var async  = require('async');
 
-var retrieve = watson.retrieve_and_rank({
+var retrieve = new RetrieveAndRankV1({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
-  password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
-  version: 'v1',
-  url: 'https://gateway.watsonplatform.net/retrieve-and-rank/api'
+  password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE'
 });
 
 var clusterId;
@@ -16,7 +14,7 @@ var clusterId;
 var clusterName = 'example_cluster';
 
 // The empty string will create a free cluster. Input an integer to create a cluster of that many units.
-var clusterSize = '';
+var clusterSize = 1;
 
 async.series([
 
@@ -39,6 +37,27 @@ async.series([
     console.log('Listing Solr clusters.');
     retrieve.listClusters({}, function(err, res) {
       printResponse(err, 'Error listing Solr clusters: ', res, done);
+    });
+  },
+
+  function resizeCluster(done) {
+    console.log('Resizing Solr cluster.');
+    retrieve.resizeCluster({cluster_id: clusterId, cluster_size: 2}, function(err, res) {
+      printResponse(err, 'Error resizing Solr cluster: ', res, done);
+    });
+  },
+
+  function getResizeStatus(done) {
+    console.log('Getting Solr cluster\'s resize status.');
+    retrieve.getResizeStatus({cluster_id: clusterId}, function(err, res) {
+      printResponse(err, 'Error getting resize status: ', res, done);
+    });
+  },
+
+  function getClusterStats(done) {
+    console.log('Getting stats from Solr cluster ' + clusterId);
+    retrieve.getClusterStats({cluster_id: clusterId}, function(err, res) {
+      printResponse(err, 'Error getting Solr cluster stats: ', res, done);
     });
   },
 

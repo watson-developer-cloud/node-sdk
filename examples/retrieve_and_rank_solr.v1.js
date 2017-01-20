@@ -1,28 +1,23 @@
 'use strict';
 
-var watson = require('watson-developer-cloud');
+var RetrieveAndRankV1 = require('watson-developer-cloud/retrieve-and-rank/v1');
 var async  = require('async');
+var fs     = require('fs');
 
-var username = 'INSERT YOUR USERNAME FOR THE SERVICE HERE';
-var password = 'INSERT YOUR PASSWORD FOR THE SERVICE HERE';
-
-var retrieve = watson.retrieve_and_rank({
-  username: username,
-  password: password,
-  version: 'v1',
-  url: 'https://gateway.watsonplatform.net/retrieve-and-rank/api'
+var retrieve = new RetrieveAndRankV1({
+  username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
+  password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE'
 });
 
 var clusterId = 'INSERT YOUR CLUSTER ID HERE';
 var collectionName = 'example_collection';
 var configName     = 'example_config';
-var configZipPath = 'examples/resources/example_solr_config.zip';
+var configZipPath = __dirname + '/resources/example_solr_config.zip';
+var jsonDocsFilePath = __dirname + '/resources/solr_docs.json';
 
 var solrClient = retrieve.createSolrClient({
   cluster_id: clusterId,
-  collection_name: collectionName,
-  username: username,
-  password: password
+  collection_name: collectionName
 });
 
 async.series([
@@ -79,7 +74,28 @@ async.series([
     });
   },
 
-  function indexAndCommit(done) {
+  function indexAndCommitJsonFileDocs(done) {
+    console.log('Indexing documents via JSON file...');
+    var jsonDocs = JSON.parse(fs.readFileSync(jsonDocsFilePath, 'utf8'));
+    solrClient.add(jsonDocs, function(err) {
+      if(err) {
+        console.log('Error indexing document: ' + err);
+        done();
+      } else {
+        console.log('Indexed JSON documents.');
+        solrClient.commit(function(err) {
+          if(err) {
+            console.log('Error committing change: ' + err);
+          } else {
+            console.log('Successfully commited changes.');
+          }
+          done();
+        });
+      }
+    });
+  },
+
+  function indexAndCommitDocObject(done) {
     console.log('Indexing a document...');
     var doc = { id : 1234, title_t : 'Hello', text_field_s: 'some text' };
     solrClient.add(doc, function(err) {

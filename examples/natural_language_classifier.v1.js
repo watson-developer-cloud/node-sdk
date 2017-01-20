@@ -1,10 +1,9 @@
 'use strict';
 
-var watson = require('watson-developer-cloud');
+var NaturalLanguageClassifierV1 = require('watson-developer-cloud/natural-language-classifier/v1');
 var fs     = require('fs');
 
-var natural_language_classifier = watson.natural_language_classifier({
-  url: 'https://gateway.watsonplatform.net/natural-language-classifier/api',
+var natural_language_classifier = new NaturalLanguageClassifierV1({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
   password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
   version: 'v1'
@@ -14,15 +13,15 @@ var natural_language_classifier = watson.natural_language_classifier({
 var params = {
   language: 'en',
   name: 'my-classifier',
-  training_data: fs.createReadStream('./resources/training_data.csv')
+  training_data: fs.createReadStream('./resources/weather_data_train')
 };
 
 natural_language_classifier.create(params, function(err, response) {
   if (err)
-    console.log(err);
+    {console.log(err);}
   else
     // copy the classifier_id from the response
-    console.log(JSON.stringify(response, null, 2));
+    {console.log(JSON.stringify(response, null, 2));}
 });
 
 
@@ -32,7 +31,7 @@ natural_language_classifier.classify({
   classifier_id: '<classifier-id>' }, // from the previous command
   function(err, response) {
     if (err)
-      console.log('error:', err);
+      {console.log('error:', err);}
     else
-      console.log(JSON.stringify(response, null, 2));
+      {console.log(JSON.stringify(response, null, 2));}
 });

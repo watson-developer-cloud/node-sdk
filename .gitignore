@@ -1,9 +1,13 @@
-node_modules/*
+node_modules
 npm-debug.log
+npm-debug.log.*
 coverage
 .DS_Store
 test/resources/auth.js
-test/resources/mobydick.txt
-test/test.all-services.js
+test/resources/-auth.js # to make sure tests run without the auth file
 test/resources/tts-output.ogg
-test/resources/face.jpg
+.idea
+doc/
+.vscode/
+dist/
+.env

@@ -1,105 +1,139 @@
 {
   "entities" : {
-    "url"  : "/url/URLGetRankedNamedEntities",
     "text" : "/text/TextGetRankedNamedEntities",
-    "html" : "/html/HTMLGetRankedNamedEntities"
+    "html" : "/html/HTMLGetRankedNamedEntities",
+    "url"  : "/url/URLGetRankedNamedEntities"
   },
 
   "keywords": {
-    "url"  : "/url/URLGetRankedKeywords",
     "text" : "/text/TextGetRankedKeywords",
-    "html" : "/html/HTMLGetRankedKeywords"
+    "html" : "/html/HTMLGetRankedKeywords",
+    "url"  : "/url/URLGetRankedKeywords"
   },
 
   "concepts": {
-    "url"  : "/url/URLGetRankedConcepts",
     "text" : "/text/TextGetRankedConcepts",
-    "html" : "/html/HTMLGetRankedConcepts"
+    "html" : "/html/HTMLGetRankedConcepts",
+    "url"  : "/url/URLGetRankedConcepts"
   },
 
   "sentiment": {
-    "url"  : "/url/URLGetTextSentiment",
     "text" : "/text/TextGetTextSentiment",
-    "html" : "/html/HTMLGetTextSentiment"
+    "html" : "/html/HTMLGetTextSentiment",
+    "url"  : "/url/URLGetTextSentiment"
   },
 
   "sentiment_targeted": {
-    "url"  : "/url/URLGetTargetedSentiment",
     "text" : "/text/TextGetTargetedSentiment",
-    "html" : "/html/HTMLGetTargetedSentiment"
+    "html" : "/html/HTMLGetTargetedSentiment",
+    "url"  : "/url/URLGetTargetedSentiment"
   },
 
   "relations": {
-    "url"  : "/url/URLGetRelations",
     "text" : "/text/TextGetRelations",
-    "html" : "/html/HTMLGetRelations"
+    "html" : "/html/HTMLGetRelations",
+    "url"  : "/url/URLGetRelations"
   },
 
   "language": {
-    "url"  : "/url/URLGetLanguage",
     "text" : "/text/TextGetLanguage",
-    "html" : "/html/HTMLGetLanguage"
+    "html" : "/html/HTMLGetLanguage",
+    "url"  : "/url/URLGetLanguage"
   },
 
   "text": {
-    "url"  : "/url/URLGetText",
-    "html" : "/html/HTMLGetText"
+    "html" : "/html/HTMLGetText",
+    "url"  : "/url/URLGetText"
   },
 
   "category": {
-    "url"  : "/url/URLGetCategory",
-    "text" : "/text/TextGetCategory"
+    "text" : "/text/TextGetCategory",
+    "url"  : "/url/URLGetCategory"
   },
 
   "publication_date": {
-    "url"  : "/url/URLGetPubDate",
-    "html" : "/html/HTMLGetPubDate"
+    "html" : "/html/HTMLGetPubDate",
+    "url"  : "/url/URLGetPubDate"
+  },
+
+  "extract_dates": {
+    "html" : "/html/HTMLExtractDates",
+    "url"  : "/url/URLExtractDates",
+    "text"  : "/text/TextExtractDates"
   },
 
   "text_raw": {
-    "url"  : "/url/URLGetRawText",
-    "html" : "/html/HTMLGetRawText"
+    "html" : "/html/HTMLGetRawText",
+    "url"  : "/url/URLGetRawText"
   },
 
   "authors": {
-    "url"  : "/url/URLGetAuthors",
-    "html" : "/html/HTMLGetAuthors"
+    "html" : "/html/HTMLGetAuthors",
+    "url"  : "/url/URLGetAuthors"
   },
 
   "feeds": {
-    "url"  : "/url/URLGetFeedLinks",
-    "html" : "/html/HTMLGetFeedLinks"
+    "html" : "/html/HTMLGetFeedLinks",
+    "url"  : "/url/URLGetFeedLinks"
   },
 
   "microformats": {
-    "url"  : "/url/URLGetMicroformatData",
-    "html" : "/html/HTMLGetMicroformatData"
+    "html" : "/html/HTMLGetMicroformatData",
+    "url"  : "/url/URLGetMicroformatData"
   },
 
   "taxonomy": {
-    "url"  : "/url/URLGetRankedTaxonomy",
     "text" : "/text/TextGetRankedTaxonomy",
-    "html" : "/html/HTMLGetRankedTaxonomy"
+    "html" : "/html/HTMLGetRankedTaxonomy",
+    "url"  : "/url/URLGetRankedTaxonomy"
   },
 
   "combined": {
-    "url"  : "/url/URLGetCombinedData",
     "text" : "/text/TextGetCombinedData",
-    "html" : "/html/HTMLGetCombinedData"
+    "html" : "/html/HTMLGetCombinedData",
+    "url"  : "/url/URLGetCombinedData"
+  },
+
+  "emotion": {
+    "text" : "/text/TextGetEmotion",
+    "html" : "/html/HTMLGetEmotion",
+    "url"  : "/url/URLGetEmotion"
+  },
+
+  "emotion_targeted": {
+    "text" : "/text/TextGetTargetedEmotion",
+    "html" : "/html/HTMLGetTargetedEmotion",
+    "url"  : "/url/URLGetTargetedEmotion"
   },
 
   "image_link": {
-    "url"  : "/url/URLGetImage",
-    "html" : "/url/HTMLGetImage"
+    "html" : "/html/HTMLGetImage",
+    "url"  : "/url/URLGetImage"
   },
 
   "image_keywords": {
-    "url"  : "/url/URLGetRankedImageKeywords",
-    "image" : "/image/ImageGetRankedImageKeywords"
+    "image" : "/image/ImageGetRankedImageKeywords",
+    "url"  : "/url/URLGetRankedImageKeywords"
   },
 
   "image_recognition": {
-    "url"  : "/url/URLGetRankedImageFaceTags",
-    "image" : "/image/ImageGetRankedImageFaceTags"
+    "image" : "/image/ImageGetRankedImageFaceTags",
+    "url"  : "/url/URLGetRankedImageFaceTags"
+  },
+
+  "image_scene_text": {
+    "image": "/image/ImageGetRankedImageSceneText",
+    "url": "/url/URLGetRankedImageSceneText"
+  },
+
+  "title": {
+    "url": "/url/URLGetTitle",
+    "html": "/html/HTMLGetTitle"
+  },
+
+  "typed_relations": {
+    "url": "/url/URLGetTypedRelations",
+    "text": "/text/TextGetTypedRelations",
+    "html": "/html/HTMLGetTypedRelations"
   }
 }

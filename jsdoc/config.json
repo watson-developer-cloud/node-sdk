@@ -1,0 +1,25 @@
+{
+  "source": {
+    "include": [ "./" ],
+    "exclude": [
+      "./.github/",
+      "./coverage/",
+      "./dist/",
+      "./doc/watson-developer-cloud/",
+      "./examples/",
+      "./jsdoc/",
+      "./node_modules/",
+      "./test/",
+      "./eslintrc.js",
+      "./karma.conf.js",
+      "./transform.js"
+    ]
+  },
+  "opts": {
+    "package": "package.json",
+    "readme": "README.md",
+    "recurse": true,
+    "destination": "./doc/"
+  },
+  "plugins": ["plugins/markdown"]
+}
