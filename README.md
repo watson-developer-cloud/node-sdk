@@ -375,7 +375,7 @@ language_translator.identify({
 
 ### Natural Language Classifier
 
-Use [Natural Language Classifier](http://www.ibm.com/watson/developercloud/doc/nl-classifier/) service to create a classifier instance by providing a set of representative strings and a set of one or more correct classes for each as training. Then use the trained classifier to classify your new question for best matching answers or to retrieve next actions for your application.
+Use [Natural Language Classifier](http://www.ibm.com/watson/developercloud/doc/natural-language-classifier/index.html) service to create a classifier instance by providing a set of representative strings and a set of one or more correct classes for each as training. Then use the trained classifier to classify your new question for best matching answers or to retrieve next actions for your application.
 
 ```javascript
 var NaturalLanguageClassifierV1 = require('watson-developer-cloud/natural-language-classifier/v1');
