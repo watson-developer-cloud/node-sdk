@@ -31,7 +31,6 @@ describe('speech_to_text_integration', function() {
   });
 
   it('recognize()', function(done) {
-    var speech_to_text = watson.speech_to_text(auth.speech_to_text);
     var params = {
       audio: fs.createReadStream(path.join(__dirname, '../resources/weather.ogg')),
       content_type: 'audio/ogg; codec=opus'
@@ -41,7 +40,6 @@ describe('speech_to_text_integration', function() {
 
 
   it('recognize() keywords', function(done) {
-    var speech_to_text = watson.speech_to_text(auth.speech_to_text);
     var params = {
       audio: fs.createReadStream(path.join(__dirname, '../resources/weather.ogg')),
       keywords: ['hail', 'tornadoes', 'rain'],
@@ -112,12 +110,10 @@ describe('speech_to_text_integration', function() {
   });
 
   it('getModels()', function(done) {
-    var speech_to_text = watson.speech_to_text(auth.speech_to_text);
     speech_to_text.getModels({}, done);
   });
 
   it('createRecognizeStream()',  function (done) {
-    var speech_to_text = watson.speech_to_text(auth.speech_to_text);
     var recognizeStream = speech_to_text.createRecognizeStream({content_type: 'audio/l16; rate=44100'});
     recognizeStream.setEncoding('utf8');
     fs.createReadStream(path.join(__dirname, '../resources/weather.flac'))
@@ -131,7 +127,6 @@ describe('speech_to_text_integration', function() {
   });
 
   it('createRecognizeStream() - no words',  function (done) {
-    var speech_to_text = watson.speech_to_text(auth.speech_to_text);
     var recognizeStream = speech_to_text.createRecognizeStream({content_type: 'audio/l16; rate=44100'});
     recognizeStream.setEncoding('utf8');
     fs.createReadStream(path.join(__dirname, '../resources/blank.wav'))
@@ -306,6 +301,15 @@ describe('speech_to_text_integration', function() {
 
     it('trainCustomization()', waitUntilReady(function(done) {
       speech_to_text.trainCustomization({customization_id: customization_id}, done);
+    }));
+
+    it('recognize() - with customization', waitUntilReady(function(done) {
+      var params = {
+        audio: fs.createReadStream(path.join(__dirname, '../resources/weather.ogg')),
+        content_type: 'audio/ogg; codec=opus',
+        customization_id: customization_id,
+      };
+      speech_to_text.recognize(params, done);
     }));
 
     it('resetCustomization()', waitUntilReady(function(done) {

@@ -230,7 +230,7 @@ describe('speech_to_text', function() {
       var req = speech_to_text.recognize(
         extend({keywords:['a','b','c']}, payload), noop);
       assert.equal(req.uri.query,'keywords=' + encodeURIComponent('a,b,c'));
-    })
+    });
   });
 
   // this test is severely broken
