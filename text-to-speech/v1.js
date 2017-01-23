@@ -242,7 +242,7 @@ TextToSpeechV1.prototype.updateCustomization = function(params, callback) {
  *
  *
  * @param {Object} [params]
- * @param {String} [params.language] optional filter. Currently only en-US is supported.
+ * @param {String} [params.language] optional filter.
  * @param {Function} callback
  */
 TextToSpeechV1.prototype.getCustomizations = function(params, callback) {

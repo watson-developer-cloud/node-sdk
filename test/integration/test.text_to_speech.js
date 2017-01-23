@@ -82,7 +82,23 @@ describe('text_to_speech_integration', function() {
         if (err) {
           return done(err);
         }
-        assert(response.customizations);
+        assert(Array.isArray(response.customizations));
+        done();
+      });
+    });
+
+
+    it('getCustomizations() with language', function(done) {
+      text_to_speech.getCustomizations({language: 'en-GB'}, function(err, response) {
+        //console.log(JSON.stringify(err || response, null, 2));
+        if (err) {
+          return done(err);
+        }
+        assert(Array.isArray(response.customizations));
+        var hasOtherLanguages = response.customizations.some(function(c) {
+          return c.language !== 'en-GB'
+        });
+        assert.equal(hasOtherLanguages, false, 'Expecting no customizations with a different language than the requested one (en-GB)');
         done();
       });
     });
