@@ -451,7 +451,6 @@ TextToSpeechV1.prototype.getWords = function(params, callback) {
     options: {
       method: 'GET',
       url: '/v1/customizations/' + params.customization_id + '/words',
-      qs: pick(params, ['language']),
       json: true
     },
     defaultOptions: this._options
