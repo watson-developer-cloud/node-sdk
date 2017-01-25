@@ -146,7 +146,7 @@ TextToSpeechV1.prototype.pronunciation = function(params, callback) {
  *
  * @param {Object} params
  * @param {String} params.name
- * @param {String} [params.language=en-US] - Currently only en-US is supported
+ * @param {String} [params.language=en-US]
  * @param {String} [params.description]
  * @param {Function} callback
  */

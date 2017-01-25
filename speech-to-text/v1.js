@@ -455,7 +455,7 @@ SpeechToTextV1.prototype.createCustomization = function(params, callback) {
 ```
  *
  * @param {Object} params The parameters
- * @param {String} [params.language] optional filter. Currently only en-US is supported.
+ * @param {String} [params.language] optional filter.
  * @param {Function} callback
  */
 SpeechToTextV1.prototype.getCustomizations = function(params, callback) {
