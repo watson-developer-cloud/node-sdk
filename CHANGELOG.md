@@ -1,4 +1,4 @@
-# v2.15.3
+# v2.15.4
 * stt.whenCustomizationReady() no longer incorrectly requires that a corpus be added. (#382)
 * various JSDoc corrections
 
