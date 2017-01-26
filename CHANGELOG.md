@@ -1,4 +1,8 @@
-# v2.15.1
+# v2.15.3
+* stt.whenCustomizationReady() no longer incorrectly requires that a corpus be added. (#382)
+* various JSDoc corrections
+
+# v2.15.2
 * Fix slightly-incorrect URL in Language Translator V2 example and error message
 
 # v2.15.0
