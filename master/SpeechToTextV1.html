@@ -184,7 +184,7 @@
 
     
 
-    <h4 class="name" id="addCorpus"><span class="type-signature"></span>addCorpus<span class="signature">(params, {Boolean, callback)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="addCorpus"><span class="type-signature"></span>addCorpus<span class="signature">(params, callback)</span><span class="type-signature"></span></h4>
 
     
 
@@ -219,6 +219,8 @@
         
 
         
+        <th>Default</th>
+        
 
         <th class="last">Description</th>
     </tr>
@@ -251,6 +253,10 @@
                 </td>
             
 
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last"><p>The parameters</p>
@@ -332,15 +338,22 @@
 
         <tr>
             
-                <td class="name"><code>{Boolean</code></td>
+                <td class="name"><code>parms.allow_overwrite</code></td>
             
 
             <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
             
             </td>
 
             
                 <td class="attributes">
+                
+                    &lt;optional><br>
                 
 
                 
@@ -350,8 +363,14 @@
             
 
             
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
 
-            <td class="description last"><p>[parms.allow_overwrite=false] - Indicates whether the specified corpus is to overwrite an existing corpus with the same name. If a corpus with the same name already exists, the request fails unless allow_overwrite is set to true; by default, the parameter is false. The parameter has no effect if a corpus with the same name does not already exist.</p></td>
+            <td class="description last"><p>Indicates whether the specified corpus is to overwrite an existing corpus with the same name. If a corpus with the same name already exists, the request fails unless allow_overwrite is set to true; by default, the parameter is false. The parameter has no effect if a corpus with the same name does not already exist.</p></td>
         </tr>
 
     
@@ -389,6 +408,10 @@
             
 
             
+                <td class="default">
+                
+                </td>
+            
 
             <td class="description last"><p>the text of the corpus - may be provided as a String, a Buffer, or a ReadableStream. A ReadableStream is recommended when reading a file from disk.</p></td>
         </tr>
@@ -419,6 +442,10 @@
                 </td>
             
 
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last"></td>
@@ -462,7 +489,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line594">line 594</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line589">line 589</a>
     </li></ul></dd>
     
 
@@ -770,7 +797,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line912">line 912</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line882">line 882</a>
     </li></ul></dd>
     
 
@@ -996,7 +1023,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line887">line 887</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line857">line 857</a>
     </li></ul></dd>
     
 
@@ -1277,7 +1304,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line400">line 400</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line399">line 399</a>
     </li></ul></dd>
     
 
@@ -1408,7 +1435,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line358">line 358</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line357">line 357</a>
     </li></ul></dd>
     
 
@@ -1466,8 +1493,7 @@
 <div class="description">
     <p>Create a session
 Set-cookie header is returned with a cookie that must be used for
-each request using this session.
-The session expires after 15 minutes of inactivity.</p>
+each request using this session.</p>
 </div>
 
 
@@ -1609,7 +1635,7 @@ The session expires after 15 minutes of inactivity.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line304">line 304</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line303">line 303</a>
     </li></ul></dd>
     
 
@@ -1835,7 +1861,7 @@ The session expires after 15 minutes of inactivity.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line695">line 695</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line690">line 690</a>
     </li></ul></dd>
     
 
@@ -2038,7 +2064,7 @@ The session expires after 15 minutes of inactivity.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line570">line 570</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line565">line 565</a>
     </li></ul></dd>
     
 
@@ -2218,7 +2244,7 @@ The session expires after 15 minutes of inactivity.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line337">line 337</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line336">line 336</a>
     </li></ul></dd>
     
 
@@ -2445,7 +2471,7 @@ The session expires after 15 minutes of inactivity.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line1034">line 1034</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line1004">line 1004</a>
     </li></ul></dd>
     
 
@@ -2664,7 +2690,7 @@ The information includes the total number of words and out-of-vocabulary (OOV) w
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line639">line 639</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line634">line 634</a>
     </li></ul></dd>
     
 
@@ -2897,7 +2923,7 @@ The information includes the total number of words and out-of-vocabulary (OOV) w
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line673">line 673</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line668">line 668</a>
     </li></ul></dd>
     
 
@@ -3110,7 +3136,7 @@ The information includes the total number of words and out-of-vocabulary (OOV) w
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line505">line 505</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line500">line 500</a>
     </li></ul></dd>
     
 
@@ -3283,7 +3309,7 @@ The information includes the total number of words and out-of-vocabulary (OOV) w
 
             
 
-            <td class="description last"><p>optional filter. Currently only en-US is supported.</p></td>
+            <td class="description last"><p>optional filter.</p></td>
         </tr>
 
     
@@ -3354,7 +3380,7 @@ The information includes the total number of words and out-of-vocabulary (OOV) w
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line462">line 462</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line461">line 461</a>
     </li></ul></dd>
     
 
@@ -4182,7 +4208,7 @@ The returned state has to be 'initialized' to be able to do recognize POST.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line1010">line 1010</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line980">line 980</a>
     </li></ul></dd>
     
 
@@ -4472,7 +4498,7 @@ You can list all words from the custom model's words resource, only custom words
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line971">line 971</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line941">line 941</a>
     </li></ul></dd>
     
 
@@ -5358,7 +5384,7 @@ chunk data.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line549">line 549</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line544">line 544</a>
     </li></ul></dd>
     
 
@@ -5616,7 +5642,7 @@ chunk data.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line527">line 527</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line522">line 522</a>
     </li></ul></dd>
     
 
@@ -5914,7 +5940,7 @@ chunk data.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line821">line 821</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line791">line 791</a>
     </li></ul></dd>
     
 
@@ -5953,7 +5979,7 @@ chunk data.</p>
 
 <div class="description">
     <p>Waits while a customization status is 'pending' or 'training', fires callback once the status is 'ready' or 'available'.</p>
-<p>Note: the customization will remain in 'pending' status until at least one corpus is added. Calling this on a customization with no corpa will result in an error.</p>
+<p>Note: the customization will remain in 'pending' status until at least one word corpus is added.</p>
 <p>See http://www.ibm.com/watson/developercloud/speech-to-text/api/v1/#list_models for status details.</p>
 </div>
 
@@ -6213,7 +6239,7 @@ chunk data.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line726">line 726</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line721">line 721</a>
     </li></ul></dd>
     
 
@@ -6261,7 +6287,7 @@ chunk data.</p>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Jan 20 2017 15:24:22 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu Jan 26 2017 21:00:28 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>
