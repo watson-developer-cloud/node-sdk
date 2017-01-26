@@ -475,10 +475,6 @@ SpeechToTextV1.prototype.getCustomizations = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
-function isPending(customization) {
-  return (customization.status === 'pending' || customization.status === 'training')
-}
-
 /**
  * Get customization details
  *
@@ -712,7 +708,7 @@ SpeechToTextV1.ERR_TIMEOUT = 'ERR_TIMEOUT';
 /**
  * Waits while a customization status is 'pending' or 'training', fires callback once the status is 'ready' or 'available'.
  *
- * Note: the customization will remain in 'pending' status until at least one corpus is added. Calling this on a customization with no corpa will result in an error.
+ * Note: the customization will remain in 'pending' status until at least one word corpus is added.
  *
  * See http://www.ibm.com/watson/developercloud/speech-to-text/api/v1/#list_models for status details.
  *
@@ -725,25 +721,8 @@ SpeechToTextV1.ERR_TIMEOUT = 'ERR_TIMEOUT';
 SpeechToTextV1.prototype.whenCustomizationReady = function(params, callback) {
   var self = this;
 
-  async.parallel([
+    // check the customization status repeatedly until it's ready or available
 
-    // validate that it has at least one corpus
-    function(next) {
-      self.getCorpora(params, function(err, res) {
-        if (err) {
-          return next(err);
-        }
-        if (!res.corpora.length) {
-          err = new Error('Customization has no corpa and therefore will never be ready.');
-          err.code = SpeechToTextV1.ERR_NO_CORPORA;
-          return next(err)
-        }
-        next();
-      })
-    },
-
-    // check the customization status repeatedly until it's ready or avaliable
-    function(next) {
       var options = extend({
         interval: 5000,
         times: 30
@@ -754,32 +733,24 @@ SpeechToTextV1.prototype.whenCustomizationReady = function(params, callback) {
         // if the params.times limit is reached, the error will be passed to the user regardless
         return err.code === SpeechToTextV1.ERR_TIMEOUT;
       };
-      async.retry(options, function(done) {
+      async.retry(options, function(next) {
         self.getCustomization(params, function(err, customization) {
           if (err) {
-            done(err);
-          } else if (isPending(customization)) {
+            next(err);
+          } else if (customization.status === 'pending' || customization.status === 'training') {
             // if the loop times out, async returns the last error, which will be this one.
             err = new Error('Customization is still pending, try increasing interval or times params');
             err.code = SpeechToTextV1.ERR_TIMEOUT;
-            done(err);
+            next(err);
           } else if (customization.status === 'ready' || customization.status === 'available') {
-            done(null, customization);
+            next(null, customization);
           } else if (customization.status === 'failed') {
-            done(new Error('Customization training failed'));
+            next(new Error('Customization training failed'));
           } else {
-            done(new Error('Unexpected customization status: ' + customization.status));
+            next(new Error('Unexpected customization status: ' + customization.status));
           }
         })
-      }, next)
-    }
-
-  ], function(err, res) {
-    if (err) {
-      return callback(err);
-    }
-    callback(null, res[1]); // callback with the final customization object
-  });
+      }, callback);
 };
 
 // Check if there is a corpus that is still being processed
