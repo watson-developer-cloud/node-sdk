@@ -32,7 +32,7 @@ describe('alchemy_vision_integration', function() {
 
   it('getImageLinks() with url', function(done) {
     alchemy_vision.getImageLinks({
-      url: 'http://www.alchemyapi.com/products/alchemylanguage/microformats-parsing'
+      url: 'http://www.ibm.com/'
     }, done);
   });
 
