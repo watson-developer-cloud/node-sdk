@@ -140,9 +140,11 @@ TextToSpeechV1.prototype.pronunciation = function(params, callback) {
  *
  * Response looks like:
  *
+ * ```json
  * {
  *   "customization_id": "abc996ea-86ca-482e-b7ec-0f31c34e5ee9"
  * }
+ * ```
  *
  * @param {Object} params
  * @param {String} params.name
@@ -182,10 +184,12 @@ TextToSpeechV1.prototype.createCustomization = function(params, callback) {
  *
  * An example of params.words could be:
  *
+ * ```json
  *  [
  *    {"word":"NCAA", "translation":"N C double A"},
  *    {"word":"iPhone", "translation":"I phone"}
  *  ]
+ * ```
  *
  * @param {Object} params
  * @param {String} params.customization_id
@@ -217,6 +221,7 @@ TextToSpeechV1.prototype.updateCustomization = function(params, callback) {
  *
  * Example response:
  *
+ * ```json
 {
   "customizations": [
     {
@@ -238,7 +243,7 @@ TextToSpeechV1.prototype.updateCustomization = function(params, callback) {
       "last_modified": 1461173033323
     }
   ]
-}
+}```
  *
  *
  * @param {Object} [params]
@@ -270,7 +275,7 @@ TextToSpeechV1.prototype.getCustomizations = function(params, callback) {
  * Only the owner of a custom voice model can use this method to query information about the model.
  *
  * Example response:
- *
+ * ```json
  {
    "words": [
      {
@@ -289,7 +294,7 @@ TextToSpeechV1.prototype.getCustomizations = function(params, callback) {
    "customization_id": "53506a62-6861-41f5-9a44-352047edcf6f",
    "name": "First cURL Test Update",
    "description": "First customization test via cURL update"
- }
+ }```
  *
  *
  * @param {Object} params
@@ -339,10 +344,12 @@ TextToSpeechV1.prototype.deleteCustomization = function(params, callback) {
  *
  * An example of params.words could be:
  *
+ * ```json
  *  [
  *    {"word":"NCAA", "translation":"N C double A"},
  *    {"word":"iPhone", "translation":"I phone"}
  *  ]
+ * ```
  *
  * @param {Object} params
  * @param {String} params.customization_id
@@ -372,6 +379,7 @@ TextToSpeechV1.prototype.addWords = function(params, callback) {
  *
  * An example call could be
  *
+ * ```json
  *  myTextToSpeech.addWord({
  *      customization_id: '<model-id>',
  *      word: 'ACLs',
@@ -380,6 +388,7 @@ TextToSpeechV1.prototype.addWords = function(params, callback) {
  *    function(err, res) {
  *      console.log(err, res);
  *   });
+ * ```
  *
  * @param {Object} params
  * @param {String} params.customization_id
@@ -410,6 +419,7 @@ TextToSpeechV1.prototype.addWord = function(params, callback) {
  *
  * Example response:
  *
+ * ```json
  {
     "words": [
        {
@@ -434,7 +444,7 @@ TextToSpeechV1.prototype.addWord = function(params, callback) {
        }
     ]
  }
- *
+ *  ```
  *
  * @param {Object} params
  * @param {String} params.customization_id
@@ -463,9 +473,11 @@ TextToSpeechV1.prototype.getWords = function(params, callback) {
  *
  * Example output:
  *
+ * ```json
 {
   "translation": "ackles"
 }
+ * ```
  *
  * @param {Object} params
  * @param {String} params.customization_id
