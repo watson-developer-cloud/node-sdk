@@ -140,10 +140,110 @@ ConversationV1.prototype.message = function(params, callback) {
       url: '/v1/workspaces/{workspace_id}/message',
       method: 'POST',
       json: true,
+	  headers: pick(params, ['X-Watson-Origin']),
       body: pick(params, ['input', 'context', 'alternate_intents', 'output', 'entities', 'intents']),
       path: pick(params, ['workspace_id'])
     },
     requiredParams: ['workspace_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+ConversationV1.prototype.create_workspace = function(params, callback) {
+  params = params || {};
+
+  var parameters = {
+    options: {
+      url: '/v1/workspaces',
+      method: 'POST',
+      json: true,
+      body: pick(params, ['name', 'created', 'updated', 'language', 'entities', 'intents', 'dialog_nodes', 'metadata', 'description', 'counterexamples'])
+    },
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+ConversationV1.prototype.get_workspace = function(params, callback) {
+  params = params || {};
+
+  var parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}',
+      method: 'GET',
+      json: true,
+	  qs: pick(params, ['export']),
+      path: pick(params, ['workspace_id'])
+    },
+    requiredParams: ['workspace_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+ConversationV1.prototype.delete_workspace = function(params, callback) {
+  params = params || {};
+
+  var parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}',
+      method: 'DELETE',
+      json: true,
+      path: pick(params, ['workspace_id'])
+    },
+    requiredParams: ['workspace_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+ConversationV1.prototype.update_workspace = function(params, callback) {
+  params = params || {};
+
+  var parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}',
+      method: 'POST',
+      json: true,
+      body: pick(params, ['name', 'created', 'updated', 'language', 'entities', 'intents', 'dialog_nodes', 'metadata', 'description', 'counterexamples']),
+      path: pick(params, ['workspace_id'])
+    },
+    requiredParams: ['workspace_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+ConversationV1.prototype.workspace_status = function(params, callback) {
+  params = params || {};
+
+  var parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/status',
+      method: 'GET',
+      json: true,
+      path: pick(params, ['workspace_id'])
+    },
+    requiredParams: ['workspace_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+ConversationV1.prototype.workspace_logs = function(params, callback) {
+  params = params || {};
+
+  var parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/logs',
+      method: 'GET',
+      json: true,
+	  qs:pick(params, ['type','include-event','limit','q','sort','start_date_time','end_date_time','window_start_time','window_end_time']),
+	  headers: pick(params, ['X-Watson-Origin']),
+      path: pick(params, ['workspace_id'])
+    },
+    requiredParams: ['workspace_id','type'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
