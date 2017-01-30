@@ -1,5 +1,7 @@
 {
-  "globals": {
+'''
+  public static boolean(
+'''  "globals": {
     "jasmine": false,
     "spyOn": false,
     "it": false,
@@ -12,7 +14,7 @@
     "waits": false,
     "waitsFor": false,
     "runs": false
-  },
+  
 
   "node" : true,
   "browser" : false,
@@ -40,5 +42,8 @@
   "sub": true,
   "strict": true,
   "white": true,
-  "unused": true
+ ''' "unused": true
+  '''
+)boolean)
 }
+@0072016
