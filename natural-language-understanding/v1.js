@@ -131,6 +131,6 @@ NaturalLanguageUnderstandingV1.prototype.analyze = function(query, params, callb
   return requestFactory(parameters, callback);
 };
 
-NaturalLanguageUnderstandingV1.prototype.QueryBuilder = new QueryBuilder();
+NaturalLanguageUnderstandingV1.prototype.QueryBuilder = QueryBuilder;
 
 module.exports = NaturalLanguageUnderstandingV1;

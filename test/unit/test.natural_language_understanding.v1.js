@@ -16,7 +16,7 @@ describe('natural_language_understanding', function() {
 
 
   before(function() {
-    nlu = new watson.NaturalLanguageClassifierV1({username: 'user', password: 'pass'});
+    nlu = new watson.NaturalLanguageUnderstandingV1({username: 'user', password: 'pass'});
     nock.enableNetConnect();
   });
 
@@ -26,7 +26,7 @@ describe('natural_language_understanding', function() {
 
 
   it('analyze()', function() {
-    const query = new watson.NaturalLanguageClassifierV1.QueryBuilder();
+    const query = new nlu.QueryBuilder();
     query.getAllFeatures().withTextString('hello this is a test');
     nlu.analyze(query, null, function() { });
   });
