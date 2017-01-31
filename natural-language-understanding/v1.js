@@ -36,8 +36,9 @@ NaturalLanguageUnderstandingV1.URL = 'https://gateway-s.watsonplatform.net/natur
 NaturalLanguageUnderstandingV1.VERSION_DATE = '2016-01-23';
 
 const QueryBuilder = function(options) {
+  // todo: why not just set this._options = options || {}, or perhaps object.pick w/ a list of accepted options?
   this._options = {};
-  Object.keys(options).apply((item) => { this._options[item] = options[item] });
+  Object.keys(options || {}).forEach((item) => { this._options[item] = options[item] });
   return this;
 };
 
