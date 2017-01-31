@@ -304,10 +304,6 @@ ConversationV1.prototype.createWorkspace = function(params, callback) {
  *
  * Returns information about a specified workspace or return the whole workspace
  *
- * @param  {Object}   params   { workspace_id: '',  }
- * @param params.workspace_id
- * @param [params.export=false] - if true, the full contents of all of the sub-resources are returned
- *
  * Example Response (with default export value):
  {
   "name": "Pizza app",
@@ -318,6 +314,10 @@ ConversationV1.prototype.createWorkspace = function(params, callback) {
   "description": "Pizza app",
   "workspace_id": "pizza_app-e0f3"
  }
+ *
+ * @param  {Object}   params   { workspace_id: '',  }
+ * @param params.workspace_id
+ * @param [params.export=false] - if true, the full contents of all of the sub-resources are returned
  *
  */
  
@@ -343,10 +343,10 @@ ConversationV1.prototype.getWorkspace = function(params, callback) {
  *
  * Deletes the specified workspace
  *
+ * Response: {}
+ *
  * @param  {Object}   params   { workspace_id: '' }
  * @param params.workspace_id
- *
- * Response: {}
  *
  */
  
@@ -444,7 +444,7 @@ ConversationV1.prototype.deleteWorkspace = function(params, callback) {
   ]
  }
  *
- * Example Response
+ * Example Response:
  {
   "name": "Pizza app",
   "created": "2015-12-06T23:53:59.153Z",
@@ -492,14 +492,14 @@ ConversationV1.prototype.updateWorkspace = function(params, callback) {
  *
  * Returns the training status of the specified workspace
  *
- * @param  {Object}   params   { workspace_id: '',  }
- * @param params.workspace_id
- *
  * Example Response:
  {
   "workspace_id": "pizza_app-e0f3",
   "training": "true"
  }
+ *
+ * @param  {Object}   params   { workspace_id: '',  }
+ * @param params.workspace_id
  *
  */
 
@@ -523,18 +523,6 @@ ConversationV1.prototype.workspaceStatus = function(params, callback) {
  * Method: workspaceLogs
  *
  * Returns the conversation logs of the specified workspace
- *
- * @param  {Object}   params   { workspace_id: '', type: '',  }
- * @param params.workspace_id
- * @param params.type - type = message or conversation - When type=conversation the logs are grouped by conversation
- * @param [params.include-event]
- * @param [params.limit]
- * @param [params.q]
- * @param [params.sort]
- * @param [params.start_date_time]
- * @param [params.end_date_time]
- * @param [params.window_start_time]
- * @param [params.window_end_time]
  *
  * Example Response:
  {
@@ -603,6 +591,18 @@ ConversationV1.prototype.workspaceStatus = function(params, callback) {
   ],
   "totalConversations": 0
  }
+ *
+ * @param  {Object}   params   { workspace_id: '', type: '',  }
+ * @param params.workspace_id
+ * @param params.type - type = message or conversation - When type=conversation the logs are grouped by conversation
+ * @param [params.include-event]
+ * @param [params.limit]
+ * @param [params.q]
+ * @param [params.sort]
+ * @param [params.start_date_time]
+ * @param [params.end_date_time]
+ * @param [params.window_start_time]
+ * @param [params.window_end_time]
  *
  */
 
