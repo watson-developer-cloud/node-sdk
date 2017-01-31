@@ -18,9 +18,6 @@
 
 var requestFactory = require('../lib/requestwrapper');
 var pick = require('object.pick');
-// var omit = require('object.omit');
-// var isStream = require('isstream');
-// var toCSV = require('./json-training-to-csv');
 var util = require('util');
 var BaseService = require('../lib/base_service');
 
@@ -38,8 +35,86 @@ NaturalLanguageUnderstandingV1.prototype.version = 'v1';
 NaturalLanguageUnderstandingV1.URL = 'https://gateway-s.watsonplatform.net/natural-language-understanding/api/';
 NaturalLanguageUnderstandingV1.VERSION_DATE = '2016-01-23';
 
-NaturalLanguageUnderstandingV1.prototype.analyze = function(params, callback) {
-  params = params || {};
+const QueryBuilder = function(options) {
+  this._options = {};
+  Object.keys(options).apply((item) => { this._options[item] = options[item] });
+  return this;
+};
+
+const afeatures = ['concepts', 'entities', 'keywords',
+  'categories', 'emotion', 'sentiment',
+  'relations', 'semantic_roles'];
+
+QueryBuilder.prototype.availableFeatures = new Set(afeatures);
+
+QueryBuilder.prototype.getFeature = function(featureName) {
+  if (this.availableFeatures.has(featureName)) {
+    if (this._options.features) {
+      if (this._options.features.indexOf(featureName) === -1) {
+        this._options.features.push(featureName);
+      }
+    } else {
+      this._options.features = [ featureName ];
+    }
+    return this;
+  } else {
+    throw new Error(`${featureName} is not a valid feature`);
+  }
+}
+
+QueryBuilder.prototype.getFeatures = function(featureNames) {
+  featureNames.map((feature) => this.getFeature(feature) );
+  return this;
+}
+
+QueryBuilder.prototype.getAllFeatures = function() {
+  return this.getFeatures(afeatures);
+}
+
+QueryBuilder.prototype.withHtmlString = function(htmlstring) {
+  this._options.html = htmlstring;
+  if (this._options.text || this._options.url) {
+    throw new Error("Only one HTML, Text, or URL can be supplied");
+  }
+  return this;
+}
+
+QueryBuilder.prototype.withTextString = function(textstring) {
+  this._options.text = textstring;
+  if (this._options.html || this._options.url) {
+    throw new Error("Only one HTML, Text, or URL can be supplied");
+  }
+  return this;
+}
+
+QueryBuilder.prototype.withURL = function(urlstring) {
+  this._options.url = urlstring
+  if (this._options.html || this._options.text) {
+    throw new Error("Only one HTML, Text, or URL can be supplied");
+  }
+  return this;
+}
+
+QueryBuilder.prototype.json = function(prettyprint) {
+  if (prettyprint) {
+    return JSON.dumps(this._options,null,2);
+  } else {
+    return JSON.dumps(this._options);
+  }
+}
+
+QueryBuilder.prototype.object = function() {
+  return this._options;
+};
+
+NaturalLanguageUnderstandingV1.prototype.analyze = function(query, params, callback) {
+  if (typeof(params) === 'function') {
+    callback = params;
+    params = {};
+  } else {
+    params = params || {};
+  }
+
   params.version = params.version || NaturalLanguageUnderstandingV1.VERSION_DATE;
 
   var parameters = {
@@ -48,13 +123,14 @@ NaturalLanguageUnderstandingV1.prototype.analyze = function(params, callback) {
       method: 'POST',
       json: true,
       qs: pick(params, ['version']),
-      body: pick(params, ['text', 'html', 'features'])
+      body: query.object()
     },
-    requiredParams: ['features'],
+    requiredParams: ['collection_id', 'image_file'],
     defaultOptions: this._options
   };
-
   return requestFactory(parameters, callback);
-}
+};
+
+NaturalLanguageUnderstandingV1.prototype.QueryBuilder = new QueryBuilder();
 
 module.exports = NaturalLanguageUnderstandingV1;
