@@ -27,7 +27,7 @@ describe('natural_language_understanding', function() {
   it('analyze()', function(done) {
     nock(watson.NaturalLanguageUnderstandingV1.URL)
       .persist()
-      .post('/v1/analyze' + '?version=' + watson.NaturalLanguageUnderstandingV1.VERSION_DATE)
+      .post(`/v1/analyze?version=${watson.NaturalLanguageUnderstandingV1.VERSION_DATE}`)
       .reply(200, {});
 
     const query = new nlu.QueryBuilder();
