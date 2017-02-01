@@ -22,7 +22,7 @@ var util = require('util');
 var BaseService = require('../lib/base_service');
 
 /**
- *
+ * NaturalLanguageUnderstanding
  * @param options
  * @constructor
  */
@@ -32,30 +32,51 @@ function NaturalLanguageUnderstandingV1(options) {
 util.inherits(NaturalLanguageUnderstandingV1, BaseService);
 NaturalLanguageUnderstandingV1.prototype.name = 'natural_language_understanding';
 NaturalLanguageUnderstandingV1.prototype.version = 'v1';
-NaturalLanguageUnderstandingV1.URL = 'https://gateway-s.watsonplatform.net/natural-language-understanding/api/';
+NaturalLanguageUnderstandingV1.URL = 'https://gateway-s.watsonplatform.net/natural-language-understanding/api';
 NaturalLanguageUnderstandingV1.VERSION_DATE = '2016-01-23';
 
+/**
+  * QueryBuilder:  This object helps you build
+  * an NLU query.
+  * @param options: This is any api options you want to pass with your request
+  * @constructor
+  */
+
 const QueryBuilder = function(options) {
-  // todo: why not just set this._options = options || {}, or perhaps object.pick w/ a list of accepted options?
-  this._options = {};
-  Object.keys(options || {}).forEach((item) => { this._options[item] = options[item] });
+  this._options = options || {};
   return this;
 };
 
-const afeatures = ['concepts', 'entities', 'keywords',
-  'categories', 'emotion', 'sentiment',
-  'relations', 'semantic_roles'];
+/**
+  * These are the available features and their default arguments.
+  */
+const afeatures = {'concepts': {},
+                   'entities': {},
+                   'keywords': {},
+                   'categories': {},
+                   'emotion': {},
+                   'sentiment': {},
+                   'relations': {},
+                   'semantic_roles': {} };
 
-QueryBuilder.prototype.availableFeatures = new Set(afeatures);
+QueryBuilder.prototype.availableFeatures = new Set(Object.keys(afeatures));
 
-QueryBuilder.prototype.getFeature = function(featureName) {
+/**
+  * getFeature:  builds a query adding a feature to getFeature.
+  * @param {string} featureName the name of the feature. Must be in availableFeatures.
+  * @param {object} featureOptions options for that feature. May be null.
+  * @returns {self} returns the query builder so they can be chained.
+  */
+QueryBuilder.prototype.getFeature = function(featureName, featureOptions) {
+  const options = featureOptions || {};
   if (this.availableFeatures.has(featureName)) {
     if (this._options.features) {
-      if (this._options.features.indexOf(featureName) === -1) {
-        this._options.features.push(featureName);
+      if (!this._options.features.hasOwnProperty(featureName)) {
+        this._options.features[featureName] = options;
       }
     } else {
-      this._options.features = [ featureName ];
+      this._options.features = {};
+      this._options.features[featureName] = options;
     }
     return this;
   } else {
@@ -63,15 +84,29 @@ QueryBuilder.prototype.getFeature = function(featureName) {
   }
 }
 
-QueryBuilder.prototype.getFeatures = function(featureNames) {
-  featureNames.map((feature) => this.getFeature(feature) );
+/**
+  * getFeatures:  builds a query adding the features to getFeature.
+  * @param {object} featureDict a dictionary of features and their options.
+  * @returns {self} returns the query builder so they can be chained.
+  */
+QueryBuilder.prototype.getFeatures = function(featureDict) {
+  Object.keys(featureDict).map((feature) => this.getFeature(feature, featureDict[feature]));
   return this;
 }
 
+/**
+  * Get all available features
+  * @returns {self} returns the query builder so they can be chained
+  */
 QueryBuilder.prototype.getAllFeatures = function() {
   return this.getFeatures(afeatures);
 }
 
+/**
+  * adds the HTML content to the query
+  * @param {string} htmlstring a string of html content
+  * @returns {self} returns the query builder so they can be chained
+  */
 QueryBuilder.prototype.withHtmlString = function(htmlstring) {
   this._options.html = htmlstring;
   if (this._options.text || this._options.url) {
@@ -80,6 +115,11 @@ QueryBuilder.prototype.withHtmlString = function(htmlstring) {
   return this;
 }
 
+/**
+  * adds the Text content to the query
+  * @param {string} textstring a string of text content
+  * @returns {self} returns the query builder so they can be chained
+  */
 QueryBuilder.prototype.withTextString = function(textstring) {
   this._options.text = textstring;
   if (this._options.html || this._options.url) {
@@ -88,6 +128,11 @@ QueryBuilder.prototype.withTextString = function(textstring) {
   return this;
 }
 
+/**
+  * adds the URL to fetch to the query
+  * @param {string} urlstring a string of a url to fetch
+  * @returns {self} returns the query builder so they can be chained
+  */
 QueryBuilder.prototype.withURL = function(urlstring) {
   this._options.url = urlstring
   if (this._options.html || this._options.text) {
@@ -96,18 +141,21 @@ QueryBuilder.prototype.withURL = function(urlstring) {
   return this;
 }
 
-QueryBuilder.prototype.json = function(prettyprint) {
-  if (prettyprint) {
-    return JSON.dumps(this._options,null,2);
-  } else {
-    return JSON.dumps(this._options);
-  }
-}
-
+/**
+  * Object returns the query data
+  * @returns {object} just the query options, formatted for the api
+  */
 QueryBuilder.prototype.object = function() {
   return this._options;
 };
 
+/**
+  * Analyze the query.
+  * @params {QueryBuilder} query a QueryBuilder query
+  * @params {object} params any addtional request params, can be null
+  * @params {function} callback taking (error,  jsonResult)
+  * @returns {void}
+  */
 NaturalLanguageUnderstandingV1.prototype.analyze = function(query, params, callback) {
   if (typeof(params) === 'function') {
     callback = params;
@@ -126,7 +174,6 @@ NaturalLanguageUnderstandingV1.prototype.analyze = function(query, params, callb
       qs: pick(params, ['version']),
       body: query.object()
     },
-    requiredParams: ['collection_id', 'image_file'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
