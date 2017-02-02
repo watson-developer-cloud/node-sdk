@@ -17,7 +17,6 @@
 'use strict';
 
 var requestFactory = require('../lib/requestwrapper');
-var pick = require('object.pick');
 var util = require('util');
 var BaseService = require('../lib/base_service');
 
@@ -38,18 +37,6 @@ NaturalLanguageUnderstandingV1.prototype.name = 'natural_language_understanding'
 NaturalLanguageUnderstandingV1.prototype.version = 'v1';
 NaturalLanguageUnderstandingV1.URL = 'https://gateway-s.watsonplatform.net/natural-language-understanding/api';
 NaturalLanguageUnderstandingV1.VERSION_DATE = '2016-01-23';
-
-/**
-  * QueryBuilder:  This object helps you build
-  * an NLU query.
-  * @param options: This is any api options you want to pass with your request
-  * @constructor
-  */
-
-const QueryBuilder = function(options) {
-  this._options = options || {};
-  return this;
-};
 
 /**
   * Analyze the query.

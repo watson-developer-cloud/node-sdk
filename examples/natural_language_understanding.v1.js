@@ -1,5 +1,4 @@
 const fs = require('fs');
-const os = require('os');
 const NaturalLanguageUnderstandingV1 = require('../natural-language-understanding/v1.js');
 
 const auth = {username: process.env['DISCOVERY_USERNAME'] || '<USERNAME>',
