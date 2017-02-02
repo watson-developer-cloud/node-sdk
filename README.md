@@ -256,15 +256,15 @@ The Dialog service was deprecated on August 15, 2016, existing instances of the 
 
 ### Discovery
 
-Use the [Discovery Service][discovery] to search and analyize structured and unstructured data.
+Use the [Discovery Service][discovery] to search and analyze structured and unstructured data.
 
 ```javascript
-var DiscoveryV1Experimental = require('watson-developer-cloud/discovery/v1-experimental');
+var DiscoveryV1 = require('watson-developer-cloud/discovery/v1');
 
-var discovery = new DiscoveryV1Experimental({
+var discovery = new DiscoveryV1({
   username: '<username>',
   password: '<password>',
-  version_date: DiscoveryV1Experimental.VERSION_DATE_2016_07_11
+  version_date: DiscoveryV1.VERSION_DATE_2016_12_15
 });
 
 discovery.query({
