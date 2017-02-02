@@ -35,13 +35,34 @@ function NaturalLanguageUnderstandingV1(options) {
 util.inherits(NaturalLanguageUnderstandingV1, BaseService);
 NaturalLanguageUnderstandingV1.prototype.name = 'natural_language_understanding';
 NaturalLanguageUnderstandingV1.prototype.version = 'v1';
-NaturalLanguageUnderstandingV1.URL = 'https://gateway-s.watsonplatform.net/natural-language-understanding/api';
+NaturalLanguageUnderstandingV1.URL = 'https://gateway.watsonplatform.net/natural-language-understanding/api';
 NaturalLanguageUnderstandingV1.VERSION_DATE = '2016-01-23';
 
 /**
   * Analyze the query.
   * @params {object} params for the query
+  * @param {Object} [params.headers] - The headers added
+  * @param {string} [params.text] - The text to analyze.
+  * @param {string} [params.html] - The html to analyze.
+  * @param {string} [params.url] - The url to fetch and analyze.
+  * @param {object} [params.features] - The features to retrieve (need at least one)
+  * @param {object} [params.features.concepts] - The concepts feature
+  * @param {object} [params.features.entities] - The entities feature
+  * @param {object} [params.features.keywords] - keywords feature
+  * @param {object} [params.features.categories] - categories feature
+  * @param {object} [params.features.emotion] - emotion feature
+  * @param {object} [params.features.sentiment] - sentiment feature
+  * @param {object} [params.features.relations] - relations feature
+  * @param {object} [params.features.semantic_roles] - semantic roles feature
   * @params {function} callback taking (error,  jsonResult)
+  * @example
+  * const options = { 'text': 'I am some text to analyze, am I not cool?',
+  *                   'features': {
+  *                                 'concepts': {},
+  *                                 'emotion': {},
+  *                    },
+  *                 };
+  * nlu.analyze(options, myCallbackFunction);
   * @returns {void}
   */
 NaturalLanguageUnderstandingV1.prototype.analyze = function(params, callback) {

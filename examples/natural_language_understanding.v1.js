@@ -1,8 +1,9 @@
 const fs = require('fs');
 const NaturalLanguageUnderstandingV1 = require('../natural-language-understanding/v1.js');
 
-const auth = {username: process.env['DISCOVERY_USERNAME'] || '<USERNAME>',
-              password: process.env['DISCOVERY_PASSWORD'] || '<PASSWORD>',
+const auth = {username: process.env['NATURAL_LANGUAGE_UNDERSTANDING_USERNAME'] || '<USERNAME>',
+              password: process.env['NATURAL_LANGUAGE_UNDERSTANDING_PASSWORD'] || '<PASSWORD>',
+              url: 'https://gateway-s.watsonplatform.net/natural-language-understanding/api',
               version_date: NaturalLanguageUnderstandingV1.VERSION_DATE};
 const nlu = new NaturalLanguageUnderstandingV1(auth);
 
