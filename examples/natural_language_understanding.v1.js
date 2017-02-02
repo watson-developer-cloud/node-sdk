@@ -1,9 +1,14 @@
 var fs = require('fs');
-var NaturalLanguageUnderstandingV1 = require('../natural-language-understanding/v1.js');
+var NaturalLanguageUnderstandingV1 = require('watson-developer-cloud/natural-language-understanding/v1.js');
+require('dotenv').config({silent: true}); //  optional
 
-var auth = {url: 'https://gateway-s.watsonplatform.net/natural-language-understanding/api',
-            version_date: NaturalLanguageUnderstandingV1.VERSION_DATE_2016_01_23};
-var nlu = new NaturalLanguageUnderstandingV1(auth);
+var nlu = new NaturalLanguageUnderstandingV1({
+  // note: if unspecified here, credentials are pulled from environment properties:
+  // NATURAL_LANGUAGE_UNDERSTANDING_USERNAME &  NATURAL_LANGUAGE_UNDERSTANDING_PASSWORD
+  // username: '<username>'.
+  // password: '<password>',
+  version_date: NaturalLanguageUnderstandingV1.VERSION_DATE_2016_01_23
+});
 
 var filename = '../test/resources/natural_language_understanding/energy-policy.html';
 fs.readFile(filename, 'utf-8', function(file_error, file_data) {
@@ -16,10 +21,12 @@ fs.readFile(filename, 'utf-8', function(file_error, file_data) {
       'keywords': {},
       }
     };
-    var res = nlu.analyze(options, function(err, fetchresult)
+    nlu.analyze(options, function(err, res)
       {
-        console.log(fetchresult);
         if (err) {
-          console.log(res);
-        }});
-      }});
+          console.log(err);
+          return;
+        }
+        console.log(res);
+      });
+    }});
