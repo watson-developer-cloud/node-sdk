@@ -168,7 +168,8 @@ VisualRecognitionV3.prototype.initCredentials = function(options) {
  */
 VisualRecognitionV3.prototype.getCredentialsFromEnvironment = function(name) {
   return {
-    api_key: process.env[name.toUpperCase() + '_API_KEY']
+    api_key: process.env[name.toUpperCase() + '_API_KEY'],
+    url: process.env[name + '_URL']
   }
 };
 
