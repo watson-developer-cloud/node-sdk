@@ -41,7 +41,21 @@ describe('BaseService', function() {
     assert.deepEqual(actual, expected);
   });
 
-  it('should return credentials from the environment', function() {
+  it('should return credentials and url from the environment', function() {
+    process.env.TEST_USERNAME='env_user';
+    process.env.TEST_PASSWORD='env_pass';
+    process.env.TEST_URL='http://foo';
+    var instance = new TestService();
+    var actual = instance.getCredentials();
+    var expected = {
+      username: 'env_user',
+      password: 'env_pass',
+      url: 'http://foo'
+    };
+    assert.deepEqual(actual, expected);
+  });
+
+  it('should allow mixing credentials from the environment and the default url', function() {
     process.env.TEST_USERNAME='env_user';
     process.env.TEST_PASSWORD='env_pass';
     var instance = new TestService();
