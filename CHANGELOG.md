@@ -1,3 +1,7 @@
+# v2.16.0
+* Added NaturalLanguageUnderstandingV1
+* Added support for pulling SERVICE_NAME_URL from enviroment properties along with username and password (or api key)
+
 # v2.15.5
 * stt.whenCustomizationReady() no longer incorrectly requires that a corpus be added. (#382)
 * various JSDoc corrections
@@ -13,7 +17,7 @@
 * Fix param checking on various TTS customization methods
 
 # v2.14.6
-* Fix incorrect error messates (#373)
+* Fix incorrect error messages (#373)
 
 # v2.14.5
 * Fix issue where adding a document as buffer/string fails in Discovery v1 (#370)

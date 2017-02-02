@@ -27,6 +27,7 @@ Node.js client library to use the [Watson Developer Cloud][wdc] services, a coll
     * [Document Conversion](#document-conversion)
     * [Language Translator](#language-translator)
     * [Natural Language Classifier](#natural-language-classifier)
+    * [Natural Language Understanding](#natural-language-understanding)
     * [Personality Insights](#personality-insights)
     * [Relationship Extraction](#relationship-extraction)
     * [Retrieve and Rank](#retrieve-and-rank)
@@ -52,7 +53,7 @@ The order of preference is now:
 
 1. User-supplied credentials passed to the service constructor
 
-2. `SERVICE_NAME_USERNAME` and `SERVICE_NAME_PASSWORD` environment properties (or `SERVICE_NAME_API_KEY` when appropriate)
+2. `SERVICE_NAME_USERNAME` and `SERVICE_NAME_PASSWORD` environment properties (or `SERVICE_NAME_API_KEY` when appropriate) and, optionally, `SERVICE_NAME_URL`
 
 3. Bluemix-supplied credentials (via the `VCAP_SERVICES` JSON-encoded environment property)
 
@@ -397,6 +398,36 @@ natural_language_classifier.classify({
 ```
 
 See this [example](https://github.com/watson-developer-cloud/node-sdk/blob/master/examples/natural_language_classifier.v1.js) to learn how to create a classifier.
+
+### Natural Language Understanding
+
+Use Natural Language Understanding is a collection of natural language processing APIs that help you understand sentiment,
+ keywords, entities, high-level concepts and more.
+
+```javascript
+var fs = require('fs');
+var NaturalLanguageUnderstandingV1 = require('watson-developer-cloud/natural-language-understanding/v1.js');
+
+var nlu = new NaturalLanguageUnderstandingV1({
+  username: '<username>',
+  password: '<password>',
+  version_date: NaturalLanguageUnderstandingV1.VERSION_DATE_2016_01_23
+});
+
+nlu.analyze({
+  'html': file_data, // Buffer or String
+  'features': {
+    'concepts': {},
+    'keywords': {},
+  }
+}, function(err, response) {
+     if (err)
+       console.log('error:', err);
+     else
+       console.log(JSON.stringify(response, null, 2));
+ });
+
+```
 
 ### Personality Insights
 Analyze text in English and get a personality profile by using the
