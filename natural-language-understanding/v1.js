@@ -36,7 +36,7 @@ util.inherits(NaturalLanguageUnderstandingV1, BaseService);
 NaturalLanguageUnderstandingV1.prototype.name = 'natural_language_understanding';
 NaturalLanguageUnderstandingV1.prototype.version = 'v1';
 NaturalLanguageUnderstandingV1.URL = 'https://gateway.watsonplatform.net/natural-language-understanding/api';
-NaturalLanguageUnderstandingV1.VERSION_DATE = '2016-01-23';
+NaturalLanguageUnderstandingV1.VERSION_DATE_2016_01_23 = '2016-01-23';
 
 /**
   * Analyze the query.
@@ -56,6 +56,7 @@ NaturalLanguageUnderstandingV1.VERSION_DATE = '2016-01-23';
   * @param {object} [params.features.semantic_roles] - semantic roles feature
   * @params {function} callback taking (error,  jsonResult)
   * @example
+  * ```
   * const options = { 'text': 'I am some text to analyze, am I not cool?',
   *                   'features': {
   *                                 'concepts': {},
@@ -63,6 +64,7 @@ NaturalLanguageUnderstandingV1.VERSION_DATE = '2016-01-23';
   *                    },
   *                 };
   * nlu.analyze(options, myCallbackFunction);
+  * ```
   * @returns {void}
   */
 NaturalLanguageUnderstandingV1.prototype.analyze = function(params, callback) {

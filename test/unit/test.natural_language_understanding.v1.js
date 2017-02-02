@@ -18,7 +18,7 @@ describe('natural_language_understanding', function() {
   before(function() {
     nlu = new watson.NaturalLanguageUnderstandingV1({username: 'user',
                                                      password: 'pass',
-                                                     version_date: watson.NaturalLanguageUnderstandingV1.VERSION_DATE});
+                                                     version_date: watson.NaturalLanguageUnderstandingV1.VERSION_DATE_2016_01_23});
     nock.disableNetConnect();
   });
 
@@ -28,8 +28,7 @@ describe('natural_language_understanding', function() {
 
   it('should throw if no version is present', function(done) {
     assert.throws(function() {
-      const badnlu = new watson.NaturalLanguageUnderstandingV1({username: 'user',
-                                                                password: 'pass'});
+      var badnlu = new watson.NaturalLanguageUnderstandingV1({username: 'user', password: 'pass'});
       assert(badnlu);
     });
     done();
@@ -38,11 +37,11 @@ describe('natural_language_understanding', function() {
   it('analyze()', function(done) {
     nock(watson.NaturalLanguageUnderstandingV1.URL)
       .persist()
-      .post(`/v1/analyze?version=${watson.NaturalLanguageUnderstandingV1.VERSION_DATE}`)
+      .post('/v1/analyze?version=' + watson.NaturalLanguageUnderstandingV1.VERSION_DATE_2016_01_23)
       .reply(200, {});
 
-    const options = { 'features': {'concepts': {}, 'keywords': {}},
-                      'text': 'hello, this is a test' };
+    var options = { 'features': {'concepts': {}, 'keywords': {}},
+                    'text': 'hello, this is a test' };
 
     nlu.analyze(options, done);
   });
