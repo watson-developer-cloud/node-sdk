@@ -28,6 +28,10 @@ var BaseService = require('../lib/base_service');
  */
 function NaturalLanguageUnderstandingV1(options) {
   BaseService.call(this, options);
+  if (typeof this._options.version_date === 'undefined') {
+    throw new Error('Argument error: version_date was not specified, use 2016-01-23');
+  }
+  this._options.qs.version = this._options.version_date;
 }
 util.inherits(NaturalLanguageUnderstandingV1, BaseService);
 NaturalLanguageUnderstandingV1.prototype.name = 'natural_language_understanding';
@@ -164,14 +168,12 @@ NaturalLanguageUnderstandingV1.prototype.analyze = function(query, params, callb
     params = params || {};
   }
 
-  params.version = params.version || NaturalLanguageUnderstandingV1.VERSION_DATE;
 
   var parameters = {
     options: {
       url: '/v1/analyze',
       method: 'POST',
       json: true,
-      qs: pick(params, ['version']),
       body: query.object()
     },
     defaultOptions: this._options

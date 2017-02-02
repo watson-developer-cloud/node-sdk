@@ -16,12 +16,23 @@ describe('natural_language_understanding', function() {
   var nlu;
 
   before(function() {
-    nlu = new watson.NaturalLanguageUnderstandingV1({username: 'user', password: 'pass'});
+    nlu = new watson.NaturalLanguageUnderstandingV1({username: 'user',
+                                                     password: 'pass',
+                                                     version_date: watson.NaturalLanguageUnderstandingV1.VERSION_DATE});
     nock.disableNetConnect();
   });
 
   after(function() {
     nock.cleanAll();
+  });
+
+  it('should throw if no version is present', function(done) {
+    assert.throws(function() {
+      const badnlu = new watson.NaturalLanguageUnderstandingV1({username: 'user',
+                                                                password: 'pass'});
+      assert(badnlu);
+    });
+    done();
   });
 
   it('analyze()', function(done) {

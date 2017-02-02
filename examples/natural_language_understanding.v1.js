@@ -1,7 +1,9 @@
 const fs = require('fs');
 const NaturalLanguageUnderstandingV1 = require('../natural-language-understanding/v1.js');
 
-const auth = {username: '<USERNAME>',password: '<PASSWORD>'};
+const auth = {username: '<USERNAME>',
+              password: '<PASSWORD>',
+              version_date= NaturalLanguageUnderstandingV1.VERSION_DATE};
 const nlu = new NaturalLanguageUnderstandingV1(auth);
 
 const query = new nlu.QueryBuilder();
