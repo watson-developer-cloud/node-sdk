@@ -28,7 +28,7 @@ var BaseService = require('../lib/base_service');
 function NaturalLanguageUnderstandingV1(options) {
   BaseService.call(this, options);
   if (typeof this._options.version_date === 'undefined') {
-    throw new Error('Argument error: version_date was not specified, use 2016-01-23');
+    throw new Error('Argument error: version_date was not specified, use NaturalLanguageUnderstandingV1.VERSION_DATE_2016_01_23');
   }
   this._options.qs.version = this._options.version_date;
 }
