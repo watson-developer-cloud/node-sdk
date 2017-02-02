@@ -52,135 +52,23 @@ const QueryBuilder = function(options) {
 };
 
 /**
-  * These are the available features and their default arguments.
-  */
-const afeatures = {'concepts': {},
-                   'entities': {},
-                   'keywords': {},
-                   'categories': {},
-                   'emotion': {},
-                   'sentiment': {},
-                   'relations': {},
-                   'semantic_roles': {} };
-
-QueryBuilder.prototype.availableFeatures = new Set(Object.keys(afeatures));
-
-/**
-  * getFeature:  builds a query adding a feature to getFeature.
-  * @param {string} featureName the name of the feature. Must be in availableFeatures.
-  * @param {object} featureOptions options for that feature. May be null.
-  * @returns {self} returns the query builder so they can be chained.
-  */
-QueryBuilder.prototype.getFeature = function(featureName, featureOptions) {
-  const options = featureOptions || {};
-  if (this.availableFeatures.has(featureName)) {
-    if (this._options.features) {
-      if (!this._options.features.hasOwnProperty(featureName)) {
-        this._options.features[featureName] = options;
-      }
-    } else {
-      this._options.features = {};
-      this._options.features[featureName] = options;
-    }
-    return this;
-  } else {
-    throw new Error(`${featureName} is not a valid feature`);
-  }
-}
-
-/**
-  * getFeatures:  builds a query adding the features to getFeature.
-  * @param {object} featureDict a dictionary of features and their options.
-  * @returns {self} returns the query builder so they can be chained.
-  */
-QueryBuilder.prototype.getFeatures = function(featureDict) {
-  Object.keys(featureDict).map((feature) => this.getFeature(feature, featureDict[feature]));
-  return this;
-}
-
-/**
-  * Get all available features
-  * @returns {self} returns the query builder so they can be chained
-  */
-QueryBuilder.prototype.getAllFeatures = function() {
-  return this.getFeatures(afeatures);
-}
-
-/**
-  * adds the HTML content to the query
-  * @param {string} htmlstring a string of html content
-  * @returns {self} returns the query builder so they can be chained
-  */
-QueryBuilder.prototype.withHtmlString = function(htmlstring) {
-  this._options.html = htmlstring;
-  if (this._options.text || this._options.url) {
-    throw new Error("Only one HTML, Text, or URL can be supplied");
-  }
-  return this;
-}
-
-/**
-  * adds the Text content to the query
-  * @param {string} textstring a string of text content
-  * @returns {self} returns the query builder so they can be chained
-  */
-QueryBuilder.prototype.withTextString = function(textstring) {
-  this._options.text = textstring;
-  if (this._options.html || this._options.url) {
-    throw new Error("Only one HTML, Text, or URL can be supplied");
-  }
-  return this;
-}
-
-/**
-  * adds the URL to fetch to the query
-  * @param {string} urlstring a string of a url to fetch
-  * @returns {self} returns the query builder so they can be chained
-  */
-QueryBuilder.prototype.withURL = function(urlstring) {
-  this._options.url = urlstring
-  if (this._options.html || this._options.text) {
-    throw new Error("Only one HTML, Text, or URL can be supplied");
-  }
-  return this;
-}
-
-/**
-  * Object returns the query data
-  * @returns {object} just the query options, formatted for the api
-  */
-QueryBuilder.prototype.object = function() {
-  return this._options;
-};
-
-/**
   * Analyze the query.
-  * @params {QueryBuilder} query a QueryBuilder query
-  * @params {object} params any addtional request params, can be null
+  * @params {object} params for the query
   * @params {function} callback taking (error,  jsonResult)
   * @returns {void}
   */
-NaturalLanguageUnderstandingV1.prototype.analyze = function(query, params, callback) {
-  if (typeof(params) === 'function') {
-    callback = params;
-    params = {};
-  } else {
-    params = params || {};
-  }
-
+NaturalLanguageUnderstandingV1.prototype.analyze = function(params, callback) {
 
   var parameters = {
     options: {
       url: '/v1/analyze',
       method: 'POST',
       json: true,
-      body: query.object()
+      body: params
     },
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };
-
-NaturalLanguageUnderstandingV1.prototype.QueryBuilder = QueryBuilder;
 
 module.exports = NaturalLanguageUnderstandingV1;

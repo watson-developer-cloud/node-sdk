@@ -41,10 +41,9 @@ describe('natural_language_understanding', function() {
       .post(`/v1/analyze?version=${watson.NaturalLanguageUnderstandingV1.VERSION_DATE}`)
       .reply(200, {});
 
-    const query = new nlu.QueryBuilder();
-    assert(typeof(query._options.features) === 'undefined');
-    query.getAllFeatures().withTextString('hello this is a test');
-    assert(Object.keys(query._options.features).length > 0);
-    nlu.analyze(query, null, done);
+    const options = { 'features': {'concepts': {}, 'keywords': {}},
+                      'text': 'hello, this is a test' };
+
+    nlu.analyze(options, done);
   });
 });
