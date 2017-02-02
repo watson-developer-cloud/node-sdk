@@ -92,7 +92,7 @@
     "websocket": "~1.0.22"
   },
   "engines": {
-    "node": ">=6"
+    "node": ">=4"
   },
   "scripts": {
     "test": "npm run lint && mocha test/unit test/integration",
