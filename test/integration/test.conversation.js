@@ -1,24 +1,23 @@
 'use strict';
 
-var nock = require('nock');
-var watson = require('../../index');
-var assert = require('assert');
-var authHelper = require('./auth_helper.js');
-var auth = authHelper.auth;
-var describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
-var assign = require('object.assign'); // for node v0.12 compatibility
-var ConversationV1 = require('../../conversation/v1');
+const nock = require('nock');
+const watson = require('../../index');
+const assert = require('assert');
+const authHelper = require('./auth_helper.js');
+const auth = authHelper.auth;
+const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
+const assign = require('object.assign'); // for node v0.12 compatibility
+const ConversationV1 = require('../../conversation/v1');
 
-var TEN_SECONDS = 10000;
-var TWO_SECONDS = 2000;
-
+const TEN_SECONDS = 10000;
+const TWO_SECONDS = 2000;
 
 describe('conversation_integration', function() {
   this.timeout(TEN_SECONDS);
   this.slow(TWO_SECONDS); // this controls when the tests get a colored warning for taking too long
   this.retries(1);
 
-  var conversation;
+  let conversation;
 
   before(function() {
     conversation = watson.conversation(auth.conversation);
@@ -31,7 +30,7 @@ describe('conversation_integration', function() {
 
   describe('message()', function() {
     it('alternate_intents', function(done) {
-      var params = {
+      const params = {
         input: {
           text: 'Turn on the lights'
         },
@@ -49,10 +48,12 @@ describe('conversation_integration', function() {
     });
 
     it('dialog_stack with 2016-09-20 version_date', function(done) {
-      var constructorParams = assign({}, auth.conversation, {version_date: ConversationV1.VERSION_DATE_2016_09_20});
-      var conversation = watson.conversation(constructorParams);
+      const constructorParams = assign({}, auth.conversation, {
+        version_date: ConversationV1.VERSION_DATE_2016_09_20
+      });
+      const conversation = watson.conversation(constructorParams);
 
-      var params = {
+      const params = {
         input: {
           text: 'Turn on the lights'
         },
@@ -63,16 +64,18 @@ describe('conversation_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.deepEqual(result.context.system.dialog_stack, [{dialog_node: 'root'}]);
+        assert.deepEqual(result.context.system.dialog_stack, [{ dialog_node: 'root' }]);
         done();
       });
     });
 
     it('dialog_stack with 2016-07-11 version_date', function(done) {
-      var constructorParams = assign({}, auth.conversation, {version_date: ConversationV1.VERSION_DATE_2016_07_11});
-      var conversation = watson.conversation(constructorParams);
+      const constructorParams = assign({}, auth.conversation, {
+        version_date: ConversationV1.VERSION_DATE_2016_07_11
+      });
+      const conversation = watson.conversation(constructorParams);
 
-      var params = {
+      const params = {
         input: {
           text: 'Turn on the lights'
         },
@@ -88,5 +91,4 @@ describe('conversation_integration', function() {
       });
     });
   });
-
 });

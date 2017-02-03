@@ -1,12 +1,12 @@
 'use strict';
-/*eslint-env es6*/
+/* eslint-env es6*/
 
-var watson = require('watson-developer-cloud');
+const watson = require('watson-developer-cloud');
 
 /**
  * Instantiate the Watson Conversation Service
  */
-var conversation = new watson.ConversationV1({
+const conversation = new watson.ConversationV1({
   username: process.env.CONVERSATION_USERNAME || '<conversation_username>',
   password: process.env.CONVERSATION_PASSWORD || '<conversation_password>',
   version_date: watson.ConversationV1.VERSION_DATE_2016_09_20
@@ -16,10 +16,10 @@ var conversation = new watson.ConversationV1({
  * Payload for the Watson Conversation Service
  * <workspace-id> and user input text required.
  */
-var payload = {
+const payload = {
   workspace_id: process.env.WORKSPACE_ID || '<workspace_id>',
   input: {
-    text: "I am happy to talk to you today."
+    text: 'I am happy to talk to you today.'
   }
 };
 

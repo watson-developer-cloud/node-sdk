@@ -5,9 +5,13 @@
   "private": true,
   "license": "Apache-2.0",
   "dependencies": {
+    "async": "^2.1.4",
     "dotenv": "^2.0.0",
     "speaker": "^0.3.0",
     "watson-developer-cloud": "*",
     "wav": "^1.0.1"
+  },
+  "engines": {
+    "node": ">=4"
   }
 }

@@ -16,10 +16,10 @@
 
 'use strict';
 
-var requestFactory = require('../lib/requestwrapper');
-var omit           = require('object.omit');
-var util = require('util');
-var BaseService = require('../lib/base_service');
+const requestFactory = require('../lib/requestwrapper');
+const omit = require('object.omit');
+const util = require('util');
+const BaseService = require('../lib/base_service');
 
 /**
  *
@@ -52,15 +52,15 @@ TradeoffAnalyticsV1.URL = 'https://gateway.watsonplatform.net/tradeoff-analytics
 TradeoffAnalyticsV1.prototype.dilemmas = function(params, callback) {
   params = params || {};
 
-  var parameters = {
+  const parameters = {
     options: {
       method: 'POST',
       url: '/v1/dilemmas',
-      body: omit(params,['metadata_header', 'generate_visualization']),
+      body: omit(params, ['metadata_header', 'generate_visualization']),
       headers: {
-        'x-watson-metadata' : params.metadata_header
+        'x-watson-metadata': params.metadata_header
       },
-      qs: params.generate_visualization === false ? { 'generate_visualization' : false} : {},
+      qs: params.generate_visualization === false ? { generate_visualization: false } : {},
       json: true
     },
     requiredParams: ['columns', 'subject', 'options'],
@@ -69,7 +69,7 @@ TradeoffAnalyticsV1.prototype.dilemmas = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
- /**
+/**
  * Forward events from the Tradeoff Analytics widget to the service
  *
  * @param  {String} params - the array of events to forward to the service
@@ -79,13 +79,13 @@ TradeoffAnalyticsV1.prototype.dilemmas = function(params, callback) {
 TradeoffAnalyticsV1.prototype.events = function(params, callback) {
   params = params || {};
 
-  var parameters = {
+  const parameters = {
     options: {
       method: 'POST',
       url: '/v1/events',
-      body: omit(params,['metadata_header', 'generate_visualization']),
+      body: omit(params, ['metadata_header', 'generate_visualization']),
       headers: {
-        'x-watson-metadata' : params.metadata_header
+        'x-watson-metadata': params.metadata_header
       },
       json: true
     },

@@ -16,11 +16,11 @@
 
 'use strict';
 
-var requestFactory = require('../lib/requestwrapper');
-var pick           = require('object.pick');
-var helper         = require('../lib/helper');
-var util = require('util');
-var BaseService = require('../lib/base_service');
+const requestFactory = require('../lib/requestwrapper');
+const pick = require('object.pick');
+const helper = require('../lib/helper');
+const util = require('util');
+const BaseService = require('../lib/base_service');
 
 /**
  *
@@ -46,38 +46,42 @@ PersonalityInsightsV2.URL = 'https://gateway.watsonplatform.net/personality-insi
  *
  * @param callback The callback.
  */
-PersonalityInsightsV2.prototype.profile = function(params, callback) { // eslint-disable-line complexity
+PersonalityInsightsV2.prototype.profile = function(
+  params,
+  callback // eslint-disable-line complexity
+) {
   params = params || {};
 
   // support for the new snake_case
-  if (params.content_items)
-    {params.contentItems = params.content_items;}
+  if (params.content_items) {
+    params.contentItems = params.content_items;
+  }
 
-  if ((!params.text && !params.contentItems)) {
+  if (!params.text && !params.contentItems) {
     callback(new Error('Missing required parameters: text or content_items'));
     return;
   }
 
   // Content-Type
-  var content_type = null;
-  if (params.text)
-    {content_type = helper.isHTML(params.text) ? 'text/html' : 'text/plain';}
-  else
-    {content_type = 'application/json';}
+  let content_type = null;
+  if (params.text) {
+    content_type = helper.isHTML(params.text) ? 'text/html' : 'text/plain';
+  } else {
+    content_type = 'application/json';
+  }
 
-  var headers = {
-    'Content-type'    : content_type,
-    'Accept-language' : params.accept_language || params.acceptLanguage || 'en'
+  const headers = {
+    'Content-type': content_type,
+    'Accept-language': params.accept_language || params.acceptLanguage || 'en'
   };
 
   // service bug: language in header overrides language in each JSON content item, so we can't set it on those requests
   // (also, content-language doesn't really make sense on JSON)
   if (params.language || params.text) {
-    headers['Content-language'] = params.language || 'en'
+    headers['Content-language'] = params.language || 'en';
   }
 
-
-  var parameters = {
+  const parameters = {
     options: {
       method: 'POST',
       url: '/v2/profile',

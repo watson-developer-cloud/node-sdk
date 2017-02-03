@@ -16,14 +16,14 @@
 
 'use strict';
 
-var extend = require('extend');
-var pick = require('object.pick');
-var isStream = require('isstream');
-var requestFactory = require('../lib/requestwrapper');
-var util = require('util');
-var BaseService = require('../lib/base_service');
+const extend = require('extend');
+const pick = require('object.pick');
+const isStream = require('isstream');
+const requestFactory = require('../lib/requestwrapper');
+const util = require('util');
+const BaseService = require('../lib/base_service');
 
-var NEGATIVE_EXAMPLES = 'negative_examples';
+const NEGATIVE_EXAMPLES = 'negative_examples';
 
 /**
  * JS-style logical XOR - works on objects, booleans, strings, etc following normal js truthy/falsy conventions
@@ -34,7 +34,7 @@ var NEGATIVE_EXAMPLES = 'negative_examples';
  * @constructor
  */
 function xor(a, b) {
-  return ( a || b ) && !( a && b );
+  return (a || b) && !(a && b);
 }
 
 /**
@@ -47,17 +47,17 @@ function xor(a, b) {
  * @returns {String|undefined}
  */
 function detectContentType(buffer) {
-  var signature = buffer.readUInt32BE();
-  switch(signature) { // eslint-disable-line default-case
-    case 0x504B0304:
-    case 0x504B0506:
-    case 0x504B0708:
+  const signature = buffer.readUInt32BE();
+  switch (signature) { // eslint-disable-line default-case
+    case 0x504b0304:
+    case 0x504b0506:
+    case 0x504b0708:
       return 'application/zip';
-    case 0x89504E47:
+    case 0x89504e47:
       return 'image/png';
-    case 0xFFD8FFE0:
-    case 0xFFD8FFE1:
-    case 0xFFD8FFE8:
+    case 0xffd8ffe0:
+    case 0xffd8ffe1:
+    case 0xffd8ffe8:
       return 'image/jpeg';
     // default is `return undefined`
   }
@@ -84,7 +84,7 @@ function fixupImageParam(params) {
       options: {
         contentType: detectContentType(params.images_file)
       }
-    }
+    };
   }
 }
 
@@ -94,17 +94,20 @@ function fixupImageParam(params) {
  * @private
  */
 function errorFormatter(cb) {
-  var callback = typeof cb === 'function' ? cb : function() { /* no op */};
+  const callback = typeof cb === 'function' ? cb /* no op */ : (function() {});
   return function(err, result) {
     if (err) {
       callback(err, result);
     } else {
       if (result.status === 'ERROR') {
         if (result.statusInfo === 'invalid-api-key') {
-          callback({
-            error: result.statusInfo,
-            code: result.statusInfo === 'invalid-api-key' ? 401 : 400
-          }, null);
+          callback(
+            {
+              error: result.statusInfo,
+              code: result.statusInfo === 'invalid-api-key' ? 401 : 400
+            },
+            null
+          );
         }
       } else {
         callback(err, result);
@@ -134,7 +137,6 @@ VisualRecognitionV3.prototype.serviceDefaults = {
   alchemy: true
 };
 
-
 /**
  * Grab the api key
  *
@@ -155,9 +157,9 @@ VisualRecognitionV3.prototype.initCredentials = function(options) {
     }
     // Per documentation, Alchemy* services use `apikey`, but Visual Recognition uses (`api_key`)
     // (Either will work in most cases, but the VR Collections & Similarity Search beta only supports `api_key`)
-    options.qs = extend({ api_key : options.api_key }, options.qs);
+    options.qs = extend({ api_key: options.api_key }, options.qs);
   }
-  return options
+  return options;
 };
 
 /**
@@ -170,7 +172,7 @@ VisualRecognitionV3.prototype.getCredentialsFromEnvironment = function(name) {
   return {
     api_key: process.env[name.toUpperCase() + '_API_KEY'],
     url: process.env[name + '_URL']
-  }
+  };
 };
 
 /**
@@ -228,7 +230,6 @@ VisualRecognitionV3.prototype.getCredentialsFromBluemix = function() {
  *
  */
 VisualRecognitionV3.prototype.classify = function(params, callback) {
-
   try {
     fixupImageParam(params);
   } catch (e) {
@@ -236,14 +237,17 @@ VisualRecognitionV3.prototype.classify = function(params, callback) {
     return;
   }
 
-  params = extend({
-    classifier_ids: ['default'],
-    owners: ['me','IBM']
-  }, params);
+  params = extend(
+    {
+      classifier_ids: ['default'],
+      owners: ['me', 'IBM']
+    },
+    params
+  );
 
-  var parameters;
+  let parameters;
 
-  if(params.images_file) {
+  if (params.images_file) {
     parameters = {
       options: {
         url: '/v3/classify',
@@ -329,9 +333,9 @@ VisualRecognitionV3.prototype.detectFaces = function(params, callback) {
     return;
   }
 
-  var parameters;
+  let parameters;
 
-  if(params.images_file) {
+  if (params.images_file) {
     parameters = {
       options: {
         url: '/v3/detect_faces',
@@ -341,7 +345,6 @@ VisualRecognitionV3.prototype.detectFaces = function(params, callback) {
       },
       defaultOptions: this._options
     };
-
   } else {
     parameters = {
       options: {
@@ -419,9 +422,9 @@ VisualRecognitionV3.prototype.recognizeText = function(params, callback) {
     return;
   }
 
-  var parameters;
+  let parameters;
 
-  if(params.images_file) {
+  if (params.images_file) {
     parameters = {
       options: {
         url: '/v3/recognize_text',
@@ -497,7 +500,7 @@ VisualRecognitionV3.prototype.recognizeText = function(params, callback) {
 VisualRecognitionV3.prototype.createClassifier = function(params, callback) {
   params = params || {};
 
-  var example_keys = Object.keys(params).filter(function(key) {
+  const example_keys = Object.keys(params).filter(function(key) {
     return key === NEGATIVE_EXAMPLES || key.match(/^.+_positive_examples$/);
   });
 
@@ -506,9 +509,9 @@ VisualRecognitionV3.prototype.createClassifier = function(params, callback) {
     return;
   }
   // todo: validate that all *_examples are streams or else objects with buffers and content-types
-  var allowed_keys = ['name', NEGATIVE_EXAMPLES].concat(example_keys);
+  const allowed_keys = ['name', NEGATIVE_EXAMPLES].concat(example_keys);
 
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v3/classifiers',
       method: 'POST',
@@ -551,11 +554,11 @@ VisualRecognitionV3.prototype.createClassifier = function(params, callback) {
 VisualRecognitionV3.prototype.retrainClassifier = function(params, callback) {
   params = params || {};
 
-  var allowed_keys = Object.keys(params).filter(function(key) {
+  const allowed_keys = Object.keys(params).filter(function(key) {
     return key === NEGATIVE_EXAMPLES || key.match(/^.+_positive_examples$/);
   });
 
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v3/classifiers/' + params.classifier_id,
       method: 'POST',
@@ -591,12 +594,12 @@ VisualRecognitionV3.prototype.retrainClassifier = function(params, callback) {
  * @return {ReadableStream|undefined}
  */
 VisualRecognitionV3.prototype.listClassifiers = function(params, callback) {
-  var parameters = {
+  const parameters = {
     options: {
       method: 'GET',
       url: '/v3/classifiers',
       qs: pick(params, ['verbose']),
-      json: true,
+      json: true
     },
     defaultOptions: this._options
   };
@@ -626,7 +629,7 @@ VisualRecognitionV3.prototype.listClassifiers = function(params, callback) {
  * @return {ReadableStream|undefined}
  */
 VisualRecognitionV3.prototype.getClassifier = function(params, callback) {
-  var parameters = {
+  const parameters = {
     options: {
       method: 'GET',
       url: '/v3/classifiers/{classifier_id}',
@@ -648,19 +651,18 @@ VisualRecognitionV3.prototype.getClassifier = function(params, callback) {
  * @returns {ReadableStream|undefined}
  */
 VisualRecognitionV3.prototype.deleteClassifier = function(params, callback) {
-  var parameters = {
+  const parameters = {
     options: {
       method: 'DELETE',
       url: '/v3/classifiers/{classifier_id}',
       path: params,
-      json: true,
+      json: true
     },
     requiredParams: ['classifier_id'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, errorFormatter(callback));
 };
-
 
 // collections & similarity search
 
@@ -684,7 +686,7 @@ VisualRecognitionV3.prototype.deleteClassifier = function(params, callback) {
 VisualRecognitionV3.prototype.createCollection = function(params, callback) {
   params = params || {};
 
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v3/collections',
       method: 'POST',
@@ -696,7 +698,6 @@ VisualRecognitionV3.prototype.createCollection = function(params, callback) {
   };
   return requestFactory(parameters, errorFormatter(callback));
 };
-
 
 /**
  * Retrieve collection details
@@ -718,7 +719,7 @@ VisualRecognitionV3.prototype.createCollection = function(params, callback) {
 VisualRecognitionV3.prototype.getCollection = function(params, callback) {
   params = params || {};
 
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v3/collections/{collection_id}',
       method: 'GET',
@@ -730,8 +731,6 @@ VisualRecognitionV3.prototype.getCollection = function(params, callback) {
   };
   return requestFactory(parameters, errorFormatter(callback));
 };
-
-
 
 /**
  * List collections
@@ -755,7 +754,7 @@ VisualRecognitionV3.prototype.listCollections = function(params, callback) {
     callback = params;
   }
 
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v3/collections',
       method: 'GET',
@@ -765,8 +764,6 @@ VisualRecognitionV3.prototype.listCollections = function(params, callback) {
   };
   return requestFactory(parameters, errorFormatter(callback));
 };
-
-
 
 /**
  * Delete a collection
@@ -779,7 +776,7 @@ VisualRecognitionV3.prototype.listCollections = function(params, callback) {
 VisualRecognitionV3.prototype.deleteCollection = function(params, callback) {
   params = params || {};
 
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v3/collections/{collection_id}',
       method: 'DELETE',
@@ -791,8 +788,6 @@ VisualRecognitionV3.prototype.deleteCollection = function(params, callback) {
   };
   return requestFactory(parameters, errorFormatter(callback));
 };
-
-
 
 /**
  * Add an image to a collection
@@ -823,12 +818,11 @@ VisualRecognitionV3.prototype.deleteCollection = function(params, callback) {
 VisualRecognitionV3.prototype.addImage = function(params, callback) {
   params = params || {};
 
-
   if (!params.image_file || !isStream(params.image_file)) {
     throw new Error('image_file param must be a standard Node.js Stream');
   }
 
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v3/collections/{collection_id}/images',
       method: 'POST',
@@ -871,7 +865,7 @@ VisualRecognitionV3.prototype.addImage = function(params, callback) {
 VisualRecognitionV3.prototype.listImages = function(params, callback) {
   params = params || {};
 
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v3/collections/{collection_id}/images',
       method: 'GET',
@@ -902,7 +896,7 @@ VisualRecognitionV3.prototype.listImages = function(params, callback) {
 VisualRecognitionV3.prototype.getImage = function(params, callback) {
   params = params || {};
 
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v3/collections/{collection_id}/images/{image_id}',
       method: 'GET',
@@ -927,7 +921,7 @@ VisualRecognitionV3.prototype.getImage = function(params, callback) {
 VisualRecognitionV3.prototype.deleteImage = function(params, callback) {
   params = params || {};
 
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v3/collections/{collection_id}/images/{image_id}',
       method: 'DELETE',
@@ -953,13 +947,13 @@ VisualRecognitionV3.prototype.deleteImage = function(params, callback) {
 VisualRecognitionV3.prototype.setImageMetadata = function(params, callback) {
   params = params || {};
 
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v3/collections/{collection_id}/images/{image_id}/metadata',
       method: 'PUT',
       json: true,
       path: params,
-      headers: {"Content-Type": "multipart/form-data"},
+      headers: { 'Content-Type': 'multipart/form-data' },
       // todo: manually create a body string that looks like a POST form data body even though it's a PUT
       formData: {
         metadata: {
@@ -976,7 +970,6 @@ VisualRecognitionV3.prototype.setImageMetadata = function(params, callback) {
   };
   return requestFactory(parameters, errorFormatter(callback));
 };
-
 
 /**
  * Get image metadata
@@ -995,7 +988,7 @@ VisualRecognitionV3.prototype.setImageMetadata = function(params, callback) {
 VisualRecognitionV3.prototype.getImageMetadata = function(params, callback) {
   params = params || {};
 
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v3/collections/{collection_id}/images/{image_id}/metadata',
       method: 'GET',
@@ -1007,7 +1000,6 @@ VisualRecognitionV3.prototype.getImageMetadata = function(params, callback) {
   };
   return requestFactory(parameters, errorFormatter(callback));
 };
-
 
 /**
  * Delete image metadata
@@ -1021,7 +1013,7 @@ VisualRecognitionV3.prototype.getImageMetadata = function(params, callback) {
 VisualRecognitionV3.prototype.deleteImageMetadata = function(params, callback) {
   params = params || {};
 
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v3/collections/{collection_id}/images/{image_id}/metadata',
       method: 'DELETE',
@@ -1033,7 +1025,6 @@ VisualRecognitionV3.prototype.deleteImageMetadata = function(params, callback) {
   };
   return requestFactory(parameters, errorFormatter(callback));
 };
-
 
 /**
  * Find similar images
@@ -1072,7 +1063,7 @@ VisualRecognitionV3.prototype.findSimilar = function(params, callback) {
     throw new Error('image_file param must be a standard Node.js Stream');
   }
 
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v3/collections/{collection_id}/find_similar',
       method: 'POST',

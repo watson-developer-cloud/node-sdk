@@ -16,11 +16,11 @@
 
 'use strict';
 
-var extend         = require('extend');
-var pick           = require('object.pick');
-var requestFactory = require('../lib/requestwrapper');
-var util = require('util');
-var BaseService = require('../lib/base_service');
+const extend = require('extend');
+const pick = require('object.pick');
+const requestFactory = require('../lib/requestwrapper');
+const util = require('util');
+const BaseService = require('../lib/base_service');
 
 function ToneAnalyzerV3(options) {
   BaseService.call(this, options);
@@ -60,12 +60,12 @@ ToneAnalyzerV3.URL = 'https://gateway.watsonplatform.net/tone-analyzer/api';
  *
  */
 ToneAnalyzerV3.prototype.tone = function(params, callback) {
-  if (!params || !params.text){
+  if (!params || !params.text) {
     callback(new Error('Missing required parameters: text'));
     return;
   }
-  var contentType = params.isHTML ? "text/html" : "text/plain";
-  var parameters = {
+  const contentType = params.isHTML ? 'text/html' : 'text/plain';
+  const parameters = {
     options: {
       url: '/v3/tone',
       method: 'POST',
@@ -74,10 +74,10 @@ ToneAnalyzerV3.prototype.tone = function(params, callback) {
     },
     defaultOptions: extend(true, this._options, {
       headers: {
-       'accept': 'application/json',
-       'content-type': contentType
+        accept: 'application/json',
+        'content-type': contentType
       }
-    }),
+    })
   };
 
   return requestFactory(parameters, callback);

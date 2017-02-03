@@ -1,24 +1,28 @@
 'use strict';
 
-var TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
-var fs = require('fs');
+const TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
+const fs = require('fs');
 
-var textToSpeech = new TextToSpeechV1({
-  // if left unspecified here, the SDK will fall back to the TEXT_TO_SPEECH_USERNAME and TEXT_TO_SPEECH_PASSWORD
-  // environment properties, and then Bluemix's VCAP_SERVICES environment property
-  //username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
-  //password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE'
-});
+const textToSpeech = new TextToSpeechV1(
+  {
+    // if left unspecified here, the SDK will fall back to the TEXT_TO_SPEECH_USERNAME and TEXT_TO_SPEECH_PASSWORD
+    // environment properties, and then Bluemix's VCAP_SERVICES environment property
+    // username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
+    // password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE'
+  }
+);
 
 // Synthesize speech and then pipe the results to a file
-textToSpeech.synthesize({
-  text: 'Hello from IBM Watson',
-  voice: 'en-US_AllisonVoice', // Optional voice
-  accept: 'audio/wav' // default is audio/ogg; codec=opus
-}).pipe(fs.createWriteStream('output.wav'));
+textToSpeech
+  .synthesize({
+    text: 'Hello from IBM Watson',
+    voice: 'en-US_AllisonVoice', // Optional voice
+    accept: 'audio/wav' // default is audio/ogg; codec=opus
+  })
+  .pipe(fs.createWriteStream('output.wav'));
 
 // Retrieve details of all available voices
-textToSpeech.voices({}, function(err, res){
+textToSpeech.voices({}, function(err, res) {
   if (err) {
     return console.log(err);
   }
@@ -26,69 +30,80 @@ textToSpeech.voices({}, function(err, res){
 });
 
 // Retrieve details of a specific voice
-textToSpeech.voice({
-  voice: 'en-GB_KateVoice'
-}, function(err, res){
-  if (err) {
-    return console.log(err);
+textToSpeech.voice(
+  {
+    voice: 'en-GB_KateVoice'
+  },
+  function(err, res) {
+    if (err) {
+      return console.log(err);
+    }
+    console.log(JSON.stringify(res, null, 2));
   }
-  console.log(JSON.stringify(res, null, 2));
-});
+);
 
 // Pronunciation details for a word
-textToSpeech.pronunciation({
-  text: 'iPhone',
-  format: 'spr', // 'ipa' (default) is only for english voices
-  voice: 'de-DE_DieterVoice' // optional, defaults to en-US_MichaelVoice
-}, function(err, res){
-  if (err) {
-    return console.log(err);
+textToSpeech.pronunciation(
+  {
+    text: 'iPhone',
+    format: 'spr', // 'ipa' (default) is only for english voices
+    voice: 'de-DE_DieterVoice' // optional, defaults to en-US_MichaelVoice
+  },
+  function(err, res) {
+    if (err) {
+      return console.log(err);
+    }
+    console.log(JSON.stringify(res, null, 2));
   }
-  console.log(JSON.stringify(res, null, 2));
-});
+);
 
 // create a customization model to change pronunciation of words
-textToSpeech.createCustomization({
-  name: 'my custom alt language pronunciation model',
-  language: 'en-US', // currently, only en-US is accepted
-  description: 'Test model to try out custom pronunciations'
-}, function(err, res){
-  if (err) {
-    return console.log(err);
-  }
-  console.log(JSON.stringify(res, null, 2));
-  /*
+textToSpeech.createCustomization(
+  {
+    name: 'my custom alt language pronunciation model',
+    language: 'en-US', // currently, only en-US is accepted
+    description: 'Test model to try out custom pronunciations'
+  },
+  function(err, res) {
+    if (err) {
+      return console.log(err);
+    }
+    console.log(JSON.stringify(res, null, 2));
+    /*
 {
   "customization_id": "6666451d-a23e-485c-9bc5-c7ce722550d6"
 }
    */
-});
+  }
+);
 
 // update a customization model
-textToSpeech.updateCustomization({
-  customization_id: "6666451d-a23e-485c-9bc5-c7ce722550d6",
-  name: 'new name', // optional
-  description: 'new description', // optional
-  words: [ // required - replaces existing words list
-    {"word":"NCAA", "translation":"N C double A"},
-    {"word":"iPhone", "translation":"I phone"}
-  ]
-}, function(err){
-  if (err) {
-    return console.log(err);
+textToSpeech.updateCustomization(
+  {
+    customization_id: '6666451d-a23e-485c-9bc5-c7ce722550d6',
+    name: 'new name', // optional
+    description: 'new description', // optional
+    words: [{ word: 'NCAA', translation: 'N C double A' }, { word: 'iPhone', translation: 'I phone' }] // required - replaces existing words list
+  },
+  function(err) {
+    if (err) {
+      return console.log(err);
+    }
+    console.log('updated');
   }
-  console.log('updated');
-});
+);
 
 // get a list of custom voice models
-textToSpeech.getCustomizations({
-  language: 'en-US' // optional filter (currently only accepts en-US)
-}, function(err, res){
-  if (err) {
-    return console.log(err);
-  }
-  console.log(JSON.stringify(res, null, 2));
-  /*
+textToSpeech.getCustomizations(
+  {
+    language: 'en-US' // optional filter (currently only accepts en-US)
+  },
+  function(err, res) {
+    if (err) {
+      return console.log(err);
+    }
+    console.log(JSON.stringify(res, null, 2));
+    /*
 {
   "customizations": [
     {
@@ -113,17 +128,20 @@ textToSpeech.getCustomizations({
   ]
 }
    */
-});
+  }
+);
 
 // get details of a custom voice model
-textToSpeech.getCustomization({
-  customization_id: "6666451d-a23e-485c-9bc5-c7ce722550d6"
-}, function(err, res){
-  if (err) {
-    return console.log(err);
-  }
-  console.log(JSON.stringify(res, null, 2));
-  /*
+textToSpeech.getCustomization(
+  {
+    customization_id: '6666451d-a23e-485c-9bc5-c7ce722550d6'
+  },
+  function(err, res) {
+    if (err) {
+      return console.log(err);
+    }
+    console.log(JSON.stringify(res, null, 2));
+    /*
 {
   "last_modified": 1472067165812,
   "customization_id": "6666451d-a23e-485c-9bc5-c7ce722550d6",
@@ -144,53 +162,62 @@ textToSpeech.getCustomization({
   "owner": "7f966201-2afd-48ea-b5c1-d6981d50633e"
 }
    */
-});
+  }
+);
 
 // delete a custom voice model
-textToSpeech.deleteCustomization({
-  customization_id: "9d153f61-a9c4-4b73-8eaf-63951c6dd77d"
-}, function(err){
-  if (err) {
-    return console.log(err);
+textToSpeech.deleteCustomization(
+  {
+    customization_id: '9d153f61-a9c4-4b73-8eaf-63951c6dd77d'
+  },
+  function(err) {
+    if (err) {
+      return console.log(err);
+    }
+    console.log('deleted');
   }
-  console.log('deleted');
-});
+);
 
 // add multiple words to an existing model
-textToSpeech.addWords({
-  customization_id: "7c7f8ba7-2f83-48f2-ae52-3a70825f9899",
-  words: [
-    {"word":"NCAA", "translation":"N C double A"},
-    {"word":"iPhone", "translation":"I phone"}
-  ]
-}, function(err){
-  if (err) {
-    return console.log(err);
+textToSpeech.addWords(
+  {
+    customization_id: '7c7f8ba7-2f83-48f2-ae52-3a70825f9899',
+    words: [{ word: 'NCAA', translation: 'N C double A' }, { word: 'iPhone', translation: 'I phone' }]
+  },
+  function(err) {
+    if (err) {
+      return console.log(err);
+    }
+    console.log('added');
   }
-  console.log('added');
-});
+);
 
 // add a single word to an existing model
-textToSpeech.updateCustomization({
-  customization_id: "7c7f8ba7-2f83-48f2-ae52-3a70825f9899",
-  word:"NCAA",
-  translation:"N C double A"
-}, function(err){
-  if (err) {
-    return console.log(err);
+textToSpeech.updateCustomization(
+  {
+    customization_id: '7c7f8ba7-2f83-48f2-ae52-3a70825f9899',
+    word: 'NCAA',
+    translation: 'N C double A'
+  },
+  function(err) {
+    if (err) {
+      return console.log(err);
+    }
+    console.log('added');
   }
-  console.log('added');
-});
+);
 
 // get all words in a customization
-textToSpeech.getWords({
-  customization_id: "7c7f8ba7-2f83-48f2-ae52-3a70825f9899"
-}, function(err, res){
-  if (err) {
-    return console.log(err);
-  }
-  console.log(JSON.stringify(res, null, 2));
-  /*
+textToSpeech.getWords(
+  {
+    customization_id: '7c7f8ba7-2f83-48f2-ae52-3a70825f9899'
+  },
+  function(err, res) {
+    if (err) {
+      return console.log(err);
+    }
+    console.log(JSON.stringify(res, null, 2));
+    /*
 {
   "words": [
     {
@@ -204,31 +231,38 @@ textToSpeech.getWords({
   ]
 }
    */
-});
+  }
+);
 
 // get a single word from a customization
-textToSpeech.getWord({
-  customization_id: "7c7f8ba7-2f83-48f2-ae52-3a70825f9899",
-  word: "iPhone"
-}, function(err, res){
-  if (err) {
-    return console.log(err);
-  }
-  console.log(JSON.stringify(res, null, 2));
-  /*
+textToSpeech.getWord(
+  {
+    customization_id: '7c7f8ba7-2f83-48f2-ae52-3a70825f9899',
+    word: 'iPhone'
+  },
+  function(err, res) {
+    if (err) {
+      return console.log(err);
+    }
+    console.log(JSON.stringify(res, null, 2));
+    /*
 {
   "translation": "I phone"
 }
    */
-});
+  }
+);
 
 // delete a word from a customization
-textToSpeech.deleteWord({
-  customization_id: "7c7f8ba7-2f83-48f2-ae52-3a70825f9899",
-  word: "iPhone"
-}, function(err){
-  if (err) {
-    return console.log(err);
+textToSpeech.deleteWord(
+  {
+    customization_id: '7c7f8ba7-2f83-48f2-ae52-3a70825f9899',
+    word: 'iPhone'
+  },
+  function(err) {
+    if (err) {
+      return console.log(err);
+    }
+    console.log('deleted word');
   }
-  console.log('deleted word');
-});
+);

@@ -15,9 +15,9 @@
  */
 
 'use strict';
-/*eslint-env es6*/
+/* eslint-env es6*/
 
-var Promise = require('bluebird');
+const Promise = require('bluebird');
 
 /**
  * Thresholds for identifying meaningful tones returned by the Watson Tone Analyzer.  Current values are
@@ -25,25 +25,25 @@ var Promise = require('bluebird');
  * https://www.ibm.com/watson/developercloud/doc/tone-analyzer/understanding-tone.shtml
  * These thresholds can be adjusted to client/domain requirements.
  */
-var PRIMARY_EMOTION_SCORE_THRESHOLD = 0.5;
-var LANGUAGE_HIGH_SCORE_THRESHOLD = 0.75;
-var LANGUAGE_NO_SCORE_THRESHOLD = 0.0;
-var SOCIAL_HIGH_SCORE_THRESHOLD = 0.75;
-var SOCIAL_LOW_SCORE_THRESHOLD = 0.25;
+const PRIMARY_EMOTION_SCORE_THRESHOLD = 0.5;
+const LANGUAGE_HIGH_SCORE_THRESHOLD = 0.75;
+const LANGUAGE_NO_SCORE_THRESHOLD = 0.0;
+const SOCIAL_HIGH_SCORE_THRESHOLD = 0.75;
+const SOCIAL_LOW_SCORE_THRESHOLD = 0.25;
 
 /**
  * Labels for the tone categories returned by the Watson Tone Analyzer
  */
-var EMOTION_TONE_LABEL = 'emotion_tone';
-var LANGUAGE_TONE_LABEL = 'language_tone';
-var SOCIAL_TONE_LABEL = 'social_tone';
+const EMOTION_TONE_LABEL = 'emotion_tone';
+const LANGUAGE_TONE_LABEL = 'language_tone';
+const SOCIAL_TONE_LABEL = 'social_tone';
 
 /**
  * Public functions for this module
  */
 module.exports = {
-    updateUserTone: updateUserTone,
-    invokeToneAsync: invokeToneAsync
+  updateUserTone: updateUserTone,
+  invokeToneAsync: invokeToneAsync
 };
 
 /**
@@ -54,18 +54,15 @@ module.exports = {
  * (which contains the user's input text)
  */
 function invokeToneAsync(conversationPayload, tone_analyzer) {
-  return new Promise(
-      function (resolve, reject){
-        tone_analyzer.tone(
-            {text: conversationPayload.input.text},
-            (error, data) => {
-              if (error) {
-                reject(error);
-              }else {
-                resolve(data);
-              }
-            });
-      });
+  return new Promise(function(resolve, reject) {
+    tone_analyzer.tone({ text: conversationPayload.input.text }, (error, data) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(data);
+      }
+    });
+  });
 }
 
 /**
@@ -76,42 +73,39 @@ function invokeToneAsync(conversationPayload, tone_analyzer) {
  * @param toneAnalyzerPayload json object returned by the Watson Tone Analyzer Service
  * @returns conversationPayload where the user object has been updated with tone information from the toneAnalyzerPayload
  */
-function updateUserTone (conversationPayload, toneAnalyzerPayload, maintainHistory) {
+function updateUserTone(conversationPayload, toneAnalyzerPayload, maintainHistory) {
+  let emotionTone = null;
+  let languageTone = null;
+  let socialTone = null;
 
-  var emotionTone = null;
-  var languageTone = null;
-  var socialTone = null;
-
-  if(typeof conversationPayload.context === 'undefined'){
+  if (typeof conversationPayload.context === 'undefined') {
     conversationPayload.context = {};
   }
 
-  if(typeof conversationPayload.context.user === 'undefined'){
-     conversationPayload.context = initUser();
+  if (typeof conversationPayload.context.user === 'undefined') {
+    conversationPayload.context = initUser();
   }
 
   // For convenience sake, define a variable for the user object
-  var user = conversationPayload.context.user;
+  const user = conversationPayload.context.user;
 
   // Extract the tones - emotion, language and social
   if (toneAnalyzerPayload && toneAnalyzerPayload.document_tone) {
-    toneAnalyzerPayload.document_tone.tone_categories.forEach(
-        function(toneCategory) {
-          if (toneCategory.category_id === EMOTION_TONE_LABEL) {
-            emotionTone = toneCategory;
-          }
-          if (toneCategory.category_id === LANGUAGE_TONE_LABEL) {
-            languageTone = toneCategory;
-          }
-          if (toneCategory.category_id === SOCIAL_TONE_LABEL) {
-            socialTone = toneCategory;
-          }
-        });
+    toneAnalyzerPayload.document_tone.tone_categories.forEach(function(toneCategory) {
+      if (toneCategory.category_id === EMOTION_TONE_LABEL) {
+        emotionTone = toneCategory;
+      }
+      if (toneCategory.category_id === LANGUAGE_TONE_LABEL) {
+        languageTone = toneCategory;
+      }
+      if (toneCategory.category_id === SOCIAL_TONE_LABEL) {
+        socialTone = toneCategory;
+      }
+    });
 
     updateEmotionTone(user, emotionTone, maintainHistory);
     updateLanguageTone(user, languageTone, maintainHistory);
     updateSocialTone(user, socialTone, maintainHistory);
-
   }
 
   conversationPayload.context.user = user;
@@ -127,16 +121,16 @@ function updateUserTone (conversationPayload, toneAnalyzerPayload, maintainHisto
  */
 function initUser() {
   return {
-    'user': {
-      'tone': {
-        'emotion': {
-          'current': null
+    user: {
+      tone: {
+        emotion: {
+          current: null
         },
-        'language': {
-          'current': null
+        language: {
+          current: null
         },
-        'social': {
-          'current': null
+        social: {
+          current: null
         }
       }
     }
@@ -150,10 +144,9 @@ function initUser() {
  * @param emotionTone a json object containing the emotion tones in the payload returned by the Tone Analyzer
  */
 function updateEmotionTone(user, emotionTone, maintainHistory) {
-
-  var maxScore = 0.0;
-  var primaryEmotion = null;
-  var primaryEmotionScore = null;
+  let maxScore = 0.0;
+  let primaryEmotion = null;
+  let primaryEmotionScore = null;
 
   emotionTone.tones.forEach(function(tone) {
     if (tone.score > maxScore) {
@@ -168,23 +161,19 @@ function updateEmotionTone(user, emotionTone, maintainHistory) {
     primaryEmotionScore = null;
   }
 
-
-
   // update user emotion tone
   user.tone.emotion.current = primaryEmotion;
 
-  if(maintainHistory)
-  {
+  if (maintainHistory) {
     if (typeof user.tone.emotion.history === 'undefined') {
-     user.tone.emotion.history = [];
+      user.tone.emotion.history = [];
     }
     user.tone.emotion.history.push({
-     'tone_name': primaryEmotion,
-     'score': primaryEmotionScore
+      tone_name: primaryEmotion,
+      score: primaryEmotionScore
     });
   }
 }
-
 
 /**
  * updateLanguageTone updates the user with the language tones interpreted based on the specified thresholds
@@ -192,48 +181,42 @@ function updateEmotionTone(user, emotionTone, maintainHistory) {
  * @param languageTone a json object containing the language tones in the payload returned by the Tone Analyzer
  */
 function updateLanguageTone(user, languageTone, maintainHistory) {
-
-  var currentLanguage = [];
-  var currentLanguageObject = [];
+  const currentLanguage = [];
+  const currentLanguageObject = [];
 
   // Process each language tone and determine if it is high or low
   languageTone.tones.forEach(function(tone) {
     if (tone.score >= LANGUAGE_HIGH_SCORE_THRESHOLD) {
       currentLanguage.push(tone.tone_name.toLowerCase() + '_high');
       currentLanguageObject.push({
-        'tone_name': tone.tone_name.toLowerCase(),
-        'score': tone.score,
-        'interpretation': 'likely high'
+        tone_name: tone.tone_name.toLowerCase(),
+        score: tone.score,
+        interpretation: 'likely high'
       });
-    }
-    else if (tone.score <= LANGUAGE_NO_SCORE_THRESHOLD) {
+    } else if (tone.score <= LANGUAGE_NO_SCORE_THRESHOLD) {
       currentLanguageObject.push({
-        'tone_name': tone.tone_name.toLowerCase(),
-        'score': tone.score,
-        'interpretation': 'no evidence'
+        tone_name: tone.tone_name.toLowerCase(),
+        score: tone.score,
+        interpretation: 'no evidence'
       });
-    }
-    else {
+    } else {
       currentLanguageObject.push({
-        'tone_name': tone.tone_name.toLowerCase(),
-        'score': tone.score,
-        'interpretation': 'likely medium'
+        tone_name: tone.tone_name.toLowerCase(),
+        score: tone.score,
+        interpretation: 'likely medium'
       });
     }
   });
 
-
   // update user language tone
   user.tone.language.current = currentLanguage;
-  if(maintainHistory)
-  {
+  if (maintainHistory) {
     if (typeof user.tone.language.history === 'undefined') {
-     user.tone.language.history = [];
+      user.tone.language.history = [];
     }
-   user.tone.language.history.push(currentLanguageObject);
+    user.tone.language.history.push(currentLanguageObject);
   }
 }
-
 
 /**
  * updateSocialTone updates the user with the social tones interpreted based on the specified thresholds
@@ -241,46 +224,40 @@ function updateLanguageTone(user, languageTone, maintainHistory) {
  * @param socialTone a json object containing the social tones in the payload returned by the Tone Analyzer
  */
 function updateSocialTone(user, socialTone, maintainHistory) {
-
-  var currentSocial = [];
-  var currentSocialObject = [];
+  const currentSocial = [];
+  const currentSocialObject = [];
 
   // Process each social tone and determine if it is high or low
   socialTone.tones.forEach(function(tone) {
     if (tone.score >= SOCIAL_HIGH_SCORE_THRESHOLD) {
       currentSocial.push(tone.tone_name.toLowerCase() + '_high');
       currentSocialObject.push({
-        'tone_name': tone.tone_name.toLowerCase(),
-        'score': tone.score,
-        'interpretation': 'likely high'
+        tone_name: tone.tone_name.toLowerCase(),
+        score: tone.score,
+        interpretation: 'likely high'
       });
-    }
-    else if (tone.score <= SOCIAL_LOW_SCORE_THRESHOLD) {
+    } else if (tone.score <= SOCIAL_LOW_SCORE_THRESHOLD) {
       currentSocial.push(tone.tone_name.toLowerCase() + '_low');
       currentSocialObject.push({
-        'tone_name': tone.tone_name.toLowerCase(),
-        'score': tone.score,
-        'interpretation': 'likely low'
+        tone_name: tone.tone_name.toLowerCase(),
+        score: tone.score,
+        interpretation: 'likely low'
       });
-    }
-    else  {
+    } else {
       currentSocialObject.push({
-        'tone_name': tone.tone_name.toLowerCase(),
-        'score': tone.score,
-        'interpretation': 'likely medium'
+        tone_name: tone.tone_name.toLowerCase(),
+        score: tone.score,
+        interpretation: 'likely medium'
       });
     }
   });
 
-
   // update user social tone
   user.tone.social.current = currentSocial;
-  if(maintainHistory)
-  {
+  if (maintainHistory) {
     if (typeof user.tone.social.history === 'undefined') {
-     user.tone.social.history = [];
+      user.tone.social.history = [];
     }
     user.tone.social.history.push(currentSocialObject);
   }
 }
-

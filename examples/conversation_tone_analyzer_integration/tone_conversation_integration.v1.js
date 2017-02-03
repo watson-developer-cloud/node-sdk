@@ -28,17 +28,16 @@
  */
 
 'use strict';
-/*eslint-env es6*/
+/* eslint-env es6*/
 
-var watson = require('watson-developer-cloud');
-var tone_detection = require("./tone_detection.js");
-require('dotenv').config({silent: true});
-
+const watson = require('watson-developer-cloud');
+const tone_detection = require('./tone_detection.js');
+require('dotenv').config({ silent: true });
 
 /**
  * Instantiate the Watson Conversation Service
  */
-var conversation = new watson.ConversationV1({
+const conversation = new watson.ConversationV1({
   username: process.env.CONVERSATION_USERNAME || '<conversation_username>',
   password: process.env.CONVERSATION_PASSWORD || '<conversation_password>',
   version_date: watson.ConversationV1.VERSION_DATE_2016_09_20
@@ -47,7 +46,7 @@ var conversation = new watson.ConversationV1({
 /**
  * Instantiate the Watson Tone Analyzer Service
  */
-var tone_analyzer = new watson.ToneAnalyzerV3({
+const tone_analyzer = new watson.ToneAnalyzerV3({
   username: process.env.TONE_ANALYZER_USERNAME || '<tone_analyzer_username>',
   password: process.env.TONE_ANALYZER_PASSWORD || '<tone_analyzer_password>',
   version_date: '2016-05-19'
@@ -57,17 +56,17 @@ var tone_analyzer = new watson.ToneAnalyzerV3({
  * This example stores tone for each user utterance in conversation context.
  * Change this to false, if you do not want to maintain history
  */
-var maintainToneHistoryInContext = true;
+const maintainToneHistoryInContext = true;
 
 /**
  * Payload for the Watson Conversation Service
  * <workspace-id> and user input text required.
  */
-var payload = {
-    workspace_id: process.env.WORKSPACE_ID || '<workspace_id>',
-    input: {
-      text: "I am not happy today :("
-    }
+const payload = {
+  workspace_id: process.env.WORKSPACE_ID || '<workspace_id>',
+  input: {
+    text: 'I am not happy today :('
+  }
 };
 
 /**
@@ -80,27 +79,26 @@ var payload = {
  * Note: as indicated below, the console.log statements can be replaced with application-specific code to process
  * 		 the err or data object returned by the Conversation Service.
  */
-function invokeToneConversation(payload,maintainToneHistoryInContext)
-{
-  tone_detection.invokeToneAsync(payload,tone_analyzer)
-  .then( (tone) => {
-    tone_detection.updateUserTone(payload, tone, maintainToneHistoryInContext);
-    conversation.message(payload, function(err, data) {
-      if (err) {
-        // APPLICATION-SPECIFIC CODE TO PROCESS THE ERROR
-        // FROM CONVERSATION SERVICE
-        console.error(JSON.stringify(err, null, 2));
-      }
-      else {
-        // APPLICATION-SPECIFIC CODE TO PROCESS THE DATA
-        // FROM CONVERSATION SERVICE
-        console.log(JSON.stringify(data, null, 2));
-      }
+function invokeToneConversation(payload, maintainToneHistoryInContext) {
+  tone_detection
+    .invokeToneAsync(payload, tone_analyzer)
+    .then(tone => {
+      tone_detection.updateUserTone(payload, tone, maintainToneHistoryInContext);
+      conversation.message(payload, function(err, data) {
+        if (err) {
+          // APPLICATION-SPECIFIC CODE TO PROCESS THE ERROR
+          // FROM CONVERSATION SERVICE
+          console.error(JSON.stringify(err, null, 2));
+        } else {
+          // APPLICATION-SPECIFIC CODE TO PROCESS THE DATA
+          // FROM CONVERSATION SERVICE
+          console.log(JSON.stringify(data, null, 2));
+        }
+      });
+    })
+    .catch(function(err) {
+      console.log(JSON.stringify(err, null, 2));
     });
-  })
-  .catch(function(err){
-    console.log(JSON.stringify(err, null, 2));
-  })
 }
 
-invokeToneConversation(payload,maintainToneHistoryInContext);
+invokeToneConversation(payload, maintainToneHistoryInContext);

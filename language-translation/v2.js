@@ -16,13 +16,13 @@
 
 'use strict';
 
-var requestFactory = require('../lib/requestwrapper');
-var extend         = require('extend');
-var pick           = require('object.pick');
-var isStream       = require('isstream');
-var helper         = require('../lib/helper');
-var util = require('util');
-var BaseService = require('../lib/base_service');
+const requestFactory = require('../lib/requestwrapper');
+const extend = require('extend');
+const pick = require('object.pick');
+const isStream = require('isstream');
+const helper = require('../lib/helper');
+const util = require('util');
+const BaseService = require('../lib/base_service');
 
 /**
  *
@@ -54,11 +54,11 @@ LanguageTranslationV2.URL = 'https://gateway.watsonplatform.net/language-transla
 LanguageTranslationV2.prototype.getModels = function(params, callback) {
   params = params || {};
 
-  var parameters = {
+  const parameters = {
     options: {
       method: 'GET',
       url: '/v2/models',
-      qs: pick(params,['default','source','target']),
+      qs: pick(params, ['default', 'source', 'target']),
       json: true
     },
     defaultOptions: this._options
@@ -73,11 +73,11 @@ LanguageTranslationV2.prototype.getModels = function(params, callback) {
 LanguageTranslationV2.prototype.getModel = function(params, callback) {
   params = params || {};
 
-  var parameters = {
+  const parameters = {
     options: {
       method: 'GET',
       url: '/v2/models/{model_id}',
-      path: pick(params,['model_id']),
+      path: pick(params, ['model_id']),
       json: true
     },
     requiredParams: ['model_id'],
@@ -98,15 +98,15 @@ LanguageTranslationV2.prototype.getModel = function(params, callback) {
 LanguageTranslationV2.prototype.createModel = function(params, callback) {
   params = params || {};
 
-  var missingParams = helper.getMissingParams(params, ['base_model_id']);
+  const missingParams = helper.getMissingParams(params, ['base_model_id']);
   if (missingParams) {
     callback(missingParams);
     return;
   }
 
-  var inputTypes = ['forced_glossary', 'parallel_corpus', 'monolingual_corpus'];
+  const inputTypes = ['forced_glossary', 'parallel_corpus', 'monolingual_corpus'];
 
-  for (var type in inputTypes) {
+  for (const type in inputTypes) {
     if (inputTypes.hasOwnProperty(type)) {
       if (params[inputTypes[type]] && !isStream(params[inputTypes[type]])) {
         callback(new Error(inputTypes[type] + ' is not a standard Node.js Stream'));
@@ -115,11 +115,11 @@ LanguageTranslationV2.prototype.createModel = function(params, callback) {
     }
   }
 
-  var parameters = {
+  const parameters = {
     options: {
       method: 'POST',
       url: '/v2/models',
-      qs: pick(params,['name', 'base_model_id']),
+      qs: pick(params, ['name', 'base_model_id']),
       formData: pick(params, inputTypes),
       json: true
     },
@@ -135,11 +135,11 @@ LanguageTranslationV2.prototype.createModel = function(params, callback) {
 LanguageTranslationV2.prototype.deleteModel = function(params, callback) {
   params = params || {};
 
-  var parameters = {
+  const parameters = {
     options: {
       method: 'DELETE',
       url: '/v2/models/{model_id}',
-      path: pick(params,['model_id']),
+      path: pick(params, ['model_id']),
       json: true
     },
     requiredParams: ['model_id'],
@@ -156,16 +156,16 @@ LanguageTranslationV2.prototype.deleteModel = function(params, callback) {
 LanguageTranslationV2.prototype.translate = function(params, callback) {
   params = params || {};
 
-  if (!(params.model_id || (params.source && params.target))){
+  if (!(params.model_id || params.source && params.target)) {
     callback(new Error('Missing required parameters: model_id or source and target'));
     return;
   }
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v2/translate',
       method: 'POST',
       json: true,
-      body: pick(params, ['source','target','text','model_id'])
+      body: pick(params, ['source', 'target', 'text', 'model_id'])
     },
     requiredParams: ['text'],
     defaultOptions: this._options
@@ -180,7 +180,7 @@ LanguageTranslationV2.prototype.translate = function(params, callback) {
 LanguageTranslationV2.prototype.getIdentifiableLanguages = function(params, callback) {
   params = params || {};
 
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v2/identifiable_languages',
       method: 'GET'
@@ -191,18 +191,17 @@ LanguageTranslationV2.prototype.getIdentifiableLanguages = function(params, call
   return requestFactory(parameters, callback);
 };
 
-
 /**
  * Identify the text based on the identifiable languages
  * @param  {string} params.text  text to identify
  */
 LanguageTranslationV2.prototype.identify = function(params, callback) {
-  if (!params || !params.text){
+  if (!params || !params.text) {
     callback(new Error('Missing required parameters: text'));
     return;
   }
 
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v2/identify',
       method: 'POST',
@@ -210,7 +209,7 @@ LanguageTranslationV2.prototype.identify = function(params, callback) {
     },
     defaultOptions: extend(true, {}, this._options, {
       headers: {
-        'accept':'application/json',
+        accept: 'application/json',
         'content-type': 'text/plain'
       }
     })

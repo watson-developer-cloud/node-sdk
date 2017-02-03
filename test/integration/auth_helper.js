@@ -1,8 +1,9 @@
-var fs = require('fs');
-var path = require('path');
-var authPath = path.join(__dirname, '../resources/auth.js');
+'use strict';
+const fs = require('fs');
+const path = require('path');
+const authPath = path.join(__dirname, '../resources/auth.js');
 
-var hasAuth = fs.existsSync(authPath);
+const hasAuth = fs.existsSync(authPath);
 
 if (hasAuth) {
   exports.describe = describe;
