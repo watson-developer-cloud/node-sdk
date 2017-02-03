@@ -1,5 +1,6 @@
 module.exports = {
   "rules": {
-    "no-console": 0
+    "no-console": "off",
+    "node/no-missing-require": "off"
   }
 };
