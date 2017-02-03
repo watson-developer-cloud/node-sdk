@@ -1,23 +1,22 @@
 'use strict';
 
-var assert    = require('assert');
-var watson    = require('../../index');
-var nock      = require('nock');
-var qs        = require('querystring');
+const assert = require('assert');
+const watson = require('../../index');
+const nock = require('nock');
+const qs = require('querystring');
 
 describe('alchemy_data_news', function() {
-
-  var noop = function() {};
+  const noop = function() {};
 
   // Test params
-  var service = {
+  const service = {
     api_key: 'foobar',
     url: 'http://ibm.com:80/calls',
     version: 'v1'
   };
-  var apiPath = '/data/GetNews';
+  const apiPath = '/data/GetNews';
 
-  var payload = {
+  const payload = {
     start: 'bar',
     end: 'foo',
     q: 'q1.q2'
@@ -31,33 +30,32 @@ describe('alchemy_data_news', function() {
     nock.cleanAll();
   });
 
-  var alchemy = watson.alchemy_data_news(service);
+  const alchemy = watson.alchemy_data_news(service);
 
-  var missingParameter = function(err) {
-    assert.ok((err instanceof Error) && /required parameters/.test(err));
+  const missingParameter = function(err) {
+    assert.ok(err instanceof Error && /required parameters/.test(err));
   };
 
   describe('getNews()', function() {
-
     it('should check missing parameters', function() {
       alchemy.getNews({}, missingParameter);
       alchemy.getNews(null, missingParameter);
       alchemy.getNews(undefined, missingParameter);
-      alchemy.getNews({end: 'bar'}, missingParameter);
-      alchemy.getNews({start: 'bar'}, missingParameter);
+      alchemy.getNews({ end: 'bar' }, missingParameter);
+      alchemy.getNews({ start: 'bar' }, missingParameter);
     });
 
     it('should generate a valid payload', function() {
-      var req = alchemy.getNews(payload, noop);
+      const req = alchemy.getNews(payload, noop);
       assert.equal(req.method, 'GET');
-      var query = qs.stringify({
+      const query = qs.stringify({
         apikey: 'foobar',
         start: 'bar',
         end: 'foo',
         q: 'q1.q2',
         outputMode: 'json'
       });
-      var requestPath = service.url + apiPath + '?' + query;
+      const requestPath = service.url + apiPath + '?' + query;
       assert.equal(req.uri.href, requestPath);
     });
   });

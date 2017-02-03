@@ -1,27 +1,26 @@
 'use strict';
 
-var AlchemyLanguageV1 = require('watson-developer-cloud/alchemy-language/v1');
-var alchemy_language = new AlchemyLanguageV1({
+const AlchemyLanguageV1 = require('watson-developer-cloud/alchemy-language/v1');
+const alchemy_language = new AlchemyLanguageV1({
   api_key: 'API_KEY'
 });
 
 // Combined call
 // ------------
-var parameters = {
+const parameters = {
   extract: 'entities,keywords',
   sentiment: 1,
   maxRetrieve: 1,
   url: 'https://www.ibm.com/us-en/'
 };
 
-alchemy_language.combined(parameters, function (err, response) {
-  if (err)
-    {console.log('error:', err);}
-  else
-    {console.log(JSON.stringify(response, null, 2));}
+alchemy_language.combined(parameters, function(err, response) {
+  if (err) {
+    console.log('error:', err);
+  } else {
+    console.log(JSON.stringify(response, null, 2));
+  }
 });
-
-
 // Authors (using example.html from the same local directory)
 // ------------
 // var fs = require('fs');
@@ -41,8 +40,6 @@ alchemy_language.combined(parameters, function (err, response) {
 //       console.log(JSON.stringify(response, null, 2));
 //   })
 // });
-
-
 // Concepts
 // ------------
 // var parameters = {
@@ -56,8 +53,6 @@ alchemy_language.combined(parameters, function (err, response) {
 //   else
 //     console.log(JSON.stringify(response, null, 2));
 // });
-
-
 // Date Extraction
 // ------------
 // var parameters = {
@@ -71,8 +66,6 @@ alchemy_language.combined(parameters, function (err, response) {
 //   else
 //     console.log(JSON.stringify(response, null, 2));
 // });
-
-
 // Emotion Analysis
 // ------------
 // var parameters = {
@@ -85,8 +78,6 @@ alchemy_language.combined(parameters, function (err, response) {
 //   else
 //     console.log(JSON.stringify(response, null, 2));
 // });
-
-
 // Entities
 // ------------
 // var parameters = {
@@ -99,8 +90,6 @@ alchemy_language.combined(parameters, function (err, response) {
 //   else
 //     console.log(JSON.stringify(response, null, 2));
 // });
-
-
 // Feed Detection
 // ------------
 // var parameters = {
@@ -113,8 +102,6 @@ alchemy_language.combined(parameters, function (err, response) {
 //   else
 //     console.log(JSON.stringify(response, null, 2));
 // });
-
-
 // Keywords
 // ------------
 // var parameters = {
@@ -127,8 +114,6 @@ alchemy_language.combined(parameters, function (err, response) {
 //   else
 //     console.log(JSON.stringify(response, null, 2));
 // });
-
-
 // Language Detection
 // ------------
 // var parameters = {
@@ -141,8 +126,6 @@ alchemy_language.combined(parameters, function (err, response) {
 //   else
 //     console.log(JSON.stringify(response, null, 2));
 // });
-
-
 // Microformats
 // ------------
 // var parameters = {
@@ -155,8 +138,6 @@ alchemy_language.combined(parameters, function (err, response) {
 //   else
 //     console.log(JSON.stringify(response, null, 2));
 // });
-
-
 // Publication date
 // ------------
 // var parameters = {
@@ -169,8 +150,6 @@ alchemy_language.combined(parameters, function (err, response) {
 //   else
 //     console.log(JSON.stringify(response, null, 2));
 // });
-
-
 // Relations
 // ------------
 // var parameters = {
@@ -183,8 +162,6 @@ alchemy_language.combined(parameters, function (err, response) {
 //   else
 //     console.log(JSON.stringify(response, null, 2));
 // });
-
-
 // Typed Relations
 // ------------
 // var parameters = {
@@ -197,8 +174,6 @@ alchemy_language.combined(parameters, function (err, response) {
 //   else
 //     console.log(JSON.stringify(response, null, 2));
 // });
-
-
 // Sentiment
 // ------------
 // var parameters = {
@@ -211,8 +186,6 @@ alchemy_language.combined(parameters, function (err, response) {
 //   else
 //     console.log(JSON.stringify(response, null, 2));
 // });
-
-
 // Targeted Sentiment
 // ------------
 // var parameters = {
@@ -228,8 +201,6 @@ alchemy_language.combined(parameters, function (err, response) {
 //   else
 //     console.log(JSON.stringify(response, null, 2));
 // });
-
-
 // Taxonomy
 // ------------
 // var parameters = {
@@ -242,8 +213,6 @@ alchemy_language.combined(parameters, function (err, response) {
 //   else
 //     console.log(JSON.stringify(response, null, 2));
 // });
-
-
 // Text extraction (cleaned)
 // ------------
 // var parameters = {
@@ -256,8 +225,6 @@ alchemy_language.combined(parameters, function (err, response) {
 //   else
 //     console.log(JSON.stringify(response, null, 2));
 // });
-
-
 // Text extraction (raw)
 // ------------
 // var parameters = {
@@ -271,8 +238,6 @@ alchemy_language.combined(parameters, function (err, response) {
 //   else
 //     console.log(JSON.stringify(response, null, 2));
 // });
-
-
 // Title extraction
 // ------------
 // var parameters = {

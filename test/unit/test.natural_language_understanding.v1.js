@@ -1,24 +1,25 @@
 'use strict';
 
-var nock = require('nock');
-var watson = require('../../index');
-var assert = require('assert');
+const nock = require('nock');
+const watson = require('../../index');
+const assert = require('assert');
 
-var FIVE_SECONDS = 5000;
-var TWO_SECONDS = 2000;
+const FIVE_SECONDS = 5000;
+const TWO_SECONDS = 2000;
 
 describe('natural_language_understanding', function() {
   this.timeout(FIVE_SECONDS);
   this.slow(TWO_SECONDS); // this controls when the tests get a colored warning for taking too long
-
   this.retries(1);
 
-  var nlu;
+  let nlu;
 
   before(function() {
-    nlu = new watson.NaturalLanguageUnderstandingV1({username: 'user',
-                                                     password: 'pass',
-                                                     version_date: watson.NaturalLanguageUnderstandingV1.VERSION_DATE_2016_01_23});
+    nlu = new watson.NaturalLanguageUnderstandingV1({
+      username: 'user',
+      password: 'pass',
+      version_date: watson.NaturalLanguageUnderstandingV1.VERSION_DATE_2016_01_23
+    });
     nock.disableNetConnect();
   });
 
@@ -28,7 +29,10 @@ describe('natural_language_understanding', function() {
 
   it('should throw if no version is present', function(done) {
     assert.throws(function() {
-      var badnlu = new watson.NaturalLanguageUnderstandingV1({username: 'user', password: 'pass'});
+      const badnlu = new watson.NaturalLanguageUnderstandingV1({
+        username: 'user',
+        password: 'pass'
+      });
       assert(badnlu);
     });
     done();
@@ -40,8 +44,10 @@ describe('natural_language_understanding', function() {
       .post('/v1/analyze?version=' + watson.NaturalLanguageUnderstandingV1.VERSION_DATE_2016_01_23)
       .reply(200, {});
 
-    var options = { 'features': {'concepts': {}, 'keywords': {}},
-                    'text': 'hello, this is a test' };
+    const options = {
+      features: { concepts: {}, keywords: {} },
+      text: 'hello, this is a test'
+    };
 
     nlu.analyze(options, done);
   });

@@ -16,9 +16,9 @@
 
 'use strict';
 
-var requestFactory = require('../lib/requestwrapper');
-var util = require('util');
-var BaseService = require('../lib/base_service');
+const requestFactory = require('../lib/requestwrapper');
+const util = require('util');
+const BaseService = require('../lib/base_service');
 
 /**
  * NaturalLanguageUnderstanding
@@ -68,8 +68,7 @@ NaturalLanguageUnderstandingV1.VERSION_DATE_2016_01_23 = '2016-01-23';
   * @returns {void}
   */
 NaturalLanguageUnderstandingV1.prototype.analyze = function(params, callback) {
-
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v1/analyze',
       method: 'POST',

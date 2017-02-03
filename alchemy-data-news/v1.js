@@ -16,11 +16,11 @@
 
 'use strict';
 
-var extend         = require('extend');
-var requestFactory = require('../lib/requestwrapper');
-var util = require('util');
-var BaseServiceAlchemy = require('../lib/base_service_alchemy');
-var errorFormatter = require('../lib/alchemy_error_formatter');
+const extend = require('extend');
+const requestFactory = require('../lib/requestwrapper');
+const util = require('util');
+const BaseServiceAlchemy = require('../lib/base_service_alchemy');
+const errorFormatter = require('../lib/alchemy_error_formatter');
 
 /**
  * @param options
@@ -43,20 +43,20 @@ AlchemyDataNewsV1.URL = 'https://gateway-a.watsonplatform.net/calls';
  * @param params.start
  * @param {Function} callback
  */
-AlchemyDataNewsV1.prototype.getNews = function (params, callback ) {
-    params = params || {};
+AlchemyDataNewsV1.prototype.getNews = function(params, callback) {
+  params = params || {};
 
-    var parameters = {
-      options: {
-        url: '/data/GetNews',
-        method: 'GET',
-        json: true,
-        qs: extend({}, params, {outputMode: 'json'}) // change default output to json
-      },
-      requiredParams: ['end','start'],
-      defaultOptions: this._options
-    };
-    return requestFactory(parameters, errorFormatter(callback));
+  const parameters = {
+    options: {
+      url: '/data/GetNews',
+      method: 'GET',
+      json: true,
+      qs: extend({}, params, { outputMode: 'json' }) // change default output to json
+    },
+    requiredParams: ['end', 'start'],
+    defaultOptions: this._options
   };
+  return requestFactory(parameters, errorFormatter(callback));
+};
 
 module.exports = AlchemyDataNewsV1;

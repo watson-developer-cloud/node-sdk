@@ -16,11 +16,11 @@
 
 'use strict';
 
-var requestFactory = require('../lib/requestwrapper');
-var isStream       = require('isstream');
-var omit           = require('object.omit');
-var util = require('util');
-var BaseService = require('../lib/base_service');
+const requestFactory = require('../lib/requestwrapper');
+const isStream = require('isstream');
+const omit = require('object.omit');
+const util = require('util');
+const BaseService = require('../lib/base_service');
 
 /**
  * Document Conversion service
@@ -31,10 +31,12 @@ function DocumentConversionV1(options) {
   BaseService.call(this, options);
 
   // Warn if not specifying version date
-  if(!this._options.version_date && !this._options.silent) {
+  if (!this._options.version_date && !this._options.silent) {
     // eslint-disable-next-line no-console
-    console.warn('[DocumentConversion] WARNING: No version_date specified. Using a (possibly old) default. ' +
-                  'e.g. watson.document_conversion({ version_date: "2015-12-15" })');
+    console.warn(
+      '[DocumentConversion] WARNING: No version_date specified. Using a (possibly old) default. ' +
+        'e.g. watson.document_conversion({ version_date: "2015-12-15" })'
+    );
   }
 }
 util.inherits(DocumentConversionV1, BaseService);
@@ -44,7 +46,6 @@ DocumentConversionV1.URL = 'https://gateway.watsonplatform.net/document-conversi
 DocumentConversionV1.prototype.serviceDefaults = {
   qs: { version: '2015-12-15' }
 };
-
 
 DocumentConversionV1.prototype.conversion_target = {
   ANSWER_UNITS: 'answer_units',
@@ -81,8 +82,10 @@ DocumentConversionV1.prototype.convert = function(params, callback) {
   if (typeof params.conversion_target === 'string') {
     params.conversion_target = params.conversion_target.toLowerCase();
   }
-  var keys = Object.keys(DocumentConversionV1.prototype.conversion_target);
-  var values = keys.map(function(v) { return DocumentConversionV1.prototype.conversion_target[v]; });
+  const keys = Object.keys(DocumentConversionV1.prototype.conversion_target);
+  const values = keys.map(function(v) {
+    return DocumentConversionV1.prototype.conversion_target[v];
+  });
   if (values.indexOf(params.conversion_target) === -1) {
     callback(new Error('Missing required parameters: conversion_target. Possible values are: ' + values.join(', ')));
     return;
@@ -98,7 +101,7 @@ DocumentConversionV1.prototype.convert = function(params, callback) {
     return;
   }
 
-  var parameters = {
+  const parameters = {
     options: {
       method: 'POST',
       url: '/v1/convert_document',
@@ -113,7 +116,7 @@ DocumentConversionV1.prototype.convert = function(params, callback) {
     parameters.options.formData = {
       file: params.file,
       config: {
-        value: JSON.stringify(params.config || omit(params,['file', 'content_type'])),
+        value: JSON.stringify(params.config || omit(params, ['file', 'content_type'])),
         options: {
           contentType: 'application/json; charset=utf-8'
         }
@@ -163,7 +166,7 @@ DocumentConversionV1.prototype.index = function(params, callback) {
     return;
   }
 
-  var parameters = {
+  const parameters = {
     options: {
       method: 'POST',
       url: '/v1/index_document',
@@ -224,14 +227,29 @@ DocumentConversionV1.prototype.index = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
-
 // give a clear error message for the deprecated methods
-['getOutput', 'getOutputs', 'getJobLog', 'getJobs', 'getJob', 'createJob', 'getBatchDocument', 'getBatchDocuments',
-  'addDocumentToBatch', 'getDocument', 'getDocuments', 'uploadDocument', 'getBatchDocuments', 'updateBatch', 'getBatch', 'createBatch', 'getBatches'].forEach(function(name) {
-    DocumentConversionV1.prototype[name] = function deprecated() {
-      throw new Error('The DocumentConversion.' + name + '() method was deprecated and is no longer available, please use convert() instead.');
+[
+  'getOutput',
+  'getOutputs',
+  'getJobLog',
+  'getJobs',
+  'getJob',
+  'createJob',
+  'getBatchDocument',
+  'getBatchDocuments',
+  'addDocumentToBatch',
+  'getDocument',
+  'getDocuments',
+  'uploadDocument',
+  'getBatchDocuments',
+  'updateBatch',
+  'getBatch',
+  'createBatch',
+  'getBatches'
+].forEach(function(name) {
+  DocumentConversionV1.prototype[name] = function deprecated() {
+    throw new Error('The DocumentConversion.' + name + '() method was deprecated and is no longer available, please use convert() instead.');
   };
 });
-
 
 module.exports = DocumentConversionV1;

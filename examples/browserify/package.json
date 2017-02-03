@@ -14,5 +14,8 @@
     "express-browserify": "^1.0.2",
     "watson-developer-cloud": "^2.7.1"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "engines": {
+    "node": ">=4"
+  }
 }

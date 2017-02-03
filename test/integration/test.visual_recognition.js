@@ -1,25 +1,24 @@
-var fs = require('fs');
-var nock = require('nock');
-var watson = require('../../index');
-var assert = require('assert');
-var path = require('path');
-var authHelper = require('./auth_helper.js');
-var auth = authHelper.auth;
-var describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
-var async = require('async');
+'use strict';
+const fs = require('fs');
+const nock = require('nock');
+const watson = require('../../index');
+const assert = require('assert');
+const path = require('path');
+const authHelper = require('./auth_helper.js');
+const auth = authHelper.auth;
+const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
+const async = require('async');
 
-var THIRTY_SECONDS = 30000;
-var TWO_SECONDS = 2000;
-
+const THIRTY_SECONDS = 30000;
+const TWO_SECONDS = 2000;
 
 describe('visual_recognition_integration', function() {
-
   // ugh.
   this.timeout(THIRTY_SECONDS * 4);
   this.slow(TWO_SECONDS);
   this.retries(5);
 
-  var visual_recognition;
+  let visual_recognition;
 
   before(function() {
     visual_recognition = watson.visual_recognition(auth.visual_recognition.v3);
@@ -30,11 +29,10 @@ describe('visual_recognition_integration', function() {
     nock.disableNetConnect();
   });
 
-
   it('should return error when invalid api_key', function(done) {
-    var constructor = auth.visual_recognition.v3;
+    const constructor = auth.visual_recognition.v3;
     constructor.api_key = 'not-a-valid-key';
-    var recognition = watson.visual_recognition(constructor);
+    const recognition = watson.visual_recognition(constructor);
 
     recognition.listClassifiers({}, function(err) {
       if (err) {
@@ -47,20 +45,22 @@ describe('visual_recognition_integration', function() {
 
   describe('classify()', function() {
     it('should classify an uploaded image', function(done) {
-      var params = {
+      const params = {
         images_file: fs.createReadStream(__dirname + '/../resources/car.png')
       };
       visual_recognition.classify(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        //console.log(JSON.stringify(result, null, 2));
+        // console.log(JSON.stringify(result, null, 2));
         assert.equal(result.images_processed, 1);
         assert.equal(result.images[0].image, 'car.png');
         assert(result.images[0].classifiers.length);
-        assert(result.images[0].classifiers[0].classes.some(function(c) {
-          return c.class === 'car'
-        }));
+        assert(
+          result.images[0].classifiers[0].classes.some(function(c) {
+            return c.class === 'car';
+          })
+        );
 
         done();
       });
@@ -68,40 +68,44 @@ describe('visual_recognition_integration', function() {
 
     it('should classify from a buffer', function(done) {
       this.retries(0);
-      var params = {
+      const params = {
         images_file: fs.readFileSync(__dirname + '/../resources/car.png')
       };
       visual_recognition.classify(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        //console.log(JSON.stringify(result, null, 2));
+        // console.log(JSON.stringify(result, null, 2));
         assert.equal(result.images_processed, 1);
         assert(result.images[0].classifiers.length);
-        assert(result.images[0].classifiers[0].classes.some(function(c) {
-          return c.class === 'car'
-        }));
+        assert(
+          result.images[0].classifiers[0].classes.some(function(c) {
+            return c.class === 'car';
+          })
+        );
 
         done();
       });
     });
 
     it('should classify an image via url', function(done) {
-      var params = {
+      const params = {
         url: 'https://watson-test-resources.mybluemix.net/resources/car.png'
       };
       visual_recognition.classify(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        //console.log(JSON.stringify(result, null, 2));
+        // console.log(JSON.stringify(result, null, 2));
         assert.equal(result.images_processed, 1);
         assert.equal(result.images[0].resolved_url, 'https://watson-test-resources.mybluemix.net/resources/car.png');
         assert.equal(result.images[0].source_url, 'https://watson-test-resources.mybluemix.net/resources/car.png');
         assert(result.images[0].classifiers.length);
-        assert(result.images[0].classifiers[0].classes.some(function(c) {
-          return c.class === 'car'
-        }));
+        assert(
+          result.images[0].classifiers[0].classes.some(function(c) {
+            return c.class === 'car';
+          })
+        );
 
         done();
       });
@@ -110,18 +114,18 @@ describe('visual_recognition_integration', function() {
 
   describe.skip('detectFaces()', function() {
     it('should detect faces in an uploaded image', function(done) {
-      var params = {
+      const params = {
         images_file: fs.createReadStream(__dirname + '/../resources/obama.jpg')
       };
       visual_recognition.detectFaces(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        //console.log(JSON.stringify(result, null, 2));
+        // console.log(JSON.stringify(result, null, 2));
         assert.equal(result.images_processed, 1);
         assert.equal(result.images[0].image, 'obama.jpg');
         assert.equal(result.images[0].faces.length, 1, 'There should be exactly one face detected'); // note: the api was sometimes failing to detect any faces right after the release
-        var face = result.images[0].faces[0];
+        const face = result.images[0].faces[0];
         assert.equal(face.gender.gender, 'MALE');
         assert.equal(face.identity.name, 'Barack Obama');
         done();
@@ -129,19 +133,19 @@ describe('visual_recognition_integration', function() {
     });
 
     it('should detect faces in an image via url', function(done) {
-      var params = {
+      const params = {
         url: 'https://watson-test-resources.mybluemix.net/resources/obama.jpg'
       };
       visual_recognition.detectFaces(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        //console.log(JSON.stringify(result, null, 2));
+        // console.log(JSON.stringify(result, null, 2));
         assert.equal(result.images_processed, 1);
         assert.equal(result.images[0].resolved_url, 'https://watson-test-resources.mybluemix.net/resources/obama.jpg');
         assert.equal(result.images[0].source_url, 'https://watson-test-resources.mybluemix.net/resources/obama.jpg');
         assert.equal(result.images[0].faces.length, 1, 'There should be exactly one face detected'); // note: the api was sometimes failing to detect any faces right after the release
-        var face = result.images[0].faces[0];
+        const face = result.images[0].faces[0];
         assert.equal(face.gender.gender, 'MALE');
         assert.equal(face.identity.name, 'Barack Obama');
         done();
@@ -152,8 +156,7 @@ describe('visual_recognition_integration', function() {
   // this endpoint is currently experiencing issues
   describe.skip('recognizeText()', function() {
     it('read text in an uploaded image', function(done) {
-
-      var params = {
+      const params = {
         images_file: fs.createReadStream(__dirname + '/../resources/car.png')
       };
       visual_recognition.recognizeText(params, function(err, result) {
@@ -161,7 +164,7 @@ describe('visual_recognition_integration', function() {
           return done(err);
         }
 
-        //console.log(JSON.stringify(actual, null, 2));
+        // console.log(JSON.stringify(actual, null, 2));
 
         assert.equal(result.images_processed, 1);
         assert.equal(result.images[0].image, 'car.png');
@@ -173,15 +176,14 @@ describe('visual_recognition_integration', function() {
     });
 
     it('read text an image via url', function(done) {
-
-      var params = {
+      const params = {
         url: 'https://watson-test-resources.mybluemix.net/resources/car.png'
       };
       visual_recognition.recognizeText(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        //console.log(JSON.stringify(result, null, 2));
+        // console.log(JSON.stringify(result, null, 2));
 
         assert.equal(result.images_processed, 1);
         assert.equal(result.images[0].resolved_url, 'https://watson-test-resources.mybluemix.net/resources/car.png');
@@ -194,26 +196,28 @@ describe('visual_recognition_integration', function() {
     });
   });
 
-
   // todo: add more tests, consider splitting things between a permanent and a temporary classifier
-  describe("custom classifiers", function() {
-    var classifier_id;
+  describe('custom classifiers', function() {
+    let classifier_id;
     this.retries(0);
 
     it('createClassifier()', function(done) {
-      visual_recognition.createClassifier({
-        name: 'light_dark_test_temporary',
-        light_positive_examples: fs.createReadStream(path.join(__dirname, '../resources/light.zip')),
-        dark_positive_examples: fs.createReadStream(path.join(__dirname, '../resources/dark.zip'))
-      }, function(err, response) {
-        if (err) {
-          return done(err)
+      visual_recognition.createClassifier(
+        {
+          name: 'light_dark_test_temporary',
+          light_positive_examples: fs.createReadStream(path.join(__dirname, '../resources/light.zip')),
+          dark_positive_examples: fs.createReadStream(path.join(__dirname, '../resources/dark.zip'))
+        },
+        function(err, response) {
+          if (err) {
+            return done(err);
+          }
+          assert(response);
+          assert(response.classifier_id);
+          classifier_id = response.classifier_id;
+          done();
         }
-        assert(response);
-        assert(response.classifier_id);
-        classifier_id = response.classifier_id;
-        done();
-      });
+      );
     });
 
     it('listClassifiers()', function(done) {
@@ -236,30 +240,26 @@ describe('visual_recognition_integration', function() {
     });
 
     it('getClassifier()', function(done) {
-      visual_recognition.getClassifier({classifier_id: classifier_id}, function(err, classifier){
+      visual_recognition.getClassifier({ classifier_id: classifier_id }, function(err, classifier) {
         if (err) {
           return done(err);
         }
         assert.equal(classifier.classifier_id, classifier_id);
         assert.equal(classifier.name, 'light_dark_test_temporary');
-        assert.deepEqual(classifier.classes, [{"class":"light"},{"class":"dark"}]);
+        assert.deepEqual(classifier.classes, [{ class: 'light' }, { class: 'dark' }]);
         done();
       });
     });
 
     it('deleteClassifier()', function(done) {
-      visual_recognition.deleteClassifier({classifier_id: classifier_id}, done);
-    })
-
+      visual_recognition.deleteClassifier({ classifier_id: classifier_id }, done);
+    });
   }); // custom classifiers
-
-
   // todo: consider creating a permanent collection to run most of these against so that a failure in creation will only kill the creation/deletion tests
-  describe("collections", function() {
+  describe('collections', function() {
     this.retries(0);
-    var collection_id;
-    var image_id;
-
+    let collection_id;
+    let image_id;
 
     // there is currently a limited number collections per service instance
     // so, this automatically deletes any existing collections that are > 15 minutes old
@@ -269,24 +269,28 @@ describe('visual_recognition_integration', function() {
         if (err) {
           return done(err);
         }
-        var cutoff = new Date();
+        const cutoff = new Date();
         cutoff.setMinutes(cutoff.getMinutes() - 15);
         if (result.collections && Array.isArray(result.collections)) {
-          async.forEach(result.collections, function(col, next) {
-            if (new Date(col.created) < cutoff) {
-              // eslint-disable-next-line no-console
-              console.log('Deleting old collection before running tests', col);
-              visual_recognition.deleteCollection({collection_id: col.collection_id}, function(err) {
-                if (err) {
-                  // eslint-disable-next-line no-console
-                  console.error('error deleting collection:', err, col);
-                }
-                next(); // even if it failed, go to the next step
-              });
-            } else {
-              next();
-            }
-          }, done);
+          async.forEach(
+            result.collections,
+            function(col, next) {
+              if (new Date(col.created) < cutoff) {
+                // eslint-disable-next-line no-console
+                console.log('Deleting old collection before running tests', col);
+                visual_recognition.deleteCollection({ collection_id: col.collection_id }, function(err) {
+                  if (err) {
+                    // eslint-disable-next-line no-console
+                    console.error('error deleting collection:', err, col);
+                  }
+                  next(); // even if it failed, go to the next step
+                });
+              } else {
+                next();
+              }
+            },
+            done
+          );
         } else {
           done();
         }
@@ -294,7 +298,7 @@ describe('visual_recognition_integration', function() {
     });
 
     it('createCollection()', function(done) {
-      visual_recognition.createCollection({name: "integration_test_" + Date.now()}, function(err, result) {
+      visual_recognition.createCollection({ name: 'integration_test_' + Date.now() }, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -317,9 +321,8 @@ describe('visual_recognition_integration', function() {
       });
     });
 
-
     it('getCollection()', function(done) {
-      visual_recognition.getCollection({collection_id: collection_id}, function(err, result) {
+      visual_recognition.getCollection({ collection_id: collection_id }, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -330,29 +333,32 @@ describe('visual_recognition_integration', function() {
     });
 
     it('addImage()', function(done) {
-      visual_recognition.addImage({
-        collection_id: collection_id,
-        image_file: fs.createReadStream(path.join(__dirname, '../resources/obama.jpg')),
-        metadata: {foo: 'bar'}
-      }, function(err, response) {
-        if (err) {
-          return done(err);
+      visual_recognition.addImage(
+        {
+          collection_id: collection_id,
+          image_file: fs.createReadStream(path.join(__dirname, '../resources/obama.jpg')),
+          metadata: { foo: 'bar' }
+        },
+        function(err, response) {
+          if (err) {
+            return done(err);
+          }
+          assert(response);
+          assert.equal(response.images_processed, 1);
+          assert(response.images);
+          assert(response.images.length);
+          assert(response.images[0].image_id);
+          image_id = response.images[0].image_id;
+          assert.equal(response.images[0].image_file, 'obama.jpg');
+          assert(response.images[0].metadata);
+          assert.equal(response.images[0].metadata.foo, 'bar');
+          done();
         }
-        assert(response);
-        assert.equal(response.images_processed, 1);
-        assert(response.images);
-        assert(response.images.length);
-        assert(response.images[0].image_id);
-        image_id = response.images[0].image_id;
-        assert.equal(response.images[0].image_file, "obama.jpg");
-        assert(response.images[0].metadata);
-        assert.equal(response.images[0].metadata.foo, "bar");
-        done();
-      });
+      );
     });
 
     it('listImages()', function(done) {
-      visual_recognition.listImages({collection_id: collection_id}, function(err, result) {
+      visual_recognition.listImages({ collection_id: collection_id }, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -364,79 +370,97 @@ describe('visual_recognition_integration', function() {
     });
 
     it('getImage()', function(done) {
-      visual_recognition.getImage({
-        collection_id: collection_id,
-        image_id: image_id
-      }, function(err, result) {
-        if (err) {
-          return done(err);
+      visual_recognition.getImage(
+        {
+          collection_id: collection_id,
+          image_id: image_id
+        },
+        function(err, result) {
+          if (err) {
+            return done(err);
+          }
+          assert(result);
+          assert(result.image_id);
+          done();
         }
-        assert(result);
-        assert(result.image_id);
-        done();
-      });
+      );
     });
 
     it('setImageMetadata', function(done) {
-      visual_recognition.setImageMetadata({
-        collection_id: collection_id,
-        image_id: image_id,
-        metadata: {baz: 'bam'}
-      }, function(err, result) {
-        if (err) {
-          return done(err);
+      visual_recognition.setImageMetadata(
+        {
+          collection_id: collection_id,
+          image_id: image_id,
+          metadata: { baz: 'bam' }
+        },
+        function(err, result) {
+          if (err) {
+            return done(err);
+          }
+          assert(result);
+          assert.equal(result.baz, 'bam');
+          done();
         }
-        assert(result);
-        assert.equal(result.baz, 'bam');
-        done();
-      });
+      );
     });
 
     it('getImageMetadata()', function(done) {
-      visual_recognition.getImageMetadata({
-        collection_id: collection_id,
-        image_id: image_id
-      }, function(err, result) {
-        if (err) {
-          return done(err);
+      visual_recognition.getImageMetadata(
+        {
+          collection_id: collection_id,
+          image_id: image_id
+        },
+        function(err, result) {
+          if (err) {
+            return done(err);
+          }
+          assert(result);
+          assert.equal(result.baz, 'bam');
+          done();
         }
-        assert(result);
-        assert.equal(result.baz, 'bam');
-        done();
-      });
+      );
     });
 
     it('findSimilar()', function(done) {
-      visual_recognition.findSimilar({
-        collection_id: collection_id,
-        image_file: fs.createReadStream(path.join(__dirname, '../resources/obama2.jpg')),
-      }, function(err, result) {
-        if (err) {
-          return done(err);
+      visual_recognition.findSimilar(
+        {
+          collection_id: collection_id,
+          image_file: fs.createReadStream(path.join(__dirname, '../resources/obama2.jpg'))
+        },
+        function(err, result) {
+          if (err) {
+            return done(err);
+          }
+          assert(result);
+          assert(result.images_processed);
+          assert(result.similar_images);
+          done();
         }
-        assert(result);
-        assert(result.images_processed);
-        assert(result.similar_images);
-        done();
-      });
+      );
     });
 
     it('deleteImageMetadata()', function(done) {
-      visual_recognition.deleteImageMetadata({
-        collection_id: collection_id,
-        image_id: image_id
-      }, done);
+      visual_recognition.deleteImageMetadata(
+        {
+          collection_id: collection_id,
+          image_id: image_id
+        },
+        done
+      );
     });
 
     it('deleteImage()', function(done) {
-      visual_recognition.deleteImage({
-        collection_id: collection_id,
-        image_id: image_id
-      }, done);
+      visual_recognition.deleteImage(
+        {
+          collection_id: collection_id,
+          image_id: image_id
+        },
+        done
+      );
     });
 
     it('deleteCollection()', function(done) {
-      visual_recognition.deleteCollection({collection_id: collection_id}, done);
+      visual_recognition.deleteCollection({ collection_id: collection_id }, done);
     });
   }); // collections
 }); // vr

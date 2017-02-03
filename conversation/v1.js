@@ -16,10 +16,10 @@
 
 'use strict';
 
-var requestFactory = require('../lib/requestwrapper');
-var pick           = require('object.pick');
-var util = require('util');
-var BaseService = require('../lib/base_service');
+const requestFactory = require('../lib/requestwrapper');
+const pick = require('object.pick');
+const util = require('util');
+const BaseService = require('../lib/base_service');
 
 /**
  *
@@ -135,7 +135,7 @@ ConversationV1.VERSION_DATE_2016_09_20 = '2016-09-20';
 ConversationV1.prototype.message = function(params, callback) {
   params = params || {};
 
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v1/workspaces/{workspace_id}/message',
       method: 'POST',

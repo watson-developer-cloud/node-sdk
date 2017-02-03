@@ -20,15 +20,15 @@ Document Conversion Service and upload it to the Retrieve and Rank Service to ma
       node document_conversion_integration.v1.js
 */
 
-var watson = require('watson-developer-cloud');
-var async = require('async');
-var fs = require('fs');
+const watson = require('watson-developer-cloud');
+const async = require('async');
+const fs = require('fs');
 
 /*
 Insert the credentials for your Retrieve and Rank service instance
 NOTE: you cannot use your Bluemix account credentials here
 */
-var retrieve = new watson.RetrieveAndRankV1({
+const retrieve = new watson.RetrieveAndRankV1({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
   password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE'
 });
@@ -37,50 +37,51 @@ var retrieve = new watson.RetrieveAndRankV1({
 Insert the credentials for your Document Conversion service instance
 NOTE: you cannot use your Bluemix account credentials here
 */
-var document_conversion = new watson.DocumentConversionV1({
+const document_conversion = new watson.DocumentConversionV1({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
   password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
   version_date: '2015-12-01'
 });
 
-var clusterId = 'INSERT YOUR CLUSTER ID HERE';
+const clusterId = 'INSERT YOUR CLUSTER ID HERE';
 
-var inputDocument = '/resources/watson-wikipedia.html';
-var collectionName = 'example_collection';
+const inputDocument = '/resources/watson-wikipedia.html';
+const collectionName = 'example_collection';
 
-var solrClient = retrieve.createSolrClient({
+const solrClient = retrieve.createSolrClient({
   cluster_id: clusterId,
   collection_name: collectionName
 });
 
 async.waterfall([
-
   function convert(done) {
     // convert a single document
-    document_conversion.convert({
-      // (JSON) ANSWER_UNITS, NORMALIZED_HTML, or NORMALIZED_TEXT
-      file: fs.createReadStream(__dirname + inputDocument),
-      conversion_target: document_conversion.conversion_target.ANSWER_UNITS,
-      config: {
-        html_to_html: {
-          specify_content_to_extract: {
-            enabled: true,
-            xpaths: ['//h3']
+    document_conversion.convert(
+      {
+        // (JSON) ANSWER_UNITS, NORMALIZED_HTML, or NORMALIZED_TEXT
+        file: fs.createReadStream(__dirname + inputDocument),
+        conversion_target: document_conversion.conversion_target.ANSWER_UNITS,
+        config: {
+          html_to_html: {
+            specify_content_to_extract: {
+              enabled: true,
+              xpaths: ['//h3']
+            }
           }
         }
+      },
+      function(err, response) {
+        if (err) {
+          console.error(err);
+        } else {
+          done(null, response);
+        }
       }
-    }, function(err, response) {
-      if (err) {
-        console.error(err);
-      } else {
-        done(null, response);
-      }
-    });
+    );
   },
-
   function indexAndCommit(response, done) {
     console.log('Indexing a document...');
-    var doc = mapAnswerUnits2SolrDocs(response);
+    const doc = mapAnswerUnits2SolrDocs(response);
     solrClient.add(doc, function(err) {
       if (err) {
         console.log('Error indexing document: ' + err);
@@ -98,15 +99,14 @@ async.waterfall([
       }
     });
   },
-
   function _search(done) {
     console.log('Searching all documents.');
-    var query = solrClient.createQuery();
+    const query = solrClient.createQuery();
     // This query searches for the term 'psychological' in the content_text field.
     // For a wildcard query use:
     // query.q({ '*' : '*' });
     query.q({
-      'content_text': 'psychological'
+      content_text: 'psychological'
     });
 
     solrClient.search(query, function(err, searchResponse) {
@@ -122,18 +122,18 @@ async.waterfall([
 ]);
 
 function mapAnswerUnits2SolrDocs(data) {
-  var answerUnits = data.answer_units;
-  var solrDocList = [];
+  const answerUnits = data.answer_units;
+  const solrDocList = [];
   answerUnits.forEach(function(value) {
-    var solrDoc = convertAnswerUnit2SolrDoc(value);
+    const solrDoc = convertAnswerUnit2SolrDoc(value);
     solrDocList.push(solrDoc);
   });
   return solrDocList;
 }
 
 function convertAnswerUnit2SolrDoc(au) {
-  var solrDoc;
-  var auContents = au.content;
+  let solrDoc;
+  const auContents = au.content;
   auContents.forEach(function(auContent) {
     if (auContent.media_type === 'text/plain') {
       solrDoc = {

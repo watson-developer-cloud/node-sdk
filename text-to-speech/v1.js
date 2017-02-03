@@ -16,11 +16,11 @@
 
 'use strict';
 
-var pick           = require('object.pick');
-var extend         = require('extend');
-var requestFactory = require('../lib/requestwrapper');
-var util = require('util');
-var BaseService = require('../lib/base_service');
+const pick = require('object.pick');
+const extend = require('extend');
+const requestFactory = require('../lib/requestwrapper');
+const util = require('util');
+const BaseService = require('../lib/base_service');
 
 /**
  * Watson Text to Speech service
@@ -48,9 +48,9 @@ TextToSpeechV1.URL = 'https://stream.watsonplatform.net/text-to-speech/api';
  * @param {Function} callback
  */
 TextToSpeechV1.prototype.synthesize = function(params, callback) {
-  params = extend({accept:'audio/ogg; codecs=opus'}, params);
+  params = extend({ accept: 'audio/ogg; codecs=opus' }, params);
 
-  var parameters = {
+  const parameters = {
     requiredParams: ['text'],
     options: {
       method: 'POST',
@@ -58,9 +58,12 @@ TextToSpeechV1.prototype.synthesize = function(params, callback) {
       body: JSON.stringify(pick(params, ['text'])),
       qs: pick(params, ['accept', 'voice', 'customization_id']),
       path: pick(params, ['text']),
-      headers: extend({
-        'content-type': 'application/json'
-      }, pick(params, ['X-Watson-Learning-Opt-Out'])),
+      headers: extend(
+        {
+          'content-type': 'application/json'
+        },
+        pick(params, ['X-Watson-Learning-Opt-Out'])
+      ),
       encoding: null
     },
     defaultOptions: this._options
@@ -71,14 +74,13 @@ TextToSpeechV1.prototype.synthesize = function(params, callback) {
 // todo: add websocket support
 // http://www.ibm.com/watson/developercloud/text-to-speech/api/v1/?curl#www_synthesize12
 
-
 /**
  * Retrieves the voices available for speech synthesis
  * @param {Object} params
  * @param {Function} callback
  */
 TextToSpeechV1.prototype.voices = function(params, callback) {
-  var parameters = {
+  const parameters = {
     options: {
       method: 'GET',
       url: '/v1/voices',
@@ -97,7 +99,7 @@ TextToSpeechV1.prototype.voices = function(params, callback) {
  * @param {String} [params.customization_id]
  */
 TextToSpeechV1.prototype.voice = function(params, callback) {
-  var parameters = {
+  const parameters = {
     requiredParams: ['voice'],
     options: {
       method: 'GET',
@@ -111,7 +113,6 @@ TextToSpeechV1.prototype.voice = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
-
 /**
  * Returns the phonetic pronunciation for the specified word.
  *
@@ -122,7 +123,7 @@ TextToSpeechV1.prototype.voice = function(params, callback) {
  * @param {String} [params.customization_id] - do not specify both a voice and a customization_id
  */
 TextToSpeechV1.prototype.pronunciation = function(params, callback) {
-  var parameters = {
+  const parameters = {
     requiredParams: ['text'],
     options: {
       method: 'GET',
@@ -153,7 +154,7 @@ TextToSpeechV1.prototype.pronunciation = function(params, callback) {
  * @param {Function} callback
  */
 TextToSpeechV1.prototype.createCustomization = function(params, callback) {
-  var parameters = {
+  const parameters = {
     requiredParams: ['name'],
     options: {
       method: 'POST',
@@ -199,14 +200,14 @@ TextToSpeechV1.prototype.createCustomization = function(params, callback) {
  * @param {Function} callback
  */
 TextToSpeechV1.prototype.updateCustomization = function(params, callback) {
-  var parameters = {
+  const parameters = {
     requiredParams: ['customization_id', 'words'],
     originalParams: params,
     options: {
       method: 'POST',
       url: '/v1/customizations/' + params.customization_id,
       body: pick(params, ['name', 'description', 'words']),
-      json: true,
+      json: true
     },
     defaultOptions: this._options
   };
@@ -255,7 +256,7 @@ TextToSpeechV1.prototype.getCustomizations = function(params, callback) {
     callback = params;
     params = {};
   }
-  var parameters = {
+  const parameters = {
     options: {
       method: 'GET',
       url: '/v1/customizations/',
@@ -302,7 +303,7 @@ TextToSpeechV1.prototype.getCustomizations = function(params, callback) {
  * @param {Function} callback
  */
 TextToSpeechV1.prototype.getCustomization = function(params, callback) {
-  var parameters = {
+  const parameters = {
     requiredParams: ['customization_id'],
     originalParams: params,
     options: {
@@ -323,7 +324,7 @@ TextToSpeechV1.prototype.getCustomization = function(params, callback) {
  * @param {Function} callback
  */
 TextToSpeechV1.prototype.deleteCustomization = function(params, callback) {
-  var parameters = {
+  const parameters = {
     requiredParams: ['customization_id'],
     originalParams: params,
     options: {
@@ -357,7 +358,7 @@ TextToSpeechV1.prototype.deleteCustomization = function(params, callback) {
  * @param {Function} callback
  */
 TextToSpeechV1.prototype.addWords = function(params, callback) {
-  var parameters = {
+  const parameters = {
     requiredParams: ['customization_id', 'words'],
     originalParams: params,
     options: {
@@ -397,7 +398,7 @@ TextToSpeechV1.prototype.addWords = function(params, callback) {
  * @param {Function} callback
  */
 TextToSpeechV1.prototype.addWord = function(params, callback) {
-  var parameters = {
+  const parameters = {
     requiredParams: ['customization_id', 'word', 'translation'],
     originalParams: params,
     options: {
@@ -455,7 +456,7 @@ TextToSpeechV1.prototype.getWords = function(params, callback) {
     callback = params;
     params = {};
   }
-  var parameters = {
+  const parameters = {
     requiredParams: ['customization_id'],
     originalParams: params,
     options: {
@@ -485,7 +486,7 @@ TextToSpeechV1.prototype.getWords = function(params, callback) {
  * @param {Function} callback
  */
 TextToSpeechV1.prototype.getWord = function(params, callback) {
-  var parameters = {
+  const parameters = {
     requiredParams: ['customization_id', 'word'],
     originalParams: params,
     options: {
@@ -507,7 +508,7 @@ TextToSpeechV1.prototype.getWord = function(params, callback) {
  * @param {Function} callback
  */
 TextToSpeechV1.prototype.deleteWord = function(params, callback) {
-  var parameters = {
+  const parameters = {
     requiredParams: ['customization_id', 'word'],
     originalParams: params,
     options: {
@@ -519,6 +520,5 @@ TextToSpeechV1.prototype.deleteWord = function(params, callback) {
   };
   return requestFactory(parameters, callback);
 };
-
 
 module.exports = TextToSpeechV1;

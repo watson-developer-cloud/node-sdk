@@ -16,10 +16,10 @@
 
 'use strict';
 
-var util = require('util');
-var requestFactory = require('../lib/requestwrapper');
-var BaseService = require('../lib/base_service');
-var pick = require('object.pick');
+const util = require('util');
+const requestFactory = require('../lib/requestwrapper');
+const BaseService = require('../lib/base_service');
+const pick = require('object.pick');
 
 /**
  *
@@ -41,7 +41,6 @@ DiscoveryV1.prototype.name = 'discovery';
 DiscoveryV1.prototype.version = 'v1';
 DiscoveryV1.URL = 'https://gateway.watsonplatform.net/discovery/api';
 
-
 /**
  * Initial release
  * @type {string}
@@ -56,7 +55,7 @@ DiscoveryV1.VERSION_DATE_2016_12_15 = '2016-12-15';
 DiscoveryV1.prototype.getEnvironments = function(params, callback) {
   params = params || {};
 
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v1/environments',
       method: 'GET',
@@ -73,7 +72,7 @@ DiscoveryV1.prototype.getEnvironments = function(params, callback) {
  * @param {string} description
  * @param {int} size (optional)
  */
-DiscoveryV1.prototype.createEnvironment = function (params, callback) {
+DiscoveryV1.prototype.createEnvironment = function(params, callback) {
   params = params || {};
 
   // size is an int of 1,2,3, default 1
@@ -81,20 +80,20 @@ DiscoveryV1.prototype.createEnvironment = function (params, callback) {
     params.size = 1;
   }
 
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v1/environments',
       method: 'POST',
       multipart: [
         {
           'content-type': 'application/json',
-          body: JSON.stringify(pick(params,['name','description','size']))
+          body: JSON.stringify(pick(params, ['name', 'description', 'size']))
         }
       ],
       json: true
     },
     originalParams: params,
-    requiredParams: ['name','description'],
+    requiredParams: ['name', 'description'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
@@ -109,7 +108,7 @@ DiscoveryV1.prototype.createEnvironment = function (params, callback) {
 DiscoveryV1.prototype.getEnvironment = function(params, callback) {
   params = params || {};
 
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v1/environments/{environment_id}',
       method: 'GET',
@@ -131,7 +130,7 @@ DiscoveryV1.prototype.getEnvironment = function(params, callback) {
 DiscoveryV1.prototype.deleteEnvironment = function(params, callback) {
   params = params || {};
 
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v1/environments/{environment_id}',
       method: 'DELETE',
@@ -153,7 +152,7 @@ DiscoveryV1.prototype.deleteEnvironment = function(params, callback) {
 DiscoveryV1.prototype.getConfigurations = function(params, callback) {
   params = params || {};
 
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v1/environments/{environment_id}/configurations',
       method: 'GET',
@@ -176,14 +175,14 @@ DiscoveryV1.prototype.getConfigurations = function(params, callback) {
 DiscoveryV1.prototype.getConfiguration = function(params, callback) {
   params = params || {};
 
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v1/environments/{environment_id}/configurations/{configuration_id}',
       method: 'GET',
-      path: pick(params, ['environment_id','configuration_id']),
+      path: pick(params, ['environment_id', 'configuration_id']),
       json: true
     },
-    requiredParams: ['environment_id','configuration_id'],
+    requiredParams: ['environment_id', 'configuration_id'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
@@ -198,7 +197,7 @@ DiscoveryV1.prototype.getConfiguration = function(params, callback) {
 DiscoveryV1.prototype.getCollections = function(params, callback) {
   params = params || {};
 
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v1/environments/{environment_id}/collections',
       method: 'GET',
@@ -221,7 +220,7 @@ DiscoveryV1.prototype.getCollections = function(params, callback) {
 DiscoveryV1.prototype.getCollection = function(params, callback) {
   params = params || {};
 
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v1/environments/{environment_id}/collections/{collection_id}',
       method: 'GET',
@@ -249,7 +248,7 @@ DiscoveryV1.prototype.createCollection = function(params, callback) {
 
   params.language_code = params.language_code || 'en_us';
 
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v1/environments/{environment_id}/collections',
       method: 'POST',
@@ -257,7 +256,7 @@ DiscoveryV1.prototype.createCollection = function(params, callback) {
       multipart: [
         {
           'content-type': 'application/json',
-          body: JSON.stringify(pick(params,['collection_name','description','configuration_id','language_code']))
+          body: JSON.stringify(pick(params, ['collection_name', 'description', 'configuration_id', 'language_code']))
         }
       ],
       json: true
@@ -281,7 +280,7 @@ DiscoveryV1.prototype.deleteCollection = function(params, callback) {
 
   params.language_code = params.language_code || 'en_us';
 
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v1/environments/{environment_id}/collections/{collection_id}',
       method: 'DELETE',
@@ -308,25 +307,24 @@ DiscoveryV1.prototype.deleteCollection = function(params, callback) {
 DiscoveryV1.prototype.addDocument = function(params, callback) {
   params = params || {};
 
-  var query_params = pick(params, ['configuration_id'])
-  var formDataParams = pick(params, ['file', 'metadata']);
+  const query_params = pick(params, ['configuration_id']);
+  const formDataParams = pick(params, ['file', 'metadata']);
 
   // if we get a buffer or object, we need to include stuff about filename for the service
   if (formDataParams.file) {
-    if (typeof formDataParams.file.filename !== 'string' &&
-          !(formDataParams.file.options &&
-             typeof formDataParams.file.options.filename !== 'string') &&
-          !(formDataParams.file.path &&
-            typeof formDataParams.file.path !== 'string') &&
-          !(formDataParams.file.name &&
-            typeof formDataParams.file.name !== 'string')) {
-      var filedat = formDataParams.file
+    if (
+      typeof formDataParams.file.filename !== 'string' &&
+        !(formDataParams.file.options && typeof formDataParams.file.options.filename !== 'string') &&
+        !(formDataParams.file.path && typeof formDataParams.file.path !== 'string') &&
+        !(formDataParams.file.name && typeof formDataParams.file.name !== 'string')
+    ) {
+      const filedat = formDataParams.file;
       // the filename used below is because the name must exist
-      formDataParams.file = { value: filedat, options: { filename: '_'}};
+      formDataParams.file = { value: filedat, options: { filename: '_' } };
     }
   }
 
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v1/environments/{environment_id}/collections/{collection_id}/documents',
       method: 'POST',
@@ -353,11 +351,11 @@ DiscoveryV1.prototype.addDocument = function(params, callback) {
 DiscoveryV1.prototype.deleteDocument = function(params, callback) {
   params = params || {};
 
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v1/environments/{environment_id}/collections/{collection_id}/documents/{document_id}',
       method: 'DELETE',
-      path: pick(params, ['environment_id', 'collection_id','document_id']),
+      path: pick(params, ['environment_id', 'collection_id', 'document_id']),
       json: true
     },
     requiredParams: ['environment_id', 'collection_id', 'document_id'],
@@ -382,13 +380,13 @@ DiscoveryV1.prototype.deleteDocument = function(params, callback) {
 DiscoveryV1.prototype.query = function(params, callback) {
   params = params || {};
 
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v1/environments/{environment_id}/collections/{collection_id}/query',
       method: 'GET',
       json: true,
       path: pick(params, ['environment_id', 'collection_id']),
-      qs: pick(params,['filter', 'aggregation', 'return', 'count', 'offset', 'query'])
+      qs: pick(params, ['filter', 'aggregation', 'return', 'count', 'offset', 'query'])
     },
     requiredParams: ['environment_id', 'collection_id'],
     defaultOptions: this._options

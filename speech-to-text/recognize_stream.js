@@ -16,19 +16,29 @@
 
 'use strict';
 
+const Duplex = require('stream').Duplex;
+const util = require('util');
+const extend = require('extend');
+const pick = require('object.pick');
+const W3CWebSocket = require('websocket').w3cwebsocket;
 
-var Duplex         = require('stream').Duplex;
-var util           = require('util');
-var extend         = require('extend');
-var pick           = require('object.pick');
-var W3CWebSocket = require('websocket').w3cwebsocket;
+const OPENING_MESSAGE_PARAMS_ALLOWED = [
+  'continuous',
+  'max_alternatives',
+  'timestamps',
+  'word_confidence',
+  'inactivity_timeout',
+  'content-type',
+  'interim_results',
+  'keywords',
+  'keywords_threshold',
+  'word_alternatives_threshold',
+  'profanity_filter',
+  'smart_formatting',
+  'speaker_labels'
+];
 
-
-var OPENING_MESSAGE_PARAMS_ALLOWED = ['continuous', 'max_alternatives', 'timestamps', 'word_confidence', 'inactivity_timeout',
-  'content-type', 'interim_results', 'keywords', 'keywords_threshold', 'word_alternatives_threshold', 'profanity_filter',
-  'smart_formatting', 'speaker_labels' ];
-
-var QUERY_PARAMS_ALLOWED = ['model', 'X-Watson-Learning-Opt-Out', 'watson-token', 'customization_id'];
+const QUERY_PARAMS_ALLOWED = ['model', 'X-Watson-Learning-Opt-Out', 'watson-token', 'customization_id'];
 
 /**
  * pipe()-able Node.js Readable/Writeable stream - accepts binary audio and emits text in it's `data` events.
@@ -40,7 +50,7 @@ var QUERY_PARAMS_ALLOWED = ['model', 'X-Watson-Learning-Opt-Out', 'watson-token'
  * @param options
  * @constructor
  */
-function RecognizeStream(options){
+function RecognizeStream(options) {
   Duplex.call(this, options);
   this.options = options;
   this.listening = false;
@@ -48,9 +58,8 @@ function RecognizeStream(options){
 }
 util.inherits(RecognizeStream, Duplex);
 
-
 RecognizeStream.prototype.initialize = function() {
-  var options = this.options;
+  const options = this.options;
 
   // todo: apply these corrections to other methods (?)
   if (options.token && !options['watson-token']) {
@@ -63,39 +72,43 @@ RecognizeStream.prototype.initialize = function() {
     options['X-Watson-Learning-Opt-Out'] = options['X-WDC-PL-OPT-OUT'];
   }
 
-  var queryParams = extend({model: 'en-US_BroadbandModel'}, pick(options, QUERY_PARAMS_ALLOWED));
-  var queryString = Object.keys(queryParams).map(function(key) {
-    return key + '=' + (key === 'watson-token' ? queryParams[key] : encodeURIComponent(queryParams[key])); // our server chokes if the token is correctly url-encoded
-  }).join('&');
+  const queryParams = extend({ model: 'en-US_BroadbandModel' }, pick(options, QUERY_PARAMS_ALLOWED));
+  const queryString = Object.keys(queryParams)
+    .map(function(key) {
+      return key + '=' + (key === 'watson-token' ? queryParams[key] : encodeURIComponent(queryParams[key])); // our server chokes if the token is correctly url-encoded
+    })
+    .join('&');
 
-  var url = (options.url || 'wss://stream.watsonplatform.net/speech-to-text/api').replace(/^http/, 'ws') + '/v1/recognize?' + queryString;
+  const url = (options.url || 'wss://stream.watsonplatform.net/speech-to-text/api').replace(/^http/, 'ws') + '/v1/recognize?' + queryString;
 
-  var openingMessage = extend({
-    action: 'start',
-    'content-type': 'audio/wav',
-    continuous: true,
-    interim_results: true,
-    word_confidence: true,
-    timestamps: true,
-    max_alternatives: 3,
-    inactivity_timeout: 600
-  }, pick(options, OPENING_MESSAGE_PARAMS_ALLOWED));
+  const openingMessage = extend(
+    {
+      action: 'start',
+      'content-type': 'audio/wav',
+      continuous: true,
+      interim_results: true,
+      word_confidence: true,
+      timestamps: true,
+      max_alternatives: 3,
+      inactivity_timeout: 600
+    },
+    pick(options, OPENING_MESSAGE_PARAMS_ALLOWED)
+  );
 
-  var closingMessage = {action: 'stop'};
+  const closingMessage = { action: 'stop' };
 
+  const self = this;
 
-  var self = this;
-
-  //node params: requestUrl, protocols, origin, headers, extraRequestOptions
+  // node params: requestUrl, protocols, origin, headers, extraRequestOptions
   // browser params: requestUrl, protocols (all others ignored)
-  var socket = this.socket = new W3CWebSocket(url, null, null, options.headers, null);
+  const socket = this.socket = new W3CWebSocket(url, null, null, options.headers, null);
 
   // when the input stops, let the service know that we're done
   self.on('finish', function() {
     if (self.socket && self.socket.readyState === W3CWebSocket.OPEN) {
       self.socket.send(JSON.stringify(closingMessage));
     } else {
-      this.once('connect', function () {
+      self.once('connect', function() {
         self.socket.send(JSON.stringify(closingMessage));
       });
     }
@@ -105,7 +118,6 @@ RecognizeStream.prototype.initialize = function() {
     self.listening = false;
     self.emit('error', error);
   };
-
 
   this.socket.onopen = function() {
     socket.send(JSON.stringify(openingMessage));
@@ -141,14 +153,14 @@ RecognizeStream.prototype.initialize = function() {
       return emitError('Unexpected binary data received from server', frame);
     }
 
-    var data;
+    let data;
     try {
       data = JSON.parse(frame.data);
     } catch (jsonEx) {
       return emitError('Invalid JSON received from service:', frame, jsonEx);
     }
 
-    var recognized = false;
+    let recognized = false;
     if (data.error) {
       emitError(data.error, frame);
       recognized = true;
@@ -205,14 +217,13 @@ RecognizeStream.prototype.initialize = function() {
   this.initialized = true;
 };
 
-
-RecognizeStream.prototype._read = function(/*size*/) {
+RecognizeStream.prototype._read = function() /* size*/ {
   // there's no easy way to control reads from the underlying library
   // so, the best we can do here is a no-op
 };
 
 RecognizeStream.prototype._write = function(chunk, encoding, callback) {
-  var self = this;
+  const self = this;
   if (self.listening) {
     self.socket.send(chunk);
     this.afterSend(callback);
@@ -225,7 +236,7 @@ RecognizeStream.prototype._write = function(chunk, encoding, callback) {
     }
     this.once('listening', function() {
       self.socket.send(chunk);
-      this.afterSend(callback);
+      self.afterSend(callback);
     });
   }
 };
@@ -249,13 +260,13 @@ RecognizeStream.prototype.stop = function() {
 };
 
 // quick/dumb way to determine content type from a supported file format
-var headerToContentType = {
-  'fLaC': 'audio/flac',
-  'RIFF': 'audio/wav',
-  'OggS': 'audio/ogg; codecs=opus'
+const headerToContentType = {
+  fLaC: 'audio/flac',
+  RIFF: 'audio/wav',
+  OggS: 'audio/ogg; codecs=opus'
 };
 RecognizeStream.getContentType = function(buffer) {
-  var header = buffer.slice(0,4).toString();
+  const header = buffer.slice(0, 4).toString();
   return headerToContentType[header];
 };
 

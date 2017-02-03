@@ -16,12 +16,12 @@
 
 'use strict';
 
-var requestFactory = require('../lib/requestwrapper');
-var pick = require('object.pick');
-var extend = require('extend');
-var helper = require('../lib/helper');
-var util = require('util');
-var BaseService = require('../lib/base_service');
+const requestFactory = require('../lib/requestwrapper');
+const pick = require('object.pick');
+const extend = require('extend');
+const helper = require('../lib/helper');
+const util = require('util');
+const BaseService = require('../lib/base_service');
 
 /**
  *
@@ -36,13 +36,11 @@ function PersonalityInsightsV3(options) {
     throw new Error('Argument error: version_date was not specified, use 2016-10-19');
   }
   this._options.qs.version = options.version_date;
-
 }
 util.inherits(PersonalityInsightsV3, BaseService);
 PersonalityInsightsV3.prototype.name = 'personality_insights';
 PersonalityInsightsV3.prototype.version = 'v3';
 PersonalityInsightsV3.URL = 'https://gateway.watsonplatform.net/personality-insights/api';
-
 
 /**
  * @param {Object} params The parameters to call the service
@@ -59,26 +57,30 @@ PersonalityInsightsV3.URL = 'https://gateway.watsonplatform.net/personality-insi
  *
  * @param callback The callback.
  */
-PersonalityInsightsV3.prototype.profile = function(_params, callback) { // eslint-disable-line complexity
-  var params = extend ({}, _params);
+PersonalityInsightsV3.prototype.profile = function(
+  _params,
+  callback // eslint-disable-line complexity
+) {
+  const params = extend({}, _params);
 
   if (params.content_items) {
     params.contentItems = params.content_items;
   }
 
-  if ((!params.text && !params.contentItems)) {
+  if (!params.text && !params.contentItems) {
     callback(new Error('Missing required parameters: text or content_items'));
     return;
   }
 
   // Content-Type
-  var content_type = null;
-  if (params.text)
-    {content_type = helper.isHTML(params.text) ? 'text/html' : 'text/plain';}
-  else
-    {content_type = 'application/json';}
+  let content_type = null;
+  if (params.text) {
+    content_type = helper.isHTML(params.text) ? 'text/html' : 'text/plain';
+  } else {
+    content_type = 'application/json';
+  }
 
-  var parameters = {
+  const parameters = {
     options: {
       method: 'POST',
       url: '/v3/profile',

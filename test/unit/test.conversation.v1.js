@@ -1,17 +1,16 @@
 'use strict';
 
-var assert = require('assert');
-var watson = require('../../index');
-var nock   = require('nock');
-var extend = require('extend');
-var pick   = require('object.pick');
+const assert = require('assert');
+const watson = require('../../index');
+const nock = require('nock');
+const extend = require('extend');
+const pick = require('object.pick');
 
 describe('conversation-v1', function() {
-
-  var noop = function() {};
+  const noop = function() {};
 
   // Test params
-  var service = {
+  const service = {
     username: 'batman',
     password: 'bruce-wayne',
     url: 'http://ibm.com:80',
@@ -19,81 +18,87 @@ describe('conversation-v1', function() {
     version_date: '2016-07-11'
   };
 
-  var service1 = {
+  const service1 = {
     password: 'bruce-wayne',
     url: 'http://ibm.com:80',
     version: 'v1',
     username: 'batman'
   };
 
-  var payload = {
+  const payload = {
     workspace_id: 'workspace1'
   };
 
-  var paths = {
-    message : '/v1/workspaces/' + payload.workspace_id + '/message'
+  const paths = {
+    message: '/v1/workspaces/' + payload.workspace_id + '/message'
   };
 
   before(function() {
     nock.disableNetConnect();
-    nock(service.url)
-      .persist()
-      .post(paths.message + '?version=' + service.version_date)
-      .reply(200, {});
+    nock(service.url).persist().post(paths.message + '?version=' + service.version_date).reply(200, {});
   });
 
   after(function() {
     nock.cleanAll();
   });
 
-  var missingParameter = function(err) {
-    assert.ok((err instanceof Error) && /required parameters/.test(err));
+  const missingParameter = function(err) {
+    assert.ok(err instanceof Error && /required parameters/.test(err));
   };
 
-  var conversation = watson.conversation(service);
+  const conversation = watson.conversation(service);
 
   describe('conversation()', function() {
-    var reqPayload = {input:'foo',context:'rab'};
-    var reqPayload1 = {output:'foo',alternate_intents:true,entities:'1entity',intents:'1intent',junk:'junk'};
-    var reqPayload2 = {output:'foo',alternate_intents:true,entities:'1entity',intents:'1intent'};
-    var params = extend({}, reqPayload, payload);
-    var params1 = extend({}, reqPayload1, payload);
+    const reqPayload = { input: 'foo', context: 'rab' };
+    const reqPayload1 = {
+      output: 'foo',
+      alternate_intents: true,
+      entities: '1entity',
+      intents: '1intent',
+      junk: 'junk'
+    };
+    const reqPayload2 = {
+      output: 'foo',
+      alternate_intents: true,
+      entities: '1entity',
+      intents: '1intent'
+    };
+    const params = extend({}, reqPayload, payload);
+    const params1 = extend({}, reqPayload1, payload);
 
     it('should generate a valid payload', function() {
-        var req = conversation.message(params,noop);
-        var body = new Buffer(req.body).toString('ascii');
-        assert.equal(req.uri.href, service.url + paths.message + '?version=' + service.version_date);
-        assert.equal(req.method, 'POST');
-        assert.deepEqual(JSON.parse(body), reqPayload);
-      });
+      const req = conversation.message(params, noop);
+      const body = new Buffer(req.body).toString('ascii');
+      assert.equal(req.uri.href, service.url + paths.message + '?version=' + service.version_date);
+      assert.equal(req.method, 'POST');
+      assert.deepEqual(JSON.parse(body), reqPayload);
+    });
 
     it('should generate a valid payload but parse out the junk option', function() {
-        var req = conversation.message(params1,noop);
-        var body = new Buffer(req.body).toString('ascii');
-        assert.equal(req.uri.href, service.url + paths.message + '?version=' + service.version_date);
-        assert.equal(req.method, 'POST');
-        assert.deepEqual(JSON.parse(body), reqPayload2);
-      });
+      const req = conversation.message(params1, noop);
+      const body = new Buffer(req.body).toString('ascii');
+      assert.equal(req.uri.href, service.url + paths.message + '?version=' + service.version_date);
+      assert.equal(req.method, 'POST');
+      assert.deepEqual(JSON.parse(body), reqPayload2);
+    });
 
     it('should check no parameters provided (negative test)', function() {
       conversation.message({}, missingParameter);
       conversation.message(null, missingParameter);
       conversation.message(undefined, missingParameter);
-      conversation.message(pick(params,['workspace_id']), missingParameter);
-      conversation.message(pick(params,['input']), missingParameter);
+      conversation.message(pick(params, ['workspace_id']), missingParameter);
+      conversation.message(pick(params, ['input']), missingParameter);
     });
 
     it('should generate version_date was not specified (negative test)', function() {
-      var threw = false;
+      let threw = false;
       try {
         watson.conversation(service1);
-      }
-      catch(err) {
+      } catch (err) {
         threw = true;
         assert.equal(err.message, 'Argument error: version_date was not specified, use ConversationV1.VERSION_DATE_2016_09_20');
       }
-      assert(threw, "should throw an error")
+      assert(threw, 'should throw an error');
     });
   });
-
 });

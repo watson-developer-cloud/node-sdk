@@ -16,10 +16,10 @@
 
 'use strict';
 
-var requestFactory = require('../lib/requestwrapper');
-var pick           = require('object.pick');
-var util = require('util');
-var BaseService = require('../lib/base_service');
+const requestFactory = require('../lib/requestwrapper');
+const pick = require('object.pick');
+const util = require('util');
+const BaseService = require('../lib/base_service');
 
 /**
  *
@@ -31,7 +31,9 @@ function ConversationV1Experimental(options) {
 
   if (!this._options.silent) {
     // eslint-disable-next-line no-console
-    console.warn(new Error("Watson Conversation v1-experimental is sunset as of 2016-08-01. Please upgrade to v1. Set {silent: true} to disable this message.").stack);
+    console.warn(
+      new Error('Watson Conversation v1-experimental is sunset as of 2016-08-01. Please upgrade to v1. Set {silent: true} to disable this message.').stack
+    );
   }
 
   // Check if 'version_date' was provided
@@ -52,7 +54,7 @@ ConversationV1Experimental.URL = 'https://gateway.watsonplatform.net/conversatio
 ConversationV1Experimental.prototype.message = function(params, callback) {
   params = params || {};
 
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v1/workspaces/{workspace_id}/message',
       method: 'POST',

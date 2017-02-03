@@ -16,10 +16,10 @@
 
 'use strict';
 
-var util = require('util');
-var requestFactory = require('../lib/requestwrapper');
-var BaseService = require('../lib/base_service');
-var pick = require('object.pick');
+const util = require('util');
+const requestFactory = require('../lib/requestwrapper');
+const BaseService = require('../lib/base_service');
+const pick = require('object.pick');
 
 /**
  *
@@ -41,14 +41,11 @@ DiscoveryV1Experimental.prototype.name = 'discovery';
 DiscoveryV1Experimental.prototype.version = 'v1-experimental';
 DiscoveryV1Experimental.URL = 'https://gateway.watsonplatform.net/discovery-experimental/api';
 
-
 /**
  * Initial release
  * @type {string}
  */
 DiscoveryV1Experimental.VERSION_DATE_2016_07_11 = '2016-11-07';
-
-
 
 /**
  * Return the list of environments
@@ -59,7 +56,7 @@ DiscoveryV1Experimental.VERSION_DATE_2016_07_11 = '2016-11-07';
 DiscoveryV1Experimental.prototype.getEnvironments = function(params, callback) {
   params = params || {};
 
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v1/environments',
       method: 'GET',
@@ -80,7 +77,7 @@ DiscoveryV1Experimental.prototype.getEnvironments = function(params, callback) {
 DiscoveryV1Experimental.prototype.getEnvironment = function(params, callback) {
   params = params || {};
 
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v1/environments/{environment_id}',
       method: 'GET',
@@ -103,7 +100,7 @@ DiscoveryV1Experimental.prototype.getEnvironment = function(params, callback) {
 DiscoveryV1Experimental.prototype.getCollections = function(params, callback) {
   params = params || {};
 
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v1/environments/{environment_id}/collections',
       method: 'GET',
@@ -126,7 +123,7 @@ DiscoveryV1Experimental.prototype.getCollections = function(params, callback) {
 DiscoveryV1Experimental.prototype.getCollection = function(params, collectionId, callback) {
   params = params || {};
 
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v1/environments/{environment_id}/collections/{collection_id}',
       method: 'GET',
@@ -138,7 +135,6 @@ DiscoveryV1Experimental.prototype.getCollection = function(params, collectionId,
   };
   return requestFactory(parameters, callback);
 };
-
 
 /**
  * Queries the collection
@@ -156,13 +152,13 @@ DiscoveryV1Experimental.prototype.getCollection = function(params, collectionId,
 DiscoveryV1Experimental.prototype.query = function(params, callback) {
   params = params || {};
 
-  var parameters = {
+  const parameters = {
     options: {
       url: '/v1/environments/{environment_id}/collections/{collection_id}/query',
       method: 'GET',
       json: true,
       path: pick(params, ['environment_id', 'collection_id']),
-      qs: pick(params,['filter', 'aggregation', 'return', 'count', 'offset', 'query'])
+      qs: pick(params, ['filter', 'aggregation', 'return', 'count', 'offset', 'query'])
     },
     requiredParams: ['environment_id', 'collection_id'],
     defaultOptions: this._options

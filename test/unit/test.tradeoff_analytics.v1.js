@@ -1,137 +1,148 @@
 'use strict';
 
-var assert = require('assert');
-var watson = require('../../index');
-var nock   = require('nock');
-var extend = require('extend');
+const assert = require('assert');
+const watson = require('../../index');
+const nock = require('nock');
+const extend = require('extend');
 
 describe('tradeoff_analytics', function() {
+  const noop = function() {};
 
-  var noop = function() {};
-
-  var service_request =  {
-    'subject': 'phone',
-    'columns': [{
-      'key': 'price',
-      'full_name': 'Price (Eur)',
-      'type': 'NUMERIC',
-      'is_objective': true,
-      'goal': 'MIN'
-    }, {
-      'key': 'RAM',
-      'full_name': 'RAM (MB)',
-      'type': 'NUMERIC',
-      'is_objective': false,
-      'goal': 'MAX'
-    }, {
-      'key': 'screen_size',
-      'full_name': 'Screen size (inch)',
-      'type': 'NUMERIC',
-      'is_objective': true,
-      'goal': 'MAX'
-    }, {
-      'key': 'camera',
-      'full_name': 'Camera (MP)',
-      'type': 'NUMERIC',
-      'is_objective': true,
-      'goal': 'MAX'
-    }, {
-      'key': 'memory_size',
-      'full_name': 'Memory size (GB)',
-      'type': 'NUMERIC',
-      'is_objective': false,
-      'goal': 'MAX'
-    }, {
-      'key': 'battery',
-      'full_name': 'Battery (mAh)',
-      'type': 'NUMERIC',
-      'is_objective': false,
-      'goal': 'MAX'
-    }, {
-      'key': 'weight',
-      'full_name': 'Weight (gr)',
-      'type': 'NUMERIC',
-      'is_objective': true,
-      'goal': 'MIN'
-    }],
-    'options': [{
-      'key': ' 1',
-      'name': 'Samsung Galaxy S4 White',
-      'values': {
-        'weight': 130,
-        'price': 239,
-        'RAM': 2048,
-        'battery': 2600,
-        'camera': 13,
-        'memory_size': 16,
-        'screen_size': 5
+  const service_request = {
+    subject: 'phone',
+    columns: [
+      {
+        key: 'price',
+        full_name: 'Price (Eur)',
+        type: 'NUMERIC',
+        is_objective: true,
+        goal: 'MIN'
+      },
+      {
+        key: 'RAM',
+        full_name: 'RAM (MB)',
+        type: 'NUMERIC',
+        is_objective: false,
+        goal: 'MAX'
+      },
+      {
+        key: 'screen_size',
+        full_name: 'Screen size (inch)',
+        type: 'NUMERIC',
+        is_objective: true,
+        goal: 'MAX'
+      },
+      {
+        key: 'camera',
+        full_name: 'Camera (MP)',
+        type: 'NUMERIC',
+        is_objective: true,
+        goal: 'MAX'
+      },
+      {
+        key: 'memory_size',
+        full_name: 'Memory size (GB)',
+        type: 'NUMERIC',
+        is_objective: false,
+        goal: 'MAX'
+      },
+      {
+        key: 'battery',
+        full_name: 'Battery (mAh)',
+        type: 'NUMERIC',
+        is_objective: false,
+        goal: 'MAX'
+      },
+      {
+        key: 'weight',
+        full_name: 'Weight (gr)',
+        type: 'NUMERIC',
+        is_objective: true,
+        goal: 'MIN'
       }
-    }, {
-      'key': '2',
-      'name': 'Samsung Galaxy S4 Black',
-      'values': {
-        'weight': 130,
-        'price': 239,
-        'RAM': 2048,
-        'battery': 2600,
-        'camera': 13,
-        'memory_size': 16,
-        'screen_size': 5
+    ],
+    options: [
+      {
+        key: ' 1',
+        name: 'Samsung Galaxy S4 White',
+        values: {
+          weight: 130,
+          price: 239,
+          RAM: 2048,
+          battery: 2600,
+          camera: 13,
+          memory_size: 16,
+          screen_size: 5
+        }
+      },
+      {
+        key: '2',
+        name: 'Samsung Galaxy S4 Black',
+        values: {
+          weight: 130,
+          price: 239,
+          RAM: 2048,
+          battery: 2600,
+          camera: 13,
+          memory_size: 16,
+          screen_size: 5
+        }
+      },
+      {
+        key: '3',
+        name: 'Samsung Galaxy S3 White',
+        values: {
+          weight: 133,
+          price: 79,
+          RAM: 2048,
+          battery: 2100,
+          camera: 8,
+          memory_size: 16,
+          screen_size: 4.8
+        }
       }
-    }, {
-      'key': '3',
-      'name': 'Samsung Galaxy S3 White',
-      'values': {
-        'weight': 133,
-        'price': 79,
-        'RAM': 2048,
-        'battery': 2100,
-        'camera': 8,
-        'memory_size': 16,
-        'screen_size': 4.8
-      }
-    }]
+    ]
   };
 
-  var events_request = {
-    "widget_instance_uuid" : "e8d263d9-a0a7-43f4-81cf-2767ad246cb5",
-    "widget_show_uuid" : null,
-    "dilemma_call_uuid" : null,
-    "event_number" : 0,
-    "category" : "widget",
-    "action" : "started",
-    "object" : "basic",
-    "value" : {
-      "optionHighlighting" : false,
-      "favorites" : true,
-      "favoritesTab" : false,
-      "optionDetails" : true,
-      "filters" : true,
-      "filterHistogram" : false,
-      "objectivesOnly" : true,
-      "optimalsList" : true,
-      "autoExcludedList" : true,
-      "incompleteList" : true,
-      "tradeoffAnalyzer" : true,
-      "undoRedo" : false,
-      "exploreViz" : "both",
-      "questionEditor" : "editableNoToggle",
-      "bidiTextDir" : "auto",
-      "analytics" : "MetadataAndEvents"
+  let events_request = {
+    widget_instance_uuid: 'e8d263d9-a0a7-43f4-81cf-2767ad246cb5',
+    widget_show_uuid: null,
+    dilemma_call_uuid: null,
+    event_number: 0,
+    category: 'widget',
+    action: 'started',
+    object: 'basic',
+    value: {
+      optionHighlighting: false,
+      favorites: true,
+      favoritesTab: false,
+      optionDetails: true,
+      filters: true,
+      filterHistogram: false,
+      objectivesOnly: true,
+      optimalsList: true,
+      autoExcludedList: true,
+      incompleteList: true,
+      tradeoffAnalyzer: true,
+      undoRedo: false,
+      exploreViz: 'both',
+      questionEditor: 'editableNoToggle',
+      bidiTextDir: 'auto',
+      analytics: 'MetadataAndEvents'
     },
-    "timestamp" : 1442414658641
+    timestamp: 1442414658641
   };
 
   events_request = {}; // todo: fix the broken tests that depend on this
   // (the content had been in a json file, but it was named .js - so it exported nothing when required by node. And the tests expect that right now :(
 
-  var service_response = {};
+  const service_response = {};
 
-  var service_path = '/v1/dilemmas';
-  var service_path_no_viz = '/v1/dilemmas?generate_visualization=false';
-  var events_path = '/v1/events';
+  const service_path = '/v1/dilemmas';
+  const service_path_no_viz = '/v1/dilemmas?generate_visualization=false';
+  const events_path = '/v1/events';
 
-  var service = {
+  const service = {
     username: 'batman',
     password: 'bruce-wayne',
     url: 'http://ibm.com:80',
@@ -140,29 +151,19 @@ describe('tradeoff_analytics', function() {
 
   before(function() {
     nock.disableNetConnect();
-    nock(service.url)
-      .persist()
-      .post(service_path, service_request)
-      .reply(200, service_response);
-    nock(service.url)
-      .persist()
-      .post(service_path_no_viz, service_request)
-      .reply(200, service_response);
-    nock(service.url)
-      .persist()
-      .post(events_path, events_request)
-      .reply(200);
-
+    nock(service.url).persist().post(service_path, service_request).reply(200, service_response);
+    nock(service.url).persist().post(service_path_no_viz, service_request).reply(200, service_response);
+    nock(service.url).persist().post(events_path, events_request).reply(200);
   });
 
   after(function() {
     nock.cleanAll();
   });
 
-  var tradeoff_analytics = watson.tradeoff_analytics(service);
+  const tradeoff_analytics = watson.tradeoff_analytics(service);
 
-  var missingParameter = function(err) {
-    assert.ok((err instanceof Error) && /required parameters/.test(err));
+  const missingParameter = function(err) {
+    assert.ok(err instanceof Error && /required parameters/.test(err));
   };
 
   it('should check no parameters provided', function() {
@@ -176,10 +177,10 @@ describe('tradeoff_analytics', function() {
   });
 
   it('should generate a valid payload', function() {
-    var params = extend({}, service_request);
+    const params = extend({}, service_request);
     params.metadata_header = 'test_header_content';
-    var req = tradeoff_analytics.dilemmas(params, noop);
-    var body = new Buffer(req.body).toString('ascii');
+    const req = tradeoff_analytics.dilemmas(params, noop);
+    const body = new Buffer(req.body).toString('ascii');
     assert.equal(req.uri.href, service.url + service_path);
     assert.equal(body, JSON.stringify(service_request));
     assert.notEqual(body, JSON.stringify(params));
@@ -189,9 +190,9 @@ describe('tradeoff_analytics', function() {
 
   it('should append generate_visualization=false query param to url if (and only if) needed', function() {
     // check with generate_visualization = false
-    var params = extend({}, service_request);
+    let params = extend({}, service_request);
     params.generate_visualization = false;
-    var req = tradeoff_analytics.dilemmas(params, noop);
+    let req = tradeoff_analytics.dilemmas(params, noop);
     assert.equal(req.uri.href, service.url + service_path_no_viz);
 
     // check with generate_visualization = true
@@ -212,12 +213,11 @@ describe('tradeoff_analytics', function() {
     assert.equal(req.uri.href, service.url + service_path);
   });
 
-
   it('should forward the events correctly', function() {
-    var params = extend({}, events_request);
+    const params = extend({}, events_request);
     params.metadata_header = 'test_header_content';
-    var req = tradeoff_analytics.events(params, noop);
-    var body = new Buffer(req.body).toString('ascii');
+    const req = tradeoff_analytics.events(params, noop);
+    const body = new Buffer(req.body).toString('ascii');
     assert.equal(req.uri.href, service.url + events_path);
     assert.equal(body, JSON.stringify(events_request));
     assert.notEqual(body, JSON.stringify(params));
@@ -227,13 +227,12 @@ describe('tradeoff_analytics', function() {
 
   it('should format the response', function(done) {
     tradeoff_analytics.dilemmas(service_request, function(err, response) {
-      if (err)
-        {done(err);}
-      else {
+      if (err) {
+        done(err);
+      } else {
         assert.equal(JSON.stringify(response), JSON.stringify(service_response));
         done();
       }
     });
   });
-
 });

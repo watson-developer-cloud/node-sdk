@@ -1,15 +1,14 @@
 'use strict';
 
-var assert = require('assert');
-var watson = require('../../index');
-var nock   = require('nock');
-var fs     = require('fs');
+const assert = require('assert');
+const watson = require('../../index');
+const nock = require('nock');
+const fs = require('fs');
 
 describe('language_translator', function() {
+  const noop = function() {};
 
-  var noop = function() {};
-
-  var service = {
+  const service = {
     username: 'batman',
     password: 'bruce-wayne',
     url: 'http://ibm.com:80',
@@ -24,15 +23,14 @@ describe('language_translator', function() {
     nock.cleanAll();
   });
 
-  var language_translator = watson.language_translator(service);
+  const language_translator = watson.language_translator(service);
 
-  var missingParameter = function(err) {
-    assert.ok((err instanceof Error) && /required parameters/.test(err));
+  const missingParameter = function(err) {
+    assert.ok(err instanceof Error && /required parameters/.test(err));
   };
 
   describe('VCAP_SERVICES', function() {
-
-    var env;
+    let env;
     before(function() {
       env = process.env;
       process.env = {};
@@ -41,104 +39,95 @@ describe('language_translator', function() {
       process.env = env;
     });
 
-    var details = [
+    const details = [
       {
-        "credentials": {
-          "password": "FAKE_PASSWORD",
-          "url": "https://gateway.watsonplatform.net/language-translator/api",
-          "username": "FAKE_USERNAME"
+        credentials: {
+          password: 'FAKE_PASSWORD',
+          url: 'https://gateway.watsonplatform.net/language-translator/api',
+          username: 'FAKE_USERNAME'
         },
-        "label": "language_translator",
-        "name": "Language Translator-4t",
-        "plan": "standard",
-        "provider": null,
-        "syslog_drain_url": null,
-        "tags": [
-          "watson",
-          "ibm_created",
-          "ibm_dedicated_public"
-        ]
+        label: 'language_translator',
+        name: 'Language Translator-4t',
+        plan: 'standard',
+        provider: null,
+        syslog_drain_url: null,
+        tags: ['watson', 'ibm_created', 'ibm_dedicated_public']
       }
     ];
 
     it('should initialize with old-style VCAP_SERVICES credentials', function() {
       process.env.VCAP_SERVICES = JSON.stringify({
-        "language_translator": details
+        language_translator: details
       });
-      var instance = watson.language_translator({version: 'v2', version_date: '2016-07-01'});
+      const instance = watson.language_translator({
+        version: 'v2',
+        version_date: '2016-07-01'
+      });
       assert(instance._options.headers.Authorization);
     });
 
     it('should initialize with new-style VCAP_SERVICES credentials', function() {
       process.env.VCAP_SERVICES = JSON.stringify({
-        "language_translator": details
+        language_translator: details
       });
-      var instance = watson.language_translator({version: 'v2', version_date: '2016-07-01'});
+      const instance = watson.language_translator({
+        version: 'v2',
+        version_date: '2016-07-01'
+      });
       assert(instance._options.headers.Authorization);
     });
   });
 
-
-  describe('getModels()', function(){
-
+  describe('getModels()', function() {
     it('should generate a valid payload', function() {
-        var corpus = {},
-          path = '/v2/models';
+      const corpus = {};
+      const path = '/v2/models';
 
-        nock(service.url).persist()
-        .get(path)
-        .reply(200, corpus);
+      nock(service.url).persist().get(path).reply(200, corpus);
 
-        var req = language_translator.getModels(null, noop);
-        assert.equal(req.uri.href, service.url + path);
-        assert.equal(req.method, 'GET');
+      const req = language_translator.getModels(null, noop);
+      assert.equal(req.uri.href, service.url + path);
+      assert.equal(req.method, 'GET');
     });
   });
 
-  describe('translate()', function(){
-
+  describe('translate()', function() {
     it('should check no parameters provided', function() {
-      language_translator.translate({source:''}, missingParameter);
-      language_translator.translate({target:''}, missingParameter);
-      language_translator.translate({text:''}, missingParameter);
-      language_translator.translate({model_id:''}, missingParameter);
+      language_translator.translate({ source: '' }, missingParameter);
+      language_translator.translate({ target: '' }, missingParameter);
+      language_translator.translate({ text: '' }, missingParameter);
+      language_translator.translate({ model_id: '' }, missingParameter);
     });
 
     it('should generate a valid payload', function() {
-        var path = '/v2/translate';
-        var service_request = {
-          text:'bar',
-          model_id: 'foo'
-        };
-        nock(service.url).persist()
-        .post(path,service_request)
-        .reply(200);
+      const path = '/v2/translate';
+      const service_request = {
+        text: 'bar',
+        model_id: 'foo'
+      };
+      nock(service.url).persist().post(path, service_request).reply(200);
 
-        var req = language_translator.translate(service_request, noop);
-        assert.equal(req.uri.href, service.url + path);
-        assert.equal(req.method, 'POST');
-        var body = new Buffer(req.body).toString('ascii');
-        assert.equal(body, JSON.stringify(service_request));
+      const req = language_translator.translate(service_request, noop);
+      assert.equal(req.uri.href, service.url + path);
+      assert.equal(req.method, 'POST');
+      const body = new Buffer(req.body).toString('ascii');
+      assert.equal(body, JSON.stringify(service_request));
     });
   });
 
-  describe('getIdentifiableLanguages()', function(){
-
+  describe('getIdentifiableLanguages()', function() {
     it('should generate a valid payload', function() {
-        var path = '/v2/identifiable_languages';
+      const path = '/v2/identifiable_languages';
 
-        nock(service.url).persist()
-        .get(path)
-        .reply(200);
+      nock(service.url).persist().get(path).reply(200);
 
-        var req = language_translator.getIdentifiableLanguages(null, noop);
-        assert.equal(req.uri.href, service.url + path);
-        assert.equal(req.method, 'GET');
+      const req = language_translator.getIdentifiableLanguages(null, noop);
+      assert.equal(req.uri.href, service.url + path);
+      assert.equal(req.method, 'GET');
     });
   });
 
-  describe('identify()', function(){
-
+  describe('identify()', function() {
     it('should check no parameters provided', function() {
       language_translator.identify({}, missingParameter);
       language_translator.identify(null, missingParameter);
@@ -146,22 +135,19 @@ describe('language_translator', function() {
     });
 
     it('should generate a valid payload', function() {
-        var path = '/v2/identify';
-        var service_request = { text: 'foo' };
-        nock(service.url).persist()
-        .post(path,service_request)
-        .reply(200);
+      const path = '/v2/identify';
+      const service_request = { text: 'foo' };
+      nock(service.url).persist().post(path, service_request).reply(200);
 
-        var req = language_translator.identify(service_request, noop);
-        assert.equal(req.uri.href, service.url + path);
-        assert.equal(req.method, 'POST');
-        var body = new Buffer(req.body).toString('ascii');
-        assert.equal(body, service_request.text);
+      const req = language_translator.identify(service_request, noop);
+      assert.equal(req.uri.href, service.url + path);
+      assert.equal(req.method, 'POST');
+      const body = new Buffer(req.body).toString('ascii');
+      assert.equal(body, service_request.text);
     });
   });
 
-  describe('createModel()', function(){
-
+  describe('createModel()', function() {
     it('should check no parameters provided', function() {
       language_translator.createModel({}, missingParameter);
       language_translator.createModel(null, missingParameter);
@@ -169,26 +155,23 @@ describe('language_translator', function() {
     });
 
     it('should generate a valid payload', function() {
-        var path = '/v2/models';
-        var service_request = {
-          base_model_id: 'foo',
-          forced_glossary: fs.createReadStream(__dirname + '/../resources/glossary.tmx'),
-          parallel_corpus: fs.createReadStream(__dirname + '/../resources/glossary.tmx'),
-          monolingual_corpus: fs.createReadStream(__dirname + '/../resources/glossary.tmx')
-        };
+      const path = '/v2/models';
+      const service_request = {
+        base_model_id: 'foo',
+        forced_glossary: fs.createReadStream(__dirname + '/../resources/glossary.tmx'),
+        parallel_corpus: fs.createReadStream(__dirname + '/../resources/glossary.tmx'),
+        monolingual_corpus: fs.createReadStream(__dirname + '/../resources/glossary.tmx')
+      };
 
-        nock(service.url).persist()
-        .post(path,service_request)
-        .reply(200);
+      nock(service.url).persist().post(path, service_request).reply(200);
 
-        var req = language_translator.createModel(service_request, noop);
-        assert.equal(req.uri.href, service.url + path+ '?base_model_id=foo');
-        assert.equal(req.method, 'POST');
+      const req = language_translator.createModel(service_request, noop);
+      assert.equal(req.uri.href, service.url + path + '?base_model_id=foo');
+      assert.equal(req.method, 'POST');
     });
   });
 
-  describe('deleteModel()', function(){
-
+  describe('deleteModel()', function() {
     it('should check no parameters provided', function() {
       language_translator.deleteModel({}, missingParameter);
       language_translator.deleteModel(null, missingParameter);
@@ -196,23 +179,20 @@ describe('language_translator', function() {
     });
 
     it('should generate a valid payload', function() {
-        var path = '/v2/models/foo';
-        var service_request = {
-          model_id: 'foo'
-        };
+      const path = '/v2/models/foo';
+      const service_request = {
+        model_id: 'foo'
+      };
 
-        nock(service.url).persist()
-        .delete(path,service_request)
-        .reply(200);
+      nock(service.url).persist().delete(path, service_request).reply(200);
 
-        var req = language_translator.deleteModel(service_request, noop);
-        assert.equal(req.uri.href, service.url + path);
-        assert.equal(req.method, 'DELETE');
+      const req = language_translator.deleteModel(service_request, noop);
+      assert.equal(req.uri.href, service.url + path);
+      assert.equal(req.method, 'DELETE');
     });
   });
 
-  describe('getModel()', function(){
-
+  describe('getModel()', function() {
     it('should check no parameters provided', function() {
       language_translator.getModel({}, missingParameter);
       language_translator.getModel(null, missingParameter);
@@ -220,19 +200,16 @@ describe('language_translator', function() {
     });
 
     it('should generate a valid payload', function() {
-        var path = '/v2/models/foo';
-        var service_request = {
-          model_id: 'foo'
-        };
+      const path = '/v2/models/foo';
+      const service_request = {
+        model_id: 'foo'
+      };
 
-        nock(service.url).persist()
-        .get(path,service_request)
-        .reply(200);
+      nock(service.url).persist().get(path, service_request).reply(200);
 
-        var req = language_translator.getModel(service_request, noop);
-        assert.equal(req.uri.href, service.url + path);
-        assert.equal(req.method, 'GET');
+      const req = language_translator.getModel(service_request, noop);
+      assert.equal(req.uri.href, service.url + path);
+      assert.equal(req.method, 'GET');
     });
   });
-
 });
