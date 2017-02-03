@@ -25,7 +25,7 @@ echo '<!DOCTYPE html>
 
     <p>JSDoc by branch/tag:</p>
     <ul>'
-ls | grep --invert-match index.html | sed 's/^.*/<li><a href="&">&<\/a><\/li>/'
+ls -t | grep --invert-match index.html | sed 's/^.*/<li><a href="&">&<\/a><\/li>/'
 echo '    </ul>
 </div>
 <script>

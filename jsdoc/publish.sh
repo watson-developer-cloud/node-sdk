@@ -26,6 +26,8 @@ if [ "$TRAVIS_REPO_SLUG" == "watson-developer-cloud/node-sdk" ] && [ "$TRAVIS_PU
       ln -s ./$TRAVIS_TAG latest
     fi
 
+    # todo: automatically delete folders that don't have a matching git branch
+
     # generate an incdex file listing all of the versions
     ../jsdoc/generate_index_html.sh > index.html
 
