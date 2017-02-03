@@ -16,12 +16,14 @@ if [ "$TRAVIS_REPO_SLUG" == "watson-developer-cloud/node-sdk" ] \
   export SEMVER=${BASH_REMATCH[1]};
   echo "Creating semver $SEMVER per commit message"
 
+  git checkout master
+
   npm version $SEMVER
 
   git config --global user.email "travis@travis-ci.org"
   git config --global user.name "travis-ci"
   git config remote.origin.url https://${GH_TOKEN}@github.com/watson-developer-cloud/node-sdk
-  git push origin master --follow-tags
+  git push --follow-tags
 
 else
 
