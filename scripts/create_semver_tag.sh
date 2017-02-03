@@ -20,6 +20,7 @@ if [ "$TRAVIS_REPO_SLUG" == "watson-developer-cloud/node-sdk" ] \
 
   npm version $SEMVER
 
+  git config --global push.default simple
   git config --global user.email "travis@travis-ci.org"
   git config --global user.name "travis-ci"
   git config remote.origin.url https://${GH_TOKEN}@github.com/watson-developer-cloud/node-sdk
