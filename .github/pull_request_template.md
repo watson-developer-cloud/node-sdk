@@ -1,14 +1,14 @@
-### Summary
+<!--
+Thank you for your pull request! 
 
-Provide a general description of the code changes in your pull
-request... were there any bugs you had fixed? If so, mention them. If
-these bugs have open GitHub issues, be sure to tag them here as well,
-to keep the conversation linked together.
+Please provide a description above and review the requirements below.
 
-### Other Information
+Bug fixes and new features should include tests whenever possible.
+-->
 
-If there's anything else that's important and relevant to your pull
-request, mention that information here.
+##### Checklist
+<!-- Remove items that do not apply. For completed items, change [ ] to [x]. -->
 
-
-Thanks for contributing to the Watson Developer Cloud!
+- [ ] `npm test` passes (tip: `npm run autofix` can correct most style issues)
+- [ ] tests are included
+- [ ] documentation is changed or added
