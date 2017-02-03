@@ -1,3 +1,6 @@
+# v2.17.0
+* No API changes, but significant internal changes. Should behave exactly the same, but releasing as a standalone version out of caution.
+
 # v2.16.0
 * Added NaturalLanguageUnderstandingV1
 * Added support for pulling SERVICE_NAME_URL from enviroment properties along with username and password (or api key)
