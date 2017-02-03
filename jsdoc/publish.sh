@@ -28,6 +28,15 @@ if [ "$TRAVIS_REPO_SLUG" == "watson-developer-cloud/node-sdk" ] && [ "$TRAVIS_PU
 
     # todo: automatically delete folders that don't have a matching git branch
 
+    echo "tags:"
+    # sorted list of tags, newest first:
+    git tag --sort -version:refname
+
+    echo ""
+    echo "branches:"
+    # sorted list of remote branches, most recently modified first
+    git branch --remote --sort -authordate | grep --invert-match gh-pages | sed -e 's/.*origin\/\(.*\)/\1/' | uniq
+
     # generate an incdex file listing all of the versions
     ../jsdoc/generate_index_html.sh > index.html
 

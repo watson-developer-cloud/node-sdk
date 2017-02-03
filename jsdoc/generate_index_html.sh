@@ -2,6 +2,13 @@
 
 # based on https://odoepner.wordpress.com/2012/02/17/shell-script-to-generate-simple-index-html/
 
+# todo: consider listing tags and branches and/or matching them to what's on disk
+# sorted tags, newest first:
+# git tag --sort -version:refname
+# unsorted list of remote branches:
+# git branch --remote --sort -authordate | grep --invert-match gh-pages | sed -e 's/.*origin\/\(.*\)/\1/' | uniq
+
+
 echo '<!DOCTYPE html>
 <html>
 <head>
@@ -25,7 +32,7 @@ echo '<!DOCTYPE html>
 
     <p>JSDoc by branch/tag:</p>
     <ul>'
-ls -t | grep --invert-match index.html | sed 's/^.*/<li><a href="&">&<\/a><\/li>/'
+ls -t -p | grep \/\$ | sed 's/^.*/<li><a href="&">&<\/a><\/li>/'
 echo '    </ul>
 </div>
 <script>
