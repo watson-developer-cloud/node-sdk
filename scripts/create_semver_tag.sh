@@ -20,12 +20,12 @@ if [ "$TRAVIS_REPO_SLUG" == "watson-developer-cloud/node-sdk" ] \
 
   git config --global user.email "travis@travis-ci.org"
   git config --global user.name "travis-ci"
-  git remote add origin https://${GH_TOKEN}@github.com/watson-developer-cloud/node-sdk
+  git config remote.origin.url https://${GH_TOKEN}@github.com/watson-developer-cloud/node-sdk
   git push origin master --follow-tags
 
 else
 
-  echo -e "Not creating a semver tag for $TRAVIS_BUILD_NUMBER ($TRAVIS_JOB_NUMBER) on branch $TRAVIS_BRANCH of repo $TRAVIS_REPO_SLUG with commit message:"
-  echo TRAVIS_COMMIT_MESSAGE
+  echo -e "Not creating a semver tag for build $TRAVIS_JOB_NUMBER on branch $TRAVIS_BRANCH of repo $TRAVIS_REPO_SLUG with commit message:"
+  echo $TRAVIS_COMMIT_MESSAGE
 
 fi
