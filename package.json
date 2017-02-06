@@ -104,7 +104,7 @@
     "lint": "npm run compat-check && eslint . && node test/dependency-lint.js",
     "compat-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
     "autofix": "eslint . --fix",
-    "doc": "jsdoc -c jsdoc/config.json",
+    "doc": "jsdoc -c scripts/jsdoc/config.json",
     "watch-doc": "nodemon --watch ./ --ext js,tmpl,json --ignore dist/ --ignore doc/ --ignore test/ --ignore examples/ --exec npm run doc",
     "test-integration": "mocha test/integration",
     "test-unit": "npm run lint && mocha test/unit/",

@@ -7,12 +7,11 @@
       "./dist/",
       "./doc/watson-developer-cloud/",
       "./examples/",
-      "./jsdoc/",
+      "./scripts/",
       "./node_modules/",
       "./test/",
       "./eslintrc.js",
-      "./karma.conf.js",
-      "./transform.js"
+      "./karma.conf.js"
     ]
   },
   "opts": {
