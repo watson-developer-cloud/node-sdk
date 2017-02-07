@@ -39,7 +39,7 @@ requiredModules:
       - 'node_modules/**/*'
       - 'examples/**/*'
       - 'dist/*'
-      - 'jsdoc/**/*'
+      - 'scripts/**/*'
     root: '**/*.js'
   stripLoaders: false
   transpilers: []
