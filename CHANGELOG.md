@@ -1,3 +1,6 @@
+# v2.17.1
+* Fixed bug in STT getWords method (#390)
+
 # v2.17.0
 * No API changes, but significant internal changes. Should behave exactly the same, but releasing as a standalone version out of caution.
 

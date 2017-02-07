@@ -986,7 +986,7 @@ SpeechToTextV1.prototype.getWords = function(params, callback) {
       method: 'GET',
       url: '/v1/customizations/{customization_id}/words',
       path: pick(params, ['customization_id']),
-      qs: pick(params, ['language']),
+      qs: pick(params, ['word_type']),
       json: true
     },
     defaultOptions: this._options
