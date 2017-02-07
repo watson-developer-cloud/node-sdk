@@ -8,6 +8,9 @@
 # The ".1" job is the first on the list in .travis.yml. By convention, this is the oldest supported node.js version.
 
 #config
+# get a token from https://github.com/settings/tokens and encrypt it like so:
+# travis encrypt --add -r user-org-name/repo-name 'GH_TOKEN=xxxxxxxxxxxxxxxxxxx'
+# then set the below vars and make sure travis runs this script in the "after_success" section
 export SLUG="watson-developer-cloud/node-sdk"
 export BRANCH="master"
 
