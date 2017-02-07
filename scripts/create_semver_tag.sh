@@ -8,14 +8,14 @@
 # The ".1" job is the first on the list in .travis.yml. By convention, this is the oldest supported node.js version.
 
 #config
-# get a token from https://github.com/settings/tokens and encrypt it like so:
+# get a token from https://github.com/settings/tokens with the `public_repo` scope and encrypt it like so:
 # travis encrypt --add -r user-org-name/repo-name 'GH_TOKEN=xxxxxxxxxxxxxxxxxxx'
 # then set the below vars and make sure travis runs this script in the "after_success" section
-export SLUG="watson-developer-cloud/node-sdk"
+export REPO="watson-developer-cloud/node-sdk"
 export BRANCH="master"
 
 
-if [ "$TRAVIS_REPO_SLUG" == "$SLUG" ] \
+if [ "$TRAVIS_REPO_SLUG" == "$REPO" ] \
   && [ "$TRAVIS_PULL_REQUEST" == "false" ] \
   && [ "$TRAVIS_BRANCH" == "$BRANCH" ] \
   && [ "$TRAVIS_BUILD_NUMBER.1" == "$TRAVIS_JOB_NUMBER" ] \
@@ -33,7 +33,7 @@ if [ "$TRAVIS_REPO_SLUG" == "$SLUG" ] \
   git config --global push.default simple
   git config --global user.email "travis@travis-ci.org"
   git config --global user.name "travis-ci"
-  git config remote.origin.url https://${GH_TOKEN}@github.com/${SLUG}
+  git config remote.origin.url https://${GH_TOKEN}@github.com/${REPO}
   git push --follow-tags
 
 else
