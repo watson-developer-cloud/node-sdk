@@ -38,7 +38,7 @@ if [ "$TRAVIS_REPO_SLUG" == "$SLUG" ] \
 
 else
 
-  echo -e "Not creating a semver tag for build $TRAVIS_JOB_NUMBE on branch $TRAVIS_BRANCH of repo $TRAVIS_REPO_SLUG with commit message:"
+  echo -e "Not creating a semver tag for build $TRAVIS_JOB_NUMBER on branch $TRAVIS_BRANCH of repo $TRAVIS_REPO_SLUG with commit message:"
   echo $TRAVIS_COMMIT_MESSAGE
 
 fi
