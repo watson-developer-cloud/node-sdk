@@ -53,13 +53,15 @@ ConversationV1.VERSION_DATE_2016_07_11 = '2016-07-11';
  * * context.system.dialog_stack changed from an array of strings to an array of objects
  *
  * Old:
+```json
  "context": {
     "system": {
       "dialog_stack": [
         "root"
       ],
-
+```
  * New:
+```json
  "context": {
     "system": {
       "dialog_stack": [
@@ -67,6 +69,7 @@ ConversationV1.VERSION_DATE_2016_07_11 = '2016-07-11';
           "dialog_node": "root"
         }
       ],
+```
  *
  * @see http://www.ibm.com/watson/developercloud/doc/conversation/release-notes.html#20-september-2016
  * @type {string}
@@ -79,6 +82,7 @@ ConversationV1.VERSION_DATE_2016_09_20 = '2016-09-20';
  * Returns a response to a user utterance.
  *
  * Example response for 2016-09-20 version_date:
+```json
  {
    "intents": [
      {
@@ -121,6 +125,7 @@ ConversationV1.VERSION_DATE_2016_09_20 = '2016-09-20';
      }
    }
  }
+```
  *
  *
  *
@@ -132,6 +137,7 @@ ConversationV1.VERSION_DATE_2016_09_20 = '2016-09-20';
  * @param [params.output]
  * @param [params.entities]
  * @param [params.intents]
+ * @param [params.X-Watson-Origin]
  *
  */
 ConversationV1.prototype.message = function(params, callback) {
@@ -158,6 +164,7 @@ ConversationV1.prototype.message = function(params, callback) {
  * Returns the list of workspaces in Watson Conversation Service instance
  *
  * Example Response:
+```json
  {
    "workspaces": [
      {
@@ -171,10 +178,16 @@ ConversationV1.prototype.message = function(params, callback) {
      }
    ]
  }
+```
  *
+ * @param {Object} [params]
+ * @param {Function} [callback]
  */
-
-ConversationV1.prototype.listWorkspaces = function(callback) {
+ConversationV1.prototype.listWorkspaces = function(params, callback) {
+  if (typeof params === 'function' && !callback) {
+    callback = params;
+    params = null;
+  }
   const parameters = {
     options: {
       url: '/v1/workspaces',
@@ -191,6 +204,7 @@ ConversationV1.prototype.listWorkspaces = function(callback) {
  * Creates a new workspace
  *
  * Model Schema
+```json
  {
   "name": "string",
   "description": "string",
@@ -260,8 +274,10 @@ ConversationV1.prototype.listWorkspaces = function(callback) {
     }
   ]
  }
+```
  *
  * Example Response
+```json
  {
   "name": "Pizza app",
   "created": "2015-12-06T23:53:59.153Z",
@@ -271,16 +287,18 @@ ConversationV1.prototype.listWorkspaces = function(callback) {
   "description": "Pizza app",
   "workspace_id": "pizza_app-e0f3"
  }
+```
  *
- * @param  {Object}   params   {}
- * @param [params.name]
- * @param [params.language]
- * @param [params.entities]
- * @param [params.intents]
- * @param [params.dialog_nodes]
- * @param [params.metadata]
- * @param [params.description]
- * @param [params.counterexamples]
+ * @param  {Object}  params
+ * @param {String} [params.name]
+ * @param {String} [params.description]
+ * @param {String} [params.language]
+ * @param {Object} [params.metadata]
+ * @param {Array<Object>} [params.entities]
+ * @param {Array<Object>} [params.intents]
+ * @param {Array<Object>} [params.dialog_nodes]
+ * @param {Array<Object>} [params.counterexamples]
+ * @param {Function} [callback]
  *
  */
 
@@ -305,6 +323,7 @@ ConversationV1.prototype.createWorkspace = function(params, callback) {
  * Returns information about a specified workspace or return the whole workspace
  *
  * Example Response (with default export value):
+```json
  {
   "name": "Pizza app",
   "created": "2015-12-06T23:53:59.153Z",
@@ -314,11 +333,12 @@ ConversationV1.prototype.createWorkspace = function(params, callback) {
   "description": "Pizza app",
   "workspace_id": "pizza_app-e0f3"
  }
+```
  *
  * @param  {Object}   params   { workspace_id: '',  }
  * @param params.workspace_id
  * @param [params.export=false] - if true, the full contents of all of the sub-resources are returned
- *
+ * @param {Function} [callback]
  */
 
 ConversationV1.prototype.getWorkspace = function(params, callback) {
@@ -343,11 +363,10 @@ ConversationV1.prototype.getWorkspace = function(params, callback) {
  *
  * Deletes the specified workspace
  *
- * Response: {}
  *
  * @param  {Object}   params   { workspace_id: '' }
  * @param params.workspace_id
- *
+ * @param {Function} [callback]
  */
 
 ConversationV1.prototype.deleteWorkspace = function(params, callback) {
@@ -372,6 +391,7 @@ ConversationV1.prototype.deleteWorkspace = function(params, callback) {
  * Updates a workspace
  *
  * Example value
+```json
  {
   "name": "Pizza app",
   "created": "2015-12-06T23:53:59.153Z",
@@ -443,8 +463,10 @@ ConversationV1.prototype.deleteWorkspace = function(params, callback) {
     }
   ]
  }
+```
  *
  * Example Response:
+```json
  {
   "name": "Pizza app",
   "created": "2015-12-06T23:53:59.153Z",
@@ -454,19 +476,19 @@ ConversationV1.prototype.deleteWorkspace = function(params, callback) {
   "description": "Pizza app",
   "workspace_id": "pizza_app-e0f3"
  }
+```
  *
  * @param  {Object}   params   { workspace_id: '',  }
- * @param params.workspace_id
- * @param [params.name]
- * @param [params.language]
- * @param [params.entities]
- * @param [params.intents]
- * @param [params.dialog_nodes]
- * @param [params.metadata]
- * @param [params.description]
- * @param [params.counterexamples]
- * @param [params.created]
- * @param [params.updated]
+ * @param {String} params.workspace_id
+ * @param {String} [params.name]
+ * @param {String} [params.description]
+ * @param {String} [params.language]
+ * @param {Object} [params.metadata]
+ * @param {Array<Object>} [params.entities]
+ * @param {Array<Object>} [params.intents]
+ * @param {Array<Object>} [params.dialog_nodes]
+ * @param {Array<Object>} [params.counterexamples]
+ * @param {Function} [callback]
  *
  */
 
@@ -478,7 +500,7 @@ ConversationV1.prototype.updateWorkspace = function(params, callback) {
       url: '/v1/workspaces/{workspace_id}',
       method: 'POST',
       json: true,
-      body: pick(params, ['name', 'created', 'updated', 'language', 'entities', 'intents', 'dialog_nodes', 'metadata', 'description', 'counterexamples']),
+      body: pick(params, ['name', 'language', 'entities', 'intents', 'dialog_nodes', 'metadata', 'description', 'counterexamples']),
       path: pick(params, ['workspace_id'])
     },
     requiredParams: ['workspace_id'],
@@ -493,13 +515,16 @@ ConversationV1.prototype.updateWorkspace = function(params, callback) {
  * Returns the training status of the specified workspace
  *
  * Example Response:
+```json
  {
   "workspace_id": "pizza_app-e0f3",
   "training": "true"
  }
+```
  *
  * @param  {Object}   params   { workspace_id: '',  }
  * @param params.workspace_id
+ * @param {Function} [callback]
  *
  */
 
@@ -525,6 +550,7 @@ ConversationV1.prototype.workspaceStatus = function(params, callback) {
  * Returns the conversation logs of the specified workspace
  *
  * Example Response:
+```json
  {
   "resultsFound": 1014,
   "resultsReturned": 1,
@@ -591,6 +617,7 @@ ConversationV1.prototype.workspaceStatus = function(params, callback) {
   ],
   "totalConversations": 0
  }
+```
  *
  * @param  {Object}   params   { workspace_id: '', type: '',  }
  * @param params.workspace_id
@@ -603,7 +630,7 @@ ConversationV1.prototype.workspaceStatus = function(params, callback) {
  * @param [params.end_date_time]
  * @param [params.window_start_time]
  * @param [params.window_end_time]
- *
+ * @param {Function} [callback]
  */
 
 ConversationV1.prototype.workspaceLogs = function(params, callback) {
