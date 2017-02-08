@@ -1,3 +1,6 @@
+# v2.18.1
+* Prevent docs site files from being included in npm releases
+
 # v2.18.0
 * Added various methods to Conversation service to create and manage workspaces
 
