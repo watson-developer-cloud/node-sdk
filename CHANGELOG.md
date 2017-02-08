@@ -1,3 +1,6 @@
+# v2.18.0
+* Added various methods to Conversation service to create and manage workspaces
+
 # v2.17.1
 * Fixed bug in STT getWords method (#390)
 
