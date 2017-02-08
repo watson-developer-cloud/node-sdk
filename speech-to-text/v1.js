@@ -124,8 +124,8 @@ SpeechToTextV1.prototype.recognize = function(params, callback) {
     },
     defaultOptions: this._options
   };
-  return params
-    .audio.on('response', function(response) {
+  return params.audio
+    .on('response', function(response) {
       // Replace content-type
       response.headers['content-type'] = params.content_type;
     })
