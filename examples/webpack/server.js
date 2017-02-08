@@ -5,7 +5,7 @@ const dotenv = require('dotenv');
 const watson = require('watson-developer-cloud');
 
 
-// bundle the
+// bundle the code
 var webpackDevMiddleware = require("webpack-dev-middleware");
 var webpack = require("webpack");
 var webpackConfig = require("./webpack.config");
