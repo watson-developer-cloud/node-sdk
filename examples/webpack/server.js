@@ -4,18 +4,18 @@ const app = express();
 const dotenv = require('dotenv');
 const watson = require('watson-developer-cloud');
 
-
 // bundle the code
-var webpackDevMiddleware = require("webpack-dev-middleware");
-var webpack = require("webpack");
-var webpackConfig = require("./webpack.config");
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpack = require('webpack');
+const webpackConfig = require('./webpack.config');
 
-var compiler = webpack(webpackConfig);
+const compiler = webpack(webpackConfig);
 
-app.use(webpackDevMiddleware(compiler, {
-  publicPath: "/" // Same as `output.publicPath` in most cases.
-}));
-
+app.use(
+  webpackDevMiddleware(compiler, {
+    publicPath: '/' // Same as `output.publicPath` in most cases.
+  })
+);
 
 app.use(express.static('public/'));
 

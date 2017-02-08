@@ -30,6 +30,7 @@ ignoreErrors:
   unused:
    - karma-*
    - eslint-*
+   - shebang-loader # webpack
 
 requiredModules:
   files:

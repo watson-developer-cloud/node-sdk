@@ -1,21 +1,18 @@
 'use strict';
 
-var MemoryFS = require('memory-fs');
-var webpack = require('webpack');
-var path = require('path');
-var config = require('../../webpack.config');
+const MemoryFS = require('memory-fs');
+const webpack = require('webpack');
+const config = require('../../webpack.config');
 
 describe('Webpack', function() {
-
-  this.timeout(30*1000);
+  this.timeout(30 * 1000);
 
   it('should generate a webpack bundle without errors', function(done) {
-
     // based on https://webpack.github.io/docs/node.js-api.html#compile-to-memory
 
-    var fs = new MemoryFS();
+    const fs = new MemoryFS();
 
-    var compiler = webpack(config);
+    const compiler = webpack(config);
     compiler.outputFileSystem = fs;
     compiler.run(function(err, stats) {
       if (err) {
@@ -30,5 +27,4 @@ describe('Webpack', function() {
       done();
     });
   });
-
 });
