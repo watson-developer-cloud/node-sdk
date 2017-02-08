@@ -1,7 +1,7 @@
 'use strict';
 // notes:
 //
-// * This file is bundled by exprss-browserify into bundle.js
+// * This file is bundled by webpack-dev-middleware into bundle.js
 //
 // * The require('watson-developer-cloud/language_translator/v2') could also be written as require('watson-developer-cloud').LanguageTranslatorV2,
 //   but that version results in a much larger bundle size.

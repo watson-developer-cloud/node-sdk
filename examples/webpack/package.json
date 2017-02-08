@@ -1,7 +1,7 @@
 {
-  "name": "watson-developer-cloud-browserify-example",
+  "name": "watson-developer-cloud-webpack-example",
   "version": "1.0.0",
-  "description": "Use the Watson JS SDK in browsers via browserify",
+  "description": "Use the Watson JS SDK in browsers via webpack",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
@@ -11,8 +11,10 @@
   "dependencies": {
     "dotenv": "^2.0.0",
     "express": "^4.14.0",
-    "express-browserify": "^1.0.2",
-    "watson-developer-cloud": "^2.7.1"
+    "shebang-loader": "0.0.1",
+    "watson-developer-cloud": "^2.7.1",
+    "webpack": "^2.2.1",
+    "webpack-dev-middleware": "^1.10.0"
   },
   "devDependencies": {},
   "engines": {

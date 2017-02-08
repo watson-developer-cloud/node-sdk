@@ -78,9 +78,11 @@
     "nock": "^9.0.2",
     "object.assign": "^4.0.4",
     "prettier": "^0.15.0",
+    "shebang-loader": "0.0.1",
     "uglify-js": "^2.7.0",
     "watchify": "^3.7.0",
-    "wav": "^1.0.0"
+    "wav": "^1.0.0",
+    "webpack": "^2.2.1"
   },
   "dependencies": {
     "async": "^2.0.1",
