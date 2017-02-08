@@ -14,12 +14,15 @@
  * limitations under the License.
  */
 
-'use strict';
+/*jslint node: true */
+/*jslint nomen: true*/
 
-const requestFactory = require('../lib/requestwrapper');
-const pick = require('object.pick');
-const util = require('util');
-const BaseService = require('../lib/base_service');
+"use strict";
+
+var requestFactory = require("../lib/requestwrapper");
+var pick           = require("object.pick");
+var util = require("util");
+var BaseService = require("../lib/base_service");
 
 /**
  *
@@ -74,6 +77,8 @@ ConversationV1.VERSION_DATE_2016_07_11 = '2016-07-11';
 ConversationV1.VERSION_DATE_2016_09_20 = '2016-09-20';
 
 /**
+ * Method: message
+ *
  * Returns a response to a user utterance.
  *
  * Example response for 2016-09-20 version_date:
@@ -132,18 +137,491 @@ ConversationV1.VERSION_DATE_2016_09_20 = '2016-09-20';
  * @param [params.intents]
  *
  */
-ConversationV1.prototype.message = function(params, callback) {
+ConversationV1.prototype.message = function (params, callback) {
   params = params || {};
 
-  const parameters = {
+  var parameters = {
     options: {
       url: '/v1/workspaces/{workspace_id}/message',
       method: 'POST',
       json: true,
+      headers: pick(params, ['X-Watson-Origin']),
       body: pick(params, ['input', 'context', 'alternate_intents', 'output', 'entities', 'intents']),
       path: pick(params, ['workspace_id'])
     },
     requiredParams: ['workspace_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: listWorkspaces
+ *
+ * Returns the list of workspaces in Watson Conversation Service instance
+ *
+ * Example Response:
+ {
+   "workspaces": [
+     {
+       "name": "Pizza app",
+       "created": "2015-12-06T23:53:59.153Z",
+       "language": "en",
+       "metadata": {},
+       "updated": "2015-12-06T23:53:59.153Z",
+       "description": "Pizza app",
+       "workspace_id": "pizza_app-e0f3"
+     }
+   ]
+ }
+ *
+ */
+ 
+ConversationV1.prototype.listWorkspaces = function (callback) {
+  var parameters = {
+    options: {
+      url: '/v1/workspaces',
+      method: 'GET'
+    },
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: createWorkspace
+ *
+ * Creates a new workspace
+ *
+ * Model Schema
+ {
+  "name": "string",
+  "description": "string",
+  "language": "string",
+  "metadata": {},
+  "counterexamples": [
+    {
+      "text": "string"
+    }
+  ],
+  "dialog_nodes": [
+    {
+      "dialog_node": "string",
+      "description": "string",
+      "conditions": "string",
+      "parent": "string",
+      "previous_sibling": "string",
+      "output": {
+        "text": "string"
+      },
+      "context": {},
+      "metadata": {},
+      "go_to": {
+        "dialog_node": "string",
+        "selector": "string",
+        "return": true
+      }
+    }
+  ],
+  "entities": [
+    {
+      "entity": "string",
+      "description": {
+        "long": [
+          "string"
+        ],
+        "short": [
+          "string"
+        ],
+        "examples": [
+          "string"
+        ]
+      },
+      "type": "string",
+      "source": "string",
+      "open_list": false,
+      "values": [
+        {
+          "value": "string",
+          "metadata": {},
+          "synonyms": [
+            "string"
+          ]
+        }
+      ]
+    }
+  ],
+  "intents": [
+    {
+      "intent": "string",
+      "description": "string",
+      "examples": [
+        {
+          "text": "string"
+        }
+      ]
+    }
+  ]
+ }
+ *
+ * Example Response
+ {
+  "name": "Pizza app",
+  "created": "2015-12-06T23:53:59.153Z",
+  "language": "en",
+  "metadata": {},
+  "updated": "2015-12-06T23:53:59.153Z",
+  "description": "Pizza app",
+  "workspace_id": "pizza_app-e0f3"
+ }
+ *
+ * @param  {Object}   params   {}
+ * @param [params.name]
+ * @param [params.language]
+ * @param [params.entities]
+ * @param [params.intents]
+ * @param [params.dialog_nodes]
+ * @param [params.metadata]
+ * @param [params.description]
+ * @param [params.counterexamples]
+ *
+ */
+
+ConversationV1.prototype.createWorkspace = function (params, callback) {
+  params = params || {};
+
+  var parameters = {
+    options: {
+      url: '/v1/workspaces',
+      method: 'POST',
+      json: true,
+      body: pick(params, ['name', 'language', 'entities', 'intents', 'dialog_nodes', 'metadata', 'description', 'counterexamples'])
+    },
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: getWorkspace
+ *
+ * Returns information about a specified workspace or return the whole workspace
+ *
+ * Example Response (with default export value):
+ {
+  "name": "Pizza app",
+  "created": "2015-12-06T23:53:59.153Z",
+  "language": "en",
+  "metadata": {},
+  "updated": "2015-12-06T23:53:59.153Z",
+  "description": "Pizza app",
+  "workspace_id": "pizza_app-e0f3"
+ }
+ *
+ * @param  {Object}   params   { workspace_id: '',  }
+ * @param params.workspace_id
+ * @param [params.export=false] - if true, the full contents of all of the sub-resources are returned
+ *
+ */
+ 
+ConversationV1.prototype.getWorkspace = function (params, callback) {
+  params = params || {};
+
+  var parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}',
+      method: 'GET',
+      json: true,
+      qs: pick(params, ['export']),
+      path: pick(params, ['workspace_id'])
+    },
+    requiredParams: ['workspace_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: deleteWorkspace
+ *
+ * Deletes the specified workspace
+ *
+ * Response: {}
+ *
+ * @param  {Object}   params   { workspace_id: '' }
+ * @param params.workspace_id
+ *
+ */
+ 
+ConversationV1.prototype.deleteWorkspace = function (params, callback) {
+  params = params || {};
+
+  var parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}',
+      method: 'DELETE',
+      json: true,
+      path: pick(params, ['workspace_id'])
+    },
+    requiredParams: ['workspace_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: updateWorkspace
+ *
+ * Updates a workspace
+ *
+ * Example value
+ {
+  "name": "Pizza app",
+  "created": "2015-12-06T23:53:59.153Z",
+  "language": "en",
+  "metadata": {},
+  "description": "Pizza app",
+  "workspace_id": "pizza_app-e0f3",
+  "counterexamples": [
+    {
+      "text": "string"
+    }
+  ],
+  "dialog_nodes": [
+    {
+      "dialog_node": "string",
+      "description": "string",
+      "conditions": "string",
+      "parent": "string",
+      "previous_sibling": "string",
+      "output": {
+        "text": "string"
+      },
+      "context": {},
+      "metadata": {},
+      "go_to": {
+        "dialog_node": "string",
+        "selector": "string",
+        "return": true
+      }
+    }
+  ],
+  "entities": [
+    {
+      "entity": "string",
+      "description": {
+        "long": [
+          "string"
+        ],
+        "short": [
+          "string"
+        ],
+        "examples": [
+          "string"
+        ]
+      },
+      "type": "string",
+      "source": "string",
+      "open_list": false,
+      "values": [
+        {
+          "value": "string",
+          "metadata": {},
+          "synonyms": [
+            "string"
+          ]
+        }
+      ]
+    }
+  ],
+  "intents": [
+    {
+      "intent": "string",
+      "description": "string",
+      "examples": [
+        {
+          "text": "string"
+        }
+      ]
+    }
+  ]
+ }
+ *
+ * Example Response:
+ {
+  "name": "Pizza app",
+  "created": "2015-12-06T23:53:59.153Z",
+  "language": "en",
+  "metadata": {},
+  "updated": "2015-12-06T23:53:59.153Z",
+  "description": "Pizza app",
+  "workspace_id": "pizza_app-e0f3"
+ }
+ *
+ * @param  {Object}   params   { workspace_id: '',  }
+ * @param params.workspace_id
+ * @param [params.name]
+ * @param [params.language]
+ * @param [params.entities]
+ * @param [params.intents]
+ * @param [params.dialog_nodes]
+ * @param [params.metadata]
+ * @param [params.description]
+ * @param [params.counterexamples]
+ * @param [params.created]
+ * @param [params.updated]
+ *
+ */
+ 
+ConversationV1.prototype.updateWorkspace = function (params, callback) {
+  params = params || {};
+
+  var parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}',
+      method: 'POST',
+      json: true,
+      body: pick(params, ['name', 'created', 'updated', 'language', 'entities', 'intents', 'dialog_nodes', 'metadata', 'description', 'counterexamples']),
+      path: pick(params, ['workspace_id'])
+    },
+    requiredParams: ['workspace_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: workspaceStatus
+ *
+ * Returns the training status of the specified workspace
+ *
+ * Example Response:
+ {
+  "workspace_id": "pizza_app-e0f3",
+  "training": "true"
+ }
+ *
+ * @param  {Object}   params   { workspace_id: '',  }
+ * @param params.workspace_id
+ *
+ */
+
+ConversationV1.prototype.workspaceStatus = function (params, callback) {
+  params = params || {};
+
+  var parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/status',
+      method: 'GET',
+      json: true,
+      path: pick(params, ['workspace_id'])
+    },
+    requiredParams: ['workspace_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: workspaceLogs
+ *
+ * Returns the conversation logs of the specified workspace
+ *
+ * Example Response:
+ {
+  "resultsFound": 1014,
+  "resultsReturned": 1,
+  "nextPageToken": "AoJ9x6+8+dUCPwUwMGEwOWI0Zi1hZDVmLTRjMTUtYTFhMi0wNzRmOTIxNGQwNTg=",
+  "messageType": "Message",
+  "results": [
+    {
+      "id": "00a09b4f-ad5f-4c15-a1a2-074f9214d058",
+      "workspace_id": "95442ab5-e34d-462c-8621-e6f80cc75a54",
+      "service_name": "conversation",
+      "service_type": "message",
+      "event": {
+        "request": {
+          "input": {
+            "text": "Hey Watson, Turn On the wipers."
+          },
+          "context": {},
+          "timestamp": "2016-07-16T09:02:40.253Z"
+        },
+        "response": {
+          "input": {
+            "text": "Hey Watson, Turn On the wipers."
+          },
+          "context": {
+            "conversation_id": "61edab2c-82cf-4931-9e29-db09faa47263",
+            "system": {
+              "dialog_stack": [
+                "root"
+              ],
+              "dialog_turn_counter": 1,
+              "dialog_request_counter": 1
+            },
+            "defaultCounter": 0
+          },
+          "entities": [
+            {
+              "entity": "appliance",
+              "location": [
+                24,
+                30
+              ],
+              "value": "wipers"
+            }
+          ],
+          "intents": [
+            {
+              "intent": "turn_on",
+              "confidence": 0.9830948246527533
+            }
+          ],
+          "output": {
+            "log_messages": [],
+            "text": [
+              "Hi. It looks like a nice drive today. What would you like me to do?"
+            ],
+            "nodes_visited": [
+              "node_1_1467221909631"
+            ]
+          },
+          "timestamp": "2016-07-16T09:02:40.304Z"
+        }
+      }
+    }
+  ],
+  "totalConversations": 0
+ }
+ *
+ * @param  {Object}   params   { workspace_id: '', type: '',  }
+ * @param params.workspace_id
+ * @param params.type - type = message or conversation - When type=conversation the logs are grouped by conversation
+ * @param [params.include-event]
+ * @param [params.limit]
+ * @param [params.q]
+ * @param [params.sort]
+ * @param [params.start_date_time]
+ * @param [params.end_date_time]
+ * @param [params.window_start_time]
+ * @param [params.window_end_time]
+ *
+ */
+
+ConversationV1.prototype.workspaceLogs = function (params, callback) {
+  params = params || {};
+
+  var parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/logs',
+      method: 'GET',
+      json: true,
+      qs: pick(params, ['type', 'include-event', 'limit', 'q', 'sort', 'start_date_time', 'end_date_time', 'window_start_time', 'window_end_time']),
+      headers: pick(params, ['X-Watson-Origin']),
+      path: pick(params, ['workspace_id'])
+    },
+    requiredParams: ['workspace_id', 'type'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
