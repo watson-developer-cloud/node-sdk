@@ -15,26 +15,34 @@ const TEN_SECONDS = 10000;
 const TWO_SECONDS = 2000;
 
 const workspace = {
-  name: 'integration test'
-  , language: 'fr'
-  , entities: [{
-    entity: 'hello'
-    , values: [{
-        value: "hola"
-        , synonyms: ['yo', 'yoo']
-    }]
-  }]
+  name: 'integration test',
+  language: 'fr',
+  entities: [
+    {
+      entity: 'hello',
+      values: [
+        {
+          value: 'hola',
+          synonyms: ['yo', 'yoo']
+        }
+      ]
+    }
+  ]
 };
 
 const intents = {
-  language: 'en'
-  , intents: [{
-    intent: 'test'
-    , examples: [{
-        text: 'I test'
-    }]
-  }]
-}
+  language: 'en',
+  intents: [
+    {
+      intent: 'test',
+      examples: [
+        {
+          text: 'I test'
+        }
+      ]
+    }
+  ]
+};
 
 const workspace1 = extend(true, {}, workspace, intents);
 
@@ -120,7 +128,6 @@ describe('conversation_integration', function() {
 
   describe('listWorkspaces()', function() {
     it('result should contain workspaces key', function(done) {
-
       conversation.listWorkspaces(function(err, result) {
         if (err) {
           return done(err);
@@ -129,19 +136,18 @@ describe('conversation_integration', function() {
         done();
       });
     });
-    
-    it('result should contain an array of workspaces', function(done) {
 
+    it('result should contain an array of workspaces', function(done) {
       conversation.listWorkspaces(function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(Object.prototype.toString.call(result.workspaces), '[object Array]')
+        assert.equal(Object.prototype.toString.call(result.workspaces), '[object Array]');
         done();
       });
     });
   });
-   
+
   describe('createWorkspace()', function() {
     it('should create a new workspace', function(done) {
       const params = workspace;
@@ -158,11 +164,10 @@ describe('conversation_integration', function() {
         done();
       });
     });
-  }); 
-     
+  });
+
   describe('updateWorkspace()', function() {
     it('should update the workspace with intents and language', function(done) {
-      
       const params = workspace1;
 
       conversation.updateWorkspace(params, function(err, result) {
@@ -176,8 +181,8 @@ describe('conversation_integration', function() {
         done();
       });
     });
-  }); 
-  
+  });
+
   describe('getWorkspace()', function() {
     it('should get the workspace with the right intent', function(done) {
       const params = {
@@ -194,7 +199,7 @@ describe('conversation_integration', function() {
       });
     });
   });
-  
+
   describe('workspaceStatus()', function() {
     it('should get the workspace status', function(done) {
       const params = {
@@ -211,13 +216,13 @@ describe('conversation_integration', function() {
       });
     });
   });
-    
+
   describe('workspaceLogs()', function() {
     it('should get the workspace log messages', function(done) {
       const params = {
-        workspace_id: workspace1.workspace_id
-        , type: 'message'
-        , "X-Watson-Origin": 'local'
+        workspace_id: workspace1.workspace_id,
+        type: 'message',
+        'X-Watson-Origin': 'local'
       };
 
       conversation.workspaceLogs(params, function(err, result) {
@@ -230,12 +235,12 @@ describe('conversation_integration', function() {
         done();
       });
     });
-    
+
     it('should get the workspace log conversations', function(done) {
       const params = {
-        workspace_id: workspace1.workspace_id
-        , type: 'conversation'
-        , "X-Watson-Origin": 'local'
+        workspace_id: workspace1.workspace_id,
+        type: 'conversation',
+        'X-Watson-Origin': 'local'
       };
 
       conversation.workspaceLogs(params, function(err, result) {
@@ -249,7 +254,7 @@ describe('conversation_integration', function() {
       });
     });
   });
-  
+
   describe('deleteWorkspace()', function() {
     it('should delete the workplace', function(done) {
       const params = {
@@ -259,7 +264,7 @@ describe('conversation_integration', function() {
       conversation.deleteWorkspace(params, function(err, result) {
         if (err) {
           return done(err);
-        }        
+        }
         done();
       });
     });
