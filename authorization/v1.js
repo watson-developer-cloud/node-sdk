@@ -22,6 +22,10 @@ const util = require('util');
 const BaseService = require('../lib/base_service');
 
 /**
+ * Authorization Service
+ *
+ * Generates temporary auth tokens for use in untrusted environments.
+ * Tokens expire after one hour.
  *
  * @param {Object} options
  * @param {String} options.username

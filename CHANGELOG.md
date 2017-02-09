@@ -2,7 +2,6 @@
 * Added various methods to Conversation service to create and manage workspaces
 * Prevent docs site files from being included in npm releases
 
-
 # v2.17.1
 * Fixed bug in STT getWords method (#390)
 
