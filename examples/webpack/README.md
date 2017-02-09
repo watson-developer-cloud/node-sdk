@@ -1,9 +1,9 @@
-# Watson Developer Cloud Browserify Example
+# Watson Developer Cloud Webpack Example
 
 This example app shows a basic client and server setup to use the Watson JS SDK in a client-side context.
 
-The example here uses [express](http://expressjs.com/) to serve the content and
-[express-browserify](https://www.npmjs.com/package/express-browserify) to generate the client-side bundle.
+The example here uses [express](http://expressjs.com/) to serve the content and [webpack](https://www.npmjs.com/package/webpack-dev-middleware) and
+[webpack-dev-middleware](https://www.npmjs.com/package/webpack-dev-middleware) to generate the client-side bundle.
 
 ## Important notes
 
