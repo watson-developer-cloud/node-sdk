@@ -56,7 +56,7 @@ TradeoffAnalyticsV1.prototype.dilemmas = function(params, callback) {
   const qs = {
     find_preferable_options: params.find_preferable_options
   };
-  if(params.generate_visualization === false){
+  if (params.generate_visualization === false) {
     qs.generate_visualization = false;
   }
   const parameters = {
