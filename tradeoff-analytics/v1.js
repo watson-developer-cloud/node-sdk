@@ -48,19 +48,26 @@ TradeoffAnalyticsV1.URL = 'https://gateway.watsonplatform.net/tradeoff-analytics
  * 								                        for analytics purposes
  * @param  {String} params.generate_visualization Boolean (default = true). if false, the algorithm
  *                                                will not create the "map" visualization, and will typically run much faster
+ * @param  {String} params.find_preferable_options Boolean (default = false). if true the algorithm includes a refined subset of best candidate options
+ * that will most likely satisfy the greatest number of users.
  */
 TradeoffAnalyticsV1.prototype.dilemmas = function(params, callback) {
   params = params || {};
-
+  const qs = {
+    find_preferable_options: params.find_preferable_options
+  };
+  if(params.generate_visualization === false){
+    qs.generate_visualization = false;
+  }
   const parameters = {
     options: {
       method: 'POST',
       url: '/v1/dilemmas',
-      body: omit(params, ['metadata_header', 'generate_visualization']),
+      body: omit(params, ['metadata_header', 'generate_visualization', 'find_preferable_options']),
       headers: {
         'x-watson-metadata': params.metadata_header
       },
-      qs: params.generate_visualization === false ? { generate_visualization: false } : {},
+      qs: qs,
       json: true
     },
     requiredParams: ['columns', 'subject', 'options'],
