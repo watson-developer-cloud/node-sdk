@@ -53,9 +53,10 @@ TradeoffAnalyticsV1.URL = 'https://gateway.watsonplatform.net/tradeoff-analytics
  */
 TradeoffAnalyticsV1.prototype.dilemmas = function(params, callback) {
   params = params || {};
-  const qs = {
-    find_preferable_options: params.find_preferable_options
-  };
+  const qs = {};
+  if (params.find_preferable_options) {
+    qs.find_preferable_options = true;
+  }
   if (params.generate_visualization === false) {
     qs.generate_visualization = false;
   }
