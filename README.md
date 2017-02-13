@@ -110,7 +110,7 @@ By default, [all requests are logged](http://www.ibm.com/watson/developercloud/d
 var myInstance = new watson.WhateverServiceV1({
   /* username, password, version, etc... */
   headers: {
-    "X-Watson-Learning-Opt-Out": "1"
+    "X-Watson-Learning-Opt-Out": true
   }
 });
 ```
