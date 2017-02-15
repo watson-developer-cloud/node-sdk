@@ -49,7 +49,7 @@ const workspace1 = extend(true, {}, workspace, intents);
 describe('conversation_integration', function() {
   this.timeout(TEN_SECONDS);
   this.slow(TWO_SECONDS); // this controls when the tests get a colored warning for taking too long
-  //this.retries(1);
+  // this.retries(1);
 
   let conversation;
 
