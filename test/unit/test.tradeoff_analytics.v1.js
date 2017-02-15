@@ -235,4 +235,20 @@ describe('tradeoff_analytics', function() {
       }
     });
   });
+
+  it('should append find_preferable_options=true query param to url', function() {
+    // check with find_preferable_options = true
+    const service_path_pref_ops = '/v1/dilemmas?find_preferable_options=true';
+    const params = extend({}, service_request);
+    params.find_preferable_options = true;
+    const req = tradeoff_analytics.dilemmas(params, noop);
+    assert.equal(req.uri.href, service.url + service_path_pref_ops);
+  });
+
+  it('should not append find_preferable_options=false query param to url', function() {
+    const params = extend({}, service_request);
+    params.find_preferable_options = false;
+    const req = tradeoff_analytics.dilemmas(params, noop);
+    assert.equal(req.uri.href, service.url + service_path);
+  });
 });
