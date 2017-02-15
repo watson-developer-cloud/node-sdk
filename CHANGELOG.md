@@ -1,3 +1,6 @@
+# v2.19.0
+* Added support for find_preferable_options flag in Tradeoff Analytics
+
 # v2.18.0
 * Added various methods to Conversation service to create and manage workspaces
 * Prevent docs site files from being included in npm releases
