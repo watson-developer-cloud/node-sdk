@@ -704,7 +704,7 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/maste
 [speech_to_text]: http://www.ibm.com/watson/developercloud/doc/speech-to-text/
 [concept_insights]: http://www.ibm.com/watson/developercloud/doc/concept-insights/
 [tradeoff_analytics]: http://www.ibm.com/watson/developercloud/doc/tradeoff-analytics/
-[language_translator]: http://www.ibm.com/watson/developercloud/doc/language-translation/
+[language_translator]: http://www.ibm.com/watson/developercloud/doc/language-translation/index.html
 [re_migration]: http://www.ibm.com/watson/developercloud/doc/alchemylanguage/migration.shtml
 
 [alchemy_language]: http://www.alchemyapi.com/products/alchemylanguage
