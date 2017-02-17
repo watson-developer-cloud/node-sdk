@@ -107,7 +107,7 @@ describe('wrapper', function() {
     });
 
     textToSpeech.synthesize({ voice: '', accept: '' }).on('error', function(error) {
-      assert.equal('Error: Missing required parameters: text', error);
+      assert.equal('Error: Missing required parameters: text (TextToSpeechV1.synthesize)', error);
       done();
     });
   });
