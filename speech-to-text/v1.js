@@ -972,6 +972,7 @@ SpeechToTextV1.prototype.addWord = function(params, callback) {
  *
  * @param {Object} params The parameters
  * @param {String} params.customization_id - The GUID of the custom language model
+ * @param {String} params.sort - +alphabetical|-alphabetical|+count|-count to order result in alphabetical oredering or count ordering.
  * @param {String} [params.word_type=all] - all|user|corpora - user shows only custom words that were added or modified by the user; corpora shows only OOV that were extracted from corpora.
  * @param {Function} callback
  */
@@ -986,7 +987,7 @@ SpeechToTextV1.prototype.getWords = function(params, callback) {
       method: 'GET',
       url: '/v1/customizations/{customization_id}/words',
       path: pick(params, ['customization_id']),
-      qs: pick(params, ['word_type']),
+      qs: pick(params, ['word_type', 'sort']),
       json: true
     },
     defaultOptions: this._options
