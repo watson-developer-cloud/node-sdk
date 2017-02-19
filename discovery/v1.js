@@ -307,7 +307,7 @@ DiscoveryV1.prototype.deleteCollection = function(params, callback) {
 DiscoveryV1.prototype.addDocument = function(params, callback) {
   params = params || {};
 
-  const query_params = pick(params, ['configuration_id']);
+  const queryParams = pick(params, ['configuration_id']);
   const formDataParams = pick(params, ['file', 'metadata']);
 
   // if we get a buffer or object, we need to include stuff about filename for the service
@@ -329,7 +329,7 @@ DiscoveryV1.prototype.addDocument = function(params, callback) {
       url: '/v1/environments/{environment_id}/collections/{collection_id}/documents',
       method: 'POST',
       path: pick(params, ['environment_id', 'collection_id']),
-      qs: query_params,
+      qs: queryParams,
       formData: formDataParams,
       json: true
     },
@@ -354,7 +354,7 @@ DiscoveryV1.prototype.addDocument = function(params, callback) {
 DiscoveryV1.prototype.updateDocument = function(params, callback) {
   params = params || {};
 
-  const query_params = pick(params, ['configuration_id']);
+  const queryParams = pick(params, ['configuration_id']);
   const formDataParams = pick(params, ['file', 'metadata']);
 
   // if we get a buffer or object, we need to include stuff about filename for the service
@@ -376,7 +376,7 @@ DiscoveryV1.prototype.updateDocument = function(params, callback) {
       url: '/v1/environments/{environment_id}/collections/{collection_id}/documents/{document_id}',
       method: 'POST',
       path: pick(params, ['environment_id', 'collection_id', 'document_id']),
-      qs: query_params,
+      qs: queryParams,
       formData: formDataParams,
       json: true
     },
