@@ -339,7 +339,6 @@ DiscoveryV1.prototype.addDocument = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
-
 /**
  * Update or partially update a document to create or replace an existing document
  * @param params
