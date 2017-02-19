@@ -386,7 +386,6 @@ DiscoveryV1.prototype.updateDocument = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
-
 /**
  * Delete a specific document
  * @param params
