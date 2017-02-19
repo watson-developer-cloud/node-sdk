@@ -339,6 +339,55 @@ DiscoveryV1.prototype.addDocument = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
+
+/**
+ * Update or partially update a document to create or replace an existing document
+ * @param params
+ * @param {String} params.environment_id environment guid for the collection
+ * @param {string} params.collection_id the guid of the collection 
+ * @param {string} params.document_id the guid of the document to update
+ * @param {Buffer|ReadableStream|Object} params.file a file to post (smaller than 50mb)
+ * @param {string} [params.configuration_id] config guid
+ * @param {string} [params.metadata] file metadata, including content-type (will infer if missing)
+ * @param callback
+ * @returns {ReadableStream|undefined}
+ */
+DiscoveryV1.prototype.updateDocument = function(params, callback) {
+  params = params || {};
+
+  const query_params = pick(params, ['configuration_id']);
+  const formDataParams = pick(params, ['file', 'metadata']);
+
+  // if we get a buffer or object, we need to include stuff about filename for the service
+  if (formDataParams.file) {
+    if (
+      typeof formDataParams.file.filename !== 'string' &&
+        !(formDataParams.file.options && typeof formDataParams.file.options.filename !== 'string') &&
+        !(formDataParams.file.path && typeof formDataParams.file.path !== 'string') &&
+        !(formDataParams.file.name && typeof formDataParams.file.name !== 'string')
+    ) {
+      const filedat = formDataParams.file;
+      // the filename used below is because the name must exist
+      formDataParams.file = { value: filedat, options: { filename: '_' } };
+    }
+  }
+
+  const parameters = {
+    options: {
+      url: '/v1/environments/{environment_id}/collections/{collection_id}/documents/{document_id}',
+      method: 'POST',
+      path: pick(params, ['environment_id', 'collection_id','document_id']),
+      qs: query_params,
+      formData: formDataParams,
+      json: true
+    },
+    requiredParams: ['environment_id', 'collection_id', 'document_id', 'file'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+
 /**
  * Delete a specific document
  * @param params
