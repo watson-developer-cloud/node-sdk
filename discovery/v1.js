@@ -375,7 +375,7 @@ DiscoveryV1.prototype.updateDocument = function(params, callback) {
     options: {
       url: '/v1/environments/{environment_id}/collections/{collection_id}/documents/{document_id}',
       method: 'POST',
-      path: pick(params, ['environment_id', 'collection_id','document_id']),
+      path: pick(params, ['environment_id', 'collection_id', 'document_id']),
       qs: query_params,
       formData: formDataParams,
       json: true
