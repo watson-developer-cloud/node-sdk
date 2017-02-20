@@ -49,6 +49,11 @@ const PARAMS_ALLOWED = [
   'speaker_labels'
 ];
 
+/**
+ * @private
+ * @param chunk
+ * @returns {*}
+ */
 function formatChunk(chunk) {
   // Convert the string into an array
   let result = chunk;
@@ -332,7 +337,12 @@ SpeechToTextV1.prototype.createSession = function(params, callback) {
     defaultOptions: this._options
   };
 
-  // Add the cookie_session to the response
+  /**
+   * Add the cookie_session to the response
+   * @private
+   * @param cb
+   * @returns {Function}
+   */
   function addSessionId(cb) {
     return function(error, body, response) {
       if (error) {
@@ -783,7 +793,12 @@ SpeechToTextV1.prototype.whenCustomizationReady = function(params, callback) {
   );
 };
 
-// Check if there is a corpus that is still being processed
+/**
+ * Check if there is a corpus that is still being processed
+ * @private
+ * @param corporaList
+ * @returns {boolean}
+ */
 function isProcessing(corporaList) {
   const recordsBeingProcessed = corporaList.corpora.filter(function(record) {
     return record['status'] === 'being_processed';
@@ -795,7 +810,12 @@ function isProcessing(corporaList) {
   }
 }
 
-// Check if corpora has been analyzed
+/**
+ * Check if corpora has been analyzed
+ * @private
+ * @param corporaList
+ * @returns {boolean}
+ */
 function isAnalyzed(corporaList) {
   const recordsAnalyzed = corporaList.corpora.filter(function(record) {
     return record['status'] === 'analyzed';

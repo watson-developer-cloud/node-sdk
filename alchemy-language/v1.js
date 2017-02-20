@@ -29,6 +29,11 @@ const helper = require('../lib/helper');
 const pick = require('object.pick');
 const errorFormatter = require('../lib/alchemy_error_formatter');
 
+/**
+ * @privte
+ * @param method
+ * @returns {Function}
+ */
 function createRequest(method) {
   return function(_params, callback) {
     const params = _params || {};
