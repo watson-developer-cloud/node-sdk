@@ -71,7 +71,7 @@ describe('document_conversion_integration', function() {
       document_conversion.convert(
         {
           conversion_target: 'ANSWER_UNITS',
-          file: new Buffer(fs.readFileSync(path.join(__dirname, '../resources/sampleWordWrongExtension.html'))),
+          file: Buffer.from(fs.readFileSync(path.join(__dirname, '../resources/sampleWordWrongExtension.html'))),
           content_type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
         },
         function(err, res) {

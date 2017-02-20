@@ -100,7 +100,7 @@ describe('document_conversion', function() {
         return Buffer.from(body, 'hex').toString();
       } catch (ex) {
         // older node.js versions either don't have Buffer.from (0v.12), or have a broken Buffer.from implementation (v4.4.4 throws TypeError: hex is not a function)
-        return new Buffer(body, 'hex').toString();
+        return Buffer.from(body, 'hex').toString();
       }
     }
 

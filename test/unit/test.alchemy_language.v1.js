@@ -48,7 +48,7 @@ describe('alchemy_language', function() {
       assert.equal(req.uri.href, service.url + apiPath + '?apikey=' + service.apikey);
       assert.equal(req.method, 'POST');
       assert(req.form);
-      const body = new Buffer(req.body).toString('ascii');
+      const body = Buffer.from(req.body).toString('ascii');
       assert.equal(body, qs.stringify({ text: payload.text, outputMode: 'json' }));
     });
 
@@ -58,7 +58,7 @@ describe('alchemy_language', function() {
       assert.equal(req.uri.href, sentimenTargetPath);
       assert.equal(req.method, 'POST');
       assert(req.form);
-      const body = new Buffer(req.body).toString('ascii');
+      const body = Buffer.from(req.body).toString('ascii');
       const expectedBody = qs.stringify({
         text: payload.text,
         target: 'bat',
@@ -73,7 +73,7 @@ describe('alchemy_language', function() {
       assert.equal(req.uri.href, sentimenPath);
       assert.equal(req.method, 'POST');
       assert(req.form);
-      const body = new Buffer(req.body).toString('ascii');
+      const body = Buffer.from(req.body).toString('ascii');
       const expectedBody = qs.stringify({
         text: payload.text,
         outputMode: 'json'
@@ -87,7 +87,7 @@ describe('alchemy_language', function() {
       assert.equal(req.uri.href, sentimenPath);
       assert.equal(req.method, 'POST');
       assert(req.form);
-      const body = new Buffer(req.body).toString('ascii');
+      const body = Buffer.from(req.body).toString('ascii');
       const expectedBody = qs.stringify({
         text: payload.text,
         url: 'www.ibm.com',
@@ -102,7 +102,7 @@ describe('alchemy_language', function() {
       assert.equal(req.uri.href, sentimenPath);
       assert.equal(req.method, 'POST');
       assert(req.form);
-      const body = new Buffer(req.body).toString('ascii');
+      const body = Buffer.from(req.body).toString('ascii');
       const expectedBody = qs.stringify({
         html: '<html><body>test</body></html>',
         url: 'www.ibm.com',
@@ -132,7 +132,7 @@ describe('alchemy_language', function() {
         assert.equal(req.uri.href, service.url + apiPath + '?apikey=' + service.apikey);
         assert.equal(req.method, 'POST');
         assert(req.form);
-        const body = new Buffer(req.body).toString('ascii');
+        const body = Buffer.from(req.body).toString('ascii');
         assert.equal(body, qs.stringify({ url: 'http://example.com/', outputMode: 'json' }));
       });
     });
@@ -149,7 +149,7 @@ describe('alchemy_language', function() {
         assert.equal(req.uri.href, service.url + apiPath + '?apikey=' + service.apikey);
         assert.equal(req.method, 'POST');
         assert(req.form);
-        const body = new Buffer(req.body).toString('ascii');
+        const body = Buffer.from(req.body).toString('ascii');
         assert.equal(body, qs.stringify({ html: 'sample text', outputMode: 'json' }));
       });
     });
@@ -168,7 +168,7 @@ describe('alchemy_language', function() {
       assert.equal(req.uri.href, service.url + apiPath + '?apikey=' + service.apikey);
       assert.equal(req.method, 'POST');
       assert(req.form);
-      const body = new Buffer(req.body).toString('ascii');
+      const body = Buffer.from(req.body).toString('ascii');
       assert.equal(
         body,
         qs.stringify({
@@ -196,7 +196,7 @@ describe('alchemy_language', function() {
       assert.equal(req.uri.href, emotionPath);
       assert.equal(req.method, 'POST');
       assert(req.form);
-      const body = new Buffer(req.body).toString('ascii');
+      const body = Buffer.from(req.body).toString('ascii');
       const expectedBody = qs.stringify({
         text: payload.text,
         outputMode: 'json'
@@ -210,7 +210,7 @@ describe('alchemy_language', function() {
       assert.equal(req.uri.href, targetedEmotionPath);
       assert.equal(req.method, 'POST');
       assert(req.form);
-      const body = new Buffer(req.body).toString('ascii');
+      const body = Buffer.from(req.body).toString('ascii');
       const expectedBody = qs.stringify({
         text: payload.text,
         targets: 'coding|busywork',

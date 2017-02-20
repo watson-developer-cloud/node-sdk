@@ -180,7 +180,7 @@ describe('tradeoff_analytics', function() {
     const params = extend({}, service_request);
     params.metadata_header = 'test_header_content';
     const req = tradeoff_analytics.dilemmas(params, noop);
-    const body = new Buffer(req.body).toString('ascii');
+    const body = Buffer.from(req.body).toString('ascii');
     assert.equal(req.uri.href, service.url + service_path);
     assert.equal(body, JSON.stringify(service_request));
     assert.notEqual(body, JSON.stringify(params));
@@ -217,7 +217,7 @@ describe('tradeoff_analytics', function() {
     const params = extend({}, events_request);
     params.metadata_header = 'test_header_content';
     const req = tradeoff_analytics.events(params, noop);
-    const body = new Buffer(req.body).toString('ascii');
+    const body = Buffer.from(req.body).toString('ascii');
     assert.equal(req.uri.href, service.url + events_path);
     assert.equal(body, JSON.stringify(events_request));
     assert.notEqual(body, JSON.stringify(params));

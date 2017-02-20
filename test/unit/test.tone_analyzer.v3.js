@@ -56,7 +56,7 @@ describe('tone_analyzer.v3', function() {
 
   it('tone API should generate a valid payload with text', function() {
     const req = tone_analyzer.tone(tone_request, noop);
-    const body = new Buffer(req.body).toString('ascii');
+    const body = Buffer.from(req.body).toString('ascii');
     assert.equal(req.uri.href, service.url + tone_path + '?version=2016-05-19');
     assert.equal(body, tone_request.text);
     assert.equal(req.method, 'POST');
@@ -71,7 +71,7 @@ describe('tone_analyzer.v3', function() {
       sentences: true
     };
     const req = tone_analyzer.tone(options, noop);
-    const body = new Buffer(req.body).toString('ascii');
+    const body = Buffer.from(req.body).toString('ascii');
     assert.equal(req.uri.href, service.url + tone_path + '?version=2016-05-19&tones=emotion&sentences=true');
     assert.equal(body, tone_request.text);
     assert.equal(req.method, 'POST');
@@ -82,7 +82,7 @@ describe('tone_analyzer.v3', function() {
   it('tone API should set HTML content-type', function() {
     const options = { text: tone_request.text, isHTML: true };
     const req = tone_analyzer.tone(options, noop);
-    const body = new Buffer(req.body).toString('ascii');
+    const body = Buffer.from(req.body).toString('ascii');
     assert.equal(req.uri.href, service.url + tone_path + '?version=2016-05-19');
     assert.equal(body, tone_request.text);
     assert.equal(req.method, 'POST');
@@ -104,7 +104,7 @@ describe('tone_analyzer.v3', function() {
   it('tone API should honor headers passed by client', function() {
     const options = { text: tone_request.text, isHTML: true };
     const req = tone_analyzer_es.tone(options, noop);
-    const body = new Buffer(req.body).toString('ascii');
+    const body = Buffer.from(req.body).toString('ascii');
     assert.equal(req.uri.href, service.url + tone_path + '?version=2016-05-19');
     assert.equal(body, tone_request.text);
     assert.equal(req.method, 'POST');
