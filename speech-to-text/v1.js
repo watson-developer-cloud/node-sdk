@@ -405,12 +405,14 @@ SpeechToTextV1.prototype.createRecognizeStream = function(params) {
   SpeechToTextV1.prototype[name] = function deprecated(params) {
     if (!(params || {}).silent && !this._options.silent) {
       // eslint-disable-next-line no-console
-      console.log(new Error(
-        'The ' +
-          name +
-          '() method is deprecated and will be removed from a future version of the watson-developer-cloud SDK. ' +
-          'Please use createRecognizeStream() instead.\n(Set {silent: true} to hide this message.)'
-      ));
+      console.log(
+        new Error(
+          'The ' +
+            name +
+            '() method is deprecated and will be removed from a future version of the watson-developer-cloud SDK. ' +
+            'Please use createRecognizeStream() instead.\n(Set {silent: true} to hide this message.)'
+        )
+      );
     }
     return original.apply(this, arguments);
   };
