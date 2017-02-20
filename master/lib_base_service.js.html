@@ -79,8 +79,8 @@ function BaseService(user_options) {
 
 /**
  * @private
- * @param options
- * @returns {*}
+ * @param {Object} options
+ * @return {*}
  */
 BaseService.prototype.initCredentials = function(options) {
   if (options.token) {
@@ -102,7 +102,7 @@ BaseService.prototype.initCredentials = function(options) {
 
     // Calculate and add Authorization header to base options
     const authHeader = {
-      Authorization: 'Basic ' + new Buffer(options.username + ':' + options.password).toString('base64')
+      Authorization: 'Basic ' + Buffer.from(options.username + ':' + options.password).toString('base64')
     };
     options.headers = extend(authHeader, options.headers);
   }
@@ -119,7 +119,7 @@ BaseService.prototype.initCredentials = function(options) {
  *
  * @private
  * @param name
- * @returns {{username: String|undefined, password: String|undefined}}
+ * @return {{username: String|undefined, password: String|undefined}}
  */
 BaseService.prototype.getCredentialsFromEnvironment = function(name) {
   name = name.toUpperCase();
@@ -134,7 +134,7 @@ BaseService.prototype.getCredentialsFromEnvironment = function(name) {
  * Pulls credentials from VCAP_SERVICES env property that bluemix sets
  *
  * @private
- * @returns {{}}
+ * @return {{}}
  */
 BaseService.prototype.getCredentialsFromBluemix = function(vcap_services_name) {
   return vcapServices.getCredentials(vcap_services_name);
@@ -145,7 +145,7 @@ BaseService.prototype.getCredentialsFromBluemix = function(vcap_services_name) {
  *
  * Only returns a URL when token auth is used.
  *
- * @returns {{username: String, password: String, url: String}}
+ * @return {{username: String, password: String, url: String}}
  */
 BaseService.prototype.getCredentials = function() {
   return {
@@ -166,13 +166,13 @@ module.exports = BaseService;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-watson-developer-cloud.html">watson-developer-cloud</a></li></ul><h3>Classes</h3><ul><li><a href="AlchemyDataNewsV1.html">AlchemyDataNewsV1</a></li><li><a href="AlchemyLanguageV1.html">AlchemyLanguageV1</a></li><li><a href="AlchemyVisionV1.html">AlchemyVisionV1</a></li><li><a href="AuthorizationV1.html">AuthorizationV1</a></li><li><a href="ConversationV1.html">ConversationV1</a></li><li><a href="ConversationV1Experimental.html">ConversationV1Experimental</a></li><li><a href="DialogV1.html">DialogV1</a></li><li><a href="DiscoveryV1.html">DiscoveryV1</a></li><li><a href="DiscoveryV1Experimental.html">DiscoveryV1Experimental</a></li><li><a href="DocumentConversionV1.html">DocumentConversionV1</a></li><li><a href="LanguageTranslationV2.html">LanguageTranslationV2</a></li><li><a href="LanguageTranslatorV2.html">LanguageTranslatorV2</a></li><li><a href="NaturalLanguageClassifierV1.html">NaturalLanguageClassifierV1</a></li><li><a href="NaturalLanguageUnderstandingV1.html">NaturalLanguageUnderstandingV1</a></li><li><a href="PersonalityInsightsV2.html">PersonalityInsightsV2</a></li><li><a href="PersonalityInsightsV3.html">PersonalityInsightsV3</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RetrieveAndRankV1.html">RetrieveAndRankV1</a></li><li><a href="SpeechToTextV1.html">SpeechToTextV1</a></li><li><a href="TextToSpeechV1.html">TextToSpeechV1</a></li><li><a href="TradeoffAnalyticsV1.html">TradeoffAnalyticsV1</a></li><li><a href="VisualRecognitionV3.html">VisualRecognitionV3</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:close">close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li><li><a href="RecognizeStream.html#event:speaker_labels">speaker_labels</a></li></ul><h3>Global</h3><ul><li><a href="global.html#detectContentType">detectContentType</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-watson-developer-cloud.html">watson-developer-cloud</a></li></ul><h3>Classes</h3><ul><li><a href="AlchemyDataNewsV1.html">AlchemyDataNewsV1</a></li><li><a href="AlchemyLanguageV1.html">AlchemyLanguageV1</a></li><li><a href="AlchemyVisionV1.html">AlchemyVisionV1</a></li><li><a href="AuthorizationV1.html">AuthorizationV1</a></li><li><a href="ConversationV1.html">ConversationV1</a></li><li><a href="ConversationV1Experimental.html">ConversationV1Experimental</a></li><li><a href="DialogV1.html">DialogV1</a></li><li><a href="DiscoveryV1.html">DiscoveryV1</a></li><li><a href="DiscoveryV1Experimental.html">DiscoveryV1Experimental</a></li><li><a href="DocumentConversionV1.html">DocumentConversionV1</a></li><li><a href="LanguageTranslationV2.html">LanguageTranslationV2</a></li><li><a href="LanguageTranslatorV2.html">LanguageTranslatorV2</a></li><li><a href="NaturalLanguageClassifierV1.html">NaturalLanguageClassifierV1</a></li><li><a href="NaturalLanguageUnderstandingV1.html">NaturalLanguageUnderstandingV1</a></li><li><a href="PersonalityInsightsV2.html">PersonalityInsightsV2</a></li><li><a href="PersonalityInsightsV3.html">PersonalityInsightsV3</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RetrieveAndRankV1.html">RetrieveAndRankV1</a></li><li><a href="SpeechToTextV1.html">SpeechToTextV1</a></li><li><a href="TextToSpeechV1.html">TextToSpeechV1</a></li><li><a href="ToneAnalyzerV3.html">ToneAnalyzerV3</a></li><li><a href="TradeoffAnalyticsV1.html">TradeoffAnalyticsV1</a></li><li><a href="VisualRecognitionV3.html">VisualRecognitionV3</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:close">close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li><li><a href="RecognizeStream.html#event:speaker_labels">speaker_labels</a></li></ul><h3>Global</h3><ul><li><a href="global.html#createRequest">createRequest</a></li><li><a href="global.html#detectContentType">detectContentType</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sun Feb 19 2017 21:59:35 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Mon Feb 20 2017 23:06:56 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>

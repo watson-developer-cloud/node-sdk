@@ -77,6 +77,11 @@ const PARAMS_ALLOWED = [
   'speaker_labels'
 ];
 
+/**
+ * @private
+ * @param chunk
+ * @return {*}
+ */
 function formatChunk(chunk) {
   // Convert the string into an array
   let result = chunk;
@@ -102,7 +107,7 @@ function formatChunk(chunk) {
 /**
  * Speech Recognition API Wrapper
  * @constructor
- * @param options
+ * @param {Object} options
  */
 function SpeechToTextV1(options) {
   BaseService.call(this, options);
@@ -304,7 +309,7 @@ SpeechToTextV1.prototype.getRecognizeStatus = function(params, callback) {
  *
  * @param {Object} params The parameters
  * @param {Function} callback
- * @returns {ReadableStream|undefined}
+ * @return {ReadableStream|undefined}
  */
 SpeechToTextV1.prototype.getModels = function(params, callback) {
   const parameters = {
@@ -325,7 +330,7 @@ SpeechToTextV1.prototype.getModels = function(params, callback) {
  * @param {Object} params The parameters
  * @param {String} params.model_id - The desired model
  * @param {Function} callback
- * @returns {ReadableStream|undefined}
+ * @return {ReadableStream|undefined}
  */
 SpeechToTextV1.prototype.getModel = function(params, callback) {
   const parameters = {
@@ -360,7 +365,12 @@ SpeechToTextV1.prototype.createSession = function(params, callback) {
     defaultOptions: this._options
   };
 
-  // Add the cookie_session to the response
+  /**
+   * Add the cookie_session to the response
+   * @private
+   * @param cb
+   * @return {Function}
+   */
   function addSessionId(cb) {
     return function(error, body, response) {
       if (error) {
@@ -400,7 +410,7 @@ SpeechToTextV1.prototype.deleteSession = function(params, callback) {
  * Replaces recognizeLive &amp; friends with a single 2-way stream over websockets
  *
  * @param {Object} params The parameters
- * @returns {RecognizeStream}
+ * @return {RecognizeStream}
  */
 SpeechToTextV1.prototype.createRecognizeStream = function(params) {
   params = params || {};
@@ -423,12 +433,14 @@ SpeechToTextV1.prototype.createRecognizeStream = function(params) {
   SpeechToTextV1.prototype[name] = function deprecated(params) {
     if (!(params || {}).silent &amp;&amp; !this._options.silent) {
       // eslint-disable-next-line no-console
-      console.log(new Error(
-        'The ' +
-          name +
-          '() method is deprecated and will be removed from a future version of the watson-developer-cloud SDK. ' +
-          'Please use createRecognizeStream() instead.\n(Set {silent: true} to hide this message.)'
-      ));
+      console.log(
+        new Error(
+          'The ' +
+            name +
+            '() method is deprecated and will be removed from a future version of the watson-developer-cloud SDK. ' +
+            'Please use createRecognizeStream() instead.\n(Set {silent: true} to hide this message.)'
+        )
+      );
     }
     return original.apply(this, arguments);
   };
@@ -811,7 +823,12 @@ SpeechToTextV1.prototype.whenCustomizationReady = function(params, callback) {
   );
 };
 
-// Check if there is a corpus that is still being processed
+/**
+ * Check if there is a corpus that is still being processed
+ * @private
+ * @param corporaList
+ * @return {boolean}
+ */
 function isProcessing(corporaList) {
   const recordsBeingProcessed = corporaList.corpora.filter(function(record) {
     return record['status'] === 'being_processed';
@@ -823,7 +840,12 @@ function isProcessing(corporaList) {
   }
 }
 
-// Check if corpora has been analyzed
+/**
+ * Check if corpora has been analyzed
+ * @private
+ * @param corporaList
+ * @return {boolean}
+ */
 function isAnalyzed(corporaList) {
   const recordsAnalyzed = corporaList.corpora.filter(function(record) {
     return record['status'] === 'analyzed';
@@ -1092,13 +1114,13 @@ module.exports = SpeechToTextV1;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-watson-developer-cloud.html">watson-developer-cloud</a></li></ul><h3>Classes</h3><ul><li><a href="AlchemyDataNewsV1.html">AlchemyDataNewsV1</a></li><li><a href="AlchemyLanguageV1.html">AlchemyLanguageV1</a></li><li><a href="AlchemyVisionV1.html">AlchemyVisionV1</a></li><li><a href="AuthorizationV1.html">AuthorizationV1</a></li><li><a href="ConversationV1.html">ConversationV1</a></li><li><a href="ConversationV1Experimental.html">ConversationV1Experimental</a></li><li><a href="DialogV1.html">DialogV1</a></li><li><a href="DiscoveryV1.html">DiscoveryV1</a></li><li><a href="DiscoveryV1Experimental.html">DiscoveryV1Experimental</a></li><li><a href="DocumentConversionV1.html">DocumentConversionV1</a></li><li><a href="LanguageTranslationV2.html">LanguageTranslationV2</a></li><li><a href="LanguageTranslatorV2.html">LanguageTranslatorV2</a></li><li><a href="NaturalLanguageClassifierV1.html">NaturalLanguageClassifierV1</a></li><li><a href="NaturalLanguageUnderstandingV1.html">NaturalLanguageUnderstandingV1</a></li><li><a href="PersonalityInsightsV2.html">PersonalityInsightsV2</a></li><li><a href="PersonalityInsightsV3.html">PersonalityInsightsV3</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RetrieveAndRankV1.html">RetrieveAndRankV1</a></li><li><a href="SpeechToTextV1.html">SpeechToTextV1</a></li><li><a href="TextToSpeechV1.html">TextToSpeechV1</a></li><li><a href="TradeoffAnalyticsV1.html">TradeoffAnalyticsV1</a></li><li><a href="VisualRecognitionV3.html">VisualRecognitionV3</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:close">close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li><li><a href="RecognizeStream.html#event:speaker_labels">speaker_labels</a></li></ul><h3>Global</h3><ul><li><a href="global.html#detectContentType">detectContentType</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-watson-developer-cloud.html">watson-developer-cloud</a></li></ul><h3>Classes</h3><ul><li><a href="AlchemyDataNewsV1.html">AlchemyDataNewsV1</a></li><li><a href="AlchemyLanguageV1.html">AlchemyLanguageV1</a></li><li><a href="AlchemyVisionV1.html">AlchemyVisionV1</a></li><li><a href="AuthorizationV1.html">AuthorizationV1</a></li><li><a href="ConversationV1.html">ConversationV1</a></li><li><a href="ConversationV1Experimental.html">ConversationV1Experimental</a></li><li><a href="DialogV1.html">DialogV1</a></li><li><a href="DiscoveryV1.html">DiscoveryV1</a></li><li><a href="DiscoveryV1Experimental.html">DiscoveryV1Experimental</a></li><li><a href="DocumentConversionV1.html">DocumentConversionV1</a></li><li><a href="LanguageTranslationV2.html">LanguageTranslationV2</a></li><li><a href="LanguageTranslatorV2.html">LanguageTranslatorV2</a></li><li><a href="NaturalLanguageClassifierV1.html">NaturalLanguageClassifierV1</a></li><li><a href="NaturalLanguageUnderstandingV1.html">NaturalLanguageUnderstandingV1</a></li><li><a href="PersonalityInsightsV2.html">PersonalityInsightsV2</a></li><li><a href="PersonalityInsightsV3.html">PersonalityInsightsV3</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RetrieveAndRankV1.html">RetrieveAndRankV1</a></li><li><a href="SpeechToTextV1.html">SpeechToTextV1</a></li><li><a href="TextToSpeechV1.html">TextToSpeechV1</a></li><li><a href="ToneAnalyzerV3.html">ToneAnalyzerV3</a></li><li><a href="TradeoffAnalyticsV1.html">TradeoffAnalyticsV1</a></li><li><a href="VisualRecognitionV3.html">VisualRecognitionV3</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:close">close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li><li><a href="RecognizeStream.html#event:speaker_labels">speaker_labels</a></li></ul><h3>Global</h3><ul><li><a href="global.html#createRequest">createRequest</a></li><li><a href="global.html#detectContentType">detectContentType</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sun Feb 19 2017 21:59:35 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Mon Feb 20 2017 23:06:56 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>

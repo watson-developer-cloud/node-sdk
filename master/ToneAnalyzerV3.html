@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: AlchemyDataNewsV1</title>
+    <title>JSDoc: Class: ToneAnalyzerV3</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: AlchemyDataNewsV1</h1>
+    <h1 class="page-title">Class: ToneAnalyzerV3</h1>
 
     
 
@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2>AlchemyDataNewsV1</h2>
+        <h2>ToneAnalyzerV3</h2>
         
     
 </header>
@@ -40,11 +40,15 @@
 
     
 
-    <h4 class="name" id="AlchemyDataNewsV1"><span class="type-signature"></span>new AlchemyDataNewsV1<span class="signature">(options)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="ToneAnalyzerV3"><span class="type-signature"></span>new ToneAnalyzerV3<span class="signature">(options)</span><span class="type-signature"></span></h4>
 
     
 
 
+
+<div class="description">
+    <p>Tone Analyzer</p>
+</div>
 
 
 
@@ -136,7 +140,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="alchemy-data-news_v1.js.html">alchemy-data-news/v1.js</a>, <a href="alchemy-data-news_v1.js.html#line29">line 29</a>
+        <a href="tone-analyzer_v3.js.html">tone-analyzer/v3.js</a>, <a href="tone-analyzer_v3.js.html#line30">line 30</a>
     </li></ul></dd>
     
 
@@ -185,15 +189,14 @@
 
     
 
-    <h4 class="name" id="getNews"><span class="type-signature"></span>getNews<span class="signature">(params, callback)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="tone"><span class="type-signature"></span>tone<span class="signature">(params:)</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    <p>Extracts a grouped, ranked list of named entities (people, companies,
-organizations, etc.) from text, a URL or HTML.</p>
+    <p>Main API call. Returns the different tone dimensions of a text.</p>
 </div>
 
 
@@ -229,49 +232,7 @@ organizations, etc.) from text, a URL or HTML.</p>
 
         <tr>
             
-                <td class="name"><code>params</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <h6>Properties</h6>
-                
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>end</code></td>
+                <td class="name"><code>params:</code></td>
             
 
             <td class="type">
@@ -282,55 +243,19 @@ organizations, etc.) from text, a URL or HTML.</p>
 
             
 
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>start</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>callback</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
+            <td class="description last"><p>An object with a string 'text' element.</p>
+<p>Additional arguments on <code>params</code> object are optional, they include:</p>
+<ul>
+<li><code>tones</code>: A Comma-separated list of tones. Only these will be computed
+ in this API call. Allowed values are 'social', 'emotion', 'language'.
+ It defaults to 'all of them'.</li>
+<li><code>sentences</code>: A boolean, telling if sentence-level analysis (which is
+ slower than just document-level) needs to be computed. It defaults
+ to true.</li>
+<li><code>isHTML</code>: A boolean value telling that the <code>params.text</code> argument is
+ to be trated as HTML contents. On HTML input, the services does
+ cleanup of tags and performs the analysis on the text contents only.</li>
+</ul></td>
         </tr>
 
     
@@ -371,12 +296,19 @@ organizations, etc.) from text, a URL or HTML.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="alchemy-data-news_v1.js.html">alchemy-data-news/v1.js</a>, <a href="alchemy-data-news_v1.js.html#line46">line 46</a>
+        <a href="tone-analyzer_v3.js.html">tone-analyzer/v3.js</a>, <a href="tone-analyzer_v3.js.html#line67">line 67</a>
     </li></ul></dd>
     
 
     
 
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>the API docs for a the full documentation.</li>
+        </ul>
+    </dd>
     
 
     
@@ -394,6 +326,17 @@ organizations, etc.) from text, a URL or HTML.</p>
 
 
 
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>upon success, the callback function is called with an object
+containing the different tones (emotion, writing and social) analyzed.</p>
+</div>
+
+
+
+    
 
 
 
@@ -419,7 +362,7 @@ organizations, etc.) from text, a URL or HTML.</p>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Mon Feb 20 2017 23:06:56 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Mon Feb 20 2017 23:06:57 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>
