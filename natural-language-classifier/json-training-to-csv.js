@@ -21,7 +21,7 @@ const stringify = require('csv-stringify');
 /**
  * @private
  * @param {Object} data
- * @returns {Array.<String>}
+ * @return {Array.<String>}
  */
 function toCSVArray(data) {
   if (data.text && data.classes && data.classes.length > 0) {

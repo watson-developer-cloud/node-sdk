@@ -24,7 +24,7 @@ const BaseService = require('../lib/base_service');
 
 /**
  * Document Conversion service
- * @param options
+ * @param {Object} options
  * @constructor
  */
 function DocumentConversionV1(options) {

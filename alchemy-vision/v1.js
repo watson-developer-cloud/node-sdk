@@ -29,7 +29,7 @@ const errorFormatter = require('../lib/alchemy_error_formatter');
 /**
  * @private
  * @param method
- * @returns {Function}
+ * @return {Function}
  */
 function createRequest(method) {
   return function(_params, callback) {
@@ -75,7 +75,7 @@ function createRequest(method) {
 
 /**
  *
- * @param options
+ * @param {Object} options
  * @constructor
  */
 function AlchemyVisionV1(options) {

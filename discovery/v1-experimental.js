@@ -23,7 +23,7 @@ const pick = require('object.pick');
 
 /**
  *
- * @param options
+ * @param {Object} options
  * @constructor
  */
 function DiscoveryV1Experimental(options) {

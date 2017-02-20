@@ -24,7 +24,7 @@ const BaseService = require('../lib/base_service');
 
 /**
  * Tone Analyzer
- * @param options
+ * @param {Object} options
  * @constructor
  */
 function ToneAnalyzerV3(options) {

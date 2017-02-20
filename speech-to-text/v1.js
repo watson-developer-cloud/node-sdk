@@ -52,7 +52,7 @@ const PARAMS_ALLOWED = [
 /**
  * @private
  * @param chunk
- * @returns {*}
+ * @return {*}
  */
 function formatChunk(chunk) {
   // Convert the string into an array
@@ -79,7 +79,7 @@ function formatChunk(chunk) {
 /**
  * Speech Recognition API Wrapper
  * @constructor
- * @param options
+ * @param {Object} options
  */
 function SpeechToTextV1(options) {
   BaseService.call(this, options);
@@ -281,7 +281,7 @@ SpeechToTextV1.prototype.getRecognizeStatus = function(params, callback) {
  *
  * @param {Object} params The parameters
  * @param {Function} callback
- * @returns {ReadableStream|undefined}
+ * @return {ReadableStream|undefined}
  */
 SpeechToTextV1.prototype.getModels = function(params, callback) {
   const parameters = {
@@ -302,7 +302,7 @@ SpeechToTextV1.prototype.getModels = function(params, callback) {
  * @param {Object} params The parameters
  * @param {String} params.model_id - The desired model
  * @param {Function} callback
- * @returns {ReadableStream|undefined}
+ * @return {ReadableStream|undefined}
  */
 SpeechToTextV1.prototype.getModel = function(params, callback) {
   const parameters = {
@@ -341,7 +341,7 @@ SpeechToTextV1.prototype.createSession = function(params, callback) {
    * Add the cookie_session to the response
    * @private
    * @param cb
-   * @returns {Function}
+   * @return {Function}
    */
   function addSessionId(cb) {
     return function(error, body, response) {
@@ -382,7 +382,7 @@ SpeechToTextV1.prototype.deleteSession = function(params, callback) {
  * Replaces recognizeLive & friends with a single 2-way stream over websockets
  *
  * @param {Object} params The parameters
- * @returns {RecognizeStream}
+ * @return {RecognizeStream}
  */
 SpeechToTextV1.prototype.createRecognizeStream = function(params) {
   params = params || {};
@@ -797,7 +797,7 @@ SpeechToTextV1.prototype.whenCustomizationReady = function(params, callback) {
  * Check if there is a corpus that is still being processed
  * @private
  * @param corporaList
- * @returns {boolean}
+ * @return {boolean}
  */
 function isProcessing(corporaList) {
   const recordsBeingProcessed = corporaList.corpora.filter(function(record) {
@@ -814,7 +814,7 @@ function isProcessing(corporaList) {
  * Check if corpora has been analyzed
  * @private
  * @param corporaList
- * @returns {boolean}
+ * @return {boolean}
  */
 function isAnalyzed(corporaList) {
   const recordsAnalyzed = corporaList.corpora.filter(function(record) {

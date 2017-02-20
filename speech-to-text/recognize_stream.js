@@ -47,7 +47,7 @@ const QUERY_PARAMS_ALLOWED = ['model', 'X-Watson-Learning-Opt-Out', 'watson-toke
  * Cannot be instantiated directly, instead reated by calling #createRecognizeStream()
  *
  * Uses WebSockets under the hood. For audio with no recognizable speech, no `data` events are emitted.
- * @param options
+ * @param {Object} options
  * @constructor
  */
 function RecognizeStream(options) {

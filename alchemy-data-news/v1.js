@@ -23,7 +23,7 @@ const BaseServiceAlchemy = require('../lib/base_service_alchemy');
 const errorFormatter = require('../lib/alchemy_error_formatter');
 
 /**
- * @param options
+ * @param {Object} options
  * @constructor
  */
 function AlchemyDataNewsV1(options) {

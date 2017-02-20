@@ -23,8 +23,8 @@ const BaseService = require('../lib/base_service');
 
 /**
  *
- * @param options
- * @param options.version_date
+ * @param {Object} options
+ * @param {Object} options.version_date
  * @constructor
  */
 function ConversationV1(options) {
