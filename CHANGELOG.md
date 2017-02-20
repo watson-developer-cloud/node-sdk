@@ -1,3 +1,12 @@
+# v2.21.0
+* Added support for sort paramater in SpeechToTextV1.getWords()
+* Added updateDocument() method to DiscoveryV1
+* Fixed up internal code to avoid using the deprecated `new Buffer(...)` API
+* Improved documentation
+
+# v2.20.0
+* Conversation VersionDate 2017-02-03
+
 # v2.19.0
 * Added support for find_preferable_options flag in Tradeoff Analytics
 
