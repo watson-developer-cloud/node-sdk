@@ -90,6 +90,28 @@ SpeechToTextV1.prototype.name = 'speech_to_text';
 SpeechToTextV1.prototype.version = 'v1';
 SpeechToTextV1.URL = 'https://stream.watsonplatform.net/speech-to-text/api';
 
+SpeechToTextV1.prototype.registerCallbackUrl = function(params, callback) {
+  const missingParams = helper.getMissingParams(params, ['callback_url']);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+
+  const parameters = {
+    requiredParams: ['callback_url'],
+    options: {
+      method: 'POST',
+      url: '/v1/register_callback',
+      qs: pick(params, ['callback_url', 'user_secret']),
+      body: {},
+      json: true
+    },
+    defaultOptions: this._options
+  };
+
+  return requestFactory(parameters, callback);
+};
+
 /**
  * Speech recognition for given audio using default model.
  *
@@ -405,14 +427,9 @@ SpeechToTextV1.prototype.createRecognizeStream = function(params) {
   SpeechToTextV1.prototype[name] = function deprecated(params) {
     if (!(params || {}).silent && !this._options.silent) {
       // eslint-disable-next-line no-console
-      console.log(
-        new Error(
-          'The ' +
-            name +
-            '() method is deprecated and will be removed from a future version of the watson-developer-cloud SDK. ' +
-            'Please use createRecognizeStream() instead.\n(Set {silent: true} to hide this message.)'
-        )
-      );
+      console.log(new Error(
+        `The ${name}() method is deprecated and will be removed from a future version of the watson-developer-cloud SDK. Please use createRecognizeStream() instead.\n(Set {silent: true} to hide this message.)`
+      ));
     }
     return original.apply(this, arguments);
   };
@@ -460,37 +477,37 @@ SpeechToTextV1.prototype.createCustomization = function(params, callback) {
  * List all customizations
  *
  * Example response:
-```json
-{ customizations:
-    [ { owner: '8a6f5bb1-5b2d-4a20-85a9-eaa421d25c88',
-        base_model_name: 'en-US_BroadbandModel',
-        customization_id: '6a7785a0-9665-11e6-a73a-0da9193a4475',
-        created: '2016-10-20T01:35:00.346Z',
-        name: 'IEEE-test',
-        description: '',
-        progress: 0,
-        language: 'en-US',
-        status: 'pending' },
-      { owner: '8a6f5bb1-5b2d-4a20-85a9-eaa421d25c88',
-        base_model_name: 'en-US_BroadbandModel',
-        customization_id: '9e2f6bb0-9665-11e6-a73a-0da9193a4475',
-        created: '2016-10-20T01:36:27.115Z',
-        name: 'IEEE-test',
-        description: '',
-        progress: 0,
-        language: 'en-US',
-        status: 'ready' },
-      { owner: '8a6f5bb1-5b2d-4a20-85a9-eaa421d25c88',
-        base_model_name: 'en-US_BroadbandModel',
-        customization_id: '6b194e70-9666-11e6-a73a-0da9193a4475',
-        created: '2016-10-20T01:42:10.903Z',
-        name: 'IEEE-test',
-        description: '',
-        progress: 100,
-        language: 'en-US',
-        status: 'available' } ] }
+ ```json
+ { customizations:
+     [ { owner: '8a6f5bb1-5b2d-4a20-85a9-eaa421d25c88',
+         base_model_name: 'en-US_BroadbandModel',
+         customization_id: '6a7785a0-9665-11e6-a73a-0da9193a4475',
+         created: '2016-10-20T01:35:00.346Z',
+         name: 'IEEE-test',
+         description: '',
+         progress: 0,
+         language: 'en-US',
+         status: 'pending' },
+       { owner: '8a6f5bb1-5b2d-4a20-85a9-eaa421d25c88',
+         base_model_name: 'en-US_BroadbandModel',
+         customization_id: '9e2f6bb0-9665-11e6-a73a-0da9193a4475',
+         created: '2016-10-20T01:36:27.115Z',
+         name: 'IEEE-test',
+         description: '',
+         progress: 0,
+         language: 'en-US',
+         status: 'ready' },
+       { owner: '8a6f5bb1-5b2d-4a20-85a9-eaa421d25c88',
+         base_model_name: 'en-US_BroadbandModel',
+         customization_id: '6b194e70-9666-11e6-a73a-0da9193a4475',
+         created: '2016-10-20T01:42:10.903Z',
+         name: 'IEEE-test',
+         description: '',
+         progress: 100,
+         language: 'en-US',
+         status: 'available' } ] }
 
-```
+ ```
  *
  * @param {Object} params The parameters
  * @param {String} [params.language] optional filter.
@@ -518,7 +535,7 @@ SpeechToTextV1.prototype.getCustomizations = function(params, callback) {
  *
  * Example response:
  *
-```json
+ ```json
  { owner: '8a6f5bb1-5b2d-4a20-85a9-eaa421d25c88',
    base_model_name: 'en-US_BroadbandModel',
    customization_id: 'e695ad30-97c1-11e6-be92-bb627d4684b9',
@@ -528,7 +545,7 @@ SpeechToTextV1.prototype.getCustomizations = function(params, callback) {
    progress: 0,
    language: 'en-US',
    status: 'pending' }
-```
+ ```
  *
  *
  * @param {Object} params The parameters
@@ -686,14 +703,14 @@ SpeechToTextV1.prototype.getCorpora = function(params, callback) {
  *
  * Example response:
  *
-```json
-  {
-    "name": "corpus-1",
-    "total_words": 100,
-    "out_of_vocabulary_words": 5,
-    "status": "analyzed"
-  }
-```
+ ```json
+ {
+   "name": "corpus-1",
+   "total_words": 100,
+   "out_of_vocabulary_words": 5,
+   "status": "analyzed"
+ }
+ ```
  *
  *
  * @param {Object} params The parameters
@@ -960,36 +977,36 @@ SpeechToTextV1.prototype.addWord = function(params, callback) {
  * You can list all words from the custom model's words resource, only custom words that were added or modified by the user, or only OOV words that were extracted from corpora.
  *
  * Example response:
-```json
-{
-    "words": [
-       {
-          "word": "hhonors",
-          "sounds_like": ["hilton honors","h honors"],
-          "display_as": "HHonors",
-          "source": ["corpus1"]
-       },
-       {
-          "word": "ieee",
-          "sounds_like": ["i triple e"],
-          "display_as": "IEEE",
-          "source": ["corpus1","corpus2"]
-       },
-       {
-          "word": "tomato",
-          "sounds_like": ["tomatoh","tomayto"],
-          "display_as": "",
-          "source": ["user"]
-       },
-       {
-          "word": "$75.00",
-          "sounds_like": ["75 dollars"],
-          "display_as": "",
-          "source": ["user"],
-          "error":" Numbers are not allowed in sounds-like"
-       }
-    ]
- }
+ ```json
+ {
+     "words": [
+        {
+           "word": "hhonors",
+           "sounds_like": ["hilton honors","h honors"],
+           "display_as": "HHonors",
+           "source": ["corpus1"]
+        },
+        {
+           "word": "ieee",
+           "sounds_like": ["i triple e"],
+           "display_as": "IEEE",
+           "source": ["corpus1","corpus2"]
+        },
+        {
+           "word": "tomato",
+           "sounds_like": ["tomatoh","tomayto"],
+           "display_as": "",
+           "source": ["user"]
+        },
+        {
+           "word": "$75.00",
+           "sounds_like": ["75 dollars"],
+           "display_as": "",
+           "source": ["user"],
+           "error":" Numbers are not allowed in sounds-like"
+        }
+     ]
+  }
  ```
  *
  * @param {Object} params The parameters

@@ -380,5 +380,10 @@ describe('speech_to_text_integration', function() {
       speech_to_text.deleteCustomization({ customization_id: customization_id }, done);
       customization_id = null;
     });
+
+    it('register callbackUrl', function(done) {
+      const params = { callback_url: 'http://{user_callback_path}/results', user_secret: 'ThisIsMySecret' };
+      speech_to_text.registerCallbackUrl(params, done);
+    });
   });
 });

@@ -344,4 +344,17 @@ describe('speech_to_text', function() {
       assert(isStream(speech_to_text.createRecognizeStream()));
     });
   });
+
+  it('should register a callback url', function() {
+    const path = '/v1/register_callback';
+    const response = {};
+
+    nock(service.url).persist().get(path).reply(200, response);
+
+    const params = { callback_url: 'http://{user_callback_path}/results', user_secret: 'ThisIsMySecret' };
+    const req = speech_to_text.registerCallbackUrl(params, (err, res) => assert.equal(JSON.stringify(res), 'toto'));
+
+    assert.equal(req.uri.href, service.url + path + '?callback_url=http%3A%2F%2F%7Buser_callback_path%7D%2Fresults&user_secret=ThisIsMySecret');
+    assert.equal(req.method, 'POST');
+  });
 });
