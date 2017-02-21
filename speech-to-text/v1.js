@@ -90,7 +90,18 @@ SpeechToTextV1.prototype.name = 'speech_to_text';
 SpeechToTextV1.prototype.version = 'v1';
 SpeechToTextV1.URL = 'https://stream.watsonplatform.net/speech-to-text/api';
 
-SpeechToTextV1.prototype.registerCallbackUrl = function(params, callback) {
+/**
+ * Registers a callback URL with the service for use with subsequent asynchronous recognition requests.
+ * The service attempts to register, or white-list, the callback URL if it is not already registered by sending a GET
+ * request to the callback URL.
+ *
+ * @param {object} params - The parameters
+ * @param {string} params.callback_url - A URL to which callback notifications are to be sent
+ * @param {string} params.user_secret - A user-specified string that the service uses to generate the HMAC-SHA1 signature that it sends via the X-Callback-Signature header
+ * @param {Function} callback
+ * @returns {ReadableStream|undefined}
+ */
+SpeechToTextV1.prototype.registerCallback = function(params, callback) {
   const missingParams = helper.getMissingParams(params, ['callback_url']);
   if (missingParams) {
     callback(missingParams);
@@ -103,7 +114,72 @@ SpeechToTextV1.prototype.registerCallbackUrl = function(params, callback) {
       method: 'POST',
       url: '/v1/register_callback',
       qs: pick(params, ['callback_url', 'user_secret']),
-      body: {},
+      json: true
+    },
+    defaultOptions: this._options
+  };
+
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Creates a job for a new asynchronous recognition request.
+ * The job is owned by the user whose service credentials are used to create it.
+ * How you learn the status and results of a job depends on the parameters you include with the job creation request.
+ *
+ * @param {object} params - The parameters
+ * @param {Audio}  params.audio - Audio to be recognized
+ * @param {string} params.content_type - The Content-type e.g. audio/l16; rate=48000
+ * @param {string} params.callback_url - A URL to which callback notifications are to be sent
+ * @param {string} params.event - recognitions.started|recognitions.completed|recognitions.failed|recognitions.completed_with_results
+ * @param {string} params.user_token - The token allows the user to maintain an internal mapping between jobs and notification events
+ * @param {number} params.results_ttl - time to alive of the job result
+ * @param {Function} callback
+ * @returns {ReadableStream|undefined}
+ */
+SpeechToTextV1.prototype.createRecognitionJob = function(params, callback) {
+  const missingParams = helper.getMissingParams(params, ['audio', 'content_type']);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+
+  if (!isStream(params.audio)) {
+    callback(new Error('audio is not a standard Node.js Stream'));
+    return;
+  }
+
+  const parameters = {
+    requiredParams: ['audio'],
+    options: {
+      method: 'POST',
+      url: '/v1/recognitions',
+      headers: {
+        'Content-Type': params.content_type
+      },
+      qs: pick(params, ['callback_url', 'event', 'user_token', 'results_ttl']),
+      body: pick(params, ['audio']),
+      json: true
+    },
+    defaultOptions: this._options
+  };
+
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Returns the status and ID of all outstanding jobs associated with the service credentials with which it is called.
+ * The method also returns the creation and update times of each job, and, if a job was created with a callback URL
+ * and a user token, the user token for the job.
+ *
+ * @param {Function} callback
+ * @returns {ReadableStream|undefined}
+ */
+SpeechToTextV1.prototype.getRecognitionsJob = function(callback) {
+  const parameters = {
+    options: {
+      method: 'GET',
+      url: '/v1/recognitions',
       json: true
     },
     defaultOptions: this._options

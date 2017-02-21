@@ -381,9 +381,26 @@ describe('speech_to_text_integration', function() {
       customization_id = null;
     });
 
-    it('register callbackUrl', function(done) {
-      const params = { callback_url: 'http://{user_callback_path}/results', user_secret: 'ThisIsMySecret' };
-      speech_to_text.registerCallbackUrl(params, done);
+    it('registerCallback()', function(done) {
+      const params = { callback_url: 'http://www.callback.fr/results', user_secret: 'ThisIsMySecret' };
+      speech_to_text.registerCallback(params, done);
     });
+
+    it('createRecognitionJob()', function(done) {
+      const params = {
+        audio: fs.createReadStream(__dirname + '/../resources/weather.wav'),
+        content_type: 'audio/l16;rate=41100',
+        callback_url: 'http://www.callback.fr/results',
+        user_token: 'ThisIsMySecret',
+        event: 'recognitions.completed',
+        results_ttl: '60'
+      };
+      speech_to_text.createRecognitionJob(params, done);
+    });
+
+    it('getRecognitionJob()', function(done) {
+      speech_to_text.getRecognitionsJob(done);
+    });
+
   });
 });
