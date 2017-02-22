@@ -34,7 +34,7 @@ function ToneAnalyzerV3(options) {
 util.inherits(ToneAnalyzerV3, BaseService);
 ToneAnalyzerV3.prototype.name = 'tone_analyzer';
 ToneAnalyzerV3.prototype.version = 'v3';
-ToneAnalyzerV3.URL = 'https://gateway.watsonplatform.net/tone-analyzer/api';
+ToneAnalyzerV3.URL = 'https://gateway-d.watsonplatform.net/tone-analyzer/api';
 
 /**
  * Main API call. Returns the different tone dimensions of a text.
@@ -76,6 +76,28 @@ ToneAnalyzerV3.prototype.tone = function(params, callback) {
       headers: {
         accept: 'application/json',
         'content-type': contentType
+      }
+    })
+  };
+
+  return requestFactory(parameters, callback);
+};
+
+ToneAnalyzerV3.prototype.tone_chat = function(params, callback) {
+  if (!params || !params.utterances) {
+    callback(new Error('Missing required parameters: utterances'));
+    return;
+  }
+  const parameters = {
+    options: {
+      url: '/v3/tone_chat',
+      method: 'POST',
+      body: JSON.stringify(params.utterances)
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        accept: 'application/json',
+        'content-type': 'application/json'
       }
     })
   };
