@@ -104,7 +104,7 @@
   },
   "scripts": {
     "test": "npm run lint && mocha test/unit test/integration",
-    "lint": "npm run compat-check && eslint . --cache && node test/dependency-lint.js",
+    "lint": "npm run compat-check && eslint . --cache && dependency-lint",
     "compat-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
     "autofix": "eslint . --fix",
     "doc": "jsdoc -c scripts/jsdoc/config.json",
