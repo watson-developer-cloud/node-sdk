@@ -47,61 +47,97 @@ describe('document_conversion', function() {
   };
 
   describe('convert()', function() {
-    it('should check no parameters provided', function() {
-      servInstance.convert({}, missingParameter);
-      servInstance.convert(null, missingParameter);
-      servInstance.convert(undefined, missingParameter);
-      servInstance.convert(pick(payload, ['file']), missingParameter);
-      servInstance.convert(pick(payload, ['conversion_target']), missingParameter);
+    it('should error when empty parameters provided', function(done) {
+      servInstance.convert({}, function(err) {
+        missingParameter(err);
+        done();
+      });
     });
 
-    it('should validate conversion_target', function() {
+    it('should error when null parameters provided', function(done) {
+      servInstance.convert(null, function(err) {
+        missingParameter(err);
+        done();
+      });
+    });
+
+    it('should error when undefined parameters provided', function(done) {
+      servInstance.convert(undefined, function(err) {
+        missingParameter(err);
+        done();
+      });
+    });
+
+    it('should error when missing conversion_target', function(done) {
+      servInstance.convert(pick(payload, ['file']), function(err) {
+        missingParameter(err);
+        done();
+      });
+    });
+
+    it('should error when missing file', function(done) {
+      servInstance.convert(pick(payload, ['conversion_target']), function(err) {
+        missingParameter(err);
+        done();
+      });
+    });
+
+    it('should validate conversion_target', function(done) {
       servInstance.convert(
         {
           file: payload.file,
           conversion_target: 'foo'
         },
-        missingParameter
+        function(err) {
+          missingParameter(err);
+          done();
+        }
       );
     });
 
-    it('should validate uppercase conversion_target', function() {
+    it('should validate uppercase conversion_target', function(done) {
       servInstance.convert(
         {
           file: payload.file,
-          conversion_target: 'ANSWER_UNITS'
+          conversion_target: 'answwer_units'
         },
-        missingParameter
+        function(err) {
+          missingParameter(err);
+          done();
+        }
       );
     });
 
-    it('should validate file as Stream', function() {
+    it('should validate file as Stream', function(done) {
       servInstance.convert(
         {
           file: 'not a file',
           conversion_target: payload.conversion_target
         },
-        missingParameter
+        function(err) {
+          missingParameter(err);
+          done();
+        }
       );
     });
 
-    it('should generate a valid payload', function() {
-      const req = servInstance.convert(payload, noop);
-      assert(req);
-      const url = service_options.url + convertPath;
-      assert.equal(req.uri.href.slice(0, url.length), url);
-      assert.equal(req.method, 'POST');
-      assert(req.formData);
+    it('should generate a valid payload', function(done) {
+      const expectation = nock('http://ibm.com:80').post('/v1/convert_document?version=2015-12-15').reply(201, '');
+
+      const req = servInstance.convert(payload, function(err, res) {
+        assert(req);
+        const url = service_options.url + convertPath;
+        assert.equal(req.uri.href.slice(0, url.length), url);
+        assert.equal(req.method, 'POST');
+        assert(req.formData);
+        assert.ifError(err);
+        assert(expectation.isDone());
+        done();
+      });
     });
 
     function hexToString(body) {
-      try {
-        // newer node.js versions prefer using the Buffer.from constructor because it handles a couple of edge cases better
-        return Buffer.from(body, 'hex').toString();
-      } catch (ex) {
-        // older node.js versions either don't have Buffer.from (0v.12), or have a broken Buffer.from implementation (v4.4.4 throws TypeError: hex is not a function)
-        return Buffer.from(body, 'hex').toString();
-      }
+      return Buffer.from(body, 'hex').toString();
     }
 
     function checkContentType(params, contentType) {
@@ -126,8 +162,6 @@ describe('document_conversion', function() {
       });
     }
 
-    // todo: check for flakyness in this test.
-    // It failed on me once, but the error message included the full file contents, which were longer than the scroll-back in my console, so I couldn't see the actual error.
     it('should set a default content type based on the file extension', function() {
       return checkContentType(
         {
