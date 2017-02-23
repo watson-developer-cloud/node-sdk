@@ -314,9 +314,9 @@ DiscoveryV1.prototype.addDocument = function(params, callback) {
   if (formDataParams.file) {
     if (
       typeof formDataParams.file.filename !== 'string' &&
-      !(formDataParams.file.options && typeof formDataParams.file.options.filename !== 'string') &&
-      !(formDataParams.file.path && typeof formDataParams.file.path !== 'string') &&
-      !(formDataParams.file.name && typeof formDataParams.file.name !== 'string')
+        !(formDataParams.file.options && typeof formDataParams.file.options.filename !== 'string') &&
+        !(formDataParams.file.path && typeof formDataParams.file.path !== 'string') &&
+        !(formDataParams.file.name && typeof formDataParams.file.name !== 'string')
     ) {
       const filedat = formDataParams.file;
       // the filename used below is because the name must exist
@@ -361,9 +361,9 @@ DiscoveryV1.prototype.updateDocument = function(params, callback) {
   if (formDataParams.file) {
     if (
       typeof formDataParams.file.filename !== 'string' &&
-      !(formDataParams.file.options && typeof formDataParams.file.options.filename !== 'string') &&
-      !(formDataParams.file.path && typeof formDataParams.file.path !== 'string') &&
-      !(formDataParams.file.name && typeof formDataParams.file.name !== 'string')
+        !(formDataParams.file.options && typeof formDataParams.file.options.filename !== 'string') &&
+        !(formDataParams.file.path && typeof formDataParams.file.path !== 'string') &&
+        !(formDataParams.file.name && typeof formDataParams.file.name !== 'string')
     ) {
       const filedat = formDataParams.file;
       // the filename used below is because the name must exist
