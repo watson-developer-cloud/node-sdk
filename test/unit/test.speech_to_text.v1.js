@@ -254,7 +254,7 @@ describe('speech_to_text', function() {
     fs.createReadStream(__dirname + '/../resources/weather.wav').pipe(recognizeStream);
     recognizeStream.setEncoding('utf8');
 
-    // note: none of these tests actually run (or even register with mocha), but the callbacks let the previous test pass :(
+    // note: none of these tests actually run(or even register with mocha), but the callbacks let the previous test pass :(
     recognizeStream.on('connect', function(socket) {
       it('should have a socket connection with a correct config', function(done) {
         assert.notStrictEqual(socket, socket.config, socket.config.fragmentOutgoingMessages);
@@ -429,10 +429,62 @@ describe('speech_to_text', function() {
         assert.equal(JSON.stringify(err), JSON.stringify(null));
         assert.equal(JSON.stringify(res), JSON.stringify(response));
       };
-      const req = speech_to_text.getRecognitionsJob(checkRes);
+      const req = speech_to_text.getRecognitionJobs(checkRes);
 
       assert.equal(req.path, path);
       assert.equal(req.method, 'GET');
     });
+
+    it('should get status of jobs', function() {
+      const path = '/v1/recognitions/Job01';
+      const response = {
+        id: '4bd734c0-e575-21f3-de03-f932aa0468a0',
+        results: [
+          {
+            result_index: 0,
+            results: [
+              {
+                final: true,
+                alternatives: [
+                  {
+                    transcript: 'several tornadoes touch down as a line of severe thunderstorms swept through Colorado on Sunday ',
+                    timestamps: [['several', 1, 1.52]],
+                    confidence: 0.885
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        created: '2016-08-17T19:11:04.298Z',
+        updated: '2016-08-17T19:11:16.003Z',
+        status: 'completed'
+      };
+
+      nock(service.url).persist().get(path).delay(200).reply(200, response);
+
+      const checkRes = function(err, res) {
+        assert.equal(JSON.stringify(err), JSON.stringify(null));
+        assert.equal(JSON.stringify(res), JSON.stringify(response));
+      };
+      const req = speech_to_text.getRecognitionJob({ id: 'Job01' }, checkRes);
+
+      assert.equal(req.path, path);
+      assert.equal(req.method, 'GET');
+    });
+  });
+
+  it('should delete a recognition job', function() {
+    const path = '/v1/recognitions/Job01';
+
+    nock(service.url).persist().delete(path).delay(200).reply(200);
+
+    const checkRes = function(err, res) {
+      assert.equal(JSON.stringify(err), JSON.stringify(null));
+    };
+    const req = speech_to_text.deleteRecognitionJob({ id: 'Job01' }, checkRes);
+
+    assert.equal(req.path, path);
+    assert.equal(req.method, 'DELETE');
   });
 });

@@ -188,19 +188,26 @@ SpeechToTextV1.prototype.getRecognitionJobs = function(callback) {
   return requestFactory(parameters, callback);
 };
 
+/**
+ * Returns the status and ID of all outstanding jobs associated with the service credentials with which it is called.
+ *
+ * @param params
+ * @param params.id - id of the Job
+ * @param callback
+ * @returns {ReadableStream|undefined}
+ */
 SpeechToTextV1.prototype.getRecognitionJob = function(params, callback) {
   const missingParams = helper.getMissingParams(params, ['id']);
   if (missingParams) {
     callback(missingParams);
     return;
   }
-  
+
   const parameters = {
     options: {
-      requiredParams: ['id'],
       method: 'GET',
       url: '/v1/recognitions/{id}',
-      path: pick(params, ['id'])
+      path: pick(params, ['id']),
       json: true
     },
     defaultOptions: this._options
@@ -209,19 +216,26 @@ SpeechToTextV1.prototype.getRecognitionJob = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
+/**
+ * Deletes the specified job. You cannot delete a job that the service is actively processing.
+ *
+ * @param params - The parameters
+ * @param params.id - id of the Job
+ * @param callback
+ * @returns {ReadableStream|undefined}
+ */
 SpeechToTextV1.prototype.deleteRecognitionJob = function(params, callback) {
   const missingParams = helper.getMissingParams(params, ['id']);
   if (missingParams) {
     callback(missingParams);
     return;
   }
-  
+
   const parameters = {
     options: {
-      requiredParams: ['id'],
       method: 'DELETE',
       url: '/v1/recognitions/{id}',
-      path: pick(params, ['id'])
+      path: pick(params, ['id']),
       json: true
     },
     defaultOptions: this._options

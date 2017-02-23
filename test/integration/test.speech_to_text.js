@@ -398,9 +398,16 @@ describe('speech_to_text_integration', function() {
       speech_to_text.createRecognitionJob(params, done);
     });
 
-    it('getRecognitionJob()', function(done) {
-      speech_to_text.getRecognitionsJob(done);
+    it('getRecognitionJobs()', function(done) {
+      speech_to_text.getRecognitionJobs(done);
     });
 
+    it('getRecognitionJob()', function(done) {
+      speech_to_text.getRecognitionJob({ id: 'Job01' }, done);
+    });
+
+    it('deleteRecognitionJob()', function(done) {
+      speech_to_text.getRecognitionJob({ id: 'Job01' }, done);
+    });
   });
 });
