@@ -68,7 +68,7 @@ describe('conversation-v1', function() {
 
     it('should generate a valid payload', function() {
       const req = conversation.message(params, noop);
-      const body = new Buffer(req.body).toString('ascii');
+      const body = Buffer.from(req.body).toString('ascii');
       assert.equal(req.uri.href, service.url + paths.message + '?version=' + service.version_date);
       assert.equal(req.method, 'POST');
       assert.deepEqual(JSON.parse(body), reqPayload);
@@ -76,7 +76,7 @@ describe('conversation-v1', function() {
 
     it('should generate a valid payload but parse out the junk option', function() {
       const req = conversation.message(params1, noop);
-      const body = new Buffer(req.body).toString('ascii');
+      const body = Buffer.from(req.body).toString('ascii');
       assert.equal(req.uri.href, service.url + paths.message + '?version=' + service.version_date);
       assert.equal(req.method, 'POST');
       assert.deepEqual(JSON.parse(body), reqPayload2);
@@ -96,7 +96,7 @@ describe('conversation-v1', function() {
         watson.conversation(service1);
       } catch (err) {
         threw = true;
-        assert.equal(err.message, 'Argument error: version_date was not specified, use ConversationV1.VERSION_DATE_2016_09_20');
+        assert.equal(err.message, 'Argument error: version_date was not specified, use ConversationV1.VERSION_DATE_2017_02_03');
       }
       assert(threw, 'should throw an error');
     });

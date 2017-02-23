@@ -18,6 +18,11 @@
 
 const stringify = require('csv-stringify');
 
+/**
+ * @private
+ * @param {Object} data
+ * @return {Array.<String>}
+ */
 function toCSVArray(data) {
   if (data.text && data.classes && data.classes.length > 0) {
     return [data.text].concat(data.classes);

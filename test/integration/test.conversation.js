@@ -49,7 +49,7 @@ const workspace1 = extend(true, {}, workspace, intents);
 describe('conversation_integration', function() {
   this.timeout(TEN_SECONDS);
   this.slow(TWO_SECONDS); // this controls when the tests get a colored warning for taking too long
-  this.retries(1);
+  // this.retries(1);
 
   let conversation;
 
@@ -77,6 +77,28 @@ describe('conversation_integration', function() {
           return done(err);
         }
         assert.equal(result.alternate_intents, true);
+        done();
+      });
+    });
+
+    it('dialog_stack with 2017-02-03 version_date', function(done) {
+      const constructorParams = assign({}, auth.conversation, {
+        version_date: ConversationV1.VERSION_DATE_2017_02_03
+      });
+      const conversation = watson.conversation(constructorParams);
+
+      const params = {
+        input: {
+          text: 'Turn on the lights'
+        },
+        workspace_id: auth.conversation.workspace_id
+      };
+
+      conversation.message(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.deepEqual(result.context.system.dialog_stack, [{ dialog_node: 'root' }]);
         done();
       });
     });
@@ -212,44 +234,6 @@ describe('conversation_integration', function() {
         }
         assert.equal(result.workspace_id, workspace1.workspace_id);
         assert.equal(result.training, true);
-        done();
-      });
-    });
-  });
-
-  describe('workspaceLogs()', function() {
-    it('should get the workspace log messages', function(done) {
-      const params = {
-        workspace_id: workspace1.workspace_id,
-        type: 'message',
-        'X-Watson-Origin': 'local'
-      };
-
-      conversation.workspaceLogs(params, function(err, result) {
-        if (err) {
-          return done(err);
-        }
-        assert.equal(result.messageType, 'Message');
-        assert.equal(typeof result.resultsFound, 'number');
-        assert.equal(Object.prototype.toString.call(result.results), '[object Array]');
-        done();
-      });
-    });
-
-    it('should get the workspace log conversations', function(done) {
-      const params = {
-        workspace_id: workspace1.workspace_id,
-        type: 'conversation',
-        'X-Watson-Origin': 'local'
-      };
-
-      conversation.workspaceLogs(params, function(err, result) {
-        if (err) {
-          return done(err);
-        }
-        assert.equal(result.messageType, 'Conversation');
-        assert.equal(typeof result.resultsFound, 'number');
-        assert.equal(Object.prototype.toString.call(result.results), '[object Array]');
         done();
       });
     });

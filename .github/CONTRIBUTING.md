@@ -8,11 +8,11 @@ or [Stack Overflow](http://stackoverflow.com/questions/ask?tags=ibm-watson).
 # Code
 
 * Our style guide is based on [Google's](https://google.github.io/styleguide/jsguide.html), most of it is automaticaly enforced (and can be automatically applied with `npm run autofix`)
-* commits should start with the service name and end with the issue #  
+* commits should start with the service name and end with the issue #
   ```
   [concept-insights] Added functionality to list the graphs #135
-  ``` 
-  
+  ```
+
 # Issues
 
 If you encounter an issue with the Node.js library, you are welcome to submit
@@ -25,7 +25,7 @@ already encountered this issue.
 If you want to contribute to the repository, follow these steps:
 
 1. Fork the repo.
-2. Develop and test your code changes: `npm install -d && npm test`. 
+2. Develop and test your code changes: `npm install -d && npm test`.
 3. Travis-CI will run the tests for all services once your changes are merged.
 4. Add a test for your changes. Only refactoring and documentation changes require no new tests.
 5. Make the test pass.

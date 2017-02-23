@@ -23,8 +23,8 @@ const BaseService = require('../lib/base_service');
 
 /**
  *
- * @param options
- * @param options.version_date
+ * @param {Object} options
+ * @param {Object} options.version_date
  * @constructor
  */
 function ConversationV1(options) {
@@ -32,7 +32,7 @@ function ConversationV1(options) {
 
   // Check if 'version_date' was provided
   if (typeof this._options.version_date === 'undefined') {
-    throw new Error('Argument error: version_date was not specified, use ConversationV1.VERSION_DATE_2016_09_20');
+    throw new Error('Argument error: version_date was not specified, use ConversationV1.VERSION_DATE_2017_02_03');
   }
   this._options.qs.version = options.version_date;
 }
@@ -77,11 +77,60 @@ ConversationV1.VERSION_DATE_2016_07_11 = '2016-07-11';
 ConversationV1.VERSION_DATE_2016_09_20 = '2016-09-20';
 
 /**
+ * 02/03 Update
+ *
+ * * Absolute scoring has now been enabled.
+ * @see https://www.ibm.com/watson/developercloud/doc/conversation/irrelevant_utterance.html
+ *
+ * Old:
+ ```json
+ "intents": [
+   { "intent" : "turn_off", "confidence" : 0.54 },
+   { "intent" : "locate_amenity", "confidence" : 0.4},
+   { "intent" : "weather", "confidence" : 0.06}
+ ]
+```
+ * Previously all intent confidence values summed to 1.0.
+ * New:
+```json
+ "intents": [
+   { "intent" : "turn_off", "confidence" : 0.54 },
+   { "intent" : "locate_amenity", "confidence" : 0.52},
+   { "intent" : "weather", "confidence" : 0.01}
+ ]
+```
+ * Now each intent is scored individually with a maximum confidence value of 1.
+ *
+ * * Irrelevant input detection.
+ * Previously an intent was always returned regardless of whether the system considered it irrelevant to the
+ * training data within the workspace. With Irrelevant input detection the system will now return an empty intent
+ * array if the system thinks the input is irrelevant to the workspace content.
+ * Old:
+ ```json
+ "input" : { "text" : "what color is the sky?"},
+ "intents": [
+ { "intent" : "weather", "confidence" : 0.36 },
+ { "intent" : "turn_off", "confidence" : 0.33},
+ { "intent" : "locate_amenity", "confidence" : 0.31}
+ ]
+ ```
+ * New:
+ ```json
+ "input" : { "text" : "what color is the sky?"},
+ "intents": []
+ ```
+ *
+ * @see https://www.ibm.com/watson/developercloud/doc/conversation/release-notes.html#3-february-2017
+ * @type {string}
+ */
+ConversationV1.VERSION_DATE_2017_02_03 = '2017-02-03';
+
+/**
  * Method: message
  *
  * Returns a response to a user utterance.
  *
- * Example response for 2016-09-20 version_date:
+ * Example response for 2017-02-03 version_date:
 ```json
  {
    "intents": [
@@ -133,11 +182,10 @@ ConversationV1.VERSION_DATE_2016_09_20 = '2016-09-20';
  * @param params.workspace_id
  * @param [params.input]
  * @param [params.context]
- * @param [params.alternate_intents=false] - includes other lower-confidence intents in the intents array
+ * @param [params.alternate_intents=false] - includes other lower-confidence intents in the intents array.
  * @param [params.output]
  * @param [params.entities]
  * @param [params.intents]
- * @param [params.X-Watson-Origin]
  *
  */
 ConversationV1.prototype.message = function(params, callback) {
@@ -148,7 +196,6 @@ ConversationV1.prototype.message = function(params, callback) {
       url: '/v1/workspaces/{workspace_id}/message',
       method: 'POST',
       json: true,
-      headers: pick(params, ['X-Watson-Origin']),
       body: pick(params, ['input', 'context', 'alternate_intents', 'output', 'entities', 'intents']),
       path: pick(params, ['workspace_id'])
     },
@@ -539,113 +586,6 @@ ConversationV1.prototype.workspaceStatus = function(params, callback) {
       path: pick(params, ['workspace_id'])
     },
     requiredParams: ['workspace_id'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Method: workspaceLogs
- *
- * Returns the conversation logs of the specified workspace
- *
- * Example Response:
-```json
- {
-  "resultsFound": 1014,
-  "resultsReturned": 1,
-  "nextPageToken": "AoJ9x6+8+dUCPwUwMGEwOWI0Zi1hZDVmLTRjMTUtYTFhMi0wNzRmOTIxNGQwNTg=",
-  "messageType": "Message",
-  "results": [
-    {
-      "id": "00a09b4f-ad5f-4c15-a1a2-074f9214d058",
-      "workspace_id": "95442ab5-e34d-462c-8621-e6f80cc75a54",
-      "service_name": "conversation",
-      "service_type": "message",
-      "event": {
-        "request": {
-          "input": {
-            "text": "Hey Watson, Turn On the wipers."
-          },
-          "context": {},
-          "timestamp": "2016-07-16T09:02:40.253Z"
-        },
-        "response": {
-          "input": {
-            "text": "Hey Watson, Turn On the wipers."
-          },
-          "context": {
-            "conversation_id": "61edab2c-82cf-4931-9e29-db09faa47263",
-            "system": {
-              "dialog_stack": [
-                "root"
-              ],
-              "dialog_turn_counter": 1,
-              "dialog_request_counter": 1
-            },
-            "defaultCounter": 0
-          },
-          "entities": [
-            {
-              "entity": "appliance",
-              "location": [
-                24,
-                30
-              ],
-              "value": "wipers"
-            }
-          ],
-          "intents": [
-            {
-              "intent": "turn_on",
-              "confidence": 0.9830948246527533
-            }
-          ],
-          "output": {
-            "log_messages": [],
-            "text": [
-              "Hi. It looks like a nice drive today. What would you like me to do?"
-            ],
-            "nodes_visited": [
-              "node_1_1467221909631"
-            ]
-          },
-          "timestamp": "2016-07-16T09:02:40.304Z"
-        }
-      }
-    }
-  ],
-  "totalConversations": 0
- }
-```
- *
- * @param  {Object}   params   { workspace_id: '', type: '',  }
- * @param params.workspace_id
- * @param params.type - type = message or conversation - When type=conversation the logs are grouped by conversation
- * @param [params.include-event]
- * @param [params.limit]
- * @param [params.q]
- * @param [params.sort]
- * @param [params.start_date_time]
- * @param [params.end_date_time]
- * @param [params.window_start_time]
- * @param [params.window_end_time]
- * @param {Function} [callback]
- */
-
-ConversationV1.prototype.workspaceLogs = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v1/workspaces/{workspace_id}/logs',
-      method: 'GET',
-      json: true,
-      qs: pick(params, ['type', 'include-event', 'limit', 'q', 'sort', 'start_date_time', 'end_date_time', 'window_start_time', 'window_end_time']),
-      headers: pick(params, ['X-Watson-Origin']),
-      path: pick(params, ['workspace_id'])
-    },
-    requiredParams: ['workspace_id', 'type'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);

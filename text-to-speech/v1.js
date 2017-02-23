@@ -25,7 +25,7 @@ const BaseService = require('../lib/base_service');
 /**
  * Watson Text to Speech service
  *
- * @param options
+ * @param {Object} options
  * @constructor
  */
 function TextToSpeechV1(options) {

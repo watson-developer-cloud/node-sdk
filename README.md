@@ -110,7 +110,7 @@ By default, [all requests are logged](http://www.ibm.com/watson/developercloud/d
 var myInstance = new watson.WhateverServiceV1({
   /* username, password, version, etc... */
   headers: {
-    "X-Watson-Learning-Opt-Out": "1"
+    "X-Watson-Learning-Opt-Out": true
   }
 });
 ```
@@ -237,7 +237,7 @@ var ConversationV1 = require('watson-developer-cloud/conversation/v1');
 var conversation = new ConversationV1({
   username: '<username>',
   password: '<password>',
-  version_date: ConversationV1.VERSION_DATE_2016_09_20
+  version_date: ConversationV1.VERSION_DATE_2017_02_03
 });
 
 conversation.message({
@@ -704,7 +704,7 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/maste
 [speech_to_text]: http://www.ibm.com/watson/developercloud/doc/speech-to-text/
 [concept_insights]: http://www.ibm.com/watson/developercloud/doc/concept-insights/
 [tradeoff_analytics]: http://www.ibm.com/watson/developercloud/doc/tradeoff-analytics/
-[language_translator]: http://www.ibm.com/watson/developercloud/doc/language-translation/
+[language_translator]: http://www.ibm.com/watson/developercloud/doc/language-translation/index.html
 [re_migration]: http://www.ibm.com/watson/developercloud/doc/alchemylanguage/migration.shtml
 
 [alchemy_language]: http://www.alchemyapi.com/products/alchemylanguage

@@ -1,6 +1,6 @@
 {
   "name": "watson-developer-cloud",
-  "version": "2.18.0",
+  "version": "2.21.1",
   "description": "Client library to use the IBM Watson Services and AlchemyAPI",
   "main": "./index",
   "repository": {
@@ -78,7 +78,7 @@
     "mocha": "^3.2.0",
     "nock": "^9.0.2",
     "object.assign": "^4.0.4",
-    "prettier": "^0.16.0",
+    "prettier": "^0.18.0",
     "shebang-loader": "0.0.1",
     "uglify-js": "^2.7.0",
     "watchify": "^3.7.0",
@@ -104,7 +104,7 @@
   },
   "scripts": {
     "test": "npm run lint && mocha test/unit test/integration",
-    "lint": "npm run compat-check && eslint . && node test/dependency-lint.js",
+    "lint": "npm run compat-check && eslint . --cache && dependency-lint",
     "compat-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
     "autofix": "eslint . --fix",
     "doc": "jsdoc -c scripts/jsdoc/config.json",

@@ -50,7 +50,7 @@ module.exports = {
  * invokeToneAsync is an asynchronous function that calls the Tone Analyzer service and returns a Promise
  * @param conversationPayload json object returned by the Watson Conversation Service
  * @param tone_analyzer an instance of the Watson Tone Analyzer service
- * @returns a Promise for the result of calling the tone_analyzer with the conversationPayload
+ * @return a Promise for the result of calling the tone_analyzer with the conversationPayload
  * (which contains the user's input text)
  */
 function invokeToneAsync(conversationPayload, tone_analyzer) {
@@ -71,7 +71,7 @@ function invokeToneAsync(conversationPayload, tone_analyzer) {
  * The conversationPayload json object is updated to include these tones.
  * @param conversationPayload json object returned by the Watson Conversation Service
  * @param toneAnalyzerPayload json object returned by the Watson Tone Analyzer Service
- * @returns conversationPayload where the user object has been updated with tone information from the toneAnalyzerPayload
+ * @return conversationPayload where the user object has been updated with tone information from the toneAnalyzerPayload
  */
 function updateUserTone(conversationPayload, toneAnalyzerPayload, maintainHistory) {
   let emotionTone = null;
@@ -115,7 +115,7 @@ function updateUserTone(conversationPayload, toneAnalyzerPayload, maintainHistor
 
 /**
  * initToneContext initializes a user object containing tone data (from the Watson Tone Analyzer)
- * @returns user json object with the emotion, language and social tones.  The current
+ * @return user json object with the emotion, language and social tones.  The current
  * tone identifies the tone for a specific conversation turn, and the history provides the conversation for
  * all tones up to the current tone for a conversation instance with a user.
  */

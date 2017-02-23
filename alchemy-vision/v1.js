@@ -26,6 +26,11 @@ const util = require('util');
 const BaseServiceAlchemy = require('../lib/base_service_alchemy');
 const errorFormatter = require('../lib/alchemy_error_formatter');
 
+/**
+ * @private
+ * @param method
+ * @return {Function}
+ */
 function createRequest(method) {
   return function(_params, callback) {
     const params = _params || {};
@@ -70,7 +75,7 @@ function createRequest(method) {
 
 /**
  *
- * @param options
+ * @param {Object} options
  * @constructor
  */
 function AlchemyVisionV1(options) {

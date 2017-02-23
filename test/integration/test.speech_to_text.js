@@ -316,7 +316,7 @@ describe('speech_to_text_integration', function() {
     );
 
     it('listWords()', function(done) {
-      speech_to_text.getWords({ customization_id: customization_id }, done);
+      speech_to_text.getWords({ customization_id: customization_id, sort: '+alphabetical' }, done);
     });
 
     it('getWord()', function(done) {

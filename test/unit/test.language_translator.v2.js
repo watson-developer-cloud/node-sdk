@@ -110,7 +110,7 @@ describe('language_translator', function() {
       const req = language_translator.translate(service_request, noop);
       assert.equal(req.uri.href, service.url + path);
       assert.equal(req.method, 'POST');
-      const body = new Buffer(req.body).toString('ascii');
+      const body = Buffer.from(req.body).toString('ascii');
       assert.equal(body, JSON.stringify(service_request));
     });
   });
@@ -142,7 +142,7 @@ describe('language_translator', function() {
       const req = language_translator.identify(service_request, noop);
       assert.equal(req.uri.href, service.url + path);
       assert.equal(req.method, 'POST');
-      const body = new Buffer(req.body).toString('ascii');
+      const body = Buffer.from(req.body).toString('ascii');
       assert.equal(body, service_request.text);
     });
   });

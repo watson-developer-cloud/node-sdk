@@ -12,3 +12,4 @@ Bug fixes and new features should include tests whenever possible.
 - [ ] `npm test` passes (tip: `npm run autofix` can correct most style issues)
 - [ ] tests are included
 - [ ] documentation is changed or added
+- [ ] link to public docs when adding new a service or new features for an existing service
