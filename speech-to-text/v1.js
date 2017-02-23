@@ -175,11 +175,53 @@ SpeechToTextV1.prototype.createRecognitionJob = function(params, callback) {
  * @param {Function} callback
  * @returns {ReadableStream|undefined}
  */
-SpeechToTextV1.prototype.getRecognitionsJob = function(callback) {
+SpeechToTextV1.prototype.getRecognitionJobs = function(callback) {
   const parameters = {
     options: {
       method: 'GET',
       url: '/v1/recognitions',
+      json: true
+    },
+    defaultOptions: this._options
+  };
+
+  return requestFactory(parameters, callback);
+};
+
+SpeechToTextV1.prototype.getRecognitionJob = function(params, callback) {
+  const missingParams = helper.getMissingParams(params, ['id']);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  
+  const parameters = {
+    options: {
+      requiredParams: ['id'],
+      method: 'GET',
+      url: '/v1/recognitions/{id}',
+      path: pick(params, ['id'])
+      json: true
+    },
+    defaultOptions: this._options
+  };
+
+  return requestFactory(parameters, callback);
+};
+
+SpeechToTextV1.prototype.deleteRecognitionJob = function(params, callback) {
+  const missingParams = helper.getMissingParams(params, ['id']);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  
+  const parameters = {
+    options: {
+      requiredParams: ['id'],
+      method: 'DELETE',
+      url: '/v1/recognitions/{id}',
+      path: pick(params, ['id'])
       json: true
     },
     defaultOptions: this._options
