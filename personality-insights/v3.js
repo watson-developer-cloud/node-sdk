@@ -25,7 +25,7 @@ const BaseService = require('../lib/base_service');
 
 /**
  *
- * @param options
+ * @param {Object} options
  * @constructor
  */
 function PersonalityInsightsV3(options) {

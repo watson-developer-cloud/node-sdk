@@ -331,9 +331,9 @@ describe('speech_to_text', function() {
         assert.equal(JSON.stringify(service_response), JSON.stringify(res));
         done();
       });
-      req.write(new Buffer('one', 'utf-8'));
-      req.write(new Buffer('two', 'utf-8'));
-      req.write(new Buffer('three', 'utf-8'));
+      req.write(Buffer.from('one', 'utf-8'));
+      req.write(Buffer.from('two', 'utf-8'));
+      req.write(Buffer.from('three', 'utf-8'));
       assert.equal(req.path, path);
       req.end();
     });

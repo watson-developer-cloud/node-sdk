@@ -68,7 +68,7 @@ describe('personality_insights_v3', function() {
 
   it('should generate a valid payload with text', function() {
     const req = personality_insights.profile(service_request, noop);
-    const body = new Buffer(req.body).toString('ascii');
+    const body = Buffer.from(req.body).toString('ascii');
     assert.equal(req.uri.href, service.url + service_path + '?version=2016-10-19');
     assert.equal(body, '"' + service_request.text + '"');
     assert.equal(req.method, 'POST');
@@ -77,7 +77,7 @@ describe('personality_insights_v3', function() {
 
   it('should generate a valid payload with contentItems', function() {
     const req = personality_insights.profile(payload, noop);
-    const body = new Buffer(req.body).toString('ascii');
+    const body = Buffer.from(req.body).toString('ascii');
     assert.equal(req.uri.href, service.url + service_path + '?version=2016-10-19');
     assert.equal(body, JSON.stringify(payload));
     assert.equal(req.method, 'POST');
@@ -88,7 +88,7 @@ describe('personality_insights_v3', function() {
   it('should generate a valid payload with content_items', function() {
     const payload_with_content_items = { content_items: payload.contentItems };
     const req = personality_insights.profile(payload_with_content_items, noop);
-    const body = new Buffer(req.body).toString('ascii');
+    const body = Buffer.from(req.body).toString('ascii');
     assert.equal(req.uri.href, service.url + service_path + '?version=2016-10-19');
     assert.equal(body, JSON.stringify(payload));
     assert.equal(req.method, 'POST');
@@ -99,7 +99,7 @@ describe('personality_insights_v3', function() {
   it('should generate a valid payload with html', function() {
     const html_req = { text: '<div>test</div>' };
     const req = personality_insights.profile(html_req, noop);
-    const body = new Buffer(req.body).toString('ascii');
+    const body = Buffer.from(req.body).toString('ascii');
     assert.equal(req.uri.href, service.url + service_path + '?version=2016-10-19');
     assert.equal(body, JSON.stringify(html_req.text));
     assert.equal(req.method, 'POST');
@@ -119,7 +119,7 @@ describe('personality_insights_v3', function() {
     );
 
     const req = personality_insights.profile(params, noop);
-    const body = new Buffer(req.body).toString('ascii');
+    const body = Buffer.from(req.body).toString('ascii');
     assert.equal(req.uri.href, service.url + service_path + '?version=2016-10-19&raw_scores=true');
     assert.equal(body, JSON.stringify(payload));
     assert.equal(req.method, 'POST');
@@ -131,7 +131,7 @@ describe('personality_insights_v3', function() {
   it('should generate a valid request with { headers: {Accept: "text/csv"}}', function() {
     const params = extend({ headers: { accept: 'text/csv' } }, payload);
     const req = personality_insights.profile(params, noop);
-    const body = new Buffer(req.body).toString('ascii');
+    const body = Buffer.from(req.body).toString('ascii');
     assert.equal(req.uri.href, service.url + service_path + '?version=2016-10-19');
     assert.equal(body, JSON.stringify(payload));
     assert.equal(req.headers['accept'], 'text/csv');
@@ -140,7 +140,7 @@ describe('personality_insights_v3', function() {
   it('should generate a valid request with {headers: {accept: "text/csv"}, csv_headers: true}', function() {
     const params = extend({ headers: { accept: 'text/csv' }, csv_headers: true }, payload);
     const req = personality_insights.profile(params, noop);
-    const body = new Buffer(req.body).toString('ascii');
+    const body = Buffer.from(req.body).toString('ascii');
     assert.equal(req.uri.href, service.url + service_path + '?version=2016-10-19&csv_headers=true');
     assert.equal(body, JSON.stringify(payload));
     assert.equal(req.headers['accept'], 'text/csv');

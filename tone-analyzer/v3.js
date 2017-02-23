@@ -22,6 +22,11 @@ const requestFactory = require('../lib/requestwrapper');
 const util = require('util');
 const BaseService = require('../lib/base_service');
 
+/**
+ * Tone Analyzer
+ * @param {Object} options
+ * @constructor
+ */
 function ToneAnalyzerV3(options) {
   BaseService.call(this, options);
   // Check if 'version_date' was provided

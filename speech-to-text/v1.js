@@ -49,6 +49,11 @@ const PARAMS_ALLOWED = [
   'speaker_labels'
 ];
 
+/**
+ * @private
+ * @param chunk
+ * @return {*}
+ */
 function formatChunk(chunk) {
   // Convert the string into an array
   let result = chunk;
@@ -74,7 +79,7 @@ function formatChunk(chunk) {
 /**
  * Speech Recognition API Wrapper
  * @constructor
- * @param options
+ * @param {Object} options
  */
 function SpeechToTextV1(options) {
   BaseService.call(this, options);
@@ -276,7 +281,7 @@ SpeechToTextV1.prototype.getRecognizeStatus = function(params, callback) {
  *
  * @param {Object} params The parameters
  * @param {Function} callback
- * @returns {ReadableStream|undefined}
+ * @return {ReadableStream|undefined}
  */
 SpeechToTextV1.prototype.getModels = function(params, callback) {
   const parameters = {
@@ -297,7 +302,7 @@ SpeechToTextV1.prototype.getModels = function(params, callback) {
  * @param {Object} params The parameters
  * @param {String} params.model_id - The desired model
  * @param {Function} callback
- * @returns {ReadableStream|undefined}
+ * @return {ReadableStream|undefined}
  */
 SpeechToTextV1.prototype.getModel = function(params, callback) {
   const parameters = {
@@ -332,7 +337,12 @@ SpeechToTextV1.prototype.createSession = function(params, callback) {
     defaultOptions: this._options
   };
 
-  // Add the cookie_session to the response
+  /**
+   * Add the cookie_session to the response
+   * @private
+   * @param cb
+   * @return {Function}
+   */
   function addSessionId(cb) {
     return function(error, body, response) {
       if (error) {
@@ -372,7 +382,7 @@ SpeechToTextV1.prototype.deleteSession = function(params, callback) {
  * Replaces recognizeLive & friends with a single 2-way stream over websockets
  *
  * @param {Object} params The parameters
- * @returns {RecognizeStream}
+ * @return {RecognizeStream}
  */
 SpeechToTextV1.prototype.createRecognizeStream = function(params) {
   params = params || {};
@@ -395,12 +405,14 @@ SpeechToTextV1.prototype.createRecognizeStream = function(params) {
   SpeechToTextV1.prototype[name] = function deprecated(params) {
     if (!(params || {}).silent && !this._options.silent) {
       // eslint-disable-next-line no-console
-      console.log(new Error(
-        'The ' +
-          name +
-          '() method is deprecated and will be removed from a future version of the watson-developer-cloud SDK. ' +
-          'Please use createRecognizeStream() instead.\n(Set {silent: true} to hide this message.)'
-      ));
+      console.log(
+        new Error(
+          'The ' +
+            name +
+            '() method is deprecated and will be removed from a future version of the watson-developer-cloud SDK. ' +
+            'Please use createRecognizeStream() instead.\n(Set {silent: true} to hide this message.)'
+        )
+      );
     }
     return original.apply(this, arguments);
   };
@@ -783,7 +795,12 @@ SpeechToTextV1.prototype.whenCustomizationReady = function(params, callback) {
   );
 };
 
-// Check if there is a corpus that is still being processed
+/**
+ * Check if there is a corpus that is still being processed
+ * @private
+ * @param corporaList
+ * @return {boolean}
+ */
 function isProcessing(corporaList) {
   const recordsBeingProcessed = corporaList.corpora.filter(function(record) {
     return record['status'] === 'being_processed';
@@ -795,7 +812,12 @@ function isProcessing(corporaList) {
   }
 }
 
-// Check if corpora has been analyzed
+/**
+ * Check if corpora has been analyzed
+ * @private
+ * @param corporaList
+ * @return {boolean}
+ */
 function isAnalyzed(corporaList) {
   const recordsAnalyzed = corporaList.corpora.filter(function(record) {
     return record['status'] === 'analyzed';

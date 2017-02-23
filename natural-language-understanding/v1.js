@@ -22,7 +22,7 @@ const BaseService = require('../lib/base_service');
 
 /**
  * NaturalLanguageUnderstanding
- * @param options
+ * @param {Object} options
  * @constructor
  */
 function NaturalLanguageUnderstandingV1(options) {
@@ -65,7 +65,7 @@ NaturalLanguageUnderstandingV1.VERSION_DATE_2016_01_23 = '2016-01-23';
   *                 };
   * nlu.analyze(options, myCallbackFunction);
   * ```
-  * @returns {void}
+  * @return {void}
   */
 NaturalLanguageUnderstandingV1.prototype.analyze = function(params, callback) {
   const parameters = {

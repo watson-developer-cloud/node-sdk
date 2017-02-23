@@ -11,3 +11,4 @@ doc/
 .vscode/
 dist/
 .env
+.eslintcache
