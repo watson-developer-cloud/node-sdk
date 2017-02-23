@@ -25,6 +25,7 @@ const message = function(text) {
     input: {
       text: text
     },
+    // pass the context from previous response
     context: currentContext
   };
   return new Promise((resolve, reject) => conversation.message(payload, function(err, data) {
@@ -38,15 +39,16 @@ const message = function(text) {
   }));
 };
 
-message('first message').then(resp1 => {
+// This example makes two successive calls to conversation service.
+message('first message').then(response1 => {
   // APPLICATION-SPECIFIC CODE TO PROCESS THE DATA
   // FROM CONVERSATION SERVICE
-  console.log(JSON.stringify(resp1, null, 2));
+  console.log(JSON.stringify(response1, null, 2));
 
   // invoke a second call to conversation
   message('second message')
-    .then(resp2 => {
-      console.log(JSON.stringify(resp2, null, 2));
+    .then(response2 => {
+      console.log(JSON.stringify(response2, null, 2));
       console.log('Note that the two reponses have the same context.conversation_id');
     })
     .catch(err => {
