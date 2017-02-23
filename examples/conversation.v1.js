@@ -19,6 +19,10 @@ const conversation = new watson.ConversationV1({
  */
 let currentContext = undefined;
 
+/**
+ * Calls the conversation message api. 
+ * returns a promise
+ */
 const message = function(text) {
   const payload = {
     workspace_id: process.env.WORKSPACE_ID || '<workspace_id>',
