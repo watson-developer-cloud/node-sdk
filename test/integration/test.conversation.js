@@ -308,4 +308,24 @@ describe('conversation_integration', function() {
       });
     });
   });
+
+  describe('updateIntent()', function() {
+    it('should update an intent of the workspace', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        intent: intents.intents[0].intent,
+        new_intent: {
+          intent: 'test2'
+        }
+      };
+
+      conversation.getIntents(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.intent, 'test2');
+        done();
+      });
+    });
+  });
 });
