@@ -624,7 +624,7 @@ ConversationV1.prototype.createIntent = function(params, callback) {
 /**
  * Method: getIntents
  *
- * Create a new intent
+ * List the intents for a workspace.
  *
  * @param  {Object}   params   { workspace_id: '',  }
  * @param {String} params.workspace_id
@@ -642,6 +642,35 @@ ConversationV1.prototype.getIntents = function(params, callback) {
       json: true,
       path: pick(params, ['workspace_id']),
       qs: pick(params, ['export'])
+    },
+    requiredParams: ['workspace_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: getIntents
+ *
+ * Get information about an intent, optionally including all intent content.
+ *
+ * @param  {Object}   params   { workspace_id: '',  }
+ * @param {String} params.workspace_id
+ * @param {String} params.intent
+ * @param [params.export=false] - if true, the full contents of all of the sub-resources are returned
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.getIntent = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/intents',
+      method: 'GET',
+      json: true,
+      path: pick(params, ['workspace_id']),
+      qs: pick(params, ['export', 'intent'])
     },
     requiredParams: ['workspace_id'],
     defaultOptions: this._options
