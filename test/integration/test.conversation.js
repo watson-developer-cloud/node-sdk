@@ -253,4 +253,23 @@ describe('conversation_integration', function() {
       });
     });
   });
+
+  describe('createIntent()', function() {
+    it('should create an intent', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        intent: intents.intents[0].intent,
+        examples: intents.intents[0].examples
+      };
+
+      conversation.createIntent(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.intent, intents.intents[0].intent);
+        assert.equal(result.description, null);
+        done();
+      });
+    });
+  });
 });
