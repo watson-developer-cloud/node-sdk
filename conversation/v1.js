@@ -628,9 +628,7 @@ ConversationV1.prototype.createIntent = function(params, callback) {
  *
  * @param  {Object}   params   { workspace_id: '',  }
  * @param {String} params.workspace_id
- * @param {String} [params.intent]
- * @param {String} [params.description]
- * @param {Array<Object>} [params.examples]
+ * @param [params.export=false] - if true, the full contents of all of the sub-resources are returned
  * @param {Function} [callback]
  *
  */
@@ -640,9 +638,10 @@ ConversationV1.prototype.getIntents = function(params, callback) {
   const parameters = {
     options: {
       url: '/v1/workspaces/{workspace_id}/intents',
-      method: 'POST',
+      method: 'GET',
       json: true,
-      body: pick(params, ['intent', 'description', 'examples'])
+      path: pick(params, ['workspace_id'])
+      qs: pick(params, ['export'])
     },
     requiredParams: ['workspace_id'],
     defaultOptions: this._options
