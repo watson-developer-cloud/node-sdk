@@ -328,4 +328,21 @@ describe('conversation_integration', function() {
       });
     });
   });
+
+  describe('deleteIntent()', function() {
+    it('should delete an intent of the workspace', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        intent: 'test2'
+      };
+
+      conversation.getIntents(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result, {});
+        done();
+      });
+    });
+  });
 });
