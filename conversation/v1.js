@@ -669,13 +669,15 @@ ConversationV1.prototype.getIntent = function(params, callback) {
       url: '/v1/workspaces/{workspace_id}/intents',
       method: 'GET',
       json: true,
-      path: pick(params, ['workspace_id']),
-      qs: pick(params, ['export', 'intent'])
+      path: pick(params, ['workspace_id', 'intent']),
+      qs: pick(params, ['export'])
     },
     requiredParams: ['workspace_id'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };
+
+
 
 module.exports = ConversationV1;
