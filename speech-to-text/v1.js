@@ -128,7 +128,7 @@ SpeechToTextV1.prototype.registerCallback = function(params, callback) {
  * How you learn the status and results of a job depends on the parameters you include with the job creation request.
  *
  * @param {object} params - The parameters
- * @param {Audio}  params.audio - Audio to be recognized
+ * @param {ReadableStream}  params.audio - Audio to be recognized
  * @param {string} params.content_type - The Content-type e.g. audio/l16; rate=48000
  * @param {string} params.callback_url - A URL to which callback notifications are to be sent
  * @param {string} params.event - recognitions.started|recognitions.completed|recognitions.failed|recognitions.completed_with_results

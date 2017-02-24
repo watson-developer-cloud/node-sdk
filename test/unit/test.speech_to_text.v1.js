@@ -52,7 +52,7 @@ describe('speech_to_text', function() {
     });
 
     it('should generate a valid response', function() {
-      nock(service.url).persist().post(path).reply(200, new_session, {
+      nock(service.url).post(path).reply(200, new_session, {
         'set-cookie': ['SESSIONID=foobar']
       });
 
@@ -347,20 +347,20 @@ describe('speech_to_text', function() {
 
   describe('asynchronous callback api', function() {
     it('should register new callback url', function() {
-      const path = '/v1/register_callback?callback_url=http%3A%2F%2Fwww.callback.fr%2Fresults&user_secret=ThisIsMySecret';
+      const path = '/v1/register_callback?callback_url=http%3A%2F%2Fwatson-test-resources.mybluemix.net%2Fresults&user_secret=ThisIsMySecret';
       const response = {
         status: 200,
-        url: 'http://www.callback.fr/results'
+        url: 'http://watson-test-resources.mybluemix.net/results'
       };
 
-      nock(service.url).persist().post(path).delay(100).reply(200, response);
+      nock(service.url).post(path).delay(100).reply(200, response);
 
       const checkRes = function(err, res) {
         assert.equal(JSON.stringify(err), JSON.stringify(null));
         assert.equal(JSON.stringify(res), JSON.stringify(response));
       };
 
-      const params = { callback_url: 'http://www.callback.fr/results', user_secret: 'ThisIsMySecret' };
+      const params = { callback_url: 'http://watson-test-resources.mybluemix.net/results', user_secret: 'ThisIsMySecret' };
       const req = speech_to_text.registerCallback(params, checkRes);
 
       assert.equal(req.path, path);
@@ -368,7 +368,7 @@ describe('speech_to_text', function() {
     });
 
     it('should create new recognitions job', function() {
-      const path = '/v1/recognitions?callback_url=http%3A%2F%2Fwww.callback.fr%2Fresults&event=recognitions.completed&user_token=ThisIsMySecret&results_ttl=60';
+      const path = '/v1/recognitions?callback_url=http%3A%2F%2Fwatson-test-resources.mybluemix.net%2Fresults&event=recognitions.completed&user_token=ThisIsMySecret&results_ttl=60';
       const response = {
         id: '4bd734c0-e575-21f3-de03-f932aa0468a0',
         status: 'waiting',
@@ -376,7 +376,7 @@ describe('speech_to_text', function() {
         url: 'https://stream.watsonplatform.net/speech-to-text/api/v1/recognitions/4bd734c0-e575-21f3-de03-f932aa0468a0'
       };
 
-      nock(service.url).persist().post(path).delay(100).reply(200, response);
+      nock(service.url).post(path).delay(100).reply(200, response);
 
       const checkRes = function(err, res) {
         assert.equal(JSON.stringify(err), JSON.stringify(null));
@@ -386,10 +386,10 @@ describe('speech_to_text', function() {
       const params = {
         audio: fs.createReadStream(__dirname + '/../resources/weather.wav'),
         content_type: 'audio/l16;rate=41100',
-        callback_url: 'http://www.callback.fr/results',
+        callback_url: 'http://watson-test-resources.mybluemix.net/results',
         user_token: 'ThisIsMySecret',
         event: 'recognitions.completed',
-        results_ttl: '60'
+        results_ttl: 60
       };
       const req = speech_to_text.createRecognitionJob(params, checkRes);
 
@@ -406,7 +406,7 @@ describe('speech_to_text', function() {
             created: '2017-02-17T19:15:17.926Z',
             updated: '2017-02-17T19:15:17.926Z',
             status: 'waiting',
-            user_token: 'job25'
+            user_token: 'job01'
           },
           {
             id: '4bb1dca0-f6b1-11e5-80bc-71fb7b058b20',
@@ -423,7 +423,7 @@ describe('speech_to_text', function() {
         ]
       };
 
-      nock(service.url).persist().get(path).delay(200).reply(200, response);
+      nock(service.url).get(path).delay(200).reply(200, response);
 
       const checkRes = function(err, res) {
         assert.equal(JSON.stringify(err), JSON.stringify(null));
@@ -435,8 +435,8 @@ describe('speech_to_text', function() {
       assert.equal(req.method, 'GET');
     });
 
-    it('should get status of jobs', function() {
-      const path = '/v1/recognitions/Job01';
+    it('should get status of job', function() {
+      const path = '/v1/recognitions/4bd734c0-e575-21f3-de03-f932aa0468a0';
       const response = {
         id: '4bd734c0-e575-21f3-de03-f932aa0468a0',
         results: [
@@ -461,13 +461,13 @@ describe('speech_to_text', function() {
         status: 'completed'
       };
 
-      nock(service.url).persist().get(path).delay(200).reply(200, response);
+      nock(service.url).get(path).delay(200).reply(200, response);
 
       const checkRes = function(err, res) {
         assert.equal(JSON.stringify(err), JSON.stringify(null));
-        assert.equal(JSON.stringify(res), JSON.stringify(response));
+        assert.deepEqual(res, response);
       };
-      const req = speech_to_text.getRecognitionJob({ id: 'Job01' }, checkRes);
+      const req = speech_to_text.getRecognitionJob({ id: '4bd734c0-e575-21f3-de03-f932aa0468a0' }, checkRes);
 
       assert.equal(req.path, path);
       assert.equal(req.method, 'GET');
@@ -475,14 +475,14 @@ describe('speech_to_text', function() {
   });
 
   it('should delete a recognition job', function() {
-    const path = '/v1/recognitions/Job01';
+    const path = '/v1/recognitions/4bd734c0-e575-21f3-de03-f932aa0468a0';
 
-    nock(service.url).persist().delete(path).delay(200).reply(200);
+    nock(service.url).delete(path).delay(200).reply(200);
 
     const checkRes = function(err, res) {
-      assert.equal(JSON.stringify(err), JSON.stringify(null));
+      assert.ifError(err);
     };
-    const req = speech_to_text.deleteRecognitionJob({ id: 'Job01' }, checkRes);
+    const req = speech_to_text.deleteRecognitionJob({ id: '4bd734c0-e575-21f3-de03-f932aa0468a0' }, checkRes);
 
     assert.equal(req.path, path);
     assert.equal(req.method, 'DELETE');

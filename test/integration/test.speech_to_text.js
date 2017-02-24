@@ -381,33 +381,40 @@ describe('speech_to_text_integration', function() {
       customization_id = null;
     });
 
-    it('registerCallback()', function(done) {
-      const params = { callback_url: 'http://www.callback.fr/results', user_secret: 'ThisIsMySecret' };
-      speech_to_text.registerCallback(params, done);
-    });
+    describe('asynchronous api', function() {
+      let jobId = null;
 
-    it('createRecognitionJob()', function(done) {
-      const params = {
-        audio: fs.createReadStream(__dirname + '/../resources/weather.wav'),
-        content_type: 'audio/l16;rate=41100',
-        callback_url: 'http://www.callback.fr/results',
-        user_token: 'ThisIsMySecret',
-        event: 'recognitions.completed',
-        results_ttl: '60'
-      };
-      speech_to_text.createRecognitionJob(params, done);
-    });
+      it('registerCallback()', function(done) {
+        const params = { callback_url: 'http://watson-test-resources.mybluemix.net/results', user_secret: 'ThisIsMySecret' };
+        speech_to_text.registerCallback(params, done);
+      });
 
-    it('getRecognitionJobs()', function(done) {
-      speech_to_text.getRecognitionJobs(done);
-    });
+      it('createRecognitionJob()', function(done) {
+        const params = {
+          audio: fs.createReadStream(__dirname + '/../resources/weather.wav'),
+          content_type: 'audio/l16;rate=41100',
+          callback_url: 'http://watson-test-resources.mybluemix.net/results',
+          user_token: 'ThisIsMySecret',
+          event: 'recognitions.completed',
+          results_ttl: 60
+        };
+        speech_to_text.createRecognitionJob(params, function(err, res) {
+          assert.ifError(err);
+          jobId = res.id;
+        });
+      });
 
-    it('getRecognitionJob()', function(done) {
-      speech_to_text.getRecognitionJob({ id: 'Job01' }, done);
-    });
+      it('getRecognitionJobs()', function(done) {
+        speech_to_text.getRecognitionJobs(done);
+      });
 
-    it('deleteRecognitionJob()', function(done) {
-      speech_to_text.getRecognitionJob({ id: 'Job01' }, done);
+      it('getRecognitionJob()', function(done) {
+        speech_to_text.getRecognitionJob({ id: jobId }, done);
+      });
+
+      it('deleteRecognitionJob()', function(done) {
+        speech_to_text.deleteRecognitionJob({ id: jobId }, done);
+      });
     });
   });
 });
