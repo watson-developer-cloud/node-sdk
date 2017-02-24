@@ -612,7 +612,7 @@ ConversationV1.prototype.createIntent = function(params, callback) {
       url: '/v1/workspaces/{workspace_id}/intents',
       method: 'POST',
       json: true,
-      path: pick(params, ['workspace_id'])
+      path: pick(params, ['workspace_id']),
       body: pick(params, ['intent', 'description', 'examples'])
     },
     requiredParams: ['workspace_id'],
@@ -640,7 +640,7 @@ ConversationV1.prototype.getIntents = function(params, callback) {
       url: '/v1/workspaces/{workspace_id}/intents',
       method: 'GET',
       json: true,
-      path: pick(params, ['workspace_id'])
+      path: pick(params, ['workspace_id']),
       qs: pick(params, ['export'])
     },
     requiredParams: ['workspace_id'],
