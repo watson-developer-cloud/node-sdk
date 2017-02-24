@@ -612,6 +612,36 @@ ConversationV1.prototype.createIntent = function(params, callback) {
       url: '/v1/workspaces/{workspace_id}/intents',
       method: 'POST',
       json: true,
+      path: pick(params, ['workspace_id'])
+      body: pick(params, ['intent', 'description', 'examples'])
+    },
+    requiredParams: ['workspace_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: getIntents
+ *
+ * Create a new intent
+ *
+ * @param  {Object}   params   { workspace_id: '',  }
+ * @param {String} params.workspace_id
+ * @param {String} [params.intent]
+ * @param {String} [params.description]
+ * @param {Array<Object>} [params.examples]
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.getIntents = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/intents',
+      method: 'POST',
+      json: true,
       body: pick(params, ['intent', 'description', 'examples'])
     },
     requiredParams: ['workspace_id'],
