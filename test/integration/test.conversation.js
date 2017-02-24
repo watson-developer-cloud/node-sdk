@@ -272,4 +272,22 @@ describe('conversation_integration', function() {
       });
     });
   });
+
+  describe('getIntents()', function() {
+    it('should get intents of the workspace', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        export: true
+      };
+
+      conversation.getIntents(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.intents[0].intent, intents.intents[0].intent);
+        assert.equal(result.intents[0].examples[0].text, intents.intents[0].examples[0].text);
+        done();
+      });
+    });
+  });
 });
