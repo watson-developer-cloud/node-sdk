@@ -678,6 +678,33 @@ ConversationV1.prototype.getIntent = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
+/**
+ * Method: updateIntent
+ *
+ * Update an existing intent with new or modified data. You must provide JSON data defining the content of the updated intent.
+ *
+ * @param  {Object}   params   { workspace_id: '',  }
+ * @param {String} params.workspace_id
+ * @param {String} params.intent
+ * @param {Object} params.new_intent
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.updateIntent = function(params, callback) {
+  params = params || {};
 
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/intents',
+      method: 'POST',
+      json: true,
+      path: pick(params, ['workspace_id', 'intent']),
+      body: pick(params, ['new_intent'])
+    },
+    requiredParams: ['workspace_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
 
 module.exports = ConversationV1;
