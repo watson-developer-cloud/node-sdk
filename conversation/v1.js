@@ -666,7 +666,7 @@ ConversationV1.prototype.getIntent = function(params, callback) {
 
   const parameters = {
     options: {
-      url: '/v1/workspaces/{workspace_id}/intents',
+      url: '/v1/workspaces/{workspace_id}/intents/{intent}',
       method: 'GET',
       json: true,
       path: pick(params, ['workspace_id', 'intent']),
@@ -695,7 +695,7 @@ ConversationV1.prototype.updateIntent = function(params, callback) {
 
   const parameters = {
     options: {
-      url: '/v1/workspaces/{workspace_id}/intents',
+      url: '/v1/workspaces/{workspace_id}/intents/{intent}',
       method: 'POST',
       json: true,
       path: pick(params, ['workspace_id', 'intent']),
