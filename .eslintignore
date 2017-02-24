@@ -2,3 +2,8 @@
 jsdoc/
 doc/
 coverage/
+dist/
+node_modules/
+examples/**/node_modules/
+# todo: encrypt a compatible version of this
+test/resources/auth.js

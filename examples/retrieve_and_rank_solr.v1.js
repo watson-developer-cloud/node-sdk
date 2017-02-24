@@ -1,90 +1,90 @@
 'use strict';
 
-var watson = require('watson-developer-cloud');
-var async  = require('async');
+const RetrieveAndRankV1 = require('watson-developer-cloud/retrieve-and-rank/v1');
+const async = require('async');
+const fs = require('fs');
 
-var retrieve = watson.retrieve_and_rank({
+const retrieve = new RetrieveAndRankV1({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
-  password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
-  version: 'v1',
-  url: 'https://gateway.watsonplatform.net/retrieve-and-rank/api'
+  password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE'
 });
 
-var clusterId = 'INSERT YOUR CLUSTER ID HERE';
-var collectionName = 'example_collection';
-var configName     = 'example_config';
-var configZipPath = __dirname + '/resources/example_solr_config.zip';
+const clusterId = 'INSERT YOUR CLUSTER ID HERE';
+const collectionName = 'example_collection';
+const configName = 'example_config';
+const configZipPath = __dirname + '/resources/example_solr_config.zip';
+const jsonDocsFilePath = __dirname + '/resources/solr_docs.json';
 
-var solrClient = retrieve.createSolrClient({
+const solrClient = retrieve.createSolrClient({
   cluster_id: clusterId,
   collection_name: collectionName
 });
 
 async.series([
   function uploadConfig(done) {
-    console.log('Uploading Solr config ' +  configName);
-    retrieve.uploadConfig({
+    console.log('Uploading Solr config ' + configName);
+    retrieve.uploadConfig(
+      {
         cluster_id: clusterId,
         config_name: configName,
         config_zip_path: configZipPath
       },
       function(err) {
         printResponse(err, 'Error uploading Solr config: ', 'Uploaded Solr config ' + configName, done);
-      });
-
+      }
+    );
   },
-
   function listConfigs(done) {
     console.log('Listing Solr configs for cluster ' + clusterId);
-    retrieve.listConfigs({cluster_id: clusterId}, function(err, res) {
+    retrieve.listConfigs({ cluster_id: clusterId }, function(err, res) {
       printResponse(err, 'Error listing Solr configs: ', res, done);
     });
   },
-
   function getConfig(done) {
     console.log('Getting Solr config ' + configName);
-    retrieve.getConfig({
-      cluster_id: clusterId,
-      config_name: configName
-    }, function(err) {
-      if (err) {
-        console.log('Error getting config: ' + JSON.stringify(err, null, 2));
-      } else {
-        // Save response to a local file here
+    retrieve.getConfig(
+      {
+        cluster_id: clusterId,
+        config_name: configName
+      },
+      function(err) {
+        if (err) {
+          console.log('Error getting config: ' + JSON.stringify(err, null, 2));
+        } else {
+          // Save response to a local file here
+        }
+        done();
       }
-      done();
-    });
-
+    );
   },
-
   function createCollection(done) {
-    retrieve.createCollection({
-      cluster_id: clusterId,
-      collection_name: collectionName,
-      config_name: configName
-    }, function(err, res) {
-      printResponse(err, 'Error creating Solr collection: ', res, done);
-    });
-
+    retrieve.createCollection(
+      {
+        cluster_id: clusterId,
+        collection_name: collectionName,
+        config_name: configName
+      },
+      function(err, res) {
+        printResponse(err, 'Error creating Solr collection: ', res, done);
+      }
+    );
   },
-
   function listCollections(done) {
-    retrieve.listCollections({cluster_id: clusterId}, function(err, res) {
+    retrieve.listCollections({ cluster_id: clusterId }, function(err, res) {
       printResponse(err, 'Error listing Solr collections: ', res, done);
     });
   },
-
-  function indexAndCommit(done) {
-    console.log('Indexing a document...');
-    var doc = { id : 1234, title_t : 'Hello', text_field_s: 'some text' };
-    solrClient.add(doc, function(err) {
-      if(err) {
+  function indexAndCommitJsonFileDocs(done) {
+    console.log('Indexing documents via JSON file...');
+    const jsonDocs = JSON.parse(fs.readFileSync(jsonDocsFilePath, 'utf8'));
+    solrClient.add(jsonDocs, function(err) {
+      if (err) {
         console.log('Error indexing document: ' + err);
         done();
       } else {
-        console.log('Indexed a document.');
+        console.log('Indexed JSON documents.');
         solrClient.commit(function(err) {
-          if(err) {
+          if (err) {
             console.log('Error committing change: ' + err);
           } else {
             console.log('Successfully commited changes.');
@@ -94,13 +94,32 @@ async.series([
       }
     });
   },
-
+  function indexAndCommitDocObject(done) {
+    console.log('Indexing a document...');
+    const doc = { id: 1234, title_t: 'Hello', text_field_s: 'some text' };
+    solrClient.add(doc, function(err) {
+      if (err) {
+        console.log('Error indexing document: ' + err);
+        done();
+      } else {
+        console.log('Indexed a document.');
+        solrClient.commit(function(err) {
+          if (err) {
+            console.log('Error committing change: ' + err);
+          } else {
+            console.log('Successfully commited changes.');
+          }
+          done();
+        });
+      }
+    });
+  },
   function _search(done) {
     console.log('Searching all documents.');
-    var query = solrClient.createQuery();
-    query.q({ '*' : '*' });
+    const query = solrClient.createQuery();
+    query.q({ '*': '*' });
     solrClient.search(query, function(err, searchResponse) {
-      if(err) {
+      if (err) {
         console.log('Error searching for documents: ' + err);
       } else {
         console.log('Found ' + searchResponse.response.numFound + ' document(s).');
@@ -109,28 +128,30 @@ async.series([
       done();
     });
   },
-
   function deleteCollection(done) {
     console.log('Deleting Solr collection ' + collectionName);
-    retrieve.deleteCollection({
-      cluster_id: clusterId,
-      collection_name: collectionName
-    }, function(err) {
-      printResponse(err, 'Error deleting collection: ', 'Deleted Solr collection ' + collectionName, done);
-    });
-
+    retrieve.deleteCollection(
+      {
+        cluster_id: clusterId,
+        collection_name: collectionName
+      },
+      function(err) {
+        printResponse(err, 'Error deleting collection: ', 'Deleted Solr collection ' + collectionName, done);
+      }
+    );
   },
-
   function deleteConfig(done) {
     console.log('Deleting Solr config ' + configName);
-    retrieve.deleteConfig({
-      cluster_id: clusterId,
-      config_name: configName
-    }, function(err) {
-      printResponse(err, 'Error deleting config: ', 'Deleted Solr config ' + configName, done);
-    });
-
-  },
+    retrieve.deleteConfig(
+      {
+        cluster_id: clusterId,
+        config_name: configName
+      },
+      function(err) {
+        printResponse(err, 'Error deleting config: ', 'Deleted Solr config ' + configName, done);
+      }
+    );
+  }
 ]);
 
 function printResponse(error, errorMessage, response, callback) {

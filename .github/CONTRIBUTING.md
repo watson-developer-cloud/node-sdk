@@ -7,18 +7,12 @@ or [Stack Overflow](http://stackoverflow.com/questions/ask?tags=ibm-watson).
 
 # Code
 
-* The code should follow: https://github.com/airbnb/javascript
-* 2 spaces identation
-* `snake_case` for parameters and same name as in swagger
-* camelCase for method names. For example:
-  ```
-  personality_insights.getProfile()
-  ```
-* commits should start with the service name and end with the issue #  
+* Our style guide is based on [Google's](https://google.github.io/styleguide/jsguide.html), most of it is automaticaly enforced (and can be automatically applied with `npm run autofix`)
+* commits should start with the service name and end with the issue #
   ```
   [concept-insights] Added functionality to list the graphs #135
-  ``` 
-  
+  ```
+
 # Issues
 
 If you encounter an issue with the Node.js library, you are welcome to submit
@@ -31,13 +25,12 @@ already encountered this issue.
 If you want to contribute to the repository, follow these steps:
 
 1. Fork the repo.
-1. Develop and test your code changes: `npm install -d && npm test`. 
-1. Travis-CI will run the integration tests for all services once your changes are merged.
-If you wish to run integration tests locally you must provide service credentials for all the services. See `test/test.integration-all-services.js`.
-1. Add a test for your changes. Only refactoring and documentation changes require no new tests.
-1. Make the test pass.
-1. Commit your changes.
-1. Push to your fork and submit a pull request.
+2. Develop and test your code changes: `npm install -d && npm test`.
+3. Travis-CI will run the tests for all services once your changes are merged.
+4. Add a test for your changes. Only refactoring and documentation changes require no new tests.
+5. Make the test pass.
+6. Commit your changes.
+7. Push to your fork and submit a pull request.
 
 # Developer's Certificate of Origin 1.1
 

@@ -1,0 +1,2 @@
+[{ "id" : 111, "title_s" : "JSON doc 1", "text_field_s": "one" },
+{ "id" : 222, "title_s" : "JSON doc 2", "text_field_s": "two" }]

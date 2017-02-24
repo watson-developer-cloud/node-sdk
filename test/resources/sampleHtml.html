@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Document Conversion Demo</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+  <meta name="ct" content="MPDzvPNR-4tCbMzbwh4VvcUn6R0Vp4lXsm4I">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+<header class="_demo--heading">
+  <div class="_demo--container">
+    <a class="wordmark" href="http://www.ibm.com/watson/developercloud/">
+      <span class="wordmark--left">IBM</span>
+      <span class="wordmark--right">Watson Developer Cloud</span>
+    </a>
+    <nav class="heading-nav" role="menubar">
+      <li class="base--li heading-nav--li" role="presentation">
+        <a class="heading-nav--item" href="http://www.ibm.com/watson/developercloud/services-catalog.html" role="menuitem">
+          Services
+        </a>
+      </li>
+      <li class="base--li heading-nav--li" role="presentation">
+        <a class="heading-nav--item" href="http://www.ibm.com/watson/developercloud/doc/" role="menuitem">
+          Docs
+        </a>
+      </li>
+      <li class="base--li heading-nav--li" role="presentation">
+        <a class="heading-nav--item" href="http://www.ibm.com/watson/developercloud/gallery.html" role="menuitem">
+          App Gallery
+        </a>
+      </li>
+      <li class="base--li heading-nav--li" role="presentation">
+        <a class="heading-nav--item" href="https://developer.ibm.com/watson/" role="menuitem">
+          Community
+        </a>
+      </li>
+    </nav>
+  </div>
+</header>
+
+<div class="_demo--banner">
+  <div class="_demo--container">
+    <div class="banner--service-icon-container">
+      <img class="banner--service-icon" src="images/document-conversion.svg" alt="Document Conversion API Icon">
+    </div>
+    <div class="banner--service-info">
+      <h1 class="banner--service-title base--h1">
+        <img class="banner--service-icon_INLINE" src="images/document-conversion.svg" alt="Document Conversion API Icon">
+        Document Conversion
+      </h1>
+      <div class="banner--service-description">
+        The Document Conversion service transforms HTML, PDF, and Microsoft™ Word documents into normalized HTML, plain text, or sets of Answer units. The Answer units can be run through a utility to convert it to the Solr JSON file type needed to train the Retrieve and Rank service.
+      </div>
+      <div class="banner--service-resource">
+        <span class="icon icon-link"></span>
+        <strong>Resources:</strong>
+      </div>
+      <div class="banner--service-links">
+        <li class="base--li banner--service-link-item">
+          <a href="http://www.ibm.com/watson/developercloud/document-conversion/api/v1/" class="base--a" target="_blank">API Overview</a>
+        </li>
+        <li class="base--li banner--service-link-item">
+          <a href="http://www.ibm.com/watson/developercloud/doc/document-conversion/" class="base--a" target="_blank">Documentation</a>
+        </li>
+        <li class="base--li banner--service-link-item" target="_blank">
+          <a href="https://bluemix.net/deploy?repository=https://github.com/watson-developer-cloud/document-conversion-nodejs" class="base--a" target="_blank">Fork and Deploy on Bluemix</a>
+        </li>
+        <li class="base--li banner--service-link-item" target="_blank">
+          <a href="https://github.com/watson-developer-cloud/document-conversion-nodejs" class="base--a" target="_blank">Fork on Github</a>
+        </li>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="_demo--container">
+  <article class="_content base--article">
+    <div class="_content--choose-input-file">
+      <h2 id="upload-your-document" class="base--h2">Upload your document</h2>
+      <p class="_content--input-description base--p">
+        This demo allows you to try out the Document Conversion service on a single file.
+      </p>
+			<span class="_content--reset-btn icon-hyperlink">
+				<span class="icon icon-reset"></span>
+				<button class="base--a reset-button" href="" type="reset">
+					Reset
+				</button>
+			</span>
+
+      <div class="_content--sample">
+        <div class="sample--list-item">
+          <div class="sample--list-item-tab" onclick="convert_sample_html()">
+            <span class="sample--icon icon icon-html_icon"></span>
+            <span class="sample--title sample--html-file">Sample.html</span>
+          </div>
+        </div>
+        <div class="sample--list-item">
+          <div class="sample--list-item-tab" onclick="convert_sample_docx()">
+            <span class="sample--icon icon icon-doc_icon"></span>
+            <span class="sample--title sample--docx-file">Sample.docx</span>
+          </div>
+        </div>
+        <div class="sample--list-item">
+          <div class="sample--list-item-tab" onclick="convert_sample_pdf()">
+            <span class="sample--icon icon icon-pdf_icon"></span>
+            <span class="sample--title sample--pdf-file">Sample.pdf</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="_content--upload">
+        <form class="upload-form" id="fileupload" method='POST', enctype='multipart/form-data', action='/files'>
+          <div class="upload--container dropzone">
+            <div class="upload--description">
+              Drag or upload a pdf, Microsoft™ Word(.doc, .docx) or HTML document. (The max file size is 1 MB.)
+            </div>
+
+            <div class="upload--file-chooser base--label">
+              <label for="file-chooser-input" class="upload--file-chooser-btn base--button">Choose your file</label>
+              <span class="upload--file-chooser-name"></span>
+              <input id="file-chooser-input" class="upload--file-chooser-input base--file-input" type="file", accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, .html" title="Choose an file to upload" name="document">
+            </div>
+          </div>
+        </form>
+
+      </div>
+      <p class="upload--explanation">
+        Attention: IBM Bluemix collects data from all requests to this demonstration and uses the data to improve the services. Do not use confidential or restricted data.
+      </p>
+      <div class="error" style="color:#a53725;text-align:center;"></div>
+
+    </div>
+
+    <div class="_content--choose-output-format">
+      <h2 id="choose-output-format" class="base--h2">Choose an output format</h2>
+
+      <div class="_content--format">
+        <div class="format--list-item">
+          <div class="format--list-item-tab" data-attr="ANSWER_UNITS" data-type="json">
+            Answer units JSON
+          </div>
+        </div>
+        <div class="format--list-item">
+          <div class="format--list-item-tab" data-attr="NORMALIZED_HTML" data-type="html">
+            Normalized HTML
+          </div>
+        </div>
+        <div class="format--list-item">
+          <div class="format--list-item-tab" data-attr="NORMALIZED_TEXT" data-type="text">
+            Plain text
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="_content--output">
+      <p class="base--p description--answer-unit">
+        The Answer units can be run through a utility to create a Solr collection needed to train the Retrieve and Rank service.
+      </p>
+      <div class="tab-panels" role="tabpanel">
+        <ul class="tab-panels--tab-list" role="tablist">
+          <li class="tab-panels--tab-list-item base--li" role="presentation">
+            <a class="tab-panels--tab base--a active" href="#display_input_doc" aria-controls="display_input_doc" role="tab">Your document</a>
+          </li>
+          <a title="Download input file" href="" class="download--input-icon icon icon-download download--icon"></a>
+        </ul>
+        <div class="tab-panels--tab-content">
+          <div id="display_input_doc" class="tab-panels--tab-pane active" role="tab-panel">
+
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panels" role="tabpanel">
+        <ul class="tab-panels--tab-list" role="tablist">
+          <li class="tab-panels--tab-list-item base--li" role="presentation">
+            <a class="tab-panels--tab base--a active" href="#display_output_doc" aria-controls="display_output_doc" role="tab">Output document</a>
+          </li>
+          <a title="Download output file" href="" class="download--output-icon icon icon-download download--icon"></a>
+        </ul>
+        <div class="tab-panels--tab-content">
+          <div id="display_output_doc" class="tab-panels--tab-pane active" role="tab-panel">
+						<pre class="code--pre language-markup">
+							<code class="base--code language-markup code--output-code">
+							</code>
+						</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+		<span class="icon-hyperlink">
+			<span class="icon icon-back2top"></span>
+			<a href="#upload-your-document" class="base--a">
+				Back to top
+			</a>
+		</span>
+
+  </article>
+
+</div>
+
+
+<script type="text/javascript" src="js/vendors/jquery.min.js"></script>
+<script type="text/javascript" src="js/vendors/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="js/vendors/jquery.fileupload.js"></script>
+<script type="text/javascript" src="js/vendors/jquery.iframe-transport.js"></script>
+<script type="text/javascript" src="js/demo.js"></script>
+<script type="text/javascript" src="js/ga.js"></script>
+</body>
+</html>

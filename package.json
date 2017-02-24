@@ -1,8 +1,8 @@
 {
   "name": "watson-developer-cloud",
-  "version": "1.2.6",
+  "version": "2.21.1",
   "description": "Client library to use the IBM Watson Services and AlchemyAPI",
-  "main": "./lib/index",
+  "main": "./index",
   "repository": {
     "type": "git",
     "url": "https://github.com/watson-developer-cloud/node-sdk.git"
@@ -12,6 +12,7 @@
     "watson",
     "wdc",
     "watson developer cloud",
+    "chatbot",
     "message resonance",
     "user modeling",
     "dialog",
@@ -36,7 +37,8 @@
     "alchemyapi",
     "alchemy vision",
     "alchemy language",
-    "alchemy datanews "
+    "alchemy datanews",
+    "conversation"
   ],
   "author": "IBM Corp.",
   "contributors": [
@@ -58,42 +60,62 @@
     "url": "https://github.com/watson-developer-cloud/node-sdk/issues"
   },
   "devDependencies": {
-    "codecov": ">1.0.0",
+    "browserify": "^14.0.0",
     "concat-stream": "^1.5.1",
-    "coveralls": "^2.11.6",
-    "eslint": "^2.2.0",
-    "istanbul": "^0.4.2",
+    "dependency-lint": "^4.2.0",
+    "eslint": "^3.14.1",
+    "eslint-config-google": "^0.7.1",
+    "eslint-config-prettier": "git+https://github.com/nfriedly/eslint-config-prettier.git#nfriedly-patch-1",
+    "eslint-plugin-node": "^4.0.0",
+    "eslint-plugin-prettier": "^2.0.0",
     "jsdoc": "^3.4.0",
-    "mocha": "^2.4.5",
-    "nock": "^7.0.2",
-    "qs": "^6.1.0",
-    "wav": "^1.0.0"
+    "karma": "^1.1.1",
+    "karma-browserify": "^5.0.5",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-firefox-launcher": "^1.0.0",
+    "karma-mocha": "^1.1.1",
+    "memory-fs": "^0.4.1",
+    "mocha": "^3.2.0",
+    "nock": "^9.0.2",
+    "object.assign": "^4.0.4",
+    "prettier": "^0.18.0",
+    "shebang-loader": "0.0.1",
+    "uglify-js": "^2.7.0",
+    "watchify": "^3.7.0",
+    "wav": "^1.0.0",
+    "webpack": "^2.2.1"
   },
   "dependencies": {
-    "cookie": "~0.2.3",
+    "async": "^2.0.1",
+    "cookie": "~0.3.1",
     "csv-stringify": "~1.0.2",
     "extend": "~3.0.0",
     "isstream": "~0.1.2",
     "object.omit": "~2.0.0",
-    "object.pick": "~1.1.1",
-    "request": "~2.69.0",
+    "object.pick": "~1.2.0",
+    "request": "~2.79.0",
     "solr-client": "~0.6.0",
-    "string": "3.3.1",
-    "vcap_services": "~0.1.7",
+    "string": "3.3.3",
+    "vcap_services": "~0.2.0",
     "websocket": "~1.0.22"
   },
   "engines": {
-    "node": ">=0.12"
+    "node": ">=4"
   },
   "scripts": {
-    "test": "npm run lint && npm run codecov",
-    "lint": "eslint .",
+    "test": "npm run lint && mocha test/unit test/integration",
+    "lint": "npm run compat-check && eslint . --cache && dependency-lint",
+    "compat-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
     "autofix": "eslint . --fix",
-    "prepare": "npm test && npm version patch",
-    "doc": "jsdoc -c jsdoc/config.json",
-    "watch-doc": "nodemon --watch lib/ --watch services/ --watch jsdoc/ --watch package.json --ext js,tmpl --exec npm run doc",
-    "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha --reporter spec --timeout 4000",
-    "codecov": "istanbul cover ./node_modules/mocha/bin/_mocha && codecov",
-    "coveralls": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+    "doc": "jsdoc -c scripts/jsdoc/config.json",
+    "watch-doc": "nodemon --watch ./ --ext js,tmpl,json --ignore dist/ --ignore doc/ --ignore test/ --ignore examples/ --exec npm run doc",
+    "test-integration": "mocha test/integration",
+    "test-unit": "npm run lint && mocha test/unit/",
+    "test-browser": "karma start --single-run",
+    "watch": "npm run test-unit -- --watch",
+    "browserify": "browserify index.js --standalone Watson --outfile dist/watson.js",
+    "watchify": "watchify index.js --standalone Watson --outfile dist/watson.js --debug --verbose",
+    "minify": "uglifyjs --compress --mangle --screw-ie8 dist/watson.js --output dist/watson.min.js --preamble \"// Watson Developer Cloud\n// JavaScript SDK$npm_package_version\n// Generated at `date`\n// Copyright IBM ($npm_package_license)\n// $npm_package_homepage\"",
+    "build": "npm run browserify && npm run minify"
   }
 }

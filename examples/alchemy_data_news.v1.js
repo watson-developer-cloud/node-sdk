@@ -1,14 +1,14 @@
 'use strict';
 
-var watson = require('watson-developer-cloud');
+const AlchemyDataNewsV1 = require('watson-developer-cloud/alchemy-data-news/v1');
 
-var alchemy_data_news = watson.alchemy_data_news({
+const alchemy_data_news = new AlchemyDataNewsV1({
   api_key: '<api_key>'
 });
 
 // News about company acquisitions in the past 24 hours:
 // More information: http://docs.alchemyapi.com/docs/introduction
-var params = {
+const params = {
   start: 'now-1d',
   end: 'now',
   count: 100,
@@ -16,9 +16,10 @@ var params = {
   return: 'enriched.url.title'
 };
 
-alchemy_data_news.getNews(params, function (err, news) {
-  if (err)
+alchemy_data_news.getNews(params, function(err, news) {
+  if (err) {
     console.log('error:', err);
-  else
+  } else {
     console.log(JSON.stringify(news, null, 2));
+  }
 });

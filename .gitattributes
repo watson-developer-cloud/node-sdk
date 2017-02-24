@@ -1,0 +1,6 @@
+# https://git-scm.com/book/en/v2/Customizing-Git-Git-Attributes
+
+# Code linting require line-endings be LF rather than CRLF in js files. This file should prevent git from converting line-endings.
+# (On Windows, git is often configured to automatically convert between the two - See https://git-scm.com/docs/git-config#git-config-coreautocrlf )
+
+*.js text eol=lf
