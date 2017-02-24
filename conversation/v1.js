@@ -707,4 +707,32 @@ ConversationV1.prototype.updateIntent = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
+/**
+ * Method: deleteItent
+ *
+ * Delete an intent from a workspace
+ *
+ * @param  {Object}   params   { workspace_id: '',  }
+ * @param {String} params.workspace_id
+ * @param {String} params.intent
+ * @param {Object} params.new_intent
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.updateIntent = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/intents/{intent}',
+      method: 'DELETE',
+      json: true,
+      path: pick(params, ['workspace_id', 'intent'])
+    },
+    requiredParams: ['workspace_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
 module.exports = ConversationV1;
