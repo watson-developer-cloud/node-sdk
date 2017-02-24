@@ -401,6 +401,7 @@ describe('speech_to_text_integration', function() {
         speech_to_text.createRecognitionJob(params, function(err, res) {
           assert.ifError(err);
           jobId = res.id;
+          done();
         });
       });
 

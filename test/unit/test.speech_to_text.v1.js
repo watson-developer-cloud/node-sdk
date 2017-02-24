@@ -52,7 +52,7 @@ describe('speech_to_text', function() {
     });
 
     it('should generate a valid response', function() {
-      nock(service.url).post(path).reply(200, new_session, {
+      nock(service.url).persist().post(path).reply(200, new_session, {
         'set-cookie': ['SESSIONID=foobar']
       });
 
