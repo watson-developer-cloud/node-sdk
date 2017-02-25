@@ -397,7 +397,7 @@ describe('speech_to_text', function() {
       assert.equal(req.method, 'POST');
     });
 
-    it('should get list of jobs', function() {
+    it('should get list of jobs', function(done) {
       const path = '/v1/recognitions';
       const response = {
         recognitions: [
@@ -428,6 +428,7 @@ describe('speech_to_text', function() {
       const checkRes = function(err, res) {
         assert.equal(JSON.stringify(err), JSON.stringify(null));
         assert.equal(JSON.stringify(res), JSON.stringify(response));
+        done();
       };
       const req = speech_to_text.getRecognitionJobs(checkRes);
 

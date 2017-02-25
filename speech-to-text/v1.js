@@ -128,7 +128,7 @@ SpeechToTextV1.prototype.registerCallback = function(params, callback) {
  * How you learn the status and results of a job depends on the parameters you include with the job creation request.
  *
  * @param {object} params - The parameters
- * @param {ReadableStream}  params.audio - Audio to be recognized
+ * @param {Audio}  params.audio - Audio to be recognized
  * @param {string} params.content_type - The Content-type e.g. audio/l16; rate=48000
  * @param {string} params.callback_url - A URL to which callback notifications are to be sent
  * @param {string} params.event - recognitions.started|recognitions.completed|recognitions.failed|recognitions.completed_with_results
@@ -150,7 +150,6 @@ SpeechToTextV1.prototype.createRecognitionJob = function(params, callback) {
   }
 
   const parameters = {
-    requiredParams: ['audio'],
     options: {
       method: 'POST',
       url: '/v1/recognitions',
@@ -158,13 +157,17 @@ SpeechToTextV1.prototype.createRecognitionJob = function(params, callback) {
         'Content-Type': params.content_type
       },
       qs: pick(params, ['callback_url', 'event', 'user_token', 'results_ttl']),
-      body: pick(params, ['audio']),
       json: true
     },
     defaultOptions: this._options
   };
 
-  return requestFactory(parameters, callback);
+  return params.audio
+    .on('response', function(response) {
+      // Replace content-type
+      response.headers['content-type'] = params.content_type;
+    })
+    .pipe(requestFactory(parameters, callback));
 };
 
 /**
