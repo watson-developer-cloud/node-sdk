@@ -368,7 +368,7 @@ describe('speech_to_text', function() {
     });
 
     it('should create new recognitions job', function() {
-      const path = '/v1/recognitions?callback_url=http%3A%2F%2Fwatson-test-resources.mybluemix.net%2Fresults&event=recognitions.completed&user_token=ThisIsMySecret&results_ttl=60';
+      const path = '/v1/recognitions?callback_url=http%3A%2F%2Fwatson-test-resources.mybluemix.net%2Fresults&event=recognitions.completed&user_token=myArbitraryIdentifier1&results_ttl=60';
       const response = {
         id: '4bd734c0-e575-21f3-de03-f932aa0468a0',
         status: 'waiting',
@@ -387,7 +387,7 @@ describe('speech_to_text', function() {
         audio: fs.createReadStream(__dirname + '/../resources/weather.wav'),
         content_type: 'audio/l16;rate=41100',
         callback_url: 'http://watson-test-resources.mybluemix.net/results',
-        user_token: 'ThisIsMySecret',
+        user_token: 'myArbitraryIdentifier1',
         event: 'recognitions.completed',
         results_ttl: 60
       };
