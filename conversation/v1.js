@@ -699,7 +699,7 @@ ConversationV1.prototype.updateIntent = function(params, callback) {
       method: 'POST',
       json: true,
       path: pick(params, ['workspace_id', 'intent']),
-      body: pick(params, ['new_intent'])
+      body: pick(params, ['new_intent']) ? pick(params, ['new_intent']).new_intent : {}
     },
     requiredParams: ['workspace_id'],
     defaultOptions: this._options
