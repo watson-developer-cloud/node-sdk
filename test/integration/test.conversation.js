@@ -239,21 +239,6 @@ describe('conversation_integration', function() {
     });
   });
 
-  describe('deleteWorkspace()', function() {
-    it('should delete the workplace', function(done) {
-      const params = {
-        workspace_id: workspace1.workspace_id
-      };
-
-      conversation.deleteWorkspace(params, function(err, result) {
-        if (err) {
-          return done(err);
-        }
-        done();
-      });
-    });
-  });
-
   describe('createIntent()', function() {
     it('should create an intent', function(done) {
       const params = {
@@ -341,6 +326,21 @@ describe('conversation_integration', function() {
           return done(err);
         }
         assert.equal(result, {});
+        done();
+      });
+    });
+  });
+
+  describe('deleteWorkspace()', function() {
+    it('should delete the workplace', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id
+      };
+
+      conversation.deleteWorkspace(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
         done();
       });
     });
