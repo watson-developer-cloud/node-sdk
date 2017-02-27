@@ -49,11 +49,21 @@ const test_intents = [
     intent: 'intent_1',
     examples: [
       {
-        text: 'example_1'
+        text: 'Hi, here\'s a URL\\URI ☺ http://example.com/?a=$+*^;&c=%20#!"`~'
       }
     ]
   }
 ];
+const test_intents_update = {
+  intent: 'intent_2',
+  description: 'description_2',
+  examples: [
+    {
+      text: 'Hey, here\'s a URL\\URI ☺ http://example.com/?a=$+*^;&c=%20#!"`~'
+    }
+  ]
+};
+const test_examples_new = 'Oh, here\'s a URL\\URI ☺ http://example.com/?a=$+*^;&c=%20#!"`~';
 
 const workspace1 = extend(true, {}, workspace, intents);
 
@@ -309,23 +319,17 @@ describe('conversation_integration', function() {
     it('should update an intent of the workspace', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        intent: test_intents[0].intent,
-        new_intent: {
-          intent: 'intent_2',
-          description: 'description_2',
-          examples: [
-            {
-              text: 'example_2'
-            }
-          ]
-        }
+        old_intent: test_intents[0].intent,
+        intent: test_intents_update.intent,
+        description: test_intents_update.description,
+        examples: test_intents_update.examples
       };
 
       conversation.updateIntent(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.intent, 'intent_2');
+        assert.equal(result.intent, test_intents_update.intent);
         done();
       });
     });
@@ -335,14 +339,14 @@ describe('conversation_integration', function() {
     it('should get all examples of intent', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        intent: 'intent_2'
+        intent: test_intents_update.intent
       };
 
       conversation.getExamples(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.examples[0].text, 'example_2');
+        assert.equal(result.examples[0].text, test_intents_update.examples[0].text);
         done();
       });
     });
@@ -352,15 +356,15 @@ describe('conversation_integration', function() {
     it('should create an example in the intent', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        intent: 'intent_2',
-        text: 'new_example_2'
+        intent: test_intents_update.intent,
+        text: 'new_example'
       };
 
       conversation.createExample(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.text, 'new_example_2');
+        assert.equal(result.text, 'new_example');
         done();
       });
     });
@@ -370,15 +374,15 @@ describe('conversation_integration', function() {
     it('should get an example of intent', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        intent: 'intent_2',
-        text: 'new_example_2'
+        intent: test_intents_update.intent,
+        text: test_intents_update.examples[0].text
       };
 
       conversation.getExample(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.text, 'new_example_2');
+        assert.equal(result.text, test_intents_update.examples[0].text);
         done();
       });
     });
@@ -388,18 +392,16 @@ describe('conversation_integration', function() {
     it('should update an example of intent', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        intent: 'intent_2',
-        text: 'new_example_2',
-        example: {
-          text: 'updated_example_2'
-        }
+        intent: test_intents_update.intent,
+        old_text: test_intents_update.examples[0].text,
+        text: test_examples_new
       };
 
       conversation.updateExample(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.text, 'updated_example_2');
+        assert.equal(result.text, test_examples_new);
         done();
       });
     });
@@ -409,8 +411,8 @@ describe('conversation_integration', function() {
     it('should delete an example of intent', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        intent: 'intent_2',
-        text: 'updated_example_2'
+        intent: test_intents_update.intent,
+        text: test_examples_new
       };
 
       conversation.deleteExample(params, function(err, result) {
@@ -426,7 +428,7 @@ describe('conversation_integration', function() {
     it('should delete an intent of the workspace', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        intent: 'intent_2'
+        intent: test_intents_update.intent
       };
 
       conversation.deleteIntent(params, function(err, result) {
