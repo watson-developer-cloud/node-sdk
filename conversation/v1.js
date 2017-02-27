@@ -848,4 +848,34 @@ ConversationV1.prototype.getExample = function(params, callback) {
     return requestFactory(parameters, callback);
 };
 
+/**
+ * Method: updateExample
+ *
+ * Update the text of a user input example.
+ *
+ * @param  {Object}   params   { workspace_id: '',  }
+ * @param {String} params.workspace_id
+ * @param {String} params.intent
+ * @param {String} params.text
+ * @param {Object} params.example
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.updateExample = function(params, callback) {
+    params = params || {};
+
+    const parameters = {
+        options: {
+            url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
+            method: 'POST',
+            json: true,
+            path: pick(params, ['workspace_id', 'intent', 'text']),
+            body: pick(params, ['example']) ? pick(params, ['example']).example : {}
+        },
+        requiredParams: ['workspace_id'],
+        defaultOptions: this._options
+    };
+    return requestFactory(parameters, callback);
+};
+
 module.exports = ConversationV1;
