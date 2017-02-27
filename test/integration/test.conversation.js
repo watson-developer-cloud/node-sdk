@@ -323,9 +323,100 @@ describe('conversation_integration', function() {
 
       conversation.updateIntent(params, function(err, result) {
         if (err) {
-          return done(JSON.stringify(err));
+          return done(err);
         }
         assert.equal(result.intent, 'intent_2');
+        done();
+      });
+    });
+  });
+
+  describe('getExamples()', function() {
+    it('should get all examples of intent', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        intent: 'intent_2'
+      };
+
+      conversation.getExamples(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.examples[0].text, 'example_2');
+        done();
+      });
+    });
+  });
+
+  describe('createExample()', function() {
+    it('should create an example in the intent', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        intent: 'intent_2',
+        text: 'new_example_2'
+      };
+
+      conversation.createExample(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.text, 'new_example_2');
+        done();
+      });
+    });
+  });
+
+  describe('getExample()', function() {
+    it('should get an example of intent', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        intent: 'intent_2',
+        text: 'new_example_2'
+      };
+
+      conversation.getExample(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.text, 'new_example_2');
+        done();
+      });
+    });
+  });
+
+  describe('updateExample()', function() {
+    it('should update an example of intent', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        intent: 'intent_2',
+        text: 'new_example_2',
+        example: {
+          text: 'updated_example_2'
+        }
+      };
+
+      conversation.updateExample(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.text, 'updated_example_2');
+        done();
+      });
+    });
+  });
+
+  describe('deleteExample()', function() {
+    it('should delete an example of intent', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        intent: 'intent_2',
+        text: 'updated_example_2'
+      };
+
+      conversation.deleteExample(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
         done();
       });
     });

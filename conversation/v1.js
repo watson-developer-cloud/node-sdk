@@ -735,4 +735,146 @@ ConversationV1.prototype.deleteIntent = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
+/**
+ * Method: getExamples
+ *
+ * List the user input examples for an intent.
+ *
+ * @param  {Object}   params   { workspace_id: '',  }
+ * @param {String} params.workspace_id
+ * @param {String} params.intent
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.getExamples = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples',
+      method: 'GET',
+      json: true,
+      path: pick(params, ['workspace_id', 'intent'])
+    },
+    requiredParams: ['workspace_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: createExample
+ *
+ * Add a new user input example to an intent.
+ *
+ * @param  {Object}   params   { workspace_id: '',  }
+ * @param {String} params.workspace_id
+ * @param {String} params.intent
+ * @param {String} params.text
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.createExample = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples',
+      method: 'POST',
+      json: true,
+      path: pick(params, ['workspace_id', 'intent']),
+      body: pick(params, ['text'])
+    },
+    requiredParams: ['workspace_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: deleteExample
+ *
+ * Delete a user input example from an intent.
+ *
+ * @param  {Object}   params   { workspace_id: '',  }
+ * @param {String} params.workspace_id
+ * @param {String} params.intent
+ * @param {String} params.text
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.deleteExample = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
+      method: 'DELETE',
+      json: true,
+      path: pick(params, ['workspace_id', 'intent', 'text'])
+    },
+    requiredParams: ['workspace_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: getExample
+ *
+ * Get information about a user input example.
+ *
+ * @param  {Object}   params   { workspace_id: '',  }
+ * @param {String} params.workspace_id
+ * @param {String} params.intent
+ * @param {String} params.text
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.getExample = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
+      method: 'GET',
+      json: true,
+      path: pick(params, ['workspace_id', 'intent', 'text'])
+    },
+    requiredParams: ['workspace_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: updateExample
+ *
+ * Update the text of a user input example.
+ *
+ * @param  {Object}   params   { workspace_id: '',  }
+ * @param {String} params.workspace_id
+ * @param {String} params.intent
+ * @param {String} params.text
+ * @param {Object} params.example
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.updateExample = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
+      method: 'POST',
+      json: true,
+      path: pick(params, ['workspace_id', 'intent', 'text']),
+      body: pick(params, ['example']) ? pick(params, ['example']).example : {}
+    },
+    requiredParams: ['workspace_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
 module.exports = ConversationV1;
