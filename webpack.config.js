@@ -1,4 +1,4 @@
-use strict';
+'use strict';
 
 // With this configuration, the entire library can be bundled with Webpack. 
 // However, not all services support client-side usage.
