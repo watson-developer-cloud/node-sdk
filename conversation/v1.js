@@ -763,4 +763,33 @@ ConversationV1.prototype.getExamples = function(params, callback) {
     return requestFactory(parameters, callback);
 };
 
+/**
+ * Method: createExample
+ *
+ * Add a new user input example to an intent.
+ *
+ * @param  {Object}   params   { workspace_id: '',  }
+ * @param {String} params.workspace_id
+ * @param {String} params.intent
+ * @param {String} params.text
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.createExample = function(params, callback) {
+    params = params || {};
+
+    const parameters = {
+        options: {
+            url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples',
+            method: 'POST',
+            json: true,
+            path: pick(params, ['workspace_id', 'intent']),
+            body: pick(params, ['text'])
+        },
+        requiredParams: ['workspace_id'],
+        defaultOptions: this._options
+    };
+    return requestFactory(parameters, callback);
+};
+
 module.exports = ConversationV1;
