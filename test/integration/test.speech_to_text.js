@@ -400,8 +400,7 @@ describe('speech_to_text_integration', function() {
     };
 
     it('registerCallback()', function(done) {
-      /* const params = { callback_url: 'http://watson-test-resources.mybluemix.net/results', user_secret: 'ThisIsMySecret' }; */
-      const params = { callback_url: 'https://rueeieyizr.localtunnel.me/stt-results', user_secret: 'ThisIsMySecret' };
+      const params = { callback_url: 'http://watson-test-resources.mybluemix.net/results', user_secret: 'ThisIsMySecret' };
       speech_to_text.registerCallback(params, done);
     });
 
@@ -409,7 +408,7 @@ describe('speech_to_text_integration', function() {
       const params = {
         audio: fs.createReadStream(__dirname + '/../resources/weather.wav'),
         content_type: 'audio/l16;rate=41100',
-        callback_url: 'https://rueeieyizr.localtunnel.me/stt-results',
+        callback_url: 'http://watson-test-resources.mybluemix.net/results',
         user_token: 'my-arbitrary-identifier-1',
         event: 'recognitions.completed',
         results_ttl: 1

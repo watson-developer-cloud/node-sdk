@@ -406,7 +406,7 @@ describe('speech_to_text', function() {
             created: '2017-02-17T19:15:17.926Z',
             updated: '2017-02-17T19:15:17.926Z',
             status: 'waiting',
-            user_token: 'job01'
+            user_token: 'myArbitraryIdentifier1'
           },
           {
             id: '4bb1dca0-f6b1-11e5-80bc-71fb7b058b20',
