@@ -44,6 +44,17 @@ const intents = {
   ]
 };
 
+const test_intents = [
+  {
+    intent: 'intent_1',
+    examples: [
+      {
+        text: 'example_1'
+      }
+    ]
+  }
+];
+
 const workspace1 = extend(true, {}, workspace, intents);
 
 describe('conversation_integration', function() {
@@ -243,15 +254,15 @@ describe('conversation_integration', function() {
     it('should create an intent', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        intent: intents.intents[0].intent,
-        examples: intents.intents[0].examples
+        intent: test_intents[0].intent,
+        examples: test_intents[0].examples
       };
 
       conversation.createIntent(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.intent, intents.intents[0].intent);
+        assert.equal(result.intent, test_intents[0].intent);
         assert.equal(result.description, null);
         done();
       });
@@ -269,8 +280,8 @@ describe('conversation_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.intents[0].intent, intents.intents[0].intent);
-        assert.equal(result.intents[0].examples[0].text, intents.intents[0].examples[0].text);
+        assert.equal(result.intents[0].intent, test_intents[0].intent);
+        assert.equal(result.intents[0].examples[0].text, test_intents[0].examples[0].text);
         done();
       });
     });
@@ -280,14 +291,14 @@ describe('conversation_integration', function() {
     it('should get an intent of the workspace', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        intent: intents.intents[0].intent
+        intent: test_intents[0].intent
       };
 
-      conversation.getIntents(params, function(err, result) {
+      conversation.getIntent(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.intent, intents.intents[0].intent);
+        assert.equal(result.intent, test_intents[0].intent);
         assert.equal(result.description, null);
         done();
       });
@@ -298,17 +309,23 @@ describe('conversation_integration', function() {
     it('should update an intent of the workspace', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        intent: intents.intents[0].intent,
+        intent: test_intents[0].intent,
         new_intent: {
-          intent: 'test2'
+          intent: 'intent_2',
+          description: 'description_2',
+          examples: [
+            {
+              text: 'example_2'
+            }
+          ]
         }
       };
 
-      conversation.getIntents(params, function(err, result) {
+      conversation.updateIntent(params, function(err, result) {
         if (err) {
-          return done(err);
+          return done(JSON.stringify(err));
         }
-        assert.equal(result.intent, 'test2');
+        assert.equal(result.intent, 'intent_2');
         done();
       });
     });
@@ -318,14 +335,13 @@ describe('conversation_integration', function() {
     it('should delete an intent of the workspace', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        intent: 'test2'
+        intent: 'intent_2'
       };
 
-      conversation.getIntents(params, function(err, result) {
+      conversation.deleteIntent(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result, {});
         done();
       });
     });
