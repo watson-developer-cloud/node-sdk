@@ -735,7 +735,6 @@ ConversationV1.prototype.deleteIntent = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
-
 /**
  * Method: getExamples
  *
@@ -748,19 +747,19 @@ ConversationV1.prototype.deleteIntent = function(params, callback) {
  *
  */
 ConversationV1.prototype.getExamples = function(params, callback) {
-    params = params || {};
+  params = params || {};
 
-    const parameters = {
-        options: {
-            url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples',
-            method: 'GET',
-            json: true,
-            path: pick(params, ['workspace_id', 'intent'])
-        },
-        requiredParams: ['workspace_id'],
-        defaultOptions: this._options
-    };
-    return requestFactory(parameters, callback);
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples',
+      method: 'GET',
+      json: true,
+      path: pick(params, ['workspace_id', 'intent'])
+    },
+    requiredParams: ['workspace_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
 };
 
 /**
@@ -776,20 +775,20 @@ ConversationV1.prototype.getExamples = function(params, callback) {
  *
  */
 ConversationV1.prototype.createExample = function(params, callback) {
-    params = params || {};
+  params = params || {};
 
-    const parameters = {
-        options: {
-            url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples',
-            method: 'POST',
-            json: true,
-            path: pick(params, ['workspace_id', 'intent']),
-            body: pick(params, ['text'])
-        },
-        requiredParams: ['workspace_id'],
-        defaultOptions: this._options
-    };
-    return requestFactory(parameters, callback);
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples',
+      method: 'POST',
+      json: true,
+      path: pick(params, ['workspace_id', 'intent']),
+      body: pick(params, ['text'])
+    },
+    requiredParams: ['workspace_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
 };
 
 /**
@@ -805,19 +804,19 @@ ConversationV1.prototype.createExample = function(params, callback) {
  *
  */
 ConversationV1.prototype.deleteExample = function(params, callback) {
-    params = params || {};
+  params = params || {};
 
-    const parameters = {
-        options: {
-            url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
-            method: 'DELETE',
-            json: true,
-            path: pick(params, ['workspace_id', 'intent', 'text'])
-        },
-        requiredParams: ['workspace_id'],
-        defaultOptions: this._options
-    };
-    return requestFactory(parameters, callback);
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
+      method: 'DELETE',
+      json: true,
+      path: pick(params, ['workspace_id', 'intent', 'text'])
+    },
+    requiredParams: ['workspace_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
 };
 
 /**
@@ -833,19 +832,19 @@ ConversationV1.prototype.deleteExample = function(params, callback) {
  *
  */
 ConversationV1.prototype.getExample = function(params, callback) {
-    params = params || {};
+  params = params || {};
 
-    const parameters = {
-        options: {
-            url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
-            method: 'GET',
-            json: true,
-            path: pick(params, ['workspace_id', 'intent', 'text'])
-        },
-        requiredParams: ['workspace_id'],
-        defaultOptions: this._options
-    };
-    return requestFactory(parameters, callback);
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
+      method: 'GET',
+      json: true,
+      path: pick(params, ['workspace_id', 'intent', 'text'])
+    },
+    requiredParams: ['workspace_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
 };
 
 /**
@@ -862,20 +861,20 @@ ConversationV1.prototype.getExample = function(params, callback) {
  *
  */
 ConversationV1.prototype.updateExample = function(params, callback) {
-    params = params || {};
+  params = params || {};
 
-    const parameters = {
-        options: {
-            url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
-            method: 'POST',
-            json: true,
-            path: pick(params, ['workspace_id', 'intent', 'text']),
-            body: pick(params, ['example']) ? pick(params, ['example']).example : {}
-        },
-        requiredParams: ['workspace_id'],
-        defaultOptions: this._options
-    };
-    return requestFactory(parameters, callback);
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
+      method: 'POST',
+      json: true,
+      path: pick(params, ['workspace_id', 'intent', 'text']),
+      body: pick(params, ['example']) ? pick(params, ['example']).example : {}
+    },
+    requiredParams: ['workspace_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
 };
 
 module.exports = ConversationV1;
