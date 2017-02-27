@@ -708,7 +708,7 @@ ConversationV1.prototype.updateIntent = function(params, callback) {
 };
 
 /**
- * Method: deleteItent
+ * Method: deleteIntent
  *
  * Delete an intent from a workspace
  *
@@ -719,7 +719,7 @@ ConversationV1.prototype.updateIntent = function(params, callback) {
  * @param {Function} [callback]
  *
  */
-ConversationV1.prototype.updateIntent = function(params, callback) {
+ConversationV1.prototype.deleteIntent = function(params, callback) {
   params = params || {};
 
   const parameters = {
