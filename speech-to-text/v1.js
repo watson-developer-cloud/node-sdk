@@ -130,7 +130,7 @@ SpeechToTextV1.prototype.registerCallback = function(params, callback) {
  * @param {object} params - The parameters
  * @param {Audio}  params.audio - Audio to be recognized
  * @param {string} params.content_type - The Content-type e.g. audio/l16; rate=48000
- * @param {string} [params.callback_url] - A URL to which callback notifications are to be sent
+ * @param {string} params.callback_url - A URL to which callback notifications are to be sent
  * @param {string} [params.event] - recognitions.started|recognitions.completed|recognitions.failed|recognitions.completed_with_results
  * @param {string} [params.user_token] - The token allows the user to maintain an internal mapping between jobs and notification events
  * @param {number} [params.results_ttl] - time to alive of the job result
