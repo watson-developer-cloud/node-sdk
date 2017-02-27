@@ -792,4 +792,32 @@ ConversationV1.prototype.createExample = function(params, callback) {
     return requestFactory(parameters, callback);
 };
 
+/**
+ * Method: deleteExample
+ *
+ * Delete a user input example from an intent.
+ *
+ * @param  {Object}   params   { workspace_id: '',  }
+ * @param {String} params.workspace_id
+ * @param {String} params.intent
+ * @param {String} params.text
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.deleteExample = function(params, callback) {
+    params = params || {};
+
+    const parameters = {
+        options: {
+            url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
+            method: 'DELETE',
+            json: true,
+            path: pick(params, ['workspace_id', 'intent', 'text'])
+        },
+        requiredParams: ['workspace_id'],
+        defaultOptions: this._options
+    };
+    return requestFactory(parameters, callback);
+};
+
 module.exports = ConversationV1;
