@@ -254,7 +254,7 @@ describe('speech_to_text', function() {
     fs.createReadStream(__dirname + '/../resources/weather.wav').pipe(recognizeStream);
     recognizeStream.setEncoding('utf8');
 
-    // note: none of these tests actually run (or even register with mocha), but the callbacks let the previous test pass :(
+    // note: none of these tests actually run(or even register with mocha), but the callbacks let the previous test pass :(
     recognizeStream.on('connect', function(socket) {
       it('should have a socket connection with a correct config', function(done) {
         assert.notStrictEqual(socket, socket.config, socket.config.fragmentOutgoingMessages);
@@ -343,5 +343,149 @@ describe('speech_to_text', function() {
     it('should return a stream', function() {
       assert(isStream(speech_to_text.createRecognizeStream()));
     });
+  });
+
+  describe('asynchronous callback api', function() {
+    it('should register new callback url', function() {
+      const path = '/v1/register_callback?callback_url=http%3A%2F%2Fwatson-test-resources.mybluemix.net%2Fresults&user_secret=ThisIsMySecret';
+      const response = {
+        status: 200,
+        url: 'http://watson-test-resources.mybluemix.net/results'
+      };
+
+      nock(service.url).post(path).delay(100).reply(200, response);
+
+      const checkRes = function(err, res) {
+        assert.equal(JSON.stringify(err), JSON.stringify(null));
+        assert.equal(JSON.stringify(res), JSON.stringify(response));
+      };
+
+      const params = { callback_url: 'http://watson-test-resources.mybluemix.net/results', user_secret: 'ThisIsMySecret' };
+      const req = speech_to_text.registerCallback(params, checkRes);
+
+      assert.equal(req.path, path);
+      assert.equal(req.method, 'POST');
+    });
+
+    it('should create new recognitions job', function() {
+      const path = '/v1/recognitions?callback_url=http%3A%2F%2Fwatson-test-resources.mybluemix.net%2Fresults&event=recognitions.completed&user_token=myArbitraryIdentifier1&results_ttl=60';
+      const response = {
+        id: '4bd734c0-e575-21f3-de03-f932aa0468a0',
+        status: 'waiting',
+        created: '2017-02-17T19:15:17.926Z',
+        url: 'https://stream.watsonplatform.net/speech-to-text/api/v1/recognitions/4bd734c0-e575-21f3-de03-f932aa0468a0'
+      };
+
+      nock(service.url).post(path).delay(100).reply(200, response);
+
+      const checkRes = function(err, res) {
+        assert.equal(JSON.stringify(err), JSON.stringify(null));
+        assert.equal(JSON.stringify(res), JSON.stringify(response));
+      };
+
+      const params = {
+        audio: fs.createReadStream(__dirname + '/../resources/weather.wav'),
+        content_type: 'audio/l16;rate=41100',
+        callback_url: 'http://watson-test-resources.mybluemix.net/results',
+        user_token: 'myArbitraryIdentifier1',
+        event: 'recognitions.completed',
+        results_ttl: 60
+      };
+      const req = speech_to_text.createRecognitionJob(params, checkRes);
+
+      assert.equal(req.path, path);
+      assert.equal(req.method, 'POST');
+    });
+
+    it('should get list of jobs', function(done) {
+      const path = '/v1/recognitions';
+      const response = {
+        recognitions: [
+          {
+            id: '4bd734c0-e575-21f3-de03-f932aa0468a0',
+            created: '2017-02-17T19:15:17.926Z',
+            updated: '2017-02-17T19:15:17.926Z',
+            status: 'waiting',
+            user_token: 'myArbitraryIdentifier1'
+          },
+          {
+            id: '4bb1dca0-f6b1-11e5-80bc-71fb7b058b20',
+            created: '2017-02-17T19:13:23.622Z',
+            updated: '2017-02-17T19:13:24.434Z',
+            status: 'processing'
+          },
+          {
+            id: '398fcd80-330a-22ba-93ce-1a73f454dd98',
+            created: '2017-02-17T19:11:04.298Z',
+            updated: '2017-02-17T19:11:16.003Z',
+            status: 'completed'
+          }
+        ]
+      };
+
+      nock(service.url).get(path).delay(200).reply(200, response);
+
+      const checkRes = function(err, res) {
+        assert.equal(JSON.stringify(err), JSON.stringify(null));
+        assert.equal(JSON.stringify(res), JSON.stringify(response));
+        done();
+      };
+      const req = speech_to_text.getRecognitionJobs(checkRes);
+
+      assert.equal(req.path, path);
+      assert.equal(req.method, 'GET');
+    });
+
+    it('should get status of job', function() {
+      const path = '/v1/recognitions/4bd734c0-e575-21f3-de03-f932aa0468a0';
+      const response = {
+        id: '4bd734c0-e575-21f3-de03-f932aa0468a0',
+        results: [
+          {
+            result_index: 0,
+            results: [
+              {
+                final: true,
+                alternatives: [
+                  {
+                    transcript: 'several tornadoes touch down as a line of severe thunderstorms swept through Colorado on Sunday ',
+                    timestamps: [['several', 1, 1.52]],
+                    confidence: 0.885
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        created: '2016-08-17T19:11:04.298Z',
+        updated: '2016-08-17T19:11:16.003Z',
+        status: 'completed'
+      };
+
+      nock(service.url).get(path).delay(200).reply(200, response);
+
+      const checkRes = function(err, res) {
+        assert.equal(JSON.stringify(err), JSON.stringify(null));
+        assert.deepEqual(res, response);
+      };
+      const req = speech_to_text.getRecognitionJob({ id: '4bd734c0-e575-21f3-de03-f932aa0468a0' }, checkRes);
+
+      assert.equal(req.path, path);
+      assert.equal(req.method, 'GET');
+    });
+  });
+
+  it('should delete a recognition job', function() {
+    const path = '/v1/recognitions/4bd734c0-e575-21f3-de03-f932aa0468a0';
+
+    nock(service.url).delete(path).delay(200).reply(200);
+
+    const checkRes = function(err, res) {
+      assert.ifError(err);
+    };
+    const req = speech_to_text.deleteRecognitionJob({ id: '4bd734c0-e575-21f3-de03-f932aa0468a0' }, checkRes);
+
+    assert.equal(req.path, path);
+    assert.equal(req.method, 'DELETE');
   });
 });

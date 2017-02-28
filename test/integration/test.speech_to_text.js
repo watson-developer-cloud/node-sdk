@@ -381,4 +381,56 @@ describe('speech_to_text_integration', function() {
       customization_id = null;
     });
   });
+
+  describe('asynchronous api', function() {
+    let jobId = null;
+
+    const deleteAfterRecognitionCompleted = (jobId, done) => {
+      speech_to_text.getRecognitionJob({ id: jobId }, (err, res) => {
+        if (res.status !== 'completed') {
+          setTimeout(
+            deleteAfterRecognitionCompleted.bind(null, jobId, done),
+          300);
+        } else {
+          speech_to_text.deleteRecognitionJob({ id: res.id }, (err, res) => {
+            assert.ifError(err);
+            done();
+          });
+        }
+      });
+    };
+
+    it('registerCallback()', function(done) {
+      const params = { callback_url: 'https://watson-test-resources.mybluemix.net/speech-to-text-async-callback-secure', user_secret: 'ThisIsMySecret' };
+      speech_to_text.registerCallback(params, done);
+    });
+
+    it('createRecognitionJob()', function(done) {
+      const params = {
+        audio: fs.createReadStream(__dirname + '/../resources/weather.ogg'),
+        content_type: 'audio/ogg; codec=opus',
+        callback_url: 'https://watson-test-resources.mybluemix.net/speech-to-text-async-callback-secure',
+        user_token: 'Node.js SDK Integration Test at ' + new Date(),
+        event: 'recognitions.completed',
+        results_ttl: 1
+      };
+      speech_to_text.createRecognitionJob(params, function(err, res) {
+        assert.ifError(err);
+        jobId = res.id;
+        done();
+      });
+    });
+
+    it('getRecognitionJobs()', function(done) {
+      speech_to_text.getRecognitionJobs(done);
+    });
+
+    it('getRecognitionJob()', function(done) {
+      speech_to_text.getRecognitionJob({ id: jobId }, done);
+    });
+
+    it('deleteRecognitionJob()', function(done) {
+      deleteAfterRecognitionCompleted(jobId, done);
+    });
+  });
 });
