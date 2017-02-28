@@ -51,4 +51,18 @@ describe('natural_language_understanding', function() {
 
     nlu.analyze(options, done);
   });
+  
+  it('2017_02_27 version should work', function(done) {
+    nock(watson.NaturalLanguageUnderstandingV1.URL)
+      .persist()
+      .post('/v1/analyze?version=' + watson.NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27)
+      .reply(200, {});
+
+    const options = {
+      features: { concepts: {}, keywords: {} },
+      text: 'hello, this is a test'
+    };
+
+    nlu.analyze(options, done);
+  });
 });
