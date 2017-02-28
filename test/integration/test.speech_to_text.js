@@ -381,4 +381,54 @@ describe('speech_to_text_integration', function() {
       customization_id = null;
     });
   });
+
+  describe('asynchronous api', function() {
+    let jobId = null;
+
+    const deleteAfterRecognitionCompleted = (jobId, done) => {
+      speech_to_text.getRecognitionJob({ id: jobId }, (err, res) => {
+        if (res.status !== 'completed') {
+          deleteAfterRecognitionCompleted(jobId, done);
+        } else {
+          speech_to_text.deleteRecognitionJob({ id: res.id }, (err, res) => {
+            assert.ifError(err);
+            done();
+          });
+        }
+      });
+    };
+
+    it('registerCallback()', function(done) {
+      const params = { callback_url: 'http://watson-test-resources.mybluemix.net/results', user_secret: 'ThisIsMySecret' };
+      speech_to_text.registerCallback(params, done);
+    });
+
+    it('createRecognitionJob()', function(done) {
+      const params = {
+        audio: fs.createReadStream(__dirname + '/../resources/weather.wav'),
+        content_type: 'audio/l16;rate=41100',
+        callback_url: 'http://watson-test-resources.mybluemix.net/results',
+        user_token: 'my-arbitrary-identifier-1',
+        event: 'recognitions.completed',
+        results_ttl: 1
+      };
+      speech_to_text.createRecognitionJob(params, function(err, res) {
+        assert.ifError(err);
+        jobId = res.id;
+        done();
+      });
+    });
+
+    it('getRecognitionJobs()', function(done) {
+      speech_to_text.getRecognitionJobs(done);
+    });
+
+    it('getRecognitionJob()', function(done) {
+      speech_to_text.getRecognitionJob({ id: jobId }, done);
+    });
+
+    it('deleteRecognitionJob()', function(done) {
+      deleteAfterRecognitionCompleted(jobId, done);
+    });
+  });
 });
