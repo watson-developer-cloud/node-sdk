@@ -494,7 +494,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line627">line 627</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line781">line 781</a>
     </li></ul></dd>
     
 
@@ -802,7 +802,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line941">line 941</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line1095">line 1095</a>
     </li></ul></dd>
     
 
@@ -1028,7 +1028,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line916">line 916</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line1070">line 1070</a>
     </li></ul></dd>
     
 
@@ -1309,7 +1309,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line438">line 438</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line592">line 592</a>
     </li></ul></dd>
     
 
@@ -1332,6 +1332,403 @@
 
 
 
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="createRecognitionJob"><span class="type-signature"></span>createRecognitionJob<span class="signature">(params, callback)</span><span class="type-signature"> &rarr; {ReadableStream|undefined}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Creates a job for a new asynchronous recognition request.
+The job is owned by the user whose service credentials are used to create it.
+How you learn the status and results of a job depends on the parameters you include with the job creation request.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>params</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The parameters</p>
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>audio</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Audio</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Audio to be recognized</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>content_type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>The Content-type e.g. audio/l16; rate=48000</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback_url</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>A URL to which callback notifications are to be sent</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>event</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>recognitions.started|recognitions.completed|recognitions.failed|recognitions.completed_with_results</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>user_token</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>The token allows the user to maintain an internal mapping between jobs and notification events</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>results_ttl</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>time to alive of the job result</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line140">line 140</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">ReadableStream</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -1440,7 +1837,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line387">line 387</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line544">line 544</a>
     </li></ul></dd>
     
 
@@ -1640,7 +2037,7 @@ each request using this session.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line329">line 329</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line486">line 486</a>
     </li></ul></dd>
     
 
@@ -1866,7 +2263,7 @@ each request using this session.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line726">line 726</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line880">line 880</a>
     </li></ul></dd>
     
 
@@ -2069,7 +2466,7 @@ each request using this session.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line603">line 603</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line757">line 757</a>
     </li></ul></dd>
     
 
@@ -2092,6 +2489,215 @@ each request using this session.</p>
 
 
 
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="deleteRecognitionJob"><span class="type-signature"></span>deleteRecognitionJob<span class="signature">(params, callback)</span><span class="type-signature"> &rarr; {ReadableStream|undefined}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Deletes the specified job. You cannot delete a job that the service is actively processing.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>params</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The parameters</p>
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>id of the Job</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line230">line 230</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">ReadableStream</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -2249,7 +2855,7 @@ each request using this session.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line367">line 367</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line524">line 524</a>
     </li></ul></dd>
     
 
@@ -2476,7 +3082,7 @@ each request using this session.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line1064">line 1064</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line1218">line 1218</a>
     </li></ul></dd>
     
 
@@ -2695,7 +3301,7 @@ The information includes the total number of words and out-of-vocabulary (OOV) w
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line670">line 670</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line824">line 824</a>
     </li></ul></dd>
     
 
@@ -2735,12 +3341,12 @@ The information includes the total number of words and out-of-vocabulary (OOV) w
 <div class="description">
     <p>Get corpus details</p>
 <p>Example response:</p>
-<pre class="prettyprint source lang-json"><code>  {
-    &quot;name&quot;: &quot;corpus-1&quot;,
-    &quot;total_words&quot;: 100,
-    &quot;out_of_vocabulary_words&quot;: 5,
-    &quot;status&quot;: &quot;analyzed&quot;
-  }</code></pre>
+<pre class="prettyprint source lang-json"><code> {
+   &quot;name&quot;: &quot;corpus-1&quot;,
+   &quot;total_words&quot;: 100,
+   &quot;out_of_vocabulary_words&quot;: 5,
+   &quot;status&quot;: &quot;analyzed&quot;
+ }</code></pre>
 </div>
 
 
@@ -2928,7 +3534,7 @@ The information includes the total number of words and out-of-vocabulary (OOV) w
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line704">line 704</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line858">line 858</a>
     </li></ul></dd>
     
 
@@ -3141,7 +3747,7 @@ The information includes the total number of words and out-of-vocabulary (OOV) w
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line538">line 538</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line692">line 692</a>
     </li></ul></dd>
     
 
@@ -3181,34 +3787,34 @@ The information includes the total number of words and out-of-vocabulary (OOV) w
 <div class="description">
     <p>List all customizations</p>
 <p>Example response:</p>
-<pre class="prettyprint source lang-json"><code>{ customizations:
-    [ { owner: '8a6f5bb1-5b2d-4a20-85a9-eaa421d25c88',
-        base_model_name: 'en-US_BroadbandModel',
-        customization_id: '6a7785a0-9665-11e6-a73a-0da9193a4475',
-        created: '2016-10-20T01:35:00.346Z',
-        name: 'IEEE-test',
-        description: '',
-        progress: 0,
-        language: 'en-US',
-        status: 'pending' },
-      { owner: '8a6f5bb1-5b2d-4a20-85a9-eaa421d25c88',
-        base_model_name: 'en-US_BroadbandModel',
-        customization_id: '9e2f6bb0-9665-11e6-a73a-0da9193a4475',
-        created: '2016-10-20T01:36:27.115Z',
-        name: 'IEEE-test',
-        description: '',
-        progress: 0,
-        language: 'en-US',
-        status: 'ready' },
-      { owner: '8a6f5bb1-5b2d-4a20-85a9-eaa421d25c88',
-        base_model_name: 'en-US_BroadbandModel',
-        customization_id: '6b194e70-9666-11e6-a73a-0da9193a4475',
-        created: '2016-10-20T01:42:10.903Z',
-        name: 'IEEE-test',
-        description: '',
-        progress: 100,
-        language: 'en-US',
-        status: 'available' } ] }</code></pre>
+<pre class="prettyprint source lang-json"><code> { customizations:
+     [ { owner: '8a6f5bb1-5b2d-4a20-85a9-eaa421d25c88',
+         base_model_name: 'en-US_BroadbandModel',
+         customization_id: '6a7785a0-9665-11e6-a73a-0da9193a4475',
+         created: '2016-10-20T01:35:00.346Z',
+         name: 'IEEE-test',
+         description: '',
+         progress: 0,
+         language: 'en-US',
+         status: 'pending' },
+       { owner: '8a6f5bb1-5b2d-4a20-85a9-eaa421d25c88',
+         base_model_name: 'en-US_BroadbandModel',
+         customization_id: '9e2f6bb0-9665-11e6-a73a-0da9193a4475',
+         created: '2016-10-20T01:36:27.115Z',
+         name: 'IEEE-test',
+         description: '',
+         progress: 0,
+         language: 'en-US',
+         status: 'ready' },
+       { owner: '8a6f5bb1-5b2d-4a20-85a9-eaa421d25c88',
+         base_model_name: 'en-US_BroadbandModel',
+         customization_id: '6b194e70-9666-11e6-a73a-0da9193a4475',
+         created: '2016-10-20T01:42:10.903Z',
+         name: 'IEEE-test',
+         description: '',
+         progress: 100,
+         language: 'en-US',
+         status: 'available' } ] }</code></pre>
 </div>
 
 
@@ -3385,7 +3991,7 @@ The information includes the total number of words and out-of-vocabulary (OOV) w
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line499">line 499</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line653">line 653</a>
     </li></ul></dd>
     
 
@@ -3588,7 +4194,7 @@ The information includes the total number of words and out-of-vocabulary (OOV) w
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line307">line 307</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line464">line 464</a>
     </li></ul></dd>
     
 
@@ -3763,7 +4369,370 @@ The information includes the total number of words and out-of-vocabulary (OOV) w
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line286">line 286</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line443">line 443</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">ReadableStream</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getRecognitionJob"><span class="type-signature"></span>getRecognitionJob<span class="signature">(params, callback)</span><span class="type-signature"> &rarr; {ReadableStream|undefined}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Returns the status and ID of all outstanding jobs associated with the service credentials with which it is called.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>params</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>id of the Job</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line202">line 202</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">ReadableStream</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getRecognitionJobs"><span class="type-signature"></span>getRecognitionJobs<span class="signature">(callback)</span><span class="type-signature"> &rarr; {ReadableStream|undefined}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Returns the status and ID of all outstanding jobs associated with the service credentials with which it is called.
+The method also returns the creation and update times of each job, and, if a job was created with a callback URL
+and a user token, the user token for the job.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line181">line 181</a>
     </li></ul></dd>
     
 
@@ -3980,7 +4949,7 @@ The returned state has to be 'initialized' to be able to do recognize POST.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line265">line 265</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line422">line 422</a>
     </li></ul></dd>
     
 
@@ -4213,7 +5182,7 @@ The returned state has to be 'initialized' to be able to do recognize POST.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line1040">line 1040</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line1194">line 1194</a>
     </li></ul></dd>
     
 
@@ -4255,35 +5224,35 @@ The returned state has to be 'initialized' to be able to do recognize POST.</p>
 <p>Lists information about all custom words from a custom language model.
 You can list all words from the custom model's words resource, only custom words that were added or modified by the user, or only OOV words that were extracted from corpora.</p>
 <p>Example response:</p>
-<pre class="prettyprint source lang-json"><code>{
-    &quot;words&quot;: [
-       {
-          &quot;word&quot;: &quot;hhonors&quot;,
-          &quot;sounds_like&quot;: [&quot;hilton honors&quot;,&quot;h honors&quot;],
-          &quot;display_as&quot;: &quot;HHonors&quot;,
-          &quot;source&quot;: [&quot;corpus1&quot;]
-       },
-       {
-          &quot;word&quot;: &quot;ieee&quot;,
-          &quot;sounds_like&quot;: [&quot;i triple e&quot;],
-          &quot;display_as&quot;: &quot;IEEE&quot;,
-          &quot;source&quot;: [&quot;corpus1&quot;,&quot;corpus2&quot;]
-       },
-       {
-          &quot;word&quot;: &quot;tomato&quot;,
-          &quot;sounds_like&quot;: [&quot;tomatoh&quot;,&quot;tomayto&quot;],
-          &quot;display_as&quot;: &quot;&quot;,
-          &quot;source&quot;: [&quot;user&quot;]
-       },
-       {
-          &quot;word&quot;: &quot;$75.00&quot;,
-          &quot;sounds_like&quot;: [&quot;75 dollars&quot;],
-          &quot;display_as&quot;: &quot;&quot;,
-          &quot;source&quot;: [&quot;user&quot;],
-          &quot;error&quot;:&quot; Numbers are not allowed in sounds-like&quot;
-       }
-    ]
- }</code></pre>
+<pre class="prettyprint source lang-json"><code> {
+     &quot;words&quot;: [
+        {
+           &quot;word&quot;: &quot;hhonors&quot;,
+           &quot;sounds_like&quot;: [&quot;hilton honors&quot;,&quot;h honors&quot;],
+           &quot;display_as&quot;: &quot;HHonors&quot;,
+           &quot;source&quot;: [&quot;corpus1&quot;]
+        },
+        {
+           &quot;word&quot;: &quot;ieee&quot;,
+           &quot;sounds_like&quot;: [&quot;i triple e&quot;],
+           &quot;display_as&quot;: &quot;IEEE&quot;,
+           &quot;source&quot;: [&quot;corpus1&quot;,&quot;corpus2&quot;]
+        },
+        {
+           &quot;word&quot;: &quot;tomato&quot;,
+           &quot;sounds_like&quot;: [&quot;tomatoh&quot;,&quot;tomayto&quot;],
+           &quot;display_as&quot;: &quot;&quot;,
+           &quot;source&quot;: [&quot;user&quot;]
+        },
+        {
+           &quot;word&quot;: &quot;$75.00&quot;,
+           &quot;sounds_like&quot;: [&quot;75 dollars&quot;],
+           &quot;display_as&quot;: &quot;&quot;,
+           &quot;source&quot;: [&quot;user&quot;],
+           &quot;error&quot;:&quot; Numbers are not allowed in sounds-like&quot;
+        }
+     ]
+  }</code></pre>
 </div>
 
 
@@ -4538,7 +5507,7 @@ You can list all words from the custom model's words resource, only custom words
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line1001">line 1001</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line1155">line 1155</a>
     </li></ul></dd>
     
 
@@ -4767,7 +5736,7 @@ otherwise it waits for the next recognition.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line211">line 211</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line368">line 368</a>
     </li></ul></dd>
     
 
@@ -4992,7 +5961,7 @@ otherwise it waits for the next recognition.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line100">line 100</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line257">line 257</a>
     </li></ul></dd>
     
 
@@ -5221,7 +6190,7 @@ chunk data.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line150">line 150</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line307">line 307</a>
     </li></ul></dd>
     
 
@@ -5244,6 +6213,255 @@ chunk data.</p>
 
 
 
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="registerCallback"><span class="type-signature"></span>registerCallback<span class="signature">(params, callback)</span><span class="type-signature"> &rarr; {ReadableStream|undefined}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Registers a callback URL with the service for use with subsequent asynchronous recognition requests.
+The service attempts to register, or white-list, the callback URL if it is not already registered by sending a GET
+request to the callback URL.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>params</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The parameters</p>
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>callback_url</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>A URL to which callback notifications are to be sent</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>user_secret</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>A user-specified string that the service uses to generate the HMAC-SHA1 signature that it sends via the X-Callback-Signature header</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line104">line 104</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">ReadableStream</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -5424,7 +6642,7 @@ chunk data.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line582">line 582</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line736">line 736</a>
     </li></ul></dd>
     
 
@@ -5682,7 +6900,7 @@ chunk data.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line560">line 560</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line714">line 714</a>
     </li></ul></dd>
     
 
@@ -5980,7 +7198,7 @@ chunk data.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line843">line 843</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line997">line 997</a>
     </li></ul></dd>
     
 
@@ -6279,7 +7497,7 @@ chunk data.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line756">line 756</a>
+        <a href="speech-to-text_v1.js.html">speech-to-text/v1.js</a>, <a href="speech-to-text_v1.js.html#line910">line 910</a>
     </li></ul></dd>
     
 
@@ -6327,7 +7545,7 @@ chunk data.</p>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Mon Feb 27 2017 14:30:13 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Tue Feb 28 2017 21:16:11 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>
