@@ -28,7 +28,7 @@ const BaseService = require('../lib/base_service');
 function NaturalLanguageUnderstandingV1(options) {
   BaseService.call(this, options);
   if (typeof this._options.version_date === 'undefined') {
-    throw new Error('Argument error: version_date was not specified, use NaturalLanguageUnderstandingV1.VERSION_DATE_2016_01_23');
+    throw new Error('Argument error: version_date was not specified, use NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27');
   }
   this._options.qs.version = this._options.version_date;
 }
@@ -36,7 +36,8 @@ util.inherits(NaturalLanguageUnderstandingV1, BaseService);
 NaturalLanguageUnderstandingV1.prototype.name = 'natural_language_understanding';
 NaturalLanguageUnderstandingV1.prototype.version = 'v1';
 NaturalLanguageUnderstandingV1.URL = 'https://gateway.watsonplatform.net/natural-language-understanding/api';
-NaturalLanguageUnderstandingV1.VERSION_DATE_2016_01_23 = '2016-01-23';
+NaturalLanguageUnderstandingV1.VERSION_DATE_2016_01_23 = '2017-02-27';
+NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27 = '2017-02-27';
 
 /**
   * Analyze the query.
