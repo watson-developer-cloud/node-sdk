@@ -388,9 +388,7 @@ describe('speech_to_text_integration', function() {
     const deleteAfterRecognitionCompleted = (jobId, done) => {
       speech_to_text.getRecognitionJob({ id: jobId }, (err, res) => {
         if (res.status !== 'completed') {
-          setTimeout(
-            deleteAfterRecognitionCompleted.bind(null, jobId, done),
-          300);
+          setTimeout(deleteAfterRecognitionCompleted.bind(null, jobId, done), 300);
         } else {
           speech_to_text.deleteRecognitionJob({ id: res.id }, (err, res) => {
             assert.ifError(err);

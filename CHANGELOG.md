@@ -1,3 +1,6 @@
+# v2.22.0
+* Speech to Text Asychronous API support
+
 # v2.21.0
 * Added support for sort paramater in SpeechToTextV1.getWords()
 * Added updateDocument() method to DiscoveryV1
