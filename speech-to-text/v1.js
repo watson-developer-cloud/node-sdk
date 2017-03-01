@@ -138,7 +138,7 @@ SpeechToTextV1.prototype.registerCallback = function(params, callback) {
  * @returns {ReadableStream|undefined}
  */
 SpeechToTextV1.prototype.createRecognitionJob = function(params, callback) {
-  const missingParams = helper.getMissingParams(params, ['callback_url', 'audio', 'content_type']);
+  const missingParams = helper.getMissingParams(params, ['audio', 'content_type']);
   if (missingParams) {
     callback(missingParams);
     return;
