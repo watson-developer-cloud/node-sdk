@@ -26,7 +26,7 @@ const http = require('http');
 const isStream = require('isstream');
 const requestFactory = require('../lib/requestwrapper');
 const RecognizeStream = require('./recognize_stream');
-const pkg = require('../package.json'); // todo: consider using env properties here instead (to enable webpack support without requiring a plugin)
+const pkg = require('../package.json');
 const util = require('util');
 const BaseService = require('../lib/base_service');
 const async = require('async');
@@ -38,7 +38,7 @@ const PARAMS_ALLOWED = [
   'word_confidence',
   'inactivity_timeout',
   'model',
-  'content-type',
+  'content-type', // this is accepted in querystring by the service, but methods here all accept content_type and then set a header
   'interim_results',
   'keywords',
   'keywords_threshold',
@@ -128,12 +128,13 @@ SpeechToTextV1.prototype.registerCallback = function(params, callback) {
  * How you learn the status and results of a job depends on the parameters you include with the job creation request.
  *
  * @param {object} params - The parameters
- * @param {Audio}  params.audio - Audio to be recognized
+ * @param {Stream}  params.audio - Audio to be recognized
  * @param {string} params.content_type - The Content-type e.g. audio/l16; rate=48000
  * @param {string} params.callback_url - A URL to which callback notifications are to be sent
  * @param {string} [params.event] - recognitions.started|recognitions.completed|recognitions.failed|recognitions.completed_with_results
  * @param {string} [params.user_token] - The token allows the user to maintain an internal mapping between jobs and notification events
  * @param {number} [params.results_ttl] - time to alive of the job result
+ * @param {*} [params.*] - all params that .recognize() accepts may also be passed to createRecognitionJob()
  * @param {Function} callback
  * @returns {ReadableStream|undefined}
  */
@@ -156,7 +157,7 @@ SpeechToTextV1.prototype.createRecognitionJob = function(params, callback) {
       headers: {
         'Content-Type': params.content_type
       },
-      qs: pick(params, ['callback_url', 'event', 'user_token', 'results_ttl']),
+      qs: pick(params, ['callback_url', 'event', 'user_token', 'results_ttl'].concat(PARAMS_ALLOWED)),
       json: true
     },
     defaultOptions: this._options
@@ -175,10 +176,14 @@ SpeechToTextV1.prototype.createRecognitionJob = function(params, callback) {
  * The method also returns the creation and update times of each job, and, if a job was created with a callback URL
  * and a user token, the user token for the job.
  *
+ * @param {Object} [params]
  * @param {Function} callback
  * @returns {ReadableStream|undefined}
  */
-SpeechToTextV1.prototype.getRecognitionJobs = function(callback) {
+SpeechToTextV1.prototype.getRecognitionJobs = function(params, callback) {
+  if (!callback && typeof params === 'function') {
+    callback = params;
+  }
   const parameters = {
     options: {
       method: 'GET',
@@ -251,8 +256,23 @@ SpeechToTextV1.prototype.deleteRecognitionJob = function(params, callback) {
  * Speech recognition for given audio using default model.
  *
  * @param {Object} params The parameters
- * @param {Audio} [params.audio] - Audio to be recognized
- * @param {String} [params.content_type] - Content-type
+ * @param {Stream} params.audio - Audio to be recognized
+ * @param {String} params.content_type - Content-type
+ * @param {Boolean} [params.continuous],
+ * @param {Number} [params.max_alternatives],
+ * @param {Boolean} [params.timestamps],
+ * @param {Boolean} [params.word_confidence],
+ * @param {Number} [params.inactivity_timeout],
+ * @param {String} [params.model],
+ * @param {Boolean} [params.interim_results],
+ * @param {Boolean} [params.keywords],
+ * @param {Number} [params.keywords_threshold],
+ * @param {Number} [params.word_alternatives_threshold],
+ * @param {Boolean} [params.profanity_filter],
+ * @param {Boolean} [params.smart_formatting],
+ * @param {String} [params.customization_id],
+ * @param {Boolean} [params.speaker_labels]
+ * @param {function} callback
  */
 SpeechToTextV1.prototype.recognize = function(params, callback) {
   const missingParams = helper.getMissingParams(params, ['audio', 'content_type']);
@@ -299,10 +319,12 @@ SpeechToTextV1.prototype.recognize = function(params, callback) {
  * Sets 'Transfer-Encoding': 'chunked' and prepare the connection to send
  * chunk data.
  *
+ * @deprecated use createRecognizeStream instead
+ *
  * @param {Object} params The parameters
  * @param {String} [params.content_type] - The Content-type e.g. audio/l16; rate=48000
  * @param {String} [params.session_id] - The session id
- * @deprecated use createRecognizeStream instead
+ * @param {function} callback
  */
 SpeechToTextV1.prototype.recognizeLive = function(params, callback) {
   const missingParams = helper.getMissingParams(params, ['session_id', 'content_type', 'cookie_session']);
@@ -360,10 +382,12 @@ SpeechToTextV1.prototype.recognizeLive = function(params, callback) {
  * This request has to be started before POST on recognize finishes,
  * otherwise it waits for the next recognition.
  *
+ * @deprecated use createRecognizeStream instead
+ *
  * @param {Object} params The parameters
  * @param {String} [params.session_id] - Session used in the recognition
  * @param {boolean} [params.interim_results] - If true, interim results will be returned. Default: false
- * @deprecated use createRecognizeStream instead
+ * @param {Function} callback
  */
 SpeechToTextV1.prototype.observeResult = function(params, callback) {
   const missingParams = helper.getMissingParams(params, ['session_id', 'cookie_session']);
@@ -415,9 +439,11 @@ SpeechToTextV1.prototype.observeResult = function(params, callback) {
  * This is the way to check if the session is ready to accept a new recognition task.
  * The returned state has to be 'initialized' to be able to do recognize POST.
  *
+ * @deprecated use createRecognizeStream instead
+ *
  * @param {Object} params The parameters
  * @param {String} [params.session_id] - Session used in the recognition
- * @deprecated use createRecognizeStream instead
+ * @param {Function} callback
  */
 SpeechToTextV1.prototype.getRecognizeStatus = function(params, callback) {
   const parameters = {
@@ -482,6 +508,7 @@ SpeechToTextV1.prototype.getModel = function(params, callback) {
  *
  * @param {Object} params The parameters
  * @param {string} params.model - The model to use during the session
+ * @param {Function} callback
  */
 SpeechToTextV1.prototype.createSession = function(params, callback) {
   const parameters = {
@@ -520,6 +547,7 @@ SpeechToTextV1.prototype.createSession = function(params, callback) {
  *
  * @param {Object} params The parameters
  * @param {String} params.session_id - Session id.
+ * @param {Function} callback
  */
 SpeechToTextV1.prototype.deleteSession = function(params, callback) {
   const parameters = {

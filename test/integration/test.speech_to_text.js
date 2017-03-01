@@ -399,15 +399,22 @@ describe('speech_to_text_integration', function() {
     };
 
     it('registerCallback()', function(done) {
-      const params = { callback_url: 'https://watson-test-resources.mybluemix.net/speech-to-text-async-callback-secure', user_secret: 'ThisIsMySecret' };
-      speech_to_text.registerCallback(params, done);
+      speech_to_text.registerCallback(
+        {
+          // if this fails, logs are available at https://watson-test-resources.mybluemix.net/speech-to-text-async/secure
+          callback_url: 'https://watson-test-resources.mybluemix.net/speech-to-text-async/secure/callback',
+          user_secret: 'ThisIsMySecret'
+        },
+        done
+      );
     });
 
     it('createRecognitionJob()', function(done) {
       const params = {
         audio: fs.createReadStream(__dirname + '/../resources/weather.ogg'),
         content_type: 'audio/ogg; codec=opus',
-        callback_url: 'https://watson-test-resources.mybluemix.net/speech-to-text-async-callback-secure',
+        // if this fails, logs are available at https://watson-test-resources.mybluemix.net/speech-to-text-async/secure
+        callback_url: 'https://watson-test-resources.mybluemix.net/speech-to-text-async/secure/callback',
         user_token: 'Node.js SDK Integration Test at ' + new Date(),
         event: 'recognitions.completed',
         results_ttl: 1
