@@ -58,7 +58,7 @@ NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27 = '2017-02-27';
   * @params {function} callback taking (error,  jsonResult)
   * @example
   * ```
-  * const options = { 
+  * const options = {
   *   'text': 'Natural Language Understanding analyzes unstructured text to return structured insights',
   *   'features': {
   *     'concepts': {
@@ -107,8 +107,7 @@ NaturalLanguageUnderstandingV1.prototype.deleteModel = function(params, callback
     requiredParams: ['model_id'],
     defaultOptions: this._options
   };
-  return requestFactory(parameters, errorFormatter(callback));
+  return requestFactory(parameters, callback);
 };
-
 
 module.exports = NaturalLanguageUnderstandingV1;

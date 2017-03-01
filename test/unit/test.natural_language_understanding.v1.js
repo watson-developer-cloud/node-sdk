@@ -37,7 +37,7 @@ describe('natural_language_understanding', function() {
     });
     done();
   });
-  
+
   it('2017_02_27 version should work', function(done) {
     nock(watson.NaturalLanguageUnderstandingV1.URL)
       .persist()
@@ -51,7 +51,7 @@ describe('natural_language_understanding', function() {
 
     nlu.analyze(options, done);
   });
-  
+
   it('should list models', function(done) {
     nock(watson.NaturalLanguageUnderstandingV1.URL)
       .persist()
