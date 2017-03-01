@@ -85,4 +85,30 @@ NaturalLanguageUnderstandingV1.prototype.analyze = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
+NaturalLanguageUnderstandingV1.prototype.listModels = function(params, callback) {
+  const parameters = {
+    options: {
+      url: '/v1/models',
+      method: 'GET',
+      json: true
+    }
+  };
+  return requestFactory(parameters, callback);
+};
+
+NaturalLanguageUnderstandingV1.prototype.deleteModel = function(params, callback) {
+  const parameters = {
+    options: {
+      method: 'DELETE',
+      url: '/v1/models/{model_id}',
+      path: params,
+      json: true
+    },
+    requiredParams: ['model_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, errorFormatter(callback));
+};
+
+
 module.exports = NaturalLanguageUnderstandingV1;
