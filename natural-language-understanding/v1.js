@@ -91,7 +91,8 @@ NaturalLanguageUnderstandingV1.prototype.listModels = function(params, callback)
       url: '/v1/models',
       method: 'GET',
       json: true
-    }
+    },
+    defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
 };
