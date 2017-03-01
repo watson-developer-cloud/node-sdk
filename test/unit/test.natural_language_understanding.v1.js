@@ -18,7 +18,7 @@ describe('natural_language_understanding', function() {
     nlu = new watson.NaturalLanguageUnderstandingV1({
       username: 'user',
       password: 'pass',
-      version_date: watson.NaturalLanguageUnderstandingV1.VERSION_DATE_2016_01_23
+      version_date: watson.NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27
     });
     nock.disableNetConnect();
   });
@@ -37,20 +37,6 @@ describe('natural_language_understanding', function() {
     });
     done();
   });
-
-  it('analyze()', function(done) {
-    nock(watson.NaturalLanguageUnderstandingV1.URL)
-      .persist()
-      .post('/v1/analyze?version=' + watson.NaturalLanguageUnderstandingV1.VERSION_DATE_2016_01_23)
-      .reply(200, {});
-
-    const options = {
-      features: { concepts: {}, keywords: {} },
-      text: 'hello, this is a test'
-    };
-
-    nlu.analyze(options, done);
-  });
   
   it('2017_02_27 version should work', function(done) {
     nock(watson.NaturalLanguageUnderstandingV1.URL)
@@ -64,5 +50,14 @@ describe('natural_language_understanding', function() {
     };
 
     nlu.analyze(options, done);
+  });
+  
+  it('should list models', function(done) {
+    nock(watson.NaturalLanguageUnderstandingV1.URL)
+      .persist()
+      .get('/v1/models?version=' + watson.NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27)
+      .reply(200, {});
+
+    nlu.listModels({}, done);
   });
 });
