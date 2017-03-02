@@ -1,3 +1,6 @@
+# v2.23.0
+* Added support for Conversation intents and examples
+
 # v2.22.2
 * Speech to Text createRecognitionJob() now accepts all params from .recognize()
 * Speech to Text getRecognitionJobs() accepts an optional params object in order to match the signature of the rest of the API
