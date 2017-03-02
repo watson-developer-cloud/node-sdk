@@ -141,6 +141,22 @@ VisualRecognitionV3.prototype.serviceDefaults = {
 };
 
 /**
+ * Wrapper for requestFactory that ensures things are formatted the way the service likes
+ *
+ * @private
+ * @param {Object} parameters
+ * @param {Function} cb
+ */
+VisualRecognitionV3.prototype.request = function(parameters, cb) {
+  const qs = parameters.options.qs;
+  if (qs) {
+    // array params are turned into a comma-separated string when in querystrings
+    Object.keys(qs).forEach(k => Array.isArray(qs[k]) && (qs[k] = qs[k].join(',')));
+  }
+  return requestFactory(parameters, cb);
+};
+
+/**
  * Grab the api key
  *
  * @param {Object} options
@@ -282,7 +298,7 @@ VisualRecognitionV3.prototype.classify = function(params, callback) {
     };
   }
 
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 /**
@@ -361,7 +377,7 @@ VisualRecognitionV3.prototype.detectFaces = function(params, callback) {
     };
   }
 
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 /**
@@ -450,7 +466,7 @@ VisualRecognitionV3.prototype.recognizeText = function(params, callback) {
     };
   }
 
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 /**
@@ -525,7 +541,7 @@ VisualRecognitionV3.prototype.createClassifier = function(params, callback) {
     requiredParams: ['name'],
     defaultOptions: this._options
   };
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 /**
@@ -572,7 +588,7 @@ VisualRecognitionV3.prototype.retrainClassifier = function(params, callback) {
     requiredParams: [],
     defaultOptions: this._options
   };
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 /**
@@ -607,7 +623,7 @@ VisualRecognitionV3.prototype.listClassifiers = function(params, callback) {
     },
     defaultOptions: this._options
   };
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 /**
@@ -643,7 +659,7 @@ VisualRecognitionV3.prototype.getClassifier = function(params, callback) {
     requiredParams: ['classifier_id'],
     defaultOptions: this._options
   };
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 /**
@@ -665,7 +681,7 @@ VisualRecognitionV3.prototype.deleteClassifier = function(params, callback) {
     requiredParams: ['classifier_id'],
     defaultOptions: this._options
   };
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 // collections & similarity search
@@ -700,7 +716,7 @@ VisualRecognitionV3.prototype.createCollection = function(params, callback) {
     requiredParams: ['name'],
     defaultOptions: this._options
   };
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 /**
@@ -733,7 +749,7 @@ VisualRecognitionV3.prototype.getCollection = function(params, callback) {
     requiredParams: ['collection_id'],
     defaultOptions: this._options
   };
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 /**
@@ -766,7 +782,7 @@ VisualRecognitionV3.prototype.listCollections = function(params, callback) {
     },
     defaultOptions: this._options
   };
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 /**
@@ -790,7 +806,7 @@ VisualRecognitionV3.prototype.deleteCollection = function(params, callback) {
     requiredParams: ['collection_id'],
     defaultOptions: this._options
   };
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 /**
@@ -846,7 +862,7 @@ VisualRecognitionV3.prototype.addImage = function(params, callback) {
     requiredParams: ['collection_id', 'image_file'],
     defaultOptions: this._options
   };
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 /**
@@ -879,7 +895,7 @@ VisualRecognitionV3.prototype.listImages = function(params, callback) {
     requiredParams: ['collection_id'],
     defaultOptions: this._options
   };
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 /**
@@ -910,7 +926,7 @@ VisualRecognitionV3.prototype.getImage = function(params, callback) {
     requiredParams: ['collection_id', 'image_id'],
     defaultOptions: this._options
   };
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 /**
@@ -935,7 +951,7 @@ VisualRecognitionV3.prototype.deleteImage = function(params, callback) {
     requiredParams: ['collection_id', 'image_id'],
     defaultOptions: this._options
   };
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 /**
@@ -972,7 +988,7 @@ VisualRecognitionV3.prototype.setImageMetadata = function(params, callback) {
     requiredParams: ['collection_id', 'image_id', 'metadata'],
     defaultOptions: this._options
   };
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 /**
@@ -1002,7 +1018,7 @@ VisualRecognitionV3.prototype.getImageMetadata = function(params, callback) {
     requiredParams: ['collection_id', 'image_id'],
     defaultOptions: this._options
   };
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 /**
@@ -1027,7 +1043,7 @@ VisualRecognitionV3.prototype.deleteImageMetadata = function(params, callback) {
     requiredParams: ['collection_id', 'image_id'],
     defaultOptions: this._options
   };
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 /**
@@ -1079,7 +1095,7 @@ VisualRecognitionV3.prototype.findSimilar = function(params, callback) {
     requiredParams: ['collection_id', 'image_file'],
     defaultOptions: this._options
   };
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 module.exports = VisualRecognitionV3;

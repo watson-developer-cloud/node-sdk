@@ -5,6 +5,8 @@ const watson = require('../../index');
 const nock = require('nock');
 const fs = require('fs');
 const omit = require('object.omit');
+const URL = require('url');
+const qs = require('querystring');
 
 describe('visual_recognition', function() {
   const noop = function() {};
@@ -151,7 +153,7 @@ describe('visual_recognition', function() {
       assert.equal(req.formData.classifier_ids, undefined);
     });
 
-    it('should generate a valid payload', function() {
+    it('should generate a valid payload with an image file', function() {
       const params = {
         images_file: fake_file,
         classifier_ids: ['foo', 'bar']
@@ -163,6 +165,22 @@ describe('visual_recognition', function() {
       assert.equal(req.formData.images_file.path, fake_file.path);
       const uploadedParameters = JSON.parse(req.formData.parameters.value);
       assert.deepEqual(uploadedParameters.classifier_ids, params.classifier_ids);
+    });
+
+    it('should generate a valid payload with a url', function() {
+      const params = {
+        url: 'https://watson-test-resources.mybluemix.net/resources/obama.jpg',
+        classifier_ids: ['foo', 'bar']
+      };
+
+      const req = visual_recognition.classify(params, noop);
+      assert.equal(req.method, 'GET');
+      assert.equal(req.uri.pathname, URL.parse(service.url + classify_path).pathname);
+      assert(req.uri.query);
+      const query = qs.parse(req.uri.query);
+      assert.equal(typeof query.classifier_ids, 'string'); // otherwise the next check can pass incorrectly (assert uses == !?)
+      assert.equal(query.classifier_ids, params.classifier_ids.join(','), 'multiple classifiers should be comma-separated');
+      assert.equal(typeof query.owners, 'string');
     });
   });
 
