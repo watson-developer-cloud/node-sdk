@@ -49,7 +49,7 @@ const test_intents = [
     intent: 'intent_1',
     examples: [
       {
-        text: 'Hi, here\'s a URL\\URI ☺ http://example.com/?a=$+*^;&c=%20#!"`~'
+        text: 'Hi, here\'s a URL ☺ http://example.com/?a=$+*^;&c=%20#!"`~'
       }
     ]
   }
@@ -59,11 +59,11 @@ const test_intents_update = {
   description: 'description_2',
   examples: [
     {
-      text: 'Hey, here\'s a URL\\URI ☺ http://example.com/?a=$+*^;&c=%20#!"`~'
+      text: 'Hey, here\'s a URL ☺ http://example.com/?a=$+*^;&c=%20#!"`~'
     }
   ]
 };
-const test_examples_new = 'Oh, here\'s a URL\\URI ☺ http://example.com/?a=$+*^;&c=%20#!"`~';
+const test_examples_new = 'Oh, here\'s a URL ☺ http://example.com/?a=$+*^;&c=%20#!"`~';
 
 const workspace1 = extend(true, {}, workspace, intents);
 
