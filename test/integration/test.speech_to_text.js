@@ -113,34 +113,43 @@ describe('speech_to_text_integration', function() {
     speech_to_text.getModels({}, done);
   });
 
-  it('createRecognizeStream()', function(done) {
-    const recognizeStream = speech_to_text.createRecognizeStream({
-      content_type: 'audio/l16; rate=44100'
+  describe('createRecognizeStream()', () => {
+    it('transcribes audio over a websocket', function(done) {
+      const recognizeStream = speech_to_text.createRecognizeStream();
+      recognizeStream.setEncoding('utf8');
+      fs.createReadStream(path.join(__dirname, '../resources/weather.flac')).pipe(recognizeStream).on('error', done).pipe(
+        concat(function(transcription) {
+          assert.equal(typeof transcription, 'string', 'should return a string transcription');
+          assert.equal(transcription.trim(), 'thunderstorms could produce large hail isolated tornadoes and heavy rain');
+          done();
+        })
+      );
     });
-    recognizeStream.setEncoding('utf8');
-    fs.createReadStream(path.join(__dirname, '../resources/weather.flac')).pipe(recognizeStream).on('error', done).pipe(
-      concat(function(transcription) {
-        assert.equal(typeof transcription, 'string', 'should return a string transcription');
-        assert.equal(transcription.trim(), 'thunderstorms could produce large hail isolated tornadoes and heavy rain');
-        done();
-      })
-    );
+
+    it('works when stream has no words', function(done) {
+      const recognizeStream = speech_to_text.createRecognizeStream({
+        content_type: 'audio/l16; rate=44100'
+      });
+      recognizeStream.setEncoding('utf8');
+      fs
+        .createReadStream(path.join(__dirname, '../resources/blank.wav'))
+        .pipe(recognizeStream)
+        .on('error', done)
+        .on('data', function(text) {
+          assert(!text, 'no text expected for an audio file with no words');
+        })
+        .on('end', done);
+    });
+
+    it('exposes Transaction ID in node.js', () => {
+      const recognizeStream = speech_to_text.createRecognizeStream();
+      return fs.createReadStream(path.join(__dirname, '../resources/weather.ogg'))
+        .pipe(recognizeStream)
+        .getTransactionId()
+        .then(id => assert(id));
+    })
   });
 
-  it('createRecognizeStream() - no words', function(done) {
-    const recognizeStream = speech_to_text.createRecognizeStream({
-      content_type: 'audio/l16; rate=44100'
-    });
-    recognizeStream.setEncoding('utf8');
-    fs
-      .createReadStream(path.join(__dirname, '../resources/blank.wav'))
-      .pipe(recognizeStream)
-      .on('error', done)
-      .on('data', function(text) {
-        assert(!text, 'no text expected for an audio file with no words');
-      })
-      .on('end', done);
-  });
 
   describe('customization', function() {
     let customization_id;

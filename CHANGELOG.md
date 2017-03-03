@@ -1,3 +1,6 @@
+# v2.24.1
+* STT RecognizeStream now exposes Transaction ID
+
 # v2.23.1
 * Restored support for Node.js 4.0-4.4
 
