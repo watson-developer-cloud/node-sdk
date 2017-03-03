@@ -1,3 +1,6 @@
+# v2.23.1
+* Restored support for Node.js 4.0-4.4
+
 # v2.23.0
 * Added support for Conversation intents and examples
 
