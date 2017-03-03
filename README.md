@@ -411,7 +411,7 @@ var NaturalLanguageUnderstandingV1 = require('watson-developer-cloud/natural-lan
 var nlu = new NaturalLanguageUnderstandingV1({
   username: '<username>',
   password: '<password>',
-  version_date: '2017-02-27'
+  version_date: 'NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27'
 });
 
 nlu.analyze({
