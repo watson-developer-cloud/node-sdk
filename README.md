@@ -128,14 +128,14 @@ To get your service credentials, follow these steps:
 
  1. Copy your credentials:
      1. On the left side of the page, click **Service Credentials** to view your service credentials.
-     1. Copy `username` and `password`(`api_key` for AlchemyAPI).
+     1. Copy `username` and `password` (`api_key` for AlchemyAPI).
 
 ## Questions
 
 If you are having difficulties using the APIs or have a question about the IBM
 Watson Services, please ask a question on
 [dW Answers](https://developer.ibm.com/answers/questions/ask/?topics=watson)
-or [Stack Overflow](http://stackoverflow.com/questions/ask?tags=ibm-watson).
+or [Stack Overflow](http://stackoverflow.com/questions/ask?tags=ibm-watson-cognitive).
 
 ## Examples
 The [examples][examples] folder has basic and advanced examples.
