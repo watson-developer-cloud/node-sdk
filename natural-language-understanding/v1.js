@@ -28,7 +28,7 @@ const BaseService = require('../lib/base_service');
 function NaturalLanguageUnderstandingV1(options) {
   BaseService.call(this, options);
   if (typeof this._options.version_date === 'undefined') {
-    throw new Error('Argument error: version_date was not specified, use "2017-02-27"');
+    throw new Error('Argument error: version_date was not specified, use NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27');
   }
   this._options.qs.version = this._options.version_date;
 }
@@ -36,12 +36,15 @@ util.inherits(NaturalLanguageUnderstandingV1, BaseService);
 NaturalLanguageUnderstandingV1.prototype.name = 'natural_language_understanding';
 NaturalLanguageUnderstandingV1.prototype.version = 'v1';
 NaturalLanguageUnderstandingV1.URL = 'https://gateway.watsonplatform.net/natural-language-understanding/api';
+NaturalLanguageUnderstandingV1.VERSION_DATE_2016_01_23 = '2016-01-23';
+// GA version date: 2017-02-27
+// https://www.ibm.com/watson/developercloud/doc/natural-language-understanding/release-notes.html
 NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27 = '2017-02-27';
 
 /**
   * Analyze the query.
   * @params {object} params for the query
-  * @param {Object} [params.headers] - The headers added
+  * @param {object} [params.headers] - The headers added
   * @param {string} [params.text] - The text to analyze.
   * @param {string} [params.html] - The html to analyze.
   * @param {string} [params.url] - The url to fetch and analyze.
@@ -84,6 +87,17 @@ NaturalLanguageUnderstandingV1.prototype.analyze = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
+/**
+  * List custom models deployed to your service instance.
+  * @params {object} params for the query
+  * @param {object} [params.headers] - The headers added
+  * @params {function} callback taking (error,  jsonResult)
+  * @example
+  * ```
+  * nlu.listModels({}, myCallbackFunction);
+  * ```
+  * @return {void}
+  */
 NaturalLanguageUnderstandingV1.prototype.listModels = function(params, callback) {
   const parameters = {
     options: {
@@ -96,6 +110,21 @@ NaturalLanguageUnderstandingV1.prototype.listModels = function(params, callback)
   return requestFactory(parameters, callback);
 };
 
+/**
+  * Delete a custom model that is deployed to your service instance.
+  * @params {object} params for the query
+  * @param {object} [params.headers] - The headers added
+  * @param {string} [params.model_id] - ID of the custom model to delete
+  * @params {function} callback taking (error,  jsonResult)
+  * @example
+  * ```
+  * const options = {
+  *   'model_id': 'myModel123'
+  * };
+  * nlu.deleteModel(options, myCallbackFunction);
+  * ```
+  * @return {void}
+  */
 NaturalLanguageUnderstandingV1.prototype.deleteModel = function(params, callback) {
   const parameters = {
     options: {
