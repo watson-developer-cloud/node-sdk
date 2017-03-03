@@ -13,12 +13,18 @@ describe('natural_language_understanding', function() {
   this.retries(1);
 
   let nlu;
+  let nlu_old_version;
 
   before(function() {
     nlu = new watson.NaturalLanguageUnderstandingV1({
       username: 'user',
       password: 'pass',
       version_date: watson.NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27
+    });
+    nlu_old_version = new watson.NaturalLanguageUnderstandingV1({
+      username: 'user',
+      password: 'pass',
+      version_date: watson.NaturalLanguageUnderstandingV1.VERSION_DATE_2016_01_23
     });
     nock.disableNetConnect();
   });
@@ -48,7 +54,7 @@ describe('natural_language_understanding', function() {
       text: 'hello, this is a test'
     };
 
-    nlu.analyze(options, done);
+    nlu_old_version.analyze(options, done);
   });
 
   it('analyze()', function(done) {
