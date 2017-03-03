@@ -267,10 +267,7 @@ RecognizeStream.prototype.stop = function() {
  * @return Promise<String>
  */
 RecognizeStream.prototype.getTransactionId = function() {
-  if (this.socket &&
-    this.socket._client &&
-    this.socket._client.response &&
-    this.socket._client.response.headers) {
+  if (this.socket && this.socket._client && this.socket._client.response && this.socket._client.response.headers) {
     return Promise.resolve(this.socket._client.response.headers['x-global-transaction-id']);
   } else {
     return new Promise((resolve, reject) => {
