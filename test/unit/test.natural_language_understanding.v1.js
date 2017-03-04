@@ -18,7 +18,7 @@ describe('natural_language_understanding', function() {
     nlu = new watson.NaturalLanguageUnderstandingV1({
       username: 'user',
       password: 'pass',
-      version_date: watson.NaturalLanguageUnderstandingV1.VERSION_DATE_2016_01_23
+      version_date: watson.NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27
     });
     nock.disableNetConnect();
   });
@@ -38,10 +38,32 @@ describe('natural_language_understanding', function() {
     done();
   });
 
-  it('analyze()', function(done) {
-    nock(watson.NaturalLanguageUnderstandingV1.URL)
-      .persist()
+  it('2016_01_23 version should work', function(done) {
+    const mockApi = nock(watson.NaturalLanguageUnderstandingV1.URL)
       .post('/v1/analyze?version=' + watson.NaturalLanguageUnderstandingV1.VERSION_DATE_2016_01_23)
+      .reply(200, {});
+
+    const nlu_old_version = new watson.NaturalLanguageUnderstandingV1({
+        username: 'user',
+        password: 'pass',
+        version_date: watson.NaturalLanguageUnderstandingV1.VERSION_DATE_2016_01_23
+      });
+
+    const options = {
+      features: { concepts: {}, keywords: {} },
+      text: 'hello, this is a test'
+    };
+
+    nlu_old_version.analyze(options, (err) => {
+      assert.ifError(err);
+      mockApi.done();
+      done();
+    });
+  });
+
+  it('analyze()', function(done) {
+    const mockApi = nock(watson.NaturalLanguageUnderstandingV1.URL)
+      .post('/v1/analyze?version=' + watson.NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27)
       .reply(200, {});
 
     const options = {
@@ -49,6 +71,22 @@ describe('natural_language_understanding', function() {
       text: 'hello, this is a test'
     };
 
-    nlu.analyze(options, done);
+    nlu.analyze(options, (err) => {
+      assert.ifError(err);
+      mockApi.done();
+      done();
+    });
+  });
+
+  it('should list models', function(done) {
+    const mockApi = nock(watson.NaturalLanguageUnderstandingV1.URL)
+      .get('/v1/models?version=' + watson.NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27)
+      .reply(200, {});
+
+    nlu.listModels({}, (err) => {
+      assert.ifError(err);
+      mockApi.done();
+      done();
+    });
   });
 });
