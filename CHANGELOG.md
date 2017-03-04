@@ -1,3 +1,6 @@
+# v2.25.0
+* Natural Language Understanding: new version_date and addition of listModels() and deleteModel() methods
+
 # v2.24.1
 * STT RecognizeStream now exposes Transaction ID
 
