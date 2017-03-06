@@ -19,6 +19,7 @@
 const requestFactory = require('../lib/requestwrapper');
 const util = require('util');
 const BaseService = require('../lib/base_service');
+const extend = require('extend');
 
 /**
  * NaturalLanguageUnderstanding
@@ -40,6 +41,23 @@ NaturalLanguageUnderstandingV1.VERSION_DATE_2016_01_23 = '2016-01-23';
 // GA version date: 2017-02-27
 // https://www.ibm.com/watson/developercloud/doc/natural-language-understanding/release-notes.html
 NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27 = '2017-02-27';
+
+/**
+ * Bluemix uses hyphens instead of underscores for NLU in the VCAP_SERVICES env property.
+ * No idea why.
+ *
+ * This method also checks for the underscore'd version just in case they ever change it.
+ *
+ * @private
+ * @override
+ */
+NaturalLanguageUnderstandingV1.prototype.getCredentialsFromBluemix = function(name) {
+  return extend(
+    {},
+    BaseService.prototype.getCredentialsFromBluemix.call(this, name),
+    BaseService.prototype.getCredentialsFromBluemix.call(this, name.replace(/_/g, '-'))
+  );
+};
 
 /**
   * Analyze the query.
