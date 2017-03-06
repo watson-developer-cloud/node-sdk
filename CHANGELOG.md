@@ -1,3 +1,6 @@
+# v2.25.1
+* Natural Language Understanding: fixed credentials pulling from bluemix
+
 # v2.25.0
 * Natural Language Understanding: new version_date and addition of listModels() and deleteModel() methods
 
