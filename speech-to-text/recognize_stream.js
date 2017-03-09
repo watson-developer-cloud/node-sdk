@@ -259,6 +259,26 @@ RecognizeStream.prototype.stop = function() {
   this.socket.close();
 };
 
+/**
+ * Returns a Promise that resolves with Watson Transaction ID from the X-Transaction-ID header
+ *
+ * Works in Node.js but not in browsers (the W3C WebSocket API does not expose headers)
+ *
+ * @return Promise<String>
+ */
+RecognizeStream.prototype.getTransactionId = function() {
+  if (this.socket && this.socket._client && this.socket._client.response && this.socket._client.response.headers) {
+    return Promise.resolve(this.socket._client.response.headers['x-global-transaction-id']);
+  } else {
+    return new Promise((resolve, reject) => {
+      this.on('connect', () => {
+        resolve(this.socket._client.response.headers['x-global-transaction-id']);
+      });
+      this.on('error', reject);
+    });
+  }
+};
+
 // quick/dumb way to determine content type from a supported file format
 const headerToContentType = {
   fLaC: 'audio/flac',

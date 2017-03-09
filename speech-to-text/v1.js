@@ -26,7 +26,7 @@ const http = require('http');
 const isStream = require('isstream');
 const requestFactory = require('../lib/requestwrapper');
 const RecognizeStream = require('./recognize_stream');
-const pkg = require('../package.json'); // todo: consider using env properties here instead (to enable webpack support without requiring a plugin)
+const pkg = require('../package.json');
 const util = require('util');
 const BaseService = require('../lib/base_service');
 const async = require('async');
@@ -38,7 +38,7 @@ const PARAMS_ALLOWED = [
   'word_confidence',
   'inactivity_timeout',
   'model',
-  'content-type',
+  'content-type', // this is accepted in querystring by the service, but methods here all accept content_type and then set a header
   'interim_results',
   'keywords',
   'keywords_threshold',
@@ -91,11 +91,188 @@ SpeechToTextV1.prototype.version = 'v1';
 SpeechToTextV1.URL = 'https://stream.watsonplatform.net/speech-to-text/api';
 
 /**
+ * Registers a callback URL with the service for use with subsequent asynchronous recognition requests.
+ * The service attempts to register, or white-list, the callback URL if it is not already registered by sending a GET
+ * request to the callback URL.
+ *
+ * @param {object} params - The parameters
+ * @param {string} params.callback_url - A URL to which callback notifications are to be sent
+ * @param {string} params.user_secret - A user-specified string that the service uses to generate the HMAC-SHA1 signature that it sends via the X-Callback-Signature header
+ * @param {Function} callback
+ * @returns {ReadableStream|undefined}
+ */
+SpeechToTextV1.prototype.registerCallback = function(params, callback) {
+  const missingParams = helper.getMissingParams(params, ['callback_url']);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+
+  const parameters = {
+    requiredParams: ['callback_url'],
+    options: {
+      method: 'POST',
+      url: '/v1/register_callback',
+      qs: pick(params, ['callback_url', 'user_secret']),
+      json: true
+    },
+    defaultOptions: this._options
+  };
+
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Creates a job for a new asynchronous recognition request.
+ * The job is owned by the user whose service credentials are used to create it.
+ * How you learn the status and results of a job depends on the parameters you include with the job creation request.
+ *
+ * @param {object} params - The parameters
+ * @param {Stream}  params.audio - Audio to be recognized
+ * @param {string} params.content_type - The Content-type e.g. audio/l16; rate=48000
+ * @param {string} params.callback_url - A URL to which callback notifications are to be sent
+ * @param {string} [params.event] - recognitions.started|recognitions.completed|recognitions.failed|recognitions.completed_with_results
+ * @param {string} [params.user_token] - The token allows the user to maintain an internal mapping between jobs and notification events
+ * @param {number} [params.results_ttl] - time to alive of the job result
+ * @param {*} [params.*] - all params that .recognize() accepts may also be passed to createRecognitionJob()
+ * @param {Function} callback
+ * @returns {ReadableStream|undefined}
+ */
+SpeechToTextV1.prototype.createRecognitionJob = function(params, callback) {
+  const missingParams = helper.getMissingParams(params, ['audio', 'content_type']);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+
+  if (!isStream(params.audio)) {
+    callback(new Error('audio is not a standard Node.js Stream'));
+    return;
+  }
+
+  const parameters = {
+    options: {
+      method: 'POST',
+      url: '/v1/recognitions',
+      headers: {
+        'Content-Type': params.content_type
+      },
+      qs: pick(params, ['callback_url', 'event', 'user_token', 'results_ttl'].concat(PARAMS_ALLOWED)),
+      json: true
+    },
+    defaultOptions: this._options
+  };
+
+  return params.audio
+    .on('response', function(response) {
+      // Replace content-type
+      response.headers['content-type'] = params.content_type;
+    })
+    .pipe(requestFactory(parameters, callback));
+};
+
+/**
+ * Returns the status and ID of all outstanding jobs associated with the service credentials with which it is called.
+ * The method also returns the creation and update times of each job, and, if a job was created with a callback URL
+ * and a user token, the user token for the job.
+ *
+ * @param {Object} [params]
+ * @param {Function} callback
+ * @returns {ReadableStream|undefined}
+ */
+SpeechToTextV1.prototype.getRecognitionJobs = function(params, callback) {
+  if (!callback && typeof params === 'function') {
+    callback = params;
+  }
+  const parameters = {
+    options: {
+      method: 'GET',
+      url: '/v1/recognitions',
+      json: true
+    },
+    defaultOptions: this._options
+  };
+
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Returns the status and ID of all outstanding jobs associated with the service credentials with which it is called.
+ *
+ * @param params
+ * @param params.id - id of the Job
+ * @param callback
+ * @returns {ReadableStream|undefined}
+ */
+SpeechToTextV1.prototype.getRecognitionJob = function(params, callback) {
+  const missingParams = helper.getMissingParams(params, ['id']);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+
+  const parameters = {
+    options: {
+      method: 'GET',
+      url: '/v1/recognitions/{id}',
+      path: pick(params, ['id']),
+      json: true
+    },
+    defaultOptions: this._options
+  };
+
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Deletes the specified job. You cannot delete a job that the service is actively processing.
+ *
+ * @param params - The parameters
+ * @param params.id - id of the Job
+ * @param callback
+ * @returns {ReadableStream|undefined}
+ */
+SpeechToTextV1.prototype.deleteRecognitionJob = function(params, callback) {
+  const missingParams = helper.getMissingParams(params, ['id']);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+
+  const parameters = {
+    options: {
+      method: 'DELETE',
+      url: '/v1/recognitions/{id}',
+      path: pick(params, ['id']),
+      json: true
+    },
+    defaultOptions: this._options
+  };
+
+  return requestFactory(parameters, callback);
+};
+
+/**
  * Speech recognition for given audio using default model.
  *
  * @param {Object} params The parameters
- * @param {Audio} [params.audio] - Audio to be recognized
- * @param {String} [params.content_type] - Content-type
+ * @param {Stream} params.audio - Audio to be recognized
+ * @param {String} params.content_type - Content-type
+ * @param {Boolean} [params.continuous],
+ * @param {Number} [params.max_alternatives],
+ * @param {Boolean} [params.timestamps],
+ * @param {Boolean} [params.word_confidence],
+ * @param {Number} [params.inactivity_timeout],
+ * @param {String} [params.model],
+ * @param {Boolean} [params.interim_results],
+ * @param {Boolean} [params.keywords],
+ * @param {Number} [params.keywords_threshold],
+ * @param {Number} [params.word_alternatives_threshold],
+ * @param {Boolean} [params.profanity_filter],
+ * @param {Boolean} [params.smart_formatting],
+ * @param {String} [params.customization_id],
+ * @param {Boolean} [params.speaker_labels]
+ * @param {function} callback
  */
 SpeechToTextV1.prototype.recognize = function(params, callback) {
   const missingParams = helper.getMissingParams(params, ['audio', 'content_type']);
@@ -142,10 +319,12 @@ SpeechToTextV1.prototype.recognize = function(params, callback) {
  * Sets 'Transfer-Encoding': 'chunked' and prepare the connection to send
  * chunk data.
  *
+ * @deprecated use createRecognizeStream instead
+ *
  * @param {Object} params The parameters
  * @param {String} [params.content_type] - The Content-type e.g. audio/l16; rate=48000
  * @param {String} [params.session_id] - The session id
- * @deprecated use createRecognizeStream instead
+ * @param {function} callback
  */
 SpeechToTextV1.prototype.recognizeLive = function(params, callback) {
   const missingParams = helper.getMissingParams(params, ['session_id', 'content_type', 'cookie_session']);
@@ -203,10 +382,12 @@ SpeechToTextV1.prototype.recognizeLive = function(params, callback) {
  * This request has to be started before POST on recognize finishes,
  * otherwise it waits for the next recognition.
  *
+ * @deprecated use createRecognizeStream instead
+ *
  * @param {Object} params The parameters
  * @param {String} [params.session_id] - Session used in the recognition
  * @param {boolean} [params.interim_results] - If true, interim results will be returned. Default: false
- * @deprecated use createRecognizeStream instead
+ * @param {Function} callback
  */
 SpeechToTextV1.prototype.observeResult = function(params, callback) {
   const missingParams = helper.getMissingParams(params, ['session_id', 'cookie_session']);
@@ -258,9 +439,11 @@ SpeechToTextV1.prototype.observeResult = function(params, callback) {
  * This is the way to check if the session is ready to accept a new recognition task.
  * The returned state has to be 'initialized' to be able to do recognize POST.
  *
+ * @deprecated use createRecognizeStream instead
+ *
  * @param {Object} params The parameters
  * @param {String} [params.session_id] - Session used in the recognition
- * @deprecated use createRecognizeStream instead
+ * @param {Function} callback
  */
 SpeechToTextV1.prototype.getRecognizeStatus = function(params, callback) {
   const parameters = {
@@ -325,6 +508,7 @@ SpeechToTextV1.prototype.getModel = function(params, callback) {
  *
  * @param {Object} params The parameters
  * @param {string} params.model - The model to use during the session
+ * @param {Function} callback
  */
 SpeechToTextV1.prototype.createSession = function(params, callback) {
   const parameters = {
@@ -363,6 +547,7 @@ SpeechToTextV1.prototype.createSession = function(params, callback) {
  *
  * @param {Object} params The parameters
  * @param {String} params.session_id - Session id.
+ * @param {Function} callback
  */
 SpeechToTextV1.prototype.deleteSession = function(params, callback) {
   const parameters = {
@@ -407,10 +592,7 @@ SpeechToTextV1.prototype.createRecognizeStream = function(params) {
       // eslint-disable-next-line no-console
       console.log(
         new Error(
-          'The ' +
-            name +
-            '() method is deprecated and will be removed from a future version of the watson-developer-cloud SDK. ' +
-            'Please use createRecognizeStream() instead.\n(Set {silent: true} to hide this message.)'
+          `The ${name}() method is deprecated and will be removed from a future version of the watson-developer-cloud SDK. Please use createRecognizeStream() instead.\n(Set {silent: true} to hide this message.)`
         )
       );
     }
@@ -460,37 +642,37 @@ SpeechToTextV1.prototype.createCustomization = function(params, callback) {
  * List all customizations
  *
  * Example response:
-```json
-{ customizations:
-    [ { owner: '8a6f5bb1-5b2d-4a20-85a9-eaa421d25c88',
-        base_model_name: 'en-US_BroadbandModel',
-        customization_id: '6a7785a0-9665-11e6-a73a-0da9193a4475',
-        created: '2016-10-20T01:35:00.346Z',
-        name: 'IEEE-test',
-        description: '',
-        progress: 0,
-        language: 'en-US',
-        status: 'pending' },
-      { owner: '8a6f5bb1-5b2d-4a20-85a9-eaa421d25c88',
-        base_model_name: 'en-US_BroadbandModel',
-        customization_id: '9e2f6bb0-9665-11e6-a73a-0da9193a4475',
-        created: '2016-10-20T01:36:27.115Z',
-        name: 'IEEE-test',
-        description: '',
-        progress: 0,
-        language: 'en-US',
-        status: 'ready' },
-      { owner: '8a6f5bb1-5b2d-4a20-85a9-eaa421d25c88',
-        base_model_name: 'en-US_BroadbandModel',
-        customization_id: '6b194e70-9666-11e6-a73a-0da9193a4475',
-        created: '2016-10-20T01:42:10.903Z',
-        name: 'IEEE-test',
-        description: '',
-        progress: 100,
-        language: 'en-US',
-        status: 'available' } ] }
+ ```json
+ { customizations:
+     [ { owner: '8a6f5bb1-5b2d-4a20-85a9-eaa421d25c88',
+         base_model_name: 'en-US_BroadbandModel',
+         customization_id: '6a7785a0-9665-11e6-a73a-0da9193a4475',
+         created: '2016-10-20T01:35:00.346Z',
+         name: 'IEEE-test',
+         description: '',
+         progress: 0,
+         language: 'en-US',
+         status: 'pending' },
+       { owner: '8a6f5bb1-5b2d-4a20-85a9-eaa421d25c88',
+         base_model_name: 'en-US_BroadbandModel',
+         customization_id: '9e2f6bb0-9665-11e6-a73a-0da9193a4475',
+         created: '2016-10-20T01:36:27.115Z',
+         name: 'IEEE-test',
+         description: '',
+         progress: 0,
+         language: 'en-US',
+         status: 'ready' },
+       { owner: '8a6f5bb1-5b2d-4a20-85a9-eaa421d25c88',
+         base_model_name: 'en-US_BroadbandModel',
+         customization_id: '6b194e70-9666-11e6-a73a-0da9193a4475',
+         created: '2016-10-20T01:42:10.903Z',
+         name: 'IEEE-test',
+         description: '',
+         progress: 100,
+         language: 'en-US',
+         status: 'available' } ] }
 
-```
+ ```
  *
  * @param {Object} params The parameters
  * @param {String} [params.language] optional filter.
@@ -518,7 +700,7 @@ SpeechToTextV1.prototype.getCustomizations = function(params, callback) {
  *
  * Example response:
  *
-```json
+ ```json
  { owner: '8a6f5bb1-5b2d-4a20-85a9-eaa421d25c88',
    base_model_name: 'en-US_BroadbandModel',
    customization_id: 'e695ad30-97c1-11e6-be92-bb627d4684b9',
@@ -528,7 +710,7 @@ SpeechToTextV1.prototype.getCustomizations = function(params, callback) {
    progress: 0,
    language: 'en-US',
    status: 'pending' }
-```
+ ```
  *
  *
  * @param {Object} params The parameters
@@ -686,14 +868,14 @@ SpeechToTextV1.prototype.getCorpora = function(params, callback) {
  *
  * Example response:
  *
-```json
-  {
-    "name": "corpus-1",
-    "total_words": 100,
-    "out_of_vocabulary_words": 5,
-    "status": "analyzed"
-  }
-```
+ ```json
+ {
+   "name": "corpus-1",
+   "total_words": 100,
+   "out_of_vocabulary_words": 5,
+   "status": "analyzed"
+ }
+ ```
  *
  *
  * @param {Object} params The parameters
@@ -960,36 +1142,36 @@ SpeechToTextV1.prototype.addWord = function(params, callback) {
  * You can list all words from the custom model's words resource, only custom words that were added or modified by the user, or only OOV words that were extracted from corpora.
  *
  * Example response:
-```json
-{
-    "words": [
-       {
-          "word": "hhonors",
-          "sounds_like": ["hilton honors","h honors"],
-          "display_as": "HHonors",
-          "source": ["corpus1"]
-       },
-       {
-          "word": "ieee",
-          "sounds_like": ["i triple e"],
-          "display_as": "IEEE",
-          "source": ["corpus1","corpus2"]
-       },
-       {
-          "word": "tomato",
-          "sounds_like": ["tomatoh","tomayto"],
-          "display_as": "",
-          "source": ["user"]
-       },
-       {
-          "word": "$75.00",
-          "sounds_like": ["75 dollars"],
-          "display_as": "",
-          "source": ["user"],
-          "error":" Numbers are not allowed in sounds-like"
-       }
-    ]
- }
+ ```json
+ {
+     "words": [
+        {
+           "word": "hhonors",
+           "sounds_like": ["hilton honors","h honors"],
+           "display_as": "HHonors",
+           "source": ["corpus1"]
+        },
+        {
+           "word": "ieee",
+           "sounds_like": ["i triple e"],
+           "display_as": "IEEE",
+           "source": ["corpus1","corpus2"]
+        },
+        {
+           "word": "tomato",
+           "sounds_like": ["tomatoh","tomayto"],
+           "display_as": "",
+           "source": ["user"]
+        },
+        {
+           "word": "$75.00",
+           "sounds_like": ["75 dollars"],
+           "display_as": "",
+           "source": ["user"],
+           "error":" Numbers are not allowed in sounds-like"
+        }
+     ]
+  }
  ```
  *
  * @param {Object} params The parameters
