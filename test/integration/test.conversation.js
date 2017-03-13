@@ -171,7 +171,12 @@ describe('conversation_integration', function() {
 
   describe('listWorkspaces()', function() {
     it('result should contain workspaces key', function(done) {
-      conversation.listWorkspaces(function(err, result) {
+      const params = {
+        page_limit: 2,
+        include_count: true,
+        sort: '-name'
+      };
+      conversation.listWorkspaces(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -181,7 +186,12 @@ describe('conversation_integration', function() {
     });
 
     it('result should contain an array of workspaces', function(done) {
-      conversation.listWorkspaces(function(err, result) {
+      const params = {
+        page_limit: 2,
+        include_count: true,
+        sort: '-name'
+      };
+      conversation.listWorkspaces(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -283,7 +293,10 @@ describe('conversation_integration', function() {
     it('should get intents of the workspace', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        export: true
+        export: true,
+        page_limit: 1,
+        include_count: true,
+        sort: 'intent'
       };
 
       conversation.getIntents(params, function(err, result) {
@@ -339,7 +352,10 @@ describe('conversation_integration', function() {
     it('should get all examples of intent', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        intent: test_intents_update.intent
+        intent: test_intents_update.intent,
+        page_limit: 2,
+        include_count: true,
+        sort: '-text'
       };
 
       conversation.getExamples(params, function(err, result) {
