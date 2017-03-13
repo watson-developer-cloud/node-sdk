@@ -228,6 +228,10 @@ ConversationV1.prototype.message = function(params, callback) {
 ```
  *
  * @param {Object} [params]
+ * @param {Number} params.page_limit
+ * @param {Boolean} params.include_count
+ * @param {String} params.sort
+ * @param {String} params.cursor
  * @param {Function} [callback]
  */
 ConversationV1.prototype.listWorkspaces = function(params, callback) {
