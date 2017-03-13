@@ -753,6 +753,10 @@ ConversationV1.prototype.deleteIntent = function(params, callback) {
  * @param {Object} params
  * @param {String} params.workspace_id
  * @param {String} params.intent
+ * @param {Number} params.page_limit
+ * @param {Boolean} params.include_count
+ * @param {String} params.sort
+ * @param {String} params.cursor
  * @param {Function} [callback]
  *
  */
@@ -764,7 +768,8 @@ ConversationV1.prototype.getExamples = function(params, callback) {
       url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples',
       method: 'GET',
       json: true,
-      path: pick(params, ['workspace_id', 'intent'])
+      path: pick(params, ['workspace_id', 'intent']),
+      qs: pick(params, ['page_limit', 'include_count', 'sort', 'cursor'])
     },
     requiredParams: ['workspace_id', 'intent'],
     defaultOptions: this._options
