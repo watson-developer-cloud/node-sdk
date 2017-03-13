@@ -238,7 +238,8 @@ ConversationV1.prototype.listWorkspaces = function(params, callback) {
   const parameters = {
     options: {
       url: '/v1/workspaces',
-      method: 'GET'
+      method: 'GET',
+      qs: pick(params, ['page_limit', 'include_count', 'sort', 'cursor'])
     },
     defaultOptions: this._options
   };
