@@ -228,10 +228,10 @@ ConversationV1.prototype.message = function(params, callback) {
 ```
  *
  * @param {Object} [params]
- * @param {Number} params.page_limit
- * @param {Boolean} params.include_count
- * @param {String} params.sort
- * @param {String} params.cursor
+ * @param {Number} [params.page_limit]
+ * @param {Boolean} [params.include_count]
+ * @param {String} [params.sort]
+ * @param {String} [params.cursor]
  * @param {Function} [callback]
  */
 ConversationV1.prototype.listWorkspaces = function(params, callback) {
@@ -634,10 +634,10 @@ ConversationV1.prototype.createIntent = function(params, callback) {
  * @param {Object} params
  * @param {String} params.workspace_id
  * @param {Boolean} [params.export=false] - if true, the full contents of all of the sub-resources are returned
- * @param {Number} params.page_limit
- * @param {Boolean} params.include_count
- * @param {String} params.sort
- * @param {String} params.cursor
+ * @param {Number} [params.page_limit]
+ * @param {Boolean} [params.include_count]
+ * @param {String} [params.sort]
+ * @param {String} [params.cursor]
  * @param {Function} [callback]
  *
  */
@@ -753,10 +753,10 @@ ConversationV1.prototype.deleteIntent = function(params, callback) {
  * @param {Object} params
  * @param {String} params.workspace_id
  * @param {String} params.intent
- * @param {Number} params.page_limit
- * @param {Boolean} params.include_count
- * @param {String} params.sort
- * @param {String} params.cursor
+ * @param {Number} [params.page_limit]
+ * @param {Boolean} [params.include_count]
+ * @param {String} [params.sort]
+ * @param {String} [params.cursor]
  * @param {Function} [callback]
  *
  */
