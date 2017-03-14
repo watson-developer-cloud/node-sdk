@@ -228,6 +228,10 @@ ConversationV1.prototype.message = function(params, callback) {
 ```
  *
  * @param {Object} [params]
+ * @param {Number} [params.page_limit]
+ * @param {Boolean} [params.include_count]
+ * @param {String} [params.sort]
+ * @param {String} [params.cursor]
  * @param {Function} [callback]
  */
 ConversationV1.prototype.listWorkspaces = function(params, callback) {
@@ -238,7 +242,8 @@ ConversationV1.prototype.listWorkspaces = function(params, callback) {
   const parameters = {
     options: {
       url: '/v1/workspaces',
-      method: 'GET'
+      method: 'GET',
+      qs: pick(params, ['page_limit', 'include_count', 'sort', 'cursor'])
     },
     defaultOptions: this._options
   };
@@ -629,6 +634,10 @@ ConversationV1.prototype.createIntent = function(params, callback) {
  * @param {Object} params
  * @param {String} params.workspace_id
  * @param {Boolean} [params.export=false] - if true, the full contents of all of the sub-resources are returned
+ * @param {Number} [params.page_limit]
+ * @param {Boolean} [params.include_count]
+ * @param {String} [params.sort]
+ * @param {String} [params.cursor]
  * @param {Function} [callback]
  *
  */
@@ -641,7 +650,7 @@ ConversationV1.prototype.getIntents = function(params, callback) {
       method: 'GET',
       json: true,
       path: pick(params, ['workspace_id']),
-      qs: pick(params, ['export'])
+      qs: pick(params, ['export', 'page_limit', 'include_count', 'sort', 'cursor'])
     },
     requiredParams: ['workspace_id'],
     defaultOptions: this._options
@@ -744,6 +753,10 @@ ConversationV1.prototype.deleteIntent = function(params, callback) {
  * @param {Object} params
  * @param {String} params.workspace_id
  * @param {String} params.intent
+ * @param {Number} [params.page_limit]
+ * @param {Boolean} [params.include_count]
+ * @param {String} [params.sort]
+ * @param {String} [params.cursor]
  * @param {Function} [callback]
  *
  */
@@ -755,7 +768,8 @@ ConversationV1.prototype.getExamples = function(params, callback) {
       url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples',
       method: 'GET',
       json: true,
-      path: pick(params, ['workspace_id', 'intent'])
+      path: pick(params, ['workspace_id', 'intent']),
+      qs: pick(params, ['page_limit', 'include_count', 'sort', 'cursor'])
     },
     requiredParams: ['workspace_id', 'intent'],
     defaultOptions: this._options

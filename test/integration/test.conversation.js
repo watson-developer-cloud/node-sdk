@@ -189,6 +189,21 @@ describe('conversation_integration', function() {
         done();
       });
     });
+
+    it('result should return pagination information', function(done) {
+      const params = {
+        page_limit: 2,
+        include_count: true,
+        sort: '-name'
+      };
+      conversation.listWorkspaces(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.hasOwnProperty('pagination'), true);
+        done();
+      });
+    });
   });
 
   describe('createWorkspace()', function() {
@@ -295,6 +310,24 @@ describe('conversation_integration', function() {
         done();
       });
     });
+
+    it('should have pagination information', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        export: true,
+        page_limit: 1,
+        include_count: true,
+        sort: 'intent'
+      };
+
+      conversation.getIntents(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.hasOwnProperty('pagination'), true);
+        done();
+      });
+    });
   });
 
   describe('getIntent()', function() {
@@ -347,6 +380,24 @@ describe('conversation_integration', function() {
           return done(err);
         }
         assert.equal(result.examples[0].text, test_intents_update.examples[0].text);
+        done();
+      });
+    });
+
+    it('should have pagination information', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        intent: test_intents_update.intent,
+        page_limit: 2,
+        include_count: true,
+        sort: '-text'
+      };
+
+      conversation.getExamples(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.hasOwnProperty('pagination'), true);
         done();
       });
     });
