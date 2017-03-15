@@ -157,7 +157,7 @@ SpeechToTextV1.prototype.createRecognitionJob = function(params, callback) {
       headers: {
         'Content-Type': params.content_type
       },
-      qs: pick(params, ['callback_url', 'event', 'user_token', 'results_ttl'].concat(PARAMS_ALLOWED)),
+      qs: pick(params, ['callback_url', 'events', 'user_token', 'results_ttl'].concat(PARAMS_ALLOWED)),
       json: true
     },
     defaultOptions: this._options
