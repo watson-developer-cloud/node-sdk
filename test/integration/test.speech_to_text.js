@@ -421,7 +421,7 @@ describe('speech_to_text_integration', function() {
         // if this fails, logs are available at https://watson-test-resources.mybluemix.net/speech-to-text-async/secure
         callback_url: 'https://watson-test-resources.mybluemix.net/speech-to-text-async/secure/callback',
         user_token: 'Node.js SDK Integration Test at ' + new Date(),
-        event: 'recognitions.completed',
+        events: 'recognitions.completed',
         results_ttl: 1
       };
       speech_to_text.createRecognitionJob(params, function(err, res) {
