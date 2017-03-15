@@ -97,7 +97,7 @@ SpeechToTextV1.URL = 'https://stream.watsonplatform.net/speech-to-text/api';
  *
  * @param {object} params - The parameters
  * @param {string} params.callback_url - A URL to which callback notifications are to be sent
- * @param {string} params.user_secret - A user-specified string that the service uses to generate the HMAC-SHA1 signature that it sends via the X-Callback-Signature header
+ * @param {string} [params.user_secret] - A user-specified string that the service uses to generate the HMAC-SHA1 signature that it sends via the X-Callback-Signature header
  * @param {Function} callback
  * @returns {ReadableStream|undefined}
  */
@@ -131,7 +131,7 @@ SpeechToTextV1.prototype.registerCallback = function(params, callback) {
  * @param {Stream}  params.audio - Audio to be recognized
  * @param {string} params.content_type - The Content-type e.g. audio/l16; rate=48000
  * @param {string} params.callback_url - A URL to which callback notifications are to be sent
- * @param {string} [params.event] - recognitions.started|recognitions.completed|recognitions.failed|recognitions.completed_with_results
+ * @param {string} [params.events - recognitions.started|recognitions.completed|recognitions.failed|recognitions.completed_with_results
  * @param {string} [params.user_token] - The token allows the user to maintain an internal mapping between jobs and notification events
  * @param {number} [params.results_ttl] - time to alive of the job result
  * @param {*} [params.*] - all params that .recognize() accepts may also be passed to createRecognitionJob()
@@ -157,7 +157,7 @@ SpeechToTextV1.prototype.createRecognitionJob = function(params, callback) {
       headers: {
         'Content-Type': params.content_type
       },
-      qs: pick(params, ['callback_url', 'event', 'user_token', 'results_ttl'].concat(PARAMS_ALLOWED)),
+      qs: pick(params, ['callback_url', 'events', 'user_token', 'results_ttl'].concat(PARAMS_ALLOWED)),
       json: true
     },
     defaultOptions: this._options
