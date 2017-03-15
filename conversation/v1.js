@@ -970,7 +970,7 @@ ConversationV1.prototype.deleteCounterExample = function(params, callback) {
       url: '/v1/workspaces/{workspace_id}/counterexamples/{text}',
       method: 'DELETE',
       json: true,
-      path: pick(params, ['workspace_id', 'text']),
+      path: pick(params, ['workspace_id', 'text'])
     },
     requiredParams: ['workspace_id', 'text'],
     defaultOptions: this._options
@@ -997,7 +997,7 @@ ConversationV1.prototype.getCounterExample = function(params, callback) {
       url: '/v1/workspaces/{workspace_id}/counterexamples/{text}',
       method: 'GET',
       json: true,
-      path: pick(params, ['workspace_id', 'text']),
+      path: pick(params, ['workspace_id', 'text'])
     },
     requiredParams: ['workspace_id', 'text'],
     defaultOptions: this._options
@@ -1025,7 +1025,7 @@ ConversationV1.prototype.updateCounterExample = function(params, callback) {
       url: '/v1/workspaces/{workspace_id}/counterexamples/{text}',
       method: 'POST',
       json: true,
-      path: pick(params, ['workspace_id', 'old_text', 'text']),
+      path: pick(params, ['workspace_id', 'old_text', 'text'])
     },
     requiredParams: ['workspace_id', 'old_text', 'text'],
     defaultOptions: this._options
