@@ -923,4 +923,32 @@ ConversationV1.prototype.getCounterExamples = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
+/**
+ * Method: createCounterExample
+ *
+ * Add a new counterexample to a workspace. Counterexamples are examples that have been marked as irrelevant input.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} params.text The text of a user input example.
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.createCounterExample = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/counterexamples',
+      method: 'POST',
+      json: true,
+      path: pick(params, ['workspace_id']),
+      body: pick(params, ['text'])
+    },
+    requiredParams: ['workspace_id', 'text'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
 module.exports = ConversationV1;
