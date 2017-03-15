@@ -491,6 +491,21 @@ describe('conversation_integration', function() {
     });
   });
 
+  describe('getCounterExamples()', function() {
+    it('should return counterExamples of the workspace', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id
+      };
+
+      conversation.getCounterExamples(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        done();
+      });
+    });
+  });
+
   describe('deleteWorkspace()', function() {
     it('should delete the workplace', function(done) {
       const params = {
