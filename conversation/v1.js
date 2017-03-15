@@ -697,7 +697,7 @@ ConversationV1.prototype.getIntent = function(params, callback) {
  * @param {String} params.old_intent
  * @param {String} params.intent
  * @param {String} params.description
- * @param {Object} params.examples
+ * @param {Array<Object>} params.examples
  * @param {Function} [callback]
  *
  */
