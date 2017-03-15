@@ -967,8 +967,35 @@ ConversationV1.prototype.deleteCounterExample = function(params, callback) {
 
   const parameters = {
     options: {
-      url: '/v1/workspaces/{workspace_id}/counterexamples',
+      url: '/v1/workspaces/{workspace_id}/counterexamples/{text}',
       method: 'DELETE',
+      json: true,
+      path: pick(params, ['workspace_id', 'text']),
+    },
+    requiredParams: ['workspace_id', 'text'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: getCounterExample
+ *
+ * Get information about a counterexample. Counterexamples are examples that have been marked as irrelevant input.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} params.text The text of a user input example.
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.getCounterExample = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/counterexamples/{text}',
+      method: 'GET',
       json: true,
       path: pick(params, ['workspace_id', 'text']),
     },
