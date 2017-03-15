@@ -1022,10 +1022,11 @@ ConversationV1.prototype.updateCounterExample = function(params, callback) {
 
   const parameters = {
     options: {
-      url: '/v1/workspaces/{workspace_id}/counterexamples/{text}',
+      url: '/v1/workspaces/{workspace_id}/counterexamples/{old_text}',
       method: 'POST',
       json: true,
-      path: pick(params, ['workspace_id', 'old_text', 'text'])
+      path: pick(params, ['workspace_id', 'old_text']),
+      body: pick(params, ['text'])
     },
     requiredParams: ['workspace_id', 'old_text', 'text'],
     defaultOptions: this._options
