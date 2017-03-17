@@ -697,7 +697,7 @@ ConversationV1.prototype.getIntent = function(params, callback) {
  * @param {String} params.old_intent
  * @param {String} params.intent
  * @param {String} params.description
- * @param {Object} params.examples
+ * @param {Array<Object>} params.examples
  * @param {Function} [callback]
  *
  */
@@ -887,6 +887,148 @@ ConversationV1.prototype.updateExample = function(params, callback) {
       body: pick(params, ['text'])
     },
     requiredParams: ['workspace_id', 'intent', 'old_text', 'text'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: getCounterExamples
+ *
+ * List the counterexamples for a workspace. Counterexamples are examples that have been marked as irrelevant input
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {Number} [params.page_limit]
+ * @param {Boolean} [params.include_count]
+ * @param {String} [params.sort]
+ * @param {String} [params.cursor]
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.getCounterExamples = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/counterexamples',
+      method: 'GET',
+      json: true,
+      path: pick(params, ['workspace_id']),
+      qs: pick(params, ['page_limit', 'include_count', 'sort', 'cursor'])
+    },
+    requiredParams: ['workspace_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: createCounterExample
+ *
+ * Add a new counterexample to a workspace. Counterexamples are examples that have been marked as irrelevant input.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} params.text The text of a user input example.
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.createCounterExample = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/counterexamples',
+      method: 'POST',
+      json: true,
+      path: pick(params, ['workspace_id']),
+      body: pick(params, ['text'])
+    },
+    requiredParams: ['workspace_id', 'text'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: deleteCounterExample
+ *
+ * Delete a counterexample from a workspace. Counterexamples are examples that have been marked as irrelevant input.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} params.text The text of a user input example.
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.deleteCounterExample = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/counterexamples/{text}',
+      method: 'DELETE',
+      json: true,
+      path: pick(params, ['workspace_id', 'text'])
+    },
+    requiredParams: ['workspace_id', 'text'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: getCounterExample
+ *
+ * Get information about a counterexample. Counterexamples are examples that have been marked as irrelevant input.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} params.text The text of a user input example.
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.getCounterExample = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/counterexamples/{text}',
+      method: 'GET',
+      json: true,
+      path: pick(params, ['workspace_id', 'text'])
+    },
+    requiredParams: ['workspace_id', 'text'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: updateCounterExample
+ *
+ * Get information about a counterexample. Counterexamples are examples that have been marked as irrelevant input.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} params.old_text
+ * @param {String} params.text The text of a user input example.
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.updateCounterExample = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/counterexamples/{old_text}',
+      method: 'POST',
+      json: true,
+      path: pick(params, ['workspace_id', 'old_text']),
+      body: pick(params, ['text'])
+    },
+    requiredParams: ['workspace_id', 'old_text', 'text'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
