@@ -397,6 +397,36 @@ describe('speech_to_text', function() {
       assert.equal(req.method, 'POST');
     });
 
+    it('should create new recognitions job w/ multiple events', function() {
+      const path = '/v1/recognitions?callback_url=http%3A%2F%2Fwatson-test-resources.mybluemix.net%2Fresults&events=recognitions.started%2Crecognitions.failed%2Crecognitions.completed_with_results&user_token=myArbitraryIdentifier1&results_ttl=60';
+      const response = {
+        id: '4bd734c0-e575-21f3-de03-f932aa0468a0',
+        status: 'waiting',
+        created: '2017-02-17T19:15:17.926Z',
+        url: 'https://stream.watsonplatform.net/speech-to-text/api/v1/recognitions/4bd734c0-e575-21f3-de03-f932aa0468a0'
+      };
+
+      nock(service.url).post(path).delay(100).reply(200, response);
+
+      const checkRes = function(err, res) {
+        assert.equal(JSON.stringify(err), JSON.stringify(null));
+        assert.equal(JSON.stringify(res), JSON.stringify(response));
+      };
+
+      const params = {
+        audio: fs.createReadStream(__dirname + '/../resources/weather.wav'),
+        content_type: 'audio/l16;rate=41100',
+        callback_url: 'http://watson-test-resources.mybluemix.net/results',
+        user_token: 'myArbitraryIdentifier1',
+        events: ['recognitions.started', 'recognitions.failed', 'recognitions.completed_with_results'],
+        results_ttl: 60
+      };
+      const req = speech_to_text.createRecognitionJob(params, checkRes);
+
+      assert.equal(req.path, path);
+      assert.equal(req.method, 'POST');
+    });
+
     it('should get list of jobs', function(done) {
       const path = '/v1/recognitions';
       const response = {
@@ -473,19 +503,19 @@ describe('speech_to_text', function() {
       assert.equal(req.path, path);
       assert.equal(req.method, 'GET');
     });
-  });
 
-  it('should delete a recognition job', function() {
-    const path = '/v1/recognitions/4bd734c0-e575-21f3-de03-f932aa0468a0';
+    it('should delete a recognition job', function() {
+      const path = '/v1/recognitions/4bd734c0-e575-21f3-de03-f932aa0468a0';
 
-    nock(service.url).delete(path).delay(200).reply(200);
+      nock(service.url).delete(path).delay(200).reply(200);
 
-    const checkRes = function(err, res) {
-      assert.ifError(err);
-    };
-    const req = speech_to_text.deleteRecognitionJob({ id: '4bd734c0-e575-21f3-de03-f932aa0468a0' }, checkRes);
+      const checkRes = function(err, res) {
+        assert.ifError(err);
+      };
+      const req = speech_to_text.deleteRecognitionJob({ id: '4bd734c0-e575-21f3-de03-f932aa0468a0' }, checkRes);
 
-    assert.equal(req.path, path);
-    assert.equal(req.method, 'DELETE');
+      assert.equal(req.path, path);
+      assert.equal(req.method, 'DELETE');
+    });
   });
 });

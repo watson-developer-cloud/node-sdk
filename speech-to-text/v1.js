@@ -150,6 +150,13 @@ SpeechToTextV1.prototype.createRecognitionJob = function(params, callback) {
     return;
   }
 
+  const qs = pick(params, ['callback_url', 'events', 'user_token', 'results_ttl'].concat(PARAMS_ALLOWED));
+
+  // multiple events must be sent as a comma-separated string. Default behavior is multiple &event= params in the querystring
+  if (Array.isArray(qs.events)) {
+    qs.events = qs.events.join(',');
+  }
+
   const parameters = {
     options: {
       method: 'POST',
@@ -157,7 +164,7 @@ SpeechToTextV1.prototype.createRecognitionJob = function(params, callback) {
       headers: {
         'Content-Type': params.content_type
       },
-      qs: pick(params, ['callback_url', 'events', 'user_token', 'results_ttl'].concat(PARAMS_ALLOWED)),
+      qs: qs,
       json: true
     },
     defaultOptions: this._options
