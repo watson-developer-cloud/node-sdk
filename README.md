@@ -55,7 +55,7 @@ This change also removes the `use_vcap_services` flag.
 
 ### Client-side usage is partially supported
 
-See [Client-side usage](#client-side-usage] section for details.
+See [Client-side usage](#client-side-usage) section for details.
 
 ### New recommended method for instantiating services:
 
