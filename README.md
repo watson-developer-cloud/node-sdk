@@ -109,7 +109,7 @@ Of those that do, most require an auth token to be generated server-side via the
 
 ### Data collection opt-out
 
-By default, [all requests are logged](http://www.ibm.com/watson/developercloud/doc/getting_started/gs-logging.shtml). This can be disabled of by setting the `X-Watson-Learning-Opt-Out` header when creating the service instance:
+By default, [all requests are logged](https://www.ibm.com/watson/developercloud/doc/common/getting-started-logging.html). This can be disabled of by setting the `X-Watson-Learning-Opt-Out` header when creating the service instance:
 
 ```js
 var myInstance = new watson.WhateverServiceV1({
