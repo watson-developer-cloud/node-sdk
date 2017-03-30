@@ -49,22 +49,13 @@ Node.js client library to use the [Watson Developer Cloud][wdc] services, a coll
 
 ### BREAKING: user-supplied credentials are now preferred over Bluemix-supplied credentials.
 
-The order of preference is now:
-
-1. User-supplied credentials passed to the service constructor
-
-2. `SERVICE_NAME_USERNAME` and `SERVICE_NAME_PASSWORD` environment properties (or `SERVICE_NAME_API_KEY` when appropriate) and, optionally, `SERVICE_NAME_URL`
-
-3. Bluemix-supplied credentials (via the `VCAP_SERVICES` JSON-encoded environment property)
+See [Usage](#usage) section for details.
 
 This change also removes the `use_vcap_services` flag.
 
-### Client-side support via [Browserify](http://browserify.org/)
+### Client-side usage is partially supported
 
-`examples/browserify/` shows an example app that generates tokens server-side and uses the SDK client-side via browserify.
-
-Note: not all services currently support CORS, and therefore not all services can be used client-side.
-Of those that do, most require an auth token to be generated server-side via the [Authorization Service](#authorization).
+See [Client-side usage](#client-side-usage] section for details.
 
 ### New recommended method for instantiating services:
 
@@ -101,6 +92,20 @@ you will have to create a service in [Bluemix][bluemix].
 
 If you are running your application in Bluemix, you don't need to specify the
 credentials; the library will get them for you by looking at the `VCAP_SERVICES` environment variable.
+
+Credentials are checked for in the following order:
+
+1. Hard-coded or programatic credentials passed to the service constructor
+
+2. `SERVICE_NAME_USERNAME` and `SERVICE_NAME_PASSWORD` environment properties (or `SERVICE_NAME_API_KEY` when appropriate) and, optionally, `SERVICE_NAME_URL` 
+
+3. Bluemix-supplied credentials (via the `VCAP_SERVICES` JSON-encoded environment property)
+
+### Client-side usage
+See the `examples/` folder for [Browserify](http://browserify.org/) and [Webpack](http://webpack.github.io/) client-side SDK examples (with server-side generation of auth tokens.)
+
+Note: not all services currently support CORS, and therefore not all services can be used client-side.
+Of those that do, most require an auth token to be generated server-side via the [Authorization Service](#authorization).
 
 ### Data collection opt-out
 
