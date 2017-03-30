@@ -104,7 +104,7 @@ credentials; the library will get them for you by looking at the `VCAP_SERVICES`
 
 ### Data collection opt-out
 
-By default, [all requests are logged](http://www.ibm.com/watson/developercloud/doc/getting_started/gs-logging.shtml). This can be disabled of by setting the `X-Watson-Learning-Opt-Out` header when creating the service instance:
+By default, [all requests are logged](https://www.ibm.com/watson/developercloud/doc/common/getting-started-logging.html). This can be disabled of by setting the `X-Watson-Learning-Opt-Out` header when creating the service instance:
 
 ```js
 var myInstance = new watson.WhateverServiceV1({
