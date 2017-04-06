@@ -75,7 +75,7 @@ in webpack.config.js:
 ```js
   module: {
     rules: [{
-        test: /node_modules\/JSONStream\/index\.js$/,
+        test: /JSONStream/,
         use: 'shebang-loader'
     }]
   }
