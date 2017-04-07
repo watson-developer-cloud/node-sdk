@@ -121,6 +121,10 @@ function errorFormatter(cb) {
 
 /**
  * Visual Recognition v3
+ *
+ * Normal usage requires an API key.
+ * Dedicated instances require a username and password.
+ *
  * @param {Object} options
  * @constructor
  */
@@ -165,15 +169,10 @@ VisualRecognitionV3.prototype.request = function(parameters, cb) {
  */
 VisualRecognitionV3.prototype.initCredentials = function(options) {
   options.api_key = options.api_key || options.apikey;
-  options = extend(
-    {},
-    this.getCredentialsFromBluemix(this.name), // todo: test if this works
-    this.getCredentialsFromEnvironment(this.name),
-    options
-  );
+  options = extend({}, this.getCredentialsFromBluemix(this.name), this.getCredentialsFromEnvironment(this.name), options);
   if (!options.use_unauthenticated) {
-    if (!options.api_key) {
-      throw new Error('Argument error: api_key was not specified');
+    if (!options.api_key && !(options.username && options.password)) {
+      throw new Error('Argument error: api_key or username/password was not specified');
     }
     // Per documentation, Alchemy* services use `apikey`, but Visual Recognition uses (`api_key`)
     // (Either will work in most cases, but the VR Collections & Similarity Search beta only supports `api_key`)
@@ -183,16 +182,20 @@ VisualRecognitionV3.prototype.initCredentials = function(options) {
 };
 
 /**
- * Pulls api_key from SERVICE_NAME_API_KEY env property
+ * Pulls api_key from the VISUAL_RECOGNITION_API_KEY env property
+ *
+ * Also checks for VISUAL_RECOGNITION_USERNAME and VISUAL_RECOGNITION_PASSWORD for dedicated instances.
  *
  * @param {String} name
- * @return {{api_key: String|undefined}}
+ * @return {{api_key: String|undefined, username: String|undefined, password: String|undefined, url: String|undefined}}
  */
 VisualRecognitionV3.prototype.getCredentialsFromEnvironment = function(name) {
-  return {
-    api_key: process.env[name.toUpperCase() + '_API_KEY'],
-    url: process.env[name + '_URL']
-  };
+  return extend(
+    {
+      api_key: process.env[name.toUpperCase() + '_API_KEY']
+    },
+    BaseService.prototype.getCredentialsFromEnvironment.call(this, name)
+  );
 };
 
 /**

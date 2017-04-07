@@ -94,6 +94,69 @@ describe('visual_recognition', function() {
     let env;
     before(function() {
       env = process.env;
+      process.env = {};
+    });
+    after(function() {
+      process.env = env;
+    });
+
+    it('should throw when no/insufficient credentials are provided', () => {
+      assert.throws(() => new watson.VisualRecognitionV3(), /key/);
+      assert.throws(() => new watson.VisualRecognitionV3({}), /key/);
+      assert.throws(() => new watson.VisualRecognitionV3({ version_date: '2016-05-20' }), /key/);
+      assert.throws(() => new watson.VisualRecognitionV3({ username: 'foo' }), /key/);
+    });
+
+    it(
+      'should accept an API key for regular usage',
+      () => new watson.VisualRecognitionV3({
+        api_key: 'foo',
+        version_date: '2016-05-20'
+      })
+    );
+
+    it(
+      'should accept username/password for regular usage',
+      () => new watson.VisualRecognitionV3({
+        username: 'foo',
+        password: 'bar',
+        version_date: '2016-05-20'
+      })
+    );
+
+    it('should accept VISUAL_RECOGNITION_API_KEY env property', () => {
+      process.env.VISUAL_RECOGNITION_API_KEY = 'foo';
+      return new watson.VisualRecognitionV3({ version_date: '2016-05-20' });
+    });
+
+    it('should read VISUAL_RECOGNITION_API_KEY environment property', function() {
+      process.env = {
+        VISUAL_RECOGNITION_API_KEY: 'foo'
+      };
+      const instance = watson.visual_recognition({
+        version: 'v3',
+        version_date: '2016-05-20'
+      });
+      assert.equal(instance._options.api_key, 'foo');
+      assert.equal(instance._options.username, undefined);
+      assert.equal(instance._options.password, undefined);
+    });
+
+    it('should read VISUAL_RECOGNITION_USERNAME / PASSWORD from environment properties', function() {
+      process.env = {
+        VISUAL_RECOGNITION_USERNAME: 'foo',
+        VISUAL_RECOGNITION_PASSWORD: 'bar'
+      };
+      const instance = watson.visual_recognition({
+        version: 'v3',
+        version_date: '2016-05-20'
+      });
+      assert.equal(instance._options.api_key, undefined);
+      assert.equal(instance._options.username, 'foo');
+      assert.equal(instance._options.password, 'bar');
+    });
+
+    it('should read api_key from cf/bluemix environment properties', function() {
       process.env = {
         VCAP_SERVICES: JSON.stringify({
           watson_vision_combined: [
@@ -110,17 +173,40 @@ describe('visual_recognition', function() {
           ]
         })
       };
-    });
-    after(function() {
-      process.env = env;
-    });
-
-    it('should read credentials from cf/bluemix environment properties', function() {
       const instance = watson.visual_recognition({
         version: 'v3',
         version_date: '2016-05-20'
       });
-      assert(instance._options.api_key, 'foo');
+      assert.equal(instance._options.api_key, 'foo');
+      assert.equal(instance._options.username, undefined);
+      assert.equal(instance._options.password, undefined);
+    });
+
+    it('should read username / password from cf/bluemix environment properties', function() {
+      process.env = {
+        VCAP_SERVICES: JSON.stringify({
+          watson_vision_combined: [
+            {
+              name: 'Visual Recognition-mj',
+              label: 'watson_vision_combined',
+              plan: 'free',
+              credentials: {
+                url: 'https://gateway-a.watsonplatform.net/visual-recognition/api',
+                note: 'It may take up to 5 minutes for this key to become active',
+                username: 'foo',
+                password: 'bar'
+              }
+            }
+          ]
+        })
+      };
+      const instance = watson.visual_recognition({
+        version: 'v3',
+        version_date: '2016-05-20'
+      });
+      assert.equal(instance._options.api_key, undefined);
+      assert.equal(instance._options.username, 'foo');
+      assert.equal(instance._options.password, 'bar');
     });
   });
 
