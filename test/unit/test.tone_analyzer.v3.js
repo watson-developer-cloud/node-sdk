@@ -15,7 +15,20 @@ describe('tone_analyzer.v3', function() {
     tree: {}
   };
 
+  const tone_chat_request = {
+    utterances: [
+      { text: 'My charger isn’t working.', user: 'customer' },
+      { text: 'Thanks for reaching out. Can you give me some more detail about the issue?', user: 'agent' },
+      {
+        text: "I put my charger in my phone last night to charge and it isn't working. Which is ridiculous, it's a new charger, I bought it yesterday.",
+        user: 'customer'
+      },
+      { text: 'I’m sorry you’re having issues with charging. What kind of charger do you have?', user: 'agent' }
+    ]
+  };
+
   const tone_path = '/v3/tone';
+  const tone_chat_path = '/v3/tone_chat';
 
   const service = {
     username: 'batman',
@@ -54,6 +67,13 @@ describe('tone_analyzer.v3', function() {
     tone_analyzer.tone(undefined, missingParameter);
   });
 
+  // Tone Chat Endpoint API
+  it('tone chat API should check no parameters provided', function() {
+    tone_analyzer.tone_chat({}, missingParameter);
+    tone_analyzer.tone_chat(null, missingParameter);
+    tone_analyzer.tone_chat(undefined, missingParameter);
+  });
+
   it('tone API should generate a valid payload with text', function() {
     const req = tone_analyzer.tone(tone_request, noop);
     const body = Buffer.from(req.body).toString('ascii');
@@ -61,6 +81,16 @@ describe('tone_analyzer.v3', function() {
     assert.equal(body, tone_request.text);
     assert.equal(req.method, 'POST');
     assert.equal(req.headers['content-type'], 'text/plain');
+    assert.equal(req.headers['accept'], 'application/json');
+  });
+
+  it('tone-chat API endpoint should generate a valid payload with utterances json payload', function() {
+    const req = tone_analyzer.tone_chat(tone_chat_request, noop);
+    const body = req.body;
+    assert.equal(req.uri.href, service.url + tone_chat_path + '?version=2016-05-19');
+    assert.equal(body, tone_chat_request.utterances);
+    assert.equal(req.method, 'POST');
+    assert.equal(req.headers['content-type'], 'application/json');
     assert.equal(req.headers['accept'], 'application/json');
   });
 
