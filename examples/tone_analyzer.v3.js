@@ -19,10 +19,10 @@ tone_analyzer.tone({ text: 'Greetings from Watson Developer Cloud!' }, function(
 
 const utterances = {
   "utterances": [
-    {"text": "Hello, can you help me", "user": "customer"},
-    {"text": "How are you ?", "user": "agent"},
-    {"text": "Nothing is working :(", "user": "customer"},
-    {"text": "Sorry to hear this", "user": "agent"}
+    {"text": "My charger isn’t working.", "user": "customer"},
+    {"text": "Thanks for reaching out. Can you give me some more detail about the issue?", "user": "agent"},
+    {"text": "I put my charger in my phone last night to charge and it isn't working. Which is ridiculous, it's a new charger, I bought it yesterday.", "user": "customer"},
+    {"text": "I’m sorry you’re having issues with charging. What kind of charger do you have?", "user": "agent"}
   ]
 };
 
