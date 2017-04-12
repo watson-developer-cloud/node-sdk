@@ -89,11 +89,9 @@ ToneAnalyzerV3.prototype.tone = function(params, callback) {
 };
 
 ToneAnalyzerV3.prototype.tone_chat = function(params, callback) {
-  if (!params || !params.utterances) {
-    callback(new Error('Missing required parameters: utterances'));
-    return;
-  }
   const parameters = {
+    requiredParams: ['utterances'],
+    originalParams: params,
     options: {
       url: '/v3/tone_chat',
       method: 'POST',
