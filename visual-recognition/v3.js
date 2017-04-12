@@ -30,7 +30,7 @@ const NEGATIVE_EXAMPLES = 'negative_examples';
  * @private
  * @param {*} a
  * @param {*} b
- * @returns {boolean}
+ * @return {boolean}
  * @constructor
  */
 function xor(a, b) {
@@ -44,7 +44,7 @@ function xor(a, b) {
  * based on https://github.com/watson-developer-cloud/node-sdk/issues/333
  *
  * @param {Buffer} buffer
- * @returns {String|undefined}
+ * @return {String|undefined}
  */
 function detectContentType(buffer) {
   const signature = buffer.readUInt32BE();
@@ -68,6 +68,7 @@ function detectContentType(buffer) {
  * also gracefully handles cases of image_file instead of images_file
  *
  * @private
+ * @param {Object} params
  */
 function fixupImageParam(params) {
   if (params && params.image_file && !params.images_file) {
@@ -89,9 +90,11 @@ function fixupImageParam(params) {
 }
 
 /**
- * Formats error
+ * Creates a function that can be called on responses to format the error then fire the cb
  *
  * @private
+ * @param {Function} [cb]
+ * @return {Function}
  */
 function errorFormatter(cb) {
   const callback = typeof cb === 'function' ? cb /* no op */ : (function() {});
@@ -117,8 +120,12 @@ function errorFormatter(cb) {
 }
 
 /**
+ * Visual Recognition v3
  *
- * @param options
+ * Normal usage requires an API key.
+ * Dedicated instances require a username and password.
+ *
+ * @param {Object} options
  * @constructor
  */
 function VisualRecognitionV3(options) {
@@ -138,22 +145,34 @@ VisualRecognitionV3.prototype.serviceDefaults = {
 };
 
 /**
+ * Wrapper for requestFactory that ensures things are formatted the way the service likes
+ *
+ * @private
+ * @param {Object} parameters
+ * @param {Function} cb
+ */
+VisualRecognitionV3.prototype.request = function(parameters, cb) {
+  const qs = parameters.options.qs;
+  if (qs) {
+    // array params are turned into a comma-separated string when in querystrings
+    Object.keys(qs).forEach(k => Array.isArray(qs[k]) && (qs[k] = qs[k].join(',')));
+  }
+  return requestFactory(parameters, cb);
+};
+
+/**
  * Grab the api key
  *
- * @param options
+ * @param {Object} options
  * @private
+ * @return {Object} new options object
  */
 VisualRecognitionV3.prototype.initCredentials = function(options) {
   options.api_key = options.api_key || options.apikey;
-  options = extend(
-    {},
-    this.getCredentialsFromBluemix(this.name), // todo: test if this works
-    this.getCredentialsFromEnvironment(this.name),
-    options
-  );
+  options = extend({}, this.getCredentialsFromBluemix(this.name), this.getCredentialsFromEnvironment(this.name), options);
   if (!options.use_unauthenticated) {
-    if (!options.api_key) {
-      throw new Error('Argument error: api_key was not specified');
+    if (!options.api_key && !(options.username && options.password)) {
+      throw new Error('Argument error: api_key or username/password was not specified');
     }
     // Per documentation, Alchemy* services use `apikey`, but Visual Recognition uses (`api_key`)
     // (Either will work in most cases, but the VR Collections & Similarity Search beta only supports `api_key`)
@@ -163,21 +182,25 @@ VisualRecognitionV3.prototype.initCredentials = function(options) {
 };
 
 /**
- * Pulls api_key from SERVICE_NAME_API_KEY env property
+ * Pulls api_key from the VISUAL_RECOGNITION_API_KEY env property
+ *
+ * Also checks for VISUAL_RECOGNITION_USERNAME and VISUAL_RECOGNITION_PASSWORD for dedicated instances.
  *
  * @param {String} name
- * @returns {{api_key: String|undefined}}
+ * @return {{api_key: String|undefined, username: String|undefined, password: String|undefined, url: String|undefined}}
  */
 VisualRecognitionV3.prototype.getCredentialsFromEnvironment = function(name) {
-  return {
-    api_key: process.env[name.toUpperCase() + '_API_KEY'],
-    url: process.env[name + '_URL']
-  };
+  return extend(
+    {
+      api_key: process.env[name.toUpperCase() + '_API_KEY']
+    },
+    BaseService.prototype.getCredentialsFromEnvironment.call(this, name)
+  );
 };
 
 /**
  * Bluemix uses a different naming convention for VR v3 than for other services
- * @returns {*}
+ * @return {*}
  */
 VisualRecognitionV3.prototype.getCredentialsFromBluemix = function() {
   return BaseService.prototype.getCredentialsFromBluemix.call(this, 'watson_vision_combined');
@@ -226,7 +249,7 @@ VisualRecognitionV3.prototype.getCredentialsFromBluemix = function() {
  * @param {Number} [params.threshold] A floating point value that specifies the minimum score a class must have to be displayed in the response.
  * @param {Function} callback
  *
- * @returns {ReadableStream|undefined}
+ * @return {ReadableStream|undefined}
  *
  */
 VisualRecognitionV3.prototype.classify = function(params, callback) {
@@ -278,7 +301,7 @@ VisualRecognitionV3.prototype.classify = function(params, callback) {
     };
   }
 
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 /**
@@ -323,7 +346,7 @@ VisualRecognitionV3.prototype.classify = function(params, callback) {
  * @param {String} [params.url] The URL of an image (.jpg, .png, .gif). Redirects are followed, so you can use shortened URLs. The resolved URL is returned in the response. Either images_file or url must be specified.
  * @param {Function} callback
  *
- * @returns {ReadableStream|undefined}
+ * @return {ReadableStream|undefined}
  */
 VisualRecognitionV3.prototype.detectFaces = function(params, callback) {
   try {
@@ -357,7 +380,7 @@ VisualRecognitionV3.prototype.detectFaces = function(params, callback) {
     };
   }
 
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 /**
@@ -412,7 +435,7 @@ VisualRecognitionV3.prototype.detectFaces = function(params, callback) {
  * @param {String} [params.url] The URL of an image (.jpg, .png, .gif). Redirects are followed, so you can use shortened URLs. The resolved URL is returned in the response. Either images_file or url must be specified.
  * @param {Function} callback
  *
- * @returns {ReadableStream|undefined}
+ * @return {ReadableStream|undefined}
  */
 VisualRecognitionV3.prototype.recognizeText = function(params, callback) {
   try {
@@ -446,7 +469,7 @@ VisualRecognitionV3.prototype.recognizeText = function(params, callback) {
     };
   }
 
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 /**
@@ -495,7 +518,7 @@ VisualRecognitionV3.prototype.recognizeText = function(params, callback) {
  * @param {ReadStream} params.classname_positive_examples <your_class_name>_positive_examples One or more compressed (.zip) files of images that depict the visual subject for a class within the new classifier. Must contain a minimum of 10 images. You may supply multiple files with different class names in the key.
  * @param {ReadStream} [params.negative_examples] A compressed (.zip) file of images that do not depict the visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images. Required if only one positive set is provided.
  *
- * @returns {ReadableStream|undefined}
+ * @return {ReadableStream|undefined}
  */
 VisualRecognitionV3.prototype.createClassifier = function(params, callback) {
   params = params || {};
@@ -521,7 +544,7 @@ VisualRecognitionV3.prototype.createClassifier = function(params, callback) {
     requiredParams: ['name'],
     defaultOptions: this._options
   };
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 /**
@@ -549,7 +572,7 @@ VisualRecognitionV3.prototype.createClassifier = function(params, callback) {
  * @param {ReadStream} params.classname_positive_examples <your_class_name>_positive_examples One or more compressed (.zip) files of images that depict the visual subject for a class within the classifier. You may supply multiple files with different class names in the key.
  * @param {ReadStream} [params.negative_examples] A compressed (.zip) file of images that do not depict the visual subject of any of the classes of the classifier.
  *
- * @returns {ReadableStream|undefined}
+ * @return {ReadableStream|undefined}
  */
 VisualRecognitionV3.prototype.retrainClassifier = function(params, callback) {
   params = params || {};
@@ -568,7 +591,7 @@ VisualRecognitionV3.prototype.retrainClassifier = function(params, callback) {
     requiredParams: [],
     defaultOptions: this._options
   };
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 /**
@@ -603,7 +626,7 @@ VisualRecognitionV3.prototype.listClassifiers = function(params, callback) {
     },
     defaultOptions: this._options
   };
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 /**
@@ -639,7 +662,7 @@ VisualRecognitionV3.prototype.getClassifier = function(params, callback) {
     requiredParams: ['classifier_id'],
     defaultOptions: this._options
   };
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 /**
@@ -648,7 +671,7 @@ VisualRecognitionV3.prototype.getClassifier = function(params, callback) {
  * @param {Object} params
  * @param {String} params.classifier_id The classifier id
  * @param {Function} callback
- * @returns {ReadableStream|undefined}
+ * @return {ReadableStream|undefined}
  */
 VisualRecognitionV3.prototype.deleteClassifier = function(params, callback) {
   const parameters = {
@@ -661,7 +684,7 @@ VisualRecognitionV3.prototype.deleteClassifier = function(params, callback) {
     requiredParams: ['classifier_id'],
     defaultOptions: this._options
   };
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 // collections & similarity search
@@ -696,7 +719,7 @@ VisualRecognitionV3.prototype.createCollection = function(params, callback) {
     requiredParams: ['name'],
     defaultOptions: this._options
   };
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 /**
@@ -729,7 +752,7 @@ VisualRecognitionV3.prototype.getCollection = function(params, callback) {
     requiredParams: ['collection_id'],
     defaultOptions: this._options
   };
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 /**
@@ -762,7 +785,7 @@ VisualRecognitionV3.prototype.listCollections = function(params, callback) {
     },
     defaultOptions: this._options
   };
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 /**
@@ -786,7 +809,7 @@ VisualRecognitionV3.prototype.deleteCollection = function(params, callback) {
     requiredParams: ['collection_id'],
     defaultOptions: this._options
   };
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 /**
@@ -842,7 +865,7 @@ VisualRecognitionV3.prototype.addImage = function(params, callback) {
     requiredParams: ['collection_id', 'image_file'],
     defaultOptions: this._options
   };
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 /**
@@ -875,7 +898,7 @@ VisualRecognitionV3.prototype.listImages = function(params, callback) {
     requiredParams: ['collection_id'],
     defaultOptions: this._options
   };
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 /**
@@ -906,7 +929,7 @@ VisualRecognitionV3.prototype.getImage = function(params, callback) {
     requiredParams: ['collection_id', 'image_id'],
     defaultOptions: this._options
   };
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 /**
@@ -931,7 +954,7 @@ VisualRecognitionV3.prototype.deleteImage = function(params, callback) {
     requiredParams: ['collection_id', 'image_id'],
     defaultOptions: this._options
   };
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 /**
@@ -968,7 +991,7 @@ VisualRecognitionV3.prototype.setImageMetadata = function(params, callback) {
     requiredParams: ['collection_id', 'image_id', 'metadata'],
     defaultOptions: this._options
   };
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 /**
@@ -998,7 +1021,7 @@ VisualRecognitionV3.prototype.getImageMetadata = function(params, callback) {
     requiredParams: ['collection_id', 'image_id'],
     defaultOptions: this._options
   };
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 /**
@@ -1023,7 +1046,7 @@ VisualRecognitionV3.prototype.deleteImageMetadata = function(params, callback) {
     requiredParams: ['collection_id', 'image_id'],
     defaultOptions: this._options
   };
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 /**
@@ -1054,7 +1077,7 @@ VisualRecognitionV3.prototype.deleteImageMetadata = function(params, callback) {
  * @param {ReadableStream} params.image_file The image file (.jpg or .png) of the image to search against the collection.
  * @param {Number} [params.limit=10]  limit The number of similar results you want returned. Default limit is 10 results, you can specify a maximum limit of 100 results.
  * @param {Function} callback
- * @returns {ReadableStream|undefined}
+ * @return {ReadableStream|undefined}
  */
 VisualRecognitionV3.prototype.findSimilar = function(params, callback) {
   params = params || {};
@@ -1075,7 +1098,7 @@ VisualRecognitionV3.prototype.findSimilar = function(params, callback) {
     requiredParams: ['collection_id', 'image_file'],
     defaultOptions: this._options
   };
-  return requestFactory(parameters, errorFormatter(callback));
+  return this.request(parameters, errorFormatter(callback));
 };
 
 module.exports = VisualRecognitionV3;

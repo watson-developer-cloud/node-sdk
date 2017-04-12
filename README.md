@@ -49,22 +49,13 @@ Node.js client library to use the [Watson Developer Cloud][wdc] services, a coll
 
 ### BREAKING: user-supplied credentials are now preferred over Bluemix-supplied credentials.
 
-The order of preference is now:
-
-1. User-supplied credentials passed to the service constructor
-
-2. `SERVICE_NAME_USERNAME` and `SERVICE_NAME_PASSWORD` environment properties (or `SERVICE_NAME_API_KEY` when appropriate) and, optionally, `SERVICE_NAME_URL`
-
-3. Bluemix-supplied credentials (via the `VCAP_SERVICES` JSON-encoded environment property)
+See [Usage](#usage) section for details.
 
 This change also removes the `use_vcap_services` flag.
 
-### Client-side support via [Browserify](http://browserify.org/)
+### Client-side usage is partially supported
 
-`examples/browserify/` shows an example app that generates tokens server-side and uses the SDK client-side via browserify.
-
-Note: not all services currently support CORS, and therefore not all services can be used client-side.
-Of those that do, most require an auth token to be generated server-side via the [Authorization Service](#authorization).
+See [Client-side usage](#client-side-usage) section for details.
 
 ### New recommended method for instantiating services:
 
@@ -102,9 +93,23 @@ you will have to create a service in [Bluemix][bluemix].
 If you are running your application in Bluemix, you don't need to specify the
 credentials; the library will get them for you by looking at the `VCAP_SERVICES` environment variable.
 
+Credentials are checked for in the following order:
+
+1. Hard-coded or programatic credentials passed to the service constructor
+
+2. `SERVICE_NAME_USERNAME` and `SERVICE_NAME_PASSWORD` environment properties (or `SERVICE_NAME_API_KEY` when appropriate) and, optionally, `SERVICE_NAME_URL` 
+
+3. Bluemix-supplied credentials (via the `VCAP_SERVICES` JSON-encoded environment property)
+
+### Client-side usage
+See the `examples/` folder for [Browserify](http://browserify.org/) and [Webpack](http://webpack.github.io/) client-side SDK examples (with server-side generation of auth tokens.)
+
+Note: not all services currently support CORS, and therefore not all services can be used client-side.
+Of those that do, most require an auth token to be generated server-side via the [Authorization Service](#authorization).
+
 ### Data collection opt-out
 
-By default, [all requests are logged](http://www.ibm.com/watson/developercloud/doc/getting_started/gs-logging.shtml). This can be disabled of by setting the `X-Watson-Learning-Opt-Out` header when creating the service instance:
+By default, [all requests are logged](https://www.ibm.com/watson/developercloud/doc/common/getting-started-logging.html). This can be disabled of by setting the `X-Watson-Learning-Opt-Out` header when creating the service instance:
 
 ```js
 var myInstance = new watson.WhateverServiceV1({
@@ -128,14 +133,14 @@ To get your service credentials, follow these steps:
 
  1. Copy your credentials:
      1. On the left side of the page, click **Service Credentials** to view your service credentials.
-     1. Copy `username` and `password`(`api_key` for AlchemyAPI).
+     1. Copy `username` and `password` (`api_key` for AlchemyAPI).
 
 ## Questions
 
 If you are having difficulties using the APIs or have a question about the IBM
 Watson Services, please ask a question on
 [dW Answers](https://developer.ibm.com/answers/questions/ask/?topics=watson)
-or [Stack Overflow](http://stackoverflow.com/questions/ask?tags=ibm-watson).
+or [Stack Overflow](http://stackoverflow.com/questions/ask?tags=ibm-watson-cognitive).
 
 ## Examples
 The [examples][examples] folder has basic and advanced examples.
@@ -411,7 +416,7 @@ var NaturalLanguageUnderstandingV1 = require('watson-developer-cloud/natural-lan
 var nlu = new NaturalLanguageUnderstandingV1({
   username: '<username>',
   password: '<password>',
-  version_date: NaturalLanguageUnderstandingV1.VERSION_DATE_2016_01_23
+  version_date: NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27
 });
 
 nlu.analyze({
@@ -704,7 +709,7 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/maste
 [speech_to_text]: http://www.ibm.com/watson/developercloud/doc/speech-to-text/
 [concept_insights]: http://www.ibm.com/watson/developercloud/doc/concept-insights/
 [tradeoff_analytics]: http://www.ibm.com/watson/developercloud/doc/tradeoff-analytics/
-[language_translator]: http://www.ibm.com/watson/developercloud/doc/language-translation/
+[language_translator]: http://www.ibm.com/watson/developercloud/doc/language-translation/index.html
 [re_migration]: http://www.ibm.com/watson/developercloud/doc/alchemylanguage/migration.shtml
 
 [alchemy_language]: http://www.alchemyapi.com/products/alchemylanguage

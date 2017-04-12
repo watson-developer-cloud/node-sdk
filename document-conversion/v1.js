@@ -24,7 +24,7 @@ const BaseService = require('../lib/base_service');
 
 /**
  * Document Conversion service
- * @param options
+ * @param {Object} options
  * @constructor
  */
 function DocumentConversionV1(options) {
@@ -53,7 +53,11 @@ DocumentConversionV1.prototype.conversion_target = {
   NORMALIZED_TEXT: 'normalized_text'
 };
 
-// this sets up the content type "headers" in the form/multipart body (not in the actual headers)
+/**
+ * This sets up the content type "headers" in the form/multipart body (not in the actual headers)
+ * @private
+ * @param params
+ */
 function fixupContentType(params) {
   if (params.content_type) {
     params.file = {

@@ -29,6 +29,11 @@ const helper = require('../lib/helper');
 const pick = require('object.pick');
 const errorFormatter = require('../lib/alchemy_error_formatter');
 
+/**
+ * @privte
+ * @param method
+ * @return {Function}
+ */
 function createRequest(method) {
   return function(_params, callback) {
     const params = _params || {};
@@ -56,7 +61,7 @@ function createRequest(method) {
 
 /**
  *
- * @param options
+ * @param {Object} options
  * @constructor
  */
 function AlchemyLanguageV1(options) {
@@ -98,7 +103,7 @@ AlchemyLanguageV1.prototype.concepts = createRequest('concepts');
 AlchemyLanguageV1.prototype.sentiment = function(params, callback) {
   const _params = extend({}, params);
   const service = params.target || params.targets ? 'sentiment_targeted' : 'sentiment';
-  if (util.isArray(_params.targets)) {
+  if (Array.isArray(_params.targets)) {
     _params.targets = _params.targets.join('|');
   }
 
@@ -214,7 +219,7 @@ AlchemyLanguageV1.prototype.combined = createRequest('combined');
 AlchemyLanguageV1.prototype.emotion = function(params, callback) {
   const _params = extend({}, params);
   const service = params.target || params.targets ? 'emotion_targeted' : 'emotion';
-  if (util.isArray(_params.targets)) {
+  if (Array.isArray(_params.targets)) {
     _params.targets = _params.targets.join('|');
   }
 

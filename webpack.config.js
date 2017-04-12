@@ -1,9 +1,15 @@
 'use strict';
 
+// With this configuration, the entire library can be bundled with Webpack.
+// However, not all services support client-side usage.
+// See https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/webpack for details
+
 module.exports = {
   entry: './index.js',
   output: {
-    filename: 'bundle.js'
+    filename: 'watson-developer-cloud.js',
+    library: 'WatsonDeveloperCloud',
+    libraryTarget: 'umd'
   },
   // http://webpack.github.io/docs/configuration.html#node
   node: {
@@ -22,7 +28,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /node_modules\/JSONStream\/index\.js$/,
+        test: /JSONStream/,
         use: 'shebang-loader'
       }
     ]

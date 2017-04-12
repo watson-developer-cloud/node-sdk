@@ -1,6 +1,6 @@
 {
-  "name": "node-sdk",
-  "version": "2.20.0",
+  "name": "watson-developer-cloud",
+  "version": "2.28.1",
   "description": "Client library to use the IBM Watson Services and AlchemyAPI",
   "main": "./index",
   "repository": {
@@ -78,7 +78,7 @@
     "mocha": "^3.2.0",
     "nock": "^9.0.2",
     "object.assign": "^4.0.4",
-    "prettier": "^0.16.0",
+    "prettier": "^0.18.0",
     "shebang-loader": "0.0.1",
     "uglify-js": "^2.7.0",
     "watchify": "^3.7.0",
@@ -87,6 +87,7 @@
   },
   "dependencies": {
     "async": "^2.0.1",
+    "buffer-from": "^0.1.1",
     "cookie": "~0.3.1",
     "csv-stringify": "~1.0.2",
     "extend": "~3.0.0",
@@ -96,7 +97,7 @@
     "request": "~2.79.0",
     "solr-client": "~0.6.0",
     "string": "3.3.3",
-    "vcap_services": "~0.2.0",
+    "vcap_services": "~0.3.0",
     "websocket": "~1.0.22"
   },
   "engines": {
@@ -104,7 +105,7 @@
   },
   "scripts": {
     "test": "npm run lint && mocha test/unit test/integration",
-    "lint": "npm run compat-check && eslint . && node test/dependency-lint.js",
+    "lint": "npm run compat-check && eslint . --cache && dependency-lint",
     "compat-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
     "autofix": "eslint . --fix",
     "doc": "jsdoc -c scripts/jsdoc/config.json",

@@ -113,33 +113,38 @@ describe('speech_to_text_integration', function() {
     speech_to_text.getModels({}, done);
   });
 
-  it('createRecognizeStream()', function(done) {
-    const recognizeStream = speech_to_text.createRecognizeStream({
-      content_type: 'audio/l16; rate=44100'
+  describe('createRecognizeStream()', () => {
+    it('transcribes audio over a websocket', function(done) {
+      const recognizeStream = speech_to_text.createRecognizeStream();
+      recognizeStream.setEncoding('utf8');
+      fs.createReadStream(path.join(__dirname, '../resources/weather.flac')).pipe(recognizeStream).on('error', done).pipe(
+        concat(function(transcription) {
+          assert.equal(typeof transcription, 'string', 'should return a string transcription');
+          assert.equal(transcription.trim(), 'thunderstorms could produce large hail isolated tornadoes and heavy rain');
+          done();
+        })
+      );
     });
-    recognizeStream.setEncoding('utf8');
-    fs.createReadStream(path.join(__dirname, '../resources/weather.flac')).pipe(recognizeStream).on('error', done).pipe(
-      concat(function(transcription) {
-        assert.equal(typeof transcription, 'string', 'should return a string transcription');
-        assert.equal(transcription.trim(), 'thunderstorms could produce large hail isolated tornadoes and heavy rain');
-        done();
-      })
-    );
-  });
 
-  it('createRecognizeStream() - no words', function(done) {
-    const recognizeStream = speech_to_text.createRecognizeStream({
-      content_type: 'audio/l16; rate=44100'
+    it('works when stream has no words', function(done) {
+      const recognizeStream = speech_to_text.createRecognizeStream({
+        content_type: 'audio/l16; rate=44100'
+      });
+      recognizeStream.setEncoding('utf8');
+      fs
+        .createReadStream(path.join(__dirname, '../resources/blank.wav'))
+        .pipe(recognizeStream)
+        .on('error', done)
+        .on('data', function(text) {
+          assert(!text, 'no text expected for an audio file with no words');
+        })
+        .on('end', done);
     });
-    recognizeStream.setEncoding('utf8');
-    fs
-      .createReadStream(path.join(__dirname, '../resources/blank.wav'))
-      .pipe(recognizeStream)
-      .on('error', done)
-      .on('data', function(text) {
-        assert(!text, 'no text expected for an audio file with no words');
-      })
-      .on('end', done);
+
+    it('exposes Transaction ID in node.js', () => {
+      const recognizeStream = speech_to_text.createRecognizeStream();
+      return fs.createReadStream(path.join(__dirname, '../resources/weather.ogg')).pipe(recognizeStream).getTransactionId().then(id => assert(id));
+    });
   });
 
   describe('customization', function() {
@@ -316,7 +321,7 @@ describe('speech_to_text_integration', function() {
     );
 
     it('listWords()', function(done) {
-      speech_to_text.getWords({ customization_id: customization_id }, done);
+      speech_to_text.getWords({ customization_id: customization_id, sort: '+alphabetical' }, done);
     });
 
     it('getWord()', function(done) {
@@ -379,6 +384,63 @@ describe('speech_to_text_integration', function() {
       // var customization_id = '7964f4c0-97ab-11e6-8ac8-6333954f158e';
       speech_to_text.deleteCustomization({ customization_id: customization_id }, done);
       customization_id = null;
+    });
+  });
+
+  describe('asynchronous api', function() {
+    let jobId = null;
+
+    const deleteAfterRecognitionCompleted = (jobId, done) => {
+      speech_to_text.getRecognitionJob({ id: jobId }, (err, res) => {
+        if (err) {
+          return done(err);
+        }
+        if (res.status !== 'completed') {
+          setTimeout(deleteAfterRecognitionCompleted.bind(null, jobId, done), 300);
+        } else {
+          speech_to_text.deleteRecognitionJob({ id: res.id }, done);
+        }
+      });
+    };
+
+    it('registerCallback()', function(done) {
+      speech_to_text.registerCallback(
+        {
+          // if this fails, logs are available at https://watson-test-resources.mybluemix.net/speech-to-text-async/secure
+          callback_url: 'https://watson-test-resources.mybluemix.net/speech-to-text-async/secure/callback',
+          user_secret: 'ThisIsMySecret'
+        },
+        done
+      );
+    });
+
+    it('createRecognitionJob()', function(done) {
+      const params = {
+        audio: fs.createReadStream(__dirname + '/../resources/weather.ogg'),
+        content_type: 'audio/ogg; codec=opus',
+        // if this fails, logs are available at https://watson-test-resources.mybluemix.net/speech-to-text-async/secure
+        callback_url: 'https://watson-test-resources.mybluemix.net/speech-to-text-async/secure/callback',
+        user_token: 'Node.js SDK Integration Test at ' + new Date(),
+        events: 'recognitions.completed',
+        results_ttl: 1
+      };
+      speech_to_text.createRecognitionJob(params, function(err, res) {
+        assert.ifError(err);
+        jobId = res.id;
+        done();
+      });
+    });
+
+    it('getRecognitionJobs()', function(done) {
+      speech_to_text.getRecognitionJobs(done);
+    });
+
+    it('getRecognitionJob()', function(done) {
+      speech_to_text.getRecognitionJob({ id: jobId }, done);
+    });
+
+    it('deleteRecognitionJob()', function(done) {
+      deleteAfterRecognitionCompleted(jobId, done);
     });
   });
 });

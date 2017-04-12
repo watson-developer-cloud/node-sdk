@@ -63,7 +63,7 @@ describe('alchemy_vision', function() {
       assert.equal(req.method, 'POST');
       assert(req.form);
       assert.equal(req.uri.href, service.url + apiPath + '?apikey=foobar');
-      const body = new Buffer(req.body).toString('ascii');
+      const body = Buffer.from(req.body).toString('ascii');
       const expectedBody = qs.stringify({
         image: 'base64img',
         outputMode: 'json',
@@ -78,7 +78,7 @@ describe('alchemy_vision', function() {
       assert.equal(req.uri.href, imagePath);
       assert.equal(req.method, 'POST');
       assert(req.form);
-      const body = new Buffer(req.body).toString('ascii');
+      const body = Buffer.from(req.body).toString('ascii');
       const expectedBody = qs.stringify({
         url: 'http://bat.com/foo.png',
         outputMode: 'json'

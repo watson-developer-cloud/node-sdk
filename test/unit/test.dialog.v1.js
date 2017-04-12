@@ -120,7 +120,7 @@ describe('dialog', function() {
 
     it('should generate a valid payload', function() {
       const req = dialog.conversation(params, noop);
-      const body = new Buffer(req.body).toString('ascii');
+      const body = Buffer.from(req.body).toString('ascii');
 
       assert.equal(req.uri.href, service.url + paths.conversation);
       assert.equal(req.method, 'POST');

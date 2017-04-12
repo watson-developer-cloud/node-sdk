@@ -44,6 +44,29 @@ const intents = {
   ]
 };
 
+const test_intents = [
+  {
+    intent: 'intent_1',
+    examples: [
+      {
+        text: 'Hi, here\'s a URL ☺ http://example.com/?a=$+*^;&c=%20#!"`~'
+      }
+    ]
+  }
+];
+const test_intents_update = {
+  intent: 'intent_2',
+  description: 'description_2',
+  examples: [
+    {
+      text: 'Hey, here\'s a URL ☺ http://example.com/?a=$+*^;&c=%20#!"`~'
+    }
+  ]
+};
+const test_examples_new = 'Oh, here\'s a URL ☺ http://example.com/?a=$+*^;&c=%20#!"`~';
+const counterExampleText = 'Hey, here\'s a URL ☺ http://example.com/?a=$+*^;&c=%20#!"`~';
+const counterExampleText_new = 'Oh, here\'s a URL ☺ http://example.com/?a=$+*^;&c=%20#!"`~';
+
 const workspace1 = extend(true, {}, workspace, intents);
 
 describe('conversation_integration', function() {
@@ -168,6 +191,21 @@ describe('conversation_integration', function() {
         done();
       });
     });
+
+    it('result should return pagination information', function(done) {
+      const params = {
+        page_limit: 2,
+        include_count: true,
+        sort: '-name'
+      };
+      conversation.listWorkspaces(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.hasOwnProperty('pagination'), true);
+        done();
+      });
+    });
   });
 
   describe('createWorkspace()', function() {
@@ -234,6 +272,323 @@ describe('conversation_integration', function() {
         }
         assert.equal(result.workspace_id, workspace1.workspace_id);
         assert.equal(result.training, true);
+        done();
+      });
+    });
+  });
+
+  describe('createIntent()', function() {
+    it('should create an intent', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        intent: test_intents[0].intent,
+        examples: test_intents[0].examples
+      };
+
+      conversation.createIntent(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.intent, test_intents[0].intent);
+        assert.equal(result.description, null);
+        done();
+      });
+    });
+  });
+
+  describe('getIntents()', function() {
+    it('should get intents of the workspace', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        export: true
+      };
+
+      conversation.getIntents(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.intents[0].intent, test_intents[0].intent);
+        assert.equal(result.intents[0].examples[0].text, test_intents[0].examples[0].text);
+        done();
+      });
+    });
+
+    it('should have pagination information', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        export: true,
+        page_limit: 1,
+        include_count: true,
+        sort: 'intent'
+      };
+
+      conversation.getIntents(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.hasOwnProperty('pagination'), true);
+        done();
+      });
+    });
+  });
+
+  describe('getIntent()', function() {
+    it('should get an intent of the workspace', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        intent: test_intents[0].intent
+      };
+
+      conversation.getIntent(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.intent, test_intents[0].intent);
+        assert.equal(result.description, null);
+        done();
+      });
+    });
+  });
+
+  describe('updateIntent()', function() {
+    it('should update an intent of the workspace', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        old_intent: test_intents[0].intent,
+        intent: test_intents_update.intent,
+        description: test_intents_update.description,
+        examples: test_intents_update.examples
+      };
+
+      conversation.updateIntent(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.intent, test_intents_update.intent);
+        done();
+      });
+    });
+  });
+
+  describe('getExamples()', function() {
+    it('should get all examples of intent', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        intent: test_intents_update.intent
+      };
+
+      conversation.getExamples(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.examples[0].text, test_intents_update.examples[0].text);
+        done();
+      });
+    });
+
+    it('should have pagination information', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        intent: test_intents_update.intent,
+        page_limit: 2,
+        include_count: true,
+        sort: '-text'
+      };
+
+      conversation.getExamples(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.hasOwnProperty('pagination'), true);
+        done();
+      });
+    });
+  });
+
+  describe('createExample()', function() {
+    it('should create an example in the intent', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        intent: test_intents_update.intent,
+        text: 'new_example'
+      };
+
+      conversation.createExample(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.text, 'new_example');
+        done();
+      });
+    });
+  });
+
+  describe('getExample()', function() {
+    it('should get an example of intent', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        intent: test_intents_update.intent,
+        text: test_intents_update.examples[0].text
+      };
+
+      conversation.getExample(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.text, test_intents_update.examples[0].text);
+        done();
+      });
+    });
+  });
+
+  describe('updateExample()', function() {
+    it('should update an example of intent', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        intent: test_intents_update.intent,
+        old_text: test_intents_update.examples[0].text,
+        text: test_examples_new
+      };
+
+      conversation.updateExample(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.text, test_examples_new);
+        done();
+      });
+    });
+  });
+
+  describe('deleteExample()', function() {
+    it('should delete an example of intent', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        intent: test_intents_update.intent,
+        text: test_examples_new
+      };
+
+      conversation.deleteExample(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        done();
+      });
+    });
+  });
+
+  describe('deleteIntent()', function() {
+    it('should delete an intent of the workspace', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        intent: test_intents_update.intent
+      };
+
+      conversation.deleteIntent(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        done();
+      });
+    });
+  });
+
+  describe('createCounterExample()', function() {
+    it('should return the newly created counterExample of the workspace', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        text: counterExampleText
+      };
+
+      conversation.createCounterExample(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.text, counterExampleText);
+        done();
+      });
+    });
+  });
+
+  describe('getCounterExample()', function() {
+    it('should return a counterExample', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        text: counterExampleText
+      };
+
+      conversation.getCounterExample(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.text, counterExampleText);
+        done();
+      });
+    });
+  });
+
+  describe('getCounterExamples()', function() {
+    it('should return counterExamples of the workspace', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id
+      };
+
+      conversation.getCounterExamples(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.counterexamples[0].text, counterExampleText);
+        done();
+      });
+    });
+    it('should return counterExamples of the workspace with pagination', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        page_limit: 1,
+        include_count: true,
+        sort: 'text'
+      };
+
+      conversation.getCounterExamples(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.counterexamples[0].text, counterExampleText);
+        assert.equal(result.hasOwnProperty('pagination'), true);
+        done();
+      });
+    });
+  });
+
+  describe('updateCounterExample()', function() {
+    it('should return an updated counterExample', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        old_text: counterExampleText,
+        text: counterExampleText_new
+      };
+
+      conversation.updateCounterExample(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.text, counterExampleText_new);
+        done();
+      });
+    });
+  });
+
+  describe('deleteCounterExample()', function() {
+    it('should delete a counterExample', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        text: counterExampleText_new
+      };
+
+      conversation.deleteCounterExample(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
         done();
       });
     });
