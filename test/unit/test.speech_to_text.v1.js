@@ -224,13 +224,13 @@ describe('speech_to_text', function() {
   });
 
   describe('recognizeWebM()', function() {
-    const session_path = '/v1/sessions/foo/recognize';
-    const payload = {
-      audio: fs.createReadStream(__dirname + '/../resources/sample1.webm'),
-      content_type: 'audio/webm'
-    };
-
     it('should generate a valid payload with session', function() {
+      const webm_stream = fs.createReadStream(__dirname + '/../resources/sample1.webm');
+      const session_path = '/v1/sessions/foo/recognize';
+      const payload = {
+        audio: webm_stream,
+        content_type: 'audio/webm'
+      };
       const req = speech_to_text.recognize(extend({ session_id: 'foo' }, payload), noop);
       assert.equal(req.uri.href, service.url + session_path);
       assert.equal(req.method, 'POST');
@@ -238,9 +238,10 @@ describe('speech_to_text', function() {
       assert.equal(req.src.path, payload.audio.path);
     });
 
-    it('should check first four hexs for webm file', function() {
-      const file = fs.readFileSync(__dirname + '/../resources/sample1.webm');
-      assert.equal(file.slice(0, 4).toString(), '\u001aEߣ');
+    it('Sample webm should have expected header', function() {
+      const RecognizeStream=require('../../speech-to-text/recognize_stream');
+      const buffer = fs.readFileSync(__dirname + '/../resources/sample1.webm');
+      assert.equal(RecognizeStream.getContentType(buffer), 'audio/webm');
     });
   });
 
