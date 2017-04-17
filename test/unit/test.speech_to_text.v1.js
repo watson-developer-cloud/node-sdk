@@ -223,6 +223,27 @@ describe('speech_to_text', function() {
     });
   });
 
+  describe('recognizeWebM()', function() {
+    const session_path = '/v1/sessions/foo/recognize';
+    const payload = {
+      audio: fs.createReadStream(__dirname + '/../resources/sample1.webm'),
+      content_type: 'audio/webm'
+    };
+
+    it('should generate a valid payload with session', function() {
+      const req = speech_to_text.recognize(extend({ session_id: 'foo' }, payload), noop);
+      assert.equal(req.uri.href, service.url + session_path);
+      assert.equal(req.method, 'POST');
+      assert.equal(req.headers['Content-Type'], payload.content_type);
+      assert.equal(req.src.path, payload.audio.path);
+    });
+
+    it('should check first four hexs for webm file', function() {
+      const file = fs.readFileSync(__dirname + '/../resources/sample1.webm');
+      assert.equal(file.slice(0, 4).toString(), '\u001aEߣ');
+    });
+  });
+
   // this test is severely broken
   describe('recognizeStream()', function() {
     const service_response = {
