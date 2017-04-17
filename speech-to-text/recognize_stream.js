@@ -283,8 +283,10 @@ RecognizeStream.prototype.getTransactionId = function() {
 const headerToContentType = {
   fLaC: 'audio/flac',
   RIFF: 'audio/wav',
-  OggS: 'audio/ogg; codecs=opus'
+  OggS: 'audio/ogg',
+  '\u001aEߣ': 'audio/webm' // String for first four hex's of webm: [1A][45][DF][A3] (https://www.matroska.org/technical/specs/index.html#EBML)
 };
+
 RecognizeStream.getContentType = function(buffer) {
   const header = buffer.slice(0, 4).toString();
   return headerToContentType[header];
