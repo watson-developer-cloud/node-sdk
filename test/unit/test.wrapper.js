@@ -19,18 +19,12 @@ describe('wrapper', function() {
   };
 
   it('should check for missing parameters', function() {
-    assert.throws(
-      function() {
-        create_service(undefined);
-      },
-      /version/
-    );
-    assert.throws(
-      function() {
-        create_service({});
-      },
-      /version/
-    );
+    assert.throws(function() {
+      create_service(undefined);
+    }, /version/);
+    assert.throws(function() {
+      create_service({});
+    }, /version/);
   });
 
   it('should check for use_unauthenticated', function() {
@@ -40,56 +34,41 @@ describe('wrapper', function() {
         version: 'v1'
       })
     );
-    assert.throws(
-      function() {
-        create_service({
-          use_unauthenticated: false,
-          version: 'v1'
-        });
-      },
-      /use_unauthenticated/
-    );
+    assert.throws(function() {
+      create_service({
+        use_unauthenticated: false,
+        version: 'v1'
+      });
+    }, /use_unauthenticated/);
   });
 
   it('should check for missing version', function() {
-    assert.throws(
-      function() {
-        create_service({
-          username: 'user',
-          password: 'pass'
-        });
-      },
-      /version/
-    );
-    assert.throws(
-      function() {
-        create_service({
-          api_key: 'keykeykey'
-        });
-      },
-      /version/
-    );
+    assert.throws(function() {
+      create_service({
+        username: 'user',
+        password: 'pass'
+      });
+    }, /version/);
+    assert.throws(function() {
+      create_service({
+        api_key: 'keykeykey'
+      });
+    }, /version/);
   });
 
   it('should check for missing authentication', function() {
-    assert.throws(
-      function() {
-        create_service({
-          version: 'v1',
-          username: 'user'
-        });
-      },
-      /password/
-    );
-    assert.throws(
-      function() {
-        create_service({
-          version: 'v1',
-          password: 'pass'
-        });
-      },
-      /username/
-    );
+    assert.throws(function() {
+      create_service({
+        version: 'v1',
+        username: 'user'
+      });
+    }, /password/);
+    assert.throws(function() {
+      create_service({
+        version: 'v1',
+        password: 'pass'
+      });
+    }, /username/);
 
     assert.ok(
       create_service({

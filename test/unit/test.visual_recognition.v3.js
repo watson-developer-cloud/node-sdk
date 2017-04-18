@@ -87,7 +87,7 @@ describe('visual_recognition', function() {
   const visual_recognition = watson.visual_recognition(service);
 
   const missingParameter = function(err) {
-    assert(err instanceof Error && /parameter/.test(err), 'Expected error to mention "parameter" but got "' + (err && err.message || err) + '"');
+    assert(err instanceof Error && /parameter/.test(err), 'Expected error to mention "parameter" but got "' + ((err && err.message) || err) + '"');
   };
 
   describe('credentials', function() {
@@ -107,22 +107,18 @@ describe('visual_recognition', function() {
       assert.throws(() => new watson.VisualRecognitionV3({ username: 'foo' }), /key/);
     });
 
-    it(
-      'should accept an API key for regular usage',
-      () => new watson.VisualRecognitionV3({
+    it('should accept an API key for regular usage', () =>
+      new watson.VisualRecognitionV3({
         api_key: 'foo',
         version_date: '2016-05-20'
-      })
-    );
+      }));
 
-    it(
-      'should accept username/password for regular usage',
-      () => new watson.VisualRecognitionV3({
+    it('should accept username/password for regular usage', () =>
+      new watson.VisualRecognitionV3({
         username: 'foo',
         password: 'bar',
         version_date: '2016-05-20'
-      })
-    );
+      }));
 
     it('should accept VISUAL_RECOGNITION_API_KEY env property', () => {
       process.env.VISUAL_RECOGNITION_API_KEY = 'foo';

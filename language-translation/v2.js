@@ -156,7 +156,7 @@ LanguageTranslationV2.prototype.deleteModel = function(params, callback) {
 LanguageTranslationV2.prototype.translate = function(params, callback) {
   params = params || {};
 
-  if (!(params.model_id || params.source && params.target)) {
+  if (!(params.model_id || (params.source && params.target))) {
     callback(new Error('Missing required parameters: model_id or source and target'));
     return;
   }

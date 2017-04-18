@@ -24,13 +24,15 @@ const message = function(text, context) {
     },
     context: context
   };
-  return new Promise((resolve, reject) => conversation.message(payload, function(err, data) {
-    if (err) {
-      reject(err);
-    } else {
-      resolve(data);
-    }
-  }));
+  return new Promise((resolve, reject) =>
+    conversation.message(payload, function(err, data) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(data);
+      }
+    })
+  );
 };
 
 // This example makes two successive calls to conversation service.
