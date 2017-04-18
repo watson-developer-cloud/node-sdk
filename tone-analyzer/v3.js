@@ -88,4 +88,35 @@ ToneAnalyzerV3.prototype.tone = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
+/**
+ * @param {Object} params The parameters to call the service
+ * @param {Object} [params.headers] - The header parameters.
+ * @param {string} [params.headers.accept-language=en] - The desired language of the response.
+ * @param {string} [params.headers.content-type=application/json] - The content type of the request: application/json (the default).
+ * @param {string} [params.headers.content-language=en] - The language of the input text for the request: en (English) (the default)
+ * @param {string} [params.headers.accept=application/json] - The desired content type of the response: application/json (the default)
+ * @param {string} [params.utterances] - The utterances to analyze.  Utterances must be a JSON object.
+ *
+ * @param callback The callback.
+ */
+ToneAnalyzerV3.prototype.tone_chat = function(params, callback) {
+  const parameters = {
+    requiredParams: ['utterances'],
+    originalParams: params,
+    options: {
+      url: '/v3/tone_chat',
+      method: 'POST',
+      body: JSON.stringify(params.utterances)
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        accept: 'application/json',
+        'content-type': 'application/json'
+      }
+    })
+  };
+
+  return requestFactory(parameters, callback);
+};
+
 module.exports = ToneAnalyzerV3;

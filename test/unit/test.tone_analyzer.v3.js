@@ -113,4 +113,39 @@ describe('tone_analyzer.v3', function() {
     assert.equal(req.headers['x-custom-header'], 'foo');
     assert.equal(req.headers['accept-language'], 'es');
   });
+
+  // Tone Chat Endpoint API - test for valid payload
+  it('tone-chat API endpoint should generate a valid payload with utterances json payload', function(done) {
+    const tone_chat_path = '/v3/tone_chat';
+    const tone_chat_request = {
+      utterances: [
+        { text: 'My charger isn’t working.', user: 'customer' },
+        { text: 'Thanks for reaching out. Can you give me some more detail about the issue?', user: 'agent' },
+        {
+          text: "I put my charger in my phone last night to charge and it isn't working. Which is ridiculous, it's a new charger, I bought it yesterday.",
+          user: 'customer'
+        },
+        { text: 'I’m sorry you’re having issues with charging. What kind of charger do you have?', user: 'agent' }
+      ]
+    };
+    const tone_chat_response = {
+      tree: {}
+    };
+
+    const expectation = nock(service.url).post('/v3/tone_chat' + '?version=2016-05-19', tone_chat_request.utterances).reply(200, tone_chat_response);
+
+    // run tests
+    const req = tone_analyzer.tone_chat(tone_chat_request, function(err, res) {
+      assert(req);
+      const url = service.url + tone_chat_path;
+      assert.equal(req.uri.href.slice(0, url.length), url);
+      assert.equal(req.uri.href, service.url + tone_chat_path + '?version=2016-05-19');
+      assert.equal(req.method, 'POST');
+      assert.equal(req.headers['content-type'], 'application/json');
+      assert.equal(req.headers['accept'], 'application/json');
+      assert.ifError(err);
+      assert(expectation.isDone());
+      done();
+    });
+  });
 });
