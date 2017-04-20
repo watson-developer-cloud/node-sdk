@@ -104,7 +104,6 @@ DiscoveryV1.prototype.createEnvironment = function(params, callback) {
  * @param {string} environment_id(required)
  * @param {string} name(required)
  * @param {string} description(optional)
- * @param {int} size (optional)
  */
 DiscoveryV1.prototype.updateEnvironment = function(params, callback) {
   params = params || {};
@@ -116,7 +115,7 @@ DiscoveryV1.prototype.updateEnvironment = function(params, callback) {
       multipart: [
         {
           'content-type': 'application/json',
-          body: JSON.stringify(pick(params, ['name', 'description', 'size']))
+          body: JSON.stringify(pick(params, ['name', 'description']))
         }
       ],
       json: true
