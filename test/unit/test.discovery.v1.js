@@ -47,6 +47,8 @@ describe('discovery-v1', function() {
       .reply(200, { environment_id: 'yes' })
       .get(paths.environmentinfo + '?version=' + service.version_date)
       .reply(200, { environment_id: 'info' })
+      .put(paths.environmentinfo + '?version=' + service.version_date)
+      .reply(200, { environment_id: 'yes' })
       .delete(paths.environmentinfo + '?version=' + service.version_date)
       .reply(200, { environment_id: 'info' })
       .get(paths.collections + '?version=' + service.version_date)
@@ -97,6 +99,18 @@ describe('discovery-v1', function() {
         noop
       );
       assert.equal(req.method, 'POST');
+    });
+
+    it('should update an environment', function() {
+      const req = discovery.updateEnvironment(
+        {
+          environment_id: 'env-guid',
+          name: 'my environment updated',
+          description: 'my description updated'
+        },
+        noop
+      );
+      assert.equal(req.method, 'PUT');
     });
 
     it('should get an environment information', function() {
