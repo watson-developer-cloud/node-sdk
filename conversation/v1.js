@@ -1494,4 +1494,35 @@ ConversationV1.prototype.deleteSynonym = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
+/**
+ * Method: getLogs
+ *
+ * Returns information about requests (user input) received, and responses sent, by the workspace.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} params.filter
+ * @param {Number} [params.page_limit]
+ * @param {String} [params.sort]
+ * @param {String} [params.cursor]
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.getLogs = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/logs',
+      method: 'GET',
+      json: true,
+      path: pick(params, ['workspace_id']),
+      qs: pick(params, ['filter', 'page_limit', 'sort', 'cursor'])
+    },
+    requiredParams: ['workspace_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
 module.exports = ConversationV1;
