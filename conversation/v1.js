@@ -1185,4 +1185,158 @@ ConversationV1.prototype.deleteEntity = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
+/**
+ * Method: createValue
+ *
+ * Add a new value to an entity.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} [params.entity]
+ * @param {String} [params.value]
+ * @param {Object} [params.metadata]
+ * @param {Array<String>} [params.synonyms]
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.createValue = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values',
+      method: 'POST',
+      json: true,
+      path: pick(params, ['workspace_id', 'entity']),
+      body: pick(params, ['value', 'metadata', 'synonyms'])
+    },
+    requiredParams: ['workspace_id', 'entity', 'value'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: getValues
+ *
+ * List the values for an entity.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} params.entity
+ * @param {Boolean} [params.export=false] - if true, the full contents of all of the sub-resources are returned
+ * @param {Number} [params.page_limit]
+ * @param {Boolean} [params.include_count]
+ * @param {String} [params.sort]
+ * @param {String} [params.cursor]
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.getValues = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values',
+      method: 'GET',
+      json: true,
+      path: pick(params, ['workspace_id', 'entity']),
+      qs: pick(params, ['export', 'page_limit', 'include_count', 'sort', 'cursor'])
+    },
+    requiredParams: ['workspace_id', 'entity'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: getValue
+ *
+ * Get information about an entity value.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} params.entity
+ * @param {String} params.value
+ * @param {Boolean} [params.export=false] - if true, the full contents of all of the sub-resources are returned
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.getValue = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}',
+      method: 'GET',
+      json: true,
+      path: pick(params, ['workspace_id', 'entity', 'value']),
+      qs: pick(params, ['export'])
+    },
+    requiredParams: ['workspace_id', 'entity', 'value'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: updateValue
+ *
+ * Update an existing entity value with new or modified data. You must provide JSON data defining the content of the updated entity value.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} params.entity
+ * @param {String} params.old_value
+ * @param {String} params.value
+ * @param {Object} params.metadata
+ * @param {Array<String>} params.synonyms
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.updateValue = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{old_value}',
+      method: 'POST',
+      json: true,
+      path: pick(params, ['workspace_id', 'entity', 'old_value']),
+      body: pick(params, ['value', 'metadata', 'synonyms'])
+    },
+    requiredParams: ['workspace_id', 'entity', 'old_value', 'value'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: deleteValue
+ *
+ * Delete an entity from a workspace.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} params.entity
+ * @param {String} params.value
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.deleteValue = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}',
+      method: 'DELETE',
+      json: true,
+      path: pick(params, ['workspace_id', 'entity', 'value'])
+    },
+    requiredParams: ['workspace_id', 'entity', 'value'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
 module.exports = ConversationV1;
