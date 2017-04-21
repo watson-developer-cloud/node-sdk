@@ -276,14 +276,13 @@ VisualRecognitionV3.prototype.classify = function(params, callback) {
         url: '/v3/classify',
         method: 'POST',
         formData: {
-          images_file: params.images_file,
-          paramters: Buffer.from(JSON.stringify(pick(params, ['classifier_ids', 'owners', 'threshold'])))
-          //parameters: {
-          //  value: JSON.stringify(pick(params, ['classifier_ids', 'owners', 'threshold'])),
-          //  options: {
-          //    contentType: 'application/json'
-          //  }
-          //}
+          parameters: {
+            value: JSON.stringify(pick(params, ['classifier_ids', 'owners', 'threshold'])),
+            options: {
+              contentType: 'application/json'
+            }
+          },
+          images_file: params.images_file
         },
         headers: pick(params, 'Accept-Language')
       },
