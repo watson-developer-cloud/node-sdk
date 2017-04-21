@@ -1339,4 +1339,159 @@ ConversationV1.prototype.deleteValue = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
+/**
+ * Method: createSynonyms
+ *
+ * Add a new synonym to an entity value.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} [params.entity]
+ * @param {String} [params.value]
+ * @param {String} [params.synonym]
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.createSynonym = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms',
+      method: 'POST',
+      json: true,
+      path: pick(params, ['workspace_id', 'entity', 'value']),
+      body: pick(params, ['synonym'])
+    },
+    requiredParams: ['workspace_id', 'entity', 'value', 'synonym'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: getSynonyms
+ *
+ * List the synonyms for an entity value.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} params.entity
+ * @param {String} params.value
+ * @param {Boolean} [params.export=false] - if true, the full contents of all of the sub-resources are returned
+ * @param {Number} [params.page_limit]
+ * @param {Boolean} [params.include_count]
+ * @param {String} [params.sort]
+ * @param {String} [params.cursor]
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.getSynonyms = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms',
+      method: 'GET',
+      json: true,
+      path: pick(params, ['workspace_id', 'entity', 'value']),
+      qs: pick(params, ['export', 'page_limit', 'include_count', 'sort', 'cursor'])
+    },
+    requiredParams: ['workspace_id', 'entity', 'value'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: getSynonym
+ *
+ * Get information about an entity value.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} params.entity
+ * @param {String} params.value
+ * @param {String} params.synonym
+ * @param {Boolean} [params.export=false] - if true, the full contents of all of the sub-resources are returned
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.getSynonym = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}',
+      method: 'GET',
+      json: true,
+      path: pick(params, ['workspace_id', 'entity', 'value', 'synonym']),
+      qs: pick(params, ['export'])
+    },
+    requiredParams: ['workspace_id', 'entity', 'value', 'synonym'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: updateSynonym
+ *
+ * Update an existing entity value synonym with new text.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} params.entity
+ * @param {String} params.value
+ * @param {String} params.old_synonym
+ * @param {String} params.synonym
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.updateSynonym = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{old_synonym}',
+      method: 'POST',
+      json: true,
+      path: pick(params, ['workspace_id', 'entity', 'value', 'old_synonym']),
+      body: pick(params, ['synonym'])
+    },
+    requiredParams: ['workspace_id', 'entity', 'value', 'old_synonym', 'synonym'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: deleteSynonym
+ *
+ * Delete a synonym from an entity value.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} params.entity
+ * @param {String} params.value
+ * @param {String} params.synonym
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.deleteSynonym = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}',
+      method: 'DELETE',
+      json: true,
+      path: pick(params, ['workspace_id', 'entity', 'value', 'synonym'])
+    },
+    requiredParams: ['workspace_id', 'entity', 'value', 'synonym'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
 module.exports = ConversationV1;
