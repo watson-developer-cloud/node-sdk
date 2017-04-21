@@ -100,6 +100,34 @@ DiscoveryV1.prototype.createEnvironment = function(params, callback) {
 };
 
 /**
+ * Update an existing environment
+ * @param {string} environment_id(required)
+ * @param {string} name(required)
+ * @param {string} description(optional)
+ */
+DiscoveryV1.prototype.updateEnvironment = function(params, callback) {
+  params = params || {};
+  const parameters = {
+    options: {
+      url: '/v1/environments/{environment_id}',
+      method: 'PUT',
+      path: pick(params, ['environment_id']),
+      multipart: [
+        {
+          'content-type': 'application/json',
+          body: JSON.stringify(pick(params, ['name', 'description']))
+        }
+      ],
+      json: true
+    },
+    originalParams: params,
+    requiredParams: ['environment_id', 'name'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
  * Get details about an environment
  *
  * @param {Object} params
