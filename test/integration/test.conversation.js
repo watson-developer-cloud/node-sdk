@@ -81,10 +81,18 @@ const test_entities_update = {
   entity: 'entity_2',
   values: [
     {
-      value: 'value_2',
-      synonyms: ['syn_2']
+      value: 'v1',
+      synonyms: ['s1']
     }
   ]
+};
+const test_value = {
+  value: 'value_1',
+  synonyms: ['syn_1']
+};
+const test_value_update = {
+  value: 'value_2',
+  synonyms: ['syn_2']
 };
 
 const workspace1 = extend(true, {}, workspace, intents);
@@ -701,6 +709,120 @@ describe('conversation_integration', function() {
           return done(err);
         }
         assert.equal(result.entity, test_entities_update.entity);
+        done();
+      });
+    });
+  });
+
+  describe('createValue()', function() {
+    it('should create a value', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        entity: test_entities_update.entity,
+        value: test_value.value,
+        synonyms: test_value.synonyms
+      };
+
+      conversation.createValue(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.value, test_value.value);
+        assert.equal(result.description, null);
+        done();
+      });
+    });
+  });
+
+  describe('getValues()', function() {
+    it('should get values of the entity', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        entity: test_entities_update.entity,
+        export: true
+      };
+
+      conversation.getValues(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.values[1].value, test_value.value);
+        assert.equal(result.values[1].synonyms[0], test_value.synonyms[0]);
+        done();
+      });
+    });
+
+    it('should have pagination information', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        entity: test_entities_update.entity,
+        export: true,
+        page_limit: 1,
+        include_count: true,
+        sort: 'value'
+      };
+
+      conversation.getValues(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.hasOwnProperty('pagination'), true);
+        done();
+      });
+    });
+  });
+
+  describe('getValue()', function() {
+    it('should get a value of the entity', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        entity: test_entities_update.entity,
+        value: test_value.value
+      };
+
+      conversation.getValue(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.value, test_value.value);
+        assert.equal(result.description, null);
+        done();
+      });
+    });
+  });
+
+  describe('updateValue()', function() {
+    it('should update a value of the entity', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        entity: test_entities_update.entity,
+        old_value: test_value.value,
+        value: test_value_update.value,
+        synonyms: test_value_update.synonyms
+      };
+
+      conversation.updateValue(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.value, test_value_update.value);
+        done();
+      });
+    });
+  });
+
+  describe('deleteValue()', function() {
+    it('should delete a value of the entity', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        entity: test_entities_update.entity,
+        value: test_value_update.value
+      };
+
+      conversation.deleteValue(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
         done();
       });
     });
