@@ -909,6 +909,24 @@ describe('conversation_integration', function() {
     });
   });
 
+  describe('getLogs()', function() {
+    it('should return logs', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        export: true,
+        page_limit: 1
+      };
+
+      conversation.getLogs(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.hasOwnProperty('logs'), true);
+        done();
+      });
+    });
+  });
+
   describe('deleteSynonym()', function() {
     it('should delete a synonym of the value', function(done) {
       const params = {
