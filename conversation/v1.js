@@ -32,7 +32,7 @@ function ConversationV1(options) {
 
   // Check if 'version_date' was provided
   if (typeof this._options.version_date === 'undefined') {
-    throw new Error('Argument error: version_date was not specified, use ConversationV1.VERSION_DATE_2017_02_03');
+    throw new Error('Argument error: version_date was not specified, use ConversationV1.VERSION_DATE_2017_04_21');
   }
   this._options.qs.version = options.version_date;
 }
@@ -124,6 +124,14 @@ ConversationV1.VERSION_DATE_2016_09_20 = '2016-09-20';
  * @type {string}
  */
 ConversationV1.VERSION_DATE_2017_02_03 = '2017-02-03';
+
+/**
+ * Adds support entities (with values and synonyms) and accessing logs
+ *
+ * @see https://www.ibm.com/watson/developercloud/doc/conversation/release-notes.html#18-april-2017
+ * @type {string}
+ */
+ConversationV1.VERSION_DATE_2017_04_21 = '2017-04-21';
 
 /**
  * Method: message
