@@ -17,7 +17,7 @@ tone_analyzer.tone({ text: 'Greetings from Watson Developer Cloud!' }, function(
   }
 });
 
-const utterances = {
+const params = {
   utterances: [
     { text: 'My charger isn’t working.', user: 'customer' },
     { text: 'Thanks for reaching out. Can you give me some more detail about the issue?', user: 'agent' },
@@ -29,7 +29,7 @@ const utterances = {
   ]
 };
 
-tone_analyzer.tone_chat({ utterances: utterances }, function(err, tone) {
+tone_analyzer.tone_chat(params, function(err, tone) {
   if (err) {
     console.log(err);
   } else {
