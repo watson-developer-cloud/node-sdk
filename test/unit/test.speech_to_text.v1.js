@@ -223,6 +223,28 @@ describe('speech_to_text', function() {
     });
   });
 
+  describe('recognizeWebM()', function() {
+    it('should generate a valid payload with session', function() {
+      const webm_stream = fs.createReadStream(__dirname + '/../resources/sample1.webm');
+      const session_path = '/v1/sessions/foo/recognize';
+      const payload = {
+        audio: webm_stream,
+        content_type: 'audio/webm'
+      };
+      const req = speech_to_text.recognize(extend({ session_id: 'foo' }, payload), noop);
+      assert.equal(req.uri.href, service.url + session_path);
+      assert.equal(req.method, 'POST');
+      assert.equal(req.headers['Content-Type'], payload.content_type);
+      assert.equal(req.src.path, payload.audio.path);
+    });
+
+    it('Sample webm should have expected header', function() {
+      const RecognizeStream = require('../../speech-to-text/recognize_stream');
+      const buffer = fs.readFileSync(__dirname + '/../resources/sample1.webm');
+      assert.equal(RecognizeStream.getContentType(buffer), 'audio/webm');
+    });
+  });
+
   // this test is severely broken
   describe('recognizeStream()', function() {
     const service_response = {
@@ -368,7 +390,8 @@ describe('speech_to_text', function() {
     });
 
     it('should create new recognitions job', function() {
-      const path = '/v1/recognitions?callback_url=http%3A%2F%2Fwatson-test-resources.mybluemix.net%2Fresults&events=recognitions.completed&user_token=myArbitraryIdentifier1&results_ttl=60';
+      const path =
+        '/v1/recognitions?callback_url=http%3A%2F%2Fwatson-test-resources.mybluemix.net%2Fresults&events=recognitions.completed&user_token=myArbitraryIdentifier1&results_ttl=60';
       const response = {
         id: '4bd734c0-e575-21f3-de03-f932aa0468a0',
         status: 'waiting',
@@ -398,7 +421,8 @@ describe('speech_to_text', function() {
     });
 
     it('should create new recognitions job w/ multiple events', function() {
-      const path = '/v1/recognitions?callback_url=http%3A%2F%2Fwatson-test-resources.mybluemix.net%2Fresults&events=recognitions.started%2Crecognitions.failed%2Crecognitions.completed_with_results&user_token=myArbitraryIdentifier1&results_ttl=60';
+      const path =
+        '/v1/recognitions?callback_url=http%3A%2F%2Fwatson-test-resources.mybluemix.net%2Fresults&events=recognitions.started%2Crecognitions.failed%2Crecognitions.completed_with_results&user_token=myArbitraryIdentifier1&results_ttl=60';
       const response = {
         id: '4bd734c0-e575-21f3-de03-f932aa0468a0',
         status: 'waiting',

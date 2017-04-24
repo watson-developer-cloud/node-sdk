@@ -435,23 +435,17 @@ describe('retrieve_and_rank', function() {
   });
 
   it('returns error when cluster_id is not specified when building Solr client', function() {
-    assert.throws(
-      function() {
-        search.createSolrClient({});
-      },
-      /required parameters: cluster_id/
-    );
+    assert.throws(function() {
+      search.createSolrClient({});
+    }, /required parameters: cluster_id/);
   });
 
   it('returns error when collection_name is not specified when building Solr client', function() {
-    assert.throws(
-      function() {
-        search.createSolrClient({
-          cluster_id: clusterId
-        });
-      },
-      /required parameters: collection_name/
-    );
+    assert.throws(function() {
+      search.createSolrClient({
+        cluster_id: clusterId
+      });
+    }, /required parameters: collection_name/);
   });
 
   it('generate valid request when creating a ranker', function() {

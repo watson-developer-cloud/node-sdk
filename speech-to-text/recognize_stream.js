@@ -101,7 +101,7 @@ RecognizeStream.prototype.initialize = function() {
 
   // node params: requestUrl, protocols, origin, headers, extraRequestOptions
   // browser params: requestUrl, protocols (all others ignored)
-  const socket = this.socket = new W3CWebSocket(url, null, null, options.headers, null);
+  const socket = (this.socket = new W3CWebSocket(url, null, null, options.headers, null));
 
   // when the input stops, let the service know that we're done
   self.on('finish', function() {
@@ -217,7 +217,7 @@ RecognizeStream.prototype.initialize = function() {
   this.initialized = true;
 };
 
-RecognizeStream.prototype._read = function() /* size*/ {
+RecognizeStream.prototype._read = function(/* size*/) {
   // there's no easy way to control reads from the underlying library
   // so, the best we can do here is a no-op
 };
@@ -283,8 +283,10 @@ RecognizeStream.prototype.getTransactionId = function() {
 const headerToContentType = {
   fLaC: 'audio/flac',
   RIFF: 'audio/wav',
-  OggS: 'audio/ogg; codecs=opus'
+  OggS: 'audio/ogg',
+  '\u001aEߣ': 'audio/webm' // String for first four hex's of webm: [1A][45][DF][A3] (https://www.matroska.org/technical/specs/index.html#EBML)
 };
+
 RecognizeStream.getContentType = function(buffer) {
   const header = buffer.slice(0, 4).toString();
   return headerToContentType[header];

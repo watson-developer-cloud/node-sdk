@@ -97,7 +97,7 @@ function fixupImageParam(params) {
  * @return {Function}
  */
 function errorFormatter(cb) {
-  const callback = typeof cb === 'function' ? cb /* no op */ : (function() {});
+  const callback = typeof cb === 'function' ? cb /* no op */ : function() {};
   return function(err, result) {
     if (err) {
       callback(err, result);
