@@ -106,7 +106,8 @@ ToneAnalyzerV3.prototype.tone_chat = function(params, callback) {
     options: {
       url: '/v3/tone_chat',
       method: 'POST',
-      body: JSON.stringify(params.utterances)
+      json: true,
+      body: pick(params, ['utterances'])
     },
     defaultOptions: extend(true, this._options, {
       headers: {

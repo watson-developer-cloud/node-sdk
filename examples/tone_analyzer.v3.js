@@ -17,23 +17,24 @@ tone_analyzer.tone({ text: 'Greetings from Watson Developer Cloud!' }, function(
   }
 });
 
-const utterances = {
-  utterances: [
-    { text: 'My charger isn’t working.', user: 'customer' },
-    { text: 'Thanks for reaching out. Can you give me some more detail about the issue?', user: 'agent' },
-    {
-      text: "I put my charger in my phone last night to charge and it isn't working. Which is ridiculous, it's a new charger, I bought it yesterday.",
-      user: 'customer'
-    },
-    { text: 'I’m sorry you’re having issues with charging. What kind of charger do you have?', user: 'agent' }
-  ]
-};
-
-tone_analyzer.tone_chat({ utterances: utterances }, function(err, tone) {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log('tone_chat endpoint:');
-    console.log(JSON.stringify(tone, null, 2));
+tone_analyzer.tone_chat(
+  {
+    utterances: [
+      { text: 'My charger isn’t working.', user: 'customer' },
+      { text: 'Thanks for reaching out. Can you give me some more detail about the issue?', user: 'agent' },
+      {
+        text: "I put my charger in my phone last night to charge and it isn't working. Which is ridiculous, it's a new charger, I bought it yesterday.",
+        user: 'customer'
+      },
+      { text: 'I’m sorry you’re having issues with charging. What kind of charger do you have?', user: 'agent' }
+    ]
+  },
+  function(err, tone) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('tone_chat endpoint:');
+      console.log(JSON.stringify(tone, null, 2));
+    }
   }
-});
+);
