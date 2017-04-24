@@ -172,6 +172,34 @@ DiscoveryV1.prototype.deleteEnvironment = function(params, callback) {
 };
 
 /**
+ * Creating a new configuration
+ * 
+ * @param {String} params.environment_id (require)
+ * @param {String} params.file(require).
+ */
+
+DiscoveryV1.prototype.createConfiguration = function(params, callback) {
+  params = params || {};
+  const parameters = {
+    options: {
+      url: '/v1/environments/{environment_id}/configurations',
+      method: 'POST',
+      path: pick(params, ['environment_id']),
+      multipart: [
+        {
+          'content-type': 'application/json',
+          body: params.file
+        }
+      ],
+      json: true
+    },
+    requiredParams: ['environment_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
  * List all configurations
  *
  * @param {Object} params
