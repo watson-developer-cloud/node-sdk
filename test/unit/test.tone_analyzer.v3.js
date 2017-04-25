@@ -132,7 +132,7 @@ describe('tone_analyzer.v3', function() {
       tree: {}
     };
 
-    const expectation = nock(service.url).post('/v3/tone_chat' + '?version=2016-05-19', tone_chat_request.utterances).reply(200, tone_chat_response);
+    const expectation = nock(service.url).post('/v3/tone_chat' + '?version=2016-05-19', tone_chat_request).reply(200, tone_chat_response);
 
     // run tests
     const req = tone_analyzer.tone_chat(tone_chat_request, function(err, res) {
