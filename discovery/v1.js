@@ -200,6 +200,35 @@ DiscoveryV1.prototype.createConfiguration = function(params, callback) {
 };
 
 /**
+ * Update an existing configuration for a given environment
+ * 
+ * @papam {String} params.environment_id (require)
+ * @papam {String} params.configuration_id (require)
+ * @param {String} params.file(require).
+ */
+
+DiscoveryV1.prototype.updateConfiguration = function(params, callback) {
+  params = params || {};
+  const parameters = {
+    options: {
+      url: '/v1/environments/{environment_id}/configurations/{configuration_id}',
+      method: 'PUT',
+      path: pick(params, ['environment_id', 'configuration_id']),
+      multipart: [
+        {
+          'content-type': 'application/json',
+          body: params.file
+        }
+      ],
+      json: true
+    },
+    requiredParams: ['environment_id', 'configuration_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
  * List all configurations
  *
  * @param {Object} params

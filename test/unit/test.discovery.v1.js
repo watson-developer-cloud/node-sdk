@@ -45,6 +45,8 @@ describe('discovery-v1', function() {
       .persist()
       .post(paths.environments + '?version=' + service.version_date)
       .reply(200, { environment_id: 'yes' })
+      .put(paths.configurationinfo + '?version=' + service.version_date)
+      .reply(200, { config: 'yes' })
       .get(paths.environmentinfo + '?version=' + service.version_date)
       .reply(200, { environment_id: 'info' })
       .put(paths.environmentinfo + '?version=' + service.version_date)
@@ -167,6 +169,19 @@ describe('discovery-v1', function() {
       );
       assert.equal(req.uri.href, service.url + paths.configurations + '?version=' + service.version_date);
       assert.equal(req.method, 'POST');
+    });
+
+    it('should update an existing configuration using a file', function() {
+      const req = discovery.updateConfiguration(
+        {
+          environment_id: 'env-guid',
+          configuration_id: 'config-guid',
+          file: fs.createReadStream(path.join(__dirname, '../resources/sampleHtml.html'))
+        },
+        noop
+      );
+      assert.equal(req.uri.href, service.url + paths.configurationinfo + '?version=' + service.version_date);
+      assert.equal(req.method, 'PUT');
     });
 
     it('should get information about configurations in a specific environment', function() {
