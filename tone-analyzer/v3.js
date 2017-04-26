@@ -90,7 +90,7 @@ ToneAnalyzerV3.prototype.tone = function(params, callback) {
 
 /**
  * @param {Object} params The parameters to call the service
- * @param {string} [params.utterances] - The utterances to analyze.  Utterances must be a JSON object.
+ * @param {Object} [params.utterances] - The utterances to analyze.  Utterances must be a JSON object.
  *
  * @param callback The callback.
  */
