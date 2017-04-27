@@ -199,11 +199,12 @@ describe('discovery-v1', function() {
           environment_id: 'env-guid',
           collection_id: 'col-guid',
           filter: 'yesplease',
-          count: 10
+          count: 10,
+          sort: '+field_1,-field_2'
         },
         noop
       );
-      assert.equal(req.uri.href, service.url + paths.query + '?version=' + service.version_date + '&filter=yesplease&count=10');
+      assert.equal(req.uri.href, service.url + paths.query + '?version=' + service.version_date + '&filter=yesplease&count=10&sort=%2Bfield_1%2C-field_2');
       assert.equal(req.method, 'GET');
     });
   });
