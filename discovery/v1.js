@@ -31,7 +31,7 @@ function DiscoveryV1(options) {
 
   // Check if 'version_date' was provided
   if (typeof this._options.version_date === 'undefined') {
-    throw new Error('Argument error: version_date was not specified, use DiscoveryV1.VERSION_DATE_2016_12_15');
+    throw new Error('Argument error: version_date was not specified, use DiscoveryV1.VERSION_DATE_2017_04_27');
   }
   this._options.qs.version = options.version_date;
 }
@@ -46,6 +46,11 @@ DiscoveryV1.URL = 'https://gateway.watsonplatform.net/discovery/api';
  * @type {string}
  */
 DiscoveryV1.VERSION_DATE_2016_12_15 = '2016-12-15';
+/**
+ * Release exposing the `sort` parameter on the `/query` endpoint
+ * @type {string}
+ */
+DiscoveryV1.VERSION_DATE_2017_04_27 = '2017-04-27';
 
 /**
  * Return the list of environments
