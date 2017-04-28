@@ -1,0 +1,132 @@
+{
+    "name": "doc-config",
+    "description": "this is a demo configuration",
+    "conversions": {
+        "word": {
+            "heading": {
+                "fonts": [
+                    {
+                        "level": 1,
+                        "min_size": 24,
+                        "bold": false,
+                        "italic": false
+                    },
+                    {
+                        "level": 2,
+                        "min_size": 18,
+                        "max_size": 23,
+                        "bold": true,
+                        "italic": false
+                    },
+                    {
+                        "level": 3,
+                        "min_size": 14,
+                        "max_size": 17,
+                        "bold": false,
+                        "italic": false
+                    },
+                    {
+                        "level": 4,
+                        "min_size": 13,
+                        "max_size": 13,
+                        "bold": true,
+                        "italic": false
+                    }
+                ],
+                "styles": [
+                    {
+                        "level": 1,
+                        "names": [
+                            "pullout heading",
+                            "pulloutheading",
+                            "header"
+                        ]
+                    },
+                    {
+                        "level": 2,
+                        "names": [
+                            "subtitle"
+                        ]
+                    }
+                ]
+            }
+        },
+        "pdf": {
+            "heading": {
+                "fonts": [
+                    {
+                        "level": 1,
+                        "min_size": 24,
+                        "max_size": 80
+                    },
+                    {
+                        "level": 2,
+                        "min_size": 18,
+                        "max_size": 24,
+                        "bold": false,
+                        "italic": false
+                    },
+                    {
+                        "level": 2,
+                        "min_size": 18,
+                        "max_size": 24,
+                        "bold": true
+                    },
+                    {
+                        "level": 3,
+                        "min_size": 13,
+                        "max_size": 18,
+                        "bold": false,
+                        "italic": false
+                    },
+                    {
+                        "level": 3,
+                        "min_size": 13,
+                        "max_size": 18,
+                        "bold": true
+                    },
+                    {
+                        "level": 4,
+                        "min_size": 11,
+                        "max_size": 13,
+                        "bold": false,
+                        "italic": false
+                    }
+                ]
+            }
+        },
+        "html": {
+            "exclude_tags_completely": [
+                "script",
+                "sup"
+            ],
+            "exclude_tags_keep_content": [
+                "font",
+                "em",
+                "span"
+            ],
+            "exclude_content": {
+                "xpaths": []
+            },
+            "keep_content": {
+                "xpaths": []
+            },
+            "exclude_tag_attributes": [
+                "EVENT_ACTIONS"
+            ]
+        },
+        "json_normalizations": []
+    },
+    "enrichments": [
+        {
+            "destination_field": "enriched_text",
+            "source_field": "text",
+            "enrichment": "alchemy_language",
+            "options": {
+                "extract": "keyword, entity, doc-sentiment, taxonomy, concept, relation",
+                "sentiment": true,
+                "quotations": true
+            }
+        }
+    ]
+}

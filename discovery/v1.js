@@ -177,6 +177,62 @@ DiscoveryV1.prototype.deleteEnvironment = function(params, callback) {
 };
 
 /**
+ * Creating a new configuration
+ * 
+ * @param {String} params.environment_id - the ID of your environment
+ * @param {Object} params.file - Input a JSON object that enables you to customize how your content is ingested and what enrichments are added to your data. 
+ */
+DiscoveryV1.prototype.createConfiguration = function(params, callback) {
+  params = params || {};
+  const parameters = {
+    options: {
+      url: '/v1/environments/{environment_id}/configurations',
+      method: 'POST',
+      path: pick(params, ['environment_id']),
+      multipart: [
+        {
+          'content-type': 'application/json',
+          body: params.file
+        }
+      ],
+      json: true
+    },
+    requiredParams: ['environment_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Update an existing configuration for a given environment
+ * 
+ * @param {String} params.environment_id - the ID of your environment
+ * @param {String} params.configuration_id - the ID of your configuration 
+ * @param {Object} params.file - Input a JSON object that enables you to update and customize how your data is ingested and what enrichments are added to your data.
+ */
+
+DiscoveryV1.prototype.updateConfiguration = function(params, callback) {
+  params = params || {};
+  const parameters = {
+    options: {
+      url: '/v1/environments/{environment_id}/configurations/{configuration_id}',
+      method: 'PUT',
+      path: pick(params, ['environment_id', 'configuration_id']),
+      multipart: [
+        {
+          'content-type': 'application/json',
+          body: params.file
+        }
+      ],
+      json: true
+    },
+    requiredParams: ['environment_id', 'configuration_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
  * List all configurations
  *
  * @param {Object} params
