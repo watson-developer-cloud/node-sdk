@@ -45,9 +45,13 @@ describe('discovery-v1', function() {
       .persist()
       .post(paths.environments + '?version=' + service.version_date)
       .reply(200, { environment_id: 'yes' })
+      .put(paths.configurationinfo + '?version=' + service.version_date)
+      .reply(200, { config: 'yes' })
       .get(paths.environmentinfo + '?version=' + service.version_date)
       .reply(200, { environment_id: 'info' })
       .put(paths.environmentinfo + '?version=' + service.version_date)
+      .reply(200, { environment_id: 'yes' })
+      .post(paths.environmentinfo + '?version=' + service.version_date)
       .reply(200, { environment_id: 'yes' })
       .delete(paths.environmentinfo + '?version=' + service.version_date)
       .reply(200, { environment_id: 'info' })
@@ -153,6 +157,31 @@ describe('discovery-v1', function() {
       );
       assert.equal(req.uri.href, service.url + paths.delete_collection + '?version=' + service.version_date);
       assert.equal(req.method, 'DELETE');
+    });
+
+    it('should create a new configuration using a file', function() {
+      const req = discovery.createConfiguration(
+        {
+          environment_id: 'env-guid',
+          file: fs.createReadStream(path.join(__dirname, '../resources/discovery-sampleAddConf.json'))
+        },
+        noop
+      );
+      assert.equal(req.uri.href, service.url + paths.configurations + '?version=' + service.version_date);
+      assert.equal(req.method, 'POST');
+    });
+
+    it('should update an existing configuration using a file', function() {
+      const req = discovery.updateConfiguration(
+        {
+          environment_id: 'env-guid',
+          configuration_id: 'config-guid',
+          file: fs.createReadStream(path.join(__dirname, '../resources/discovery-sampleUpdateConf.json'))
+        },
+        noop
+      );
+      assert.equal(req.uri.href, service.url + paths.configurationinfo + '?version=' + service.version_date);
+      assert.equal(req.method, 'PUT');
     });
 
     it('should get information about configurations in a specific environment', function() {
