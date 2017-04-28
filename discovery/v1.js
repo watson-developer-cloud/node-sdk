@@ -31,7 +31,7 @@ function DiscoveryV1(options) {
 
   // Check if 'version_date' was provided
   if (typeof this._options.version_date === 'undefined') {
-    throw new Error('Argument error: version_date was not specified, use DiscoveryV1.VERSION_DATE_2016_12_15');
+    throw new Error('Argument error: version_date was not specified, use DiscoveryV1.VERSION_DATE_2017_04_27');
   }
   this._options.qs.version = options.version_date;
 }
@@ -46,6 +46,11 @@ DiscoveryV1.URL = 'https://gateway.watsonplatform.net/discovery/api';
  * @type {string}
  */
 DiscoveryV1.VERSION_DATE_2016_12_15 = '2016-12-15';
+/**
+ * Release exposing the `sort` parameter on the `/query` endpoint
+ * @type {string}
+ */
+DiscoveryV1.VERSION_DATE_2017_04_27 = '2017-04-27';
 
 /**
  * Return the list of environments
@@ -445,12 +450,13 @@ DiscoveryV1.prototype.deleteDocument = function(params, callback) {
  * @param {Object} params
  * @param {String} params.environment_id
  * @param {string} params.collection_id
- * @param {String} [params.filter]  A cacheable query that allows you to limit the information returned to exclude anything that isn't related to what you are searching. Filter searches are better for metadata type searches and when you are trying to get a sense of concepts in the dataset.
  * @param {String} [params.query]  A query search returns all possible results, even when it's not very relevant, with the most relevant documents listed first. Use a query search when you want to find the most relevant search results. Results are scored between 0 and 1, with 1 being an exact match and 0 being not a match at all.
+ * @param {String} [params.filter]  A cacheable query that allows you to limit the information returned to exclude anything that isn't related to what you are searching. Filter searches are better for metadata type searches and when you are trying to get a sense of concepts in the dataset.
  * @param {String} [params.aggregation] An aggregation search uses combinations of filters and query search to return an exact answer. Aggregations are useful for building applications, because you can use them to build lists, tables, and time series. For a full list of possible aggregrations, see the Query reference.
  * @param {Number} [params.count=10] Number of documents to return
- * @param {String} [params.return] A comma separated list of the portion of the document hierarchy to return.
  * @param {Number} [params.offset=0] For pagination purposes. Returns additional pages of results. Deep pagination is highly unperformant, and should be avoided.
+ * @param {String} [params.return] A comma separated list of the portion of the document hierarchy to return.
+ * @param {String} [params.sort] A comma separated list of fields in the document to sort on. You can optionally specify a sort direction by prefixing the field with - for descending or + for ascending. Ascending is the default sort direction if no prefix is specified.
  */
 DiscoveryV1.prototype.query = function(params, callback) {
   params = params || {};
@@ -461,7 +467,7 @@ DiscoveryV1.prototype.query = function(params, callback) {
       method: 'GET',
       json: true,
       path: pick(params, ['environment_id', 'collection_id']),
-      qs: pick(params, ['filter', 'aggregation', 'return', 'count', 'offset', 'query'])
+      qs: pick(params, ['query', 'filter', 'aggregation', 'count', 'offset', 'return', 'sort'])
     },
     requiredParams: ['environment_id', 'collection_id'],
     defaultOptions: this._options
