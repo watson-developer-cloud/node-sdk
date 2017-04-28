@@ -174,6 +174,8 @@ DiscoveryV1.prototype.deleteEnvironment = function(params, callback) {
 /**
  * Creating a new configuration
  * 
+ * @param {String} params.environment_id - the ID of your environment
+ * @param {Object} params.file - Input a JSON object that enables you to customize how your content is ingested and what enrichments are added to your data. 
  */
 
 DiscoveryV1.prototype.createConfiguration = function(params, callback) {
@@ -200,6 +202,9 @@ DiscoveryV1.prototype.createConfiguration = function(params, callback) {
 /**
  * Update an existing configuration for a given environment
  * 
+ * @param {String} params.environment_id - the ID of your environment
+ * @param {String} params.configuration_id - the ID of your configuration 
+ * @param {Object} params.file - Input a JSON object that enables you to update and customize how your data is ingested and what enrichments are added to your data.
  */
 
 DiscoveryV1.prototype.updateConfiguration = function(params, callback) {
