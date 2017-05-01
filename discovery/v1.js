@@ -177,7 +177,7 @@ DiscoveryV1.prototype.deleteEnvironment = function(params, callback) {
 };
 
 /**
- * Creating a new configuration
+ * Create a new configuration
  * 
  * @param {String} params.environment_id - the ID of your environment
  * @param {Object} params.file - Input a JSON object that enables you to customize how your content is ingested and what enrichments are added to your data. 
