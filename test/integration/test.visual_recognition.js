@@ -247,6 +247,7 @@ describe('visual_recognition_integration', function() {
         assert.equal(classifier.classifier_id, classifier_id);
         assert.equal(classifier.name, 'light_dark_test_temporary');
         assert.deepEqual(classifier.classes, [{ class: 'light' }, { class: 'dark' }]);
+        assert.equal(classifier.status, 'failed');  // Because we didn't give enough images. -JPS
         done();
       });
     });

@@ -276,22 +276,13 @@ VisualRecognitionV3.prototype.classify = function(params, callback) {
         url: '/v3/classify',
         method: 'POST',
         formData: {
-          // TODO:
-          // The API depends on receiving the 'parameters' information before the
-          // images to be classified.  For 'request' currently, putting the keys in the
-          // appropriate order in 'formData' seems to do the trick; however, that behavior
-          // can't be relied upon (per the ECMAScript specification).  One approach would
-          // be to access the FormData once the request has been declared and to
-          // append the images file; however, the callback structure for the Watson
-          // request doesn't seem to allow that right now, or at least not in a way
-          // that preserves append order.  Everything's quite opaque.
+          images_file: params.images_file,
           parameters: {
             value: JSON.stringify(pick(params, ['classifier_ids', 'owners', 'threshold'])),
             options: {
               contentType: 'application/json'
             }
           }
-          , images_file: params.images_file
         },
         headers: pick(params, 'Accept-Language')
       },
