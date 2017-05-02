@@ -11,8 +11,8 @@ const describe = authHelper.describe; // this runs describe.skip if there is no 
 const THIRTY_SECONDS = 30000;
 const TWO_SECONDS = 2000;
 
-let logit = function(string) {
-  console.log('==> ' + string);
+const logit = function(string) {
+  return; // console.log('==> ' + string);
 };
 
 describe('visual_recognition_integration_prepopulated', function() {
@@ -24,30 +24,28 @@ describe('visual_recognition_integration_prepopulated', function() {
   let visual_recognition;
   let classifier_id;
 
-  let test_training_status = function(resolve,reject) {
+  const test_training_status = function(resolve, reject) {
     //  This evil recursive function will be used to verify that the classifier
     //  has finished training. 'resolve' and 'reject' are functions from an
     //  enclosing promise (or a follow-on callback for resolve if you )
-    visual_recognition.getClassifier({ classifier_id: classifier_id },
-      (err, response) => {
-        if (err) {
-          reject(err);
-          return;
-        }
-        if (response.status === 'failed') {
-          reject(new Error(response.explanation));
-          return;
-        }
-        if (response.status !== 'ready') {
-          logit(JSON.stringify(response));
-          logit('Classifier '+classifier_id+' status is "'+response.status+'".  Waiting 10 seconds.');
-          setTimeout(test_training_status, 10*1000, classifier_id); // wait 10 seconds and try again
-        } else {
-          logit('Classifier '+classifier_id+' is ready.');
-          resolve();
-        }
+    visual_recognition.getClassifier({ classifier_id: classifier_id }, (err, response) => {
+      if (err) {
+        reject(err);
+        return;
       }
-    );
+      if (response.status === 'failed') {
+        reject(new Error(response.explanation));
+        return;
+      }
+      if (response.status !== 'ready') {
+        logit(JSON.stringify(response));
+        logit('Classifier ' + classifier_id + ' status is "' + response.status + '".  Waiting 10 seconds.');
+        setTimeout(test_training_status, 10 * 1000, classifier_id); // wait 10 seconds and try again
+      } else {
+        logit('Classifier ' + classifier_id + ' is ready.');
+        resolve();
+      }
+    });
   };
 
   before(function() {
@@ -58,12 +56,14 @@ describe('visual_recognition_integration_prepopulated', function() {
 
     //  WOW.  I never thought I'd have to learn Promises just to write a test prep.  -JPS
     return new Promise((resolve, reject) => {
-
       visual_recognition.listClassifiers({}, (err, result) => {
-        if (err) { reject(err); return; }
+        if (err) {
+          reject(err);
+          return;
+        }
 
         const classifier_name = 'visual_recognition_test_prepop';
-        const c = result.classifiers.find(element=>(element.name === classifier_name));
+        const c = result.classifiers.find(element => element.name === classifier_name);
 
         if (c === undefined) {
           logit('Classifier not found, creating new classifier...');
@@ -77,18 +77,23 @@ describe('visual_recognition_integration_prepopulated', function() {
               water_positive_examples: fs.createReadStream(path.join(p, 'water.zip'))
             },
             function(err, response) {
-              if (err) { reject(err); return; }
-              logit('Created classifier with ID="'+response.classifier_id+'"');
+              if (err) {
+                reject(err);
+                return;
+              }
+              logit('Created classifier with ID="' + response.classifier_id + '"');
               logit(JSON.stringify(response));
               resolve(response.classifier_id);
             }
           );
         } else {
-          logit('Classifier '+classifier_name+' found with ID='+c.classifier_id);
+          logit('Classifier ' + classifier_name + ' found with ID=' + c.classifier_id);
           resolve(c.classifier_id);
         }
       });
-    }).then(c => { classifier_id = c; });
+    }).then(c => {
+      classifier_id = c;
+    });
   });
 
   after(function() {
@@ -101,33 +106,36 @@ describe('visual_recognition_integration_prepopulated', function() {
     });
   });
 
-  it('should classify an image ', function() {
+  it('should classify an uploaded image ', function() {
     return new Promise((resolve, reject) => {
       test_training_status(() => {
         const params = {
           images_file: fs.createReadStream(__dirname + '/../resources/car.png'),
-          classifier_ids: [ classifier_id ]
+          classifier_ids: [classifier_id]
         };
         visual_recognition.classify(params, function(err, result) {
-          if (err) { reject(err); }
+          if (err) {
+            reject(err);
+          }
           // console.log(JSON.stringify(result, null, 2));
           assert.equal(result.images_processed, 1);
           assert.equal(result.images[0].image, 'car.png');
           assert.equal(result.images[0].classifiers.length, 1);
           assert.equal(result.images[0].classifiers[0].classifier_id, classifier_id);
           logit(JSON.stringify(result.images[0].classifiers[0]));
-          assert(result.images[0].classifiers[0].classes.every(function(cl) {
-            if (cl.class === 'beach' || cl.class === 'water' || cl.class === 'still' || cl.class === 'forest') {
-              return true;
-            } else {
-              logit('Rogue class ' + cl.class + ' found.');
-              return false;
-            }
-          }));
+          assert(
+            result.images[0].classifiers[0].classes.every(function(cl) {
+              if (cl.class === 'beach' || cl.class === 'water' || cl.class === 'still' || cl.class === 'forest') {
+                return true;
+              } else {
+                logit('Rogue class ' + cl.class + ' found.');
+                return false;
+              }
+            })
+          );
           resolve();
         });
       }, reject);
     });
   });
-
 }); // vr
