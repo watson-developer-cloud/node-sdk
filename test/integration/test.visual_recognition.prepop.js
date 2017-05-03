@@ -12,7 +12,8 @@ const THIRTY_SECONDS = 30000;
 const TWO_SECONDS = 2000;
 
 const logit = function(string) {
-  return; // console.log('==> ' + string);
+  // console.log('==> ' + string);
+  return string;
 };
 
 describe('visual_recognition_integration_prepopulated', function() {
