@@ -197,7 +197,8 @@ DiscoveryV1.prototype.createConfiguration = function(params, callback) {
       ],
       json: true
     },
-    requiredParams: ['environment_id'],
+    originalParams: params,
+    requiredParams: ['environment_id', 'file'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
@@ -226,7 +227,8 @@ DiscoveryV1.prototype.updateConfiguration = function(params, callback) {
       ],
       json: true
     },
-    requiredParams: ['environment_id', 'configuration_id'],
+    originalParams: params,
+    requiredParams: ['environment_id', 'configuration_id', 'file'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
