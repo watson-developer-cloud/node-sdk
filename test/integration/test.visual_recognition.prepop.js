@@ -12,24 +12,24 @@ const THIRTY_SECONDS = 30000;
 const TWO_SECONDS = 2000;
 
 const logit = function(string) {
-  // console.log('==> ' + string);
+  console.log('==> ' + string);
   return string;
 };
 
 describe('visual_recognition_integration_prepopulated', function() {
   // ugh.
-  this.timeout(THIRTY_SECONDS * 4);
+  this.timeout(THIRTY_SECONDS * 8);
   this.slow(TWO_SECONDS);
   this.retries(5);
 
   let visual_recognition;
   let classifier_id;
 
-  const test_training_status = function(resolve, reject) {
+  let test_training_status = function(resolve, reject) {
     //  This evil recursive function will be used to verify that the classifier
     //  has finished training. 'resolve' and 'reject' are functions from an
     //  enclosing promise (or a follow-on callback for resolve if you )
-    visual_recognition.getClassifier({ classifier_id: classifier_id }, (err, response) => {
+    visual_recognition.getClassifier({ classifier_id: classifier_id }, function(err, response) {
       if (err) {
         reject(err);
         return;
@@ -56,7 +56,7 @@ describe('visual_recognition_integration_prepopulated', function() {
     nock.enableNetConnect();
 
     //  WOW.  I never thought I'd have to learn Promises just to write a test prep.  -JPS
-    return new Promise((resolve, reject) => {
+    return new Promise( function(resolve, reject) {
       visual_recognition.listClassifiers({}, (err, result) => {
         if (err) {
           reject(err);
@@ -102,7 +102,7 @@ describe('visual_recognition_integration_prepopulated', function() {
   });
 
   it('should eventually be in a trained status', function() {
-    return new Promise((resolve, reject) => {
+    return new Promise(function(resolve, reject) {
       test_training_status(resolve, reject);
     });
   });
@@ -110,20 +110,20 @@ describe('visual_recognition_integration_prepopulated', function() {
   it('should classify an uploaded image ', function() {
     return new Promise((resolve, reject) => {
       test_training_status(() => {
+        logit('Classifing with classifier_id = ' + classifier_id);
         const params = {
-          images_file: fs.createReadStream(__dirname + '/../resources/car.png'),
-          classifier_ids: [classifier_id]
+          images_file: fs.createReadStream(__dirname + '/../resources/183px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg'),
+          classifier_ids: [ classifier_id ], threshold: '0.0'
         };
         visual_recognition.classify(params, function(err, result) {
           if (err) {
             reject(err);
           }
-          // console.log(JSON.stringify(result, null, 2));
+          logit(JSON.stringify(result, null, 2));
           assert.equal(result.images_processed, 1);
-          assert.equal(result.images[0].image, 'car.png');
+          assert.equal(result.images[0].image, '183px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg');
           assert.equal(result.images[0].classifiers.length, 1);
           assert.equal(result.images[0].classifiers[0].classifier_id, classifier_id);
-          logit(JSON.stringify(result.images[0].classifiers[0]));
           assert(
             result.images[0].classifiers[0].classes.every(function(cl) {
               if (cl.class === 'beach' || cl.class === 'water' || cl.class === 'still' || cl.class === 'forest') {

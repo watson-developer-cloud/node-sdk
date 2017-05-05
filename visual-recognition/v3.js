@@ -279,9 +279,7 @@ VisualRecognitionV3.prototype.classify = function(params, callback) {
           images_file: params.images_file,
           parameters: {
             value: JSON.stringify(pick(params, ['classifier_ids', 'owners', 'threshold'])),
-            options: {
-              contentType: 'application/json'
-            }
+            options: { contentType: 'application/json' }
           }
         },
         headers: pick(params, 'Accept-Language')
