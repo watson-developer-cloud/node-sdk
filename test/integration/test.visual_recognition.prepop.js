@@ -12,7 +12,7 @@ const THIRTY_SECONDS = 30000;
 const TWO_SECONDS = 2000;
 
 const logit = function(string) {
-  console.log('==> ' + string);
+  // console.log('==> ' + string);
   return string;
 };
 
@@ -25,10 +25,10 @@ describe('visual_recognition_integration_prepopulated', function() {
   let visual_recognition;
   let classifier_id;
 
-  let test_training_status = function(resolve, reject) {
+  const test_training_status = function(resolve, reject) {
     //  This evil recursive function will be used to verify that the classifier
     //  has finished training. 'resolve' and 'reject' are functions from an
-    //  enclosing promise (or a follow-on callback for resolve if you )
+    //  enclosing promise (or a follow-on callback for resolve if you prefer)
     visual_recognition.getClassifier({ classifier_id: classifier_id }, function(err, response) {
       if (err) {
         reject(err);
@@ -41,7 +41,7 @@ describe('visual_recognition_integration_prepopulated', function() {
       if (response.status !== 'ready') {
         logit(JSON.stringify(response));
         logit('Classifier ' + classifier_id + ' status is "' + response.status + '".  Waiting 10 seconds.');
-        setTimeout(test_training_status, 10 * 1000, classifier_id); // wait 10 seconds and try again
+        setTimeout(test_training_status, 10 * 1000, resolve, reject); // wait 10 seconds and try again
       } else {
         logit('Classifier ' + classifier_id + ' is ready.');
         resolve();
@@ -56,7 +56,7 @@ describe('visual_recognition_integration_prepopulated', function() {
     nock.enableNetConnect();
 
     //  WOW.  I never thought I'd have to learn Promises just to write a test prep.  -JPS
-    return new Promise( function(resolve, reject) {
+    return new Promise(function(resolve, reject) {
       visual_recognition.listClassifiers({}, (err, result) => {
         if (err) {
           reject(err);
@@ -101,42 +101,63 @@ describe('visual_recognition_integration_prepopulated', function() {
     nock.disableNetConnect();
   });
 
-  it('should eventually be in a trained status', function() {
-    return new Promise(function(resolve, reject) {
-      test_training_status(resolve, reject);
-    });
+  beforeEach(function() {
+    return new Promise(test_training_status);
   });
 
   it('should classify an uploaded image ', function() {
-    return new Promise((resolve, reject) => {
-      test_training_status(() => {
-        logit('Classifing with classifier_id = ' + classifier_id);
-        const params = {
-          images_file: fs.createReadStream(__dirname + '/../resources/183px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg'),
-          classifier_ids: [ classifier_id ], threshold: '0.0'
-        };
-        visual_recognition.classify(params, function(err, result) {
-          if (err) {
-            reject(err);
-          }
-          logit(JSON.stringify(result, null, 2));
-          assert.equal(result.images_processed, 1);
-          assert.equal(result.images[0].image, '183px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg');
-          assert.equal(result.images[0].classifiers.length, 1);
-          assert.equal(result.images[0].classifiers[0].classifier_id, classifier_id);
-          assert(
-            result.images[0].classifiers[0].classes.every(function(cl) {
-              if (cl.class === 'beach' || cl.class === 'water' || cl.class === 'still' || cl.class === 'forest') {
-                return true;
-              } else {
-                logit('Rogue class ' + cl.class + ' found.');
-                return false;
-              }
-            })
-          );
-          resolve();
-        });
-      }, reject);
+    return new Promise(function(resolve, reject) {
+      logit('Classifing with classifier_id = ' + classifier_id);
+      const params = {
+        images_file: fs.createReadStream(__dirname + '/../resources/183px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg'),
+        classifier_ids: [classifier_id],
+        threshold: '0.0'
+      };
+      visual_recognition.classify(params, function(err, result) {
+        if (err) {
+          reject(err);
+          return;
+        }
+        logit(JSON.stringify(result, null, 2));
+        assert.equal(result.images_processed, 1);
+        assert.equal(result.images[0].image, '183px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg');
+        assert.equal(result.images[0].classifiers.length, 1);
+        assert.equal(result.images[0].classifiers[0].classifier_id, classifier_id);
+        assert(
+          result.images[0].classifiers[0].classes.every(function(cl) {
+            if (cl.class === 'beach' || cl.class === 'water' || cl.class === 'still' || cl.class === 'forest') {
+              return true;
+            } else {
+              logit('Rogue class ' + cl.class + ' found.');
+              return false;
+            }
+          })
+        );
+        resolve();
+      });
+    });
+  });
+
+  it('should come back empty when nothing passes the classification threshold ', function() {
+    return new Promise(function(resolve, reject) {
+      logit('Classifing with classifier_id = ' + classifier_id);
+      const params = {
+        images_file: fs.createReadStream(__dirname + '/../resources/183px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg'),
+        classifier_ids: [classifier_id],
+        threshold: '0.9'
+      };
+      visual_recognition.classify(params, function(err, result) {
+        if (err) {
+          reject(err);
+          return;
+        }
+        logit(JSON.stringify(result, null, 2));
+        assert.equal(result.images_processed, 1);
+        assert.equal(result.images[0].image, '183px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg');
+        assert.equal(result.images[0].classifiers.length, 0);
+        assert(result.custom_classes > 0);
+        resolve();
+      });
     });
   });
 }); // vr
