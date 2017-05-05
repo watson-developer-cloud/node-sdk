@@ -132,9 +132,9 @@ function VisualRecognitionV3(options) {
   BaseService.call(this, options);
   // Check if 'version_date' was provided
   if (typeof this._options.version_date === 'undefined') {
-    throw new Error('Argument error: version_date was not specified, use 2016-05-20');
+    throw new Error('Argument error: version_date was not specified, use VisualRecognitionV3.VERSION_DATE_2016_05_20');
   }
-  this._options.qs.version = this._options.version_date; // todo: confirm service expects version not version_date
+  this._options.qs.version = this._options.version_date;
 }
 util.inherits(VisualRecognitionV3, BaseService);
 VisualRecognitionV3.prototype.name = 'visual_recognition';
@@ -143,6 +143,12 @@ VisualRecognitionV3.URL = 'https://gateway-a.watsonplatform.net/visual-recogniti
 VisualRecognitionV3.prototype.serviceDefaults = {
   alchemy: true
 };
+
+/**
+ * @see https://www.ibm.com/watson/developercloud/doc/visual-recognition/release-notes.html#5-april-2017
+ * @type {string}
+ */
+VisualRecognitionV3.VERSION_DATE_2016_05_20 = '2016-05-20';
 
 /**
  * Wrapper for requestFactory that ensures things are formatted the way the service likes

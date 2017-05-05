@@ -8,7 +8,7 @@
 
 api_key=$(node <<EOF
 auth=require('../auth.js');
-console.log(auth.visual_recognition_prepop.v3.api_key)
+console.log(auth.visual_recognition.v3.api_key)
 EOF
 )
 

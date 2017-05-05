@@ -625,7 +625,7 @@ var fs = require('fs');
 
 var visual_recognition = new VisualRecognitionV3({
   api_key: '<api_key>',
-  version_date: '2016-05-19'
+  version_date: VisualRecognitionV3.VERSION_DATE_2016_05_20
 });
 
 var params = {
