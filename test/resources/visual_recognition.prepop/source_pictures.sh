@@ -15,7 +15,8 @@ for i in *.txt; do
     curl -O $url)
   done
 
-  #  Create an array of file names becase zip does its own globbing.
+  #  TODO:  zip is a big flakey about how it handles globbing, but I haven't
+  #  come up with a happier way to address this challeng.  Maybe find and xargs?
   rm "${class}.zip"
   zip "${class}.zip" images/${class}/*.jpg images/${class}/*.JPG images/${class}/*.png
 done
