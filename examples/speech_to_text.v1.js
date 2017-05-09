@@ -30,24 +30,3 @@ recognizeStream.setEncoding('utf8'); // to get strings instead of Buffers from `
   recognizeStream.on(eventName, console.log.bind(console, eventName + ' event: '));
 });
 
-// Change the following parameters appropriately
-// Note that 'interval' and 'times' are OPTIONAL. You can choose to get rid of these fields.
-// By default, 'interval' is set to 5000 milliseconds and 'times' is set to 30.
-const corporaParams = {
-  customization_id: 'd83aa3c0-bd6f-11e6-acaa-019f979b8xyz',
-  interval: 1000,
-  times: 20
-};
-
-// wait until corpus has been analyzed
-// Using the above parameters, whenCorporaAnalyzed checks for the corpora status at most 20 "times" until the corpus has been analyzed.
-// It waits for an "interval" of 1000 milliseconds after every status check.
-// If the corpus has not been analyzed after 20 times, then it throws an error.
-speech_to_text.whenCorporaAnalyzed(corporaParams, function(err, res) {
-  if (err) {
-    console.error(JSON.stringify(err, null, 2));
-  } else {
-    console.log(JSON.stringify(res, null, 2));
-    console.log('Corpus analysis done!');
-  }
-});
