@@ -210,7 +210,9 @@ describe('discovery-v1', function() {
               collection_id: 'col-guid',
               filter: 'yesplease',
               count: 10,
-              sort: '+field_1,-field_2'
+              sort: '+field_1,-field_2',
+              natural_language_query: 'a question about stuff and things',
+              passages: true
             },
             noop
           );
