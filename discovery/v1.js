@@ -385,6 +385,30 @@ DiscoveryV1.prototype.deleteCollection = function(params, callback) {
 };
 
 /**
+ * Get fields available in a a collection
+ *
+ * @param {Object} params
+ * @param {String} params.environment_id
+ * @param {string} params.collection_id
+ */
+DiscoveryV1.prototype.getCollectionFields = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/environments/{environment_id}/collections/{collection_id}/fields',
+      method: 'GET',
+      path: pick(params, ['environment_id', 'collection_id']),
+      json: true
+    },
+    requiredParams: ['environment_id', 'collection_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+
+/**
  * Add a document to a collection
  * @param params
  * @param {String} params.environment_id environment guid for the collection
