@@ -464,7 +464,7 @@ DiscoveryV1.prototype.query = function(params, callback) {
   params = params || {};
 
   // query and natural_language_query can't both be populated
-  if(params.query && params.natural_language_query) {
+  if (params.query && params.natural_language_query) {
     delete params.natural_language_query;
   }
 
