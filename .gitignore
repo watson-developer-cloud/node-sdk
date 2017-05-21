@@ -6,6 +6,7 @@ coverage
 test/resources/auth.js
 test/resources/-auth.js # to make sure tests run without the auth file
 test/resources/tts-output.ogg
+test/resources/visual_recognition.prepop/images
 .idea
 doc/
 .vscode/
