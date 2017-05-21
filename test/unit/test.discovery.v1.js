@@ -135,6 +135,21 @@ describe('discovery-v1', function() {
           assert.equal(req.method, 'DELETE');
         });
 
+
+        it('should create a collection in an environment', function() {
+          const req = discovery.createCollection(
+            {
+              environment_id: 'env-guid',
+              configuration_id: 'config-guid',
+              name: 'new collection',
+              description: 'my description'
+            },
+            noop
+          );
+          assert.equal(req.uri.href, service.url + paths.collections + '?version=' + service.version_date);
+          assert.equal(req.method, 'POST');
+        });
+
         it('should get collections from an environment', function() {
           const req = discovery.getCollections({ environment_id: 'env-guid' }, noop);
           assert.equal(req.uri.href, service.url + paths.collections + '?version=' + service.version_date);
