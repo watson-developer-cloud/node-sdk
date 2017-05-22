@@ -178,9 +178,9 @@ DiscoveryV1.prototype.deleteEnvironment = function(params, callback) {
 
 /**
  * Create a new configuration
- * 
+ *
  * @param {String} params.environment_id - the ID of your environment
- * @param {Object} params.file - Input a JSON object that enables you to customize how your content is ingested and what enrichments are added to your data. 
+ * @param {Object} params.file - Input a JSON object that enables you to customize how your content is ingested and what enrichments are added to your data.
  */
 DiscoveryV1.prototype.createConfiguration = function(params, callback) {
   params = params || {};
@@ -206,9 +206,9 @@ DiscoveryV1.prototype.createConfiguration = function(params, callback) {
 
 /**
  * Update an existing configuration for a given environment
- * 
+ *
  * @param {String} params.environment_id - the ID of your environment
- * @param {String} params.configuration_id - the ID of your configuration 
+ * @param {String} params.configuration_id - the ID of your configuration
  * @param {Object} params.file - Input a JSON object that enables you to update and customize how your data is ingested and what enrichments are added to your data.
  */
 
@@ -329,7 +329,7 @@ DiscoveryV1.prototype.getCollection = function(params, callback) {
  *
  * @param {Object} params
  * @param {String} params.environment_id environment guid for the collection
- * @param {string} params.collection_name
+ * @param {string} params.name
  * @param {string} params.description
  * @param {string} params.configuration_id  configuration to create the collection in
  * @param {string} params.language_code currently, only `en_us` is supported
@@ -347,13 +347,13 @@ DiscoveryV1.prototype.createCollection = function(params, callback) {
       multipart: [
         {
           'content-type': 'application/json',
-          body: JSON.stringify(pick(params, ['collection_name', 'description', 'configuration_id', 'language_code']))
+          body: JSON.stringify(pick(params, ['name', 'description', 'configuration_id', 'language_code']))
         }
       ],
       json: true
     },
     originalParams: params,
-    requiredParams: ['environment_id', 'configuration_id', 'collection_name'],
+    requiredParams: ['environment_id', 'configuration_id', 'name'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
