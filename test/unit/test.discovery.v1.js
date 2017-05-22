@@ -135,7 +135,6 @@ describe('discovery-v1', function() {
           assert.equal(req.method, 'DELETE');
         });
 
-
         it('should create a collection in an environment', function() {
           const req = discovery.createCollection(
             {
