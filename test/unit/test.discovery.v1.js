@@ -235,11 +235,20 @@ describe('discovery-v1', function() {
               collection_id: 'col-guid',
               filter: 'yesplease',
               count: 10,
-              sort: '+field_1,-field_2'
+              sort: '+field_1,-field_2',
+              natural_language_query: 'a question about stuff and things',
+              passages: true
             },
             noop
           );
-          assert.equal(req.uri.href, service.url + paths.query + '?version=' + service.version_date + '&filter=yesplease&count=10&sort=%2Bfield_1%2C-field_2');
+          assert.equal(
+            req.uri.href,
+            service.url +
+              paths.query +
+              '?version=' +
+              service.version_date +
+              '&natural_language_query=a%20question%20about%20stuff%20and%20things&filter=yesplease&count=10&sort=%2Bfield_1%2C-field_2&passages=true'
+          );
           assert.equal(req.method, 'GET');
         });
       });
