@@ -29,4 +29,3 @@ recognizeStream.setEncoding('utf8'); // to get strings instead of Buffers from `
 ['data', 'results', 'speaker_labels', 'error', 'close'].forEach(function(eventName) {
   recognizeStream.on(eventName, console.log.bind(console, eventName + ' event: '));
 });
-

@@ -382,7 +382,7 @@ DiscoveryV1.prototype.updateCollection = function(params, callback) {
     options: {
       url: '/v1/environments/{environment_id}/collections/{collection_id}',
       method: 'PUT',
-      path: pick(params, ['environment_id','collection_id]),
+      path: pick(params, ['environment_id', 'collection_id']),
       multipart: [
         {
           'content-type': 'application/json',
