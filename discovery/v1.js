@@ -407,7 +407,6 @@ DiscoveryV1.prototype.getCollectionFields = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
-
 /**
  * Add a document to a collection
  * @param params
