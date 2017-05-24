@@ -299,12 +299,14 @@ describe('discovery-v1', function() {
          * @return {Array}
          */
         function readMultipartReqJsons(req) {
-          let result = [];
+          const result = [];
           if (req && req.body && req.body.length) {
-            req.body.forEach((part) => {
+            req.body.forEach(part => {
               try {
                 result.push(JSON.parse(Buffer.from(part).toString('ascii')));
-              } catch (err) {}
+              } catch (err) {
+                // JSON parse error -> this part is not JSON: skip.
+              }
             });
           }
 
