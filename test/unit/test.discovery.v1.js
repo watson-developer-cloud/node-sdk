@@ -111,6 +111,33 @@ describe('discovery-v1', function() {
           assert.equal(req.method, 'POST');
         });
 
+        it('should create an environment with size 1 by default', function() {
+          const req = discovery.createEnvironment(
+            {
+              name: 'new environment',
+              description: 'my description'
+            },
+            noop
+          );
+          const jsonBodyParts = readMultipartReqJsons(req);
+          assert.equal(jsonBodyParts.length, 1);
+          assert.equal(jsonBodyParts[0].size, 1);
+        });
+
+        it('should create an environment with size 0', function() {
+          const req = discovery.createEnvironment(
+            {
+              name: 'new environment',
+              description: 'my description',
+              size: 0
+            },
+            noop
+          );
+          const jsonBodyParts = readMultipartReqJsons(req);
+          assert.equal(jsonBodyParts.length, 1);
+          assert.equal(jsonBodyParts[0].size, 0);
+        });
+
         it('should update an environment', function() {
           const req = discovery.updateEnvironment(
             {
@@ -265,6 +292,24 @@ describe('discovery-v1', function() {
           );
           assert.equal(req.method, 'GET');
         });
+
+        /**
+         * Return an array of parsed objects representing all valid JSON parts of a multipart request.
+         * @param {*} req 
+         * @return {Array}
+         */
+        function readMultipartReqJsons(req) {
+          let result = [];
+          if (req && req.body && req.body.length) {
+            req.body.forEach((part) => {
+              try {
+                result.push(JSON.parse(Buffer.from(part).toString('ascii')));
+              } catch (err) {}
+            });
+          }
+
+          return result;
+        }
       });
     });
   });

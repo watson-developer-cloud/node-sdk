@@ -80,8 +80,8 @@ DiscoveryV1.prototype.getEnvironments = function(params, callback) {
 DiscoveryV1.prototype.createEnvironment = function(params, callback) {
   params = params || {};
 
-  // size is an int of 1,2,3, default 1
-  if (!params.size) {
+  // size is an int of 0,1,2,3, default 1
+  if (typeof params.size === 'undefined' || params.size === null) {
     params.size = 1;
   }
 
