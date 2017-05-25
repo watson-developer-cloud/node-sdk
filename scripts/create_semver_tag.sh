@@ -10,6 +10,7 @@
 #config
 # get a token from https://github.com/settings/tokens with the `public_repo` scope and encrypt it like so:
 # travis encrypt --add -r user-org-name/repo-name 'GH_TOKEN=xxxxxxxxxxxxxxxxxxx'
+# (or enter it into the travis web ui)
 # then set the below vars and make sure travis runs this script in the "after_success" section
 export REPO="watson-developer-cloud/node-sdk"
 export BRANCH="master"
