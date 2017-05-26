@@ -141,6 +141,30 @@ describe('discovery-v1', function() {
           assert.equal(req.method, 'GET');
         });
 
+        it('should update collection in an environment', function() {
+          const req = discovery.updateCollection(
+            {
+              environment_id: 'env-guid',
+              collection_id: 'col-guid'
+            },
+            noop
+          );
+          assert.equal(req.uri.href, service.url + paths.collectioninfo + '?version=' + service.version_date);
+          assert.equal(req.method, 'PUT');
+        });
+
+        it('should get information about a specific collections fields', function() {
+          const req = discovery.getCollectionFields(
+            {
+              environment_id: 'env-guid',
+              collection_id: 'col-guid'
+            },
+            noop
+          );
+          assert.equal(req.uri.href, service.url + paths.collectioninfo + '/fields' + '?version=' + service.version_date);
+          assert.equal(req.method, 'GET');
+        });
+
         it('should get information about a specific collection and environment', function() {
           const req = discovery.getCollection(
             {
