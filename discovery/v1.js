@@ -420,7 +420,6 @@ DiscoveryV1.prototype.deleteCollection = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
-
 /**
  * Get list of unique fields associated with a collection
  *
