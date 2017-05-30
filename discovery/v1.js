@@ -360,6 +360,42 @@ DiscoveryV1.prototype.createCollection = function(params, callback) {
 };
 
 /**
+ * Update an existing collection
+ *
+ * @param {Object} params
+ * @param {String} params.environment_id environment guid for the collection
+ * @param {String} params.collection_id collection id for the collection to be updated
+ * @param {string} params.collection_name
+ * @param {string} params.description
+ * @param {string} params.configuration_id  configuration to create the collection in
+ * @param {string} params.language_code currently, only `en_us` is supported
+ */
+DiscoveryV1.prototype.updateCollection = function(params, callback) {
+  params = params || {};
+
+  params.language_code = params.language_code || 'en_us';
+
+  const parameters = {
+    options: {
+      url: '/v1/environments/{environment_id}/collections/{collection_id}',
+      method: 'PUT',
+      path: pick(params, ['environment_id', 'collection_id']),
+      multipart: [
+        {
+          'content-type': 'application/json',
+          body: JSON.stringify(pick(params, ['collection_name', 'description', 'configuration_id', 'language_code']))
+        }
+      ],
+      json: true
+    },
+    originalParams: params,
+    requiredParams: ['environment_id', 'collection_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
  * Delete a collection
  *
  * @param {Object} params
@@ -375,6 +411,29 @@ DiscoveryV1.prototype.deleteCollection = function(params, callback) {
     options: {
       url: '/v1/environments/{environment_id}/collections/{collection_id}',
       method: 'DELETE',
+      path: pick(params, ['environment_id', 'collection_id']),
+      json: true
+    },
+    requiredParams: ['environment_id', 'collection_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Get list of unique fields associated with a collection
+ *
+ * @param {Object} params
+ * @param {String} params.environment_id in which the collection is located
+ * @param {string} params.collection_id for which fields are required
+ */
+DiscoveryV1.prototype.getCollectionFields = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/environments/{environment_id}/collections/{collection_id}/fields',
+      method: 'GET',
       path: pick(params, ['environment_id', 'collection_id']),
       json: true
     },
