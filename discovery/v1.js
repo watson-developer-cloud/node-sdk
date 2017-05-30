@@ -325,29 +325,6 @@ DiscoveryV1.prototype.getCollection = function(params, callback) {
 };
 
 /**
- * Get list of unique fields associated with a collection
- *
- * @param {Object} params
- * @param {String} params.environment_id in which the collection is located
- * @param {string} params.collection_id for which fields are required
- */
-DiscoveryV1.prototype.getCollectionFields = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v1/environments/{environment_id}/collections/{collection_id}/fields',
-      method: 'GET',
-      path: pick(params, ['environment_id', 'collection_id']),
-      json: true
-    },
-    requiredParams: ['environment_id', 'collection_id'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
  * Create a new collection
  *
  * @param {Object} params
@@ -443,12 +420,13 @@ DiscoveryV1.prototype.deleteCollection = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
+
 /**
- * Get fields available in a a collection
+ * Get list of unique fields associated with a collection
  *
  * @param {Object} params
- * @param {String} params.environment_id
- * @param {string} params.collection_id
+ * @param {String} params.environment_id in which the collection is located
+ * @param {string} params.collection_id for which fields are required
  */
 DiscoveryV1.prototype.getCollectionFields = function(params, callback) {
   params = params || {};
