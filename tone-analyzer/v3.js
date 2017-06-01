@@ -71,7 +71,7 @@ ToneAnalyzerV3.prototype.tone = function(params, callback) {
     return;
   }
   const contentType = params.isHTML ? 'text/html' : 'text/plain';
-  const contentLanguage = params.language ? params.language : 'en'
+  const contentLanguage = params.language ? params.language : 'en';
   const parameters = {
     options: {
       url: '/v3/tone',

@@ -68,7 +68,8 @@ describe('tone_analyzer.v3', function() {
     const options = {
       text: tone_request.text,
       tones: 'emotion',
-      sentences: true
+      sentences: true,
+      language: 'en'
     };
     const req = tone_analyzer.tone(options, noop);
     const body = Buffer.from(req.body).toString('ascii');
