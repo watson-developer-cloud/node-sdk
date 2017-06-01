@@ -396,6 +396,45 @@ DiscoveryV1.prototype.updateCollection = function(params, callback) {
 };
 
 /**
+  * Update a collection
+  *
+  * @param {Object} params
+  * @param {Object} params.collection_name name of the collection
+  * @param {Object} params.description description for this collection
+  * @param {Object} params.configuration_id configuration to update the collection with
+  * @param {string} params.language_code currently, only `en_us` is supported
+  * @param {String} params.environment_id environment guid for the collection
+  * @param {String} params.collection_id the collection id for the collection to be updated
+  * @
+
+*/
+
+DiscoveryV1.prototype.updateCollection = function(params, callback) {
+  params = params || {};
+
+  params.language_code = params.language_code || 'en_us';
+
+  const parameters = {
+    options: {
+      url: '/v1/environments/{environment_id}/collections/{collection_id}',
+      method: 'PUT',
+      path: pick(params, ['environment_id', 'collection_id']),
+      multipart: [
+        {
+          'content-type': 'application/json',
+          body: JSON.stringify(pick(params, ['collection_name', 'description', 'configuration_id', 'language_code']))
+        }
+      ],
+      json: true
+    },
+    originalParams: params,
+    requiredParams: ['environment_id', 'configuration_id', 'collection_name'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
  * Delete a collection
  *
  * @param {Object} params
