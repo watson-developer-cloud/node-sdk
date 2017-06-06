@@ -71,7 +71,14 @@ ToneAnalyzerV3.prototype.tone = function(params, callback) {
     return;
   }
   const contentType = params.isHTML ? 'text/html' : 'text/plain';
-  const contentLanguage = params.language ? params.language : 'en';
+
+  const defaultHeaders = {
+    accept: 'application/json',
+    'content-type': contentType
+  };
+
+  const headers = params.language ? extend(true, defaultHeaders, { 'content-language': params.language }) : defaultHeaders;
+
   const parameters = {
     options: {
       url: '/v3/tone',
@@ -79,13 +86,7 @@ ToneAnalyzerV3.prototype.tone = function(params, callback) {
       body: params.text,
       qs: pick(params, ['tones', 'sentences'])
     },
-    defaultOptions: extend(true, this._options, {
-      headers: {
-        accept: 'application/json',
-        'content-type': contentType,
-        'content-language': contentLanguage
-      }
-    })
+    defaultOptions: extend(true, this._options, headers)
   };
 
   return requestFactory(parameters, callback);
