@@ -31,7 +31,7 @@ function DiscoveryV1(options) {
 
   // Check if 'version_date' was provided
   if (typeof this._options.version_date === 'undefined') {
-    throw new Error('Argument error: version_date was not specified, use DiscoveryV1.VERSION_DATE_2016_12_15');
+    throw new Error('Argument error: version_date was not specified, use DiscoveryV1.VERSION_DATE_2017_04_27');
   }
   this._options.qs.version = options.version_date;
 }
@@ -46,6 +46,11 @@ DiscoveryV1.URL = 'https://gateway.watsonplatform.net/discovery/api';
  * @type {string}
  */
 DiscoveryV1.VERSION_DATE_2016_12_15 = '2016-12-15';
+/**
+ * Release exposing the `sort` parameter on the `/query` endpoint
+ * @type {string}
+ */
+DiscoveryV1.VERSION_DATE_2017_04_27 = '2017-04-27';
 
 /**
  * Return the list of environments
@@ -75,8 +80,8 @@ DiscoveryV1.prototype.getEnvironments = function(params, callback) {
 DiscoveryV1.prototype.createEnvironment = function(params, callback) {
   params = params || {};
 
-  // size is an int of 1,2,3, default 1
-  if (!params.size) {
+  // size is an int of 0,1,2,3, default 1
+  if (typeof params.size === 'undefined' || params.size === null) {
     params.size = 1;
   }
 
@@ -94,6 +99,34 @@ DiscoveryV1.prototype.createEnvironment = function(params, callback) {
     },
     originalParams: params,
     requiredParams: ['name', 'description'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Update an existing environment
+ * @param {string} environment_id(required)
+ * @param {string} name(required)
+ * @param {string} description(optional)
+ */
+DiscoveryV1.prototype.updateEnvironment = function(params, callback) {
+  params = params || {};
+  const parameters = {
+    options: {
+      url: '/v1/environments/{environment_id}',
+      method: 'PUT',
+      path: pick(params, ['environment_id']),
+      multipart: [
+        {
+          'content-type': 'application/json',
+          body: JSON.stringify(pick(params, ['name', 'description']))
+        }
+      ],
+      json: true
+    },
+    originalParams: params,
+    requiredParams: ['environment_id', 'name'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
@@ -138,6 +171,64 @@ DiscoveryV1.prototype.deleteEnvironment = function(params, callback) {
       json: true
     },
     requiredParams: ['environment_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Create a new configuration
+ *
+ * @param {String} params.environment_id - the ID of your environment
+ * @param {Object} params.file - Input a JSON object that enables you to customize how your content is ingested and what enrichments are added to your data.
+ */
+DiscoveryV1.prototype.createConfiguration = function(params, callback) {
+  params = params || {};
+  const parameters = {
+    options: {
+      url: '/v1/environments/{environment_id}/configurations',
+      method: 'POST',
+      path: pick(params, ['environment_id']),
+      multipart: [
+        {
+          'content-type': 'application/json',
+          body: params.file
+        }
+      ],
+      json: true
+    },
+    originalParams: params,
+    requiredParams: ['environment_id', 'file'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Update an existing configuration for a given environment
+ *
+ * @param {String} params.environment_id - the ID of your environment
+ * @param {String} params.configuration_id - the ID of your configuration
+ * @param {Object} params.file - Input a JSON object that enables you to update and customize how your data is ingested and what enrichments are added to your data.
+ */
+
+DiscoveryV1.prototype.updateConfiguration = function(params, callback) {
+  params = params || {};
+  const parameters = {
+    options: {
+      url: '/v1/environments/{environment_id}/configurations/{configuration_id}',
+      method: 'PUT',
+      path: pick(params, ['environment_id', 'configuration_id']),
+      multipart: [
+        {
+          'content-type': 'application/json',
+          body: params.file
+        }
+      ],
+      json: true
+    },
+    originalParams: params,
+    requiredParams: ['environment_id', 'configuration_id', 'file'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
@@ -238,7 +329,7 @@ DiscoveryV1.prototype.getCollection = function(params, callback) {
  *
  * @param {Object} params
  * @param {String} params.environment_id environment guid for the collection
- * @param {string} params.collection_name
+ * @param {string} params.name
  * @param {string} params.description
  * @param {string} params.configuration_id  configuration to create the collection in
  * @param {string} params.language_code currently, only `en_us` is supported
@@ -256,13 +347,49 @@ DiscoveryV1.prototype.createCollection = function(params, callback) {
       multipart: [
         {
           'content-type': 'application/json',
+          body: JSON.stringify(pick(params, ['name', 'description', 'configuration_id', 'language_code']))
+        }
+      ],
+      json: true
+    },
+    originalParams: params,
+    requiredParams: ['environment_id', 'configuration_id', 'name'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Update an existing collection
+ *
+ * @param {Object} params
+ * @param {String} params.environment_id environment guid for the collection
+ * @param {String} params.collection_id collection id for the collection to be updated
+ * @param {string} params.collection_name
+ * @param {string} params.description
+ * @param {string} params.configuration_id  configuration to create the collection in
+ * @param {string} params.language_code currently, only `en_us` is supported
+ */
+DiscoveryV1.prototype.updateCollection = function(params, callback) {
+  params = params || {};
+
+  params.language_code = params.language_code || 'en_us';
+
+  const parameters = {
+    options: {
+      url: '/v1/environments/{environment_id}/collections/{collection_id}',
+      method: 'PUT',
+      path: pick(params, ['environment_id', 'collection_id']),
+      multipart: [
+        {
+          'content-type': 'application/json',
           body: JSON.stringify(pick(params, ['collection_name', 'description', 'configuration_id', 'language_code']))
         }
       ],
       json: true
     },
     originalParams: params,
-    requiredParams: ['environment_id', 'configuration_id', 'collection_name'],
+    requiredParams: ['environment_id', 'collection_id'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
@@ -284,6 +411,29 @@ DiscoveryV1.prototype.deleteCollection = function(params, callback) {
     options: {
       url: '/v1/environments/{environment_id}/collections/{collection_id}',
       method: 'DELETE',
+      path: pick(params, ['environment_id', 'collection_id']),
+      json: true
+    },
+    requiredParams: ['environment_id', 'collection_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Get list of unique fields associated with a collection
+ *
+ * @param {Object} params
+ * @param {String} params.environment_id in which the collection is located
+ * @param {string} params.collection_id for which fields are required
+ */
+DiscoveryV1.prototype.getCollectionFields = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/environments/{environment_id}/collections/{collection_id}/fields',
+      method: 'GET',
       path: pick(params, ['environment_id', 'collection_id']),
       json: true
     },
@@ -417,15 +567,23 @@ DiscoveryV1.prototype.deleteDocument = function(params, callback) {
  * @param {Object} params
  * @param {String} params.environment_id
  * @param {string} params.collection_id
- * @param {String} [params.filter]  A cacheable query that allows you to limit the information returned to exclude anything that isn't related to what you are searching. Filter searches are better for metadata type searches and when you are trying to get a sense of concepts in the dataset.
  * @param {String} [params.query]  A query search returns all possible results, even when it's not very relevant, with the most relevant documents listed first. Use a query search when you want to find the most relevant search results. Results are scored between 0 and 1, with 1 being an exact match and 0 being not a match at all.
+ * @param {String} [params.natural_language_query]  BETA - A natural language query that returns relevant documents by using training data and natural language understanding. You cannot use this parameter and the query parameter in the same query.
+ * @param {String} [params.filter]  A cacheable query that allows you to limit the information returned to exclude anything that isn't related to what you are searching. Filter searches are better for metadata type searches and when you are trying to get a sense of concepts in the dataset.
  * @param {String} [params.aggregation] An aggregation search uses combinations of filters and query search to return an exact answer. Aggregations are useful for building applications, because you can use them to build lists, tables, and time series. For a full list of possible aggregrations, see the Query reference.
  * @param {Number} [params.count=10] Number of documents to return
- * @param {String} [params.return] A comma separated list of the portion of the document hierarchy to return.
  * @param {Number} [params.offset=0] For pagination purposes. Returns additional pages of results. Deep pagination is highly unperformant, and should be avoided.
+ * @param {String} [params.return] A comma separated list of the portion of the document hierarchy to return.
+ * @param {String} [params.sort] A comma separated list of fields in the document to sort on. You can optionally specify a sort direction by prefixing the field with - for descending or + for ascending. Ascending is the default sort direction if no prefix is specified.
+ * @param {Boolean} [params.passages=false] BETA - A boolean that specifies whether the service returns a set of the most relevant passages from the documents returned by a query.  The passages parameter works only on private collections. It does not work in the Watson Discovery News collection.
  */
 DiscoveryV1.prototype.query = function(params, callback) {
   params = params || {};
+
+  // query and natural_language_query can't both be populated
+  if (params.query && params.natural_language_query) {
+    delete params.natural_language_query;
+  }
 
   const parameters = {
     options: {
@@ -433,7 +591,7 @@ DiscoveryV1.prototype.query = function(params, callback) {
       method: 'GET',
       json: true,
       path: pick(params, ['environment_id', 'collection_id']),
-      qs: pick(params, ['filter', 'aggregation', 'return', 'count', 'offset', 'query'])
+      qs: pick(params, ['query', 'natural_language_query', 'filter', 'aggregation', 'count', 'offset', 'return', 'sort', 'passages'])
     },
     requiredParams: ['environment_id', 'collection_id'],
     defaultOptions: this._options

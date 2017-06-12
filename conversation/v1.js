@@ -32,7 +32,7 @@ function ConversationV1(options) {
 
   // Check if 'version_date' was provided
   if (typeof this._options.version_date === 'undefined') {
-    throw new Error('Argument error: version_date was not specified, use ConversationV1.VERSION_DATE_2017_02_03');
+    throw new Error('Argument error: version_date was not specified, use ConversationV1.VERSION_DATE_2017_04_21');
   }
   this._options.qs.version = options.version_date;
 }
@@ -124,6 +124,14 @@ ConversationV1.VERSION_DATE_2016_09_20 = '2016-09-20';
  * @type {string}
  */
 ConversationV1.VERSION_DATE_2017_02_03 = '2017-02-03';
+
+/**
+ * Adds support entities (with values and synonyms) and accessing logs
+ *
+ * @see https://www.ibm.com/watson/developercloud/doc/conversation/release-notes.html#18-april-2017
+ * @type {string}
+ */
+ConversationV1.VERSION_DATE_2017_04_21 = '2017-04-21';
 
 /**
  * Method: message
@@ -1029,6 +1037,497 @@ ConversationV1.prototype.updateCounterExample = function(params, callback) {
       body: pick(params, ['text'])
     },
     requiredParams: ['workspace_id', 'old_text', 'text'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: createEntity
+ *
+ * Create a new entity
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} [params.entity]
+ * @param {String} [params.description]
+ * @param {Object} [params.metadata]
+ * @param {Array<Object>} [params.values]
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.createEntity = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities',
+      method: 'POST',
+      json: true,
+      path: pick(params, ['workspace_id']),
+      body: pick(params, ['entity', 'description', 'metadata', 'values'])
+    },
+    requiredParams: ['workspace_id', 'entity'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: getEntities
+ *
+ * List the entities for a workspace.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {Boolean} [params.export=false] - if true, the full contents of all of the sub-resources are returned
+ * @param {Number} [params.page_limit]
+ * @param {Boolean} [params.include_count]
+ * @param {String} [params.sort]
+ * @param {String} [params.cursor]
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.getEntities = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities',
+      method: 'GET',
+      json: true,
+      path: pick(params, ['workspace_id']),
+      qs: pick(params, ['export', 'page_limit', 'include_count', 'sort', 'cursor'])
+    },
+    requiredParams: ['workspace_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: getEntity
+ *
+ * Get information about an entity, optionally including all entity content.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} params.entity
+ * @param {Boolean} [params.export=false] - if true, the full contents of all of the sub-resources are returned
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.getEntity = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities/{entity}',
+      method: 'GET',
+      json: true,
+      path: pick(params, ['workspace_id', 'entity']),
+      qs: pick(params, ['export'])
+    },
+    requiredParams: ['workspace_id', 'entity'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: updateEntity
+ *
+ * Update an existing entity with new or modified data. You must provide JSON data defining the content of the updated entity.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} params.old_entity
+ * @param {String} params.entity
+ * @param {String} params.description
+ * @param {Object} params.metadata
+ * @param {Array<Object>} params.values
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.updateEntity = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities/{old_entity}',
+      method: 'POST',
+      json: true,
+      path: pick(params, ['workspace_id', 'old_entity']),
+      body: pick(params, ['entity', 'description', 'metadata', 'values'])
+    },
+    requiredParams: ['workspace_id', 'old_entity', 'entity'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: deleteEntity
+ *
+ * Delete an entity from a workspace.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} params.entity
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.deleteEntity = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities/{entity}',
+      method: 'DELETE',
+      json: true,
+      path: pick(params, ['workspace_id', 'entity'])
+    },
+    requiredParams: ['workspace_id', 'entity'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: createValue
+ *
+ * Add a new value to an entity.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} [params.entity]
+ * @param {String} [params.value]
+ * @param {Object} [params.metadata]
+ * @param {Array<String>} [params.synonyms]
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.createValue = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values',
+      method: 'POST',
+      json: true,
+      path: pick(params, ['workspace_id', 'entity']),
+      body: pick(params, ['value', 'metadata', 'synonyms'])
+    },
+    requiredParams: ['workspace_id', 'entity', 'value'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: getValues
+ *
+ * List the values for an entity.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} params.entity
+ * @param {Boolean} [params.export=false] - if true, the full contents of all of the sub-resources are returned
+ * @param {Number} [params.page_limit]
+ * @param {Boolean} [params.include_count]
+ * @param {String} [params.sort]
+ * @param {String} [params.cursor]
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.getValues = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values',
+      method: 'GET',
+      json: true,
+      path: pick(params, ['workspace_id', 'entity']),
+      qs: pick(params, ['export', 'page_limit', 'include_count', 'sort', 'cursor'])
+    },
+    requiredParams: ['workspace_id', 'entity'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: getValue
+ *
+ * Get information about an entity value.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} params.entity
+ * @param {String} params.value
+ * @param {Boolean} [params.export=false] - if true, the full contents of all of the sub-resources are returned
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.getValue = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}',
+      method: 'GET',
+      json: true,
+      path: pick(params, ['workspace_id', 'entity', 'value']),
+      qs: pick(params, ['export'])
+    },
+    requiredParams: ['workspace_id', 'entity', 'value'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: updateValue
+ *
+ * Update an existing entity value with new or modified data. You must provide JSON data defining the content of the updated entity value.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} params.entity
+ * @param {String} params.old_value
+ * @param {String} params.value
+ * @param {Object} params.metadata
+ * @param {Array<String>} params.synonyms
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.updateValue = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{old_value}',
+      method: 'POST',
+      json: true,
+      path: pick(params, ['workspace_id', 'entity', 'old_value']),
+      body: pick(params, ['value', 'metadata', 'synonyms'])
+    },
+    requiredParams: ['workspace_id', 'entity', 'old_value', 'value'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: deleteValue
+ *
+ * Delete an entity from a workspace.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} params.entity
+ * @param {String} params.value
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.deleteValue = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}',
+      method: 'DELETE',
+      json: true,
+      path: pick(params, ['workspace_id', 'entity', 'value'])
+    },
+    requiredParams: ['workspace_id', 'entity', 'value'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: createSynonyms
+ *
+ * Add a new synonym to an entity value.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} [params.entity]
+ * @param {String} [params.value]
+ * @param {String} [params.synonym]
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.createSynonym = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms',
+      method: 'POST',
+      json: true,
+      path: pick(params, ['workspace_id', 'entity', 'value']),
+      body: pick(params, ['synonym'])
+    },
+    requiredParams: ['workspace_id', 'entity', 'value', 'synonym'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: getSynonyms
+ *
+ * List the synonyms for an entity value.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} params.entity
+ * @param {String} params.value
+ * @param {Boolean} [params.export=false] - if true, the full contents of all of the sub-resources are returned
+ * @param {Number} [params.page_limit]
+ * @param {Boolean} [params.include_count]
+ * @param {String} [params.sort]
+ * @param {String} [params.cursor]
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.getSynonyms = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms',
+      method: 'GET',
+      json: true,
+      path: pick(params, ['workspace_id', 'entity', 'value']),
+      qs: pick(params, ['export', 'page_limit', 'include_count', 'sort', 'cursor'])
+    },
+    requiredParams: ['workspace_id', 'entity', 'value'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: getSynonym
+ *
+ * Get information about an entity value.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} params.entity
+ * @param {String} params.value
+ * @param {String} params.synonym
+ * @param {Boolean} [params.export=false] - if true, the full contents of all of the sub-resources are returned
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.getSynonym = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}',
+      method: 'GET',
+      json: true,
+      path: pick(params, ['workspace_id', 'entity', 'value', 'synonym']),
+      qs: pick(params, ['export'])
+    },
+    requiredParams: ['workspace_id', 'entity', 'value', 'synonym'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: updateSynonym
+ *
+ * Update an existing entity value synonym with new text.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} params.entity
+ * @param {String} params.value
+ * @param {String} params.old_synonym
+ * @param {String} params.synonym
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.updateSynonym = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{old_synonym}',
+      method: 'POST',
+      json: true,
+      path: pick(params, ['workspace_id', 'entity', 'value', 'old_synonym']),
+      body: pick(params, ['synonym'])
+    },
+    requiredParams: ['workspace_id', 'entity', 'value', 'old_synonym', 'synonym'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: deleteSynonym
+ *
+ * Delete a synonym from an entity value.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} params.entity
+ * @param {String} params.value
+ * @param {String} params.synonym
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.deleteSynonym = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}',
+      method: 'DELETE',
+      json: true,
+      path: pick(params, ['workspace_id', 'entity', 'value', 'synonym'])
+    },
+    requiredParams: ['workspace_id', 'entity', 'value', 'synonym'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: getLogs
+ *
+ * Returns information about requests (user input) received, and responses sent, by the workspace.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} params.filter
+ * @param {Number} [params.page_limit]
+ * @param {String} [params.sort]
+ * @param {String} [params.cursor]
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.getLogs = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/logs',
+      method: 'GET',
+      json: true,
+      path: pick(params, ['workspace_id']),
+      qs: pick(params, ['filter', 'page_limit', 'sort', 'cursor'])
+    },
+    requiredParams: ['workspace_id'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);

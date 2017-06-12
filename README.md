@@ -97,7 +97,7 @@ Credentials are checked for in the following order:
 
 1. Hard-coded or programatic credentials passed to the service constructor
 
-2. `SERVICE_NAME_USERNAME` and `SERVICE_NAME_PASSWORD` environment properties (or `SERVICE_NAME_API_KEY` when appropriate) and, optionally, `SERVICE_NAME_URL` 
+2. `SERVICE_NAME_USERNAME` and `SERVICE_NAME_PASSWORD` environment properties (or `SERVICE_NAME_API_KEY` when appropriate) and, optionally, `SERVICE_NAME_URL`
 
 3. Bluemix-supplied credentials (via the `VCAP_SERVICES` JSON-encoded environment property)
 
@@ -242,7 +242,7 @@ var ConversationV1 = require('watson-developer-cloud/conversation/v1');
 var conversation = new ConversationV1({
   username: '<username>',
   password: '<password>',
-  version_date: ConversationV1.VERSION_DATE_2017_02_03
+  version_date: ConversationV1.VERSION_DATE_2017_04_21
 });
 
 conversation.message({
@@ -270,13 +270,13 @@ var DiscoveryV1 = require('watson-developer-cloud/discovery/v1');
 var discovery = new DiscoveryV1({
   username: '<username>',
   password: '<password>',
-  version_date: DiscoveryV1.VERSION_DATE_2016_12_15
+  version_date: DiscoveryV1.VERSION_DATE_2017_04_27
 });
 
 discovery.query({
     environment_id: '<environment_id>',
     collection_id: '<collection_id>',
-    query:
+    query: 'my_query'
   }, function(err, response) {
         if (err) {
           console.error(err);
@@ -625,7 +625,7 @@ var fs = require('fs');
 
 var visual_recognition = new VisualRecognitionV3({
   api_key: '<api_key>',
-  version_date: '2016-05-19'
+  version_date: VisualRecognitionV3.VERSION_DATE_2016_05_20
 });
 
 var params = {

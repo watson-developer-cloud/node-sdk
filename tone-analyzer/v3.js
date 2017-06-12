@@ -88,4 +88,36 @@ ToneAnalyzerV3.prototype.tone = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
+/**
+ * @param {Object} params The parameters to call the service
+ * @param {Object} [params.utterances] - The utterances to analyze.  Utterances must be a JSON object.
+ *
+ * @param callback The callback.
+ */
+ToneAnalyzerV3.prototype.tone_chat = function(params, callback) {
+  // For backward compatibility
+  if (params && params.utterances && params.utterances.utterances) {
+    params.utterances = params.utterances.utterances;
+  }
+
+  const parameters = {
+    requiredParams: ['utterances'],
+    originalParams: params,
+    options: {
+      url: '/v3/tone_chat',
+      method: 'POST',
+      json: true,
+      body: pick(params, ['utterances'])
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        accept: 'application/json',
+        'content-type': 'application/json'
+      }
+    })
+  };
+
+  return requestFactory(parameters, callback);
+};
+
 module.exports = ToneAnalyzerV3;

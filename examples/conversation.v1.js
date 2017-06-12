@@ -9,11 +9,11 @@ const watson = require('watson-developer-cloud');
 const conversation = new watson.ConversationV1({
   username: process.env.CONVERSATION_USERNAME || '<conversation_username>',
   password: process.env.CONVERSATION_PASSWORD || '<conversation_password>',
-  version_date: watson.ConversationV1.VERSION_DATE_2017_02_03
+  version_date: watson.ConversationV1.VERSION_DATE_2017_04_21
 });
 
 /**
- * Calls the conversation message api. 
+ * Calls the conversation message api.
  * returns a promise
  */
 const message = function(text, context) {
@@ -24,13 +24,15 @@ const message = function(text, context) {
     },
     context: context
   };
-  return new Promise((resolve, reject) => conversation.message(payload, function(err, data) {
-    if (err) {
-      reject(err);
-    } else {
-      resolve(data);
-    }
-  }));
+  return new Promise((resolve, reject) =>
+    conversation.message(payload, function(err, data) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(data);
+      }
+    })
+  );
 };
 
 // This example makes two successive calls to conversation service.

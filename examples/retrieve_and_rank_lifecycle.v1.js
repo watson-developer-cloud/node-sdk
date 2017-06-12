@@ -73,12 +73,9 @@ function waitForCluster(clusterId, callback) {
       console.log('Solr cluster ' + clusterId + ' is ready.');
       callback();
     } else {
-      setTimeout(
-        function() {
-          waitForCluster(clusterId, callback);
-        },
-        5000
-      );
+      setTimeout(function() {
+        waitForCluster(clusterId, callback);
+      }, 5000);
     }
   });
 }

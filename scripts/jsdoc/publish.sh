@@ -34,8 +34,8 @@ if [ "$TRAVIS_REPO_SLUG" == "watson-developer-cloud/node-sdk" ] && [ "$TRAVIS_PU
 
     echo ""
     echo "branches:"
-    # sorted list of remote branches, most recently modified first
-    git branch --remote --sort -authordate | grep --invert-match gh-pages | sed -e 's/.*origin\/\(.*\)/\1/' | uniq
+    # list branches
+    git branch --remote | grep --invert-match gh-pages | sed -e 's/.*origin\/\(.*\)/\1/' | uniq
 
     # generate an incdex file listing all of the versions
     generate_index_html.sh > index.html

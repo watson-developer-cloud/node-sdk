@@ -239,7 +239,11 @@ describe('speech_to_text', function() {
     });
 
     it('Sample webm should have expected header', function() {
+<<<<<<< HEAD
       const RecognizeStream=require('../../speech-to-text/recognize_stream');
+=======
+      const RecognizeStream = require('../../speech-to-text/recognize_stream');
+>>>>>>> watson-developer-cloud/master
       const buffer = fs.readFileSync(__dirname + '/../resources/sample1.webm');
       assert.equal(RecognizeStream.getContentType(buffer), 'audio/webm');
     });
@@ -390,7 +394,8 @@ describe('speech_to_text', function() {
     });
 
     it('should create new recognitions job', function() {
-      const path = '/v1/recognitions?callback_url=http%3A%2F%2Fwatson-test-resources.mybluemix.net%2Fresults&events=recognitions.completed&user_token=myArbitraryIdentifier1&results_ttl=60';
+      const path =
+        '/v1/recognitions?callback_url=http%3A%2F%2Fwatson-test-resources.mybluemix.net%2Fresults&events=recognitions.completed&user_token=myArbitraryIdentifier1&results_ttl=60';
       const response = {
         id: '4bd734c0-e575-21f3-de03-f932aa0468a0',
         status: 'waiting',
@@ -420,7 +425,8 @@ describe('speech_to_text', function() {
     });
 
     it('should create new recognitions job w/ multiple events', function() {
-      const path = '/v1/recognitions?callback_url=http%3A%2F%2Fwatson-test-resources.mybluemix.net%2Fresults&events=recognitions.started%2Crecognitions.failed%2Crecognitions.completed_with_results&user_token=myArbitraryIdentifier1&results_ttl=60';
+      const path =
+        '/v1/recognitions?callback_url=http%3A%2F%2Fwatson-test-resources.mybluemix.net%2Fresults&events=recognitions.started%2Crecognitions.failed%2Crecognitions.completed_with_results&user_token=myArbitraryIdentifier1&results_ttl=60';
       const response = {
         id: '4bd734c0-e575-21f3-de03-f932aa0468a0',
         status: 'waiting',
