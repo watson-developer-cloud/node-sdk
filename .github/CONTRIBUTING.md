@@ -57,3 +57,21 @@ By making a contribution to this project, I certify that:
    personal information I submit with it, including my sign-off) is
    maintained indefinitely and may be redistributed consistent with
    this project or the open source license(s) involved.
+
+## Tests
+
+Ideally, we'd like to see both unit and innervation tests on each method.
+(Unit tests do not actually connect to the Watson service, integration tests do.)
+
+Out of the box, `npm test` runs linting and unit tests, but skips the integration tests,
+because they require credentials.
+
+To run integration tests, copy `test/resources/auth.example.js` to `test/resources/auth.js` and fill in credentials for
+the service(s) you wish to test.
+
+Currently this enables integration tests for all services so, unless all credentials are supplied, some tests will fail.
+(This will be improved eventually.)
+
+To run only specific tests, pass the file name to mocha. For example:
+
+node ./node_modules/mocha/bin/_mocha test/integration/test.conversation.js
