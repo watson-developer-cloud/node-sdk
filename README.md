@@ -12,6 +12,7 @@ Node.js client library to use the [Watson Developer Cloud][wdc] services, a coll
   * [Major Changes for v2](#major-changes-for-v2)
   * [Installation](#installation)
   * [Usage](#usage)
+  * [Documentation](#documentation)
   * [Getting the Service Credentials](#getting-the-service-credentials)
   * [Questions](#questions)
   * [Examples](#examples)
@@ -119,6 +120,13 @@ var myInstance = new watson.WhateverServiceV1({
   }
 });
 ```
+
+## Documentation
+
+The primary documentation is at https://www.ibm.com/watson/developercloud/doc/index.html
+From there, find the service you're interested in, select View API Reference, and then select the Node tab.
+
+There are also auto-generated JSDocs available at http://watson-developer-cloud.github.io/node-sdk/latest/
 
 ## Getting the Service Credentials
 You will need the `username` and `password` (`api_key` for AlchemyAPI) credentials for each service. Service credentials are different from your Bluemix account username and password.
