@@ -630,7 +630,8 @@ describe('conversation_integration', function() {
       const params = {
         workspace_id: workspace1.workspace_id,
         entity: test_entities[0].entity,
-        values: test_entities[0].values
+        values: test_entities[0].values,
+        fuzzy_match: true
       };
 
       conversation.createEntity(params, function(err, result) {
@@ -693,6 +694,7 @@ describe('conversation_integration', function() {
         }
         assert.equal(result.entity, test_entities[0].entity);
         assert.equal(result.description, null);
+        assert.equal(result.fuzzy_match, true);
         done();
       });
     });
@@ -704,7 +706,8 @@ describe('conversation_integration', function() {
         workspace_id: workspace1.workspace_id,
         old_entity: test_entities[0].entity,
         entity: test_entities_update.entity,
-        values: test_entities_update.values
+        values: test_entities_update.values,
+        fuzzy_match: false
       };
 
       conversation.updateEntity(params, function(err, result) {
