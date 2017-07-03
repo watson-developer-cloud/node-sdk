@@ -273,7 +273,7 @@ describe('discovery-v1', function() {
               {
                 environment_id: 'env-guid',
                 collection_id: 'col-guid',
-                file: fs.createReadStream(path.join(__dirname, '../resources/sampleHtml.html')),
+                file: fs.createReadStream(path.join(__dirname, '../resources/sampleHtml.html'))
               },
               noop
             );
@@ -285,19 +285,19 @@ describe('discovery-v1', function() {
           it('should accept an object for metadata', function(done) {
             nock.cleanAll();
             nock.disableNetConnect();
-            const expectation = nock('http://ibm.com:80', {"encodedQueryParams":true})
+            const expectation = nock('http://ibm.com:80', { encodedQueryParams: true })
               .post('/v1/environments/env-guid/collections/col-guid/documents')
-              .query({"version": service.version_date})
+              .query({ version: service.version_date })
               .reply({
-                "status": "processing",
-                "document_id": "45556e23-f2b1-449d-8f27-489b514000ff"
+                status: 'processing',
+                document_id: '45556e23-f2b1-449d-8f27-489b514000ff'
               });
-            const req = discovery.addDocument(
+            discovery.addDocument(
               {
                 environment_id: 'env-guid',
                 collection_id: 'col-guid',
                 file: fs.createReadStream(path.join(__dirname, '../resources/sampleHtml.html')),
-                "metadata": {'action': 'testing'}
+                metadata: { action: 'testing' }
               },
               function(err) {
                 assert.ifError(err);
@@ -307,7 +307,6 @@ describe('discovery-v1', function() {
             );
           });
         });
-
 
         it('should delete a document in a collection and environment', function() {
           const req = discovery.deleteDocument(
