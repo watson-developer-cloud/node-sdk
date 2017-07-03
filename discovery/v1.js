@@ -450,7 +450,7 @@ DiscoveryV1.prototype.getCollectionFields = function(params, callback) {
  * @param {string} params.collection_id the guid of the collection to delete
  * @param {Buffer|ReadableStream|Object} params.file a file to post (smaller than 50mb)
  * @param {string} [params.configuration_id] config guid
- * @param {string} [params.metadata] file metadata, including content-type (will infer if missing)
+ * @param {object|string} [params.metadata] JSON object with file metadata including content-type (will infer if missing)
  * @param callback
  * @return {ReadableStream|undefined}
  */
@@ -472,6 +472,10 @@ DiscoveryV1.prototype.addDocument = function(params, callback) {
       // the filename used below is because the name must exist
       formDataParams.file = { value: filedat, options: { filename: '_' } };
     }
+  }
+
+  if (formDataParams.metadata && typeof formDataParams.metadata === 'object') {
+    formDataParams.metadata = JSON.stringify(formDataParams.metadata);
   }
 
   const parameters = {

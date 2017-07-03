@@ -57,10 +57,10 @@ describe('discovery-v1', function() {
 
   describe('discovery versions', function() {
     [service, service_v2016_12_15].forEach(service => {
-      before(function() {
+      beforeEach(function() {
         nock.disableNetConnect();
+        // grr! these should be in the individual tests where they are needed!
         nock(service.url)
-          .persist()
           .post(paths.environments + '?version=' + service.version_date)
           .reply(200, { environment_id: 'yes' })
           .get(paths.environmentinfo + '?version=' + service.version_date)
@@ -87,7 +87,7 @@ describe('discovery-v1', function() {
           .reply(200, { configs: 'yes' });
       });
 
-      after(function() {
+      afterEach(function() {
         nock.cleanAll();
       });
 
@@ -267,18 +267,47 @@ describe('discovery-v1', function() {
           assert.equal(req.method, 'GET');
         });
 
-        it('should add a document to a collection and environment', function() {
-          const req = discovery.addDocument(
-            {
-              environment_id: 'env-guid',
-              collection_id: 'col-guid',
-              file: fs.createReadStream(path.join(__dirname, '../resources/sampleHtml.html'))
-            },
-            noop
-          );
-          assert.equal(req.uri.href, service.url + paths.add_document + '?version=' + service.version_date);
-          assert.equal(req.method, 'POST');
+        describe('addDocument()', function() {
+          it('should add a document to a collection and environment', function() {
+            const req = discovery.addDocument(
+              {
+                environment_id: 'env-guid',
+                collection_id: 'col-guid',
+                file: fs.createReadStream(path.join(__dirname, '../resources/sampleHtml.html')),
+              },
+              noop
+            );
+            assert.equal(req.uri.href, service.url + paths.add_document + '?version=' + service.version_date);
+            assert.equal(req.method, 'POST');
+          });
+
+          // https://github.com/watson-developer-cloud/node-sdk/issues/474
+          it('should accept an object for metadata', function(done) {
+            nock.cleanAll();
+            nock.disableNetConnect();
+            const expectation = nock('http://ibm.com:80', {"encodedQueryParams":true})
+              .post('/v1/environments/env-guid/collections/col-guid/documents')
+              .query({"version": service.version_date})
+              .reply({
+                "status": "processing",
+                "document_id": "45556e23-f2b1-449d-8f27-489b514000ff"
+              });
+            const req = discovery.addDocument(
+              {
+                environment_id: 'env-guid',
+                collection_id: 'col-guid',
+                file: fs.createReadStream(path.join(__dirname, '../resources/sampleHtml.html')),
+                "metadata": {'action': 'testing'}
+              },
+              function(err) {
+                assert.ifError(err);
+                expectation.isDone();
+                done();
+              }
+            );
+          });
         });
+
 
         it('should delete a document in a collection and environment', function() {
           const req = discovery.deleteDocument(
@@ -319,7 +348,7 @@ describe('discovery-v1', function() {
 
         /**
          * Return an array of parsed objects representing all valid JSON parts of a multipart request.
-         * @param {*} req 
+         * @param {*} req
          * @return {Array}
          */
         function readMultipartReqJsons(req) {
