@@ -1052,6 +1052,7 @@ ConversationV1.prototype.updateCounterExample = function(params, callback) {
  * @param {String} [params.entity]
  * @param {String} [params.description]
  * @param {Object} [params.metadata]
+ * @param {Boolean} [params.fuzzy_match=false] - whether to use fuzzy matching for the entity.
  * @param {Array<Object>} [params.values]
  * @param {Function} [callback]
  *
@@ -1065,7 +1066,7 @@ ConversationV1.prototype.createEntity = function(params, callback) {
       method: 'POST',
       json: true,
       path: pick(params, ['workspace_id']),
-      body: pick(params, ['entity', 'description', 'metadata', 'values'])
+      body: pick(params, ['entity', 'description', 'metadata', 'values', 'fuzzy_match'])
     },
     requiredParams: ['workspace_id', 'entity'],
     defaultOptions: this._options
@@ -1145,6 +1146,7 @@ ConversationV1.prototype.getEntity = function(params, callback) {
  * @param {String} params.entity
  * @param {String} params.description
  * @param {Object} params.metadata
+ * @param {Boolean} [params.fuzzy_match=false] - whether to use fuzzy matching for the entity.
  * @param {Array<Object>} params.values
  * @param {Function} [callback]
  *
@@ -1158,7 +1160,7 @@ ConversationV1.prototype.updateEntity = function(params, callback) {
       method: 'POST',
       json: true,
       path: pick(params, ['workspace_id', 'old_entity']),
-      body: pick(params, ['entity', 'description', 'metadata', 'values'])
+      body: pick(params, ['entity', 'description', 'metadata', 'values', 'fuzzy_match'])
     },
     requiredParams: ['workspace_id', 'old_entity', 'entity'],
     defaultOptions: this._options
