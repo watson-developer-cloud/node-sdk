@@ -4,6 +4,7 @@ const assert = require('assert');
 const DiscoveryV1 = require('../../discovery/v1');
 const fs = require('fs');
 const path = require('path');
+const stream = require('stream');
 
 const nock = require('nock');
 
@@ -364,6 +365,78 @@ describe('discovery-v1', function() {
 
           return result;
         }
+
+        describe('_ensureFilename()', function() {
+          it('should pass through ReadStreams unmodified', function() {
+            const src = fs.createReadStream(__dirname + '../resources/sample-docx.docx');
+            assert.equal(DiscoveryV1._ensureFilename(src), src);
+          });
+
+          it('should pass through value/options objects with a filename', function() {
+            const src = {
+              value: 'foo',
+              options: {
+                filename: 'foo.bar'
+              }
+            };
+            const actual = DiscoveryV1._ensureFilename(src);
+            assert.equal(actual, src);
+            assert.deepEqual(actual, {
+              value: 'foo',
+              options: {
+                filename: 'foo.bar'
+              }
+            });
+          });
+
+          it('should create new object/values with a filename when missing', function() {
+            const src = {
+              value: '{"foo": "bar"}',
+              options: {
+                contentType: 'application/json'
+              }
+            };
+            const actual = DiscoveryV1._ensureFilename(src);
+            assert.deepEqual(actual, {
+              value: '{"foo": "bar"}',
+              options: {
+                contentType: 'application/json',
+                filename: '_'
+              }
+            });
+            assert.notEqual(actual, src, 'it should be a new object, not a modification of the existing one');
+          });
+
+          it('should wrap buffers', function() {
+            const src = Buffer.from([1, 2, 3, 4]);
+            assert.deepEqual(DiscoveryV1._ensureFilename(src), {
+              value: src,
+              options: {
+                filename: '_'
+              }
+            });
+          });
+
+          it('should wrap strings', function() {
+            const src = 'foo';
+            assert.deepEqual(DiscoveryV1._ensureFilename(src), {
+              value: src,
+              options: {
+                filename: '_'
+              }
+            });
+          });
+
+          it('should wrap streams', function() {
+            const src = new stream.Readable();
+            assert.deepEqual(DiscoveryV1._ensureFilename(src), {
+              value: src,
+              options: {
+                filename: '_'
+              }
+            });
+          });
+        }); // end of _ensureFilename()
       });
     });
   });
