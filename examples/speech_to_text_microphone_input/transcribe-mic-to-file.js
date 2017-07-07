@@ -1,32 +1,33 @@
-var fs = require('fs');
+'use strict';
+const fs = require('fs');
 require('dotenv').config({ silent: true }); // optional, handy for local development
-var SpeechToText = require('watson-developer-cloud/speech-to-text/v1');
-var mic = require('mic');
-var wav = require('wav');
+const SpeechToText = require('watson-developer-cloud/speech-to-text/v1');
+const mic = require('mic');
+const wav = require('wav');
 
+const speechToText = new SpeechToText(
+  {
+    // if left unspecified here, the SDK will fall back to the SPEECH_TO_TEXT_USERNAME and SPEECH_TO_TEXT_PASSWORD
+    // environment properties, and then Bluemix's VCAP_SERVICES environment property
+    // username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
+    // password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE'
+  }
+);
 
-var speechToText = new SpeechToText({
-  // if left unspecified here, the SDK will fall back to the SPEECH_TO_TEXT_USERNAME and SPEECH_TO_TEXT_PASSWORD
-  // environment properties, and then Bluemix's VCAP_SERVICES environment property
-  // username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
-  // password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE'
+const micInstance = mic({
+  rate: '48000',
+  channels: '1',
+  debug: false
 });
 
-var micInstance = mic({
-  'rate': '48000',
-  'channels': '1',
-  'debug': false
-});
+const micInputStream = micInstance.getAudioStream();
 
-var micInputStream = micInstance.getAudioStream();
-
-
-var wavStream = new wav.FileWriter('./audio.wav', {
+const wavStream = new wav.FileWriter('./audio.wav', {
   sampleRate: 48000,
   channels: 1
 });
 
-var recognizeStream = speechToText.createRecognizeStream({'content_type': 'audio/wav'});
+const recognizeStream = speechToText.createRecognizeStream({ content_type: 'audio/wav' });
 
 micInputStream.pipe(wavStream);
 
@@ -48,8 +49,7 @@ process.stdin.once('data', function() {
   micInstance.stop();
   recognizeStream.on('end', function() {
     process.exit();
-  })
+  });
 });
-
 
 micInstance.start();
