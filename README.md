@@ -653,7 +653,7 @@ visual_recognition.classify(params, function(err, res) {
 ### Integration of Tone Analyzer with Conversation
 Sample code for [integrating Tone Analyzer and Conversation][conversation_tone_analyzer_example] is provided in the [examples directory][examples].
 
-## Integration Document Conversation with Retrieve and Rank
+## Integration of Document Conversion with Retrieve and Rank
 See the [Document Conversion integration example][document_conversion_integration_example] about how to integrate the Document Conversion service
 with the Retrieve and Rank service.
 
