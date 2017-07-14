@@ -64,8 +64,8 @@ const test_intents_update = {
   ]
 };
 const test_examples_new = 'Oh, here\'s a URL ☺ http://example.com/?a=$+*^;&c=%20#!"`~';
-const counterExampleText = 'Hey, here\'s a URL ☺ http://example.com/?a=$+*^;&c=%20#!"`~';
-const counterExampleText_new = 'Oh, here\'s a URL ☺ http://example.com/?a=$+*^;&c=%20#!"`~';
+const counterexampleText = 'Hey, here\'s a URL ☺ http://example.com/?a=$+*^;&c=%20#!"`~';
+const counterexampleText_new = 'Oh, here\'s a URL ☺ http://example.com/?a=$+*^;&c=%20#!"`~';
 const test_entities = [
   {
     entity: 'entity_1',
@@ -524,42 +524,42 @@ describe('conversation_integration', function() {
     });
   });
 
-  describe('createCounterExample()', function() {
-    it('should return the newly created counterExample of the workspace', function(done) {
+  describe('createCounterexample()', function() {
+    it('should return the newly created counterexample of the workspace', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        text: counterExampleText
+        text: counterexampleText
       };
 
-      conversation.createCounterExample(params, function(err, result) {
+      conversation.createCounterexample(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.text, counterExampleText);
+        assert.equal(result.text, counterexampleText);
         done();
       });
     });
   });
 
-  describe('getCounterExample()', function() {
-    it('should return a counterExample', function(done) {
+  describe('getCounterexample()', function() {
+    it('should return a counterexample', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        text: counterExampleText
+        text: counterexampleText
       };
 
-      conversation.getCounterExample(params, function(err, result) {
+      conversation.getCounterexample(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.text, counterExampleText);
+        assert.equal(result.text, counterexampleText);
         done();
       });
     });
   });
 
-  describe('getCounterExamples()', function() {
-    it('should return counterExamples of the workspace', function(done) {
+  describe('listCounterexamples()', function() {
+    it('should return counterexamples of the workspace', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id
       };
@@ -568,11 +568,11 @@ describe('conversation_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.counterexamples[0].text, counterExampleText);
+        assert.equal(result.counterexamples[0].text, counterexampleText);
         done();
       });
     });
-    it('should return counterExamples of the workspace with pagination', function(done) {
+    it('should return counterexamples of the workspace with pagination', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
         page_limit: 1,
@@ -584,39 +584,39 @@ describe('conversation_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.counterexamples[0].text, counterExampleText);
+        assert.equal(result.counterexamples[0].text, counterexampleText);
         assert.equal(result.hasOwnProperty('pagination'), true);
         done();
       });
     });
   });
 
-  describe('updateCounterExample()', function() {
-    it('should return an updated counterExample', function(done) {
+  describe('updateCounterexample()', function() {
+    it('should return an updated counterexample', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
         old_text: counterExampleText,
         text: counterExampleText_new
       };
 
-      conversation.updateCounterExample(params, function(err, result) {
+      conversation.updateCounterexample(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.text, counterExampleText_new);
+        assert.equal(result.text, counterexampleText_new);
         done();
       });
     });
   });
 
-  describe('deleteCounterExample()', function() {
-    it('should delete a counterExample', function(done) {
+  describe('deleteCounterexample()', function() {
+    it('should delete a counterexample', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        text: counterExampleText_new
+        text: counterexampleText_new
       };
 
-      conversation.deleteCounterExample(params, function(err, result) {
+      conversation.deleteCounterexample(params, function(err, result) {
         if (err) {
           return done(err);
         }
