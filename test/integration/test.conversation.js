@@ -370,10 +370,10 @@ describe('conversation_integration', function() {
     it('should update an intent of the workspace', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        old_intent: test_intents[0].intent,
-        intent: test_intents_update.intent,
-        description: test_intents_update.description,
-        examples: test_intents_update.examples
+        intent: test_intents[0].intent,
+        new_intent: test_intents_update.intent,
+        new_description: test_intents_update.description,
+        new_examples: test_intents_update.examples
       };
 
       conversation.updateIntent(params, function(err, result) {
@@ -462,8 +462,8 @@ describe('conversation_integration', function() {
       const params = {
         workspace_id: workspace1.workspace_id,
         intent: test_intents_update.intent,
-        old_text: test_intents_update.examples[0].text,
-        text: test_examples_new
+        text: test_intents_update.examples[0].text,
+        new_text: test_examples_new
       };
 
       conversation.updateExample(params, function(err, result) {
@@ -580,8 +580,8 @@ describe('conversation_integration', function() {
     it('should return an updated counterexample', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        old_text: counterExampleText,
-        text: counterExampleText_new
+        text: counterexampleText,
+        new_text: counterexampleText_new
       };
 
       conversation.updateCounterexample(params, function(err, result) {
@@ -689,9 +689,9 @@ describe('conversation_integration', function() {
     it('should update an entity of the workspace', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        old_entity: test_entities[0].entity,
-        entity: test_entities_update.entity,
-        values: test_entities_update.values,
+        entity: test_entities[0].entity,
+        new_entity: test_entities_update.entity,
+        new_values: test_entities_update.values,
         fuzzy_match: false
       };
 
@@ -787,9 +787,9 @@ describe('conversation_integration', function() {
       const params = {
         workspace_id: workspace1.workspace_id,
         entity: test_entities_update.entity,
-        old_value: test_value.value,
-        value: test_value_update.value,
-        synonyms: test_value_update.synonyms
+        value: test_value.value,
+        new_value: test_value_update.value,
+        new_synonyms: test_value_update.synonyms
       };
 
       conversation.updateValue(params, function(err, result) {
@@ -884,8 +884,8 @@ describe('conversation_integration', function() {
         workspace_id: workspace1.workspace_id,
         entity: test_entities_update.entity,
         value: test_value_update.value,
-        old_synonym: test_synonym,
-        synonym: test_synonym_update
+        synonym: test_synonym,
+        new_synonym: test_synonym_update
       };
 
       conversation.updateSynonym(params, function(err, result) {
