@@ -47,6 +47,7 @@ const intents = {
 const test_intents = [
   {
     intent: 'intent_1',
+    description: 'description_1',
     examples: [
       {
         text: 'Hi, here\'s a URL ☺ http://example.com/?a=$+*^;&c=%20#!"`~'
@@ -296,6 +297,7 @@ describe('conversation_integration', function() {
       const params = {
         workspace_id: workspace1.workspace_id,
         intent: test_intents[0].intent,
+        description: test_intents[0].description,
         examples: test_intents[0].examples
       };
 
@@ -304,7 +306,7 @@ describe('conversation_integration', function() {
           return done(err);
         }
         assert.equal(result.intent, test_intents[0].intent);
-        assert.equal(result.description, null);
+        assert.equal(result.description, test_intents[0].description);
         done();
       });
     });
@@ -358,7 +360,7 @@ describe('conversation_integration', function() {
           return done(err);
         }
         assert.equal(result.intent, test_intents[0].intent);
-        assert.equal(result.description, null);
+        assert.equal(result.description, test_intents[0].description);
         done();
       });
     });
