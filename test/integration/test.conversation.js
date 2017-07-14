@@ -16,7 +16,7 @@ const TWO_SECONDS = 2000;
 
 const workspace = {
   name: 'integration test',
-  language: 'fr',
+  language: 'en',
   entities: [
     {
       entity: 'hello',
@@ -250,7 +250,7 @@ describe('conversation_integration', function() {
         }
         workspace1.workspace_id = result.workspace_id;
         assert.equal(result.name, params.name);
-        assert.equal(result.language, 'fr');
+        assert.equal(result.language, 'en');
         assert.equal(result.metadata, params.metadata);
         assert.equal(result.description, params.description);
         done();
@@ -259,7 +259,7 @@ describe('conversation_integration', function() {
   });
 
   describe('updateWorkspace()', function() {
-    it('should update the workspace with intents and language', function(done) {
+    it('should update the workspace with intents', function(done) {
       const params = workspace1;
 
       conversation.updateWorkspace(params, function(err, result) {
