@@ -317,7 +317,7 @@ describe('conversation_integration', function() {
         export: true
       };
 
-      conversation.getIntents(params, function(err, result) {
+      conversation.listIntents(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -336,7 +336,7 @@ describe('conversation_integration', function() {
         sort: 'intent'
       };
 
-      conversation.getIntents(params, function(err, result) {
+      conversation.listIntents(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -391,7 +391,7 @@ describe('conversation_integration', function() {
         intent: test_intents_update.intent
       };
 
-      conversation.getExamples(params, function(err, result) {
+      conversation.listExamples(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -409,7 +409,7 @@ describe('conversation_integration', function() {
         sort: '-text'
       };
 
-      conversation.getExamples(params, function(err, result) {
+      conversation.listExamples(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -547,7 +547,7 @@ describe('conversation_integration', function() {
         workspace_id: workspace1.workspace_id
       };
 
-      conversation.getCounterExamples(params, function(err, result) {
+      conversation.listCounterexamples(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -563,7 +563,7 @@ describe('conversation_integration', function() {
         sort: 'text'
       };
 
-      conversation.getCounterExamples(params, function(err, result) {
+      conversation.listCounterexamples(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -628,14 +628,14 @@ describe('conversation_integration', function() {
     });
   });
 
-  describe('getEntities()', function() {
+  describe('listEntities()', function() {
     it('should get entities of the workspace', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
         export: true
       };
 
-      conversation.getEntities(params, function(err, result) {
+      conversation.listEntities(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -654,7 +654,7 @@ describe('conversation_integration', function() {
         sort: 'entity'
       };
 
-      conversation.getEntities(params, function(err, result) {
+      conversation.listEntities(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -723,7 +723,7 @@ describe('conversation_integration', function() {
     });
   });
 
-  describe('getValues()', function() {
+  describe('listValues()', function() {
     it('should get values of the entity', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
@@ -731,7 +731,7 @@ describe('conversation_integration', function() {
         export: true
       };
 
-      conversation.getValues(params, function(err, result) {
+      conversation.listValues(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -751,7 +751,7 @@ describe('conversation_integration', function() {
         sort: 'value'
       };
 
-      conversation.getValues(params, function(err, result) {
+      conversation.listValues(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -819,7 +819,7 @@ describe('conversation_integration', function() {
     });
   });
 
-  describe('getSynonyms()', function() {
+  describe('listSynonyms()', function() {
     it('should get synonyms of the value', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
@@ -828,7 +828,7 @@ describe('conversation_integration', function() {
         export: true
       };
 
-      conversation.getSynonyms(params, function(err, result) {
+      conversation.listSynonyms(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -847,7 +847,7 @@ describe('conversation_integration', function() {
         include_count: true
       };
 
-      conversation.getSynonyms(params, function(err, result) {
+      conversation.listSynonyms(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -896,7 +896,7 @@ describe('conversation_integration', function() {
     });
   });
 
-  describe('getLogs()', function() {
+  describe('listLogs()', function() {
     it('should return logs', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
@@ -904,7 +904,7 @@ describe('conversation_integration', function() {
         page_limit: 1
       };
 
-      conversation.getLogs(params, function(err, result) {
+      conversation.listLogs(params, function(err, result) {
         if (err) {
           return done(err);
         }
