@@ -53,8 +53,8 @@ ConversationV1.VERSION_DATE_2016_07_11 = '2016-07-11';
  * Add a new counterexample to a workspace. Counterexamples are examples that have been marked as irrelevant input.
  *
  * @param {Object} params - The parameters to send to the service.
- * @param {Object} params.workspace_id - The workspace ID.
- * @param {Object} params.text - The text of a user input marked as irrelevant input.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.text - The text of a user input marked as irrelevant input.
  * @param {Function} [callback] - The callback that handles the response.
  */
 ConversationV1.prototype.createCounterexample = function(params, callback) {
@@ -91,8 +91,8 @@ ConversationV1.prototype.createCounterexample = function(params, callback) {
  * Delete a counterexample from a workspace. Counterexamples are examples that have been marked as irrelevant input.
  *
  * @param {Object} params - The parameters to send to the service.
- * @param {Object} params.workspace_id - The workspace ID.
- * @param {Object} params.text - The text of a user input counterexample (for example, `What are you wearing?`).
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.text - The text of a user input counterexample (for example, `What are you wearing?`).
  * @param {Function} [callback] - The callback that handles the response.
  */
 ConversationV1.prototype.deleteCounterexample = function(params, callback) {
@@ -125,8 +125,8 @@ ConversationV1.prototype.deleteCounterexample = function(params, callback) {
  * Get information about a counterexample. Counterexamples are examples that have been marked as irrelevant input.
  *
  * @param {Object} params - The parameters to send to the service.
- * @param {Object} params.workspace_id - The workspace ID.
- * @param {Object} params.text - The text of a user input counterexample (for example, `What are you wearing?`).
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.text - The text of a user input counterexample (for example, `What are you wearing?`).
  * @param {Function} [callback] - The callback that handles the response.
  */
 ConversationV1.prototype.getCounterexample = function(params, callback) {
@@ -159,11 +159,11 @@ ConversationV1.prototype.getCounterexample = function(params, callback) {
  * List the counterexamples for a workspace. Counterexamples are examples that have been marked as irrelevant input.
  *
  * @param {Object} params - The parameters to send to the service.
- * @param {Object} params.workspace_id - The workspace ID.
- * @param {Object} [params.page_limit] - The number of records to return in each page of results. The default page limit is 100.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {number} [params.page_limit] - The number of records to return in each page of results. The default page limit is 100.
  * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
- * @param {Object} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
- * @param {Object} [params.cursor] - A token identifying the last value from the previous page of results.
+ * @param {string} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
+ * @param {string} [params.cursor] - A token identifying the last value from the previous page of results.
  * @param {Function} [callback] - The callback that handles the response.
  */
 ConversationV1.prototype.listCounterexamples = function(params, callback) {
@@ -198,9 +198,9 @@ ConversationV1.prototype.listCounterexamples = function(params, callback) {
  * Update the text of a counterexample. Counterexamples are examples that have been marked as irrelevant input.
  *
  * @param {Object} params - The parameters to send to the service.
- * @param {Object} params.workspace_id - The workspace ID.
- * @param {Object} params.text - The text of a user input counterexample (for example, `What are you wearing?`).
- * @param {Object} [params.new_text] - The text of the example to be marked as irrelevant input.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.text - The text of a user input counterexample (for example, `What are you wearing?`).
+ * @param {string} [params.new_text] - The text of the example to be marked as irrelevant input.
  * @param {Function} [callback] - The callback that handles the response.
  */
 ConversationV1.prototype.updateCounterexample = function(params, callback) {
@@ -237,11 +237,11 @@ ConversationV1.prototype.updateCounterexample = function(params, callback) {
  * Create a new entity.
  *
  * @param {Object} params - The parameters to send to the service.
- * @param {Object} params.workspace_id - The workspace ID.
- * @param {Object} params.entity - The name of the entity.
- * @param {Object} [params.description] - The description of the entity.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.entity - The name of the entity.
+ * @param {string} [params.description] - The description of the entity.
  * @param {Object} [params.metadata] - Any metadata related to the value.
- * @param {Array<Object>} [params.values] - An array of entity values.
+ * @param {CreateValue[]} [params.values] - An array of entity values.
  * @param {boolean} [params.fuzzy_match] - Whether to use fuzzy matching for the entity.
  * @param {Function} [callback] - The callback that handles the response.
  */
@@ -279,8 +279,8 @@ ConversationV1.prototype.createEntity = function(params, callback) {
  * Delete an entity from a workspace.
  *
  * @param {Object} params - The parameters to send to the service.
- * @param {Object} params.workspace_id - The workspace ID.
- * @param {Object} params.entity - The name of the entity.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.entity - The name of the entity.
  * @param {Function} [callback] - The callback that handles the response.
  */
 ConversationV1.prototype.deleteEntity = function(params, callback) {
@@ -313,8 +313,8 @@ ConversationV1.prototype.deleteEntity = function(params, callback) {
  * Get information about an entity, optionally including all entity content.
  *
  * @param {Object} params - The parameters to send to the service.
- * @param {Object} params.workspace_id - The workspace ID.
- * @param {Object} params.entity - The name of the entity.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.entity - The name of the entity.
  * @param {boolean} [params.export] - Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`.
  * @param {Function} [callback] - The callback that handles the response.
  */
@@ -350,12 +350,12 @@ ConversationV1.prototype.getEntity = function(params, callback) {
  * List the entities for a workspace.
  *
  * @param {Object} params - The parameters to send to the service.
- * @param {Object} params.workspace_id - The workspace ID.
+ * @param {string} params.workspace_id - The workspace ID.
  * @param {boolean} [params.export] - Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`.
- * @param {Object} [params.page_limit] - The number of records to return in each page of results. The default page limit is 100.
+ * @param {number} [params.page_limit] - The number of records to return in each page of results. The default page limit is 100.
  * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
- * @param {Object} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
- * @param {Object} [params.cursor] - A token identifying the last value from the previous page of results.
+ * @param {string} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
+ * @param {string} [params.cursor] - A token identifying the last value from the previous page of results.
  * @param {Function} [callback] - The callback that handles the response.
  */
 ConversationV1.prototype.listEntities = function(params, callback) {
@@ -390,13 +390,13 @@ ConversationV1.prototype.listEntities = function(params, callback) {
  * Update an existing entity with new or modified data.
  *
  * @param {Object} params - The parameters to send to the service.
- * @param {Object} params.workspace_id - The workspace ID.
- * @param {Object} params.entity - The name of the entity.
- * @param {Object} [params.new_entity] - The name of the entity.
- * @param {Object} [params.new_description] - The description of the entity.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.entity - The name of the entity.
+ * @param {string} [params.new_entity] - The name of the entity.
+ * @param {string} [params.new_description] - The description of the entity.
  * @param {Object} [params.new_metadata] - Any metadata related to the entity.
  * @param {boolean} [params.new_fuzzy_match] - Whether to use fuzzy matching for the entity.
- * @param {Array<Object>} [params.new_values] - An array of entity values.
+ * @param {CreateValue[]} [params.new_values] - An array of entity values.
  * @param {Function} [callback] - The callback that handles the response.
  */
 ConversationV1.prototype.updateEntity = function(params, callback) {
@@ -433,9 +433,9 @@ ConversationV1.prototype.updateEntity = function(params, callback) {
  * Add a new user input example to an intent.
  *
  * @param {Object} params - The parameters to send to the service.
- * @param {Object} params.workspace_id - The workspace ID.
- * @param {Object} params.intent - The intent name (for example, `pizza_order`).
- * @param {Object} params.text - The text of a user input example.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.intent - The intent name (for example, `pizza_order`).
+ * @param {string} params.text - The text of a user input example.
  * @param {Function} [callback] - The callback that handles the response.
  */
 ConversationV1.prototype.createExample = function(params, callback) {
@@ -472,9 +472,9 @@ ConversationV1.prototype.createExample = function(params, callback) {
  * Delete a user input example from an intent.
  *
  * @param {Object} params - The parameters to send to the service.
- * @param {Object} params.workspace_id - The workspace ID.
- * @param {Object} params.intent - The intent name (for example, `pizza_order`).
- * @param {Object} params.text - The text of the user input example.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.intent - The intent name (for example, `pizza_order`).
+ * @param {string} params.text - The text of the user input example.
  * @param {Function} [callback] - The callback that handles the response.
  */
 ConversationV1.prototype.deleteExample = function(params, callback) {
@@ -507,9 +507,9 @@ ConversationV1.prototype.deleteExample = function(params, callback) {
  * Get information about a user input example.
  *
  * @param {Object} params - The parameters to send to the service.
- * @param {Object} params.workspace_id - The workspace ID.
- * @param {Object} params.intent - The intent name (for example, `pizza_order`).
- * @param {Object} params.text - The text of the user input example.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.intent - The intent name (for example, `pizza_order`).
+ * @param {string} params.text - The text of the user input example.
  * @param {Function} [callback] - The callback that handles the response.
  */
 ConversationV1.prototype.getExample = function(params, callback) {
@@ -542,12 +542,12 @@ ConversationV1.prototype.getExample = function(params, callback) {
  * List the user input examples for an intent.
  *
  * @param {Object} params - The parameters to send to the service.
- * @param {Object} params.workspace_id - The workspace ID.
- * @param {Object} params.intent - The intent name (for example, `pizza_order`).
- * @param {Object} [params.page_limit] - The number of records to return in each page of results. The default page limit is 100.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.intent - The intent name (for example, `pizza_order`).
+ * @param {number} [params.page_limit] - The number of records to return in each page of results. The default page limit is 100.
  * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
- * @param {Object} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
- * @param {Object} [params.cursor] - A token identifying the last value from the previous page of results.
+ * @param {string} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
+ * @param {string} [params.cursor] - A token identifying the last value from the previous page of results.
  * @param {Function} [callback] - The callback that handles the response.
  */
 ConversationV1.prototype.listExamples = function(params, callback) {
@@ -582,10 +582,10 @@ ConversationV1.prototype.listExamples = function(params, callback) {
  * Update the text of a user input example.
  *
  * @param {Object} params - The parameters to send to the service.
- * @param {Object} params.workspace_id - The workspace ID.
- * @param {Object} params.intent - The intent name (for example, `pizza_order`).
- * @param {Object} params.text - The text of the user input example.
- * @param {Object} [params.new_text] - The text of the user input example.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.intent - The intent name (for example, `pizza_order`).
+ * @param {string} params.text - The text of the user input example.
+ * @param {string} [params.new_text] - The text of the user input example.
  * @param {Function} [callback] - The callback that handles the response.
  */
 ConversationV1.prototype.updateExample = function(params, callback) {
@@ -622,10 +622,10 @@ ConversationV1.prototype.updateExample = function(params, callback) {
  * Create a new intent.
  *
  * @param {Object} params - The parameters to send to the service.
- * @param {Object} params.workspace_id - The workspace ID.
- * @param {Object} params.intent - The name of the intent.
- * @param {Object} [params.description] - The description of the intent.
- * @param {Array<Object>} [params.examples] - An array of user input examples.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.intent - The name of the intent.
+ * @param {string} [params.description] - The description of the intent.
+ * @param {CreateExample[]} [params.examples] - An array of user input examples.
  * @param {Function} [callback] - The callback that handles the response.
  */
 ConversationV1.prototype.createIntent = function(params, callback) {
@@ -662,8 +662,8 @@ ConversationV1.prototype.createIntent = function(params, callback) {
  * Delete an intent from a workspace.
  *
  * @param {Object} params - The parameters to send to the service.
- * @param {Object} params.workspace_id - The workspace ID.
- * @param {Object} params.intent - The intent name (for example, `pizza_order`).
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.intent - The intent name (for example, `pizza_order`).
  * @param {Function} [callback] - The callback that handles the response.
  */
 ConversationV1.prototype.deleteIntent = function(params, callback) {
@@ -696,8 +696,8 @@ ConversationV1.prototype.deleteIntent = function(params, callback) {
  * Get information about an intent, optionally including all intent content.
  *
  * @param {Object} params - The parameters to send to the service.
- * @param {Object} params.workspace_id - The workspace ID.
- * @param {Object} params.intent - The intent name (for example, `pizza_order`).
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.intent - The intent name (for example, `pizza_order`).
  * @param {boolean} [params.export] - Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`.
  * @param {Function} [callback] - The callback that handles the response.
  */
@@ -733,12 +733,12 @@ ConversationV1.prototype.getIntent = function(params, callback) {
  * List the intents for a workspace.
  *
  * @param {Object} params - The parameters to send to the service.
- * @param {Object} params.workspace_id - The workspace ID.
+ * @param {string} params.workspace_id - The workspace ID.
  * @param {boolean} [params.export] - Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`.
- * @param {Object} [params.page_limit] - The number of records to return in each page of results. The default page limit is 100.
+ * @param {number} [params.page_limit] - The number of records to return in each page of results. The default page limit is 100.
  * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
- * @param {Object} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
- * @param {Object} [params.cursor] - A token identifying the last value from the previous page of results.
+ * @param {string} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
+ * @param {string} [params.cursor] - A token identifying the last value from the previous page of results.
  * @param {Function} [callback] - The callback that handles the response.
  */
 ConversationV1.prototype.listIntents = function(params, callback) {
@@ -773,11 +773,11 @@ ConversationV1.prototype.listIntents = function(params, callback) {
  * Update an existing intent with new or modified data. You must provide data defining the content of the updated intent.
  *
  * @param {Object} params - The parameters to send to the service.
- * @param {Object} params.workspace_id - The workspace ID.
- * @param {Object} params.intent - The intent name (for example, `pizza_order`).
- * @param {Object} [params.new_intent] - The name of the intent.
- * @param {Object} [params.new_description] - The description of the intent.
- * @param {Array<Object>} [params.new_examples] - An array of user input examples for the intent.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.intent - The intent name (for example, `pizza_order`).
+ * @param {string} [params.new_intent] - The name of the intent.
+ * @param {string} [params.new_description] - The description of the intent.
+ * @param {CreateExample[]} [params.new_examples] - An array of user input examples for the intent.
  * @param {Function} [callback] - The callback that handles the response.
  */
 ConversationV1.prototype.updateIntent = function(params, callback) {
@@ -813,11 +813,11 @@ ConversationV1.prototype.updateIntent = function(params, callback) {
  *
  *
  * @param {Object} params - The parameters to send to the service.
- * @param {Object} params.workspace_id - The workspace ID.
- * @param {Object} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
- * @param {Object} [params.filter] - A cacheable parameter that limits the results to those matching the specified filter.
- * @param {Object} [params.page_limit] - The number of records to return in each page of results. The default page limit is 100.
- * @param {Object} [params.cursor] - A token identifying the last value from the previous page of results.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
+ * @param {string} [params.filter] - A cacheable parameter that limits the results to those matching the specified filter.
+ * @param {number} [params.page_limit] - The number of records to return in each page of results. The default page limit is 100.
+ * @param {string} [params.cursor] - A token identifying the last value from the previous page of results.
  * @param {Function} [callback] - The callback that handles the response.
  */
 ConversationV1.prototype.listLogs = function(params, callback) {
@@ -851,13 +851,13 @@ ConversationV1.prototype.listLogs = function(params, callback) {
  *
  *
  * @param {Object} params - The parameters to send to the service.
- * @param {Object} params.workspace_id - Unique identifier of the workspace.
- * @param {Object} [params.input] - An input object that includes the input text.
+ * @param {string} params.workspace_id - Unique identifier of the workspace.
+ * @param {InputData} [params.input] - An input object that includes the input text.
  * @param {boolean} [params.alternate_intents] - Whether to return more than one intent. Set to `true` to return all matching intents.
- * @param {Object} [params.context] - State information for the conversation. Continue a conversation by including the context object from the previous response.
- * @param {Array<Object>} [params.entities] - Include the entities from the previous response when they do not need to change and to prevent Watson from trying to identify them.
- * @param {Array<Object>} [params.intents] - An array of name-confidence pairs for the user input. Include the intents from the previous response when they do not need to change and to prevent Watson from trying to identify them.
- * @param {Object} [params.output] - System output. Include the output from the request when you have several requests within the same Dialog turn to pass back in the intermediate information.
+ * @param {Context} [params.context] - State information for the conversation. Continue a conversation by including the context object from the previous response.
+ * @param {RuntimeEntity[]} [params.entities] - Include the entities from the previous response when they do not need to change and to prevent Watson from trying to identify them.
+ * @param {RuntimeIntent[]} [params.intents] - An array of name-confidence pairs for the user input. Include the intents from the previous response when they do not need to change and to prevent Watson from trying to identify them.
+ * @param {OutputData} [params.output] - System output. Include the output from the request when you have several requests within the same Dialog turn to pass back in the intermediate information.
  * @param {Function} [callback] - The callback that handles the response.
  */
 ConversationV1.prototype.message = function(params, callback) {
@@ -894,10 +894,10 @@ ConversationV1.prototype.message = function(params, callback) {
  * Add a new synonym to an entity value.
  *
  * @param {Object} params - The parameters to send to the service.
- * @param {Object} params.workspace_id - The workspace ID.
- * @param {Object} params.entity - The name of the entity.
- * @param {Object} params.value - The text of the entity value.
- * @param {Object} params.synonym - The text of the synonym.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.entity - The name of the entity.
+ * @param {string} params.value - The text of the entity value.
+ * @param {string} params.synonym - The text of the synonym.
  * @param {Function} [callback] - The callback that handles the response.
  */
 ConversationV1.prototype.createSynonym = function(params, callback) {
@@ -934,10 +934,10 @@ ConversationV1.prototype.createSynonym = function(params, callback) {
  * Delete a synonym for an entity value.
  *
  * @param {Object} params - The parameters to send to the service.
- * @param {Object} params.workspace_id - The workspace ID.
- * @param {Object} params.entity - The name of the entity.
- * @param {Object} params.value - The text of the entity value.
- * @param {Object} params.synonym - The text of the synonym.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.entity - The name of the entity.
+ * @param {string} params.value - The text of the entity value.
+ * @param {string} params.synonym - The text of the synonym.
  * @param {Function} [callback] - The callback that handles the response.
  */
 ConversationV1.prototype.deleteSynonym = function(params, callback) {
@@ -970,10 +970,10 @@ ConversationV1.prototype.deleteSynonym = function(params, callback) {
  * Get information about a synonym for an entity value.
  *
  * @param {Object} params - The parameters to send to the service.
- * @param {Object} params.workspace_id - The workspace ID.
- * @param {Object} params.entity - The name of the entity.
- * @param {Object} params.value - The text of the entity value.
- * @param {Object} params.synonym - The text of the synonym.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.entity - The name of the entity.
+ * @param {string} params.value - The text of the entity value.
+ * @param {string} params.synonym - The text of the synonym.
  * @param {Function} [callback] - The callback that handles the response.
  */
 ConversationV1.prototype.getSynonym = function(params, callback) {
@@ -1006,13 +1006,13 @@ ConversationV1.prototype.getSynonym = function(params, callback) {
  * List the synonyms for an entity value.
  *
  * @param {Object} params - The parameters to send to the service.
- * @param {Object} params.workspace_id - The workspace ID.
- * @param {Object} params.entity - The name of the entity.
- * @param {Object} params.value - The text of the entity value.
- * @param {Object} [params.page_limit] - The number of records to return in each page of results. The default page limit is 100.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.entity - The name of the entity.
+ * @param {string} params.value - The text of the entity value.
+ * @param {number} [params.page_limit] - The number of records to return in each page of results. The default page limit is 100.
  * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
- * @param {Object} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
- * @param {Object} [params.cursor] - A token identifying the last value from the previous page of results.
+ * @param {string} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
+ * @param {string} [params.cursor] - A token identifying the last value from the previous page of results.
  * @param {Function} [callback] - The callback that handles the response.
  */
 ConversationV1.prototype.listSynonyms = function(params, callback) {
@@ -1047,11 +1047,11 @@ ConversationV1.prototype.listSynonyms = function(params, callback) {
  * Update the information about a synonym for an entity value.
  *
  * @param {Object} params - The parameters to send to the service.
- * @param {Object} params.workspace_id - The workspace ID.
- * @param {Object} params.entity - The name of the entity.
- * @param {Object} params.value - The text of the entity value.
- * @param {Object} params.synonym - The text of the synonym.
- * @param {Object} [params.new_synonym] - The text of the synonym.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.entity - The name of the entity.
+ * @param {string} params.value - The text of the entity value.
+ * @param {string} params.synonym - The text of the synonym.
+ * @param {string} [params.new_synonym] - The text of the synonym.
  * @param {Function} [callback] - The callback that handles the response.
  */
 ConversationV1.prototype.updateSynonym = function(params, callback) {
@@ -1088,11 +1088,11 @@ ConversationV1.prototype.updateSynonym = function(params, callback) {
  * Create a new value for an entity.
  *
  * @param {Object} params - The parameters to send to the service.
- * @param {Object} params.workspace_id - The workspace ID.
- * @param {Object} params.entity - The name of the entity.
- * @param {Object} params.value - The text of the entity value.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.entity - The name of the entity.
+ * @param {string} params.value - The text of the entity value.
  * @param {Object} [params.metadata] - Any metadata related to the entity value.
- * @param {Array<Object>} [params.synonyms] - An array of synonyms for the entity value.
+ * @param {string[]} [params.synonyms] - An array of synonyms for the entity value.
  * @param {Function} [callback] - The callback that handles the response.
  */
 ConversationV1.prototype.createValue = function(params, callback) {
@@ -1129,9 +1129,9 @@ ConversationV1.prototype.createValue = function(params, callback) {
  * Delete a value for an entity.
  *
  * @param {Object} params - The parameters to send to the service.
- * @param {Object} params.workspace_id - The workspace ID.
- * @param {Object} params.entity - The name of the entity.
- * @param {Object} params.value - The text of the entity value.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.entity - The name of the entity.
+ * @param {string} params.value - The text of the entity value.
  * @param {Function} [callback] - The callback that handles the response.
  */
 ConversationV1.prototype.deleteValue = function(params, callback) {
@@ -1164,9 +1164,9 @@ ConversationV1.prototype.deleteValue = function(params, callback) {
  * Get information about an entity value.
  *
  * @param {Object} params - The parameters to send to the service.
- * @param {Object} params.workspace_id - The workspace ID.
- * @param {Object} params.entity - The name of the entity.
- * @param {Object} params.value - The text of the entity value.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.entity - The name of the entity.
+ * @param {string} params.value - The text of the entity value.
  * @param {boolean} [params.export] - Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`.
  * @param {Function} [callback] - The callback that handles the response.
  */
@@ -1202,13 +1202,13 @@ ConversationV1.prototype.getValue = function(params, callback) {
  * List the values for an entity.
  *
  * @param {Object} params - The parameters to send to the service.
- * @param {Object} params.workspace_id - The workspace ID.
- * @param {Object} params.entity - The name of the entity.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.entity - The name of the entity.
  * @param {boolean} [params.export] - Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`.
- * @param {Object} [params.page_limit] - The number of records to return in each page of results. The default page limit is 100.
+ * @param {number} [params.page_limit] - The number of records to return in each page of results. The default page limit is 100.
  * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
- * @param {Object} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
- * @param {Object} [params.cursor] - A token identifying the last value from the previous page of results.
+ * @param {string} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
+ * @param {string} [params.cursor] - A token identifying the last value from the previous page of results.
  * @param {Function} [callback] - The callback that handles the response.
  */
 ConversationV1.prototype.listValues = function(params, callback) {
@@ -1243,12 +1243,12 @@ ConversationV1.prototype.listValues = function(params, callback) {
  * Update the content of a value for an entity.
  *
  * @param {Object} params - The parameters to send to the service.
- * @param {Object} params.workspace_id - The workspace ID.
- * @param {Object} params.entity - The name of the entity.
- * @param {Object} params.value - The text of the entity value.
- * @param {Object} [params.new_value] - The text of the entity value.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.entity - The name of the entity.
+ * @param {string} params.value - The text of the entity value.
+ * @param {string} [params.new_value] - The text of the entity value.
  * @param {Object} [params.new_metadata] - Any metadata related to the entity value.
- * @param {Array<Object>} [params.new_synonyms] - An array of synonyms for the entity value.
+ * @param {string[]} [params.new_synonyms] - An array of synonyms for the entity value.
  * @param {Function} [callback] - The callback that handles the response.
  */
 ConversationV1.prototype.updateValue = function(params, callback) {
@@ -1285,13 +1285,13 @@ ConversationV1.prototype.updateValue = function(params, callback) {
  * Create a workspace based on component objects. You must provide workspace components defining the content of the new workspace.
  *
  * @param {Object} [params] - The parameters to send to the service.
- * @param {Object} [params.name] - The name of the workspace.
- * @param {Object} [params.description] - The description of the workspace.
- * @param {Object} [params.language] - The language of the workspace.
- * @param {Array<Object>} [params.intents] - An array of objects defining the intents for the workspace.
- * @param {Array<Object>} [params.entities] - An array of objects defining the entities for the workspace.
- * @param {Array<Object>} [params.dialog_nodes] - An array of objects defining the nodes in the workspace dialog.
- * @param {Array<Object>} [params.counterexamples] - An array of objects defining input examples that have been marked as irrelevant input.
+ * @param {string} [params.name] - The name of the workspace.
+ * @param {string} [params.description] - The description of the workspace.
+ * @param {string} [params.language] - The language of the workspace.
+ * @param {CreateIntent[]} [params.intents] - An array of objects defining the intents for the workspace.
+ * @param {CreateEntity[]} [params.entities] - An array of objects defining the entities for the workspace.
+ * @param {DialogNode[]} [params.dialog_nodes] - An array of objects defining the nodes in the workspace dialog.
+ * @param {CreateCounterexample[]} [params.counterexamples] - An array of objects defining input examples that have been marked as irrelevant input.
  * @param {Object} [params.metadata] - Any metadata related to the workspace.
  * @param {Function} [callback] - The callback that handles the response.
  */
@@ -1324,7 +1324,7 @@ ConversationV1.prototype.createWorkspace = function(params, callback) {
  * Delete a workspace from the service instance.
  *
  * @param {Object} params - The parameters to send to the service.
- * @param {Object} params.workspace_id - The workspace ID.
+ * @param {string} params.workspace_id - The workspace ID.
  * @param {Function} [callback] - The callback that handles the response.
  */
 ConversationV1.prototype.deleteWorkspace = function(params, callback) {
@@ -1357,7 +1357,7 @@ ConversationV1.prototype.deleteWorkspace = function(params, callback) {
  * Get information about a workspace, optionally including all workspace content.
  *
  * @param {Object} params - The parameters to send to the service.
- * @param {Object} params.workspace_id - The workspace ID.
+ * @param {string} params.workspace_id - The workspace ID.
  * @param {boolean} [params.export] - Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`.
  * @param {Function} [callback] - The callback that handles the response.
  */
@@ -1393,10 +1393,10 @@ ConversationV1.prototype.getWorkspace = function(params, callback) {
  * List the workspaces associated with a Conversation service instance.
  *
  * @param {Object} [params] - The parameters to send to the service.
- * @param {Object} [params.page_limit] - The number of records to return in each page of results. The default page limit is 100.
+ * @param {number} [params.page_limit] - The number of records to return in each page of results. The default page limit is 100.
  * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
- * @param {Object} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
- * @param {Object} [params.cursor] - A token identifying the last value from the previous page of results.
+ * @param {string} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
+ * @param {string} [params.cursor] - A token identifying the last value from the previous page of results.
  * @param {Function} [callback] - The callback that handles the response.
  */
 ConversationV1.prototype.listWorkspaces = function(params, callback) {
@@ -1426,14 +1426,14 @@ ConversationV1.prototype.listWorkspaces = function(params, callback) {
  * Update an existing workspace with new or modified data. You must provide component objects defining the content of the updated workspace.
  *
  * @param {Object} params - The parameters to send to the service.
- * @param {Object} params.workspace_id - The workspace ID.
- * @param {Object} [params.name] - The name of the workspace.
- * @param {Object} [params.description] - The description of the workspace.
- * @param {Object} [params.language] - The language of the workspace.
- * @param {Array<Object>} [params.intents] - An array of objects defining the intents for the workspace.
- * @param {Array<Object>} [params.entities] - An array of objects defining the entities for the workspace.
- * @param {Array<Object>} [params.dialog_nodes] - An array of objects defining the nodes in the workspace dialog.
- * @param {Array<Object>} [params.counterexamples] - An array of objects defining input examples that have been marked as irrelevant input.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} [params.name] - The name of the workspace.
+ * @param {string} [params.description] - The description of the workspace.
+ * @param {string} [params.language] - The language of the workspace.
+ * @param {CreateIntent[]} [params.intents] - An array of objects defining the intents for the workspace.
+ * @param {CreateEntity[]} [params.entities] - An array of objects defining the entities for the workspace.
+ * @param {DialogNode[]} [params.dialog_nodes] - An array of objects defining the nodes in the workspace dialog.
+ * @param {CreateCounterexample[]} [params.counterexamples] - An array of objects defining input examples that have been marked as irrelevant input.
  * @param {Object} [params.metadata] - Any metadata related to the workspace.
  * @param {Function} [callback] - The callback that handles the response.
  */
