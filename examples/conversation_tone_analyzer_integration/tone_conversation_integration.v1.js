@@ -10,18 +10,18 @@
  *
  * Requirements:
  *   1. Tone Analyzer Service instance:
- *   	- https://console.ng.bluemix.net/catalog/services/tone-analyzer/
- *      - credentials for this service to be provided below in tone_analyzer variable
- *      	- replace <tone_analyzer_username> and <tone_analyzer_password>
+ *   - https://console.ng.bluemix.net/catalog/services/tone-analyzer/
+ *   - credentials for this service to be provided below in tone_analyzer variable
+ *    - replace <tone_analyzer_username> and <tone_analyzer_password>
  *   2. Conversation Service instance:
- *   	- https://console.ng.bluemix.net/catalog/services/conversation/
- *   	- credentials for this service to be provided below in the conversation variable
- *   		- replace <conversation_username> and <conversation_password>
+ *   - https://console.ng.bluemix.net/catalog/services/conversation/
+ *   - credentials for this service to be provided below in the conversation variable
+ *    - replace <conversation_username> and <conversation_password>
  *   3. Workspace id:
- *   	- a workspace containing intents, entities and dialog nodes must be created using the tool
- *        available through the Bluemix Conversation Service.  Details are available at
- *        https://github.com/watson-developer-cloud/conversation-simple#workspace
- *      - replace <workspace_id> in the payload variable
+ *   - a workspace containing intents, entities and dialog nodes must be created using the tool
+ *     available through the Bluemix Conversation Service. Details are available at
+ *     https://github.com/watson-developer-cloud/conversation-simple#workspace
+ *    - replace <workspace_id> in the payload variable
  *
  * Run the code using the command:
  *   node tone_conversation_integration.v1.js
@@ -74,10 +74,10 @@ const payload = {
  * input text (input.text in the payload json object), adds/updates the user's tone in the payload's context,
  * and sends the payload to the conversation service to get a response which is printed to screen.
  * @param payload a json object containing the basic information needed to converse with the Conversation Service's
- *        message endpoint.
+ * message endpoint.
  *
  * Note: as indicated below, the console.log statements can be replaced with application-specific code to process
- * 		 the err or data object returned by the Conversation Service.
+ * the err or data object returned by the Conversation Service.
  */
 function invokeToneConversation(payload, maintainToneHistoryInContext) {
   tone_detection
