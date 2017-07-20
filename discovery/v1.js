@@ -546,7 +546,6 @@ DiscoveryV1.prototype.addJsonDocument = function(params, callback) {
  * @param {string} params.collection_id the guid of the collection
  * @param {string} params.document_id the guid of the document to update
  * @param {Object} params.file non-stringified JSON object
- * @param {Buffer|ReadableStream|Object} params.file a file to post (smaller than 50mb)
  * @param {string} [params.configuration_id] config guid
  * @param {object} [params.metadata] file metadata, including content-type (will infer if missing)
  * @param callback
