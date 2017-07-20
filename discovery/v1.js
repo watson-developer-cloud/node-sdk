@@ -517,7 +517,7 @@ DiscoveryV1.prototype.addDocument = function(params, callback) {
 };
 
 /**
- * Helper method, similar to addDocument except that the file param expects a JSON object
+ * Helper method, similar to updateDocument except that the file param expects a JSON object
  * @param {object} params
  * @param {String} params.environment_id environment guid for the collection
  * @param {string} params.collection_id the guid of the collection to delete
@@ -537,6 +537,30 @@ DiscoveryV1.prototype.addJsonDocument = function(params, callback) {
     }
   });
   return this.addDocument(params, callback);
+};
+
+/**
+ * Update or partially update a document to create or replace an existing document
+ * @param params
+ * @param {String} params.environment_id environment guid for the collection
+ * @param {string} params.collection_id the guid of the collection
+ * @param {string} params.document_id the guid of the document to update
+ * @param {Object} params.file non-stringified JSON object
+ * @param {string} [params.configuration_id] config guid
+ * @param {object} [params.metadata] file metadata, including content-type (will infer if missing)
+ * @param callback
+ * @return {ReadableStream|undefined}
+ */
+DiscoveryV1.prototype.updateJsonDocument = function(params, callback) {
+  params = Object.assign({}, params, {
+    file: {
+      value: JSON.stringify(params.file),
+      options: {
+        filename: '_.json'
+      }
+    }
+  });
+  return this.updateDocument(params, callback);
 };
 
 /**
