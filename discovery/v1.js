@@ -564,7 +564,6 @@ DiscoveryV1.prototype.updateJsonDocument = function(params, callback) {
   return this.updateDocument(params, callback);
 };
 
-
 /**
  * Update or partially update a document to create or replace an existing document
  * @param params
