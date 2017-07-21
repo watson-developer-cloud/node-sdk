@@ -205,7 +205,7 @@ ConversationV1.prototype.listCounterexamples = function(params, callback) {
  */
 ConversationV1.prototype.updateCounterexample = function(params, callback) {
   params = params || {};
-  const requiredParams = ['workspace_id', 'text', ];
+  const requiredParams = ['workspace_id', 'text', 'body'];
   const missingParams = helper.getMissingParams(params, requiredParams);
   if (missingParams) {
     callback(missingParams);
@@ -247,7 +247,7 @@ ConversationV1.prototype.updateCounterexample = function(params, callback) {
  */
 ConversationV1.prototype.createEntity = function(params, callback) {
   params = params || {};
-  const requiredParams = ['workspace_id', 'entity', ];
+  const requiredParams = ['workspace_id', 'entity'];
   const missingParams = helper.getMissingParams(params, requiredParams);
   if (missingParams) {
     callback(missingParams);
@@ -401,7 +401,7 @@ ConversationV1.prototype.listEntities = function(params, callback) {
  */
 ConversationV1.prototype.updateEntity = function(params, callback) {
   params = params || {};
-  const requiredParams = ['workspace_id', 'entity', ];
+  const requiredParams = ['workspace_id', 'entity', 'body'];
   const missingParams = helper.getMissingParams(params, requiredParams);
   if (missingParams) {
     callback(missingParams);
@@ -590,7 +590,7 @@ ConversationV1.prototype.listExamples = function(params, callback) {
  */
 ConversationV1.prototype.updateExample = function(params, callback) {
   params = params || {};
-  const requiredParams = ['workspace_id', 'intent', 'text', ];
+  const requiredParams = ['workspace_id', 'intent', 'text', 'body'];
   const missingParams = helper.getMissingParams(params, requiredParams);
   if (missingParams) {
     callback(missingParams);
@@ -630,7 +630,7 @@ ConversationV1.prototype.updateExample = function(params, callback) {
  */
 ConversationV1.prototype.createIntent = function(params, callback) {
   params = params || {};
-  const requiredParams = ['workspace_id', 'intent', ];
+  const requiredParams = ['workspace_id', 'intent'];
   const missingParams = helper.getMissingParams(params, requiredParams);
   if (missingParams) {
     callback(missingParams);
@@ -782,7 +782,7 @@ ConversationV1.prototype.listIntents = function(params, callback) {
  */
 ConversationV1.prototype.updateIntent = function(params, callback) {
   params = params || {};
-  const requiredParams = ['workspace_id', 'intent', ];
+  const requiredParams = ['workspace_id', 'intent', 'body'];
   const missingParams = helper.getMissingParams(params, requiredParams);
   if (missingParams) {
     callback(missingParams);
@@ -1056,7 +1056,7 @@ ConversationV1.prototype.listSynonyms = function(params, callback) {
  */
 ConversationV1.prototype.updateSynonym = function(params, callback) {
   params = params || {};
-  const requiredParams = ['workspace_id', 'entity', 'value', 'synonym', ];
+  const requiredParams = ['workspace_id', 'entity', 'value', 'synonym', 'body'];
   const missingParams = helper.getMissingParams(params, requiredParams);
   if (missingParams) {
     callback(missingParams);
@@ -1097,7 +1097,7 @@ ConversationV1.prototype.updateSynonym = function(params, callback) {
  */
 ConversationV1.prototype.createValue = function(params, callback) {
   params = params || {};
-  const requiredParams = ['workspace_id', 'entity', 'value', ];
+  const requiredParams = ['workspace_id', 'entity', 'value'];
   const missingParams = helper.getMissingParams(params, requiredParams);
   if (missingParams) {
     callback(missingParams);
@@ -1253,7 +1253,7 @@ ConversationV1.prototype.listValues = function(params, callback) {
  */
 ConversationV1.prototype.updateValue = function(params, callback) {
   params = params || {};
-  const requiredParams = ['workspace_id', 'entity', 'value', ];
+  const requiredParams = ['workspace_id', 'entity', 'value', 'body'];
   const missingParams = helper.getMissingParams(params, requiredParams);
   if (missingParams) {
     callback(missingParams);
