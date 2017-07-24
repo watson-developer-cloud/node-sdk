@@ -32,7 +32,7 @@ function ToneAnalyzerV3(options) {
   BaseService.call(this, options);
   // check if 'version_date' was provided
   if (typeof this._options.version_date === 'undefined') {
-    throw new Error('Argument error: version_date was not specified, use ');
+    throw new Error('Argument error: version_date was not specified, use ToneAnalyzerV3.VERSION_DATE_2016_05_19');
   }
   this._options.qs.version = options.version_date;
 }
@@ -41,6 +41,7 @@ ToneAnalyzerV3.prototype.name = 'tone_analyzer';
 ToneAnalyzerV3.prototype.version = 'v3';
 ToneAnalyzerV3.URL = 'https://gateway.watsonplatform.net/tone-analyzer/api';
 
+ToneAnalyzerV3.VERSION_DATE_2016_05_19 = '2016-05-19';
 
 /**
  * Analyze general purpose tone.
