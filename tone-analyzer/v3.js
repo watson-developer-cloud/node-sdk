@@ -118,4 +118,4 @@ ToneAnalyzerV3.prototype.toneChat = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
-module.exports = ToneAnalyzerV3
+module.exports = ToneAnalyzerV3;
