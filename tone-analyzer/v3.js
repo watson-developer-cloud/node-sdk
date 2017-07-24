@@ -86,7 +86,7 @@ ToneAnalyzerV3.prototype.tone = function(params, callback) {
 /**
  * Analyze customer engagement tone.
  *
- * Uses the customer engagement endpoint to analyze the tone of customer service and customer support conversations. For each utterance of a conversation, the method reports the most prevalent subset of the following seven tones: sad, frustrated, satisfied, excited, polite, impolite, and sympathetic. You can submit a maximum of 128 KB of JSON input. Per the JSON specification, the default character encoding for JSON content is effectively always UTF-8.   **Note**: The `tone_chat` method is currently beta functionality.
+ * Uses the customer engagement endpoint to analyze the tone of customer service and customer support conversations. For each utterance of a conversation, the method reports the most prevalent subset of the following seven tones: sad, frustrated, satisfied, excited, polite, impolite, and sympathetic. You can submit a maximum of 128 KB of JSON input. Per the JSON specification, the default character encoding for JSON content is effectively always UTF-8.
  *
  * @param {Object} params - The parameters to send to the service.
  * @param {Utterance[]} params.utterances - An array of `Utterance` objects that provides the input content that the service is to analyze.
