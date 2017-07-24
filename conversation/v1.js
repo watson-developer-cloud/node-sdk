@@ -205,7 +205,7 @@ ConversationV1.prototype.listCounterexamples = function(params, callback) {
  */
 ConversationV1.prototype.updateCounterexample = function(params, callback) {
   params = params || {};
-  const requiredParams = ['workspace_id', 'text', 'body'];
+  const requiredParams = ['workspace_id', 'text'];
   const missingParams = helper.getMissingParams(params, requiredParams);
   if (missingParams) {
     callback(missingParams);
@@ -401,7 +401,7 @@ ConversationV1.prototype.listEntities = function(params, callback) {
  */
 ConversationV1.prototype.updateEntity = function(params, callback) {
   params = params || {};
-  const requiredParams = ['workspace_id', 'entity', 'body'];
+  const requiredParams = ['workspace_id', 'entity'];
   const missingParams = helper.getMissingParams(params, requiredParams);
   if (missingParams) {
     callback(missingParams);
@@ -590,7 +590,7 @@ ConversationV1.prototype.listExamples = function(params, callback) {
  */
 ConversationV1.prototype.updateExample = function(params, callback) {
   params = params || {};
-  const requiredParams = ['workspace_id', 'intent', 'text', 'body'];
+  const requiredParams = ['workspace_id', 'intent', 'text'];
   const missingParams = helper.getMissingParams(params, requiredParams);
   if (missingParams) {
     callback(missingParams);
@@ -782,7 +782,7 @@ ConversationV1.prototype.listIntents = function(params, callback) {
  */
 ConversationV1.prototype.updateIntent = function(params, callback) {
   params = params || {};
-  const requiredParams = ['workspace_id', 'intent', 'body'];
+  const requiredParams = ['workspace_id', 'intent'];
   const missingParams = helper.getMissingParams(params, requiredParams);
   if (missingParams) {
     callback(missingParams);
@@ -1056,7 +1056,7 @@ ConversationV1.prototype.listSynonyms = function(params, callback) {
  */
 ConversationV1.prototype.updateSynonym = function(params, callback) {
   params = params || {};
-  const requiredParams = ['workspace_id', 'entity', 'value', 'synonym', 'body'];
+  const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
   const missingParams = helper.getMissingParams(params, requiredParams);
   if (missingParams) {
     callback(missingParams);
@@ -1253,7 +1253,7 @@ ConversationV1.prototype.listValues = function(params, callback) {
  */
 ConversationV1.prototype.updateValue = function(params, callback) {
   params = params || {};
-  const requiredParams = ['workspace_id', 'entity', 'value', 'body'];
+  const requiredParams = ['workspace_id', 'entity', 'value'];
   const missingParams = helper.getMissingParams(params, requiredParams);
   if (missingParams) {
     callback(missingParams);
