@@ -20,7 +20,6 @@ Node.js client library to use the [Watson Developer Cloud][wdc] services, a coll
     * [AlchemyLanguage](#alchemylanguage)
     * [AlchemyData News](#alchemydata-news)
     * [Authorization](#authorization)
-    * [Concept Insights](#concept-insights)
     * [Conversation](#conversation)
     * [Dialog](#dialog)
     * [Discovery](#discovery)
@@ -29,14 +28,13 @@ Node.js client library to use the [Watson Developer Cloud][wdc] services, a coll
     * [Natural Language Classifier](#natural-language-classifier)
     * [Natural Language Understanding](#natural-language-understanding)
     * [Personality Insights](#personality-insights)
-    * [Relationship Extraction](#relationship-extraction)
     * [Retrieve and Rank](#retrieve-and-rank)
     * [Speech to Text](#speech-to-text)
     * [Text to Speech](#text-to-speech)
     * [Tone Analyzer](#tone-analyzer)
     * [Tradeoff Analytics](#tradeoff-analytics)
-    * [Visual Insights](#visual-insights)
     * [Visual Recognition](#visual-recognition)
+    * [Removed Services](#removed-Services)
   * [Composing Services](#composing-services)
   * [Debug](#debug)
   * [Tests](#tests)
@@ -228,10 +226,6 @@ authorization.getToken(function (err, token) {
   }
 });
 ```
-
-### Concept Insights
-
-The [Concept Insights][concept_insights] has been deprecated, AlchemyLanguage's concept function can be used as a replacement for most Concept Insights use cases; therefore, we encourage existing Concept Insights service users to migrate to AlchemyLanguage.
 
 
 ### Conversation
@@ -465,11 +459,6 @@ personality_insights.profile({
 
 **Note:** Don't forget to update the `text` variable!
 
-
-### Relationship Extraction
-Relationship Extraction has been deprecated. If you want to continue using Relationship Extraction models, you can now access them with AlchemyLanguage. See the [migration guide][re_migration] for details.
-
-
 ### Retrieve and Rank
 Use the [Retrieve and Rank][retrieve_and_rank] service to enhance search results with machine learning.
 
@@ -614,9 +603,6 @@ tradeoff_analytics.dilemmas(params, function(err, res) {
 });
 ```
 
-### Visual Insights
-The Watson [Visual Insights][visual_insights] Service will be withdrawn. The Watson Visual Insights Service tile will be removed from the Bluemix catalog on July 3, 2016, after which you cannot provision new instances of this service.
-
 ### Visual Recognition
 Use the [Visual Recognition][visual_recognition] service to recognize the
 following picture.
@@ -643,6 +629,18 @@ visual_recognition.classify(params, function(err, res) {
     console.log(JSON.stringify(res, null, 2));
 });
 ```
+
+## Removed Services
+
+The following services are no longer available.
+
+* **AlchemyVision**: Visual Recognition replaced Alchemy Vision with improved billing and a superset of the original features
+* **Concept Insights**: AlchemyLanguage's concept function can be used as a replacement for most Concept Insights use cases; therefore, we encourage existing Concept Insights service users to migrate to AlchemyLanguage.
+* **Relationship Extraction**: You can now access Relationship Extraction models with AlchemyLanguage. See the [migration guide][re_migration] for details.
+* **Message Resonance**: Use Natural Language Understanding or Tone Analyzer to understand the emotions of your audience and messages.
+* **Question and Answer**: Use Conversation or Natural Language Classifier to identify intent and Retrieve and Rank to search for relevant documents.
+* **Visual Insights**: Use Visual Recognition to achieve a similar result
+* **Concept Expansion**: Use Natural Langue Understanding to extract concepts, entities, and more.
 
 ## Composing Services
 
