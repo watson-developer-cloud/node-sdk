@@ -71,7 +71,7 @@ ConversationV1.VERSION_DATE_2016_07_11 = '2016-07-11';
       ],
 ```
  *
- * @see http://www.ibm.com/watson/developercloud/doc/conversation/release-notes.html#20-september-2016
+ * @see https://console.bluemix.net/docs/services/conversation/release-notes.html#20September2016
  * @type {string}
  */
 ConversationV1.VERSION_DATE_2016_09_20 = '2016-09-20';
@@ -80,7 +80,7 @@ ConversationV1.VERSION_DATE_2016_09_20 = '2016-09-20';
  * 02/03 Update
  *
  * * Absolute scoring has now been enabled.
- * @see https://www.ibm.com/watson/developercloud/doc/conversation/irrelevant_utterance.html
+ * @see https://console.bluemix.net/docs/services/conversation/intents.html#absolute-scoring
  *
  * Old:
  ```json
@@ -120,7 +120,7 @@ ConversationV1.VERSION_DATE_2016_09_20 = '2016-09-20';
  "intents": []
  ```
  *
- * @see https://www.ibm.com/watson/developercloud/doc/conversation/release-notes.html#3-february-2017
+ * @see https://console.bluemix.net/docs/services/conversation/release-notes.html#3February2017
  * @type {string}
  */
 ConversationV1.VERSION_DATE_2017_02_03 = '2017-02-03';
