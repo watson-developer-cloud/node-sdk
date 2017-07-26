@@ -18,7 +18,6 @@ Node.js client library to use the [Watson Developer Cloud][wdc] services, a coll
   * [Examples](#examples)
   * [IBM Watson Services](#ibm-watson-services)
     * [AlchemyLanguage](#alchemylanguage)
-    * [AlchemyVision](#alchemyvision)
     * [AlchemyData News](#alchemydata-news)
     * [Authorization](#authorization)
     * [Concept Insights](#concept-insights)
@@ -180,9 +179,6 @@ alchemy_language.sentiment(params, function (err, response) {
     console.log(JSON.stringify(response, null, 2));
 });
 ```
-
-### AlchemyVision
-The AlchemyVision service has been replaced by the [Visual Recognition](#visual-recognition) service. Existing users have until May 20, 2017 to migrate to the new service, and no new instances may be created.
 
 ### AlchemyData News
 [Alchemy Data News][alchemy_data_news] indexes 250k to 300k English language news and blog articles every day with historical search available for the past 60 days.
