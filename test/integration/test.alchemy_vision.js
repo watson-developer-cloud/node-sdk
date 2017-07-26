@@ -47,11 +47,12 @@ describe('alchemy_vision_integration', function() {
     );
   });
 
-  it('getImageKeywordsWithFile()', function(done) {
+  // these parts of the service are currently down
+  it.skip('getImageKeywordsWithFile()', function(done) {
     alchemy_vision.getImageKeywords({ image: imageFile }, done);
   });
 
-  it('getImageKeywordsWithUrl()', function(done) {
+  it.skip('getImageKeywordsWithUrl()', function(done) {
     alchemy_vision.getImageKeywords(
       {
         url: 'https://watson-test-resources.mybluemix.net/resources/obama.jpg'
