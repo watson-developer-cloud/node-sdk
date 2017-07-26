@@ -32,7 +32,7 @@ function ConversationV1(options) {
 
   // Check if 'version_date' was provided
   if (typeof this._options.version_date === 'undefined') {
-    throw new Error('Argument error: version_date was not specified, use ConversationV1.VERSION_DATE_2017_04_21');
+    throw new Error('Argument error: version_date was not specified, use ConversationV1.VERSION_DATE_2017_05_26');
   }
   this._options.qs.version = options.version_date;
 }
@@ -132,6 +132,14 @@ ConversationV1.VERSION_DATE_2017_02_03 = '2017-02-03';
  * @type {string}
  */
 ConversationV1.VERSION_DATE_2017_04_21 = '2017-04-21';
+
+/**
+ * Schema changes for error response objects and workspace exporting
+ *
+ * @see https://console.bluemix.net/docs/services/conversation/release-notes.html#release-notes
+ * @type {string}
+ */
+ConversationV1.VERSION_DATE_2017_05_26 = '2017-05-26';
 
 /**
  * Method: message

@@ -240,7 +240,7 @@ var ConversationV1 = require('watson-developer-cloud/conversation/v1');
 var conversation = new ConversationV1({
   username: '<username>',
   password: '<password>',
-  version_date: ConversationV1.VERSION_DATE_2017_04_21
+  version_date: ConversationV1.VERSION_DATE_2017_05_26
 });
 
 conversation.message({
