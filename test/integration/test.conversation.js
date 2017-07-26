@@ -16,7 +16,7 @@ const TWO_SECONDS = 2000;
 
 const workspace = {
   name: 'integration test',
-  language: 'fr',
+  language: 'en',
   entities: [
     {
       entity: 'hello',
@@ -47,6 +47,7 @@ const intents = {
 const test_intents = [
   {
     intent: 'intent_1',
+    description: 'description_1',
     examples: [
       {
         text: 'Hi, here\'s a URL ☺ http://example.com/?a=$+*^;&c=%20#!"`~'
@@ -64,8 +65,8 @@ const test_intents_update = {
   ]
 };
 const test_examples_new = 'Oh, here\'s a URL ☺ http://example.com/?a=$+*^;&c=%20#!"`~';
-const counterExampleText = 'Hey, here\'s a URL ☺ http://example.com/?a=$+*^;&c=%20#!"`~';
-const counterExampleText_new = 'Oh, here\'s a URL ☺ http://example.com/?a=$+*^;&c=%20#!"`~';
+const counterexampleText = 'Hey, here\'s a URL ☺ http://example.com/?a=$+*^;&c=%20#!"`~';
+const counterexampleText_new = 'Oh, here\'s a URL ☺ http://example.com/?a=$+*^;&c=%20#!"`~';
 const test_entities = [
   {
     entity: 'entity_1',
@@ -249,7 +250,7 @@ describe('conversation_integration', function() {
         }
         workspace1.workspace_id = result.workspace_id;
         assert.equal(result.name, params.name);
-        assert.equal(result.language, 'fr');
+        assert.equal(result.language, 'en');
         assert.equal(result.metadata, params.metadata);
         assert.equal(result.description, params.description);
         done();
@@ -258,7 +259,7 @@ describe('conversation_integration', function() {
   });
 
   describe('updateWorkspace()', function() {
-    it('should update the workspace with intents and language', function(done) {
+    it('should update the workspace with intents', function(done) {
       const params = workspace1;
 
       conversation.updateWorkspace(params, function(err, result) {
@@ -291,28 +292,12 @@ describe('conversation_integration', function() {
     });
   });
 
-  describe('workspaceStatus()', function() {
-    it('should get the workspace status', function(done) {
-      const params = {
-        workspace_id: workspace1.workspace_id
-      };
-
-      conversation.workspaceStatus(params, function(err, result) {
-        if (err) {
-          return done(err);
-        }
-        assert.equal(result.workspace_id, workspace1.workspace_id);
-        assert.equal(result.training, true);
-        done();
-      });
-    });
-  });
-
   describe('createIntent()', function() {
     it('should create an intent', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
         intent: test_intents[0].intent,
+        description: test_intents[0].description,
         examples: test_intents[0].examples
       };
 
@@ -321,7 +306,7 @@ describe('conversation_integration', function() {
           return done(err);
         }
         assert.equal(result.intent, test_intents[0].intent);
-        assert.equal(result.description, null);
+        assert.equal(result.description, test_intents[0].description);
         done();
       });
     });
@@ -334,7 +319,7 @@ describe('conversation_integration', function() {
         export: true
       };
 
-      conversation.getIntents(params, function(err, result) {
+      conversation.listIntents(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -353,7 +338,7 @@ describe('conversation_integration', function() {
         sort: 'intent'
       };
 
-      conversation.getIntents(params, function(err, result) {
+      conversation.listIntents(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -375,7 +360,7 @@ describe('conversation_integration', function() {
           return done(err);
         }
         assert.equal(result.intent, test_intents[0].intent);
-        assert.equal(result.description, null);
+        assert.equal(result.description, test_intents[0].description);
         done();
       });
     });
@@ -385,10 +370,10 @@ describe('conversation_integration', function() {
     it('should update an intent of the workspace', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        old_intent: test_intents[0].intent,
-        intent: test_intents_update.intent,
-        description: test_intents_update.description,
-        examples: test_intents_update.examples
+        intent: test_intents[0].intent,
+        new_intent: test_intents_update.intent,
+        new_description: test_intents_update.description,
+        new_examples: test_intents_update.examples
       };
 
       conversation.updateIntent(params, function(err, result) {
@@ -408,7 +393,7 @@ describe('conversation_integration', function() {
         intent: test_intents_update.intent
       };
 
-      conversation.getExamples(params, function(err, result) {
+      conversation.listExamples(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -426,7 +411,7 @@ describe('conversation_integration', function() {
         sort: '-text'
       };
 
-      conversation.getExamples(params, function(err, result) {
+      conversation.listExamples(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -477,8 +462,8 @@ describe('conversation_integration', function() {
       const params = {
         workspace_id: workspace1.workspace_id,
         intent: test_intents_update.intent,
-        old_text: test_intents_update.examples[0].text,
-        text: test_examples_new
+        text: test_intents_update.examples[0].text,
+        new_text: test_examples_new
       };
 
       conversation.updateExample(params, function(err, result) {
@@ -524,55 +509,55 @@ describe('conversation_integration', function() {
     });
   });
 
-  describe('createCounterExample()', function() {
-    it('should return the newly created counterExample of the workspace', function(done) {
+  describe('createCounterexample()', function() {
+    it('should return the newly created counterexample of the workspace', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        text: counterExampleText
+        text: counterexampleText
       };
 
-      conversation.createCounterExample(params, function(err, result) {
+      conversation.createCounterexample(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.text, counterExampleText);
+        assert.equal(result.text, counterexampleText);
         done();
       });
     });
   });
 
-  describe('getCounterExample()', function() {
-    it('should return a counterExample', function(done) {
+  describe('getCounterexample()', function() {
+    it('should return a counterexample', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        text: counterExampleText
+        text: counterexampleText
       };
 
-      conversation.getCounterExample(params, function(err, result) {
+      conversation.getCounterexample(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.text, counterExampleText);
+        assert.equal(result.text, counterexampleText);
         done();
       });
     });
   });
 
-  describe('getCounterExamples()', function() {
-    it('should return counterExamples of the workspace', function(done) {
+  describe('listCounterexamples()', function() {
+    it('should return counterexamples of the workspace', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id
       };
 
-      conversation.getCounterExamples(params, function(err, result) {
+      conversation.listCounterexamples(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.counterexamples[0].text, counterExampleText);
+        assert.equal(result.counterexamples[0].text, counterexampleText);
         done();
       });
     });
-    it('should return counterExamples of the workspace with pagination', function(done) {
+    it('should return counterexamples of the workspace with pagination', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
         page_limit: 1,
@@ -580,43 +565,43 @@ describe('conversation_integration', function() {
         sort: 'text'
       };
 
-      conversation.getCounterExamples(params, function(err, result) {
+      conversation.listCounterexamples(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.counterexamples[0].text, counterExampleText);
+        assert.equal(result.counterexamples[0].text, counterexampleText);
         assert.equal(result.hasOwnProperty('pagination'), true);
         done();
       });
     });
   });
 
-  describe('updateCounterExample()', function() {
-    it('should return an updated counterExample', function(done) {
+  describe('updateCounterexample()', function() {
+    it('should return an updated counterexample', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        old_text: counterExampleText,
-        text: counterExampleText_new
+        text: counterexampleText,
+        new_text: counterexampleText_new
       };
 
-      conversation.updateCounterExample(params, function(err, result) {
+      conversation.updateCounterexample(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.text, counterExampleText_new);
+        assert.equal(result.text, counterexampleText_new);
         done();
       });
     });
   });
 
-  describe('deleteCounterExample()', function() {
-    it('should delete a counterExample', function(done) {
+  describe('deleteCounterexample()', function() {
+    it('should delete a counterexample', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        text: counterExampleText_new
+        text: counterexampleText_new
       };
 
-      conversation.deleteCounterExample(params, function(err, result) {
+      conversation.deleteCounterexample(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -645,14 +630,14 @@ describe('conversation_integration', function() {
     });
   });
 
-  describe('getEntities()', function() {
+  describe('listEntities()', function() {
     it('should get entities of the workspace', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
         export: true
       };
 
-      conversation.getEntities(params, function(err, result) {
+      conversation.listEntities(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -671,7 +656,7 @@ describe('conversation_integration', function() {
         sort: 'entity'
       };
 
-      conversation.getEntities(params, function(err, result) {
+      conversation.listEntities(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -704,9 +689,9 @@ describe('conversation_integration', function() {
     it('should update an entity of the workspace', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        old_entity: test_entities[0].entity,
-        entity: test_entities_update.entity,
-        values: test_entities_update.values,
+        entity: test_entities[0].entity,
+        new_entity: test_entities_update.entity,
+        new_values: test_entities_update.values,
         fuzzy_match: false
       };
 
@@ -740,7 +725,7 @@ describe('conversation_integration', function() {
     });
   });
 
-  describe('getValues()', function() {
+  describe('listValues()', function() {
     it('should get values of the entity', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
@@ -748,7 +733,7 @@ describe('conversation_integration', function() {
         export: true
       };
 
-      conversation.getValues(params, function(err, result) {
+      conversation.listValues(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -768,7 +753,7 @@ describe('conversation_integration', function() {
         sort: 'value'
       };
 
-      conversation.getValues(params, function(err, result) {
+      conversation.listValues(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -802,9 +787,9 @@ describe('conversation_integration', function() {
       const params = {
         workspace_id: workspace1.workspace_id,
         entity: test_entities_update.entity,
-        old_value: test_value.value,
-        value: test_value_update.value,
-        synonyms: test_value_update.synonyms
+        value: test_value.value,
+        new_value: test_value_update.value,
+        new_synonyms: test_value_update.synonyms
       };
 
       conversation.updateValue(params, function(err, result) {
@@ -836,7 +821,7 @@ describe('conversation_integration', function() {
     });
   });
 
-  describe('getSynonyms()', function() {
+  describe('listSynonyms()', function() {
     it('should get synonyms of the value', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
@@ -845,7 +830,7 @@ describe('conversation_integration', function() {
         export: true
       };
 
-      conversation.getSynonyms(params, function(err, result) {
+      conversation.listSynonyms(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -864,7 +849,7 @@ describe('conversation_integration', function() {
         include_count: true
       };
 
-      conversation.getSynonyms(params, function(err, result) {
+      conversation.listSynonyms(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -899,8 +884,8 @@ describe('conversation_integration', function() {
         workspace_id: workspace1.workspace_id,
         entity: test_entities_update.entity,
         value: test_value_update.value,
-        old_synonym: test_synonym,
-        synonym: test_synonym_update
+        synonym: test_synonym,
+        new_synonym: test_synonym_update
       };
 
       conversation.updateSynonym(params, function(err, result) {
@@ -913,7 +898,7 @@ describe('conversation_integration', function() {
     });
   });
 
-  describe('getLogs()', function() {
+  describe('listLogs()', function() {
     it('should return logs', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
@@ -921,7 +906,7 @@ describe('conversation_integration', function() {
         page_limit: 1
       };
 
-      conversation.getLogs(params, function(err, result) {
+      conversation.listLogs(params, function(err, result) {
         if (err) {
           return done(err);
         }

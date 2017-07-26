@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 IBM Corp. All Rights Reserved.
+ * Copyright 2017 IBM All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,23 +16,23 @@
 
 'use strict';
 
-const requestFactory = require('../lib/requestwrapper');
-const pick = require('object.pick');
-const util = require('util');
-const BaseService = require('../lib/base_service');
+const extend = require('extend')
+const pick = require('object.pick')
+const requestFactory = require('../lib/requestwrapper')
+const helper = require('../lib/helper')
+const util = require('util')
+const BaseService = require('../lib/base_service')
 
 /**
- *
  * @param {Object} options
- * @param {Object} options.version_date
+ * @param {String} options.version_date - Release date of the API version in YYYY-MM-DD format.
  * @constructor
  */
 function ConversationV1(options) {
   BaseService.call(this, options);
-
-  // Check if 'version_date' was provided
+  // check if 'version_date' was provided
   if (typeof this._options.version_date === 'undefined') {
-    throw new Error('Argument error: version_date was not specified, use ConversationV1.VERSION_DATE_2017_04_21');
+    throw new Error('Argument error: version_date was not specified, use ConversationV1.VERSION_DATE_2017_05_26');
   }
   this._options.qs.version = options.version_date;
 }
@@ -41,1498 +41,1428 @@ ConversationV1.prototype.name = 'conversation';
 ConversationV1.prototype.version = 'v1';
 ConversationV1.URL = 'https://gateway.watsonplatform.net/conversation/api';
 
-/**
- * Initial release
- * @type {string}
- */
+ConversationV1.VERSION_DATE_2017_05_26 = '2017-05-26';
+ConversationV1.VERSION_DATE_2017_04_21 = '2017-04-21';
+ConversationV1.VERSION_DATE_2017_02_03 = '2017-02-03';
+ConversationV1.VERSION_DATE_2016_09_20 = '2016-09-20';
 ConversationV1.VERSION_DATE_2016_07_11 = '2016-07-11';
 
 /**
- * 9/20 update made changes to response format
+ * Create counterexample.
  *
- * * context.system.dialog_stack changed from an array of strings to an array of objects
+ * Add a new counterexample to a workspace. Counterexamples are examples that have been marked as irrelevant input.
  *
- * Old:
-```json
- "context": {
-    "system": {
-      "dialog_stack": [
-        "root"
-      ],
-```
- * New:
-```json
- "context": {
-    "system": {
-      "dialog_stack": [
-        {
-          "dialog_node": "root"
-        }
-      ],
-```
- *
- * @see http://www.ibm.com/watson/developercloud/doc/conversation/release-notes.html#20-september-2016
- * @type {string}
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.text - The text of a user input marked as irrelevant input.
+ * @param {Function} [callback] - The callback that handles the response.
  */
-ConversationV1.VERSION_DATE_2016_09_20 = '2016-09-20';
+ConversationV1.prototype.createCounterexample = function(params, callback) {
+  params = params || {};
+  const requiredParams = ['workspace_id', 'text'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const body = { text: params.text };
+  const path = { workspace_id: params.workspace_id };
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/counterexamples',
+      method: 'POST',
+      json: true,
+      body: body,
+      path: path
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+        'content-type': 'application/json'
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
 
 /**
- * 02/03 Update
+ * Delete counterexample.
  *
- * * Absolute scoring has now been enabled.
- * @see https://www.ibm.com/watson/developercloud/doc/conversation/irrelevant_utterance.html
+ * Delete a counterexample from a workspace. Counterexamples are examples that have been marked as irrelevant input.
  *
- * Old:
- ```json
- "intents": [
-   { "intent" : "turn_off", "confidence" : 0.54 },
-   { "intent" : "locate_amenity", "confidence" : 0.4},
-   { "intent" : "weather", "confidence" : 0.06}
- ]
-```
- * Previously all intent confidence values summed to 1.0.
- * New:
-```json
- "intents": [
-   { "intent" : "turn_off", "confidence" : 0.54 },
-   { "intent" : "locate_amenity", "confidence" : 0.52},
-   { "intent" : "weather", "confidence" : 0.01}
- ]
-```
- * Now each intent is scored individually with a maximum confidence value of 1.
- *
- * * Irrelevant input detection.
- * Previously an intent was always returned regardless of whether the system considered it irrelevant to the
- * training data within the workspace. With Irrelevant input detection the system will now return an empty intent
- * array if the system thinks the input is irrelevant to the workspace content.
- * Old:
- ```json
- "input" : { "text" : "what color is the sky?"},
- "intents": [
- { "intent" : "weather", "confidence" : 0.36 },
- { "intent" : "turn_off", "confidence" : 0.33},
- { "intent" : "locate_amenity", "confidence" : 0.31}
- ]
- ```
- * New:
- ```json
- "input" : { "text" : "what color is the sky?"},
- "intents": []
- ```
- *
- * @see https://www.ibm.com/watson/developercloud/doc/conversation/release-notes.html#3-february-2017
- * @type {string}
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.text - The text of a user input counterexample (for example, `What are you wearing?`).
+ * @param {Function} [callback] - The callback that handles the response.
  */
-ConversationV1.VERSION_DATE_2017_02_03 = '2017-02-03';
+ConversationV1.prototype.deleteCounterexample = function(params, callback) {
+  params = params || {};
+  const requiredParams = ['workspace_id', 'text'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const path = { workspace_id: params.workspace_id, text: params.text };
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/counterexamples/{text}',
+      method: 'DELETE',
+      path: path
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
 
 /**
- * Adds support entities (with values and synonyms) and accessing logs
+ * Get counterexample.
  *
- * @see https://www.ibm.com/watson/developercloud/doc/conversation/release-notes.html#18-april-2017
- * @type {string}
+ * Get information about a counterexample. Counterexamples are examples that have been marked as irrelevant input.
+ *
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.text - The text of a user input counterexample (for example, `What are you wearing?`).
+ * @param {Function} [callback] - The callback that handles the response.
  */
-ConversationV1.VERSION_DATE_2017_04_21 = '2017-04-21';
+ConversationV1.prototype.getCounterexample = function(params, callback) {
+  params = params || {};
+  const requiredParams = ['workspace_id', 'text'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const path = { workspace_id: params.workspace_id, text: params.text };
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/counterexamples/{text}',
+      method: 'GET',
+      path: path
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
 
 /**
- * Method: message
+ * List counterexamples.
  *
- * Returns a response to a user utterance.
+ * List the counterexamples for a workspace. Counterexamples are examples that have been marked as irrelevant input.
  *
- * Example response for 2017-02-03 version_date:
-```json
- {
-   "intents": [
-     {
-       "intent": "turn_on",
-       "confidence": 0.999103316650195
-     }
-   ],
-   "entities": [
-     {
-       "entity": "appliance",
-       "location": [
-         12,
-         18
-       ],
-       "value": "light"
-     }
-   ],
-   "input": {
-     "text": "Turn on the lights"
-   },
-   "output": {
-     "log_messages": [],
-     "text": [
-       "Hi. It looks like a nice drive today. What would you like me to do?"
-     ],
-     "nodes_visited": [
-       "node_1_1467221909631"
-     ]
-   },
-   "context": {
-     "conversation_id": "820334ac-ee79-45b5-aa03-7958dcd0fd34",
-     "system": {
-       "dialog_stack": [
-         {
-           "dialog_node": "root"
-         }
-       ],
-       "dialog_turn_counter": 1,
-       "dialog_request_counter": 1
-     }
-   }
- }
-```
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {number} [params.page_limit] - The number of records to return in each page of results. The default page limit is 100.
+ * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
+ * @param {string} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
+ * @param {string} [params.cursor] - A token identifying the last value from the previous page of results.
+ * @param {Function} [callback] - The callback that handles the response.
+ */
+ConversationV1.prototype.listCounterexamples = function(params, callback) {
+  params = params || {};
+  const requiredParams = ['workspace_id'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const query = { page_limit: params.page_limit, include_count: params.include_count, sort: params.sort, cursor: params.cursor };
+  const path = { workspace_id: params.workspace_id };
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/counterexamples',
+      method: 'GET',
+      qs: query,
+      path: path
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Update counterexample.
+ *
+ * Update the text of a counterexample. Counterexamples are examples that have been marked as irrelevant input.
+ *
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.text - The text of a user input counterexample (for example, `What are you wearing?`).
+ * @param {string} [params.new_text] - The text of the example to be marked as irrelevant input.
+ * @param {Function} [callback] - The callback that handles the response.
+ */
+ConversationV1.prototype.updateCounterexample = function(params, callback) {
+  params = params || {};
+  const requiredParams = ['workspace_id', 'text'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const body = { text: params.new_text };
+  const path = { workspace_id: params.workspace_id, text: params.text };
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/counterexamples/{text}',
+      method: 'POST',
+      json: true,
+      body: body,
+      path: path
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+        'content-type': 'application/json'
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Create entity.
+ *
+ * Create a new entity.
+ *
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.entity - The name of the entity.
+ * @param {string} [params.description] - The description of the entity.
+ * @param {Object} [params.metadata] - Any metadata related to the value.
+ * @param {CreateValue[]} [params.values] - An array of entity values.
+ * @param {boolean} [params.fuzzy_match] - Whether to use fuzzy matching for the entity.
+ * @param {Function} [callback] - The callback that handles the response.
+ */
+ConversationV1.prototype.createEntity = function(params, callback) {
+  params = params || {};
+  const requiredParams = ['workspace_id', 'entity'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const body = { entity: params.entity, description: params.description, metadata: params.metadata, values: params.values, fuzzy_match: params.fuzzy_match };
+  const path = { workspace_id: params.workspace_id };
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities',
+      method: 'POST',
+      json: true,
+      body: body,
+      path: path
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+        'content-type': 'application/json'
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Delete entity.
+ *
+ * Delete an entity from a workspace.
+ *
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.entity - The name of the entity.
+ * @param {Function} [callback] - The callback that handles the response.
+ */
+ConversationV1.prototype.deleteEntity = function(params, callback) {
+  params = params || {};
+  const requiredParams = ['workspace_id', 'entity'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const path = { workspace_id: params.workspace_id, entity: params.entity };
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities/{entity}',
+      method: 'DELETE',
+      path: path
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Get entity.
+ *
+ * Get information about an entity, optionally including all entity content.
+ *
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.entity - The name of the entity.
+ * @param {boolean} [params.export] - Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`.
+ * @param {Function} [callback] - The callback that handles the response.
+ */
+ConversationV1.prototype.getEntity = function(params, callback) {
+  params = params || {};
+  const requiredParams = ['workspace_id', 'entity'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const query = { export: params.export };
+  const path = { workspace_id: params.workspace_id, entity: params.entity };
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities/{entity}',
+      method: 'GET',
+      qs: query,
+      path: path
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * List entities.
+ *
+ * List the entities for a workspace.
+ *
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {boolean} [params.export] - Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`.
+ * @param {number} [params.page_limit] - The number of records to return in each page of results. The default page limit is 100.
+ * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
+ * @param {string} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
+ * @param {string} [params.cursor] - A token identifying the last value from the previous page of results.
+ * @param {Function} [callback] - The callback that handles the response.
+ */
+ConversationV1.prototype.listEntities = function(params, callback) {
+  params = params || {};
+  const requiredParams = ['workspace_id'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const query = { export: params.export, page_limit: params.page_limit, include_count: params.include_count, sort: params.sort, cursor: params.cursor };
+  const path = { workspace_id: params.workspace_id };
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities',
+      method: 'GET',
+      qs: query,
+      path: path
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Update entity.
+ *
+ * Update an existing entity with new or modified data.
+ *
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.entity - The name of the entity.
+ * @param {string} [params.new_entity] - The name of the entity.
+ * @param {string} [params.new_description] - The description of the entity.
+ * @param {Object} [params.new_metadata] - Any metadata related to the entity.
+ * @param {boolean} [params.new_fuzzy_match] - Whether to use fuzzy matching for the entity.
+ * @param {CreateValue[]} [params.new_values] - An array of entity values.
+ * @param {Function} [callback] - The callback that handles the response.
+ */
+ConversationV1.prototype.updateEntity = function(params, callback) {
+  params = params || {};
+  const requiredParams = ['workspace_id', 'entity'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const body = { entity: params.new_entity, description: params.new_description, metadata: params.new_metadata, fuzzy_match: params.new_fuzzy_match, values: params.new_values };
+  const path = { workspace_id: params.workspace_id, entity: params.entity };
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities/{entity}',
+      method: 'POST',
+      json: true,
+      body: body,
+      path: path
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+        'content-type': 'application/json'
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Create user input example.
+ *
+ * Add a new user input example to an intent.
+ *
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.intent - The intent name (for example, `pizza_order`).
+ * @param {string} params.text - The text of a user input example.
+ * @param {Function} [callback] - The callback that handles the response.
+ */
+ConversationV1.prototype.createExample = function(params, callback) {
+  params = params || {};
+  const requiredParams = ['workspace_id', 'intent', 'text'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const body = { text: params.text };
+  const path = { workspace_id: params.workspace_id, intent: params.intent };
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples',
+      method: 'POST',
+      json: true,
+      body: body,
+      path: path
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+        'content-type': 'application/json'
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Delete user input example.
+ *
+ * Delete a user input example from an intent.
+ *
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.intent - The intent name (for example, `pizza_order`).
+ * @param {string} params.text - The text of the user input example.
+ * @param {Function} [callback] - The callback that handles the response.
+ */
+ConversationV1.prototype.deleteExample = function(params, callback) {
+  params = params || {};
+  const requiredParams = ['workspace_id', 'intent', 'text'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const path = { workspace_id: params.workspace_id, intent: params.intent, text: params.text };
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
+      method: 'DELETE',
+      path: path
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Get user input example.
+ *
+ * Get information about a user input example.
+ *
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.intent - The intent name (for example, `pizza_order`).
+ * @param {string} params.text - The text of the user input example.
+ * @param {Function} [callback] - The callback that handles the response.
+ */
+ConversationV1.prototype.getExample = function(params, callback) {
+  params = params || {};
+  const requiredParams = ['workspace_id', 'intent', 'text'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const path = { workspace_id: params.workspace_id, intent: params.intent, text: params.text };
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
+      method: 'GET',
+      path: path
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * List user input examples.
+ *
+ * List the user input examples for an intent.
+ *
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.intent - The intent name (for example, `pizza_order`).
+ * @param {number} [params.page_limit] - The number of records to return in each page of results. The default page limit is 100.
+ * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
+ * @param {string} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
+ * @param {string} [params.cursor] - A token identifying the last value from the previous page of results.
+ * @param {Function} [callback] - The callback that handles the response.
+ */
+ConversationV1.prototype.listExamples = function(params, callback) {
+  params = params || {};
+  const requiredParams = ['workspace_id', 'intent'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const query = { page_limit: params.page_limit, include_count: params.include_count, sort: params.sort, cursor: params.cursor };
+  const path = { workspace_id: params.workspace_id, intent: params.intent };
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples',
+      method: 'GET',
+      qs: query,
+      path: path
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Update user input example.
+ *
+ * Update the text of a user input example.
+ *
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.intent - The intent name (for example, `pizza_order`).
+ * @param {string} params.text - The text of the user input example.
+ * @param {string} [params.new_text] - The text of the user input example.
+ * @param {Function} [callback] - The callback that handles the response.
+ */
+ConversationV1.prototype.updateExample = function(params, callback) {
+  params = params || {};
+  const requiredParams = ['workspace_id', 'intent', 'text'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const body = { text: params.new_text };
+  const path = { workspace_id: params.workspace_id, intent: params.intent, text: params.text };
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
+      method: 'POST',
+      json: true,
+      body: body,
+      path: path
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+        'content-type': 'application/json'
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Create intent.
+ *
+ * Create a new intent.
+ *
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.intent - The name of the intent.
+ * @param {string} [params.description] - The description of the intent.
+ * @param {CreateExample[]} [params.examples] - An array of user input examples.
+ * @param {Function} [callback] - The callback that handles the response.
+ */
+ConversationV1.prototype.createIntent = function(params, callback) {
+  params = params || {};
+  const requiredParams = ['workspace_id', 'intent'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const body = { intent: params.intent, description: params.description, examples: params.examples };
+  const path = { workspace_id: params.workspace_id };
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/intents',
+      method: 'POST',
+      json: true,
+      body: body,
+      path: path
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+        'content-type': 'application/json'
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Delete intent.
+ *
+ * Delete an intent from a workspace.
+ *
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.intent - The intent name (for example, `pizza_order`).
+ * @param {Function} [callback] - The callback that handles the response.
+ */
+ConversationV1.prototype.deleteIntent = function(params, callback) {
+  params = params || {};
+  const requiredParams = ['workspace_id', 'intent'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const path = { workspace_id: params.workspace_id, intent: params.intent };
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/intents/{intent}',
+      method: 'DELETE',
+      path: path
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Get intent.
+ *
+ * Get information about an intent, optionally including all intent content.
+ *
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.intent - The intent name (for example, `pizza_order`).
+ * @param {boolean} [params.export] - Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`.
+ * @param {Function} [callback] - The callback that handles the response.
+ */
+ConversationV1.prototype.getIntent = function(params, callback) {
+  params = params || {};
+  const requiredParams = ['workspace_id', 'intent'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const query = { export: params.export };
+  const path = { workspace_id: params.workspace_id, intent: params.intent };
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/intents/{intent}',
+      method: 'GET',
+      qs: query,
+      path: path
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * List intents.
+ *
+ * List the intents for a workspace.
+ *
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {boolean} [params.export] - Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`.
+ * @param {number} [params.page_limit] - The number of records to return in each page of results. The default page limit is 100.
+ * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
+ * @param {string} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
+ * @param {string} [params.cursor] - A token identifying the last value from the previous page of results.
+ * @param {Function} [callback] - The callback that handles the response.
+ */
+ConversationV1.prototype.listIntents = function(params, callback) {
+  params = params || {};
+  const requiredParams = ['workspace_id'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const query = { export: params.export, page_limit: params.page_limit, include_count: params.include_count, sort: params.sort, cursor: params.cursor };
+  const path = { workspace_id: params.workspace_id };
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/intents',
+      method: 'GET',
+      qs: query,
+      path: path
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Update intent.
+ *
+ * Update an existing intent with new or modified data. You must provide data defining the content of the updated intent.
+ *
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.intent - The intent name (for example, `pizza_order`).
+ * @param {string} [params.new_intent] - The name of the intent.
+ * @param {string} [params.new_description] - The description of the intent.
+ * @param {CreateExample[]} [params.new_examples] - An array of user input examples for the intent.
+ * @param {Function} [callback] - The callback that handles the response.
+ */
+ConversationV1.prototype.updateIntent = function(params, callback) {
+  params = params || {};
+  const requiredParams = ['workspace_id', 'intent'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const body = { intent: params.new_intent, description: params.new_description, examples: params.new_examples };
+  const path = { workspace_id: params.workspace_id, intent: params.intent };
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/intents/{intent}',
+      method: 'POST',
+      json: true,
+      body: body,
+      path: path
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+        'content-type': 'application/json'
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * List log events.
  *
  *
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
+ * @param {string} [params.filter] - A cacheable parameter that limits the results to those matching the specified filter.
+ * @param {number} [params.page_limit] - The number of records to return in each page of results. The default page limit is 100.
+ * @param {string} [params.cursor] - A token identifying the last value from the previous page of results.
+ * @param {Function} [callback] - The callback that handles the response.
+ */
+ConversationV1.prototype.listLogs = function(params, callback) {
+  params = params || {};
+  const requiredParams = ['workspace_id'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const query = { sort: params.sort, filter: params.filter, page_limit: params.page_limit, cursor: params.cursor };
+  const path = { workspace_id: params.workspace_id };
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/logs',
+      method: 'GET',
+      qs: query,
+      path: path
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Get a response to a user's input.
  *
- * @param {Object} params
- * @param params.workspace_id
- * @param [params.input]
- * @param [params.context]
- * @param [params.alternate_intents=false] - includes other lower-confidence intents in the intents array.
- * @param [params.output]
- * @param [params.entities]
- * @param [params.intents]
  *
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.workspace_id - Unique identifier of the workspace.
+ * @param {InputData} [params.input] - An input object that includes the input text.
+ * @param {boolean} [params.alternate_intents] - Whether to return more than one intent. Set to `true` to return all matching intents.
+ * @param {Context} [params.context] - State information for the conversation. Continue a conversation by including the context object from the previous response.
+ * @param {RuntimeEntity[]} [params.entities] - Include the entities from the previous response when they do not need to change and to prevent Watson from trying to identify them.
+ * @param {RuntimeIntent[]} [params.intents] - An array of name-confidence pairs for the user input. Include the intents from the previous response when they do not need to change and to prevent Watson from trying to identify them.
+ * @param {OutputData} [params.output] - System output. Include the output from the request when you have several requests within the same Dialog turn to pass back in the intermediate information.
+ * @param {Function} [callback] - The callback that handles the response.
  */
 ConversationV1.prototype.message = function(params, callback) {
   params = params || {};
-
+  const requiredParams = ['workspace_id'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const body = { input: params.input, alternate_intents: params.alternate_intents, context: params.context, entities: params.entities, intents: params.intents, output: params.output };
+  const path = { workspace_id: params.workspace_id };
   const parameters = {
     options: {
       url: '/v1/workspaces/{workspace_id}/message',
       method: 'POST',
       json: true,
-      body: pick(params, ['input', 'context', 'alternate_intents', 'output', 'entities', 'intents']),
-      path: pick(params, ['workspace_id'])
+      body: body,
+      path: path
     },
-    requiredParams: ['workspace_id'],
-    defaultOptions: this._options
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+        'content-type': 'application/json'
+      }
+    })
   };
   return requestFactory(parameters, callback);
 };
 
 /**
- * Method: listWorkspaces
+ * Add entity value synonym.
  *
- * Returns the list of workspaces in Watson Conversation Service instance
+ * Add a new synonym to an entity value.
  *
- * Example Response:
-```json
- {
-   "workspaces": [
-     {
-       "name": "Pizza app",
-       "created": "2015-12-06T23:53:59.153Z",
-       "language": "en",
-       "metadata": {},
-       "updated": "2015-12-06T23:53:59.153Z",
-       "description": "Pizza app",
-       "workspace_id": "pizza_app-e0f3"
-     }
-   ]
- }
-```
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.entity - The name of the entity.
+ * @param {string} params.value - The text of the entity value.
+ * @param {string} params.synonym - The text of the synonym.
+ * @param {Function} [callback] - The callback that handles the response.
+ */
+ConversationV1.prototype.createSynonym = function(params, callback) {
+  params = params || {};
+  const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const body = { synonym: params.synonym };
+  const path = { workspace_id: params.workspace_id, entity: params.entity, value: params.value };
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms',
+      method: 'POST',
+      json: true,
+      body: body,
+      path: path
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+        'content-type': 'application/json'
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Delete entity value synonym.
  *
- * @param {Object} [params]
- * @param {Number} [params.page_limit]
- * @param {Boolean} [params.include_count]
- * @param {String} [params.sort]
- * @param {String} [params.cursor]
- * @param {Function} [callback]
+ * Delete a synonym for an entity value.
+ *
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.entity - The name of the entity.
+ * @param {string} params.value - The text of the entity value.
+ * @param {string} params.synonym - The text of the synonym.
+ * @param {Function} [callback] - The callback that handles the response.
+ */
+ConversationV1.prototype.deleteSynonym = function(params, callback) {
+  params = params || {};
+  const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const path = { workspace_id: params.workspace_id, entity: params.entity, value: params.value, synonym: params.synonym };
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}',
+      method: 'DELETE',
+      path: path
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Get entity value synonym.
+ *
+ * Get information about a synonym for an entity value.
+ *
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.entity - The name of the entity.
+ * @param {string} params.value - The text of the entity value.
+ * @param {string} params.synonym - The text of the synonym.
+ * @param {Function} [callback] - The callback that handles the response.
+ */
+ConversationV1.prototype.getSynonym = function(params, callback) {
+  params = params || {};
+  const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const path = { workspace_id: params.workspace_id, entity: params.entity, value: params.value, synonym: params.synonym };
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}',
+      method: 'GET',
+      path: path
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * List entity value synonyms.
+ *
+ * List the synonyms for an entity value.
+ *
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.entity - The name of the entity.
+ * @param {string} params.value - The text of the entity value.
+ * @param {number} [params.page_limit] - The number of records to return in each page of results. The default page limit is 100.
+ * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
+ * @param {string} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
+ * @param {string} [params.cursor] - A token identifying the last value from the previous page of results.
+ * @param {Function} [callback] - The callback that handles the response.
+ */
+ConversationV1.prototype.listSynonyms = function(params, callback) {
+  params = params || {};
+  const requiredParams = ['workspace_id', 'entity', 'value'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const query = { page_limit: params.page_limit, include_count: params.include_count, sort: params.sort, cursor: params.cursor };
+  const path = { workspace_id: params.workspace_id, entity: params.entity, value: params.value };
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms',
+      method: 'GET',
+      qs: query,
+      path: path
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Update entity value synonym.
+ *
+ * Update the information about a synonym for an entity value.
+ *
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.entity - The name of the entity.
+ * @param {string} params.value - The text of the entity value.
+ * @param {string} params.synonym - The text of the synonym.
+ * @param {string} [params.new_synonym] - The text of the synonym.
+ * @param {Function} [callback] - The callback that handles the response.
+ */
+ConversationV1.prototype.updateSynonym = function(params, callback) {
+  params = params || {};
+  const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const body = { synonym: params.new_synonym };
+  const path = { workspace_id: params.workspace_id, entity: params.entity, value: params.value, synonym: params.synonym };
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}',
+      method: 'POST',
+      json: true,
+      body: body,
+      path: path
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+        'content-type': 'application/json'
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Add entity value.
+ *
+ * Create a new value for an entity.
+ *
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.entity - The name of the entity.
+ * @param {string} params.value - The text of the entity value.
+ * @param {Object} [params.metadata] - Any metadata related to the entity value.
+ * @param {string[]} [params.synonyms] - An array of synonyms for the entity value.
+ * @param {Function} [callback] - The callback that handles the response.
+ */
+ConversationV1.prototype.createValue = function(params, callback) {
+  params = params || {};
+  const requiredParams = ['workspace_id', 'entity', 'value'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const body = { value: params.value, metadata: params.metadata, synonyms: params.synonyms };
+  const path = { workspace_id: params.workspace_id, entity: params.entity };
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values',
+      method: 'POST',
+      json: true,
+      body: body,
+      path: path
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+        'content-type': 'application/json'
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Delete entity value.
+ *
+ * Delete a value for an entity.
+ *
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.entity - The name of the entity.
+ * @param {string} params.value - The text of the entity value.
+ * @param {Function} [callback] - The callback that handles the response.
+ */
+ConversationV1.prototype.deleteValue = function(params, callback) {
+  params = params || {};
+  const requiredParams = ['workspace_id', 'entity', 'value'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const path = { workspace_id: params.workspace_id, entity: params.entity, value: params.value };
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}',
+      method: 'DELETE',
+      path: path
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Get entity value.
+ *
+ * Get information about an entity value.
+ *
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.entity - The name of the entity.
+ * @param {string} params.value - The text of the entity value.
+ * @param {boolean} [params.export] - Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`.
+ * @param {Function} [callback] - The callback that handles the response.
+ */
+ConversationV1.prototype.getValue = function(params, callback) {
+  params = params || {};
+  const requiredParams = ['workspace_id', 'entity', 'value'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const query = { export: params.export };
+  const path = { workspace_id: params.workspace_id, entity: params.entity, value: params.value };
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}',
+      method: 'GET',
+      qs: query,
+      path: path
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * List entity values.
+ *
+ * List the values for an entity.
+ *
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.entity - The name of the entity.
+ * @param {boolean} [params.export] - Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`.
+ * @param {number} [params.page_limit] - The number of records to return in each page of results. The default page limit is 100.
+ * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
+ * @param {string} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
+ * @param {string} [params.cursor] - A token identifying the last value from the previous page of results.
+ * @param {Function} [callback] - The callback that handles the response.
+ */
+ConversationV1.prototype.listValues = function(params, callback) {
+  params = params || {};
+  const requiredParams = ['workspace_id', 'entity'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const query = { export: params.export, page_limit: params.page_limit, include_count: params.include_count, sort: params.sort, cursor: params.cursor };
+  const path = { workspace_id: params.workspace_id, entity: params.entity };
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values',
+      method: 'GET',
+      qs: query,
+      path: path
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Update entity value.
+ *
+ * Update the content of a value for an entity.
+ *
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} params.entity - The name of the entity.
+ * @param {string} params.value - The text of the entity value.
+ * @param {string} [params.new_value] - The text of the entity value.
+ * @param {Object} [params.new_metadata] - Any metadata related to the entity value.
+ * @param {string[]} [params.new_synonyms] - An array of synonyms for the entity value.
+ * @param {Function} [callback] - The callback that handles the response.
+ */
+ConversationV1.prototype.updateValue = function(params, callback) {
+  params = params || {};
+  const requiredParams = ['workspace_id', 'entity', 'value'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const body = { value: params.new_value, metadata: params.new_metadata, synonyms: params.new_synonyms };
+  const path = { workspace_id: params.workspace_id, entity: params.entity, value: params.value };
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}',
+      method: 'POST',
+      json: true,
+      body: body,
+      path: path
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+        'content-type': 'application/json'
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Create workspace.
+ *
+ * Create a workspace based on component objects. You must provide workspace components defining the content of the new workspace.
+ *
+ * @param {Object} [params] - The parameters to send to the service.
+ * @param {string} [params.name] - The name of the workspace.
+ * @param {string} [params.description] - The description of the workspace.
+ * @param {string} [params.language] - The language of the workspace.
+ * @param {CreateIntent[]} [params.intents] - An array of objects defining the intents for the workspace.
+ * @param {CreateEntity[]} [params.entities] - An array of objects defining the entities for the workspace.
+ * @param {DialogNode[]} [params.dialog_nodes] - An array of objects defining the nodes in the workspace dialog.
+ * @param {CreateCounterexample[]} [params.counterexamples] - An array of objects defining input examples that have been marked as irrelevant input.
+ * @param {Object} [params.metadata] - Any metadata related to the workspace.
+ * @param {Function} [callback] - The callback that handles the response.
+ */
+ConversationV1.prototype.createWorkspace = function(params, callback) {
+  if (typeof params === 'function' && !callback) {
+    callback = params;
+    params = {};
+  }
+  const body = { name: params.name, description: params.description, language: params.language, intents: params.intents, entities: params.entities, dialog_nodes: params.dialog_nodes, counterexamples: params.counterexamples, metadata: params.metadata };
+  const parameters = {
+    options: {
+      url: '/v1/workspaces',
+      method: 'POST',
+      json: true,
+      body: body,
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+        'content-type': 'application/json'
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Delete workspace.
+ *
+ * Delete a workspace from the service instance.
+ *
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {Function} [callback] - The callback that handles the response.
+ */
+ConversationV1.prototype.deleteWorkspace = function(params, callback) {
+  params = params || {};
+  const requiredParams = ['workspace_id'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const path = { workspace_id: params.workspace_id };
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}',
+      method: 'DELETE',
+      path: path
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Get information about a workspace.
+ *
+ * Get information about a workspace, optionally including all workspace content.
+ *
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {boolean} [params.export] - Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`.
+ * @param {Function} [callback] - The callback that handles the response.
+ */
+ConversationV1.prototype.getWorkspace = function(params, callback) {
+  params = params || {};
+  const requiredParams = ['workspace_id'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const query = { export: params.export };
+  const path = { workspace_id: params.workspace_id };
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}',
+      method: 'GET',
+      qs: query,
+      path: path
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * List workspaces.
+ *
+ * List the workspaces associated with a Conversation service instance.
+ *
+ * @param {Object} [params] - The parameters to send to the service.
+ * @param {number} [params.page_limit] - The number of records to return in each page of results. The default page limit is 100.
+ * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
+ * @param {string} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
+ * @param {string} [params.cursor] - A token identifying the last value from the previous page of results.
+ * @param {Function} [callback] - The callback that handles the response.
  */
 ConversationV1.prototype.listWorkspaces = function(params, callback) {
   if (typeof params === 'function' && !callback) {
     callback = params;
-    params = null;
+    params = {};
   }
+  const query = { page_limit: params.page_limit, include_count: params.include_count, sort: params.sort, cursor: params.cursor };
   const parameters = {
     options: {
       url: '/v1/workspaces',
       method: 'GET',
-      qs: pick(params, ['page_limit', 'include_count', 'sort', 'cursor'])
+      qs: query,
     },
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Method: createWorkspace
- *
- * Creates a new workspace
- *
- * Model Schema
-```json
- {
-  "name": "string",
-  "description": "string",
-  "language": "string",
-  "metadata": {},
-  "counterexamples": [
-    {
-      "text": "string"
-    }
-  ],
-  "dialog_nodes": [
-    {
-      "dialog_node": "string",
-      "description": "string",
-      "conditions": "string",
-      "parent": "string",
-      "previous_sibling": "string",
-      "output": {
-        "text": "string"
-      },
-      "context": {},
-      "metadata": {},
-      "go_to": {
-        "dialog_node": "string",
-        "selector": "string",
-        "return": true
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
       }
-    }
-  ],
-  "entities": [
-    {
-      "entity": "string",
-      "description": {
-        "long": [
-          "string"
-        ],
-        "short": [
-          "string"
-        ],
-        "examples": [
-          "string"
-        ]
-      },
-      "type": "string",
-      "source": "string",
-      "open_list": false,
-      "values": [
-        {
-          "value": "string",
-          "metadata": {},
-          "synonyms": [
-            "string"
-          ]
-        }
-      ]
-    }
-  ],
-  "intents": [
-    {
-      "intent": "string",
-      "description": "string",
-      "examples": [
-        {
-          "text": "string"
-        }
-      ]
-    }
-  ]
- }
-```
- *
- * Example Response
-```json
- {
-  "name": "Pizza app",
-  "created": "2015-12-06T23:53:59.153Z",
-  "language": "en",
-  "metadata": {},
-  "updated": "2015-12-06T23:53:59.153Z",
-  "description": "Pizza app",
-  "workspace_id": "pizza_app-e0f3"
- }
-```
- *
- * @param  {Object}  params
- * @param {String} [params.name]
- * @param {String} [params.description]
- * @param {String} [params.language]
- * @param {Object} [params.metadata]
- * @param {Array<Object>} [params.entities]
- * @param {Array<Object>} [params.intents]
- * @param {Array<Object>} [params.dialog_nodes]
- * @param {Array<Object>} [params.counterexamples]
- * @param {Function} [callback]
- *
- */
-
-ConversationV1.prototype.createWorkspace = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v1/workspaces',
-      method: 'POST',
-      json: true,
-      body: pick(params, ['name', 'language', 'entities', 'intents', 'dialog_nodes', 'metadata', 'description', 'counterexamples'])
-    },
-    defaultOptions: this._options
+    })
   };
   return requestFactory(parameters, callback);
 };
 
 /**
- * Method: getWorkspace
+ * Update workspace.
  *
- * Returns information about a specified workspace or return the whole workspace
+ * Update an existing workspace with new or modified data. You must provide component objects defining the content of the updated workspace.
  *
- * Example Response (with default export value):
-```json
- {
-  "name": "Pizza app",
-  "created": "2015-12-06T23:53:59.153Z",
-  "language": "en",
-  "metadata": {},
-  "updated": "2015-12-06T23:53:59.153Z",
-  "description": "Pizza app",
-  "workspace_id": "pizza_app-e0f3"
- }
-```
- *
- * @param {Object} params
- * @param {String} params.workspace_id
- * @param {Boolean} [params.export=false] - if true, the full contents of all of the sub-resources are returned
- * @param {Function} [callback]
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.workspace_id - The workspace ID.
+ * @param {string} [params.name] - The name of the workspace.
+ * @param {string} [params.description] - The description of the workspace.
+ * @param {string} [params.language] - The language of the workspace.
+ * @param {CreateIntent[]} [params.intents] - An array of objects defining the intents for the workspace.
+ * @param {CreateEntity[]} [params.entities] - An array of objects defining the entities for the workspace.
+ * @param {DialogNode[]} [params.dialog_nodes] - An array of objects defining the nodes in the workspace dialog.
+ * @param {CreateCounterexample[]} [params.counterexamples] - An array of objects defining input examples that have been marked as irrelevant input.
+ * @param {Object} [params.metadata] - Any metadata related to the workspace.
+ * @param {Function} [callback] - The callback that handles the response.
  */
-
-ConversationV1.prototype.getWorkspace = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v1/workspaces/{workspace_id}',
-      method: 'GET',
-      json: true,
-      qs: pick(params, ['export']),
-      path: pick(params, ['workspace_id'])
-    },
-    requiredParams: ['workspace_id'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Method: deleteWorkspace
- *
- * Deletes the specified workspace
- *
- *
- * @param  {Object}   params   { workspace_id: '' }
- * @param params.workspace_id
- * @param {Function} [callback]
- */
-
-ConversationV1.prototype.deleteWorkspace = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v1/workspaces/{workspace_id}',
-      method: 'DELETE',
-      json: true,
-      path: pick(params, ['workspace_id'])
-    },
-    requiredParams: ['workspace_id'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Method: updateWorkspace
- *
- * Updates a workspace
- *
- * Example value
-```json
- {
-  "name": "Pizza app",
-  "created": "2015-12-06T23:53:59.153Z",
-  "language": "en",
-  "metadata": {},
-  "description": "Pizza app",
-  "workspace_id": "pizza_app-e0f3",
-  "counterexamples": [
-    {
-      "text": "string"
-    }
-  ],
-  "dialog_nodes": [
-    {
-      "dialog_node": "string",
-      "description": "string",
-      "conditions": "string",
-      "parent": "string",
-      "previous_sibling": "string",
-      "output": {
-        "text": "string"
-      },
-      "context": {},
-      "metadata": {},
-      "go_to": {
-        "dialog_node": "string",
-        "selector": "string",
-        "return": true
-      }
-    }
-  ],
-  "entities": [
-    {
-      "entity": "string",
-      "description": {
-        "long": [
-          "string"
-        ],
-        "short": [
-          "string"
-        ],
-        "examples": [
-          "string"
-        ]
-      },
-      "type": "string",
-      "source": "string",
-      "open_list": false,
-      "values": [
-        {
-          "value": "string",
-          "metadata": {},
-          "synonyms": [
-            "string"
-          ]
-        }
-      ]
-    }
-  ],
-  "intents": [
-    {
-      "intent": "string",
-      "description": "string",
-      "examples": [
-        {
-          "text": "string"
-        }
-      ]
-    }
-  ]
- }
-```
- *
- * Example Response:
-```json
- {
-  "name": "Pizza app",
-  "created": "2015-12-06T23:53:59.153Z",
-  "language": "en",
-  "metadata": {},
-  "updated": "2015-12-06T23:53:59.153Z",
-  "description": "Pizza app",
-  "workspace_id": "pizza_app-e0f3"
- }
-```
- *
- * @param {Object} params
- * @param {String} params.workspace_id
- * @param {String} [params.name]
- * @param {String} [params.description]
- * @param {String} [params.language]
- * @param {Object} [params.metadata]
- * @param {Array<Object>} [params.entities]
- * @param {Array<Object>} [params.intents]
- * @param {Array<Object>} [params.dialog_nodes]
- * @param {Array<Object>} [params.counterexamples]
- * @param {Function} [callback]
- *
- */
-
 ConversationV1.prototype.updateWorkspace = function(params, callback) {
   params = params || {};
-
+  const requiredParams = ['workspace_id'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const body = { name: params.name, description: params.description, language: params.language, intents: params.intents, entities: params.entities, dialog_nodes: params.dialog_nodes, counterexamples: params.counterexamples, metadata: params.metadata };
+  const path = { workspace_id: params.workspace_id };
   const parameters = {
     options: {
       url: '/v1/workspaces/{workspace_id}',
       method: 'POST',
       json: true,
-      body: pick(params, ['name', 'language', 'entities', 'intents', 'dialog_nodes', 'metadata', 'description', 'counterexamples']),
-      path: pick(params, ['workspace_id'])
+      body: body,
+      path: path
     },
-    requiredParams: ['workspace_id'],
-    defaultOptions: this._options
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+        'content-type': 'application/json'
+      }
+    })
   };
   return requestFactory(parameters, callback);
 };
 
-/**
- * Method: workspaceStatus
- *
- * Returns the training status of the specified workspace
- *
- * Example Response:
-```json
- {
-  "workspace_id": "pizza_app-e0f3",
-  "training": "true"
- }
-```
- *
- * @param {Object} params
- * @param params.workspace_id
- * @param {Function} [callback]
- *
- */
-
-ConversationV1.prototype.workspaceStatus = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v1/workspaces/{workspace_id}/status',
-      method: 'GET',
-      json: true,
-      path: pick(params, ['workspace_id'])
-    },
-    requiredParams: ['workspace_id'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Method: createIntent
- *
- * Create a new intent
- *
- * @param {Object} params
- * @param {String} params.workspace_id
- * @param {String} [params.intent]
- * @param {String} [params.description]
- * @param {Array<Object>} [params.examples]
- * @param {Function} [callback]
- *
- */
-ConversationV1.prototype.createIntent = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v1/workspaces/{workspace_id}/intents',
-      method: 'POST',
-      json: true,
-      path: pick(params, ['workspace_id']),
-      body: pick(params, ['intent', 'description', 'examples'])
-    },
-    requiredParams: ['workspace_id', 'intent'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Method: getIntents
- *
- * List the intents for a workspace.
- *
- * @param {Object} params
- * @param {String} params.workspace_id
- * @param {Boolean} [params.export=false] - if true, the full contents of all of the sub-resources are returned
- * @param {Number} [params.page_limit]
- * @param {Boolean} [params.include_count]
- * @param {String} [params.sort]
- * @param {String} [params.cursor]
- * @param {Function} [callback]
- *
- */
-ConversationV1.prototype.getIntents = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v1/workspaces/{workspace_id}/intents',
-      method: 'GET',
-      json: true,
-      path: pick(params, ['workspace_id']),
-      qs: pick(params, ['export', 'page_limit', 'include_count', 'sort', 'cursor'])
-    },
-    requiredParams: ['workspace_id'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Method: getIntent
- *
- * Get information about an intent, optionally including all intent content.
- *
- * @param {Object} params
- * @param {String} params.workspace_id
- * @param {String} params.intent
- * @param {Boolean} [params.export=false] - if true, the full contents of all of the sub-resources are returned
- * @param {Function} [callback]
- *
- */
-ConversationV1.prototype.getIntent = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v1/workspaces/{workspace_id}/intents/{intent}',
-      method: 'GET',
-      json: true,
-      path: pick(params, ['workspace_id', 'intent']),
-      qs: pick(params, ['export'])
-    },
-    requiredParams: ['workspace_id', 'intent'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Method: updateIntent
- *
- * Update an existing intent with new or modified data. You must provide JSON data defining the content of the updated intent.
- *
- * @param {Object} params
- * @param {String} params.workspace_id
- * @param {String} params.old_intent
- * @param {String} params.intent
- * @param {String} params.description
- * @param {Array<Object>} params.examples
- * @param {Function} [callback]
- *
- */
-ConversationV1.prototype.updateIntent = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v1/workspaces/{workspace_id}/intents/{old_intent}',
-      method: 'POST',
-      json: true,
-      path: pick(params, ['workspace_id', 'old_intent']),
-      body: pick(params, ['intent', 'description', 'examples'])
-    },
-    requiredParams: ['workspace_id', 'old_intent', 'intent'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Method: deleteIntent
- *
- * Delete an intent from a workspace
- *
- * @param {Object} params
- * @param {String} params.workspace_id
- * @param {String} params.intent
- * @param {Function} [callback]
- *
- */
-ConversationV1.prototype.deleteIntent = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v1/workspaces/{workspace_id}/intents/{intent}',
-      method: 'DELETE',
-      json: true,
-      path: pick(params, ['workspace_id', 'intent'])
-    },
-    requiredParams: ['workspace_id', 'intent'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Method: getExamples
- *
- * List the user input examples for an intent.
- *
- * @param {Object} params
- * @param {String} params.workspace_id
- * @param {String} params.intent
- * @param {Number} [params.page_limit]
- * @param {Boolean} [params.include_count]
- * @param {String} [params.sort]
- * @param {String} [params.cursor]
- * @param {Function} [callback]
- *
- */
-ConversationV1.prototype.getExamples = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples',
-      method: 'GET',
-      json: true,
-      path: pick(params, ['workspace_id', 'intent']),
-      qs: pick(params, ['page_limit', 'include_count', 'sort', 'cursor'])
-    },
-    requiredParams: ['workspace_id', 'intent'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Method: createExample
- *
- * Add a new user input example to an intent.
- *
- * @param {Object} params
- * @param {String} params.workspace_id
- * @param {String} params.intent
- * @param {String} params.text
- * @param {Function} [callback]
- *
- */
-ConversationV1.prototype.createExample = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples',
-      method: 'POST',
-      json: true,
-      path: pick(params, ['workspace_id', 'intent']),
-      body: pick(params, ['text'])
-    },
-    requiredParams: ['workspace_id', 'intent'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Method: deleteExample
- *
- * Delete a user input example from an intent.
- *
- * @param {Object} params
- * @param {String} params.workspace_id
- * @param {String} params.intent
- * @param {String} params.text
- * @param {Function} [callback]
- *
- */
-ConversationV1.prototype.deleteExample = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
-      method: 'DELETE',
-      json: true,
-      path: pick(params, ['workspace_id', 'intent', 'text'])
-    },
-    requiredParams: ['workspace_id', 'intent', 'text'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Method: getExample
- *
- * Get information about a user input example.
- *
- * @param {Object} params
- * @param {String} params.workspace_id
- * @param {String} params.intent
- * @param {String} params.text
- * @param {Function} [callback]
- *
- */
-ConversationV1.prototype.getExample = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
-      method: 'GET',
-      json: true,
-      path: pick(params, ['workspace_id', 'intent', 'text'])
-    },
-    requiredParams: ['workspace_id', 'intent', 'text'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Method: updateExample
- *
- * Update the text of a user input example.
- *
- * @param {Object} params
- * @param {String} params.workspace_id
- * @param {String} params.intent
- * @param {String} params.text
- * @param {Object} params.example
- * @param {Function} [callback]
- *
- */
-ConversationV1.prototype.updateExample = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{old_text}',
-      method: 'POST',
-      json: true,
-      path: pick(params, ['workspace_id', 'intent', 'old_text']),
-      body: pick(params, ['text'])
-    },
-    requiredParams: ['workspace_id', 'intent', 'old_text', 'text'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Method: getCounterExamples
- *
- * List the counterexamples for a workspace. Counterexamples are examples that have been marked as irrelevant input
- *
- * @param {Object} params
- * @param {String} params.workspace_id
- * @param {Number} [params.page_limit]
- * @param {Boolean} [params.include_count]
- * @param {String} [params.sort]
- * @param {String} [params.cursor]
- * @param {Function} [callback]
- *
- */
-ConversationV1.prototype.getCounterExamples = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v1/workspaces/{workspace_id}/counterexamples',
-      method: 'GET',
-      json: true,
-      path: pick(params, ['workspace_id']),
-      qs: pick(params, ['page_limit', 'include_count', 'sort', 'cursor'])
-    },
-    requiredParams: ['workspace_id'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Method: createCounterExample
- *
- * Add a new counterexample to a workspace. Counterexamples are examples that have been marked as irrelevant input.
- *
- * @param {Object} params
- * @param {String} params.workspace_id
- * @param {String} params.text The text of a user input example.
- * @param {Function} [callback]
- *
- */
-ConversationV1.prototype.createCounterExample = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v1/workspaces/{workspace_id}/counterexamples',
-      method: 'POST',
-      json: true,
-      path: pick(params, ['workspace_id']),
-      body: pick(params, ['text'])
-    },
-    requiredParams: ['workspace_id', 'text'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Method: deleteCounterExample
- *
- * Delete a counterexample from a workspace. Counterexamples are examples that have been marked as irrelevant input.
- *
- * @param {Object} params
- * @param {String} params.workspace_id
- * @param {String} params.text The text of a user input example.
- * @param {Function} [callback]
- *
- */
-ConversationV1.prototype.deleteCounterExample = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v1/workspaces/{workspace_id}/counterexamples/{text}',
-      method: 'DELETE',
-      json: true,
-      path: pick(params, ['workspace_id', 'text'])
-    },
-    requiredParams: ['workspace_id', 'text'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Method: getCounterExample
- *
- * Get information about a counterexample. Counterexamples are examples that have been marked as irrelevant input.
- *
- * @param {Object} params
- * @param {String} params.workspace_id
- * @param {String} params.text The text of a user input example.
- * @param {Function} [callback]
- *
- */
-ConversationV1.prototype.getCounterExample = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v1/workspaces/{workspace_id}/counterexamples/{text}',
-      method: 'GET',
-      json: true,
-      path: pick(params, ['workspace_id', 'text'])
-    },
-    requiredParams: ['workspace_id', 'text'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Method: updateCounterExample
- *
- * Get information about a counterexample. Counterexamples are examples that have been marked as irrelevant input.
- *
- * @param {Object} params
- * @param {String} params.workspace_id
- * @param {String} params.old_text
- * @param {String} params.text The text of a user input example.
- * @param {Function} [callback]
- *
- */
-ConversationV1.prototype.updateCounterExample = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v1/workspaces/{workspace_id}/counterexamples/{old_text}',
-      method: 'POST',
-      json: true,
-      path: pick(params, ['workspace_id', 'old_text']),
-      body: pick(params, ['text'])
-    },
-    requiredParams: ['workspace_id', 'old_text', 'text'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Method: createEntity
- *
- * Create a new entity
- *
- * @param {Object} params
- * @param {String} params.workspace_id
- * @param {String} [params.entity]
- * @param {String} [params.description]
- * @param {Object} [params.metadata]
- * @param {Boolean} [params.fuzzy_match=false] - whether to use fuzzy matching for the entity.
- * @param {Array<Object>} [params.values]
- * @param {Function} [callback]
- *
- */
-ConversationV1.prototype.createEntity = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v1/workspaces/{workspace_id}/entities',
-      method: 'POST',
-      json: true,
-      path: pick(params, ['workspace_id']),
-      body: pick(params, ['entity', 'description', 'metadata', 'values', 'fuzzy_match'])
-    },
-    requiredParams: ['workspace_id', 'entity'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Method: getEntities
- *
- * List the entities for a workspace.
- *
- * @param {Object} params
- * @param {String} params.workspace_id
- * @param {Boolean} [params.export=false] - if true, the full contents of all of the sub-resources are returned
- * @param {Number} [params.page_limit]
- * @param {Boolean} [params.include_count]
- * @param {String} [params.sort]
- * @param {String} [params.cursor]
- * @param {Function} [callback]
- *
- */
-ConversationV1.prototype.getEntities = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v1/workspaces/{workspace_id}/entities',
-      method: 'GET',
-      json: true,
-      path: pick(params, ['workspace_id']),
-      qs: pick(params, ['export', 'page_limit', 'include_count', 'sort', 'cursor'])
-    },
-    requiredParams: ['workspace_id'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Method: getEntity
- *
- * Get information about an entity, optionally including all entity content.
- *
- * @param {Object} params
- * @param {String} params.workspace_id
- * @param {String} params.entity
- * @param {Boolean} [params.export=false] - if true, the full contents of all of the sub-resources are returned
- * @param {Function} [callback]
- *
- */
-ConversationV1.prototype.getEntity = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v1/workspaces/{workspace_id}/entities/{entity}',
-      method: 'GET',
-      json: true,
-      path: pick(params, ['workspace_id', 'entity']),
-      qs: pick(params, ['export'])
-    },
-    requiredParams: ['workspace_id', 'entity'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Method: updateEntity
- *
- * Update an existing entity with new or modified data. You must provide JSON data defining the content of the updated entity.
- *
- * @param {Object} params
- * @param {String} params.workspace_id
- * @param {String} params.old_entity
- * @param {String} params.entity
- * @param {String} params.description
- * @param {Object} params.metadata
- * @param {Boolean} [params.fuzzy_match=false] - whether to use fuzzy matching for the entity.
- * @param {Array<Object>} params.values
- * @param {Function} [callback]
- *
- */
-ConversationV1.prototype.updateEntity = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v1/workspaces/{workspace_id}/entities/{old_entity}',
-      method: 'POST',
-      json: true,
-      path: pick(params, ['workspace_id', 'old_entity']),
-      body: pick(params, ['entity', 'description', 'metadata', 'values', 'fuzzy_match'])
-    },
-    requiredParams: ['workspace_id', 'old_entity', 'entity'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Method: deleteEntity
- *
- * Delete an entity from a workspace.
- *
- * @param {Object} params
- * @param {String} params.workspace_id
- * @param {String} params.entity
- * @param {Function} [callback]
- *
- */
-ConversationV1.prototype.deleteEntity = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v1/workspaces/{workspace_id}/entities/{entity}',
-      method: 'DELETE',
-      json: true,
-      path: pick(params, ['workspace_id', 'entity'])
-    },
-    requiredParams: ['workspace_id', 'entity'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Method: createValue
- *
- * Add a new value to an entity.
- *
- * @param {Object} params
- * @param {String} params.workspace_id
- * @param {String} [params.entity]
- * @param {String} [params.value]
- * @param {Object} [params.metadata]
- * @param {Array<String>} [params.synonyms]
- * @param {Function} [callback]
- *
- */
-ConversationV1.prototype.createValue = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values',
-      method: 'POST',
-      json: true,
-      path: pick(params, ['workspace_id', 'entity']),
-      body: pick(params, ['value', 'metadata', 'synonyms'])
-    },
-    requiredParams: ['workspace_id', 'entity', 'value'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Method: getValues
- *
- * List the values for an entity.
- *
- * @param {Object} params
- * @param {String} params.workspace_id
- * @param {String} params.entity
- * @param {Boolean} [params.export=false] - if true, the full contents of all of the sub-resources are returned
- * @param {Number} [params.page_limit]
- * @param {Boolean} [params.include_count]
- * @param {String} [params.sort]
- * @param {String} [params.cursor]
- * @param {Function} [callback]
- *
- */
-ConversationV1.prototype.getValues = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values',
-      method: 'GET',
-      json: true,
-      path: pick(params, ['workspace_id', 'entity']),
-      qs: pick(params, ['export', 'page_limit', 'include_count', 'sort', 'cursor'])
-    },
-    requiredParams: ['workspace_id', 'entity'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Method: getValue
- *
- * Get information about an entity value.
- *
- * @param {Object} params
- * @param {String} params.workspace_id
- * @param {String} params.entity
- * @param {String} params.value
- * @param {Boolean} [params.export=false] - if true, the full contents of all of the sub-resources are returned
- * @param {Function} [callback]
- *
- */
-ConversationV1.prototype.getValue = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}',
-      method: 'GET',
-      json: true,
-      path: pick(params, ['workspace_id', 'entity', 'value']),
-      qs: pick(params, ['export'])
-    },
-    requiredParams: ['workspace_id', 'entity', 'value'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Method: updateValue
- *
- * Update an existing entity value with new or modified data. You must provide JSON data defining the content of the updated entity value.
- *
- * @param {Object} params
- * @param {String} params.workspace_id
- * @param {String} params.entity
- * @param {String} params.old_value
- * @param {String} params.value
- * @param {Object} params.metadata
- * @param {Array<String>} params.synonyms
- * @param {Function} [callback]
- *
- */
-ConversationV1.prototype.updateValue = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{old_value}',
-      method: 'POST',
-      json: true,
-      path: pick(params, ['workspace_id', 'entity', 'old_value']),
-      body: pick(params, ['value', 'metadata', 'synonyms'])
-    },
-    requiredParams: ['workspace_id', 'entity', 'old_value', 'value'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Method: deleteValue
- *
- * Delete an entity from a workspace.
- *
- * @param {Object} params
- * @param {String} params.workspace_id
- * @param {String} params.entity
- * @param {String} params.value
- * @param {Function} [callback]
- *
- */
-ConversationV1.prototype.deleteValue = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}',
-      method: 'DELETE',
-      json: true,
-      path: pick(params, ['workspace_id', 'entity', 'value'])
-    },
-    requiredParams: ['workspace_id', 'entity', 'value'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Method: createSynonyms
- *
- * Add a new synonym to an entity value.
- *
- * @param {Object} params
- * @param {String} params.workspace_id
- * @param {String} [params.entity]
- * @param {String} [params.value]
- * @param {String} [params.synonym]
- * @param {Function} [callback]
- *
- */
-ConversationV1.prototype.createSynonym = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms',
-      method: 'POST',
-      json: true,
-      path: pick(params, ['workspace_id', 'entity', 'value']),
-      body: pick(params, ['synonym'])
-    },
-    requiredParams: ['workspace_id', 'entity', 'value', 'synonym'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Method: getSynonyms
- *
- * List the synonyms for an entity value.
- *
- * @param {Object} params
- * @param {String} params.workspace_id
- * @param {String} params.entity
- * @param {String} params.value
- * @param {Boolean} [params.export=false] - if true, the full contents of all of the sub-resources are returned
- * @param {Number} [params.page_limit]
- * @param {Boolean} [params.include_count]
- * @param {String} [params.sort]
- * @param {String} [params.cursor]
- * @param {Function} [callback]
- *
- */
-ConversationV1.prototype.getSynonyms = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms',
-      method: 'GET',
-      json: true,
-      path: pick(params, ['workspace_id', 'entity', 'value']),
-      qs: pick(params, ['export', 'page_limit', 'include_count', 'sort', 'cursor'])
-    },
-    requiredParams: ['workspace_id', 'entity', 'value'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Method: getSynonym
- *
- * Get information about an entity value.
- *
- * @param {Object} params
- * @param {String} params.workspace_id
- * @param {String} params.entity
- * @param {String} params.value
- * @param {String} params.synonym
- * @param {Boolean} [params.export=false] - if true, the full contents of all of the sub-resources are returned
- * @param {Function} [callback]
- *
- */
-ConversationV1.prototype.getSynonym = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}',
-      method: 'GET',
-      json: true,
-      path: pick(params, ['workspace_id', 'entity', 'value', 'synonym']),
-      qs: pick(params, ['export'])
-    },
-    requiredParams: ['workspace_id', 'entity', 'value', 'synonym'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Method: updateSynonym
- *
- * Update an existing entity value synonym with new text.
- *
- * @param {Object} params
- * @param {String} params.workspace_id
- * @param {String} params.entity
- * @param {String} params.value
- * @param {String} params.old_synonym
- * @param {String} params.synonym
- * @param {Function} [callback]
- *
- */
-ConversationV1.prototype.updateSynonym = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{old_synonym}',
-      method: 'POST',
-      json: true,
-      path: pick(params, ['workspace_id', 'entity', 'value', 'old_synonym']),
-      body: pick(params, ['synonym'])
-    },
-    requiredParams: ['workspace_id', 'entity', 'value', 'old_synonym', 'synonym'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Method: deleteSynonym
- *
- * Delete a synonym from an entity value.
- *
- * @param {Object} params
- * @param {String} params.workspace_id
- * @param {String} params.entity
- * @param {String} params.value
- * @param {String} params.synonym
- * @param {Function} [callback]
- *
- */
-ConversationV1.prototype.deleteSynonym = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}',
-      method: 'DELETE',
-      json: true,
-      path: pick(params, ['workspace_id', 'entity', 'value', 'synonym'])
-    },
-    requiredParams: ['workspace_id', 'entity', 'value', 'synonym'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Method: getLogs
- *
- * Returns information about requests (user input) received, and responses sent, by the workspace.
- *
- * @param {Object} params
- * @param {String} params.workspace_id
- * @param {String} params.filter
- * @param {Number} [params.page_limit]
- * @param {String} [params.sort]
- * @param {String} [params.cursor]
- * @param {Function} [callback]
- *
- */
-ConversationV1.prototype.getLogs = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v1/workspaces/{workspace_id}/logs',
-      method: 'GET',
-      json: true,
-      path: pick(params, ['workspace_id']),
-      qs: pick(params, ['filter', 'page_limit', 'sort', 'cursor'])
-    },
-    requiredParams: ['workspace_id'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-module.exports = ConversationV1;
+module.exports = ConversationV1

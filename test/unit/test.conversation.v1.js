@@ -96,7 +96,7 @@ describe('conversation-v1', function() {
         watson.conversation(service1);
       } catch (err) {
         threw = true;
-        assert.equal(err.message, 'Argument error: version_date was not specified, use ConversationV1.VERSION_DATE_2017_04_21');
+        assert.equal(err.message, 'Argument error: version_date was not specified, use ConversationV1.VERSION_DATE_2017_05_26');
       }
       assert(threw, 'should throw an error');
     });
