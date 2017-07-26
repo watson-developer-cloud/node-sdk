@@ -150,30 +150,43 @@ describe('speech_to_text', function() {
       speech_to_text.observeResult(null, missingParameter);
     });
 
-    it('should generate a valid payload', function() {
-      const path = '/v1/sessions/foo/observe_result';
-      nock(service.url).get(path).delay(300).reply(200, {});
+    it('should generate a valid payload', function(done) {
+      const expectation = nock('http://ibm.com:80', { encodedQueryParams: true })
+        .matchHeader('Cookie', /SESSIONID=bar/)
+        .get('/v1/sessions/foo/observe_result')
+        .reply(200, {});
 
-      let req = speech_to_text.observeResult(
+      speech_to_text.observeResult(
         {
           session_id: 'foo',
           cookie_session: 'bar'
         },
-        noop
+        err => {
+          assert.ifError(err);
+          assert(expectation.isDone());
+          done();
+        }
       );
-      assert.equal(req.path, path);
-      assert.ok(req._headers['cookie'].indexOf('SESSIONID=bar') !== -1);
+    });
 
-      req = speech_to_text.observeResult(
+    it('should generate a valid payload with interim_results enabled', function(done) {
+      const expectation = nock('http://ibm.com:80', { encodedQueryParams: true })
+        .matchHeader('Cookie', /SESSIONID=bar/)
+        .get('/v1/sessions/foo/observe_result?interim_results=true')
+        .reply(200, {});
+
+      speech_to_text.observeResult(
         {
           session_id: 'foo',
           cookie_session: 'bar',
           interim_results: true
         },
-        noop
+        err => {
+          assert.ifError(err);
+          assert(expectation.isDone());
+          done();
+        }
       );
-      assert.equal(req.path, path + '?interim_results=true');
-      assert.ok(req._headers['cookie'].indexOf('SESSIONID=bar') !== -1);
     });
   });
 
