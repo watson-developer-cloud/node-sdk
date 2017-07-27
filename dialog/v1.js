@@ -35,7 +35,7 @@ function DialogV1(options) {
   if (!options.silent) {
     // eslint-disable-next-line no-console
     console.warn(
-      'WARNING: The Dialog service was deprecated, existing instances of the service will continue to function until August 9, 2017. See https://www.ibm.com/watson/developercloud/doc/conversation/migration.shtml. Set {silent: true} to disable this message.'
+      'WARNING: The Dialog service was deprecated. Existing instances of the service stopped functioning on August 9, 2017. For information about the Conversation service that is replacing Dialog, see https://console.bluemix.net/docs/services/conversation/index.html#about. Set {silent: true} to disable this message.'
     );
   }
 }

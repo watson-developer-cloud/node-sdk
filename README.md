@@ -232,7 +232,7 @@ authorization.getToken(function (err, token) {
 
 Use the [Conversation][conversation] service to determine the intent of a message.
 
-Note: you must first create a workspace via Bluemix. See [the documentation](https://www.ibm.com/watson/developercloud/doc/conversation) for details.
+Note: you must first create a workspace via Bluemix. See [the documentation](https://console.bluemix.net/docs/services/conversation/index.html#about) for details.
 
 ```js
 var ConversationV1 = require('watson-developer-cloud/conversation/v1');
@@ -723,7 +723,7 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/maste
 [bluemix]: https://console.ng.bluemix.net
 [npm_link]: https://www.npmjs.com/package/watson-developer-cloud
 [request_github]: https://github.com/request/request
-[dialog_migration]: https://www.ibm.com/watson/developercloud/doc/conversation/migration.shtml
+[dialog_migration]: https://console.bluemix.net/docs/services/conversation/index.html#about
 
 [examples]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples
 [document_conversion_integration_example]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/document_conversion_integration.v1.js
