@@ -48,6 +48,7 @@ const util = require('util');
 const requestFactory = require('../lib/requestwrapper');
 const BaseService = require('../lib/base_service');
 const pick = require('object.pick');
+const isStream = require('isstream');
 
 /**
  *
@@ -388,6 +389,42 @@ DiscoveryV1.prototype.createCollection = function(params, callback) {
 };
 
 /**
+ * Update an existing collection
+ *
+ * @param {Object} params
+ * @param {String} params.environment_id environment guid for the collection
+ * @param {String} params.collection_id collection id for the collection to be updated
+ * @param {string} params.collection_name
+ * @param {string} params.description
+ * @param {string} params.configuration_id  configuration to create the collection in
+ * @param {string} params.language_code currently, only `en_us` is supported
+ */
+DiscoveryV1.prototype.updateCollection = function(params, callback) {
+  params = params || {};
+
+  params.language_code = params.language_code || 'en_us';
+
+  const parameters = {
+    options: {
+      url: '/v1/environments/{environment_id}/collections/{collection_id}',
+      method: 'PUT',
+      path: pick(params, ['environment_id', 'collection_id']),
+      multipart: [
+        {
+          'content-type': 'application/json',
+          body: JSON.stringify(pick(params, ['collection_name', 'description', 'configuration_id', 'language_code']))
+        }
+      ],
+      json: true
+    },
+    originalParams: params,
+    requiredParams: ['environment_id', 'collection_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
  * Delete a collection
  *
  * @param {Object} params
@@ -413,14 +450,68 @@ DiscoveryV1.prototype.deleteCollection = function(params, callback) {
 };
 
 /**
+ * Get list of unique fields associated with a collection
+ *
+ * @param {Object} params
+ * @param {String} params.environment_id in which the collection is located
+ * @param {string} params.collection_id for which fields are required
+ */
+DiscoveryV1.prototype.getCollectionFields = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/environments/{environment_id}/collections/{collection_id}/fields',
+      method: 'GET',
+      path: pick(params, ['environment_id', 'collection_id']),
+      json: true
+    },
+    requiredParams: ['environment_id', 'collection_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Ensures a filename is always set because discovery ignores documents that do not have a filename set.
+ * @param file
+ * @private
+ */
+DiscoveryV1._ensureFilename = function(file) {
+  // no changes needed for streams created by fs.ReadStream (or similar looking streams)
+  if (isStream.isReadable(file) &amp;&amp; file.path) {
+    return file;
+  }
+
+  // next handle request-style value/options objects
+  if (file &amp;&amp; file.hasOwnProperty('value') &amp;&amp; file.hasOwnProperty('options')) {
+    if (file.options.filename) {
+      return file;
+    }
+    return {
+      value: file.value,
+      options: Object.assign({ filename: '_' }, file.options)
+    };
+  }
+
+  // finally, handle all other cases by wrapping them in a request-style value/options object
+  return {
+    value: file,
+    options: {
+      filename: '_'
+    }
+  };
+};
+
+/**
  * Add a document to a collection
- * @param params
+ * @param {object} params
  * @param {String} params.environment_id environment guid for the collection
  * @param {string} params.collection_id the guid of the collection to delete
- * @param {Buffer|ReadableStream|Object} params.file a file to post (smaller than 50mb)
+ * @param {Buffer|ReadableStream|Object} params.file a file to post (smaller than 50mb). In some cases you will need to supply an object with {value: data, options: {contentType: /...'}}
  * @param {string} [params.configuration_id] config guid
- * @param {string} [params.metadata] file metadata, including content-type (will infer if missing)
- * @param callback
+ * @param {object} [params.metadata] JSON object with file metadata
+ * @param {function} callback
  * @return {ReadableStream|undefined}
  */
 DiscoveryV1.prototype.addDocument = function(params, callback) {
@@ -429,18 +520,13 @@ DiscoveryV1.prototype.addDocument = function(params, callback) {
   const queryParams = pick(params, ['configuration_id']);
   const formDataParams = pick(params, ['file', 'metadata']);
 
-  // if we get a buffer or object, we need to include stuff about filename for the service
+  // Discovery only accepts files that have a filename specified
   if (formDataParams.file) {
-    if (
-      typeof formDataParams.file.filename !== 'string' &amp;&amp;
-      !(formDataParams.file.options &amp;&amp; typeof formDataParams.file.options.filename !== 'string') &amp;&amp;
-      !(formDataParams.file.path &amp;&amp; typeof formDataParams.file.path !== 'string') &amp;&amp;
-      !(formDataParams.file.name &amp;&amp; typeof formDataParams.file.name !== 'string')
-    ) {
-      const filedat = formDataParams.file;
-      // the filename used below is because the name must exist
-      formDataParams.file = { value: filedat, options: { filename: '_' } };
-    }
+    formDataParams.file = DiscoveryV1._ensureFilename(formDataParams.file);
+  }
+
+  if (formDataParams.metadata &amp;&amp; typeof formDataParams.metadata === 'object') {
+    formDataParams.metadata = JSON.stringify(formDataParams.metadata);
   }
 
   const parameters = {
@@ -452,10 +538,57 @@ DiscoveryV1.prototype.addDocument = function(params, callback) {
       formData: formDataParams,
       json: true
     },
-    requiredParams: ['environment_id', 'collection_id', 'file'],
+    requiredParams: ['environment_id', 'collection_id'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
+};
+
+/**
+ * Helper method, similar to updateDocument except that the file param expects a JSON object
+ * @param {object} params
+ * @param {String} params.environment_id environment guid for the collection
+ * @param {string} params.collection_id the guid of the collection to delete
+ * @param {Object} params.file non-stringified JSON object
+ * @param {string} [params.configuration_id] config guid
+ * @param {object} [params.metadata] JSON object with file metadata
+ * @param {function} callback
+ * @return {ReadableStream|undefined}
+ */
+DiscoveryV1.prototype.addJsonDocument = function(params, callback) {
+  params = Object.assign({}, params, {
+    file: {
+      value: JSON.stringify(params.file),
+      options: {
+        filename: '_.json'
+      }
+    }
+  });
+  return this.addDocument(params, callback);
+};
+
+/**
+ * Update or partially update a document to create or replace an existing document
+ * @param params
+ * @param {String} params.environment_id environment guid for the collection
+ * @param {string} params.collection_id the guid of the collection
+ * @param {string} params.document_id the guid of the document to update
+ * @param {Object} params.file non-stringified JSON object
+ * @param {string} [params.configuration_id] config guid
+ * @param {object} [params.metadata] file metadata, including content-type (will infer if missing)
+ * @param callback
+ * @return {ReadableStream|undefined}
+ */
+DiscoveryV1.prototype.updateJsonDocument = function(params, callback) {
+  params = Object.assign({}, params, {
+    file: {
+      value: JSON.stringify(params.file),
+      options: {
+        filename: '_.json'
+      }
+    }
+  });
+  return this.updateDocument(params, callback);
 };
 
 /**
@@ -466,7 +599,7 @@ DiscoveryV1.prototype.addDocument = function(params, callback) {
  * @param {string} params.document_id the guid of the document to update
  * @param {Buffer|ReadableStream|Object} params.file a file to post (smaller than 50mb)
  * @param {string} [params.configuration_id] config guid
- * @param {string} [params.metadata] file metadata, including content-type (will infer if missing)
+ * @param {object} [params.metadata] file metadata, including content-type (will infer if missing)
  * @param callback
  * @return {ReadableStream|undefined}
  */
@@ -476,18 +609,13 @@ DiscoveryV1.prototype.updateDocument = function(params, callback) {
   const queryParams = pick(params, ['configuration_id']);
   const formDataParams = pick(params, ['file', 'metadata']);
 
-  // if we get a buffer or object, we need to include stuff about filename for the service
+  // Discovery only accepts files that have a filename specified
   if (formDataParams.file) {
-    if (
-      typeof formDataParams.file.filename !== 'string' &amp;&amp;
-      !(formDataParams.file.options &amp;&amp; typeof formDataParams.file.options.filename !== 'string') &amp;&amp;
-      !(formDataParams.file.path &amp;&amp; typeof formDataParams.file.path !== 'string') &amp;&amp;
-      !(formDataParams.file.name &amp;&amp; typeof formDataParams.file.name !== 'string')
-    ) {
-      const filedat = formDataParams.file;
-      // the filename used below is because the name must exist
-      formDataParams.file = { value: filedat, options: { filename: '_' } };
-    }
+    formDataParams.file = DiscoveryV1._ensureFilename(formDataParams.file);
+  }
+
+  if (formDataParams.metadata &amp;&amp; typeof formDataParams.metadata === 'object') {
+    formDataParams.metadata = JSON.stringify(formDataParams.metadata);
   }
 
   const parameters = {
@@ -579,13 +707,13 @@ module.exports = DiscoveryV1;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-watson-developer-cloud.html">watson-developer-cloud</a></li></ul><h3>Classes</h3><ul><li><a href="AlchemyDataNewsV1.html">AlchemyDataNewsV1</a></li><li><a href="AlchemyLanguageV1.html">AlchemyLanguageV1</a></li><li><a href="AlchemyVisionV1.html">AlchemyVisionV1</a></li><li><a href="AuthorizationV1.html">AuthorizationV1</a></li><li><a href="ConversationV1.html">ConversationV1</a></li><li><a href="ConversationV1Experimental.html">ConversationV1Experimental</a></li><li><a href="DialogV1.html">DialogV1</a></li><li><a href="DiscoveryV1.html">DiscoveryV1</a></li><li><a href="DiscoveryV1Experimental.html">DiscoveryV1Experimental</a></li><li><a href="DocumentConversionV1.html">DocumentConversionV1</a></li><li><a href="LanguageTranslationV2.html">LanguageTranslationV2</a></li><li><a href="LanguageTranslatorV2.html">LanguageTranslatorV2</a></li><li><a href="NaturalLanguageClassifierV1.html">NaturalLanguageClassifierV1</a></li><li><a href="NaturalLanguageUnderstandingV1.html">NaturalLanguageUnderstandingV1</a></li><li><a href="PersonalityInsightsV2.html">PersonalityInsightsV2</a></li><li><a href="PersonalityInsightsV3.html">PersonalityInsightsV3</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RetrieveAndRankV1.html">RetrieveAndRankV1</a></li><li><a href="SpeechToTextV1.html">SpeechToTextV1</a></li><li><a href="TextToSpeechV1.html">TextToSpeechV1</a></li><li><a href="ToneAnalyzerV3.html">ToneAnalyzerV3</a></li><li><a href="TradeoffAnalyticsV1.html">TradeoffAnalyticsV1</a></li><li><a href="VisualRecognitionV3.html">VisualRecognitionV3</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:close">close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li><li><a href="RecognizeStream.html#event:speaker_labels">speaker_labels</a></li></ul><h3>Global</h3><ul><li><a href="global.html#createRequest">createRequest</a></li><li><a href="global.html#detectContentType">detectContentType</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-watson-developer-cloud.html">watson-developer-cloud</a></li></ul><h3>Classes</h3><ul><li><a href="AlchemyDataNewsV1.html">AlchemyDataNewsV1</a></li><li><a href="AlchemyLanguageV1.html">AlchemyLanguageV1</a></li><li><a href="AuthorizationV1.html">AuthorizationV1</a></li><li><a href="ConversationV1.html">ConversationV1</a></li><li><a href="ConversationV1Experimental.html">ConversationV1Experimental</a></li><li><a href="DialogV1.html">DialogV1</a></li><li><a href="DiscoveryV1.html">DiscoveryV1</a></li><li><a href="DiscoveryV1Experimental.html">DiscoveryV1Experimental</a></li><li><a href="DocumentConversionV1.html">DocumentConversionV1</a></li><li><a href="LanguageTranslationV2.html">LanguageTranslationV2</a></li><li><a href="LanguageTranslatorV2.html">LanguageTranslatorV2</a></li><li><a href="NaturalLanguageClassifierV1.html">NaturalLanguageClassifierV1</a></li><li><a href="NaturalLanguageUnderstandingV1.html">NaturalLanguageUnderstandingV1</a></li><li><a href="PersonalityInsightsV2.html">PersonalityInsightsV2</a></li><li><a href="PersonalityInsightsV3.html">PersonalityInsightsV3</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RetrieveAndRankV1.html">RetrieveAndRankV1</a></li><li><a href="SpeechToTextV1.html">SpeechToTextV1</a></li><li><a href="TextToSpeechV1.html">TextToSpeechV1</a></li><li><a href="ToneAnalyzerV3.html">ToneAnalyzerV3</a></li><li><a href="TradeoffAnalyticsV1.html">TradeoffAnalyticsV1</a></li><li><a href="VisualRecognitionV3.html">VisualRecognitionV3</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:close">close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li><li><a href="RecognizeStream.html#event:speaker_labels">speaker_labels</a></li></ul><h3>Global</h3><ul><li><a href="global.html#createRequest">createRequest</a></li><li><a href="global.html#detectContentType">detectContentType</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu May 25 2017 19:31:44 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Thu Jul 27 2017 02:55:08 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>

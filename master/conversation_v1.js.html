@@ -60,7 +60,7 @@ function ConversationV1(options) {
 
   // Check if 'version_date' was provided
   if (typeof this._options.version_date === 'undefined') {
-    throw new Error('Argument error: version_date was not specified, use ConversationV1.VERSION_DATE_2017_04_21');
+    throw new Error('Argument error: version_date was not specified, use ConversationV1.VERSION_DATE_2017_05_26');
   }
   this._options.qs.version = options.version_date;
 }
@@ -99,7 +99,7 @@ ConversationV1.VERSION_DATE_2016_07_11 = '2016-07-11';
       ],
 ```
  *
- * @see http://www.ibm.com/watson/developercloud/doc/conversation/release-notes.html#20-september-2016
+ * @see https://console.bluemix.net/docs/services/conversation/release-notes.html#20September2016
  * @type {string}
  */
 ConversationV1.VERSION_DATE_2016_09_20 = '2016-09-20';
@@ -108,7 +108,7 @@ ConversationV1.VERSION_DATE_2016_09_20 = '2016-09-20';
  * 02/03 Update
  *
  * * Absolute scoring has now been enabled.
- * @see https://www.ibm.com/watson/developercloud/doc/conversation/irrelevant_utterance.html
+ * @see https://console.bluemix.net/docs/services/conversation/intents.html#absolute-scoring
  *
  * Old:
  ```json
@@ -148,7 +148,7 @@ ConversationV1.VERSION_DATE_2016_09_20 = '2016-09-20';
  "intents": []
  ```
  *
- * @see https://www.ibm.com/watson/developercloud/doc/conversation/release-notes.html#3-february-2017
+ * @see https://console.bluemix.net/docs/services/conversation/release-notes.html#3February2017
  * @type {string}
  */
 ConversationV1.VERSION_DATE_2017_02_03 = '2017-02-03';
@@ -160,6 +160,14 @@ ConversationV1.VERSION_DATE_2017_02_03 = '2017-02-03';
  * @type {string}
  */
 ConversationV1.VERSION_DATE_2017_04_21 = '2017-04-21';
+
+/**
+ * Schema changes for error response objects and workspace exporting
+ *
+ * @see https://console.bluemix.net/docs/services/conversation/release-notes.html#release-notes
+ * @type {string}
+ */
+ConversationV1.VERSION_DATE_2017_05_26 = '2017-05-26';
 
 /**
  * Method: message
@@ -1080,6 +1088,7 @@ ConversationV1.prototype.updateCounterExample = function(params, callback) {
  * @param {String} [params.entity]
  * @param {String} [params.description]
  * @param {Object} [params.metadata]
+ * @param {Boolean} [params.fuzzy_match=false] - whether to use fuzzy matching for the entity.
  * @param {Array&lt;Object>} [params.values]
  * @param {Function} [callback]
  *
@@ -1093,7 +1102,7 @@ ConversationV1.prototype.createEntity = function(params, callback) {
       method: 'POST',
       json: true,
       path: pick(params, ['workspace_id']),
-      body: pick(params, ['entity', 'description', 'metadata', 'values'])
+      body: pick(params, ['entity', 'description', 'metadata', 'values', 'fuzzy_match'])
     },
     requiredParams: ['workspace_id', 'entity'],
     defaultOptions: this._options
@@ -1173,6 +1182,7 @@ ConversationV1.prototype.getEntity = function(params, callback) {
  * @param {String} params.entity
  * @param {String} params.description
  * @param {Object} params.metadata
+ * @param {Boolean} [params.fuzzy_match=false] - whether to use fuzzy matching for the entity.
  * @param {Array&lt;Object>} params.values
  * @param {Function} [callback]
  *
@@ -1186,7 +1196,7 @@ ConversationV1.prototype.updateEntity = function(params, callback) {
       method: 'POST',
       json: true,
       path: pick(params, ['workspace_id', 'old_entity']),
-      body: pick(params, ['entity', 'description', 'metadata', 'values'])
+      body: pick(params, ['entity', 'description', 'metadata', 'values', 'fuzzy_match'])
     },
     requiredParams: ['workspace_id', 'old_entity', 'entity'],
     defaultOptions: this._options
@@ -1572,13 +1582,13 @@ module.exports = ConversationV1;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-watson-developer-cloud.html">watson-developer-cloud</a></li></ul><h3>Classes</h3><ul><li><a href="AlchemyDataNewsV1.html">AlchemyDataNewsV1</a></li><li><a href="AlchemyLanguageV1.html">AlchemyLanguageV1</a></li><li><a href="AlchemyVisionV1.html">AlchemyVisionV1</a></li><li><a href="AuthorizationV1.html">AuthorizationV1</a></li><li><a href="ConversationV1.html">ConversationV1</a></li><li><a href="ConversationV1Experimental.html">ConversationV1Experimental</a></li><li><a href="DialogV1.html">DialogV1</a></li><li><a href="DiscoveryV1.html">DiscoveryV1</a></li><li><a href="DiscoveryV1Experimental.html">DiscoveryV1Experimental</a></li><li><a href="DocumentConversionV1.html">DocumentConversionV1</a></li><li><a href="LanguageTranslationV2.html">LanguageTranslationV2</a></li><li><a href="LanguageTranslatorV2.html">LanguageTranslatorV2</a></li><li><a href="NaturalLanguageClassifierV1.html">NaturalLanguageClassifierV1</a></li><li><a href="NaturalLanguageUnderstandingV1.html">NaturalLanguageUnderstandingV1</a></li><li><a href="PersonalityInsightsV2.html">PersonalityInsightsV2</a></li><li><a href="PersonalityInsightsV3.html">PersonalityInsightsV3</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RetrieveAndRankV1.html">RetrieveAndRankV1</a></li><li><a href="SpeechToTextV1.html">SpeechToTextV1</a></li><li><a href="TextToSpeechV1.html">TextToSpeechV1</a></li><li><a href="ToneAnalyzerV3.html">ToneAnalyzerV3</a></li><li><a href="TradeoffAnalyticsV1.html">TradeoffAnalyticsV1</a></li><li><a href="VisualRecognitionV3.html">VisualRecognitionV3</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:close">close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li><li><a href="RecognizeStream.html#event:speaker_labels">speaker_labels</a></li></ul><h3>Global</h3><ul><li><a href="global.html#createRequest">createRequest</a></li><li><a href="global.html#detectContentType">detectContentType</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-watson-developer-cloud.html">watson-developer-cloud</a></li></ul><h3>Classes</h3><ul><li><a href="AlchemyDataNewsV1.html">AlchemyDataNewsV1</a></li><li><a href="AlchemyLanguageV1.html">AlchemyLanguageV1</a></li><li><a href="AuthorizationV1.html">AuthorizationV1</a></li><li><a href="ConversationV1.html">ConversationV1</a></li><li><a href="ConversationV1Experimental.html">ConversationV1Experimental</a></li><li><a href="DialogV1.html">DialogV1</a></li><li><a href="DiscoveryV1.html">DiscoveryV1</a></li><li><a href="DiscoveryV1Experimental.html">DiscoveryV1Experimental</a></li><li><a href="DocumentConversionV1.html">DocumentConversionV1</a></li><li><a href="LanguageTranslationV2.html">LanguageTranslationV2</a></li><li><a href="LanguageTranslatorV2.html">LanguageTranslatorV2</a></li><li><a href="NaturalLanguageClassifierV1.html">NaturalLanguageClassifierV1</a></li><li><a href="NaturalLanguageUnderstandingV1.html">NaturalLanguageUnderstandingV1</a></li><li><a href="PersonalityInsightsV2.html">PersonalityInsightsV2</a></li><li><a href="PersonalityInsightsV3.html">PersonalityInsightsV3</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RetrieveAndRankV1.html">RetrieveAndRankV1</a></li><li><a href="SpeechToTextV1.html">SpeechToTextV1</a></li><li><a href="TextToSpeechV1.html">TextToSpeechV1</a></li><li><a href="ToneAnalyzerV3.html">ToneAnalyzerV3</a></li><li><a href="TradeoffAnalyticsV1.html">TradeoffAnalyticsV1</a></li><li><a href="VisualRecognitionV3.html">VisualRecognitionV3</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:close">close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li><li><a href="RecognizeStream.html#event:speaker_labels">speaker_labels</a></li></ul><h3>Global</h3><ul><li><a href="global.html#createRequest">createRequest</a></li><li><a href="global.html#detectContentType">detectContentType</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu May 25 2017 19:31:44 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Thu Jul 27 2017 02:55:08 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>

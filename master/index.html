@@ -26,7 +26,7 @@
     
 
 
-    <h3>watson-developer-cloud 2.32.0</h3>
+    <h3>watson-developer-cloud 2.35.0</h3>
 
 
 
@@ -53,15 +53,14 @@
 <li><a href="#major-changes-for-v2">Major Changes for v2</a></li>
 <li><a href="#installation">Installation</a></li>
 <li><a href="#usage">Usage</a></li>
+<li><a href="#documentation">Documentation</a></li>
 <li><a href="#getting-the-service-credentials">Getting the Service Credentials</a></li>
 <li><a href="#questions">Questions</a></li>
 <li><a href="#examples">Examples</a></li>
 <li><a href="#ibm-watson-services">IBM Watson Services</a><ul>
 <li><a href="#alchemylanguage">AlchemyLanguage</a></li>
-<li><a href="#alchemyvision">AlchemyVision</a></li>
 <li><a href="#alchemydata-news">AlchemyData News</a></li>
 <li><a href="#authorization">Authorization</a></li>
-<li><a href="#concept-insights">Concept Insights</a></li>
 <li><a href="#conversation">Conversation</a></li>
 <li><a href="#dialog">Dialog</a></li>
 <li><a href="#discovery">Discovery</a></li>
@@ -70,14 +69,13 @@
 <li><a href="#natural-language-classifier">Natural Language Classifier</a></li>
 <li><a href="#natural-language-understanding">Natural Language Understanding</a></li>
 <li><a href="#personality-insights">Personality Insights</a></li>
-<li><a href="#relationship-extraction">Relationship Extraction</a></li>
 <li><a href="#retrieve-and-rank">Retrieve and Rank</a></li>
 <li><a href="#speech-to-text">Speech to Text</a></li>
 <li><a href="#text-to-speech">Text to Speech</a></li>
 <li><a href="#tone-analyzer">Tone Analyzer</a></li>
 <li><a href="#tradeoff-analytics">Tradeoff Analytics</a></li>
-<li><a href="#visual-insights">Visual Insights</a></li>
 <li><a href="#visual-recognition">Visual Recognition</a></li>
+<li><a href="#removed-Services">Removed Services</a></li>
 </ul>
 </li>
 <li><a href="#composing-services">Composing Services</a></li>
@@ -122,7 +120,10 @@ Of those that do, most require an auth token to be generated server-side via the
   headers: {
     &quot;X-Watson-Learning-Opt-Out&quot;: true
   }
-});</code></pre><h2>Getting the Service Credentials</h2><p>You will need the <code>username</code> and <code>password</code> (<code>api_key</code> for AlchemyAPI) credentials for each service. Service credentials are different from your Bluemix account username and password.</p>
+});</code></pre><h2>Documentation</h2><p>The primary documentation is at https://www.ibm.com/watson/developercloud/doc/index.html
+From there, find the service you're interested in, select View API Reference, and then select the Node tab.</p>
+<p>There are also auto-generated JSDocs available at http://watson-developer-cloud.github.io/node-sdk/latest/</p>
+<h2>Getting the Service Credentials</h2><p>You will need the <code>username</code> and <code>password</code> (<code>api_key</code> for AlchemyAPI) credentials for each service. Service credentials are different from your Bluemix account username and password.</p>
 <p>To get your service credentials, follow these steps:</p>
 <ol>
 <li><p>Log in to Bluemix at https://bluemix.net.</p>
@@ -165,8 +166,7 @@ alchemy_language.sentiment(params, function (err, response) {
     console.log('error:', err);
   else
     console.log(JSON.stringify(response, null, 2));
-});</code></pre><h3>AlchemyVision</h3><p>The AlchemyVision service has been replaced by the <a href="#visual-recognition">Visual Recognition</a> service. Existing users have until May 20, 2017 to migrate to the new service, and no new instances may be created.</p>
-<h3>AlchemyData News</h3><p><a href="http://www.alchemyapi.com/products/alchemydata-news">Alchemy Data News</a> indexes 250k to 300k English language news and blog articles every day with historical search available for the past 60 days.
+});</code></pre><h3>AlchemyData News</h3><p><a href="http://www.alchemyapi.com/products/alchemydata-news">Alchemy Data News</a> indexes 250k to 300k English language news and blog articles every day with historical search available for the past 60 days.
 Example: Get the volume data from the last 7 days using 12hs of time slice.</p>
 <pre class="prettyprint source lang-javascript"><code>var AlchemyDataNewsV1 = require('watson-developer-cloud/alchemy-data-news/v1');
 
@@ -201,15 +201,14 @@ authorization.getToken(function (err, token) {
   } else {
     // Use your token here
   }
-});</code></pre><h3>Concept Insights</h3><p>The <a href="http://www.ibm.com/watson/developercloud/doc/concept-insights/">Concept Insights</a> has been deprecated, AlchemyLanguage's concept function can be used as a replacement for most Concept Insights use cases; therefore, we encourage existing Concept Insights service users to migrate to AlchemyLanguage.</p>
-<h3>Conversation</h3><p>Use the <a href="https://www.ibm.com/watson/developercloud/conversation.html">Conversation</a> service to determine the intent of a message.</p>
-<p>Note: you must first create a workspace via Bluemix. See <a href="https://www.ibm.com/watson/developercloud/doc/conversation">the documentation</a> for details.</p>
+});</code></pre><h3>Conversation</h3><p>Use the <a href="https://www.ibm.com/watson/developercloud/conversation.html">Conversation</a> service to determine the intent of a message.</p>
+<p>Note: you must first create a workspace via Bluemix. See <a href="https://console.bluemix.net/docs/services/conversation/index.html#about">the documentation</a> for details.</p>
 <pre class="prettyprint source lang-js"><code>var ConversationV1 = require('watson-developer-cloud/conversation/v1');
 
 var conversation = new ConversationV1({
   username: '&lt;username>',
   password: '&lt;password>',
-  version_date: ConversationV1.VERSION_DATE_2017_04_21
+  version_date: ConversationV1.VERSION_DATE_2017_05_26
 });
 
 conversation.message({
@@ -221,7 +220,7 @@ conversation.message({
      } else {
        console.log(JSON.stringify(response, null, 2));
      }
-});</code></pre><h3>Dialog</h3><p>The Dialog service was deprecated on August 15, 2016, existing instances of the service will continue to function until August 9, 2017. Users of the Dialog service should migrate their applications to use the Conversation service. See the <a href="https://www.ibm.com/watson/developercloud/doc/conversation/migration.shtml">migration documentation</a> to learn how to migrate your dialogs to the Conversation service.</p>
+});</code></pre><h3>Dialog</h3><p>The Dialog service was deprecated on August 15, 2016, existing instances of the service will continue to function until August 9, 2017. Users of the Dialog service should migrate their applications to use the Conversation service. See the <a href="https://console.bluemix.net/docs/services/conversation/index.html#about">migration documentation</a> to learn how to migrate your dialogs to the Conversation service.</p>
 <h3>Discovery</h3><p>Use the <a href="http://www.ibm.com/watson/developercloud/discovery.html">Discovery Service</a> to search and analyze structured and unstructured data.</p>
 <pre class="prettyprint source lang-javascript"><code>var DiscoveryV1 = require('watson-developer-cloud/discovery/v1');
 
@@ -370,7 +369,6 @@ personality_insights.profile({
     else
       console.log(JSON.stringify(response, null, 2));
 });</code></pre><p><strong>Note:</strong> Don't forget to update the <code>text</code> variable!</p>
-<h3>Relationship Extraction</h3><p>Relationship Extraction has been deprecated. If you want to continue using Relationship Extraction models, you can now access them with AlchemyLanguage. See the <a href="http://www.ibm.com/watson/developercloud/doc/alchemylanguage/migration.shtml">migration guide</a> for details.</p>
 <h3>Retrieve and Rank</h3><p>Use the <a href="https://www.ibm.com/watson/developercloud/doc/retrieve-rank/">Retrieve and Rank</a> service to enhance search results with machine learning.</p>
 <pre class="prettyprint source lang-javascript"><code>var RetrieveAndRankV1 = require('watson-developer-cloud/retrieve-and-rank/v1');
 
@@ -485,8 +483,7 @@ tradeoff_analytics.dilemmas(params, function(err, res) {
     console.log(err);
   else
     console.log(JSON.stringify(res, null, 2));
-});</code></pre><h3>Visual Insights</h3><p>The Watson <a href="http://www.ibm.com/watson/developercloud/doc/visual-insights/">Visual Insights</a> Service will be withdrawn. The Watson Visual Insights Service tile will be removed from the Bluemix catalog on July 3, 2016, after which you cannot provision new instances of this service.</p>
-<h3>Visual Recognition</h3><p>Use the <a href="http://www.ibm.com/watson/developercloud/doc/visual-recognition/">Visual Recognition</a> service to recognize the
+});</code></pre><h3>Visual Recognition</h3><p>Use the <a href="http://www.ibm.com/watson/developercloud/doc/visual-recognition/">Visual Recognition</a> service to recognize the
 following picture.</p>
 <p><img src="https://visual-recognition-demo.mybluemix.net/images/samples/5.jpg" width="150" /></p>
 <pre class="prettyprint source lang-js"><code>var VisualRecognitionV3 = require('watson-developer-cloud/visual-recognition/v3');
@@ -506,8 +503,18 @@ visual_recognition.classify(params, function(err, res) {
     console.log(err);
   else
     console.log(JSON.stringify(res, null, 2));
-});</code></pre><h2>Composing Services</h2><h3>Integration of Tone Analyzer with Conversation</h3><p>Sample code for <a href="https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/conversation_tone_analyzer_integration">integrating Tone Analyzer and Conversation</a> is provided in the <a href="https://github.com/watson-developer-cloud/node-sdk/tree/master/examples">examples directory</a>.</p>
-<h2>Integration Document Conversation with Retrieve and Rank</h2><p>See the <a href="https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/document_conversion_integration.v1.js">Document Conversion integration example</a> about how to integrate the Document Conversion service
+});</code></pre><h2>Removed Services</h2><p>The following services are no longer available.</p>
+<ul>
+<li><strong>AlchemyVision</strong>: Visual Recognition replaced Alchemy Vision with improved billing and a superset of the original features</li>
+<li><strong>Concept Insights</strong>: AlchemyLanguage's concept function can be used as a replacement for most Concept Insights use cases; therefore, we encourage existing Concept Insights service users to migrate to AlchemyLanguage.</li>
+<li><strong>Relationship Extraction</strong>: You can now access Relationship Extraction models with AlchemyLanguage. See the <a href="http://www.ibm.com/watson/developercloud/doc/alchemylanguage/migration.shtml">migration guide</a> for details.</li>
+<li><strong>Message Resonance</strong>: Use Natural Language Understanding or Tone Analyzer to understand the emotions of your audience and messages.</li>
+<li><strong>Question and Answer</strong>: Use Conversation or Natural Language Classifier to identify intent and Retrieve and Rank to search for relevant documents.</li>
+<li><strong>Visual Insights</strong>: Use Visual Recognition to achieve a similar result</li>
+<li><strong>Concept Expansion</strong>: Use Natural Langue Understanding to extract concepts, entities, and more.</li>
+</ul>
+<h2>Composing Services</h2><h3>Integration of Tone Analyzer with Conversation</h3><p>Sample code for <a href="https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/conversation_tone_analyzer_integration">integrating Tone Analyzer and Conversation</a> is provided in the <a href="https://github.com/watson-developer-cloud/node-sdk/tree/master/examples">examples directory</a>.</p>
+<h2>Integration of Document Conversion with Retrieve and Rank</h2><p>See the <a href="https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/document_conversion_integration.v1.js">Document Conversion integration example</a> about how to integrate the Document Conversion service
 with the Retrieve and Rank service.</p>
 <h2>Unauthenticated requests</h2><p>By default, the library tries to use Basic Auth and will ask for <code>api_key</code> or <code>username</code> and <code>password</code> and send an <code>Authorization: Basic XXXXXXX</code>. You can avoid this by using:</p>
 <p><code>use_unauthenticated</code>.</p>
@@ -535,13 +542,13 @@ var dialog = new watson.DialogV1({
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-watson-developer-cloud.html">watson-developer-cloud</a></li></ul><h3>Classes</h3><ul><li><a href="AlchemyDataNewsV1.html">AlchemyDataNewsV1</a></li><li><a href="AlchemyLanguageV1.html">AlchemyLanguageV1</a></li><li><a href="AlchemyVisionV1.html">AlchemyVisionV1</a></li><li><a href="AuthorizationV1.html">AuthorizationV1</a></li><li><a href="ConversationV1.html">ConversationV1</a></li><li><a href="ConversationV1Experimental.html">ConversationV1Experimental</a></li><li><a href="DialogV1.html">DialogV1</a></li><li><a href="DiscoveryV1.html">DiscoveryV1</a></li><li><a href="DiscoveryV1Experimental.html">DiscoveryV1Experimental</a></li><li><a href="DocumentConversionV1.html">DocumentConversionV1</a></li><li><a href="LanguageTranslationV2.html">LanguageTranslationV2</a></li><li><a href="LanguageTranslatorV2.html">LanguageTranslatorV2</a></li><li><a href="NaturalLanguageClassifierV1.html">NaturalLanguageClassifierV1</a></li><li><a href="NaturalLanguageUnderstandingV1.html">NaturalLanguageUnderstandingV1</a></li><li><a href="PersonalityInsightsV2.html">PersonalityInsightsV2</a></li><li><a href="PersonalityInsightsV3.html">PersonalityInsightsV3</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RetrieveAndRankV1.html">RetrieveAndRankV1</a></li><li><a href="SpeechToTextV1.html">SpeechToTextV1</a></li><li><a href="TextToSpeechV1.html">TextToSpeechV1</a></li><li><a href="ToneAnalyzerV3.html">ToneAnalyzerV3</a></li><li><a href="TradeoffAnalyticsV1.html">TradeoffAnalyticsV1</a></li><li><a href="VisualRecognitionV3.html">VisualRecognitionV3</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:close">close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li><li><a href="RecognizeStream.html#event:speaker_labels">speaker_labels</a></li></ul><h3>Global</h3><ul><li><a href="global.html#createRequest">createRequest</a></li><li><a href="global.html#detectContentType">detectContentType</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-watson-developer-cloud.html">watson-developer-cloud</a></li></ul><h3>Classes</h3><ul><li><a href="AlchemyDataNewsV1.html">AlchemyDataNewsV1</a></li><li><a href="AlchemyLanguageV1.html">AlchemyLanguageV1</a></li><li><a href="AuthorizationV1.html">AuthorizationV1</a></li><li><a href="ConversationV1.html">ConversationV1</a></li><li><a href="ConversationV1Experimental.html">ConversationV1Experimental</a></li><li><a href="DialogV1.html">DialogV1</a></li><li><a href="DiscoveryV1.html">DiscoveryV1</a></li><li><a href="DiscoveryV1Experimental.html">DiscoveryV1Experimental</a></li><li><a href="DocumentConversionV1.html">DocumentConversionV1</a></li><li><a href="LanguageTranslationV2.html">LanguageTranslationV2</a></li><li><a href="LanguageTranslatorV2.html">LanguageTranslatorV2</a></li><li><a href="NaturalLanguageClassifierV1.html">NaturalLanguageClassifierV1</a></li><li><a href="NaturalLanguageUnderstandingV1.html">NaturalLanguageUnderstandingV1</a></li><li><a href="PersonalityInsightsV2.html">PersonalityInsightsV2</a></li><li><a href="PersonalityInsightsV3.html">PersonalityInsightsV3</a></li><li><a href="RecognizeStream.html">RecognizeStream</a></li><li><a href="RetrieveAndRankV1.html">RetrieveAndRankV1</a></li><li><a href="SpeechToTextV1.html">SpeechToTextV1</a></li><li><a href="TextToSpeechV1.html">TextToSpeechV1</a></li><li><a href="ToneAnalyzerV3.html">ToneAnalyzerV3</a></li><li><a href="TradeoffAnalyticsV1.html">TradeoffAnalyticsV1</a></li><li><a href="VisualRecognitionV3.html">VisualRecognitionV3</a></li></ul><h3>Events</h3><ul><li><a href="RecognizeStream.html#event:close">close</a></li><li><a href="RecognizeStream.html#event:data">data</a></li><li><a href="RecognizeStream.html#event:error">error</a></li><li><a href="RecognizeStream.html#event:results">results</a></li><li><a href="RecognizeStream.html#event:speaker_labels">speaker_labels</a></li></ul><h3>Global</h3><ul><li><a href="global.html#createRequest">createRequest</a></li><li><a href="global.html#detectContentType">detectContentType</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu May 25 2017 19:31:44 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Thu Jul 27 2017 02:55:08 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>
