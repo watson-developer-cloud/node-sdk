@@ -141,8 +141,8 @@ describe('visual_recognition_integration', function() {
     });
   });
 
-  // this endpoint is currently experiencing issues
-  describe('recognizeText()', function() {
+  // this endpoint is flakey
+  describe.skip('recognizeText()', function() {
     it('read text in an uploaded image', function(done) {
       const params = {
         images_file: fs.createReadStream(__dirname + '/../resources/car.png')
