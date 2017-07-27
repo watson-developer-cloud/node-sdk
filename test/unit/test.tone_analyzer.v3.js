@@ -8,9 +8,7 @@ const extend = require('extend');
 describe('tone_analyzer.v3', function() {
   const noop = function() {};
 
-  const tone_request = {
-    text: 'IBM Watson Developer Cloud'
-  };
+  const text = 'IBM Watson Developer Cloud';
   const tone_response = {
     tree: {}
   };
@@ -33,7 +31,7 @@ describe('tone_analyzer.v3', function() {
 
   before(function() {
     nock.disableNetConnect();
-    nock(service.url).persist().post(tone_path + '?version=2016-05-19', tone_request.text).reply(200, tone_response);
+    nock(service.url).persist().post(tone_path + '?version=2016-05-19', text).reply(200, tone_response);
   });
 
   after(function() {
@@ -55,10 +53,11 @@ describe('tone_analyzer.v3', function() {
   });
 
   it('tone API should generate a valid payload with text', function() {
-    const req = tone_analyzer.tone(tone_request, noop);
+    const options = { content_type: 'text/plain', tone_input: text };
+    const req = tone_analyzer.tone(options, noop);
     const body = Buffer.from(req.body).toString('ascii');
     assert.equal(req.uri.href, service.url + tone_path + '?version=2016-05-19');
-    assert.equal(body, tone_request.text);
+    assert.equal(body, text);
     assert.equal(req.method, 'POST');
     assert.equal(req.headers['content-type'], 'text/plain');
     assert.equal(req.headers['accept'], 'application/json');
@@ -66,32 +65,34 @@ describe('tone_analyzer.v3', function() {
 
   it('tone API should add optional query parameters', function() {
     const options = {
-      text: tone_request.text,
+      content_type: 'text/plain',
+      tone_input: text,
       tones: 'emotion',
       sentences: true
     };
     const req = tone_analyzer.tone(options, noop);
     const body = Buffer.from(req.body).toString('ascii');
     assert.equal(req.uri.href, service.url + tone_path + '?version=2016-05-19&tones=emotion&sentences=true');
-    assert.equal(body, tone_request.text);
+    assert.equal(body, text);
     assert.equal(req.method, 'POST');
     assert.equal(req.headers['content-type'], 'text/plain');
     assert.equal(req.headers['accept'], 'application/json');
   });
 
   it('tone API should set HTML content-type', function() {
-    const options = { text: tone_request.text, isHTML: true };
+    const options = { content_type: 'text/html', tone_input: text };
     const req = tone_analyzer.tone(options, noop);
     const body = Buffer.from(req.body).toString('ascii');
     assert.equal(req.uri.href, service.url + tone_path + '?version=2016-05-19');
-    assert.equal(body, tone_request.text);
+    assert.equal(body, text);
     assert.equal(req.method, 'POST');
     assert.equal(req.headers['content-type'], 'text/html');
     assert.equal(req.headers['accept'], 'application/json');
   });
 
   it('tone API should format the response', function(done) {
-    tone_analyzer.tone(tone_request, function(err, response) {
+    const options = { content_type: 'text/plain', tone_input: text };
+    tone_analyzer.tone(options, function(err, response) {
       if (err) {
         done(err);
       } else {
@@ -102,11 +103,11 @@ describe('tone_analyzer.v3', function() {
   });
 
   it('tone API should honor headers passed by client', function() {
-    const options = { text: tone_request.text, isHTML: true };
+    const options = { content_type: 'text/html', tone_input: text };
     const req = tone_analyzer_es.tone(options, noop);
     const body = Buffer.from(req.body).toString('ascii');
     assert.equal(req.uri.href, service.url + tone_path + '?version=2016-05-19');
-    assert.equal(body, tone_request.text);
+    assert.equal(body, text);
     assert.equal(req.method, 'POST');
     assert.equal(req.headers['content-type'], 'text/html');
     assert.equal(req.headers['accept'], 'application/json');
@@ -135,7 +136,7 @@ describe('tone_analyzer.v3', function() {
     const expectation = nock(service.url).post('/v3/tone_chat' + '?version=2016-05-19', tone_chat_request).reply(200, tone_chat_response);
 
     // run tests
-    const req = tone_analyzer.tone_chat(tone_chat_request, function(err, res) {
+    const req = tone_analyzer.toneChat(tone_chat_request, function(err, res) {
       assert(req);
       const url = service.url + tone_chat_path;
       assert.equal(req.uri.href.slice(0, url.length), url);
