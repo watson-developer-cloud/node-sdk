@@ -57,6 +57,7 @@ ToneAnalyzerV3.URL = 'https://gateway.watsonplatform.net/tone-analyzer/api';
  * - `isHTML`: A boolean value telling that the `params.text` argument is
  *    to be trated as HTML contents. On HTML input, the services does
  *    cleanup of tags and performs the analysis on the text contents only.
+ * - `language`: Language of the input. It defaults to `en`.
  *
  * @return upon success, the callback function is called with an object
  * containing the different tones (emotion, writing and social) analyzed.
@@ -70,6 +71,16 @@ ToneAnalyzerV3.prototype.tone = function(params, callback) {
     return;
   }
   const contentType = params.isHTML ? 'text/html' : 'text/plain';
+
+  const headers = {
+    accept: 'application/json',
+    'content-type': contentType
+  };
+
+  if (params.language) {
+    headers['content-language'] = params.language;
+  }
+
   const parameters = {
     options: {
       url: '/v3/tone',
@@ -78,10 +89,7 @@ ToneAnalyzerV3.prototype.tone = function(params, callback) {
       qs: pick(params, ['tones', 'sentences'])
     },
     defaultOptions: extend(true, this._options, {
-      headers: {
-        accept: 'application/json',
-        'content-type': contentType
-      }
+      headers: headers
     })
   };
 
