@@ -219,4 +219,38 @@ describe('alchemy_language', function() {
       assert.equal(body, expectedBody);
     });
   });
+
+  // https://github.com/watson-developer-cloud/node-sdk/issues/478
+  describe('deserialization', function() {
+    it("shouldn't treat invalid JSON strings as objects when building the error object", function(done) {
+      const expectation = nock('http://ibm.com:80', { encodedQueryParams: true })
+        .post(
+          '/calls/text/TextGetCombinedData',
+          'extract=entity&text=Bear%20River%20Massacre%20ceremony%20marks%20sesquicentennial%20anniversary%20of%20event%20Farid%20Rushdi%07%20for%20the%20Journal&outputMode=json'
+        )
+        .query({ apikey: 'foobar' })
+        // this is the exact response from the server - gzipped and all. It's base-64 encoded here, nock decodes that to binary and then responds with that.
+        // this decodes to not-quite-valid JSON - it has a \a instead of a \u0007 (both represent the bell character, but only the latter is valid JSON)
+        .reply(
+          200,
+          [
+            '1f8b0800000000000003b553db6adc30107d0fe41f063fb590da294b4bd9b7ec434a6f2484843cb4218ca5b12c6a4b46976c4cc8bf57922fbb8dd396422b30c83347a333e78c1e0e0f20accc3a74de666bc8ce3e654763d05b1414639b1e9031b2562a01270daba9ed4fce3f8036e0534caa4a9b169dd40a042932e88843d9ef818fa0d71ed010a03044b192d3501294daab847535ede1e1924c6b41577065690db573ddba28b6db6d8e0301ec64ce745b84af43d5172ee2f3dab5cddc40834af8b10752a291b69e73a49c749262cf5f877ea3100fbb6dd2c5f55d52e09c8cd56a3a1c537165861aba43c512e6385fad160816ba7351c3d78b94a3fb94394523395c785b73f90db31d83c7d18878d52f8919a9dc17e21217f5ff09b98fda1b85cd5fb27a4f5a18ec6ac94e290c96a1ff436e4368e042de9159d4e7d2625bca607f98c4a0ff13fd927bd6979783bf7b131033d3ca3e6b9686fa69f919b0d1bc3fabaec3250b0a336620b8b3754adcecd93bc53285edf0e4e6d6e0c595c3fae57314325e76c9fa305fe3031923b936a23064837b8c8aa8d36da271fb9b6255789625da74fd58cdf02a9fc2e9b1295bb4f9f1eaed9b77f7cf12ea51e838ede3f9f8fbeabbd2db86b8a03f91fa59a2c7ddefb8bd393c08bb1fa9006fd6b3040000'
+          ],
+          ['Content-Type', 'application/json', 'Content-Encoding', 'gzip']
+        );
+
+      alchemy.combined(
+        {
+          extract: 'entity',
+          text: 'Bear River Massacre ceremony marks sesquicentennial anniversary of event Farid Rushdi\u0007 for the Journal'
+        },
+        err => {
+          assert(expectation.isDone());
+          assert(err); // we're expecting an error!
+          assert.equal(err[1], undefined, "String errors should not be extend()'d onto the Error instance");
+          done();
+        }
+      );
+    });
+  });
 });
