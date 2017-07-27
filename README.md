@@ -34,7 +34,7 @@ Node.js client library to use the [Watson Developer Cloud][wdc] services, a coll
     * [Tone Analyzer](#tone-analyzer)
     * [Tradeoff Analytics](#tradeoff-analytics)
     * [Visual Recognition](#visual-recognition)
-    * [Removed Services](#removed-Services)
+    * [Removed Services](#removed-services)
   * [Composing Services](#composing-services)
   * [Debug](#debug)
   * [Tests](#tests)
