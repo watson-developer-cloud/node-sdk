@@ -21,7 +21,6 @@
  */
 exports.AlchemyDataNewsV1 = require('./alchemy-data-news/v1');
 exports.AlchemyLanguageV1 = require('./alchemy-language/v1');
-exports.AlchemyVisionV1 = require('./alchemy-vision/v1');
 
 exports.AuthorizationV1 = require('./authorization/v1');
 
@@ -106,6 +105,16 @@ Object.keys(servicesByVersion).forEach(function(serviceName) {
     writable: true,
     value: function() {
       throw new Error('The ' + serviceName + ' service is no longer available');
+    }
+  });
+});
+['AlchemyVisionV1', 'alchemy_vision'].forEach(function(serviceName) {
+  Object.defineProperty(exports, serviceName, {
+    enumerable: false,
+    configurable: true,
+    writable: true,
+    value: function() {
+      throw new Error('The Alchemy Vision service is no longer available, please use Visual Recognition instead.');
     }
   });
 });

@@ -20,6 +20,7 @@ const util = require('util');
 const requestFactory = require('../lib/requestwrapper');
 const BaseService = require('../lib/base_service');
 const pick = require('object.pick');
+const isStream = require('isstream');
 
 /**
  *
@@ -444,14 +445,45 @@ DiscoveryV1.prototype.getCollectionFields = function(params, callback) {
 };
 
 /**
+ * Ensures a filename is always set because discovery ignores documents that do not have a filename set.
+ * @param file
+ * @private
+ */
+DiscoveryV1._ensureFilename = function(file) {
+  // no changes needed for streams created by fs.ReadStream (or similar looking streams)
+  if (isStream.isReadable(file) && file.path) {
+    return file;
+  }
+
+  // next handle request-style value/options objects
+  if (file && file.hasOwnProperty('value') && file.hasOwnProperty('options')) {
+    if (file.options.filename) {
+      return file;
+    }
+    return {
+      value: file.value,
+      options: Object.assign({ filename: '_' }, file.options)
+    };
+  }
+
+  // finally, handle all other cases by wrapping them in a request-style value/options object
+  return {
+    value: file,
+    options: {
+      filename: '_'
+    }
+  };
+};
+
+/**
  * Add a document to a collection
- * @param params
+ * @param {object} params
  * @param {String} params.environment_id environment guid for the collection
  * @param {string} params.collection_id the guid of the collection to delete
- * @param {Buffer|ReadableStream|Object} params.file a file to post (smaller than 50mb)
+ * @param {Buffer|ReadableStream|Object} params.file a file to post (smaller than 50mb). In some cases you will need to supply an object with {value: data, options: {contentType: /...'}}
  * @param {string} [params.configuration_id] config guid
- * @param {string} [params.metadata] file metadata, including content-type (will infer if missing)
- * @param callback
+ * @param {object} [params.metadata] JSON object with file metadata
+ * @param {function} callback
  * @return {ReadableStream|undefined}
  */
 DiscoveryV1.prototype.addDocument = function(params, callback) {
@@ -460,18 +492,13 @@ DiscoveryV1.prototype.addDocument = function(params, callback) {
   const queryParams = pick(params, ['configuration_id']);
   const formDataParams = pick(params, ['file', 'metadata']);
 
-  // if we get a buffer or object, we need to include stuff about filename for the service
+  // Discovery only accepts files that have a filename specified
   if (formDataParams.file) {
-    if (
-      typeof formDataParams.file.filename !== 'string' &&
-      !(formDataParams.file.options && typeof formDataParams.file.options.filename !== 'string') &&
-      !(formDataParams.file.path && typeof formDataParams.file.path !== 'string') &&
-      !(formDataParams.file.name && typeof formDataParams.file.name !== 'string')
-    ) {
-      const filedat = formDataParams.file;
-      // the filename used below is because the name must exist
-      formDataParams.file = { value: filedat, options: { filename: '_' } };
-    }
+    formDataParams.file = DiscoveryV1._ensureFilename(formDataParams.file);
+  }
+
+  if (formDataParams.metadata && typeof formDataParams.metadata === 'object') {
+    formDataParams.metadata = JSON.stringify(formDataParams.metadata);
   }
 
   const parameters = {
@@ -483,10 +510,57 @@ DiscoveryV1.prototype.addDocument = function(params, callback) {
       formData: formDataParams,
       json: true
     },
-    requiredParams: ['environment_id', 'collection_id', 'file'],
+    requiredParams: ['environment_id', 'collection_id'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
+};
+
+/**
+ * Helper method, similar to updateDocument except that the file param expects a JSON object
+ * @param {object} params
+ * @param {String} params.environment_id environment guid for the collection
+ * @param {string} params.collection_id the guid of the collection to delete
+ * @param {Object} params.file non-stringified JSON object
+ * @param {string} [params.configuration_id] config guid
+ * @param {object} [params.metadata] JSON object with file metadata
+ * @param {function} callback
+ * @return {ReadableStream|undefined}
+ */
+DiscoveryV1.prototype.addJsonDocument = function(params, callback) {
+  params = Object.assign({}, params, {
+    file: {
+      value: JSON.stringify(params.file),
+      options: {
+        filename: '_.json'
+      }
+    }
+  });
+  return this.addDocument(params, callback);
+};
+
+/**
+ * Update or partially update a document to create or replace an existing document
+ * @param params
+ * @param {String} params.environment_id environment guid for the collection
+ * @param {string} params.collection_id the guid of the collection
+ * @param {string} params.document_id the guid of the document to update
+ * @param {Object} params.file non-stringified JSON object
+ * @param {string} [params.configuration_id] config guid
+ * @param {object} [params.metadata] file metadata, including content-type (will infer if missing)
+ * @param callback
+ * @return {ReadableStream|undefined}
+ */
+DiscoveryV1.prototype.updateJsonDocument = function(params, callback) {
+  params = Object.assign({}, params, {
+    file: {
+      value: JSON.stringify(params.file),
+      options: {
+        filename: '_.json'
+      }
+    }
+  });
+  return this.updateDocument(params, callback);
 };
 
 /**
@@ -497,7 +571,7 @@ DiscoveryV1.prototype.addDocument = function(params, callback) {
  * @param {string} params.document_id the guid of the document to update
  * @param {Buffer|ReadableStream|Object} params.file a file to post (smaller than 50mb)
  * @param {string} [params.configuration_id] config guid
- * @param {string} [params.metadata] file metadata, including content-type (will infer if missing)
+ * @param {object} [params.metadata] file metadata, including content-type (will infer if missing)
  * @param callback
  * @return {ReadableStream|undefined}
  */
@@ -507,18 +581,13 @@ DiscoveryV1.prototype.updateDocument = function(params, callback) {
   const queryParams = pick(params, ['configuration_id']);
   const formDataParams = pick(params, ['file', 'metadata']);
 
-  // if we get a buffer or object, we need to include stuff about filename for the service
+  // Discovery only accepts files that have a filename specified
   if (formDataParams.file) {
-    if (
-      typeof formDataParams.file.filename !== 'string' &&
-      !(formDataParams.file.options && typeof formDataParams.file.options.filename !== 'string') &&
-      !(formDataParams.file.path && typeof formDataParams.file.path !== 'string') &&
-      !(formDataParams.file.name && typeof formDataParams.file.name !== 'string')
-    ) {
-      const filedat = formDataParams.file;
-      // the filename used below is because the name must exist
-      formDataParams.file = { value: filedat, options: { filename: '_' } };
-    }
+    formDataParams.file = DiscoveryV1._ensureFilename(formDataParams.file);
+  }
+
+  if (formDataParams.metadata && typeof formDataParams.metadata === 'object') {
+    formDataParams.metadata = JSON.stringify(formDataParams.metadata);
   }
 
   const parameters = {

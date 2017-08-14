@@ -13,3 +13,5 @@ doc/
 dist/
 .env
 .eslintcache
+examples/speech_to_text_microphone_input/*.wav
+examples/speech_to_text_microphone_input/*.txt

@@ -4,6 +4,7 @@ const assert = require('assert');
 const DiscoveryV1 = require('../../discovery/v1');
 const fs = require('fs');
 const path = require('path');
+const stream = require('stream');
 
 const nock = require('nock');
 
@@ -57,10 +58,10 @@ describe('discovery-v1', function() {
 
   describe('discovery versions', function() {
     [service, service_v2016_12_15].forEach(service => {
-      before(function() {
+      beforeEach(function() {
         nock.disableNetConnect();
+        // grr! these should be in the individual tests where they are needed!
         nock(service.url)
-          .persist()
           .post(paths.environments + '?version=' + service.version_date)
           .reply(200, { environment_id: 'yes' })
           .get(paths.environmentinfo + '?version=' + service.version_date)
@@ -87,7 +88,7 @@ describe('discovery-v1', function() {
           .reply(200, { configs: 'yes' });
       });
 
-      after(function() {
+      afterEach(function() {
         nock.cleanAll();
       });
 
@@ -267,17 +268,45 @@ describe('discovery-v1', function() {
           assert.equal(req.method, 'GET');
         });
 
-        it('should add a document to a collection and environment', function() {
-          const req = discovery.addDocument(
-            {
-              environment_id: 'env-guid',
-              collection_id: 'col-guid',
-              file: fs.createReadStream(path.join(__dirname, '../resources/sampleHtml.html'))
-            },
-            noop
-          );
-          assert.equal(req.uri.href, service.url + paths.add_document + '?version=' + service.version_date);
-          assert.equal(req.method, 'POST');
+        describe('addDocument()', function() {
+          it('should add a document to a collection and environment', function() {
+            const req = discovery.addDocument(
+              {
+                environment_id: 'env-guid',
+                collection_id: 'col-guid',
+                file: fs.createReadStream(path.join(__dirname, '../resources/sampleHtml.html'))
+              },
+              noop
+            );
+            assert.equal(req.uri.href, service.url + paths.add_document + '?version=' + service.version_date);
+            assert.equal(req.method, 'POST');
+          });
+
+          // https://github.com/watson-developer-cloud/node-sdk/issues/474
+          it('should accept an object for metadata', function(done) {
+            nock.cleanAll();
+            nock.disableNetConnect();
+            const expectation = nock('http://ibm.com:80', { encodedQueryParams: true })
+              .post('/v1/environments/env-guid/collections/col-guid/documents')
+              .query({ version: service.version_date })
+              .reply({
+                status: 'processing',
+                document_id: '45556e23-f2b1-449d-8f27-489b514000ff'
+              });
+            discovery.addDocument(
+              {
+                environment_id: 'env-guid',
+                collection_id: 'col-guid',
+                file: fs.createReadStream(path.join(__dirname, '../resources/sampleHtml.html')),
+                metadata: { action: 'testing' }
+              },
+              function(err) {
+                assert.ifError(err);
+                expectation.isDone();
+                done();
+              }
+            );
+          });
         });
 
         it('should delete a document in a collection and environment', function() {
@@ -319,7 +348,7 @@ describe('discovery-v1', function() {
 
         /**
          * Return an array of parsed objects representing all valid JSON parts of a multipart request.
-         * @param {*} req 
+         * @param {*} req
          * @return {Array}
          */
         function readMultipartReqJsons(req) {
@@ -336,6 +365,78 @@ describe('discovery-v1', function() {
 
           return result;
         }
+
+        describe('_ensureFilename()', function() {
+          it('should pass through ReadStreams unmodified', function() {
+            const src = fs.createReadStream(path.join(__dirname, '../resources/sample-docx.docx'));
+            assert.equal(DiscoveryV1._ensureFilename(src), src);
+          });
+
+          it('should pass through value/options objects with a filename', function() {
+            const src = {
+              value: 'foo',
+              options: {
+                filename: 'foo.bar'
+              }
+            };
+            const actual = DiscoveryV1._ensureFilename(src);
+            assert.equal(actual, src);
+            assert.deepEqual(actual, {
+              value: 'foo',
+              options: {
+                filename: 'foo.bar'
+              }
+            });
+          });
+
+          it('should create new object/values with a filename when missing', function() {
+            const src = {
+              value: '{"foo": "bar"}',
+              options: {
+                contentType: 'application/json'
+              }
+            };
+            const actual = DiscoveryV1._ensureFilename(src);
+            assert.deepEqual(actual, {
+              value: '{"foo": "bar"}',
+              options: {
+                contentType: 'application/json',
+                filename: '_'
+              }
+            });
+            assert.notEqual(actual, src, 'it should be a new object, not a modification of the existing one');
+          });
+
+          it('should wrap buffers', function() {
+            const src = Buffer.from([1, 2, 3, 4]);
+            assert.deepEqual(DiscoveryV1._ensureFilename(src), {
+              value: src,
+              options: {
+                filename: '_'
+              }
+            });
+          });
+
+          it('should wrap strings', function() {
+            const src = 'foo';
+            assert.deepEqual(DiscoveryV1._ensureFilename(src), {
+              value: src,
+              options: {
+                filename: '_'
+              }
+            });
+          });
+
+          it('should wrap streams', function() {
+            const src = new stream.Readable();
+            assert.deepEqual(DiscoveryV1._ensureFilename(src), {
+              value: src,
+              options: {
+                filename: '_'
+              }
+            });
+          });
+        }); // end of _ensureFilename()
       });
     });
   });

@@ -97,7 +97,8 @@ const test_value_update = {
 const test_synonym = 'synonym_1';
 const test_synonym_update = 'synonym_2';
 
-const workspace1 = extend(true, {}, workspace, intents);
+// changing language is forbidden starting with VERSION_DATE_2017_05_26
+const workspace1 = extend(true, {}, workspace, intents, { language: workspace.language });
 
 describe('conversation_integration', function() {
   this.timeout(TEN_SECONDS);
@@ -107,7 +108,7 @@ describe('conversation_integration', function() {
   let conversation;
 
   before(function() {
-    auth.conversation.version_date = ConversationV1.VERSION_DATE_2017_04_21;
+    auth.conversation.version_date = ConversationV1.VERSION_DATE_2017_05_26;
     conversation = watson.conversation(auth.conversation);
     nock.enableNetConnect();
   });
@@ -130,7 +131,7 @@ describe('conversation_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.alternate_intents, true);
+        assert(result.intents.length > 1);
         done();
       });
     });
@@ -258,7 +259,7 @@ describe('conversation_integration', function() {
   });
 
   describe('updateWorkspace()', function() {
-    it('should update the workspace with intents and language', function(done) {
+    it('should update the workspace with intents', function(done) {
       const params = workspace1;
 
       conversation.updateWorkspace(params, function(err, result) {
@@ -266,7 +267,7 @@ describe('conversation_integration', function() {
           return done(err);
         }
         assert.equal(result.name, params.name);
-        assert.equal(result.language, 'en');
+        assert.equal(result.language, 'fr');
         assert.equal(result.metadata, params.metadata);
         assert.equal(result.description, params.description);
         done();
@@ -630,7 +631,8 @@ describe('conversation_integration', function() {
       const params = {
         workspace_id: workspace1.workspace_id,
         entity: test_entities[0].entity,
-        values: test_entities[0].values
+        values: test_entities[0].values,
+        fuzzy_match: true
       };
 
       conversation.createEntity(params, function(err, result) {
@@ -693,6 +695,7 @@ describe('conversation_integration', function() {
         }
         assert.equal(result.entity, test_entities[0].entity);
         assert.equal(result.description, null);
+        assert.equal(result.fuzzy_match, true);
         done();
       });
     });
@@ -704,7 +707,8 @@ describe('conversation_integration', function() {
         workspace_id: workspace1.workspace_id,
         old_entity: test_entities[0].entity,
         entity: test_entities_update.entity,
-        values: test_entities_update.values
+        values: test_entities_update.values,
+        fuzzy_match: false
       };
 
       conversation.updateEntity(params, function(err, result) {

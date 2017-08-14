@@ -32,7 +32,7 @@ function ConversationV1(options) {
 
   // Check if 'version_date' was provided
   if (typeof this._options.version_date === 'undefined') {
-    throw new Error('Argument error: version_date was not specified, use ConversationV1.VERSION_DATE_2017_04_21');
+    throw new Error('Argument error: version_date was not specified, use ConversationV1.VERSION_DATE_2017_05_26');
   }
   this._options.qs.version = options.version_date;
 }
@@ -71,7 +71,7 @@ ConversationV1.VERSION_DATE_2016_07_11 = '2016-07-11';
       ],
 ```
  *
- * @see http://www.ibm.com/watson/developercloud/doc/conversation/release-notes.html#20-september-2016
+ * @see https://console.bluemix.net/docs/services/conversation/release-notes.html#20September2016
  * @type {string}
  */
 ConversationV1.VERSION_DATE_2016_09_20 = '2016-09-20';
@@ -80,7 +80,7 @@ ConversationV1.VERSION_DATE_2016_09_20 = '2016-09-20';
  * 02/03 Update
  *
  * * Absolute scoring has now been enabled.
- * @see https://www.ibm.com/watson/developercloud/doc/conversation/irrelevant_utterance.html
+ * @see https://console.bluemix.net/docs/services/conversation/intents.html#absolute-scoring
  *
  * Old:
  ```json
@@ -120,7 +120,7 @@ ConversationV1.VERSION_DATE_2016_09_20 = '2016-09-20';
  "intents": []
  ```
  *
- * @see https://www.ibm.com/watson/developercloud/doc/conversation/release-notes.html#3-february-2017
+ * @see https://console.bluemix.net/docs/services/conversation/release-notes.html#3February2017
  * @type {string}
  */
 ConversationV1.VERSION_DATE_2017_02_03 = '2017-02-03';
@@ -132,6 +132,14 @@ ConversationV1.VERSION_DATE_2017_02_03 = '2017-02-03';
  * @type {string}
  */
 ConversationV1.VERSION_DATE_2017_04_21 = '2017-04-21';
+
+/**
+ * Schema changes for error response objects and workspace exporting
+ *
+ * @see https://console.bluemix.net/docs/services/conversation/release-notes.html#release-notes
+ * @type {string}
+ */
+ConversationV1.VERSION_DATE_2017_05_26 = '2017-05-26';
 
 /**
  * Method: message
@@ -1052,6 +1060,7 @@ ConversationV1.prototype.updateCounterExample = function(params, callback) {
  * @param {String} [params.entity]
  * @param {String} [params.description]
  * @param {Object} [params.metadata]
+ * @param {Boolean} [params.fuzzy_match=false] - whether to use fuzzy matching for the entity.
  * @param {Array<Object>} [params.values]
  * @param {Function} [callback]
  *
@@ -1065,7 +1074,7 @@ ConversationV1.prototype.createEntity = function(params, callback) {
       method: 'POST',
       json: true,
       path: pick(params, ['workspace_id']),
-      body: pick(params, ['entity', 'description', 'metadata', 'values'])
+      body: pick(params, ['entity', 'description', 'metadata', 'values', 'fuzzy_match'])
     },
     requiredParams: ['workspace_id', 'entity'],
     defaultOptions: this._options
@@ -1145,6 +1154,7 @@ ConversationV1.prototype.getEntity = function(params, callback) {
  * @param {String} params.entity
  * @param {String} params.description
  * @param {Object} params.metadata
+ * @param {Boolean} [params.fuzzy_match=false] - whether to use fuzzy matching for the entity.
  * @param {Array<Object>} params.values
  * @param {Function} [callback]
  *
@@ -1158,7 +1168,7 @@ ConversationV1.prototype.updateEntity = function(params, callback) {
       method: 'POST',
       json: true,
       path: pick(params, ['workspace_id', 'old_entity']),
-      body: pick(params, ['entity', 'description', 'metadata', 'values'])
+      body: pick(params, ['entity', 'description', 'metadata', 'values', 'fuzzy_match'])
     },
     requiredParams: ['workspace_id', 'old_entity', 'entity'],
     defaultOptions: this._options

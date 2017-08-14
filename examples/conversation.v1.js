@@ -9,7 +9,7 @@ const watson = require('watson-developer-cloud');
 const conversation = new watson.ConversationV1({
   username: process.env.CONVERSATION_USERNAME || '<conversation_username>',
   password: process.env.CONVERSATION_PASSWORD || '<conversation_password>',
-  version_date: watson.ConversationV1.VERSION_DATE_2017_04_21
+  version_date: watson.ConversationV1.VERSION_DATE_2017_05_26
 });
 
 /**
