@@ -32,7 +32,7 @@ function DiscoveryV1(options) {
 
   // Check if 'version_date' was provided
   if (typeof this._options.version_date === 'undefined') {
-    throw new Error('Argument error: version_date was not specified, use DiscoveryV1.VERSION_DATE_2017_04_27');
+    throw new Error('Argument error: version_date was not specified, use DiscoveryV1.VERSION_DATE_2017_08_01');
   }
   this._options.qs.version = options.version_date;
 }
@@ -52,6 +52,11 @@ DiscoveryV1.VERSION_DATE_2016_12_15 = '2016-12-15';
  * @type {string}
  */
 DiscoveryV1.VERSION_DATE_2017_04_27 = '2017-04-27';
+/**
+ * Release migrating from Watson Discovery News Original to Watson Discovery News
+ * @type {string}
+ */
+DiscoveryV1.VERSION_DATE_2017_08_01 = '2017-08-01';
 
 /**
  * Return the list of environments
@@ -90,12 +95,10 @@ DiscoveryV1.prototype.createEnvironment = function(params, callback) {
     options: {
       url: '/v1/environments',
       method: 'POST',
-      multipart: [
-        {
-          'content-type': 'application/json',
-          body: JSON.stringify(pick(params, ['name', 'description', 'size']))
-        }
-      ],
+      multipart: [{
+        'content-type': 'application/json',
+        body: JSON.stringify(pick(params, ['name', 'description', 'size']))
+      }],
       json: true
     },
     originalParams: params,
@@ -118,12 +121,10 @@ DiscoveryV1.prototype.updateEnvironment = function(params, callback) {
       url: '/v1/environments/{environment_id}',
       method: 'PUT',
       path: pick(params, ['environment_id']),
-      multipart: [
-        {
-          'content-type': 'application/json',
-          body: JSON.stringify(pick(params, ['name', 'description']))
-        }
-      ],
+      multipart: [{
+        'content-type': 'application/json',
+        body: JSON.stringify(pick(params, ['name', 'description']))
+      }],
       json: true
     },
     originalParams: params,
@@ -190,12 +191,10 @@ DiscoveryV1.prototype.createConfiguration = function(params, callback) {
       url: '/v1/environments/{environment_id}/configurations',
       method: 'POST',
       path: pick(params, ['environment_id']),
-      multipart: [
-        {
-          'content-type': 'application/json',
-          body: params.file
-        }
-      ],
+      multipart: [{
+        'content-type': 'application/json',
+        body: params.file
+      }],
       json: true
     },
     originalParams: params,
@@ -220,12 +219,10 @@ DiscoveryV1.prototype.updateConfiguration = function(params, callback) {
       url: '/v1/environments/{environment_id}/configurations/{configuration_id}',
       method: 'PUT',
       path: pick(params, ['environment_id', 'configuration_id']),
-      multipart: [
-        {
-          'content-type': 'application/json',
-          body: params.file
-        }
-      ],
+      multipart: [{
+        'content-type': 'application/json',
+        body: params.file
+      }],
       json: true
     },
     originalParams: params,
@@ -285,7 +282,7 @@ DiscoveryV1.prototype.getConfiguration = function(params, callback) {
  *
  * @param {Object} params
  * @param {String} params.environment_id
-  */
+ */
 DiscoveryV1.prototype.getCollections = function(params, callback) {
   params = params || {};
 
@@ -345,12 +342,10 @@ DiscoveryV1.prototype.createCollection = function(params, callback) {
       url: '/v1/environments/{environment_id}/collections',
       method: 'POST',
       path: pick(params, ['environment_id']),
-      multipart: [
-        {
-          'content-type': 'application/json',
-          body: JSON.stringify(pick(params, ['name', 'description', 'configuration_id', 'language_code']))
-        }
-      ],
+      multipart: [{
+        'content-type': 'application/json',
+        body: JSON.stringify(pick(params, ['name', 'description', 'configuration_id', 'language_code']))
+      }],
       json: true
     },
     originalParams: params,
@@ -381,12 +376,10 @@ DiscoveryV1.prototype.updateCollection = function(params, callback) {
       url: '/v1/environments/{environment_id}/collections/{collection_id}',
       method: 'PUT',
       path: pick(params, ['environment_id', 'collection_id']),
-      multipart: [
-        {
-          'content-type': 'application/json',
-          body: JSON.stringify(pick(params, ['collection_name', 'description', 'configuration_id', 'language_code']))
-        }
-      ],
+      multipart: [{
+        'content-type': 'application/json',
+        body: JSON.stringify(pick(params, ['collection_name', 'description', 'configuration_id', 'language_code']))
+      }],
       json: true
     },
     originalParams: params,
