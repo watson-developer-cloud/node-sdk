@@ -95,10 +95,12 @@ DiscoveryV1.prototype.createEnvironment = function(params, callback) {
     options: {
       url: '/v1/environments',
       method: 'POST',
-      multipart: [{
-        'content-type': 'application/json',
-        body: JSON.stringify(pick(params, ['name', 'description', 'size']))
-      }],
+      multipart: [
+        {
+          'content-type': 'application/json',
+          body: JSON.stringify(pick(params, ['name', 'description', 'size']))
+        }
+      ],
       json: true
     },
     originalParams: params,
@@ -121,10 +123,12 @@ DiscoveryV1.prototype.updateEnvironment = function(params, callback) {
       url: '/v1/environments/{environment_id}',
       method: 'PUT',
       path: pick(params, ['environment_id']),
-      multipart: [{
-        'content-type': 'application/json',
-        body: JSON.stringify(pick(params, ['name', 'description']))
-      }],
+      multipart: [
+        {
+          'content-type': 'application/json',
+          body: JSON.stringify(pick(params, ['name', 'description']))
+        }
+      ],
       json: true
     },
     originalParams: params,
@@ -191,10 +195,12 @@ DiscoveryV1.prototype.createConfiguration = function(params, callback) {
       url: '/v1/environments/{environment_id}/configurations',
       method: 'POST',
       path: pick(params, ['environment_id']),
-      multipart: [{
-        'content-type': 'application/json',
-        body: params.file
-      }],
+      multipart: [
+        {
+          'content-type': 'application/json',
+          body: params.file
+        }
+      ],
       json: true
     },
     originalParams: params,
@@ -219,10 +225,12 @@ DiscoveryV1.prototype.updateConfiguration = function(params, callback) {
       url: '/v1/environments/{environment_id}/configurations/{configuration_id}',
       method: 'PUT',
       path: pick(params, ['environment_id', 'configuration_id']),
-      multipart: [{
-        'content-type': 'application/json',
-        body: params.file
-      }],
+      multipart: [
+        {
+          'content-type': 'application/json',
+          body: params.file
+        }
+      ],
       json: true
     },
     originalParams: params,
@@ -342,10 +350,12 @@ DiscoveryV1.prototype.createCollection = function(params, callback) {
       url: '/v1/environments/{environment_id}/collections',
       method: 'POST',
       path: pick(params, ['environment_id']),
-      multipart: [{
-        'content-type': 'application/json',
-        body: JSON.stringify(pick(params, ['name', 'description', 'configuration_id', 'language_code']))
-      }],
+      multipart: [
+        {
+          'content-type': 'application/json',
+          body: JSON.stringify(pick(params, ['name', 'description', 'configuration_id', 'language_code']))
+        }
+      ],
       json: true
     },
     originalParams: params,
@@ -376,10 +386,12 @@ DiscoveryV1.prototype.updateCollection = function(params, callback) {
       url: '/v1/environments/{environment_id}/collections/{collection_id}',
       method: 'PUT',
       path: pick(params, ['environment_id', 'collection_id']),
-      multipart: [{
-        'content-type': 'application/json',
-        body: JSON.stringify(pick(params, ['collection_name', 'description', 'configuration_id', 'language_code']))
-      }],
+      multipart: [
+        {
+          'content-type': 'application/json',
+          body: JSON.stringify(pick(params, ['collection_name', 'description', 'configuration_id', 'language_code']))
+        }
+      ],
       json: true
     },
     originalParams: params,
