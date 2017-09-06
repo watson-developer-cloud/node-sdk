@@ -533,6 +533,12 @@ DiscoveryV1.prototype.addDocument = function(params, callback) {
  * @return {ReadableStream|undefined}
  */
 DiscoveryV1.prototype.addJsonDocument = function(params, callback) {
+  const fileParamType = typeof params.file;
+
+  if (fileParamType !== 'object') {
+    throw new Error(`Argument error: params.file must be an object, but got ${fileParamType}.`);
+  }
+
   params = Object.assign({}, params, {
     file: {
       value: JSON.stringify(params.file),
@@ -557,6 +563,12 @@ DiscoveryV1.prototype.addJsonDocument = function(params, callback) {
  * @return {ReadableStream|undefined}
  */
 DiscoveryV1.prototype.updateJsonDocument = function(params, callback) {
+  const fileParamType = typeof params.file;
+
+  if (fileParamType !== 'object') {
+    throw new Error(`Argument error: params.file must be an object, but got ${fileParamType}.`);
+  }
+
   params = Object.assign({}, params, {
     file: {
       value: JSON.stringify(params.file),
