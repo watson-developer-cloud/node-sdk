@@ -33,7 +33,10 @@ describe('tone_analyzer.v3', function() {
 
   before(function() {
     nock.disableNetConnect();
-    nock(service.url).persist().post(tone_path + '?version=2016-05-19', tone_request.text).reply(200, tone_response);
+    nock(service.url)
+      .persist()
+      .post(tone_path + '?version=2016-05-19', tone_request.text)
+      .reply(200, tone_response);
   });
 
   after(function() {
@@ -149,7 +152,9 @@ describe('tone_analyzer.v3', function() {
       tree: {}
     };
 
-    const expectation = nock(service.url).post('/v3/tone_chat' + '?version=2016-05-19', tone_chat_request).reply(200, tone_chat_response);
+    const expectation = nock(service.url)
+      .post('/v3/tone_chat' + '?version=2016-05-19', tone_chat_request)
+      .reply(200, tone_chat_response);
 
     // run tests
     const req = tone_analyzer.tone_chat(tone_chat_request, function(err, res) {

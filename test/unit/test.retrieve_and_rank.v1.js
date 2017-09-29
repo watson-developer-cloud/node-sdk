@@ -505,7 +505,9 @@ describe('retrieve_and_rank', function() {
     });
 
     it('should support the answers parameter', function(done) {
-      nock(service.url).post(rankPath + '/rank').reply(200, rankResponse);
+      nock(service.url)
+        .post(rankPath + '/rank')
+        .reply(200, rankResponse);
       const req = search.rank({ ranker_id: 'foo', answers: 3, answer_data: 'bar' }, function(err) {
         if (err) {
           return done(err);

@@ -52,9 +52,12 @@ describe('speech_to_text', function() {
     });
 
     it('should generate a valid response', function() {
-      nock(service.url).persist().post(path).reply(200, new_session, {
-        'set-cookie': ['SESSIONID=foobar']
-      });
+      nock(service.url)
+        .persist()
+        .post(path)
+        .reply(200, new_session, {
+          'set-cookie': ['SESSIONID=foobar']
+        });
 
       const checkSession = function(err, res) {
         assert.equal(JSON.stringify(res), JSON.stringify(new_session_with_cookie));
@@ -92,7 +95,10 @@ describe('speech_to_text', function() {
     });
 
     it('should generate a valid response', function() {
-      nock(service.url).persist().get(path).reply(200, models);
+      nock(service.url)
+        .persist()
+        .get(path)
+        .reply(200, models);
 
       const checkModels = function(err, res) {
         assert.equal(JSON.stringify(res), JSON.stringify(models));
@@ -119,7 +125,9 @@ describe('speech_to_text', function() {
     });
 
     it('should generate a valid response', function() {
-      nock(service.url).get(path).reply(200, model);
+      nock(service.url)
+        .get(path)
+        .reply(200, model);
 
       const checkModel = function(err, res) {
         assert.equal(JSON.stringify(res), JSON.stringify(model));
@@ -345,7 +353,10 @@ describe('speech_to_text', function() {
     });
 
     it('should generate a valid payload', function(done) {
-      nock(service.url).post(path).delay(300).reply(200, service_response);
+      nock(service.url)
+        .post(path)
+        .delay(300)
+        .reply(200, service_response);
 
       const req = speech_to_text.recognizeLive(payload, function(err, res) {
         assert.equal(JSON.stringify(service_response), JSON.stringify(res));
@@ -360,7 +371,10 @@ describe('speech_to_text', function() {
     });
 
     it('should generate a valid response', function(done) {
-      nock(service.url).post(path).delay(300).reply(200, service_response);
+      nock(service.url)
+        .post(path)
+        .delay(300)
+        .reply(200, service_response);
 
       const req = speech_to_text.recognizeLive(payload, function(err, res) {
         assert.equal(JSON.stringify(service_response), JSON.stringify(res));
@@ -388,7 +402,10 @@ describe('speech_to_text', function() {
         url: 'http://watson-test-resources.mybluemix.net/results'
       };
 
-      nock(service.url).post(path).delay(100).reply(200, response);
+      nock(service.url)
+        .post(path)
+        .delay(100)
+        .reply(200, response);
 
       const checkRes = function(err, res) {
         assert.equal(JSON.stringify(err), JSON.stringify(null));
@@ -412,7 +429,10 @@ describe('speech_to_text', function() {
         url: 'https://stream.watsonplatform.net/speech-to-text/api/v1/recognitions/4bd734c0-e575-21f3-de03-f932aa0468a0'
       };
 
-      nock(service.url).post(path).delay(100).reply(200, response);
+      nock(service.url)
+        .post(path)
+        .delay(100)
+        .reply(200, response);
 
       const checkRes = function(err, res) {
         assert.equal(JSON.stringify(err), JSON.stringify(null));
@@ -443,7 +463,10 @@ describe('speech_to_text', function() {
         url: 'https://stream.watsonplatform.net/speech-to-text/api/v1/recognitions/4bd734c0-e575-21f3-de03-f932aa0468a0'
       };
 
-      nock(service.url).post(path).delay(100).reply(200, response);
+      nock(service.url)
+        .post(path)
+        .delay(100)
+        .reply(200, response);
 
       const checkRes = function(err, res) {
         assert.equal(JSON.stringify(err), JSON.stringify(null));
@@ -490,7 +513,10 @@ describe('speech_to_text', function() {
         ]
       };
 
-      nock(service.url).get(path).delay(200).reply(200, response);
+      nock(service.url)
+        .get(path)
+        .delay(200)
+        .reply(200, response);
 
       const checkRes = function(err, res) {
         assert.equal(JSON.stringify(err), JSON.stringify(null));
@@ -529,7 +555,10 @@ describe('speech_to_text', function() {
         status: 'completed'
       };
 
-      nock(service.url).get(path).delay(200).reply(200, response);
+      nock(service.url)
+        .get(path)
+        .delay(200)
+        .reply(200, response);
 
       const checkRes = function(err, res) {
         assert.equal(JSON.stringify(err), JSON.stringify(null));
@@ -544,7 +573,10 @@ describe('speech_to_text', function() {
     it('should delete a recognition job', function() {
       const path = '/v1/recognitions/4bd734c0-e575-21f3-de03-f932aa0468a0';
 
-      nock(service.url).delete(path).delay(200).reply(200);
+      nock(service.url)
+        .delete(path)
+        .delay(200)
+        .reply(200);
 
       const checkRes = function(err, res) {
         assert.ifError(err);

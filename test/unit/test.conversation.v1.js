@@ -35,7 +35,10 @@ describe('conversation-v1', function() {
 
   before(function() {
     nock.disableNetConnect();
-    nock(service.url).persist().post(paths.message + '?version=' + service.version_date).reply(200, {});
+    nock(service.url)
+      .persist()
+      .post(paths.message + '?version=' + service.version_date)
+      .reply(200, {});
   });
 
   after(function() {
