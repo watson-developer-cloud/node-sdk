@@ -26,7 +26,7 @@
     
 
 
-    <h3>watson-developer-cloud 2.38.0</h3>
+    <h3>watson-developer-cloud 2.39.2</h3>
 
 
 
@@ -48,7 +48,7 @@
 <a href="https://gemnasium.com/watson-developer-cloud/node-sdk"><img src="https://gemnasium.com/watson-developer-cloud/node-sdk.svg" alt="Dependency Status"></a>
 <a href="https://www.npmjs.com/package/watson-developer-cloud"><img src="https://img.shields.io/npm/v/watson-developer-cloud.svg" alt="npm-version"></a>
 <a href="https://www.npmjs.com/package/watson-developer-cloud"><img src="https://img.shields.io/npm/dm/watson-developer-cloud.svg" alt="npm-downloads"></a></p>
-<p>Node.js client library to use the <a href="http://www.ibm.com/watson/developercloud/">Watson Developer Cloud</a> services, a collection of APIs that use cognitive computing to solve complex problems.</p>
+<p>Node.js client library to use the Watson Developer Cloud services, a collection of APIs that use cognitive computing to solve complex problems.</p>
 <h2>Table of Contents</h2><ul>
 <li><a href="#major-changes-for-v2">Major Changes for v2</a></li>
 <li><a href="#installation">Installation</a></li>
@@ -85,7 +85,7 @@
 <li><a href="#license">License</a></li>
 <li><a href="#contributing">Contributing</a></li>
 </ul>
-<h2>Major Changes for v2</h2><h3>BREAKING: user-supplied credentials are now preferred over Bluemix-supplied credentials.</h3><p>See <a href="#usage">Usage</a> section for details.</p>
+<h2>Major changes for v2</h2><h3>BREAKING: user-supplied credentials are now preferred over Bluemix-supplied credentials.</h3><p>See <a href="#usage">Usage</a> section for details.</p>
 <p>This change also removes the <code>use_vcap_services</code> flag.</p>
 <h3>Client-side usage is partially supported</h3><p>See <a href="#client-side-usage">Client-side usage</a> section for details.</p>
 <h3>New recommended method for instantiating services:</h3><pre class="prettyprint source lang-js"><code>var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
@@ -99,7 +99,7 @@ var watson = require('watson-developer-cloud');
 var toneAnalyzer = new watson.ToneAnalyzerV3({/*...*/});
 
 var tone_analyzer = watson.tone_analyzer({version: 'v3', /*...*/});</code></pre><h2>Installation</h2><pre class="prettyprint source lang-sh"><code>$ npm install watson-developer-cloud --save</code></pre><h2>Usage</h2><p>The examples below assume that you already have service credentials. If not,
-you will have to create a service in <a href="https://console.ng.bluemix.net">Bluemix</a>.</p>
+you will have to create a service in <a href="https://console.bluemix.net">Bluemix</a>.</p>
 <p>If you are running your application in Bluemix, you don't need to specify the
 credentials; the library will get them for you by looking at the <code>VCAP_SERVICES</code> environment variable.</p>
 <p>Credentials are checked for in the following order:</p>
@@ -114,43 +114,34 @@ credentials; the library will get them for you by looking at the <code>VCAP_SERV
 <h3>Client-side usage</h3><p>See the <code>examples/</code> folder for <a href="http://browserify.org/">Browserify</a> and <a href="http://webpack.github.io/">Webpack</a> client-side SDK examples (with server-side generation of auth tokens.)</p>
 <p>Note: not all services currently support CORS, and therefore not all services can be used client-side.
 Of those that do, most require an auth token to be generated server-side via the <a href="#authorization">Authorization Service</a>.</p>
-<h3>Data collection opt-out</h3><p>By default, <a href="https://www.ibm.com/watson/developercloud/doc/common/getting-started-logging.html">all requests are logged</a>. This can be disabled of by setting the <code>X-Watson-Learning-Opt-Out</code> header when creating the service instance:</p>
+<h3>Data collection opt-out</h3><p>By default, <a href="https://console.bluemix.net/docs/services/watson/getting-started-logging.html">all requests are logged</a>. This can be disabled of by setting the <code>X-Watson-Learning-Opt-Out</code> header when creating the service instance:</p>
 <pre class="prettyprint source lang-js"><code>var myInstance = new watson.WhateverServiceV1({
   /* username, password, version, etc... */
   headers: {
     &quot;X-Watson-Learning-Opt-Out&quot;: true
   }
-});</code></pre><h2>Documentation</h2><p>The primary documentation is at https://www.ibm.com/watson/developercloud/doc/index.html
-From there, find the service you're interested in, select View API Reference, and then select the Node tab.</p>
+});</code></pre><h2>Documentation</h2><p>You can find links to the documentation at https://www.ibm.com/watson/developercloud/doc/index.html. Find the service that you're interested in, click <strong>API reference</strong>, and then select the <strong>Node</strong> tab.</p>
 <p>There are also auto-generated JSDocs available at http://watson-developer-cloud.github.io/node-sdk/latest/</p>
-<h2>Getting the Service Credentials</h2><p>You will need the <code>username</code> and <code>password</code> (<code>api_key</code> for AlchemyAPI) credentials for each service. Service credentials are different from your Bluemix account username and password.</p>
+<h2>Getting the service credentials</h2><p>You will need the <code>username</code> and <code>password</code> (<code>api_key</code> for AlchemyAPI) credentials for each service. Service credentials are different from your Bluemix account username and password.</p>
 <p>To get your service credentials, follow these steps:</p>
 <ol>
-<li><p>Log in to Bluemix at https://bluemix.net.</p>
-</li>
-<li><p>Create an instance of the service:</p>
-<ol>
+<li>Log in to Bluemix at https://bluemix.net.</li>
+<li>Create an instance of the service:<ol>
 <li>In the Bluemix <strong>Catalog</strong>, select the service you want to use.</li>
-<li>Under <strong>Add Service</strong>, type a unique name for the service instance in the Service name field. For example, type <code>my-service-name</code>. Leave the default values for the other options.</li>
+<li>Type a unique name for the service instance in the <strong>Service name</strong> field. For example, type <code>my-service-name</code>. Leave the default values for the other options.</li>
 <li>Click <strong>Create</strong>.</li>
-</ol>
-</li>
-<li><p>Copy your credentials:</p>
-<ol>
-<li>On the left side of the page, click <strong>Service Credentials</strong> to view your service credentials.</li>
-<li>Copy <code>username</code> and <code>password</code> (<code>api_key</code> for AlchemyAPI).</li>
+<li>From the service dashboard, click <strong>Service credentials</strong>.</li>
+<li>Click <strong>View credentials</strong> under <strong>Actions</strong>.</li>
+<li>Copy <code>username</code> and <code>password</code> (or <code>api_key</code> for Visual Recognition).</li>
 </ol>
 </li>
 </ol>
-<h2>Questions</h2><p>If you are having difficulties using the APIs or have a question about the IBM
-Watson Services, please ask a question on
-<a href="https://developer.ibm.com/answers/questions/ask/?topics=watson">dW Answers</a>
-or <a href="http://stackoverflow.com/questions/ask?tags=ibm-watson-cognitive">Stack Overflow</a>.</p>
+<h2>Questions</h2><p>If you are having difficulties using the APIs or have a question about the Watson services, please ask a question at <a href="https://developer.ibm.com/answers/questions/ask/?topics=watson">dW Answers</a> or <a href="http://stackoverflow.com/questions/ask?tags=ibm-watson-cognitive">Stack Overflow</a>.</p>
 <h2>Examples</h2><p>The <a href="https://github.com/watson-developer-cloud/node-sdk/tree/master/examples">examples</a> folder has basic and advanced examples.</p>
-<h2>IBM Watson Services</h2><p>The Watson Developer Cloud offers a variety of services for building cognitive
+<h2>IBM Watson services</h2><p>The Watson Developer Cloud offers a variety of services for building cognitive
 apps.</p>
-<h3>AlchemyLanguage</h3><p><a href="http://www.alchemyapi.com/products/alchemylanguage">AlchemyLanguage</a> offers 12 API functions as part of its text analysis service, each of which uses sophisticated natural language processing techniques to analyze your content and add high-level semantic information.</p>
-<p>Use the <a href="http://www.alchemyapi.com/products/alchemylanguage/sentiment-analysis">Sentiment Analysis</a> endpoint to identify positive/negative sentiment within a sample text document.</p>
+<h3>AlchemyLanguage</h3><p><a href="https://console.bluemix.net/docs/services/alchemy-language/index.html">AlchemyLanguage</a> offers 12 API functions as part of its text analysis service, each of which uses sophisticated natural language processing techniques to analyze your content and add high-level semantic information.</p>
+<p>Use the [Sentiment Analysis][sentiment_analysis] endpoint to identify positive/negative sentiment within a sample text document.</p>
 <pre class="prettyprint source lang-javascript"><code>var AlchemyLanguageV1 = require('watson-developer-cloud/alchemy-language/v1');
 
 var alchemy_language = new AlchemyLanguageV1({
@@ -166,7 +157,7 @@ alchemy_language.sentiment(params, function (err, response) {
     console.log('error:', err);
   else
     console.log(JSON.stringify(response, null, 2));
-});</code></pre><h3>AlchemyData News</h3><p><a href="http://www.alchemyapi.com/products/alchemydata-news">Alchemy Data News</a> indexes 250k to 300k English language news and blog articles every day with historical search available for the past 60 days.
+});</code></pre><h3>AlchemyData News</h3><p><a href="https://console.bluemix.net/docs/services/alchemydata-news/index.html">Alchemy Data News</a> indexes 250k to 300k English language news and blog articles every day with historical search available for the past 60 days.
 Example: Get the volume data from the last 7 days using 12hs of time slice.</p>
 <pre class="prettyprint source lang-javascript"><code>var AlchemyDataNewsV1 = require('watson-developer-cloud/alchemy-data-news/v1');
 
@@ -201,7 +192,7 @@ authorization.getToken(function (err, token) {
   } else {
     // Use your token here
   }
-});</code></pre><h3>Conversation</h3><p>Use the <a href="https://www.ibm.com/watson/developercloud/conversation.html">Conversation</a> service to determine the intent of a message.</p>
+});</code></pre><h3>Conversation</h3><p>Use the <a href="https://www.ibm.com/watson/services/conversation/">Conversation</a> service to determine the intent of a message.</p>
 <p>Note: you must first create a workspace via Bluemix. See <a href="https://console.bluemix.net/docs/services/conversation/index.html#about">the documentation</a> for details.</p>
 <pre class="prettyprint source lang-js"><code>var ConversationV1 = require('watson-developer-cloud/conversation/v1');
 
@@ -220,8 +211,8 @@ conversation.message({
      } else {
        console.log(JSON.stringify(response, null, 2));
      }
-});</code></pre><h3>Dialog</h3><p>The Dialog service was deprecated on August 15, 2016, existing instances of the service will continue to function until August 9, 2017. Users of the Dialog service should migrate their applications to use the Conversation service. See the <a href="https://console.bluemix.net/docs/services/conversation/index.html#about">migration documentation</a> to learn how to migrate your dialogs to the Conversation service.</p>
-<h3>Discovery</h3><p>Use the <a href="http://www.ibm.com/watson/developercloud/discovery.html">Discovery Service</a> to search and analyze structured and unstructured data.</p>
+});</code></pre><h3>Dialog</h3><p>The Dialog service was deprecated on August 15, 2016, existing instances of the service will continue to function until August 9, 2017. Users of the Dialog service should migrate their applications to use the Conversation service. See the <a href="https://console.bluemix.net/docs/services/conversation/index.html">migration documentation</a> to learn how to migrate your dialogs to the Conversation service.</p>
+<h3>Discovery</h3><p>Use the <a href="https://www.ibm.com/watson/services/discovery/">Discovery Service</a> to search and analyze structured and unstructured data.</p>
 <pre class="prettyprint source lang-javascript"><code>var DiscoveryV1 = require('watson-developer-cloud/discovery/v1');
 
 var discovery = new DiscoveryV1({
@@ -271,21 +262,17 @@ document_conversion.convert({
   }
 });</code></pre><p>See the <a href="https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/document_conversion_integration.v1.js">Document Conversion integration example</a> about how to integrate the Document Conversion service
 with the Retrieve and Rank service.</p>
-<h3>Language Translation</h3><p>The IBM Watson™ Language Translation service has been rebranded as the Language Translator service.
-The Language Translator service provides the same capabilities as the Language Translation service, but with simpler pricing.
-For information about migrating existing applications from the Language Translation service to the Language Translator service, see the
-<a href="http://www.ibm.com/watson/developercloud/doc/language-translator/migrating.shtml">Migration documentation</a></p>
+<h3>Language Translation</h3><p>The IBM Watson™ Language Translation service has been rebranded as the Language Translator service.</p>
+<p>The Language Translator service provides the same capabilities as the Language Translation service, but with simpler pricing. For information about migrating existing applications from the Language Translation service to the Language Translator service, see the <a href="https://console.bluemix.net/docs/services/language-translator/migrating.html">Migration documentation</a></p>
 <pre class="prettyprint source lang-javascript"><code>var LanguageTranslationV2 = require('watson-developer-cloud/language-translation/v2');
 
 var language_translation = new LanguageTranslationV2({
   username: '&lt;username>',
   password: '&lt;password>'
-});</code></pre><h3>Language Translator</h3><p>Translate text from one language to another or idenfity a language using the <a href="http://www.ibm.com/watson/developercloud/doc/language-translation/index.html">Language Translator</a> service.</p>
-<p><strong>Note:</strong> There is a deprecated Language <em>Translation</em> service and a newer Language <em>Translator</em> service.
-The only difference is the pricing structure and the service endpoint.
-The SDK currently defaults to the older endpoint for both <code>LanguageTranslationV2</code> and <code>LanguageTranslatorV2</code>, but <code>LanguageTranslatorV2</code>'s default endpoint will change in the next major release (3.0.0).
-<strong>To guarantee compatibility, include the <code>url</code> when creating a <code>LanguageTranslatorV2</code> instance.</strong>
-See http://www.ibm.com/watson/developercloud/doc/language-translator/migrating.shtml for more details.</p>
+});</code></pre><h3>Language Translator</h3><p>Translate text from one language to another or idenfity a language using the <a href="https://www.ibm.com/watson/services/language-translator/">Language Translator</a> service.</p>
+<p><strong>Note:</strong> There is a deprecated Language <em>Translation</em> service and a newer Language <em>Translator</em> service. The only difference is the pricing structure and the service endpoint.</p>
+<p>The SDK currently defaults to the older endpoint for both <code>LanguageTranslationV2</code> and <code>LanguageTranslatorV2</code>, but <code>LanguageTranslatorV2</code>'s default endpoint will change in the next major release (3.0.0). <strong>To guarantee compatibility, include the <code>url</code> when creating a <code>LanguageTranslatorV2</code> instance.</strong></p>
+<p>See <a href="https://console.bluemix.net/docs/services/language-translator/migrating.html">Migrating from Language Translation</a> for more details.</p>
 <pre class="prettyprint source lang-javascript"><code>var LanguageTranslatorV2 = require('watson-developer-cloud/language-translator/v2');
 
 var language_translator = new LanguageTranslatorV2({
@@ -310,7 +297,7 @@ language_translator.identify({
       console.log('error:', err);
     else
       console.log(JSON.stringify(language, null, 2));
-});</code></pre><h3>Natural Language Classifier</h3><p>Use <a href="http://www.ibm.com/watson/developercloud/doc/natural-language-classifier/index.html">Natural Language Classifier</a> service to create a classifier instance by providing a set of representative strings and a set of one or more correct classes for each as training. Then use the trained classifier to classify your new question for best matching answers or to retrieve next actions for your application.</p>
+});</code></pre><h3>Natural Language Classifier</h3><p>Use <a href="https://console.bluemix.net/docs/services/natural-language-classifier/getting-started.html">Natural Language Classifier</a> service to create a classifier instance by providing a set of representative strings and a set of one or more correct classes for each as training. Then use the trained classifier to classify your new question for best matching answers or to retrieve next actions for your application.</p>
 <pre class="prettyprint source lang-javascript"><code>var NaturalLanguageClassifierV1 = require('watson-developer-cloud/natural-language-classifier/v1');
 
 var natural_language_classifier = new NaturalLanguageClassifierV1({
@@ -350,7 +337,7 @@ nlu.analyze({
      else
        console.log(JSON.stringify(response, null, 2));
  });</code></pre><h3>Personality Insights</h3><p>Analyze text in English and get a personality profile by using the
-<a href="http://www.ibm.com/watson/developercloud/doc/personality-insights/">Personality Insights</a> service.</p>
+<a href="https://www.ibm.com/watson/services/personality-insights/">Personality Insights</a> service.</p>
 <pre class="prettyprint source lang-javascript"><code>var PersonalityInsightsV3 = require('watson-developer-cloud/personality-insights/v3');
 
 var personality_insights = new PersonalityInsightsV3({
@@ -369,7 +356,7 @@ personality_insights.profile({
     else
       console.log(JSON.stringify(response, null, 2));
 });</code></pre><p><strong>Note:</strong> Don't forget to update the <code>text</code> variable!</p>
-<h3>Retrieve and Rank</h3><p>Use the <a href="https://www.ibm.com/watson/developercloud/doc/retrieve-rank/">Retrieve and Rank</a> service to enhance search results with machine learning.</p>
+<h3>Retrieve and Rank</h3><p>Use the <a href="https://www.ibm.com/watson/services/retrieve-and-rank/">Retrieve and Rank</a> service to enhance search results with machine learning.</p>
 <pre class="prettyprint source lang-javascript"><code>var RetrieveAndRankV1 = require('watson-developer-cloud/retrieve-and-rank/v1');
 
 var retrieve = new RetrieveAndRankV1({
@@ -409,7 +396,7 @@ solrClient.search(query, function(err, searchResponse) {
     console.log('Found ' + searchResponse.response.numFound + ' document(s).');
     console.log('First document: ' + JSON.stringify(searchResponse.response.docs[0], null, 2));
   }
-});</code></pre><h3>Speech to Text</h3><p>Use the <a href="http://www.ibm.com/watson/developercloud/doc/speech-to-text/">Speech to Text</a> service to recognize the text from a .wav file.</p>
+});</code></pre><h3>Speech to Text</h3><p>Use the <a href="https://www.ibm.com/watson/services/speech-to-text/">Speech to Text</a> service to recognize the text from a .wav file.</p>
 <pre class="prettyprint source lang-javascript"><code>var SpeechToTextV1 = require('watson-developer-cloud/speech-to-text/v1');
 var fs = require('fs');
 
@@ -434,7 +421,7 @@ speech_to_text.recognize(params, function(err, res) {
 // or streaming
 fs.createReadStream('./resources/speech.wav')
   .pipe(speech_to_text.createRecognizeStream({ content_type: 'audio/l16; rate=44100' }))
-  .pipe(fs.createWriteStream('./transcription.txt'));</code></pre><h3>Text to Speech</h3><p>Use the <a href="http://www.ibm.com/watson/developercloud/doc/text-to-speech/">Text to Speech</a> service to synthesize text into a .wav file.</p>
+  .pipe(fs.createWriteStream('./transcription.txt'));</code></pre><h3>Text to Speech</h3><p>Use the <a href="https://www.ibm.com/watson/services/text-to-speech/">Text to Speech</a> service to synthesize text into a .wav file.</p>
 <pre class="prettyprint source lang-js"><code>var TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
 var fs = require('fs');
 
@@ -450,7 +437,7 @@ var params = {
 };
 
 // Pipe the synthesized text to a file
-text_to_speech.synthesize(params).pipe(fs.createWriteStream('output.wav'));</code></pre><h3>Tone Analyzer</h3><p>Use the <a href="http://www.ibm.com/watson/developercloud/tone-analyzer.html">Tone Analyzer</a> service to analyze the
+text_to_speech.synthesize(params).pipe(fs.createWriteStream('output.wav'));</code></pre><h3>Tone Analyzer</h3><p>Use the <a href="https://www.ibm.com/watson/services/tone-analyzer/">Tone Analyzer</a> service to analyze the
 emotion, writing and social tones of a text.</p>
 <pre class="prettyprint source lang-js"><code>var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
 
@@ -466,7 +453,7 @@ tone_analyzer.tone({ text: 'Greetings from Watson Developer Cloud!' },
       console.log(err);
     else
       console.log(JSON.stringify(tone, null, 2));
-});</code></pre><h3>Tradeoff Analytics</h3><p>Use the <a href="http://www.ibm.com/watson/developercloud/doc/tradeoff-analytics/">Tradeoff Analytics</a> service to find the best
+});</code></pre><h3>Tradeoff Analytics</h3><p>Use the <a href="https://console.bluemix.net/docs/services/tradeoff-analytics/index.html">Tradeoff Analytics</a> service to find the best
 phone that minimizes price and weight and maximizes screen size.</p>
 <pre class="prettyprint source lang-javascript"><code>var TradeoffAnalyticsV1 = require('watson-developer-cloud/tradeoff-analytics/v1');
 
@@ -483,7 +470,7 @@ tradeoff_analytics.dilemmas(params, function(err, res) {
     console.log(err);
   else
     console.log(JSON.stringify(res, null, 2));
-});</code></pre><h3>Visual Recognition</h3><p>Use the <a href="http://www.ibm.com/watson/developercloud/doc/visual-recognition/">Visual Recognition</a> service to recognize the
+});</code></pre><h3>Visual Recognition</h3><p>Use the <a href="https://www.ibm.com/watson/services/visual-recognition/">Visual Recognition</a> service to recognize the
 following picture.</p>
 <p><img src="https://visual-recognition-demo.mybluemix.net/images/samples/5.jpg" width="150" /></p>
 <pre class="prettyprint source lang-js"><code>var VisualRecognitionV3 = require('watson-developer-cloud/visual-recognition/v3');
@@ -503,17 +490,17 @@ visual_recognition.classify(params, function(err, res) {
     console.log(err);
   else
     console.log(JSON.stringify(res, null, 2));
-});</code></pre><h2>Removed Services</h2><p>The following services are no longer available.</p>
+});</code></pre><h2>Removed services</h2><p>The following services are no longer available.</p>
 <ul>
 <li><strong>AlchemyVision</strong>: Visual Recognition replaced Alchemy Vision with improved billing and a superset of the original features</li>
 <li><strong>Concept Insights</strong>: AlchemyLanguage's concept function can be used as a replacement for most Concept Insights use cases; therefore, we encourage existing Concept Insights service users to migrate to AlchemyLanguage.</li>
-<li><strong>Relationship Extraction</strong>: You can now access Relationship Extraction models with AlchemyLanguage. See the <a href="http://www.ibm.com/watson/developercloud/doc/alchemylanguage/migration.shtml">migration guide</a> for details.</li>
+<li><strong>Relationship Extraction</strong>: You can now access Relationship Extraction models with AlchemyLanguage. See the <a href="https://console.bluemix.net/docs/services/alchemy-language/migration.html">migration guide</a> for details.</li>
 <li><strong>Message Resonance</strong>: Use Natural Language Understanding or Tone Analyzer to understand the emotions of your audience and messages.</li>
 <li><strong>Question and Answer</strong>: Use Conversation or Natural Language Classifier to identify intent and Retrieve and Rank to search for relevant documents.</li>
 <li><strong>Visual Insights</strong>: Use Visual Recognition to achieve a similar result</li>
 <li><strong>Concept Expansion</strong>: Use Natural Langue Understanding to extract concepts, entities, and more.</li>
 </ul>
-<h2>Composing Services</h2><h3>Integration of Tone Analyzer with Conversation</h3><p>Sample code for <a href="https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/conversation_tone_analyzer_integration">integrating Tone Analyzer and Conversation</a> is provided in the <a href="https://github.com/watson-developer-cloud/node-sdk/tree/master/examples">examples directory</a>.</p>
+<h2>Composing services</h2><h3>Integration of Tone Analyzer with Conversation</h3><p>Sample code for <a href="https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/conversation_tone_analyzer_integration">integrating Tone Analyzer and Conversation</a> is provided in the <a href="https://github.com/watson-developer-cloud/node-sdk/tree/master/examples">examples directory</a>.</p>
 <h2>Integration of Document Conversion with Retrieve and Rank</h2><p>See the <a href="https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/document_conversion_integration.v1.js">Document Conversion integration example</a> about how to integrate the Document Conversion service
 with the Retrieve and Rank service.</p>
 <h2>Unauthenticated requests</h2><p>By default, the library tries to use Basic Auth and will ask for <code>api_key</code> or <code>username</code> and <code>password</code> and send an <code>Authorization: Basic XXXXXXX</code>. You can avoid this by using:</p>
@@ -548,7 +535,7 @@ var dialog = new watson.DialogV1({
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.4</a> on Mon Aug 14 2017 21:55:26 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Sep 29 2017 15:27:58 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>
