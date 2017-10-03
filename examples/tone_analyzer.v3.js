@@ -5,7 +5,7 @@ const ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
 const tone_analyzer = new ToneAnalyzerV3({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
   password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
-  version_date: '2016-05-19'
+  version_date: '2017-09-21'
 });
 
 tone_analyzer.tone({ text: 'Greetings from Watson Developer Cloud!' }, function(err, tone) {
