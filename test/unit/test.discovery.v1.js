@@ -376,7 +376,7 @@ describe('discovery-v1', function() {
 
         describe('_ensureFilename()', function() {
           it('should pass through ReadStreams unmodified', function() {
-            const src = fs.createReadStream(path.join(__dirname, '../resources/sample-docx.docx'));
+            const src = fs.createReadStream(path.join(__dirname, '../resources/sampleWord.docx'));
             assert.equal(DiscoveryV1._ensureFilename(src), src);
           });
 
