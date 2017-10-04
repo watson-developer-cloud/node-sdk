@@ -1543,4 +1543,183 @@ ConversationV1.prototype.getLogs = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
+/**
+ * Method: createDialogNode
+ *
+ * Create a new dialog node
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} [params.dialog_node]
+ * @param {String} [params.description]
+ * @param {Array<Object>} [params.examples]
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.createDialogNode = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/dialog_nodes',
+      method: 'POST',
+      json: true,
+      path: pick(params, ['workspace_id']),
+      body: pick(params, [
+        'dialog_node',
+        'description',
+        'conditions',
+        'parent',
+        'previous_sibling',
+        'output',
+        'context',
+        'metadata',
+        'next_step',
+        'actions',
+        'title',
+        'type',
+        'event_name',
+        'variable'
+      ])
+    },
+    requiredParams: ['workspace_id', 'dialog_node'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: getDialogNodes
+ *
+ * List the dialog nodes for a workspace.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {Boolean} [params.export=false] - if true, the full contents of all of the sub-resources are returned
+ * @param {Number} [params.page_limit]
+ * @param {Boolean} [params.include_count]
+ * @param {String} [params.sort]
+ * @param {String} [params.cursor]
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.getDialogNodes = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/dialog_nodes',
+      method: 'GET',
+      json: true,
+      path: pick(params, ['workspace_id']),
+      qs: pick(params, ['page_limit', 'include_count', 'sort', 'cursor'])
+    },
+    requiredParams: ['workspace_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: getDialogNode
+ *
+ * Get information about an dialog node, optionally including all dialog node content.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} params.dialog_node
+ * @param {Boolean} [params.export=false] - if true, the full contents of all of the sub-resources are returned
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.getDialogNode = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/dialog_nodes/{dialog_node}',
+      method: 'GET',
+      json: true,
+      path: pick(params, ['workspace_id', 'dialog_node']),
+      qs: pick(params, ['export'])
+    },
+    requiredParams: ['workspace_id', 'dialog_node'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: updateDialogNode
+ *
+ * Update an existing dialog node with new or modified data. You must provide JSON data defining the content of the updated dialog node.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} params.old_dialog_node
+ * @param {String} params.dialog_node
+ * @param {String} params.description
+ * @param {Array<Object>} params.examples
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.updateDialogNode = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/dialog_nodes/{old_dialog_node}',
+      method: 'POST',
+      json: true,
+      path: pick(params, ['workspace_id', 'old_dialog_node']),
+      body: pick(params, [
+        'dialog_node',
+        'description',
+        'conditions',
+        'parent',
+        'previous_sibling',
+        'output',
+        'context',
+        'metadata',
+        'next_step',
+        'actions',
+        'title',
+        'type',
+        'event_name',
+        'variable'
+      ])
+    },
+    requiredParams: ['workspace_id', 'old_dialog_node', 'dialog_node'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: deleteDialogNode
+ *
+ * Delete an dialog node from a workspace
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} params.dialog_node
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.deleteDialogNode = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/dialog_nodes/{dialog_node}',
+      method: 'DELETE',
+      json: true,
+      path: pick(params, ['workspace_id', 'dialog_node'])
+    },
+    requiredParams: ['workspace_id', 'dialog_node'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
 module.exports = ConversationV1;
