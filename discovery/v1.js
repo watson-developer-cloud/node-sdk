@@ -680,7 +680,21 @@ DiscoveryV1.prototype.query = function(params, callback) {
       method: 'GET',
       json: true,
       path: pick(params, ['environment_id', 'collection_id']),
-      qs: pick(params, ['query', 'natural_language_query', 'filter', 'aggregation', 'count', 'offset', 'return', 'sort', 'passages', 'highlight', 'passages.fields', 'passages.count', 'passages.characters'])
+      qs: pick(params, [
+        'query',
+        'natural_language_query',
+        'filter',
+        'aggregation',
+        'count',
+        'offset',
+        'return',
+        'sort',
+        'passages',
+        'highlight',
+        'passages.fields',
+        'passages.count',
+        'passages.characters'
+      ])
     },
     requiredParams: ['environment_id', 'collection_id'],
     defaultOptions: this._options
