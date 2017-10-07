@@ -202,6 +202,19 @@ describe('alchemy_language_integration', function() {
     );
   });
 
+  // Public: https://github.com/watson-developer-cloud/node-sdk/issues/478
+  // Internal: https://github.ibm.com/watson-nlu/planning-hub/issues/847
+  // skipped due to not yet being fixed
+  it.skip('should not choke on bell characters', done => {
+    alchemy_language.combined(
+      {
+        extract: 'entity',
+        text: 'Bear River Massacre ceremony marks sesquicentennial anniversary of event Farid Rushdi\u0007 for the Journal'
+      },
+      done
+    );
+  });
+
   describe('typedRelations()', function() {
     it('should process html', function(done) {
       alchemy_language.typedRelations(

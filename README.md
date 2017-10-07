@@ -6,21 +6,20 @@ Watson Developer Cloud Node.js SDK
 [![npm-version](https://img.shields.io/npm/v/watson-developer-cloud.svg)](https://www.npmjs.com/package/watson-developer-cloud)
 [![npm-downloads](https://img.shields.io/npm/dm/watson-developer-cloud.svg)](https://www.npmjs.com/package/watson-developer-cloud)
 
-Node.js client library to use the [Watson Developer Cloud][wdc] services, a collection of APIs that use cognitive computing to solve complex problems.
+Node.js client library to use the Watson Developer Cloud services, a collection of APIs that use cognitive computing to solve complex problems.
 
 ## Table of Contents
   * [Major Changes for v2](#major-changes-for-v2)
   * [Installation](#installation)
   * [Usage](#usage)
+  * [Documentation](#documentation)
   * [Getting the Service Credentials](#getting-the-service-credentials)
   * [Questions](#questions)
   * [Examples](#examples)
   * [IBM Watson Services](#ibm-watson-services)
     * [AlchemyLanguage](#alchemylanguage)
-    * [AlchemyVision](#alchemyvision)
     * [AlchemyData News](#alchemydata-news)
     * [Authorization](#authorization)
-    * [Concept Insights](#concept-insights)
     * [Conversation](#conversation)
     * [Dialog](#dialog)
     * [Discovery](#discovery)
@@ -29,14 +28,13 @@ Node.js client library to use the [Watson Developer Cloud][wdc] services, a coll
     * [Natural Language Classifier](#natural-language-classifier)
     * [Natural Language Understanding](#natural-language-understanding)
     * [Personality Insights](#personality-insights)
-    * [Relationship Extraction](#relationship-extraction)
     * [Retrieve and Rank](#retrieve-and-rank)
     * [Speech to Text](#speech-to-text)
     * [Text to Speech](#text-to-speech)
     * [Tone Analyzer](#tone-analyzer)
     * [Tradeoff Analytics](#tradeoff-analytics)
-    * [Visual Insights](#visual-insights)
     * [Visual Recognition](#visual-recognition)
+    * [Removed Services](#removed-services)
   * [Composing Services](#composing-services)
   * [Debug](#debug)
   * [Tests](#tests)
@@ -45,7 +43,7 @@ Node.js client library to use the [Watson Developer Cloud][wdc] services, a coll
   * [Contributing](#contributing)
 
 
-## Major Changes for v2
+## Major changes for v2
 
 ### BREAKING: user-supplied credentials are now preferred over Bluemix-supplied credentials.
 
@@ -109,7 +107,7 @@ Of those that do, most require an auth token to be generated server-side via the
 
 ### Data collection opt-out
 
-By default, [all requests are logged](https://www.ibm.com/watson/developercloud/doc/common/getting-started-logging.html). This can be disabled of by setting the `X-Watson-Learning-Opt-Out` header when creating the service instance:
+By default, [all requests are logged](https://console.bluemix.net/docs/services/watson/getting-started-logging.html). This can be disabled of by setting the `X-Watson-Learning-Opt-Out` header when creating the service instance:
 
 ```js
 var myInstance = new watson.WhateverServiceV1({
@@ -120,32 +118,34 @@ var myInstance = new watson.WhateverServiceV1({
 });
 ```
 
-## Getting the Service Credentials
+## Documentation
+
+You can find links to the documentation at https://www.ibm.com/watson/developercloud/doc/index.html. Find the service that you're interested in, click **API reference**, and then select the **Node** tab.
+
+There are also auto-generated JSDocs available at http://watson-developer-cloud.github.io/node-sdk/latest/
+
+## Getting the service credentials
 You will need the `username` and `password` (`api_key` for AlchemyAPI) credentials for each service. Service credentials are different from your Bluemix account username and password.
 
 To get your service credentials, follow these steps:
- 1. Log in to Bluemix at https://bluemix.net.
 
- 1. Create an instance of the service:
-     1. In the Bluemix **Catalog**, select the service you want to use.
-     1. Under **Add Service**, type a unique name for the service instance in the Service name field. For example, type `my-service-name`. Leave the default values for the other options.
-     1. Click **Create**.
-
- 1. Copy your credentials:
-     1. On the left side of the page, click **Service Credentials** to view your service credentials.
-     1. Copy `username` and `password` (`api_key` for AlchemyAPI).
+1.  Log in to Bluemix at https://bluemix.net.
+1.  Create an instance of the service:
+    1.  In the Bluemix **Catalog**, select the service you want to use.
+    1.  Type a unique name for the service instance in the **Service name** field. For example, type `my-service-name`. Leave the default values for the other options.
+    1.  Click **Create**.
+    1.  From the service dashboard, click **Service credentials**.
+    1.  Click **View credentials** under **Actions**.
+    1.  Copy `username` and `password` (or `api_key` for Visual Recognition).
 
 ## Questions
 
-If you are having difficulties using the APIs or have a question about the IBM
-Watson Services, please ask a question on
-[dW Answers](https://developer.ibm.com/answers/questions/ask/?topics=watson)
-or [Stack Overflow](http://stackoverflow.com/questions/ask?tags=ibm-watson-cognitive).
+If you are having difficulties using the APIs or have a question about the Watson services, please ask a question at [dW Answers](https://developer.ibm.com/answers/questions/ask/?topics=watson) or [Stack Overflow](http://stackoverflow.com/questions/ask?tags=ibm-watson-cognitive).
 
 ## Examples
 The [examples][examples] folder has basic and advanced examples.
 
-## IBM Watson Services
+## IBM Watson services
 The Watson Developer Cloud offers a variety of services for building cognitive
 apps.
 
@@ -172,9 +172,6 @@ alchemy_language.sentiment(params, function (err, response) {
     console.log(JSON.stringify(response, null, 2));
 });
 ```
-
-### AlchemyVision
-The AlchemyVision service has been replaced by the [Visual Recognition](#visual-recognition) service. Existing users have until May 20, 2017 to migrate to the new service, and no new instances may be created.
 
 ### AlchemyData News
 [Alchemy Data News][alchemy_data_news] indexes 250k to 300k English language news and blog articles every day with historical search available for the past 60 days.
@@ -225,16 +222,12 @@ authorization.getToken(function (err, token) {
 });
 ```
 
-### Concept Insights
-
-The [Concept Insights][concept_insights] has been deprecated, AlchemyLanguage's concept function can be used as a replacement for most Concept Insights use cases; therefore, we encourage existing Concept Insights service users to migrate to AlchemyLanguage.
-
 
 ### Conversation
 
 Use the [Conversation][conversation] service to determine the intent of a message.
 
-Note: you must first create a workspace via Bluemix. See [the documentation](https://www.ibm.com/watson/developercloud/doc/conversation) for details.
+Note: you must first create a workspace via Bluemix. See [the documentation](https://console.bluemix.net/docs/services/conversation/index.html#about) for details.
 
 ```js
 var ConversationV1 = require('watson-developer-cloud/conversation/v1');
@@ -242,7 +235,7 @@ var ConversationV1 = require('watson-developer-cloud/conversation/v1');
 var conversation = new ConversationV1({
   username: '<username>',
   password: '<password>',
-  version_date: ConversationV1.VERSION_DATE_2017_04_21
+  version_date: ConversationV1.VERSION_DATE_2017_05_26
 });
 
 conversation.message({
@@ -328,9 +321,8 @@ with the Retrieve and Rank service.
 ### Language Translation
 
 The IBM Watson™ Language Translation service has been rebranded as the Language Translator service.
-The Language Translator service provides the same capabilities as the Language Translation service, but with simpler pricing.
-For information about migrating existing applications from the Language Translation service to the Language Translator service, see the
-[Migration documentation](http://www.ibm.com/watson/developercloud/doc/language-translator/migrating.shtml)
+
+The Language Translator service provides the same capabilities as the Language Translation service, but with simpler pricing. For information about migrating existing applications from the Language Translation service to the Language Translator service, see the [Migration documentation][language-translator-migration]
 
 ```javascript
 var LanguageTranslationV2 = require('watson-developer-cloud/language-translation/v2');
@@ -345,11 +337,11 @@ var language_translation = new LanguageTranslationV2({
 
 Translate text from one language to another or idenfity a language using the [Language Translator][language_translator] service.
 
-**Note:** There is a deprecated Language *Translation* service and a newer Language *Translator* service.
-The only difference is the pricing structure and the service endpoint.
-The SDK currently defaults to the older endpoint for both `LanguageTranslationV2` and `LanguageTranslatorV2`, but `LanguageTranslatorV2`'s default endpoint will change in the next major release (3.0.0).
-**To guarantee compatibility, include the `url` when creating a `LanguageTranslatorV2` instance.**
-See http://www.ibm.com/watson/developercloud/doc/language-translator/migrating.shtml for more details.
+**Note:** There is a deprecated Language *Translation* service and a newer Language *Translator* service. The only difference is the pricing structure and the service endpoint.
+
+The SDK currently defaults to the older endpoint for both `LanguageTranslationV2` and `LanguageTranslatorV2`, but `LanguageTranslatorV2`'s default endpoint will change in the next major release (3.0.0). **To guarantee compatibility, include the `url` when creating a `LanguageTranslatorV2` instance.**
+
+See [Migrating from Language Translation][language-translator-migration] for more details.
 
 ```javascript
 var LanguageTranslatorV2 = require('watson-developer-cloud/language-translator/v2');
@@ -381,7 +373,7 @@ language_translator.identify({
 
 ### Natural Language Classifier
 
-Use [Natural Language Classifier](http://www.ibm.com/watson/developercloud/doc/natural-language-classifier/index.html) service to create a classifier instance by providing a set of representative strings and a set of one or more correct classes for each as training. Then use the trained classifier to classify your new question for best matching answers or to retrieve next actions for your application.
+Use [Natural Language Classifier](https://console.bluemix.net/docs/services/natural-language-classifier/getting-started.html) service to create a classifier instance by providing a set of representative strings and a set of one or more correct classes for each as training. Then use the trained classifier to classify your new question for best matching answers or to retrieve next actions for your application.
 
 ```javascript
 var NaturalLanguageClassifierV1 = require('watson-developer-cloud/natural-language-classifier/v1');
@@ -460,11 +452,6 @@ personality_insights.profile({
 ```
 
 **Note:** Don't forget to update the `text` variable!
-
-
-### Relationship Extraction
-Relationship Extraction has been deprecated. If you want to continue using Relationship Extraction models, you can now access them with AlchemyLanguage. See the [migration guide][re_migration] for details.
-
 
 ### Retrieve and Rank
 Use the [Retrieve and Rank][retrieve_and_rank] service to enhance search results with machine learning.
@@ -610,9 +597,6 @@ tradeoff_analytics.dilemmas(params, function(err, res) {
 });
 ```
 
-### Visual Insights
-The Watson [Visual Insights][visual_insights] Service will be withdrawn. The Watson Visual Insights Service tile will be removed from the Bluemix catalog on July 3, 2016, after which you cannot provision new instances of this service.
-
 ### Visual Recognition
 Use the [Visual Recognition][visual_recognition] service to recognize the
 following picture.
@@ -640,12 +624,24 @@ visual_recognition.classify(params, function(err, res) {
 });
 ```
 
-## Composing Services
+## Removed services
+
+The following services are no longer available.
+
+* **AlchemyVision**: Visual Recognition replaced Alchemy Vision with improved billing and a superset of the original features
+* **Concept Insights**: AlchemyLanguage's concept function can be used as a replacement for most Concept Insights use cases; therefore, we encourage existing Concept Insights service users to migrate to AlchemyLanguage.
+* **Relationship Extraction**: You can now access Relationship Extraction models with AlchemyLanguage. See the [migration guide][re_migration] for details.
+* **Message Resonance**: Use Natural Language Understanding or Tone Analyzer to understand the emotions of your audience and messages.
+* **Question and Answer**: Use Conversation or Natural Language Classifier to identify intent and Retrieve and Rank to search for relevant documents.
+* **Visual Insights**: Use Visual Recognition to achieve a similar result
+* **Concept Expansion**: Use Natural Langue Understanding to extract concepts, entities, and more.
+
+## Composing services
 
 ### Integration of Tone Analyzer with Conversation
 Sample code for [integrating Tone Analyzer and Conversation][conversation_tone_analyzer_example] is provided in the [examples directory][examples].
 
-## Integration Document Conversation with Retrieve and Rank
+## Integration of Document Conversion with Retrieve and Rank
 See the [Document Conversion integration example][document_conversion_integration_example] about how to integrate the Document Conversion service
 with the Retrieve and Rank service.
 
@@ -694,34 +690,25 @@ This library is licensed under Apache 2.0. Full license text is available in
 ## Contributing
 See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/master/.github/CONTRIBUTING.md).
 
-[conversation]: https://www.ibm.com/watson/developercloud/conversation.html
+[conversation]: https://www.ibm.com/watson/services/conversation/
+[discovery]: https://www.ibm.com/watson/services/discovery/
+[personality_insights]: https://www.ibm.com/watson/services/personality-insights/
+[retrieve_and_rank]: https://www.ibm.com/watson/services/retrieve-and-rank/
+[visual_recognition]: https://www.ibm.com/watson/services/visual-recognition/
+[tone_analyzer]: https://www.ibm.com/watson/services/tone-analyzer/
+[text_to_speech]: https://www.ibm.com/watson/services/text-to-speech/
+[speech_to_text]: https://www.ibm.com/watson/services/speech-to-text/
+[tradeoff_analytics]: https://console.bluemix.net/docs/services/tradeoff-analytics/index.html
+[language_translator]: https://www.ibm.com/watson/services/language-translator/
+[re_migration]: https://console.bluemix.net/docs/services/alchemy-language/migration.html
+[alchemy_language]: https://console.bluemix.net/docs/services/alchemy-language/index.html
+[alchemy_data_news]: https://console.bluemix.net/docs/services/alchemydata-news/index.html
 
-[discovery]: http://www.ibm.com/watson/developercloud/discovery.html
-
-[personality_insights]: http://www.ibm.com/watson/developercloud/doc/personality-insights/
-[relationship_extraction]: http://www.ibm.com/watson/developercloud/doc/sireapi/
-[retrieve_and_rank]: https://www.ibm.com/watson/developercloud/doc/retrieve-rank/
-[visual_recognition]: http://www.ibm.com/watson/developercloud/doc/visual-recognition/
-[visual_insights]: http://www.ibm.com/watson/developercloud/doc/visual-insights/
-
-[tone_analyzer]: http://www.ibm.com/watson/developercloud/tone-analyzer.html
-[text_to_speech]: http://www.ibm.com/watson/developercloud/doc/text-to-speech/
-[speech_to_text]: http://www.ibm.com/watson/developercloud/doc/speech-to-text/
-[concept_insights]: http://www.ibm.com/watson/developercloud/doc/concept-insights/
-[tradeoff_analytics]: http://www.ibm.com/watson/developercloud/doc/tradeoff-analytics/
-[language_translator]: http://www.ibm.com/watson/developercloud/doc/language-translation/index.html
-[re_migration]: http://www.ibm.com/watson/developercloud/doc/alchemylanguage/migration.shtml
-
-[alchemy_language]: http://www.alchemyapi.com/products/alchemylanguage
-[sentiment_analysis]: http://www.alchemyapi.com/products/alchemylanguage/sentiment-analysis
-[alchemy_vision]: http://www.alchemyapi.com/products/alchemyvision
-[alchemy_data_news]: http://www.alchemyapi.com/products/alchemydata-news
-
-[wdc]: http://www.ibm.com/watson/developercloud/
-[bluemix]: https://console.ng.bluemix.net
+[bluemix]: https://console.bluemix.net
 [npm_link]: https://www.npmjs.com/package/watson-developer-cloud
 [request_github]: https://github.com/request/request
-[dialog_migration]: https://www.ibm.com/watson/developercloud/doc/conversation/migration.shtml
+[dialog_migration]: https://console.bluemix.net/docs/services/conversation/index.html
+[language-translator-migration]: https://console.bluemix.net/docs/services/language-translator/migrating.html
 
 [examples]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples
 [document_conversion_integration_example]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/document_conversion_integration.v1.js

@@ -122,7 +122,9 @@ describe('document_conversion', function() {
     });
 
     it('should generate a valid payload', function(done) {
-      const expectation = nock('http://ibm.com:80').post('/v1/convert_document?version=2015-12-15').reply(201, '');
+      const expectation = nock('http://ibm.com:80')
+        .post('/v1/convert_document?version=2015-12-15')
+        .reply(201, '');
 
       const req = servInstance.convert(payload, function(err, res) {
         assert(req);

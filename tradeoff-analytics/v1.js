@@ -45,7 +45,7 @@ TradeoffAnalyticsV1.URL = 'https://gateway.watsonplatform.net/tradeoff-analytics
  * @param  {String} params.options A list of options. Typically, the rows in a
  *                                 table representation of your data
  * @param  {String} params.metadataHeader Value of the x-watson-metadata header to be forwarded
- * 								                        for analytics purposes
+ *                                        for analytics purposes
  * @param  {String} params.generate_visualization Boolean (default = true). if false, the algorithm
  *                                                will not create the "map" visualization, and will typically run much faster
  * @param  {String} params.find_preferable_options Boolean (default = false). if true the algorithm includes a refined subset of best candidate options
@@ -82,7 +82,7 @@ TradeoffAnalyticsV1.prototype.dilemmas = function(params, callback) {
  *
  * @param  {String} params - the array of events to forward to the service
  * @param  {String} params.metadataHeader Value of the x-watson-metadata header to be forwarded
- * 								   for analytics purposes
+ *                                        for analytics purposes
  */
 TradeoffAnalyticsV1.prototype.events = function(params, callback) {
   params = params || {};

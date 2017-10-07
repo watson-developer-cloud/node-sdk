@@ -33,7 +33,10 @@ describe('tone_analyzer.v3', function() {
 
   before(function() {
     nock.disableNetConnect();
-    nock(service.url).persist().post(tone_path + '?version=2016-05-19', tone_request.text).reply(200, tone_response);
+    nock(service.url)
+      .persist()
+      .post(tone_path + '?version=2016-05-19', tone_request.text)
+      .reply(200, tone_response);
   });
 
   after(function() {
@@ -77,6 +80,23 @@ describe('tone_analyzer.v3', function() {
     assert.equal(req.method, 'POST');
     assert.equal(req.headers['content-type'], 'text/plain');
     assert.equal(req.headers['accept'], 'application/json');
+  });
+
+  it('tone API should add optional language parameter', function() {
+    const options = {
+      text: tone_request.text,
+      tones: 'emotion',
+      sentences: true,
+      language: 'en'
+    };
+    const req = tone_analyzer.tone(options, noop);
+    const body = Buffer.from(req.body).toString('ascii');
+    assert.equal(req.uri.href, service.url + tone_path + '?version=2016-05-19&tones=emotion&sentences=true');
+    assert.equal(body, tone_request.text);
+    assert.equal(req.method, 'POST');
+    assert.equal(req.headers['content-type'], 'text/plain');
+    assert.equal(req.headers['accept'], 'application/json');
+    assert.equal(req.headers['content-language'], 'en');
   });
 
   it('tone API should set HTML content-type', function() {
@@ -132,7 +152,9 @@ describe('tone_analyzer.v3', function() {
       tree: {}
     };
 
-    const expectation = nock(service.url).post('/v3/tone_chat' + '?version=2016-05-19', tone_chat_request).reply(200, tone_chat_response);
+    const expectation = nock(service.url)
+      .post('/v3/tone_chat' + '?version=2016-05-19', tone_chat_request)
+      .reply(200, tone_chat_response);
 
     // run tests
     const req = tone_analyzer.tone_chat(tone_chat_request, function(err, res) {

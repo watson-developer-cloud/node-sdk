@@ -32,7 +32,7 @@ function ConversationV1(options) {
 
   // Check if 'version_date' was provided
   if (typeof this._options.version_date === 'undefined') {
-    throw new Error('Argument error: version_date was not specified, use ConversationV1.VERSION_DATE_2017_04_21');
+    throw new Error('Argument error: version_date was not specified, use ConversationV1.VERSION_DATE_2017_05_26');
   }
   this._options.qs.version = options.version_date;
 }
@@ -71,7 +71,7 @@ ConversationV1.VERSION_DATE_2016_07_11 = '2016-07-11';
       ],
 ```
  *
- * @see http://www.ibm.com/watson/developercloud/doc/conversation/release-notes.html#20-september-2016
+ * @see https://console.bluemix.net/docs/services/conversation/release-notes.html#20September2016
  * @type {string}
  */
 ConversationV1.VERSION_DATE_2016_09_20 = '2016-09-20';
@@ -80,7 +80,7 @@ ConversationV1.VERSION_DATE_2016_09_20 = '2016-09-20';
  * 02/03 Update
  *
  * * Absolute scoring has now been enabled.
- * @see https://www.ibm.com/watson/developercloud/doc/conversation/irrelevant_utterance.html
+ * @see https://console.bluemix.net/docs/services/conversation/intents.html#absolute-scoring
  *
  * Old:
  ```json
@@ -120,7 +120,7 @@ ConversationV1.VERSION_DATE_2016_09_20 = '2016-09-20';
  "intents": []
  ```
  *
- * @see https://www.ibm.com/watson/developercloud/doc/conversation/release-notes.html#3-february-2017
+ * @see https://console.bluemix.net/docs/services/conversation/release-notes.html#3February2017
  * @type {string}
  */
 ConversationV1.VERSION_DATE_2017_02_03 = '2017-02-03';
@@ -132,6 +132,14 @@ ConversationV1.VERSION_DATE_2017_02_03 = '2017-02-03';
  * @type {string}
  */
 ConversationV1.VERSION_DATE_2017_04_21 = '2017-04-21';
+
+/**
+ * Schema changes for error response objects and workspace exporting
+ *
+ * @see https://console.bluemix.net/docs/services/conversation/release-notes.html#release-notes
+ * @type {string}
+ */
+ConversationV1.VERSION_DATE_2017_05_26 = '2017-05-26';
 
 /**
  * Method: message
@@ -1052,6 +1060,7 @@ ConversationV1.prototype.updateCounterExample = function(params, callback) {
  * @param {String} [params.entity]
  * @param {String} [params.description]
  * @param {Object} [params.metadata]
+ * @param {Boolean} [params.fuzzy_match=false] - whether to use fuzzy matching for the entity.
  * @param {Array<Object>} [params.values]
  * @param {Function} [callback]
  *
@@ -1065,7 +1074,7 @@ ConversationV1.prototype.createEntity = function(params, callback) {
       method: 'POST',
       json: true,
       path: pick(params, ['workspace_id']),
-      body: pick(params, ['entity', 'description', 'metadata', 'values'])
+      body: pick(params, ['entity', 'description', 'metadata', 'values', 'fuzzy_match'])
     },
     requiredParams: ['workspace_id', 'entity'],
     defaultOptions: this._options
@@ -1145,6 +1154,7 @@ ConversationV1.prototype.getEntity = function(params, callback) {
  * @param {String} params.entity
  * @param {String} params.description
  * @param {Object} params.metadata
+ * @param {Boolean} [params.fuzzy_match=false] - whether to use fuzzy matching for the entity.
  * @param {Array<Object>} params.values
  * @param {Function} [callback]
  *
@@ -1158,7 +1168,7 @@ ConversationV1.prototype.updateEntity = function(params, callback) {
       method: 'POST',
       json: true,
       path: pick(params, ['workspace_id', 'old_entity']),
-      body: pick(params, ['entity', 'description', 'metadata', 'values'])
+      body: pick(params, ['entity', 'description', 'metadata', 'values', 'fuzzy_match'])
     },
     requiredParams: ['workspace_id', 'old_entity', 'entity'],
     defaultOptions: this._options
@@ -1528,6 +1538,185 @@ ConversationV1.prototype.getLogs = function(params, callback) {
       qs: pick(params, ['filter', 'page_limit', 'sort', 'cursor'])
     },
     requiredParams: ['workspace_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: createDialogNode
+ *
+ * Create a new dialog node
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} [params.dialog_node]
+ * @param {String} [params.description]
+ * @param {Array<Object>} [params.examples]
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.createDialogNode = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/dialog_nodes',
+      method: 'POST',
+      json: true,
+      path: pick(params, ['workspace_id']),
+      body: pick(params, [
+        'dialog_node',
+        'description',
+        'conditions',
+        'parent',
+        'previous_sibling',
+        'output',
+        'context',
+        'metadata',
+        'next_step',
+        'actions',
+        'title',
+        'type',
+        'event_name',
+        'variable'
+      ])
+    },
+    requiredParams: ['workspace_id', 'dialog_node'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: getDialogNodes
+ *
+ * List the dialog nodes for a workspace.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {Boolean} [params.export=false] - if true, the full contents of all of the sub-resources are returned
+ * @param {Number} [params.page_limit]
+ * @param {Boolean} [params.include_count]
+ * @param {String} [params.sort]
+ * @param {String} [params.cursor]
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.getDialogNodes = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/dialog_nodes',
+      method: 'GET',
+      json: true,
+      path: pick(params, ['workspace_id']),
+      qs: pick(params, ['page_limit', 'include_count', 'sort', 'cursor'])
+    },
+    requiredParams: ['workspace_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: getDialogNode
+ *
+ * Get information about an dialog node, optionally including all dialog node content.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} params.dialog_node
+ * @param {Boolean} [params.export=false] - if true, the full contents of all of the sub-resources are returned
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.getDialogNode = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/dialog_nodes/{dialog_node}',
+      method: 'GET',
+      json: true,
+      path: pick(params, ['workspace_id', 'dialog_node']),
+      qs: pick(params, ['export'])
+    },
+    requiredParams: ['workspace_id', 'dialog_node'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: updateDialogNode
+ *
+ * Update an existing dialog node with new or modified data. You must provide JSON data defining the content of the updated dialog node.
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} params.old_dialog_node
+ * @param {String} params.dialog_node
+ * @param {String} params.description
+ * @param {Array<Object>} params.examples
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.updateDialogNode = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/dialog_nodes/{old_dialog_node}',
+      method: 'POST',
+      json: true,
+      path: pick(params, ['workspace_id', 'old_dialog_node']),
+      body: pick(params, [
+        'dialog_node',
+        'description',
+        'conditions',
+        'parent',
+        'previous_sibling',
+        'output',
+        'context',
+        'metadata',
+        'next_step',
+        'actions',
+        'title',
+        'type',
+        'event_name',
+        'variable'
+      ])
+    },
+    requiredParams: ['workspace_id', 'old_dialog_node', 'dialog_node'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Method: deleteDialogNode
+ *
+ * Delete an dialog node from a workspace
+ *
+ * @param {Object} params
+ * @param {String} params.workspace_id
+ * @param {String} params.dialog_node
+ * @param {Function} [callback]
+ *
+ */
+ConversationV1.prototype.deleteDialogNode = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/workspaces/{workspace_id}/dialog_nodes/{dialog_node}',
+      method: 'DELETE',
+      json: true,
+      path: pick(params, ['workspace_id', 'dialog_node'])
+    },
+    requiredParams: ['workspace_id', 'dialog_node'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);

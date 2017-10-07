@@ -117,13 +117,17 @@ describe('speech_to_text_integration', function() {
     it('transcribes audio over a websocket', function(done) {
       const recognizeStream = speech_to_text.createRecognizeStream();
       recognizeStream.setEncoding('utf8');
-      fs.createReadStream(path.join(__dirname, '../resources/weather.flac')).pipe(recognizeStream).on('error', done).pipe(
-        concat(function(transcription) {
-          assert.equal(typeof transcription, 'string', 'should return a string transcription');
-          assert.equal(transcription.trim(), 'thunderstorms could produce large hail isolated tornadoes and heavy rain');
-          done();
-        })
-      );
+      fs
+        .createReadStream(path.join(__dirname, '../resources/weather.flac'))
+        .pipe(recognizeStream)
+        .on('error', done)
+        .pipe(
+          concat(function(transcription) {
+            assert.equal(typeof transcription, 'string', 'should return a string transcription');
+            assert.equal(transcription.trim(), 'thunderstorms could produce large hail isolated tornadoes and heavy rain');
+            done();
+          })
+        );
     });
 
     it('works when stream has no words', function(done) {
@@ -143,7 +147,11 @@ describe('speech_to_text_integration', function() {
 
     it('exposes Transaction ID in node.js', () => {
       const recognizeStream = speech_to_text.createRecognizeStream();
-      return fs.createReadStream(path.join(__dirname, '../resources/weather.ogg')).pipe(recognizeStream).getTransactionId().then(id => assert(id));
+      return fs
+        .createReadStream(path.join(__dirname, '../resources/weather.ogg'))
+        .pipe(recognizeStream)
+        .getTransactionId()
+        .then(id => assert(id));
     });
   });
 

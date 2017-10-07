@@ -51,7 +51,7 @@ function createRequest(method) {
         method: 'POST',
         json: true,
         qs: pick(params, ['model']),
-        form: extend({}, params, { outputMode: 'json' }) // change default output to json
+        form: extend({}, params, { outputMode: 'json' }) // force output to json
       },
       defaultOptions: this._options // eslint-disable-line no-invalid-this
     };

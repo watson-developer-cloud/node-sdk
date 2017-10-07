@@ -38,7 +38,7 @@ function LanguageTranslatorV2(options) {
   // and correcting the default URL here will break older code, so it must be reserved for a major release.
   // todo: consider checking for options.url === LanguageTranslationV2.URL and also throw this warning then.
   // (This probably does't matter since the api didn't change)
-  if (!options.url) {
+  if (!options || !options.url) {
     const err = new Error(
       'LanguageTranslatorV2 currently defaults to the url for LanguageTranslationV2, ' +
         'but this will change in the next major release of the watson-developer-cloud Node.js SDK. ' +

@@ -20,6 +20,7 @@ const util = require('util');
 const requestFactory = require('../lib/requestwrapper');
 const BaseService = require('../lib/base_service');
 const pick = require('object.pick');
+const isStream = require('isstream');
 
 /**
  *
@@ -31,7 +32,7 @@ function DiscoveryV1(options) {
 
   // Check if 'version_date' was provided
   if (typeof this._options.version_date === 'undefined') {
-    throw new Error('Argument error: version_date was not specified, use DiscoveryV1.VERSION_DATE_2017_04_27');
+    throw new Error('Argument error: version_date was not specified, use DiscoveryV1.VERSION_DATE_2017_08_01');
   }
   this._options.qs.version = options.version_date;
 }
@@ -51,6 +52,11 @@ DiscoveryV1.VERSION_DATE_2016_12_15 = '2016-12-15';
  * @type {string}
  */
 DiscoveryV1.VERSION_DATE_2017_04_27 = '2017-04-27';
+/**
+ * Release migrating from Watson Discovery News Original to Watson Discovery News
+ * @type {string}
+ */
+DiscoveryV1.VERSION_DATE_2017_08_01 = '2017-08-01';
 
 /**
  * Return the list of environments
@@ -80,8 +86,8 @@ DiscoveryV1.prototype.getEnvironments = function(params, callback) {
 DiscoveryV1.prototype.createEnvironment = function(params, callback) {
   params = params || {};
 
-  // size is an int of 1,2,3, default 1
-  if (!params.size) {
+  // size is an int of 0,1,2,3, default 1
+  if (typeof params.size === 'undefined' || params.size === null) {
     params.size = 1;
   }
 
@@ -178,9 +184,9 @@ DiscoveryV1.prototype.deleteEnvironment = function(params, callback) {
 
 /**
  * Create a new configuration
- * 
+ *
  * @param {String} params.environment_id - the ID of your environment
- * @param {Object} params.file - Input a JSON object that enables you to customize how your content is ingested and what enrichments are added to your data. 
+ * @param {Object} params.file - Input a JSON object that enables you to customize how your content is ingested and what enrichments are added to your data.
  */
 DiscoveryV1.prototype.createConfiguration = function(params, callback) {
   params = params || {};
@@ -206,9 +212,9 @@ DiscoveryV1.prototype.createConfiguration = function(params, callback) {
 
 /**
  * Update an existing configuration for a given environment
- * 
+ *
  * @param {String} params.environment_id - the ID of your environment
- * @param {String} params.configuration_id - the ID of your configuration 
+ * @param {String} params.configuration_id - the ID of your configuration
  * @param {Object} params.file - Input a JSON object that enables you to update and customize how your data is ingested and what enrichments are added to your data.
  */
 
@@ -284,7 +290,7 @@ DiscoveryV1.prototype.getConfiguration = function(params, callback) {
  *
  * @param {Object} params
  * @param {String} params.environment_id
-  */
+ */
 DiscoveryV1.prototype.getCollections = function(params, callback) {
   params = params || {};
 
@@ -329,7 +335,7 @@ DiscoveryV1.prototype.getCollection = function(params, callback) {
  *
  * @param {Object} params
  * @param {String} params.environment_id environment guid for the collection
- * @param {string} params.collection_name
+ * @param {string} params.name
  * @param {string} params.description
  * @param {string} params.configuration_id  configuration to create the collection in
  * @param {string} params.language_code currently, only `en_us` is supported
@@ -347,13 +353,49 @@ DiscoveryV1.prototype.createCollection = function(params, callback) {
       multipart: [
         {
           'content-type': 'application/json',
+          body: JSON.stringify(pick(params, ['name', 'description', 'configuration_id', 'language_code']))
+        }
+      ],
+      json: true
+    },
+    originalParams: params,
+    requiredParams: ['environment_id', 'configuration_id', 'name'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Update an existing collection
+ *
+ * @param {Object} params
+ * @param {String} params.environment_id environment guid for the collection
+ * @param {String} params.collection_id collection id for the collection to be updated
+ * @param {string} params.collection_name
+ * @param {string} params.description
+ * @param {string} params.configuration_id  configuration to create the collection in
+ * @param {string} params.language_code currently, only `en_us` is supported
+ */
+DiscoveryV1.prototype.updateCollection = function(params, callback) {
+  params = params || {};
+
+  params.language_code = params.language_code || 'en_us';
+
+  const parameters = {
+    options: {
+      url: '/v1/environments/{environment_id}/collections/{collection_id}',
+      method: 'PUT',
+      path: pick(params, ['environment_id', 'collection_id']),
+      multipart: [
+        {
+          'content-type': 'application/json',
           body: JSON.stringify(pick(params, ['collection_name', 'description', 'configuration_id', 'language_code']))
         }
       ],
       json: true
     },
     originalParams: params,
-    requiredParams: ['environment_id', 'configuration_id', 'collection_name'],
+    requiredParams: ['environment_id', 'collection_id'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
@@ -385,14 +427,68 @@ DiscoveryV1.prototype.deleteCollection = function(params, callback) {
 };
 
 /**
+ * Get list of unique fields associated with a collection
+ *
+ * @param {Object} params
+ * @param {String} params.environment_id in which the collection is located
+ * @param {string} params.collection_id for which fields are required
+ */
+DiscoveryV1.prototype.getCollectionFields = function(params, callback) {
+  params = params || {};
+
+  const parameters = {
+    options: {
+      url: '/v1/environments/{environment_id}/collections/{collection_id}/fields',
+      method: 'GET',
+      path: pick(params, ['environment_id', 'collection_id']),
+      json: true
+    },
+    requiredParams: ['environment_id', 'collection_id'],
+    defaultOptions: this._options
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Ensures a filename is always set because discovery ignores documents that do not have a filename set.
+ * @param file
+ * @private
+ */
+DiscoveryV1._ensureFilename = function(file) {
+  // no changes needed for streams created by fs.ReadStream (or similar looking streams)
+  if (isStream.isReadable(file) && file.path) {
+    return file;
+  }
+
+  // next handle request-style value/options objects
+  if (file && file.hasOwnProperty('value') && file.hasOwnProperty('options')) {
+    if (file.options.filename) {
+      return file;
+    }
+    return {
+      value: file.value,
+      options: Object.assign({ filename: '_' }, file.options)
+    };
+  }
+
+  // finally, handle all other cases by wrapping them in a request-style value/options object
+  return {
+    value: file,
+    options: {
+      filename: '_'
+    }
+  };
+};
+
+/**
  * Add a document to a collection
- * @param params
+ * @param {object} params
  * @param {String} params.environment_id environment guid for the collection
  * @param {string} params.collection_id the guid of the collection to delete
- * @param {Buffer|ReadableStream|Object} params.file a file to post (smaller than 50mb)
+ * @param {Buffer|ReadableStream|Object} params.file a file to post (smaller than 50mb). In some cases you will need to supply an object with {value: data, options: {contentType: /...'}}
  * @param {string} [params.configuration_id] config guid
- * @param {string} [params.metadata] file metadata, including content-type (will infer if missing)
- * @param callback
+ * @param {object} [params.metadata] JSON object with file metadata
+ * @param {function} callback
  * @return {ReadableStream|undefined}
  */
 DiscoveryV1.prototype.addDocument = function(params, callback) {
@@ -401,18 +497,13 @@ DiscoveryV1.prototype.addDocument = function(params, callback) {
   const queryParams = pick(params, ['configuration_id']);
   const formDataParams = pick(params, ['file', 'metadata']);
 
-  // if we get a buffer or object, we need to include stuff about filename for the service
+  // Discovery only accepts files that have a filename specified
   if (formDataParams.file) {
-    if (
-      typeof formDataParams.file.filename !== 'string' &&
-      !(formDataParams.file.options && typeof formDataParams.file.options.filename !== 'string') &&
-      !(formDataParams.file.path && typeof formDataParams.file.path !== 'string') &&
-      !(formDataParams.file.name && typeof formDataParams.file.name !== 'string')
-    ) {
-      const filedat = formDataParams.file;
-      // the filename used below is because the name must exist
-      formDataParams.file = { value: filedat, options: { filename: '_' } };
-    }
+    formDataParams.file = DiscoveryV1._ensureFilename(formDataParams.file);
+  }
+
+  if (formDataParams.metadata && typeof formDataParams.metadata === 'object') {
+    formDataParams.metadata = JSON.stringify(formDataParams.metadata);
   }
 
   const parameters = {
@@ -424,10 +515,69 @@ DiscoveryV1.prototype.addDocument = function(params, callback) {
       formData: formDataParams,
       json: true
     },
-    requiredParams: ['environment_id', 'collection_id', 'file'],
+    requiredParams: ['environment_id', 'collection_id'],
     defaultOptions: this._options
   };
   return requestFactory(parameters, callback);
+};
+
+/**
+ * Helper method, similar to updateDocument except that the file param expects a JSON object
+ * @param {object} params
+ * @param {String} params.environment_id environment guid for the collection
+ * @param {string} params.collection_id the guid of the collection to delete
+ * @param {Object} params.file non-stringified JSON object
+ * @param {string} [params.configuration_id] config guid
+ * @param {object} [params.metadata] JSON object with file metadata
+ * @param {function} callback
+ * @return {ReadableStream|undefined}
+ */
+DiscoveryV1.prototype.addJsonDocument = function(params, callback) {
+  const fileParamType = typeof params.file;
+
+  if (fileParamType !== 'object') {
+    throw new Error(`Argument error: params.file must be an object, but got ${fileParamType}.`);
+  }
+
+  params = Object.assign({}, params, {
+    file: {
+      value: JSON.stringify(params.file),
+      options: {
+        filename: '_.json'
+      }
+    }
+  });
+  return this.addDocument(params, callback);
+};
+
+/**
+ * Update or partially update a document to create or replace an existing document
+ * @param params
+ * @param {String} params.environment_id environment guid for the collection
+ * @param {string} params.collection_id the guid of the collection
+ * @param {string} params.document_id the guid of the document to update
+ * @param {Object} params.file non-stringified JSON object
+ * @param {string} [params.configuration_id] config guid
+ * @param {object} [params.metadata] file metadata, including content-type (will infer if missing)
+ * @param callback
+ * @return {ReadableStream|undefined}
+ */
+DiscoveryV1.prototype.updateJsonDocument = function(params, callback) {
+  const fileParamType = typeof params.file;
+
+  if (fileParamType !== 'object') {
+    throw new Error(`Argument error: params.file must be an object, but got ${fileParamType}.`);
+  }
+
+  params = Object.assign({}, params, {
+    file: {
+      value: JSON.stringify(params.file),
+      options: {
+        filename: '_.json'
+      }
+    }
+  });
+  return this.updateDocument(params, callback);
 };
 
 /**
@@ -438,7 +588,7 @@ DiscoveryV1.prototype.addDocument = function(params, callback) {
  * @param {string} params.document_id the guid of the document to update
  * @param {Buffer|ReadableStream|Object} params.file a file to post (smaller than 50mb)
  * @param {string} [params.configuration_id] config guid
- * @param {string} [params.metadata] file metadata, including content-type (will infer if missing)
+ * @param {object} [params.metadata] file metadata, including content-type (will infer if missing)
  * @param callback
  * @return {ReadableStream|undefined}
  */
@@ -448,18 +598,13 @@ DiscoveryV1.prototype.updateDocument = function(params, callback) {
   const queryParams = pick(params, ['configuration_id']);
   const formDataParams = pick(params, ['file', 'metadata']);
 
-  // if we get a buffer or object, we need to include stuff about filename for the service
+  // Discovery only accepts files that have a filename specified
   if (formDataParams.file) {
-    if (
-      typeof formDataParams.file.filename !== 'string' &&
-      !(formDataParams.file.options && typeof formDataParams.file.options.filename !== 'string') &&
-      !(formDataParams.file.path && typeof formDataParams.file.path !== 'string') &&
-      !(formDataParams.file.name && typeof formDataParams.file.name !== 'string')
-    ) {
-      const filedat = formDataParams.file;
-      // the filename used below is because the name must exist
-      formDataParams.file = { value: filedat, options: { filename: '_' } };
-    }
+    formDataParams.file = DiscoveryV1._ensureFilename(formDataParams.file);
+  }
+
+  if (formDataParams.metadata && typeof formDataParams.metadata === 'object') {
+    formDataParams.metadata = JSON.stringify(formDataParams.metadata);
   }
 
   const parameters = {
@@ -509,15 +654,22 @@ DiscoveryV1.prototype.deleteDocument = function(params, callback) {
  * @param {String} params.environment_id
  * @param {string} params.collection_id
  * @param {String} [params.query]  A query search returns all possible results, even when it's not very relevant, with the most relevant documents listed first. Use a query search when you want to find the most relevant search results. Results are scored between 0 and 1, with 1 being an exact match and 0 being not a match at all.
+ * @param {String} [params.natural_language_query]  BETA - A natural language query that returns relevant documents by using training data and natural language understanding. You cannot use this parameter and the query parameter in the same query.
  * @param {String} [params.filter]  A cacheable query that allows you to limit the information returned to exclude anything that isn't related to what you are searching. Filter searches are better for metadata type searches and when you are trying to get a sense of concepts in the dataset.
  * @param {String} [params.aggregation] An aggregation search uses combinations of filters and query search to return an exact answer. Aggregations are useful for building applications, because you can use them to build lists, tables, and time series. For a full list of possible aggregrations, see the Query reference.
  * @param {Number} [params.count=10] Number of documents to return
  * @param {Number} [params.offset=0] For pagination purposes. Returns additional pages of results. Deep pagination is highly unperformant, and should be avoided.
  * @param {String} [params.return] A comma separated list of the portion of the document hierarchy to return.
  * @param {String} [params.sort] A comma separated list of fields in the document to sort on. You can optionally specify a sort direction by prefixing the field with - for descending or + for ascending. Ascending is the default sort direction if no prefix is specified.
+ * @param {Boolean} [params.passages=false] BETA - A boolean that specifies whether the service returns a set of the most relevant passages from the documents returned by a query.  The passages parameter works only on private collections. It does not work in the Watson Discovery News collection.
  */
 DiscoveryV1.prototype.query = function(params, callback) {
   params = params || {};
+
+  // query and natural_language_query can't both be populated
+  if (params.query && params.natural_language_query) {
+    delete params.natural_language_query;
+  }
 
   const parameters = {
     options: {
@@ -525,7 +677,7 @@ DiscoveryV1.prototype.query = function(params, callback) {
       method: 'GET',
       json: true,
       path: pick(params, ['environment_id', 'collection_id']),
-      qs: pick(params, ['query', 'filter', 'aggregation', 'count', 'offset', 'return', 'sort'])
+      qs: pick(params, ['query', 'natural_language_query', 'filter', 'aggregation', 'count', 'offset', 'return', 'sort', 'passages', 'highlight'])
     },
     requiredParams: ['environment_id', 'collection_id'],
     defaultOptions: this._options

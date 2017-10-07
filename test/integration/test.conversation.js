@@ -96,8 +96,11 @@ const test_value_update = {
 };
 const test_synonym = 'synonym_1';
 const test_synonym_update = 'synonym_2';
+const test_dialog_node = 'new_node';
+const test_dialog_node_update = 'updated_node';
 
-const workspace1 = extend(true, {}, workspace, intents);
+// changing language is forbidden starting with VERSION_DATE_2017_05_26
+const workspace1 = extend(true, {}, workspace, intents, { language: workspace.language });
 
 describe('conversation_integration', function() {
   this.timeout(TEN_SECONDS);
@@ -107,7 +110,7 @@ describe('conversation_integration', function() {
   let conversation;
 
   before(function() {
-    auth.conversation.version_date = ConversationV1.VERSION_DATE_2017_04_21;
+    auth.conversation.version_date = ConversationV1.VERSION_DATE_2017_05_26;
     conversation = watson.conversation(auth.conversation);
     nock.enableNetConnect();
   });
@@ -130,7 +133,7 @@ describe('conversation_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.alternate_intents, true);
+        assert(result.intents.length > 1);
         done();
       });
     });
@@ -258,7 +261,7 @@ describe('conversation_integration', function() {
   });
 
   describe('updateWorkspace()', function() {
-    it('should update the workspace with intents and language', function(done) {
+    it('should update the workspace with intents', function(done) {
       const params = workspace1;
 
       conversation.updateWorkspace(params, function(err, result) {
@@ -266,7 +269,7 @@ describe('conversation_integration', function() {
           return done(err);
         }
         assert.equal(result.name, params.name);
-        assert.equal(result.language, 'en');
+        assert.equal(result.language, 'fr');
         assert.equal(result.metadata, params.metadata);
         assert.equal(result.description, params.description);
         done();
@@ -630,7 +633,8 @@ describe('conversation_integration', function() {
       const params = {
         workspace_id: workspace1.workspace_id,
         entity: test_entities[0].entity,
-        values: test_entities[0].values
+        values: test_entities[0].values,
+        fuzzy_match: true
       };
 
       conversation.createEntity(params, function(err, result) {
@@ -693,6 +697,7 @@ describe('conversation_integration', function() {
         }
         assert.equal(result.entity, test_entities[0].entity);
         assert.equal(result.description, null);
+        assert.equal(result.fuzzy_match, true);
         done();
       });
     });
@@ -704,7 +709,8 @@ describe('conversation_integration', function() {
         workspace_id: workspace1.workspace_id,
         old_entity: test_entities[0].entity,
         entity: test_entities_update.entity,
-        values: test_entities_update.values
+        values: test_entities_update.values,
+        fuzzy_match: false
       };
 
       conversation.updateEntity(params, function(err, result) {
@@ -971,6 +977,114 @@ describe('conversation_integration', function() {
       };
 
       conversation.deleteEntity(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        done();
+      });
+    });
+  });
+
+  describe('createDialogNode()', function() {
+    it('should create an dialog node', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        dialog_node: test_dialog_node,
+        conditions: 'true'
+      };
+
+      conversation.createDialogNode(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.dialog_node, test_dialog_node, 'dialog_node field has unexpected value');
+        assert.equal(result.conditions, 'true', 'conditions field has unexpected value');
+        assert.equal(result.description, null, 'description field is not null');
+        assert.notEqual(result.created, null, 'created field is null');
+        done();
+      });
+    });
+  });
+
+  describe('getDialogNodes()', function() {
+    it('should get dialog nodes of the workspace', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id
+      };
+
+      conversation.getDialogNodes(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.dialog_nodes[0].dialog_node, test_dialog_node);
+        done();
+      });
+    });
+
+    it('should have pagination information', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        page_limit: 1,
+        include_count: true,
+        sort: 'dialog_node'
+      };
+
+      conversation.getDialogNodes(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.hasOwnProperty('pagination'), true);
+        done();
+      });
+    });
+  });
+
+  describe('getDialogNode()', function() {
+    it('should get a dialog node of the workspace', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        dialog_node: test_dialog_node
+      };
+
+      conversation.getDialogNode(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.dialog_node, test_dialog_node);
+        assert.equal(result.description, null);
+        done();
+      });
+    });
+  });
+
+  describe('updateDialogNode()', function() {
+    it('should update a dialog node of the workspace', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        old_dialog_node: test_dialog_node,
+        dialog_node: test_dialog_node_update,
+        conditions: 'false'
+      };
+
+      conversation.updateDialogNode(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert.equal(result.dialog_node, test_dialog_node_update);
+        assert.equal(result.conditions, 'false');
+        done();
+      });
+    });
+  });
+
+  describe('deleteDialogNode()', function() {
+    it('should delete a dialog node of the workspace', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        dialog_node: test_dialog_node_update
+      };
+
+      conversation.deleteDialogNode(params, function(err, result) {
         if (err) {
           return done(err);
         }

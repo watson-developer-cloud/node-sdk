@@ -83,7 +83,10 @@ describe('language_translator', function() {
       const corpus = {};
       const path = '/v2/models';
 
-      nock(service.url).persist().get(path).reply(200, corpus);
+      nock(service.url)
+        .persist()
+        .get(path)
+        .reply(200, corpus);
 
       const req = language_translator.getModels(null, noop);
       assert.equal(req.uri.href, service.url + path);
@@ -105,7 +108,10 @@ describe('language_translator', function() {
         text: 'bar',
         model_id: 'foo'
       };
-      nock(service.url).persist().post(path, service_request).reply(200);
+      nock(service.url)
+        .persist()
+        .post(path, service_request)
+        .reply(200);
 
       const req = language_translator.translate(service_request, noop);
       assert.equal(req.uri.href, service.url + path);
@@ -119,7 +125,10 @@ describe('language_translator', function() {
     it('should generate a valid payload', function() {
       const path = '/v2/identifiable_languages';
 
-      nock(service.url).persist().get(path).reply(200);
+      nock(service.url)
+        .persist()
+        .get(path)
+        .reply(200);
 
       const req = language_translator.getIdentifiableLanguages(null, noop);
       assert.equal(req.uri.href, service.url + path);
@@ -137,7 +146,10 @@ describe('language_translator', function() {
     it('should generate a valid payload', function() {
       const path = '/v2/identify';
       const service_request = { text: 'foo' };
-      nock(service.url).persist().post(path, service_request).reply(200);
+      nock(service.url)
+        .persist()
+        .post(path, service_request)
+        .reply(200);
 
       const req = language_translator.identify(service_request, noop);
       assert.equal(req.uri.href, service.url + path);
@@ -163,7 +175,10 @@ describe('language_translator', function() {
         monolingual_corpus: fs.createReadStream(__dirname + '/../resources/glossary.tmx')
       };
 
-      nock(service.url).persist().post(path, service_request).reply(200);
+      nock(service.url)
+        .persist()
+        .post(path, service_request)
+        .reply(200);
 
       const req = language_translator.createModel(service_request, noop);
       assert.equal(req.uri.href, service.url + path + '?base_model_id=foo');
@@ -184,7 +199,10 @@ describe('language_translator', function() {
         model_id: 'foo'
       };
 
-      nock(service.url).persist().delete(path, service_request).reply(200);
+      nock(service.url)
+        .persist()
+        .delete(path, service_request)
+        .reply(200);
 
       const req = language_translator.deleteModel(service_request, noop);
       assert.equal(req.uri.href, service.url + path);
@@ -205,7 +223,10 @@ describe('language_translator', function() {
         model_id: 'foo'
       };
 
-      nock(service.url).persist().get(path, service_request).reply(200);
+      nock(service.url)
+        .persist()
+        .get(path, service_request)
+        .reply(200);
 
       const req = language_translator.getModel(service_request, noop);
       assert.equal(req.uri.href, service.url + path);

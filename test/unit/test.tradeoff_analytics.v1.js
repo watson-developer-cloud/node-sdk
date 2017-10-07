@@ -151,9 +151,18 @@ describe('tradeoff_analytics', function() {
 
   before(function() {
     nock.disableNetConnect();
-    nock(service.url).persist().post(service_path, service_request).reply(200, service_response);
-    nock(service.url).persist().post(service_path_no_viz, service_request).reply(200, service_response);
-    nock(service.url).persist().post(events_path, events_request).reply(200);
+    nock(service.url)
+      .persist()
+      .post(service_path, service_request)
+      .reply(200, service_response);
+    nock(service.url)
+      .persist()
+      .post(service_path_no_viz, service_request)
+      .reply(200, service_response);
+    nock(service.url)
+      .persist()
+      .post(events_path, events_request)
+      .reply(200);
   });
 
   after(function() {

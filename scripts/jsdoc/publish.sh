@@ -38,7 +38,7 @@ if [ "$TRAVIS_REPO_SLUG" == "watson-developer-cloud/node-sdk" ] && [ "$TRAVIS_PU
     git branch --remote | grep --invert-match gh-pages | sed -e 's/.*origin\/\(.*\)/\1/' | uniq
 
     # generate an incdex file listing all of the versions
-    generate_index_html.sh > index.html
+    ../scripts/jsdoc/generate_index_html.sh > index.html
 
     # add all changes to git, including deleted files
     git add -f -A .

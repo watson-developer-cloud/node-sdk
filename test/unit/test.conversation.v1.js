@@ -15,7 +15,7 @@ describe('conversation-v1', function() {
     password: 'bruce-wayne',
     url: 'http://ibm.com:80',
     version: 'v1',
-    version_date: '2016-07-11'
+    version_date: '2017-05-26'
   };
 
   const service1 = {
@@ -35,7 +35,10 @@ describe('conversation-v1', function() {
 
   before(function() {
     nock.disableNetConnect();
-    nock(service.url).persist().post(paths.message + '?version=' + service.version_date).reply(200, {});
+    nock(service.url)
+      .persist()
+      .post(paths.message + '?version=' + service.version_date)
+      .reply(200, {});
   });
 
   after(function() {
@@ -96,7 +99,7 @@ describe('conversation-v1', function() {
         watson.conversation(service1);
       } catch (err) {
         threw = true;
-        assert.equal(err.message, 'Argument error: version_date was not specified, use ConversationV1.VERSION_DATE_2017_04_21');
+        assert.equal(err.message, 'Argument error: version_date was not specified, use ConversationV1.VERSION_DATE_2017_05_26');
       }
       assert(threw, 'should throw an error');
     });

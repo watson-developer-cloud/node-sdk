@@ -6,6 +6,8 @@ const authHelper = require('./auth_helper.js');
 const auth = authHelper.auth;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const assert = require('assert');
+const async = require('async');
+const fs = require('fs');
 
 const THIRTY_SECONDS = 30000;
 const TWO_SECONDS = 2000;
@@ -18,11 +20,18 @@ describe.skip('discovery_integration', function() {
   let discovery;
   let environment_id; // = auth.discovery.environment_id;
   let configuration_id; // = auth.discovery.configuration_id;
-  // var collection_id;
+  let collection_id;
 
   before(function() {
     nock.enableNetConnect();
-    discovery = new DiscoveryV1(auth.discovery);
+    discovery = new DiscoveryV1(
+      Object.assign({}, auth.discovery, {
+        version_date: DiscoveryV1.VERSION_DATE_2017_04_27
+      })
+    );
+    environment_id = auth.discovery.environment_id;
+    configuration_id = auth.discovery.configuration_id;
+    collection_id = auth.discovery.collection_id;
   });
 
   after(function() {
@@ -75,11 +84,12 @@ describe.skip('discovery_integration', function() {
     );
   });
 
+  // todo: delete the collection after the testing is complete
   it.skip('should createCollection()', function(done) {
     discovery.createCollection(
       {
         environment_id: environment_id,
-        collection_name: 'node-sdk-test-' + Date.now(),
+        name: 'node-sdk-test-' + Date.now(),
         description: 'Test collection created by the Node.js SDK integration tests on ' + new Date() + '. Should be deleted shortly',
         configuration_id: configuration_id,
         language_code: 'en_us'
@@ -92,15 +102,102 @@ describe.skip('discovery_integration', function() {
       }
     );
   });
-  // it('should getCollections()', function(done) {
-  //
-  // });
-  //
-  // it('should getCollection()', function(done) {
-  //
-  // });
-  //
-  // it('should deleteCollection()', function(done) {
-  //
-  // });
+
+  it('getCollections()', function(done) {
+    discovery.getCollections(
+      {
+        environment_id: environment_id,
+        configuration_id: configuration_id
+      },
+      function(err, res) {
+        assert.ifError(err);
+        assert(res);
+        // console.log(res);
+        assert(Array.isArray(res.collections));
+        done(err);
+      }
+    );
+  });
+
+  describe('add-query-delete', function() {
+    it('addDocument()', function(done) {
+      const document_obj = {
+        environment_id: environment_id,
+        collection_id: collection_id,
+        file: fs.createReadStream(__dirname + '../resources/sample-docx.docx')
+      };
+
+      discovery.addDocument(document_obj, function(err, response) {
+        assert.ifError(err);
+        assert(response.document_id);
+        done(err);
+      });
+    });
+
+    it('addJsonDocument()', function(done) {
+      const document_obj = {
+        environment_id: environment_id,
+        collection_id: collection_id,
+        file: {
+          foo: 'bar',
+          from: 'node-sdk integration test',
+          test_date: new Date().toString()
+        }
+      };
+
+      discovery.addJsonDocument(document_obj, function(err, response) {
+        assert.ifError(err);
+        assert(response.document_id);
+        done(err);
+      });
+    });
+
+    it('query()', function(done) {
+      discovery.query(
+        {
+          environment_id: environment_id,
+          collection_id: collection_id,
+          query: ''
+        },
+        function(err, res) {
+          assert.ifError(err);
+          assert(res);
+          assert.equal(typeof res.matching_results, 'number');
+          assert(Array.isArray(res.results));
+          done(err);
+        }
+      );
+    });
+
+    it('delete all documents', function(done) {
+      discovery.query(
+        {
+          environment_id: environment_id,
+          collection_id: collection_id,
+          query: ''
+        },
+        function(err, res) {
+          assert.ifError(err);
+          async.eachSeries(
+            res.results,
+            function(doc, next) {
+              // console.log('deleting ', doc);
+              discovery.deleteDocument(
+                {
+                  environment_id: environment_id,
+                  collection_id: collection_id,
+                  document_id: doc.id
+                },
+                function(err, res) {
+                  // console.log('deleted', err, res);
+                  next(err);
+                }
+              );
+            },
+            done
+          );
+        }
+      );
+    });
+  });
 });

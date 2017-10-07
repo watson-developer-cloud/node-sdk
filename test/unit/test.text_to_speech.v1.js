@@ -56,7 +56,9 @@ describe('text_to_speech', function() {
 
   describe('synthesize()', function() {
     beforeEach(function() {
-      nock(service.url).post(synthesize_request, { text: service_request.text }).replyWithFile(200, __dirname + '/../resources/watson-hi.ogg');
+      nock(service.url)
+        .post(synthesize_request, { text: service_request.text })
+        .replyWithFile(200, __dirname + '/../resources/watson-hi.ogg');
     });
 
     it('should check for missing text', function() {
@@ -129,7 +131,9 @@ describe('text_to_speech', function() {
 
   describe('voice()', function() {
     beforeEach(function() {
-      nock(service.url).get('/v1/voices/en-US_MichaelVoice').reply(200, mock_voices[0]);
+      nock(service.url)
+        .get('/v1/voices/en-US_MichaelVoice')
+        .reply(200, mock_voices[0]);
     });
 
     it('should require a voice parameter', function() {
@@ -163,7 +167,9 @@ describe('text_to_speech', function() {
     };
 
     beforeEach(function() {
-      nock(service.url).get('/v1/pronunciation?text=IEEE').reply(200, mock_pronunciation);
+      nock(service.url)
+        .get('/v1/pronunciation?text=IEEE')
+        .reply(200, mock_pronunciation);
     });
 
     it('should require a text parameter', function() {
