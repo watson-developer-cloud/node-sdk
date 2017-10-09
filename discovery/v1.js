@@ -662,6 +662,9 @@ DiscoveryV1.prototype.deleteDocument = function(params, callback) {
  * @param {String} [params.return] A comma separated list of the portion of the document hierarchy to return.
  * @param {String} [params.sort] A comma separated list of fields in the document to sort on. You can optionally specify a sort direction by prefixing the field with - for descending or + for ascending. Ascending is the default sort direction if no prefix is specified.
  * @param {Boolean} [params.passages=false] BETA - A boolean that specifies whether the service returns a set of the most relevant passages from the documents returned by a query.  The passages parameter works only on private collections. It does not work in the Watson Discovery News collection.
+ * @param {String} [params.passages.fields] A comma-separated list of fields in the index that passages will be drawn from. If this parameter not specified then all top level field are included.
+ * @param {Number} [params.passages.count=10] The maximum number of passages to return. The search will return fewer if that is the total number found. The default is 10. The maximum is 100.
+ * @param {Number} [params.passages.characters=400] The approximate number of characters that any one passage should have. The default is 400. The minimum is 50. The maximum is 2000.
  */
 DiscoveryV1.prototype.query = function(params, callback) {
   params = params || {};
@@ -677,7 +680,21 @@ DiscoveryV1.prototype.query = function(params, callback) {
       method: 'GET',
       json: true,
       path: pick(params, ['environment_id', 'collection_id']),
-      qs: pick(params, ['query', 'natural_language_query', 'filter', 'aggregation', 'count', 'offset', 'return', 'sort', 'passages', 'highlight'])
+      qs: pick(params, [
+        'query',
+        'natural_language_query',
+        'filter',
+        'aggregation',
+        'count',
+        'offset',
+        'return',
+        'sort',
+        'passages',
+        'highlight',
+        'passages.fields',
+        'passages.count',
+        'passages.characters'
+      ])
     },
     requiredParams: ['environment_id', 'collection_id'],
     defaultOptions: this._options
