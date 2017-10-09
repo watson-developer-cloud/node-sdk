@@ -344,6 +344,7 @@ DiscoveryV1.prototype.createCollection = function(params, callback) {
   params = params || {};
 
   params.language_code = params.language_code || 'en_us';
+  params.language = params.language || params.language_code;
 
   const parameters = {
     options: {
@@ -353,7 +354,7 @@ DiscoveryV1.prototype.createCollection = function(params, callback) {
       multipart: [
         {
           'content-type': 'application/json',
-          body: JSON.stringify(pick(params, ['name', 'description', 'configuration_id', 'language_code']))
+          body: JSON.stringify(pick(params, ['name', 'description', 'configuration_id', 'language']))
         }
       ],
       json: true
