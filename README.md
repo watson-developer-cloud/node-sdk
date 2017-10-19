@@ -339,8 +339,6 @@ Translate text from one language to another or idenfity a language using the [La
 
 **Note:** There is a deprecated Language *Translation* service and a newer Language *Translator* service. The only difference is the pricing structure and the service endpoint.
 
-The SDK currently defaults to the older endpoint for both `LanguageTranslationV2` and `LanguageTranslatorV2`, but `LanguageTranslatorV2`'s default endpoint will change in the next major release (3.0.0). **To guarantee compatibility, include the `url` when creating a `LanguageTranslatorV2` instance.**
-
 See [Migrating from Language Translation][language-translator-migration] for more details.
 
 ```javascript
