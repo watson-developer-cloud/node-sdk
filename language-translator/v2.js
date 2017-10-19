@@ -1,237 +1,271 @@
 /**
- * Copyright 2015 IBM Corp. All Rights Reserved.
+ * Copyright 2017 IBM All Rights Reserved.
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
- * the License.
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 'use strict';
 
-const requestFactory = require('../lib/requestwrapper');
 const extend = require('extend');
-const pick = require('object.pick');
-const isStream = require('isstream');
+const requestFactory = require('../lib/requestwrapper');
 const helper = require('../lib/helper');
 const util = require('util');
 const BaseService = require('../lib/base_service');
 
 /**
- *
- * @param {string} [params.url=https://gateway.watsonplatform.net/language-translation/api] The service URL.
- * @param {string} params.username Username
- * @param {string} params.password Password
+ * @param {Object} options
  * @constructor
  */
 function LanguageTranslatorV2(options) {
-  // Welp, this is awkward. Originally the rename was *just* a rename, but then (after the SDK was updated,
-  // but before the backend was updated), it was decided that the billing should be simplified at the same time.
-  // That's a solid improvement, but it means that the SDK now needs to support both services independently,
-  // and correcting the default URL here will break older code, so it must be reserved for a major release.
-  // todo: consider checking for options.url === LanguageTranslationV2.URL and also throw this warning then.
-  // (This probably does't matter since the api didn't change)
-  if (!options || !options.url) {
-    const err = new Error(
-      'LanguageTranslatorV2 currently defaults to the url for LanguageTranslationV2, ' +
-        'but this will change in the next major release of the watson-developer-cloud Node.js SDK. ' +
-        'Please either specify the url https://gateway.watsonplatform.net/language-translator/api or else use ' +
-        'LanguageTranslationV2. ' +
-        'See http://www.ibm.com/watson/developercloud/doc/language-translator/migrating.shtml for more details.'
-    );
-    // eslint-disable-next-line no-console
-    console.warn(err);
-  }
-
   BaseService.call(this, options);
 }
 util.inherits(LanguageTranslatorV2, BaseService);
 LanguageTranslatorV2.prototype.name = 'language_translator';
 LanguageTranslatorV2.prototype.version = 'v2';
-LanguageTranslatorV2.URL = 'https://gateway.watsonplatform.net/language-translation/api'; // This is incorrect and will change in v 3.0.0
-/**
- * Return the translation models
- */
+LanguageTranslatorV2.URL = 'https://gateway.watsonplatform.net/language-translator/api';
+
 
 /**
- * Return the translation models
- * @param  {string}   params.default   Query filters to check if the model is
- *                            the default one used when only source
- *                            and target languages are specified.
- * @param  {string}   params.source   Filter by source language
- * @param  {string}   params.target   Filter by target language
+ * Translates the input text from the source language to the target language.
+ *
+ *
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string[]} params.text - Input text in UTF-8 encoding. It is a list so that multiple paragraphs can be submitted. Also accept a single string, instead of an array, as valid input.
+ * @param {string} [params.model_id] - The unique model_id of the translation model being used to translate text. The model_id inherently specifies source language, target language, and domain. If the model_id is specified, there is no need for the source and target parameters and the values are ignored.
+ * @param {string} [params.source] - Used in combination with target as an alternative way to select the model for translation. When target and source are set, and model_id is not set, the system chooses a default model with the right language pair to translate (usually the model based on the news domain).
+ * @param {string} [params.target] - Used in combination with source as an alternative way to select the model for translation. When target and source are set, and model_id is not set, the system chooses a default model with the right language pair to translate (usually the model based on the news domain).
+ * @param {Function} [callback] - The callback that handles the response.
  */
-LanguageTranslatorV2.prototype.getModels = function(params, callback) {
+LanguageTranslatorV2.prototype.translate = function(params, callback) {
   params = params || {};
-
-  const parameters = {
-    options: {
-      method: 'GET',
-      url: '/v2/models',
-      qs: pick(params, ['default', 'source', 'target']),
-      json: true
-    },
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Return the translation model
- * @param  {string}   params.model_id   The model identifier
- */
-LanguageTranslatorV2.prototype.getModel = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      method: 'GET',
-      url: '/v2/models/{model_id}',
-      path: pick(params, ['model_id']),
-      json: true
-    },
-    requiredParams: ['model_id'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Creates a translation model
- * @param  {string}   params.base_model_id   The base model identifier
- * @param  {string}   params.name   The model name
- * @param  {stream}   params.forced_glossary   A UTF-8 encoded TMX file that contains pairs of matching terms in the source and target language that are seen as absolute by the system. This file completely overwrites the original domain data.
- * @param  {stream}   params.parallel_corpus   A UTF-8 encoded TMX file that contains matching phrases in the source and target language that serve as examples for Watson. Parallel corpora differ from glossaries because they do not overwrite the original domain data.
- * @param  {stream}   params.monolingual_corpus A UTF-8 encoded plain text file that contains a body of text in the target language that is related to what you are translating. A monolingual corpus helps improve literal translations to be more fluent and human.
- */
-
-LanguageTranslatorV2.prototype.createModel = function(params, callback) {
-  params = params || {};
-
-  const missingParams = helper.getMissingParams(params, ['base_model_id']);
+  const requiredParams = ['text'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
   if (missingParams) {
     callback(missingParams);
     return;
   }
-
-  const inputTypes = ['forced_glossary', 'parallel_corpus', 'monolingual_corpus'];
-
-  for (const type in inputTypes) {
-    if (inputTypes.hasOwnProperty(type)) {
-      if (params[inputTypes[type]] && !isStream(params[inputTypes[type]])) {
-        callback(new Error(inputTypes[type] + ' is not a standard Node.js Stream'));
-        return;
-      }
-    }
-  }
-
-  const parameters = {
-    options: {
-      method: 'POST',
-      url: '/v2/models',
-      qs: pick(params, ['name', 'base_model_id']),
-      formData: pick(params, inputTypes),
-      json: true
-    },
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Deletes a model
- * @param  {string}   params.model_id   The model identifier
- */
-LanguageTranslatorV2.prototype.deleteModel = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      method: 'DELETE',
-      url: '/v2/models/{model_id}',
-      path: pick(params, ['model_id']),
-      json: true
-    },
-    requiredParams: ['model_id'],
-    defaultOptions: this._options
-  };
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Translate pharagraphs from one language into another
- * @param {string} params.source Source language
- * @param {string} params.target Target language
- */
-LanguageTranslatorV2.prototype.translate = function(params, callback) {
-  params = params || {};
-
-  if (!(params.model_id || (params.source && params.target))) {
-    callback(new Error('Missing required parameters: model_id or source and target'));
-    return;
-  }
+  const body = { text: params.text, model_id: params.model_id, source: params.source, target: params.target };
   const parameters = {
     options: {
       url: '/v2/translate',
       method: 'POST',
       json: true,
-      body: pick(params, ['source', 'target', 'text', 'model_id'])
+      body: body,
     },
-    requiredParams: ['text'],
-    defaultOptions: this._options
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+        'content-type': 'application/json'
+      }
+    })
   };
-
   return requestFactory(parameters, callback);
 };
 
 /**
- * Returns the identifiable languages
- */
-LanguageTranslatorV2.prototype.getIdentifiableLanguages = function(params, callback) {
-  params = params || {};
-
-  const parameters = {
-    options: {
-      url: '/v2/identifiable_languages',
-      method: 'GET'
-    },
-    defaultOptions: this._options
-  };
-
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Identify the text based on the identifiable languages
- * @param  {string} params.text  text to identify
+ * Identifies the language of the input text.
+ *
+ *
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.text - Input text in UTF-8 format.
+ * @param {Function} [callback] - The callback that handles the response.
  */
 LanguageTranslatorV2.prototype.identify = function(params, callback) {
-  if (!params || !params.text) {
-    callback(new Error('Missing required parameters: text'));
+  params = params || {};
+  const requiredParams = ['text'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
     return;
   }
-
+  const body = {  };
   const parameters = {
     options: {
       url: '/v2/identify',
       method: 'POST',
-      body: params.text
+      json: true,
+      body: body,
     },
-    defaultOptions: extend(true, {}, this._options, {
+    defaultOptions: extend(true, this._options, {
       headers: {
-        accept: 'application/json',
+        'accept': 'application/json',
         'content-type': 'text/plain'
       }
     })
   };
+  return requestFactory(parameters, callback);
+};
 
+/**
+ * Lists all languages that can be identified by the API.
+ *
+ * Lists all languages that the service can identify. Returns the two-letter code (for example, `en` for English or `es` for Spanish) and name of each language.
+ *
+ * @param {Object} [params] - The parameters to send to the service.
+ * @param {Function} [callback] - The callback that handles the response.
+ */
+LanguageTranslatorV2.prototype.listIdentifiableLanguages = function(params, callback) {
+  if (typeof params === 'function' && !callback) {
+    callback = params;
+    params = {};
+  }
+  const parameters = {
+    options: {
+      url: '/v2/identifiable_languages',
+      method: 'GET',
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Uploads a TMX glossary file on top of a domain to customize a translation model.
+ *
+ *
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.base_model_id - Specifies the domain model that is used as the base for the training. To see current supported domain models, use the GET /v2/models parameter.
+ * @param {string} [params.name] - The model name. Valid characters are letters, numbers, -, and _. No spaces.
+ * @param {File} [params.forced_glossary] - A TMX file with your customizations. The customizations in the file completely overwrite the domain data translation, including high frequency or high confidence phrase translations. You can upload only one glossary with a file size less than 10 MB per call.
+ * @param {File} [params.parallel_corpus] - A TMX file that contains entries that are treated as a parallel corpus instead of a glossary.
+ * @param {File} [params.monolingual_corpus] - A UTF-8 encoded plain text file that is used to customize the target language model.
+ * @param {string} [params.forced_glossary_content_type] - The content type of forced_glossary.
+ * @param {string} [params.parallel_corpus_content_type] - The content type of parallel_corpus.
+ * @param {string} [params.monolingual_corpus_content_type] - The content type of monolingual_corpus.
+ * @param {Function} [callback] - The callback that handles the response.
+ */
+LanguageTranslatorV2.prototype.createModel = function(params, callback) {
+  params = params || {};
+  const requiredParams = ['base_model_id'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const query = { base_model_id: params.base_model_id, name: params.name };
+  const parameters = {
+    options: {
+      url: '/v2/models',
+      method: 'POST',
+      qs: query,
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+        'content-type': 'multipart/form-data'
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Deletes a custom translation model.
+ *
+ *
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.model_id - The model identifier.
+ * @param {Function} [callback] - The callback that handles the response.
+ */
+LanguageTranslatorV2.prototype.deleteModel = function(params, callback) {
+  params = params || {};
+  const requiredParams = ['model_id'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const path = { model_id: params.model_id };
+  const parameters = {
+    options: {
+      url: '/v2/models/{model_id}',
+      method: 'DELETE',
+      path: path
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Get information about the given translation model, including training status.
+ *
+ *
+ * @param {Object} params - The parameters to send to the service.
+ * @param {string} params.model_id - Model ID to use.
+ * @param {Function} [callback] - The callback that handles the response.
+ */
+LanguageTranslatorV2.prototype.getModel = function(params, callback) {
+  params = params || {};
+  const requiredParams = ['model_id'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
+    return;
+  }
+  const path = { model_id: params.model_id };
+  const parameters = {
+    options: {
+      url: '/v2/models/{model_id}',
+      method: 'GET',
+      path: path
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+      }
+    })
+  };
+  return requestFactory(parameters, callback);
+};
+
+/**
+ * Lists available standard and custom models by source or target language.
+ *
+ *
+ * @param {Object} [params] - The parameters to send to the service.
+ * @param {string} [params.source] - Filter models by source language.
+ * @param {string} [params.target] - Filter models by target language.
+ * @param {boolean} [params.default_models] - Valid values are leaving it unset, `true`, and `false`. When `true`, it filters models to return the default_models model or models. When `false`, it returns the non-default_models model or models. If not set, it returns all models, default_models and non-default_models.
+ * @param {Function} [callback] - The callback that handles the response.
+ */
+LanguageTranslatorV2.prototype.listModels = function(params, callback) {
+  if (typeof params === 'function' && !callback) {
+    callback = params;
+    params = {};
+  }
+  const query = { source: params.source, target: params.target, default: params.default_models };
+  const parameters = {
+    options: {
+      url: '/v2/models',
+      method: 'GET',
+      qs: query,
+    },
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+        'content-type': 'application/x-www-form-urlencoded'
+      }
+    })
+  };
   return requestFactory(parameters, callback);
 };
 
