@@ -68,8 +68,99 @@ TextToSpeechV1.prototype.synthesize = function(params, callback) {
     },
     defaultOptions: this._options
   };
+
   return requestFactory(parameters, callback);
+
+  /*
+
+  // NOTE: This change requires the npm package 'into-stream'.
+  // In the require statements above, th following line should be added:
+
+  // const intoStream = require('into-stream');
+
+  const requestContents = requestFactory(parameters, callback);
+
+  return new Promise(function(resolve, reject) {
+    if (params.accept === 'audio/wav') {
+      repairWavHeader(requestContents).then(function(repairedWavFile) {
+        resolve(intoStream(repairedWavFile));
+      });
+    } else {
+      resolve(requestContents);
+    }
+  });
+
+  */
 };
+
+// /**
+//  * Internal function to repair WAV file header.
+//  *
+//  * @param {Object} wavFileData
+//  */
+
+/*
+
+function repairWavHeader(wavFileData) {
+  const chunks = [];
+
+  wavFileData.on('data', function(chunk) {
+    chunks.push(chunk);
+  });
+
+  return new Promise(function(resolve, reject) {
+    // perform actions once the end of the stream is reached
+    wavFileData.on('end', function() {
+      // calculate the size of the file, in bytes
+      const wholeFile = Buffer.concat(chunks);
+      const totalBytes = wholeFile.length;
+
+      // bytes 4-8 in header give the total file size,
+      // after the first 8 bytes
+      // this is a reliable constant
+      const chunkSize = totalBytes - 8;
+      wholeFile.writeInt32LE(chunkSize, 4);
+
+      // the first subchunk is at byte 12, the fmt subchunk
+      // this is the only other reliable constant
+      let chunkIdOffset = 12;
+      const fieldSize = 4;
+
+      // every subchunk has a 4 byte id followed by a 4 byte size field
+      let chunkSizeOffset = chunkIdOffset + fieldSize;
+
+      let tempChunkID = '';
+      let tempChunkSize = 0;
+
+      let subchunk2sizeLocation = 0;
+
+      while (tempChunkID !== 'data') {
+        if (chunkSizeOffset + fieldSize > totalBytes) {
+          break;
+        }
+
+        tempChunkID = wholeFile.slice(chunkIdOffset, chunkIdOffset + fieldSize).toString('ascii');
+        tempChunkSize = wholeFile.readInt32LE(chunkSizeOffset);
+
+        // save the location of the data size field
+        if (tempChunkID === 'data') {
+          subchunk2sizeLocation = chunkSizeOffset;
+        }
+
+        chunkIdOffset = chunkSizeOffset + fieldSize + tempChunkSize;
+        chunkSizeOffset = chunkIdOffset + fieldSize;
+      }
+
+      const subchunk2size = totalBytes - subchunk2sizeLocation - fieldSize;
+
+      // update the size of the audio data and return
+      wholeFile.writeInt32LE(subchunk2size, subchunk2sizeLocation);
+      resolve(wholeFile);
+    });
+  });
+}
+
+*/
 
 // todo: add websocket support
 // http://www.ibm.com/watson/developercloud/text-to-speech/api/v1/?curl#www_synthesize12
