@@ -70,97 +70,61 @@ TextToSpeechV1.prototype.synthesize = function(params, callback) {
   };
 
   return requestFactory(parameters, callback);
-
-  /*
-
-  // NOTE: This change requires the npm package 'into-stream'.
-  // In the require statements above, th following line should be added:
-
-  // const intoStream = require('into-stream');
-
-  const requestContents = requestFactory(parameters, callback);
-
-  return new Promise(function(resolve, reject) {
-    if (params.accept === 'audio/wav') {
-      repairWavHeader(requestContents).then(function(repairedWavFile) {
-        resolve(intoStream(repairedWavFile));
-      });
-    } else {
-      resolve(requestContents);
-    }
-  });
-
-  */
 };
 
-// /**
-//  * Internal function to repair WAV file header.
-//  *
-//  * @param {Object} wavFileData
-//  */
+/**
+ * Repair the WAV header of an audio/wav file.
+ *
+ * @param {Object} wavFileData
+ */
 
-/*
+TextToSpeechV1.prototype.repairWavHeader = function(wavFileData) {
+  const totalBytes = wavFileData.length;
 
-function repairWavHeader(wavFileData) {
-  const chunks = [];
+  // bytes 4-8 in header give the total file size,
+  // after the first 8 bytes
+  // this is a reliable constant
+  const chunkSize = totalBytes - 8;
+  wavFileData.writeInt32LE(chunkSize, 4);
 
-  wavFileData.on('data', function(chunk) {
-    chunks.push(chunk);
-  });
+  // the first subchunk is at byte 12, the fmt subchunk
+  // this is the only other reliable constant
+  let chunkIdOffset = 12;
+  const fieldSize = 4;
 
-  return new Promise(function(resolve, reject) {
-    // perform actions once the end of the stream is reached
-    wavFileData.on('end', function() {
-      // calculate the size of the file, in bytes
-      const wholeFile = Buffer.concat(chunks);
-      const totalBytes = wholeFile.length;
+  // every subchunk has a 4 byte id followed by a 4 byte size field
+  let chunkSizeOffset = chunkIdOffset + fieldSize;
+  let subchunk2sizeLocation = 0;
 
-      // bytes 4-8 in header give the total file size,
-      // after the first 8 bytes
-      // this is a reliable constant
-      const chunkSize = totalBytes - 8;
-      wholeFile.writeInt32LE(chunkSize, 4);
+  // initialize values to hold data of each chunk we come across
+  let tempChunkID = '';
+  let tempChunkSize = 0;
 
-      // the first subchunk is at byte 12, the fmt subchunk
-      // this is the only other reliable constant
-      let chunkIdOffset = 12;
-      const fieldSize = 4;
+  while (tempChunkID !== 'data') {
+    if (chunkSizeOffset + fieldSize > totalBytes) {
+      break;
+    }
 
-      // every subchunk has a 4 byte id followed by a 4 byte size field
-      let chunkSizeOffset = chunkIdOffset + fieldSize;
+    tempChunkID = wavFileData.slice(chunkIdOffset, chunkIdOffset + fieldSize).toString('ascii');
+    tempChunkSize = wavFileData.readInt32LE(chunkSizeOffset);
 
-      let tempChunkID = '';
-      let tempChunkSize = 0;
+    // save the location of the data size field
+    if (tempChunkID === 'data') {
+      subchunk2sizeLocation = chunkSizeOffset;
+    }
 
-      let subchunk2sizeLocation = 0;
+    // skip over all the data in the temp chunk
+    chunkIdOffset = chunkSizeOffset + fieldSize + tempChunkSize;
+    chunkSizeOffset = chunkIdOffset + fieldSize;
+  }
 
-      while (tempChunkID !== 'data') {
-        if (chunkSizeOffset + fieldSize > totalBytes) {
-          break;
-        }
+  const subchunk2size = totalBytes - subchunk2sizeLocation - fieldSize;
 
-        tempChunkID = wholeFile.slice(chunkIdOffset, chunkIdOffset + fieldSize).toString('ascii');
-        tempChunkSize = wholeFile.readInt32LE(chunkSizeOffset);
+  // update the size of the audio data and return
+  wavFileData.writeInt32LE(subchunk2size, subchunk2sizeLocation);
 
-        // save the location of the data size field
-        if (tempChunkID === 'data') {
-          subchunk2sizeLocation = chunkSizeOffset;
-        }
-
-        chunkIdOffset = chunkSizeOffset + fieldSize + tempChunkSize;
-        chunkSizeOffset = chunkIdOffset + fieldSize;
-      }
-
-      const subchunk2size = totalBytes - subchunk2sizeLocation - fieldSize;
-
-      // update the size of the audio data and return
-      wholeFile.writeInt32LE(subchunk2size, subchunk2sizeLocation);
-      resolve(wholeFile);
-    });
-  });
-}
-
-*/
+  return wavFileData;
+};
 
 // todo: add websocket support
 // http://www.ibm.com/watson/developercloud/text-to-speech/api/v1/?curl#www_synthesize12
