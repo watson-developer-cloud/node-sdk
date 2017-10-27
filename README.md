@@ -548,8 +548,18 @@ var params = {
   accept: 'audio/wav'
 };
 
-// Pipe the synthesized text to a file
-text_to_speech.synthesize(params).pipe(fs.createWriteStream('output.wav'));
+// Synthesize speech, correct the wav header, then save to disk
+// (wav header requires a file length, but this is unknown until after the header is already generated and sent)
+textToSpeech
+  .synthesize(params, function(err, audio) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    textToSpeech.repairWavHeader(audio);
+    fs.writeFileSync('audio.wav', audio);
+    console.log('audio.wav written with a corrected wav header');
+});
 ```
 
 ### Tone Analyzer
