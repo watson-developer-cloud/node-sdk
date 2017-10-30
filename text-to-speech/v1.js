@@ -75,7 +75,8 @@ TextToSpeechV1.prototype.synthesize = function(params, callback) {
 /**
  * Repair the WAV header of an audio/wav file.
  *
- * @param {Object} wavFileData
+ * @param {Buffer} wavFileData - Wave audio - will be edited in place and returned
+ * @return {Buffer} wavFileData - the original Buffer, with a correct header
  */
 
 TextToSpeechV1.prototype.repairWavHeader = function(wavFileData) {
