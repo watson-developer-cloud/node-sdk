@@ -1,5 +1,5 @@
 /**
- * Copyright 2016 IBM Corp. All Rights Reserved.
+ * Copyright 2017 IBM All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,24 +16,22 @@
 
 'use strict';
 
-const requestFactory = require('../lib/requestwrapper');
-const pick = require('object.pick');
 const extend = require('extend');
+const requestFactory = require('../lib/requestwrapper');
 const helper = require('../lib/helper');
 const util = require('util');
 const BaseService = require('../lib/base_service');
 
 /**
- *
  * @param {Object} options
+ * @param {String} options.version_date - Release date of the API version in YYYY-MM-DD format.
  * @constructor
  */
 function PersonalityInsightsV3(options) {
   BaseService.call(this, options);
-
-  // Check if 'version_date' was provided
+  // check if 'version_date' was provided
   if (typeof this._options.version_date === 'undefined') {
-    throw new Error('Argument error: version_date was not specified, use 2016-10-19');
+    throw new Error('Argument error: version_date was not specified, use ');
   }
   this._options.qs.version = options.version_date;
 }
@@ -42,56 +40,48 @@ PersonalityInsightsV3.prototype.name = 'personality_insights';
 PersonalityInsightsV3.prototype.version = 'v3';
 PersonalityInsightsV3.URL = 'https://gateway.watsonplatform.net/personality-insights/api';
 
+
 /**
- * @param {Object} params The parameters to call the service
- * @param {Object} [params.headers] - The header parameters.
- * @param {string} [params.headers.accept-language=en] - The desired language of the response.
- * @param {string} [params.headers.content-type=text/plain] - The content type of the request: text/plain (the default), text/html, or application/json.
- * @param {string} [params.headers.content-language=en] - The language of the input text for the request: ar (Arabic), en (English), es (Spanish), or ja (Japanese)
- * @param {string} [params.headers.accept=application/json] - The desired content type of the response: application/json (the default) or text/csv
- * @param {string} [params.text] - The text to analyze.
- * @param {Object} [params.content_items] - A JSON input (if 'text' not provided).
- * @param {boolean} [params.raw_scores=false] - include raw results.
- * @param {boolean} [params.csv_headers=false] - If true, column labels are returned with a CSV response; if false (the default), they are not. Applies only when the Accept header is set to text/csv.
- * @param {boolean} [params.consumption_preferences=false] - If true, information about consumption preferences is returned with the results.
+ * Generates a personality profile based on input text.
  *
- * @param callback The callback.
+ * Derives personality insights for up to 20 MB of input content written by an author, though the service requires much less text to produce an accurate profile; for more information, see [Guidelines for providing sufficient input](https://console.bluemix.net/docs/services/personality-insights/user-overview.html#overviewGuidelines). Accepts input in Arabic, English, Japanese, Korean, or Spanish and produces output in one of eleven languages. Provide plain text, HTML, or JSON content, and receive results in JSON or CSV format.
+ *
+ * @param {Object} params - The parameters to send to the service.
+ * @param {Content} params.content - A maximum of 20 MB of content to analyze, though the service requires much less text; for more information, see [Guidelines for providing sufficient input](https://console.bluemix.net/docs/services/personality-insights/user-overview.html#overviewGuidelines). A JSON request must conform to the `Content` model.
+ * @param {string} params.content_type - The type of the input: application/json, text/html, or text/plain. A character encoding can be specified by including a `charset` parameter. For example, 'text/html;charset=utf-8'.
+ * @param {string} [params.content_language] - The language of the input text for the request: Arabic, English, Japanese, Korean, or Spanish. Regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. The effect of the `content_language` header depends on the `Content-Type` header. When `Content-Type` is `text/plain` or `text/html`, `content_language` is the only way to specify the language. When `Content-Type` is `application/json`, `content_language` overrides a language specified with the `language` parameter of a `ContentItem` object, and content items that specify a different language are ignored; omit this header to base the language on the specification of the content items. You can specify any combination of languages for `content_language` and `Accept-Language`.
+ * @param {string} [params.accept_language] - The desired language of the response. For two-character arguments, regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. You can specify any combination of languages for the input and response content.
+ * @param {boolean} [params.raw_scores] - If `true`, a raw score in addition to a normalized percentile is returned for each characteristic; raw scores are not compared with a sample population. If `false` (the default), only normalized percentiles are returned.
+ * @param {boolean} [params.csv_headers] - If `true`, column labels are returned with a CSV response; if `false` (the default), they are not. Applies only when the `Accept` header is set to `text/csv`.
+ * @param {boolean} [params.consumption_preferences] - If `true`, information about consumption preferences is returned with the results; if `false` (the default), the response does not include the information.
+ * @param {Function} [callback] - The callback that handles the response.
  */
-PersonalityInsightsV3.prototype.profile = function(
-  _params,
-  callback // eslint-disable-line complexity
-) {
-  const params = extend({}, _params);
-
-  if (params.content_items) {
-    params.contentItems = params.content_items;
-  }
-
-  if (!params.text && !params.contentItems) {
-    callback(new Error('Missing required parameters: text or content_items'));
+PersonalityInsightsV3.prototype.profile = function(params, callback) {
+  params = params || {};
+  const requiredParams = ['content', 'content_type'];
+  const missingParams = helper.getMissingParams(params, requiredParams);
+  if (missingParams) {
+    callback(missingParams);
     return;
   }
-
-  // Content-Type
-  let content_type = null;
-  if (params.text) {
-    content_type = helper.isHTML(params.text) ? 'text/html' : 'text/plain';
-  } else {
-    content_type = 'application/json';
-  }
-
+  const body = params.content;
+  const query = { raw_scores: params.raw_scores, csv_headers: params.csv_headers, consumption_preferences: params.consumption_preferences };
   const parameters = {
     options: {
-      method: 'POST',
       url: '/v3/profile',
-      body: params.text || pick(params, ['contentItems']),
-      json: true,
-      qs: pick(params, ['csv_headers', 'raw_scores', 'consumption_preferences']),
-      headers: extend({ 'content-type': content_type, 'accept-language': 'en' }, params.headers)
+      method: 'POST',
+      json: (params.content_type === 'application/json'),
+      body: body,
+      qs: query,
     },
-    defaultOptions: this._options
+    defaultOptions: extend(true, this._options, {
+      headers: {
+        'accept': 'application/json',
+        'content-type': params.content_type
+      }
+    })
   };
-
   return requestFactory(parameters, callback);
 };
+
 module.exports = PersonalityInsightsV3;
