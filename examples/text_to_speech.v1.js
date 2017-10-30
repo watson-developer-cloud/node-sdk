@@ -10,7 +10,29 @@ const textToSpeech = new TextToSpeechV1({
   // password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE'
 });
 
+// Synthesize speech, correct the wav header, then save to disk
+// (wav header requires a file length, but this is unknown until after the header is already generated and sent)
+// This method buffers the file in memory and repairs the WAV header in place.
+textToSpeech.synthesize(
+  {
+    text: 'Hello from IBM Watson',
+    accept: 'audio/wav'
+  },
+  function(err, audio) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    textToSpeech.repairWavHeader(audio);
+    fs.writeFileSync('audio.wav', audio);
+    console.log('audio.wav written with a corrected wav header');
+  }
+);
+
 // Synthesize speech and then pipe the results to a file
+// This method is more efficient and does not buffer the file in memory,
+// but the WAV header will be incorrect and an audio player will likely
+// show the clip as being ~20 hours long.
 textToSpeech
   .synthesize({
     text: 'Hello from IBM Watson',
