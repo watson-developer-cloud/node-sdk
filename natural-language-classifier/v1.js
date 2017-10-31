@@ -1,175 +1,195 @@
+'use strict';
 /**
- * Copyright 2015 IBM Corp. All Rights Reserved.
+ * Copyright 2017 IBM All Rights Reserved.
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
- * the License.
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
-
-'use strict';
-
+const extend = require('extend');
 const requestFactory = require('../lib/requestwrapper');
-const pick = require('object.pick');
-const omit = require('object.omit');
-const isStream = require('isstream');
-const toCSV = require('./json-training-to-csv');
+const helper = require('../lib/helper');
 const util = require('util');
 const BaseService = require('../lib/base_service');
-
-/**
- *
- * @param {Object} options
- * @constructor
- */
-function NaturalLanguageClassifierV1(options) {
-  BaseService.call(this, options);
-}
-util.inherits(NaturalLanguageClassifierV1, BaseService);
-NaturalLanguageClassifierV1.prototype.name = 'natural_language_classifier';
-NaturalLanguageClassifierV1.prototype.version = 'v1';
-NaturalLanguageClassifierV1.URL = 'https://gateway.watsonplatform.net/natural-language-classifier/api';
-
-/**
- * Creates a classifier
- */
-NaturalLanguageClassifierV1.prototype.create = function(params, callback) {
-  params = params || {};
-
-  if (!params || !params.training_data) {
-    callback(new Error('Missing required parameters: training_data'));
-    return;
+const NaturalLanguageClassifierV1 = /** @class */ (function() {
+  /**
+     * Construct a NaturalLanguageClassifierV1 object.
+     *
+     * @param {Object} options
+     * @constructor
+     */
+  function NaturalLanguageClassifierV1(options) {
+    BaseService.call(this, options);
   }
-  if (!(Array.isArray(params.training_data) || typeof params.training_data === 'string' || isStream(params.training_data))) {
-    callback(new Error('training_data needs to be a String, Array or Stream'));
-    return;
-  }
-
-  const self = this;
-
-  toCSV(params.training_data, function(err, csv) {
-    if (err) {
-      callback(err);
-      return;
-    }
-
+  /**
+     * Returns label information for the input.
+     *
+     * The status must be `Available` before you can use the classifier to classify text. Use `Get information about a classifier` to retrieve the status.
+     *
+     * @param {Object} params - The parameters to send to the service.
+     * @param {string} params.classifier_id - Classifier ID to use.
+     * @param {string} params.text - The submitted phrase.
+     * @param {Function} [callback] - The callback that handles the response.
+     */
+  NaturalLanguageClassifierV1.prototype.classify = function(params, callback) {
+    const requiredParams = ['classifier_id', 'text'];
+    const missingParams = helper.getMissingParams(params || {}, requiredParams);
+    if (missingParams && callback) return callback(missingParams);
+    const body = { text: params.text };
+    const path = { classifier_id: params.classifier_id };
+    const parameters = {
+      options: {
+        url: '/v1/classifiers/{classifier_id}/classify',
+        method: 'POST',
+        json: true,
+        body: body,
+        path: path
+      },
+      defaultOptions: extend(true, this._options, {
+        headers: {
+          accept: 'application/json',
+          'content-type': 'application/json'
+        }
+      })
+    };
+    return requestFactory(parameters, callback);
+  };
+  /**
+     * Create classifier.
+     *
+     * Sends data to create and train a classifier and returns information about the new classifier.
+     *
+     * @param {Object} params - The parameters to send to the service.
+     * @param {ReadableStream|Object|Uint8Array} params.metadata - Metadata in JSON format. The metadata identifies the language of the data, and an optional name to identify the classifier. For details, see the [API reference](https://www.ibm.com/watson/developercloud/natural-language-classifier/api/v1/#create_classifier).
+     * @param {ReadableStream|Object|Uint8Array} params.training_data - Training data in CSV format. Each text value must have at least one class. The data can include up to 15,000 records. For details, see [Using your own data](https://www.ibm.com/watson/developercloud/doc/natural-language-classifier/using-your-data.html).
+     * @param {Function} [callback] - The callback that handles the response.
+     */
+  NaturalLanguageClassifierV1.prototype.createClassifier = function(params, callback) {
+    const requiredParams = ['metadata', 'training_data'];
+    const missingParams = helper.getMissingParams(params || {}, requiredParams);
+    if (missingParams && callback) return callback(missingParams);
+    const formData = {
+      training_metadata: helper.buildRequestFileObject({
+        data: params.metadata,
+        contentType: 'application/json'
+      }),
+      training_data: helper.buildRequestFileObject({
+        data: params.training_data,
+        contentType: 'text/csv'
+      })
+    };
     const parameters = {
       options: {
         url: '/v1/classifiers',
         method: 'POST',
-        json: true,
-        formData: {
-          training_data: csv,
-          training_metadata: JSON.stringify(omit(params, ['training_data']))
-        },
-        // hack to check required parameters.
-        // We don't actually need path parameters
-        path: pick(params, ['language'])
+        formData: formData
       },
-      requiredParams: ['language'],
-      defaultOptions: self._options
+      defaultOptions: extend(true, this._options, {
+        headers: {
+          accept: 'application/json',
+          'content-type': 'multipart/form-data'
+        }
+      })
     };
     return requestFactory(parameters, callback);
-  });
-};
-
-/**
- * Returns the classification information for a classifier on a phrase
- */
-NaturalLanguageClassifierV1.prototype.classify = function(params, callback) {
-  params = params || {};
-
-  // #84: use classifier_id not classifier.
-  if (!params.classifier_id) {
-    params.classifier_id = params.classifier;
-  }
-
-  const parameters = {
-    options: {
-      url: '/v1/classifiers/{classifier_id}/classify',
-      method: 'POST',
-      json: true,
-      path: pick(params, ['classifier_id']),
-      body: pick(params, ['text'])
-    },
-    requiredParams: ['classifier_id', 'text'],
-    defaultOptions: this._options
   };
-
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Returns the training status of the classifier
- */
-NaturalLanguageClassifierV1.prototype.status = function(params, callback) {
-  params = params || {};
-
-  // #84: use classifier_id not classifier.
-  if (!params.classifier_id) {
-    params.classifier_id = params.classifier;
-  }
-
-  const parameters = {
-    options: {
-      url: '/v1/classifiers/{classifier_id}',
-      method: 'GET',
-      json: true,
-      path: params
-    },
-    requiredParams: ['classifier_id'],
-    defaultOptions: this._options
+  /**
+     * Delete classifier.
+     *
+     *
+     * @param {Object} params - The parameters to send to the service.
+     * @param {string} params.classifier_id - Classifier ID to delete.
+     * @param {Function} [callback] - The callback that handles the response.
+     */
+  NaturalLanguageClassifierV1.prototype.deleteClassifier = function(params, callback) {
+    const requiredParams = ['classifier_id'];
+    const missingParams = helper.getMissingParams(params || {}, requiredParams);
+    if (missingParams && callback) return callback(missingParams);
+    const path = { classifier_id: params.classifier_id };
+    const parameters = {
+      options: {
+        url: '/v1/classifiers/{classifier_id}',
+        method: 'DELETE',
+        path: path
+      },
+      defaultOptions: extend(true, this._options, {
+        headers: {
+          accept: 'application/json',
+          'content-type': 'application/json'
+        }
+      })
+    };
+    return requestFactory(parameters, callback);
   };
-
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Retrieves the list of classifiers for the user
- */
-NaturalLanguageClassifierV1.prototype.list = function(params, callback) {
-  const parameters = {
-    options: {
-      url: '/v1/classifiers',
-      method: 'GET',
-      json: true
-    },
-    defaultOptions: this._options
+  /**
+     * Get information about a classifier.
+     *
+     * Returns status and other information about a classifier.
+     *
+     * @param {Object} params - The parameters to send to the service.
+     * @param {string} params.classifier_id - Classifier ID to query.
+     * @param {Function} [callback] - The callback that handles the response.
+     */
+  NaturalLanguageClassifierV1.prototype.getClassifier = function(params, callback) {
+    const requiredParams = ['classifier_id'];
+    const missingParams = helper.getMissingParams(params || {}, requiredParams);
+    if (missingParams && callback) return callback(missingParams);
+    const path = { classifier_id: params.classifier_id };
+    const parameters = {
+      options: {
+        url: '/v1/classifiers/{classifier_id}',
+        method: 'GET',
+        path: path
+      },
+      defaultOptions: extend(true, this._options, {
+        headers: {
+          accept: 'application/json',
+          'content-type': 'application/json'
+        }
+      })
+    };
+    return requestFactory(parameters, callback);
   };
-
-  return requestFactory(parameters, callback);
-};
-
-/**
- * Deletes a classifier
- */
-NaturalLanguageClassifierV1.prototype.remove = function(params, callback) {
-  params = params || {};
-
-  // #84: use classifier_id not classifier.
-  if (!params.classifier_id) {
-    params.classifier_id = params.classifier;
-  }
-
-  const parameters = {
-    options: {
-      url: '/v1/classifiers/{classifier_id}',
-      method: 'DELETE',
-      path: params,
-      json: true
-    },
-    requiredParams: ['classifier_id'],
-    defaultOptions: this._options
+  /**
+     * List classifiers.
+     *
+     * Returns an empty array if no classifiers are available.
+     *
+     * @param {Object} [params] - The parameters to send to the service.
+     * @param {Function} [callback] - The callback that handles the response.
+     */
+  NaturalLanguageClassifierV1.prototype.listClassifiers = function(params, callback) {
+    params = params || {};
+    if (typeof params === 'function' && !callback) {
+      callback = params;
+      params = {};
+    }
+    const parameters = {
+      options: {
+        url: '/v1/classifiers',
+        method: 'GET'
+      },
+      defaultOptions: extend(true, this._options, {
+        headers: {
+          accept: 'application/json',
+          'content-type': 'application/json'
+        }
+      })
+    };
+    return requestFactory(parameters, callback);
   };
-
-  return requestFactory(parameters, callback);
-};
-
+  NaturalLanguageClassifierV1.URL = 'https://gateway.watsonplatform.net/natural-language-classifier/api';
+  return NaturalLanguageClassifierV1;
+})();
+util.inherits(NaturalLanguageClassifierV1, BaseService);
+NaturalLanguageClassifierV1.prototype.name = 'natural_language_classifier';
+NaturalLanguageClassifierV1.prototype.version = 'v1';
 module.exports = NaturalLanguageClassifierV1;
