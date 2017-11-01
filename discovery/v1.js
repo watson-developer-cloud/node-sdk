@@ -703,4 +703,43 @@ DiscoveryV1.prototype.query = function(params, callback) {
   return requestFactory(parameters, callback);
 };
 
+DiscoveryV1.prototype.addTrainingData = function(params, callback) {
+    params = params || {};
+    const parameters = {
+        options: {
+            url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data',
+            method: 'POST',
+            path: pick(params, ['environment_id', 'collection_id']),
+            multipart: [
+                {
+                    'content-type': 'application/json',
+                    body: JSON.stringify(pick(params.data, ['environment_id', 'collection_id','filter','natural_language_query','examples','document_id','relevance']))
+                }
+            ],
+            json: true
+        },
+        requiredParams: ['environment_id', 'collection_id'],
+        originalParams: params,
+        defaultOptions: this._options
+    };
+    return requestFactory(parameters, callback);
+};
+
+DiscoveryV1.prototype.deleteTrainingData = function(params, callback) {
+    params = params || {};
+    const parameters = {
+        options: {
+            url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}',
+            method: 'DELETE',
+            path: pick(params, ['environment_id', 'collection_id','query_id']),
+            json: true
+        },
+        requiredParams: ['environment_id', 'collection_id','query_id'],
+        defaultOptions: this._options
+    };
+    return requestFactory(parameters, callback);
+};
+
+
+
 module.exports = DiscoveryV1;
