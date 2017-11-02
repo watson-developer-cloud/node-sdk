@@ -21,7 +21,7 @@ import helper = require('../lib/helper');
 import util = require('util');
 import BaseService = require('../lib/base_service');
 
-class NaturalLanguageClassifierV1 {
+class GeneratedNaturalLanguageClassifierV1 {
 
   name: string; // set by prototype to 'natural_language_classifier'
   version: string; // set by prototype to 'v1'
@@ -30,12 +30,12 @@ class NaturalLanguageClassifierV1 {
   static URL: string = 'https://gateway.watsonplatform.net/natural-language-classifier/api';
 
   /**
-   * Construct a NaturalLanguageClassifierV1 object.
+   * Construct a GeneratedNaturalLanguageClassifierV1 object.
    *
    * @param {Object} options
    * @constructor
    */
-  constructor(options: NaturalLanguageClassifierV1.Options) {
+  constructor(options: GeneratedNaturalLanguageClassifierV1.Options) {
     BaseService.call(this, options);
   }
 
@@ -53,7 +53,7 @@ class NaturalLanguageClassifierV1 {
    * @param {string} params.text - The submitted phrase.
    * @param {Function} [callback] - The callback that handles the response.
    */
-  classify(params: NaturalLanguageClassifierV1.ClassifyParams, callback?: NaturalLanguageClassifierV1.Callback<NaturalLanguageClassifierV1.Classification>): ReadableStream | void {
+  classify(params: GeneratedNaturalLanguageClassifierV1.ClassifyParams, callback?: GeneratedNaturalLanguageClassifierV1.Callback<GeneratedNaturalLanguageClassifierV1.Classification>): ReadableStream | void {
     const requiredParams = ['classifier_id', 'text'];
     const missingParams = helper.getMissingParams(params || {}, requiredParams);
     if (missingParams && callback) return callback(missingParams);
@@ -87,7 +87,7 @@ class NaturalLanguageClassifierV1 {
    * @param {ReadableStream|Object|Uint8Array} params.training_data - Training data in CSV format. Each text value must have at least one class. The data can include up to 15,000 records. For details, see [Using your own data](https://www.ibm.com/watson/developercloud/doc/natural-language-classifier/using-your-data.html).
    * @param {Function} [callback] - The callback that handles the response.
    */
-  createClassifier(params: NaturalLanguageClassifierV1.CreateClassifierParams, callback?: NaturalLanguageClassifierV1.Callback<NaturalLanguageClassifierV1.Classifier>): ReadableStream | void {
+  createClassifier(params: GeneratedNaturalLanguageClassifierV1.CreateClassifierParams, callback?: GeneratedNaturalLanguageClassifierV1.Callback<GeneratedNaturalLanguageClassifierV1.Classifier>): ReadableStream | void {
     const requiredParams = ['metadata', 'training_data'];
     const missingParams = helper.getMissingParams(params || {}, requiredParams);
     if (missingParams && callback) return callback(missingParams);
@@ -119,7 +119,7 @@ class NaturalLanguageClassifierV1 {
    * @param {string} params.classifier_id - Classifier ID to delete.
    * @param {Function} [callback] - The callback that handles the response.
    */
-  deleteClassifier(params: NaturalLanguageClassifierV1.DeleteClassifierParams, callback?: NaturalLanguageClassifierV1.Callback<NaturalLanguageClassifierV1.Empty>): ReadableStream | void {
+  deleteClassifier(params: GeneratedNaturalLanguageClassifierV1.DeleteClassifierParams, callback?: GeneratedNaturalLanguageClassifierV1.Callback<GeneratedNaturalLanguageClassifierV1.Empty>): ReadableStream | void {
     const requiredParams = ['classifier_id'];
     const missingParams = helper.getMissingParams(params || {}, requiredParams);
     if (missingParams && callback) return callback(missingParams);
@@ -149,7 +149,7 @@ class NaturalLanguageClassifierV1 {
    * @param {string} params.classifier_id - Classifier ID to query.
    * @param {Function} [callback] - The callback that handles the response.
    */
-  getClassifier(params: NaturalLanguageClassifierV1.GetClassifierParams, callback?: NaturalLanguageClassifierV1.Callback<NaturalLanguageClassifierV1.Classifier>): ReadableStream | void {
+  getClassifier(params: GeneratedNaturalLanguageClassifierV1.GetClassifierParams, callback?: GeneratedNaturalLanguageClassifierV1.Callback<GeneratedNaturalLanguageClassifierV1.Classifier>): ReadableStream | void {
     const requiredParams = ['classifier_id'];
     const missingParams = helper.getMissingParams(params || {}, requiredParams);
     if (missingParams && callback) return callback(missingParams);
@@ -178,7 +178,7 @@ class NaturalLanguageClassifierV1 {
    * @param {Object} [params] - The parameters to send to the service.
    * @param {Function} [callback] - The callback that handles the response.
    */
-  listClassifiers(params?: NaturalLanguageClassifierV1.ListClassifiersParams, callback?: NaturalLanguageClassifierV1.Callback<NaturalLanguageClassifierV1.ClassifierList>): ReadableStream | void {
+  listClassifiers(params?: GeneratedNaturalLanguageClassifierV1.ListClassifiersParams, callback?: GeneratedNaturalLanguageClassifierV1.Callback<GeneratedNaturalLanguageClassifierV1.ClassifierList>): ReadableStream | void {
     params = params || {};
     if (typeof params === 'function' && !callback) {
       callback = params;
@@ -201,15 +201,15 @@ class NaturalLanguageClassifierV1 {
 
 }
 
-util.inherits(NaturalLanguageClassifierV1, BaseService);
-NaturalLanguageClassifierV1.prototype.name = 'natural_language_classifier';
-NaturalLanguageClassifierV1.prototype.version = 'v1';
+util.inherits(GeneratedNaturalLanguageClassifierV1, BaseService);
+GeneratedNaturalLanguageClassifierV1.prototype.name = 'natural_language_classifier';
+GeneratedNaturalLanguageClassifierV1.prototype.version = 'v1';
 
 /*************************
  * interfaces
  ************************/
 
-namespace NaturalLanguageClassifierV1 {
+namespace GeneratedNaturalLanguageClassifierV1 {
 
   export interface Empty { }
 
@@ -293,4 +293,4 @@ namespace NaturalLanguageClassifierV1 {
 
 }
 
-export = NaturalLanguageClassifierV1;
+export = GeneratedNaturalLanguageClassifierV1;
