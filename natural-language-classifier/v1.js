@@ -44,7 +44,7 @@ var NaturalLanguageClassifierV1 = /** @class */ (function (_super) {
         if (!params.classifier_id) {
             params.classifier_id = params.classifier;
         }
-        _super.prototype.classify.call(this, params, callback);
+        return _super.prototype.classify.call(this, params, callback);
     };
     /**
      * Returns the training status of the classifier
@@ -54,14 +54,14 @@ var NaturalLanguageClassifierV1 = /** @class */ (function (_super) {
         if (!params.classifier_id) {
             params.classifier_id = params.classifier;
         }
-        _super.prototype.getClassifier.call(this, params, callback);
+        return _super.prototype.getClassifier.call(this, params, callback);
     };
     /**
      * Retrieves the list of classifiers for the user
      */
     NaturalLanguageClassifierV1.prototype.list = function (params, callback) {
         params = params || {};
-        _super.prototype.listClassifiers.call(this, params, callback);
+        return _super.prototype.listClassifiers.call(this, params, callback);
     };
     /**
      * Deletes a classifier
@@ -71,7 +71,7 @@ var NaturalLanguageClassifierV1 = /** @class */ (function (_super) {
         if (!params.classifier_id) {
             params.classifier_id = params.classifier;
         }
-        _super.prototype.deleteClassifier.call(this, params, callback);
+        return _super.prototype.deleteClassifier.call(this, params, callback);
     };
     return NaturalLanguageClassifierV1;
 }(GeneratedNaturalLanguageClassifierV1));

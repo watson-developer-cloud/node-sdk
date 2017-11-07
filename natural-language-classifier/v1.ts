@@ -43,7 +43,7 @@ class NaturalLanguageClassifierV1 extends GeneratedNaturalLanguageClassifierV1 {
     if (!params.classifier_id) {
       params.classifier_id = params.classifier;
     }
-    super.classify(params, callback);
+    return super.classify(params, callback);
   }
 
   /**
@@ -54,7 +54,7 @@ class NaturalLanguageClassifierV1 extends GeneratedNaturalLanguageClassifierV1 {
     if (!params.classifier_id) {
       params.classifier_id = params.classifier;
     }
-    super.getClassifier(params, callback);
+    return super.getClassifier(params, callback);
   }
 
   /**
@@ -62,7 +62,7 @@ class NaturalLanguageClassifierV1 extends GeneratedNaturalLanguageClassifierV1 {
    */
    list(params, callback) {
      params = params || {};
-     super.listClassifiers(params, callback);
+     return super.listClassifiers(params, callback);
    }
 
   /**
@@ -73,7 +73,7 @@ class NaturalLanguageClassifierV1 extends GeneratedNaturalLanguageClassifierV1 {
     if (!params.classifier_id) {
       params.classifier_id = params.classifier;
     }
-    super.deleteClassifier(params, callback);
+    return super.deleteClassifier(params, callback);
   }
 }
 
