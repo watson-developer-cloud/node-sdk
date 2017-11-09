@@ -19,7 +19,7 @@
 import * as extend from 'extend';
 import * as request from 'request';
 import * as vcapServices from 'vcap_services';
-import bufferFrom from 'buffer-from'; // new Buffer() is deprecated, replaced with Buffer.from() in node v4.5.0+ - this uses the new api when possible but falls back to the old one otherwise
+import * as bufferFrom from 'buffer-from'; // new Buffer() is deprecated, replaced with Buffer.from() in node v4.5.0+ - this uses the new api when possible but falls back to the old one otherwise
 import { stripTrailingSlash } from './helper';
 
 // custom interfaces
@@ -106,7 +106,7 @@ export class BaseService {
     if (options.url) {
       _options.url = stripTrailingSlash(options.url);
     }
-    this._options = extend({ qs: {}, url: this.constructor.URL }, options, _options);
+    this._options = extend({ qs: {}, url: this.constructor.URL }, this.serviceDefaults, options, _options);
   }
   /**
    * @private
@@ -116,19 +116,20 @@ export class BaseService {
   private initCredentials(options: UserOptions): BaseServiceOptions {
     let _options: BaseServiceOptions = <BaseServiceOptions>{};
     if(options.token) {
-      _options.headers = extend({}, options.headers);
-      _options.headers['X-Watson-Authorization-Token'] = options.token;
+      options.headers = options.headers || {};
+      options.headers['X-Watson-Authorization-Token'] = options.token;
+      _options = extend(_options, options);
       return _options;
     }
+    _options.jar = request.jar();
     // Get credentials from environment properties or Bluemix
     // but prefer credentials provided programatically
-    _options = extend({}, this.getCredentialsFromBluemix(this.name), this.getCredentialsFromEnvironment(this.name), options, this.serviceDefaults, _options);
+    _options = extend({}, this.getCredentialsFromBluemix(this.name), this.getCredentialsFromEnvironment(this.name), options, _options);
     if(!areCredentialedOptions(_options) && !areNonCredentialedOptions(_options)) {
       throw new Error('Argument error: username and password are required unless use_unauthenticated is set');
     }
-    _options.jar = request.jar();
     // Calculate and add Authorization header to base options
-    const encodedCredentials = Buffer.from(`${_options.password}:${_options.password}`).toString('base64');
+    const encodedCredentials = bufferFrom(`${_options.username}:${_options.password}`).toString('base64');
     const authHeader = { Authorization: `Basic ${encodedCredentials}`};
     _options.headers = extend(authHeader, _options.headers);
     return _options;
