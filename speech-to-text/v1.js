@@ -24,11 +24,11 @@ const url = require('url');
 const https = require('https');
 const http = require('http');
 const isStream = require('isstream');
-const requestFactory = require('../lib/requestwrapper');
+const requestFactory = require('../lib/requestwrapper').createRequest;
 const RecognizeStream = require('./recognize_stream');
 const pkg = require('../package.json');
 const util = require('util');
-const BaseService = require('../lib/base_service');
+const BaseService = require('../lib/base_service').BaseService;
 const async = require('async');
 
 const PARAMS_ALLOWED = [

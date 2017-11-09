@@ -16,10 +16,10 @@
 
 'use strict';
 
-const requestFactory = require('../lib/requestwrapper');
+const requestFactory = require('../lib/requestwrapper').createRequest;
 const omit = require('object.omit');
 const util = require('util');
-const BaseService = require('../lib/base_service');
+const BaseService = require('../lib/base_service').BaseService;
 
 /**
  *

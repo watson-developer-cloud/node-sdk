@@ -5,20 +5,10 @@ node_js:
 - 6
 - stable
 script:
+- tsc # use the tsconfig.json to transpile specified service-files
 - npm test
-- npm run doc
-after_success:
-- scripts/jsdoc/publish.sh
-- scripts/create_semver_tag.sh
 before_install:
 - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && openssl aes-256-cbc -K $encrypted_cb4d3d070e32_key
   -iv $encrypted_cb4d3d070e32_iv -in auth.js.enc -out test/resources/auth.js -d ||
   true'
-deploy:
-  provider: npm
-  email: nathan@nfriedly.com
-  api_key:
-    secure: SWmOXKulWp2sDEpt/0/Ad6DqZzgjFRLNxJbN5xyIZfkr2Z5SItSiewQn0A+Q0vd2Ug1lZNsF1dOcp9HDWSUE44PHRzjdSH498djI2iNbVdPMaMYQkE6dAnixHOxPbW3rzFWlS+LUPWjEmaeTAH2TkpfjxJURng7iUrrmS3HRLvU=
-  on:
-    tags: true
-    repo: watson-developer-cloud/node-sdk
+- npm install -g typescript

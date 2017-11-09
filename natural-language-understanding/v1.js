@@ -16,9 +16,9 @@
 
 'use strict';
 
-const requestFactory = require('../lib/requestwrapper');
+const requestFactory = require('../lib/requestwrapper').createRequest;
 const util = require('util');
-const BaseService = require('../lib/base_service');
+const BaseService = require('../lib/base_service').BaseService;
 const extend = require('extend');
 
 /**

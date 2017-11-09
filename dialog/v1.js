@@ -17,12 +17,12 @@
 'use strict';
 
 const extend = require('extend');
-const requestFactory = require('../lib/requestwrapper');
+const requestFactory = require('../lib/requestwrapper').createRequest;
 const pick = require('object.pick');
 const omit = require('object.omit');
 const isStream = require('isstream');
 const util = require('util');
-const BaseService = require('../lib/base_service');
+const BaseService = require('../lib/base_service').BaseService;
 
 /**
  *

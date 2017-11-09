@@ -16,20 +16,26 @@
 
 'use strict';
 
-const extend = require('extend');
-const request = require('request');
-const pkg = require('../package.json');
-const helper = require('./helper');
-const readableStream = require('stream').PassThrough;
+import * as extend from 'extend';
+import * as request from 'request';
+import { getMissingParams }  from './helper';
+import { PassThrough } from 'stream';
+import { readFileSync } from 'fs';
+import { join } from 'path';
+
+const pkgPath = join(__dirname, '../package.json');
+const pkg = JSON.parse(readFileSync(pkgPath).toString('utf-8'));
+const readableStream = PassThrough
 const isBrowser = typeof window === 'object';
+
 
 /**
  * @private
- * @param {String} path
+ * @param {string} path
  * @param {Object} params
- * @return {String}
+ * @returns {string}
  */
-function parsePath(path, params) {
+function parsePath(path: string, params: Object): string {
   if (!path || !params) {
     return path;
   }
@@ -43,8 +49,9 @@ function parsePath(path, params) {
  * Check if the service/request have error and try to format them.
  * @param  {Function} cb the request callback
  * @private
+ * @returns {request.RequestCallback}
  */
-function formatErrorIfExists(cb) {
+function formatErrorIfExists(cb: Function): request.RequestCallback{
   return function(error, response, body) {
     // eslint-disable-line complexity
 
@@ -76,13 +83,18 @@ function formatErrorIfExists(cb) {
           body[key] = body.error[key];
         });
         body.error = errObj.description;
-      } else if (typeof body.error == 'object' && typeof body.error.error == 'object') {
+      } else if (
+        typeof body.error == 'object' &&
+        typeof body.error.error == 'object'
+      ) {
         // this can happen with, for example, the conversation createSynonym() API
         body.rawError = body.error;
         body.error = JSON.stringify(body.error.error); //
       }
       // language translaton returns json with error_code and error_message
-      error = new Error(body.error || body.error_message || 'Error Code: ' + body.error_code);
+      error = new Error(
+        body.error || body.error_message || 'Error Code: ' + body.error_code
+      );
       error.code = body.error_code;
       Object.keys(body).forEach(function(key) {
         error[key] = body[key];
@@ -98,11 +110,13 @@ function formatErrorIfExists(cb) {
       error.code = response.statusCode;
       if (error.code === 401 || error.code === 403) {
         error.body = error.message;
-        error.message = 'Unauthorized: Access is denied due to invalid credentials.';
+        error.message =
+          'Unauthorized: Access is denied due to invalid credentials.';
       }
       body = null;
     }
     cb(error, body, response);
+    return;
   };
 }
 
@@ -113,11 +127,17 @@ function formatErrorIfExists(cb) {
  * 3. Encode path and query parameters
  * 4. Call the api
  * @private
- * @return {ReadableStream|undefined}
+ * @returns {ReadableStream|undefined}
+ * @throws {Error}
  */
-function createRequest(parameters, _callback) {
+export function createRequest(parameters, _callback) {
   let missingParams = null;
-  const options = extend(true, {}, parameters.defaultOptions, parameters.options);
+  const options = extend(
+    true,
+    {},
+    parameters.defaultOptions,
+    parameters.options
+  );
   const path = options.path;
   const body = options.body; // application/json or text/plain
   const form = options.form; // application/x-www-form-urlencoded
@@ -125,28 +145,35 @@ function createRequest(parameters, _callback) {
   const qs = options.qs; // Query parameters
 
   // Provide a default callback if it doesn't exists
-  const callback = typeof _callback === 'function' ? _callback /* no op */ : function() {};
+  const callback =
+    typeof _callback === 'function' ? _callback /* no op */ : function() {};
 
   // Missing parameters
   if (parameters.options.requiredParams) {
     // eslint-disable-next-line no-console
-    console.warn(new Error('requiredParams set on parameters.options - it should be set directly on parameters'));
+    console.warn(
+      new Error(
+        'requiredParams set on parameters.options - it should be set directly on parameters'
+      )
+    );
   }
 
-  missingParams = helper.getMissingParams(parameters.originalParams || extend({}, qs, body, form, formData, path), parameters.requiredParams);
+  missingParams = getMissingParams(
+    parameters.originalParams || extend({}, qs, body, form, formData, path),
+    parameters.requiredParams
+  );
 
   if (missingParams) {
     if (typeof _callback === 'function') {
       return callback(missingParams);
     } else {
-      const errorStream = readableStream();
+      const errorStream = new readableStream();
       setTimeout(function() {
         errorStream.emit('error', missingParams);
       }, 0);
       return errorStream;
     }
   }
-
   // Path params
   options.url = parsePath(options.url, path);
   delete options.path;
@@ -173,5 +200,3 @@ function createRequest(parameters, _callback) {
 
   return request(options, formatErrorIfExists(callback));
 }
-
-module.exports = createRequest;

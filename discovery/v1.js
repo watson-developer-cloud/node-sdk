@@ -17,8 +17,8 @@
 'use strict';
 
 const util = require('util');
-const requestFactory = require('../lib/requestwrapper');
-const BaseService = require('../lib/base_service');
+const requestFactory = require('../lib/requestwrapper').createRequest;
+const BaseService = require('../lib/base_service').BaseService;
 const pick = require('object.pick');
 const isStream = require('isstream');
 

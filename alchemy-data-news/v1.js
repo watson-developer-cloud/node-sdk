@@ -17,7 +17,7 @@
 'use strict';
 
 const extend = require('extend');
-const requestFactory = require('../lib/requestwrapper');
+const requestFactory = require('../lib/requestwrapper').createRequest;
 const util = require('util');
 const BaseServiceAlchemy = require('../lib/base_service_alchemy');
 const errorFormatter = require('../lib/alchemy_error_formatter');

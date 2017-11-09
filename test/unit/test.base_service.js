@@ -1,7 +1,7 @@
 'use strict';
 // note: this has a lot of overlap with test.wrapper.js
 // many/most of those tests should be moved here
-const BaseService = require('../../lib/base_service');
+const BaseService = require('../../lib/base_service').BaseService;
 const assert = require('assert');
 const util = require('util');
 

@@ -19,7 +19,7 @@
 const extend = require('extend');
 const util = require('util');
 const BaseServiceAlchemy = require('../lib/base_service_alchemy');
-const requestFactory = require('../lib/requestwrapper');
+const requestFactory = require('../lib/requestwrapper').createRequest;
 // IMPORTANT:
 // Due to the current design, the URL must be the last key on each endpoint or
 // it could inadvertently clobber a url query param in the users request.

@@ -19,9 +19,9 @@
 const extend = require('extend');
 const pick = require('object.pick');
 const isStream = require('isstream');
-const requestFactory = require('../lib/requestwrapper');
+const requestFactory = require('../lib/requestwrapper').createRequest;
 const util = require('util');
-const BaseService = require('../lib/base_service');
+const BaseService = require('../lib/base_service').BaseService;
 
 const NEGATIVE_EXAMPLES = 'negative_examples';
 
