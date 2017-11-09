@@ -16,12 +16,14 @@
 
 
 import * as extend from 'extend';
-import requestFactory from '../lib/requestwrapper';
+import { createRequest } from '../lib/requestwrapper';
 import { BaseService} from '../lib/base_service';
 import { getMissingParams } from '../lib/helper';
 import { buildRequestFileObject } from '../lib/helper';
 import { FileObject } from '../lib/helper';
 import { RequestResponse } from 'request';
+
+const requestFactory = createRequest;
 
 /**
  * Language Translator translates text from one language to another. The service offers multiple domain-specific models that you can customize based on your unique terminology and language. Use Language Translator to take news from across the globe and present it in your language, communicate with your customers in their own language, and more.

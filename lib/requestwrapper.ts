@@ -130,7 +130,7 @@ function formatErrorIfExists(cb: Function): request.RequestCallback{
  * @returns {ReadableStream|undefined}
  * @throws {Error}
  */
-export default function createRequest(parameters, _callback) {
+export function createRequest(parameters, _callback) {
   let missingParams = null;
   const options = extend(
     true,
