@@ -28,24 +28,14 @@ interface HeaderOptions {
   [key: string]: any;
 }
 
-interface UserOptionsWithCredentials {
-  username: string;
-  password: string;
-  headers?: HeaderOptions;
+interface UserOptions {
   url?: string;
-  token?: string;
-  version_date?: string;
-}
-
-interface UserOptionsWithoutCredentials {
-  use_unauthenticated: boolean;
+  username?: string;
+  password?: string;
+  use_unauthenticated?: boolean;
   headers?: HeaderOptions;
-  url?: string;
   token?: string;
-  version_date?: string;
 }
-
-type UserOptions = UserOptionsWithCredentials | UserOptionsWithoutCredentials;
 
 interface BaseServiceOptions {
   username?: string;

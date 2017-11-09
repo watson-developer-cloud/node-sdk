@@ -155,7 +155,7 @@ describe('language_translator', function() {
       assert.equal(req.uri.href, service.url + path);
       assert.equal(req.method, 'POST');
       const body = Buffer.from(req.body).toString('ascii');
-      assert.equal(body, service_request.text);
+      assert.equal(body, JSON.stringify(service_request));
     });
   });
 
