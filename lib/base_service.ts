@@ -30,6 +30,7 @@ interface HeaderOptions {
 
 interface UserOptions {
   url?: string;
+  version_date?: string;
   username?: string;
   password?: string;
   use_unauthenticated?: boolean;
