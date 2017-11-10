@@ -21,55 +21,66 @@ import { getMissingParams } from '../lib/helper';
 import * as isStream from 'isstream';
 
 class LanguageTranslatorV2 extends GeneratedLanguageTranslatorV2 {
-    constructor(options) {
-        // Welp, this is awkward. Originally the rename was *just* a rename, but then (after the SDK was updated,
-        // but before the backend was updated), it was decided that the billing should be simplified at the same time.
-        // That's a solid improvement, but it means that the SDK now needs to support both services independently,
-        // and correcting the default URL here will break older code, so it must be reserved for a major release.
-        // todo: consider checking for options.url === LanguageTranslationV2.URL and also throw this warning then.
-        // (This probably does't matter since the api didn't change)
-        if (!options || !options.url) {
-            const err = new Error(
-                'LanguageTranslatorV2 currently defaults to the url for LanguageTranslationV2, ' +
-                'but this will change in the next major release of the watson-developer-cloud Node.js SDK. ' +
-                'Please either specify the url https://gateway.watsonplatform.net/language-translator/api or else use ' +
-                'LanguageTranslationV2. ' +
-                'See http://www.ibm.com/watson/developercloud/doc/language-translator/migrating.shtml for more details.'
-            );
-            // eslint-disable-next-line no-console
-            console.warn(err);
-        }
-        super(options);
+  constructor(options) {
+    // Welp, this is awkward. Originally the rename was *just* a rename, but then (after the SDK was updated,
+    // but before the backend was updated), it was decided that the billing should be simplified at the same time.
+    // That's a solid improvement, but it means that the SDK now needs to support both services independently,
+    // and correcting the default URL here will break older code, so it must be reserved for a major release.
+    // todo: consider checking for options.url === LanguageTranslationV2.URL and also throw this warning then.
+    // (This probably does't matter since the api didn't change)
+    if (!options || !options.url) {
+      const err = new Error(
+        'LanguageTranslatorV2 currently defaults to the url for LanguageTranslationV2, ' +
+          'but this will change in the next major release of the watson-developer-cloud Node.js SDK. ' +
+          'Please either specify the url https://gateway.watsonplatform.net/language-translator/api or else use ' +
+          'LanguageTranslationV2. ' +
+          'See http://www.ibm.com/watson/developercloud/doc/language-translator/migrating.shtml for more details.'
+      );
+      // eslint-disable-next-line no-console
+      console.warn(err);
     }
-    getModels(params, callback) {
-        return super.listModels(params, callback);
+    super(options);
+  }
+
+  getModels(params, callback) {
+    return super.listModels(params, callback);
+  }
+
+  getModel(params, callback) {
+    return super.getModel(params, callback);
+  }
+
+  createModel(params, callback) {
+    const missingParams = getMissingParams(params, ['base_model_id']);
+    if (missingParams) {
+      return callback(missingParams);
     }
-    getModel(params, callback) {
-        return super.getModel(params, callback);
+
+    const inputTypes: string[] = [
+      'forced_glossary',
+      'parallel_corpus',
+      'monolingual_corpus',
+    ];
+    inputTypes.forEach(type => {
+      if (params[type] && !isStream(params[type])) {
+        return callback(new Error(`${type} is not a standard Node.js Stream`));
+      }
+    });
+    return super.createModel(params, callback);
+  }
+
+  translate(params, callback) {
+    if (!params || !(params.model_id || (params.source && params.target))) {
+      return callback(
+        new Error('Missing required parameters: model_id or source and target')
+      );
     }
-    createModel(params, callback) {
-        const missingParams = getMissingParams(params, ['base_model_id']);
-        if (missingParams) {
-            return callback(missingParams);
-        }
-      
-        const inputTypes: string[] = ['forced_glossary', 'parallel_corpus', 'monolingual_corpus'];
-        inputTypes.forEach((type) => {
-            if (params[type] && !isStream(params[type])) {
-                return callback(new Error(`${type} is not a standard Node.js Stream`));
-            }
-        });
-        return super.createModel(params, callback);
-    }
-    translate(params, callback) {
-        if (!(params.model_id || (params.source && params.target))) {
-            return callback(new Error('Missing required parameters: model_id or source and target'));
-        }
-        return super.translate(params, callback);
-    }
-    getIdentifiableLanguages(params, callback) {
-        return super.listIdentifiableLanguages(params, callback);
-    }
+    return super.translate(params, callback);
+  }
+
+  getIdentifiableLanguages(params, callback) {
+    return super.listIdentifiableLanguages(params, callback);
+  }
 }
 
 export = LanguageTranslatorV2;

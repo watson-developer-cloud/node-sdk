@@ -14,15 +14,13 @@
  * limitations under the License.
  */
 
-
 import * as extend from 'extend';
-import { createRequest } from '../lib/requestwrapper';
-import { BaseService} from '../lib/base_service';
-import { getMissingParams } from '../lib/helper';
-import { buildRequestFileObject } from '../lib/helper';
-import { FileObject } from '../lib/helper';
 import { RequestResponse } from 'request';
-
+import { createRequest } from '../lib/requestwrapper';
+import { getMissingParams } from '../lib/helper';
+import { BaseService } from '../lib/base_service';
+import { FileObject } from '../lib/helper';
+import { buildRequestFileObject } from '../lib/helper'
 const requestFactory = createRequest;
 
 /**
@@ -33,7 +31,6 @@ export class GeneratedLanguageTranslatorV2 extends BaseService {
 
   name: string; // set by prototype to 'language_translator'
   version: string; // set by prototype to 'v2'
-  _options: any // set by BaseService
 
   static URL: string = 'https://gateway.watsonplatform.net/language-translator/api';
 
@@ -53,13 +50,8 @@ export class GeneratedLanguageTranslatorV2 extends BaseService {
     super(options);
   }
 
-  /*************************
-   * translate
-   ************************/
-
   /**
    * Translates the input text from the source language to the target language.
-   *
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string[]} params.text - Input text in UTF-8 encoding. It is a list so that multiple paragraphs can be submitted. Also accept a single string, instead of an array, as valid input.
@@ -69,55 +61,65 @@ export class GeneratedLanguageTranslatorV2 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    */
   translate(params: GeneratedLanguageTranslatorV2.TranslateParams, callback?: GeneratedLanguageTranslatorV2.Callback<GeneratedLanguageTranslatorV2.TranslationResult>): ReadableStream | void {
+    if (!callback || !(typeof callback === 'function')) {
+      throw new Error('callback must be non-null and of type function');
+    }
+    const _params = extend({}, params);
     const requiredParams = ['text'];
-    const missingParams = getMissingParams(params || {}, requiredParams);
-    if (missingParams && callback) return callback(missingParams);
-    const body = { text: params.text, model_id: params.model_id, source: params.source, target: params.target };
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) return callback(missingParams);
+    const body = { 
+      text: _params.text,
+      model_id: _params.model_id,
+      source: _params.source,
+      target: _params.target
+    };
     const parameters = {
       options: {
         url: '/v2/translate',
         method: 'POST',
         json: true,
-        body: body,
+        body: body
       },
       defaultOptions: extend(true, this._options, {
         headers: {
           'accept': 'application/json',
-          'content-type': 'application/json',
+          'content-type': 'application/json'
         }
       })
     };
     return requestFactory(parameters, callback);
   };
 
-  /*************************
-   * identify
-   ************************/
-
   /**
    * Identifies the language of the input text.
-   *
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.text - Input text in UTF-8 format.
    * @param {Function} [callback] - The callback that handles the response.
    */
   identify(params: GeneratedLanguageTranslatorV2.IdentifyParams, callback?: GeneratedLanguageTranslatorV2.Callback<GeneratedLanguageTranslatorV2.IdentifiedLanguages>): ReadableStream | void {
+    if (!callback || !(typeof callback === 'function')) {
+      throw new Error('callback must be non-null and of type function');
+    }
+    const _params = extend({}, params);
     const requiredParams = ['text'];
-    const missingParams = getMissingParams(params || {}, requiredParams);
-    if (missingParams && callback) return callback(missingParams);
-    const body = { text: params.text };
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) return callback(missingParams);
+    const body = { 
+      text: _params.text
+    };
     const parameters = {
       options: {
         url: '/v2/identify',
         method: 'POST',
         json: true,
-        body: body,
+        body: body
       },
       defaultOptions: extend(true, this._options, {
         headers: {
           'accept': 'application/json',
-          'content-type': 'text/plain',
+          'content-type': 'text/plain'
         }
       })
     };
@@ -133,32 +135,26 @@ export class GeneratedLanguageTranslatorV2 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    */
   listIdentifiableLanguages(params?: GeneratedLanguageTranslatorV2.ListIdentifiableLanguagesParams, callback?: GeneratedLanguageTranslatorV2.Callback<GeneratedLanguageTranslatorV2.IdentifiableLanguages>): ReadableStream | void {
-    params = params || {};
-    if (typeof params === 'function' && !callback) {
-      callback = params;
-      params = {};
+    if (!callback || !(typeof callback === 'function')) {
+      throw new Error('callback must be non-null and of type function');
     }
+    const _params = extend({}, params);
     const parameters = {
       options: {
         url: '/v2/identifiable_languages',
-        method: 'GET',
+        method: 'GET'
       },
       defaultOptions: extend(true, this._options, {
         headers: {
-          'accept': 'application/json',
+          'accept': 'application/json'
         }
       })
     };
     return requestFactory(parameters, callback);
   };
 
-  /*************************
-   * models
-   ************************/
-
   /**
    * Uploads a TMX glossary file on top of a domain to customize a translation model.
-   *
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.base_model_id - Specifies the domain model that is used as the base for the training. To see current supported domain models, use the GET /v2/models parameter.
@@ -169,21 +165,34 @@ export class GeneratedLanguageTranslatorV2 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    */
   createModel(params: GeneratedLanguageTranslatorV2.CreateModelParams, callback?: GeneratedLanguageTranslatorV2.Callback<GeneratedLanguageTranslatorV2.TranslationModel>): ReadableStream | void {
+    if (!callback || !(typeof callback === 'function')) {
+      throw new Error('callback must be non-null and of type function');
+    }
+    const _params = extend({}, params);
     const requiredParams = ['base_model_id'];
-    const missingParams = getMissingParams(params || {}, requiredParams);
-    if (missingParams && callback) return callback(missingParams);
-    const formData: {[key:string]: any} = {
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) return callback(missingParams);
+    const formData: {[key:string]: FileObject} = {
     };
-    if (params.forced_glossary) {
-      formData.forced_glossary = buildRequestFileObject({data: params.forced_glossary, contentType: 'application/octet-stream'});
+    if (_params.forced_glossary) {
+      formData.forced_glossary = buildRequestFileObject({
+        data: _params.forced_glossary, 
+        contentType: 'application/octet-stream'});
     }
-    if (params.parallel_corpus) {
-      formData.parallel_corpus = buildRequestFileObject({data: params.parallel_corpus, contentType: 'application/octet-stream'});
+    if (_params.parallel_corpus) {
+      formData.parallel_corpus = buildRequestFileObject({
+        data: _params.parallel_corpus, 
+        contentType: 'application/octet-stream'});
     }
-    if (params.monolingual_corpus) {
-      formData.monolingual_corpus = buildRequestFileObject({data: params.monolingual_corpus, contentType: 'text/plain'});
+    if (_params.monolingual_corpus) {
+      formData.monolingual_corpus = buildRequestFileObject({
+        data: _params.monolingual_corpus, 
+        contentType: 'text/plain'});
     }
-    const query = { base_model_id: params.base_model_id, name: params.name };
+    const query = { 
+      base_model_id: _params.base_model_id,
+      name: _params.name
+    };
     const parameters = {
       options: {
         url: '/v2/models',
@@ -194,7 +203,7 @@ export class GeneratedLanguageTranslatorV2 extends BaseService {
       defaultOptions: extend(true, this._options, {
         headers: {
           'accept': 'application/json',
-          'content-type': 'multipart/form-data',
+          'content-type': 'multipart/form-data'
         }
       })
     };
@@ -204,25 +213,30 @@ export class GeneratedLanguageTranslatorV2 extends BaseService {
   /**
    * Deletes a custom translation model.
    *
-   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.model_id - The model identifier.
    * @param {Function} [callback] - The callback that handles the response.
    */
   deleteModel(params: GeneratedLanguageTranslatorV2.DeleteModelParams, callback?: GeneratedLanguageTranslatorV2.Callback<GeneratedLanguageTranslatorV2.DeleteModelResult>): ReadableStream | void {
+    if (!callback || !(typeof callback === 'function')) {
+      throw new Error('callback must be non-null and of type function');
+    }
+    const _params = extend({}, params);
     const requiredParams = ['model_id'];
-    const missingParams = getMissingParams(params || {}, requiredParams);
-    if (missingParams && callback) return callback(missingParams);
-    const path = { model_id: params.model_id };
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) return callback(missingParams);
+    const path = { 
+      model_id: _params.model_id
+    };
     const parameters = {
       options: {
         url: '/v2/models/{model_id}',
         method: 'DELETE',
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, this._options, {
         headers: {
-          'accept': 'application/json',
+          'accept': 'application/json'
         }
       })
     };
@@ -232,25 +246,30 @@ export class GeneratedLanguageTranslatorV2 extends BaseService {
   /**
    * Get information about the given translation model, including training status.
    *
-   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.model_id - Model ID to use.
    * @param {Function} [callback] - The callback that handles the response.
    */
   getModel(params: GeneratedLanguageTranslatorV2.GetModelParams, callback?: GeneratedLanguageTranslatorV2.Callback<GeneratedLanguageTranslatorV2.TranslationModel>): ReadableStream | void {
+    if (!callback || !(typeof callback === 'function')) {
+      throw new Error('callback must be non-null and of type function');
+    }
+    const _params = extend({}, params);
     const requiredParams = ['model_id'];
-    const missingParams = getMissingParams(params || {}, requiredParams);
-    if (missingParams && callback) return callback(missingParams);
-    const path = { model_id: params.model_id };
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) return callback(missingParams);
+    const path = { 
+      model_id: _params.model_id
+    };
     const parameters = {
       options: {
         url: '/v2/models/{model_id}',
         method: 'GET',
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, this._options, {
         headers: {
-          'accept': 'application/json',
+          'accept': 'application/json'
         }
       })
     };
@@ -260,7 +279,6 @@ export class GeneratedLanguageTranslatorV2 extends BaseService {
   /**
    * Lists available standard and custom models by source or target language.
    *
-   *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {string} [params.source] - Filter models by source language.
    * @param {string} [params.target] - Filter models by target language.
@@ -268,22 +286,25 @@ export class GeneratedLanguageTranslatorV2 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    */
   listModels(params?: GeneratedLanguageTranslatorV2.ListModelsParams, callback?: GeneratedLanguageTranslatorV2.Callback<GeneratedLanguageTranslatorV2.TranslationModels>): ReadableStream | void {
-    params = params || {};
-    if (typeof params === 'function' && !callback) {
-      callback = params;
-      params = {};
+    if (!callback || !(typeof callback === 'function')) {
+      throw new Error('callback must be non-null and of type function');
     }
-    const query = { source: params.source, target: params.target, default: params.default_models };
+    const _params = extend({}, params);
+    const query = { 
+      source: _params.source,
+      target: _params.target,
+      default: _params.default_models
+    };
     const parameters = {
       options: {
         url: '/v2/models',
         method: 'GET',
-        qs: query,
+        qs: query
       },
       defaultOptions: extend(true, this._options, {
         headers: {
           'accept': 'application/json',
-          'content-type': 'application/x-www-form-urlencoded',
+          'content-type': 'application/x-www-form-urlencoded'
         }
       })
     };
@@ -295,28 +316,19 @@ export class GeneratedLanguageTranslatorV2 extends BaseService {
 GeneratedLanguageTranslatorV2.prototype.name = 'language_translator';
 GeneratedLanguageTranslatorV2.prototype.version = 'v2';
 
-/*************************
- * interfaces
- ************************/
-
 namespace GeneratedLanguageTranslatorV2 {
 
   export interface Empty { }
 
   export type Callback<T> = (error: any, body?: T, response?: RequestResponse) => void;
 
-  export type Options =
-    {
+  export type Options = {
       url?: string;
       username?: string;
       password?: string;
       use_unauthenticated?: boolean;
       headers?: object;
-    }
-
-  /*************************
-   * request interfaces
-   ************************/
+  }
 
   export interface TranslateParams {
     text: string[];
@@ -353,10 +365,6 @@ namespace GeneratedLanguageTranslatorV2 {
     target?: string;
     default_models?: boolean;
   }
-
-  /*************************
-   * model interfaces
-   ************************/
 
   export interface DeleteModelResult {
     status: string;
