@@ -19,7 +19,6 @@ import { RequestResponse } from 'request';
 import { createRequest } from '../lib/requestwrapper';
 import { getMissingParams } from '../lib/helper';
 import { BaseService } from '../lib/base_service';
-const requestFactory = createRequest;
 
 /**
  * Analyze various features of text content at scale. Provide text, raw HTML, or a public URL, and IBM Watson Natural Language Understanding will give you results for the features you request. The service cleans HTML content before analysis by default, so the results can ignore most advertisements and other unwanted content.    ### Concepts  Identify general concepts that are referenced or alluded to in your content. Concepts that are detected typically have an associated link to a DBpedia resource.    ### Entities  Detect important people, places, geopolitical entities and other types of entities in your content. Entity detection recognizes consecutive coreferences of each entity. For example, analysis of the following text would count \"Barack Obama\" and \"He\" as the same entity:    \"Barack Obama was the 44th President of the United States. He took office in January 2009.\"    ### Keywords  Determine the most important keywords in your content. Keyword phrases are organized by relevance in the results.    ### Categories  Categorize your content into a hierarchical 5-level taxonomy. For example, \"Leonardo DiCaprio won an Oscar\" returns \"/art and entertainment/movies and tv/movies\" as the most confident classification.    ### Sentiment  Determine whether your content conveys postive or negative sentiment. Sentiment information can be returned for detected entities, keywords, or user-specified target phrases found in the text.    ### Emotion  Detect anger, disgust, fear, joy, or sadness that is conveyed by your content. Emotion information can be returned for detected entities, keywords, or user-specified target phrases found in the text.    ### Relations  Recognize when two entities are related, and identify the type of relation.  For example, you can identify an \"awardedTo\" relation between an award and its recipient.    ### Semantic Roles  Parse sentences into subject-action-object form, and identify entities and keywords that are subjects or objects of an action.    ### Metadata  Get author information, publication date, and the title of your text/HTML content.
@@ -77,17 +76,14 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {number} [params.limit_text_characters] - Sets the maximum number of characters that are processed by the service.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
-   * @throws {Error}
    */
   analyze(params: NaturalLanguageUnderstandingV1.AnalyzeParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.AnalysisResults>): ReadableStream | void {
-    if (!callback || !(typeof callback === 'function')) {
-      throw new Error('callback must be non-null and of type function');
-    }
+    const _callback = typeof callback === 'function' ? callback : () => {};
     const _params = extend({}, params);
     const requiredParams = ['features'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
-      return callback(missingParams);
+      return _callback(missingParams);
     }
     const body = { 
       features: _params.features,
@@ -106,16 +102,16 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         url: '/v1/analyze',
         method: 'POST',
         json: true,
-        body: body,
+        body: body
       },
       defaultOptions: extend(true, this._options, {
         headers: {
           'accept': 'application/json',
-          'content-type': 'application/json',
+          'content-type': 'application/json'
         }
       })
     };
-    return requestFactory(parameters, callback);
+    return createRequest(parameters, _callback);
   };
 
   /**
@@ -127,17 +123,14 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {string} params.model_id - model_id of the model to delete.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
-   * @throws {Error}
    */
   deleteModel(params: NaturalLanguageUnderstandingV1.DeleteModelParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.InlineResponse200>): ReadableStream | void {
-    if (!callback || !(typeof callback === 'function')) {
-      throw new Error('callback must be non-null and of type function');
-    }
+    const _callback = typeof callback === 'function' ? callback : () => {};
     const _params = extend({}, params);
     const requiredParams = ['model_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
-      return callback(missingParams);
+      return _callback(missingParams);
     }
     const path = { 
       model_id: _params.model_id
@@ -146,16 +139,16 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
       options: {
         url: '/v1/models/{model_id}',
         method: 'DELETE',
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, this._options, {
         headers: {
           'accept': 'application/json',
-          'content-type': 'application/json',
+          'content-type': 'application/json'
         }
       })
     };
-    return requestFactory(parameters, callback);
+    return createRequest(parameters, _callback);
   };
 
   /**
@@ -166,26 +159,23 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {Object} [params] - The parameters to send to the service.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
-   * @throws {Error}
    */
   listModels(params?: NaturalLanguageUnderstandingV1.ListModelsParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.ListModelsResults>): ReadableStream | void {
-    if (!callback || !(typeof callback === 'function')) {
-      throw new Error('callback must be non-null and of type function');
-    }
+    const _callback = typeof callback === 'function' ? callback : () => {};
     const _params = extend({}, params);
     const parameters = {
       options: {
         url: '/v1/models',
-        method: 'GET',
+        method: 'GET'
       },
       defaultOptions: extend(true, this._options, {
         headers: {
           'accept': 'application/json',
-          'content-type': 'application/json',
+          'content-type': 'application/json'
         }
       })
     };
-    return requestFactory(parameters, callback);
+    return createRequest(parameters, _callback);
   };
 
 }
