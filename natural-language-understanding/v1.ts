@@ -15,13 +15,10 @@
  */
 
 import * as extend from 'extend';
-import { createRequest } from '../lib/requestwrapper';
-import { BaseService} from '../lib/base_service';
-import { getMissingParams } from '../lib/helper';
-import { buildRequestFileObject } from '../lib/helper';
-import { FileObject } from '../lib/helper';
 import { RequestResponse } from 'request';
-
+import { createRequest } from '../lib/requestwrapper';
+import { getMissingParams } from '../lib/helper';
+import { BaseService } from '../lib/base_service';
 const requestFactory = createRequest;
 
 /**
@@ -32,11 +29,11 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
 
   name: string; // set by prototype to 'natural-language-understanding'
   version: string; // set by prototype to 'v1'
-  _options: any // set by BaseService
 
-  static URL: string = 'https://gateway.watsonplatform.net/natural-language-understanding/api';
   static VERSION_DATE_2016_01_23: string = '2016-01-23';
   static VERSION_DATE_2017_02_27: string = '2017-02-27';
+
+  static URL: string = 'https://gateway.watsonplatform.net/natural-language-understanding/api';
 
   /**
    * Construct a NaturalLanguageUnderstandingV1 object.
@@ -49,20 +46,18 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {Boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
    * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {Object} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
+   * @returns {NaturalLanguageUnderstandingV1}
+   * @throws {Error}
    * @constructor
    */
   constructor(options: NaturalLanguageUnderstandingV1.Options) {
     super(options);
     // check if 'version_date' was provided
     if (typeof this._options.version_date === 'undefined') {
-      throw new Error('Argument error: version_date was not specified');
+      throw new Error('Argument error: version_date was not specified, use NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27');
     }
     this._options.qs.version = options.version_date;
   }
-
-  /*************************
-   * analyze
-   ************************/
 
   /**
    * Analyze text, HTML, or a public webpage.
@@ -81,12 +76,29 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {string} [params.language] - ISO 639-1 code indicating the language to use in the analysis.
    * @param {number} [params.limit_text_characters] - Sets the maximum number of characters that are processed by the service.
    * @param {Function} [callback] - The callback that handles the response.
+   * @returns {ReadableStream|void}
+   * @throws {Error}
    */
   analyze(params: NaturalLanguageUnderstandingV1.AnalyzeParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.AnalysisResults>): ReadableStream | void {
+    if (!callback || !(typeof callback === 'function')) {
+      throw new Error('callback must be non-null and of type function');
+    }
+    const _params = extend({}, params);
     const requiredParams = ['features'];
-    const missingParams = getMissingParams(params || {}, requiredParams);
-    if (missingParams && callback) return callback(missingParams);
-    const body = { features: params.features, text: params.text, html: params.html, url: params.url, clean: params.clean, xpath: params.xpath, fallback_to_raw: params.fallback_to_raw, return_analyzed_text: params.return_analyzed_text, language: params.language, limit_text_characters: params.limit_text_characters };
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) return callback(missingParams);
+    const body = { 
+      features: _params.features,
+      text: _params.text,
+      html: _params.html,
+      url: _params.url,
+      clean: _params.clean,
+      xpath: _params.xpath,
+      fallback_to_raw: _params.fallback_to_raw,
+      return_analyzed_text: _params.return_analyzed_text,
+      language: _params.language,
+      limit_text_characters: _params.limit_text_characters
+    };
     const parameters = {
       options: {
         url: '/v1/analyze',
@@ -104,10 +116,6 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     return requestFactory(parameters, callback);
   };
 
-  /*************************
-   * modelManagement
-   ************************/
-
   /**
    * Delete model.
    *
@@ -116,12 +124,20 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.model_id - model_id of the model to delete.
    * @param {Function} [callback] - The callback that handles the response.
+   * @returns {ReadableStream|void}
+   * @throws {Error}
    */
   deleteModel(params: NaturalLanguageUnderstandingV1.DeleteModelParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.InlineResponse200>): ReadableStream | void {
+    if (!callback || !(typeof callback === 'function')) {
+      throw new Error('callback must be non-null and of type function');
+    }
+    const _params = extend({}, params);
     const requiredParams = ['model_id'];
-    const missingParams = getMissingParams(params || {}, requiredParams);
-    if (missingParams && callback) return callback(missingParams);
-    const path = { model_id: params.model_id };
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) return callback(missingParams);
+    const path = { 
+      model_id: _params.model_id
+    };
     const parameters = {
       options: {
         url: '/v1/models/{model_id}',
@@ -145,13 +161,14 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {Function} [callback] - The callback that handles the response.
+   * @returns {ReadableStream|void}
+   * @throws {Error}
    */
   listModels(params?: NaturalLanguageUnderstandingV1.ListModelsParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.ListModelsResults>): ReadableStream | void {
-    params = params || {};
-    if (typeof params === 'function' && !callback) {
-      callback = params;
-      params = {};
+    if (!callback || !(typeof callback === 'function')) {
+      throw new Error('callback must be non-null and of type function');
     }
+    const _params = extend({}, params);
     const parameters = {
       options: {
         url: '/v1/models',
@@ -172,29 +189,20 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
 NaturalLanguageUnderstandingV1.prototype.name = 'natural-language-understanding';
 NaturalLanguageUnderstandingV1.prototype.version = 'v1';
 
-/*************************
- * interfaces
- ************************/
-
 namespace NaturalLanguageUnderstandingV1 {
 
   export interface Empty { }
 
   export type Callback<T> = (error: any, body?: T, response?: RequestResponse) => void;
 
-  export type Options =
-    {
+  export type Options = {
       version_date: string;
       url?: string;
       username?: string;
       password?: string;
       use_unauthenticated?: boolean;
       headers?: object;
-    }
-
-  /*************************
-   * request interfaces
-   ************************/
+  }
 
   export interface AnalyzeParams {
     features: Features;
@@ -215,10 +223,6 @@ namespace NaturalLanguageUnderstandingV1 {
 
   export interface ListModelsParams {
   }
-
-  /*************************
-   * model interfaces
-   ************************/
 
   export interface Author {
     name?: string;
