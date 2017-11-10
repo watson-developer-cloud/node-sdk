@@ -86,7 +86,9 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     const _params = extend({}, params);
     const requiredParams = ['features'];
     const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) return callback(missingParams);
+    if (missingParams) {
+      return callback(missingParams);
+    }
     const body = { 
       features: _params.features,
       text: _params.text,
@@ -134,7 +136,9 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     const _params = extend({}, params);
     const requiredParams = ['model_id'];
     const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) return callback(missingParams);
+    if (missingParams) {
+      return callback(missingParams);
+    }
     const path = { 
       model_id: _params.model_id
     };
