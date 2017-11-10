@@ -29,13 +29,13 @@ interface HeaderOptions {
 }
 
 interface UserOptions {
+  url?: string;
+  version_date?: string;
   username?: string;
   password?: string;
   use_unauthenticated?: boolean;
   headers?: HeaderOptions;
-  url?: string;
   token?: string;
-  version_date?: string;
 }
 
 interface BaseServiceOptions {
