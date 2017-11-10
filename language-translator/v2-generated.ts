@@ -21,7 +21,6 @@ import { getMissingParams } from '../lib/helper';
 import { BaseService } from '../lib/base_service';
 import { FileObject } from '../lib/helper';
 import { buildRequestFileObject } from '../lib/helper'
-const requestFactory = createRequest;
 
 /**
  * Language Translator translates text from one language to another. The service offers multiple domain-specific models that you can customize based on your unique terminology and language. Use Language Translator to take news from across the globe and present it in your language, communicate with your customers in their own language, and more.
@@ -61,17 +60,14 @@ export class GeneratedLanguageTranslatorV2 extends BaseService {
    * @param {string} [params.target] - Used in combination with source as an alternative way to select the model for translation. When target and source are set, and model_id is not set, the system chooses a default model with the right language pair to translate (usually the model based on the news domain).
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
-   * @throws {Error}
    */
   translate(params: GeneratedLanguageTranslatorV2.TranslateParams, callback?: GeneratedLanguageTranslatorV2.Callback<GeneratedLanguageTranslatorV2.TranslationResult>): ReadableStream | void {
-    if (!callback || !(typeof callback === 'function')) {
-      throw new Error('callback must be non-null and of type function');
-    }
+    const _callback = typeof callback === 'function' ? callback : () => {};
     const _params = extend({}, params);
     const requiredParams = ['text'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
-      return callback(missingParams);
+      return _callback(missingParams);
     }
     const body = { 
       text: _params.text,
@@ -93,7 +89,7 @@ export class GeneratedLanguageTranslatorV2 extends BaseService {
         }
       })
     };
-    return requestFactory(parameters, callback);
+    return createRequest(parameters, _callback);
   };
 
   /**
@@ -103,17 +99,14 @@ export class GeneratedLanguageTranslatorV2 extends BaseService {
    * @param {string} params.text - Input text in UTF-8 format.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
-   * @throws {Error}
    */
   identify(params: GeneratedLanguageTranslatorV2.IdentifyParams, callback?: GeneratedLanguageTranslatorV2.Callback<GeneratedLanguageTranslatorV2.IdentifiedLanguages>): ReadableStream | void {
-    if (!callback || !(typeof callback === 'function')) {
-      throw new Error('callback must be non-null and of type function');
-    }
+    const _callback = typeof callback === 'function' ? callback : () => {};
     const _params = extend({}, params);
     const requiredParams = ['text'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
-      return callback(missingParams);
+      return _callback(missingParams);
     }
     const body = {
       text: _params.text
@@ -132,7 +125,7 @@ export class GeneratedLanguageTranslatorV2 extends BaseService {
         }
       })
     };
-    return requestFactory(parameters, callback);
+    return createRequest(parameters, _callback);
   };
 
   /**
@@ -143,12 +136,9 @@ export class GeneratedLanguageTranslatorV2 extends BaseService {
    * @param {Object} [params] - The parameters to send to the service.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
-   * @throws {Error}
    */
   listIdentifiableLanguages(params?: GeneratedLanguageTranslatorV2.ListIdentifiableLanguagesParams, callback?: GeneratedLanguageTranslatorV2.Callback<GeneratedLanguageTranslatorV2.IdentifiableLanguages>): ReadableStream | void {
-    if (!callback || !(typeof callback === 'function')) {
-      throw new Error('callback must be non-null and of type function');
-    }
+    const _callback = typeof callback === 'function' ? callback : () => {};
     const _params = extend({}, params);
     const parameters = {
       options: {
@@ -161,7 +151,7 @@ export class GeneratedLanguageTranslatorV2 extends BaseService {
         }
       })
     };
-    return requestFactory(parameters, callback);
+    return createRequest(parameters, _callback);
   };
 
   /**
@@ -175,17 +165,14 @@ export class GeneratedLanguageTranslatorV2 extends BaseService {
    * @param {ReadableStream|FileObject|Buffer} [params.monolingual_corpus] - A UTF-8 encoded plain text file that is used to customize the target language model.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
-   * @throws {Error}
    */
   createModel(params: GeneratedLanguageTranslatorV2.CreateModelParams, callback?: GeneratedLanguageTranslatorV2.Callback<GeneratedLanguageTranslatorV2.TranslationModel>): ReadableStream | void {
-    if (!callback || !(typeof callback === 'function')) {
-      throw new Error('callback must be non-null and of type function');
-    }
+    const _callback = typeof callback === 'function' ? callback : () => {};
     const _params = extend({}, params);
     const requiredParams = ['base_model_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
-      return callback(missingParams);
+      return _callback(missingParams);
     }
     const formData: {[key:string]: FileObject} = {
     };
@@ -222,7 +209,7 @@ export class GeneratedLanguageTranslatorV2 extends BaseService {
         }
       })
     };
-    return requestFactory(parameters, callback);
+    return createRequest(parameters, _callback);
   };
 
   /**
@@ -232,17 +219,14 @@ export class GeneratedLanguageTranslatorV2 extends BaseService {
    * @param {string} params.model_id - The model identifier.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
-   * @throws {Error}
    */
   deleteModel(params: GeneratedLanguageTranslatorV2.DeleteModelParams, callback?: GeneratedLanguageTranslatorV2.Callback<GeneratedLanguageTranslatorV2.DeleteModelResult>): ReadableStream | void {
-    if (!callback || !(typeof callback === 'function')) {
-      throw new Error('callback must be non-null and of type function');
-    }
+    const _callback = typeof callback === 'function' ? callback : () => {};
     const _params = extend({}, params);
     const requiredParams = ['model_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
-      return callback(missingParams);
+      return _callback(missingParams);
     }
     const path = { 
       model_id: _params.model_id
@@ -259,7 +243,7 @@ export class GeneratedLanguageTranslatorV2 extends BaseService {
         }
       })
     };
-    return requestFactory(parameters, callback);
+    return createRequest(parameters, _callback);
   };
 
   /**
@@ -269,17 +253,14 @@ export class GeneratedLanguageTranslatorV2 extends BaseService {
    * @param {string} params.model_id - Model ID to use.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
-   * @throws {Error}
    */
   getModel(params: GeneratedLanguageTranslatorV2.GetModelParams, callback?: GeneratedLanguageTranslatorV2.Callback<GeneratedLanguageTranslatorV2.TranslationModel>): ReadableStream | void {
-    if (!callback || !(typeof callback === 'function')) {
-      throw new Error('callback must be non-null and of type function');
-    }
+    const _callback = typeof callback === 'function' ? callback : () => {};
     const _params = extend({}, params);
     const requiredParams = ['model_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
-      return callback(missingParams);
+      return _callback(missingParams);
     }
     const path = { 
       model_id: _params.model_id
@@ -296,7 +277,7 @@ export class GeneratedLanguageTranslatorV2 extends BaseService {
         }
       })
     };
-    return requestFactory(parameters, callback);
+    return createRequest(parameters, _callback);
   };
 
   /**
@@ -308,12 +289,9 @@ export class GeneratedLanguageTranslatorV2 extends BaseService {
    * @param {boolean} [params.default_models] - Valid values are leaving it unset, `true`, and `false`. When `true`, it filters models to return the default_models model or models. When `false`, it returns the non-default_models model or models. If not set, it returns all models, default_models and non-default_models.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
-   * @throws {Error}
    */
   listModels(params?: GeneratedLanguageTranslatorV2.ListModelsParams, callback?: GeneratedLanguageTranslatorV2.Callback<GeneratedLanguageTranslatorV2.TranslationModels>): ReadableStream | void {
-    if (!callback || !(typeof callback === 'function')) {
-      throw new Error('callback must be non-null and of type function');
-    }
+    const _callback = typeof callback === 'function' ? callback : () => {};
     const _params = extend({}, params);
     const query = { 
       source: _params.source,
@@ -333,7 +311,7 @@ export class GeneratedLanguageTranslatorV2 extends BaseService {
         }
       })
     };
-    return requestFactory(parameters, callback);
+    return createRequest(parameters, _callback);
   };
 
 }
