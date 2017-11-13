@@ -48,6 +48,7 @@ describe('discovery-v1', function() {
     environmentinfo: '/v1/environments/env-guid',
     collections: '/v1/environments/env-guid/collections',
     collectioninfo: '/v1/environments/env-guid/collections/col-guid',
+    fields: '/v1/environments/env-guid/fields',
     configurations: '/v1/environments/env-guid/configurations',
     configurationinfo: '/v1/environments/env-guid/configurations/config-guid',
     delete_collection: '/v1/environments/env-guid/collections/col-guid',
@@ -93,7 +94,9 @@ describe('discovery-v1', function() {
           .delete(paths.delete_document + '?version=' + service.version_date)
           .reply(200, { delete_doc: 'yes' })
           .get(paths.configurations + '?version=' + service.version_date)
-          .reply(200, { configs: 'yes' });
+          .reply(200, { configs: 'yes' })
+          .get(paths.fields + '?version=' + service.version_date)
+          .reply(200, { fields: 'yes' });
       });
 
       afterEach(function() {
@@ -204,14 +207,12 @@ describe('discovery-v1', function() {
         });
 
         it('should get information about a specific collections fields', function() {
-          const req = discovery.getCollectionFields(
-            {
-              environment_id: 'env-guid',
-              collection_id: 'col-guid'
-            },
-            noop
-          );
-          assert.equal(req.uri.href, service.url + paths.collectioninfo + '/fields' + '?version=' + service.version_date);
+          const params = {
+            environment_id: 'env-guid',
+            collection_id: 'col-guid'
+          };
+          const req = discovery.getCollectionFields(params, noop);
+          assert.equal(req.uri.href, service.url + paths.fields + '?version=' + service.version_date + '&collection_ids=' + params.collection_id);
           assert.equal(req.method, 'GET');
         });
 
@@ -249,7 +250,8 @@ describe('discovery-v1', function() {
           const req = discovery.createConfiguration(
             {
               environment_id: 'env-guid',
-              file: fs.createReadStream(path.join(__dirname, '../resources/discovery-sampleAddConf.json'))
+              // file is a JSON Object not a file
+              file: JSON.parse(fs.readFileSync(path.join(__dirname, '../resources/discovery-sampleAddConf.json')))
             },
             noop
           );
@@ -262,7 +264,8 @@ describe('discovery-v1', function() {
             {
               environment_id: 'env-guid',
               configuration_id: 'config-guid',
-              file: fs.createReadStream(path.join(__dirname, '../resources/discovery-sampleUpdateConf.json'))
+              // file is a JSON Object not a file
+              file: JSON.parse(fs.readFileSync(path.join(__dirname, '../resources/discovery-sampleUpdateConf.json')))
             },
             noop
           );
@@ -348,8 +351,8 @@ describe('discovery-v1', function() {
             service.url +
               paths.query +
               '?version=' +
-              service.version_date +
-              '&natural_language_query=a%20question%20about%20stuff%20and%20things&filter=yesplease&count=10&sort=%2Bfield_1%2C-field_2&passages=true'
+              service.version_date + //query string params order changed, shouldn't be a problem for the service...
+              '&filter=yesplease&natural_language_query=a%20question%20about%20stuff%20and%20things&passages=true&count=10&sort=%2Bfield_1%2C-field_2'
           );
           assert.equal(req.method, 'GET');
         });
@@ -362,7 +365,11 @@ describe('discovery-v1', function() {
         function readMultipartReqJsons(req) {
           const result = [];
           if (req && req.body && req.body.length) {
-            req.body.forEach(part => {
+            // req is no longer an array, so .forEach doesn't make sense
+            // probably because we're using multi-part syntax with an array
+            // anymore in the generated code
+            const body = [ req.body ];
+            body.forEach(part => {
               try {
                 result.push(JSON.parse(Buffer.from(part).toString('ascii')));
               } catch (err) {
