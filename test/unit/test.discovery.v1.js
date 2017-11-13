@@ -250,7 +250,8 @@ describe('discovery-v1', function() {
           const req = discovery.createConfiguration(
             {
               environment_id: 'env-guid',
-              file: fs.createReadStream(path.join(__dirname, '../resources/discovery-sampleAddConf.json'))
+              // file is a JSON Object not a file
+              file: JSON.parse(fs.readFileSync(path.join(__dirname, '../resources/discovery-sampleAddConf.json')))
             },
             noop
           );
@@ -263,7 +264,8 @@ describe('discovery-v1', function() {
             {
               environment_id: 'env-guid',
               configuration_id: 'config-guid',
-              file: fs.createReadStream(path.join(__dirname, '../resources/discovery-sampleUpdateConf.json'))
+              // file is a JSON Object not a file
+              file: JSON.parse(fs.readFileSync(path.join(__dirname, '../resources/discovery-sampleUpdateConf.json')))
             },
             noop
           );

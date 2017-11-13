@@ -42,6 +42,7 @@ class DiscoveryV1 extends GeneratedDiscoveryV1 {
   }
 
   createEnvironment(params, callback) {
+    // make sure environments with size 0 can be created
     if (params.size !== 0 && !params.size) {
       params.size = 1;
     }
@@ -49,16 +50,29 @@ class DiscoveryV1 extends GeneratedDiscoveryV1 {
   }
 
   updateEnvironment(params, callback) {
-    // Should work as is
     return super.updateEnvironment(params, callback);
   }
 
   updateConfiguration(params, callback) {
-    // file is now called configuration
+    // name is now a required parameter
+    // file is now split into conversions, enrichments and normalizations
+    let _conversions;
+    let _enrichments;
+    let _normalizations;
     if (params && params.file) {
-      params.configuration = params.file;
+      _conversions = params.file.conversions;
+      _enrichments = params.file.enrichments;
+      _normalizations = params.file.normalizations;
     }
-    const _params = extend({ name: '_' }, params);
+    const _params = extend(
+      {
+        name: '_',
+        conversions: _conversions,
+        enrichments: _enrichments,
+        normalizations: _normalizations
+      },
+      params
+    );
     return super.updateConfiguration(_params, callback);
   }
 
@@ -67,35 +81,52 @@ class DiscoveryV1 extends GeneratedDiscoveryV1 {
   }
 
   createCollection(params, callback) {
-    const language = params.language_code || 'en_us';
-    const _params = extend({ language: language }, params);
+    // language_code is now called language
+    const _language = params.language_code || 'en_us';
+    const _params = extend({ language: _language }, params);
     return super.createCollection(_params, callback);
   }
 
   updateCollection(params, callback) {
     // collection_name is now called name
-    // language_code is no longer a parameter
-    if (params && params.name) {
-      params.collection_name = params.name;
+    // language_code is now called language
+    let _collection_name: string;
+    let _language: string = 'en_us';
+    if (params) {
+      if (params.name) {
+        _collection_name = params.name;
+      }
+      if (params.language_code) {
+        _language = params.language_code;
+      }
     }
-    const language = params.language_code || 'en_us';
-    const _params = extend({ language: language }, params);
+    const _params = extend(
+      { language: _language, name: _collection_name },
+      params
+    );
     return super.updateCollection(_params, callback);
   }
 
   getCollectionFields(params, callback) {
-    if (!Array.isArray(params.collection_id)) {
-      params.collection_id = [params.collection_id];
+    // listFields expects an array of collection ids
+    let _collection_id;
+    if (params && !Array.isArray(params.collection_id)) {
+      _collection_id = [params.collection_id];
     }
-    const _params = extend(params, { collection_ids: params.collection_id });
+    const _params = extend({ collection_ids: _collection_id }, params);
     return super.listFields(_params, callback);
   }
 
   addDocument(params, callback) {
-    if (params.metadata && typeof params.metadata === 'object') {
-      params.metadata = JSON.stringify(params.metadata);
+    // addDocument expects metadata as a string
+    let _metadata: string;
+    if (params && params.metadata) {
+      _metadata =
+        typeof params.metadata === 'object'
+          ? JSON.stringify(params.metadata)
+          : params.metadata;
     }
-    const _params = extend({}, params);
+    const _params = extend(params, { metadata: _metadata });
     return super.addDocument(_params, callback);
   }
 
@@ -104,12 +135,30 @@ class DiscoveryV1 extends GeneratedDiscoveryV1 {
   }
 
   createConfiguration(params, callback) {
-    const _params = extend({ name: '_' }, params);
+    // name is now a required parameter
+    // file is now split into conversions, enrichments and normalizations
+    let _conversions;
+    let _enrichments;
+    let _normalizations;
+    if (params && params.file) {
+      _conversions = params.file.conversions;
+      _enrichments = params.file.enrichments;
+      _normalizations = params.file.normalizations;
+    }
+    const _params = extend(
+      {
+        name: '_',
+        conversions: _conversions,
+        enrichments: _enrichments,
+        normalizations: _normalizations
+      },
+      params
+    );
     return super.createConfiguration(_params, callback);
   }
 
   addJsonDocument(params, callback) {
-    const fileParamType = typeof params.file;
+    const fileParamType: string = typeof params.file;
     if (fileParamType !== 'object') {
       throw new Error(
         `Argument error: params.file must be an object, but got ${fileParamType}.`
@@ -145,17 +194,25 @@ class DiscoveryV1 extends GeneratedDiscoveryV1 {
   }
 
   updateDocument(params, callback) {
-    if (params.metadata && typeof params.metadata === 'object') {
-      params.metadata = JSON.stringify(params.metadata);
+    // addDocument expects metadata as a string
+    let _metadata: string;
+    if (params && params.metadata) {
+      _metadata =
+        typeof params.metadata === 'object'
+          ? JSON.stringify(params.metadata)
+          : params.metadata;
     }
-    const _params = extend({}, params);
+    const _params = extend(params, { metadata: _metadata });
     super.addDocument(_params, callback);
   }
 
   query(params, callback) {
-    let _params = {};
+    let _params: any = {};
+    let _collection_id;
+    let _return_fields;
+    let _passages;
     if (params.collection_id) {
-      params.collection_ids = !Array.isArray(params.collection_id)
+      _collection_id = !Array.isArray(params.collection_id)
         ? [params.collection_id]
         : params.collection_id;
     }
@@ -164,15 +221,24 @@ class DiscoveryV1 extends GeneratedDiscoveryV1 {
       delete params.natural_language_query;
     }
     if (params.return) {
-      params.return_fields = params.return.split(',');
+      _return_fields = params.return.split(',');
     }
+    // params.passages is now a boolean with properties passed in
+    // indepdently, i.e params.passage_<property_name> etc...
     if (params.passages && Object.keys(params.passages).length > 0) {
       Object.keys(params.passages).forEach(function(key) {
-        params[`passages_${key}`] = params.passages[key];
+        _passages[`passages_${key}`] = params.passages[key];
       });
     }
-    _params = extend({}, params);
-    return super.query(<any>_params, callback);
+    _params = extend(
+      {
+        collection_ids: _collection_id,
+        return_fields: _return_fields
+      },
+      _passages,
+      params
+    );
+    return super.query(_params, callback);
   }
 }
 
