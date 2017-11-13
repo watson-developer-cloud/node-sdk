@@ -203,11 +203,10 @@ class DiscoveryV1 extends GeneratedDiscoveryV1 {
           : params.metadata;
     }
     const _params = extend(params, { metadata: _metadata });
-    super.addDocument(_params, callback);
+    return super.updateDocument(_params, callback);
   }
 
   query(params, callback) {
-    let _params: any = {};
     let _collection_id;
     let _return_fields;
     let _passages;
@@ -230,7 +229,7 @@ class DiscoveryV1 extends GeneratedDiscoveryV1 {
         _passages[`passages_${key}`] = params.passages[key];
       });
     }
-    _params = extend(
+    const _params = extend(
       {
         collection_ids: _collection_id,
         return_fields: _return_fields
