@@ -168,10 +168,10 @@ class GeneratedVisualRecognitionV3 extends BaseService {
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = typeof callback === 'function' ? callback : () => {};
-    const _positive_examples_class = Object.keys(params).filter(key => {
+    const _positive_example_classes = Object.keys(params).filter(key => {
       return key.match(/^.+positive_examples$/);
     }) || ['classname_positive_examples'];
-    const requiredParams = ['name', _positive_examples_class[0]];
+    const requiredParams = ['name', ..._positive_example_classes];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
@@ -179,9 +179,11 @@ class GeneratedVisualRecognitionV3 extends BaseService {
     const formData: any = {
       name: _params.name
     };
-    formData[_positive_examples_class[0]] = buildRequestFileObject({
-      data: _params[_positive_examples_class[0]],
-      contentType: 'application/octet-stream'
+    _positive_example_classes.forEach(positive_example_class => {
+      formData[positive_example_class] = buildRequestFileObject({
+        data: _params[positive_example_class],
+        contentType: 'application/octet-stream'
+      });
     });
     if (_params.negative_examples) {
       formData.negative_examples = buildRequestFileObject({
