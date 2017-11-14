@@ -18,16 +18,14 @@
 
 import * as extend from 'extend';
 import * as request from 'request';
-import { getMissingParams }  from './helper';
-import { PassThrough } from 'stream';
+import { getMissingParams } from './helper';
+import { PassThrough as readableStream } from 'stream';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 
 const pkgPath = join(__dirname, '../package.json');
 const pkg = JSON.parse(readFileSync(pkgPath).toString('utf-8'));
-const readableStream = PassThrough
 const isBrowser = typeof window === 'object';
-
 
 /**
  * @private
@@ -51,7 +49,7 @@ function parsePath(path: string, params: Object): string {
  * @private
  * @returns {request.RequestCallback}
  */
-function formatErrorIfExists(cb: Function): request.RequestCallback{
+function formatErrorIfExists(cb: Function): request.RequestCallback {
   return function(error, response, body) {
     // eslint-disable-line complexity
 
@@ -72,6 +70,18 @@ function formatErrorIfExists(cb: Function): request.RequestCallback{
       body = JSON.parse(body);
     } catch (e) {
       // if it fails, just return the body as-is
+    }
+
+    // for api-key services
+    if (response.statusMessage === 'invalid-api-key') {
+      cb(
+        {
+          error: response.statusMessage,
+          code: response.statusMessage === 'invalid-api-key' ? 401 : 400
+        },
+        null
+      );
+      return;
     }
 
     // If we have a response and it contains an error
@@ -144,6 +154,13 @@ export function createRequest(parameters, _callback) {
   const formData = options.formData; // application/x-www-form-urlencoded
   const qs = options.qs; // Query parameters
 
+  // turn array params into comma-separated string when in querystrings
+  if (qs) {
+    Object.keys(qs).forEach(key => {
+      Array.isArray(qs[key]) && (qs[key] = qs[key].join(','));
+    });
+  }
+
   // Provide a default callback if it doesn't exists
   const callback =
     typeof _callback === 'function' ? _callback /* no op */ : function() {};
@@ -174,13 +191,13 @@ export function createRequest(parameters, _callback) {
       return errorStream;
     }
   }
+
   // Path params
   options.url = parsePath(options.url, path);
   delete options.path;
 
   // Headers
   options.headers = extend({}, options.headers);
-
   if (!isBrowser) {
     options.headers['User-Agent'] = pkg.name + '-nodejs-' + pkg.version;
   }

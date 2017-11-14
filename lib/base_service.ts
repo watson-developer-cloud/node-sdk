@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 
- 'use strict';
+'use strict';
 
 import * as extend from 'extend';
 import * as request from 'request';
 import * as vcapServices from 'vcap_services';
-import * as bufferFrom from 'buffer-from'; // new Buffer() is deprecated, replaced with Buffer.from() in node v4.5.0+ - this uses the new api when possible but falls back to the old one otherwise
+// new Buffer() is deprecated, replaced with Buffer.from() in node v4.5.0+ -
+// `buffer-from` uses the new api when possible but falls back to the old one otherwise
+import * as bufferFrom from 'buffer-from';
 import { stripTrailingSlash } from './helper';
 
 // custom interfaces
@@ -33,40 +35,53 @@ interface UserOptions {
   version_date?: string;
   username?: string;
   password?: string;
+  api_key?: string;
+  apikey?: string;
   use_unauthenticated?: boolean;
   headers?: HeaderOptions;
   token?: string;
 }
 
-interface BaseServiceOptions {
-  username?: string;
-  password?: string;
-  use_unauthenticated?: boolean,
+interface BaseServiceOptions extends UserOptions {
   headers: HeaderOptions;
   url: string;
-  token?: string;
   jar?: request.CookieJar;
   qs: any;
-  version_date?: string;
 }
 
 interface Credentials {
   username: string;
   password: string;
+  api_key: string;
   url: string;
 }
 
 // custom type guards
-function areCredentialedOptions(obj: any): boolean {
-  return obj.hasOwnProperty('username') && obj.hasOwnProperty('password');
+function hasCredentials(obj: any): boolean {
+  return (
+    (obj &&
+      (obj.hasOwnProperty('username') &&
+        obj.hasOwnProperty('password') &&
+        obj['username'] &&
+        obj['password'])) ||
+    (obj.hasOwnProperty('api_key') && obj['api_key'])
+  );
 }
 
-function areNonCredentialedOptions(obj: any): boolean {
-  return obj.hasOwnProperty('use_unauthenticated') && obj['use_unauthenticated'] === true;
+function hasUseUnauthenticated(obj: any): boolean {
+  return (
+    obj &&
+    obj.hasOwnProperty('use_unauthenticated') &&
+    obj['use_unauthenticated'] === true
+  );
+}
+
+function acceptsApiKey(name: string): boolean {
+  return name === 'watson_vision_combined' || name === 'visual_recognition';
 }
 
 export class BaseService {
-  protected 'constructor' : typeof BaseService;
+  protected 'constructor': typeof BaseService;
   protected _options: BaseServiceOptions;
   protected serviceDefaults: object;
   static URL: string;
@@ -88,16 +103,25 @@ export class BaseService {
    * @returns {BaseService}
    */
   constructor(user_options: UserOptions) {
-    if(!(this instanceof BaseService)) {
-      // it might be better to just create a new instance and return that.. but that can't be done here, it has to be done in each individual service. So this is still a good failsafe even in that case.
-      throw new Error('"new" keyword required to create Watson service instances');
+    if (!(this instanceof BaseService)) {
+      // it might be better to just create a new instance and return that..
+      // but that can't be done here, it has to be done in each individual service.
+      // So this is still a good failsafe even in that case.
+      throw new Error(
+        'the "new" keyword is required to create Watson service instances'
+      );
     }
     const options = extend({}, user_options);
     const _options = this.initCredentials(options);
     if (options.url) {
       _options.url = stripTrailingSlash(options.url);
     }
-    this._options = extend({ qs: {}, url: this.constructor.URL }, this.serviceDefaults, options, _options);
+    this._options = extend(
+      { qs: {}, url: this.constructor.URL },
+      this.serviceDefaults,
+      options,
+      _options
+    );
   }
   /**
    * @private
@@ -106,23 +130,47 @@ export class BaseService {
    */
   private initCredentials(options: UserOptions): BaseServiceOptions {
     let _options: BaseServiceOptions = <BaseServiceOptions>{};
-    if(options.token) {
+    if (options.token) {
       options.headers = options.headers || {};
       options.headers['X-Watson-Authorization-Token'] = options.token;
       _options = extend(_options, options);
       return _options;
     }
-    _options.jar = request.jar();
-    // Get credentials from environment properties or Bluemix
-    // but prefer credentials provided programatically
-    _options = extend({}, this.getCredentialsFromBluemix(this.name), this.getCredentialsFromEnvironment(this.name), options, _options);
-    if(!areCredentialedOptions(_options) && !areNonCredentialedOptions(_options)) {
-      throw new Error('Argument error: username and password are required unless use_unauthenticated is set');
+    if (options.api_key || options.apikey) {
+      _options.api_key = options.api_key || options.apikey;
     }
-    // Calculate and add Authorization header to base options
-    const encodedCredentials = bufferFrom(`${_options.username}:${_options.password}`).toString('base64');
-    const authHeader = { Authorization: `Basic ${encodedCredentials}`};
-    _options.headers = extend(authHeader, _options.headers);
+    _options.jar = request.jar();
+    // Get credentials from environment properties or Bluemix,
+    // but prefer credentials provided programatically
+    _options = extend(
+      {},
+      this.getCredentialsFromBluemix(this.name),
+      this.getCredentialsFromEnvironment(this.name),
+      options,
+      _options
+    );
+    if (!hasUseUnauthenticated(_options)) {
+      if (!hasCredentials(_options) && acceptsApiKey(this.name)) {
+        throw new Error(
+          'Argument error: api_key or username/password are' +
+            ' required unless use_unauthenticated is set'
+        );
+      } else if (!hasCredentials(_options)) {
+        throw new Error(
+          'Argument error: username and password are required unless use_unauthenticated is set'
+        );
+      }
+    }
+    if (!acceptsApiKey(this.name)) {
+      // Calculate and add Authorization header to base options
+      const encodedCredentials = bufferFrom(
+        `${_options.username}:${_options.password}`
+      ).toString('base64');
+      const authHeader = { Authorization: `Basic ${encodedCredentials}` };
+      _options.headers = extend(authHeader, _options.headers);
+    } else {
+      _options.qs = extend({ api_key: _options.api_key }, _options.qs);
+    }
     return _options;
   }
   /**
@@ -130,18 +178,34 @@ export class BaseService {
    *
    * Property checked is uppercase service.name suffixed by _USERNAME and _PASSWORD
    *
-   * For example, if service.name is speech_to_text, env properties are SPEECH_TO_TEXT_USERNAME and SPEECH_TO_TEXT_PASSWORD
+   * For example, if service.name is speech_to_text, 
+   * env properties are SPEECH_TO_TEXT_USERNAME and SPEECH_TO_TEXT_PASSWORD
    *
    * @private
    * @param {string} name - the service snake case name
    * @returns {Credentials}
    */
   private getCredentialsFromEnvironment(name: string): Credentials {
-    const _name : string = name.toUpperCase();
+    const envCredentials = <Credentials>{};
+    const _name: string = name.toUpperCase();
+    const _alternate_name: string =
+      name === 'watson_vision_combined' ? 'VISUAL_RECOGNITION' : null;
+    const _username: string =
+      process.env[`${_name}_USERNAME`] ||
+      process.env[`${_alternate_name}_USERNAME`];
+    const _password: string =
+      process.env[`${_name}_PASSWORD`] ||
+      process.env[`${_alternate_name}_PASSWORD`];
+    const _api_key: string =
+      process.env[`${_name}_API_KEY`] ||
+      process.env[`${_alternate_name}_API_KEY`];
+    const _url: string =
+      process.env[`${_name}_URL`] || process.env[`${_alternate_name}_URL`];
     return {
-      username: process.env[`${_name}_USERNAME`],
-      password: process.env[`${_name}_PASSWORD`],
-      url: process.env[`${_name}_URL`]
+      username: _username,
+      password: _password,
+      api_key: _api_key,
+      url: _url
     };
   }
   /**
@@ -151,7 +215,14 @@ export class BaseService {
    * @returns {Credentials}
    */
   private getCredentialsFromBluemix(vcap_services_name: string): Credentials {
-    return vcapServices.getCredentials(vcap_services_name);
+    const _alternate_vcap_services_name =
+      vcap_services_name === 'watson_vision_combined'
+        ? 'visual_recognition'
+        : null;
+    return (
+      vcapServices.getCredentials(vcap_services_name) ||
+      vcapServices.getCredentials(_alternate_vcap_services_name)
+    );
   }
   /**
    * Retrieve this service's credentials - useful for passing to the authorization service
@@ -161,11 +232,19 @@ export class BaseService {
    * @returns {Credentials}
    */
   public getCredentials(): Credentials {
-    return {
-      username: this._options.username,
-      password: this._options.password,
-      url: this._options.url
-    };
+    const _credentials = <Credentials>{};
+    if (this._options.username) {
+      _credentials.username = this._options.username;
+    }
+    if (this._options.password) {
+      _credentials.password = this._options.password;
+    }
+    if (this._options.api_key) {
+      _credentials.api_key = this._options.api_key;
+    }
+    if (this._options.url) {
+      _credentials.url = this._options.url;
+    }
+    return _credentials;
   }
 }
-

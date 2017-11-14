@@ -84,7 +84,7 @@ describe('visual_recognition', function() {
     nock.cleanAll();
   });
 
-  const visual_recognition = watson.visual_recognition(service);
+  const visual_recognition = watson.watson_vision_combined(service);
 
   const missingParameter = function(err) {
     assert(err instanceof Error && /parameter/.test(err), 'Expected error to mention "parameter" but got "' + ((err && err.message) || err) + '"');
@@ -129,7 +129,7 @@ describe('visual_recognition', function() {
       process.env = {
         VISUAL_RECOGNITION_API_KEY: 'foo'
       };
-      const instance = watson.visual_recognition({
+      const instance = watson.watson_vision_combined({
         version: 'v3',
         version_date: '2016-05-20'
       });
@@ -143,7 +143,7 @@ describe('visual_recognition', function() {
         VISUAL_RECOGNITION_USERNAME: 'foo',
         VISUAL_RECOGNITION_PASSWORD: 'bar'
       };
-      const instance = watson.visual_recognition({
+      const instance = watson.watson_vision_combined({
         version: 'v3',
         version_date: '2016-05-20'
       });
@@ -169,7 +169,7 @@ describe('visual_recognition', function() {
           ]
         })
       };
-      const instance = watson.visual_recognition({
+      const instance = watson.watson_vision_combined({
         version: 'v3',
         version_date: '2016-05-20'
       });
@@ -196,7 +196,7 @@ describe('visual_recognition', function() {
           ]
         })
       };
-      const instance = watson.visual_recognition({
+      const instance = watson.watson_vision_combined({
         version: 'v3',
         version_date: '2016-05-20'
       });
@@ -209,7 +209,7 @@ describe('visual_recognition', function() {
   describe('version_date', function() {
     it('should check no version_date provided', function(done) {
       try {
-        watson.visual_recognition(omit(service, ['version_date']));
+        watson.watson_vision_combined(omit(service, ['version_date']));
       } catch (e) {
         return done();
       }
@@ -231,7 +231,8 @@ describe('visual_recognition', function() {
       const req = visual_recognition.classify(params, noop);
       assert.equal(req.uri.href, service.url + classify_path);
       assert.equal(req.method, 'POST');
-      assert.equal(req.formData.images_file.path, fake_file.path);
+      // we always convert files to request-style objects
+      assert.equal(req.formData.images_file.value.path, fake_file.path);
       assert.equal(req.formData.classifier_ids, undefined);
     });
 
@@ -244,8 +245,9 @@ describe('visual_recognition', function() {
       const req = visual_recognition.classify(params, noop);
       assert.equal(req.uri.href, service.url + classify_path);
       assert.equal(req.method, 'POST');
-      assert.equal(req.formData.images_file.path, fake_file.path);
-      const uploadedParameters = JSON.parse(req.formData.parameters.value);
+      // we always convert files to request-style objects
+      assert.equal(req.formData.images_file.value.path, fake_file.path);
+      const uploadedParameters = JSON.parse(req.formData.parameters);
       assert.deepEqual(uploadedParameters.classifier_ids, params.classifier_ids);
     });
 
@@ -256,13 +258,15 @@ describe('visual_recognition', function() {
       };
 
       const req = visual_recognition.classify(params, noop);
-      assert.equal(req.method, 'GET');
+      assert.equal(req.method, 'POST');
       assert.equal(req.uri.pathname, URL.parse(service.url + classify_path).pathname);
-      assert(req.uri.query);
-      const query = qs.parse(req.uri.query);
-      assert.equal(typeof query.classifier_ids, 'string'); // otherwise the next check can pass incorrectly (assert uses == !?)
-      assert.equal(query.classifier_ids, params.classifier_ids.join(','), 'multiple classifiers should be comma-separated');
-      assert.equal(typeof query.owners, 'string');
+      // classifier_ids, owners, url and threshold are now encapsulated 
+      // in params.parameters
+      // and are uploaded as a formData object
+      assert(req.formData);
+      assert(req.formData.parameters);
+      const parameters = JSON.parse(req.formData.parameters);
+      assert.deepEqual(parameters.classifier_ids, params.classifier_ids);
     });
   });
 
