@@ -128,7 +128,8 @@ class GeneratedVisualRecognitionV3 extends BaseService {
     if (_params.images_file) {
       formData.images_file = buildRequestFileObject({
         data: _params.images_file,
-        contentType: 'application/octet-stream'
+        contentType:
+          params.images_file_content_type || 'application/octet-stream'
       });
     }
     if (_params.parameters) {

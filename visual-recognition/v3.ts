@@ -6,6 +6,64 @@ class VisualRecognitionV3 extends GeneratedVisualRecognitionV3 {
     super(options);
   }
 
+  private static betaError: Error = new Error(
+    'As of September 8, 2017, the beta period for Similarity Search is closed.' +
+      'For more information, see [Visual Recognition API – Similarity Search Update]' +
+      '(https://www.ibm.com/blogs/bluemix/2017/08/visual-recognition-api-similarity-search-update)'
+  );
+
+  recognizeText(params, callback) {
+    console.warn(VisualRecognitionV3.betaError);
+  }
+
+  createCollection(params, callback) {
+    console.warn(VisualRecognitionV3.betaError);
+  }
+
+  getCollection(params, callback) {
+    console.warn(VisualRecognitionV3.betaError);
+  }
+
+  listCollections(params, callback) {
+    console.warn(VisualRecognitionV3.betaError);
+  }
+
+  deleteCollection(params, callback) {
+    console.warn(VisualRecognitionV3.betaError);
+  }
+
+  addImage(params, callback) {
+    console.warn(VisualRecognitionV3.betaError);
+  }
+
+  listImages(params, callback) {
+    console.warn(VisualRecognitionV3.betaError);
+  }
+
+  getImage(params, callback) {
+    console.warn(VisualRecognitionV3.betaError);
+  }
+
+  deleteImage(params, callback) {
+    console.warn(VisualRecognitionV3.betaError);
+  }
+
+  setImageData(params, callback) {
+    console.warn(VisualRecognitionV3.betaError);
+  }
+
+  getImageData(params, callback) {
+    console.warn(VisualRecognitionV3.betaError);
+  }
+
+  deleteImageData(params, callback) {
+    console.warn(VisualRecognitionV3.betaError);
+  }
+
+  findSimilar(params, callback) {
+    console.warn(VisualRecognitionV3.betaError);
+  }
+
   private xor(a, b): boolean {
     return (a || b) && !(a && b);
   }
@@ -18,7 +76,7 @@ class VisualRecognitionV3 extends GeneratedVisualRecognitionV3 {
     if (!params) {
       return _callback(err);
     }
-    const _images_file = params.images_file || params.image_file;
+    params.images_file = params.images_file || params.image_file;
     // need a try/catch for parameters since it can be stringified JSON
     // or it can be null if users are using old parameter names
     let _parameters;
@@ -27,7 +85,6 @@ class VisualRecognitionV3 extends GeneratedVisualRecognitionV3 {
     } catch (e) {
       _parameters = {};
     }
-    const _url = _parameters.url || params.url;
     if (
       !(
         this.xor(params.images_file, params.url) ||
@@ -36,28 +93,47 @@ class VisualRecognitionV3 extends GeneratedVisualRecognitionV3 {
     ) {
       return _callback(err);
     }
-    const _classifier_ids = _parameters.classifier_ids ||
-      params.classifier_ids || ['default'];
-    const _owners = _parameters.owners || params.owners || ['me', 'IBM'];
+    const _url = _parameters.url || params.url;
+    const _classifier_ids = _parameters.classifier_ids || params.classifier_ids;
+    const _owners = _parameters.owners || params.owners;
     const _threshold = _parameters.threshold || params.threshold;
-    return JSON.stringify({
+    let _obj = {
       url: _url,
       classifier_ids: _classifier_ids,
       owners: _owners,
       threshold: _threshold
+    };
+    // remove null/undefined keys
+    Object.keys(_obj).forEach(key => {
+      _obj[key] == null && delete _obj[key];
     });
+    return Object.keys(_obj).length > 0 ? _obj : null;
   }
 
   classify(params, callback) {
-    const _parameters = this.parseParameters(params, callback);
-    const _params = extend(params, { parameters: _parameters });
+    const _parameters = this.parseParameters(params, callback) || {};
+    // set defaults for classify()
+    if (!_parameters.classifier_ids) {
+      _parameters.classifier_ids = ['default'];
+    }
+    if (!_parameters.owners) {
+      _parameters.owners = ['me', 'IBM'];
+    }
+    const _params = extend(params, { parameters: JSON.stringify(_parameters) });
     return super.classify(_params, callback);
   }
 
   detectFaces(params, callback) {
     const _parameters = this.parseParameters(params, callback);
-    const _params = extend(params, { parameters: _parameters });
-    return super.classify(_params, callback);
+    if (!_parameters) {
+      // if images_file
+      return super.classify(params, callback);
+    } else {
+      const _params = extend(params, {
+        parameters: JSON.stringify(_parameters)
+      });
+      return super.classify(_params, callback);
+    }
   }
 
   createClassifier(params, callback) {
