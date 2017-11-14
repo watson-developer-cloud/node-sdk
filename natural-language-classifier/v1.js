@@ -24,6 +24,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var extend = require("extend");
 var GeneratedNaturalLanguageClassifierV1 = require("./v1-generated");
 var NaturalLanguageClassifierV1 = /** @class */ (function (_super) {
     __extends(NaturalLanguageClassifierV1, _super);
@@ -40,38 +41,38 @@ var NaturalLanguageClassifierV1 = /** @class */ (function (_super) {
      * Returns the classification information for a classifier on a phrase
      */
     NaturalLanguageClassifierV1.prototype.classify = function (params, callback) {
-        params = params || {};
-        if (!params.classifier_id) {
-            params.classifier_id = params.classifier;
+        var _params = extend({}, params);
+        if (!_params.classifier_id) {
+            _params.classifier_id = _params.classifier;
         }
-        return _super.prototype.classify.call(this, params, callback);
+        return _super.prototype.classify.call(this, _params, callback);
     };
     /**
      * Returns the training status of the classifier
      */
     NaturalLanguageClassifierV1.prototype.status = function (params, callback) {
-        params = params || {};
-        if (!params.classifier_id) {
-            params.classifier_id = params.classifier;
+        var _params = extend({}, params);
+        if (!_params.classifier_id) {
+            _params.classifier_id = _params.classifier;
         }
-        return _super.prototype.getClassifier.call(this, params, callback);
+        return _super.prototype.getClassifier.call(this, _params, callback);
     };
     /**
      * Retrieves the list of classifiers for the user
      */
     NaturalLanguageClassifierV1.prototype.list = function (params, callback) {
-        params = params || {};
-        return _super.prototype.listClassifiers.call(this, params, callback);
+        var _params = extend({}, params);
+        return _super.prototype.listClassifiers.call(this, _params, callback);
     };
     /**
      * Deletes a classifier
      */
     NaturalLanguageClassifierV1.prototype.remove = function (params, callback) {
-        params = params || {};
-        if (!params.classifier_id) {
-            params.classifier_id = params.classifier;
+        var _params = extend({}, params);
+        if (!_params.classifier_id) {
+            _params.classifier_id = _params.classifier;
         }
-        return _super.prototype.deleteClassifier.call(this, params, callback);
+        return _super.prototype.deleteClassifier.call(this, _params, callback);
     };
     return NaturalLanguageClassifierV1;
 }(GeneratedNaturalLanguageClassifierV1));

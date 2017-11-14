@@ -39,41 +39,41 @@ class NaturalLanguageClassifierV1 extends GeneratedNaturalLanguageClassifierV1 {
    * Returns the classification information for a classifier on a phrase
    */
   classify(params, callback) {
-    params = params || {};
-    if (!params.classifier_id) {
-      params.classifier_id = params.classifier;
+    let _params = extend({}, params)
+    if (!_params.classifier_id) {
+      _params.classifier_id = _params.classifier;
     }
-    return super.classify(params, callback);
+    return super.classify(_params, callback);
   }
 
   /**
    * Returns the training status of the classifier
    */
   status(params, callback) {
-    params = params || {};
-    if (!params.classifier_id) {
-      params.classifier_id = params.classifier;
+    let _params = extend({}, params)
+    if (!_params.classifier_id) {
+      _params.classifier_id = _params.classifier;
     }
-    return super.getClassifier(params, callback);
+    return super.getClassifier(_params, callback);
   }
 
   /**
    * Retrieves the list of classifiers for the user
    */
    list(params, callback) {
-     params = params || {};
-     return super.listClassifiers(params, callback);
+     let _params = extend({}, params)
+     return super.listClassifiers(_params, callback);
    }
 
   /**
    * Deletes a classifier
    */
   remove(params, callback) {
-    params = params || {};
-    if (!params.classifier_id) {
-      params.classifier_id = params.classifier;
+    let _params = extend({}, params)
+    if (!_params.classifier_id) {
+      _params.classifier_id = _params.classifier;
     }
-    return super.deleteClassifier(params, callback);
+    return super.deleteClassifier(_params, callback);
   }
 }
 
