@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-'use strict';
-
 import * as extend from 'extend';
 import * as request from 'request';
 import { getMissingParams } from './helper';

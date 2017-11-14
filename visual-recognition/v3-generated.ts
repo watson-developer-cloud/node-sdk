@@ -377,7 +377,7 @@ class GeneratedVisualRecognitionV3 extends BaseService {
   }
 }
 
-GeneratedVisualRecognitionV3.prototype.name = 'watson_vision_combined';
+GeneratedVisualRecognitionV3.prototype.name = 'visual_recognition';
 GeneratedVisualRecognitionV3.prototype.version = 'v3';
 
 namespace GeneratedVisualRecognitionV3 {

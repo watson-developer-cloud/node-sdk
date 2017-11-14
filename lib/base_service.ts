@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-'use strict';
-
 import * as extend from 'extend';
 import * as request from 'request';
 import * as vcapServices from 'vcap_services';
@@ -77,7 +75,7 @@ function hasUseUnauthenticated(obj: any): boolean {
 }
 
 function acceptsApiKey(name: string): boolean {
-  return name === 'watson_vision_combined' || name === 'visual_recognition';
+  return name === 'visual_recognition';
 }
 
 export class BaseService {
@@ -186,21 +184,11 @@ export class BaseService {
    * @returns {Credentials}
    */
   private getCredentialsFromEnvironment(name: string): Credentials {
-    const envCredentials = <Credentials>{};
     const _name: string = name.toUpperCase();
-    const _alternate_name: string =
-      name === 'watson_vision_combined' ? 'VISUAL_RECOGNITION' : null;
-    const _username: string =
-      process.env[`${_name}_USERNAME`] ||
-      process.env[`${_alternate_name}_USERNAME`];
-    const _password: string =
-      process.env[`${_name}_PASSWORD`] ||
-      process.env[`${_alternate_name}_PASSWORD`];
-    const _api_key: string =
-      process.env[`${_name}_API_KEY`] ||
-      process.env[`${_alternate_name}_API_KEY`];
-    const _url: string =
-      process.env[`${_name}_URL`] || process.env[`${_alternate_name}_URL`];
+    const _username: string = process.env[`${_name}_USERNAME`];
+    const _password: string = process.env[`${_name}_PASSWORD`];
+    const _api_key: string = process.env[`${_name}_API_KEY`];
+    const _url: string = process.env[`${_name}_URL`];
     return {
       username: _username,
       password: _password,
@@ -215,14 +203,13 @@ export class BaseService {
    * @returns {Credentials}
    */
   private getCredentialsFromBluemix(vcap_services_name: string): Credentials {
-    const _alternate_vcap_services_name =
-      vcap_services_name === 'watson_vision_combined'
-        ? 'visual_recognition'
-        : null;
-    return (
-      vcapServices.getCredentials(vcap_services_name) ||
-      vcapServices.getCredentials(_alternate_vcap_services_name)
-    );
+    let _credentials: Credentials;
+    if (this.name === 'visual_recognition') {
+      _credentials = vcapServices.getCredentials('watson_vision_combined');
+    } else {
+      _credentials = vcapServices.getCredentials(vcap_services_name);
+    }
+    return _credentials;
   }
   /**
    * Retrieve this service's credentials - useful for passing to the authorization service

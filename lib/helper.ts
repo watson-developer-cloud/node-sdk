@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-'use strict';
-
 import { fileType } from 'file-type';
 import { isReadable } from 'isstream';
 import { basename } from 'path';

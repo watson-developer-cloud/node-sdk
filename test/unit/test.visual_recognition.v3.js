@@ -84,7 +84,7 @@ describe('visual_recognition', function() {
     nock.cleanAll();
   });
 
-  const visual_recognition = watson.watson_vision_combined(service);
+  const visual_recognition = watson.visual_recognition(service);
 
   const missingParameter = function(err) {
     assert(err instanceof Error && /parameter/.test(err), 'Expected error to mention "parameter" but got "' + ((err && err.message) || err) + '"');
@@ -129,7 +129,7 @@ describe('visual_recognition', function() {
       process.env = {
         VISUAL_RECOGNITION_API_KEY: 'foo'
       };
-      const instance = watson.watson_vision_combined({
+      const instance = watson.visual_recognition({
         version: 'v3',
         version_date: '2016-05-20'
       });
@@ -143,7 +143,7 @@ describe('visual_recognition', function() {
         VISUAL_RECOGNITION_USERNAME: 'foo',
         VISUAL_RECOGNITION_PASSWORD: 'bar'
       };
-      const instance = watson.watson_vision_combined({
+      const instance = watson.visual_recognition({
         version: 'v3',
         version_date: '2016-05-20'
       });
@@ -169,7 +169,7 @@ describe('visual_recognition', function() {
           ]
         })
       };
-      const instance = watson.watson_vision_combined({
+      const instance = watson.visual_recognition({
         version: 'v3',
         version_date: '2016-05-20'
       });
@@ -196,7 +196,7 @@ describe('visual_recognition', function() {
           ]
         })
       };
-      const instance = watson.watson_vision_combined({
+      const instance = watson.visual_recognition({
         version: 'v3',
         version_date: '2016-05-20'
       });
@@ -209,7 +209,7 @@ describe('visual_recognition', function() {
   describe('version_date', function() {
     it('should check no version_date provided', function(done) {
       try {
-        watson.watson_vision_combined(omit(service, ['version_date']));
+        watson.visual_recognition(omit(service, ['version_date']));
       } catch (e) {
         return done();
       }
