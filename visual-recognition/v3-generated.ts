@@ -82,12 +82,16 @@ class GeneratedVisualRecognitionV3 extends BaseService {
     if (_params.images_file) {
       formData.images_file = buildRequestFileObject({
         data: _params.images_file,
-        contentType:
-          params.images_file_content_type || 'application/octet-stream'
+        contentType: params.images_file_content_type
       });
     }
     if (_params.parameters) {
-      formData.parameters = _params.parameters;
+      formData.parameters = {
+        value: _params.parameters,
+        options: {
+          contentType: 'application/json'
+        }
+      };
     }
     const parameters = {
       options: {
@@ -128,12 +132,16 @@ class GeneratedVisualRecognitionV3 extends BaseService {
     if (_params.images_file) {
       formData.images_file = buildRequestFileObject({
         data: _params.images_file,
-        contentType:
-          params.images_file_content_type || 'application/octet-stream'
+        contentType: params.images_file_content_type
       });
     }
     if (_params.parameters) {
-      formData.parameters = _params.parameters;
+      formData.parameters = {
+        value: _params.parameters,
+        options: {
+          contentType: 'application/json'
+        }
+      };
     }
     const parameters = {
       options: {
