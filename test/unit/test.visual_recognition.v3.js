@@ -233,7 +233,6 @@ describe('visual_recognition', function() {
       assert.equal(req.uri.href, service.url + classify_path);
       assert.equal(req.method, 'POST');
       // we always convert files to request-style objects
-      console.log(req.formData);
       assert.equal(req.formData.images_file.value.path, fake_file.path);
       assert.equal(req.formData.images_file.value, params.images_file);
       const parameters = JSON.parse(req.formData.parameters.value);
@@ -249,7 +248,6 @@ describe('visual_recognition', function() {
       assert.equal(req.uri.href, service.url + classify_path);
       assert.equal(req.method, 'POST');
       // we always convert files to request-style objects
-      console.log(req.formData);
       assert.equal(req.formData.images_file.options.filename, null);
       assert.equal(req.formData.images_file.value, params.images_file);
       const parameters = JSON.parse(req.formData.parameters.value);
