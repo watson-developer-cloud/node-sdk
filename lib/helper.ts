@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { fileType } from 'file-type';
+import fileType = require('file-type');
 import { isReadable } from 'isstream';
 import { basename } from 'path';
 import { lookup } from 'mime-types';
