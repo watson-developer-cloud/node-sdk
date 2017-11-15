@@ -124,13 +124,19 @@ class VisualRecognitionV3 extends GeneratedVisualRecognitionV3 {
   }
 
   detectFaces(params, callback) {
-    const _parameters = this.parseParameters(params, callback);
-    if (!_parameters) {
+    if (!params || !this.xor(params.url, params.images_file)) {
+      return callback(
+        new Error(
+          'Watson VisualRecognition.classify() requires either an images_file or a url parameter'
+        )
+      );
+    }
+    if (!params.url && params.images_file) {
       // if images_file
       return super.classify(params, callback);
-    } else {
+    } else if (params.url && !params.images_file) {
       const _params = extend(params, {
-        parameters: JSON.stringify(_parameters)
+        parameters: JSON.stringify({ url: params.url })
       });
       return super.classify(_params, callback);
     }
