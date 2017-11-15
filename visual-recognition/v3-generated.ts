@@ -86,12 +86,7 @@ class GeneratedVisualRecognitionV3 extends BaseService {
       });
     }
     if (_params.parameters) {
-      formData.parameters = {
-        value: _params.parameters,
-        options: {
-          contentType: 'application/json'
-        }
-      };
+      formData.parameters = _params.parameters;
     }
     const parameters = {
       options: {
@@ -136,12 +131,7 @@ class GeneratedVisualRecognitionV3 extends BaseService {
       });
     }
     if (_params.parameters) {
-      formData.parameters = {
-        value: _params.parameters,
-        options: {
-          contentType: 'application/json'
-        }
-      };
+      formData.parameters = _params.parameters;
     }
     const parameters = {
       options: {

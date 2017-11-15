@@ -41,7 +41,7 @@ interface HasPath extends ReadableStream {
 }
 
 // custom type guards
-function isFileObject(obj: any): obj is FileObject {
+export function isFileObject(obj: any): obj is FileObject {
   return obj && obj.hasOwnProperty('value');
 }
 

@@ -235,7 +235,7 @@ describe('visual_recognition', function() {
       // we always convert files to request-style objects
       assert.equal(req.formData.images_file.value.path, fake_file.path);
       assert.equal(req.formData.images_file.value, params.images_file);
-      const parameters = JSON.parse(req.formData.parameters.value);
+      const parameters = JSON.parse(req.formData.parameters);
       assert.deepEqual(parameters.classifier_ids, ['default']);
       assert.deepEqual(parameters.owners, ['me', 'IBM']);
       assert.equal(parameters.url, undefined);
@@ -250,7 +250,7 @@ describe('visual_recognition', function() {
       // we always convert files to request-style objects
       assert.equal(req.formData.images_file.options.filename, null);
       assert.equal(req.formData.images_file.value, params.images_file);
-      const parameters = JSON.parse(req.formData.parameters.value);
+      const parameters = JSON.parse(req.formData.parameters);
       assert.deepEqual(parameters.classifier_ids, ['default']);
       assert.deepEqual(parameters.owners, ['me', 'IBM']);
       assert.equal(parameters.url, undefined);
@@ -268,7 +268,7 @@ describe('visual_recognition', function() {
       assert.equal(req.method, 'POST');
       // we always convert files to request-style objects
       assert.equal(req.formData.images_file.value.path, fake_file.path);
-      const uploadedParameters = JSON.parse(req.formData.parameters.value);
+      const uploadedParameters = JSON.parse(req.formData.parameters);
       assert.deepEqual(uploadedParameters.classifier_ids, params.classifier_ids);
     });
 
@@ -286,7 +286,7 @@ describe('visual_recognition', function() {
       // and are uploaded as a formData object
       assert(req.formData);
       assert(req.formData.parameters);
-      const parameters = JSON.parse(req.formData.parameters.value);
+      const parameters = JSON.parse(req.formData.parameters);
       assert.deepEqual(parameters.classifier_ids, params.classifier_ids);
     });
   });

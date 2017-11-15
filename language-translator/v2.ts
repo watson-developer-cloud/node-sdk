@@ -14,11 +14,9 @@
  * limitations under the License.
  */
 
-'user strict';
-
-import { GeneratedLanguageTranslatorV2 } from './v2-generated';
+import GeneratedLanguageTranslatorV2 = require('./v2-generated');
+import isStream = require('isstream');
 import { getMissingParams } from '../lib/helper';
-import * as isStream from 'isstream';
 
 class LanguageTranslatorV2 extends GeneratedLanguageTranslatorV2 {
   constructor(options) {
@@ -59,7 +57,7 @@ class LanguageTranslatorV2 extends GeneratedLanguageTranslatorV2 {
     const inputTypes: string[] = [
       'forced_glossary',
       'parallel_corpus',
-      'monolingual_corpus',
+      'monolingual_corpus'
     ];
     inputTypes.forEach(type => {
       if (params[type] && !isStream(params[type])) {

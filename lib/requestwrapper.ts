@@ -16,7 +16,8 @@
 
 import * as extend from 'extend';
 import * as request from 'request';
-import { getMissingParams } from './helper';
+import * as isStream from 'isstream';
+import { getMissingParams, isFileObject } from './helper';
 import { PassThrough as readableStream } from 'stream';
 import { readFileSync } from 'fs';
 import { join } from 'path';
@@ -151,7 +152,7 @@ export function createRequest(parameters, _callback) {
   const form = options.form; // application/x-www-form-urlencoded
   const formData = options.formData; // application/x-www-form-urlencoded
   const qs = options.qs; // Query parameters
-  
+
   // Provide a default callback if it doesn't exists
   const callback =
     typeof _callback === 'function' ? _callback /* no op */ : function() {};
@@ -181,6 +182,28 @@ export function createRequest(parameters, _callback) {
       }, 0);
       return errorStream;
     }
+  }
+
+  // Form params
+  if (formData) {
+    // Remove keys with undefined/null values
+    Object.keys(formData).forEach(key => {
+      formData[key] == null && delete formData[key];
+    });
+    // Convert non-file form parameters to strings
+    Object.keys(formData).forEach(key => {
+      // Make sure it's not a file
+      if (
+        !isStream(formData[key]) &&
+        !Buffer.isBuffer(formData[key]) &&
+        !isFileObject(formData[key])
+      ) {
+        formData[key] =
+          typeof formData[key] === 'object'
+            ? JSON.stringify(formData[key])
+            : formData[key];
+      }
+    });
   }
 
   // Path params

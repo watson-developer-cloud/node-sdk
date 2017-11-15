@@ -601,7 +601,7 @@ class GeneratedDiscoveryV1 extends BaseService {
     if (_params.file) {
       formData.file = buildRequestFileObject({
         data: _params.file,
-        contentType: 'application/octet-stream'
+        contentType: params.file_content_type
       });
     }
     if (_params.metadata) {
@@ -937,7 +937,7 @@ class GeneratedDiscoveryV1 extends BaseService {
     if (_params.file) {
       formData.file = buildRequestFileObject({
         data: _params.file,
-        contentType: 'application/octet-stream'
+        contentType: params.file_content_type
       });
     }
     if (_params.metadata) {
@@ -1091,7 +1091,7 @@ class GeneratedDiscoveryV1 extends BaseService {
     if (_params.file) {
       formData.file = buildRequestFileObject({
         data: _params.file,
-        contentType: 'application/octet-stream'
+        contentType: params.file_content_type
       });
     }
     if (_params.metadata) {

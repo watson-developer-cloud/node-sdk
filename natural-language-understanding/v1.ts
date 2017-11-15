@@ -25,7 +25,6 @@ import { BaseService } from '../lib/base_service';
  */
 
 class NaturalLanguageUnderstandingV1 extends BaseService {
-
   name: string; // set by prototype to 'natural-language-understanding'
   version: string; // set by prototype to 'v1'
 
@@ -53,7 +52,9 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     super(options);
     // check if 'version_date' was provided
     if (typeof this._options.version_date === 'undefined') {
-      throw new Error('Argument error: version_date was not specified, use NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27');
+      throw new Error(
+        'Argument error: version_date was not specified, use NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27'
+      );
     }
     this._options.qs.version = options.version_date;
   }
@@ -77,7 +78,12 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  analyze(params: NaturalLanguageUnderstandingV1.AnalyzeParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.AnalysisResults>): ReadableStream | void {
+  analyze(
+    params: NaturalLanguageUnderstandingV1.AnalyzeParams,
+    callback?: NaturalLanguageUnderstandingV1.Callback<
+      NaturalLanguageUnderstandingV1.AnalysisResults
+    >
+  ): ReadableStream | void {
     const _callback = typeof callback === 'function' ? callback : () => {};
     const _params = extend({}, params);
     const requiredParams = ['features'];
@@ -85,7 +91,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
-    const body = { 
+    const body = {
       features: _params.features,
       text: _params.text,
       html: _params.html,
@@ -106,13 +112,13 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
       },
       defaultOptions: extend(true, this._options, {
         headers: {
-          'accept': 'application/json',
+          accept: 'application/json',
           'content-type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
    * Delete model.
@@ -124,7 +130,12 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  deleteModel(params: NaturalLanguageUnderstandingV1.DeleteModelParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.InlineResponse200>): ReadableStream | void {
+  deleteModel(
+    params: NaturalLanguageUnderstandingV1.DeleteModelParams,
+    callback?: NaturalLanguageUnderstandingV1.Callback<
+      NaturalLanguageUnderstandingV1.InlineResponse200
+    >
+  ): ReadableStream | void {
     const _callback = typeof callback === 'function' ? callback : () => {};
     const _params = extend({}, params);
     const requiredParams = ['model_id'];
@@ -132,7 +143,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = { 
+    const path = {
       model_id: _params.model_id
     };
     const parameters = {
@@ -143,13 +154,13 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
       },
       defaultOptions: extend(true, this._options, {
         headers: {
-          'accept': 'application/json',
+          accept: 'application/json',
           'content-type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
    * List models.
@@ -160,7 +171,12 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  listModels(params?: NaturalLanguageUnderstandingV1.ListModelsParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.ListModelsResults>): ReadableStream | void {
+  listModels(
+    params?: NaturalLanguageUnderstandingV1.ListModelsParams,
+    callback?: NaturalLanguageUnderstandingV1.Callback<
+      NaturalLanguageUnderstandingV1.ListModelsResults
+    >
+  ): ReadableStream | void {
     const _callback = typeof callback === 'function' ? callback : () => {};
     const _params = extend({}, params);
     const parameters = {
@@ -170,33 +186,36 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
       },
       defaultOptions: extend(true, this._options, {
         headers: {
-          'accept': 'application/json',
+          accept: 'application/json',
           'content-type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
-
+  }
 }
 
-NaturalLanguageUnderstandingV1.prototype.name = 'natural-language-understanding';
+NaturalLanguageUnderstandingV1.prototype.name =
+  'natural-language-understanding';
 NaturalLanguageUnderstandingV1.prototype.version = 'v1';
 
 namespace NaturalLanguageUnderstandingV1 {
+  export interface Empty {}
 
-  export interface Empty { }
-
-  export type Callback<T> = (error: any, body?: T, response?: RequestResponse) => void;
+  export type Callback<T> = (
+    error: any,
+    body?: T,
+    response?: RequestResponse
+  ) => void;
 
   export type Options = {
-      version_date: string;
-      url?: string;
-      username?: string;
-      password?: string;
-      use_unauthenticated?: boolean;
-      headers?: object;
-  }
+    version_date: string;
+    url?: string;
+    username?: string;
+    password?: string;
+    use_unauthenticated?: boolean;
+    headers?: object;
+  };
 
   export interface AnalyzeParams {
     features: Features;
@@ -215,15 +234,13 @@ namespace NaturalLanguageUnderstandingV1 {
     model_id: string;
   }
 
-  export interface ListModelsParams {
-  }
+  export interface ListModelsParams {}
 
   export interface Author {
     name?: string;
   }
 
-  export interface CategoriesOptions {
-  }
+  export interface CategoriesOptions {}
 
   export interface CategoriesResult {
     label?: string;
@@ -327,8 +344,7 @@ namespace NaturalLanguageUnderstandingV1 {
     models?: Model[];
   }
 
-  export interface MetadataOptions {
-  }
+  export interface MetadataOptions {}
 
   export interface MetadataResult {
     authors?: Author[];
@@ -449,7 +465,6 @@ namespace NaturalLanguageUnderstandingV1 {
     semantic_roles?: SemanticRolesResult[];
     sentiment?: SentimentResult;
   }
-
 }
 
 export = NaturalLanguageUnderstandingV1;
