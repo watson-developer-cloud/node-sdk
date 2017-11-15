@@ -14,9 +14,7 @@
  * limitations under the License.
  */
 
-'use strict';
-
-import { fileType } from 'file-type';
+import fileType = require('file-type');
 import { isReadable } from 'isstream';
 import { basename } from 'path';
 import { lookup } from 'mime-types';
@@ -32,24 +30,31 @@ interface FileOptions {
   filename?: string;
   contentType?: string;
 }
+
 interface FileParamAttributes {
   data: ReadableStream|Buffer|FileObject;
   contentType?: string;
 }
+
 interface HasPath extends ReadableStream {
   path?: string|Buffer;
 }
 
-
 // custom type guards
 function isFileObject(obj: any): obj is FileObject {
-  return obj.hasOwnProperty('value');
+  return obj && obj.hasOwnProperty('value');
 }
+
 function isFileParamAttributes(obj: any): obj is FileParamAttributes {
-  return obj.hasOwnProperty('data') && obj.hasOwnProperty('contentType');
+  return obj && obj.hasOwnProperty('data') && obj.hasOwnProperty('contentType');
 }
+
 function hasPath(obj: any): obj is HasPath {
-  return obj.hasOwnProperty('path') && (typeof obj['path'] === 'string' || Buffer.isBuffer(obj['path']));
+  return (
+    obj &&
+    obj.hasOwnProperty('path') &&
+    (typeof obj['path'] === 'string' || Buffer.isBuffer(obj['path']))
+  );
 }
 
 /**
@@ -179,7 +184,11 @@ export function buildRequestFileObject(
 
   // build contentType
   let contentType: string = 'application/octet-stream';
-  if (isFileObject(fileParams.data) && fileParams.data.options && fileParams.data.options.contentType) {
+  if (
+    isFileObject(fileParams.data) &&
+    fileParams.data.options &&
+    fileParams.data.options.contentType
+  ) {
     // if form-data object
     contentType = fileParams.data.options.contentType;
   } else if (fileParams.contentType) {
@@ -196,7 +205,7 @@ export function buildRequestFileObject(
   }
 
   // build value
-  let value: ReadableStream|Buffer|string = isFileObject(fileParams.data)
+  let value: ReadableStream | Buffer | string = isFileObject(fileParams.data)
     ? fileParams.data.value
     : fileParams.data;
   if (typeof value === 'string') {
@@ -206,7 +215,7 @@ export function buildRequestFileObject(
     value: value,
     options: {
       filename: filename,
-      contentType: contentType,
-    },
+      contentType: contentType
+    }
   };
 }
