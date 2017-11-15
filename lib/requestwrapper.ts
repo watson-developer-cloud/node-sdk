@@ -151,14 +151,7 @@ export function createRequest(parameters, _callback) {
   const form = options.form; // application/x-www-form-urlencoded
   const formData = options.formData; // application/x-www-form-urlencoded
   const qs = options.qs; // Query parameters
-
-  // turn array params into comma-separated string when in querystrings
-  if (qs) {
-    Object.keys(qs).forEach(key => {
-      Array.isArray(qs[key]) && (qs[key] = qs[key].join(','));
-    });
-  }
-
+  
   // Provide a default callback if it doesn't exists
   const callback =
     typeof _callback === 'function' ? _callback /* no op */ : function() {};
