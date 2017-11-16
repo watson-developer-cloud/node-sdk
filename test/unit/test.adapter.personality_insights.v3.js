@@ -46,7 +46,7 @@ describe('personality_insights_v3', function() {
       .reply(200, service_response)
       .post(service_path + '?raw_scores=true', payload)
       .reply(200, service_response)
-      .post(service_path + '?version=2016-10-19', '"' + service_request.text + '"')
+      .post(service_path + '?version=2016-10-19', service_request.text)
       .reply(200, service_response);
   });
 
@@ -70,7 +70,7 @@ describe('personality_insights_v3', function() {
     const req = personality_insights.profile(service_request, noop);
     const body = Buffer.from(req.body).toString('ascii');
     assert.equal(req.uri.href, service.url + service_path + '?version=2016-10-19');
-    assert.equal(body, '"' + service_request.text + '"');
+    assert.equal(body, service_request.text);
     assert.equal(req.method, 'POST');
     assert.equal(req.headers['content-type'], 'text/plain');
   });
@@ -101,7 +101,7 @@ describe('personality_insights_v3', function() {
     const req = personality_insights.profile(html_req, noop);
     const body = Buffer.from(req.body).toString('ascii');
     assert.equal(req.uri.href, service.url + service_path + '?version=2016-10-19');
-    assert.equal(body, JSON.stringify(html_req.text));
+    assert.equal(body, html_req.text);
     assert.equal(req.method, 'POST');
     assert.equal(req.headers['content-type'], 'text/html');
   });
