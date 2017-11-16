@@ -75,7 +75,7 @@ describe('tone_analyzer.v3', function() {
     };
     const req = tone_analyzer.tone(options, noop);
     const body = Buffer.from(req.body).toString('ascii');
-    assert.equal(req.uri.href, service.url + tone_path + '?version=2016-05-19&tones=emotion&sentences=true');
+    assert.equal(req.uri.href, service.url + tone_path + '?version=2016-05-19&sentences=true&tones=emotion');
     assert.equal(body, tone_request.text);
     assert.equal(req.method, 'POST');
     assert.equal(req.headers['content-type'], 'text/plain');
@@ -91,7 +91,7 @@ describe('tone_analyzer.v3', function() {
     };
     const req = tone_analyzer.tone(options, noop);
     const body = Buffer.from(req.body).toString('ascii');
-    assert.equal(req.uri.href, service.url + tone_path + '?version=2016-05-19&tones=emotion&sentences=true');
+    assert.equal(req.uri.href, service.url + tone_path + '?version=2016-05-19&sentences=true&tones=emotion');
     assert.equal(body, tone_request.text);
     assert.equal(req.method, 'POST');
     assert.equal(req.headers['content-type'], 'text/plain');
