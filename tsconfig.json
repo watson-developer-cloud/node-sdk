@@ -53,6 +53,7 @@
   },
   "include": [
     "./lib/*.ts",
+    "./conversation/*.ts",
     "./natural-language-classifier/*.ts",
     "./language-translator/*.ts",
     "./discovery/*.ts",
