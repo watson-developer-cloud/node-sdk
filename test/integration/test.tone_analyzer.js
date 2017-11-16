@@ -28,10 +28,10 @@ describe('tone_analyzer_integration', function() {
 
   it('tone()', function(done) {
     const mobydick = fs.readFileSync(path.join(__dirname, '../resources/mobydick.txt'), 'utf8');
-    tone_analyzer.tone({ text: mobydick }, done);
+    tone_analyzer.tone({ tone_input: mobydick, content_type: 'text/plain' }, done);
   });
 
-  it('tone_chat()', function(done) {
+  it('toneChat()', function(done) {
     const utterances = {
       utterances: [
         { text: 'My charger isn’t working.', user: 'customer' },
@@ -43,6 +43,6 @@ describe('tone_analyzer_integration', function() {
         { text: 'I’m sorry you’re having issues with charging. What kind of charger do you have?', user: 'agent' }
       ]
     };
-    tone_analyzer.tone_chat(utterances, done);
+    tone_analyzer.toneChat(utterances, done);
   });
 });
