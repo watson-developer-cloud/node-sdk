@@ -52,12 +52,12 @@ class PersonalityInsightsV3 extends GeneratedPersonalityInsightsV3 {
 
     let _params: GeneratedPersonalityInsightsV3.ProfileParams = {
       content: params.text || pick(params, ['contentItems']),
-      content_type: content_type
+      content_type: content_type,
+      raw_scores: params.raw_scores,
+      csv_headers: params.csv_headers,
+      consumption_preferences: params.consumption_preferences,
     }
 
-    if (params.raw_scores) _params.raw_scores = params.raw_scores;
-    if (params.csv_headers) _params.csv_headers = params.csv_headers;
-    if (params.consumption_preferences) _params.consumption_preferences = params.consumption_preferences;
     if (params.headers && params.headers['accept-language']) _params.accept_language = params.headers['accept-language'];
     if (params.headers && params.headers['content-type']) _params.content_type = params.headers['content-type'];
     if (params.headers && params.headers['content-language']) _params.content_language = params.headers['content-language'];
