@@ -68,7 +68,6 @@ function acceptsApiKey(name: string): boolean {
 }
 
 export class BaseService {
-  protected 'constructor': typeof BaseService;
   protected _options: BaseServiceOptions;
   protected serviceDefaults: object;
   static URL: string;
@@ -103,8 +102,9 @@ export class BaseService {
     if (options.url) {
       _options.url = stripTrailingSlash(options.url);
     }
+    const serviceClass = this.constructor as typeof BaseService;
     this._options = extend(
-      { qs: {}, url: this.constructor.URL },
+      { qs: {}, url: serviceClass.URL },
       this.serviceDefaults,
       options,
       _options
