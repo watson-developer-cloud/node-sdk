@@ -627,10 +627,11 @@ var params = {
 };
 
 visual_recognition.classify(params, function(err, res) {
-  if (err)
+  if (err) {
     console.log(err);
-  else
+  } else {
     console.log(JSON.stringify(res, null, 2));
+  }
 });
 ```
 
