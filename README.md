@@ -185,16 +185,19 @@ var conversation = new ConversationV1({
   version_date: ConversationV1.VERSION_DATE_2017_05_26
 });
 
-conversation.message({
-  input: { text: 'What\'s the weather?' },
-  workspace_id: '<workspace id>'
- }, function(err, response) {
-     if (err) {
-       console.error(err);
-     } else {
-       console.log(JSON.stringify(response, null, 2));
-     }
-});
+conversation.message(
+  {
+    input: { text: "What's the weather?" },
+    workspace_id: '<workspace id>'
+  },
+  function(err, response) {
+    if (err) {
+      console.error(err);
+    } else {
+      console.log(JSON.stringify(response, null, 2));
+    }
+  }
+);
 ```
 
 
