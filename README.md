@@ -17,24 +17,18 @@ Node.js client library to use the Watson Developer Cloud services, a collection 
   * [Questions](#questions)
   * [Examples](#examples)
   * [IBM Watson Services](#ibm-watson-services)
-    * [AlchemyLanguage](#alchemylanguage)
-    * [AlchemyData News](#alchemydata-news)
     * [Authorization](#authorization)
     * [Conversation](#conversation)
     * [Dialog](#dialog)
     * [Discovery](#discovery)
-    * [Document Conversion](#document-conversion)
     * [Language Translator](#language-translator)
     * [Natural Language Classifier](#natural-language-classifier)
     * [Natural Language Understanding](#natural-language-understanding)
     * [Personality Insights](#personality-insights)
-    * [Retrieve and Rank](#retrieve-and-rank)
     * [Speech to Text](#speech-to-text)
     * [Text to Speech](#text-to-speech)
     * [Tone Analyzer](#tone-analyzer)
-    * [Tradeoff Analytics](#tradeoff-analytics)
     * [Visual Recognition](#visual-recognition)
-    * [Removed Services](#removed-services)
   * [Composing Services](#composing-services)
   * [Debug](#debug)
   * [Tests](#tests)
@@ -149,53 +143,6 @@ The [examples][examples] folder has basic and advanced examples.
 The Watson Developer Cloud offers a variety of services for building cognitive
 apps.
 
-### AlchemyLanguage
-[AlchemyLanguage][alchemy_language] offers 12 API functions as part of its text analysis service, each of which uses sophisticated natural language processing techniques to analyze your content and add high-level semantic information.
-
-Use the [Sentiment Analysis][sentiment_analysis] endpoint to identify positive/negative sentiment within a sample text document.
-
-```javascript
-var AlchemyLanguageV1 = require('watson-developer-cloud/alchemy-language/v1');
-
-var alchemy_language = new AlchemyLanguageV1({
-  api_key: 'API_KEY'
-});
-
-var params = {
-  text: 'IBM Watson won the Jeopardy television show hosted by Alex Trebek'
-};
-
-alchemy_language.sentiment(params, function (err, response) {
-  if (err)
-    console.log('error:', err);
-  else
-    console.log(JSON.stringify(response, null, 2));
-});
-```
-
-### AlchemyData News
-[Alchemy Data News][alchemy_data_news] indexes 250k to 300k English language news and blog articles every day with historical search available for the past 60 days.
-Example: Get the volume data from the last 7 days using 12hs of time slice.
-
-```javascript
-var AlchemyDataNewsV1 = require('watson-developer-cloud/alchemy-data-news/v1');
-
-var alchemy_data_news = new AlchemyDataNewsV1({
-  api_key: '<api_key>'
-});
-
-var params = {
-  start: 'now-1d',
-  end: 'now'
-};
-
-alchemy_data_news.getNews(params, function (err, news) {
-  if (err)
-    console.log('error:', err);
-  else
-    console.log(JSON.stringify(news, null, 2));
-});
-```
 
 ### Authorization
 The Authorization service can generate auth tokens for situations where providing the service username/password is undesirable.
@@ -250,8 +197,10 @@ conversation.message({
 });
 ```
 
+
 ### Dialog
 The Dialog service was deprecated on August 15, 2016, existing instances of the service will continue to function until August 9, 2017. Users of the Dialog service should migrate their applications to use the Conversation service. See the [migration documentation][dialog_migration] to learn how to migrate your dialogs to the Conversation service.
+
 
 ### Discovery
 
@@ -281,44 +230,6 @@ discovery.query(
   }
 );
 ```
-
-### Document Conversion
-
-```javascript
-var DocumentConversionV1 = require('watson-developer-cloud/document-conversion/v1');
-var fs = require('fs');
-
-var document_conversion = new DocumentConversionV1({
-  username:     '<username>',
-  password:     '<password>',
-  version_date: '2015-12-01'
-});
-
-// convert a single document
-document_conversion.convert({
-  // (JSON) ANSWER_UNITS, NORMALIZED_HTML, or NORMALIZED_TEXT
-  file: fs.createReadStream('sample-docx.docx'),
-  conversion_target: document_conversion.conversion_target.ANSWER_UNITS,
-  // Add custom configuration properties or omit for defaults
-  word: {
-    heading: {
-      fonts: [
-        { level: 1, min_size: 24 },
-        { level: 2, min_size: 16, max_size: 24 }
-      ]
-    }
-  }
-}, function (err, response) {
-  if (err) {
-    console.error(err);
-  } else {
-    console.log(JSON.stringify(response, null, 2));
-  }
-});
-```
-
-See the [Document Conversion integration example][document_conversion_integration_example] about how to integrate the Document Conversion service
-with the Retrieve and Rank service.
 
 
 ### Language Translator
@@ -358,6 +269,7 @@ language_translator.identify(
 );
 ```
 
+
 ### Natural Language Classifier
 
 Use [Natural Language Classifier](https://console.bluemix.net/docs/services/natural-language-classifier/getting-started.html) service to create a classifier instance by providing a set of representative strings and a set of one or more correct classes for each as training. Then use the trained classifier to classify your new question for best matching answers or to retrieve next actions for your application.
@@ -382,6 +294,7 @@ natural_language_classifier.classify({
 ```
 
 See this [example](https://github.com/watson-developer-cloud/node-sdk/blob/master/examples/natural_language_classifier.v1.js) to learn how to create a classifier.
+
 
 ### Natural Language Understanding
 
@@ -413,6 +326,7 @@ nlu.analyze(
 );
 ```
 
+
 ### Personality Insights
 Analyze text in English and get a personality profile by using the
 [Personality Insights][personality_insights] service.
@@ -438,53 +352,6 @@ personality_insights.profile({
 });
 ```
 
-**Note:** Don't forget to update the `text` variable!
-
-### Retrieve and Rank
-Use the [Retrieve and Rank][retrieve_and_rank] service to enhance search results with machine learning.
-
-```javascript
-var RetrieveAndRankV1 = require('watson-developer-cloud/retrieve-and-rank/v1');
-
-var retrieve = new RetrieveAndRankV1({
-  username: '<username>',
-  password: '<password>',
-});
-
-var solrClient = retrieve.createSolrClient({
-  cluster_id: 'INSERT YOUR CLUSTER ID HERE',
-  collection_name: 'example_collection'
-});
-
-// add a document
-var doc = { id : 1234, title_t : 'Hello', text_field_s: 'some text' };
-solrClient.add(doc, function(err) {
-  if(err) {
-    console.log('Error indexing document: ' + err);
-  } else {
-    console.log('Indexed a document.');
-    solrClient.commit(function(err) {
-      if(err) {
-        console.log('Error committing change: ' + err);
-      } else {
-        console.log('Successfully commited changes.');
-      }
-    });
-  }
-});
-
-// search all documents
-var query = solrClient.createQuery();
-query.q({ '*' : '*' });
-solrClient.search(query, function(err, searchResponse) {
-  if(err) {
-    console.log('Error searching for documents: ' + err);
-  } else {
-    console.log('Found ' + searchResponse.response.numFound + ' document(s).');
-    console.log('First document: ' + JSON.stringify(searchResponse.response.docs[0], null, 2));
-  }
-});
-```
 
 ### Speech to Text
 Use the [Speech to Text][speech_to_text] service to recognize the text from a .wav file.
@@ -516,6 +383,7 @@ fs.createReadStream('./resources/speech.wav')
   .pipe(speech_to_text.createRecognizeStream({ content_type: 'audio/l16; rate=44100' }))
   .pipe(fs.createWriteStream('./transcription.txt'));
 ```
+
 
 ### Text to Speech
 Use the [Text to Speech][text_to_speech] service to synthesize text into a .wav file.
@@ -549,6 +417,7 @@ textToSpeech
 });
 ```
 
+
 ### Tone Analyzer
 Use the [Tone Analyzer][tone_analyzer] service to analyze the
 emotion, writing and social tones of a text.
@@ -571,28 +440,6 @@ tone_analyzer.tone({ text: 'Greetings from Watson Developer Cloud!' },
 });
 ```
 
-### Tradeoff Analytics
-Use the [Tradeoff Analytics][tradeoff_analytics] service to find the best
-phone that minimizes price and weight and maximizes screen size.
-
-```javascript
-var TradeoffAnalyticsV1 = require('watson-developer-cloud/tradeoff-analytics/v1');
-
-var tradeoff_analytics = new TradeoffAnalyticsV1({
-  username: '<username>',
-  password: '<password>'
-});
-
-// From file
-var params = require('./resources/problem.json');
-
-tradeoff_analytics.dilemmas(params, function(err, res) {
-  if (err)
-    console.log(err);
-  else
-    console.log(JSON.stringify(res, null, 2));
-});
-```
 
 ### Visual Recognition
 Use the [Visual Recognition][visual_recognition] service to recognize the
@@ -622,26 +469,11 @@ visual_recognition.classify(params, function(err, res) {
 });
 ```
 
-## Removed services
-
-The following services are no longer available.
-
-* **AlchemyVision**: Visual Recognition replaced Alchemy Vision with improved billing and a superset of the original features
-* **Concept Insights**: AlchemyLanguage's concept function can be used as a replacement for most Concept Insights use cases; therefore, we encourage existing Concept Insights service users to migrate to AlchemyLanguage.
-* **Relationship Extraction**: You can now access Relationship Extraction models with AlchemyLanguage. See the [migration guide][re_migration] for details.
-* **Message Resonance**: Use Natural Language Understanding or Tone Analyzer to understand the emotions of your audience and messages.
-* **Question and Answer**: Use Conversation or Natural Language Classifier to identify intent and Retrieve and Rank to search for relevant documents.
-* **Visual Insights**: Use Visual Recognition to achieve a similar result
-* **Concept Expansion**: Use Natural Langue Understanding to extract concepts, entities, and more.
 
 ## Composing services
 
 ### Integration of Tone Analyzer with Conversation
 Sample code for [integrating Tone Analyzer and Conversation][conversation_tone_analyzer_example] is provided in the [examples directory][examples].
-
-## Integration of Document Conversion with Retrieve and Rank
-See the [Document Conversion integration example][document_conversion_integration_example] about how to integrate the Document Conversion service
-with the Retrieve and Rank service.
 
 ## Unauthenticated requests
 By default, the library tries to use Basic Auth and will ask for `api_key` or `username` and `password` and send an `Authorization: Basic XXXXXXX`. You can avoid this by using:
@@ -691,22 +523,16 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/maste
 [conversation]: https://www.ibm.com/watson/services/conversation/
 [discovery]: https://www.ibm.com/watson/services/discovery/
 [personality_insights]: https://www.ibm.com/watson/services/personality-insights/
-[retrieve_and_rank]: https://www.ibm.com/watson/services/retrieve-and-rank/
 [visual_recognition]: https://www.ibm.com/watson/services/visual-recognition/
 [tone_analyzer]: https://www.ibm.com/watson/services/tone-analyzer/
 [text_to_speech]: https://www.ibm.com/watson/services/text-to-speech/
 [speech_to_text]: https://www.ibm.com/watson/services/speech-to-text/
-[tradeoff_analytics]: https://console.bluemix.net/docs/services/tradeoff-analytics/index.html
 [language_translator]: https://www.ibm.com/watson/services/language-translator/
-[re_migration]: https://console.bluemix.net/docs/services/alchemy-language/migration.html
-[alchemy_language]: https://console.bluemix.net/docs/services/alchemy-language/index.html
-[alchemy_data_news]: https://console.bluemix.net/docs/services/alchemydata-news/index.html
 
 [bluemix]: https://console.bluemix.net
 [npm_link]: https://www.npmjs.com/package/watson-developer-cloud
 [request_github]: https://github.com/request/request
 [dialog_migration]: https://console.bluemix.net/docs/services/conversation/index.html
-[language-translator-migration]: https://console.bluemix.net/docs/services/language-translator/migrating.html
 
 [examples]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples
 [document_conversion_integration_example]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/document_conversion_integration.v1.js
