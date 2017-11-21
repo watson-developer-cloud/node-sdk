@@ -20,7 +20,6 @@ import { createRequest } from '../lib/requestwrapper';
 import { getMissingParams } from '../lib/helper';
 import { BaseService } from '../lib/base_service';
 import { FileObject } from '../lib/helper';
-import { buildRequestFileObject } from '../lib/helper';
 
 /**
  * The IBM Watson Discovery Service is a cognitive search and content analytics engine that you can add to applications to identify patterns, trends and actionable insights to drive better decision-making. Securely unify structured and unstructured data with pre-enriched content, and use a simplified query language to eliminate the need for manual filtering of results.
@@ -594,19 +593,11 @@ class GeneratedDiscoveryV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
-    const formData: any = {};
-    if (_params.configuration) {
-      formData.configuration = _params.configuration;
-    }
-    if (_params.file) {
-      formData.file = buildRequestFileObject({
-        data: _params.file,
-        contentType: params.file_content_type
-      });
-    }
-    if (_params.metadata) {
-      formData.metadata = _params.metadata;
-    }
+    const formData = {
+      configuration: _params.configuration,
+      file: { data: _params.file, contentType: _params.file_content_type },
+      metadata: _params.metadata
+    };
     const query = {
       step: _params.step,
       configuration_id: _params.configuration_id
@@ -933,16 +924,10 @@ class GeneratedDiscoveryV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
-    const formData: any = {};
-    if (_params.file) {
-      formData.file = buildRequestFileObject({
-        data: _params.file,
-        contentType: params.file_content_type
-      });
-    }
-    if (_params.metadata) {
-      formData.metadata = _params.metadata;
-    }
+    const formData = {
+      file: { data: _params.file, contentType: _params.file_content_type },
+      metadata: _params.metadata
+    };
     const path = {
       environment_id: _params.environment_id,
       collection_id: _params.collection_id
@@ -1087,16 +1072,10 @@ class GeneratedDiscoveryV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
-    const formData: any = {};
-    if (_params.file) {
-      formData.file = buildRequestFileObject({
-        data: _params.file,
-        contentType: params.file_content_type
-      });
-    }
-    if (_params.metadata) {
-      formData.metadata = _params.metadata;
-    }
+    const formData = {
+      file: { data: _params.file, contentType: _params.file_content_type },
+      metadata: _params.metadata
+    };
     const path = {
       environment_id: _params.environment_id,
       collection_id: _params.collection_id,

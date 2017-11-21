@@ -20,7 +20,6 @@ import { createRequest } from '../lib/requestwrapper';
 import { getMissingParams } from '../lib/helper';
 import { BaseService } from '../lib/base_service';
 import { FileObject } from '../lib/helper';
-import { buildRequestFileObject } from '../lib/helper';
 
 /**
  * Language Translator translates text from one language to another. The service offers multiple domain-specific models that you can customize based on your unique terminology and language. Use Language Translator to take news from across the globe and present it in your language, communicate with your customers in their own language, and more.
@@ -193,25 +192,20 @@ class GeneratedLanguageTranslatorV2 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
-    const formData: any = {};
-    if (_params.forced_glossary) {
-      formData.forced_glossary = buildRequestFileObject({
+    const formData = {
+      forced_glossary: {
         data: _params.forced_glossary,
         contentType: 'application/octet-stream'
-      });
-    }
-    if (_params.parallel_corpus) {
-      formData.parallel_corpus = buildRequestFileObject({
+      },
+      parallel_corpus: {
         data: _params.parallel_corpus,
         contentType: 'application/octet-stream'
-      });
-    }
-    if (_params.monolingual_corpus) {
-      formData.monolingual_corpus = buildRequestFileObject({
+      },
+      monolingual_corpus: {
         data: _params.monolingual_corpus,
         contentType: 'text/plain'
-      });
-    }
+      }
+    };
     const query = {
       base_model_id: _params.base_model_id,
       name: _params.name

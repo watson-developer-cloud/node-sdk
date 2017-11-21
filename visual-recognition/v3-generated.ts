@@ -20,7 +20,6 @@ import { createRequest } from '../lib/requestwrapper';
 import { getMissingParams } from '../lib/helper';
 import { BaseService } from '../lib/base_service';
 import { FileObject } from '../lib/helper';
-import { buildRequestFileObject } from '../lib/helper';
 
 /**
  * **Important**: As of September 8, 2017, the beta period for Similarity Search is closed. For more information, see [Visual Recognition API – Similarity Search Update](https://www.ibm.com/blogs/bluemix/2017/08/visual-recognition-api-similarity-search-update).  The IBM Watson Visual Recognition service uses deep learning algorithms to identify scenes, objects, and faces  in images you upload to the service. You can create and train a custom classifier to identify subjects that suit your needs.   **Tip**: To test calls to the **Custom classifiers** methods with the API explorer, provide your `api_key` from your Bluemix service instance.
@@ -78,16 +77,13 @@ class GeneratedVisualRecognitionV3 extends BaseService {
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = typeof callback === 'function' ? callback : () => {};
-    const formData: any = {};
-    if (_params.images_file) {
-      formData.images_file = buildRequestFileObject({
+    const formData = {
+      images_file: {
         data: _params.images_file,
-        contentType: params.images_file_content_type
-      });
-    }
-    if (_params.parameters) {
-      formData.parameters = _params.parameters;
-    }
+        contentType: _params.images_file_content_type
+      },
+      parameters: _params.parameters
+    };
     const parameters = {
       options: {
         url: '/v3/classify',
@@ -123,16 +119,13 @@ class GeneratedVisualRecognitionV3 extends BaseService {
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = typeof callback === 'function' ? callback : () => {};
-    const formData: any = {};
-    if (_params.images_file) {
-      formData.images_file = buildRequestFileObject({
+    const formData = {
+      images_file: {
         data: _params.images_file,
-        contentType: params.images_file_content_type
-      });
-    }
-    if (_params.parameters) {
-      formData.parameters = _params.parameters;
-    }
+        contentType: _params.images_file_content_type
+      },
+      parameters: _params.parameters
+    };
     const parameters = {
       options: {
         url: '/v3/detect_faces',
@@ -175,21 +168,19 @@ class GeneratedVisualRecognitionV3 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
-    const formData: any = {
-      name: _params.name
-    };
-    _positive_example_classes.forEach(positive_example_class => {
-      formData[positive_example_class] = buildRequestFileObject({
-        data: _params[positive_example_class],
-        contentType: 'application/octet-stream'
-      });
-    });
-    if (_params.negative_examples) {
-      formData.negative_examples = buildRequestFileObject({
+    const formData = {
+      name: _params.name,
+      negative_examples: {
         data: _params.negative_examples,
         contentType: 'application/octet-stream'
-      });
-    }
+      }
+    };
+    _positive_example_classes.forEach(positive_example_class => {
+      formData[positive_example_class] = {
+        data: _params[positive_example_class],
+        contentType: 'application/octet-stream'
+      };
+    });
     const parameters = {
       options: {
         url: '/v3/classifiers',
@@ -326,7 +317,7 @@ class GeneratedVisualRecognitionV3 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.classifier_id - The ID of the classifier.
-   * @param {ReadableStream|FileObject|Buffer} [params.classname_positive_examples] - A compressed (.zip) file of images that depict the visual subject for a class within the classifier. Must contain a minimum of 10 images.
+   * @param {ReadableStream|FileObject|Buffer} [params.<classname>_positive_examples] - A compressed (.zip) file of images that depict the visual subject for a class within the classifier. Must contain a minimum of 10 images.
    * @param {ReadableStream|FileObject|Buffer} [params.negative_examples] - A compressed (.zip) file of images that do not depict the visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
@@ -339,24 +330,26 @@ class GeneratedVisualRecognitionV3 extends BaseService {
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = typeof callback === 'function' ? callback : () => {};
+    const _positive_example_classes = Object.keys(params).filter(key => {
+      return key.match(/^.+positive_examples$/);
+    }) || ['classname_positive_examples'];
     const requiredParams = ['classifier_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const formData: any = {};
-    if (_params.classname_positive_examples) {
-      formData.classname_positive_examples = buildRequestFileObject({
-        data: _params.classname_positive_examples,
-        contentType: 'application/octet-stream'
-      });
-    }
-    if (_params.negative_examples) {
-      formData.negative_examples = buildRequestFileObject({
+    const formData = {
+      negative_examples: {
         data: _params.negative_examples,
         contentType: 'application/octet-stream'
-      });
-    }
+      }
+    };
+    _positive_example_classes.forEach(positive_example_class => {
+      formData[positive_example_class] = {
+        data: _params[positive_example_class],
+        contentType: 'application/octet-stream'
+      };
+    });
     const path = {
       classifier_id: _params.classifier_id
     };
