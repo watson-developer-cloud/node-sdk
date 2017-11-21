@@ -411,19 +411,19 @@ var nlu = new NaturalLanguageUnderstandingV1({
   version_date: NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27
 });
 
-nlu.analyze({
-  'html': file_data, // Buffer or String
-  'features': {
-    'concepts': {},
-    'keywords': {},
+nlu.analyze(
+  {
+    html: file_data, // Buffer or String
+    features: {
+      concepts: {},
+      keywords: {}
+    }
+  },
+  function(err, response) {
+    if (err) console.log('error:', err);
+    else console.log(JSON.stringify(response, null, 2));
   }
-}, function(err, response) {
-     if (err)
-       console.log('error:', err);
-     else
-       console.log(JSON.stringify(response, null, 2));
- });
-
+);
 ```
 
 ### Personality Insights
