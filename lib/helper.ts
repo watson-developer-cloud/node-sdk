@@ -42,11 +42,11 @@ interface FileStream extends ReadableStream {
 
 // custom type guards
 function isFileObject(obj: any): obj is FileObject {
-  return obj && obj.hasOwnProperty('value');
+  return obj && obj.value;
 }
 
 function isFileStream(obj: any): obj is FileStream {
-  return obj && isReadable(obj) && obj.hasOwnProperty('path');
+  return obj && isReadable(obj) && obj.path;
 }
 
 export function isFileParam(obj: any): boolean {
