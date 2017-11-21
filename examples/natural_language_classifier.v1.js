@@ -11,12 +11,11 @@ const natural_language_classifier = new NaturalLanguageClassifierV1({
 
 // Creating a classifier
 const params = {
-  language: 'en',
-  name: 'my-classifier',
-  training_data: fs.createReadStream('./resources/weather_data_train')
+  training_data: fs.createReadStream('../test/resources/weather_data_train.csv'),
+  metadata: Buffer.from(JSON.stringify({language: 'en', name: 'my-classifier'}), 'utf8')
 };
 
-natural_language_classifier.create(params, function(err, response) {
+natural_language_classifier.createClassifier(params, function(err, response) {
   if (err) {
     console.log(err);
   } else {
