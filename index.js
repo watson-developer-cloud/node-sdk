@@ -19,20 +19,14 @@
 /**
  * @module watson-developer-cloud
  */
-exports.AlchemyDataNewsV1 = require('./alchemy-data-news/v1');
-exports.AlchemyLanguageV1 = require('./alchemy-language/v1');
 
 exports.AuthorizationV1 = require('./authorization/v1');
 
 exports.ConversationV1 = require('./conversation/v1');
-exports.ConversationV1Experimental = require('./conversation/v1-experimental');
 
 exports.DialogV1 = require('./dialog/v1');
 
 exports.DiscoveryV1 = require('./discovery/v1');
-exports.DiscoveryV1Experimental = require('./discovery/v1-experimental');
-
-exports.DocumentConversionV1 = require('./document-conversion/v1');
 
 exports.LanguageTranslatorV2 = require('./language-translator/v2');
 
@@ -43,15 +37,11 @@ exports.NaturalLanguageUnderstandingV1 = require('./natural-language-understandi
 exports.PersonalityInsightsV2 = require('./personality-insights/v2');
 exports.PersonalityInsightsV3 = require('./personality-insights/v3');
 
-exports.RetrieveAndRankV1 = require('./retrieve-and-rank/v1');
-
 exports.SpeechToTextV1 = require('./speech-to-text/v1');
 
 exports.TextToSpeechV1 = require('./text-to-speech/v1');
 
 exports.ToneAnalyzerV3 = require('./tone-analyzer/v3');
-
-exports.TradeoffAnalyticsV1 = require('./tradeoff-analytics/v1');
 
 exports.VisualRecognitionV3 = require('./visual-recognition/v3');
 
