@@ -15,9 +15,9 @@
  */
 
 import fileType = require('file-type');
-import { isReadable } from 'isstream';
 import { basename } from 'path';
 import { lookup } from 'mime-types';
+import { isReadable } from 'isstream';
 
 // exported interfaces
 export interface FileObject {
@@ -32,29 +32,32 @@ interface FileOptions {
 }
 
 interface FileParamAttributes {
-  data: ReadableStream|Buffer|FileObject;
-  contentType?: string;
+  data: ReadableStream | Buffer | FileObject;
+  contentType: string;
 }
 
-interface HasPath extends ReadableStream {
-  path?: string|Buffer;
+interface FileStream extends ReadableStream {
+  path: string | Buffer;
 }
 
 // custom type guards
-export function isFileObject(obj: any): obj is FileObject {
+function isFileObject(obj: any): obj is FileObject {
   return obj && obj.hasOwnProperty('value');
 }
 
-function isFileParamAttributes(obj: any): obj is FileParamAttributes {
-  return obj && obj.hasOwnProperty('data') && obj.hasOwnProperty('contentType');
+function isFileStream(obj: any): obj is FileStream {
+  return obj && isReadable(obj) && obj.hasOwnProperty('path');
 }
 
-function hasPath(obj: any): obj is HasPath {
+export function isFileParam(obj: any): boolean {
   return (
     obj &&
-    obj.hasOwnProperty('path') &&
-    (typeof obj['path'] === 'string' || Buffer.isBuffer(obj['path']))
+    (isReadable(obj) || Buffer.isBuffer(obj) || isFileObject(obj) || obj.data)
   );
+}
+
+export function isEmptyObject(obj: any): boolean {
+  return obj && Object.keys(obj).length === 0 && obj.constructor === Object;
 }
 
 /**
@@ -66,7 +69,7 @@ export function getContentType(
   inputData: ReadableStream | Buffer | string
 ): string {
   let contentType = null;
-  if (isReadable(inputData) && hasPath(inputData)) {
+  if (isFileStream(inputData)) {
     // if the inputData is a ReadableStream
     const mimeType = lookup(inputData.path);
     contentType = { mime: mimeType || null };
@@ -168,13 +171,12 @@ export function buildRequestFileObject(
   ) {
     // if FileObject with value and options
     filename = fileParams.data.options.filename;
-  } else if (isReadable(fileParams.data) && hasPath(fileParams.data)) {
+  } else if (isFileStream(fileParams.data)) {
     // if readable stream with path property
     filename = fileParams.data.path;
   } else if (
     isFileObject(fileParams.data) &&
-    isReadable(fileParams.data.value) &&
-    hasPath(fileParams.data.value)
+    isFileStream(fileParams.data.value)
   ) {
     // if FileObject with stream value
     filename = fileParams.data.value.path;
