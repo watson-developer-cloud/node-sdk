@@ -318,30 +318,9 @@ See the [Document Conversion integration example][document_conversion_integratio
 with the Retrieve and Rank service.
 
 
-### Language Translation
-
-The IBM Watson™ Language Translation service has been rebranded as the Language Translator service.
-
-The Language Translator service provides the same capabilities as the Language Translation service, but with simpler pricing. For information about migrating existing applications from the Language Translation service to the Language Translator service, see the [Migration documentation][language-translator-migration]
-
-```javascript
-var LanguageTranslationV2 = require('watson-developer-cloud/language-translation/v2');
-
-var language_translation = new LanguageTranslationV2({
-  username: '<username>',
-  password: '<password>'
-});
-```
-
 ### Language Translator
 
 Translate text from one language to another or idenfity a language using the [Language Translator][language_translator] service.
-
-**Note:** There is a deprecated Language *Translation* service and a newer Language *Translator* service. The only difference is the pricing structure and the service endpoint.
-
-The SDK currently defaults to the older endpoint for both `LanguageTranslationV2` and `LanguageTranslatorV2`, but `LanguageTranslatorV2`'s default endpoint will change in the next major release (3.0.0). **To guarantee compatibility, include the `url` when creating a `LanguageTranslatorV2` instance.**
-
-See [Migrating from Language Translation][language-translator-migration] for more details.
 
 ```javascript
 var LanguageTranslatorV2 = require('watson-developer-cloud/language-translator/v2');
@@ -352,23 +331,28 @@ var language_translator = new LanguageTranslatorV2({
   url: 'https://gateway.watsonplatform.net/language-translator/api/'
 });
 
-language_translator.translate({
-  text: 'A sentence must have a verb', source : 'en', target: 'es' },
-  function (err, translation) {
-    if (err)
-      console.log('error:', err);
-    else
-      console.log(JSON.stringify(translation, null, 2));
-});
+language_translator.translate(
+  {
+    text: 'A sentence must have a verb',
+    source: 'en',
+    target: 'es'
+  },
+  function(err, translation) {
+    if (err) console.log('error:', err);
+    else console.log(JSON.stringify(translation, null, 2));
+  }
+);
 
-language_translator.identify({
-  text: 'The language translator service takes text input and identifies the language used.' },
-  function (err, language) {
-    if (err)
-      console.log('error:', err);
-    else
-      console.log(JSON.stringify(language, null, 2));
-});
+language_translator.identify(
+  {
+    text:
+      'The language translator service takes text input and identifies the language used.'
+  },
+  function(err, language) {
+    if (err) console.log('error:', err);
+    else console.log(JSON.stringify(language, null, 2));
+  }
+);
 ```
 
 ### Natural Language Classifier
