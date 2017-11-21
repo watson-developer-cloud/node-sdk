@@ -56,22 +56,11 @@ interface Credentials {
 
 // custom type guards
 function hasCredentials(obj: any): boolean {
-  return (
-    (obj &&
-      (obj.hasOwnProperty('username') &&
-        obj.hasOwnProperty('password') &&
-        obj['username'] &&
-        obj['password'])) ||
-    (obj.hasOwnProperty('api_key') && obj['api_key'])
-  );
+  return obj && ((obj.username && obj.password) || obj.api_key);
 }
 
 function hasUseUnauthenticated(obj: any): boolean {
-  return (
-    obj &&
-    obj.hasOwnProperty('use_unauthenticated') &&
-    obj['use_unauthenticated'] === true
-  );
+  return obj && obj.use_unauthenticated === true;
 }
 
 function acceptsApiKey(name: string): boolean {
@@ -79,7 +68,6 @@ function acceptsApiKey(name: string): boolean {
 }
 
 export class BaseService {
-  protected 'constructor': typeof BaseService;
   protected _options: BaseServiceOptions;
   protected serviceDefaults: object;
   static URL: string;
@@ -114,8 +102,9 @@ export class BaseService {
     if (options.url) {
       _options.url = stripTrailingSlash(options.url);
     }
+    const serviceClass = this.constructor as typeof BaseService;
     this._options = extend(
-      { qs: {}, url: this.constructor.URL },
+      { qs: {}, url: serviceClass.URL },
       this.serviceDefaults,
       options,
       _options
@@ -159,7 +148,10 @@ export class BaseService {
         );
       }
     }
-    if (!acceptsApiKey(this.name)) {
+    if (
+      !acceptsApiKey(this.name) ||
+      (acceptsApiKey(this.name) && !_options.api_key)
+    ) {
       // Calculate and add Authorization header to base options
       const encodedCredentials = bufferFrom(
         `${_options.username}:${_options.password}`

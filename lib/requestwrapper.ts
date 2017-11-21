@@ -16,8 +16,12 @@
 
 import * as extend from 'extend';
 import * as request from 'request';
-import * as isStream from 'isstream';
-import { getMissingParams, isFileObject } from './helper';
+import {
+  getMissingParams,
+  buildRequestFileObject,
+  isFileParam,
+  isEmptyObject
+} from './helper';
 import { PassThrough as readableStream } from 'stream';
 import { readFileSync } from 'fs';
 import { join } from 'path';
@@ -147,15 +151,7 @@ export function createRequest(parameters, _callback) {
     parameters.defaultOptions,
     parameters.options
   );
-  const path = options.path;
-  const body = options.body; // application/json or text/plain
-  const form = options.form; // application/x-www-form-urlencoded
-  const formData = options.formData; // application/x-www-form-urlencoded
-  const qs = options.qs; // Query parameters
-
-  // Provide a default callback if it doesn't exists
-  const callback =
-    typeof _callback === 'function' ? _callback /* no op */ : function() {};
+  const { path, body, form, formData, qs } = options;
 
   // Missing parameters
   if (parameters.options.requiredParams) {
@@ -174,7 +170,7 @@ export function createRequest(parameters, _callback) {
 
   if (missingParams) {
     if (typeof _callback === 'function') {
-      return callback(missingParams);
+      return _callback(missingParams);
     } else {
       const errorStream = new readableStream();
       setTimeout(function() {
@@ -186,23 +182,26 @@ export function createRequest(parameters, _callback) {
 
   // Form params
   if (formData) {
-    // Remove keys with undefined/null values
+    // Remove keys with undefined/null values and empty objects
     Object.keys(formData).forEach(key => {
-      formData[key] == null && delete formData[key];
+      (formData[key] == null || isEmptyObject(formData[key])) &&
+        delete formData[key];
     });
     // Convert non-file form parameters to strings
     Object.keys(formData).forEach(key => {
-      // Make sure it's not a file
-      if (
-        !isStream(formData[key]) &&
-        !Buffer.isBuffer(formData[key]) &&
-        !isFileObject(formData[key])
-      ) {
+      if (!isFileParam(formData[key])) {
         formData[key] =
           typeof formData[key] === 'object'
             ? JSON.stringify(formData[key])
             : formData[key];
       }
+    });
+    // Convert file form parameters to request-style objects
+    const fileParams: string[] = Object.keys(formData).filter(key => {
+      return formData[key].data;
+    });
+    fileParams.forEach(fileParam => {
+      formData[fileParam] = buildRequestFileObject(formData[fileParam]);
     });
   }
 
@@ -229,5 +228,5 @@ export function createRequest(parameters, _callback) {
   // Compression support
   options.gzip = true;
 
-  return request(options, formatErrorIfExists(callback));
+  return request(options, formatErrorIfExists(_callback));
 }
