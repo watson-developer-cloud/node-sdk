@@ -34,7 +34,6 @@ exports.DiscoveryV1Experimental = require('./discovery/v1-experimental');
 
 exports.DocumentConversionV1 = require('./document-conversion/v1');
 
-exports.LanguageTranslationV2 = require('./language-translation/v2');
 exports.LanguageTranslatorV2 = require('./language-translator/v2');
 
 exports.NaturalLanguageClassifierV1 = require('./natural-language-classifier/v1');
