@@ -64,37 +64,8 @@ class VisualRecognitionV3 extends GeneratedVisualRecognitionV3 {
     console.warn(VisualRecognitionV3.betaError);
   }
 
-  private xor(a, b): boolean {
-    return (a || b) && !(a && b);
-  }
-
-  private checkVisionParams(params) {
-    const err = new Error(
-      'Watson VisualRecognition.classify() requires either an images_file or a url parameter'
-    );
-    if (!params) {
-      throw err;
-    }
-    const _images_file = params.images_file || params.images_file;
-    // need a try/catch for parameters since it can be stringified JSON
-    // or it can be null if users are using old parameter names
-    let _parameters;
-    try {
-      _parameters = JSON.parse(params.parameters);
-    } catch (e) {
-      _parameters = {};
-    }
-    if (
-      !(
-        this.xor(_images_file, params.url) ||
-        this.xor(_images_file, _parameters.url)
-      )
-    ) {
-      throw err;
-    }
-  }
-
   private parseParameters(params) {
+    const _params = params || {};
     let parameters;
     try {
       parameters = JSON.parse(params.parameters);
@@ -104,21 +75,15 @@ class VisualRecognitionV3 extends GeneratedVisualRecognitionV3 {
     const parameters_keys = ['url', 'classifier_ids', 'owners', 'threshold'];
     let _parameters = {};
     parameters_keys.forEach(key => {
-      if (parameters[key] || params[key]) {
-        _parameters[key] = parameters[key] || params[key];
+      if (parameters[key] || _params[key]) {
+        _parameters[key] = parameters[key] || _params[key];
       }
     });
     return Object.keys(_parameters).length > 0 ? _parameters : null;
   }
 
   classify(params, callback) {
-    const _callback = typeof callback === 'function' ? callback : () => {};
-    try {
-      this.checkVisionParams(params);
-    } catch (e) {
-      return _callback(e);
-    }
-    if (params.image_file) {
+    if (params && params.image_file) {
       params.images_file = params.image_file;
     }
     const defaultParameters = {
@@ -131,41 +96,17 @@ class VisualRecognitionV3 extends GeneratedVisualRecognitionV3 {
       this.parseParameters(params)
     );
     const _params = extend(params, { parameters: _parameters });
-    return super.classify(_params, _callback);
+    return super.classify(_params, callback);
   }
 
   detectFaces(params, callback) {
-    const _callback = typeof callback === 'function' ? callback : () => {};
-    try {
-      this.checkVisionParams(params);
-    } catch (e) {
-      return _callback(e);
-    }
-    if (params.image_file) {
+    if (params && params.image_file) {
       params.images_file = params.image_file;
     }
     const _params = extend({}, params, {
       parameters: this.parseParameters(params)
     });
-    return super.detectFaces(_params, _callback);
-  }
-
-  createClassifier(params, callback) {
-    const _callback = callback ? callback : () => {};
-    const err = new Error(
-      'Missing required parameters: either two *_positive_examples' +
-        'or one *_positive_examples and one negative_examples are required'
-    );
-    if (!params) {
-      return _callback(err);
-    }
-    const example_keys = Object.keys(params).filter(key => {
-      return key === 'negative_examples' || key.match(/^.+positive_examples$/);
-    });
-    if (example_keys.length < 2) {
-      return _callback(err);
-    }
-    return super.createClassifier(params, _callback);
+    return super.detectFaces(_params, callback);
   }
 
   retrainClassifier(params, callback) {

@@ -160,9 +160,9 @@ class GeneratedVisualRecognitionV3 extends BaseService {
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = typeof callback === 'function' ? callback : () => {};
-    const _positive_example_classes = Object.keys(params).filter(key => {
+    const _positive_example_classes = Object.keys(_params).filter(key => {
       return key.match(/^.+positive_examples$/);
-    }) || ['classname_positive_examples'];
+    }) || ['<classname>_positive_examples'];
     const requiredParams = ['name', ..._positive_example_classes];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -330,9 +330,9 @@ class GeneratedVisualRecognitionV3 extends BaseService {
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = typeof callback === 'function' ? callback : () => {};
-    const _positive_example_classes = Object.keys(params).filter(key => {
+    const _positive_example_classes = Object.keys(_params).filter(key => {
       return key.match(/^.+positive_examples$/);
-    }) || ['classname_positive_examples'];
+    });
     const requiredParams = ['classifier_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
