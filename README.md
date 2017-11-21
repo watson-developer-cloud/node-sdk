@@ -263,20 +263,23 @@ var DiscoveryV1 = require('watson-developer-cloud/discovery/v1');
 var discovery = new DiscoveryV1({
   username: '<username>',
   password: '<password>',
-  version_date: DiscoveryV1.VERSION_DATE_2017_04_27
+  version_date: DiscoveryV1.VERSION_DATE_2017_09_01
 });
 
-discovery.query({
+discovery.query(
+  {
     environment_id: '<environment_id>',
     collection_id: '<collection_id>',
     query: 'my_query'
-  }, function(err, response) {
-        if (err) {
-          console.error(err);
-        } else {
-          console.log(JSON.stringify(response, null, 2));
-        }
-   });
+  },
+  function(err, response) {
+    if (err) {
+      console.error(err);
+    } else {
+      console.log(JSON.stringify(response, null, 2));
+    }
+  }
+);
 ```
 
 ### Document Conversion
