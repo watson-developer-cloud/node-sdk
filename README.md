@@ -435,13 +435,16 @@ var tone_analyzer = new ToneAnalyzerV3({
   version_date: '2016-05-19'
 });
 
-tone_analyzer.tone({ text: 'Greetings from Watson Developer Cloud!' },
+tone_analyzer.tone(
+  {
+    tone_input: 'Greetings from Watson Developer Cloud!',
+    content_type: 'text/plain'
+  },
   function(err, tone) {
-    if (err)
-      console.log(err);
-    else
-      console.log(JSON.stringify(tone, null, 2));
-});
+    if (err) console.log(err);
+    else console.log(JSON.stringify(tone, null, 2));
+  }
+);
 ```
 
 
