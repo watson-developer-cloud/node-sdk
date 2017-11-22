@@ -255,8 +255,10 @@ language_translator.translate(
     target: 'es'
   },
   function(err, translation) {
-    if (err) console.log('error:', err);
-    else console.log(JSON.stringify(translation, null, 2));
+    if (err)  {
+      console.log('error:', err);
+    } else  {
+      console.log(JSON.stringify(translation, null, 2));
   }
 );
 
@@ -266,8 +268,11 @@ language_translator.identify(
       'The language translator service takes text input and identifies the language used.'
   },
   function(err, language) {
-    if (err) console.log('error:', err);
-    else console.log(JSON.stringify(language, null, 2));
+    if (err)  {
+      console.log('error:', err);
+    } else {
+      console.log(JSON.stringify(language, null, 2));
+    }
   }
 );
 ```
@@ -291,8 +296,11 @@ natural_language_classifier.classify(
     classifier_id: '<classifier-id>'
   },
   function(err, response) {
-    if (err) console.log('error:', err);
-    else console.log(JSON.stringify(response, null, 2));
+    if (err) {
+      console.log('error:', err);
+    } else {
+      console.log(JSON.stringify(response, null, 2));
+    }
   }
 );
 ```
@@ -324,8 +332,11 @@ nlu.analyze(
     }
   },
   function(err, response) {
-    if (err) console.log('error:', err);
-    else console.log(JSON.stringify(response, null, 2));
+    if (err) {
+      console.log('error:', err);
+    } else {
+      console.log(JSON.stringify(response, null, 2));
+    }
   }
 );
 ```
@@ -351,8 +362,11 @@ personality_insights.profile(
     consumption_preferences: true
   },
   function(err, response) {
-    if (err) console.log('error:', err);
-    else console.log(JSON.stringify(response, null, 2));
+    if (err) {
+      console.log('error:', err);
+    } else {
+      console.log(JSON.stringify(response, null, 2));
+    }
   }
 );
 ```
@@ -442,8 +456,11 @@ tone_analyzer.tone(
     content_type: 'text/plain'
   },
   function(err, tone) {
-    if (err) console.log(err);
-    else console.log(JSON.stringify(tone, null, 2));
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(JSON.stringify(tone, null, 2));
+    }
   }
 );
 ```
