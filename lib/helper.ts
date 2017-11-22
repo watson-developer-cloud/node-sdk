@@ -233,12 +233,9 @@ export function toLowerHeaderParams(headers: Object): Object {
   if (headers) {
     _headers = extend(
       {},
-      ...Object.keys(headers).map(key => {
-        const _key = key.toLowerCase();
-        const _header_param = {};
-        _header_param[_key] = headers[key];
-        return _header_param;
-      })
+      ...Object.keys(headers).map(key => ({
+        [key.toLowerCase()]: headers[key]
+      }))
     );
   }
   return _headers;
