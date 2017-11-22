@@ -344,16 +344,17 @@ var personality_insights = new PersonalityInsightsV3({
   version_date: '2016-10-19'
 });
 
-personality_insights.profile({
-  text: 'Enter more than 100 unique words here...',
-  consumption_preferences: true
+personality_insights.profile(
+  {
+    content: 'Enter more than 100 unique words here...',
+    content_type: 'text/plain',
+    consumption_preferences: true
   },
-  function (err, response) {
-    if (err)
-      console.log('error:', err);
-    else
-      console.log(JSON.stringify(response, null, 2));
-});
+  function(err, response) {
+    if (err) console.log('error:', err);
+    else console.log(JSON.stringify(response, null, 2));
+  }
+);
 ```
 
 
