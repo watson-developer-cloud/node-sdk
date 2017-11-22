@@ -15,11 +15,11 @@
  */
 
 import GeneratedNaturalLanguageClassifierV1 = require('./v1-generated');
+import toCSV =  require('./json-training-to-csv');
 import extend = require('extend');
+import isStream = require('isstream');
+import omit = require('object.omit');
 import { getMissingParams } from '../lib/helper';
-import * as toCSV from './json-training-to-csv';
-import * as isStream from 'isstream';
-import * as omit from 'object.omit';
 
 class NaturalLanguageClassifierV1 extends GeneratedNaturalLanguageClassifierV1 {
   

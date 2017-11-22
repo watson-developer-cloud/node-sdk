@@ -14,20 +14,22 @@
  * the License.
  */
 
-'use strict';
-
-const stringify = require('csv-stringify');
+import stringify = require('csv-stringify');
 
 /**
  * @private
  * @param {Object} data
- * @return {Array.<String>}
+ * @return {string[]}
+ * @throws {Error}
  */
-function toCSVArray(data) {
+function toCSVArray(data): string[] {
   if (data.text && data.classes && data.classes.length > 0) {
     return [data.text].concat(data.classes);
   } else {
-    throw Error('Invalid training_data format, it needs to be: ' + '[{ text: "my-text", classes:["my-class1", "my-class2",...]}, {}, ...]');
+    throw Error(
+      'Invalid training_data format, it needs to be: ' +
+        '[{ text: "my-text", classes:["my-class1", "my-class2",...]}, {}, ...]'
+    );
   }
 }
 
@@ -36,7 +38,7 @@ function toCSVArray(data) {
  * @param  {Object[]} jsonData the training_data as a json array
  * @param  {Function} cb the error first callback
  */
-module.exports = function toCSV(training, cb) {
+function toCSV(training, cb): void {
   if (Array.isArray(training)) {
     try {
       stringify(training.map(toCSVArray), cb);
@@ -46,4 +48,6 @@ module.exports = function toCSV(training, cb) {
   } else {
     cb(null, training);
   }
-};
+}
+
+export = toCSV;

@@ -86,6 +86,7 @@
     "webpack": "^3.6.0"
   },
   "dependencies": {
+    "@types/csv-stringify": "^1.4.1",
     "@types/extend": "^3.0.0",
     "@types/file-type": "^5.2.1",
     "@types/is-stream": "^1.1.0",
@@ -110,7 +111,7 @@
     "node": ">=4"
   },
   "scripts": {
-    "test": "mocha test/unit/test.* test/integration/test.*",
+    "test": "mocha test/unit/ test/integration/",
     "lint": "npm run compat-check && eslint . --cache && dependency-lint",
     "compat-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
     "autofix": "eslint . --fix",
