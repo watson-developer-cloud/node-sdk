@@ -285,15 +285,16 @@ var natural_language_classifier = new NaturalLanguageClassifierV1({
   password: '<password>'
 });
 
-natural_language_classifier.classify({
-  text: 'Is it sunny?',
-  classifier_id: '<classifier-id>' },
+natural_language_classifier.classify(
+  {
+    text: 'Is it sunny?',
+    classifier_id: '<classifier-id>'
+  },
   function(err, response) {
-    if (err)
-      console.log('error:', err);
-    else
-      console.log(JSON.stringify(response, null, 2));
-});
+    if (err) console.log('error:', err);
+    else console.log(JSON.stringify(response, null, 2));
+  }
+);
 ```
 
 See this [example](https://github.com/watson-developer-cloud/node-sdk/blob/master/examples/natural_language_classifier.v1.js) to learn how to create a classifier.
