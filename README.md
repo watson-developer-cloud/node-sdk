@@ -10,6 +10,7 @@ Node.js client library to use the Watson Developer Cloud services, a collection 
 
 <details>
   <summary>Table of Contents</summary>
+
   * [Installation](#installation)
   * [Usage](#usage)
   * [Documentation](#documentation)
@@ -35,6 +36,7 @@ Node.js client library to use the Watson Developer Cloud services, a collection 
   * [Open Source @ IBM](#open-source--ibm)
   * [License](#license)
   * [Contributing](#contributing)
+
 </details>
 
 ## Installation
