@@ -112,16 +112,6 @@ describe('wrapper', function() {
       assert.equal(service._options.api_key, 'not-gonna-work');
     });
 
-    it('should use apikey (not documented) for alchemy service', function() {
-      const service = watson.alchemy_language({ apikey: 'not-gonna-work' });
-      assert.equal(service._options.qs.apikey, 'not-gonna-work');
-    });
-
-    it('should use api_key for alchemy service', function() {
-      const service = watson.alchemy_language({ api_key: 'not-gonna-work' });
-      assert.equal(service._options.qs.apikey, 'not-gonna-work');
-    });
-
     it('should not use VCAP_SERVICES if use_vcap_services is false', function() {
       process.env.VCAP_SERVICES = JSON.stringify(vcap_services);
       const service = create_service({
@@ -174,15 +164,6 @@ describe('wrapper', function() {
     try {
       watson.not_a_real_service({ version: 'v1', api_key: '' });
       done('Inexistent service');
-    } catch (e) {
-      done();
-    }
-  });
-
-  it('should ask for api_key when using an alchemy service', function(done) {
-    try {
-      watson.alchemy_language({ version: 'v1' });
-      done('service created without an api_key');
     } catch (e) {
       done();
     }
