@@ -15,6 +15,7 @@
  */
 
 import fileType = require('file-type');
+import extend = require('extend');
 import { basename } from 'path';
 import { lookup } from 'mime-types';
 import { isReadable } from 'isstream';
@@ -220,4 +221,22 @@ export function buildRequestFileObject(
       contentType: contentType
     }
   };
+}
+
+/**
+ * this function converts header keys to lower case
+ * @param {Object} headers - the header parameters
+ * @returns {Object}
+ */
+export function toLowerHeaderParams(headers: Object): Object {
+  let _headers = {};
+  if (headers) {
+    _headers = extend(
+      {},
+      ...Object.keys(headers).map(key => ({
+        [key.toLowerCase()]: headers[key]
+      }))
+    );
+  }
+  return _headers;
 }

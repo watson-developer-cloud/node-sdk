@@ -18,7 +18,7 @@ import GeneratedPersonalityInsightsV3 = require('./v3-generated');
 import extend = require('extend');
 import { RequestResponse } from 'request';
 import { createRequest } from '../lib/requestwrapper';
-import { getMissingParams, isHTML } from '../lib/helper';
+import { getMissingParams, isHTML, toLowerHeaderParams } from '../lib/helper';
 import { BaseService } from '../lib/base_service';
 
 class PersonalityInsightsV3 extends GeneratedPersonalityInsightsV3 {
@@ -28,7 +28,7 @@ class PersonalityInsightsV3 extends GeneratedPersonalityInsightsV3 {
 
   profile(params, callback) {
     const _params = extend({}, params);
-    const _headers = extend({}, _params.headers);
+    const _headers = toLowerHeaderParams(_params.headers);
 
     let _content;
     if (_params.contentItems || _params.content_items) {
@@ -45,24 +45,15 @@ class PersonalityInsightsV3 extends GeneratedPersonalityInsightsV3 {
       _content_type = 'application/json';
     }
     _params.content_type =
-      _params.content_type ||
-      _headers['content-type'] ||
-      _headers['Content-Type'] ||
-      _content_type;
+      _params.content_type || _headers['content-type'] || _content_type;
 
     _params.accept_language =
-      _params.accept_language ||
-      _headers['accept-language'] ||
-      _headers['Accept-Language'];
+      _params.accept_language || _headers['accept-language'];
 
     _params.content_language =
-      _params.content_language ||
-      _headers['content-language'] ||
-      _headers['Content-Language'];
+      _params.content_language || _headers['content-language'];
 
-    const _accept = _headers['accept'] || _headers['Accept'];
-
-    return _accept === 'text/csv'
+    return _headers['accept'] === 'text/csv'
       ? this.profile_csv(_params, callback)
       : super.profile(_params, callback);
   }
