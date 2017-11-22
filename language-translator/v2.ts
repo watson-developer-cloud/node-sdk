@@ -20,23 +20,6 @@ import { getMissingParams } from '../lib/helper';
 
 class LanguageTranslatorV2 extends GeneratedLanguageTranslatorV2 {
   constructor(options) {
-    // Welp, this is awkward. Originally the rename was *just* a rename, but then (after the SDK was updated,
-    // but before the backend was updated), it was decided that the billing should be simplified at the same time.
-    // That's a solid improvement, but it means that the SDK now needs to support both services independently,
-    // and correcting the default URL here will break older code, so it must be reserved for a major release.
-    // todo: consider checking for options.url === LanguageTranslationV2.URL and also throw this warning then.
-    // (This probably does't matter since the api didn't change)
-    if (!options || !options.url) {
-      const err = new Error(
-        'LanguageTranslatorV2 currently defaults to the url for LanguageTranslationV2, ' +
-          'but this will change in the next major release of the watson-developer-cloud Node.js SDK. ' +
-          'Please either specify the url https://gateway.watsonplatform.net/language-translator/api or else use ' +
-          'LanguageTranslationV2. ' +
-          'See http://www.ibm.com/watson/developercloud/doc/language-translator/migrating.shtml for more details.'
-      );
-      // eslint-disable-next-line no-console
-      console.warn(err);
-    }
     super(options);
   }
 

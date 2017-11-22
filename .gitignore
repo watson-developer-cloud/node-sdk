@@ -21,8 +21,7 @@ language-translator/*.js
 lib/helper.js
 lib/base_service.js
 lib/requestwrapper.js
-natural-language-classifier/v1.js
-natural-language-classifier/v1-generated.js
+natural-language-classifier/*.js
 natural-language-understanding/*.js
 personality-insights/*.js
 tone-analyzer/*.js
