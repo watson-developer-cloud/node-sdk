@@ -8,8 +8,8 @@ Watson Developer Cloud Node.js SDK
 
 Node.js client library to use the Watson Developer Cloud services, a collection of APIs that use cognitive computing to solve complex problems.
 
-## Table of Contents
-  * [Major Changes for v2](#major-changes-for-v2)
+<details>
+  <summary>Table of Contents</summary>
   * [Installation](#installation)
   * [Usage](#usage)
   * [Documentation](#documentation)
@@ -35,41 +35,7 @@ Node.js client library to use the Watson Developer Cloud services, a collection 
   * [Open Source @ IBM](#open-source--ibm)
   * [License](#license)
   * [Contributing](#contributing)
-
-
-## Major changes for v2
-
-### BREAKING: user-supplied credentials are now preferred over Bluemix-supplied credentials.
-
-See [Usage](#usage) section for details.
-
-This change also removes the `use_vcap_services` flag.
-
-### Client-side usage is partially supported
-
-See [Client-side usage](#client-side-usage) section for details.
-
-### New recommended method for instantiating services:
-
-```js
-var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
-
-var toneAnalyzer = new ToneAnalyzerV3({/*...*/});
-```
-
-This was primarily done to enable smaller bundles for client-side usage, but also gives a small performance boost for server-side usage by only loading the portion of the library that is actually needed.
-
-The following methods will also work, but cause the entire library to be loaded:
-
-```js
-// Alternate methods of using the library.
-// Not recommended, especially for client-side JS.
-var watson = require('watson-developer-cloud');
-
-var toneAnalyzer = new watson.ToneAnalyzerV3({/*...*/});
-
-var tone_analyzer = watson.tone_analyzer({version: 'v3', /*...*/});
-```
+</details>
 
 ## Installation
 
