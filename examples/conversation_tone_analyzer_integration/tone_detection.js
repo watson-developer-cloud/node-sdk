@@ -15,9 +15,8 @@
  */
 
 'use strict';
-/* eslint-env es6*/
 
-const Promise = require('bluebird');
+var Promise = require('bluebird');
 
 /**
  * Thresholds for identifying meaningful tones returned by the Watson Tone Analyzer.  Current values are
@@ -25,18 +24,18 @@ const Promise = require('bluebird');
  * https://www.ibm.com/watson/developercloud/doc/tone-analyzer/understanding-tone.shtml
  * These thresholds can be adjusted to client/domain requirements.
  */
-const PRIMARY_EMOTION_SCORE_THRESHOLD = 0.5;
-const LANGUAGE_HIGH_SCORE_THRESHOLD = 0.75;
-const LANGUAGE_NO_SCORE_THRESHOLD = 0.0;
-const SOCIAL_HIGH_SCORE_THRESHOLD = 0.75;
-const SOCIAL_LOW_SCORE_THRESHOLD = 0.25;
+var PRIMARY_EMOTION_SCORE_THRESHOLD = 0.5;
+var LANGUAGE_HIGH_SCORE_THRESHOLD = 0.75;
+var LANGUAGE_NO_SCORE_THRESHOLD = 0.0;
+var SOCIAL_HIGH_SCORE_THRESHOLD = 0.75;
+var SOCIAL_LOW_SCORE_THRESHOLD = 0.25;
 
 /**
  * Labels for the tone categories returned by the Watson Tone Analyzer
  */
-const EMOTION_TONE_LABEL = 'emotion_tone';
-const LANGUAGE_TONE_LABEL = 'language_tone';
-const SOCIAL_TONE_LABEL = 'social_tone';
+var EMOTION_TONE_LABEL = 'emotion_tone';
+var LANGUAGE_TONE_LABEL = 'language_tone';
+var SOCIAL_TONE_LABEL = 'social_tone';
 
 /**
  * Public functions for this module
@@ -55,13 +54,16 @@ module.exports = {
  */
 function invokeToneAsync(conversationPayload, tone_analyzer) {
   return new Promise(function(resolve, reject) {
-    tone_analyzer.tone({ text: conversationPayload.input.text }, (error, data) => {
-      if (error) {
-        reject(error);
-      } else {
-        resolve(data);
+    tone_analyzer.tone(
+      { text: conversationPayload.input.text },
+      (error, data) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(data);
+        }
       }
-    });
+    );
   });
 }
 
@@ -73,10 +75,14 @@ function invokeToneAsync(conversationPayload, tone_analyzer) {
  * @param toneAnalyzerPayload json object returned by the Watson Tone Analyzer Service
  * @return conversationPayload where the user object has been updated with tone information from the toneAnalyzerPayload
  */
-function updateUserTone(conversationPayload, toneAnalyzerPayload, maintainHistory) {
-  let emotionTone = null;
-  let languageTone = null;
-  let socialTone = null;
+function updateUserTone(
+  conversationPayload,
+  toneAnalyzerPayload,
+  maintainHistory
+) {
+  var emotionTone = null;
+  var languageTone = null;
+  var socialTone = null;
 
   if (typeof conversationPayload.context === 'undefined') {
     conversationPayload.context = {};
@@ -87,11 +93,13 @@ function updateUserTone(conversationPayload, toneAnalyzerPayload, maintainHistor
   }
 
   // For convenience sake, define a variable for the user object
-  const user = conversationPayload.context.user;
+  var user = conversationPayload.context.user;
 
   // Extract the tones - emotion, language and social
   if (toneAnalyzerPayload && toneAnalyzerPayload.document_tone) {
-    toneAnalyzerPayload.document_tone.tone_categories.forEach(function(toneCategory) {
+    toneAnalyzerPayload.document_tone.tone_categories.forEach(function(
+      toneCategory
+    ) {
       if (toneCategory.category_id === EMOTION_TONE_LABEL) {
         emotionTone = toneCategory;
       }
@@ -144,9 +152,9 @@ function initUser() {
  * @param emotionTone a json object containing the emotion tones in the payload returned by the Tone Analyzer
  */
 function updateEmotionTone(user, emotionTone, maintainHistory) {
-  let maxScore = 0.0;
-  let primaryEmotion = null;
-  let primaryEmotionScore = null;
+  var maxScore = 0.0;
+  var primaryEmotion = null;
+  var primaryEmotionScore = null;
 
   emotionTone.tones.forEach(function(tone) {
     if (tone.score > maxScore) {
@@ -181,8 +189,8 @@ function updateEmotionTone(user, emotionTone, maintainHistory) {
  * @param languageTone a json object containing the language tones in the payload returned by the Tone Analyzer
  */
 function updateLanguageTone(user, languageTone, maintainHistory) {
-  const currentLanguage = [];
-  const currentLanguageObject = [];
+  var currentLanguage = [];
+  var currentLanguageObject = [];
 
   // Process each language tone and determine if it is high or low
   languageTone.tones.forEach(function(tone) {
@@ -224,8 +232,8 @@ function updateLanguageTone(user, languageTone, maintainHistory) {
  * @param socialTone a json object containing the social tones in the payload returned by the Tone Analyzer
  */
 function updateSocialTone(user, socialTone, maintainHistory) {
-  const currentSocial = [];
-  const currentSocialObject = [];
+  var currentSocial = [];
+  var currentSocialObject = [];
 
   // Process each social tone and determine if it is high or low
   socialTone.tones.forEach(function(tone) {

@@ -185,16 +185,19 @@ var conversation = new ConversationV1({
   version_date: ConversationV1.VERSION_DATE_2017_05_26
 });
 
-conversation.message({
-  input: { text: 'What\'s the weather?' },
-  workspace_id: '<workspace id>'
- }, function(err, response) {
-     if (err) {
-       console.error(err);
-     } else {
-       console.log(JSON.stringify(response, null, 2));
-     }
-});
+conversation.message(
+  {
+    input: { text: "What's the weather?" },
+    workspace_id: '<workspace id>'
+  },
+  function(err, response) {
+    if (err) {
+      console.error(err);
+    } else {
+      console.log(JSON.stringify(response, null, 2));
+    }
+  }
+);
 ```
 
 
@@ -252,8 +255,10 @@ language_translator.translate(
     target: 'es'
   },
   function(err, translation) {
-    if (err) console.log('error:', err);
-    else console.log(JSON.stringify(translation, null, 2));
+    if (err)  {
+      console.log('error:', err);
+    } else  {
+      console.log(JSON.stringify(translation, null, 2));
   }
 );
 
@@ -263,8 +268,11 @@ language_translator.identify(
       'The language translator service takes text input and identifies the language used.'
   },
   function(err, language) {
-    if (err) console.log('error:', err);
-    else console.log(JSON.stringify(language, null, 2));
+    if (err)  {
+      console.log('error:', err);
+    } else {
+      console.log(JSON.stringify(language, null, 2));
+    }
   }
 );
 ```
@@ -282,15 +290,19 @@ var natural_language_classifier = new NaturalLanguageClassifierV1({
   password: '<password>'
 });
 
-natural_language_classifier.classify({
-  text: 'Is it sunny?',
-  classifier_id: '<classifier-id>' },
+natural_language_classifier.classify(
+  {
+    text: 'Is it sunny?',
+    classifier_id: '<classifier-id>'
+  },
   function(err, response) {
-    if (err)
+    if (err) {
       console.log('error:', err);
-    else
+    } else {
       console.log(JSON.stringify(response, null, 2));
-});
+    }
+  }
+);
 ```
 
 See this [example](https://github.com/watson-developer-cloud/node-sdk/blob/master/examples/natural_language_classifier.v1.js) to learn how to create a classifier.
@@ -320,8 +332,11 @@ nlu.analyze(
     }
   },
   function(err, response) {
-    if (err) console.log('error:', err);
-    else console.log(JSON.stringify(response, null, 2));
+    if (err) {
+      console.log('error:', err);
+    } else {
+      console.log(JSON.stringify(response, null, 2));
+    }
   }
 );
 ```
@@ -340,16 +355,20 @@ var personality_insights = new PersonalityInsightsV3({
   version_date: '2016-10-19'
 });
 
-personality_insights.profile({
-  text: 'Enter more than 100 unique words here...',
-  consumption_preferences: true
+personality_insights.profile(
+  {
+    content: 'Enter more than 100 unique words here...',
+    content_type: 'text/plain',
+    consumption_preferences: true
   },
-  function (err, response) {
-    if (err)
+  function(err, response) {
+    if (err) {
       console.log('error:', err);
-    else
+    } else {
       console.log(JSON.stringify(response, null, 2));
-});
+    }
+  }
+);
 ```
 
 
@@ -431,13 +450,19 @@ var tone_analyzer = new ToneAnalyzerV3({
   version_date: '2016-05-19'
 });
 
-tone_analyzer.tone({ text: 'Greetings from Watson Developer Cloud!' },
+tone_analyzer.tone(
+  {
+    tone_input: 'Greetings from Watson Developer Cloud!',
+    content_type: 'text/plain'
+  },
   function(err, tone) {
-    if (err)
+    if (err) {
       console.log(err);
-    else
+    } else {
       console.log(JSON.stringify(tone, null, 2));
-});
+    }
+  }
+);
 ```
 
 
