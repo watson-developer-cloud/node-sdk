@@ -16,6 +16,7 @@
 
 import GeneratedPersonalityInsightsV3 = require('./v3-generated');
 import extend = require('extend');
+import pick = require('object.pick');
 import { RequestResponse } from 'request';
 import { createRequest } from '../lib/requestwrapper';
 import { getMissingParams, isHTML, toLowerHeaderParams } from '../lib/helper';
@@ -27,36 +28,45 @@ class PersonalityInsightsV3 extends GeneratedPersonalityInsightsV3 {
   }
 
   profile(params, callback) {
-    const _params = extend({}, params);
-    const _headers = toLowerHeaderParams(_params.headers);
-
-    let _content;
-    if (_params.contentItems || _params.content_items) {
-      _content = {
-        contentItems: _params.contentItems || _params.content_items
-      };
+    if (params && (params.content || params.content_type)) {
+      return super.profile(params, callback);
     }
-    _params.content = _params.content || _content || _params.text;
 
-    let _content_type;
-    if (typeof _params.content === 'string') {
-      _content_type = isHTML(_params.content) ? 'text/html' : 'text/plain';
+    if (params && params.content_items) {
+      params.contentItems = params.content_items;
+    }
+
+    if (!params || (!params.text && !params.contentItems)) {
+      callback(new Error('Missing required parameters: text or content_items'));
+      return;
+    }
+
+    let content_type = null;
+    if (params.text) {
+      content_type = isHTML(params.text) ? 'text/html' : 'text/plain';
     } else {
-      _content_type = 'application/json';
+      content_type = 'application/json';
     }
-    _params.content_type =
-      _params.content_type || _headers['content-type'] || _content_type;
 
-    _params.accept_language =
-      _params.accept_language || _headers['accept-language'];
+    let _params: GeneratedPersonalityInsightsV3.ProfileParams = {
+      content: params.text || pick(params, ['contentItems']),
+      content_type: content_type,
+      raw_scores: params.raw_scores,
+      csv_headers: params.csv_headers,
+      consumption_preferences: params.consumption_preferences,
+    }
 
-    _params.content_language =
-      _params.content_language || _headers['content-language'];
+    const headers = extend({}, toLowerHeaderParams(params.headers));
 
-    return _headers['accept'] === 'text/csv'
-      ? this.profile_csv(_params, callback)
-      : super.profile(_params, callback);
-  }
+    if (headers['accept-language']) _params.accept_language = headers['accept-language'];
+    if (headers['content-type']) _params.content_type = headers['content-type'];
+    if (headers['content-language']) _params.content_language = headers['content-language'];
+    if (headers['accept'] === 'text/csv') {
+      return this.profile_csv(_params, callback);
+    }
+
+    return super.profile(_params, callback);
+}
 
   /**
    * Generates a personality profile based on input text.
