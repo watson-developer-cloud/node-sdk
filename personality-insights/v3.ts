@@ -56,7 +56,7 @@ class PersonalityInsightsV3 extends GeneratedPersonalityInsightsV3 {
       consumption_preferences: params.consumption_preferences,
     }
 
-    const headers = extend({}, toLowerHeaderParams(params.headers));
+    const headers = toLowerHeaderParams(params.headers);
 
     if (headers['accept-language']) _params.accept_language = headers['accept-language'];
     if (headers['content-type']) _params.content_type = headers['content-type'];
