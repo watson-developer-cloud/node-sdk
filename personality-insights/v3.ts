@@ -53,20 +53,26 @@ class PersonalityInsightsV3 extends GeneratedPersonalityInsightsV3 {
       content_type: content_type,
       raw_scores: params.raw_scores,
       csv_headers: params.csv_headers,
-      consumption_preferences: params.consumption_preferences,
-    }
+      consumption_preferences: params.consumption_preferences
+    };
 
     const headers = toLowerHeaderParams(params.headers);
 
-    if (headers['accept-language']) _params.accept_language = headers['accept-language'];
-    if (headers['content-type']) _params.content_type = headers['content-type'];
-    if (headers['content-language']) _params.content_language = headers['content-language'];
+    if (headers['accept-language']) {
+      _params.accept_language = headers['accept-language'];
+    }
+    if (headers['content-type']) {
+      _params.content_type = headers['content-type'];
+    }
+    if (headers['content-language']) {
+      _params.content_language = headers['content-language'];
+    }
     if (headers['accept'] === 'text/csv') {
       return this.profile_csv(_params, callback);
     }
 
     return super.profile(_params, callback);
-}
+  }
 
   /**
    * Generates a personality profile based on input text.
