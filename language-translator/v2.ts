@@ -32,16 +32,20 @@ class LanguageTranslatorV2 extends GeneratedLanguageTranslatorV2 {
   }
 
   createModel(params, callback) {
-    const inputTypes: string[] = [
-      'forced_glossary',
-      'parallel_corpus',
-      'monolingual_corpus'
-    ];
-    inputTypes.forEach(type => {
-      if (params[type] && !isStream(params[type])) {
-        return callback(new Error(`${type} is not a standard Node.js Stream`));
-      }
-    });
+    if (params) {
+      const inputTypes: string[] = [
+        'forced_glossary',
+        'parallel_corpus',
+        'monolingual_corpus'
+      ];
+      inputTypes.forEach(type => {
+        if (params[type] && !isStream(params[type])) {
+          return callback(
+            new Error(`${type} is not a standard Node.js Stream`)
+          );
+        }
+      });
+    }
     return super.createModel(params, callback);
   }
 
