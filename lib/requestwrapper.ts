@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import * as extend from 'extend';
-import * as request from 'request';
+import extend = require('extend');
+import request = require('request');
 import {
   getMissingParams,
   buildRequestFileObject,
