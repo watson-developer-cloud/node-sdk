@@ -56,7 +56,6 @@ class DiscoveryV1 extends GeneratedDiscoveryV1 {
   updateConfiguration(params, callback) {
     // name is now a required parameter
     // file is now split into conversions, enrichments and normalizations
-    // let conversions, enrichments, normalizations;
     let _params = params || {};
     if (params && params.file) {
       const { conversions, enrichments, normalizations } = params.file;
@@ -108,7 +107,6 @@ class DiscoveryV1 extends GeneratedDiscoveryV1 {
   createConfiguration(params, callback) {
     // name is now a required parameter
     // file is now split into conversions, enrichments and normalizations
-    // let conversions, enrichments, normalizations;
     let _params = params || {};
     if (params && params.file) {
       const { conversions, enrichments, normalizations } = params.file;
