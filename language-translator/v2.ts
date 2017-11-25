@@ -32,11 +32,6 @@ class LanguageTranslatorV2 extends GeneratedLanguageTranslatorV2 {
   }
 
   createModel(params, callback) {
-    const missingParams = getMissingParams(params, ['base_model_id']);
-    if (missingParams) {
-      return callback(missingParams);
-    }
-
     const inputTypes: string[] = [
       'forced_glossary',
       'parallel_corpus',
