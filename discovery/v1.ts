@@ -162,20 +162,19 @@ class DiscoveryV1 extends GeneratedDiscoveryV1 {
   }
 
   query(params, callback) {
-    const _params = params || {};
-    const _passages = {};
+    let _params = params || {};
     // query and natural_language_query can't both be populated
     if (_params.query && _params.natural_language_query) {
       delete _params.natural_language_query;
     }
     if (_params.return) {
-      _params.return_fields = params.return.split(',');
+      _params.return_fields = _params.return.split(',');
     }
     // passages parameters are now snake case
     Object.keys(_params).forEach(
       key =>
         key.match(/passages\..*/i) &&
-        (_passages[`passages_${key}`] = params.passages[key])
+        (_params[key.replace('.', '_')] = _params[key])
     );
     return super.query(_params, callback);
   }
