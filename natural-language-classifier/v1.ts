@@ -15,13 +15,12 @@
  */
 
 import GeneratedNaturalLanguageClassifierV1 = require('./v1-generated');
-import toCSV =  require('./json-training-to-csv');
+import toCSV = require('./json-training-to-csv');
 import isStream = require('isstream');
 import omit = require('object.omit');
 import { getMissingParams } from '../lib/helper';
 
 class NaturalLanguageClassifierV1 extends GeneratedNaturalLanguageClassifierV1 {
-  
   constructor(options) {
     super(options);
   }
@@ -32,8 +31,16 @@ class NaturalLanguageClassifierV1 extends GeneratedNaturalLanguageClassifierV1 {
       return;
     }
 
-    if (!(Array.isArray(params.training_data) || typeof params.training_data === 'string' || isStream(params.training_data))) {
-      callback(new Error('training_data needs to be a String, Array or Stream'));
+    if (
+      !(
+        Array.isArray(params.training_data) ||
+        typeof params.training_data === 'string' ||
+        isStream(params.training_data)
+      )
+    ) {
+      callback(
+        new Error('training_data needs to be a String, Array or Stream')
+      );
       return;
     }
 
@@ -44,9 +51,12 @@ class NaturalLanguageClassifierV1 extends GeneratedNaturalLanguageClassifierV1 {
       }
 
       const _params: GeneratedNaturalLanguageClassifierV1.CreateClassifierParams = {
-        metadata: Buffer.from(JSON.stringify(omit(params, ['training_data'])), 'utf8'),
+        metadata: Buffer.from(
+          JSON.stringify(omit(params, ['training_data'])),
+          'utf8'
+        ),
         training_data: csv
-      }
+      };
 
       return super.createClassifier(_params, callback);
     });
