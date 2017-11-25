@@ -58,7 +58,7 @@ class DiscoveryV1 extends GeneratedDiscoveryV1 {
     // file is now split into conversions, enrichments and normalizations
     const _params = params || {};
     if (_params.file) {
-      const { conversions, enrichments, normalizations } = params.file;
+      const { conversions, enrichments, normalizations } = _params.file;
       _params.conversions = conversions;
       _params.enrichments = enrichments;
       _params.normalizations = normalizations;
@@ -104,7 +104,7 @@ class DiscoveryV1 extends GeneratedDiscoveryV1 {
     // file is now split into conversions, enrichments and normalizations
     const _params = params || {};
     if (_params.file) {
-      const { conversions, enrichments, normalizations } = params.file;
+      const { conversions, enrichments, normalizations } = _params.file;
       _params.conversions = conversions;
       _params.enrichments = enrichments;
       _params.normalizations = normalizations;
