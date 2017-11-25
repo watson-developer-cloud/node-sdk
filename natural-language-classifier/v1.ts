@@ -16,7 +16,6 @@
 
 import GeneratedNaturalLanguageClassifierV1 = require('./v1-generated');
 import toCSV =  require('./json-training-to-csv');
-import extend = require('extend');
 import isStream = require('isstream');
 import omit = require('object.omit');
 import { getMissingParams } from '../lib/helper';
@@ -54,7 +53,7 @@ class NaturalLanguageClassifierV1 extends GeneratedNaturalLanguageClassifierV1 {
   }
 
   classify(params, callback) {
-    let _params = extend({}, params);
+    const _params = params || {};
     if (!_params.classifier_id) {
       _params.classifier_id = _params.classifier;
     }
@@ -62,7 +61,7 @@ class NaturalLanguageClassifierV1 extends GeneratedNaturalLanguageClassifierV1 {
   }
 
   status(params, callback) {
-    let _params = extend({}, params);
+    const _params = params || {};
     if (!_params.classifier_id) {
       _params.classifier_id = _params.classifier;
     }
@@ -74,7 +73,7 @@ class NaturalLanguageClassifierV1 extends GeneratedNaturalLanguageClassifierV1 {
   }
 
   remove(params, callback) {
-    let _params = extend({}, params);
+    const _params = params || {};
     if (!_params.classifier_id) {
       _params.classifier_id = _params.classifier;
     }
