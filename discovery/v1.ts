@@ -56,19 +56,14 @@ class DiscoveryV1 extends GeneratedDiscoveryV1 {
   updateConfiguration(params, callback) {
     // name is now a required parameter
     // file is now split into conversions, enrichments and normalizations
-    let _params = params || {};
-    if (params && params.file) {
+    const _params = params || {};
+    if (_params.file) {
       const { conversions, enrichments, normalizations } = params.file;
-      _params = extend(
-        {
-          name: '_',
-          conversions: conversions,
-          enrichments: enrichments,
-          normalizations: normalizations
-        },
-        params
-      );
+      _params.conversions = conversions;
+      _params.enrichments = enrichments;
+      _params.normalizations = normalizations;
     }
+    _params.name = _params.name || '_';
     return super.updateConfiguration(_params, callback);
   }
 
@@ -107,19 +102,14 @@ class DiscoveryV1 extends GeneratedDiscoveryV1 {
   createConfiguration(params, callback) {
     // name is now a required parameter
     // file is now split into conversions, enrichments and normalizations
-    let _params = params || {};
-    if (params && params.file) {
+    const _params = params || {};
+    if (_params.file) {
       const { conversions, enrichments, normalizations } = params.file;
-      _params = extend(
-        {
-          name: '_',
-          conversions: conversions,
-          enrichments: enrichments,
-          normalizations: normalizations
-        },
-        params
-      );
+      _params.conversions = conversions;
+      _params.enrichments = enrichments;
+      _params.normalizations = normalizations;
     }
+    _params.name = _params.name || '_';
     return super.createConfiguration(_params, callback);
   }
 
