@@ -19,7 +19,7 @@ import extend = require('extend');
 import pick = require('object.pick');
 import { RequestResponse } from 'request';
 import { createRequest } from '../lib/requestwrapper';
-import { getMissingParams, isHTML, toLowerHeaderParams } from '../lib/helper';
+import { getMissingParams, isHTML, toLowerKeys } from '../lib/helper';
 import { BaseService } from '../lib/base_service';
 
 class PersonalityInsightsV3 extends GeneratedPersonalityInsightsV3 {
@@ -56,7 +56,7 @@ class PersonalityInsightsV3 extends GeneratedPersonalityInsightsV3 {
       consumption_preferences: params.consumption_preferences
     };
 
-    const headers = toLowerHeaderParams(params.headers);
+    const headers = toLowerKeys(params.headers);
 
     if (headers['accept-language']) {
       _params.accept_language = headers['accept-language'];
