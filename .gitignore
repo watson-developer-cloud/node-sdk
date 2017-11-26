@@ -26,3 +26,4 @@ natural-language-understanding/*.js
 personality-insights/*.js
 tone-analyzer/*.js
 visual-recognition/*.js
+text-to-speech/*.js
