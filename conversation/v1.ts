@@ -20,31 +20,30 @@ import { getMissingParams } from '../lib/helper';
 import { createRequest } from '../lib/requestwrapper';
 
 class ConversationV1 extends GeneratedConversationV1 {
-
   constructor(options) {
     super(options);
   }
 
   workspaceStatus(params, callback) {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = { 
+    const path = {
       workspace_id: _params.workspace_id
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/status',
         method: 'GET',
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, this._options, {
         headers: {
-          'accept': 'application/json',
+          accept: 'application/json'
         }
       })
     };
@@ -56,7 +55,13 @@ class ConversationV1 extends GeneratedConversationV1 {
   }
 
   updateIntent(params, callback) {
-    if (params && (params.new_intent || params.new_description || params.new_examples)) {
+    if (
+      params &&
+      (params.new_intent ||
+        params.new_description ||
+        params.new_examples ||
+        (params.intent && !params.old_intent))
+    ) {
       return super.updateIntent(params, callback);
     }
 
@@ -70,7 +75,7 @@ class ConversationV1 extends GeneratedConversationV1 {
       new_intent: params.intent,
       new_description: params.description,
       new_examples: params.examples
-    }
+    };
 
     return super.updateIntent(_params, callback);
   }
@@ -80,7 +85,7 @@ class ConversationV1 extends GeneratedConversationV1 {
   }
 
   updateExample(params, callback) {
-    if (params && params.new_text) {
+    if (params && (params.new_text || (params.text && !params.old_text))) {
       return super.updateExample(params, callback);
     }
 
@@ -93,7 +98,7 @@ class ConversationV1 extends GeneratedConversationV1 {
       intent: params.intent,
       text: params.old_text,
       new_text: params.text
-    }
+    };
 
     return super.updateExample(_params, callback);
   }
@@ -115,7 +120,7 @@ class ConversationV1 extends GeneratedConversationV1 {
   }
 
   updateCounterExample(params, callback) {
-    if (params && params.new_text) {
+    if (params && (params.new_text || (params.text && !params.old_text))) {
       return super.updateCounterexample(params, callback);
     }
 
@@ -127,7 +132,7 @@ class ConversationV1 extends GeneratedConversationV1 {
       workspace_id: params.workspace_id,
       text: params.old_text,
       new_text: params.text
-    }
+    };
 
     return super.updateCounterexample(_params, callback);
   }
@@ -137,7 +142,15 @@ class ConversationV1 extends GeneratedConversationV1 {
   }
 
   updateEntity(params, callback) {
-    if (params && (params.new_entity || params.new_description || params.new_metadata || params.new_fuzzy_match || params.new_values)) {
+    if (
+      params &&
+      (params.new_entity ||
+        params.new_description ||
+        params.new_metadata ||
+        params.new_fuzzy_match ||
+        params.new_values ||
+        (params.entity && !params.old_entity))
+    ) {
       return super.updateEntity(params, callback);
     }
 
@@ -153,7 +166,7 @@ class ConversationV1 extends GeneratedConversationV1 {
       new_metadata: params.metadata,
       new_fuzzy_match: params.fuzzy_match,
       new_values: params.values
-    }
+    };
 
     return super.updateEntity(_params, callback);
   }
@@ -163,7 +176,15 @@ class ConversationV1 extends GeneratedConversationV1 {
   }
 
   updateValue(params, callback) {
-    if (params && (params.new_value || params.new_metadata || params.new_type || params.new_synonyms || params.new_patterns)) {
+    if (
+      params &&
+      (params.new_value ||
+        params.new_metadata ||
+        params.new_type ||
+        params.new_synonyms ||
+        params.new_patterns ||
+        (params.value && !params.old_value))
+    ) {
       return super.updateValue(params, callback);
     }
 
@@ -180,7 +201,7 @@ class ConversationV1 extends GeneratedConversationV1 {
       new_type: params.type,
       new_synonyms: params.synonyms,
       new_patterns: params.patterns
-    }
+    };
 
     return super.updateValue(_params, callback);
   }
@@ -194,7 +215,13 @@ class ConversationV1 extends GeneratedConversationV1 {
       return super.updateSynonym(params, callback);
     }
 
-    const requiredParams = ['workspace_id', 'entity', 'value', 'old_synonym', 'synonym'];
+    const requiredParams = [
+      'workspace_id',
+      'entity',
+      'value',
+      'old_synonym',
+      'synonym'
+    ];
     const missingParams = getMissingParams(params, requiredParams);
     if (missingParams) return callback(missingParams);
 
@@ -204,7 +231,7 @@ class ConversationV1 extends GeneratedConversationV1 {
       value: params.value,
       synonym: params.old_synonym,
       new_synonym: params.synonym
-    }
+    };
 
     return super.updateSynonym(_params, callback);
   }
@@ -226,7 +253,24 @@ class ConversationV1 extends GeneratedConversationV1 {
   }
 
   updateDialogNode(params, callback) {
-    if (params && (params.new_dialog_node || params.new_description || params.new_conditions || params.new_parent || params.new_previous_sibling || params.new_output || params.new_context || params.new_metadata || params.new_next_step || params.new_title || params.new_type || params.new_event_name || params.new_variable || params.new_actions)) {
+    if (
+      params &&
+      (params.new_dialog_node ||
+        params.new_description ||
+        params.new_conditions ||
+        params.new_parent ||
+        params.new_previous_sibling ||
+        params.new_output ||
+        params.new_context ||
+        params.new_metadata ||
+        params.new_next_step ||
+        params.new_title ||
+        params.new_type ||
+        params.new_event_name ||
+        params.new_variable ||
+        params.new_actions ||
+        (params.dialog_node && !params.old_dialog_node))
+    ) {
       return super.updateDialogNode(params, callback);
     }
 
@@ -251,7 +295,7 @@ class ConversationV1 extends GeneratedConversationV1 {
       new_event_name: params.event_name,
       new_variable: params.variable,
       new_actions: params.actions
-    }
+    };
 
     return super.updateDialogNode(_params, callback);
   }
