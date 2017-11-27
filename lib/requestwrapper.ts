@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import * as extend from 'extend';
-import * as request from 'request';
+import extend = require('extend');
+import request = require('request');
 import {
   getMissingParams,
   buildRequestFileObject,
@@ -182,27 +182,30 @@ export function createRequest(parameters, _callback) {
 
   // Form params
   if (formData) {
-    // Remove keys with undefined/null values and empty objects
+    // Remove keys with undefined/null values
+    // Remove empty objects
+    // Remove non-valid inputs for buildRequestFileObject,
+    // i.e things like {contentType: <contentType>}
     Object.keys(formData).forEach(key => {
-      (formData[key] == null || isEmptyObject(formData[key])) &&
+      (formData[key] == null ||
+        isEmptyObject(formData[key]) ||
+        (formData[key].hasOwnProperty('contentType') &&
+          !formData[key].hasOwnProperty('data'))) &&
         delete formData[key];
     });
-    // Convert non-file form parameters to strings
-    Object.keys(formData).forEach(key => {
-      if (!isFileParam(formData[key])) {
-        formData[key] =
-          typeof formData[key] === 'object'
-            ? JSON.stringify(formData[key])
-            : formData[key];
-      }
-    });
     // Convert file form parameters to request-style objects
-    const fileParams: string[] = Object.keys(formData).filter(key => {
-      return formData[key].data;
-    });
-    fileParams.forEach(fileParam => {
-      formData[fileParam] = buildRequestFileObject(formData[fileParam]);
-    });
+    Object.keys(formData).forEach(
+      key =>
+        formData[key].data != null &&
+        (formData[key] = buildRequestFileObject(formData[key]))
+    );
+    // Convert non-file form parameters to strings
+    Object.keys(formData).forEach(
+      key =>
+        !isFileParam(formData[key]) &&
+        typeof formData[key] === 'object' &&
+        (formData[key] = JSON.stringify(formData[key]))
+    );
   }
 
   // Path params
