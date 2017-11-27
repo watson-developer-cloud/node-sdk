@@ -66,20 +66,14 @@ class VisualRecognitionV3 extends GeneratedVisualRecognitionV3 {
 
   private parseParameters(params) {
     const _params = params || {};
-    let parameters;
-    try {
-      parameters = JSON.parse(params.parameters);
-    } catch (e) {
-      parameters = {};
+    if (_params.parameters) {
+      return _params.parameters;
     }
-    const parameters_keys = ['url', 'classifier_ids', 'owners', 'threshold'];
-    let _parameters = {};
-    parameters_keys.forEach(key => {
-      if (parameters[key] || _params[key]) {
-        _parameters[key] = parameters[key] || _params[key];
-      }
-    });
-    return Object.keys(_parameters).length > 0 ? _parameters : null;
+    const _parameters = {};
+    ['url', 'classifier_ids', 'owners', 'threshold'].forEach(
+      key => _params[key] && (_parameters[key] = _params[key])
+    );
+    return _parameters;
   }
 
   classify(params, callback) {

@@ -56,23 +56,14 @@ class DiscoveryV1 extends GeneratedDiscoveryV1 {
   updateConfiguration(params, callback) {
     // name is now a required parameter
     // file is now split into conversions, enrichments and normalizations
-    let _conversions;
-    let _enrichments;
-    let _normalizations;
-    if (params && params.file) {
-      _conversions = params.file.conversions;
-      _enrichments = params.file.enrichments;
-      _normalizations = params.file.normalizations;
+    const _params = params || {};
+    if (_params.file) {
+      const { conversions, enrichments, normalizations } = _params.file;
+      _params.conversions = conversions;
+      _params.enrichments = enrichments;
+      _params.normalizations = normalizations;
     }
-    const _params = extend(
-      {
-        name: '_',
-        conversions: _conversions,
-        enrichments: _enrichments,
-        normalizations: _normalizations
-      },
-      params
-    );
+    _params.name = _params.name || '_';
     return super.updateConfiguration(_params, callback);
   }
 
@@ -82,52 +73,26 @@ class DiscoveryV1 extends GeneratedDiscoveryV1 {
 
   createCollection(params, callback) {
     // language_code is now called language
-    const _language = params.language_code || 'en_us';
-    const _params = extend({ language: _language }, params);
-    return super.createCollection(_params, callback);
+    if (params) {
+      params.language = params.language || params.language_code || 'en_us';
+    }
+    return super.createCollection(params, callback);
   }
 
   updateCollection(params, callback) {
     // collection_name is now called name
-    // language_code is now called language
-    let _collection_name: string;
-    let _language: string = 'en_us';
     if (params) {
-      if (params.name) {
-        _collection_name = params.name;
-      }
-      if (params.language_code) {
-        _language = params.language_code;
-      }
+      params.name = params.name || params.collection_name;
     }
-    const _params = extend(
-      { language: _language, name: _collection_name },
-      params
-    );
-    return super.updateCollection(_params, callback);
+    return super.updateCollection(params, callback);
   }
 
   getCollectionFields(params, callback) {
     // listFields expects an array of collection ids
-    let _collection_id;
     if (params && !Array.isArray(params.collection_id)) {
-      _collection_id = [params.collection_id];
+      params.collection_ids = [params.collection_id];
     }
-    const _params = extend({ collection_ids: _collection_id }, params);
-    return super.listFields(_params, callback);
-  }
-
-  addDocument(params, callback) {
-    // addDocument expects metadata as a string
-    let _metadata: string;
-    if (params && params.metadata) {
-      _metadata =
-        typeof params.metadata === 'object'
-          ? JSON.stringify(params.metadata)
-          : params.metadata;
-    }
-    const _params = extend(params, { metadata: _metadata });
-    return super.addDocument(_params, callback);
+    return super.listFields(params, callback);
   }
 
   getConfigurations(params, callback) {
@@ -137,23 +102,14 @@ class DiscoveryV1 extends GeneratedDiscoveryV1 {
   createConfiguration(params, callback) {
     // name is now a required parameter
     // file is now split into conversions, enrichments and normalizations
-    let _conversions;
-    let _enrichments;
-    let _normalizations;
-    if (params && params.file) {
-      _conversions = params.file.conversions;
-      _enrichments = params.file.enrichments;
-      _normalizations = params.file.normalizations;
+    const _params = params || {};
+    if (_params.file) {
+      const { conversions, enrichments, normalizations } = _params.file;
+      _params.conversions = conversions;
+      _params.enrichments = enrichments;
+      _params.normalizations = normalizations;
     }
-    const _params = extend(
-      {
-        name: '_',
-        conversions: _conversions,
-        enrichments: _enrichments,
-        normalizations: _normalizations
-      },
-      params
-    );
+    _params.name = _params.name || '_';
     return super.createConfiguration(_params, callback);
   }
 
@@ -193,49 +149,20 @@ class DiscoveryV1 extends GeneratedDiscoveryV1 {
     return this.updateDocument(_params, callback);
   }
 
-  updateDocument(params, callback) {
-    // addDocument expects metadata as a string
-    let _metadata: string;
-    if (params && params.metadata) {
-      _metadata =
-        typeof params.metadata === 'object'
-          ? JSON.stringify(params.metadata)
-          : params.metadata;
-    }
-    const _params = extend(params, { metadata: _metadata });
-    return super.updateDocument(_params, callback);
-  }
-
   query(params, callback) {
-    let _collection_id;
-    let _return_fields;
-    let _passages;
-    if (params.collection_id) {
-      _collection_id = !Array.isArray(params.collection_id)
-        ? [params.collection_id]
-        : params.collection_id;
-    }
+    let _params = params || {};
     // query and natural_language_query can't both be populated
-    if (params.query && params.natural_language_query) {
-      delete params.natural_language_query;
+    if (_params.query && _params.natural_language_query) {
+      delete _params.natural_language_query;
     }
-    if (params.return) {
-      _return_fields = params.return.split(',');
+    if (_params.return) {
+      _params.return_fields = _params.return.split(',');
     }
-    // params.passages is now a boolean with properties passed in
-    // indepdently, i.e params.passage_<property_name> etc...
-    if (params.passages && Object.keys(params.passages).length > 0) {
-      Object.keys(params.passages).forEach(function(key) {
-        _passages[`passages_${key}`] = params.passages[key];
-      });
-    }
-    const _params = extend(
-      {
-        collection_ids: _collection_id,
-        return_fields: _return_fields
-      },
-      _passages,
-      params
+    // passages parameters are now snake case
+    Object.keys(_params).forEach(
+      key =>
+        key.match(/passages\..*/i) &&
+        (_params[key.replace('.', '_')] = _params[key])
     );
     return super.query(_params, callback);
   }

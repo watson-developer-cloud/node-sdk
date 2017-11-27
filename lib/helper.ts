@@ -224,19 +224,19 @@ export function buildRequestFileObject(
 }
 
 /**
- * this function converts header keys to lower case
+ * this function converts an object's keys to lower case
  * @param {Object} headers - the header parameters
  * @returns {Object}
  */
-export function toLowerHeaderParams(headers: Object): Object {
-  let _headers = {};
-  if (headers) {
-    _headers = extend(
+export function toLowerKeys(obj: Object): Object {
+  let _obj = {};
+  if (obj) {
+    _obj = extend(
       {},
-      ...Object.keys(headers).map(key => ({
-        [key.toLowerCase()]: headers[key]
+      ...Object.keys(obj).map(key => ({
+        [key.toLowerCase()]: obj[key]
       }))
     );
   }
-  return _headers;
+  return _obj;
 }
