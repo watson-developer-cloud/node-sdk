@@ -78,18 +78,6 @@ describe('wrapper', function() {
       })
     );
   });
-  it('should return a stream if callback is null and there is an error', function(done) {
-    const textToSpeech = watson.text_to_speech({
-      username: 'a',
-      password: 'b',
-      version: 'v1'
-    });
-
-    textToSpeech.synthesize({ voice: '', accept: '' }).on('error', function(error) {
-      assert.equal('Error: Missing required parameters: text', error);
-      done();
-    });
-  });
 
   describe('env', function() {
     let env;

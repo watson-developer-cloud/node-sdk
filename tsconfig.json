@@ -60,6 +60,7 @@
     "./natural-language-understanding/*.ts",
     "./visual-recognition/*.ts",
     "./personality-insights/*.ts",
-    "./tone-analyzer/*.ts"
+    "./tone-analyzer/*.ts",
+    "./text-to-speech/*.ts"
   ]
 }
