@@ -25,7 +25,7 @@ import { BaseService } from '../lib/base_service';
  */
 
 class GeneratedTextToSpeechV1 extends BaseService {
-  name: string; // set by prototype to ''
+  name: string; // set by prototype to 'text_to_speech'
   version: string; // set by prototype to 'v1'
 
   static URL: string = 'https://gateway.watsonplatform.net/text-to-speech/api';
@@ -548,8 +548,7 @@ class GeneratedTextToSpeechV1 extends BaseService {
    * Synthesizes text to spoken audio, returning the synthesized audio stream as an array of bytes. Identical to the `GET` method but passes longer text in the body of the request, not with the URL. Text size is limited to 5 KB.   If a request includes invalid query parameters, the service returns a `Warnings` response header that provides messages about the invalid parameters. The warning includes a descriptive message and a list of invalid argument strings. For example, a message such as `\"Unknown arguments:\"` or `\"Unknown url query arguments:\"` followed by a list of the form `\"invalid_arg_1, invalid_arg_2.\"` The request succeeds despite the warnings.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} [params.accept2] - Requested audio format (MIME type) of the audio. You can use this header or the `accept` query parameter to specify the audio format. (For the `audio/l16` format, you can optionally specify `endianness=big-endian` or `endianness=little-endian`; the default is little endian.).
-   * @param {string} [params.accept] - Requested audio format (MIME type) of the audio. You can use this query parameter or the `Accept` header to specify the audio format. (For the `audio/l16` format, you can optionally specify `endianness=big-endian` or `endianness=little-endian`; the default is little endian.).
+   * @param {string} [params.accept] - Requested audio format (MIME type) of the audio. You can optionally specify `endianness=big-endian` or `endianness=little-endian`; the default is little endian.
    * @param {string} [params.voice] - Selects a voice to use for synthesis. Retrieve available voices with the `GET /v1/voices` method.
    * @param {string} [params.customization_id] - GUID of a custom voice model to be used for the synthesis. If a custom voice model is specified, it is guaranteed to work only if it matches the language of the indicated voice. You must make the request with service credentials created for the instance of the service that owns the custom model. Omit the parameter to use the specified voice with no customization.
    * @param {string} params.text - Text to synthesize.
@@ -571,7 +570,6 @@ class GeneratedTextToSpeechV1 extends BaseService {
       text: _params.text
     };
     const query = {
-      accept: _params.accept,
       voice: _params.voice,
       customization_id: _params.customization_id
     };
@@ -586,7 +584,7 @@ class GeneratedTextToSpeechV1 extends BaseService {
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          accept: _params.accept2 || 'audio/basic',
+          accept: _params.accept || 'audio/basic',
           'content-type': 'application/json',
           'X-Watson-Learning-Opt-Out': _params['X-Watson-Learning-Opt-Out'] || 0
         }
