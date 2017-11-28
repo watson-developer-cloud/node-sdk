@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import * as extend from 'extend';
+import extend = require('extend');
 import { RequestResponse } from 'request';
 import { createRequest } from '../lib/requestwrapper';
 import { getMissingParams } from '../lib/helper';
@@ -168,7 +168,7 @@ class GeneratedTextToSpeechV1 extends BaseService {
         method: 'GET',
         path: path
       },
-      defaultOptions: extend(true, extend(true, {}, this._options), {
+      defaultOptions: extend(true, {}, this._options, {
         headers: {
           accept: 'application/json'
         }
@@ -527,8 +527,7 @@ class GeneratedTextToSpeechV1 extends BaseService {
       options: {
         url: '/v1/pronunciation',
         method: 'GET',
-        qs: query,
-        json: true
+        qs: query
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
@@ -559,7 +558,7 @@ class GeneratedTextToSpeechV1 extends BaseService {
    */
   synthesize(
     params: GeneratedTextToSpeechV1.SynthesizeParams,
-    callback?: GeneratedTextToSpeechV1.Callback<ReadableStream>
+    callback?: GeneratedTextToSpeechV1.Callback<Buffer>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -928,19 +927,18 @@ namespace GeneratedTextToSpeechV1 {
     export enum Accept {
       BASIC = 'audio/basic',
       FLAC = 'audio/flac',
-      L16_RATE_NNNN = 'audio/l16;rate=nnnn',
+      L16 = 'audio/l16',
       OGG = 'audio/ogg',
       OGG_CODECS_OPUS = 'audio/ogg;codecs=opus',
       OGG_CODECS_VORBIS = 'audio/ogg;codecs=vorbis',
       MP3 = 'audio/mp3',
       MPEG = 'audio/mpeg',
-      MULAW_RATE_NNNN = 'audio/mulaw;rate=nnnn',
+      MULAW = 'audio/mulaw',
       WAV = 'audio/wav',
       WEBM = 'audio/webm',
       WEBM_CODECS_OPUS = 'audio/webm:codecs=opus',
       WEBM_CODECS_VORBIS = 'audio/webm:codecs=vorbis'
     }
-
     /** Selects a voice to use for synthesis. Retrieve available voices with the `GET /v1/voices` method. **/
     export enum Voice {
       EN_US_ALLISONVOICE = 'en-US_AllisonVoice',
