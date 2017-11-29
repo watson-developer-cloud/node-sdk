@@ -138,16 +138,21 @@ export class BaseService {
     if (!_options.use_unauthenticated) {
       if (!hasCredentials(_options) && acceptsApiKey(this.name)) {
         throw new Error(
-          `Argument error: api_key or username/password are` +
-            ` required for ${this.name
-              .toUpperCase()
-              .replace(/_/g, ' ')} unless use_unauthenticated is set`
+          `Argument error: api_key or username/password are required for ${this.name
+            .toUpperCase()
+            .replace(
+              /_/g,
+              ' '
+            )} ${this.version.toUpperCase()} unless use_unauthenticated is set`
         );
       } else if (!hasCredentials(_options)) {
         throw new Error(
           `Argument error: username and password are required for ${this.name
             .toUpperCase()
-            .replace(/_/g, ' ')} unless use_unauthenticated is set`
+            .replace(
+              /_/g,
+              ' '
+            )} ${this.version.toUpperCase()} unless use_unauthenticated is set`
         );
       }
       if (hasBasicCredentials(_options)) {
