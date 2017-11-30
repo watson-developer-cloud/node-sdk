@@ -66,6 +66,7 @@
     "./personality-insights/*.ts",
     "./tone-analyzer/*.ts",
     "./text-to-speech/*.ts",
-    "./speech-to-text/*.ts"
+    "./speech-to-text/*.ts",
+    "./authorization/*.ts"
   ]
 }
