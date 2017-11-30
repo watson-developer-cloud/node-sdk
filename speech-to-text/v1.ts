@@ -1,17 +1,20 @@
 import cookie = require('cookie');
 import pick = require('object.pick');
-import url = require('url');
-import https = require('https');
 import async = require('async');
-import http = require('http');
 import isStream = require('isstream');
-import { createRequest as requestFactory } from '../lib/requestwrapper';
 import extend = require('extend');
 import GeneratedSpeechToTextV1 = require('./v1-generated');
-import helper = require('../lib/helper');
 import RecognizeStream = require('./recognize_stream');
+import { createRequest as requestFactory } from '../lib/requestwrapper';
+import { parse } from 'url';
+import { getMissingParams } from '../lib/helper';
 
 const pkg = require('../package.json');
+
+const protocols = {
+  https: require('https'),
+  http: require('http')
+};
 
 const PARAMS_ALLOWED = [
   'continuous',
@@ -37,15 +40,10 @@ const PARAMS_ALLOWED = [
  * @param corporaList
  * @return {boolean}
  */
-function isProcessing(corporaList) {
-  const recordsBeingProcessed = corporaList.corpora.filter(function(record) {
-    return record['status'] === 'being_processed';
-  });
-  if (recordsBeingProcessed.length === 0) {
-    return false;
-  } else {
-    return true;
-  }
+function isProcessing(corporaList): boolean {
+  return corporaList.corpora.some(
+    record => record['status'] === 'being_processed'
+  );
 }
 
 /**
@@ -54,23 +52,16 @@ function isProcessing(corporaList) {
  * @param corporaList
  * @return {boolean}
  */
-function isAnalyzed(corporaList) {
-  const recordsAnalyzed = corporaList.corpora.filter(function(record) {
-    return record['status'] === 'analyzed';
-  });
-  if (recordsAnalyzed.length === corporaList.corpora.length) {
-    return true;
-  } else {
-    return false;
-  }
+function isAnalyzed(corporaList): boolean {
+  return corporaList.corpora.some(record => record['status'] === 'analyzed');
 }
 
 /**
  * @private
  * @param chunk
- * @return {*}
+ * @return {any}
  */
-function formatChunk(chunk) {
+function formatChunk(chunk: string) {
   // Convert the string into an array
   let result = chunk;
 
@@ -112,10 +103,6 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
     return super.getSessionStatus(params, callback);
   }
 
-  recognize(params, callback) {
-    return this._recognize(params, callback);
-  }
-
   getRecognitionJob(params, callback) {
     return super.checkJob(params, callback);
   }
@@ -137,7 +124,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
   }
 
   createRecognitionJob(params, callback) {
-    if(params && Array.isArray(params.events)) {
+    if (params && Array.isArray(params.events)) {
       params.events = params.events.join(',');
     }
     return super.createJob(params, callback);
@@ -214,18 +201,39 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
     return super.resetLanguageModel(params, callback);
   }
 
-/**
- * Waits while corpora analysis status is 'being_processes', fires callback once the status is 'analyzed'
- *
- * Note: the code will throw an error in case there in no corpus in the customization
- *
- *
- * @param {Object} params The parameters
- * @param {String} params.customization_id - The GUID of the custom language model
- * @param {Number} [params.interval=5000] - (milliseconds) - how long to wait between status checks
- * @param {Number} [params.times=30] - maximum number of attempts
- * @param {Function} callback
- */
+  createSession(params, callback) {
+    /**
+     * Add the cookie_session to the response
+     * @private
+     * @param cb
+     * @return {Function}
+     */
+    function addSessionId(cb) {
+      return function(error, body, response) {
+        if (error) {
+          cb(error, body, response);
+          return;
+        }
+        const cookies = cookie.parse(response.headers['set-cookie'][0]);
+        body.cookie_session = cookies.SESSIONID;
+        cb(error, body, response);
+      };
+    }
+    return super.createSession(params, addSessionId(callback));
+  }
+
+  /**
+   * Waits while corpora analysis status is 'being_processes', fires callback once the status is 'analyzed'
+   *
+   * Note: the code will throw an error in case there in no corpus in the customization
+   *
+   *
+   * @param {Object} params The parameters
+   * @param {String} params.customization_id - The GUID of the custom language model
+   * @param {Number} [params.interval=5000] - (milliseconds) - how long to wait between status checks
+   * @param {Number} [params.times=30] - maximum number of attempts
+   * @param {Function} callback
+   */
   whenCorporaAnalyzed(params, callback) {
     const self = this;
 
@@ -295,41 +303,20 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
     );
   }
 
-  createSession(params, callback) {
   /**
-   * Add the cookie_session to the response
-   * @private
-   * @param cb
-   * @return {Function}
+   * Creates a HTTP/HTTPS request to /recognize and keep the connection open.
+   * Sets 'Transfer-Encoding': 'chunked' and prepare the connection to send
+   * chunk data.
+   *
+   * @deprecated use createRecognizeStream instead
+   *
+   * @param {Object} params The parameters
+   * @param {String} [params.content_type] - The Content-type e.g. audio/l16; rate=48000
+   * @param {String} [params.session_id] - The session id
+   * @param {function} callback
    */
-    function addSessionId(cb) {
-      return function(error, body, response) {
-        if (error) {
-          cb(error, body, response);
-          return;
-        }
-        const cookies = cookie.parse(response.headers['set-cookie'][0]);
-        body.cookie_session = cookies.SESSIONID;
-        cb(error, body, response);
-      };
-    }
-    return super.createSession(params, addSessionId(callback));
-  }
-
-/**
- * Creates a HTTP/HTTPS request to /recognize and keep the connection open.
- * Sets 'Transfer-Encoding': 'chunked' and prepare the connection to send
- * chunk data.
- *
- * @deprecated use createRecognizeStream instead
- *
- * @param {Object} params The parameters
- * @param {String} [params.content_type] - The Content-type e.g. audio/l16; rate=48000
- * @param {String} [params.session_id] - The session id
- * @param {function} callback
- */
   recognizeLive(params, callback) {
-    const missingParams = helper.getMissingParams(params, [
+    const missingParams = getMissingParams(params, [
       'session_id',
       'content_type',
       'cookie_session'
@@ -346,7 +333,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
       params.session_id,
       '/recognize'
     ].join('');
-    const parts = url.parse(serviceUrl);
+    const parts = parse(serviceUrl);
     const options = {
       agent: false,
       host: parts.hostname,
@@ -362,7 +349,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
         this._options.headers
       )
     };
-    const protocol = parts.protocol.match('http:') ? http : https;
+    const protocol = protocols[parts.protocol.split(':')[0]];
     const recognize_req = protocol.request(options, function(result) {
       result.setEncoding('utf-8');
       let transcript = '';
@@ -388,20 +375,20 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
     return recognize_req;
   }
 
-/**
- * Result observer for upcoming or ongoing recognition task in the session.
- * This request has to be started before POST on recognize finishes,
- * otherwise it waits for the next recognition.
- *
- * @deprecated use createRecognizeStream instead
- *
- * @param {Object} params The parameters
- * @param {String} [params.session_id] - Session used in the recognition
- * @param {boolean} [params.interim_results] - If true, interim results will be returned. Default: false
- * @param {Function} callback
- */
+  /**
+   * Result observer for upcoming or ongoing recognition task in the session.
+   * This request has to be started before POST on recognize finishes,
+   * otherwise it waits for the next recognition.
+   *
+   * @deprecated use createRecognizeStream instead
+   *
+   * @param {Object} params The parameters
+   * @param {String} [params.session_id] - Session used in the recognition
+   * @param {boolean} [params.interim_results] - If true, interim results will be returned. Default: false
+   * @param {Function} callback
+   */
   observeResult(params, callback) {
-    const missingParams = helper.getMissingParams(params, [
+    const missingParams = getMissingParams(params, [
       'session_id',
       'cookie_session'
     ]);
@@ -415,7 +402,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
       params.session_id,
       '/observe_result'
     ].join('');
-    const parts = url.parse(serviceUrl);
+    const parts = parse(serviceUrl);
     const options = {
       agent: false,
       host: parts.hostname,
@@ -432,7 +419,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
         this._options.headers
       )
     };
-    const protocol = parts.protocol.match('http:') ? http : https;
+    const protocol = protocols[parts.protocol.match(/https?/)[0]];
     const req = protocol.request(options, function(result) {
       result.setEncoding('utf-8');
       result.on('data', function(chunk) {
@@ -455,12 +442,12 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
     return req;
   }
 
-/**
- * Replaces recognizeLive & friends with a single 2-way stream over websockets
- *
- * @param {Object} params The parameters
- * @return {RecognizeStream}
- */
+  /**
+   * Replaces recognizeLive & friends with a single 2-way stream over websockets
+   *
+   * @param {Object} params The parameters
+   * @return {RecognizeStream}
+   */
   createRecognizeStream(params) {
     params = params || {};
     params.url = this._options.url;
@@ -476,33 +463,30 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
     return new RecognizeStream(params);
   }
 
-/**
- * Speech recognition for given audio using default model.
- *
- * @param {Object} params The parameters
- * @param {Stream} params.audio - Audio to be recognized
- * @param {String} params.content_type - Content-type
- * @param {Boolean} [params.continuous]
- * @param {Number} [params.max_alternatives]
- * @param {Boolean} [params.timestamps]
- * @param {Boolean} [params.word_confidence]
- * @param {Number} [params.inactivity_timeout]
- * @param {String} [params.model]
- * @param {Boolean} [params.interim_results]
- * @param {Boolean} [params.keywords]
- * @param {Number} [params.keywords_threshold]
- * @param {Number} [params.word_alternatives_threshold]
- * @param {Boolean} [params.profanity_filter]
- * @param {Boolean} [params.smart_formatting]
- * @param {String} [params.customization_id]
- * @param {Boolean} [params.speaker_labels]
- * @param {function} callback
- */
-  _recognize(params, callback) {
-    const missingParams = helper.getMissingParams(params, [
-      'audio',
-      'content_type'
-    ]);
+  /**
+   * Speech recognition for given audio using default model.
+   *
+   * @param {Object} params The parameters
+   * @param {Stream} params.audio - Audio to be recognized
+   * @param {String} params.content_type - Content-type
+   * @param {Boolean} [params.continuous]
+   * @param {Number} [params.max_alternatives]
+   * @param {Boolean} [params.timestamps]
+   * @param {Boolean} [params.word_confidence]
+   * @param {Number} [params.inactivity_timeout]
+   * @param {String} [params.model]
+   * @param {Boolean} [params.interim_results]
+   * @param {Boolean} [params.keywords]
+   * @param {Number} [params.keywords_threshold]
+   * @param {Number} [params.word_alternatives_threshold]
+   * @param {Boolean} [params.profanity_filter]
+   * @param {Boolean} [params.smart_formatting]
+   * @param {String} [params.customization_id]
+   * @param {Boolean} [params.speaker_labels]
+   * @param {function} callback
+   */
+  recognize(params, callback) {
+    const missingParams = getMissingParams(params, ['audio', 'content_type']);
     if (missingParams) {
       callback(missingParams);
       return;
@@ -545,19 +529,19 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
     return super.deleteLanguageModel(params, callback);
   }
 
-/**
- * Waits while a customization status is 'pending' or 'training', fires callback once the status is 'ready' or 'available'.
- *
- * Note: the customization will remain in 'pending' status until at least one word corpus is added.
- *
- * See http://www.ibm.com/watson/developercloud/speech-to-text/api/v1/#list_models for status details.
- *
- * @param {Object} params The parameters
- * @param {String} params.customization_id - The GUID of the custom language model
- * @param {Number} [params.interval=5000] - (milliseconds) - how log to wait between status checks
- * @param {Number} [params.times=30] - maximum number of attempts
- * @param {Function} callback
- */
+  /**
+   * Waits while a customization status is 'pending' or 'training', fires callback once the status is 'ready' or 'available'.
+   *
+   * Note: the customization will remain in 'pending' status until at least one word corpus is added.
+   *
+   * See http://www.ibm.com/watson/developercloud/speech-to-text/api/v1/#list_models for status details.
+   *
+   * @param {Object} params The parameters
+   * @param {String} params.customization_id - The GUID of the custom language model
+   * @param {Number} [params.interval=5000] - (milliseconds) - how log to wait between status checks
+   * @param {Number} [params.times=30] - maximum number of attempts
+   * @param {Function} callback
+   */
   whenCustomizationReady(params, callback) {
     const self = this;
 
