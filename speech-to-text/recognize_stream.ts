@@ -66,8 +66,8 @@ interface RecognizeStream extends Duplex {
  */
 class RecognizeStream extends Duplex {
   private options;
-  private listening;
-  private initialized;
+  private listening: boolean;
+  private initialized: boolean;
   private socket;
 
   constructor(options) {
