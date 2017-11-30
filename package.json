@@ -111,7 +111,7 @@
     "node": ">=4"
   },
   "scripts": {
-    "test": "nyc mocha test/unit/ test/integration/",
+    "test": "nyc mocha test/unit/ test/integration/ && nyc report --reporter=html",
     "lint": "npm run compat-check && eslint . --cache && dependency-lint",
     "compat-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
     "autofix": "eslint . --fix",
