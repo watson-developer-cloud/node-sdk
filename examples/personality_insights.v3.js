@@ -80,6 +80,6 @@ personality_insights
   .profile_csv({
     content: 'Enter more than 100 unique words here...',
     content_type: 'text/plain',
-    csv_headers: true,
+    csv_headers: true
   })
   .pipe(fs.createWriteStream('./output.csv'));

@@ -103,7 +103,10 @@ textToSpeech.updateCustomization(
     customization_id: '6666451d-a23e-485c-9bc5-c7ce722550d6',
     name: 'new name', // optional
     description: 'new description', // optional
-    words: [{ word: 'NCAA', translation: 'N C double A' }, { word: 'iPhone', translation: 'I phone' }] // required - replaces existing words list
+    words: [
+      { word: 'NCAA', translation: 'N C double A' },
+      { word: 'iPhone', translation: 'I phone' }
+    ] // required - replaces existing words list
   },
   function(err) {
     if (err) {
@@ -202,7 +205,10 @@ textToSpeech.deleteCustomization(
 textToSpeech.addWords(
   {
     customization_id: '7c7f8ba7-2f83-48f2-ae52-3a70825f9899',
-    words: [{ word: 'NCAA', translation: 'N C double A' }, { word: 'iPhone', translation: 'I phone' }]
+    words: [
+      { word: 'NCAA', translation: 'N C double A' },
+      { word: 'iPhone', translation: 'I phone' }
+    ]
   },
   function(err) {
     if (err) {

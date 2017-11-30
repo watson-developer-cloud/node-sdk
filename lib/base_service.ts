@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-import * as extend from 'extend';
-import * as request from 'request';
-import * as vcapServices from 'vcap_services';
+import extend = require('extend');
+import request = require('request');
+import vcapServices = require('vcap_services');
 // new Buffer() is deprecated, replaced with Buffer.from() in node v4.5.0+ -
 // `buffer-from` uses the new api when possible but falls back to the old one otherwise
-import * as bufferFrom from 'buffer-from';
+import bufferFrom = require('buffer-from');
 import { stripTrailingSlash } from './helper';
 
 // custom interfaces
@@ -54,13 +54,12 @@ interface Credentials {
   url: string;
 }
 
-// custom type guards
 function hasCredentials(obj: any): boolean {
   return obj && ((obj.username && obj.password) || obj.api_key);
 }
 
-function hasUseUnauthenticated(obj: any): boolean {
-  return obj && obj.use_unauthenticated === true;
+function hasBasicCredentials(obj: any): boolean {
+  return obj && obj.username && obj.password;
 }
 
 function acceptsApiKey(name: string): boolean {
@@ -136,30 +135,36 @@ export class BaseService {
       options,
       _options
     );
-    if (!hasUseUnauthenticated(_options)) {
+    if (!_options.use_unauthenticated) {
       if (!hasCredentials(_options) && acceptsApiKey(this.name)) {
         throw new Error(
-          'Argument error: api_key or username/password are' +
-            ' required unless use_unauthenticated is set'
+          `Argument error: api_key or username/password are required for ${this.name
+            .toUpperCase()
+            .replace(
+              /_/g,
+              ' '
+            )} ${this.version.toUpperCase()} unless use_unauthenticated is set`
         );
       } else if (!hasCredentials(_options)) {
         throw new Error(
-          'Argument error: username and password are required unless use_unauthenticated is set'
+          `Argument error: username and password are required for ${this.name
+            .toUpperCase()
+            .replace(
+              /_/g,
+              ' '
+            )} ${this.version.toUpperCase()} unless use_unauthenticated is set`
         );
       }
-    }
-    if (
-      !acceptsApiKey(this.name) ||
-      (acceptsApiKey(this.name) && !_options.api_key)
-    ) {
-      // Calculate and add Authorization header to base options
-      const encodedCredentials = bufferFrom(
-        `${_options.username}:${_options.password}`
-      ).toString('base64');
-      const authHeader = { Authorization: `Basic ${encodedCredentials}` };
-      _options.headers = extend(authHeader, _options.headers);
-    } else {
-      _options.qs = extend({ api_key: _options.api_key }, _options.qs);
+      if (hasBasicCredentials(_options)) {
+        // Calculate and add Authorization header to base options
+        const encodedCredentials = bufferFrom(
+          `${_options.username}:${_options.password}`
+        ).toString('base64');
+        const authHeader = { Authorization: `Basic ${encodedCredentials}` };
+        _options.headers = extend(authHeader, _options.headers);
+      } else {
+        _options.qs = extend({ api_key: _options.api_key }, _options.qs);
+      }
     }
     return _options;
   }

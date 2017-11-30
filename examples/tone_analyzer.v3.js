@@ -8,24 +8,39 @@ const tone_analyzer = new ToneAnalyzerV3({
   version_date: '2017-09-21'
 });
 
-tone_analyzer.tone({ tone_input: 'Greetings from Watson Developer Cloud!', content_type: 'text/plain' }, function(err, tone) {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log('tone endpoint:');
-    console.log(JSON.stringify(tone, null, 2));
+tone_analyzer.tone(
+  {
+    tone_input: 'Greetings from Watson Developer Cloud!',
+    content_type: 'text/plain'
+  },
+  function(err, tone) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('tone endpoint:');
+      console.log(JSON.stringify(tone, null, 2));
+    }
   }
-});
+);
 
 const params = {
   utterances: [
     { text: 'My charger isn’t working.', user: 'customer' },
-    { text: 'Thanks for reaching out. Can you give me some more detail about the issue?', user: 'agent' },
     {
-      text: "I put my charger in my phone last night to charge and it isn't working. Which is ridiculous, it's a new charger, I bought it yesterday.",
+      text:
+        'Thanks for reaching out. Can you give me some more detail about the issue?',
+      user: 'agent'
+    },
+    {
+      text:
+        "I put my charger in my phone last night to charge and it isn't working. Which is ridiculous, it's a new charger, I bought it yesterday.",
       user: 'customer'
     },
-    { text: 'I’m sorry you’re having issues with charging. What kind of charger do you have?', user: 'agent' }
+    {
+      text:
+        'I’m sorry you’re having issues with charging. What kind of charger do you have?',
+      user: 'agent'
+    }
   ]
 };
 
