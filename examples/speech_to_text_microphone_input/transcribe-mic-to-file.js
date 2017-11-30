@@ -25,7 +25,9 @@ const wavStream = new wav.FileWriter('./audio.wav', {
   channels: 1
 });
 
-const recognizeStream = speechToText.createRecognizeStream({ content_type: 'audio/wav' });
+const recognizeStream = speechToText.createRecognizeStream({
+  content_type: 'audio/wav'
+});
 
 micInputStream.pipe(wavStream);
 

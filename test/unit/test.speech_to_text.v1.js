@@ -230,14 +230,6 @@ describe('speech_to_text', function() {
       assert.equal(req.src.path, payload.audio.path);
     });
 
-    it('should generate a valid payload without continuous', function() {
-      const req = speech_to_text.recognize(extend({ continuous: true }, payload), noop);
-      assert.equal(req.uri.href, service.url + path + '?continuous=true');
-      assert.equal(req.method, 'POST');
-      assert.equal(req.headers['Content-Type'], payload.content_type);
-      assert.equal(req.src.path, payload.audio.path);
-    });
-
     it('should accept an array of keywords', function() {
       const req = speech_to_text.recognize(extend({ keywords: ['a', 'b', 'c'] }, payload), noop);
       assert.equal(req.uri.query, 'keywords=' + encodeURIComponent('a,b,c'));

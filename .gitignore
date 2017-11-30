@@ -27,3 +27,4 @@ personality-insights/*.js
 tone-analyzer/*.js
 visual-recognition/*.js
 text-to-speech/*.js
+speech-to-text/*.js

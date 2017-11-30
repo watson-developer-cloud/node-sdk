@@ -18,7 +18,9 @@ const wavStream = new wav.Writer({
   channels: 2
 });
 
-const recognizeStream = speechToText.createRecognizeStream({ content_type: 'audio/wav' });
+const recognizeStream = speechToText.createRecognizeStream({
+  content_type: 'audio/wav'
+});
 
 lineIn.pipe(wavStream);
 
