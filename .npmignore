@@ -12,6 +12,8 @@ examples
 LICENSE
 CONTRIBUTING.md
 RELEASE.md
+CONTRIBUTING.md
+CHANGELOG.md
 jsdoc/
 doc/
 auth.js.enc
@@ -25,3 +27,11 @@ tsconfig.json
 tslint.json
 typings.json
 typings
+.vscode
+.nyc_output
+.github
+.eslintrc.js
+.eslintcache
+.eslintignore
+.gitattributes
+watson-developer-cloud-*.tgz
