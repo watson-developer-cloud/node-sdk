@@ -13,6 +13,7 @@ doc/
 dist/
 .env
 .eslintcache
+.nyc_output/*
 examples/speech_to_text_microphone_input/*.wav
 examples/speech_to_text_microphone_input/*.txt
 conversation/*.js
