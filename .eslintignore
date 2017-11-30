@@ -8,12 +8,5 @@ examples/**/node_modules/
 # todo: encrypt a compatible version of this
 test/resources/auth.js
 # ignore emitted js
-./discovery/*.js
-./language-translator/*.js
-./natural-language-classifier/*.js
-./natural-language-understanding/*.js
-./personality-insights/*.js
-./speech-to-text/*.js
-./text-to-speech/*.js
-./tone-analyzer/*.js
-./visual-recognition/*.js
+**/*v*.js
+lib/*.js
