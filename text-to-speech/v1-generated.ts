@@ -585,8 +585,7 @@ class GeneratedTextToSpeechV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: {
           accept: _params.accept || 'audio/basic',
-          'content-type': 'application/json',
-          'X-Watson-Learning-Opt-Out': _params['X-Watson-Learning-Opt-Out'] || 0
+          'content-type': 'application/json'
         }
       })
     };

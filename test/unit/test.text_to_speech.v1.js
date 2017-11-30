@@ -95,12 +95,6 @@ describe('text_to_speech', function() {
       assert.equal(req.headers['content-type'], 'application/json');
     });
 
-    it('should support the X-Watson-Learning-Opt-Out option', function() {
-      const params = { 'X-Watson-Learning-Opt-Out': true, text: 'test' };
-      const req = text_to_speech.synthesize(params, noop);
-      assert.equal(req.headers['X-Watson-Learning-Opt-Out'], '1');
-    });
-
     it('should support the customization_id option', function() {
       const params = { customization_id: 'foo', text: 'test' };
       const req = text_to_speech.synthesize(params, noop);
