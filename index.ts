@@ -14,43 +14,44 @@
  * limitations under the License.
  */
 
-'use strict';
-
 /**
  * @module watson-developer-cloud
  */
 
-exports.AuthorizationV1 = require('./authorization/v1');
+export import AuthorizationV1 = require('./authorization/v1');
 
-exports.ConversationV1 = require('./conversation/v1');
+export import ConversationV1 = require('./conversation/v1');
 
-exports.DialogV1 = require('./dialog/v1');
+export import DiscoveryV1 = require('./discovery/v1');
 
-exports.DiscoveryV1 = require('./discovery/v1');
+export import LanguageTranslatorV2 = require('./language-translator/v2');
 
-exports.LanguageTranslatorV2 = require('./language-translator/v2');
+export import NaturalLanguageClassifierV1 = require('./natural-language-classifier/v1');
 
-exports.NaturalLanguageClassifierV1 = require('./natural-language-classifier/v1');
+export import NaturalLanguageUnderstandingV1 = require('./natural-language-understanding/v1');
 
-exports.NaturalLanguageUnderstandingV1 = require('./natural-language-understanding/v1');
+export import PersonalityInsightsV3 = require('./personality-insights/v3');
 
-exports.PersonalityInsightsV2 = require('./personality-insights/v2');
-exports.PersonalityInsightsV3 = require('./personality-insights/v3');
+export import SpeechToTextV1 = require('./speech-to-text/v1');
 
-exports.SpeechToTextV1 = require('./speech-to-text/v1');
+export import TextToSpeechV1 = require('./text-to-speech/v1');
 
-exports.TextToSpeechV1 = require('./text-to-speech/v1');
+export import ToneAnalyzerV3 = require('./tone-analyzer/v3');
 
-exports.ToneAnalyzerV3 = require('./tone-analyzer/v3');
+export import VisualRecognitionV3 = require('./visual-recognition/v3');
 
-exports.VisualRecognitionV3 = require('./visual-recognition/v3');
+// js service files need to be imported this way as
+// a hack to supress compiler warnings about using
+// a .js file with the es6 import construct
+export const DialogV1 = require('./dialog/v1');
+export const PersonalityInsightsV2 = require('./personality-insights/v2');
 
 // adding shim constructors for backwards compatibility
 
 // 2-d map of snake_case service names & version => constructor function
-// e.g. servicesByVersion.text_to_speech.v1 === exports.TextToSpeechV1;
+// e.g. servicesByVersion.text_to_speech.v1 === export import TextToSpeechV1;
 const servicesByVersion = {};
-Object.keys(exports).forEach(function(key) {
+Object.keys(exports).forEach(key => {
   const Service = exports[key];
   const name = Service.prototype.name;
   const version = Service.prototype.version;
@@ -58,7 +59,7 @@ Object.keys(exports).forEach(function(key) {
   servicesByVersion[name][version] = Service;
 });
 
-Object.keys(servicesByVersion).forEach(function(serviceName) {
+Object.keys(servicesByVersion).forEach(serviceName => {
   Object.defineProperty(exports, serviceName, {
     enumerable: false,
     configurable: true,
@@ -74,7 +75,9 @@ Object.keys(servicesByVersion).forEach(function(serviceName) {
       const Service = servicesByVersion[serviceName][options.version];
 
       if (!Service) {
-        throw new Error('Unable to find ' + serviceName + ' version ' + options.version);
+        throw new Error(
+          'Unable to find ' + serviceName + ' version ' + options.version
+        );
       }
 
       return new Service(options);
@@ -85,9 +88,14 @@ Object.keys(servicesByVersion).forEach(function(serviceName) {
 // removed services
 // we don't want these services listed (so non-enumerable), but we do want a clear error message
 // if old code happens to try using one
-['concept_insights', 'relationship_extraction', 'message_resonance', 'question_and_answer', 'visual_insights', 'concept_expansion'].forEach(function(
-  serviceName
-) {
+[
+  'concept_insights',
+  'relationship_extraction',
+  'message_resonance',
+  'question_and_answer',
+  'visual_insights',
+  'concept_expansion'
+].forEach(function(serviceName) {
   Object.defineProperty(exports, serviceName, {
     enumerable: false,
     configurable: true,
@@ -103,7 +111,9 @@ Object.keys(servicesByVersion).forEach(function(serviceName) {
     configurable: true,
     writable: true,
     value: function() {
-      throw new Error('The Alchemy Vision service is no longer available, please use Visual Recognition instead.');
+      throw new Error(
+        'The Alchemy Vision service is no longer available, please use Visual Recognition instead.'
+      );
     }
   });
 });

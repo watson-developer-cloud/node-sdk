@@ -67,6 +67,7 @@
     "./tone-analyzer/*.ts",
     "./text-to-speech/*.ts",
     "./speech-to-text/*.ts",
-    "./authorization/*.ts"
+    "./authorization/*.ts",
+    "index.ts"
   ]
 }
