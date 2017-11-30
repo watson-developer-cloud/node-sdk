@@ -83,6 +83,7 @@
     "memory-fs": "^0.4.1",
     "mocha": "^3.5.3",
     "nock": "^9.1.3",
+    "nyc": "^11.3.0",
     "object.assign": "^4.0.4",
     "prettier": "^1.8.2",
     "shebang-loader": "0.0.1",
@@ -110,7 +111,7 @@
     "node": ">=4"
   },
   "scripts": {
-    "test": "mocha test/unit/ test/integration/",
+    "test": "nyc mocha test/unit/ test/integration/",
     "lint": "npm run compat-check && eslint . --cache && dependency-lint",
     "compat-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
     "autofix": "eslint . --fix",
