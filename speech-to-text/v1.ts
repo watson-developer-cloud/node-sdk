@@ -4,7 +4,7 @@ import async = require('async');
 import isStream = require('isstream');
 import extend = require('extend');
 import GeneratedSpeechToTextV1 = require('./v1-generated');
-import RecognizeStream = require('./recognize_stream');
+import RecognizeStream = require('../lib/recognize-stream');
 import { createRequest as requestFactory } from '../lib/requestwrapper';
 import { parse } from 'url';
 import { getMissingParams } from '../lib/helper';

@@ -252,7 +252,7 @@ describe('speech_to_text', function() {
     });
 
     it('Sample webm should have expected header', function() {
-      const RecognizeStream = require('../../speech-to-text/recognize_stream');
+      const RecognizeStream = require('../../lib/recognize-stream');
       const buffer = fs.readFileSync(__dirname + '/../resources/sample1.webm');
       assert.equal(RecognizeStream.getContentType(buffer), 'audio/webm');
     });
