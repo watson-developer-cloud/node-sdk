@@ -94,8 +94,12 @@ Object.keys(servicesByVersion).forEach(serviceName => {
   'message_resonance',
   'question_and_answer',
   'visual_insights',
-  'concept_expansion'
-].forEach(function(serviceName) {
+  'concept_expansion',
+  'retrieve_and_rank',
+  'alchemy_language',
+  'alchemy_data_news',
+  'tradeoff_analytics'
+].forEach(serviceName => {
   Object.defineProperty(exports, serviceName, {
     enumerable: false,
     configurable: true,
@@ -105,7 +109,7 @@ Object.keys(servicesByVersion).forEach(serviceName => {
     }
   });
 });
-['AlchemyVisionV1', 'alchemy_vision'].forEach(function(serviceName) {
+['AlchemyVisionV1', 'alchemy_vision'].forEach(serviceName => {
   Object.defineProperty(exports, serviceName, {
     enumerable: false,
     configurable: true,
