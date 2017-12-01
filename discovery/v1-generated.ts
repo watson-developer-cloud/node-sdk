@@ -29,16 +29,6 @@ class DiscoveryV1 extends BaseService {
   name: string; // set by prototype to 'discovery'
   version: string; // set by prototype to 'v1'
 
-  static VERSION_DATE_2017_09_01: string = '2017-09-01';
-
-  static VERSION_DATE_2017_08_01: string = '2017-08-01';
-
-  static VERSION_DATE_2017_07_19: string = '2017-07-19';
-
-  static VERSION_DATE_2017_06_25: string = '2017-06-25';
-
-  static VERSION_DATE_2016_12_01: string = '2016-12-01';
-
   static URL: string = 'https://gateway.watsonplatform.net/discovery/api';
 
   /**
@@ -124,9 +114,7 @@ class DiscoveryV1 extends BaseService {
    */
   deleteEnvironment(
     params: DiscoveryV1.DeleteEnvironmentParams,
-    callback?: DiscoveryV1.Callback<
-      DiscoveryV1.DeleteEnvironmentResponse
-    >
+    callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteEnvironmentResponse>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -204,9 +192,7 @@ class DiscoveryV1 extends BaseService {
    */
   listEnvironments(
     params?: DiscoveryV1.ListEnvironmentsParams,
-    callback?: DiscoveryV1.Callback<
-      DiscoveryV1.ListEnvironmentsResponse
-    >
+    callback?: DiscoveryV1.Callback<DiscoveryV1.ListEnvironmentsResponse>
   ): ReadableStream | void {
     const _params =
       typeof params === 'function' && !callback ? {} : extend({}, params);
@@ -246,9 +232,7 @@ class DiscoveryV1 extends BaseService {
    */
   listFields(
     params: DiscoveryV1.ListFieldsParams,
-    callback?: DiscoveryV1.Callback<
-      DiscoveryV1.ListCollectionFieldsResponse
-    >
+    callback?: DiscoveryV1.Callback<DiscoveryV1.ListCollectionFieldsResponse>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -399,9 +383,7 @@ class DiscoveryV1 extends BaseService {
    */
   deleteConfiguration(
     params: DiscoveryV1.DeleteConfigurationParams,
-    callback?: DiscoveryV1.Callback<
-      DiscoveryV1.DeleteConfigurationResponse
-    >
+    callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteConfigurationResponse>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -485,9 +467,7 @@ class DiscoveryV1 extends BaseService {
    */
   listConfigurations(
     params: DiscoveryV1.ListConfigurationsParams,
-    callback?: DiscoveryV1.Callback<
-      DiscoveryV1.ListConfigurationsResponse
-    >
+    callback?: DiscoveryV1.Callback<DiscoveryV1.ListConfigurationsResponse>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -705,9 +685,7 @@ class DiscoveryV1 extends BaseService {
    */
   deleteCollection(
     params: DiscoveryV1.DeleteCollectionParams,
-    callback?: DiscoveryV1.Callback<
-      DiscoveryV1.DeleteCollectionResponse
-    >
+    callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteCollectionResponse>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -789,9 +767,7 @@ class DiscoveryV1 extends BaseService {
    */
   listCollectionFields(
     params: DiscoveryV1.ListCollectionFieldsParams,
-    callback?: DiscoveryV1.Callback<
-      DiscoveryV1.ListCollectionFieldsResponse
-    >
+    callback?: DiscoveryV1.Callback<DiscoveryV1.ListCollectionFieldsResponse>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -834,9 +810,7 @@ class DiscoveryV1 extends BaseService {
    */
   listCollections(
     params: DiscoveryV1.ListCollectionsParams,
-    callback?: DiscoveryV1.Callback<
-      DiscoveryV1.ListCollectionsResponse
-    >
+    callback?: DiscoveryV1.Callback<DiscoveryV1.ListCollectionsResponse>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -938,9 +912,7 @@ class DiscoveryV1 extends BaseService {
    */
   addDocument(
     params: DiscoveryV1.AddDocumentParams,
-    callback?: DiscoveryV1.Callback<
-      DiscoveryV1.DocumentAccepted
-    >
+    callback?: DiscoveryV1.Callback<DiscoveryV1.DocumentAccepted>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -992,9 +964,7 @@ class DiscoveryV1 extends BaseService {
    */
   deleteDocument(
     params: DiscoveryV1.DeleteDocumentParams,
-    callback?: DiscoveryV1.Callback<
-      DiscoveryV1.DeleteDocumentResponse
-    >
+    callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteDocumentResponse>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1039,9 +1009,7 @@ class DiscoveryV1 extends BaseService {
    */
   getDocumentStatus(
     params: DiscoveryV1.GetDocumentStatusParams,
-    callback?: DiscoveryV1.Callback<
-      DiscoveryV1.DocumentStatus
-    >
+    callback?: DiscoveryV1.Callback<DiscoveryV1.DocumentStatus>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1089,9 +1057,7 @@ class DiscoveryV1 extends BaseService {
    */
   updateDocument(
     params: DiscoveryV1.UpdateDocumentParams,
-    callback?: DiscoveryV1.Callback<
-      DiscoveryV1.DocumentAccepted
-    >
+    callback?: DiscoveryV1.Callback<DiscoveryV1.DocumentAccepted>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1224,9 +1190,7 @@ class DiscoveryV1 extends BaseService {
    */
   federatedQueryNotices(
     params: DiscoveryV1.FederatedQueryNoticesParams,
-    callback?: DiscoveryV1.Callback<
-      DiscoveryV1.QueryNoticesResponse
-    >
+    callback?: DiscoveryV1.Callback<DiscoveryV1.QueryNoticesResponse>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1371,9 +1335,7 @@ class DiscoveryV1 extends BaseService {
    */
   queryNotices(
     params: DiscoveryV1.QueryNoticesParams,
-    callback?: DiscoveryV1.Callback<
-      DiscoveryV1.QueryNoticesResponse
-    >
+    callback?: DiscoveryV1.Callback<DiscoveryV1.QueryNoticesResponse>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1425,16 +1387,16 @@ class DiscoveryV1 extends BaseService {
    ************************/
 
   /**
-   * 
+   *
    *
    * Adds a query to the training data for this collection. The query can contain a filter and natural language query.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
-   * @param {string} [params.natural_language_query] - 
-   * @param {string} [params.filter] - 
-   * @param {TrainingExample[]} [params.examples] - 
+   * @param {string} [params.natural_language_query] -
+   * @param {string} [params.filter] -
+   * @param {TrainingExample[]} [params.examples] -
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
@@ -1478,7 +1440,7 @@ class DiscoveryV1 extends BaseService {
   }
 
   /**
-   * 
+   *
    *
    * Adds a new example to this training data query.
    *
@@ -1486,17 +1448,15 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
    * @param {string} params.query_id - The ID of the query used for training.
-   * @param {string} [params.document_id] - 
-   * @param {string} [params.cross_reference] - 
-   * @param {number} [params.relevance] - 
+   * @param {string} [params.document_id] -
+   * @param {string} [params.cross_reference] -
+   * @param {number} [params.relevance] -
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
   createTrainingExample(
     params: DiscoveryV1.CreateTrainingExampleParams,
-    callback?: DiscoveryV1.Callback<
-      DiscoveryV1.TrainingExample
-    >
+    callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingExample>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1535,7 +1495,7 @@ class DiscoveryV1 extends BaseService {
   }
 
   /**
-   * 
+   *
    *
    * Clears all training data for this collection.
    *
@@ -1578,7 +1538,7 @@ class DiscoveryV1 extends BaseService {
   }
 
   /**
-   * 
+   *
    *
    * Removes the training data and all associated examples from the training data set.
    *
@@ -1623,7 +1583,7 @@ class DiscoveryV1 extends BaseService {
   }
 
   /**
-   * 
+   *
    *
    * Removes the example with the given ID for the training data query.
    *
@@ -1675,7 +1635,7 @@ class DiscoveryV1 extends BaseService {
   }
 
   /**
-   * 
+   *
    *
    * Shows details for a specific training data query, including the query string and all examples.
    *
@@ -1720,7 +1680,7 @@ class DiscoveryV1 extends BaseService {
   }
 
   /**
-   * 
+   *
    *
    * Gets the details for this training example.
    *
@@ -1734,9 +1694,7 @@ class DiscoveryV1 extends BaseService {
    */
   getTrainingExample(
     params: DiscoveryV1.GetTrainingExampleParams,
-    callback?: DiscoveryV1.Callback<
-      DiscoveryV1.TrainingExample
-    >
+    callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingExample>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1774,7 +1732,7 @@ class DiscoveryV1 extends BaseService {
   }
 
   /**
-   * 
+   *
    *
    * Lists the training data for this collection.
    *
@@ -1786,9 +1744,7 @@ class DiscoveryV1 extends BaseService {
    */
   listTrainingData(
     params: DiscoveryV1.ListTrainingDataParams,
-    callback?: DiscoveryV1.Callback<
-      DiscoveryV1.TrainingDataSet
-    >
+    callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingDataSet>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1819,7 +1775,7 @@ class DiscoveryV1 extends BaseService {
   }
 
   /**
-   * 
+   *
    *
    * List all examples for this training data query.
    *
@@ -1832,9 +1788,7 @@ class DiscoveryV1 extends BaseService {
    */
   listTrainingExamples(
     params: DiscoveryV1.ListTrainingExamplesParams,
-    callback?: DiscoveryV1.Callback<
-      DiscoveryV1.TrainingExampleList
-    >
+    callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingExampleList>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1866,7 +1820,7 @@ class DiscoveryV1 extends BaseService {
   }
 
   /**
-   * 
+   *
    *
    * Changes the label or cross reference query for this training example.
    *
@@ -1875,16 +1829,14 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.collection_id - The ID of the collection.
    * @param {string} params.query_id - The ID of the query used for training.
    * @param {string} params.example_id - The ID of the document as it is indexed.
-   * @param {string} [params.cross_reference] - 
-   * @param {number} [params.relevance] - 
+   * @param {string} [params.cross_reference] -
+   * @param {number} [params.relevance] -
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
   updateTrainingExample(
     params: DiscoveryV1.UpdateTrainingExampleParams,
-    callback?: DiscoveryV1.Callback<
-      DiscoveryV1.TrainingExample
-    >
+    callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingExample>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};

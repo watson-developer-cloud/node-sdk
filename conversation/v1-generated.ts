@@ -28,16 +28,6 @@ class ConversationV1 extends BaseService {
   name: string; // set by prototype to 'conversation'
   version: string; // set by prototype to 'v1'
 
-  static VERSION_DATE_2017_05_26: string = '2017-05-26';
-
-  static VERSION_DATE_2017_04_21: string = '2017-04-21';
-
-  static VERSION_DATE_2017_02_03: string = '2017-02-03';
-
-  static VERSION_DATE_2016_09_20: string = '2016-09-20';
-
-  static VERSION_DATE_2016_07_11: string = '2016-07-11';
-
   static URL: string = 'https://gateway.watsonplatform.net/conversation/api';
 
   /**
@@ -88,9 +78,7 @@ class ConversationV1 extends BaseService {
    */
   createWorkspace(
     params?: ConversationV1.CreateWorkspaceParams,
-    callback?: ConversationV1.Callback<
-      ConversationV1.Workspace
-    >
+    callback?: ConversationV1.Callback<ConversationV1.Workspace>
   ): ReadableStream | void {
     const _params =
       typeof params === 'function' && !callback ? {} : extend({}, params);
@@ -178,9 +166,7 @@ class ConversationV1 extends BaseService {
    */
   getWorkspace(
     params: ConversationV1.GetWorkspaceParams,
-    callback?: ConversationV1.Callback<
-      ConversationV1.WorkspaceExport
-    >
+    callback?: ConversationV1.Callback<ConversationV1.WorkspaceExport>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -226,9 +212,7 @@ class ConversationV1 extends BaseService {
    */
   listWorkspaces(
     params?: ConversationV1.ListWorkspacesParams,
-    callback?: ConversationV1.Callback<
-      ConversationV1.WorkspaceCollection
-    >
+    callback?: ConversationV1.Callback<ConversationV1.WorkspaceCollection>
   ): ReadableStream | void {
     const _params =
       typeof params === 'function' && !callback ? {} : extend({}, params);
@@ -278,9 +262,7 @@ class ConversationV1 extends BaseService {
    */
   updateWorkspace(
     params: ConversationV1.UpdateWorkspaceParams,
-    callback?: ConversationV1.Callback<
-      ConversationV1.Workspace
-    >
+    callback?: ConversationV1.Callback<ConversationV1.Workspace>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -341,9 +323,7 @@ class ConversationV1 extends BaseService {
    */
   message(
     params: ConversationV1.MessageParams,
-    callback?: ConversationV1.Callback<
-      ConversationV1.MessageResponse
-    >
+    callback?: ConversationV1.Callback<ConversationV1.MessageResponse>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -490,9 +470,7 @@ class ConversationV1 extends BaseService {
    */
   getIntent(
     params: ConversationV1.GetIntentParams,
-    callback?: ConversationV1.Callback<
-      ConversationV1.IntentExport
-    >
+    callback?: ConversationV1.Callback<ConversationV1.IntentExport>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -541,9 +519,7 @@ class ConversationV1 extends BaseService {
    */
   listIntents(
     params: ConversationV1.ListIntentsParams,
-    callback?: ConversationV1.Callback<
-      ConversationV1.IntentCollection
-    >
+    callback?: ConversationV1.Callback<ConversationV1.IntentCollection>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -785,9 +761,7 @@ class ConversationV1 extends BaseService {
    */
   listExamples(
     params: ConversationV1.ListExamplesParams,
-    callback?: ConversationV1.Callback<
-      ConversationV1.ExampleCollection
-    >
+    callback?: ConversationV1.Callback<ConversationV1.ExampleCollection>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -985,9 +959,7 @@ class ConversationV1 extends BaseService {
    */
   getEntity(
     params: ConversationV1.GetEntityParams,
-    callback?: ConversationV1.Callback<
-      ConversationV1.EntityExport
-    >
+    callback?: ConversationV1.Callback<ConversationV1.EntityExport>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1036,9 +1008,7 @@ class ConversationV1 extends BaseService {
    */
   listEntities(
     params: ConversationV1.ListEntitiesParams,
-    callback?: ConversationV1.Callback<
-      ConversationV1.EntityCollection
-    >
+    callback?: ConversationV1.Callback<ConversationV1.EntityCollection>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1247,9 +1217,7 @@ class ConversationV1 extends BaseService {
    */
   getValue(
     params: ConversationV1.GetValueParams,
-    callback?: ConversationV1.Callback<
-      ConversationV1.ValueExport
-    >
+    callback?: ConversationV1.Callback<ConversationV1.ValueExport>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1300,9 +1268,7 @@ class ConversationV1 extends BaseService {
    */
   listValues(
     params: ConversationV1.ListValuesParams,
-    callback?: ConversationV1.Callback<
-      ConversationV1.ValueCollection
-    >
+    callback?: ConversationV1.Callback<ConversationV1.ValueCollection>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1561,9 +1527,7 @@ class ConversationV1 extends BaseService {
    */
   listSynonyms(
     params: ConversationV1.ListSynonymsParams,
-    callback?: ConversationV1.Callback<
-      ConversationV1.SynonymCollection
-    >
+    callback?: ConversationV1.Callback<ConversationV1.SynonymCollection>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1683,9 +1647,7 @@ class ConversationV1 extends BaseService {
    */
   createDialogNode(
     params: ConversationV1.CreateDialogNodeParams,
-    callback?: ConversationV1.Callback<
-      ConversationV1.DialogNode
-    >
+    callback?: ConversationV1.Callback<ConversationV1.DialogNode>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1785,9 +1747,7 @@ class ConversationV1 extends BaseService {
    */
   getDialogNode(
     params: ConversationV1.GetDialogNodeParams,
-    callback?: ConversationV1.Callback<
-      ConversationV1.DialogNode
-    >
+    callback?: ConversationV1.Callback<ConversationV1.DialogNode>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1831,9 +1791,7 @@ class ConversationV1 extends BaseService {
    */
   listDialogNodes(
     params: ConversationV1.ListDialogNodesParams,
-    callback?: ConversationV1.Callback<
-      ConversationV1.DialogNodeCollection
-    >
+    callback?: ConversationV1.Callback<ConversationV1.DialogNodeCollection>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1894,9 +1852,7 @@ class ConversationV1 extends BaseService {
    */
   updateDialogNode(
     params: ConversationV1.UpdateDialogNodeParams,
-    callback?: ConversationV1.Callback<
-      ConversationV1.DialogNode
-    >
+    callback?: ConversationV1.Callback<ConversationV1.DialogNode>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1962,9 +1918,7 @@ class ConversationV1 extends BaseService {
    */
   listAllLogs(
     params: ConversationV1.ListAllLogsParams,
-    callback?: ConversationV1.Callback<
-      ConversationV1.LogCollection
-    >
+    callback?: ConversationV1.Callback<ConversationV1.LogCollection>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -2010,9 +1964,7 @@ class ConversationV1 extends BaseService {
    */
   listLogs(
     params: ConversationV1.ListLogsParams,
-    callback?: ConversationV1.Callback<
-      ConversationV1.LogCollection
-    >
+    callback?: ConversationV1.Callback<ConversationV1.LogCollection>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -2063,9 +2015,7 @@ class ConversationV1 extends BaseService {
    */
   createCounterexample(
     params: ConversationV1.CreateCounterexampleParams,
-    callback?: ConversationV1.Callback<
-      ConversationV1.Counterexample
-    >
+    callback?: ConversationV1.Callback<ConversationV1.Counterexample>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -2152,9 +2102,7 @@ class ConversationV1 extends BaseService {
    */
   getCounterexample(
     params: ConversationV1.GetCounterexampleParams,
-    callback?: ConversationV1.Callback<
-      ConversationV1.Counterexample
-    >
+    callback?: ConversationV1.Callback<ConversationV1.Counterexample>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -2198,9 +2146,7 @@ class ConversationV1 extends BaseService {
    */
   listCounterexamples(
     params: ConversationV1.ListCounterexamplesParams,
-    callback?: ConversationV1.Callback<
-      ConversationV1.CounterexampleCollection
-    >
+    callback?: ConversationV1.Callback<ConversationV1.CounterexampleCollection>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -2248,9 +2194,7 @@ class ConversationV1 extends BaseService {
    */
   updateCounterexample(
     params: ConversationV1.UpdateCounterexampleParams,
-    callback?: ConversationV1.Callback<
-      ConversationV1.Counterexample
-    >
+    callback?: ConversationV1.Callback<ConversationV1.Counterexample>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};

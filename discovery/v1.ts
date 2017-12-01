@@ -3,7 +3,11 @@ import extend = require('extend');
 import isStream = require('isstream');
 
 class DiscoveryV1 extends GeneratedDiscoveryV1 {
+  static VERSION_DATE_2017_09_01: string = '2017-09-01';
   static VERSION_DATE_2017_08_01: string = '2017-08-01';
+  static VERSION_DATE_2017_07_19: string = '2017-07-19';
+  static VERSION_DATE_2017_06_25: string = '2017-06-25';
+  static VERSION_DATE_2016_12_01: string = '2016-12-01';
   static VERSION_DATE_2017_04_27: string = '2017-04-27';
   static VERSION_DATE_2016_12_15: string = '2016-12-15';
 
@@ -117,7 +121,9 @@ class DiscoveryV1 extends GeneratedDiscoveryV1 {
     const fileParamType: string = typeof params.file;
     if (fileParamType !== 'object') {
       throw new Error(
-        `Argument error: params.file must be an object, but got ${fileParamType}.`
+        `Argument error: params.file must be an object, but got ${
+          fileParamType
+        }.`
       );
     }
     const _params = extend(params, {
@@ -135,7 +141,9 @@ class DiscoveryV1 extends GeneratedDiscoveryV1 {
     const fileParamType = typeof params.file;
     if (fileParamType !== 'object') {
       throw new Error(
-        `Argument error: params.file must be an object, but got ${fileParamType}.`
+        `Argument error: params.file must be an object, but got ${
+          fileParamType
+        }.`
       );
     }
     const _params = extend(params, {

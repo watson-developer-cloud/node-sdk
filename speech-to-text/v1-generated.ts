@@ -64,9 +64,7 @@ class SpeechToTextV1 extends BaseService {
    */
   getModel(
     params: SpeechToTextV1.GetModelParams,
-    callback?: SpeechToTextV1.Callback<
-      SpeechToTextV1.SpeechModel
-    >
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.SpeechModel>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -105,9 +103,7 @@ class SpeechToTextV1 extends BaseService {
    */
   listModels(
     params?: SpeechToTextV1.ListModelsParams,
-    callback?: SpeechToTextV1.Callback<
-      SpeechToTextV1.SpeechModels
-    >
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.SpeechModels>
   ): ReadableStream | void {
     const _params =
       typeof params === 'function' && !callback ? {} : extend({}, params);
@@ -165,9 +161,7 @@ class SpeechToTextV1 extends BaseService {
    */
   recognizeSessionless(
     params?: SpeechToTextV1.RecognizeSessionlessParams,
-    callback?: SpeechToTextV1.Callback<
-      SpeechToTextV1.SpeechRecognitionResults
-    >
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.SpeechRecognitionResults>
   ): ReadableStream | void {
     const _params =
       typeof params === 'function' && !callback ? {} : extend({}, params);
@@ -238,9 +232,7 @@ class SpeechToTextV1 extends BaseService {
    */
   createSession(
     params?: SpeechToTextV1.CreateSessionParams,
-    callback?: SpeechToTextV1.Callback<
-      SpeechToTextV1.SpeechSession
-    >
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.SpeechSession>
   ): ReadableStream | void {
     const _params =
       typeof params === 'function' && !callback ? {} : extend({}, params);
@@ -322,9 +314,7 @@ class SpeechToTextV1 extends BaseService {
    */
   getSessionStatus(
     params: SpeechToTextV1.GetSessionStatusParams,
-    callback?: SpeechToTextV1.Callback<
-      SpeechToTextV1.SessionStatus
-    >
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.SessionStatus>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -366,9 +356,7 @@ class SpeechToTextV1 extends BaseService {
    */
   observeResult(
     params: SpeechToTextV1.ObserveResultParams,
-    callback?: SpeechToTextV1.Callback<
-      SpeechToTextV1.SpeechRecognitionResults
-    >
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.SpeechRecognitionResults>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -430,9 +418,7 @@ class SpeechToTextV1 extends BaseService {
    */
   recognizeSession(
     params: SpeechToTextV1.RecognizeSessionParams,
-    callback?: SpeechToTextV1.Callback<
-      SpeechToTextV1.SpeechRecognitionResults
-    >
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.SpeechRecognitionResults>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -502,9 +488,7 @@ class SpeechToTextV1 extends BaseService {
    */
   checkJob(
     params: SpeechToTextV1.CheckJobParams,
-    callback?: SpeechToTextV1.Callback<
-      SpeechToTextV1.RecognitionJob
-    >
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.RecognitionJob>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -543,9 +527,7 @@ class SpeechToTextV1 extends BaseService {
    */
   checkJobs(
     params?: SpeechToTextV1.CheckJobsParams,
-    callback?: SpeechToTextV1.Callback<
-      SpeechToTextV1.RecognitionJobs
-    >
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.RecognitionJobs>
   ): ReadableStream | void {
     const _params =
       typeof params === 'function' && !callback ? {} : extend({}, params);
@@ -600,9 +582,7 @@ class SpeechToTextV1 extends BaseService {
    */
   createJob(
     params: SpeechToTextV1.CreateJobParams,
-    callback?: SpeechToTextV1.Callback<
-      SpeechToTextV1.RecognitionJob
-    >
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.RecognitionJob>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -704,9 +684,7 @@ class SpeechToTextV1 extends BaseService {
    */
   registerCallback(
     params: SpeechToTextV1.RegisterCallbackParams,
-    callback?: SpeechToTextV1.Callback<
-      SpeechToTextV1.RegisterStatus
-    >
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.RegisterStatus>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -795,9 +773,7 @@ class SpeechToTextV1 extends BaseService {
    */
   createLanguageModel(
     params: SpeechToTextV1.CreateLanguageModelParams,
-    callback?: SpeechToTextV1.Callback<
-      SpeechToTextV1.LanguageModel
-    >
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.LanguageModel>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -881,9 +857,7 @@ class SpeechToTextV1 extends BaseService {
    */
   getLanguageModel(
     params: SpeechToTextV1.GetLanguageModelParams,
-    callback?: SpeechToTextV1.Callback<
-      SpeechToTextV1.LanguageModel
-    >
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.LanguageModel>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -923,9 +897,7 @@ class SpeechToTextV1 extends BaseService {
    */
   listLanguageModels(
     params?: SpeechToTextV1.ListLanguageModelsParams,
-    callback?: SpeechToTextV1.Callback<
-      SpeechToTextV1.LanguageModels
-    >
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.LanguageModels>
   ): ReadableStream | void {
     const _params =
       typeof params === 'function' && !callback ? {} : extend({}, params);
@@ -1517,9 +1489,7 @@ class SpeechToTextV1 extends BaseService {
    */
   createAcousticModel(
     params: SpeechToTextV1.CreateAcousticModelParams,
-    callback?: SpeechToTextV1.Callback<
-      SpeechToTextV1.AcousticModel
-    >
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.AcousticModel>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1602,9 +1572,7 @@ class SpeechToTextV1 extends BaseService {
    */
   getAcousticModel(
     params: SpeechToTextV1.GetAcousticModelParams,
-    callback?: SpeechToTextV1.Callback<
-      SpeechToTextV1.AcousticModel
-    >
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.AcousticModel>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1644,9 +1612,7 @@ class SpeechToTextV1 extends BaseService {
    */
   listAcousticModels(
     params?: SpeechToTextV1.ListAcousticModelsParams,
-    callback?: SpeechToTextV1.Callback<
-      SpeechToTextV1.AcousticModels
-    >
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.AcousticModels>
   ): ReadableStream | void {
     const _params =
       typeof params === 'function' && !callback ? {} : extend({}, params);
@@ -1878,9 +1844,7 @@ class SpeechToTextV1 extends BaseService {
    */
   getAudio(
     params: SpeechToTextV1.GetAudioParams,
-    callback?: SpeechToTextV1.Callback<
-      SpeechToTextV1.AudioListing
-    >
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.AudioListing>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1922,9 +1886,7 @@ class SpeechToTextV1 extends BaseService {
    */
   listAudio(
     params: SpeechToTextV1.ListAudioParams,
-    callback?: SpeechToTextV1.Callback<
-      SpeechToTextV1.AudioResources
-    >
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.AudioResources>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
