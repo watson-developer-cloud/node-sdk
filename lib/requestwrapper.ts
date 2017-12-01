@@ -23,11 +23,8 @@ import {
   isEmptyObject
 } from './helper';
 import { PassThrough as readableStream } from 'stream';
-import { readFileSync } from 'fs';
-import { join } from 'path';
 
-const pkgPath = join(__dirname, '../package.json');
-const pkg = JSON.parse(readFileSync(pkgPath).toString('utf-8'));
+const pkgPath = require('../package.json');
 const isBrowser = typeof window === 'object';
 
 /**
