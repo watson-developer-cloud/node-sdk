@@ -10,8 +10,7 @@
       "./scripts/",
       "./node_modules/",
       "./test/",
-      "./eslintrc.js",
-      "./karma.conf.js"
+      "./eslintrc.js"
     ]
   },
   "opts": {

@@ -102,7 +102,8 @@ describe('personality_insights_v3', function() {
       raw_scores: true,
       csv_headers: false,
       consumption_preferences: true
-    }
+    };
+
     const req = personality_insights.profile(params, noop);
     const body = Buffer.from(req.body).toString('ascii');
     const query_string = '?version=2016-10-19&raw_scores=true&csv_headers=false&consumption_preferences=true';
