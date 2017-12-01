@@ -27,17 +27,17 @@ export interface FileObject {
 }
 
 // internal interfaces
-interface FileOptions {
+export interface FileOptions {
   filename?: string;
   contentType?: string;
 }
 
-interface FileParamAttributes {
+export interface FileParamAttributes {
   data: ReadableStream | Buffer | FileObject;
   contentType: string;
 }
 
-interface FileStream extends ReadableStream {
+export interface FileStream extends ReadableStream {
   path: string | Buffer;
 }
 

@@ -29,3 +29,5 @@ visual-recognition/*.js
 text-to-speech/*.js
 speech-to-text/*.js
 .nyc_output
+**/*.d.ts
+**/*.js.map
