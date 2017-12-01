@@ -27,7 +27,7 @@ var BaseService = require('../lib/base_service').BaseService;
 /**
  *
  * @param {Object} options
- * @varructor
+ * @constructor
  */
 function DialogV1(options) {
   BaseService.call(this, options);
