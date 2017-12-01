@@ -39,7 +39,7 @@ describe('visual_recognition_integration_custom_classifiers', function() {
         return done(err);
       }
       if (result.classifiers && Array.isArray(result.classifiers)) {
-        const toDelete = result.classifiers.filter(c => c.name.includes('temporary'));
+        const toDelete = result.classifiers.filter(c => c && c.name.includes('temporary'));
         // todo: consider fetching the classifier details and only delete ones older than 24 hours
         async.forEach(
           toDelete,
@@ -130,7 +130,7 @@ describe('visual_recognition_integration_custom_classifiers', function() {
           }
 
           const classifier_name = 'visual_recognition_test_prepop';
-          const c = result.classifiers.find(element => element.name === classifier_name);
+          const c = result.classifiers.find(element => element && element.name === classifier_name);
 
           if (c === undefined) {
             logit('Classifier not found, creating new classifier...');

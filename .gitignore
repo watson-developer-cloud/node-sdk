@@ -13,7 +13,6 @@ doc/
 dist/
 .env
 .eslintcache
-.nyc_output/*
 examples/speech_to_text_microphone_input/*.wav
 examples/speech_to_text_microphone_input/*.txt
 lib/*.js
@@ -28,3 +27,4 @@ visual-recognition/*.js
 text-to-speech/*.js
 speech-to-text/*.js
 authorization/*.js
+.nyc_output
