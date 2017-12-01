@@ -25,7 +25,7 @@ import { FileObject } from '../lib/helper';
  * The IBM Watson Discovery Service is a cognitive search and content analytics engine that you can add to applications to identify patterns, trends and actionable insights to drive better decision-making. Securely unify structured and unstructured data with pre-enriched content, and use a simplified query language to eliminate the need for manual filtering of results.
  */
 
-class GeneratedDiscoveryV1 extends BaseService {
+class DiscoveryV1 extends BaseService {
   name: string; // set by prototype to 'discovery'
   version: string; // set by prototype to 'v1'
 
@@ -42,7 +42,7 @@ class GeneratedDiscoveryV1 extends BaseService {
   static URL: string = 'https://gateway.watsonplatform.net/discovery/api';
 
   /**
-   * Construct a GeneratedDiscoveryV1 object.
+   * Construct a DiscoveryV1 object.
    *
    * @param {Object} options - Options for the service.
    * @param {String} options.version_date - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses the API version for the date you specify, or the most recent version before that date. Note that you should not programmatically specify the current date at runtime, in case the API has been updated since your application's release. Instead, specify a version date that is compatible with your application, and don't change it until your application is ready for a later version.
@@ -53,10 +53,10 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {Object} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
    * @constructor
-   * @returns {GeneratedDiscoveryV1}
+   * @returns {DiscoveryV1}
    * @throws {Error}
    */
-  constructor(options: GeneratedDiscoveryV1.Options) {
+  constructor(options: DiscoveryV1.Options) {
     super(options);
     // check if 'version_date' was provided
     if (typeof this._options.version_date === 'undefined') {
@@ -82,8 +82,8 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   createEnvironment(
-    params: GeneratedDiscoveryV1.CreateEnvironmentParams,
-    callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.Environment>
+    params: DiscoveryV1.CreateEnvironmentParams,
+    callback?: DiscoveryV1.Callback<DiscoveryV1.Environment>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -123,9 +123,9 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   deleteEnvironment(
-    params: GeneratedDiscoveryV1.DeleteEnvironmentParams,
-    callback?: GeneratedDiscoveryV1.Callback<
-      GeneratedDiscoveryV1.DeleteEnvironmentResponse
+    params: DiscoveryV1.DeleteEnvironmentParams,
+    callback?: DiscoveryV1.Callback<
+      DiscoveryV1.DeleteEnvironmentResponse
     >
   ): ReadableStream | void {
     const _params = extend({}, params);
@@ -163,8 +163,8 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   getEnvironment(
-    params: GeneratedDiscoveryV1.GetEnvironmentParams,
-    callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.Environment>
+    params: DiscoveryV1.GetEnvironmentParams,
+    callback?: DiscoveryV1.Callback<DiscoveryV1.Environment>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -203,9 +203,9 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   listEnvironments(
-    params?: GeneratedDiscoveryV1.ListEnvironmentsParams,
-    callback?: GeneratedDiscoveryV1.Callback<
-      GeneratedDiscoveryV1.ListEnvironmentsResponse
+    params?: DiscoveryV1.ListEnvironmentsParams,
+    callback?: DiscoveryV1.Callback<
+      DiscoveryV1.ListEnvironmentsResponse
     >
   ): ReadableStream | void {
     const _params =
@@ -245,9 +245,9 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   listFields(
-    params: GeneratedDiscoveryV1.ListFieldsParams,
-    callback?: GeneratedDiscoveryV1.Callback<
-      GeneratedDiscoveryV1.ListCollectionFieldsResponse
+    params: DiscoveryV1.ListFieldsParams,
+    callback?: DiscoveryV1.Callback<
+      DiscoveryV1.ListCollectionFieldsResponse
     >
   ): ReadableStream | void {
     const _params = extend({}, params);
@@ -293,8 +293,8 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   updateEnvironment(
-    params: GeneratedDiscoveryV1.UpdateEnvironmentParams,
-    callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.Environment>
+    params: DiscoveryV1.UpdateEnvironmentParams,
+    callback?: DiscoveryV1.Callback<DiscoveryV1.Environment>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -348,8 +348,8 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   createConfiguration(
-    params: GeneratedDiscoveryV1.CreateConfigurationParams,
-    callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.Configuration>
+    params: DiscoveryV1.CreateConfigurationParams,
+    callback?: DiscoveryV1.Callback<DiscoveryV1.Configuration>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -398,9 +398,9 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   deleteConfiguration(
-    params: GeneratedDiscoveryV1.DeleteConfigurationParams,
-    callback?: GeneratedDiscoveryV1.Callback<
-      GeneratedDiscoveryV1.DeleteConfigurationResponse
+    params: DiscoveryV1.DeleteConfigurationParams,
+    callback?: DiscoveryV1.Callback<
+      DiscoveryV1.DeleteConfigurationResponse
     >
   ): ReadableStream | void {
     const _params = extend({}, params);
@@ -441,8 +441,8 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   getConfiguration(
-    params: GeneratedDiscoveryV1.GetConfigurationParams,
-    callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.Configuration>
+    params: DiscoveryV1.GetConfigurationParams,
+    callback?: DiscoveryV1.Callback<DiscoveryV1.Configuration>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -484,9 +484,9 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   listConfigurations(
-    params: GeneratedDiscoveryV1.ListConfigurationsParams,
-    callback?: GeneratedDiscoveryV1.Callback<
-      GeneratedDiscoveryV1.ListConfigurationsResponse
+    params: DiscoveryV1.ListConfigurationsParams,
+    callback?: DiscoveryV1.Callback<
+      DiscoveryV1.ListConfigurationsResponse
     >
   ): ReadableStream | void {
     const _params = extend({}, params);
@@ -536,8 +536,8 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   updateConfiguration(
-    params: GeneratedDiscoveryV1.UpdateConfigurationParams,
-    callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.Configuration>
+    params: DiscoveryV1.UpdateConfigurationParams,
+    callback?: DiscoveryV1.Callback<DiscoveryV1.Configuration>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -597,8 +597,8 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   testConfigurationInEnvironment(
-    params: GeneratedDiscoveryV1.TestConfigurationInEnvironmentParams,
-    callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.TestDocument>
+    params: DiscoveryV1.TestConfigurationInEnvironmentParams,
+    callback?: DiscoveryV1.Callback<DiscoveryV1.TestDocument>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -657,8 +657,8 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   createCollection(
-    params: GeneratedDiscoveryV1.CreateCollectionParams,
-    callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.Collection>
+    params: DiscoveryV1.CreateCollectionParams,
+    callback?: DiscoveryV1.Callback<DiscoveryV1.Collection>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -704,9 +704,9 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   deleteCollection(
-    params: GeneratedDiscoveryV1.DeleteCollectionParams,
-    callback?: GeneratedDiscoveryV1.Callback<
-      GeneratedDiscoveryV1.DeleteCollectionResponse
+    params: DiscoveryV1.DeleteCollectionParams,
+    callback?: DiscoveryV1.Callback<
+      DiscoveryV1.DeleteCollectionResponse
     >
   ): ReadableStream | void {
     const _params = extend({}, params);
@@ -746,8 +746,8 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   getCollection(
-    params: GeneratedDiscoveryV1.GetCollectionParams,
-    callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.Collection>
+    params: DiscoveryV1.GetCollectionParams,
+    callback?: DiscoveryV1.Callback<DiscoveryV1.Collection>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -788,9 +788,9 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   listCollectionFields(
-    params: GeneratedDiscoveryV1.ListCollectionFieldsParams,
-    callback?: GeneratedDiscoveryV1.Callback<
-      GeneratedDiscoveryV1.ListCollectionFieldsResponse
+    params: DiscoveryV1.ListCollectionFieldsParams,
+    callback?: DiscoveryV1.Callback<
+      DiscoveryV1.ListCollectionFieldsResponse
     >
   ): ReadableStream | void {
     const _params = extend({}, params);
@@ -833,9 +833,9 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   listCollections(
-    params: GeneratedDiscoveryV1.ListCollectionsParams,
-    callback?: GeneratedDiscoveryV1.Callback<
-      GeneratedDiscoveryV1.ListCollectionsResponse
+    params: DiscoveryV1.ListCollectionsParams,
+    callback?: DiscoveryV1.Callback<
+      DiscoveryV1.ListCollectionsResponse
     >
   ): ReadableStream | void {
     const _params = extend({}, params);
@@ -881,8 +881,8 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   updateCollection(
-    params: GeneratedDiscoveryV1.UpdateCollectionParams,
-    callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.Collection>
+    params: DiscoveryV1.UpdateCollectionParams,
+    callback?: DiscoveryV1.Callback<DiscoveryV1.Collection>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -937,9 +937,9 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   addDocument(
-    params: GeneratedDiscoveryV1.AddDocumentParams,
-    callback?: GeneratedDiscoveryV1.Callback<
-      GeneratedDiscoveryV1.DocumentAccepted
+    params: DiscoveryV1.AddDocumentParams,
+    callback?: DiscoveryV1.Callback<
+      DiscoveryV1.DocumentAccepted
     >
   ): ReadableStream | void {
     const _params = extend({}, params);
@@ -991,9 +991,9 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   deleteDocument(
-    params: GeneratedDiscoveryV1.DeleteDocumentParams,
-    callback?: GeneratedDiscoveryV1.Callback<
-      GeneratedDiscoveryV1.DeleteDocumentResponse
+    params: DiscoveryV1.DeleteDocumentParams,
+    callback?: DiscoveryV1.Callback<
+      DiscoveryV1.DeleteDocumentResponse
     >
   ): ReadableStream | void {
     const _params = extend({}, params);
@@ -1038,9 +1038,9 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   getDocumentStatus(
-    params: GeneratedDiscoveryV1.GetDocumentStatusParams,
-    callback?: GeneratedDiscoveryV1.Callback<
-      GeneratedDiscoveryV1.DocumentStatus
+    params: DiscoveryV1.GetDocumentStatusParams,
+    callback?: DiscoveryV1.Callback<
+      DiscoveryV1.DocumentStatus
     >
   ): ReadableStream | void {
     const _params = extend({}, params);
@@ -1088,9 +1088,9 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   updateDocument(
-    params: GeneratedDiscoveryV1.UpdateDocumentParams,
-    callback?: GeneratedDiscoveryV1.Callback<
-      GeneratedDiscoveryV1.DocumentAccepted
+    params: DiscoveryV1.UpdateDocumentParams,
+    callback?: DiscoveryV1.Callback<
+      DiscoveryV1.DocumentAccepted
     >
   ): ReadableStream | void {
     const _params = extend({}, params);
@@ -1157,8 +1157,8 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   federatedQuery(
-    params: GeneratedDiscoveryV1.FederatedQueryParams,
-    callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.QueryResponse>
+    params: DiscoveryV1.FederatedQueryParams,
+    callback?: DiscoveryV1.Callback<DiscoveryV1.QueryResponse>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1223,9 +1223,9 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   federatedQueryNotices(
-    params: GeneratedDiscoveryV1.FederatedQueryNoticesParams,
-    callback?: GeneratedDiscoveryV1.Callback<
-      GeneratedDiscoveryV1.QueryNoticesResponse
+    params: DiscoveryV1.FederatedQueryNoticesParams,
+    callback?: DiscoveryV1.Callback<
+      DiscoveryV1.QueryNoticesResponse
     >
   ): ReadableStream | void {
     const _params = extend({}, params);
@@ -1295,8 +1295,8 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   query(
-    params: GeneratedDiscoveryV1.QueryParams,
-    callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.QueryResponse>
+    params: DiscoveryV1.QueryParams,
+    callback?: DiscoveryV1.Callback<DiscoveryV1.QueryResponse>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1370,9 +1370,9 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   queryNotices(
-    params: GeneratedDiscoveryV1.QueryNoticesParams,
-    callback?: GeneratedDiscoveryV1.Callback<
-      GeneratedDiscoveryV1.QueryNoticesResponse
+    params: DiscoveryV1.QueryNoticesParams,
+    callback?: DiscoveryV1.Callback<
+      DiscoveryV1.QueryNoticesResponse
     >
   ): ReadableStream | void {
     const _params = extend({}, params);
@@ -1439,8 +1439,8 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   addTrainingData(
-    params: GeneratedDiscoveryV1.AddTrainingDataParams,
-    callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.TrainingQuery>
+    params: DiscoveryV1.AddTrainingDataParams,
+    callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingQuery>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1493,9 +1493,9 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   createTrainingExample(
-    params: GeneratedDiscoveryV1.CreateTrainingExampleParams,
-    callback?: GeneratedDiscoveryV1.Callback<
-      GeneratedDiscoveryV1.TrainingExample
+    params: DiscoveryV1.CreateTrainingExampleParams,
+    callback?: DiscoveryV1.Callback<
+      DiscoveryV1.TrainingExample
     >
   ): ReadableStream | void {
     const _params = extend({}, params);
@@ -1546,8 +1546,8 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   deleteAllTrainingData(
-    params: GeneratedDiscoveryV1.DeleteAllTrainingDataParams,
-    callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.Empty>
+    params: DiscoveryV1.DeleteAllTrainingDataParams,
+    callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1590,8 +1590,8 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   deleteTrainingData(
-    params: GeneratedDiscoveryV1.DeleteTrainingDataParams,
-    callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.Empty>
+    params: DiscoveryV1.DeleteTrainingDataParams,
+    callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1636,8 +1636,8 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   deleteTrainingExample(
-    params: GeneratedDiscoveryV1.DeleteTrainingExampleParams,
-    callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.Empty>
+    params: DiscoveryV1.DeleteTrainingExampleParams,
+    callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1687,8 +1687,8 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   getTrainingData(
-    params: GeneratedDiscoveryV1.GetTrainingDataParams,
-    callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.TrainingQuery>
+    params: DiscoveryV1.GetTrainingDataParams,
+    callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingQuery>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1733,9 +1733,9 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   getTrainingExample(
-    params: GeneratedDiscoveryV1.GetTrainingExampleParams,
-    callback?: GeneratedDiscoveryV1.Callback<
-      GeneratedDiscoveryV1.TrainingExample
+    params: DiscoveryV1.GetTrainingExampleParams,
+    callback?: DiscoveryV1.Callback<
+      DiscoveryV1.TrainingExample
     >
   ): ReadableStream | void {
     const _params = extend({}, params);
@@ -1785,9 +1785,9 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   listTrainingData(
-    params: GeneratedDiscoveryV1.ListTrainingDataParams,
-    callback?: GeneratedDiscoveryV1.Callback<
-      GeneratedDiscoveryV1.TrainingDataSet
+    params: DiscoveryV1.ListTrainingDataParams,
+    callback?: DiscoveryV1.Callback<
+      DiscoveryV1.TrainingDataSet
     >
   ): ReadableStream | void {
     const _params = extend({}, params);
@@ -1831,9 +1831,9 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   listTrainingExamples(
-    params: GeneratedDiscoveryV1.ListTrainingExamplesParams,
-    callback?: GeneratedDiscoveryV1.Callback<
-      GeneratedDiscoveryV1.TrainingExampleList
+    params: DiscoveryV1.ListTrainingExamplesParams,
+    callback?: DiscoveryV1.Callback<
+      DiscoveryV1.TrainingExampleList
     >
   ): ReadableStream | void {
     const _params = extend({}, params);
@@ -1881,9 +1881,9 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   updateTrainingExample(
-    params: GeneratedDiscoveryV1.UpdateTrainingExampleParams,
-    callback?: GeneratedDiscoveryV1.Callback<
-      GeneratedDiscoveryV1.TrainingExample
+    params: DiscoveryV1.UpdateTrainingExampleParams,
+    callback?: DiscoveryV1.Callback<
+      DiscoveryV1.TrainingExample
     >
   ): ReadableStream | void {
     const _params = extend({}, params);
@@ -1928,15 +1928,15 @@ class GeneratedDiscoveryV1 extends BaseService {
   }
 }
 
-GeneratedDiscoveryV1.prototype.name = 'discovery';
-GeneratedDiscoveryV1.prototype.version = 'v1';
+DiscoveryV1.prototype.name = 'discovery';
+DiscoveryV1.prototype.version = 'v1';
 
 /*************************
  * interfaces
  ************************/
 
-namespace GeneratedDiscoveryV1 {
-  /** Options for the `GeneratedDiscoveryV1` constructor. **/
+namespace DiscoveryV1 {
+  /** Options for the `DiscoveryV1` constructor. **/
   export type Options = {
     version_date: string;
     url?: string;
@@ -3014,4 +3014,4 @@ namespace GeneratedDiscoveryV1 {
   }
 }
 
-export = GeneratedDiscoveryV1;
+export = DiscoveryV1;
