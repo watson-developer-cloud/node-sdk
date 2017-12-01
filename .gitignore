@@ -28,3 +28,5 @@ text-to-speech/*.js
 speech-to-text/*.js
 authorization/*.js
 .nyc_output
+**/*.d.ts
+**/*.js.map

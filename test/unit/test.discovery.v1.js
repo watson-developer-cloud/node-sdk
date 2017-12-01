@@ -46,15 +46,24 @@ describe('discovery-v1', function() {
   const paths = {
     environments: '/v1/environments',
     environmentinfo: '/v1/environments/env-guid',
+    fields: '/v1/environments/env-guid/fields',
     collections: '/v1/environments/env-guid/collections',
     collectioninfo: '/v1/environments/env-guid/collections/col-guid',
-    fields: '/v1/environments/env-guid/fields',
+    collectionfields: '/v1/environments/env-guid/collections/col-guid/fields',
     configurations: '/v1/environments/env-guid/configurations',
     configurationinfo: '/v1/environments/env-guid/configurations/config-guid',
+    testconfiguration: '/v1/environments/env-guid/preview',
     delete_collection: '/v1/environments/env-guid/collections/col-guid',
     add_document: '/v1/environments/env-guid/collections/col-guid/documents',
-    delete_document: '/v1/environments/env-guid/collections/col-guid/documents/document-guid',
-    query: '/v1/environments/env-guid/collections/col-guid/query'
+    documentinfo: '/v1/environments/env-guid/collections/col-guid/documents/document-guid',
+    query: '/v1/environments/env-guid/collections/col-guid/query',
+    queryNotices: '/v1/environments/env-guid/collections/col-guid/notices',
+    federatedquery: '/v1/environments/env-guid/query',
+    federatednotices: '/v1/environments/env-guid/notices',
+    trainingdata: '/v1/environments/env-guid/collections/col-guid/training_data',
+    createtrainingexample: '/v1/environments/env-guid/collections/col-guid/training_data/query-guid/examples',
+    trainingdatainfo: '/v1/environments/env-guid/collections/col-guid/training_data/query-guid',
+    trainingexample: '/v1/environments/env-guid/collections/col-guid/training_data/query-guid/examples/example-guid'
   };
 
   it('should generate version_date was not specified (negative test)', function() {
@@ -91,7 +100,7 @@ describe('discovery-v1', function() {
           .reply(200, { config: 'yes' })
           .post(paths.add_document + '?version=' + service.version_date)
           .reply(200, { add_doc: 'yes' })
-          .delete(paths.delete_document + '?version=' + service.version_date)
+          .delete(paths.documentinfo + '?version=' + service.version_date)
           .reply(200, { delete_doc: 'yes' })
           .get(paths.configurations + '?version=' + service.version_date)
           .reply(200, { configs: 'yes' })
@@ -228,6 +237,16 @@ describe('discovery-v1', function() {
           assert.equal(req.method, 'GET');
         });
 
+        it('should list collections fields', function() {
+          const params = {
+            environment_id: 'env-guid',
+            collection_id: 'col-guid'
+          };
+          const req = discovery.listCollectionFields(params, noop);
+          assert.equal(req.uri.href, service.url + paths.collectionfields + '?version=' + service.version_date);
+          assert.equal(req.method, 'GET');
+        });
+
         it('should delete a collection in an environment', function() {
           const req = discovery.deleteCollection(
             {
@@ -259,6 +278,17 @@ describe('discovery-v1', function() {
           assert.equal(req.method, 'POST');
         });
 
+        it('should test the new configuration', function() {
+          const req = discovery.testConfigurationInEnvironment(
+            {
+              environment_id: 'env-guid'
+            },
+            noop
+          );
+          assert.equal(req.uri.href, service.url + paths.testconfiguration + '?version=' + service.version_date);
+          assert.equal(req.method, 'POST');
+        });
+
         it('should update an existing configuration using a file', function() {
           const req = discovery.updateConfiguration(
             {
@@ -279,6 +309,18 @@ describe('discovery-v1', function() {
           assert.equal(req.method, 'GET');
         });
 
+        it('should delete a configuration in an environment', function() {
+          const req = discovery.deleteConfiguration(
+            {
+              environment_id: 'env-guid',
+              configuration_id: 'config-guid'
+            },
+            noop
+          );
+          assert.equal(req.uri.href, service.url + paths.configurationinfo + '?version=' + service.version_date);
+          assert.equal(req.method, 'DELETE');
+        });
+        
         describe('addDocument()', function() {
           it('should add a document to a collection and environment', function() {
             const req = discovery.addDocument(
@@ -290,6 +332,35 @@ describe('discovery-v1', function() {
               noop
             );
             assert.equal(req.uri.href, service.url + paths.add_document + '?version=' + service.version_date);
+            assert.equal(req.method, 'POST');
+          });
+
+
+          it('should get document status for a document in collection', function() {
+            const req = discovery.getDocumentStatus(
+              {
+                environment_id: 'env-guid',
+                collection_id: 'col-guid',
+                document_id: 'document-guid',
+              },
+              noop
+            );
+            assert.equal(req.uri.href, service.url + paths.documentinfo + '?version=' + service.version_date);
+            assert.equal(req.method, 'GET');
+          });
+
+          
+          it('should update document in collection', function() {
+            const req = discovery.updateDocument(
+              {
+                environment_id: 'env-guid',
+                collection_id: 'col-guid',
+                document_id: 'document-guid',
+                file: fs.createReadStream(path.join(__dirname, '../resources/sampleHtml.html'))
+              },
+              noop
+            );
+            assert.equal(req.uri.href, service.url + paths.documentinfo + '?version=' + service.version_date);
             assert.equal(req.method, 'POST');
           });
 
@@ -329,7 +400,7 @@ describe('discovery-v1', function() {
             },
             noop
           );
-          assert.equal(req.uri.href, service.url + paths.delete_document + '?version=' + service.version_date);
+          assert.equal(req.uri.href, service.url + paths.documentinfo + '?version=' + service.version_date);
           assert.equal(req.method, 'DELETE');
         });
 
@@ -355,6 +426,269 @@ describe('discovery-v1', function() {
               '&filter=yesplease&natural_language_query=a%20question%20about%20stuff%20and%20things&passages=true&count=10&sort=%2Bfield_1%2C-field_2'
           );
           assert.equal(req.method, 'GET');
+        });
+
+        it('should perform a query for notices', function() {
+          const req = discovery.queryNotices(
+            {
+              environment_id: 'env-guid',
+              collection_id: 'col-guid',
+              filter: 'yesplease',
+              count: 10,
+              sort: '+field_1,-field_2',
+              natural_language_query: 'a question about stuff and things',
+              passages: true
+            },
+            noop
+          );
+          assert.equal(
+            req.uri.href,
+            service.url +
+              paths.queryNotices +
+              '?version=' +
+              service.version_date + //query string params order changed, shouldn't be a problem for the service...
+              '&filter=yesplease&natural_language_query=a%20question%20about%20stuff%20and%20things&passages=true&count=10&sort=%2Bfield_1%2C-field_2'
+          );
+          assert.equal(req.method, 'GET');
+        });
+
+        it('should perform a federated query', function() {
+          const req = discovery.federatedQuery(
+            {
+              environment_id: 'env-guid',
+              collection_ids: '[col1-guid,col2-guid]',
+              filter: 'yesplease',
+              count: 10,
+              sort: '+field_1,-field_2',
+              natural_language_query: 'a question about stuff and things'
+            },
+            noop
+          );
+          assert.equal(
+            req.uri.href,
+            service.url +
+              paths.federatedquery +
+              '?version=' +
+              service.version_date + //query string params order changed, shouldn't be a problem for the service...
+              '&collection_ids=%5Bcol1-guid%2Ccol2-guid%5D&filter=yesplease&natural_language_query=a%20question%20about%20stuff%20and%20things&count=10&sort=%2Bfield_1%2C-field_2'
+          );
+          assert.equal(req.method, 'GET');
+        });
+
+        it('should perform a federated query for notices', function() {
+          const req = discovery.federatedQueryNotices(
+            {
+              environment_id: 'env-guid',
+              collection_ids: '[col1-guid,col2-guid]',
+              filter: 'yesplease',
+              count: 10,
+              sort: '+field_1,-field_2',
+              natural_language_query: 'a question about stuff and things'
+            },
+            noop
+          );
+          assert.equal(
+            req.uri.href,
+            service.url +
+              paths.federatednotices +
+              '?version=' +
+              service.version_date + //query string params order changed, shouldn't be a problem for the service...
+              '&collection_ids=%5Bcol1-guid%2Ccol2-guid%5D&filter=yesplease&natural_language_query=a%20question%20about%20stuff%20and%20things&count=10&sort=%2Bfield_1%2C-field_2'
+          );
+          assert.equal(req.method, 'GET');
+        });
+
+        it('should add training data', function() {
+          const req = discovery.addTrainingData(
+            {
+              environment_id: 'env-guid',
+              collection_id: 'col-guid',
+              filter: 'yesplease',
+              natural_language_query: 'a question about stuff and things',
+              examples: '[]'
+            },
+            noop
+          );
+          assert.equal(
+            req.uri.href,
+            service.url +
+              paths.trainingdata +
+              '?version=' +
+              service.version_date 
+          );
+          assert.equal(req.method, 'POST');
+        });
+
+        it('should create a training example', function() {
+          const req = discovery.createTrainingExample(
+            {
+              environment_id: 'env-guid',
+              collection_id: 'col-guid',
+              query_id: 'query-guid',
+            },
+            noop
+          );
+          assert.equal(
+            req.uri.href,
+            service.url +
+              paths.createtrainingexample +
+              '?version=' +
+              service.version_date 
+          );
+          assert.equal(req.method, 'POST');
+        });
+
+        it('should delete all of the training data for this collection', function() {
+          const req = discovery.deleteAllTrainingData(
+            {
+              environment_id: 'env-guid',
+              collection_id: 'col-guid',
+            },
+            noop
+          );
+          assert.equal(
+            req.uri.href,
+            service.url +
+              paths.trainingdata +
+              '?version=' +
+              service.version_date 
+          );
+          assert.equal(req.method, 'DELETE');
+        });
+
+        it('should delete the training data and all associated examples from the training data set', function() {
+          const req = discovery.deleteTrainingData(
+            {
+              environment_id: 'env-guid',
+              collection_id: 'col-guid',
+              query_id: 'query-guid'
+            },
+            noop
+          );
+          assert.equal(
+            req.uri.href,
+            service.url +
+              paths.trainingdatainfo +
+              '?version=' +
+              service.version_date 
+          );
+          assert.equal(req.method, 'DELETE');
+        });
+
+        it('should delete a training examples from the training data set', function() {
+          const req = discovery.deleteTrainingExample(
+            {
+              environment_id: 'env-guid',
+              collection_id: 'col-guid',
+              query_id: 'query-guid',
+              example_id: 'example-guid'
+            },
+            noop
+          );
+          assert.equal(
+            req.uri.href,
+            service.url +
+              paths.trainingexample +
+              '?version=' +
+              service.version_date 
+          );
+          assert.equal(req.method, 'DELETE');
+        });
+
+        it('should get the training data and all associated examples from the training data set', function() {
+          const req = discovery.getTrainingData(
+            {
+              environment_id: 'env-guid',
+              collection_id: 'col-guid',
+              query_id: 'query-guid'
+            },
+            noop
+          );
+          assert.equal(
+            req.uri.href,
+            service.url +
+              paths.trainingdatainfo +
+              '?version=' +
+              service.version_date 
+          );
+          assert.equal(req.method, 'GET');
+        });
+
+        it('get the details of training examples from the training data set', function() {
+          const req = discovery.getTrainingExample(
+            {
+              environment_id: 'env-guid',
+              collection_id: 'col-guid',
+              query_id: 'query-guid',
+              example_id: 'example-guid'
+            },
+            noop
+          );
+          assert.equal(
+            req.uri.href,
+            service.url +
+              paths.trainingexample +
+              '?version=' +
+              service.version_date 
+          );
+          assert.equal(req.method, 'GET');
+        });
+
+        it('should list the training data for the collection', function() {
+          const req = discovery.listTrainingData(
+            {
+              environment_id: 'env-guid',
+              collection_id: 'col-guid',
+            },
+            noop
+          );
+          assert.equal(
+            req.uri.href,
+            service.url +
+              paths.trainingdata +
+              '?version=' +
+              service.version_date 
+          );
+          assert.equal(req.method, 'GET');
+        });
+
+        it('should list examples for the training data', function() {
+          const req = discovery.listTrainingExamples(
+            {
+              environment_id: 'env-guid',
+              collection_id: 'col-guid',
+              query_id: 'query-guid',
+            },
+            noop
+          );
+          assert.equal(
+            req.uri.href,
+            service.url +
+              paths.createtrainingexample +
+              '?version=' +
+              service.version_date 
+          );
+          assert.equal(req.method, 'GET');
+        });
+
+        it('should update examples for the training data', function() {
+          const req = discovery.updateTrainingExample(
+            {
+              environment_id: 'env-guid',
+              collection_id: 'col-guid',
+              query_id: 'query-guid',
+              example_id: 'example-guid'
+            },
+            noop
+          );
+          assert.equal(
+            req.uri.href,
+            service.url +
+              paths.trainingexample +
+              '?version=' +
+              service.version_date 
+          );
+          assert.equal(req.method, 'PUT');
         });
 
         /**
