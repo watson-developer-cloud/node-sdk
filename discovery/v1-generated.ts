@@ -26,18 +26,17 @@ import { FileObject } from '../lib/helper';
  */
 
 class GeneratedDiscoveryV1 extends BaseService {
-
   name: string; // set by prototype to 'discovery'
   version: string; // set by prototype to 'v1'
 
   static VERSION_DATE_2017_09_01: string = '2017-09-01';
-  
+
   static VERSION_DATE_2017_08_01: string = '2017-08-01';
-  
+
   static VERSION_DATE_2017_07_19: string = '2017-07-19';
-  
+
   static VERSION_DATE_2017_06_25: string = '2017-06-25';
-  
+
   static VERSION_DATE_2016_12_01: string = '2016-12-01';
 
   static URL: string = 'https://gateway.watsonplatform.net/discovery/api';
@@ -82,15 +81,18 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  createEnvironment(params: GeneratedDiscoveryV1.CreateEnvironmentParams, callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.Environment>): ReadableStream | void {
+  createEnvironment(
+    params: GeneratedDiscoveryV1.CreateEnvironmentParams,
+    callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.Environment>
+  ): ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['name'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const body = { 
+    const body = {
       name: _params.name,
       description: _params.description,
       size: _params.size
@@ -100,17 +102,17 @@ class GeneratedDiscoveryV1 extends BaseService {
         url: '/v1/environments',
         method: 'POST',
         json: true,
-        body: body,
+        body: body
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
    * Delete environment.
@@ -120,32 +122,37 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  deleteEnvironment(params: GeneratedDiscoveryV1.DeleteEnvironmentParams, callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.DeleteEnvironmentResponse>): ReadableStream | void {
+  deleteEnvironment(
+    params: GeneratedDiscoveryV1.DeleteEnvironmentParams,
+    callback?: GeneratedDiscoveryV1.Callback<
+      GeneratedDiscoveryV1.DeleteEnvironmentResponse
+    >
+  ): ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = { 
+    const path = {
       environment_id: _params.environment_id
     };
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}',
         method: 'DELETE',
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
    * Get environment info.
@@ -155,32 +162,35 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  getEnvironment(params: GeneratedDiscoveryV1.GetEnvironmentParams, callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.Environment>): ReadableStream | void {
+  getEnvironment(
+    params: GeneratedDiscoveryV1.GetEnvironmentParams,
+    callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.Environment>
+  ): ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = { 
+    const path = {
       environment_id: _params.environment_id
     };
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}',
         method: 'GET',
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
    * List environments.
@@ -192,27 +202,36 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  listEnvironments(params?: GeneratedDiscoveryV1.ListEnvironmentsParams, callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.ListEnvironmentsResponse>): ReadableStream | void {
-    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {};
-    const query = { 
+  listEnvironments(
+    params?: GeneratedDiscoveryV1.ListEnvironmentsParams,
+    callback?: GeneratedDiscoveryV1.Callback<
+      GeneratedDiscoveryV1.ListEnvironmentsResponse
+    >
+  ): ReadableStream | void {
+    const _params =
+      typeof params === 'function' && !callback ? {} : extend({}, params);
+    const _callback =
+      typeof params === 'function' && !callback
+        ? params
+        : callback ? callback : () => {};
+    const query = {
       name: _params.name
     };
     const parameters = {
       options: {
         url: '/v1/environments',
         method: 'GET',
-        qs: query,
+        qs: query
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
    * List fields in specified collecitons.
@@ -225,18 +244,23 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  listFields(params: GeneratedDiscoveryV1.ListFieldsParams, callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.ListCollectionFieldsResponse>): ReadableStream | void {
+  listFields(
+    params: GeneratedDiscoveryV1.ListFieldsParams,
+    callback?: GeneratedDiscoveryV1.Callback<
+      GeneratedDiscoveryV1.ListCollectionFieldsResponse
+    >
+  ): ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_ids'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const query = { 
+    const query = {
       collection_ids: _params.collection_ids
     };
-    const path = { 
+    const path = {
       environment_id: _params.environment_id
     };
     const parameters = {
@@ -244,17 +268,17 @@ class GeneratedDiscoveryV1 extends BaseService {
         url: '/v1/environments/{environment_id}/fields',
         method: 'GET',
         qs: query,
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
    * Update an environment.
@@ -268,19 +292,22 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  updateEnvironment(params: GeneratedDiscoveryV1.UpdateEnvironmentParams, callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.Environment>): ReadableStream | void {
+  updateEnvironment(
+    params: GeneratedDiscoveryV1.UpdateEnvironmentParams,
+    callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.Environment>
+  ): ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const body = { 
+    const body = {
       name: _params.name,
       description: _params.description
     };
-    const path = { 
+    const path = {
       environment_id: _params.environment_id
     };
     const parameters = {
@@ -289,17 +316,17 @@ class GeneratedDiscoveryV1 extends BaseService {
         method: 'PUT',
         json: true,
         body: body,
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /*************************
    * configurations
@@ -320,22 +347,25 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  createConfiguration(params: GeneratedDiscoveryV1.CreateConfigurationParams, callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.Configuration>): ReadableStream | void {
+  createConfiguration(
+    params: GeneratedDiscoveryV1.CreateConfigurationParams,
+    callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.Configuration>
+  ): ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'name'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const body = { 
+    const body = {
       name: _params.name,
       description: _params.description,
       conversions: _params.conversions,
       enrichments: _params.enrichments,
       normalizations: _params.normalizations
     };
-    const path = { 
+    const path = {
       environment_id: _params.environment_id
     };
     const parameters = {
@@ -344,17 +374,17 @@ class GeneratedDiscoveryV1 extends BaseService {
         method: 'POST',
         json: true,
         body: body,
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
    * Delete a configuration.
@@ -367,33 +397,39 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  deleteConfiguration(params: GeneratedDiscoveryV1.DeleteConfigurationParams, callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.DeleteConfigurationResponse>): ReadableStream | void {
+  deleteConfiguration(
+    params: GeneratedDiscoveryV1.DeleteConfigurationParams,
+    callback?: GeneratedDiscoveryV1.Callback<
+      GeneratedDiscoveryV1.DeleteConfigurationResponse
+    >
+  ): ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'configuration_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = { 
+    const path = {
       environment_id: _params.environment_id,
       configuration_id: _params.configuration_id
     };
     const parameters = {
       options: {
-        url: '/v1/environments/{environment_id}/configurations/{configuration_id}',
+        url:
+          '/v1/environments/{environment_id}/configurations/{configuration_id}',
         method: 'DELETE',
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
    * Get configuration details.
@@ -404,33 +440,37 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  getConfiguration(params: GeneratedDiscoveryV1.GetConfigurationParams, callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.Configuration>): ReadableStream | void {
+  getConfiguration(
+    params: GeneratedDiscoveryV1.GetConfigurationParams,
+    callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.Configuration>
+  ): ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'configuration_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = { 
+    const path = {
       environment_id: _params.environment_id,
       configuration_id: _params.configuration_id
     };
     const parameters = {
       options: {
-        url: '/v1/environments/{environment_id}/configurations/{configuration_id}',
+        url:
+          '/v1/environments/{environment_id}/configurations/{configuration_id}',
         method: 'GET',
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
    * List configurations.
@@ -443,18 +483,23 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  listConfigurations(params: GeneratedDiscoveryV1.ListConfigurationsParams, callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.ListConfigurationsResponse>): ReadableStream | void {
+  listConfigurations(
+    params: GeneratedDiscoveryV1.ListConfigurationsParams,
+    callback?: GeneratedDiscoveryV1.Callback<
+      GeneratedDiscoveryV1.ListConfigurationsResponse
+    >
+  ): ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const query = { 
+    const query = {
       name: _params.name
     };
-    const path = { 
+    const path = {
       environment_id: _params.environment_id
     };
     const parameters = {
@@ -462,17 +507,17 @@ class GeneratedDiscoveryV1 extends BaseService {
         url: '/v1/environments/{environment_id}/configurations',
         method: 'GET',
         qs: query,
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
    * Update a configuration.
@@ -490,42 +535,46 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  updateConfiguration(params: GeneratedDiscoveryV1.UpdateConfigurationParams, callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.Configuration>): ReadableStream | void {
+  updateConfiguration(
+    params: GeneratedDiscoveryV1.UpdateConfigurationParams,
+    callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.Configuration>
+  ): ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'configuration_id', 'name'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const body = { 
+    const body = {
       name: _params.name,
       description: _params.description,
       conversions: _params.conversions,
       enrichments: _params.enrichments,
       normalizations: _params.normalizations
     };
-    const path = { 
+    const path = {
       environment_id: _params.environment_id,
       configuration_id: _params.configuration_id
     };
     const parameters = {
       options: {
-        url: '/v1/environments/{environment_id}/configurations/{configuration_id}',
+        url:
+          '/v1/environments/{environment_id}/configurations/{configuration_id}',
         method: 'PUT',
         json: true,
         body: body,
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /*************************
    * testYourConfigurationOnADocument
@@ -547,9 +596,12 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  testConfigurationInEnvironment(params: GeneratedDiscoveryV1.TestConfigurationInEnvironmentParams, callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.TestDocument>): ReadableStream | void {
+  testConfigurationInEnvironment(
+    params: GeneratedDiscoveryV1.TestConfigurationInEnvironmentParams,
+    callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.TestDocument>
+  ): ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -563,11 +615,11 @@ class GeneratedDiscoveryV1 extends BaseService {
       },
       metadata: _params.metadata
     };
-    const query = { 
+    const query = {
       step: _params.step,
       configuration_id: _params.configuration_id
     };
-    const path = { 
+    const path = {
       environment_id: _params.environment_id
     };
     const parameters = {
@@ -580,13 +632,13 @@ class GeneratedDiscoveryV1 extends BaseService {
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
+          Accept: 'application/json',
+          'Content-Type': 'multipart/form-data'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /*************************
    * collections
@@ -604,21 +656,24 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  createCollection(params: GeneratedDiscoveryV1.CreateCollectionParams, callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.Collection>): ReadableStream | void {
+  createCollection(
+    params: GeneratedDiscoveryV1.CreateCollectionParams,
+    callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.Collection>
+  ): ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'name'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const body = { 
+    const body = {
       name: _params.name,
       description: _params.description,
       configuration_id: _params.configuration_id,
       language: _params.language
     };
-    const path = { 
+    const path = {
       environment_id: _params.environment_id
     };
     const parameters = {
@@ -627,17 +682,17 @@ class GeneratedDiscoveryV1 extends BaseService {
         method: 'POST',
         json: true,
         body: body,
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
    * Delete a collection.
@@ -648,15 +703,20 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  deleteCollection(params: GeneratedDiscoveryV1.DeleteCollectionParams, callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.DeleteCollectionResponse>): ReadableStream | void {
+  deleteCollection(
+    params: GeneratedDiscoveryV1.DeleteCollectionParams,
+    callback?: GeneratedDiscoveryV1.Callback<
+      GeneratedDiscoveryV1.DeleteCollectionResponse
+    >
+  ): ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = { 
+    const path = {
       environment_id: _params.environment_id,
       collection_id: _params.collection_id
     };
@@ -664,17 +724,17 @@ class GeneratedDiscoveryV1 extends BaseService {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}',
         method: 'DELETE',
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
    * Get collection details.
@@ -685,15 +745,18 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  getCollection(params: GeneratedDiscoveryV1.GetCollectionParams, callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.Collection>): ReadableStream | void {
+  getCollection(
+    params: GeneratedDiscoveryV1.GetCollectionParams,
+    callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.Collection>
+  ): ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = { 
+    const path = {
       environment_id: _params.environment_id,
       collection_id: _params.collection_id
     };
@@ -701,17 +764,17 @@ class GeneratedDiscoveryV1 extends BaseService {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}',
         method: 'GET',
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
    * List unique fields.
@@ -724,33 +787,39 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  listCollectionFields(params: GeneratedDiscoveryV1.ListCollectionFieldsParams, callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.ListCollectionFieldsResponse>): ReadableStream | void {
+  listCollectionFields(
+    params: GeneratedDiscoveryV1.ListCollectionFieldsParams,
+    callback?: GeneratedDiscoveryV1.Callback<
+      GeneratedDiscoveryV1.ListCollectionFieldsResponse
+    >
+  ): ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = { 
+    const path = {
       environment_id: _params.environment_id,
       collection_id: _params.collection_id
     };
     const parameters = {
       options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/fields',
+        url:
+          '/v1/environments/{environment_id}/collections/{collection_id}/fields',
         method: 'GET',
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
    * List collections.
@@ -763,18 +832,23 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  listCollections(params: GeneratedDiscoveryV1.ListCollectionsParams, callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.ListCollectionsResponse>): ReadableStream | void {
+  listCollections(
+    params: GeneratedDiscoveryV1.ListCollectionsParams,
+    callback?: GeneratedDiscoveryV1.Callback<
+      GeneratedDiscoveryV1.ListCollectionsResponse
+    >
+  ): ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const query = { 
+    const query = {
       name: _params.name
     };
-    const path = { 
+    const path = {
       environment_id: _params.environment_id
     };
     const parameters = {
@@ -782,17 +856,17 @@ class GeneratedDiscoveryV1 extends BaseService {
         url: '/v1/environments/{environment_id}/collections',
         method: 'GET',
         qs: query,
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
    * Update a collection.
@@ -806,20 +880,23 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  updateCollection(params: GeneratedDiscoveryV1.UpdateCollectionParams, callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.Collection>): ReadableStream | void {
+  updateCollection(
+    params: GeneratedDiscoveryV1.UpdateCollectionParams,
+    callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.Collection>
+  ): ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const body = { 
+    const body = {
       name: _params.name,
       description: _params.description,
       configuration_id: _params.configuration_id
     };
-    const path = { 
+    const path = {
       environment_id: _params.environment_id,
       collection_id: _params.collection_id
     };
@@ -829,17 +906,17 @@ class GeneratedDiscoveryV1 extends BaseService {
         method: 'PUT',
         json: true,
         body: body,
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /*************************
    * documents
@@ -859,9 +936,14 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  addDocument(params: GeneratedDiscoveryV1.AddDocumentParams, callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.DocumentAccepted>): ReadableStream | void {
+  addDocument(
+    params: GeneratedDiscoveryV1.AddDocumentParams,
+    callback?: GeneratedDiscoveryV1.Callback<
+      GeneratedDiscoveryV1.DocumentAccepted
+    >
+  ): ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -874,26 +956,27 @@ class GeneratedDiscoveryV1 extends BaseService {
       },
       metadata: _params.metadata
     };
-    const path = { 
+    const path = {
       environment_id: _params.environment_id,
       collection_id: _params.collection_id
     };
     const parameters = {
       options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/documents',
+        url:
+          '/v1/environments/{environment_id}/collections/{collection_id}/documents',
         method: 'POST',
         path: path,
         formData: formData
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
+          Accept: 'application/json',
+          'Content-Type': 'multipart/form-data'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
    * Delete a document.
@@ -907,34 +990,40 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  deleteDocument(params: GeneratedDiscoveryV1.DeleteDocumentParams, callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.DeleteDocumentResponse>): ReadableStream | void {
+  deleteDocument(
+    params: GeneratedDiscoveryV1.DeleteDocumentParams,
+    callback?: GeneratedDiscoveryV1.Callback<
+      GeneratedDiscoveryV1.DeleteDocumentResponse
+    >
+  ): ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_id', 'document_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = { 
+    const path = {
       environment_id: _params.environment_id,
       collection_id: _params.collection_id,
       document_id: _params.document_id
     };
     const parameters = {
       options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/documents/{document_id}',
+        url:
+          '/v1/environments/{environment_id}/collections/{collection_id}/documents/{document_id}',
         method: 'DELETE',
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
    * Get document details.
@@ -948,34 +1037,40 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  getDocumentStatus(params: GeneratedDiscoveryV1.GetDocumentStatusParams, callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.DocumentStatus>): ReadableStream | void {
+  getDocumentStatus(
+    params: GeneratedDiscoveryV1.GetDocumentStatusParams,
+    callback?: GeneratedDiscoveryV1.Callback<
+      GeneratedDiscoveryV1.DocumentStatus
+    >
+  ): ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_id', 'document_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = { 
+    const path = {
       environment_id: _params.environment_id,
       collection_id: _params.collection_id,
       document_id: _params.document_id
     };
     const parameters = {
       options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/documents/{document_id}',
+        url:
+          '/v1/environments/{environment_id}/collections/{collection_id}/documents/{document_id}',
         method: 'GET',
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
    * Update a document.
@@ -992,9 +1087,14 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  updateDocument(params: GeneratedDiscoveryV1.UpdateDocumentParams, callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.DocumentAccepted>): ReadableStream | void {
+  updateDocument(
+    params: GeneratedDiscoveryV1.UpdateDocumentParams,
+    callback?: GeneratedDiscoveryV1.Callback<
+      GeneratedDiscoveryV1.DocumentAccepted
+    >
+  ): ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_id', 'document_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1007,27 +1107,28 @@ class GeneratedDiscoveryV1 extends BaseService {
       },
       metadata: _params.metadata
     };
-    const path = { 
+    const path = {
       environment_id: _params.environment_id,
       collection_id: _params.collection_id,
       document_id: _params.document_id
     };
     const parameters = {
       options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/documents/{document_id}',
+        url:
+          '/v1/environments/{environment_id}/collections/{collection_id}/documents/{document_id}',
         method: 'POST',
         path: path,
         formData: formData
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
+          Accept: 'application/json',
+          'Content-Type': 'multipart/form-data'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /*************************
    * queries
@@ -1055,15 +1156,18 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  federatedQuery(params: GeneratedDiscoveryV1.FederatedQueryParams, callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.QueryResponse>): ReadableStream | void {
+  federatedQuery(
+    params: GeneratedDiscoveryV1.FederatedQueryParams,
+    callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.QueryResponse>
+  ): ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_ids'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const query = { 
+    const query = {
       collection_ids: _params.collection_ids,
       filter: _params.filter,
       query: _params.query,
@@ -1077,7 +1181,7 @@ class GeneratedDiscoveryV1 extends BaseService {
       deduplicate: _params.deduplicate,
       'deduplicate.field': _params.deduplicate_field
     };
-    const path = { 
+    const path = {
       environment_id: _params.environment_id
     };
     const parameters = {
@@ -1085,17 +1189,17 @@ class GeneratedDiscoveryV1 extends BaseService {
         url: '/v1/environments/{environment_id}/query',
         method: 'GET',
         qs: query,
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
    * Query multiple collection system notices.
@@ -1118,15 +1222,20 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  federatedQueryNotices(params: GeneratedDiscoveryV1.FederatedQueryNoticesParams, callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.QueryNoticesResponse>): ReadableStream | void {
+  federatedQueryNotices(
+    params: GeneratedDiscoveryV1.FederatedQueryNoticesParams,
+    callback?: GeneratedDiscoveryV1.Callback<
+      GeneratedDiscoveryV1.QueryNoticesResponse
+    >
+  ): ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_ids'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const query = { 
+    const query = {
       collection_ids: _params.collection_ids,
       filter: _params.filter,
       query: _params.query,
@@ -1139,7 +1248,7 @@ class GeneratedDiscoveryV1 extends BaseService {
       highlight: _params.highlight,
       'deduplicate.field': _params.deduplicate_field
     };
-    const path = { 
+    const path = {
       environment_id: _params.environment_id
     };
     const parameters = {
@@ -1147,17 +1256,17 @@ class GeneratedDiscoveryV1 extends BaseService {
         url: '/v1/environments/{environment_id}/notices',
         method: 'GET',
         qs: query,
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
    * Query documents.
@@ -1185,15 +1294,18 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  query(params: GeneratedDiscoveryV1.QueryParams, callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.QueryResponse>): ReadableStream | void {
+  query(
+    params: GeneratedDiscoveryV1.QueryParams,
+    callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.QueryResponse>
+  ): ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const query = { 
+    const query = {
       filter: _params.filter,
       query: _params.query,
       natural_language_query: _params.natural_language_query,
@@ -1210,26 +1322,27 @@ class GeneratedDiscoveryV1 extends BaseService {
       deduplicate: _params.deduplicate,
       'deduplicate.field': _params.deduplicate_field
     };
-    const path = { 
+    const path = {
       environment_id: _params.environment_id,
       collection_id: _params.collection_id
     };
     const parameters = {
       options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/query',
+        url:
+          '/v1/environments/{environment_id}/collections/{collection_id}/query',
         method: 'GET',
         qs: query,
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
    * Query system notices.
@@ -1256,15 +1369,20 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  queryNotices(params: GeneratedDiscoveryV1.QueryNoticesParams, callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.QueryNoticesResponse>): ReadableStream | void {
+  queryNotices(
+    params: GeneratedDiscoveryV1.QueryNoticesParams,
+    callback?: GeneratedDiscoveryV1.Callback<
+      GeneratedDiscoveryV1.QueryNoticesResponse
+    >
+  ): ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const query = { 
+    const query = {
       filter: _params.filter,
       query: _params.query,
       natural_language_query: _params.natural_language_query,
@@ -1280,26 +1398,27 @@ class GeneratedDiscoveryV1 extends BaseService {
       'passages.characters': _params.passages_characters,
       'deduplicate.field': _params.deduplicate_field
     };
-    const path = { 
+    const path = {
       environment_id: _params.environment_id,
       collection_id: _params.collection_id
     };
     const parameters = {
       options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/notices',
+        url:
+          '/v1/environments/{environment_id}/collections/{collection_id}/notices',
         method: 'GET',
         qs: query,
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /*************************
    * trainingData
@@ -1319,40 +1438,44 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  addTrainingData(params: GeneratedDiscoveryV1.AddTrainingDataParams, callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.TrainingQuery>): ReadableStream | void {
+  addTrainingData(
+    params: GeneratedDiscoveryV1.AddTrainingDataParams,
+    callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.TrainingQuery>
+  ): ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const body = { 
+    const body = {
       natural_language_query: _params.natural_language_query,
       filter: _params.filter,
       examples: _params.examples
     };
-    const path = { 
+    const path = {
       environment_id: _params.environment_id,
       collection_id: _params.collection_id
     };
     const parameters = {
       options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data',
+        url:
+          '/v1/environments/{environment_id}/collections/{collection_id}/training_data',
         method: 'POST',
         json: true,
         body: body,
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
    * 
@@ -1369,41 +1492,47 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  createTrainingExample(params: GeneratedDiscoveryV1.CreateTrainingExampleParams, callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.TrainingExample>): ReadableStream | void {
+  createTrainingExample(
+    params: GeneratedDiscoveryV1.CreateTrainingExampleParams,
+    callback?: GeneratedDiscoveryV1.Callback<
+      GeneratedDiscoveryV1.TrainingExample
+    >
+  ): ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_id', 'query_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const body = { 
+    const body = {
       document_id: _params.document_id,
       cross_reference: _params.cross_reference,
       relevance: _params.relevance
     };
-    const path = { 
+    const path = {
       environment_id: _params.environment_id,
       collection_id: _params.collection_id,
       query_id: _params.query_id
     };
     const parameters = {
       options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples',
+        url:
+          '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples',
         method: 'POST',
         json: true,
         body: body,
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
    * 
@@ -1416,33 +1545,37 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  deleteAllTrainingData(params: GeneratedDiscoveryV1.DeleteAllTrainingDataParams, callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.Empty>): ReadableStream | void {
+  deleteAllTrainingData(
+    params: GeneratedDiscoveryV1.DeleteAllTrainingDataParams,
+    callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.Empty>
+  ): ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = { 
+    const path = {
       environment_id: _params.environment_id,
       collection_id: _params.collection_id
     };
     const parameters = {
       options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data',
+        url:
+          '/v1/environments/{environment_id}/collections/{collection_id}/training_data',
         method: 'DELETE',
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
    * 
@@ -1456,34 +1589,38 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  deleteTrainingData(params: GeneratedDiscoveryV1.DeleteTrainingDataParams, callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.Empty>): ReadableStream | void {
+  deleteTrainingData(
+    params: GeneratedDiscoveryV1.DeleteTrainingDataParams,
+    callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.Empty>
+  ): ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_id', 'query_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = { 
+    const path = {
       environment_id: _params.environment_id,
       collection_id: _params.collection_id,
       query_id: _params.query_id
     };
     const parameters = {
       options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}',
+        url:
+          '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}',
         method: 'DELETE',
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
    * 
@@ -1498,15 +1635,23 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  deleteTrainingExample(params: GeneratedDiscoveryV1.DeleteTrainingExampleParams, callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.Empty>): ReadableStream | void {
+  deleteTrainingExample(
+    params: GeneratedDiscoveryV1.DeleteTrainingExampleParams,
+    callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.Empty>
+  ): ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
-    const requiredParams = ['environment_id', 'collection_id', 'query_id', 'example_id'];
+    const _callback = callback ? callback : () => {};
+    const requiredParams = [
+      'environment_id',
+      'collection_id',
+      'query_id',
+      'example_id'
+    ];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = { 
+    const path = {
       environment_id: _params.environment_id,
       collection_id: _params.collection_id,
       query_id: _params.query_id,
@@ -1514,19 +1659,20 @@ class GeneratedDiscoveryV1 extends BaseService {
     };
     const parameters = {
       options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples/{example_id}',
+        url:
+          '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples/{example_id}',
         method: 'DELETE',
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
    * 
@@ -1540,34 +1686,38 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  getTrainingData(params: GeneratedDiscoveryV1.GetTrainingDataParams, callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.TrainingQuery>): ReadableStream | void {
+  getTrainingData(
+    params: GeneratedDiscoveryV1.GetTrainingDataParams,
+    callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.TrainingQuery>
+  ): ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_id', 'query_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = { 
+    const path = {
       environment_id: _params.environment_id,
       collection_id: _params.collection_id,
       query_id: _params.query_id
     };
     const parameters = {
       options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}',
+        url:
+          '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}',
         method: 'GET',
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
    * 
@@ -1582,15 +1732,25 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  getTrainingExample(params: GeneratedDiscoveryV1.GetTrainingExampleParams, callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.TrainingExample>): ReadableStream | void {
+  getTrainingExample(
+    params: GeneratedDiscoveryV1.GetTrainingExampleParams,
+    callback?: GeneratedDiscoveryV1.Callback<
+      GeneratedDiscoveryV1.TrainingExample
+    >
+  ): ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
-    const requiredParams = ['environment_id', 'collection_id', 'query_id', 'example_id'];
+    const _callback = callback ? callback : () => {};
+    const requiredParams = [
+      'environment_id',
+      'collection_id',
+      'query_id',
+      'example_id'
+    ];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = { 
+    const path = {
       environment_id: _params.environment_id,
       collection_id: _params.collection_id,
       query_id: _params.query_id,
@@ -1598,19 +1758,20 @@ class GeneratedDiscoveryV1 extends BaseService {
     };
     const parameters = {
       options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples/{example_id}',
+        url:
+          '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples/{example_id}',
         method: 'GET',
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
    * 
@@ -1623,33 +1784,39 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  listTrainingData(params: GeneratedDiscoveryV1.ListTrainingDataParams, callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.TrainingDataSet>): ReadableStream | void {
+  listTrainingData(
+    params: GeneratedDiscoveryV1.ListTrainingDataParams,
+    callback?: GeneratedDiscoveryV1.Callback<
+      GeneratedDiscoveryV1.TrainingDataSet
+    >
+  ): ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = { 
+    const path = {
       environment_id: _params.environment_id,
       collection_id: _params.collection_id
     };
     const parameters = {
       options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data',
+        url:
+          '/v1/environments/{environment_id}/collections/{collection_id}/training_data',
         method: 'GET',
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
    * 
@@ -1663,34 +1830,40 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  listTrainingExamples(params: GeneratedDiscoveryV1.ListTrainingExamplesParams, callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.TrainingExampleList>): ReadableStream | void {
+  listTrainingExamples(
+    params: GeneratedDiscoveryV1.ListTrainingExamplesParams,
+    callback?: GeneratedDiscoveryV1.Callback<
+      GeneratedDiscoveryV1.TrainingExampleList
+    >
+  ): ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_id', 'query_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = { 
+    const path = {
       environment_id: _params.environment_id,
       collection_id: _params.collection_id,
       query_id: _params.query_id
     };
     const parameters = {
       options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples',
+        url:
+          '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples',
         method: 'GET',
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
    * 
@@ -1707,19 +1880,29 @@ class GeneratedDiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  updateTrainingExample(params: GeneratedDiscoveryV1.UpdateTrainingExampleParams, callback?: GeneratedDiscoveryV1.Callback<GeneratedDiscoveryV1.TrainingExample>): ReadableStream | void {
+  updateTrainingExample(
+    params: GeneratedDiscoveryV1.UpdateTrainingExampleParams,
+    callback?: GeneratedDiscoveryV1.Callback<
+      GeneratedDiscoveryV1.TrainingExample
+    >
+  ): ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
-    const requiredParams = ['environment_id', 'collection_id', 'query_id', 'example_id'];
+    const _callback = callback ? callback : () => {};
+    const requiredParams = [
+      'environment_id',
+      'collection_id',
+      'query_id',
+      'example_id'
+    ];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const body = { 
+    const body = {
       cross_reference: _params.cross_reference,
       relevance: _params.relevance
     };
-    const path = { 
+    const path = {
       environment_id: _params.environment_id,
       collection_id: _params.collection_id,
       query_id: _params.query_id,
@@ -1727,22 +1910,22 @@ class GeneratedDiscoveryV1 extends BaseService {
     };
     const parameters = {
       options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples/{example_id}',
+        url:
+          '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples/{example_id}',
         method: 'PUT',
         json: true,
         body: body,
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
-
+  }
 }
 
 GeneratedDiscoveryV1.prototype.name = 'discovery';
@@ -1753,7 +1936,6 @@ GeneratedDiscoveryV1.prototype.version = 'v1';
  ************************/
 
 namespace GeneratedDiscoveryV1 {
-
   /** Options for the `GeneratedDiscoveryV1` constructor. **/
   export type Options = {
     version_date: string;
@@ -1762,13 +1944,17 @@ namespace GeneratedDiscoveryV1 {
     password?: string;
     use_unauthenticated?: boolean;
     headers?: object;
-  }
+  };
 
   /** The callback for a service request. **/
-  export type Callback<T> = (error: any, body?: T, response?: RequestResponse) => void;
+  export type Callback<T> = (
+    error: any,
+    body?: T,
+    response?: RequestResponse
+  ) => void;
 
   /** The body of a service request that returns no response data. **/
-  export interface Empty { }
+  export interface Empty {}
 
   /*************************
    * request interfaces
@@ -1889,11 +2075,13 @@ namespace GeneratedDiscoveryV1 {
     /** The ID of the configuration to use to process the document. If the `configuration` form part is also provided (both are present at the same time), then request will be rejected. **/
     configuration_id?: string;
     /** The content of the document to ingest. The maximum supported file size is 50 megabytes. Files larger than 50 megabytes is rejected. **/
-    file?: ReadableStream|FileObject|Buffer;
+    file?: ReadableStream | FileObject | Buffer;
     /** If you're using the Data Crawler to upload your documents, you can test a document against the type of metadata that the Data Crawler might send. The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected. Example:  ``` {   "Creator": "Johnny Appleseed",   "Subject": "Apples" } ```. **/
     metadata?: string;
     /** The content type of file. **/
-    file_content_type?: TestConfigurationInEnvironmentConstants.FileContentType | string;
+    file_content_type?:
+      | TestConfigurationInEnvironmentConstants.FileContentType
+      | string;
   }
 
   /** Constants for the `testConfigurationInEnvironment` operation. **/
@@ -1905,7 +2093,7 @@ namespace GeneratedDiscoveryV1 {
       JSON_OUTPUT = 'json_output',
       JSON_NORMALIZATIONS_OUTPUT = 'json_normalizations_output',
       ENRICHMENTS_OUTPUT = 'enrichments_output',
-      NORMALIZATIONS_OUTPUT = 'normalizations_output',
+      NORMALIZATIONS_OUTPUT = 'normalizations_output'
     }
     /** The content type of file. **/
     export enum FileContentType {
@@ -1914,7 +2102,7 @@ namespace GeneratedDiscoveryV1 {
       APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_DOCUMENT = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
       APPLICATION_PDF = 'application/pdf',
       TEXT_HTML = 'text/html',
-      APPLICATION_XHTML_XML = 'application/xhtml+xml',
+      APPLICATION_XHTML_XML = 'application/xhtml+xml'
     }
   }
 
@@ -1944,7 +2132,7 @@ namespace GeneratedDiscoveryV1 {
       IT = 'it',
       JA = 'ja',
       KO = 'ko',
-      PT_BR = 'pt-br',
+      PT_BR = 'pt-br'
     }
   }
 
@@ -2001,7 +2189,7 @@ namespace GeneratedDiscoveryV1 {
     /** The ID of the collection. **/
     collection_id: string;
     /** The content of the document to ingest. The maximum supported file size is 50 megabytes. Files larger than 50 megabytes is rejected. **/
-    file?: ReadableStream|FileObject|Buffer;
+    file?: ReadableStream | FileObject | Buffer;
     /** If you're using the Data Crawler to upload your documents, you can test a document against the type of metadata that the Data Crawler might send. The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected. Example:  ``` {   "Creator": "Johnny Appleseed",   "Subject": "Apples" } ```. **/
     metadata?: string;
     /** The content type of file. **/
@@ -2017,7 +2205,7 @@ namespace GeneratedDiscoveryV1 {
       APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_DOCUMENT = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
       APPLICATION_PDF = 'application/pdf',
       TEXT_HTML = 'text/html',
-      APPLICATION_XHTML_XML = 'application/xhtml+xml',
+      APPLICATION_XHTML_XML = 'application/xhtml+xml'
     }
   }
 
@@ -2050,7 +2238,7 @@ namespace GeneratedDiscoveryV1 {
     /** The ID of the document. **/
     document_id: string;
     /** The content of the document to ingest. The maximum supported file size is 50 megabytes. Files larger than 50 megabytes is rejected. **/
-    file?: ReadableStream|FileObject|Buffer;
+    file?: ReadableStream | FileObject | Buffer;
     /** If you're using the Data Crawler to upload your documents, you can test a document against the type of metadata that the Data Crawler might send. The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected. Example:  ``` {   "Creator": "Johnny Appleseed",   "Subject": "Apples" } ```. **/
     metadata?: string;
     /** The content type of file. **/
@@ -2066,7 +2254,7 @@ namespace GeneratedDiscoveryV1 {
       APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_DOCUMENT = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
       APPLICATION_PDF = 'application/pdf',
       TEXT_HTML = 'text/html',
-      APPLICATION_XHTML_XML = 'application/xhtml+xml',
+      APPLICATION_XHTML_XML = 'application/xhtml+xml'
     }
   }
 
@@ -2824,7 +3012,6 @@ namespace GeneratedDiscoveryV1 {
     /** The collection ID of the collection containing the document for this result. **/
     collection_id?: string;
   }
-
 }
 
 export = GeneratedDiscoveryV1;
