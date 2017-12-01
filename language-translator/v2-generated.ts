@@ -41,12 +41,16 @@ class GeneratedLanguageTranslatorV2 extends BaseService {
    * @param {Boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
    * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {Object} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
-   * @returns {GeneratedLanguageTranslatorV2}
    * @constructor
+   * @returns {GeneratedLanguageTranslatorV2}
    */
   constructor(options: GeneratedLanguageTranslatorV2.Options) {
     super(options);
   }
+
+  /*************************
+   * translate
+   ************************/
 
   /**
    * Translates the input text from the source language to the target language.
@@ -65,8 +69,8 @@ class GeneratedLanguageTranslatorV2 extends BaseService {
       GeneratedLanguageTranslatorV2.TranslationResult
     >
   ): ReadableStream | void {
-    const _callback = typeof callback === 'function' ? callback : () => {};
     const _params = extend({}, params);
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['text'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -85,15 +89,19 @@ class GeneratedLanguageTranslatorV2 extends BaseService {
         json: true,
         body: body
       },
-      defaultOptions: extend(true, this._options, {
+      defaultOptions: extend(true, {}, this._options, {
         headers: {
-          accept: 'application/json',
-          'content-type': 'application/json'
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
   }
+
+  /*************************
+   * identify
+   ************************/
 
   /**
    * Identifies the language of the input text.
@@ -109,16 +117,14 @@ class GeneratedLanguageTranslatorV2 extends BaseService {
       GeneratedLanguageTranslatorV2.IdentifiedLanguages
     >
   ): ReadableStream | void {
-    const _callback = typeof callback === 'function' ? callback : () => {};
     const _params = extend({}, params);
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['text'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const body = {
-      text: _params.text
-    };
+    const body = { text: _params.text };
     const parameters = {
       options: {
         url: '/v2/identify',
@@ -126,10 +132,10 @@ class GeneratedLanguageTranslatorV2 extends BaseService {
         json: true,
         body: body
       },
-      defaultOptions: extend(true, this._options, {
+      defaultOptions: extend(true, {}, this._options, {
         headers: {
-          accept: 'application/json',
-          'content-type': 'text/plain'
+          Accept: 'application/json',
+          'Content-Type': 'text/plain'
         }
       })
     };
@@ -151,21 +157,29 @@ class GeneratedLanguageTranslatorV2 extends BaseService {
       GeneratedLanguageTranslatorV2.IdentifiableLanguages
     >
   ): ReadableStream | void {
-    const _callback = typeof callback === 'function' ? callback : () => {};
-    const _params = extend({}, params);
+    const _params =
+      typeof params === 'function' && !callback ? {} : extend({}, params);
+    const _callback =
+      typeof params === 'function' && !callback
+        ? params
+        : callback ? callback : () => {};
     const parameters = {
       options: {
         url: '/v2/identifiable_languages',
         method: 'GET'
       },
-      defaultOptions: extend(true, this._options, {
+      defaultOptions: extend(true, {}, this._options, {
         headers: {
-          accept: 'application/json'
+          Accept: 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
   }
+
+  /*************************
+   * models
+   ************************/
 
   /**
    * Uploads a TMX glossary file on top of a domain to customize a translation model.
@@ -185,8 +199,8 @@ class GeneratedLanguageTranslatorV2 extends BaseService {
       GeneratedLanguageTranslatorV2.TranslationModel
     >
   ): ReadableStream | void {
-    const _callback = typeof callback === 'function' ? callback : () => {};
     const _params = extend({}, params);
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['base_model_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -217,10 +231,10 @@ class GeneratedLanguageTranslatorV2 extends BaseService {
         qs: query,
         formData: formData
       },
-      defaultOptions: extend(true, this._options, {
+      defaultOptions: extend(true, {}, this._options, {
         headers: {
-          accept: 'application/json',
-          'content-type': 'multipart/form-data'
+          Accept: 'application/json',
+          'Content-Type': 'multipart/form-data'
         }
       })
     };
@@ -241,8 +255,8 @@ class GeneratedLanguageTranslatorV2 extends BaseService {
       GeneratedLanguageTranslatorV2.DeleteModelResult
     >
   ): ReadableStream | void {
-    const _callback = typeof callback === 'function' ? callback : () => {};
     const _params = extend({}, params);
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['model_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -257,9 +271,9 @@ class GeneratedLanguageTranslatorV2 extends BaseService {
         method: 'DELETE',
         path: path
       },
-      defaultOptions: extend(true, this._options, {
+      defaultOptions: extend(true, {}, this._options, {
         headers: {
-          accept: 'application/json'
+          Accept: 'application/json'
         }
       })
     };
@@ -280,8 +294,8 @@ class GeneratedLanguageTranslatorV2 extends BaseService {
       GeneratedLanguageTranslatorV2.TranslationModel
     >
   ): ReadableStream | void {
-    const _callback = typeof callback === 'function' ? callback : () => {};
     const _params = extend({}, params);
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['model_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -296,9 +310,9 @@ class GeneratedLanguageTranslatorV2 extends BaseService {
         method: 'GET',
         path: path
       },
-      defaultOptions: extend(true, this._options, {
+      defaultOptions: extend(true, {}, this._options, {
         headers: {
-          accept: 'application/json'
+          Accept: 'application/json'
         }
       })
     };
@@ -321,8 +335,12 @@ class GeneratedLanguageTranslatorV2 extends BaseService {
       GeneratedLanguageTranslatorV2.TranslationModels
     >
   ): ReadableStream | void {
-    const _callback = typeof callback === 'function' ? callback : () => {};
-    const _params = extend({}, params);
+    const _params =
+      typeof params === 'function' && !callback ? {} : extend({}, params);
+    const _callback =
+      typeof params === 'function' && !callback
+        ? params
+        : callback ? callback : () => {};
     const query = {
       source: _params.source,
       target: _params.target,
@@ -334,10 +352,10 @@ class GeneratedLanguageTranslatorV2 extends BaseService {
         method: 'GET',
         qs: query
       },
-      defaultOptions: extend(true, this._options, {
+      defaultOptions: extend(true, {}, this._options, {
         headers: {
-          accept: 'application/json',
-          'content-type': 'application/x-www-form-urlencoded'
+          Accept: 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded'
         }
       })
     };
@@ -348,15 +366,12 @@ class GeneratedLanguageTranslatorV2 extends BaseService {
 GeneratedLanguageTranslatorV2.prototype.name = 'language_translator';
 GeneratedLanguageTranslatorV2.prototype.version = 'v2';
 
+/*************************
+ * interfaces
+ ************************/
+
 namespace GeneratedLanguageTranslatorV2 {
-  export interface Empty {}
-
-  export type Callback<T> = (
-    error: any,
-    body?: T,
-    response?: RequestResponse
-  ) => void;
-
+  /** Options for the `GeneratedLanguageTranslatorV2` constructor. **/
   export type Options = {
     url?: string;
     username?: string;
@@ -365,87 +380,158 @@ namespace GeneratedLanguageTranslatorV2 {
     headers?: object;
   };
 
+  /** The callback for a service request. **/
+  export type Callback<T> = (
+    error: any,
+    body?: T,
+    response?: RequestResponse
+  ) => void;
+
+  /** The body of a service request that returns no response data. **/
+  export interface Empty {}
+
+  /*************************
+   * request interfaces
+   ************************/
+
+  /** Parameters for the `translate` operation. **/
   export interface TranslateParams {
+    /** Input text in UTF-8 encoding. It is a list so that multiple paragraphs can be submitted. Also accept a single string, instead of an array, as valid input. **/
     text: string[];
+    /** The unique model_id of the translation model being used to translate text. The model_id inherently specifies source language, target language, and domain. If the model_id is specified, there is no need for the source and target parameters and the values are ignored. **/
     model_id?: string;
+    /** Used in combination with target as an alternative way to select the model for translation. When target and source are set, and model_id is not set, the system chooses a default model with the right language pair to translate (usually the model based on the news domain). **/
     source?: string;
+    /** Used in combination with source as an alternative way to select the model for translation. When target and source are set, and model_id is not set, the system chooses a default model with the right language pair to translate (usually the model based on the news domain). **/
     target?: string;
   }
 
+  /** Parameters for the `identify` operation. **/
   export interface IdentifyParams {
+    /** Input text in UTF-8 format. **/
     text: string;
   }
 
+  /** Parameters for the `listIdentifiableLanguages` operation. **/
   export interface ListIdentifiableLanguagesParams {}
 
+  /** Parameters for the `createModel` operation. **/
   export interface CreateModelParams {
+    /** Specifies the domain model that is used as the base for the training. To see current supported domain models, use the GET /v2/models parameter. **/
     base_model_id: string;
+    /** The model name. Valid characters are letters, numbers, -, and _. No spaces. **/
     name?: string;
+    /** A TMX file with your customizations. The customizations in the file completely overwrite the domain data translation, including high frequency or high confidence phrase translations. You can upload only one glossary with a file size less than 10 MB per call. **/
     forced_glossary?: ReadableStream | FileObject | Buffer;
+    /** A TMX file that contains entries that are treated as a parallel corpus instead of a glossary. **/
     parallel_corpus?: ReadableStream | FileObject | Buffer;
+    /** A UTF-8 encoded plain text file that is used to customize the target language model. **/
     monolingual_corpus?: ReadableStream | FileObject | Buffer;
   }
 
+  /** Parameters for the `deleteModel` operation. **/
   export interface DeleteModelParams {
+    /** The model identifier. **/
     model_id: string;
   }
 
+  /** Parameters for the `getModel` operation. **/
   export interface GetModelParams {
+    /** Model ID to use. **/
     model_id: string;
   }
 
+  /** Parameters for the `listModels` operation. **/
   export interface ListModelsParams {
+    /** Filter models by source language. **/
     source?: string;
+    /** Filter models by target language. **/
     target?: string;
+    /** Valid values are leaving it unset, `true`, and `false`. When `true`, it filters models to return the default_models model or models. When `false`, it returns the non-default_models model or models. If not set, it returns all models, default_models and non-default_models. **/
     default_models?: boolean;
   }
 
+  /*************************
+   * model interfaces
+   ************************/
+
+  /** DeleteModelResult. **/
   export interface DeleteModelResult {
+    /** "OK" indicates that the model was successfully deleted. **/
     status: string;
   }
 
+  /** IdentifiableLanguage. **/
   export interface IdentifiableLanguage {
+    /** The code for an identifiable language. **/
     language: string;
+    /** The name of the identifiable language. **/
     name: string;
   }
 
+  /** IdentifiableLanguages. **/
   export interface IdentifiableLanguages {
+    /** A list of all languages that the service can identify. **/
     languages: IdentifiableLanguage[];
   }
 
+  /** IdentifiedLanguage. **/
   export interface IdentifiedLanguage {
+    /** The code for an identified language. **/
     language: string;
+    /** The confidence score for the identified language. **/
     confidence: number;
   }
 
+  /** IdentifiedLanguages. **/
   export interface IdentifiedLanguages {
+    /** A ranking of identified languages with confidence scores. **/
     languages: IdentifiedLanguage[];
   }
 
+  /** Translation. **/
   export interface Translation {
+    /** Translation output in UTF-8. **/
     translation_output: string;
   }
 
+  /** Response payload for models. **/
   export interface TranslationModel {
+    /** A globally unique string that identifies the underlying model that is used for translation. This string contains all the information about source language, target language, domain, and various other related configurations. **/
     model_id: string;
+    /** If a model is trained by a user, there might be an optional “name” parameter attached during training to help the user identify the model. **/
     name?: string;
+    /** Source language in two letter language code. Use the five letter code when clarifying between multiple supported languages. When model_id is used directly, it will override the source-target language combination. Also, when a two letter language code is used, but no suitable default is found, it returns an error. **/
     source?: string;
+    /** Target language in two letter language code. **/
     target?: string;
+    /** If this model is a custom model, this returns the base model that it is trained on. For a base model, this response value is empty. **/
     base_model_id?: string;
+    /** The domain of the translation model. **/
     domain?: string;
+    /** Whether this model can be used as a base for customization. Customized models are not further customizable, and we don't allow the customization of certain base models. **/
     customizable?: boolean;
+    /** Whether this model is considered a default model and is used when the source and target languages are specified without the model_id. **/
     default_model?: boolean;
+    /** Returns the ID of the Language Translator service instance that created the model, or an empty string if it is a model that is trained by IBM. **/
     owner?: string;
+    /** Availability of a model. **/
     status?: string;
   }
 
+  /** The response type for listing existing translation models. **/
   export interface TranslationModels {
+    /** An array of available models. **/
     models: TranslationModel[];
   }
 
+  /** TranslationResult. **/
   export interface TranslationResult {
+    /** Number of words of the complete input text. **/
     word_count: number;
+    /** Number of characters of the complete input text. **/
     character_count: number;
+    /** List of translation output in UTF-8, corresponding to the list of input text. **/
     translations: Translation[];
   }
 }

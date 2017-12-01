@@ -607,14 +607,4 @@ describe('conversation-v1', function() {
     });
   });
 
-  it('should generate version_date was not specified (negative test)', function() {
-    let threw = false;
-    try {
-      watson.conversation(service1);
-    } catch (err) {
-      threw = true;
-      assert.equal(err.message, 'Argument error: version_date was not specified, use ConversationV1.VERSION_DATE_2017_05_26');
-    }
-    assert(threw, 'should throw an error');
-  });
 });
