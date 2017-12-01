@@ -352,7 +352,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
         this._options.headers
       )
     };
-    const protocol = protocols[parts.protocol.split(':')[0]];
+    const protocol = protocols[parts.protocol.match(/https?/)[0]];
     const recognize_req = protocol.request(options, function(result) {
       result.setEncoding('utf-8');
       let transcript = '';
