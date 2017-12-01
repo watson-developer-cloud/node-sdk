@@ -25,14 +25,14 @@ import { FileObject } from '../lib/helper';
  * IBM Watson Natural Language Classifier uses machine learning algorithms to return the top matching predefined classes for short text input. You create and train a classifier to connect predefined classes to example texts so that the service can apply those classes to new inputs.
  */
 
-class GeneratedNaturalLanguageClassifierV1 extends BaseService {
+class NaturalLanguageClassifierV1 extends BaseService {
   name: string; // set by prototype to 'natural_language_classifier'
   version: string; // set by prototype to 'v1'
 
   static URL: string = 'https://gateway.watsonplatform.net/natural-language-classifier/api';
 
   /**
-   * Construct a GeneratedNaturalLanguageClassifierV1 object.
+   * Construct a NaturalLanguageClassifierV1 object.
    *
    * @param {Object} options - Options for the service.
    * @param {String} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/natural-language-classifier/api'). The base url may differ between Bluemix regions.
@@ -42,9 +42,9 @@ class GeneratedNaturalLanguageClassifierV1 extends BaseService {
    * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {Object} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
    * @constructor
-   * @returns {GeneratedNaturalLanguageClassifierV1}
+   * @returns {NaturalLanguageClassifierV1}
    */
-  constructor(options: GeneratedNaturalLanguageClassifierV1.Options) {
+  constructor(options: NaturalLanguageClassifierV1.Options) {
     super(options);
   }
 
@@ -64,9 +64,9 @@ class GeneratedNaturalLanguageClassifierV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   classify(
-    params: GeneratedNaturalLanguageClassifierV1.ClassifyParams,
-    callback?: GeneratedNaturalLanguageClassifierV1.Callback<
-      GeneratedNaturalLanguageClassifierV1.Classification
+    params: NaturalLanguageClassifierV1.ClassifyParams,
+    callback?: NaturalLanguageClassifierV1.Callback<
+      NaturalLanguageClassifierV1.Classification
     >
   ): ReadableStream | void {
     const _params = extend({}, params);
@@ -112,9 +112,9 @@ class GeneratedNaturalLanguageClassifierV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   createClassifier(
-    params: GeneratedNaturalLanguageClassifierV1.CreateClassifierParams,
-    callback?: GeneratedNaturalLanguageClassifierV1.Callback<
-      GeneratedNaturalLanguageClassifierV1.Classifier
+    params: NaturalLanguageClassifierV1.CreateClassifierParams,
+    callback?: NaturalLanguageClassifierV1.Callback<
+      NaturalLanguageClassifierV1.Classifier
     >
   ): ReadableStream | void {
     const _params = extend({}, params);
@@ -159,9 +159,9 @@ class GeneratedNaturalLanguageClassifierV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   deleteClassifier(
-    params: GeneratedNaturalLanguageClassifierV1.DeleteClassifierParams,
-    callback?: GeneratedNaturalLanguageClassifierV1.Callback<
-      GeneratedNaturalLanguageClassifierV1.Empty
+    params: NaturalLanguageClassifierV1.DeleteClassifierParams,
+    callback?: NaturalLanguageClassifierV1.Callback<
+      NaturalLanguageClassifierV1.Empty
     >
   ): ReadableStream | void {
     const _params = extend({}, params);
@@ -201,9 +201,9 @@ class GeneratedNaturalLanguageClassifierV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   getClassifier(
-    params: GeneratedNaturalLanguageClassifierV1.GetClassifierParams,
-    callback?: GeneratedNaturalLanguageClassifierV1.Callback<
-      GeneratedNaturalLanguageClassifierV1.Classifier
+    params: NaturalLanguageClassifierV1.GetClassifierParams,
+    callback?: NaturalLanguageClassifierV1.Callback<
+      NaturalLanguageClassifierV1.Classifier
     >
   ): ReadableStream | void {
     const _params = extend({}, params);
@@ -242,9 +242,9 @@ class GeneratedNaturalLanguageClassifierV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   listClassifiers(
-    params?: GeneratedNaturalLanguageClassifierV1.ListClassifiersParams,
-    callback?: GeneratedNaturalLanguageClassifierV1.Callback<
-      GeneratedNaturalLanguageClassifierV1.ClassifierList
+    params?: NaturalLanguageClassifierV1.ListClassifiersParams,
+    callback?: NaturalLanguageClassifierV1.Callback<
+      NaturalLanguageClassifierV1.ClassifierList
     >
   ): ReadableStream | void {
     const _params =
@@ -269,15 +269,15 @@ class GeneratedNaturalLanguageClassifierV1 extends BaseService {
   }
 }
 
-GeneratedNaturalLanguageClassifierV1.prototype.name = 'natural_language_classifier';
-GeneratedNaturalLanguageClassifierV1.prototype.version = 'v1';
+NaturalLanguageClassifierV1.prototype.name = 'natural_language_classifier';
+NaturalLanguageClassifierV1.prototype.version = 'v1';
 
 /*************************
  * interfaces
  ************************/
 
-namespace GeneratedNaturalLanguageClassifierV1 {
-  /** Options for the `GeneratedNaturalLanguageClassifierV1` constructor. **/
+namespace NaturalLanguageClassifierV1 {
+  /** Options for the `NaturalLanguageClassifierV1` constructor. **/
   export type Options = {
     url?: string;
     username?: string;
@@ -382,4 +382,4 @@ namespace GeneratedNaturalLanguageClassifierV1 {
   }
 }
 
-export = GeneratedNaturalLanguageClassifierV1;
+export = NaturalLanguageClassifierV1;
