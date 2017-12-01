@@ -24,7 +24,7 @@ import {
 } from './helper';
 import { PassThrough as readableStream } from 'stream';
 
-const pkgPath = require('../package.json');
+const pkg = require('../package.json');
 const isBrowser = typeof window === 'object';
 
 /**
