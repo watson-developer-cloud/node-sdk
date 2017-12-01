@@ -24,14 +24,14 @@ import { BaseService } from '../lib/base_service';
  * ### Service Overview The IBM Text to Speech service provides a Representational State Transfer (REST) Application Programming Interface (API) that uses IBM's speech-synthesis capabilities to synthesize text into natural-sounding speech in a variety of languages, dialects, and voices. The service currently synthesizes text from US English, UK English, French, German, Italian, Japanese, Spanish, or Brazilian Portuguese into audio spoken in a male or female voice (the service supports only a single gender for some languages). The audio is streamed back to the client with minimal delay. ### API Overview The Text to Speech service consists of the following related endpoints: * `/v1/voices` provides information about the voices available for synthesized speech. * `/v1/synthesize` synthesizes written text to audio speech. * `/v1/pronunciation` returns the pronunciation for a specified word. * `/v1/customizations` and `/v1/customizations/{customization_id}` lets users create custom voice models, which are dictionaries of words and their translations for use in speech synthesis. * `/v1/customizations/{customization_id}/words` and `/v1/customizations/{customization_id}/words/{word}` lets users manage the words in a custom voice model.   **Note:** The `/v1/pronunciation` and `/v1/customizations` interfaces are currently beta functionality. ### API Usage The following information provides details about using the service to synthesize audio: * **Audio formats:** The service supports a number of audio formats (MIME types). For more information about audio formats and sampling rates, including links to a number of Internet sites that provide technical and usage details about the different formats, see [Specifying an audio format](https://console.bluemix.net/docs/services/text-to-speech/http.html#format). * **SSML:** Many methods refer to the Speech Synthesis Markup Language (SSML), an XML-based markup language that provides annotations of text for speech-synthesis applications; for example, many methods accept or produce translations that use an SSML-based phoneme format. See [Using SSML](https://console.bluemix.net/docs/services/text-to-speech/SSML.html) and [Using IBM SPR](https://console.bluemix.net/docs/services/text-to-speech/SPRs.html). * **Word translations:** Many customization methods accept or return sounds-like or phonetic translations for words. A phonetic translation is based on the SSML format for representing the phonetic string of a word. Phonetic translations can use standard International Phonetic Alphabet (IPA) representation:   &lt;phoneme alphabet=\"ipa\" ph=\"t&#601;m&#712;&#593;to\"&gt;&lt;/phoneme&gt;   or the proprietary IBM Symbolic Phonetic Representation (SPR):   &lt;phoneme alphabet=\"ibm\" ph=\"1gAstroEntxrYFXs\"&gt;&lt;/phoneme&gt;   For more information about customization and about sounds-like and phonetic translations, see [Understanding customization](https://console.bluemix.net/docs/services/text-to-speech/custom-intro.html). * **GUIDs:** The pronunciation and customization methods accept or return a Globally Unique Identifier (GUID). For example, customization IDs (specified with the `customization_id` parameter) and service credentials are GUIDs. GUIDs are hexadecimal strings that have the format `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`. * **WebSocket interface:** The service also offers a WebSocket interface as an alternative to its HTTP REST interface for speech synthesis. The WebSocket interface supports both plain text and SSML input, including the SSML &lt;mark&gt; element and word timings. See [The WebSocket interface](https://console.bluemix.net/docs/services/text-to-speech/websockets.html). * **Authentication:** You authenticate to the service by using your service credentials. You can use your credentials to authenticate via a proxy server that resides in IBM Cloud, or you can use your credentials to obtain a token and contact the service directly. See [Service credentials for Watson services](https://console.bluemix.net/docs/services/watson/getting-started-credentials.html) and [Tokens for authentication](https://console.bluemix.net/docs/services/watson/getting-started-tokens.html). * **Custom voice model ownership:** In all cases, you must use service credentials created for the instance of the service that owns a custom voice model to use the methods described in this documentation with that model. For more information, see [Ownership of custom voice models](https://console.bluemix.net/docs/services/text-to-speech/custom-models.html#customOwner). * **Request Logging:** By default, all Watson services log requests and their results. Data is collected only to improve the Watson services. If you do not want to share your data, set the header parameter `X-Watson-Learning-Opt-Out` to `true` for each request. Data is collected for any request that omits this header. See [Controlling request logging for Watson services](https://console.bluemix.net/docs/services/watson/getting-started-logging.html).   The service does not log data (words and translations) that are used to build custom language models; your training data is never used to improve the service's base models. The service does log data when a custom model is used with a synthesize request; you must set the `X-Watson-Learning-Opt-Out` request header to prevent logging for recognition requests. For more information, see [Request logging and data privacy](https://console.bluemix.net/docs/services/text-to-speech/custom-models.html#customLogging).  For more information about the service and its various interfaces, see [About Text to Speech](https://console.bluemix.net/docs/services/text-to-speech/index.html).
  */
 
-class GeneratedTextToSpeechV1 extends BaseService {
+class TextToSpeechV1 extends BaseService {
   name: string; // set by prototype to 'text_to_speech'
   version: string; // set by prototype to 'v1'
 
   static URL: string = 'https://gateway.watsonplatform.net/text-to-speech/api';
 
   /**
-   * Construct a GeneratedTextToSpeechV1 object.
+   * Construct a TextToSpeechV1 object.
    *
    * @param {Object} options - Options for the service.
    * @param {String} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/text-to-speech/api'). The base url may differ between Bluemix regions.
@@ -41,9 +41,9 @@ class GeneratedTextToSpeechV1 extends BaseService {
    * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {Object} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
    * @constructor
-   * @returns {GeneratedTextToSpeechV1}
+   * @returns {TextToSpeechV1}
    */
-  constructor(options: GeneratedTextToSpeechV1.Options) {
+  constructor(options: TextToSpeechV1.Options) {
     super(options);
   }
 
@@ -63,8 +63,8 @@ class GeneratedTextToSpeechV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   getVoice(
-    params: GeneratedTextToSpeechV1.GetVoiceParams,
-    callback?: GeneratedTextToSpeechV1.Callback<GeneratedTextToSpeechV1.Voice>
+    params: TextToSpeechV1.GetVoiceParams,
+    callback?: TextToSpeechV1.Callback<TextToSpeechV1.Voice>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -105,8 +105,8 @@ class GeneratedTextToSpeechV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   listVoices(
-    params?: GeneratedTextToSpeechV1.ListVoicesParams,
-    callback?: GeneratedTextToSpeechV1.Callback<GeneratedTextToSpeechV1.Voices>
+    params?: TextToSpeechV1.ListVoicesParams,
+    callback?: TextToSpeechV1.Callback<TextToSpeechV1.Voices>
   ): ReadableStream | void {
     const _params =
       typeof params === 'function' && !callback ? {} : extend({}, params);
@@ -146,8 +146,8 @@ class GeneratedTextToSpeechV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   synthesize(
-    params: GeneratedTextToSpeechV1.SynthesizeParams,
-    callback?: GeneratedTextToSpeechV1.Callback<ReadableStream | Buffer>
+    params: TextToSpeechV1.SynthesizeParams,
+    callback?: TextToSpeechV1.Callback<ReadableStream | Buffer>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -201,10 +201,8 @@ class GeneratedTextToSpeechV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   getPronunciation(
-    params: GeneratedTextToSpeechV1.GetPronunciationParams,
-    callback?: GeneratedTextToSpeechV1.Callback<
-      GeneratedTextToSpeechV1.Pronunciation
-    >
+    params: TextToSpeechV1.GetPronunciationParams,
+    callback?: TextToSpeechV1.Callback<TextToSpeechV1.Pronunciation>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -251,10 +249,8 @@ class GeneratedTextToSpeechV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   createVoiceModel(
-    params: GeneratedTextToSpeechV1.CreateVoiceModelParams,
-    callback?: GeneratedTextToSpeechV1.Callback<
-      GeneratedTextToSpeechV1.VoiceModel
-    >
+    params: TextToSpeechV1.CreateVoiceModelParams,
+    callback?: TextToSpeechV1.Callback<TextToSpeechV1.VoiceModel>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -296,8 +292,8 @@ class GeneratedTextToSpeechV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   deleteVoiceModel(
-    params: GeneratedTextToSpeechV1.DeleteVoiceModelParams,
-    callback?: GeneratedTextToSpeechV1.Callback<GeneratedTextToSpeechV1.Empty>
+    params: TextToSpeechV1.DeleteVoiceModelParams,
+    callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -333,10 +329,8 @@ class GeneratedTextToSpeechV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   getVoiceModel(
-    params: GeneratedTextToSpeechV1.GetVoiceModelParams,
-    callback?: GeneratedTextToSpeechV1.Callback<
-      GeneratedTextToSpeechV1.VoiceModel
-    >
+    params: TextToSpeechV1.GetVoiceModelParams,
+    callback?: TextToSpeechV1.Callback<TextToSpeechV1.VoiceModel>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -374,10 +368,8 @@ class GeneratedTextToSpeechV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   listVoiceModels(
-    params?: GeneratedTextToSpeechV1.ListVoiceModelsParams,
-    callback?: GeneratedTextToSpeechV1.Callback<
-      GeneratedTextToSpeechV1.VoiceModels
-    >
+    params?: TextToSpeechV1.ListVoiceModelsParams,
+    callback?: TextToSpeechV1.Callback<TextToSpeechV1.VoiceModels>
   ): ReadableStream | void {
     const _params =
       typeof params === 'function' && !callback ? {} : extend({}, params);
@@ -417,8 +409,8 @@ class GeneratedTextToSpeechV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   updateVoiceModel(
-    params: GeneratedTextToSpeechV1.UpdateVoiceModelParams,
-    callback?: GeneratedTextToSpeechV1.Callback<GeneratedTextToSpeechV1.Empty>
+    params: TextToSpeechV1.UpdateVoiceModelParams,
+    callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -470,8 +462,8 @@ class GeneratedTextToSpeechV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   addWord(
-    params: GeneratedTextToSpeechV1.AddWordParams,
-    callback?: GeneratedTextToSpeechV1.Callback<GeneratedTextToSpeechV1.Empty>
+    params: TextToSpeechV1.AddWordParams,
+    callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -517,8 +509,8 @@ class GeneratedTextToSpeechV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   addWords(
-    params: GeneratedTextToSpeechV1.AddWordsParams,
-    callback?: GeneratedTextToSpeechV1.Callback<GeneratedTextToSpeechV1.Empty>
+    params: TextToSpeechV1.AddWordsParams,
+    callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -562,8 +554,8 @@ class GeneratedTextToSpeechV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   deleteWord(
-    params: GeneratedTextToSpeechV1.DeleteWordParams,
-    callback?: GeneratedTextToSpeechV1.Callback<GeneratedTextToSpeechV1.Empty>
+    params: TextToSpeechV1.DeleteWordParams,
+    callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -601,10 +593,8 @@ class GeneratedTextToSpeechV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   getWord(
-    params: GeneratedTextToSpeechV1.GetWordParams,
-    callback?: GeneratedTextToSpeechV1.Callback<
-      GeneratedTextToSpeechV1.Translation
-    >
+    params: TextToSpeechV1.GetWordParams,
+    callback?: TextToSpeechV1.Callback<TextToSpeechV1.Translation>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -643,8 +633,8 @@ class GeneratedTextToSpeechV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   listWords(
-    params: GeneratedTextToSpeechV1.ListWordsParams,
-    callback?: GeneratedTextToSpeechV1.Callback<GeneratedTextToSpeechV1.Words>
+    params: TextToSpeechV1.ListWordsParams,
+    callback?: TextToSpeechV1.Callback<TextToSpeechV1.Words>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -672,15 +662,15 @@ class GeneratedTextToSpeechV1 extends BaseService {
   }
 }
 
-GeneratedTextToSpeechV1.prototype.name = 'text_to_speech';
-GeneratedTextToSpeechV1.prototype.version = 'v1';
+TextToSpeechV1.prototype.name = 'text_to_speech';
+TextToSpeechV1.prototype.version = 'v1';
 
 /*************************
  * interfaces
  ************************/
 
-namespace GeneratedTextToSpeechV1 {
-  /** Options for the `GeneratedTextToSpeechV1` constructor. **/
+namespace TextToSpeechV1 {
+  /** Options for the `TextToSpeechV1` constructor. **/
   export type Options = {
     url?: string;
     username?: string;
@@ -1070,4 +1060,4 @@ namespace GeneratedTextToSpeechV1 {
   }
 }
 
-export = GeneratedTextToSpeechV1;
+export = TextToSpeechV1;
