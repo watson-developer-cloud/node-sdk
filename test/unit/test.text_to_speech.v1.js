@@ -92,7 +92,7 @@ describe('text_to_speech', function() {
       const req = text_to_speech.synthesize(service_request, noop);
       assert.equal(req.uri.href, service.url + synthesize_request);
       assert.equal(req.method, 'POST');
-      assert.equal(req.headers['content-type'], 'application/json');
+      assert.equal(req.headers['Content-Type'], 'application/json');
     });
 
     it('should support the customization_id option', function() {

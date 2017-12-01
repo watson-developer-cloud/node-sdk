@@ -108,6 +108,9 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
   }
 
   createCustomization(params, callback) {
+    if (params && !params.content_type) {
+      params.content_type = 'application/json';
+    }
     return super.createLanguageModel(params, callback);
   }
 
@@ -135,7 +138,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
       params.corpus_name = params.name;
     }
     if (params && params.corpus) {
-      params.body = params.corpus;
+      params.corpus_file = params.corpus;
     }
     return super.addCorpus(params, callback);
   }

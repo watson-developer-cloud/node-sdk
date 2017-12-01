@@ -26,7 +26,7 @@ describe('tone_analyzer.v3', function() {
   };
   const service_es = extend(service, {
     headers: {
-      'accept-language': 'es',
+      'Accept-Language': 'es',
       'x-custom-header': 'foo'
     }
   });
@@ -63,8 +63,8 @@ describe('tone_analyzer.v3', function() {
     assert.equal(req.uri.href, service.url + tone_path + '?version=2016-05-19');
     assert.equal(body, tone_request.text);
     assert.equal(req.method, 'POST');
-    assert.equal(req.headers['content-type'], 'text/plain');
-    assert.equal(req.headers['accept'], 'application/json');
+    assert.equal(req.headers['Content-Type'], 'text/plain');
+    assert.equal(req.headers['Accept'], 'application/json');
   });
 
   it('tone API should add optional query parameters', function() {
@@ -78,8 +78,8 @@ describe('tone_analyzer.v3', function() {
     assert.equal(req.uri.href, service.url + tone_path + '?version=2016-05-19&sentences=true&tones=emotion');
     assert.equal(body, tone_request.text);
     assert.equal(req.method, 'POST');
-    assert.equal(req.headers['content-type'], 'text/plain');
-    assert.equal(req.headers['accept'], 'application/json');
+    assert.equal(req.headers['Content-Type'], 'text/plain');
+    assert.equal(req.headers['Accept'], 'application/json');
   });
 
   it('tone API should add optional language parameter', function() {
@@ -94,9 +94,9 @@ describe('tone_analyzer.v3', function() {
     assert.equal(req.uri.href, service.url + tone_path + '?version=2016-05-19&sentences=true&tones=emotion');
     assert.equal(body, tone_request.text);
     assert.equal(req.method, 'POST');
-    assert.equal(req.headers['content-type'], 'text/plain');
-    assert.equal(req.headers['accept'], 'application/json');
-    assert.equal(req.headers['content-language'], 'en');
+    assert.equal(req.headers['Content-Type'], 'text/plain');
+    assert.equal(req.headers['Accept'], 'application/json');
+    assert.equal(req.headers['Content-Language'], 'en');
   });
 
   it('tone API should set HTML content-type', function() {
@@ -106,8 +106,8 @@ describe('tone_analyzer.v3', function() {
     assert.equal(req.uri.href, service.url + tone_path + '?version=2016-05-19');
     assert.equal(body, tone_request.text);
     assert.equal(req.method, 'POST');
-    assert.equal(req.headers['content-type'], 'text/html');
-    assert.equal(req.headers['accept'], 'application/json');
+    assert.equal(req.headers['Content-Type'], 'text/html');
+    assert.equal(req.headers['Accept'], 'application/json');
   });
 
   it('tone API should format the response', function(done) {
@@ -128,10 +128,10 @@ describe('tone_analyzer.v3', function() {
     assert.equal(req.uri.href, service.url + tone_path + '?version=2016-05-19');
     assert.equal(body, tone_request.text);
     assert.equal(req.method, 'POST');
-    assert.equal(req.headers['content-type'], 'text/html');
-    assert.equal(req.headers['accept'], 'application/json');
+    assert.equal(req.headers['Content-Type'], 'text/html');
+    assert.equal(req.headers['Accept'], 'application/json');
     assert.equal(req.headers['x-custom-header'], 'foo');
-    assert.equal(req.headers['accept-language'], 'es');
+    assert.equal(req.headers['Accept-Language'], 'es');
   });
 
   // Tone Chat Endpoint API - test for valid payload
@@ -163,8 +163,8 @@ describe('tone_analyzer.v3', function() {
       assert.equal(req.uri.href.slice(0, url.length), url);
       assert.equal(req.uri.href, service.url + tone_chat_path + '?version=2016-05-19');
       assert.equal(req.method, 'POST');
-      assert.equal(req.headers['content-type'], 'application/json');
-      assert.equal(req.headers['accept'], 'application/json');
+      assert.equal(req.headers['Content-Type'], 'application/json');
+      assert.equal(req.headers['Accept'], 'application/json');
       assert.ifError(err);
       assert(expectation.isDone());
       done();

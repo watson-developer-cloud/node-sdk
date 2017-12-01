@@ -72,7 +72,7 @@ describe('personality_insights_v3', function() {
     assert.equal(req.uri.href, service.url + service_path + '?version=2016-10-19');
     assert.equal(body, service_request.text);
     assert.equal(req.method, 'POST');
-    assert.equal(req.headers['content-type'], 'text/plain');
+    assert.equal(req.headers['Content-Type'], 'text/plain');
   });
 
   it('should generate a valid payload with contentItems', function() {
@@ -81,8 +81,8 @@ describe('personality_insights_v3', function() {
     assert.equal(req.uri.href, service.url + service_path + '?version=2016-10-19');
     assert.equal(body, JSON.stringify(payload));
     assert.equal(req.method, 'POST');
-    assert.equal(req.headers['content-language'], undefined); // service bug: content-language header overrides the language specified in JSON for each content item, so it must not be set
-    assert.equal(req.headers['content-type'], 'application/json');
+    assert.equal(req.headers['Content-Language'], undefined); // service bug: content-language header overrides the language specified in JSON for each content item, so it must not be set
+    assert.equal(req.headers['Content-Type'], 'application/json');
   });
 
   it('should generate a valid payload with content_items', function() {
@@ -92,8 +92,8 @@ describe('personality_insights_v3', function() {
     assert.equal(req.uri.href, service.url + service_path + '?version=2016-10-19');
     assert.equal(body, JSON.stringify(payload));
     assert.equal(req.method, 'POST');
-    assert.equal(req.headers['content-language'], undefined); // service bug: content-language header overrides the language specified in JSON for each content item, so it must not be set
-    assert.equal(req.headers['content-type'], 'application/json');
+    assert.equal(req.headers['Content-Language'], undefined); // service bug: content-language header overrides the language specified in JSON for each content item, so it must not be set
+    assert.equal(req.headers['Content-Type'], 'application/json');
   });
 
   it('should generate a valid payload with html', function() {
@@ -103,7 +103,7 @@ describe('personality_insights_v3', function() {
     assert.equal(req.uri.href, service.url + service_path + '?version=2016-10-19');
     assert.equal(body, html_req.text);
     assert.equal(req.method, 'POST');
-    assert.equal(req.headers['content-type'], 'text/html');
+    assert.equal(req.headers['Content-Type'], 'text/html');
   });
 
   it('should generate a valid payload with raw_scores, accept-Language and content-language', function() {
@@ -123,9 +123,9 @@ describe('personality_insights_v3', function() {
     assert.equal(req.uri.href, service.url + service_path + '?version=2016-10-19&raw_scores=true');
     assert.equal(body, JSON.stringify(payload));
     assert.equal(req.method, 'POST');
-    assert.equal(req.headers['content-type'], 'application/json');
-    assert.equal(req.headers['content-language'], 'es');
-    assert.equal(req.headers['accept-language'], 'es');
+    assert.equal(req.headers['Content-Type'], 'application/json');
+    assert.equal(req.headers['Content-Language'], 'es');
+    assert.equal(req.headers['Accept-Language'], 'es');
   });
 
   it('should generate a valid request with { headers: {Accept: "text/csv"}}', function() {
@@ -134,7 +134,7 @@ describe('personality_insights_v3', function() {
     const body = Buffer.from(req.body).toString('ascii');
     assert.equal(req.uri.href, service.url + service_path + '?version=2016-10-19');
     assert.equal(body, JSON.stringify(payload));
-    assert.equal(req.headers['accept'], 'text/csv');
+    assert.equal(req.headers['Accept'], 'text/csv');
   });
 
   it('should generate a valid request with {headers: {accept: "text/csv"}, csv_headers: true}', function() {
@@ -143,7 +143,7 @@ describe('personality_insights_v3', function() {
     const body = Buffer.from(req.body).toString('ascii');
     assert.equal(req.uri.href, service.url + service_path + '?version=2016-10-19&csv_headers=true');
     assert.equal(body, JSON.stringify(payload));
-    assert.equal(req.headers['accept'], 'text/csv');
+    assert.equal(req.headers['Accept'], 'text/csv');
   });
 
   it('should format the response', function(done) {

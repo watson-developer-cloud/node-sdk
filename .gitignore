@@ -27,3 +27,4 @@ visual-recognition/*.js
 text-to-speech/*.js
 speech-to-text/*.js
 authorization/*.js
+index.js

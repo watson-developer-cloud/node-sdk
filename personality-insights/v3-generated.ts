@@ -99,10 +99,10 @@ class PersonalityInsightsV3 extends BaseService {
       },
       defaultOptions: extend(true, this._options, {
         headers: {
-          'accept': 'application/json',
-          'content-type': _params.content_type, 
-          'content-language': _params.content_language, 
-          'accept-language': _params.accept_language
+          'Accept': 'application/json',
+          'Content-Type': _params.content_type, 
+          'Content-Language': _params.content_language, 
+          'Accept-Language': _params.accept_language
         }
       })
     };
