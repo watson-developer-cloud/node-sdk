@@ -49,7 +49,7 @@ function parsePath(path: string, params: Object): string {
  * @private
  * @returns {request.RequestCallback}
  */
-function formatErrorIfExists(cb: Function): request.RequestCallback {
+export function formatErrorIfExists(cb: Function): request.RequestCallback {
   return function(error, response, body) {
     // eslint-disable-line complexity
 
