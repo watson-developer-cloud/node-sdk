@@ -25,16 +25,14 @@ import { FileObject } from '../lib/helper';
  * **Important:** As of September 8, 2017, the beta period for Similarity Search is closed. For more information, see [Visual Recognition API – Similarity Search Update](https://www.ibm.com/blogs/bluemix/2017/08/visual-recognition-api-similarity-search-update).  The IBM Watson Visual Recognition service uses deep learning algorithms to identify scenes, objects, and faces  in images you upload to the service. You can create and train a custom classifier to identify subjects that suit your needs.   **Tip:** To test calls to the **Custom classifiers** methods with the API explorer, provide your `api_key` from your IBM&reg; Cloud service instance.
  */
 
-class GeneratedVisualRecognitionV3 extends BaseService {
+class VisualRecognitionV3 extends BaseService {
   name: string; // set by prototype to 'visual_recognition'
   version: string; // set by prototype to 'v3'
-
-  static VERSION_DATE_2016_05_20: string = '2016-05-20';
 
   static URL: string = 'https://gateway.watsonplatform.net/visual-recognition/api';
 
   /**
-   * Construct a GeneratedVisualRecognitionV3 object.
+   * Construct a VisualRecognitionV3 object.
    *
    * @param {Object} options - Options for the service.
    * @param {String} options.version_date - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses the API version for the date you specify, or the most recent version before that date. Note that you should not programmatically specify the current date at runtime, in case the API has been updated since your application's release. Instead, specify a version date that is compatible with your application, and don't change it until your application is ready for a later version.
@@ -44,10 +42,10 @@ class GeneratedVisualRecognitionV3 extends BaseService {
    * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {Object} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
    * @constructor
-   * @returns {GeneratedVisualRecognitionV3}
+   * @returns {VisualRecognitionV3}
    * @throws {Error}
    */
-  constructor(options: GeneratedVisualRecognitionV3.Options) {
+  constructor(options: VisualRecognitionV3.Options) {
     super(options);
     // check if 'version_date' was provided
     if (typeof this._options.version_date === 'undefined') {
@@ -74,9 +72,9 @@ class GeneratedVisualRecognitionV3 extends BaseService {
    * @returns {ReadableStream|void}
    */
   classify(
-    params?: GeneratedVisualRecognitionV3.ClassifyParams,
-    callback?: GeneratedVisualRecognitionV3.Callback<
-      GeneratedVisualRecognitionV3.ClassifiedImages
+    params?: VisualRecognitionV3.ClassifyParams,
+    callback?: VisualRecognitionV3.Callback<
+      VisualRecognitionV3.ClassifiedImages
     >
   ): ReadableStream | void {
     const _params =
@@ -122,10 +120,8 @@ class GeneratedVisualRecognitionV3 extends BaseService {
    * @returns {ReadableStream|void}
    */
   detectFaces(
-    params?: GeneratedVisualRecognitionV3.DetectFacesParams,
-    callback?: GeneratedVisualRecognitionV3.Callback<
-      GeneratedVisualRecognitionV3.DetectedFaces
-    >
+    params?: VisualRecognitionV3.DetectFacesParams,
+    callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.DetectedFaces>
   ): ReadableStream | void {
     const _params =
       typeof params === 'function' && !callback ? {} : extend({}, params);
@@ -173,10 +169,8 @@ class GeneratedVisualRecognitionV3 extends BaseService {
    * @returns {ReadableStream|void}
    */
   createClassifier(
-    params: GeneratedVisualRecognitionV3.CreateClassifierParams,
-    callback?: GeneratedVisualRecognitionV3.Callback<
-      GeneratedVisualRecognitionV3.Classifier
-    >
+    params: VisualRecognitionV3.CreateClassifierParams,
+    callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -226,10 +220,8 @@ class GeneratedVisualRecognitionV3 extends BaseService {
    * @returns {ReadableStream|void}
    */
   deleteClassifier(
-    params: GeneratedVisualRecognitionV3.DeleteClassifierParams,
-    callback?: GeneratedVisualRecognitionV3.Callback<
-      GeneratedVisualRecognitionV3.Empty
-    >
+    params: VisualRecognitionV3.DeleteClassifierParams,
+    callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Empty>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -268,10 +260,8 @@ class GeneratedVisualRecognitionV3 extends BaseService {
    * @returns {ReadableStream|void}
    */
   getClassifier(
-    params: GeneratedVisualRecognitionV3.GetClassifierParams,
-    callback?: GeneratedVisualRecognitionV3.Callback<
-      GeneratedVisualRecognitionV3.Classifier
-    >
+    params: VisualRecognitionV3.GetClassifierParams,
+    callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -308,10 +298,8 @@ class GeneratedVisualRecognitionV3 extends BaseService {
    * @returns {ReadableStream|void}
    */
   listClassifiers(
-    params?: GeneratedVisualRecognitionV3.ListClassifiersParams,
-    callback?: GeneratedVisualRecognitionV3.Callback<
-      GeneratedVisualRecognitionV3.Classifiers
-    >
+    params?: VisualRecognitionV3.ListClassifiersParams,
+    callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifiers>
   ): ReadableStream | void {
     const _params =
       typeof params === 'function' && !callback ? {} : extend({}, params);
@@ -351,10 +339,8 @@ class GeneratedVisualRecognitionV3 extends BaseService {
    * @returns {ReadableStream|void}
    */
   updateClassifier(
-    params: GeneratedVisualRecognitionV3.UpdateClassifierParams,
-    callback?: GeneratedVisualRecognitionV3.Callback<
-      GeneratedVisualRecognitionV3.Classifier
-    >
+    params: VisualRecognitionV3.UpdateClassifierParams,
+    callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -399,15 +385,15 @@ class GeneratedVisualRecognitionV3 extends BaseService {
   }
 }
 
-GeneratedVisualRecognitionV3.prototype.name = 'visual_recognition';
-GeneratedVisualRecognitionV3.prototype.version = 'v3';
+VisualRecognitionV3.prototype.name = 'visual_recognition';
+VisualRecognitionV3.prototype.version = 'v3';
 
 /*************************
  * interfaces
  ************************/
 
-namespace GeneratedVisualRecognitionV3 {
-  /** Options for the `GeneratedVisualRecognitionV3` constructor. **/
+namespace VisualRecognitionV3 {
+  /** Options for the `VisualRecognitionV3` constructor. **/
   export type Options = {
     version_date: string;
     url?: string;
@@ -671,4 +657,4 @@ namespace GeneratedVisualRecognitionV3 {
   }
 }
 
-export = GeneratedVisualRecognitionV3;
+export = VisualRecognitionV3;

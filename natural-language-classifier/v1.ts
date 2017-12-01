@@ -15,7 +15,7 @@
  */
 
 import GeneratedNaturalLanguageClassifierV1 = require('./v1-generated');
-import toCSV = require('./json-training-to-csv');
+import toCSV = require('../lib/json-training-to-csv');
 import isStream = require('isstream');
 import omit = require('object.omit');
 import { getMissingParams } from '../lib/helper';

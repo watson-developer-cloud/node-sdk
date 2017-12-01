@@ -22,7 +22,7 @@ class AuthorizationV1 extends BaseService {
   name;
   version;
   static URL: string = 'https://stream.watsonplatform.net/authorization/api';
-  
+
   /**
    * Authorization Service
    *

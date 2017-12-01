@@ -24,7 +24,7 @@ import { BaseService } from '../lib/base_service';
  * Analyze various features of text content at scale. Provide text, raw HTML, or a public URL, and IBM Watson Natural Language Understanding will give you results for the features you request. The service cleans HTML content before analysis by default, so the results can ignore most advertisements and other unwanted content.    ### Concepts  Identify general concepts that are referenced or alluded to in your content. Concepts that are detected typically have an associated link to a DBpedia resource.    ### Entities  Detect important people, places, geopolitical entities and other types of entities in your content. Entity detection recognizes consecutive coreferences of each entity. For example, analysis of the following text would count \"Barack Obama\" and \"He\" as the same entity:    \"Barack Obama was the 44th President of the United States. He took office in January 2009.\"    ### Keywords  Determine the most important keywords in your content. Keyword phrases are organized by relevance in the results.    ### Categories  Categorize your content into a hierarchical 5-level taxonomy. For example, \"Leonardo DiCaprio won an Oscar\" returns \"/art and entertainment/movies and tv/movies\" as the most confident classification.    ### Sentiment  Determine whether your content conveys postive or negative sentiment. Sentiment information can be returned for detected entities, keywords, or user-specified target phrases found in the text.    ### Emotion  Detect anger, disgust, fear, joy, or sadness that is conveyed by your content. Emotion information can be returned for detected entities, keywords, or user-specified target phrases found in the text.    ### Relations  Recognize when two entities are related, and identify the type of relation.  For example, you can identify an \"awardedTo\" relation between an award and its recipient.    ### Semantic Roles  Parse sentences into subject-action-object form, and identify entities and keywords that are subjects or objects of an action.    ### Metadata  Get author information, publication date, and the title of your text/HTML content.
  */
 
-class GeneratedNaturalLanguageUnderstandingV1 extends BaseService {
+class NaturalLanguageUnderstandingV1 extends BaseService {
   name: string; // set by prototype to 'natural-language-understanding'
   version: string; // set by prototype to 'v1'
 
@@ -34,7 +34,7 @@ class GeneratedNaturalLanguageUnderstandingV1 extends BaseService {
   static URL: string = 'https://gateway.watsonplatform.net/natural-language-understanding/api';
 
   /**
-   * Construct a GeneratedNaturalLanguageUnderstandingV1 object.
+   * Construct a NaturalLanguageUnderstandingV1 object.
    *
    * @param {Object} options - Options for the service.
    * @param {String} options.version_date - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses the API version for the date you specify, or the most recent version before that date. Note that you should not programmatically specify the current date at runtime, in case the API has been updated since your application's release. Instead, specify a version date that is compatible with your application, and don't change it until your application is ready for a later version.
@@ -45,10 +45,10 @@ class GeneratedNaturalLanguageUnderstandingV1 extends BaseService {
    * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {Object} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
    * @constructor
-   * @returns {GeneratedNaturalLanguageUnderstandingV1}
+   * @returns {NaturalLanguageUnderstandingV1}
    * @throws {Error}
    */
-  constructor(options: GeneratedNaturalLanguageUnderstandingV1.Options) {
+  constructor(options: NaturalLanguageUnderstandingV1.Options) {
     super(options);
     // check if 'version_date' was provided
     if (typeof this._options.version_date === 'undefined') {
@@ -81,9 +81,9 @@ class GeneratedNaturalLanguageUnderstandingV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   analyze(
-    params: GeneratedNaturalLanguageUnderstandingV1.AnalyzeParams,
-    callback?: GeneratedNaturalLanguageUnderstandingV1.Callback<
-      GeneratedNaturalLanguageUnderstandingV1.AnalysisResults
+    params: NaturalLanguageUnderstandingV1.AnalyzeParams,
+    callback?: NaturalLanguageUnderstandingV1.Callback<
+      NaturalLanguageUnderstandingV1.AnalysisResults
     >
   ): ReadableStream | void {
     const _params = extend({}, params);
@@ -137,9 +137,9 @@ class GeneratedNaturalLanguageUnderstandingV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   deleteModel(
-    params: GeneratedNaturalLanguageUnderstandingV1.DeleteModelParams,
-    callback?: GeneratedNaturalLanguageUnderstandingV1.Callback<
-      GeneratedNaturalLanguageUnderstandingV1.InlineResponse200
+    params: NaturalLanguageUnderstandingV1.DeleteModelParams,
+    callback?: NaturalLanguageUnderstandingV1.Callback<
+      NaturalLanguageUnderstandingV1.InlineResponse200
     >
   ): ReadableStream | void {
     const _params = extend({}, params);
@@ -178,9 +178,9 @@ class GeneratedNaturalLanguageUnderstandingV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   listModels(
-    params?: GeneratedNaturalLanguageUnderstandingV1.ListModelsParams,
-    callback?: GeneratedNaturalLanguageUnderstandingV1.Callback<
-      GeneratedNaturalLanguageUnderstandingV1.ListModelsResults
+    params?: NaturalLanguageUnderstandingV1.ListModelsParams,
+    callback?: NaturalLanguageUnderstandingV1.Callback<
+      NaturalLanguageUnderstandingV1.ListModelsResults
     >
   ): ReadableStream | void {
     const _params =
@@ -205,16 +205,16 @@ class GeneratedNaturalLanguageUnderstandingV1 extends BaseService {
   }
 }
 
-GeneratedNaturalLanguageUnderstandingV1.prototype.name =
+NaturalLanguageUnderstandingV1.prototype.name =
   'natural-language-understanding';
-GeneratedNaturalLanguageUnderstandingV1.prototype.version = 'v1';
+NaturalLanguageUnderstandingV1.prototype.version = 'v1';
 
 /*************************
  * interfaces
  ************************/
 
-namespace GeneratedNaturalLanguageUnderstandingV1 {
-  /** Options for the `GeneratedNaturalLanguageUnderstandingV1` constructor. **/
+namespace NaturalLanguageUnderstandingV1 {
+  /** Options for the `NaturalLanguageUnderstandingV1` constructor. **/
   export type Options = {
     version_date: string;
     url?: string;
@@ -664,4 +664,4 @@ namespace GeneratedNaturalLanguageUnderstandingV1 {
   }
 }
 
-export = GeneratedNaturalLanguageUnderstandingV1;
+export = NaturalLanguageUnderstandingV1;

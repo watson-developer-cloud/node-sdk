@@ -25,14 +25,14 @@ import { FileObject } from '../lib/helper';
  * Language Translator translates text from one language to another. The service offers multiple domain-specific models that you can customize based on your unique terminology and language. Use Language Translator to take news from across the globe and present it in your language, communicate with your customers in their own language, and more.
  */
 
-class GeneratedLanguageTranslatorV2 extends BaseService {
+class LanguageTranslatorV2 extends BaseService {
   name: string; // set by prototype to 'language_translator'
   version: string; // set by prototype to 'v2'
 
   static URL: string = 'https://gateway.watsonplatform.net/language-translator/api';
 
   /**
-   * Construct a GeneratedLanguageTranslatorV2 object.
+   * Construct a LanguageTranslatorV2 object.
    *
    * @param {Object} options - Options for the service.
    * @param {String} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/language-translator/api'). The base url may differ between Bluemix regions.
@@ -42,9 +42,9 @@ class GeneratedLanguageTranslatorV2 extends BaseService {
    * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {Object} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
    * @constructor
-   * @returns {GeneratedLanguageTranslatorV2}
+   * @returns {LanguageTranslatorV2}
    */
-  constructor(options: GeneratedLanguageTranslatorV2.Options) {
+  constructor(options: LanguageTranslatorV2.Options) {
     super(options);
   }
 
@@ -64,9 +64,9 @@ class GeneratedLanguageTranslatorV2 extends BaseService {
    * @returns {ReadableStream|void}
    */
   translate(
-    params: GeneratedLanguageTranslatorV2.TranslateParams,
-    callback?: GeneratedLanguageTranslatorV2.Callback<
-      GeneratedLanguageTranslatorV2.TranslationResult
+    params: LanguageTranslatorV2.TranslateParams,
+    callback?: LanguageTranslatorV2.Callback<
+      LanguageTranslatorV2.TranslationResult
     >
   ): ReadableStream | void {
     const _params = extend({}, params);
@@ -112,9 +112,9 @@ class GeneratedLanguageTranslatorV2 extends BaseService {
    * @returns {ReadableStream|void}
    */
   identify(
-    params: GeneratedLanguageTranslatorV2.IdentifyParams,
-    callback?: GeneratedLanguageTranslatorV2.Callback<
-      GeneratedLanguageTranslatorV2.IdentifiedLanguages
+    params: LanguageTranslatorV2.IdentifyParams,
+    callback?: LanguageTranslatorV2.Callback<
+      LanguageTranslatorV2.IdentifiedLanguages
     >
   ): ReadableStream | void {
     const _params = extend({}, params);
@@ -152,9 +152,9 @@ class GeneratedLanguageTranslatorV2 extends BaseService {
    * @returns {ReadableStream|void}
    */
   listIdentifiableLanguages(
-    params?: GeneratedLanguageTranslatorV2.ListIdentifiableLanguagesParams,
-    callback?: GeneratedLanguageTranslatorV2.Callback<
-      GeneratedLanguageTranslatorV2.IdentifiableLanguages
+    params?: LanguageTranslatorV2.ListIdentifiableLanguagesParams,
+    callback?: LanguageTranslatorV2.Callback<
+      LanguageTranslatorV2.IdentifiableLanguages
     >
   ): ReadableStream | void {
     const _params =
@@ -194,9 +194,9 @@ class GeneratedLanguageTranslatorV2 extends BaseService {
    * @returns {ReadableStream|void}
    */
   createModel(
-    params: GeneratedLanguageTranslatorV2.CreateModelParams,
-    callback?: GeneratedLanguageTranslatorV2.Callback<
-      GeneratedLanguageTranslatorV2.TranslationModel
+    params: LanguageTranslatorV2.CreateModelParams,
+    callback?: LanguageTranslatorV2.Callback<
+      LanguageTranslatorV2.TranslationModel
     >
   ): ReadableStream | void {
     const _params = extend({}, params);
@@ -250,9 +250,9 @@ class GeneratedLanguageTranslatorV2 extends BaseService {
    * @returns {ReadableStream|void}
    */
   deleteModel(
-    params: GeneratedLanguageTranslatorV2.DeleteModelParams,
-    callback?: GeneratedLanguageTranslatorV2.Callback<
-      GeneratedLanguageTranslatorV2.DeleteModelResult
+    params: LanguageTranslatorV2.DeleteModelParams,
+    callback?: LanguageTranslatorV2.Callback<
+      LanguageTranslatorV2.DeleteModelResult
     >
   ): ReadableStream | void {
     const _params = extend({}, params);
@@ -289,9 +289,9 @@ class GeneratedLanguageTranslatorV2 extends BaseService {
    * @returns {ReadableStream|void}
    */
   getModel(
-    params: GeneratedLanguageTranslatorV2.GetModelParams,
-    callback?: GeneratedLanguageTranslatorV2.Callback<
-      GeneratedLanguageTranslatorV2.TranslationModel
+    params: LanguageTranslatorV2.GetModelParams,
+    callback?: LanguageTranslatorV2.Callback<
+      LanguageTranslatorV2.TranslationModel
     >
   ): ReadableStream | void {
     const _params = extend({}, params);
@@ -330,9 +330,9 @@ class GeneratedLanguageTranslatorV2 extends BaseService {
    * @returns {ReadableStream|void}
    */
   listModels(
-    params?: GeneratedLanguageTranslatorV2.ListModelsParams,
-    callback?: GeneratedLanguageTranslatorV2.Callback<
-      GeneratedLanguageTranslatorV2.TranslationModels
+    params?: LanguageTranslatorV2.ListModelsParams,
+    callback?: LanguageTranslatorV2.Callback<
+      LanguageTranslatorV2.TranslationModels
     >
   ): ReadableStream | void {
     const _params =
@@ -363,15 +363,15 @@ class GeneratedLanguageTranslatorV2 extends BaseService {
   }
 }
 
-GeneratedLanguageTranslatorV2.prototype.name = 'language_translator';
-GeneratedLanguageTranslatorV2.prototype.version = 'v2';
+LanguageTranslatorV2.prototype.name = 'language_translator';
+LanguageTranslatorV2.prototype.version = 'v2';
 
 /*************************
  * interfaces
  ************************/
 
-namespace GeneratedLanguageTranslatorV2 {
-  /** Options for the `GeneratedLanguageTranslatorV2` constructor. **/
+namespace LanguageTranslatorV2 {
+  /** Options for the `LanguageTranslatorV2` constructor. **/
   export type Options = {
     url?: string;
     username?: string;
@@ -536,4 +536,4 @@ namespace GeneratedLanguageTranslatorV2 {
   }
 }
 
-export = GeneratedLanguageTranslatorV2;
+export = LanguageTranslatorV2;

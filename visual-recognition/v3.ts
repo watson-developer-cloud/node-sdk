@@ -2,6 +2,8 @@ import GeneratedVisualRecognitionV3 = require('./v3-generated');
 import extend = require('extend');
 
 class VisualRecognitionV3 extends GeneratedVisualRecognitionV3 {
+  static VERSION_DATE_2016_05_20: string = '2016-05-20';
+
   constructor(options) {
     super(options);
   }

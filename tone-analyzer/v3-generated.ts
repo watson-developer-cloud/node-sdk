@@ -24,14 +24,14 @@ import { BaseService } from '../lib/base_service';
  * ### Service Overview The IBM Watson Tone Analyzer service uses linguistic analysis to detect emotional and language tones in written text. The service can analyze tone at both the document and sentence levels. You can use the service to understand how your written communications are perceived and then to improve the tone of your communications. Businesses can use the service to learn the tone of their customers' communications and to respond to each customer appropriately, or to understand and improve their customer conversations. ### API Usage The following information provides details about using the service to analyze tone: * **The tone method:** The service offers `GET` and `POST /v3/tone` methods that use the general purpose endpoint to analyze the tone of input content. The methods accept content in JSON, plain text, or HTML format. * **The tone_chat method:** The service offers a `POST /v3/tone_chat` method that uses the customer engagement endpoint to analyze the tone of customer service and customer support conversations. The method accepts content in JSON format. * **Authentication:** You authenticate to the service by using your service credentials. You can use your credentials to authenticate via a proxy server that resides in IBM Cloud, or you can use your credentials to obtain a token and contact the service directly. See [Service credentials for Watson services](https://console.bluemix.net/docs/services/watson/getting-started-credentials.html) and [Tokens for authentication](https://console.bluemix.net/docs/services/watson/getting-started-tokens.html). * **Request Logging:** By default, all Watson services log requests and their results. Data is collected only to improve the Watson services. If you do not want to share your data, set the header parameter `X-Watson-Learning-Opt-Out` to `true` for each request. Data is collected for any request that omits this header. See [Controlling request logging for Watson services](https://console.bluemix.net/docs/services/watson/getting-started-logging.html).   For more information about the service, see [About Tone Analyzer](https://console.bluemix.net/docs/services/tone-analyzer/index.html).   **Note:** Method descriptions apply to the latest version of the interface, `2017-09-21`. Where necessary, parameters and models describe differences between versions `2017-09-21` and `2016-05-19`.
  */
 
-class GeneratedToneAnalyzerV3 extends BaseService {
+class ToneAnalyzerV3 extends BaseService {
   name: string; // set by prototype to 'tone_analyzer'
   version: string; // set by prototype to 'v3'
 
   static URL: string = 'https://gateway.watsonplatform.net/tone-analyzer/api';
 
   /**
-   * Construct a GeneratedToneAnalyzerV3 object.
+   * Construct a ToneAnalyzerV3 object.
    *
    * @param {Object} options - Options for the service.
    * @param {String} options.version_date - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses the API version for the date you specify, or the most recent version before that date. Note that you should not programmatically specify the current date at runtime, in case the API has been updated since your application's release. Instead, specify a version date that is compatible with your application, and don't change it until your application is ready for a later version.
@@ -42,10 +42,10 @@ class GeneratedToneAnalyzerV3 extends BaseService {
    * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {Object} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
    * @constructor
-   * @returns {GeneratedToneAnalyzerV3}
+   * @returns {ToneAnalyzerV3}
    * @throws {Error}
    */
-  constructor(options: GeneratedToneAnalyzerV3.Options) {
+  constructor(options: ToneAnalyzerV3.Options) {
     super(options);
     // check if 'version_date' was provided
     if (typeof this._options.version_date === 'undefined') {
@@ -74,10 +74,8 @@ class GeneratedToneAnalyzerV3 extends BaseService {
    * @returns {ReadableStream|void}
    */
   tone(
-    params: GeneratedToneAnalyzerV3.ToneParams,
-    callback?: GeneratedToneAnalyzerV3.Callback<
-      GeneratedToneAnalyzerV3.ToneAnalysis
-    >
+    params: ToneAnalyzerV3.ToneParams,
+    callback?: ToneAnalyzerV3.Callback<ToneAnalyzerV3.ToneAnalysis>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -123,10 +121,8 @@ class GeneratedToneAnalyzerV3 extends BaseService {
    * @returns {ReadableStream|void}
    */
   toneChat(
-    params: GeneratedToneAnalyzerV3.ToneChatParams,
-    callback?: GeneratedToneAnalyzerV3.Callback<
-      GeneratedToneAnalyzerV3.UtteranceAnalyses
-    >
+    params: ToneAnalyzerV3.ToneChatParams,
+    callback?: ToneAnalyzerV3.Callback<ToneAnalyzerV3.UtteranceAnalyses>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -157,15 +153,15 @@ class GeneratedToneAnalyzerV3 extends BaseService {
   }
 }
 
-GeneratedToneAnalyzerV3.prototype.name = 'tone_analyzer';
-GeneratedToneAnalyzerV3.prototype.version = 'v3';
+ToneAnalyzerV3.prototype.name = 'tone_analyzer';
+ToneAnalyzerV3.prototype.version = 'v3';
 
 /*************************
  * interfaces
  ************************/
 
-namespace GeneratedToneAnalyzerV3 {
-  /** Options for the `GeneratedToneAnalyzerV3` constructor. **/
+namespace ToneAnalyzerV3 {
+  /** Options for the `ToneAnalyzerV3` constructor. **/
   export type Options = {
     version_date: string;
     url?: string;
@@ -363,4 +359,4 @@ namespace GeneratedToneAnalyzerV3 {
   }
 }
 
-export = GeneratedToneAnalyzerV3;
+export = ToneAnalyzerV3;
