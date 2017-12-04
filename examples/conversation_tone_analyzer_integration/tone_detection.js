@@ -16,7 +16,7 @@
 
 'use strict';
 
-const Promise = require('bluebird');
+var Promise = require('bluebird');
 
 /**
  * Thresholds for identifying meaningful tones returned by the Watson Tone Analyzer.  Current values are
@@ -24,12 +24,12 @@ const Promise = require('bluebird');
  * https://www.ibm.com/watson/developercloud/doc/tone-analyzer/understanding-tone.shtml
  * These thresholds can be adjusted to client/domain requirements.
  */
-const PRIMARY_EMOTION_SCORE_THRESHOLD = 0.5;
+var PRIMARY_EMOTION_SCORE_THRESHOLD = 0.5;
 
 /**
  * Labels for the tone categories returned by the Watson Tone Analyzer
  */
-const EMOTION_TONE_LABEL = 'emotion_tone';
+var EMOTION_TONE_LABEL = 'emotion_tone';
 
 /**
  * Public functions for this module
@@ -72,7 +72,7 @@ function invokeToneAsync(conversationPayload, tone_analyzer) {
  * @return conversationPayload where the user object has been updated with tone information from the toneAnalyzerPayload
  */
 function updateUserTone(conversationPayload, toneAnalyzerPayload, maintainHistory) {
-  let emotionTone = null;
+  var emotionTone = null;
 
   if (typeof conversationPayload.context === 'undefined') {
     conversationPayload.context = {};
@@ -83,7 +83,7 @@ function updateUserTone(conversationPayload, toneAnalyzerPayload, maintainHistor
   }
 
   // For convenience sake, define a variable for the user object
-  const user = conversationPayload.context.user;
+  var user = conversationPayload.context.user;
 
   // Extract the tones - emotion, language and social
   if (toneAnalyzerPayload && toneAnalyzerPayload.document_tone) {
@@ -126,9 +126,9 @@ function initUser() {
  * @param emotionTone a json object containing the emotion tones in the payload returned by the Tone Analyzer
  */
 function updateEmotionTone(user, emotionTone, maintainHistory) {
-  let maxScore = 0.0;
-  let primaryEmotion = null;
-  let primaryEmotionScore = null;
+  var maxScore = 0.0;
+  var primaryEmotion = null;
+  var primaryEmotionScore = null;
 
   emotionTone.tones.forEach(function(tone) {
     if (tone.score > maxScore) {
