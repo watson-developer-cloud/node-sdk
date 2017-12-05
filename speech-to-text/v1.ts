@@ -4,7 +4,7 @@ import async = require('async');
 import isStream = require('isstream');
 import extend = require('extend');
 import GeneratedSpeechToTextV1 = require('./v1-generated');
-import RecognizeStream = require('./recognize_stream');
+import RecognizeStream = require('../lib/recognize-stream');
 import { createRequest as requestFactory } from '../lib/requestwrapper';
 import { parse } from 'url';
 import { getMissingParams } from '../lib/helper';
@@ -108,6 +108,9 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
   }
 
   createCustomization(params, callback) {
+    if (params && !params.content_type) {
+      params.content_type = 'application/json';
+    }
     return super.createLanguageModel(params, callback);
   }
 
@@ -135,7 +138,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
       params.corpus_name = params.name;
     }
     if (params && params.corpus) {
-      params.body = params.corpus;
+      params.corpus_file = params.corpus;
     }
     return super.addCorpus(params, callback);
   }
@@ -349,7 +352,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
         this._options.headers
       )
     };
-    const protocol = protocols[parts.protocol.split(':')[0]];
+    const protocol = protocols[parts.protocol.match(/https?/)[0]];
     const recognize_req = protocol.request(options, function(result) {
       result.setEncoding('utf-8');
       let transcript = '';

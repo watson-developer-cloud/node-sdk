@@ -25,14 +25,14 @@ import { FileObject } from '../lib/helper';
  * ### Service Overview  The IBM Speech to Text service provides a Representational State Transfer (REST) Application Programming Interface (API) that enables you to add IBM's speech transcription capabilities to your applications. The service also supports an asynchronous HTTP interface for transcribing audio via non-blocking calls. And it supports a customization interface that lets you expand the vocabulary of a base model with domain-specific terminology or adapt a base model for the acoustic characteristics of your audio.   The service transcribes speech from various languages and audio formats to text with low latency. The service supports transcription of the following languages: Brazilian Portuguese, French, Japanese, Mandarin Chinese, Modern Standard Arabic, Spanish, UK English, and US English. For most languages, the service supports two sampling rates, broadband and narrowband.  ### API Overview The Speech to Text service provides the following endpoints: * `/v1/models` returns information about the language models that are available for speech recognition. * `/v1/recognize` (sessionless) includes a single method that provides a simple means of transcribing audio without the overhead of establishing and maintaining a session, but it lacks some of the capabilities available with sessions. * `/v1/sessions` provides a collection of methods that provide a mechanism for a client to maintain a long, multi-turn exchange, or session, with the service or to establish multiple parallel conversations with a particular instance of the service. * `/v1/recognitions` (asynchronous) provides a set of non-blocking methods for submitting, querying, and deleting jobs for recognition requests with the asynchronous HTTP interface. The interface includes calls to register (white-list) and unregister a callback URL. * `/v1/customizations` provides methods for creating and managing custom language models. Custom language models let you expand the vocabulary of a base model with domain-specific terminology. * `/v1/customizations/{customization_id}/corpora` provides methods for managing the corpora associated with a custom language model. You add corpora to extract out-of-vocabulary (OOV) words from the corpora into the custom language model's vocabulary. You can add, list, and delete corpora from a custom language model. * `/v1/customizations/{customization_id}/words` includes methods for managing individual words in a custom language model. You can add, modify, list, and delete words from a custom language model. * `/v1/acoustic_customizations` provides methods for creating and managing custom acoustic models. The interface lets you adapt a base model for the audio characteristics of your environment and speakers. * `/v1/acoustic_customizations/{customization_id}/audio` provides methods for managing the audio resources associated with a custom acoustic model. You add audio resources that closely match the acoustic characteristics of the audio that you want to transcribe. You can add, list, and delete audio resources from a custom acoustic model.    **Note about the Try It Out feature:** The `Try it out!` button lets you experiment with the methods of the API by making actual cURL calls to the service. The feature is **not** supported for use with the the session-based `POST /v1/sessions/{session_id}/recognize` and sessionless `POST /v1/recognize` methods. For examples of calls to these methods, see the [Speech to Text API reference](http://www.ibm.com/watson/developercloud/speech-to-text/api/v1/).  ### API Usage The following information provides details about using the service to transcribe audio: * **HTTP REST interfaces:** You can use methods of the session-based, sessionless, or asynchronous HTTP interfaces to pass audio data to the service. All interfaces let you send the data via the body of the request; the session-based and sessionless methods also let you pass data as multipart form data. With the former approach, you control the transcription via a collection of request headers and query parameters. With the latter, you control the transcription primarily via JSON metadata sent as form data. * **WebSocket interface:** The service also offers a WebSocket interface as an alternative to its HTTP interfaces. The WebSocket interface supports efficient implementation, lower latency, and higher throughput. The interface establishes a persistent connection with the service, eliminating the need for session-based calls from the HTTP interface. See [The WebSocket interface](https://console.bluemix.net/docs/services/speech-to-text/websockets.html). * **Audio formats:** The service supports a variety of popular audio formats. For more information, including links to a number of Internet sites that provide technical and usage details about the different formats, see [Audio formats](https://console.bluemix.net/docs/services/speech-to-text/audio-formats.html). * **Audio transmission:** You can pass the audio to be transcribed as a one-shot delivery or in streaming mode. With one-shot delivery, you pass all of the audio data to the service at one time. With streaming mode, you send audio data to the service in chunks over a persistent connection. To use streaming, you must pass the `Transfer-Encoding` request header with a value of `chunked`. Both forms of data transmission impose a limit of 100 MB of total data for transcription. See [Audio transmission](https://console.bluemix.net/docs/services/speech-to-text/input.html#transmission). * **Authentication:** You authenticate to the service by using your service credentials. You can use your credentials to authenticate via a proxy server that resides in IBM Cloud, or you can use your credentials to obtain a token and contact the service directly. See [Service credentials for Watson services](https://console.bluemix.net/docs/services/watson/getting-started-credentials.html) and [Tokens for authentication](https://console.bluemix.net/docs/services/watson/getting-started-tokens.html). * **Request Logging:** By default, all Watson services log requests and their results. Data is collected only to improve the Watson services. If you do not want to share your data, set the header parameter `X-Watson-Learning-Opt-Out` to `true` for each request. Data is collected for any request that omits this header. See [Controlling request logging for Watson services](https://console.bluemix.net/docs/services/watson/getting-started-logging.html).  For more information about the service and its various interfaces, see [About Speech to Text](https://console.bluemix.net/docs/services/speech-to-text/index.html). ### Customization API Usage   The following information pertains to methods of the customization interface: * Language model customization and acoustic model customization are available only for a limited set of languages. They are generally available for production use for some languages but are beta offerings for other languages. For a complete list of supported languages and the status of their availability, see [Language support for customization](https://console.bluemix.net/docs/services/speech-to-text/custom.html#languageSupport). * In all cases, you must use service credentials created for the instance of the service that owns a custom model to use the methods described in this documentation with that model. For more information, see [Ownership of custom language models](https://console.bluemix.net/docs/services/speech-to-text/custom.html#customOwner). * How the service handles request logging for the customization interface depends on the request. The service does not log data that are used to build custom models. But it does log data when a custom model is used with a recognition request. For more information, see [Request logging and data privacy](https://console.bluemix.net/docs/services/speech-to-text/custom.html#customLogging). * Each custom model is identified by a customization ID, which is a Globally Unique Identifier (GUID). A GUID is a hexadecimal string that has the same format as Watson service credentials: `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`. You specify a custom model's GUID with the appropriate customization parameter of methods that support customization.   For more information about using the service's customization interface, see [The customization interface](https://console.bluemix.net/docs/services/speech-to-text/custom.html).
  */
 
-class GeneratedSpeechToTextV1 extends BaseService {
+class SpeechToTextV1 extends BaseService {
   name: string; // set by prototype to 'speech_to_text'
   version: string; // set by prototype to 'v1'
 
   static URL: string = 'https://gateway.watsonplatform.net/speech-to-text/api';
 
   /**
-   * Construct a GeneratedSpeechToTextV1 object.
+   * Construct a SpeechToTextV1 object.
    *
    * @param {Object} options - Options for the service.
    * @param {String} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/speech-to-text/api'). The base url may differ between Bluemix regions.
@@ -42,9 +42,9 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {Object} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
    * @constructor
-   * @returns {GeneratedSpeechToTextV1}
+   * @returns {SpeechToTextV1}
    */
-  constructor(options: GeneratedSpeechToTextV1.Options) {
+  constructor(options: SpeechToTextV1.Options) {
     super(options);
   }
 
@@ -63,10 +63,8 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   getModel(
-    params: GeneratedSpeechToTextV1.GetModelParams,
-    callback?: GeneratedSpeechToTextV1.Callback<
-      GeneratedSpeechToTextV1.SpeechModel
-    >
+    params: SpeechToTextV1.GetModelParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.SpeechModel>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -104,10 +102,8 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   listModels(
-    params?: GeneratedSpeechToTextV1.ListModelsParams,
-    callback?: GeneratedSpeechToTextV1.Callback<
-      GeneratedSpeechToTextV1.SpeechModels
-    >
+    params?: SpeechToTextV1.ListModelsParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.SpeechModels>
   ): ReadableStream | void {
     const _params =
       typeof params === 'function' && !callback ? {} : extend({}, params);
@@ -137,7 +133,7 @@ class GeneratedSpeechToTextV1 extends BaseService {
   /**
    * Sends audio for speech recognition in sessionless mode.
    *
-   * Sends audio and returns transcription results for a sessionless recognition request. Returns only the final results; to enable interim results, use session-based requests or the WebSocket API. The service imposes a data size limit of 100 MB. It automatically detects the endianness of the incoming audio and, for audio that includes multiple channels, downmixes the audio to one-channel mono during transcoding. (For the `audio/l16` format, you can specify the endianness.)   ###Streaming mode   For requests to transcribe live audio as it becomes available or to transcribe multiple audio files with multipart requests, you must set the `Transfer-Encoding` header to `chunked` to use streaming mode. In streaming mode, the server closes the connection (status code 408) if the service receives no data chunk for 30 seconds and the service has no audio to transcribe for 30 seconds. The server also closes the connection (status code 400) if no speech is detected for `inactivity_timeout` seconds of audio (not processing time); use the `inactivity_timeout` parameter to change the default of 30 seconds.   ###Non-multipart requests   For non-multipart requests, you specify all parameters of the request as a collection of request headers and query parameters, and you provide the audio as the body of the request. This is the recommended means of submitting a recognition request. Use the following parameters: * **Required:** `Content-Type` and `body` * **Optional:** `Transfer-Encoding`, `model`, `customization_id`, `acoustic_customization_id`, `customization_weight`, `inactivity_timeout`, `keywords`, `keywords_threshold`, `max_alternatives`, `word_alternatives_threshold`, `word_confidence`, `timestamps`, `profanity_filter`, `smart_formatting`, and `speaker_labels`     ###Multipart requests   For multipart requests, you specify a few parameters of the request as request headers and query parameters, but you specify most parameters as multipart form data in the form of JSON metadata, in which only `part_content_type` is required. You then specify the audio files for the request as subsequent parts of the form data. Use this approach with browsers that do not support JavaScript or when the parameters of the request are greater than the 8 KB limit imposed by most HTTP servers and proxies. Use the following parameters: * **Required:** `Content-Type`, `metadata`, and `upload` * **Optional:** `Transfer-Encoding`, `model`, `customization_id`, `acoustic_customization_id`, and `customization_weight`   An example of the multipart metadata for a pair of FLAC files follows. This first part of the request is sent as JSON; the remaining parts are the audio files for the request.  `metadata=\"{\\\"part_content_type\\\":\\\"audio/flac\\\",\\\"data_parts_count\\\":2,\\\"inactivity_timeout\\\"=-1}\"`   **Note:** You can pass the `interim_results` parameter with a recognition request made with the HTTP sessionless interface, as a query parameter for a non-multipart request or with the `MultipartRecognition` object for a multipart request. However, the service sends all results, both interim and final, at the same time, when the request completes. The service does **not** return interim results as it generates them.   **Note about the Try It Out feature:** The `Try it out!` button is **not** supported for use with the the `POST /v1/recognize` method. For examples of calls to the method, see the [Speech to Text API reference](http://www.ibm.com/watson/developercloud/speech-to-text/api/v1/).
+   * Sends audio and returns transcription results for a sessionless recognition request. Returns only the final results; to enable interim results, use session-based requests or the WebSocket API. The service imposes a data size limit of 100 MB. It automatically detects the endianness of the incoming audio and, for audio that includes multiple channels, downmixes the audio to one-channel mono during transcoding. (For the `audio/l16` format, you can specify the endianness.)   ###Streaming mode   For requests to transcribe live audio as it becomes available or to transcribe multiple audio files with multipart requests, you must set the `Transfer-Encoding` header to `chunked` to use streaming mode. In streaming mode, the server closes the connection (status code 408) if the service receives no data chunk for 30 seconds and the service has no audio to transcribe for 30 seconds. The server also closes the connection (status code 400) if no speech is detected for `inactivity_timeout` seconds of audio (not processing time); use the `inactivity_timeout` parameter to change the default of 30 seconds.   ###Non-multipart requests   For non-multipart requests, you specify all parameters of the request as a collection of request headers and query parameters, and you provide the audio as the body of the request. This is the recommended means of submitting a recognition request. Use the following parameters: * **Required:** `Content-Type` and `audio` * **Optional:** `Transfer-Encoding`, `model`, `customization_id`, `acoustic_customization_id`, `customization_weight`, `inactivity_timeout`, `keywords`, `keywords_threshold`, `max_alternatives`, `word_alternatives_threshold`, `word_confidence`, `timestamps`, `profanity_filter`, `smart_formatting`, and `speaker_labels`     ###Multipart requests   For multipart requests, you specify a few parameters of the request as request headers and query parameters, but you specify most parameters as multipart form data in the form of JSON metadata, in which only `part_content_type` is required. You then specify the audio files for the request as subsequent parts of the form data. Use this approach with browsers that do not support JavaScript or when the parameters of the request are greater than the 8 KB limit imposed by most HTTP servers and proxies. Use the following parameters: * **Required:** `Content-Type`, `metadata`, and `upload` * **Optional:** `Transfer-Encoding`, `model`, `customization_id`, `acoustic_customization_id`, and `customization_weight`   An example of the multipart metadata for a pair of FLAC files follows. This first part of the request is sent as JSON; the remaining parts are the audio files for the request.  `metadata=\"{\\\"part_content_type\\\":\\\"audio/flac\\\",\\\"data_parts_count\\\":2,\\\"inactivity_timeout\\\"=-1}\"`   **Note:** You can pass the `interim_results` parameter with a recognition request made with the HTTP sessionless interface, as a query parameter for a non-multipart request or with the `MultipartRecognition` object for a multipart request. However, the service sends all results, both interim and final, at the same time, when the request completes. The service does **not** return interim results as it generates them.   **Note about the Try It Out feature:** The `Try it out!` button is **not** supported for use with the the `POST /v1/recognize` method. For examples of calls to the method, see the [Speech to Text API reference](http://www.ibm.com/watson/developercloud/speech-to-text/api/v1/).
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {string} [params.transfer_encoding] - Set to `chunked` to send the audio in streaming mode; the data does not need to exist fully before being streamed to the service.   MULTIPART: You must also set this header for requests with more than one audio part.
@@ -164,10 +160,8 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   recognizeSessionless(
-    params?: GeneratedSpeechToTextV1.RecognizeSessionlessParams,
-    callback?: GeneratedSpeechToTextV1.Callback<
-      GeneratedSpeechToTextV1.SpeechRecognitionResults
-    >
+    params?: SpeechToTextV1.RecognizeSessionlessParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.SpeechRecognitionResults>
   ): ReadableStream | void {
     const _params =
       typeof params === 'function' && !callback ? {} : extend({}, params);
@@ -237,10 +231,8 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   createSession(
-    params?: GeneratedSpeechToTextV1.CreateSessionParams,
-    callback?: GeneratedSpeechToTextV1.Callback<
-      GeneratedSpeechToTextV1.SpeechSession
-    >
+    params?: SpeechToTextV1.CreateSessionParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.SpeechSession>
   ): ReadableStream | void {
     const _params =
       typeof params === 'function' && !callback ? {} : extend({}, params);
@@ -281,8 +273,8 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   deleteSession(
-    params: GeneratedSpeechToTextV1.DeleteSessionParams,
-    callback?: GeneratedSpeechToTextV1.Callback<GeneratedSpeechToTextV1.Empty>
+    params: SpeechToTextV1.DeleteSessionParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -321,10 +313,8 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   getSessionStatus(
-    params: GeneratedSpeechToTextV1.GetSessionStatusParams,
-    callback?: GeneratedSpeechToTextV1.Callback<
-      GeneratedSpeechToTextV1.SessionStatus
-    >
+    params: SpeechToTextV1.GetSessionStatusParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.SessionStatus>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -352,6 +342,136 @@ class GeneratedSpeechToTextV1 extends BaseService {
     return createRequest(parameters, _callback);
   }
 
+  /**
+   * Observes results for a recognition task within a session.
+   *
+   * Requests results for a recognition task within the specified session. You can submit multiple requests for the same recognition task. To see interim results, set the query parameter `interim_results=true`. The request must pass the cookie that was returned by the `POST /v1/sessions` method.   To see results for a specific recognition task, specify a sequence ID (with the `sequence_id` query parameter) that matches the sequence ID of the recognition request. A request with a sequence ID can arrive before, during, or after the matching recognition request, but it must arrive no later than 30 seconds after the recognition completes to avoid a session timeout (response code 408). Send multiple requests for the sequence ID with a maximum gap of 30 seconds to avoid the timeout.   Omit the sequence ID to observe results for an ongoing recognition task. If no recognition task is ongoing, the method returns results for the next recognition task regardless of whether it specifies a sequence ID.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.session_id - The ID of the session whose results you want to observe.
+   * @param {number} [params.sequence_id] - The sequence ID of the recognition task whose results you want to observe. Omit the parameter to obtain results either for an ongoing recognition, if any, or for the next recognition task regardless of whether it specifies a sequence ID.
+   * @param {boolean} [params.interim_results] - If `true`, interim results are returned as a stream of JSON `SpeechRecognitionResults` objects. If `false`, the response is a single `SpeechRecognitionResults` object with final results only.
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {ReadableStream|void}
+   */
+  observeResult(
+    params: SpeechToTextV1.ObserveResultParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.SpeechRecognitionResults>
+  ): ReadableStream | void {
+    const _params = extend({}, params);
+    const _callback = callback ? callback : () => {};
+    const requiredParams = ['session_id'];
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+    const query = {
+      sequence_id: _params.sequence_id,
+      interim_results: _params.interim_results
+    };
+    const path = {
+      session_id: _params.session_id
+    };
+    const parameters = {
+      options: {
+        url: '/v1/sessions/{session_id}/observe_result',
+        method: 'GET',
+        qs: query,
+        path: path
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+    };
+    return createRequest(parameters, _callback);
+  }
+
+  /**
+   * Sends audio for speech recognition within a session.
+   *
+   * Sends audio and returns transcription results for a session-based recognition request. By default, returns only the final transcription results for the request. To see interim results, set the query parameter `interim_results=true` in a `GET` request to the `observe_result` method before this `POST` request finishes. To enable polling by the `observe_result` method for large audio requests, specify an integer with the `sequence_id` query parameter for non-multipart requests or with the `sequence_id` parameter of the JSON metadata for multipart requests.   The service imposes a data size limit of 100 MB per session. It automatically detects the endianness of the incoming audio and, for audio that includes multiple channels, downmixes the audio to one-channel mono during transcoding. (For the `audio/l16` format, you can specify the endianness.) The request must pass the cookie that was returned by the `POST /v1/sessions` method.  ###Streaming mode   For requests to transcribe live audio as it becomes available or to transcribe multiple audio files with multipart requests, you must set `Transfer-Encoding` to `chunked` to use streaming mode. In streaming mode, the server closes the session (status code 408) if the service receives no data chunk for 30 seconds and the service has no audio to transcribe for 30 seconds. The server also closes the session (status code 400) if no speech is detected for `inactivity_timeout` seconds of audio (not processing time); use the `inactivity_timeout` parameter to change the default of 30 seconds. For more information, see [Timeouts](https://console.bluemix.net/docs/services/speech-to-text/input.html#timeouts).   ###Non-multipart requests   For non-multipart requests, you specify all parameters of the request as a path parameter, request headers, and query parameters. You provide the audio as the body of the request. This is the recommended means of submitting a recognition request. Use the following parameters: * **Required:** `session_id`, `Content-Type`, and `audio` * **Optional:** `Transfer-Encoding`, `sequence_id`, `inactivity_timeout`, `keywords`, `keywords_threshold`, `max_alternatives`, `word_alternatives_threshold`, `word_confidence`, `timestamps`, `profanity_filter`, `smart_formatting`, and `speaker_labels`     ###Multipart requests   For multipart requests, you specify a few parameters of the request via a path parameter and as request headers, but you specify most parameters as multipart form data in the form of JSON metadata, in which only `part_content_type` is required. You then specify the audio files for the request as subsequent parts of the form data. Use this approach with browsers that do not support JavaScript or when the parameters of the request are greater than the 8 KB limit imposed by most HTTP servers and proxies. Use the following parameters: * **Required:** `session_id`, `Content-Type`, `metadata`, and `upload` * **Optional:** `Transfer-Encoding`  An example of the multipart metadata for a pair of FLAC files follows. This first part of the request is sent as JSON; the remaining parts are the audio files for the request.  `metadata=\"{\\\"part_content_type\\\":\\\"audio/flac\\\",\\\"data_parts_count\\\":2,\\\"inactivity_timeout\\\":-1}\"`   **Note about the Try It Out feature:** The `Try it out!` button is **not** supported for use with the the `POST /v1/sessions/{session_id}/recognize` method. For examples of calls to the method, see the [Speech to Text API reference](http://www.ibm.com/watson/developercloud/speech-to-text/api/v1/).
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.session_id - The ID of the session for the recognition task.
+   * @param {string} [params.transfer_encoding] - Set to `chunked` to send the audio in streaming mode; the data does not need to exist fully before being streamed to the service.   MULTIPART: You must also set this header for requests with more than one audio part.
+   * @param {Blob} [params.audio] - NON-MULTIPART ONLY: Audio to transcribe in the format specified by the `Content-Type` header. **Required for a non-multipart request.**.
+   * @param {string} [params.content_type] - The type of the input: audio/basic, audio/flac, audio/l16, audio/mp3, audio/mpeg, audio/mulaw, audio/ogg, audio/ogg;codecs=opus, audio/ogg;codecs=vorbis, audio/wav, audio/webm, audio/webm;codecs=opus, audio/webm;codecs=vorbis, or multipart/form-data.
+   * @param {number} [params.sequence_id] - NON-MULTIPART ONLY: Sequence ID of this recognition task in the form of a user-specified integer. If omitted, no sequence ID is associated with the recognition task.
+   * @param {number} [params.inactivity_timeout] - NON-MULTIPART ONLY: The time in seconds after which, if only silence (no speech) is detected in submitted audio, the connection is closed with a 400 error and with `session_closed` set to `true`. Useful for stopping audio submission from a live microphone when a user simply walks away.  Use `-1` for infinity.
+   * @param {string[]} [params.keywords] - NON-MULTIPART ONLY: Array of keyword strings to spot in the audio. Each keyword string can include one or more tokens. Keywords are spotted only in the final hypothesis, not in interim results (if supported by the method). Omit the parameter or specify an empty array if you do not need to spot keywords.
+   * @param {number} [params.keywords_threshold] - NON-MULTIPART ONLY: Confidence value that is the lower bound for spotting a keyword. A word is considered to match a keyword if its confidence is greater than or equal to the threshold. Specify a probability between 0 and 1 inclusive. No keyword spotting is performed if you omit the parameter. If you specify a threshold, you must also specify one or more keywords.
+   * @param {number} [params.max_alternatives] - NON-MULTIPART ONLY: Maximum number of alternative transcripts to be returned. By default, a single transcription is returned.
+   * @param {number} [params.word_alternatives_threshold] - NON-MULTIPART ONLY: Confidence value that is the lower bound for identifying a hypothesis as a possible word alternative (also known as "Confusion Networks"). An alternative word is considered if its confidence is greater than or equal to the threshold. Specify a probability between 0 and 1 inclusive. No alternative words are computed if you omit the parameter.
+   * @param {boolean} [params.word_confidence] - NON-MULTIPART ONLY: If `true`, confidence measure per word is returned.
+   * @param {boolean} [params.timestamps] - NON-MULTIPART ONLY: If `true`, time alignment for each word is returned.
+   * @param {boolean} [params.profanity_filter] - NON-MULTIPART ONLY: If `true` (the default), filters profanity from all output except for keyword results by replacing inappropriate words with a series of asterisks. Set the parameter to `false` to return results with no censoring. Applies to US English transcription only.
+   * @param {boolean} [params.smart_formatting] - NON-MULTIPART ONLY: If `true`, converts dates, times, series of digits and numbers, phone numbers, currency values, and Internet addresses into more readable, conventional representations in the final transcript of a recognition request. If `false` (the default), no formatting is performed. Applies to US English transcription only.
+   * @param {boolean} [params.speaker_labels] - NON-MULTIPART ONLY: Indicates whether labels that identify which words were spoken by which participants in a multi-person exchange are to be included in the response. The default is `false`; no speaker labels are returned. Setting `speaker_labels` to `true` forces the `timestamps` parameter to be `true`, regardless of whether you specify `false` for the parameter.   To determine whether a language model supports speaker labels, use the `GET /v1/models` method and check that the attribute `speaker_labels` is set to `true`. You can also refer to [Speaker labels](https://console.bluemix.net/docs/services/speech-to-text/output.html#speaker_labels).
+   * @param {string} [params.metadata] - MULTIPART ONLY: Parameters for the multipart recognition request. This must be the first part of the request and must consist of JSON-formatted data. The information describes the subsequent parts of the request, which pass the audio files to be transcribed. **Required for a multipart request.**.
+   * @param {ReadableStream|FileObject|Buffer} [params.upload] - MULTIPART ONLY: One or more audio files for the request. For multiple audio files, set `Transfer-Encoding` to `chunked`. **Required for a multipart request.**.
+   * @param {string} [params.upload_content_type] - The content type of upload.
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {ReadableStream|void}
+   */
+  recognizeSession(
+    params: SpeechToTextV1.RecognizeSessionParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.SpeechRecognitionResults>
+  ): ReadableStream | void {
+    const _params = extend({}, params);
+    const _callback = callback ? callback : () => {};
+    const requiredParams = ['session_id'];
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+    const formData = {
+      metadata: _params.metadata,
+      upload: {
+        data: _params.upload,
+        contentType: _params.upload_content_type
+      }
+    };
+    const body = _params.audio;
+    const query = {
+      sequence_id: _params.sequence_id,
+      inactivity_timeout: _params.inactivity_timeout,
+      keywords: _params.keywords,
+      keywords_threshold: _params.keywords_threshold,
+      max_alternatives: _params.max_alternatives,
+      word_alternatives_threshold: _params.word_alternatives_threshold,
+      word_confidence: _params.word_confidence,
+      timestamps: _params.timestamps,
+      profanity_filter: _params.profanity_filter,
+      smart_formatting: _params.smart_formatting,
+      speaker_labels: _params.speaker_labels
+    };
+    const path = {
+      session_id: _params.session_id
+    };
+    const parameters = {
+      options: {
+        url: '/v1/sessions/{session_id}/recognize',
+        method: 'POST',
+        json: _params.content_type === 'application/json',
+        body: body,
+        qs: query,
+        path: path,
+        formData: formData
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: {
+          Accept: 'application/json',
+          'Transfer-Encoding': _params.transfer_encoding,
+          'Content-Type': _params.content_type
+        }
+      })
+    };
+    return createRequest(parameters, _callback);
+  }
+
   /*************************
    * asynchronous
    ************************/
@@ -367,10 +487,8 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   checkJob(
-    params: GeneratedSpeechToTextV1.CheckJobParams,
-    callback?: GeneratedSpeechToTextV1.Callback<
-      GeneratedSpeechToTextV1.RecognitionJob
-    >
+    params: SpeechToTextV1.CheckJobParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.RecognitionJob>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -408,10 +526,8 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   checkJobs(
-    params?: GeneratedSpeechToTextV1.CheckJobsParams,
-    callback?: GeneratedSpeechToTextV1.Callback<
-      GeneratedSpeechToTextV1.RecognitionJobs
-    >
+    params?: SpeechToTextV1.CheckJobsParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.RecognitionJobs>
   ): ReadableStream | void {
     const _params =
       typeof params === 'function' && !callback ? {} : extend({}, params);
@@ -465,10 +581,8 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   createJob(
-    params: GeneratedSpeechToTextV1.CreateJobParams,
-    callback?: GeneratedSpeechToTextV1.Callback<
-      GeneratedSpeechToTextV1.RecognitionJob
-    >
+    params: SpeechToTextV1.CreateJobParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.RecognitionJob>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -528,8 +642,8 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   deleteJob(
-    params: GeneratedSpeechToTextV1.DeleteJobParams,
-    callback?: GeneratedSpeechToTextV1.Callback<GeneratedSpeechToTextV1.Empty>
+    params: SpeechToTextV1.DeleteJobParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -569,10 +683,8 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   registerCallback(
-    params: GeneratedSpeechToTextV1.RegisterCallbackParams,
-    callback?: GeneratedSpeechToTextV1.Callback<
-      GeneratedSpeechToTextV1.RegisterStatus
-    >
+    params: SpeechToTextV1.RegisterCallbackParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.RegisterStatus>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -612,8 +724,8 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   unregisterCallback(
-    params: GeneratedSpeechToTextV1.UnregisterCallbackParams,
-    callback?: GeneratedSpeechToTextV1.Callback<GeneratedSpeechToTextV1.Empty>
+    params: SpeechToTextV1.UnregisterCallbackParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -651,6 +763,7 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * Creates a new custom language model for a specified base model. The custom language model can be used only with the base model for which it is created. The model is owned by the instance of the service whose credentials are used to create it.
    *
    * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.content_type - The type of the input.
    * @param {string} params.name - A user-defined name for the new custom language model. Use a name that is unique among all custom language models that you own. Use a localized name that matches the language of the custom model. Use a name that describes the domain of the custom model, such as `Medical custom model` or `Legal custom model`.
    * @param {string} params.base_model_name - The name of the base language model that is to be customized by the new custom language model. The new custom model can be used only with the base model that it customizes. To determine whether a base model supports language model customization, request information about the base model and check that the attribute `custom_language_model` is set to `true`, or refer to [Language support for customization](https://console.bluemix.net/docs/services/speech-to-text/custom.html#languageSupport).
    * @param {string} [params.dialect] - The dialect of the specified language that is to be used with the custom language model. The parameter is meaningful only for Spanish models, for which the service creates a custom language model that is suited for speech in one of the following dialects: * `es-ES` for Castilian Spanish (the default) * `es-LA` for Latin American Spanish * `es-US` for North American (Mexican) Spanish   A specified dialect must be valid for the base model. By default, the dialect matches the language of the base model; for example, `en-US` for either of the US English language models.
@@ -659,14 +772,12 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   createLanguageModel(
-    params: GeneratedSpeechToTextV1.CreateLanguageModelParams,
-    callback?: GeneratedSpeechToTextV1.Callback<
-      GeneratedSpeechToTextV1.LanguageModel
-    >
+    params: SpeechToTextV1.CreateLanguageModelParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.LanguageModel>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
-    const requiredParams = ['name', 'base_model_name'];
+    const requiredParams = ['content_type', 'name', 'base_model_name'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
@@ -705,8 +816,8 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   deleteLanguageModel(
-    params: GeneratedSpeechToTextV1.DeleteLanguageModelParams,
-    callback?: GeneratedSpeechToTextV1.Callback<GeneratedSpeechToTextV1.Empty>
+    params: SpeechToTextV1.DeleteLanguageModelParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -745,10 +856,8 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   getLanguageModel(
-    params: GeneratedSpeechToTextV1.GetLanguageModelParams,
-    callback?: GeneratedSpeechToTextV1.Callback<
-      GeneratedSpeechToTextV1.LanguageModel
-    >
+    params: SpeechToTextV1.GetLanguageModelParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.LanguageModel>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -787,10 +896,8 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   listLanguageModels(
-    params?: GeneratedSpeechToTextV1.ListLanguageModelsParams,
-    callback?: GeneratedSpeechToTextV1.Callback<
-      GeneratedSpeechToTextV1.LanguageModels
-    >
+    params?: SpeechToTextV1.ListLanguageModelsParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.LanguageModels>
   ): ReadableStream | void {
     const _params =
       typeof params === 'function' && !callback ? {} : extend({}, params);
@@ -828,8 +935,8 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   resetLanguageModel(
-    params: GeneratedSpeechToTextV1.ResetLanguageModelParams,
-    callback?: GeneratedSpeechToTextV1.Callback<GeneratedSpeechToTextV1.Empty>
+    params: SpeechToTextV1.ResetLanguageModelParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -870,8 +977,8 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   trainLanguageModel(
-    params: GeneratedSpeechToTextV1.TrainLanguageModelParams,
-    callback?: GeneratedSpeechToTextV1.Callback<GeneratedSpeechToTextV1.Empty>
+    params: SpeechToTextV1.TrainLanguageModelParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -915,8 +1022,8 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   upgradeLanguageModel(
-    params: GeneratedSpeechToTextV1.UpgradeLanguageModelParams,
-    callback?: GeneratedSpeechToTextV1.Callback<GeneratedSpeechToTextV1.Empty>
+    params: SpeechToTextV1.UpgradeLanguageModelParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -957,26 +1064,26 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @param {string} params.customization_id - The GUID of the custom language model to which a corpus is to be added. You must make the request with service credentials created for the instance of the service that owns the custom model.
    * @param {string} params.corpus_name - The name of the corpus that is to be added to the custom language model. The name cannot contain spaces and cannot be the string `user`, which is reserved by the service to denote custom words added or modified by the user. Use a localized name that matches the language of the custom model.
    * @param {boolean} [params.allow_overwrite] - Indicates whether the specified corpus is to overwrite an existing corpus with the same name. If a corpus with the same name already exists, the request fails unless `allow_overwrite` is set to `true`; by default, the parameter is `false`. The parameter has no effect if a corpus with the same name does not already exist.
-   * @param {ReadableStream|FileObject|Buffer} params.body - A plain text file that contains the training data for the corpus. Encode the file in UTF-8 if it contains non-ASCII characters; the service assumes UTF-8 encoding if it encounters non-ASCII characters. With cURL, use the `--data-binary` option to upload the file for the request.
-   * @param {string} [params.body_content_type] - The content type of body.
+   * @param {ReadableStream|FileObject|Buffer} params.corpus_file - A plain text file that contains the training data for the corpus. Encode the file in UTF-8 if it contains non-ASCII characters; the service assumes UTF-8 encoding if it encounters non-ASCII characters. With cURL, use the `--data-binary` option to upload the file for the request.
+   * @param {string} [params.corpus_file_content_type] - The content type of corpus_file.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
   addCorpus(
-    params: GeneratedSpeechToTextV1.AddCorpusParams,
-    callback?: GeneratedSpeechToTextV1.Callback<GeneratedSpeechToTextV1.Empty>
+    params: SpeechToTextV1.AddCorpusParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
-    const requiredParams = ['customization_id', 'corpus_name', 'body'];
+    const requiredParams = ['customization_id', 'corpus_name', 'corpus_file'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const formData = {
-      body: {
-        data: _params.body,
-        contentType: _params.body_content_type
+      corpus_file: {
+        data: _params.corpus_file,
+        contentType: _params.corpus_file_content_type
       }
     };
     const query = {
@@ -1016,8 +1123,8 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   deleteCorpus(
-    params: GeneratedSpeechToTextV1.DeleteCorpusParams,
-    callback?: GeneratedSpeechToTextV1.Callback<GeneratedSpeechToTextV1.Empty>
+    params: SpeechToTextV1.DeleteCorpusParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1058,8 +1165,8 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   getCorpus(
-    params: GeneratedSpeechToTextV1.GetCorpusParams,
-    callback?: GeneratedSpeechToTextV1.Callback<GeneratedSpeechToTextV1.Corpus>
+    params: SpeechToTextV1.GetCorpusParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Corpus>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1099,8 +1206,8 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   listCorpora(
-    params: GeneratedSpeechToTextV1.ListCorporaParams,
-    callback?: GeneratedSpeechToTextV1.Callback<GeneratedSpeechToTextV1.Corpora>
+    params: SpeechToTextV1.ListCorporaParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Corpora>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1148,8 +1255,8 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   addWord(
-    params: GeneratedSpeechToTextV1.AddWordParams,
-    callback?: GeneratedSpeechToTextV1.Callback<GeneratedSpeechToTextV1.Empty>
+    params: SpeechToTextV1.AddWordParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1198,8 +1305,8 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   addWords(
-    params: GeneratedSpeechToTextV1.AddWordsParams,
-    callback?: GeneratedSpeechToTextV1.Callback<GeneratedSpeechToTextV1.Empty>
+    params: SpeechToTextV1.AddWordsParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1244,8 +1351,8 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   deleteWord(
-    params: GeneratedSpeechToTextV1.DeleteWordParams,
-    callback?: GeneratedSpeechToTextV1.Callback<GeneratedSpeechToTextV1.Empty>
+    params: SpeechToTextV1.DeleteWordParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1286,8 +1393,8 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   getWord(
-    params: GeneratedSpeechToTextV1.GetWordParams,
-    callback?: GeneratedSpeechToTextV1.Callback<GeneratedSpeechToTextV1.Word>
+    params: SpeechToTextV1.GetWordParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Word>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1329,8 +1436,8 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   listWords(
-    params: GeneratedSpeechToTextV1.ListWordsParams,
-    callback?: GeneratedSpeechToTextV1.Callback<GeneratedSpeechToTextV1.Words>
+    params: SpeechToTextV1.ListWordsParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Words>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1381,10 +1488,8 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   createAcousticModel(
-    params: GeneratedSpeechToTextV1.CreateAcousticModelParams,
-    callback?: GeneratedSpeechToTextV1.Callback<
-      GeneratedSpeechToTextV1.AcousticModel
-    >
+    params: SpeechToTextV1.CreateAcousticModelParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.AcousticModel>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1426,8 +1531,8 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   deleteAcousticModel(
-    params: GeneratedSpeechToTextV1.DeleteAcousticModelParams,
-    callback?: GeneratedSpeechToTextV1.Callback<GeneratedSpeechToTextV1.Empty>
+    params: SpeechToTextV1.DeleteAcousticModelParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1466,10 +1571,8 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   getAcousticModel(
-    params: GeneratedSpeechToTextV1.GetAcousticModelParams,
-    callback?: GeneratedSpeechToTextV1.Callback<
-      GeneratedSpeechToTextV1.AcousticModel
-    >
+    params: SpeechToTextV1.GetAcousticModelParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.AcousticModel>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1508,10 +1611,8 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   listAcousticModels(
-    params?: GeneratedSpeechToTextV1.ListAcousticModelsParams,
-    callback?: GeneratedSpeechToTextV1.Callback<
-      GeneratedSpeechToTextV1.AcousticModels
-    >
+    params?: SpeechToTextV1.ListAcousticModelsParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.AcousticModels>
   ): ReadableStream | void {
     const _params =
       typeof params === 'function' && !callback ? {} : extend({}, params);
@@ -1549,8 +1650,8 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   resetAcousticModel(
-    params: GeneratedSpeechToTextV1.ResetAcousticModelParams,
-    callback?: GeneratedSpeechToTextV1.Callback<GeneratedSpeechToTextV1.Empty>
+    params: SpeechToTextV1.ResetAcousticModelParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1590,8 +1691,8 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   trainAcousticModel(
-    params: GeneratedSpeechToTextV1.TrainAcousticModelParams,
-    callback?: GeneratedSpeechToTextV1.Callback<GeneratedSpeechToTextV1.Empty>
+    params: SpeechToTextV1.TrainAcousticModelParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1637,28 +1738,28 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @param {string} params.audio_name - The name of the audio resource that is to be added to the custom acoustic model. The name cannot contain spaces. Use a localized name that matches the language of the custom model.
    * @param {string} [params.contained_content_type] - For an archive-type resource that contains audio files whose format is not `audio/wav`, specifies the format of the audio files. The header accepts all of the audio formats supported for use with speech recognition and with the `Content-Type` header, including the `rate`, `channels`, and `endianness` parameters that are used with some formats. For a complete list of supported audio formats, see [Audio formats](/docs/services/speech-to-text/input.html#formats).
    * @param {boolean} [params.allow_overwrite] - Indicates whether the specified audio resource is to overwrite an existing resource with the same name. If a resource with the same name already exists, the request fails unless `allow_overwrite` is set to `true`; by default, the parameter is `false`. The parameter has no effect if a resource with the same name does not already exist.
-   * @param {ByteArray[]} params.body - The audio resource that is to be added to the custom acoustic model, an individual audio file or an archive file.
+   * @param {ByteArray[]} params.audio_resource - The audio resource that is to be added to the custom acoustic model, an individual audio file or an archive file.
    * @param {string} params.content_type - The type of the input: application/zip, application/gzip, audio/basic, audio/flac, audio/l16, audio/mp3, audio/mpeg, audio/mulaw, audio/ogg, audio/ogg;codecs=opus, audio/ogg;codecs=vorbis, audio/wav, audio/webm, audio/webm;codecs=opus, or audio/webm;codecs=vorbis.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
   addAudio(
-    params: GeneratedSpeechToTextV1.AddAudioParams,
-    callback?: GeneratedSpeechToTextV1.Callback<GeneratedSpeechToTextV1.Empty>
+    params: SpeechToTextV1.AddAudioParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = [
       'customization_id',
       'audio_name',
-      'body',
+      'audio_resource',
       'content_type'
     ];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const body = _params.body;
+    const body = _params.audio_resource;
     const query = {
       allow_overwrite: _params.allow_overwrite
     };
@@ -1699,8 +1800,8 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   deleteAudio(
-    params: GeneratedSpeechToTextV1.DeleteAudioParams,
-    callback?: GeneratedSpeechToTextV1.Callback<GeneratedSpeechToTextV1.Empty>
+    params: SpeechToTextV1.DeleteAudioParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1742,10 +1843,8 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   getAudio(
-    params: GeneratedSpeechToTextV1.GetAudioParams,
-    callback?: GeneratedSpeechToTextV1.Callback<
-      GeneratedSpeechToTextV1.AudioListing
-    >
+    params: SpeechToTextV1.GetAudioParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.AudioListing>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1786,10 +1885,8 @@ class GeneratedSpeechToTextV1 extends BaseService {
    * @returns {ReadableStream|void}
    */
   listAudio(
-    params: GeneratedSpeechToTextV1.ListAudioParams,
-    callback?: GeneratedSpeechToTextV1.Callback<
-      GeneratedSpeechToTextV1.AudioResources
-    >
+    params: SpeechToTextV1.ListAudioParams,
+    callback?: SpeechToTextV1.Callback<SpeechToTextV1.AudioResources>
   ): ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
@@ -1818,15 +1915,15 @@ class GeneratedSpeechToTextV1 extends BaseService {
   }
 }
 
-GeneratedSpeechToTextV1.prototype.name = 'speech_to_text';
-GeneratedSpeechToTextV1.prototype.version = 'v1';
+SpeechToTextV1.prototype.name = 'speech_to_text';
+SpeechToTextV1.prototype.version = 'v1';
 
 /*************************
  * interfaces
  ************************/
 
-namespace GeneratedSpeechToTextV1 {
-  /** Options for the `GeneratedSpeechToTextV1` constructor. **/
+namespace SpeechToTextV1 {
+  /** Options for the `SpeechToTextV1` constructor. **/
   export type Options = {
     url?: string;
     username?: string;
@@ -2288,9 +2385,9 @@ namespace GeneratedSpeechToTextV1 {
     /** Indicates whether the specified corpus is to overwrite an existing corpus with the same name. If a corpus with the same name already exists, the request fails unless `allow_overwrite` is set to `true`; by default, the parameter is `false`. The parameter has no effect if a corpus with the same name does not already exist. **/
     allow_overwrite?: boolean;
     /** A plain text file that contains the training data for the corpus. Encode the file in UTF-8 if it contains non-ASCII characters; the service assumes UTF-8 encoding if it encounters non-ASCII characters. With cURL, use the `--data-binary` option to upload the file for the request. **/
-    body: ReadableStream | FileObject | Buffer;
-    /** The content type of body. **/
-    body_content_type?: string;
+    corpus_file: ReadableStream | FileObject | Buffer;
+    /** The content type of corpus_file. **/
+    corpus_file_content_type?: string;
   }
 
   /** Parameters for the `deleteCorpus` operation. **/
@@ -2461,7 +2558,7 @@ namespace GeneratedSpeechToTextV1 {
     /** Indicates whether the specified audio resource is to overwrite an existing resource with the same name. If a resource with the same name already exists, the request fails unless `allow_overwrite` is set to `true`; by default, the parameter is `false`. The parameter has no effect if a resource with the same name does not already exist. **/
     allow_overwrite?: boolean;
     /** The audio resource that is to be added to the custom acoustic model, an individual audio file or an archive file. **/
-    body: Buffer[];
+    audio_resource: Buffer[];
     /** The type of the input: application/zip, application/gzip, audio/basic, audio/flac, audio/l16, audio/mp3, audio/mpeg, audio/mulaw, audio/ogg, audio/ogg;codecs=opus, audio/ogg;codecs=vorbis, audio/wav, audio/webm, audio/webm;codecs=opus, or audio/webm;codecs=vorbis. **/
     content_type: AddAudioConstants.ContentType | string;
   }
@@ -2875,4 +2972,4 @@ namespace GeneratedSpeechToTextV1 {
   }
 }
 
-export = GeneratedSpeechToTextV1;
+export = SpeechToTextV1;

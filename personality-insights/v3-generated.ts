@@ -25,7 +25,6 @@ import { BaseService } from '../lib/base_service';
  */
 
 class PersonalityInsightsV3 extends BaseService {
-
   name: string; // set by prototype to 'personality_insights'
   version: string; // set by prototype to 'v3'
 
@@ -75,16 +74,19 @@ class PersonalityInsightsV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {ReadableStream|void}
    */
-  profile(params: PersonalityInsightsV3.ProfileParams, callback?: PersonalityInsightsV3.Callback<PersonalityInsightsV3.Profile>): ReadableStream | void {
+  profile(
+    params: PersonalityInsightsV3.ProfileParams,
+    callback?: PersonalityInsightsV3.Callback<PersonalityInsightsV3.Profile>
+  ): ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['content', 'content_type'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const body = _params.content;
-    const query = { 
+    const query = {
       raw_scores: _params.raw_scores,
       csv_headers: _params.csv_headers,
       consumption_preferences: _params.consumption_preferences
@@ -93,22 +95,21 @@ class PersonalityInsightsV3 extends BaseService {
       options: {
         url: '/v3/profile',
         method: 'POST',
-        json: (_params.content_type === 'application/json'),
+        json: _params.content_type === 'application/json',
         body: body,
-        qs: query,
+        qs: query
       },
       defaultOptions: extend(true, this._options, {
         headers: {
-          'accept': 'application/json',
-          'content-type': _params.content_type, 
-          'content-language': _params.content_language, 
-          'accept-language': _params.accept_language
+          Accept: 'application/json',
+          'Content-Type': _params.content_type,
+          'Content-Language': _params.content_language,
+          'Accept-Language': _params.accept_language
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
-
+  }
 }
 
 PersonalityInsightsV3.prototype.name = 'personality_insights';
@@ -119,10 +120,13 @@ PersonalityInsightsV3.prototype.version = 'v3';
  ************************/
 
 namespace PersonalityInsightsV3 {
+  export interface Empty {}
 
-  export interface Empty { }
-
-  export type Callback<T> = (error: any, body?: T, response?: RequestResponse) => void;
+  export type Callback<T> = (
+    error: any,
+    body?: T,
+    response?: RequestResponse
+  ) => void;
 
   export type Options = {
     version_date: string;
@@ -131,14 +135,14 @@ namespace PersonalityInsightsV3 {
     password?: string;
     use_unauthenticated?: boolean;
     headers?: object;
-  }
+  };
 
   /*************************
    * request interfaces
    ************************/
 
   export interface ProfileParams {
-    content: Content|string;
+    content: Content | string;
     content_type: ProfileConstants.ContentType | string;
     content_language?: ProfileConstants.ContentLanguage | string;
     accept_language?: ProfileConstants.AcceptLanguage | string;
@@ -151,14 +155,14 @@ namespace PersonalityInsightsV3 {
     export enum ContentType {
       APPLICATION_JSON = 'application/json',
       TEXT_HTML = 'text/html',
-      TEXT_PLAIN = 'text/plain',
+      TEXT_PLAIN = 'text/plain'
     }
     export enum ContentLanguage {
       AR = 'ar',
       EN = 'en',
       ES = 'es',
       JA = 'ja',
-      KO = 'ko',
+      KO = 'ko'
     }
     export enum AcceptLanguage {
       AR = 'ar',
@@ -171,7 +175,7 @@ namespace PersonalityInsightsV3 {
       KO = 'ko',
       PT_BR = 'pt-br',
       ZH_CN = 'zh-cn',
-      ZH_TW = 'zh-tw',
+      ZH_TW = 'zh-tw'
     }
   }
 
@@ -240,7 +244,6 @@ namespace PersonalityInsightsV3 {
     warning_id: string;
     message: string;
   }
-
 }
 
 export = PersonalityInsightsV3;

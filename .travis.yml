@@ -8,7 +8,7 @@ script:
 - tsc # use the tsconfig.json to transpile specified service-files
 - npm test
 before_install:
-- '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && openssl aes-256-cbc -K $encrypted_cb4d3d070e32_key
-  -iv $encrypted_cb4d3d070e32_iv -in auth.js.enc -out test/resources/auth.js -d ||
+- '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && openssl aes-256-cbc -K $encrypted_d4f181ef7c79_key
+  -iv $encrypted_d4f181ef7c79_iv -in auth.js.enc -out test/resources/auth.js -d ||
   true'
 - npm install -g typescript

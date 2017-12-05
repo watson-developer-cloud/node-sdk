@@ -5,6 +5,7 @@ const watson = require('../../index');
 const nock = require('nock');
 const extend = require('extend');
 const pick = require('object.pick');
+const omit = require('object.omit');
 
 describe('conversation-v1', function() {
   const noop = function() {};
@@ -46,7 +47,7 @@ describe('conversation-v1', function() {
     logs: '/v1/workspaces/' + payload.workspace_id + '/logs',
     values: '/v1/workspaces/' + payload.workspace_id + '/entities/' + payload2.entity + '/values',
     synonyms: '/v1/workspaces/' + payload.workspace_id + '/entities/' + payload2.entity + '/values/' + payload2.value + '/synonyms',
-    workspaces: '/v1/workspaces/'
+    workspaces: '/v1/workspaces'
   };
 
   before(function() {
@@ -408,42 +409,93 @@ describe('conversation-v1', function() {
   });
 
   describe('deleteExample()', function() {
+    const reqPayload = { text: 'text' , intent: payload2.intent};
+    const params = extend({}, reqPayload, payload);
+
     it('should check no parameters provided (negative test)', function() {
       conversation.deleteExample({}, missingParameter);
       conversation.deleteExample(null, missingParameter);
       conversation.deleteExample(undefined, missingParameter);
+      conversation.deleteExample(pick(params, ['workspace_id']), missingParameter);
+      conversation.deleteExample(pick(params, ['text']), missingParameter);
+      conversation.deleteExample(pick(params, ['intent']), missingParameter);
+    });
+
+    it('should generate a valid payload', function() {
+      const req = conversation.deleteExample(params, noop);
+      assert.equal(req.uri.href, service.url + paths.examples + '/' + reqPayload.text + '?version=' + service.version_date);
+      assert.equal(req.method, 'DELETE');
     });
   });
 
   describe('getExample()', function() {
+    const reqPayload = { text: 'text' , intent: payload2.intent};
+    const params = extend({}, reqPayload, payload);
+
     it('should check no parameters provided (negative test)', function() {
       conversation.getExample({}, missingParameter);
       conversation.getExample(null, missingParameter);
       conversation.getExample(undefined, missingParameter);
+      conversation.getExample(pick(params, ['workspace_id']), missingParameter);
+      conversation.getExample(pick(params, ['text']), missingParameter);
+      conversation.getExample(pick(params, ['intent']), missingParameter);
+    });
+
+    it('should generate a valid payload', function() {
+      const req = conversation.getExample(params, noop);
+      assert.equal(req.uri.href, service.url + paths.examples + '/' + reqPayload.text + '?version=' + service.version_date);
+      assert.equal(req.method, 'GET');
     });
   });
 
   describe('listExamples()', function() {
+    const reqPayload = {intent: payload2.intent};
+    const params = extend({}, reqPayload, payload);
+
     it('should check no parameters provided (negative test)', function() {
       conversation.listExamples({}, missingParameter);
       conversation.listExamples(null, missingParameter);
       conversation.listExamples(undefined, missingParameter);
     });
+
+    it('should generate a valid payload', function() {
+      const req = conversation.listExamples(params, noop);
+      assert.equal(req.uri.href, service.url + paths.examples + '?version=' + service.version_date);
+      assert.equal(req.method, 'GET');
+    });
   });
 
   describe('updateExample()', function() {
+    const reqPayload = { text: 'text' , intent: payload2.intent};
+    const params = extend({}, reqPayload, payload);
+
     it('should check no parameters provided (negative test)', function() {
       conversation.updateExample({}, missingParameter);
       conversation.updateExample(null, missingParameter);
       conversation.updateExample(undefined, missingParameter);
     });
+
+    it('should generate a valid payload', function() {
+      const req = conversation.updateExample(params, noop);
+      assert.equal(req.uri.href, service.url + paths.examples + '/' + reqPayload.text + '?version=' + service.version_date);
+      assert.equal(req.method, 'POST');
+    });
   });
+
+  const intentPayload = { intent: 'intent1'};
+  const intentParams = extend({}, intentPayload, payload);
 
   describe('createIntent()', function() {
     it('should check no parameters provided (negative test)', function() {
       conversation.createIntent({}, missingParameter);
       conversation.createIntent(null, missingParameter);
       conversation.createIntent(undefined, missingParameter);
+    });
+
+    it('should generate a valid payload', function() {
+      const req = conversation.createIntent(intentParams, noop);
+      assert.equal(req.uri.href, service.url + paths.intents + '?version=' + service.version_date);
+      assert.equal(req.method, 'POST');
     });
   });
 
@@ -453,6 +505,12 @@ describe('conversation-v1', function() {
       conversation.deleteIntent(null, missingParameter);
       conversation.deleteIntent(undefined, missingParameter);
     });
+
+    it('should generate a valid payload', function() {
+      const req = conversation.deleteIntent(intentParams, noop);
+      assert.equal(req.uri.href, service.url + paths.intents + '/' + intentParams.intent + '?version=' + service.version_date);
+      assert.equal(req.method, 'DELETE');
+    });
   });
 
   describe('getIntent()', function() {
@@ -460,6 +518,12 @@ describe('conversation-v1', function() {
       conversation.getIntent({}, missingParameter);
       conversation.getIntent(null, missingParameter);
       conversation.getIntent(undefined, missingParameter);
+    });
+
+    it('should generate a valid payload', function() {
+      const req = conversation.getIntent(intentParams, noop);
+      assert.equal(req.uri.href, service.url + paths.intents + '/' + intentParams.intent + '?version=' + service.version_date);
+      assert.equal(req.method, 'GET');
     });
   });
 
@@ -469,6 +533,12 @@ describe('conversation-v1', function() {
       conversation.listIntents(null, missingParameter);
       conversation.listIntents(undefined, missingParameter);
     });
+
+    it('should generate a valid payload', function() {
+      const req = conversation.listIntents(payload, noop);
+      assert.equal(req.uri.href, service.url + paths.intents + '?version=' + service.version_date);
+      assert.equal(req.method, 'GET');
+    });
   });
 
   describe('updateIntent()', function() {
@@ -476,6 +546,28 @@ describe('conversation-v1', function() {
       conversation.updateIntent({}, missingParameter);
       conversation.updateIntent(null, missingParameter);
       conversation.updateIntent(undefined, missingParameter);
+    });
+
+    it('should generate a valid payload', function() {
+      const req = conversation.updateIntent(intentParams, noop);
+      assert.equal(req.uri.href, service.url + paths.intents + '/' + intentParams.intent + '?version=' + service.version_date);
+      assert.equal(req.method, 'POST');
+    });
+  });
+
+  describe('listAllLogs()', function() {
+
+    const param = { filter: 'test'};
+    it('should check no parameters provided (negative test)', function() {
+      conversation.listAllLogs({}, missingParameter);
+      conversation.listAllLogs(null, missingParameter);
+      conversation.listAllLogs(undefined, missingParameter);
+    });
+
+    it('should generate a valid payload', function() {
+      const req = conversation.listAllLogs(param, noop);
+      assert.equal(req.uri.href, service.url + '/v1/logs' + '?version=' + service.version_date + '&filter=' + param.filter);
+      assert.equal(req.method, 'GET');
     });
   });
 
@@ -485,13 +577,28 @@ describe('conversation-v1', function() {
       conversation.listLogs(null, missingParameter);
       conversation.listLogs(undefined, missingParameter);
     });
+
+    it('should generate a valid payload', function() {
+      const req = conversation.listLogs(payload, noop);
+      assert.equal(req.uri.href, service.url + paths.logs + '?version=' + service.version_date);
+      assert.equal(req.method, 'GET');
+    });
   });
+
+  const synPayload = { entity: payload2.entity , value: payload2.value, synonym: 'syn'};
+  const synParams = extend({}, synPayload, payload);
 
   describe('createSynonym()', function() {
     it('should check no parameters provided (negative test)', function() {
       conversation.createSynonym({}, missingParameter);
       conversation.createSynonym(null, missingParameter);
       conversation.createSynonym(undefined, missingParameter);
+    });
+
+    it('should generate a valid payload', function() {
+      const req = conversation.createSynonym(synParams, noop);
+      assert.equal(req.uri.href, service.url + paths.synonyms + '?version=' + service.version_date);
+      assert.equal(req.method, 'POST');
     });
   });
 
@@ -501,6 +608,12 @@ describe('conversation-v1', function() {
       conversation.deleteSynonym(null, missingParameter);
       conversation.deleteSynonym(undefined, missingParameter);
     });
+
+    it('should generate a valid payload', function() {
+      const req = conversation.deleteSynonym(synParams, noop);
+      assert.equal(req.uri.href, service.url + paths.synonyms + '/' + synParams.synonym + '?version=' + service.version_date);
+      assert.equal(req.method, 'DELETE');
+    });
   });
 
   describe('getSynonym()', function() {
@@ -508,6 +621,12 @@ describe('conversation-v1', function() {
       conversation.getSynonym({}, missingParameter);
       conversation.getSynonym(null, missingParameter);
       conversation.getSynonym(undefined, missingParameter);
+    });
+
+    it('should generate a valid payload', function() {
+      const req = conversation.getSynonym(synParams, noop);
+      assert.equal(req.uri.href, service.url + paths.synonyms + '/' + synParams.synonym + '?version=' + service.version_date);
+      assert.equal(req.method, 'GET');
     });
   });
 
@@ -517,6 +636,14 @@ describe('conversation-v1', function() {
       conversation.listSynonyms(null, missingParameter);
       conversation.listSynonyms(undefined, missingParameter);
     });
+
+    it('should generate a valid payload', function() {
+      const req = conversation.listSynonyms(omit(synParams, ['synonym']), noop);
+      assert.equal(req.uri.href, service.url + paths.synonyms + '?version=' + service.version_date);
+      assert.equal(req.method, 'GET');
+    });
+
+    
   });
 
   describe('updateSynonym()', function() {
@@ -525,45 +652,96 @@ describe('conversation-v1', function() {
       conversation.updateSynonym(null, missingParameter);
       conversation.updateSynonym(undefined, missingParameter);
     });
+
+    it('should generate a valid payload', function() {
+      const req = conversation.updateSynonym(synParams, noop);
+      assert.equal(req.uri.href, service.url + paths.synonyms + '/' + synParams.synonym + '?version=' + service.version_date);
+      assert.equal(req.method, 'POST');
+    });
   });
 
   describe('createValue()', function() {
+    const reqPayload = { entity: payload2.entity , value: 'val'};
+    const params = extend({}, reqPayload, payload);
+
     it('should check no parameters provided (negative test)', function() {
       conversation.createValue({}, missingParameter);
       conversation.createValue(null, missingParameter);
       conversation.createValue(undefined, missingParameter);
     });
+
+    it('should generate a valid payload', function() {
+      const req = conversation.createValue(params, noop);
+      assert.equal(req.uri.href, service.url + paths.values + '?version=' + service.version_date);
+      assert.equal(req.method, 'POST');
+    });
   });
 
   describe('deleteValue()', function() {
+    const reqPayload = { entity: payload2.entity , value: 'val'};
+    const params = extend({}, reqPayload, payload);
+
     it('should check no parameters provided (negative test)', function() {
       conversation.deleteValue({}, missingParameter);
       conversation.deleteValue(null, missingParameter);
       conversation.deleteValue(undefined, missingParameter);
     });
+
+    it('should generate a valid payload', function() {
+      const req = conversation.deleteValue(params, noop);
+      assert.equal(req.uri.href, service.url + paths.values + '/' + reqPayload.value + '?version=' + service.version_date);
+      assert.equal(req.method, 'DELETE');
+    });
   });
 
   describe('getValue()', function() {
+    const reqPayload = { entity: payload2.entity , value: 'val'};
+    const params = extend({}, reqPayload, payload);
+
     it('should check no parameters provided (negative test)', function() {
       conversation.getValue({}, missingParameter);
       conversation.getValue(null, missingParameter);
       conversation.getValue(undefined, missingParameter);
     });
+
+    it('should generate a valid payload', function() {
+      const req = conversation.getValue(params, noop);
+      assert.equal(req.uri.href, service.url + paths.values + '/' + reqPayload.value + '?version=' + service.version_date);
+      assert.equal(req.method, 'GET');
+    });
   });
 
   describe('listValues()', function() {
+    const reqPayload = { entity: payload2.entity};
+    const params = extend({}, reqPayload, payload);
+
     it('should check no parameters provided (negative test)', function() {
       conversation.listValues({}, missingParameter);
       conversation.listValues(null, missingParameter);
       conversation.listValues(undefined, missingParameter);
     });
+
+    it('should generate a valid payload', function() {
+      const req = conversation.listValues(params, noop);
+      assert.equal(req.uri.href, service.url + paths.values + '?version=' + service.version_date);
+      assert.equal(req.method, 'GET');
+    });
   });
 
   describe('updateValue()', function() {
+    const reqPayload = { entity: payload2.entity , value: 'val'};
+    const params = extend({}, reqPayload, payload);
+
     it('should check no parameters provided (negative test)', function() {
       conversation.updateValue({}, missingParameter);
       conversation.updateValue(null, missingParameter);
       conversation.updateValue(undefined, missingParameter);
+    });
+
+    it('should generate a valid payload', function() {
+      const req = conversation.updateValue(params, noop);
+      assert.equal(req.uri.href, service.url + paths.values + '/' + reqPayload.value + '?version=' + service.version_date);
+      assert.equal(req.method, 'POST');
     });
   });
 
@@ -573,6 +751,12 @@ describe('conversation-v1', function() {
       conversation.createWorkspace(null, missingParameter);
       conversation.createWorkspace(undefined, missingParameter);
     });
+
+    it('should generate a valid payload', function() {
+      const req = conversation.createWorkspace({}, noop);
+      assert.equal(req.uri.href, service.url + paths.workspaces + '?version=' + service.version_date);
+      assert.equal(req.method, 'POST');
+    });
   });
 
   describe('deleteWorkspace()', function() {
@@ -581,6 +765,13 @@ describe('conversation-v1', function() {
       conversation.deleteWorkspace(null, missingParameter);
       conversation.deleteWorkspace(undefined, missingParameter);
     });
+
+    it('should generate a valid payload', function() {
+      const req = conversation.deleteWorkspace(payload, noop);
+      assert.equal(req.uri.href, service.url + paths.workspaces + '/' + payload.workspace_id + '?version=' + service.version_date);
+      assert.equal(req.method, 'DELETE');
+    });
+    
   });
 
   describe('getWorkspace()', function() {
@@ -588,6 +779,12 @@ describe('conversation-v1', function() {
       conversation.getWorkspace({}, missingParameter);
       conversation.getWorkspace(null, missingParameter);
       conversation.getWorkspace(undefined, missingParameter);
+    });
+
+    it('should generate a valid payload', function() {
+      const req = conversation.getWorkspace(payload, noop);
+      assert.equal(req.uri.href, service.url + paths.workspaces + '/' + payload.workspace_id + '?version=' + service.version_date);
+      assert.equal(req.method, 'GET');
     });
   });
 
@@ -597,6 +794,14 @@ describe('conversation-v1', function() {
       conversation.listWorkspaces(null, missingParameter);
       conversation.listWorkspaces(undefined, missingParameter);
     });
+
+    it('should generate a valid payload', function() {
+      const req = conversation.listWorkspaces({}, noop);
+      assert.equal(req.uri.href, service.url + paths.workspaces + '?version=' + service.version_date);
+      assert.equal(req.method, 'GET');
+    });
+
+    
   });
 
   describe('updateWorkspace()', function() {
@@ -605,16 +810,14 @@ describe('conversation-v1', function() {
       conversation.updateWorkspace(null, missingParameter);
       conversation.updateWorkspace(undefined, missingParameter);
     });
+
+    it('should generate a valid payload', function() {
+      const req = conversation.updateWorkspace(payload, noop);
+      assert.equal(req.uri.href, service.url + paths.workspaces + '/' + payload.workspace_id + '?version=' + service.version_date);
+      assert.equal(req.method, 'POST');
+    });
+
+    
   });
 
-  it('should generate version_date was not specified (negative test)', function() {
-    let threw = false;
-    try {
-      watson.conversation(service1);
-    } catch (err) {
-      threw = true;
-      assert.equal(err.message, 'Argument error: version_date was not specified, use ConversationV1.VERSION_DATE_2017_05_26');
-    }
-    assert(threw, 'should throw an error');
-  });
 });

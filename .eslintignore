@@ -10,3 +10,4 @@ test/resources/auth.js
 # ignore emitted js
 **/*v*.js
 lib/*.js
+dialog/v1.js

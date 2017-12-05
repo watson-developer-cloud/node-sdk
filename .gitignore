@@ -15,12 +15,10 @@ dist/
 .eslintcache
 examples/speech_to_text_microphone_input/*.wav
 examples/speech_to_text_microphone_input/*.txt
+lib/*.js
 conversation/*.js
 discovery/*.js
 language-translator/*.js
-lib/helper.js
-lib/base_service.js
-lib/requestwrapper.js
 natural-language-classifier/*.js
 natural-language-understanding/*.js
 personality-insights/*.js
@@ -28,3 +26,8 @@ tone-analyzer/*.js
 visual-recognition/*.js
 text-to-speech/*.js
 speech-to-text/*.js
+authorization/*.js
+index.js
+.nyc_output
+**/*.d.ts
+**/*.js.map

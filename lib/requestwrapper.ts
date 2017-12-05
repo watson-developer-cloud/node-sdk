@@ -23,11 +23,8 @@ import {
   isEmptyObject
 } from './helper';
 import { PassThrough as readableStream } from 'stream';
-import { readFileSync } from 'fs';
-import { join } from 'path';
 
-const pkgPath = join(__dirname, '../package.json');
-const pkg = JSON.parse(readFileSync(pkgPath).toString('utf-8'));
+const pkg = require('../package.json');
 const isBrowser = typeof window === 'object';
 
 /**
@@ -52,7 +49,7 @@ function parsePath(path: string, params: Object): string {
  * @private
  * @returns {request.RequestCallback}
  */
-function formatErrorIfExists(cb: Function): request.RequestCallback {
+export function formatErrorIfExists(cb: Function): request.RequestCallback {
   return function(error, response, body) {
     // eslint-disable-line complexity
 

@@ -23,12 +23,12 @@ import bufferFrom = require('buffer-from');
 import { stripTrailingSlash } from './helper';
 
 // custom interfaces
-interface HeaderOptions {
+export interface HeaderOptions {
   'X-Watson-Learning-Opt-Out'?: boolean;
   [key: string]: any;
 }
 
-interface UserOptions {
+export interface UserOptions {
   url?: string;
   version_date?: string;
   username?: string;
@@ -40,14 +40,14 @@ interface UserOptions {
   token?: string;
 }
 
-interface BaseServiceOptions extends UserOptions {
+export interface BaseServiceOptions extends UserOptions {
   headers: HeaderOptions;
   url: string;
   jar?: request.CookieJar;
   qs: any;
 }
 
-interface Credentials {
+export interface Credentials {
   username: string;
   password: string;
   api_key: string;

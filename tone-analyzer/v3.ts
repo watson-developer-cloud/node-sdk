@@ -19,7 +19,6 @@ import extend = require('extend');
 import { getMissingParams } from '../lib/helper';
 
 class ToneAnalyzerV3 extends GeneratedToneAnalyzerV3 {
-
   constructor(options) {
     super(options);
   }
@@ -35,7 +34,7 @@ class ToneAnalyzerV3 extends GeneratedToneAnalyzerV3 {
     let _params: GeneratedToneAnalyzerV3.ToneParams = {
       tone_input: params.text,
       content_type: params.isHTML ? 'text/html' : 'text/plain'
-    }
+    };
 
     if (params.tones) _params.tones = params.tones.split(',');
     if (params.sentences) _params.sentences = params.sentences;
@@ -54,7 +53,7 @@ class ToneAnalyzerV3 extends GeneratedToneAnalyzerV3 {
 
     let _params: GeneratedToneAnalyzerV3.ToneChatParams = {
       utterances: params.utterances
-    }
+    };
 
     return super.toneChat(_params, callback);
   }

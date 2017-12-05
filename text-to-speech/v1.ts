@@ -6,7 +6,23 @@ class TextToSpeechV1 extends GeneratedTextToSpeechV1 {
   }
 
   getCustomizations(params, callback) {
-    return super.listCustomizations(params, callback);
+    return super.listVoiceModels(params, callback);
+  }
+
+  getCustomization(params, callback) {
+    return super.getVoiceModel(params, callback);
+  }
+
+  updateCustomization(params, callback) {
+    return super.updateVoiceModel(params, callback);
+  }
+
+  deleteCustomization(params, callback) {
+    return super.deleteVoiceModel(params, callback);
+  }
+
+  createCustomization(params, callback) {
+    return super.createVoiceModel(params, callback);
   }
 
   getWords(params, callback) {
@@ -19,6 +35,10 @@ class TextToSpeechV1 extends GeneratedTextToSpeechV1 {
 
   voice(params, callback) {
     return super.getVoice(params, callback);
+  }
+
+  pronunciation(params, callback) {
+    return super.getPronunciation(params, callback);
   }
 
   /**

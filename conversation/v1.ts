@@ -20,6 +20,16 @@ import { getMissingParams } from '../lib/helper';
 import { createRequest } from '../lib/requestwrapper';
 
 class ConversationV1 extends GeneratedConversationV1 {
+  static VERSION_DATE_2017_05_26: string = '2017-05-26';
+
+  static VERSION_DATE_2017_04_21: string = '2017-04-21';
+
+  static VERSION_DATE_2017_02_03: string = '2017-02-03';
+
+  static VERSION_DATE_2016_09_20: string = '2016-09-20';
+
+  static VERSION_DATE_2016_07_11: string = '2016-07-11';
+
   constructor(options) {
     super(options);
   }
@@ -211,7 +221,7 @@ class ConversationV1 extends GeneratedConversationV1 {
   }
 
   updateSynonym(params, callback) {
-    if (params && params.new_synonym) {
+    if (params && (params.new_synonym || !params.old_synonym)) {
       return super.updateSynonym(params, callback);
     }
 

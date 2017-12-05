@@ -145,14 +145,6 @@ describe('speech_to_text_integration', function() {
         .on('end', done);
     });
 
-    it('exposes Transaction ID in node.js', () => {
-      const recognizeStream = speech_to_text.createRecognizeStream();
-      return fs
-        .createReadStream(path.join(__dirname, '../resources/weather.ogg'))
-        .pipe(recognizeStream)
-        .getTransactionId()
-        .then(id => assert(id));
-    });
   });
 
   describe('customization', function() {

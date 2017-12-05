@@ -2,6 +2,7 @@
 
 const assert = require('assert');
 const watson = require('../../index');
+const sinon = require('sinon');
 const nock = require('nock');
 const fs = require('fs');
 const omit = require('object.omit');
@@ -31,6 +32,7 @@ describe('visual_recognition', function() {
   };
 
   const classify_path = '/v3/classify?' + api_key_qs + '&' + version_qs;
+  const detect_faces_path = '/v3/detect_faces?' + api_key_qs + '&' + version_qs;
   const classifiers_path = '/v3/classifiers?' + api_key_qs + '&' + version_qs;
   const foo_classifiers_path = '/v3/classifiers/foo?' + api_key_qs + '&' + version_qs;
   const mock_classify = {
@@ -228,7 +230,7 @@ describe('visual_recognition', function() {
     });
 
     it('should generate a valid payload with streams', function() {
-      const params = { images_file: fake_file };
+      const params = { image_file: fake_file };
       const req = visual_recognition.classify(params, noop);
       assert.equal(req.uri.href, service.url + classify_path);
       assert.equal(req.method, 'POST');
@@ -243,7 +245,7 @@ describe('visual_recognition', function() {
     });
 
     it('should generate a valid paylod with buffers', function() {
-      const params = { images_file : fake_buffer };
+      const params = { images_file: fake_buffer, parameters: {pwmers: ['me', 'IBM']} };
       const req = visual_recognition.classify(params, noop);
       assert.equal(req.uri.href, service.url + classify_path);
       assert.equal(req.method, 'POST');
@@ -281,7 +283,69 @@ describe('visual_recognition', function() {
       const req = visual_recognition.classify(params, noop);
       assert.equal(req.method, 'POST');
       assert.equal(req.uri.pathname, URL.parse(service.url + classify_path).pathname);
-      // classifier_ids, owners, url and threshold are now encapsulated 
+      // classifier_ids, owners, url and threshold are now encapsulated
+      // in params.parameters
+      // and are uploaded as a formData object
+      assert(req.formData);
+      assert(req.formData.parameters);
+      const parameters = JSON.parse(req.formData.parameters);
+      assert.deepEqual(parameters.classifier_ids, params.classifier_ids);
+    });
+  });
+
+  describe('detectFaces()', function() {
+    it('should check no parameters provided', function() {
+      visual_recognition.detectFaces({}, missingParameter);
+      visual_recognition.detectFaces(null, missingParameter);
+      visual_recognition.detectFaces(undefined, missingParameter);
+      visual_recognition.detectFaces({ images_file: '' }, missingParameter);
+    });
+
+    it('should generate a valid payload with streams', function() {
+      const params = { image_file: fake_file };
+      const req = visual_recognition.detectFaces(params, noop);
+      assert.equal(req.uri.href, service.url + detect_faces_path);
+      assert.equal(req.method, 'POST');
+      // we always convert files to request-style objects
+      assert.equal(req.formData.images_file.value.path, fake_file.path);
+      assert.equal(req.formData.images_file.value, params.images_file);
+    });
+
+    it('should generate a valid paylod with buffers', function() {
+      const params = { images_file: fake_buffer, parameters: {pwmers: ['me', 'IBM']} };
+      const req = visual_recognition.detectFaces(params, noop);
+      assert.equal(req.uri.href, service.url + detect_faces_path);
+      assert.equal(req.method, 'POST');
+      // we always convert files to request-style objects
+      assert.equal(req.formData.images_file.options.filename, null);
+      assert.equal(req.formData.images_file.value, params.images_file);
+    });
+
+    it('should generate a valid payload with an image file', function() {
+      const params = {
+        images_file: fake_file,
+        classifier_ids: ['foo', 'bar']
+      };
+
+      const req = visual_recognition.detectFaces(params, noop);
+      assert.equal(req.uri.href, service.url + detect_faces_path);
+      assert.equal(req.method, 'POST');
+      // we always convert files to request-style objects
+      assert.equal(req.formData.images_file.value.path, fake_file.path);
+      const uploadedParameters = JSON.parse(req.formData.parameters);
+      assert.deepEqual(uploadedParameters.classifier_ids, params.classifier_ids);
+    });
+
+    it('should generate a valid payload with a url', function() {
+      const params = {
+        url: 'https://watson-test-resources.mybluemix.net/resources/obama.jpg',
+        classifier_ids: ['foo', 'bar']
+      };
+
+      const req = visual_recognition.detectFaces(params, noop);
+      assert.equal(req.method, 'POST');
+      assert.equal(req.uri.pathname, URL.parse(service.url + detect_faces_path).pathname);
+      // classifier_ids, owners, url and threshold are now encapsulated
       // in params.parameters
       // and are uploaded as a formData object
       assert(req.formData);
@@ -328,6 +392,43 @@ describe('visual_recognition', function() {
       assert.ok(req.formData.foo_positive_examples);
       assert.ok(req.formData.negative_examples);
       assert.equal(req.formData.name, params.name);
+      done();
+    });
+  });
+  describe('retrainClassifier()', function() {
+    it('should call updateClassifier()', function() {
+      visual_recognition.retrainClassifier({}, missingParameter);
+    })
+  });
+
+  describe('updateClassifier()', function() {
+    it('should check no/insufficient parameters provided', function() {
+      visual_recognition.updateClassifier({}, missingParameter);
+      visual_recognition.updateClassifier(null, missingParameter);
+      visual_recognition.updateClassifier(undefined, missingParameter);
+      visual_recognition.updateClassifier({ positive_examples: '', name: 'foo' }, missingParameter);
+      visual_recognition.updateClassifier({ foo_positive_examples: '', name: 'foo' }, missingParameter);
+      visual_recognition.updateClassifier({ positive_examples: '', negative_examples: '', name: 'foo' }, missingParameter); // positive examples must include a tag
+      visual_recognition.updateClassifier({ foo_positive_examples: '', negative_examples: '' }, missingParameter); // missing name
+    });
+
+    it('should generate a valid payload with streams', function(done) {
+      const params = {
+        foo_positive_examples: fake_file,
+        negative_examples: fake_file,
+        classifier_id: 'foo'
+      };
+
+      // todo: make this fully async
+      const req = visual_recognition.updateClassifier(params, function(err) {
+        if (err) {
+          done(err);
+        }
+      });
+      assert.equal(req.uri.href, service.url + foo_classifiers_path);
+      assert.equal(req.method, 'POST');
+      assert.ok(req.formData.foo_positive_examples);
+      assert.ok(req.formData.negative_examples);
       done();
     });
   });
@@ -410,6 +511,40 @@ describe('visual_recognition', function() {
           done();
         }
       );
+    });
+  });
+
+  describe('Print a warning for deprecated methods()', function() {
+    let spy;
+    beforeEach(function() {
+      spy = sinon.stub(console, 'warn');
+    });
+    afterEach(function() {
+      spy.restore();
+    });
+    after(function() {
+      spy.restore();
+    });
+
+    const deprecatedMethods = [
+      'recognizeText',
+      'createCollection',
+      'getCollection',
+      'listCollections',
+      'deleteCollection',
+      'addImage',
+      'listImages',
+      'getImage',
+      'deleteImage',
+      'setImageData',
+      'getImageData',
+      'deleteImageData',
+      'findSimilar'
+    ].forEach(function(method) {
+      it(`${method} should print a warning message`, function() {
+        visual_recognition[method]({}, noop);
+        assert(spy.calledOnce);
+      });
     });
   });
 });
