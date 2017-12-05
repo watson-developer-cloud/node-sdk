@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const nock = require('nock');
+const assert = require('assert');
 const watson = require('../../index');
 const path = require('path');
 const authHelper = require('./auth_helper.js');
@@ -29,6 +30,17 @@ describe('tone_analyzer_integration', function() {
   it('tone()', function(done) {
     const mobydick = fs.readFileSync(path.join(__dirname, '../resources/mobydick.txt'), 'utf8');
     tone_analyzer.tone({ tone_input: mobydick, content_type: 'text/plain' }, done);
+  });
+
+  it('failing tone()', function(done) {
+    // this is a failing test
+    const mobydick = fs.readFileSync(path.join(__dirname, '../resources/mobydick.txt'), 'utf8');
+    tone_analyzer.tone({ tone_input: mobydick, content_type: 'invalid content type' }, (err, res) => {
+      assert(err);
+      assert(err['x-global-transaction-id']);
+      assert(typeof err['x-global-transaction-id'] === 'string');
+    });
+    done();
   });
 
   it('toneChat()', function(done) {
