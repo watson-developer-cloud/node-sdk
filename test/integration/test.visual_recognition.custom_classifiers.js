@@ -46,7 +46,9 @@ describe('visual_recognition_integration_custom_classifiers', function() {
           function(cls, next) {
             // eslint-disable-next-line no-console
             console.log('Deleting old classifier before running tests', cls);
-            visual_recognition.deleteClassifier({ classifier_id: cls.classifier_id }, function(err) {
+            visual_recognition.deleteClassifier({ classifier_id: cls.classifier_id }, function(
+              err
+            ) {
               if (err) {
                 // eslint-disable-next-line no-console
                 console.error('error deleting classifier:', err, cls);
@@ -75,7 +77,9 @@ describe('visual_recognition_integration_custom_classifiers', function() {
       visual_recognition.createClassifier(
         {
           name: 'light_dark_test_temporary',
-          light_positive_examples: fs.createReadStream(path.join(__dirname, '../resources/light.zip')),
+          light_positive_examples: fs.createReadStream(
+            path.join(__dirname, '../resources/light.zip')
+          ),
           dark_positive_examples: fs.createReadStream(path.join(__dirname, '../resources/dark.zip'))
         },
         function(err, response) {
@@ -178,7 +182,13 @@ describe('visual_recognition_integration_custom_classifiers', function() {
         }
         if (response.status !== 'ready') {
           logit(JSON.stringify(response));
-          logit('Classifier ' + classifier_id + ' status is "' + response.status + '".  Waiting 10 seconds.');
+          logit(
+            'Classifier ' +
+              classifier_id +
+              ' status is "' +
+              response.status +
+              '".  Waiting 10 seconds.'
+          );
           setTimeout(test_training_status, 10 * 1000, resolve, reject); // wait 10 seconds and try again
         } else {
           logit('Classifier ' + classifier_id + ' is ready.');
@@ -195,7 +205,9 @@ describe('visual_recognition_integration_custom_classifiers', function() {
       return new Promise(function(resolve, reject) {
         logit('Classifing with classifier_id = ' + classifier_id);
         const params = {
-          images_file: fs.createReadStream(__dirname + '/../resources/183px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg'),
+          images_file: fs.createReadStream(
+            __dirname + '/../resources/183px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg'
+          ),
           classifier_ids: [classifier_id],
           threshold: '0.0'
         };
@@ -206,12 +218,20 @@ describe('visual_recognition_integration_custom_classifiers', function() {
           }
           logit(JSON.stringify(result, null, 2));
           assert.equal(result.images_processed, 1);
-          assert.equal(result.images[0].image, '183px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg');
+          assert.equal(
+            result.images[0].image,
+            '183px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg'
+          );
           assert.equal(result.images[0].classifiers.length, 1);
           assert.equal(result.images[0].classifiers[0].classifier_id, classifier_id);
           assert(
             result.images[0].classifiers[0].classes.every(function(cl) {
-              if (cl.class === 'beach' || cl.class === 'water' || cl.class === 'still' || cl.class === 'forest') {
+              if (
+                cl.class === 'beach' ||
+                cl.class === 'water' ||
+                cl.class === 'still' ||
+                cl.class === 'forest'
+              ) {
                 return true;
               } else {
                 logit('Rogue class ' + cl.class + ' found.');
@@ -228,7 +248,9 @@ describe('visual_recognition_integration_custom_classifiers', function() {
       return new Promise(function(resolve, reject) {
         logit('Classifing with classifier_id = ' + classifier_id);
         const params = {
-          images_file: fs.createReadStream(__dirname + '/../resources/183px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg'),
+          images_file: fs.createReadStream(
+            __dirname + '/../resources/183px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg'
+          ),
           classifier_ids: [classifier_id],
           threshold: '0.9'
         };
@@ -239,7 +261,10 @@ describe('visual_recognition_integration_custom_classifiers', function() {
           }
           logit(JSON.stringify(result, null, 2));
           assert.equal(result.images_processed, 1);
-          assert.equal(result.images[0].image, '183px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg');
+          assert.equal(
+            result.images[0].image,
+            '183px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg'
+          );
           assert.equal(result.images[0].classifiers.length, 0);
           assert(result.custom_classes > 0);
           resolve();

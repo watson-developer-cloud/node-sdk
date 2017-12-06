@@ -41,12 +41,21 @@ describe('getMissingParams', function() {
     assert.strictEqual(getMissingParams({ a: 'a', b: 'b', c: 'c' }, ['b', 'c']), null);
   });
   it('should throw an error if there are missing parameters', function() {
-    assert.strictEqual(getMissingParams({ a: 'a' }, ['a', 'b']).message, 'Missing required parameters: b');
+    assert.strictEqual(
+      getMissingParams({ a: 'a' }, ['a', 'b']).message,
+      'Missing required parameters: b'
+    );
   });
   it('should throw an error if params is null and there are missing parameters', function() {
-    assert.strictEqual(getMissingParams(null, ['a', 'b']).message, 'Missing required parameters: a, b');
+    assert.strictEqual(
+      getMissingParams(null, ['a', 'b']).message,
+      'Missing required parameters: a, b'
+    );
   });
   it('should throw an error if params is undefined and there are missing parameters', function() {
-    assert.strictEqual(getMissingParams(undefined, ['a', 'b']).message, 'Missing required parameters: a, b');
+    assert.strictEqual(
+      getMissingParams(undefined, ['a', 'b']).message,
+      'Missing required parameters: a, b'
+    );
   });
 });

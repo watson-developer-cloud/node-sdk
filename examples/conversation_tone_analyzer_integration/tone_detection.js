@@ -48,18 +48,13 @@ module.exports = {
  */
 function invokeToneAsync(conversationPayload, tone_analyzer) {
   return new Promise(function(resolve, reject) {
-    tone_analyzer.tone(
-      {
-        text: conversationPayload.input.text
-      },
-      (error, data) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(data);
-        }
+    tone_analyzer.tone({ text: conversationPayload.input.text }, function(error, data) {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(data);
       }
-    );
+    });
   });
 }
 

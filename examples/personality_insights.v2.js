@@ -1,9 +1,9 @@
 'use strict';
 
-const PersonalityInsightsV2 = require('watson-developer-cloud/personality-insights/v2');
-const fs = require('fs');
+var PersonalityInsightsV2 = require('watson-developer-cloud/personality-insights/v2');
+var fs = require('fs');
 
-const personality_insights = new PersonalityInsightsV2({
+var personality_insights = new PersonalityInsightsV2({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
   password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE'
 });

@@ -25,12 +25,14 @@ executedModules:
     root: ''
 
 ignoreErrors:
-  shouldBeDependency: []
+  shouldBeDependency: ['lint-staged']
   shouldBeDevDependency: []
   unused:
    - karma-*
    - eslint-*
    - shebang-loader # webpack
+   - types*
+   - husky
 
 requiredModules:
   files:

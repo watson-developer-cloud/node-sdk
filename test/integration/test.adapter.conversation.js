@@ -294,23 +294,6 @@ describe('conversation_integration', function() {
     });
   });
 
-  describe('workspaceStatus()', function() {
-    it('should get the workspace status', function(done) {
-      const params = {
-        workspace_id: workspace1.workspace_id
-      };
-
-      conversation.workspaceStatus(params, function(err, result) {
-        if (err) {
-          return done(err);
-        }
-        assert.equal(result.workspace_id, workspace1.workspace_id);
-        assert.equal(result.training, true);
-        done();
-      });
-    });
-  });
-
   describe('createIntent()', function() {
     it('should create an intent', function(done) {
       const params = {
@@ -997,7 +980,11 @@ describe('conversation_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.dialog_node, test_dialog_node, 'dialog_node field has unexpected value');
+        assert.equal(
+          result.dialog_node,
+          test_dialog_node,
+          'dialog_node field has unexpected value'
+        );
         assert.equal(result.conditions, 'true', 'conditions field has unexpected value');
         assert.equal(result.description, null, 'description field is not null');
         assert.notEqual(result.created, null, 'created field is null');

@@ -1,8 +1,8 @@
 'use strict';
 
-const DialogV1 = require('watson-developer-cloud/dialog/v1');
+var DialogV1 = require('watson-developer-cloud/dialog/v1');
 
-const dialog = new DialogV1({
+var dialog = new DialogV1({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
   password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE'
 });

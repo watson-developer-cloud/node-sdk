@@ -42,17 +42,27 @@ const nullDataClassifier = { text: null, classifier_id: null };
 const goodClassifier = { classifier_id: 'good' };
 const goodData = { text: 'good' };
 const goodDataWithClassifierId = { text: 'good', classifier_id: 'good' };
-const noTrainingData = { metadata: JSON.stringify({ language: 'en', name: 'foo' }) };
+const noTrainingData = {
+  metadata: JSON.stringify({ language: 'en', name: 'foo' })
+};
 
 // training requests
 // training with a string variable (CSV)
 const createWithString = { training_data: 'foo' };
 // training with a stream variable (CSV)
-const createWithStream = { training_data: fs.createReadStream(__dirname + '/../resources/weather_data_train.csv') };
+const createWithStream = {
+  training_data: fs.createReadStream(__dirname + '/../resources/weather_data_train.csv')
+};
 // training with a buffer variable (CSV)
-const createWithBuffer = { training_data: fs.readFileSync(__dirname + '/../resources/weather_data_train.csv') };
+const createWithBuffer = {
+  training_data: fs.readFileSync(__dirname + '/../resources/weather_data_train.csv')
+};
 // training with a form-data object
-const createWithObject = { training_data: { value: fs.readFileSync(__dirname + '/../resources/weather_data_train.csv') } };
+const createWithObject = {
+  training_data: {
+    value: fs.readFileSync(__dirname + '/../resources/weather_data_train.csv')
+  }
+};
 
 describe('natural_language_classifer', function() {
   it('should fail if no parameters are provided for create, classify, status and delete requests', function() {
@@ -127,10 +137,22 @@ describe('natural_language_classifer', function() {
     natural_language_classifier.listClassifiers(null, goodRequest);
     natural_language_classifier.listClassifiers(undefined, goodRequest);
     // create classifier
-    natural_language_classifier.createClassifier(extend(createWithBuffer, noTrainingData), goodRequest);
-    natural_language_classifier.createClassifier(extend(createWithObject, noTrainingData), goodRequest);
-    natural_language_classifier.createClassifier(extend(createWithStream, noTrainingData), goodRequest);
-    natural_language_classifier.createClassifier(extend(createWithString, noTrainingData), goodRequest);
+    natural_language_classifier.createClassifier(
+      extend(createWithBuffer, noTrainingData),
+      goodRequest
+    );
+    natural_language_classifier.createClassifier(
+      extend(createWithObject, noTrainingData),
+      goodRequest
+    );
+    natural_language_classifier.createClassifier(
+      extend(createWithStream, noTrainingData),
+      goodRequest
+    );
+    natural_language_classifier.createClassifier(
+      extend(createWithString, noTrainingData),
+      goodRequest
+    );
     natural_language_classifier.classify(goodDataWithClassifierId, goodRequest);
   });
 

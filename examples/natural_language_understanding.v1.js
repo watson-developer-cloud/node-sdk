@@ -4,7 +4,7 @@ var fs = require('fs');
 var NaturalLanguageUnderstandingV1 = require('watson-developer-cloud/natural-language-understanding/v1.js');
 require('dotenv').config({ silent: true }); //  optional
 
-const nlu = new NaturalLanguageUnderstandingV1({
+var nlu = new NaturalLanguageUnderstandingV1({
   // note: if unspecified here, credentials are pulled from environment properties:
   // NATURAL_LANGUAGE_UNDERSTANDING_USERNAME &  NATURAL_LANGUAGE_UNDERSTANDING_PASSWORD
   // username: '<username>'.
@@ -17,7 +17,7 @@ fs.readFile(filename, 'utf-8', function(file_error, file_data) {
   if (file_error) {
     console.log(file_error);
   } else {
-    const options = {
+    var options = {
       html: file_data,
       features: {
         concepts: {},

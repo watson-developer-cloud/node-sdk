@@ -3,12 +3,11 @@
 const assert = require('assert');
 const watson = require('../../index');
 const nock = require('nock');
-const extend = require('extend');
 
 describe('personality_insights_v3', function() {
   const noop = function() {};
 
-  const text = 'IBM Watson Developer Cloud'
+  const text = 'IBM Watson Developer Cloud';
   const content_items = [
     {
       userid: 'dummy',
@@ -18,7 +17,7 @@ describe('personality_insights_v3', function() {
       language: 'en',
       content: text
     }
-  ]
+  ];
 
   const service_response = {
     tree: {}
@@ -84,7 +83,10 @@ describe('personality_insights_v3', function() {
   });
 
   it('should generate a valid payload with html', function() {
-    const params = { content: '<div>' + text + '</div>', content_type: 'text/html' };
+    const params = {
+      content: '<div>' + text + '</div>',
+      content_type: 'text/html'
+    };
     const req = personality_insights.profile(params, noop);
     const body = Buffer.from(req.body).toString('ascii');
     assert.equal(req.uri.href, service.url + service_path + '?version=2016-10-19');
@@ -106,7 +108,8 @@ describe('personality_insights_v3', function() {
 
     const req = personality_insights.profile(params, noop);
     const body = Buffer.from(req.body).toString('ascii');
-    const query_string = '?version=2016-10-19&raw_scores=true&csv_headers=false&consumption_preferences=true';
+    const query_string =
+      '?version=2016-10-19&raw_scores=true&csv_headers=false&consumption_preferences=true';
     assert.equal(req.uri.href, service.url + service_path + query_string);
     assert.equal(body, JSON.stringify(params.content));
     assert.equal(req.method, 'POST');
@@ -125,7 +128,11 @@ describe('personality_insights_v3', function() {
   });
 
   it('should generate a valid csv request with csv headers', function() {
-    const params = { content: content_items, content_type: 'application/json', csv_headers: true };
+    const params = {
+      content: content_items,
+      content_type: 'application/json',
+      csv_headers: true
+    };
     const req = personality_insights.profile_csv(params, noop);
     const body = Buffer.from(req.body).toString('ascii');
     assert.equal(req.uri.href, service.url + service_path + '?version=2016-10-19&csv_headers=true');

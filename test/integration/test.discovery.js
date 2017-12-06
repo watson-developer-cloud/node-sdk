@@ -90,7 +90,10 @@ describe.skip('discovery_integration', function() {
       {
         environment_id: environment_id,
         name: 'node-sdk-test-' + Date.now(),
-        description: 'Test collection created by the Node.js SDK integration tests on ' + new Date() + '. Should be deleted shortly',
+        description:
+          'Test collection created by the Node.js SDK integration tests on ' +
+          new Date() +
+          '. Should be deleted shortly',
         configuration_id: configuration_id,
         language_code: 'en_us'
       },
