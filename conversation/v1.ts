@@ -203,7 +203,7 @@ class ConversationV1 extends GeneratedConversationV1 {
   }
 
   updateSynonym(params, callback) {
-    if (params && (params.new_synonym || !params.old_synonym)) {
+    if (params && params.new_synonym) {
       return super.updateSynonym(params, callback);
     }
 
