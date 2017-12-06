@@ -26,6 +26,7 @@ import { PassThrough as readableStream } from 'stream';
 
 const pkg = require('../package.json');
 const isBrowser = typeof window === 'object';
+const globalTransactionId = 'x-global-transaction-id';
 
 /**
  * @private
@@ -61,6 +62,9 @@ export function formatErrorIfExists(cb: Function): request.RequestCallback {
         error = new Error(error.message || error.error || error);
         error.body = body;
       }
+      if (response && response.headers) {
+        error[globalTransactionId] = response.headers[globalTransactionId];
+      }
       cb(error, body, response);
       return;
     }
@@ -74,13 +78,14 @@ export function formatErrorIfExists(cb: Function): request.RequestCallback {
 
     // for api-key services
     if (response.statusMessage === 'invalid-api-key') {
-      cb(
-        {
-          error: response.statusMessage,
-          code: response.statusMessage === 'invalid-api-key' ? 401 : 400
-        },
-        null
-      );
+      const error = {
+        error: response.statusMessage,
+        code: response.statusMessage === 'invalid-api-key' ? 401 : 400
+      };
+      if (response.headers) {
+        error[globalTransactionId] = response.headers[globalTransactionId];
+      }
+      cb(error, null);
       return;
     }
 
@@ -124,6 +129,9 @@ export function formatErrorIfExists(cb: Function): request.RequestCallback {
           'Unauthorized: Access is denied due to invalid credentials.';
       }
       body = null;
+    }
+    if (error && response && response.headers) {
+      error[globalTransactionId] = response.headers[globalTransactionId];
     }
     cb(error, body, response);
     return;
