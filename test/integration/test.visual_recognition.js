@@ -140,47 +140,4 @@ describe('visual_recognition_integration', function() {
       });
     });
   });
-
-  // this endpoint is flakey
-  // describe.skip('recognizeText()', function() {
-  //   it('read text in an uploaded image', function(done) {
-  //     const params = {
-  //       images_file: fs.createReadStream(__dirname + '/../resources/car.png')
-  //     };
-  //     visual_recognition.recognizeText(params, function(err, result) {
-  //       if (err) {
-  //         return done(err);
-  //       }
-
-  //       // console.log(JSON.stringify(actual, null, 2));
-
-  //       assert.equal(result.images_processed, 1);
-  //       assert.equal(result.images[0].image, 'car.png');
-  //       assert(result.images[0].text);
-  //       assert(result.images[0].words.length);
-
-  //       done();
-  //     });
-  //   });
-
-  //   it('read text an image via url', function(done) {
-  //     const params = {
-  //       url: 'https://watson-test-resources.mybluemix.net/resources/car.png'
-  //     };
-  //     visual_recognition.recognizeText(params, function(err, result) {
-  //       if (err) {
-  //         return done(err);
-  //       }
-  //       // console.log(JSON.stringify(result, null, 2));
-
-  //       assert.equal(result.images_processed, 1);
-  //       assert.equal(result.images[0].resolved_url, 'https://watson-test-resources.mybluemix.net/resources/car.png');
-  //       assert.equal(result.images[0].source_url, 'https://watson-test-resources.mybluemix.net/resources/car.png');
-  //       assert(result.images[0].text);
-  //       assert(result.images[0].words.length);
-
-  //       done();
-  //     });
-  //   });
-  // });
 }); // vr
