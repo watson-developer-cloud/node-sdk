@@ -13,9 +13,7 @@ var discovery = new DiscoveryV1({
   version_date: DiscoveryV1.VERSION_DATE_2017_04_27
 });
 
-discovery.getEnvironments({}, function(error, data) {
-  console.log(JSON.stringify(data, null, 2));
-});
+discovery.getEnvironments({}, function(error, data) {console.log(JSON.stringify(data, null, 2                      ));});
 
 // var file = fs.readFileSync('../test/resources/sampleHtml.html');
 var file = fs.createReadStream('../test/resources/sampleWord.docx');
