@@ -65,6 +65,7 @@
     "nyc": "^11.4.0",
     "object.assign": "^4.0.4",
     "prettier": "^1.8.2",
+    "prettier-eslint-cli": "^4.4.2",
     "sinon": "^4.1.2",
     "typescript": "^2.6.2",
     "uglify-es": "^3.2.0",

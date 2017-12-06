@@ -86,8 +86,14 @@ describe('visual_recognition_integration', function() {
         }
         // console.log(JSON.stringify(result, null, 2));
         assert.equal(result.images_processed, 1);
-        assert.equal(result.images[0].resolved_url, 'https://watson-test-resources.mybluemix.net/resources/car.png');
-        assert.equal(result.images[0].source_url, 'https://watson-test-resources.mybluemix.net/resources/car.png');
+        assert.equal(
+          result.images[0].resolved_url,
+          'https://watson-test-resources.mybluemix.net/resources/car.png'
+        );
+        assert.equal(
+          result.images[0].source_url,
+          'https://watson-test-resources.mybluemix.net/resources/car.png'
+        );
         assert(result.images[0].classifiers.length);
         assert(
           result.images[0].classifiers[0].classes.some(function(c) {
@@ -130,8 +136,14 @@ describe('visual_recognition_integration', function() {
         }
         // console.log(JSON.stringify(result, null, 2));
         assert.equal(result.images_processed, 1);
-        assert.equal(result.images[0].resolved_url, 'https://watson-test-resources.mybluemix.net/resources/obama.jpg');
-        assert.equal(result.images[0].source_url, 'https://watson-test-resources.mybluemix.net/resources/obama.jpg');
+        assert.equal(
+          result.images[0].resolved_url,
+          'https://watson-test-resources.mybluemix.net/resources/obama.jpg'
+        );
+        assert.equal(
+          result.images[0].source_url,
+          'https://watson-test-resources.mybluemix.net/resources/obama.jpg'
+        );
         assert.equal(result.images[0].faces.length, 1, 'There should be exactly one face detected'); // note: the api was sometimes failing to detect any faces right after the release
         const face = result.images[0].faces[0];
         assert.equal(face.gender.gender, 'MALE');

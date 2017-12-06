@@ -1,16 +1,16 @@
-"use strict";
+'use strict';
 
-const assert = require("assert");
-const watson = require("../../index");
-const nock = require("nock");
-const fs = require("fs");
-const extend = require("extend");
+const assert = require('assert');
+const watson = require('../../index');
+const nock = require('nock');
+const fs = require('fs');
+const extend = require('extend');
 
 const service = {
-  username: "foo",
-  password: "bar",
-  url: "http://ibm.com:80",
-  version: "v1"
+  username: 'foo',
+  password: 'bar',
+  url: 'http://ibm.com:80',
+  version: 'v1'
 };
 
 before(function() {
@@ -28,7 +28,7 @@ const missingParameter = function(err) {
 };
 
 const goodRequest = function(err) {
-  const check = err.message.indexOf("Missing required") > -1;
+  const check = err.message.indexOf('Missing required') > -1;
   assert.strictEqual(false, check);
 };
 
@@ -40,25 +40,25 @@ const invalidParameter = function(err) {
   assert.ok(err instanceof Error && /training_data needs to be/.test(err.message));
 };
 
-const emptyData = { text: "" };
+const emptyData = { text: '' };
 const nullData = { text: null };
-const emptyClassifier = { classifier: "" };
+const emptyClassifier = { classifier: '' };
 const nullClassifier = { classifier: null };
 const undefinedClassifier = { classifier: undefined };
-const emptyDataClassifier = { text: "", classifer: "" };
+const emptyDataClassifier = { text: '', classifer: '' };
 const nullDataClassifier = { text: null, classifer: null };
-const goodData = { text: "good", classifier: "good" };
-const goodDataWithClassifierId = { text: "good", classifier_id: "good" };
-const noTrainingData = { language: "en", name: "foo" };
+const goodData = { text: 'good', classifier: 'good' };
+const goodDataWithClassifierId = { text: 'good', classifier_id: 'good' };
+const noTrainingData = { language: 'en', name: 'foo' };
 
 // training requests
 // training with a string variable (CSV)
-const createWithString = extend({ training_data: "foo" }, noTrainingData);
+const createWithString = extend({ training_data: 'foo' }, noTrainingData);
 
 // training with a stream variable (CSV)
 const createWithStream = extend(
   {
-    training_data: fs.createReadStream(__dirname + "/../resources/weather_data_train.csv")
+    training_data: fs.createReadStream(__dirname + '/../resources/weather_data_train.csv')
   },
   noTrainingData
 );
@@ -66,13 +66,13 @@ const createWithStream = extend(
 // training with an object variable (JSON)
 const createWithJson = extend(
   {
-    training_data: [{ text: "text", classes: ["class1"] }, { text: "text2", classes: ["class2"] }]
+    training_data: [{ text: 'text', classes: ['class1'] }, { text: 'text2', classes: ['class2'] }]
   },
   noTrainingData
 );
 
-describe("natural_language_classifer", function() {
-  it("should fail if no parameters are provided for create, classify, status and delete requests", function() {
+describe('natural_language_classifer', function() {
+  it('should fail if no parameters are provided for create, classify, status and delete requests', function() {
     natural_language_classifier.classify({}, missingParameter);
     natural_language_classifier.classify(null, missingParameter);
     natural_language_classifier.classify(undefined, missingParameter);
@@ -90,7 +90,7 @@ describe("natural_language_classifer", function() {
     natural_language_classifier.remove(undefined, missingParameter);
   });
 
-  it("should fail if no classifier is provided for classify, status and delete requests", function() {
+  it('should fail if no classifier is provided for classify, status and delete requests', function() {
     natural_language_classifier.classify(emptyData, missingParameter);
     natural_language_classifier.classify(emptyClassifier, missingParameter);
     natural_language_classifier.classify(nullClassifier, missingParameter);
@@ -112,7 +112,7 @@ describe("natural_language_classifer", function() {
     natural_language_classifier.remove(nullDataClassifier, missingParameter);
   });
 
-  it("should fail if no data provided create and classify requests", function() {
+  it('should fail if no data provided create and classify requests', function() {
     natural_language_classifier.create(noTrainingData, missingParameter);
     natural_language_classifier.create(emptyClassifier, missingParameter);
     natural_language_classifier.create(nullData, missingParameter);
@@ -123,7 +123,7 @@ describe("natural_language_classifer", function() {
     natural_language_classifier.classify(emptyData, missingParameter);
   });
 
-  it("all other good requests should pass", function() {
+  it('all other good requests should pass', function() {
     natural_language_classifier.status(goodData, goodRequest);
     natural_language_classifier.remove(goodData, goodRequest);
 
@@ -140,7 +140,7 @@ describe("natural_language_classifer", function() {
     natural_language_classifier.create(createWithJson, goodRequest);
   });
 
-  it("should fail if training_data is not json, string or stream", function() {
+  it('should fail if training_data is not json, string or stream', function() {
     const params = extend({}, noTrainingData);
 
     params.training_data = null;
@@ -153,10 +153,10 @@ describe("natural_language_classifer", function() {
     natural_language_classifier.create(params, invalidParameter);
   });
 
-  it("should fail if training_data is not a valid json format", function() {
+  it('should fail if training_data is not a valid json format', function() {
     const params = extend({}, noTrainingData);
 
-    params.training_data = [{ json: "bad" }];
+    params.training_data = [{ json: 'bad' }];
     natural_language_classifier.create(params, invalidFormatParameter);
   });
 });

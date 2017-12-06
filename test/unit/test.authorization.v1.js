@@ -1,29 +1,29 @@
-"use strict";
+'use strict';
 
-const assert = require("assert");
-const watson = require("../../index");
-const nock = require("nock");
+const assert = require('assert');
+const watson = require('../../index');
+const nock = require('nock');
 
-describe("authorization", function() {
+describe('authorization', function() {
   // Test params
   const service_request = {
-    url: "http://ibm.com:80/text-to-speech-beta/api/foo/bar"
+    url: 'http://ibm.com:80/text-to-speech-beta/api/foo/bar'
   };
   const service = {
-    username: "batman",
-    password: "bruce-wayne",
+    username: 'batman',
+    password: 'bruce-wayne',
     url: service_request.url,
-    version: "v1"
+    version: 'v1'
   };
 
   // tokens are URL-encoded when recieved from the service
-  const mock_token = "token";
+  const mock_token = 'token';
 
   before(function() {
     nock.disableNetConnect();
-    nock("http://ibm.com:80")
+    nock('http://ibm.com:80')
       .persist()
-      .get("/authorization/api/v1/token")
+      .get('/authorization/api/v1/token')
       .query(function(params) {
         return params.url; // accept any querystring as long as it has a &url= parameter with some value set
       })
@@ -52,19 +52,19 @@ describe("authorization", function() {
     };
   }
 
-  describe("getToken()", function() {
-    it("should check for missing url param", function(done) {
+  describe('getToken()', function() {
+    it('should check for missing url param', function(done) {
       const params = {
         noturl: service_request.url
       };
       authorization.getToken(params, missingParameter(done));
     });
 
-    it("should generate a valid token payload", function(done) {
-      authorization.getToken({ url: "http://ibm.com/myservice/myresource" }, checkToken(done));
+    it('should generate a valid token payload', function(done) {
+      authorization.getToken({ url: 'http://ibm.com/myservice/myresource' }, checkToken(done));
     });
 
-    it("should default to url from credentials", function(done) {
+    it('should default to url from credentials', function(done) {
       authorization.getToken(checkToken(done));
     });
   });
