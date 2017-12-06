@@ -200,5 +200,153 @@ describe('text_to_speech', function() {
   });
 
 
+  describe('getCustomizations()', function() {
+    const path = '/v1/customizations';
+
+    it('should generate a valid payload', function() {
+      const req = text_to_speech.getCustomizations({}, noop);
+      assert.equal(req.uri.href, service.url + path);
+      assert.equal(req.method, 'GET');
+    });
+  });
+
+  describe('getCustomization()', function() {
+    const path = '/v1/customizations/customer_id_1';
+
+    it('should check no parameters provided', function() {
+      text_to_speech.getCustomization({}, missingParameter);
+      text_to_speech.getCustomization(null, missingParameter);
+    });
+
+    it('should generate a valid payload', function() {
+      const req = text_to_speech.getCustomization({customization_id: 'customer_id_1'}, noop);
+      assert.equal(req.uri.href, service.url + path);
+      assert.equal(req.method, 'GET');
+    });
+  });
+
+  describe('updateCustomization()', function() {
+    const path = '/v1/customizations/customer_id_1';
+
+    it('should check no parameters provided', function() {
+      text_to_speech.updateCustomization({}, missingParameter);
+      text_to_speech.updateCustomization(null, missingParameter);
+    });
+
+    it('should generate a valid payload', function() {
+      const req = text_to_speech.updateCustomization({customization_id: 'customer_id_1'}, noop);
+      assert.equal(req.uri.href, service.url + path);
+      assert.equal(req.method, 'POST');
+    });
+  });
+
+  describe('createCustomization()', function() {
+    const path = '/v1/customizations';
+
+    it('should check no parameters provided', function() {
+      text_to_speech.createCustomization({}, missingParameter);
+      text_to_speech.createCustomization(null, missingParameter);
+    });
+
+    it('should generate a valid payload', function() {
+      const req = text_to_speech.createCustomization({name: 'name1'}, noop);
+      assert.equal(req.uri.href, service.url + path);
+      assert.equal(req.method, 'POST');
+    });
+  });
+
+  describe('deleteCustomization()', function() {
+    const path = '/v1/customizations/customer_id1';
+
+    it('should check no parameters provided', function() {
+      text_to_speech.deleteCustomization({}, missingParameter);
+      text_to_speech.deleteCustomization(null, missingParameter);
+    });
+
+    it('should generate a valid payload', function() {
+      const req = text_to_speech.deleteCustomization({customization_id: 'customer_id1'}, noop);
+      assert.equal(req.uri.href, service.url + path);
+      assert.equal(req.method, 'DELETE');
+    });
+  });
+
+
+  describe('getWords()', function() {
+    const path = '/v1/customizations/customer_id_1/words';
+
+    it('should check no parameters provided', function() {
+      text_to_speech.getWords({}, missingParameter);
+      text_to_speech.getWords(null, missingParameter);
+    });
+
+    it('should generate a valid payload', function() {
+      const req = text_to_speech.getWords({customization_id: 'customer_id_1'}, noop);
+      assert.equal(req.uri.href, service.url + path);
+      assert.equal(req.method, 'GET');
+    });
+  });
+
+  describe('getWord()', function() {
+    const path = '/v1/customizations/customer_id_1/words/word1';
+
+    it('should check no parameters provided', function() {
+      text_to_speech.getWord({}, missingParameter);
+      text_to_speech.getWord(null, missingParameter);
+    });
+
+    it('should generate a valid payload', function() {
+      const req = text_to_speech.getWord({customization_id: 'customer_id_1', word: 'word1'}, noop);
+      assert.equal(req.uri.href, service.url + path);
+      assert.equal(req.method, 'GET');
+    });
+  });
+
+
+  describe('addWord()', function() {
+    const path = '/v1/customizations/customer_id_1/words/word1';
+
+    it('should check no parameters provided', function() {
+      text_to_speech.addWord({}, missingParameter);
+      text_to_speech.addWord(null, missingParameter);
+    });
+
+    it('should generate a valid payload', function() {
+      const req = text_to_speech.addWord({customization_id: 'customer_id_1', word: 'word1', translation: 'translation1'}, noop);
+      assert.equal(req.uri.href, service.url + path);
+      assert.equal(req.method, 'PUT');
+    });
+  });
+
+  describe('addWords()', function() {
+    const path = '/v1/customizations/customer_id_1/words';
+
+    it('should check no parameters provided', function() {
+      text_to_speech.addWords({}, missingParameter);
+      text_to_speech.addWords(null, missingParameter);
+    });
+
+    it('should generate a valid payload', function() {
+      const req = text_to_speech.addWords({customization_id: 'customer_id_1', words: 'words'}, noop);
+      assert.equal(req.uri.href, service.url + path);
+      assert.equal(req.method, 'POST');
+    });
+  });
+
+
+  describe('deleteWord()', function() {
+    const path = '/v1/customizations/customer_id_1/words/word1';
+
+    it('should check no parameters provided', function() {
+      text_to_speech.deleteWord({}, missingParameter);
+      text_to_speech.deleteWord(null, missingParameter);
+    });
+
+    it('should generate a valid payload', function() {
+      const req = text_to_speech.deleteWord({customization_id: 'customer_id_1', word: 'word1'}, noop);
+      assert.equal(req.uri.href, service.url + path);
+      assert.equal(req.method, 'DELETE');
+    });
+  });
+
   
 });

@@ -605,5 +605,218 @@ describe('speech_to_text', function() {
     });
   });
 
+  describe('createCustomization()', function() {
+    const path = '/v1/customizations';
+
+    it('should check no parameters provided', function() {
+      speech_to_text.createCustomization({}, missingParameter);
+      speech_to_text.createCustomization(null, missingParameter);
+      speech_to_text.createLanguageModel({name: 'name', base_model_name: 'base_name' }, missingParameter)
+    });
+
+    it('should generate a valid payload', function() {
+      const req = speech_to_text.createCustomization({name: 'name', base_model_name: 'base_name' }, noop);
+      assert.equal(req.uri.href, service.url + path);
+      assert.equal(req.method, 'POST');
+    });
+  });
+
+  describe('addCorpus()', function() {
+    const path = '/v1/customizations/customer_id_1/corpora/corpus_name_1';
+
+    it('should check no parameters provided', function() {
+      speech_to_text.addCorpus({}, missingParameter);
+      speech_to_text.addCorpus(null, missingParameter);
+      speech_to_text.addCorpus({customization_id: 'customer_id_1', corpus_name: 'corpus_name_1' }, missingParameter)
+    });
+
+    it('should generate a valid payload', function() {
+      const req = speech_to_text.addCorpus({customization_id: 'customer_id_1', corpus_name: 'corpus_name_1', corpus_file: 'file_1'}, noop);
+      assert.equal(req.uri.href, service.url + path);
+      assert.equal(req.method, 'POST');
+
+      const req2 = speech_to_text.addCorpus({customization_id: 'customer_id_1', name: 'corpus_name_1', corpus: 'file_1'}, noop);
+      assert.equal(req2.uri.href, service.url + path);
+      assert.equal(req2.method, 'POST');
+    });
+  });
+
+  describe('getCorpus()', function() {
+    const path = '/v1/customizations/customer_id_1/corpora/corpus_name_1';
+
+
+    it('should check no parameters provided', function() {
+      speech_to_text.getCorpus({}, missingParameter);
+      speech_to_text.getCorpus(null, missingParameter);
+      speech_to_text.getCorpus({customization_id: 'customer_id_1'}, missingParameter)
+    });
+
+    it('should generate a valid payload', function() {
+      const req = speech_to_text.getCorpus({customization_id: 'customer_id_1', corpus_name: 'corpus_name_1'}, noop);
+      assert.equal(req.uri.href, service.url + path);
+      assert.equal(req.method, 'GET');
+
+      const req2 = speech_to_text.getCorpus({customization_id: 'customer_id_1', name: 'corpus_name_1'}, noop);
+      assert.equal(req2.uri.href, service.url + path);
+      assert.equal(req2.method, 'GET');
+    });
+  });
+
+  describe('deleteCorpus()', function() {
+    const path = '/v1/customizations/customer_id_1/corpora/corpus_name_1';
+
+
+    it('should check no parameters provided', function() {
+      speech_to_text.deleteCorpus({}, missingParameter);
+      speech_to_text.deleteCorpus(null, missingParameter);
+      speech_to_text.deleteCorpus({customization_id: 'customer_id_1'}, missingParameter)
+    });
+
+    it('should generate a valid payload', function() {
+      const req = speech_to_text.deleteCorpus({customization_id: 'customer_id_1', corpus_name: 'corpus_name_1'}, noop);
+      assert.equal(req.uri.href, service.url + path);
+      assert.equal(req.method, 'DELETE');
+
+      const req2 = speech_to_text.deleteCorpus({customization_id: 'customer_id_1', name: 'corpus_name_1'}, noop);
+      assert.equal(req2.uri.href, service.url + path);
+      assert.equal(req2.method, 'DELETE');
+    });
+  });
+
+  describe('getCorpora()', function() {
+    const path = '/v1/customizations/customer_id_1/corpora';
+
+
+    it('should check no parameters provided', function() {
+      speech_to_text.getCorpora({}, missingParameter);
+      speech_to_text.getCorpora(null, missingParameter);
+    });
+
+    it('should generate a valid payload', function() {
+      const req = speech_to_text.getCorpora({customization_id: 'customer_id_1'}, noop);
+      assert.equal(req.uri.href, service.url + path);
+      assert.equal(req.method, 'GET');
+    });
+  });
+
+  describe('addWords()', function() {
+    const path = '/v1/customizations/customer_id_1/words';
+
+    it('should check no parameters provided', function() {
+      speech_to_text.addWords({}, missingParameter);
+      speech_to_text.addWords(null, missingParameter);
+    });
+
+    it('should generate a valid payload', function() {
+      const req = speech_to_text.addWords({customization_id: 'customer_id_1', words: 'words'}, noop);
+      assert.equal(req.uri.href, service.url + path);
+      assert.equal(req.method, 'POST');
+    });
+  });
+
+  describe('addWord()', function() {
+    const path = '/v1/customizations/customer_id_1/words/word1';
+
+    it('should check no parameters provided', function() {
+      speech_to_text.addWord({}, missingParameter);
+      speech_to_text.addWord(null, missingParameter);
+    });
+
+    it('should generate a valid payload', function() {
+      const req = speech_to_text.addWord({customization_id: 'customer_id_1', word: 'word1'}, noop);
+      assert.equal(req.uri.href, service.url + path);
+      assert.equal(req.method, 'PUT');
+    });
+  });
+
+  describe('getWords()', function() {
+    const path = '/v1/customizations/customer_id_1/words';
+
+    it('should check no parameters provided', function() {
+      speech_to_text.getWords({}, missingParameter);
+      speech_to_text.getWords(null, missingParameter);
+    });
+
+    it('should generate a valid payload', function() {
+      const req = speech_to_text.getWords({customization_id: 'customer_id_1'}, noop);
+      assert.equal(req.uri.href, service.url + path);
+      assert.equal(req.method, 'GET');
+    });
+  });
+
+  describe('getWord()', function() {
+    const path = '/v1/customizations/customer_id_1/words/word1';
+
+    it('should check no parameters provided', function() {
+      speech_to_text.getWord({}, missingParameter);
+      speech_to_text.getWord(null, missingParameter);
+    });
+
+    it('should generate a valid payload', function() {
+      const req = speech_to_text.getWord({customization_id: 'customer_id_1', word: 'word1'}, noop);
+      assert.equal(req.uri.href, service.url + path);
+      assert.equal(req.method, 'GET');
+    });
+  });
+
+  describe('deleteWord()', function() {
+    const path = '/v1/customizations/customer_id_1/words/word1';
+
+    it('should check no parameters provided', function() {
+      speech_to_text.deleteWord({}, missingParameter);
+      speech_to_text.deleteWord(null, missingParameter);
+    });
+
+    it('should generate a valid payload', function() {
+      const req = speech_to_text.deleteWord({customization_id: 'customer_id_1', word: 'word1'}, noop);
+      assert.equal(req.uri.href, service.url + path);
+      assert.equal(req.method, 'DELETE');
+    });
+  });
+
+  describe('trainCustomization()', function() {
+    const path = '/v1/customizations/customer_id_1/train';
+
+    it('should check no parameters provided', function() {
+      speech_to_text.trainCustomization({}, missingParameter);
+      speech_to_text.trainCustomization(null, missingParameter);
+    });
+
+    it('should generate a valid payload', function() {
+      const req = speech_to_text.trainCustomization({customization_id: 'customer_id_1'}, noop);
+      assert.equal(req.uri.href, service.url + path);
+      assert.equal(req.method, 'POST');
+    });
+  });
+
+  describe('resetCustomization()', function() {
+    const path = '/v1/customizations/customer_id_1/reset';
+
+    it('should check no parameters provided', function() {
+      speech_to_text.resetCustomization({}, missingParameter);
+      speech_to_text.resetCustomization(null, missingParameter);
+    });
+
+    it('should generate a valid payload', function() {
+      const req = speech_to_text.resetCustomization({customization_id: 'customer_id_1'}, noop);
+      assert.equal(req.uri.href, service.url + path);
+      assert.equal(req.method, 'POST');
+    });
+  });
+
+  describe('deleteCustomization()', function() {
+    const path = '/v1/customizations/customer_id_1';
+
+    it('should check no parameters provided', function() {
+      speech_to_text.deleteCustomization({}, missingParameter);
+      speech_to_text.deleteCustomization(null, missingParameter);
+    });
+
+    it('should generate a valid payload', function() {
+      const req = speech_to_text.deleteCustomization({customization_id: 'customer_id_1'}, noop);
+      assert.equal(req.uri.href, service.url + path);
+      assert.equal(req.method, 'DELETE');
+    });
+  });
   
 });
