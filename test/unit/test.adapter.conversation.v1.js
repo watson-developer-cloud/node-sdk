@@ -19,13 +19,6 @@ describe('conversation-v1', function() {
     version_date: '2017-05-26'
   };
 
-  const service1 = {
-    password: 'bruce-wayne',
-    url: 'http://ibm.com:80',
-    version: 'v1',
-    username: 'batman'
-  };
-
   const payload = {
     workspace_id: 'workspace1'
   };

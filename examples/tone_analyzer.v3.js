@@ -1,8 +1,8 @@
 'use strict';
 
-const ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
+var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
 
-const tone_analyzer = new ToneAnalyzerV3({
+var tone_analyzer = new ToneAnalyzerV3({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
   password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
   version_date: '2017-09-21'
@@ -23,7 +23,7 @@ tone_analyzer.tone(
   }
 );
 
-const params = {
+var params = {
   utterances: [
     { text: 'My charger isn’t working.', user: 'customer' },
     {

@@ -26,7 +26,7 @@ function getToken() {
 }
 
 function analyze(token) {
-  const toneAnalyzer = new ToneAnalyzerV3({
+  var toneAnalyzer = new ToneAnalyzerV3({
     token: token,
     version_date: '2016-05-19'
   });

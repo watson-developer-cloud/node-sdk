@@ -1,9 +1,9 @@
 'use strict';
 
-const TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
-const fs = require('fs');
+var TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
+var fs = require('fs');
 
-const textToSpeech = new TextToSpeechV1({
+var textToSpeech = new TextToSpeechV1({
   // if left unspecified here, the SDK will fall back to the TEXT_TO_SPEECH_USERNAME and TEXT_TO_SPEECH_PASSWORD
   // environment properties, and then Bluemix's VCAP_SERVICES environment property
   // username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
