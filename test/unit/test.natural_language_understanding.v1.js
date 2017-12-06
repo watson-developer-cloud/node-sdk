@@ -14,6 +14,12 @@ describe('natural_language_understanding', function() {
 
   let nlu;
 
+  const missingParameter = function(err) {
+    assert.ok(err instanceof Error && /required parameters/.test(err));
+  };
+  const noop = function() {};
+
+
   before(function() {
     nlu = new watson.NaturalLanguageUnderstandingV1({
       username: 'user',
@@ -125,4 +131,22 @@ describe('natural_language_understanding', function() {
       done();
     });
   });
+
+
+  describe('deleteModel()', function() {
+    const payload = { model_id: 'foo' };
+
+    it('should check no parameters provided (negative test)', function() {
+      nlu.deleteModel({}, missingParameter);
+      nlu.deleteModel(null, missingParameter);
+      nlu.deleteModel(undefined, missingParameter);
+    });
+
+    it('should generate a valid payload', function() {
+      const req = nlu.deleteModel(payload, noop);
+      assert.equal(req.uri.href, watson.NaturalLanguageUnderstandingV1.URL + '/v1/models/' + payload.model_id + '?version=' + watson.NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27);
+      assert.equal(req.method, 'DELETE');
+    });
+  });
 });
+

@@ -34,30 +34,12 @@ class ConversationV1 extends GeneratedConversationV1 {
     super(options);
   }
 
+  private static removedError: Error = new Error(
+    'This endpoint has been deprecated.'
+  );
+
   workspaceStatus(params, callback) {
-    const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
-    const requiredParams = ['workspace_id'];
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-    const path = {
-      workspace_id: _params.workspace_id
-    };
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/status',
-        method: 'GET',
-        path: path
-      },
-      defaultOptions: extend(true, this._options, {
-        headers: {
-          accept: 'application/json'
-        }
-      })
-    };
-    return createRequest(parameters, _callback);
+    console.warn(ConversationV1.removedError);
   }
 
   getIntents(params, callback) {

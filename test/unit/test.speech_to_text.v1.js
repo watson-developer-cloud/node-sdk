@@ -579,4 +579,31 @@ describe('speech_to_text', function() {
       assert.equal(req.method, 'DELETE');
     });
   });
+
+  describe('getCustomizations()', function() {
+    const path = '/v1/customizations';
+
+    it('should generate a valid payload', function() {
+      const req = speech_to_text.getCustomizations({}, noop);
+      assert.equal(req.uri.href, service.url + path);
+      assert.equal(req.method, 'GET');
+    });
+  });
+
+  describe('getCustomization()', function() {
+    const path = '/v1/customizations/foo';
+
+    it('should check no parameters provided', function() {
+      speech_to_text.getCustomization({}, missingParameter);
+      speech_to_text.getCustomization(null, missingParameter);
+    });
+
+    it('should generate a valid payload', function() {
+      const req = speech_to_text.getCustomization({ customization_id: 'foo' }, noop);
+      assert.equal(req.uri.href, service.url + path);
+      assert.equal(req.method, 'GET');
+    });
+  });
+
+  
 });
