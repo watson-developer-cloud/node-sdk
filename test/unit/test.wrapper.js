@@ -78,18 +78,6 @@ describe('wrapper', function() {
       })
     );
   });
-  it('should return a stream if callback is null and there is an error', function(done) {
-    const textToSpeech = watson.text_to_speech({
-      username: 'a',
-      password: 'b',
-      version: 'v1'
-    });
-
-    textToSpeech.synthesize({ voice: '', accept: '' }).on('error', function(error) {
-      assert.equal('Error: Missing required parameters: text', error);
-      done();
-    });
-  });
 
   describe('env', function() {
     let env;
@@ -110,16 +98,6 @@ describe('wrapper', function() {
 
       // check api_key we get from VCAP_SERVICES
       assert.equal(service._options.api_key, 'not-gonna-work');
-    });
-
-    it('should use apikey (not documented) for alchemy service', function() {
-      const service = watson.alchemy_language({ apikey: 'not-gonna-work' });
-      assert.equal(service._options.qs.apikey, 'not-gonna-work');
-    });
-
-    it('should use api_key for alchemy service', function() {
-      const service = watson.alchemy_language({ api_key: 'not-gonna-work' });
-      assert.equal(service._options.qs.apikey, 'not-gonna-work');
     });
 
     it('should not use VCAP_SERVICES if use_vcap_services is false', function() {
@@ -174,15 +152,6 @@ describe('wrapper', function() {
     try {
       watson.not_a_real_service({ version: 'v1', api_key: '' });
       done('Inexistent service');
-    } catch (e) {
-      done();
-    }
-  });
-
-  it('should ask for api_key when using an alchemy service', function(done) {
-    try {
-      watson.alchemy_language({ version: 'v1' });
-      done('service created without an api_key');
     } catch (e) {
       done();
     }

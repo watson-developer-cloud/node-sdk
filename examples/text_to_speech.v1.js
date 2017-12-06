@@ -1,9 +1,9 @@
 'use strict';
 
-const TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
-const fs = require('fs');
+var TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
+var fs = require('fs');
 
-const textToSpeech = new TextToSpeechV1({
+var textToSpeech = new TextToSpeechV1({
   // if left unspecified here, the SDK will fall back to the TEXT_TO_SPEECH_USERNAME and TEXT_TO_SPEECH_PASSWORD
   // environment properties, and then Bluemix's VCAP_SERVICES environment property
   // username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
@@ -103,7 +103,10 @@ textToSpeech.updateCustomization(
     customization_id: '6666451d-a23e-485c-9bc5-c7ce722550d6',
     name: 'new name', // optional
     description: 'new description', // optional
-    words: [{ word: 'NCAA', translation: 'N C double A' }, { word: 'iPhone', translation: 'I phone' }] // required - replaces existing words list
+    words: [
+      { word: 'NCAA', translation: 'N C double A' },
+      { word: 'iPhone', translation: 'I phone' }
+    ] // required - replaces existing words list
   },
   function(err) {
     if (err) {
@@ -202,7 +205,10 @@ textToSpeech.deleteCustomization(
 textToSpeech.addWords(
   {
     customization_id: '7c7f8ba7-2f83-48f2-ae52-3a70825f9899',
-    words: [{ word: 'NCAA', translation: 'N C double A' }, { word: 'iPhone', translation: 'I phone' }]
+    words: [
+      { word: 'NCAA', translation: 'N C double A' },
+      { word: 'iPhone', translation: 'I phone' }
+    ]
   },
   function(err) {
     if (err) {

@@ -1,9 +1,9 @@
 'use strict';
 
-const PersonalityInsightsV3 = require('watson-developer-cloud/personality-insights/v3');
-const fs = require('fs');
+var PersonalityInsightsV3 = require('watson-developer-cloud/personality-insights/v3');
+var fs = require('fs');
 
-const personality_insights = new PersonalityInsightsV3({
+var personality_insights = new PersonalityInsightsV3({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
   password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
   version_date: '2016-10-19'
@@ -15,7 +15,8 @@ const personality_insights = new PersonalityInsightsV3({
  */
 personality_insights.profile(
   {
-    text: 'Enter more than 100 unique words here...',
+    content: 'Enter more than 100 unique words here...',
+    content_type: 'text/plain',
     consumption_preferences: true
   },
   function(err, response) {
@@ -34,8 +35,9 @@ personality_insights.profile(
  */
 personality_insights.profile(
   {
-    text: 'Ingrese un texto de más de 100 palabras aquí...',
-    headers: { 'Content-Language': 'es' }
+    content: 'Ingrese un texto de más de 100 palabras aquí...',
+    content_type: 'text/plain',
+    content_language: 'es'
   },
   function(err, response) {
     if (err) {
@@ -56,8 +58,10 @@ personality_insights.profile(
  */
 personality_insights.profile(
   {
-    text: 'Ingrese un texto de más de 100 palabras aquí...',
-    headers: { 'Content-Language': 'es', 'Accept-Language': 'es' }
+    content: 'Ingrese un texto de más de 100 palabras aquí...',
+    content_type: 'text/plain',
+    content_language: 'es',
+    accept_language: 'es'
   },
   function(err, response) {
     if (err) {
@@ -73,9 +77,9 @@ personality_insights.profile(
  * https://www.ibm.com/watson/developercloud/doc/personality-insights/output.shtml#outputCSV
  */
 personality_insights
-  .profile({
-    text: 'Enter more than 100 unique words here...',
-    csv_headers: true,
-    headers: { Accept: 'text/csv' }
+  .profile_csv({
+    content: 'Enter more than 100 unique words here...',
+    content_type: 'text/plain',
+    csv_headers: true
   })
   .pipe(fs.createWriteStream('./output.csv'));

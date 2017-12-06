@@ -3,19 +3,19 @@
 // This example takes uncompressed wav audio from the Text to Speech service and plays it through the computer's speakers
 // Should work on windows/mac/linux, but linux may require some extra setup first: https://www.npmjs.com/package/speaker
 
-const TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
-const wav = require('wav');
-const Speaker = require('speaker');
+var TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
+var wav = require('wav');
+var Speaker = require('speaker');
 require('dotenv').load({ silent: true }); // imports environment properties from a .env file if present
 
-const textToSpeech = new TextToSpeechV1({
+var textToSpeech = new TextToSpeechV1({
   // if left unspecified here, the SDK will fall back to the TEXT_TO_SPEECH_USERNAME and TEXT_TO_SPEECH_PASSWORD
   // environment properties, and then Bluemix's VCAP_SERVICES environment property
   // username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
   // password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE'
 });
 
-const reader = new wav.Reader();
+var reader = new wav.Reader();
 
 // the "format" event gets emitted at the end of the WAVE header
 reader.on('format', function(format) {

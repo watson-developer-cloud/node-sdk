@@ -3,27 +3,22 @@
 const assert = require('assert');
 const watson = require('../../index');
 const nock = require('nock');
-const extend = require('extend');
 
 describe('personality_insights_v3', function() {
   const noop = function() {};
 
-  const service_request = {
-    text: 'IBM Watson Developer Cloud'
-  };
+  const text = 'IBM Watson Developer Cloud';
+  const content_items = [
+    {
+      userid: 'dummy',
+      id: 'dummyUuid',
+      sourceid: 'freetext',
+      contenttype: 'text/plain',
+      language: 'en',
+      content: text
+    }
+  ];
 
-  const payload = {
-    contentItems: [
-      {
-        userid: 'dummy',
-        id: 'dummyUuid',
-        sourceid: 'freetext',
-        contenttype: 'text/plain',
-        language: 'en',
-        content: service_request.text
-      }
-    ]
-  };
   const service_response = {
     tree: {}
   };
@@ -42,11 +37,11 @@ describe('personality_insights_v3', function() {
     nock.disableNetConnect();
     nock(service.url)
       .persist()
-      .post(service_path, payload)
+      .post(service_path, content_items)
       .reply(200, service_response)
-      .post(service_path + '?raw_scores=true', payload)
+      .post(service_path + '?raw_scores=true', content_items)
       .reply(200, service_response)
-      .post(service_path + '?version=2016-10-19', '"' + service_request.text + '"')
+      .post(service_path + '?version=2016-10-19', text)
       .reply(200, service_response);
   });
 
@@ -67,87 +62,87 @@ describe('personality_insights_v3', function() {
   });
 
   it('should generate a valid payload with text', function() {
-    const req = personality_insights.profile(service_request, noop);
+    const params = { content: text, content_type: 'text/plain' };
+    const req = personality_insights.profile(params, noop);
     const body = Buffer.from(req.body).toString('ascii');
     assert.equal(req.uri.href, service.url + service_path + '?version=2016-10-19');
-    assert.equal(body, '"' + service_request.text + '"');
+    assert.equal(body, params.content);
     assert.equal(req.method, 'POST');
-    assert.equal(req.headers['content-type'], 'text/plain');
+    assert.equal(req.headers['Content-Type'], 'text/plain');
   });
 
-  it('should generate a valid payload with contentItems', function() {
-    const req = personality_insights.profile(payload, noop);
+  it('should generate a valid payload with json', function() {
+    const params = { content: content_items, content_type: 'application/json' };
+    const req = personality_insights.profile(params, noop);
     const body = Buffer.from(req.body).toString('ascii');
     assert.equal(req.uri.href, service.url + service_path + '?version=2016-10-19');
-    assert.equal(body, JSON.stringify(payload));
+    assert.equal(body, JSON.stringify(params.content));
     assert.equal(req.method, 'POST');
-    assert.equal(req.headers['content-language'], undefined); // service bug: content-language header overrides the language specified in JSON for each content item, so it must not be set
-    assert.equal(req.headers['content-type'], 'application/json');
-  });
-
-  it('should generate a valid payload with content_items', function() {
-    const payload_with_content_items = { content_items: payload.contentItems };
-    const req = personality_insights.profile(payload_with_content_items, noop);
-    const body = Buffer.from(req.body).toString('ascii');
-    assert.equal(req.uri.href, service.url + service_path + '?version=2016-10-19');
-    assert.equal(body, JSON.stringify(payload));
-    assert.equal(req.method, 'POST');
-    assert.equal(req.headers['content-language'], undefined); // service bug: content-language header overrides the language specified in JSON for each content item, so it must not be set
-    assert.equal(req.headers['content-type'], 'application/json');
+    assert.equal(req.headers['Content-Language'], undefined); // service bug: content-language header overrides the language specified in JSON for each content item, so it must not be set
+    assert.equal(req.headers['Content-Type'], 'application/json');
   });
 
   it('should generate a valid payload with html', function() {
-    const html_req = { text: '<div>test</div>' };
-    const req = personality_insights.profile(html_req, noop);
-    const body = Buffer.from(req.body).toString('ascii');
-    assert.equal(req.uri.href, service.url + service_path + '?version=2016-10-19');
-    assert.equal(body, JSON.stringify(html_req.text));
-    assert.equal(req.method, 'POST');
-    assert.equal(req.headers['content-type'], 'text/html');
-  });
-
-  it('should generate a valid payload with raw_scores, accept-Language and content-language', function() {
-    const params = extend(
-      {
-        raw_scores: true,
-        headers: {
-          'content-language': 'es',
-          'accept-language': 'es'
-        }
-      },
-      payload
-    );
-
-    const req = personality_insights.profile(params, noop);
-    const body = Buffer.from(req.body).toString('ascii');
-    assert.equal(req.uri.href, service.url + service_path + '?version=2016-10-19&raw_scores=true');
-    assert.equal(body, JSON.stringify(payload));
-    assert.equal(req.method, 'POST');
-    assert.equal(req.headers['content-type'], 'application/json');
-    assert.equal(req.headers['content-language'], 'es');
-    assert.equal(req.headers['accept-language'], 'es');
-  });
-
-  it('should generate a valid request with { headers: {Accept: "text/csv"}}', function() {
-    const params = extend({ headers: { accept: 'text/csv' } }, payload);
+    const params = {
+      content: '<div>' + text + '</div>',
+      content_type: 'text/html'
+    };
     const req = personality_insights.profile(params, noop);
     const body = Buffer.from(req.body).toString('ascii');
     assert.equal(req.uri.href, service.url + service_path + '?version=2016-10-19');
-    assert.equal(body, JSON.stringify(payload));
-    assert.equal(req.headers['accept'], 'text/csv');
+    assert.equal(body, params.content);
+    assert.equal(req.method, 'POST');
+    assert.equal(req.headers['Content-Type'], 'text/html');
   });
 
-  it('should generate a valid request with {headers: {accept: "text/csv"}, csv_headers: true}', function() {
-    const params = extend({ headers: { accept: 'text/csv' }, csv_headers: true }, payload);
+  it('should generate a valid payload with all params', function() {
+    const params = {
+      content: content_items,
+      content_type: 'application/json',
+      content_language: 'es',
+      accept_language: 'es',
+      raw_scores: true,
+      csv_headers: false,
+      consumption_preferences: true
+    };
+
     const req = personality_insights.profile(params, noop);
+    const body = Buffer.from(req.body).toString('ascii');
+    const query_string =
+      '?version=2016-10-19&raw_scores=true&csv_headers=false&consumption_preferences=true';
+    assert.equal(req.uri.href, service.url + service_path + query_string);
+    assert.equal(body, JSON.stringify(params.content));
+    assert.equal(req.method, 'POST');
+    assert.equal(req.headers['Content-Type'], 'application/json');
+    assert.equal(req.headers['Content-Language'], 'es');
+    assert.equal(req.headers['Accept-Language'], 'es');
+  });
+
+  it('should generate a valid csv request', function() {
+    const params = { content: content_items, content_type: 'application/json' };
+    const req = personality_insights.profile_csv(params, noop);
+    const body = Buffer.from(req.body).toString('ascii');
+    assert.equal(req.uri.href, service.url + service_path + '?version=2016-10-19');
+    assert.equal(body, JSON.stringify(params.content));
+    assert.equal(req.headers['Accept'], 'text/csv');
+  });
+
+  it('should generate a valid csv request with csv headers', function() {
+    const params = {
+      content: content_items,
+      content_type: 'application/json',
+      csv_headers: true
+    };
+    const req = personality_insights.profile_csv(params, noop);
     const body = Buffer.from(req.body).toString('ascii');
     assert.equal(req.uri.href, service.url + service_path + '?version=2016-10-19&csv_headers=true');
-    assert.equal(body, JSON.stringify(payload));
-    assert.equal(req.headers['accept'], 'text/csv');
+    assert.equal(body, JSON.stringify(params.content));
+    assert.equal(req.headers['Accept'], 'text/csv');
   });
 
   it('should format the response', function(done) {
-    personality_insights.profile(service_request, function(err, response) {
+    const params = { content: text, content_type: 'plain/text' };
+    personality_insights.profile(params, function(err, response) {
       if (err) {
         done(err);
       } else {

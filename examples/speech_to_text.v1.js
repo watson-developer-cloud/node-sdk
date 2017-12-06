@@ -1,19 +1,19 @@
 'use strict';
 
-const SpeechToTextV1 = require('watson-developer-cloud/speech-to-text/v1');
-const fs = require('fs');
+var SpeechToTextV1 = require('watson-developer-cloud/speech-to-text/v1');
+var fs = require('fs');
 
-const speech_to_text = new SpeechToTextV1({
+var speech_to_text = new SpeechToTextV1({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
   password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE'
 });
 
-const params = {
+var params = {
   content_type: 'audio/wav'
 };
 
 // create the stream
-const recognizeStream = speech_to_text.createRecognizeStream(params);
+var recognizeStream = speech_to_text.createRecognizeStream(params);
 
 // pipe in some audio
 fs.createReadStream(__dirname + '/resources/speech.wav').pipe(recognizeStream);
@@ -26,6 +26,11 @@ recognizeStream.pipe(fs.createWriteStream('transcription.txt'));
 
 recognizeStream.setEncoding('utf8'); // to get strings instead of Buffers from `data` events
 
-['data', 'results', 'speaker_labels', 'error', 'close'].forEach(function(eventName) {
-  recognizeStream.on(eventName, console.log.bind(console, eventName + ' event: '));
+['data', 'results', 'speaker_labels', 'error', 'close'].forEach(function(
+  eventName
+) {
+  recognizeStream.on(
+    eventName,
+    console.log.bind(console, eventName + ' event: ')
+  );
 });

@@ -28,23 +28,38 @@ describe('personality_insights_v3_integration', function() {
     nock.disableNetConnect();
   });
 
-  it('profile()', function(done) {
+  it('profile with text content', function(done) {
     const params = {
-      text: mobydick
+      content: mobydick,
+      content_type: 'text/plain'
     };
     personality_insights.profile(params, done);
   });
 
-  it('profile_html()', function(done) {
+  it('profile with text content and all params', function(done) {
     const params = {
-      text: '<div>' + mobydick + '</div>'
+      content: mobydick,
+      content_type: 'text/plain',
+      content_language: 'en',
+      accept_language: 'en',
+      raw_scores: true,
+      consumption_preferences: true
     };
     personality_insights.profile(params, done);
   });
 
-  it('profile_csv()', function(done) {
+  it('profile with html content', function(done) {
     const params = {
-      text: mobydick,
+      content: '<div>' + mobydick + '</div>',
+      content_type: 'text/html'
+    };
+    personality_insights.profile(params, done);
+  });
+
+  it('profile with csv response', function(done) {
+    const params = {
+      content: mobydick,
+      content_type: 'text/plain',
       raw_scores: true,
       consumption_preferences: true,
       csv_headers: true,
@@ -52,6 +67,6 @@ describe('personality_insights_v3_integration', function() {
         accept: 'text/csv'
       }
     };
-    personality_insights.profile(params, done);
+    personality_insights.profile_csv(params, done);
   });
 });

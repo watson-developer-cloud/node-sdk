@@ -1,9 +1,9 @@
 'use strict';
 
-const LanguageTranslatorV2 = require('watson-developer-cloud/language-translator/v2');
-const fs = require('fs');
+var LanguageTranslatorV2 = require('watson-developer-cloud/language-translator/v2');
+var fs = require('fs');
 
-const language_translator = new LanguageTranslatorV2({
+var language_translator = new LanguageTranslatorV2({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
   password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
   url: 'https://gateway.watsonplatform.net/language-translator/api/'
