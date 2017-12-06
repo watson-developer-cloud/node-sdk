@@ -12,3 +12,4 @@ test/resources/auth.js
 !test/**/*.js
 lib/*.js
 dialog/v1.js
+index.js
