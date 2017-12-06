@@ -44,12 +44,6 @@
     "url": "https://github.com/watson-developer-cloud/node-sdk/issues"
   },
   "devDependencies": {
-    "@types/csv-stringify": "^1.4.1",
-    "@types/extend": "^3.0.0",
-    "@types/file-type": "^5.2.1",
-    "@types/is-stream": "^1.1.0",
-    "@types/node": "^8.0.47",
-    "@types/request": "^2.0.7",
     "browserify": "^14.5.0",
     "concat-stream": "^1.5.1",
     "dependency-lint": "^5.0.1",
@@ -73,6 +67,12 @@
     "webpack": "^3.9.1"
   },
   "dependencies": {
+    "@types/csv-stringify": "^1.4.1",
+    "@types/extend": "^3.0.0",
+    "@types/file-type": "^5.2.1",
+    "@types/is-stream": "^1.1.0",
+    "@types/node": "^8.0.47",
+    "@types/request": "^2.0.7",
     "async": "^2.6.0",
     "buffer-from": "^0.1.1",
     "cookie": "~0.3.1",
