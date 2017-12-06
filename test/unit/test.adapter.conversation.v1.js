@@ -126,12 +126,6 @@ describe('conversation-v1', function() {
     });
   });
 
-  describe('workspaceStatus()', function() {
-    it('should return an error', function() {
-      conversation.workspaceStatus({}, console.warn());
-    });
-  });
-
   describe('getEntities()', function() {
     it('should check no parameters provided (negative test)', function() {
       conversation.getEntities({}, missingParameter);
