@@ -566,7 +566,8 @@ describe('visual_recognition', function() {
       'getImageData',
       'deleteImageData',
       'findSimilar'
-    ].forEach(function(method) {
+    ];
+    deprecatedMethods.forEach(function(method) {
       it(`${method} should print a warning message`, function() {
         visual_recognition[method]({}, noop);
         assert(spy.calledOnce);

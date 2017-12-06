@@ -3,7 +3,6 @@
 const assert = require('assert');
 const watson = require('../../index');
 const nock = require('nock');
-const extend = require('extend');
 
 describe('personality_insights_v3', function() {
   const noop = function() {};

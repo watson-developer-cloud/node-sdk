@@ -1,3 +1,5 @@
+'use strict';
+
 const contentType = require('../../lib/content-type');
 const assert = require('assert');
 const fs = require('fs');
