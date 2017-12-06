@@ -2,6 +2,7 @@
 
 const assert = require('assert');
 const watson = require('../../index');
+const sinon = require('sinon');
 const nock = require('nock');
 const extend = require('extend');
 const pick = require('object.pick');
@@ -908,6 +909,15 @@ describe('conversation-v1', function() {
           service.version_date
       );
       assert.equal(req.method, 'GET');
+    });
+  });
+
+  describe('workspaceStatus()', function() {
+    it('should issue a console warning for deprecated method', function() {
+      const spy = sinon.stub(console, 'warn');
+      conversation.workspaceStatus({}, noop);
+      assert(spy.calledOnce);
+      spy.restore();
     });
   });
 
