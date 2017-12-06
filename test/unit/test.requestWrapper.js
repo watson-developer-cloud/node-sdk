@@ -11,7 +11,7 @@ describe('requestwrapper', () => {
         qs: { fake: 'fake' }
       },
       requiredParams: ['fake_param'],
-      defaultOptions: { url: 'more'}
+      defaultOptions: { url: 'more' }
     };
     assert(isStream(createRequest(parameters, '')));
   });
@@ -25,10 +25,7 @@ describe('formatError', () => {
     const cb = (err, body, res) => {
       assert.equal(body, null);
       assert(err instanceof Error);
-      assert.equal(
-        err.message,
-        'Unauthorized: Access is denied due to invalid credentials.'
-      );
+      assert.equal(err.message, 'Unauthorized: Access is denied due to invalid credentials.');
     };
     const formatted = formatError(cb);
     formatted(_error, _response, _body);

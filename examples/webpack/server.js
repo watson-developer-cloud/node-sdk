@@ -1,15 +1,15 @@
 'use strict';
-const express = require('express'); // eslint-disable-line node/no-missing-require
-const app = express();
-const dotenv = require('dotenv');
-const watson = require('watson-developer-cloud');
+var express = require('express'); // eslint-disable-line node/no-missing-require
+var app = express();
+var dotenv = require('dotenv');
+var watson = require('watson-developer-cloud');
 
 // bundle the code
-const webpackDevMiddleware = require('webpack-dev-middleware');
-const webpack = require('webpack');
-const webpackConfig = require('./webpack.config');
+var webpackDevMiddleware = require('webpack-dev-middleware');
+var webpack = require('webpack');
+var webpackConfig = require('./webpack.config');
 
-const compiler = webpack(webpackConfig);
+var compiler = webpack(webpackConfig);
 
 app.use(
   webpackDevMiddleware(compiler, {
@@ -23,7 +23,7 @@ app.use(express.static('public/'));
 dotenv.load({ silent: true });
 
 // For local development, specify the username and password or set env properties
-const ltAuthService = new watson.AuthorizationV1({
+var ltAuthService = new watson.AuthorizationV1({
   username: process.env.TONE_ANALYZER_USERNAME || '<username>',
   password: process.env.TONE_ANALYZER_PASSWORD || '<password>',
   url: watson.ToneAnalyzerV3.URL
@@ -39,7 +39,7 @@ app.get('/api/token/tone_analyzer', function(req, res) {
   });
 });
 
-const port = process.env.PORT || process.env.VCAP_APP_PORT || 3000;
+var port = process.env.PORT || process.env.VCAP_APP_PORT || 3000;
 app.listen(port, function() {
   console.log('Watson browserify example server running at http://localhost:%s/', port);
 });

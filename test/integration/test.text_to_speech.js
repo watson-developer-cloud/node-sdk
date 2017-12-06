@@ -67,7 +67,10 @@ describe('text_to_speech_integration', function() {
         {
           name: 'temporary-node-sdk-test',
           language: 'en-US',
-          description: 'Created by Node.js SDK integration tests on ' + new Date() + '. Should be automatically deleted within 10 minutes.'
+          description:
+            'Created by Node.js SDK integration tests on ' +
+            new Date() +
+            '. Should be automatically deleted within 10 minutes.'
         },
         function(err, response) {
           // console.log(JSON.stringify(err || response, null, 2));
@@ -102,7 +105,11 @@ describe('text_to_speech_integration', function() {
         const hasOtherLanguages = response.customizations.some(function(c) {
           return c.language !== 'en-GB';
         });
-        assert.equal(hasOtherLanguages, false, 'Expecting no customizations with a different language than the requested one (en-GB)');
+        assert.equal(
+          hasOtherLanguages,
+          false,
+          'Expecting no customizations with a different language than the requested one (en-GB)'
+        );
         done();
       });
     });
@@ -119,7 +126,10 @@ describe('text_to_speech_integration', function() {
     });
 
     it('getCustomization()', function(done) {
-      text_to_speech.getCustomization({ customization_id: customization_id }, function(err, response) {
+      text_to_speech.getCustomization({ customization_id: customization_id }, function(
+        err,
+        response
+      ) {
         // console.log(JSON.stringify(err || response, null, 2));
         if (err) {
           return done(err);
@@ -164,7 +174,10 @@ describe('text_to_speech_integration', function() {
     });
 
     it('getWord()', function(done) {
-      text_to_speech.getWord({ customization_id: customization_id, word: 'NCAA' }, function(err, response) {
+      text_to_speech.getWord({ customization_id: customization_id, word: 'NCAA' }, function(
+        err,
+        response
+      ) {
         if (err) {
           return done(err);
         }

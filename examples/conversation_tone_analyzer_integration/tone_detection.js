@@ -54,16 +54,13 @@ module.exports = {
  */
 function invokeToneAsync(conversationPayload, tone_analyzer) {
   return new Promise(function(resolve, reject) {
-    tone_analyzer.tone(
-      { text: conversationPayload.input.text },
-      (error, data) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(data);
-        }
+    tone_analyzer.tone({ text: conversationPayload.input.text }, (error, data) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(data);
       }
-    );
+    });
   });
 }
 
@@ -75,11 +72,7 @@ function invokeToneAsync(conversationPayload, tone_analyzer) {
  * @param toneAnalyzerPayload json object returned by the Watson Tone Analyzer Service
  * @return conversationPayload where the user object has been updated with tone information from the toneAnalyzerPayload
  */
-function updateUserTone(
-  conversationPayload,
-  toneAnalyzerPayload,
-  maintainHistory
-) {
+function updateUserTone(conversationPayload, toneAnalyzerPayload, maintainHistory) {
   var emotionTone = null;
   var languageTone = null;
   var socialTone = null;
@@ -97,9 +90,7 @@ function updateUserTone(
 
   // Extract the tones - emotion, language and social
   if (toneAnalyzerPayload && toneAnalyzerPayload.document_tone) {
-    toneAnalyzerPayload.document_tone.tone_categories.forEach(function(
-      toneCategory
-    ) {
+    toneAnalyzerPayload.document_tone.tone_categories.forEach(function(toneCategory) {
       if (toneCategory.category_id === EMOTION_TONE_LABEL) {
         emotionTone = toneCategory;
       }

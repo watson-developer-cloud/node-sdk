@@ -7,7 +7,6 @@ const nock = require('nock');
 const fs = require('fs');
 const omit = require('object.omit');
 const URL = require('url');
-const qs = require('querystring');
 
 describe('visual_recognition', function() {
   const noop = function() {};
@@ -90,7 +89,10 @@ describe('visual_recognition', function() {
   const visual_recognition = watson.visual_recognition(service);
 
   const missingParameter = function(err) {
-    assert(err instanceof Error && /parameter/.test(err), 'Expected error to mention "parameter" but got "' + ((err && err.message) || err) + '"');
+    assert(
+      err instanceof Error && /parameter/.test(err),
+      'Expected error to mention "parameter" but got "' + ((err && err.message) || err) + '"'
+    );
   };
 
   describe('credentials', function() {
@@ -245,7 +247,10 @@ describe('visual_recognition', function() {
     });
 
     it('should generate a valid paylod with buffers', function() {
-      const params = { images_file: fake_buffer, parameters: {pwmers: ['me', 'IBM']} };
+      const params = {
+        images_file: fake_buffer,
+        parameters: { pwmers: ['me', 'IBM'] }
+      };
       const req = visual_recognition.classify(params, noop);
       assert.equal(req.uri.href, service.url + classify_path);
       assert.equal(req.method, 'POST');
@@ -312,7 +317,10 @@ describe('visual_recognition', function() {
     });
 
     it('should generate a valid paylod with buffers', function() {
-      const params = { images_file: fake_buffer, parameters: {pwmers: ['me', 'IBM']} };
+      const params = {
+        images_file: fake_buffer,
+        parameters: { pwmers: ['me', 'IBM'] }
+      };
       const req = visual_recognition.detectFaces(params, noop);
       assert.equal(req.uri.href, service.url + detect_faces_path);
       assert.equal(req.method, 'POST');
@@ -369,9 +377,18 @@ describe('visual_recognition', function() {
       visual_recognition.createClassifier(null, missingParameter);
       visual_recognition.createClassifier(undefined, missingParameter);
       visual_recognition.createClassifier({ positive_examples: '', name: 'foo' }, missingParameter);
-      visual_recognition.createClassifier({ foo_positive_examples: '', name: 'foo' }, missingParameter);
-      visual_recognition.createClassifier({ positive_examples: '', negative_examples: '', name: 'foo' }, missingParameter); // positive examples must include a tag
-      visual_recognition.createClassifier({ foo_positive_examples: '', negative_examples: '' }, missingParameter); // missing name
+      visual_recognition.createClassifier(
+        { foo_positive_examples: '', name: 'foo' },
+        missingParameter
+      );
+      visual_recognition.createClassifier(
+        { positive_examples: '', negative_examples: '', name: 'foo' },
+        missingParameter
+      ); // positive examples must include a tag
+      visual_recognition.createClassifier(
+        { foo_positive_examples: '', negative_examples: '' },
+        missingParameter
+      ); // missing name
     });
 
     it('should generate a valid payload with streams', function(done) {
@@ -398,7 +415,7 @@ describe('visual_recognition', function() {
   describe('retrainClassifier()', function() {
     it('should call updateClassifier()', function() {
       visual_recognition.retrainClassifier({}, missingParameter);
-    })
+    });
   });
 
   describe('updateClassifier()', function() {
@@ -407,9 +424,18 @@ describe('visual_recognition', function() {
       visual_recognition.updateClassifier(null, missingParameter);
       visual_recognition.updateClassifier(undefined, missingParameter);
       visual_recognition.updateClassifier({ positive_examples: '', name: 'foo' }, missingParameter);
-      visual_recognition.updateClassifier({ foo_positive_examples: '', name: 'foo' }, missingParameter);
-      visual_recognition.updateClassifier({ positive_examples: '', negative_examples: '', name: 'foo' }, missingParameter); // positive examples must include a tag
-      visual_recognition.updateClassifier({ foo_positive_examples: '', negative_examples: '' }, missingParameter); // missing name
+      visual_recognition.updateClassifier(
+        { foo_positive_examples: '', name: 'foo' },
+        missingParameter
+      );
+      visual_recognition.updateClassifier(
+        { positive_examples: '', negative_examples: '', name: 'foo' },
+        missingParameter
+      ); // positive examples must include a tag
+      visual_recognition.updateClassifier(
+        { foo_positive_examples: '', negative_examples: '' },
+        missingParameter
+      ); // missing name
     });
 
     it('should generate a valid payload with streams', function(done) {

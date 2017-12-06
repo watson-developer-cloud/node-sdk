@@ -124,7 +124,10 @@ describe('speech_to_text_integration', function() {
         .pipe(
           concat(function(transcription) {
             assert.equal(typeof transcription, 'string', 'should return a string transcription');
-            assert.equal(transcription.trim(), 'thunderstorms could produce large hail isolated tornadoes and heavy rain');
+            assert.equal(
+              transcription.trim(),
+              'thunderstorms could produce large hail isolated tornadoes and heavy rain'
+            );
             done();
           })
         );
@@ -144,7 +147,6 @@ describe('speech_to_text_integration', function() {
         })
         .on('end', done);
     });
-
   });
 
   describe('customization', function() {
@@ -155,12 +157,15 @@ describe('speech_to_text_integration', function() {
     function waitUntilReady(test) {
       return function(done) {
         this.timeout(TWO_MINUTES);
-        speech_to_text.whenCustomizationReady({ customization_id: customization_id, interval: 250, times: 400 }, function(err) {
-          if (err && err.code !== watson.SpeechToTextV1.ERR_NO_CORPORA) {
-            return done(err);
+        speech_to_text.whenCustomizationReady(
+          { customization_id: customization_id, interval: 250, times: 400 },
+          function(err) {
+            if (err && err.code !== watson.SpeechToTextV1.ERR_NO_CORPORA) {
+              return done(err);
+            }
+            test(done);
           }
-          test(done);
-        });
+        );
       };
     }
 
@@ -200,7 +205,8 @@ describe('speech_to_text_integration', function() {
         {
           name: 'js-sdk-test-temporary',
           base_model_name: 'en-US_BroadbandModel',
-          description: 'Temporary customization to test the JS SDK. Should be automatically deleted within a few minutes.'
+          description:
+            'Temporary customization to test the JS SDK. Should be automatically deleted within a few minutes.'
         },
         function(err, result) {
           if (err) {
@@ -225,7 +231,10 @@ describe('speech_to_text_integration', function() {
     });
 
     it('getCustomization()', function(done) {
-      speech_to_text.getCustomization({ customization_id: customization_id }, function(err, result) {
+      speech_to_text.getCustomization({ customization_id: customization_id }, function(
+        err,
+        result
+      ) {
         if (err) {
           return done(err);
         }
@@ -242,7 +251,9 @@ describe('speech_to_text_integration', function() {
         {
           customization_id: customization_id,
           name: 'test_corpus_1',
-          corpus: fs.createReadStream(path.join(__dirname, '../resources/speech_to_text/corpus-short-1.txt'))
+          corpus: fs.createReadStream(
+            path.join(__dirname, '../resources/speech_to_text/corpus-short-1.txt')
+          )
         },
         done
       );
@@ -256,7 +267,9 @@ describe('speech_to_text_integration', function() {
           {
             customization_id: customization_id,
             name: 'test_corpus_2',
-            corpus: fs.readFileSync(path.join(__dirname, '../resources/speech_to_text/corpus-short-2.txt'))
+            corpus: fs.readFileSync(
+              path.join(__dirname, '../resources/speech_to_text/corpus-short-2.txt')
+            )
           },
           done
         );
@@ -270,7 +283,9 @@ describe('speech_to_text_integration', function() {
           {
             customization_id: customization_id,
             name: 'test_corpus_2',
-            corpus: fs.readFileSync(path.join(__dirname, '../resources/speech_to_text/corpus-short-2.txt')).toString(),
+            corpus: fs
+              .readFileSync(path.join(__dirname, '../resources/speech_to_text/corpus-short-2.txt'))
+              .toString(),
             allow_overwrite: true
           },
           done
@@ -350,7 +365,10 @@ describe('speech_to_text_integration', function() {
     it(
       'deleteCorpus()',
       waitUntilReady(function(done) {
-        speech_to_text.deleteCorpus({ customization_id: customization_id, name: 'test_corpus_1' }, done);
+        speech_to_text.deleteCorpus(
+          { customization_id: customization_id, name: 'test_corpus_1' },
+          done
+        );
       })
     );
 
@@ -407,7 +425,8 @@ describe('speech_to_text_integration', function() {
       speech_to_text.registerCallback(
         {
           // if this fails, logs are available at https://watson-test-resources.mybluemix.net/speech-to-text-async/secure
-          callback_url: 'https://watson-test-resources.mybluemix.net/speech-to-text-async/secure/callback',
+          callback_url:
+            'https://watson-test-resources.mybluemix.net/speech-to-text-async/secure/callback',
           user_secret: 'ThisIsMySecret'
         },
         done
@@ -419,7 +438,8 @@ describe('speech_to_text_integration', function() {
         audio: fs.createReadStream(__dirname + '/../resources/weather.ogg'),
         content_type: 'audio/ogg; codec=opus',
         // if this fails, logs are available at https://watson-test-resources.mybluemix.net/speech-to-text-async/secure
-        callback_url: 'https://watson-test-resources.mybluemix.net/speech-to-text-async/secure/callback',
+        callback_url:
+          'https://watson-test-resources.mybluemix.net/speech-to-text-async/secure/callback',
         user_token: 'Node.js SDK Integration Test at ' + new Date(),
         events: 'recognitions.completed',
         results_ttl: 1

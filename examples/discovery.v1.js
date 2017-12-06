@@ -1,9 +1,9 @@
 'use strict';
 
-const DiscoveryV1 = require('watson-developer-cloud/discovery/v1');
-const fs = require('fs');
+var DiscoveryV1 = require('watson-developer-cloud/discovery/v1');
+var fs = require('fs');
 
-const discovery = new DiscoveryV1({
+var discovery = new DiscoveryV1({
   // if left unspecified here, the SDK will fall back to the DISCOVERY_USERNAME and DISCOVERY_PASSWORD
   // environment properties, and then Bluemix's VCAP_SERVICES environment property
   // username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
@@ -18,7 +18,7 @@ discovery.getEnvironments({}, function(error, data) {
 });
 
 // var file = fs.readFileSync('../test/resources/sampleHtml.html');
-const file = fs.createReadStream('../test/resources/sampleWord.docx');
+var file = fs.createReadStream('../test/resources/sampleWord.docx');
 
 discovery.addDocument(
   {

@@ -6,9 +6,7 @@ const path = require('path');
 
 describe('toPromise()', () => {
   it('should resolve with results buffer as a string', () => {
-    const file = fs.createReadStream(
-      path.join(__dirname, '../resources/weather_data_train.csv')
-    );
+    const file = fs.createReadStream(path.join(__dirname, '../resources/weather_data_train.csv'));
     toPromise(file)
       .then(res => {
         assert(typeof res === 'string');
@@ -19,9 +17,7 @@ describe('toPromise()', () => {
       });
   });
   it('should resolve with results string as an array', () => {
-    const file = fs.createReadStream(
-      path.join(__dirname, '../resources/weather_data_train.csv')
-    );
+    const file = fs.createReadStream(path.join(__dirname, '../resources/weather_data_train.csv'));
     file.setEncoding('utf-8');
     toPromise(file)
       .then(res => {

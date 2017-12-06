@@ -18,9 +18,7 @@ describe('contentType', () => {
     assert(contentType.fromFilename({}) === undefined);
   });
   it('should return content type from a buffer', () => {
-    const buffer = fs.readFileSync(
-      path.join(__dirname, '../resources/blank.wav')
-    );
+    const buffer = fs.readFileSync(path.join(__dirname, '../resources/blank.wav'));
     assert(contentType.fromHeader(buffer) === 'audio/wav');
   });
 });
