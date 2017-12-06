@@ -1,3 +1,5 @@
+'use strict';
+
 const createRequest = require('../../lib/requestwrapper').createRequest;
 const formatError = require('../../lib/requestwrapper').formatErrorIfExists;
 const assert = require('assert');

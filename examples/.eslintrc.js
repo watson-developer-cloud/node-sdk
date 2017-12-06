@@ -6,6 +6,7 @@ module.exports = {
     "require-jsdoc": "off",
     "valid-jsdoc": "off",
     "no-process-exit": "off",
-    "prefer-const": "off"
+    "prefer-const": "off",
+    "no-var": "off"
   }
 };

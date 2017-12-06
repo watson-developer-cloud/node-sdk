@@ -35,11 +35,14 @@ describe('tone_analyzer_integration', function() {
   it('failing tone()', function(done) {
     // this is a failing test
     const mobydick = fs.readFileSync(path.join(__dirname, '../resources/mobydick.txt'), 'utf8');
-    tone_analyzer.tone({ tone_input: mobydick, content_type: 'invalid content type' }, (err, res) => {
-      assert(err);
-      assert(err['x-global-transaction-id']);
-      assert(typeof err['x-global-transaction-id'] === 'string');
-    });
+    tone_analyzer.tone(
+      { tone_input: mobydick, content_type: 'invalid content type' },
+      (err, res) => {
+        assert(err);
+        assert(err['x-global-transaction-id']);
+        assert(typeof err['x-global-transaction-id'] === 'string');
+      }
+    );
     done();
   });
 
