@@ -46,8 +46,8 @@ function invokeToneAsync(conversationPayload, tone_analyzer) {
 }
 
 /**
- * updateUserTone processes the Tone Analyzer payload to pull out the emotion, language and social
- * tones, and identify the meaningful tones (i.e., those tones that meet the specified thresholds).
+ * updateUserTone processes the Tone Analyzer payload to identify the most significant tone 
+ * (i.e., the tone with the largest score)
  * The conversationPayload json object is updated to include these tones.
  * @param conversationPayload json object returned by the Watson Conversation Service
  * @param toneAnalyzerPayload json object returned by the Watson Tone Analyzer Service
@@ -67,7 +67,7 @@ function updateUserTone(conversationPayload, toneAnalyzerPayload, maintainHistor
   // For convenience sake, define a variable for the user object
   var user = conversationPayload.context.user;
 
-  // Extract the tones - emotion, language and social
+  // Extract the document-level tones
   if (toneAnalyzerPayload && toneAnalyzerPayload.document_tone) {
     updateTone(user, toneAnalyzerPayload.document_tone.tones, maintainHistory);
   }
@@ -79,9 +79,9 @@ function updateUserTone(conversationPayload, toneAnalyzerPayload, maintainHistor
 
 /**
  * initToneContext initializes a user object containing tone data (from the Watson Tone Analyzer)
- * @return user json object with the emotion, language and social tones.  The current
- * tone identifies the tone for a specific conversation turn, and the history provides the conversation for
- * all tones up to the current tone for a conversation instance with a user.
+ * @return user json object.  The current tone identifies the tone for a specific conversation turn, 
+ * and the history provides the conversation for all tones up to the current tone for a conversation 
+ * instance with a user.
  */
 function initUser() {
   return {
@@ -94,10 +94,9 @@ function initUser() {
 }
 
 /**
- * updateEmotionTone updates the user emotion tone with the primary emotion - the emotion tone that has
- * a score greater than or equal to the EMOTION_SCORE_THRESHOLD; otherwise primary emotion will be 'neutral'
+ * updateTone updates the user tone with the primary tone - the tone with the largest score
  * @param user a json object representing user information (tone) to be used in conversing with the Conversation Service
- * @param tones an array containing the tones in the payload returned by the Tone Analyzer
+ * @param tones an array containing the document-level tones in the payload returned by the Tone Analyzer
  */
 function updateTone(user, tones, maintainHistory) {
   var maxScore = 0.0;
@@ -112,7 +111,7 @@ function updateTone(user, tones, maintainHistory) {
     }
   });
 
-  // update user emotion tone
+  // update user tone
   user.tone.current = primaryTone;
 
   if (maintainHistory) {
