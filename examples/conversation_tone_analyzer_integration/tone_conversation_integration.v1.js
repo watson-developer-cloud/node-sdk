@@ -41,7 +41,7 @@ require('dotenv').config({ silent: true });
 var conversation = new ConversationV1({
   username: process.env.CONVERSATION_USERNAME || '<conversation_username>',
   password: process.env.CONVERSATION_PASSWORD || '<conversation_password>',
-  version_date: ConversationV1.VERSION_DATE_2017_09_01
+  version_date: '2017-05-26'
 });
 
 /**
@@ -50,7 +50,7 @@ var conversation = new ConversationV1({
 var tone_analyzer = new ToneAnalyzerV3({
   username: process.env.TONE_ANALYZER_USERNAME || '<tone_analyzer_username>',
   password: process.env.TONE_ANALYZER_PASSWORD || '<tone_analyzer_password>',
-  version_date: '2016-05-19'
+  version_date: '2017-09-21'
 });
 
 /**
