@@ -51,36 +51,36 @@ class PersonalityInsightsV2 extends BaseService {
     }
     // Content-Type
     let content_type = null;
-    if (params.text) {
-      content_type = isHTML(params.text) ? 'text/html' : 'text/plain';
+    if (_params.text) {
+      content_type = isHTML(_params.text) ? 'text/html' : 'text/plain';
     } else {
       content_type = 'application/json';
     }
     const headers = {
       'Content-type': content_type,
       'Accept-language':
-        params.accept_language || params.acceptLanguage || 'en',
+        _params.accept_language || _params.acceptLanguage || 'en',
       Accept: undefined
     };
     // service bug: language in header overrides language in each JSON content item, so we can't set it on those requests
     // (also, content-language doesn't really make sense on JSON)
-    if (params.language || params.text) {
-      headers['Content-language'] = params.language || 'en';
+    if (_params.language || _params.text) {
+      headers['Content-language'] = _params.language || 'en';
     }
     const parameters = {
       options: {
         method: 'POST',
         url: '/v2/profile',
-        body: params.text || pick(params, ['contentItems']),
+        body: _params.text || pick(_params, ['contentItems']),
         json: true,
-        qs: pick(params, ['include_raw']),
+        qs: pick(_params, ['include_raw']),
         headers: headers
       },
       defaultOptions: this._options
     };
-    if (params.csv) {
+    if (_params.csv) {
       parameters.options.headers.Accept = 'text/csv';
-      if (params.csv_headers) {
+      if (_params.csv_headers) {
         parameters.options.qs.headers = 'true';
       }
     }
