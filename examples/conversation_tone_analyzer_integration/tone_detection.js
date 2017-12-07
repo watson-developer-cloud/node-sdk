@@ -46,16 +46,14 @@ function invokeToneAsync(conversationPayload, tone_analyzer) {
 }
 
 /**
- * updateUserTone processes the Tone Analyzer payload to identify the most significant tone 
- * (i.e., the tone with the largest score)
- * The conversationPayload json object is updated to include these tones.
+ * updateUserTone processes the Tone Analyzer payload to identify the most significant tone
+ * (i.e., the tone with the largest score). The conversationPayload json object is updated
+ * to include these tones.
  * @param conversationPayload json object returned by the Watson Conversation Service
  * @param toneAnalyzerPayload json object returned by the Watson Tone Analyzer Service
  * @return conversationPayload where the user object has been updated with tone information from the toneAnalyzerPayload
  */
 function updateUserTone(conversationPayload, toneAnalyzerPayload, maintainHistory) {
-  var tone = null;
-
   if (typeof conversationPayload.context === 'undefined') {
     conversationPayload.context = {};
   }
@@ -72,15 +70,15 @@ function updateUserTone(conversationPayload, toneAnalyzerPayload, maintainHistor
     updateTone(user, toneAnalyzerPayload.document_tone.tones, maintainHistory);
   }
 
-  conversationPayload.context.user = user;;
+  conversationPayload.context.user = user;
 
   return conversationPayload;
 }
 
 /**
  * initToneContext initializes a user object containing tone data (from the Watson Tone Analyzer)
- * @return user json object.  The current tone identifies the tone for a specific conversation turn, 
- * and the history provides the conversation for all tones up to the current tone for a conversation 
+ * @return user json object. The current tone identifies the tone for a specific conversation turn,
+ * and the history provides the conversation for all tones up to the current tone for a conversation
  * instance with a user.
  */
 function initUser() {
