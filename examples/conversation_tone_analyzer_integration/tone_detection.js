@@ -19,19 +19,6 @@
 var Promise = require('bluebird');
 
 /**
- * Thresholds for identifying meaningful tones returned by the Watson Tone Analyzer.  Current values are
- * based on the recommendations made by the Watson Tone Analyzer at
- * https://www.ibm.com/watson/developercloud/doc/tone-analyzer/understanding-tone.shtml
- * These thresholds can be adjusted to client/domain requirements.
- */
-var PRIMARY_EMOTION_SCORE_THRESHOLD = 0.5;
-
-/**
- * Labels for the tone categories returned by the Watson Tone Analyzer
- */
-var EMOTION_TONE_LABEL = 'emotion_tone';
-
-/**
  * Public functions for this module
  */
 module.exports = {
@@ -67,7 +54,7 @@ function invokeToneAsync(conversationPayload, tone_analyzer) {
  * @return conversationPayload where the user object has been updated with tone information from the toneAnalyzerPayload
  */
 function updateUserTone(conversationPayload, toneAnalyzerPayload, maintainHistory) {
-  var emotionTone = null;
+  var tone = null;
 
   if (typeof conversationPayload.context === 'undefined') {
     conversationPayload.context = {};
@@ -82,16 +69,10 @@ function updateUserTone(conversationPayload, toneAnalyzerPayload, maintainHistor
 
   // Extract the tones - emotion, language and social
   if (toneAnalyzerPayload && toneAnalyzerPayload.document_tone) {
-    toneAnalyzerPayload.document_tone.tone_categories.forEach(function(toneCategory) {
-      if (toneCategory.category_id === EMOTION_TONE_LABEL) {
-        emotionTone = toneCategory;
-      }
-    });
-
-    updateEmotionTone(user, emotionTone, maintainHistory);
+    updateTone(user, toneAnalyzerPayload.document_tone.tones, maintainHistory);
   }
 
-  conversationPayload.context.user = user;
+  conversationPayload.context.user = user;;
 
   return conversationPayload;
 }
@@ -106,9 +87,7 @@ function initUser() {
   return {
     user: {
       tone: {
-        emotion: {
-          current: null
-        }
+        current: null
       }
     }
   };
@@ -118,36 +97,31 @@ function initUser() {
  * updateEmotionTone updates the user emotion tone with the primary emotion - the emotion tone that has
  * a score greater than or equal to the EMOTION_SCORE_THRESHOLD; otherwise primary emotion will be 'neutral'
  * @param user a json object representing user information (tone) to be used in conversing with the Conversation Service
- * @param emotionTone a json object containing the emotion tones in the payload returned by the Tone Analyzer
+ * @param tones an array containing the tones in the payload returned by the Tone Analyzer
  */
-function updateEmotionTone(user, emotionTone, maintainHistory) {
+function updateTone(user, tones, maintainHistory) {
   var maxScore = 0.0;
-  var primaryEmotion = null;
-  var primaryEmotionScore = null;
+  var primaryTone = null;
+  var primaryToneScore = null;
 
-  emotionTone.tones.forEach(function(tone) {
+  tones.forEach(function(tone) {
     if (tone.score > maxScore) {
       maxScore = tone.score;
-      primaryEmotion = tone.tone_name.toLowerCase();
-      primaryEmotionScore = tone.score;
+      primaryTone = tone.tone_name.toLowerCase();
+      primaryToneScore = tone.score;
     }
   });
 
-  if (maxScore <= PRIMARY_EMOTION_SCORE_THRESHOLD) {
-    primaryEmotion = 'neutral';
-    primaryEmotionScore = null;
-  }
-
   // update user emotion tone
-  user.tone.emotion.current = primaryEmotion;
+  user.tone.current = primaryTone;
 
   if (maintainHistory) {
-    if (typeof user.tone.emotion.history === 'undefined') {
-      user.tone.emotion.history = [];
+    if (typeof user.tone.history === 'undefined') {
+      user.tone.history = [];
     }
-    user.tone.emotion.history.push({
-      tone_name: primaryEmotion,
-      score: primaryEmotionScore
+    user.tone.history.push({
+      tone_name: primaryTone,
+      score: primaryToneScore
     });
   }
 }
