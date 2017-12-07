@@ -8,7 +8,7 @@
   "dependencies": {
     "bluebird": "^3.4.1",
     "dotenv": "^2.0.0",
-    "watson-developer-cloud": "^2.0.3"
+    "watson-developer-cloud": "^3.0.1"
   },
   "engines": {
     "node": ">=4"
