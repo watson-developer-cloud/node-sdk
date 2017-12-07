@@ -22,9 +22,11 @@ import { BaseService } from '../lib/base_service';
 
 class PersonalityInsightsV2 extends BaseService {
   static URL: string = 'https://gateway.watsonplatform.net/personality-insights/api';
+  
   constructor(options: PersonalityInsightsV2.Options) {
     super(options);
   }
+
   /**
    * @param params {Object} The parameters to call the service
    *   The accepted parameters are:
