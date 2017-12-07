@@ -29,13 +29,13 @@ class SpeechToTextV1 extends BaseService {
   name: string; // set by prototype to 'speech_to_text'
   version: string; // set by prototype to 'v1'
 
-  static URL: string = 'https://gateway.watsonplatform.net/speech-to-text/api';
+  static URL: string = 'https://stream.watsonplatform.net/speech-to-text/api';
 
   /**
    * Construct a SpeechToTextV1 object.
    *
    * @param {Object} options - Options for the service.
-   * @param {String} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/speech-to-text/api'). The base url may differ between Bluemix regions.
+   * @param {String} [options.url] - The base url to use when contacting the service (e.g. 'https://stream.watsonplatform.net/speech-to-text/api'). The base url may differ between Bluemix regions.
    * @param {String} [options.username] - The username used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
    * @param {String} [options.password] - The password used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
    * @param {Boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
