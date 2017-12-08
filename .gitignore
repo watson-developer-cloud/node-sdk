@@ -17,6 +17,7 @@ examples/speech_to_text_microphone_input/*.wav
 examples/speech_to_text_microphone_input/*.txt
 lib/*.js
 conversation/*.js
+dialog/*.js
 discovery/*.js
 language-translator/*.js
 natural-language-classifier/*.js

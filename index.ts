@@ -24,6 +24,8 @@ export import ConversationV1 = require('./conversation/v1');
 
 export import DiscoveryV1 = require('./discovery/v1');
 
+export import DialogV1 = require('./dialog/v1');
+
 export import LanguageTranslatorV2 = require('./language-translator/v2');
 
 export import NaturalLanguageClassifierV1 = require('./natural-language-classifier/v1');
@@ -43,7 +45,6 @@ export import VisualRecognitionV3 = require('./visual-recognition/v3');
 // js service files need to be imported this way as
 // a hack to supress compiler warnings about using
 // a .js file with the es6 import construct
-export const DialogV1 = require('./dialog/v1');
 export const PersonalityInsightsV2 = require('./personality-insights/v2');
 
 // adding shim constructors for backwards compatibility
