@@ -46,6 +46,11 @@ describe('discovery-v1', function() {
     username: 'batman'
   };
 
+  const queryPayload = {
+    collection_id: 'col-guid',
+    environment_id: 'env-guid'
+  };
+
   const paths = {
     environments: '/v1/environments',
     environmentinfo: '/v1/environments/env-guid',
@@ -842,10 +847,6 @@ describe('discovery-v1', function() {
           });
         }); // end of _ensureFilename()
         describe('queryRelations()', function() {
-          const queryParams = {
-            collection_id: 'col-guid',
-            environment_id: 'env-guid'
-          };
           it('should check no parameters are provided', function() {
             discovery.queryRelations(null, missingParams);
             discovery.queryRelations(undefined, missingParams);
@@ -854,7 +855,7 @@ describe('discovery-v1', function() {
             discovery.queryRelations({ collection_id: 'col-guid' }, missingParams);
           });
           it('should generate a valid payload', function() {
-            const req = discovery.queryRelations(queryParams, noop);
+            const req = discovery.queryRelations(queryPayload, noop);
             assert.equal(
               req.uri.href,
               service.url + paths.queryRelations + '?version=' + service.version_date
@@ -863,10 +864,6 @@ describe('discovery-v1', function() {
         });
 
         describe('queryEntities()', function() {
-          const queryParams = {
-            collection_id: 'col-guid',
-            environment_id: 'env-guid'
-          };
           it('should check no parameters are provided', function() {
             discovery.queryEntities(null, missingParams);
             discovery.queryEntities(undefined, missingParams);
@@ -875,7 +872,7 @@ describe('discovery-v1', function() {
             discovery.queryEntities({ collection_id: 'col-guid' }, missingParams);
           });
           it('should generate a valid payload', function() {
-            const req = discovery.queryEntities(queryParams, noop);
+            const req = discovery.queryEntities(queryPayload, noop);
             assert.equal(
               req.uri.href,
               service.url + paths.queryEntities + '?version=' + service.version_date
