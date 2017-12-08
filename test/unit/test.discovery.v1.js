@@ -10,6 +10,9 @@ const nock = require('nock');
 
 describe('discovery-v1', function() {
   const noop = function() {};
+  const missingParams = function(err, res) {
+    assert(err && err.message && err.message.match(/Missing/));
+  };
 
   // Test params
   const service = {
@@ -65,7 +68,9 @@ describe('discovery-v1', function() {
       '/v1/environments/env-guid/collections/col-guid/training_data/query-guid/examples',
     trainingdatainfo: '/v1/environments/env-guid/collections/col-guid/training_data/query-guid',
     trainingexample:
-      '/v1/environments/env-guid/collections/col-guid/training_data/query-guid/examples/example-guid'
+      '/v1/environments/env-guid/collections/col-guid/training_data/query-guid/examples/example-guid',
+    queryRelations: '/v1/environments/env-guid/collections/col-guid/query_relations',
+    queryEntities: '/v1/environments/env-guid/collections/col-guid/query_entities'
   };
 
   it('should generate version_date was not specified (negative test)', function() {
@@ -836,6 +841,47 @@ describe('discovery-v1', function() {
             });
           });
         }); // end of _ensureFilename()
+        describe('queryRelations()', function() {
+          const queryParams = {
+            collection_id: 'col-guid',
+            environment_id: 'env-guid'
+          };
+          it('should check no parameters are provided', function() {
+            discovery.queryRelations(null, missingParams);
+            discovery.queryRelations(undefined, missingParams);
+            discovery.queryRelations({}, missingParams);
+            discovery.queryRelations({ environment_id: 'env-guid' }, missingParams);
+            discovery.queryRelations({ collection_id: 'col-guid' }, missingParams);
+          });
+          it('should generate a valid payload', function() {
+            const req = discovery.queryRelations(queryParams, noop);
+            assert.equal(
+              req.uri.href,
+              service.url + paths.queryRelations + '?version=' + service.version_date
+            );
+          });
+        });
+
+        describe('queryEntities()', function() {
+          const queryParams = {
+            collection_id: 'col-guid',
+            environment_id: 'env-guid'
+          };
+          it('should check no parameters are provided', function() {
+            discovery.queryEntities(null, missingParams);
+            discovery.queryEntities(undefined, missingParams);
+            discovery.queryEntities({}, missingParams);
+            discovery.queryEntities({ environment_id: 'env-guid' }, missingParams);
+            discovery.queryEntities({ collection_id: 'col-guid' }, missingParams);
+          });
+          it('should generate a valid payload', function() {
+            const req = discovery.queryEntities(queryParams, noop);
+            assert.equal(
+              req.uri.href,
+              service.url + paths.queryEntities + '?version=' + service.version_date
+            );
+          });
+        });
       });
     });
   });
