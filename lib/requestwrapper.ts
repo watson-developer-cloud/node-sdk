@@ -225,6 +225,14 @@ export function createRequest(parameters, _callback) {
 
   // Query params
   if (options.qs && Object.keys(options.qs).length > 0) {
+    // dialog doesn't like qs params joined with a `,`
+    if (!parameters.defaultOptions.url.match(/dialog\/api/)) {
+      Object.keys(options.qs).forEach(
+        key =>
+          Array.isArray(options.qs[key]) &&
+          (options.qs[key] = options.qs[key].join(','))
+      );
+    }
     options.useQuerystring = true;
   }
 
