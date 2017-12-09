@@ -379,6 +379,7 @@ namespace DialogV1 {
     dialog_id: string;
     /** A client ID obtained from /dialog. **/
     client_id: string;
+    name: string | Array<string>;
   }
 
   export interface UpdateProfileParams {
