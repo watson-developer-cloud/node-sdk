@@ -363,6 +363,19 @@ describe('speech_to_text_integration', function() {
     );
 
     it(
+      'deleteWord()',
+      waitUntilReady(function(done) {
+        speech_to_text.deleteWord(
+          {
+            customization_id: customization_id,
+            word: 'hhonors'
+          },
+          done
+        );
+      })
+    );
+
+    it(
       'deleteCorpus()',
       waitUntilReady(function(done) {
         speech_to_text.deleteCorpus(
@@ -461,6 +474,19 @@ describe('speech_to_text_integration', function() {
 
     it('deleteRecognitionJob()', function(done) {
       deleteAfterRecognitionCompleted(jobId, done);
+    });
+  });
+
+  describe('createLanguageModel', function() {
+    it('should create a language model', function(done) {
+      speech_to_text.createLanguageModel(
+        {
+          name: 'testName',
+          base_model_name: 'en-US_BroadbandModel',
+          content_type: 'application/json'
+        },
+        done
+      );
     });
   });
 });
