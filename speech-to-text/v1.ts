@@ -31,7 +31,10 @@ const PARAMS_ALLOWED = [
   'profanity_filter',
   'smart_formatting',
   'customization_id',
-  'speaker_labels'
+  'speaker_labels',
+  'customization_weight',
+  'acoustic_customization_id'
+
 ];
 
 /**
