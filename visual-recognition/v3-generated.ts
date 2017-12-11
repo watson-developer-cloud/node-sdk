@@ -29,7 +29,7 @@ class VisualRecognitionV3 extends BaseService {
   name: string; // set by prototype to 'visual_recognition'
   version: string; // set by prototype to 'v3'
 
-  static URL: string = 'https://gateway.watsonplatform.net/visual-recognition/api';
+  static URL: string = 'https://gateway-a.watsonplatform.net/visual-recognition/api';
 
   /**
    * Construct a VisualRecognitionV3 object.
