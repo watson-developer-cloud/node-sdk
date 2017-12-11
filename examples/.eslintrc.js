@@ -6,11 +6,7 @@ module.exports = {
     "require-jsdoc": "off",
     "valid-jsdoc": "off",
     "no-process-exit": "off",
-<<<<<<< HEAD
-    "prefer-const": "off"
-=======
     "prefer-const": "off",
     "no-var": "off"
->>>>>>> typescript/master
   }
 };
