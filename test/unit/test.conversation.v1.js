@@ -910,8 +910,6 @@ describe('conversation-v1', function() {
       );
       assert.equal(req.method, 'GET');
     });
-<<<<<<< HEAD
-=======
   });
 
   describe('workspaceStatus()', function() {
@@ -921,7 +919,6 @@ describe('conversation-v1', function() {
       assert(spy.calledOnce);
       spy.restore();
     });
->>>>>>> typescript/master
   });
 
   describe('listWorkspaces()', function() {
