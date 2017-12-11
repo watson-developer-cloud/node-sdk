@@ -34,7 +34,6 @@ const PARAMS_ALLOWED = [
   'speaker_labels',
   'customization_weight',
   'acoustic_customization_id'
-
 ];
 
 /**
