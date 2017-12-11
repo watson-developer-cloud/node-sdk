@@ -294,23 +294,6 @@ describe('conversation_integration', function() {
     });
   });
 
-  describe('workspaceStatus()', function() {
-    it('should get the workspace status', function(done) {
-      const params = {
-        workspace_id: workspace1.workspace_id
-      };
-
-      conversation.workspaceStatus(params, function(err, result) {
-        if (err) {
-          return done(err);
-        }
-        assert.equal(result.workspace_id, workspace1.workspace_id);
-        assert.equal(result.training, true);
-        done();
-      });
-    });
-  });
-
   describe('createIntent()', function() {
     it('should create an intent', function(done) {
       const params = {

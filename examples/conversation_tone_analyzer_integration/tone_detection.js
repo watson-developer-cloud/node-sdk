@@ -54,7 +54,11 @@ module.exports = {
  */
 function invokeToneAsync(conversationPayload, tone_analyzer) {
   return new Promise(function(resolve, reject) {
+<<<<<<< HEAD
     tone_analyzer.tone({ text: conversationPayload.input.text }, (error, data) => {
+=======
+    tone_analyzer.tone({ text: conversationPayload.input.text }, function(error, data) {
+>>>>>>> typescript/master
       if (error) {
         reject(error);
       } else {

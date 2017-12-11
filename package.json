@@ -1,6 +1,6 @@
 {
   "name": "watson-developer-cloud",
-  "version": "3.0.0-beta1",
+  "version": "3.0.0-rc1",
   "description": "Client library to use the IBM Watson Services and AlchemyAPI",
   "main": "./index",
   "repository": {
@@ -52,7 +52,9 @@
     "eslint-config-prettier": "~2.9.0",
     "eslint-plugin-node": "~5.2.1",
     "eslint-plugin-prettier": "~2.3.1",
+    "husky": "^0.14.3",
     "jsdoc": "~3.5.5",
+    "lint-staged": "^6.0.0",
     "memory-fs": "~0.4.1",
     "mocha": "~4.0.1",
     "nock": "~9.1.4",
@@ -91,6 +93,7 @@
     "node": ">=4"
   },
   "scripts": {
+    "precommit": "lint-staged",
     "autofix": "eslint . --fix",
     "browserify": "browserify index.js --standalone Watson --outfile dist/watson.js",
     "build": "tsc && npm run browserify && npm run minify",
@@ -106,5 +109,10 @@
     "watch-doc": "nodemon --watch ./ --ext js,tmpl,json --ignore dist/ --ignore doc/ --ignore test/ --ignore examples/ --exec npm run doc",
     "watch": "npm run test-unit -- --watch",
     "watchify": "watchify index.js --standalone Watson --outfile dist/watson.js --debug --verbose"
+  },
+  "lint-staged": {
+    "test/**/*.js": ["eslint --fix", "test-unit", "git add"],
+    "examples/*.js": ["eslint --fix", "git add"],
+    "**/*.ts": ["tsc", "test-unit", "git add"]
   }
 }

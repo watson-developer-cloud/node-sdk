@@ -1,5 +1,6 @@
+'use strict';
+
 const toPromise = require('../../lib/to-promise');
-const stream = require('stream');
 const fs = require('fs');
 const assert = require('assert');
 const path = require('path');
@@ -12,7 +13,6 @@ describe('toPromise()', () => {
         assert(typeof res === 'string');
       })
       .catch(err => {
-        console.log(err);
         assert(false);
       });
   });
