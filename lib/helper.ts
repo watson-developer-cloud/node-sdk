@@ -164,7 +164,7 @@ export function buildRequestFileObject(
   fileParams: FileParamAttributes
 ): FileObject {
   // build filename
-  let filename: string | Buffer = null;
+  let filename: string | Buffer;
   if (
     isFileObject(fileParams.data) &&
     fileParams.data.options &&
@@ -183,7 +183,7 @@ export function buildRequestFileObject(
     filename = fileParams.data.value.path;
   }
   // toString handles the case when path is a buffer
-  filename = filename ? basename(filename.toString()) : null;
+  filename = filename ? basename(filename.toString()) : '_';
 
   // build contentType
   let contentType: string = 'application/octet-stream';
