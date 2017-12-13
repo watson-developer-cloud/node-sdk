@@ -239,26 +239,19 @@ describe('visual_recognition', function() {
       // we always convert files to request-style objects
       assert.equal(req.formData.images_file.value.path, fake_file.path);
       assert.equal(req.formData.images_file.value, params.images_file);
-      const parameters = JSON.parse(req.formData.parameters);
-      assert.deepEqual(parameters.classifier_ids, ['default']);
-      assert.deepEqual(parameters.owners, ['me', 'IBM']);
-      assert.equal(parameters.url, undefined);
-      assert.equal(parameters.threshold, undefined);
     });
 
     it('should generate a valid paylod with buffers', function() {
       const params = {
         images_file: fake_buffer,
-        parameters: { pwmers: ['me', 'IBM'] }
+        parameters: { owners: ['me', 'IBM'] }
       };
       const req = visual_recognition.classify(params, noop);
       assert.equal(req.uri.href, service.url + classify_path);
       assert.equal(req.method, 'POST');
       // we always convert files to request-style objects
-      assert.equal(req.formData.images_file.options.filename, null);
       assert.equal(req.formData.images_file.value, params.images_file);
       const parameters = JSON.parse(req.formData.parameters);
-      assert.deepEqual(parameters.classifier_ids, ['default']);
       assert.deepEqual(parameters.owners, ['me', 'IBM']);
       assert.equal(parameters.url, undefined);
       assert.equal(parameters.threshold, undefined);
@@ -288,9 +281,6 @@ describe('visual_recognition', function() {
       const req = visual_recognition.classify(params, noop);
       assert.equal(req.method, 'POST');
       assert.equal(req.uri.pathname, URL.parse(service.url + classify_path).pathname);
-      // classifier_ids, owners, url and threshold are now encapsulated
-      // in params.parameters
-      // and are uploaded as a formData object
       assert(req.formData);
       assert(req.formData.parameters);
       const parameters = JSON.parse(req.formData.parameters);
@@ -319,14 +309,15 @@ describe('visual_recognition', function() {
     it('should generate a valid paylod with buffers', function() {
       const params = {
         images_file: fake_buffer,
-        parameters: { pwmers: ['me', 'IBM'] }
+        parameters: { owners: ['me', 'IBM'] }
       };
       const req = visual_recognition.detectFaces(params, noop);
       assert.equal(req.uri.href, service.url + detect_faces_path);
       assert.equal(req.method, 'POST');
       // we always convert files to request-style objects
-      assert.equal(req.formData.images_file.options.filename, null);
       assert.equal(req.formData.images_file.value, params.images_file);
+      const parameters = JSON.parse(req.formData.parameters);
+      assert.deepEqual(parameters, params.parameters);
     });
 
     it('should generate a valid payload with an image file', function() {
@@ -340,8 +331,8 @@ describe('visual_recognition', function() {
       assert.equal(req.method, 'POST');
       // we always convert files to request-style objects
       assert.equal(req.formData.images_file.value.path, fake_file.path);
-      const uploadedParameters = JSON.parse(req.formData.parameters);
-      assert.deepEqual(uploadedParameters.classifier_ids, params.classifier_ids);
+      const parameters = JSON.parse(req.formData.parameters);
+      assert.deepEqual(parameters.classifier_ids, params.classifier_ids);
     });
 
     it('should generate a valid payload with a url', function() {
@@ -353,9 +344,6 @@ describe('visual_recognition', function() {
       const req = visual_recognition.detectFaces(params, noop);
       assert.equal(req.method, 'POST');
       assert.equal(req.uri.pathname, URL.parse(service.url + detect_faces_path).pathname);
-      // classifier_ids, owners, url and threshold are now encapsulated
-      // in params.parameters
-      // and are uploaded as a formData object
       assert(req.formData);
       assert(req.formData.parameters);
       const parameters = JSON.parse(req.formData.parameters);

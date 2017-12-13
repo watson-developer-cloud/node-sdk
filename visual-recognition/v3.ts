@@ -82,15 +82,7 @@ class VisualRecognitionV3 extends GeneratedVisualRecognitionV3 {
     if (params && params.image_file) {
       params.images_file = params.image_file;
     }
-    const defaultParameters = {
-      classifier_ids: ['default'],
-      owners: ['me', 'IBM']
-    };
-    const _parameters = extend(
-      {},
-      defaultParameters,
-      this.parseParameters(params)
-    );
+    const _parameters = this.parseParameters(params);
     const _params = extend(params, { parameters: _parameters });
     return super.classify(_params, callback);
   }
@@ -99,9 +91,8 @@ class VisualRecognitionV3 extends GeneratedVisualRecognitionV3 {
     if (params && params.image_file) {
       params.images_file = params.image_file;
     }
-    const _params = extend({}, params, {
-      parameters: this.parseParameters(params)
-    });
+    const _parameters = this.parseParameters(params);
+    const _params = extend(params, { parameters: _parameters });
     return super.detectFaces(_params, callback);
   }
 
