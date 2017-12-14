@@ -11,7 +11,7 @@ before_install:
 - npm install -g typescript
 script:
 - tsc # use the tsconfig.json to transpile specified service-files
-#- npm test
+- npm test
 - sh scripts/typedoc/generate_typedoc.sh
 after_success:
 - scripts/jsdoc/publish.sh
