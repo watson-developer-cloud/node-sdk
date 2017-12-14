@@ -6,3 +6,4 @@
     ./speech-to-text/v1-generated.ts ./text-to-speech/v1-generated.ts \
     ./tone-analyzer/v3-generated.ts ./visual-recognition/v3-generated.ts \
     ./lib/recognize-stream.ts --target "ES5"
+    
