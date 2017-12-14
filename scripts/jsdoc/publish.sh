@@ -17,9 +17,8 @@ if [ "$TRAVIS_REPO_SLUG" == "watson-developer-cloud/node-sdk" ] && [ "$TRAVIS_PU
     # on tagged builds, $TRAVIS_BRANCH is the tag (e.g. v1.2.3), otherwise it's the branch name (e.g. master)
     rm -rf $TRAVIS_BRANCH
     mkdir $TRAVIS_BRANCH
-    cp -Rf ../doc ./$TRAVIS_BRANCH
-    mv ./$TRAVIS_BRANCH/doc ./$TRAVIS_BRANCH
-    
+    cp -Rf ../doc/. ./$TRAVIS_BRANCH
+
     # update the latest/ symlink
     # on tagged builds, $TRAVIS_TAG is set to the tag, but it's blank on regular builds, unlike $TRAVIS_BRANCH
     if [ $TRAVIS_TAG ]; then
