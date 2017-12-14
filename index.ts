@@ -32,6 +32,8 @@ export import NaturalLanguageClassifierV1 = require('./natural-language-classifi
 
 export import NaturalLanguageUnderstandingV1 = require('./natural-language-understanding/v1');
 
+export import PersonalityInsightsV2 = require('./personality-insights/v2');
+
 export import PersonalityInsightsV3 = require('./personality-insights/v3');
 
 export import SpeechToTextV1 = require('./speech-to-text/v1');
@@ -41,11 +43,6 @@ export import TextToSpeechV1 = require('./text-to-speech/v1');
 export import ToneAnalyzerV3 = require('./tone-analyzer/v3');
 
 export import VisualRecognitionV3 = require('./visual-recognition/v3');
-
-// js service files need to be imported this way as
-// a hack to supress compiler warnings about using
-// a .js file with the es6 import construct
-export const PersonalityInsightsV2 = require('./personality-insights/v2');
 
 // adding shim constructors for backwards compatibility
 
