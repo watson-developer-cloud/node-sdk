@@ -111,7 +111,13 @@ describe('visual_recognition_integration_custom_classifiers', function() {
           return done(err);
         }
         assert.equal(classifier.classifier_id, classifier_id);
-        assert.deepEqual(classifier.classes, [{ class: 'dark' }, { class: 'light' }]);
+        assert.equal(classifier.name, 'light_dark_test_temporary');
+        const classes = [];
+        classifier.classes.forEach(function(element) {
+          classes.push(element.class);
+        });
+        classes.sort();
+        assert.deepEqual(classes, ['dark', 'light']);
         done();
       });
     });
