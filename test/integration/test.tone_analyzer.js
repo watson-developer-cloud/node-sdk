@@ -28,13 +28,13 @@ describe('tone_analyzer_integration', function() {
   });
 
   it('tone()', function(done) {
-    const mobydick = fs.readFileSync(path.join(__dirname, '../resources/mobydick.txt'), 'utf8');
+    const mobydick = fs.readFileSync(path.join(__dirname, '../resources/tweet.txt'), 'utf8');
     tone_analyzer.tone({ tone_input: mobydick, content_type: 'text/plain' }, done);
   });
 
   it('failing tone()', function(done) {
     // this is a failing test
-    const mobydick = fs.readFileSync(path.join(__dirname, '../resources/mobydick.txt'), 'utf8');
+    const mobydick = fs.readFileSync(path.join(__dirname, '../resources/tweet.txt'), 'utf8');
     tone_analyzer.tone(
       { tone_input: mobydick, content_type: 'invalid content type' },
       (err, res) => {

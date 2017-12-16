@@ -27,7 +27,7 @@ describe('tone_analyzer_integration', function() {
   });
 
   it('tone()', function(done) {
-    const mobydick = fs.readFileSync(path.join(__dirname, '../resources/mobydick.txt'), 'utf8');
+    const mobydick = fs.readFileSync(path.join(__dirname, '../resources/tweet.txt'), 'utf8');
     tone_analyzer.tone({ text: mobydick }, done);
   });
 
