@@ -139,7 +139,8 @@ describe('tone_analyzer.v3', function() {
   // Tone Chat Endpoint API - test for valid payload
   it('tone-chat API endpoint should generate a valid payload with utterances json payload', function(done) {
     const tone_chat_path = '/v3/tone_chat';
-    const tone_chat_request = { utterances: [
+    const tone_chat_request = {
+      utterances: [
         { text: 'My charger isn’t working.', user: 'customer' },
         {
           text: 'Thanks for reaching out. Can you give me some more detail about the issue?',
