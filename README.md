@@ -82,7 +82,7 @@ var myInstance = new watson.WhateverServiceV1({
 
 ## Documentation
 
-You can find links to the documentation at https://www.ibm.com/watson/developercloud/doc/index.html. Find the service that you're interested in, click **API reference**, and then select the **Node** tab.
+You can find links to the documentation at https://console.bluemix.net/developer/watson/documentation. Find the service that you're interested in, click **API reference**, and then select the **Node** tab.
 
 There are also auto-generated JSDocs available at http://watson-developer-cloud.github.io/node-sdk/master/
 

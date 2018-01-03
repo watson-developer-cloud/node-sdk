@@ -74,7 +74,7 @@ personality_insights.profile(
 
 /*
  * CSV output example:
- * https://www.ibm.com/watson/developercloud/doc/personality-insights/output.shtml#outputCSV
+ * https://console.bluemix.net/docs/services/personality-insights/output-csv.html#outputCSV
  */
 personality_insights
   .profile_csv({
