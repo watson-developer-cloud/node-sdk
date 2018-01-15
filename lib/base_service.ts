@@ -173,7 +173,7 @@ export class BaseService {
    *
    * Property checked is uppercase service.name suffixed by _USERNAME and _PASSWORD
    *
-   * For example, if service.name is speech_to_text, 
+   * For example, if service.name is speech_to_text,
    * env properties are SPEECH_TO_TEXT_USERNAME and SPEECH_TO_TEXT_PASSWORD
    *
    * @private
@@ -182,19 +182,13 @@ export class BaseService {
    */
   private getCredentialsFromEnvironment(name: string): Credentials {
     const _name: string = name.toUpperCase();
-    let _username: string = process.env[`${_name}_USERNAME`];
-    let _password: string = process.env[`${_name}_PASSWORD`];
-    const _api_key: string = process.env[`${_name}_API_KEY`];
-    let _url: string = process.env[`${_name}_URL`];
-    if (_username === undefined && _name.match(new RegExp("-")) != null){
-      _username = process.env[`NATURAL_LANGUAGE_UNDERSTANDING_USERNAME`];
-    }
-    if (_password === undefined && _name.match(new RegExp("-")) != null){
-      _password = process.env[`NATURAL_LANGUAGE_UNDERSTANDING_PASSWORD`];
-    }
-    if (_url === undefined && _name.match(new RegExp("-")) != null){
-      _url = process.env[`NATURAL_LANGUAGE_UNDERSTANDING_URL`];
-    }
+    // https://github.com/watson-developer-cloud/node-sdk/issues/605
+    const _nameWithUnderscore: string = name.toUpperCase().replace('/-/g','_');
+    const _username: string = process.env[`${_name}_USERNAME`] || process.env[`${_nameWithUnderscore}_USERNAME`];
+    const _password: string = process.env[`${_name}_PASSWORD`] || process.env[`${_nameWithUnderscore}_PASSWORD`];
+    const _api_key: string = process.env[`${_name}_API_KEY`] || process.env[`${_nameWithUnderscore}_API_KEY`];
+    const _url: string = process.env[`${_name}_URL`] || process.env[`${_nameWithUnderscore}_URL`];
+
     return {
       username: _username,
       password: _password,
