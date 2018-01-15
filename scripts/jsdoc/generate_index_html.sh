@@ -24,8 +24,8 @@ echo '<!DOCTYPE html>
         <h1>IBM Watson Developer Cloud Node.js SDK</h1>
     </div>
 
-    <p><a href="http://www.ibm.com/watson/developercloud/">Info</a>
-        | <a href="http://www.ibm.com/watson/developercloud/doc/">Documentation</a>
+    <p><a href="https://www.ibm.com/watson/developer/">Info</a>
+        | <a href="https://console.bluemix.net/developer/watson/documentation">Documentation</a>
         | <a href="https://github.com/watson-developer-cloud/node-sdk">GitHub</a>
         | <a href="https://npmjs.org/package/watson-developer-cloud">npm</a>
     </p>
