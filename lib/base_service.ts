@@ -183,7 +183,7 @@ export class BaseService {
   private getCredentialsFromEnvironment(name: string): Credentials {
     const _name: string = name.toUpperCase();
     // https://github.com/watson-developer-cloud/node-sdk/issues/605
-    const _nameWithUnderscore: string = name.toUpperCase().replace('/-/g','_');
+    const _nameWithUnderscore: string = _name.replace(/-/g, '_');
     const _username: string = process.env[`${_name}_USERNAME`] || process.env[`${_nameWithUnderscore}_USERNAME`];
     const _password: string = process.env[`${_name}_PASSWORD`] || process.env[`${_nameWithUnderscore}_PASSWORD`];
     const _api_key: string = process.env[`${_name}_API_KEY`] || process.env[`${_nameWithUnderscore}_API_KEY`];
