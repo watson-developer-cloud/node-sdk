@@ -112,6 +112,11 @@
     "watchify": "watchify index.js --standalone Watson --outfile dist/watson.js --debug --verbose"
   },
   "lint-staged": {
+    "**/*.ts": [
+      "tsc",
+      "test-unit",
+      "git add"
+    ],
     "test/**/*.js": [
       "eslint --fix",
       "test-unit",
@@ -119,11 +124,6 @@
     ],
     "examples/*.js": [
       "eslint --fix",
-      "git add"
-    ],
-    "**/*.ts": [
-      "tsc",
-      "test-unit",
       "git add"
     ]
   }
