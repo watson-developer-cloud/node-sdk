@@ -77,6 +77,18 @@ describe('natural_language_understanding', function() {
       assert(nluHyphenated);
       assert.equal(nluHyphenated.getCredentials().username, 'hyphenated-user');
     });
+
+    it('should load its credentials from environment (underscore name)', function() {
+      process.env.NATURAL_LANGUAGE_UNDERSTANDING_USERNAME = 'user';
+      process.env.NATURAL_LANGUAGE_UNDERSTANDING_PASSWORD = 'password';
+      process.env.NATURAL_LANGUAGE_UNDERSTANDING_URL =
+        'https://gateway.watsonplatform.net/natural-language-understanding/api';
+      const nluUnderscore = new watson.NaturalLanguageUnderstandingV1({
+        version_date: watson.NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27
+      });
+      assert(nluUnderscore);
+      assert.equal(nluUnderscore.getCredentials().username, 'user');
+    });
   });
 
   it('2016_01_23 version should work', function(done) {
