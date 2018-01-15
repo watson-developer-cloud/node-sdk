@@ -26,5 +26,5 @@ Command to run the sample code
 [bluemix_conversation_service]: https://console.ng.bluemix.net/catalog/services/conversation/
 [bluemix_tone_analyzer_service]: https://console.ng.bluemix.net/catalog/services/tone-analyzer/
 [conversation_simple_workspace]: https://github.com/watson-developer-cloud/conversation-simple#workspace
-[tone_conversation_integration_example]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/tone_conversation_integration.v1.js
-[tone_conversation_integration_example_tone_detection]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/conversation_addons/tone_detection.js
+[tone_conversation_integration_example]: https://github.com/watson-developer-cloud/node-sdk/blob/master/examples/conversation_tone_analyzer_integration/tone_conversation_integration.v1.js
+[tone_conversation_integration_example_tone_detection]: https://github.com/watson-developer-cloud/node-sdk/blob/master/examples/conversation_tone_analyzer_integration/tone_detection.js
