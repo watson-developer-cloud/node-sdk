@@ -294,7 +294,7 @@ describe('speech_to_text', function() {
     recognizeStream.setEncoding('utf8');
 
     // note: none of these tests actually run(or even register with mocha), but the callbacks let the previous test pass :(
-    recognizeStream.on('connect', function(socket) {
+    recognizeStream.on('open', function(socket) {
       it('should have a socket connection with a correct config', function(done) {
         assert.notStrictEqual(socket, socket.config, socket.config.fragmentOutgoingMessages);
         assert.notStrictEqual(socket, socket.config, socket.config.fragmentOutgoingMessages);
@@ -310,7 +310,7 @@ describe('speech_to_text', function() {
       });
     });
 
-    recognizeStream.on('results', function(obj) {
+    recognizeStream.on('data', function(obj) {
       console.log(JSON.stringify(obj)); // eslint-disable-line no-console
       it('should generate a valid response', function(done) {
         assert.equal(obj, service_response);
