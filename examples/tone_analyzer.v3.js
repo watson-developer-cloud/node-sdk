@@ -10,7 +10,7 @@ var tone_analyzer = new ToneAnalyzerV3({
 
 tone_analyzer.tone(
   {
-    tone_input: 'Greetings from Watson Developer Cloud!',
+    tone_input: 'Greetings from the Watson Developer Cloud Node SDK, we are pleased to say hello!',
     content_type: 'text/plain'
   },
   function(err, tone) {
