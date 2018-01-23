@@ -220,7 +220,7 @@ export function createRequest(parameters, _callback) {
   // Headers
   options.headers = extend({}, options.headers);
   if (!isBrowser) {
-    options.headers['User-Agent'] = pkg.name + '-nodejs-' + pkg.version;
+    options.headers['User-Agent'] = `${pkg.name}-nodejs-${pkg.version};${options.headers['User-Agent'] || ''}`;
   }
 
   // Query params
