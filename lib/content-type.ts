@@ -1,5 +1,7 @@
 import { extname } from 'path';
 
+/// <reference path="../blob.d.ts" />
+
 // This module attempts to identify common content-types based on the filename or header
 // It is not exhaustive, and for best results, you should always manually specify the content-type option.
 // See the complete list of supported content-types at

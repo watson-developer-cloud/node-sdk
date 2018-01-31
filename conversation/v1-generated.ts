@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+
 import * as extend from 'extend';
 import { RequestResponse } from 'request';
 import { createRequest } from '../lib/requestwrapper';
@@ -74,12 +75,12 @@ class ConversationV1 extends BaseService {
    * @param {Object} [params.metadata] - Any metadata related to the workspace.
    * @param {boolean} [params.learning_opt_out] - Whether training data from the workspace can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   createWorkspace(
     params?: ConversationV1.CreateWorkspaceParams,
     callback?: ConversationV1.Callback<ConversationV1.Workspace>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params =
       typeof params === 'function' && !callback ? {} : extend({}, params);
     const _callback =
@@ -122,12 +123,12 @@ class ConversationV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - The workspace ID.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   deleteWorkspace(
     params: ConversationV1.DeleteWorkspaceParams,
     callback?: ConversationV1.Callback<ConversationV1.Empty>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id'];
@@ -162,12 +163,12 @@ class ConversationV1 extends BaseService {
    * @param {string} params.workspace_id - The workspace ID.
    * @param {boolean} [params.export] - Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   getWorkspace(
     params: ConversationV1.GetWorkspaceParams,
     callback?: ConversationV1.Callback<ConversationV1.WorkspaceExport>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id'];
@@ -208,12 +209,12 @@ class ConversationV1 extends BaseService {
    * @param {string} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
    * @param {string} [params.cursor] - A token identifying the last value from the previous page of results.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   listWorkspaces(
     params?: ConversationV1.ListWorkspacesParams,
     callback?: ConversationV1.Callback<ConversationV1.WorkspaceCollection>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params =
       typeof params === 'function' && !callback ? {} : extend({}, params);
     const _callback =
@@ -258,12 +259,12 @@ class ConversationV1 extends BaseService {
    * @param {Object} [params.metadata] - Any metadata related to the workspace.
    * @param {boolean} [params.learning_opt_out] - Whether training data from the workspace can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   updateWorkspace(
     params: ConversationV1.UpdateWorkspaceParams,
     callback?: ConversationV1.Callback<ConversationV1.Workspace>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id'];
@@ -319,12 +320,12 @@ class ConversationV1 extends BaseService {
    * @param {RuntimeIntent[]} [params.intents] - An array of name-confidence pairs for the user input. Include the intents from the previous response when they do not need to change and to prevent Watson from trying to identify them.
    * @param {OutputData} [params.output] - System output. Include the output from the request when you have several requests within the same Dialog turn to pass back in the intermediate information.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   message(
     params: ConversationV1.MessageParams,
     callback?: ConversationV1.Callback<ConversationV1.MessageResponse>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id'];
@@ -376,12 +377,12 @@ class ConversationV1 extends BaseService {
    * @param {string} [params.description] - The description of the intent.
    * @param {CreateExample[]} [params.examples] - An array of user input examples.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   createIntent(
     params: ConversationV1.CreateIntentParams,
     callback?: ConversationV1.Callback<ConversationV1.Intent>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id', 'intent'];
@@ -424,12 +425,12 @@ class ConversationV1 extends BaseService {
    * @param {string} params.workspace_id - The workspace ID.
    * @param {string} params.intent - The intent name (for example, `pizza_order`).
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   deleteIntent(
     params: ConversationV1.DeleteIntentParams,
     callback?: ConversationV1.Callback<ConversationV1.Empty>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id', 'intent'];
@@ -466,12 +467,12 @@ class ConversationV1 extends BaseService {
    * @param {string} params.intent - The intent name (for example, `pizza_order`).
    * @param {boolean} [params.export] - Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   getIntent(
     params: ConversationV1.GetIntentParams,
     callback?: ConversationV1.Callback<ConversationV1.IntentExport>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id', 'intent'];
@@ -515,12 +516,12 @@ class ConversationV1 extends BaseService {
    * @param {string} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
    * @param {string} [params.cursor] - A token identifying the last value from the previous page of results.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   listIntents(
     params: ConversationV1.ListIntentsParams,
     callback?: ConversationV1.Callback<ConversationV1.IntentCollection>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id'];
@@ -566,12 +567,12 @@ class ConversationV1 extends BaseService {
    * @param {string} [params.new_description] - The description of the intent.
    * @param {CreateExample[]} [params.new_examples] - An array of user input examples for the intent.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   updateIntent(
     params: ConversationV1.UpdateIntentParams,
     callback?: ConversationV1.Callback<ConversationV1.Intent>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id', 'intent'];
@@ -620,12 +621,12 @@ class ConversationV1 extends BaseService {
    * @param {string} params.intent - The intent name (for example, `pizza_order`).
    * @param {string} params.text - The text of a user input example.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   createExample(
     params: ConversationV1.CreateExampleParams,
     callback?: ConversationV1.Callback<ConversationV1.Example>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id', 'intent', 'text'];
@@ -668,12 +669,12 @@ class ConversationV1 extends BaseService {
    * @param {string} params.intent - The intent name (for example, `pizza_order`).
    * @param {string} params.text - The text of the user input example.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   deleteExample(
     params: ConversationV1.DeleteExampleParams,
     callback?: ConversationV1.Callback<ConversationV1.Empty>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id', 'intent', 'text'];
@@ -711,12 +712,12 @@ class ConversationV1 extends BaseService {
    * @param {string} params.intent - The intent name (for example, `pizza_order`).
    * @param {string} params.text - The text of the user input example.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   getExample(
     params: ConversationV1.GetExampleParams,
     callback?: ConversationV1.Callback<ConversationV1.Example>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id', 'intent', 'text'];
@@ -757,12 +758,12 @@ class ConversationV1 extends BaseService {
    * @param {string} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
    * @param {string} [params.cursor] - A token identifying the last value from the previous page of results.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   listExamples(
     params: ConversationV1.ListExamplesParams,
     callback?: ConversationV1.Callback<ConversationV1.ExampleCollection>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id', 'intent'];
@@ -807,12 +808,12 @@ class ConversationV1 extends BaseService {
    * @param {string} params.text - The text of the user input example.
    * @param {string} [params.new_text] - The text of the user input example.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   updateExample(
     params: ConversationV1.UpdateExampleParams,
     callback?: ConversationV1.Callback<ConversationV1.Example>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id', 'intent', 'text'];
@@ -863,12 +864,12 @@ class ConversationV1 extends BaseService {
    * @param {CreateValue[]} [params.values] - An array of entity values.
    * @param {boolean} [params.fuzzy_match] - Whether to use fuzzy matching for the entity.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   createEntity(
     params: ConversationV1.CreateEntityParams,
     callback?: ConversationV1.Callback<ConversationV1.Entity>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id', 'entity'];
@@ -913,12 +914,12 @@ class ConversationV1 extends BaseService {
    * @param {string} params.workspace_id - The workspace ID.
    * @param {string} params.entity - The name of the entity.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   deleteEntity(
     params: ConversationV1.DeleteEntityParams,
     callback?: ConversationV1.Callback<ConversationV1.Empty>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id', 'entity'];
@@ -955,12 +956,12 @@ class ConversationV1 extends BaseService {
    * @param {string} params.entity - The name of the entity.
    * @param {boolean} [params.export] - Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   getEntity(
     params: ConversationV1.GetEntityParams,
     callback?: ConversationV1.Callback<ConversationV1.EntityExport>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id', 'entity'];
@@ -1004,12 +1005,12 @@ class ConversationV1 extends BaseService {
    * @param {string} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
    * @param {string} [params.cursor] - A token identifying the last value from the previous page of results.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   listEntities(
     params: ConversationV1.ListEntitiesParams,
     callback?: ConversationV1.Callback<ConversationV1.EntityCollection>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id'];
@@ -1057,12 +1058,12 @@ class ConversationV1 extends BaseService {
    * @param {boolean} [params.new_fuzzy_match] - Whether to use fuzzy matching for the entity.
    * @param {CreateValue[]} [params.new_values] - An array of entity values.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   updateEntity(
     params: ConversationV1.UpdateEntityParams,
     callback?: ConversationV1.Callback<ConversationV1.Entity>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id', 'entity'];
@@ -1117,12 +1118,12 @@ class ConversationV1 extends BaseService {
    * @param {string[]} [params.patterns] - An array of patterns for the entity value. A pattern is specified as a regular expression.
    * @param {string} [params.value_type] - Specifies the type of value (`synonyms` or `patterns`). The default value is `synonyms`.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   createValue(
     params: ConversationV1.CreateValueParams,
     callback?: ConversationV1.Callback<ConversationV1.Value>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id', 'entity', 'value'];
@@ -1169,12 +1170,12 @@ class ConversationV1 extends BaseService {
    * @param {string} params.entity - The name of the entity.
    * @param {string} params.value - The text of the entity value.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   deleteValue(
     params: ConversationV1.DeleteValueParams,
     callback?: ConversationV1.Callback<ConversationV1.Empty>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id', 'entity', 'value'];
@@ -1213,12 +1214,12 @@ class ConversationV1 extends BaseService {
    * @param {string} params.value - The text of the entity value.
    * @param {boolean} [params.export] - Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   getValue(
     params: ConversationV1.GetValueParams,
     callback?: ConversationV1.Callback<ConversationV1.ValueExport>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id', 'entity', 'value'];
@@ -1264,12 +1265,12 @@ class ConversationV1 extends BaseService {
    * @param {string} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
    * @param {string} [params.cursor] - A token identifying the last value from the previous page of results.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   listValues(
     params: ConversationV1.ListValuesParams,
     callback?: ConversationV1.Callback<ConversationV1.ValueCollection>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id', 'entity'];
@@ -1319,12 +1320,12 @@ class ConversationV1 extends BaseService {
    * @param {string[]} [params.new_synonyms] - An array of synonyms for the entity value.
    * @param {string[]} [params.new_patterns] - An array of patterns for the entity value. A pattern is specified as a regular expression.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   updateValue(
     params: ConversationV1.UpdateValueParams,
     callback?: ConversationV1.Callback<ConversationV1.Value>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id', 'entity', 'value'];
@@ -1377,12 +1378,12 @@ class ConversationV1 extends BaseService {
    * @param {string} params.value - The text of the entity value.
    * @param {string} params.synonym - The text of the synonym.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   createSynonym(
     params: ConversationV1.CreateSynonymParams,
     callback?: ConversationV1.Callback<ConversationV1.Synonym>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
@@ -1428,12 +1429,12 @@ class ConversationV1 extends BaseService {
    * @param {string} params.value - The text of the entity value.
    * @param {string} params.synonym - The text of the synonym.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   deleteSynonym(
     params: ConversationV1.DeleteSynonymParams,
     callback?: ConversationV1.Callback<ConversationV1.Empty>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
@@ -1474,12 +1475,12 @@ class ConversationV1 extends BaseService {
    * @param {string} params.value - The text of the entity value.
    * @param {string} params.synonym - The text of the synonym.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   getSynonym(
     params: ConversationV1.GetSynonymParams,
     callback?: ConversationV1.Callback<ConversationV1.Synonym>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
@@ -1523,12 +1524,12 @@ class ConversationV1 extends BaseService {
    * @param {string} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
    * @param {string} [params.cursor] - A token identifying the last value from the previous page of results.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   listSynonyms(
     params: ConversationV1.ListSynonymsParams,
     callback?: ConversationV1.Callback<ConversationV1.SynonymCollection>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id', 'entity', 'value'];
@@ -1576,12 +1577,12 @@ class ConversationV1 extends BaseService {
    * @param {string} params.synonym - The text of the synonym.
    * @param {string} [params.new_synonym] - The text of the synonym.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   updateSynonym(
     params: ConversationV1.UpdateSynonymParams,
     callback?: ConversationV1.Callback<ConversationV1.Synonym>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
@@ -1643,12 +1644,12 @@ class ConversationV1 extends BaseService {
    * @param {string} [params.event_name] - How an `event_handler` node is processed.
    * @param {string} [params.variable] - The location in the dialog context where output is stored.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   createDialogNode(
     params: ConversationV1.CreateDialogNodeParams,
     callback?: ConversationV1.Callback<ConversationV1.DialogNode>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id', 'dialog_node'];
@@ -1702,12 +1703,12 @@ class ConversationV1 extends BaseService {
    * @param {string} params.workspace_id - The workspace ID.
    * @param {string} params.dialog_node - The dialog node ID (for example, `get_order`).
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   deleteDialogNode(
     params: ConversationV1.DeleteDialogNodeParams,
     callback?: ConversationV1.Callback<ConversationV1.Empty>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id', 'dialog_node'];
@@ -1743,12 +1744,12 @@ class ConversationV1 extends BaseService {
    * @param {string} params.workspace_id - The workspace ID.
    * @param {string} params.dialog_node - The dialog node ID (for example, `get_order`).
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   getDialogNode(
     params: ConversationV1.GetDialogNodeParams,
     callback?: ConversationV1.Callback<ConversationV1.DialogNode>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id', 'dialog_node'];
@@ -1787,12 +1788,12 @@ class ConversationV1 extends BaseService {
    * @param {string} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
    * @param {string} [params.cursor] - A token identifying the last value from the previous page of results.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   listDialogNodes(
     params: ConversationV1.ListDialogNodesParams,
     callback?: ConversationV1.Callback<ConversationV1.DialogNodeCollection>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id'];
@@ -1848,12 +1849,12 @@ class ConversationV1 extends BaseService {
    * @param {string} [params.new_variable] - The location in the dialog context where output is stored.
    * @param {DialogNodeAction[]} [params.new_actions] - The actions for the dialog node.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   updateDialogNode(
     params: ConversationV1.UpdateDialogNodeParams,
     callback?: ConversationV1.Callback<ConversationV1.DialogNode>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id', 'dialog_node', 'new_dialog_node'];
@@ -1914,12 +1915,12 @@ class ConversationV1 extends BaseService {
    * @param {number} [params.page_limit] - The number of records to return in each page of results. The default page limit is 100.
    * @param {string} [params.cursor] - A token identifying the last value from the previous page of results.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   listAllLogs(
     params: ConversationV1.ListAllLogsParams,
     callback?: ConversationV1.Callback<ConversationV1.LogCollection>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['filter'];
@@ -1960,12 +1961,12 @@ class ConversationV1 extends BaseService {
    * @param {number} [params.page_limit] - The number of records to return in each page of results. The default page limit is 100.
    * @param {string} [params.cursor] - A token identifying the last value from the previous page of results.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   listLogs(
     params: ConversationV1.ListLogsParams,
     callback?: ConversationV1.Callback<ConversationV1.LogCollection>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id'];
@@ -2011,12 +2012,12 @@ class ConversationV1 extends BaseService {
    * @param {string} params.workspace_id - The workspace ID.
    * @param {string} params.text - The text of a user input marked as irrelevant input.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   createCounterexample(
     params: ConversationV1.CreateCounterexampleParams,
     callback?: ConversationV1.Callback<ConversationV1.Counterexample>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id', 'text'];
@@ -2057,12 +2058,12 @@ class ConversationV1 extends BaseService {
    * @param {string} params.workspace_id - The workspace ID.
    * @param {string} params.text - The text of a user input counterexample (for example, `What are you wearing?`).
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   deleteCounterexample(
     params: ConversationV1.DeleteCounterexampleParams,
     callback?: ConversationV1.Callback<ConversationV1.Empty>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id', 'text'];
@@ -2098,12 +2099,12 @@ class ConversationV1 extends BaseService {
    * @param {string} params.workspace_id - The workspace ID.
    * @param {string} params.text - The text of a user input counterexample (for example, `What are you wearing?`).
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   getCounterexample(
     params: ConversationV1.GetCounterexampleParams,
     callback?: ConversationV1.Callback<ConversationV1.Counterexample>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id', 'text'];
@@ -2142,12 +2143,12 @@ class ConversationV1 extends BaseService {
    * @param {string} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
    * @param {string} [params.cursor] - A token identifying the last value from the previous page of results.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   listCounterexamples(
     params: ConversationV1.ListCounterexamplesParams,
     callback?: ConversationV1.Callback<ConversationV1.CounterexampleCollection>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id'];
@@ -2190,12 +2191,12 @@ class ConversationV1 extends BaseService {
    * @param {string} params.text - The text of a user input counterexample (for example, `What are you wearing?`).
    * @param {string} [params.new_text] - The text of the example to be marked as irrelevant input.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   updateCounterexample(
     params: ConversationV1.UpdateCounterexampleParams,
     callback?: ConversationV1.Callback<ConversationV1.Counterexample>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['workspace_id', 'text'];

@@ -61,14 +61,14 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * @param {string} params.classifier_id - Classifier ID to use.
    * @param {string} params.text - The submitted phrase.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   classify(
     params: NaturalLanguageClassifierV1.ClassifyParams,
     callback?: NaturalLanguageClassifierV1.Callback<
       NaturalLanguageClassifierV1.Classification
     >
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['classifier_id', 'text'];
@@ -106,17 +106,17 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * Sends data to create and train a classifier and returns information about the new classifier.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {ReadableStream|FileObject|Buffer} params.metadata - Metadata in JSON format. The metadata identifies the language of the data, and an optional name to identify the classifier. For details, see the [API reference](https://www.ibm.com/watson/developercloud/natural-language-classifier/api/v1/#create_classifier).
-   * @param {ReadableStream|FileObject|Buffer} params.training_data - Training data in CSV format. Each text value must have at least one class. The data can include up to 15,000 records. For details, see [Using your own data](https://console.bluemix.net/docs/services/natural-language-classifier/using-your-data.html).
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} params.metadata - Metadata in JSON format. The metadata identifies the language of the data, and an optional name to identify the classifier. For details, see the [API reference](https://www.ibm.com/watson/developercloud/natural-language-classifier/api/v1/#create_classifier).
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} params.training_data - Training data in CSV format. Each text value must have at least one class. The data can include up to 15,000 records. For details, see [Using your own data](https://console.bluemix.net/docs/services/natural-language-classifier/using-your-data.html).
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   createClassifier(
     params: NaturalLanguageClassifierV1.CreateClassifierParams,
     callback?: NaturalLanguageClassifierV1.Callback<
       NaturalLanguageClassifierV1.Classifier
     >
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['metadata', 'training_data'];
@@ -156,14 +156,14 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.classifier_id - Classifier ID to delete.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   deleteClassifier(
     params: NaturalLanguageClassifierV1.DeleteClassifierParams,
     callback?: NaturalLanguageClassifierV1.Callback<
       NaturalLanguageClassifierV1.Empty
     >
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['classifier_id'];
@@ -198,14 +198,14 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.classifier_id - Classifier ID to query.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   getClassifier(
     params: NaturalLanguageClassifierV1.GetClassifierParams,
     callback?: NaturalLanguageClassifierV1.Callback<
       NaturalLanguageClassifierV1.Classifier
     >
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['classifier_id'];
@@ -239,14 +239,14 @@ class NaturalLanguageClassifierV1 extends BaseService {
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   listClassifiers(
     params?: NaturalLanguageClassifierV1.ListClassifiersParams,
     callback?: NaturalLanguageClassifierV1.Callback<
       NaturalLanguageClassifierV1.ClassifierList
     >
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params =
       typeof params === 'function' && !callback ? {} : extend({}, params);
     const _callback =
@@ -311,9 +311,9 @@ namespace NaturalLanguageClassifierV1 {
   /** Parameters for the `createClassifier` operation. **/
   export interface CreateClassifierParams {
     /** Metadata in JSON format. The metadata identifies the language of the data, and an optional name to identify the classifier. For details, see the [API reference](https://www.ibm.com/watson/developercloud/natural-language-classifier/api/v1/#create_classifier). **/
-    metadata: ReadableStream | FileObject | Buffer;
+    metadata: NodeJS.ReadableStream | FileObject | Buffer;
     /** Training data in CSV format. Each text value must have at least one class. The data can include up to 15,000 records. For details, see [Using your own data](https://console.bluemix.net/docs/services/natural-language-classifier/using-your-data.html). **/
-    training_data: ReadableStream | FileObject | Buffer;
+    training_data: NodeJS.ReadableStream | FileObject | Buffer;
   }
 
   /** Parameters for the `deleteClassifier` operation. **/

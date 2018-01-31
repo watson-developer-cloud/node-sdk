@@ -61,14 +61,14 @@ class LanguageTranslatorV2 extends BaseService {
    * @param {string} [params.source] - Used in combination with target as an alternative way to select the model for translation. When target and source are set, and model_id is not set, the system chooses a default model with the right language pair to translate (usually the model based on the news domain).
    * @param {string} [params.target] - Used in combination with source as an alternative way to select the model for translation. When target and source are set, and model_id is not set, the system chooses a default model with the right language pair to translate (usually the model based on the news domain).
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   translate(
     params: LanguageTranslatorV2.TranslateParams,
     callback?: LanguageTranslatorV2.Callback<
       LanguageTranslatorV2.TranslationResult
     >
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['text'];
@@ -109,14 +109,14 @@ class LanguageTranslatorV2 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.text - Input text in UTF-8 format.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   identify(
     params: LanguageTranslatorV2.IdentifyParams,
     callback?: LanguageTranslatorV2.Callback<
       LanguageTranslatorV2.IdentifiedLanguages
     >
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['text'];
@@ -149,14 +149,14 @@ class LanguageTranslatorV2 extends BaseService {
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   listIdentifiableLanguages(
     params?: LanguageTranslatorV2.ListIdentifiableLanguagesParams,
     callback?: LanguageTranslatorV2.Callback<
       LanguageTranslatorV2.IdentifiableLanguages
     >
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params =
       typeof params === 'function' && !callback ? {} : extend({}, params);
     const _callback =
@@ -187,18 +187,18 @@ class LanguageTranslatorV2 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.base_model_id - Specifies the domain model that is used as the base for the training. To see current supported domain models, use the GET /v2/models parameter.
    * @param {string} [params.name] - The model name. Valid characters are letters, numbers, -, and _. No spaces.
-   * @param {ReadableStream|FileObject|Buffer} [params.forced_glossary] - A TMX file with your customizations. The customizations in the file completely overwrite the domain data translation, including high frequency or high confidence phrase translations. You can upload only one glossary with a file size less than 10 MB per call.
-   * @param {ReadableStream|FileObject|Buffer} [params.parallel_corpus] - A TMX file that contains entries that are treated as a parallel corpus instead of a glossary.
-   * @param {ReadableStream|FileObject|Buffer} [params.monolingual_corpus] - A UTF-8 encoded plain text file that is used to customize the target language model.
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.forced_glossary] - A TMX file with your customizations. The customizations in the file completely overwrite the domain data translation, including high frequency or high confidence phrase translations. You can upload only one glossary with a file size less than 10 MB per call.
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.parallel_corpus] - A TMX file that contains entries that are treated as a parallel corpus instead of a glossary.
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.monolingual_corpus] - A UTF-8 encoded plain text file that is used to customize the target language model.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   createModel(
     params: LanguageTranslatorV2.CreateModelParams,
     callback?: LanguageTranslatorV2.Callback<
       LanguageTranslatorV2.TranslationModel
     >
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['base_model_id'];
@@ -247,14 +247,14 @@ class LanguageTranslatorV2 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.model_id - The model identifier.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   deleteModel(
     params: LanguageTranslatorV2.DeleteModelParams,
     callback?: LanguageTranslatorV2.Callback<
       LanguageTranslatorV2.DeleteModelResult
     >
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['model_id'];
@@ -286,14 +286,14 @@ class LanguageTranslatorV2 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.model_id - Model ID to use.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   getModel(
     params: LanguageTranslatorV2.GetModelParams,
     callback?: LanguageTranslatorV2.Callback<
       LanguageTranslatorV2.TranslationModel
     >
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['model_id'];
@@ -327,14 +327,14 @@ class LanguageTranslatorV2 extends BaseService {
    * @param {string} [params.target] - Filter models by target language.
    * @param {boolean} [params.default_models] - Valid values are leaving it unset, `true`, and `false`. When `true`, it filters models to return the default_models model or models. When `false`, it returns the non-default_models model or models. If not set, it returns all models, default_models and non-default_models.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   listModels(
     params?: LanguageTranslatorV2.ListModelsParams,
     callback?: LanguageTranslatorV2.Callback<
       LanguageTranslatorV2.TranslationModels
     >
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params =
       typeof params === 'function' && !callback ? {} : extend({}, params);
     const _callback =
@@ -422,11 +422,11 @@ namespace LanguageTranslatorV2 {
     /** The model name. Valid characters are letters, numbers, -, and _. No spaces. **/
     name?: string;
     /** A TMX file with your customizations. The customizations in the file completely overwrite the domain data translation, including high frequency or high confidence phrase translations. You can upload only one glossary with a file size less than 10 MB per call. **/
-    forced_glossary?: ReadableStream | FileObject | Buffer;
+    forced_glossary?: NodeJS.ReadableStream | FileObject | Buffer;
     /** A TMX file that contains entries that are treated as a parallel corpus instead of a glossary. **/
-    parallel_corpus?: ReadableStream | FileObject | Buffer;
+    parallel_corpus?: NodeJS.ReadableStream | FileObject | Buffer;
     /** A UTF-8 encoded plain text file that is used to customize the target language model. **/
-    monolingual_corpus?: ReadableStream | FileObject | Buffer;
+    monolingual_corpus?: NodeJS.ReadableStream | FileObject | Buffer;
   }
 
   /** Parameters for the `deleteModel` operation. **/

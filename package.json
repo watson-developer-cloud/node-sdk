@@ -102,7 +102,7 @@
     "doc": "jsdoc -c scripts/jsdoc/config.json",
     "lint": "npm run compat-check && eslint . --cache && dependency-lint",
     "minify": "uglifyjs --compress --mangle --output dist/watson.min.js --preamble \"// Watson Developer Cloud\n// JavaScript SDK$npm_package_version\n// Generated at `date`\n// Copyright IBM ($npm_package_license)\n// $npm_package_homepage\" -- dist/watson.js",
-    "prepublish": "npm run build",
+    "prepublishOnly": "npm run build",
     "test-browser": "karma start --single-run",
     "test-integration": "mocha test/integration",
     "test-unit": "mocha test/unit/",

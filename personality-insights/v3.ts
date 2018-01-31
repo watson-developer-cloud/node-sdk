@@ -88,14 +88,14 @@ class PersonalityInsightsV3 extends GeneratedPersonalityInsightsV3 {
    * @param {boolean} [params.csv_headers] - If `true`, column labels are returned with a CSV response; if `false` (the default), they are not. Applies only when the `Accept` header is set to `text/csv`.
    * @param {boolean} [params.consumption_preferences] - If `true`, information about consumption preferences is returned with the results; if `false` (the default), the response does not include the information.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   profile_csv(
     params: GeneratedPersonalityInsightsV3.ProfileParams,
     callback?: GeneratedPersonalityInsightsV3.Callback<
       GeneratedPersonalityInsightsV3.Profile
     >
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['content', 'content_type'];
