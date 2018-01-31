@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/// <reference path="../blob.d.ts" />
+/// <reference path="../lib/blob.d.ts" />
 
 import * as extend from 'extend';
 import { RequestResponse } from 'request';
