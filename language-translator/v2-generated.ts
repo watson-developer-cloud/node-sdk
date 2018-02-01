@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 IBM All Rights Reserved.
+ * Copyright 2018 IBM All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import { FileObject } from '../lib/helper';
  */
 
 class LanguageTranslatorV2 extends BaseService {
+
   name: string; // set by prototype to 'language_translator'
   version: string; // set by prototype to 'v2'
 
@@ -35,12 +36,12 @@ class LanguageTranslatorV2 extends BaseService {
    * Construct a LanguageTranslatorV2 object.
    *
    * @param {Object} options - Options for the service.
-   * @param {String} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/language-translator/api'). The base url may differ between Bluemix regions.
-   * @param {String} [options.username] - The username used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
-   * @param {String} [options.password] - The password used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
-   * @param {Boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
+   * @param {string} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/language-translator/api'). The base url may differ between Bluemix regions.
+   * @param {string} [options.username] - The username used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
+   * @param {string} [options.password] - The password used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
+   * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
    * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
-   * @param {Object} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
+   * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
    * @constructor
    * @returns {LanguageTranslatorV2}
    */
@@ -56,27 +57,22 @@ class LanguageTranslatorV2 extends BaseService {
    * Translates the input text from the source language to the target language.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string[]} params.text - Input text in UTF-8 encoding. It is a list so that multiple paragraphs can be submitted. Also accept a single string, instead of an array, as valid input.
+   * @param {string[ ]} params.text - Input text in UTF-8 encoding. It is a list so that multiple paragraphs can be submitted. Also accept a single string, instead of an array, as valid input.
    * @param {string} [params.model_id] - The unique model_id of the translation model being used to translate text. The model_id inherently specifies source language, target language, and domain. If the model_id is specified, there is no need for the source and target parameters and the values are ignored.
    * @param {string} [params.source] - Used in combination with target as an alternative way to select the model for translation. When target and source are set, and model_id is not set, the system chooses a default model with the right language pair to translate (usually the model based on the news domain).
    * @param {string} [params.target] - Used in combination with source as an alternative way to select the model for translation. When target and source are set, and model_id is not set, the system chooses a default model with the right language pair to translate (usually the model based on the news domain).
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  translate(
-    params: LanguageTranslatorV2.TranslateParams,
-    callback?: LanguageTranslatorV2.Callback<
-      LanguageTranslatorV2.TranslationResult
-    >
-  ): NodeJS.ReadableStream | void {
+  translate(params: LanguageTranslatorV2.TranslateParams, callback?: LanguageTranslatorV2.Callback<LanguageTranslatorV2.TranslationResult>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['text'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const body = {
+    const body = { 
       text: _params.text,
       model_id: _params.model_id,
       source: _params.source,
@@ -87,17 +83,17 @@ class LanguageTranslatorV2 extends BaseService {
         url: '/v2/translate',
         method: 'POST',
         json: true,
-        body: body
+        body: body,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /*************************
    * identify
@@ -111,36 +107,32 @@ class LanguageTranslatorV2 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  identify(
-    params: LanguageTranslatorV2.IdentifyParams,
-    callback?: LanguageTranslatorV2.Callback<
-      LanguageTranslatorV2.IdentifiedLanguages
-    >
-  ): NodeJS.ReadableStream | void {
+  identify(params: LanguageTranslatorV2.IdentifyParams, callback?: LanguageTranslatorV2.Callback<LanguageTranslatorV2.IdentifiedLanguages>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['text'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const body = { text: _params.text };
+    const body = { 
+    };
     const parameters = {
       options: {
         url: '/v2/identify',
         method: 'POST',
         json: true,
-        body: body
+        body: body,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'text/plain'
+          'Accept': 'application/json',
+          'Content-Type': 'text/plain',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Lists all languages that can be identified by the API.
@@ -151,31 +143,22 @@ class LanguageTranslatorV2 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  listIdentifiableLanguages(
-    params?: LanguageTranslatorV2.ListIdentifiableLanguagesParams,
-    callback?: LanguageTranslatorV2.Callback<
-      LanguageTranslatorV2.IdentifiableLanguages
-    >
-  ): NodeJS.ReadableStream | void {
-    const _params =
-      typeof params === 'function' && !callback ? {} : extend({}, params);
-    const _callback =
-      typeof params === 'function' && !callback
-        ? params
-        : callback ? callback : () => {};
+  listIdentifiableLanguages(params?: LanguageTranslatorV2.ListIdentifiableLanguagesParams, callback?: LanguageTranslatorV2.Callback<LanguageTranslatorV2.IdentifiableLanguages>): NodeJS.ReadableStream | void {
+    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
+    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {};
     const parameters = {
       options: {
         url: '/v2/identifiable_languages',
-        method: 'GET'
+        method: 'GET',
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json'
+          'Accept': 'application/json',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /*************************
    * models
@@ -187,20 +170,15 @@ class LanguageTranslatorV2 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.base_model_id - Specifies the domain model that is used as the base for the training. To see current supported domain models, use the GET /v2/models parameter.
    * @param {string} [params.name] - The model name. Valid characters are letters, numbers, -, and _. No spaces.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.forced_glossary] - A TMX file with your customizations. The customizations in the file completely overwrite the domain data translation, including high frequency or high confidence phrase translations. You can upload only one glossary with a file size less than 10 MB per call.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.parallel_corpus] - A TMX file that contains entries that are treated as a parallel corpus instead of a glossary.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.monolingual_corpus] - A UTF-8 encoded plain text file that is used to customize the target language model.
+   * @param {ReadableStream|FileObject|Buffer} [params.forced_glossary] - A TMX file with your customizations. The customizations in the file completely overwrite the domain data translation, including high frequency or high confidence phrase translations. You can upload only one glossary with a file size less than 10 MB per call.
+   * @param {ReadableStream|FileObject|Buffer} [params.parallel_corpus] - A TMX file that contains entries that are treated as a parallel corpus instead of a glossary.
+   * @param {ReadableStream|FileObject|Buffer} [params.monolingual_corpus] - A UTF-8 encoded plain text file that is used to customize the target language model.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  createModel(
-    params: LanguageTranslatorV2.CreateModelParams,
-    callback?: LanguageTranslatorV2.Callback<
-      LanguageTranslatorV2.TranslationModel
-    >
-  ): NodeJS.ReadableStream | void {
+  createModel(params: LanguageTranslatorV2.CreateModelParams, callback?: LanguageTranslatorV2.Callback<LanguageTranslatorV2.TranslationModel>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['base_model_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -220,7 +198,7 @@ class LanguageTranslatorV2 extends BaseService {
         contentType: 'text/plain'
       }
     };
-    const query = {
+    const query = { 
       base_model_id: _params.base_model_id,
       name: _params.name
     };
@@ -233,13 +211,13 @@ class LanguageTranslatorV2 extends BaseService {
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'multipart/form-data'
+          'Accept': 'application/json',
+          'Content-Type': 'multipart/form-data',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Deletes a custom translation model.
@@ -249,36 +227,31 @@ class LanguageTranslatorV2 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  deleteModel(
-    params: LanguageTranslatorV2.DeleteModelParams,
-    callback?: LanguageTranslatorV2.Callback<
-      LanguageTranslatorV2.DeleteModelResult
-    >
-  ): NodeJS.ReadableStream | void {
+  deleteModel(params: LanguageTranslatorV2.DeleteModelParams, callback?: LanguageTranslatorV2.Callback<LanguageTranslatorV2.DeleteModelResult>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['model_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = {
+    const path = { 
       model_id: _params.model_id
     };
     const parameters = {
       options: {
         url: '/v2/models/{model_id}',
         method: 'DELETE',
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json'
+          'Accept': 'application/json',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Get information about the given translation model, including training status.
@@ -288,36 +261,31 @@ class LanguageTranslatorV2 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  getModel(
-    params: LanguageTranslatorV2.GetModelParams,
-    callback?: LanguageTranslatorV2.Callback<
-      LanguageTranslatorV2.TranslationModel
-    >
-  ): NodeJS.ReadableStream | void {
+  getModel(params: LanguageTranslatorV2.GetModelParams, callback?: LanguageTranslatorV2.Callback<LanguageTranslatorV2.TranslationModel>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['model_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = {
+    const path = { 
       model_id: _params.model_id
     };
     const parameters = {
       options: {
         url: '/v2/models/{model_id}',
         method: 'GET',
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json'
+          'Accept': 'application/json',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Lists available standard and custom models by source or target language.
@@ -329,19 +297,10 @@ class LanguageTranslatorV2 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  listModels(
-    params?: LanguageTranslatorV2.ListModelsParams,
-    callback?: LanguageTranslatorV2.Callback<
-      LanguageTranslatorV2.TranslationModels
-    >
-  ): NodeJS.ReadableStream | void {
-    const _params =
-      typeof params === 'function' && !callback ? {} : extend({}, params);
-    const _callback =
-      typeof params === 'function' && !callback
-        ? params
-        : callback ? callback : () => {};
-    const query = {
+  listModels(params?: LanguageTranslatorV2.ListModelsParams, callback?: LanguageTranslatorV2.Callback<LanguageTranslatorV2.TranslationModels>): NodeJS.ReadableStream | void {
+    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
+    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {};
+    const query = { 
       source: _params.source,
       target: _params.target,
       default: _params.default_models
@@ -350,17 +309,18 @@ class LanguageTranslatorV2 extends BaseService {
       options: {
         url: '/v2/models',
         method: 'GET',
-        qs: query
+        qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/x-www-form-urlencoded'
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
+
 }
 
 LanguageTranslatorV2.prototype.name = 'language_translator';
@@ -371,6 +331,7 @@ LanguageTranslatorV2.prototype.version = 'v2';
  ************************/
 
 namespace LanguageTranslatorV2 {
+
   /** Options for the `LanguageTranslatorV2` constructor. **/
   export type Options = {
     url?: string;
@@ -378,17 +339,13 @@ namespace LanguageTranslatorV2 {
     password?: string;
     use_unauthenticated?: boolean;
     headers?: object;
-  };
+  }
 
   /** The callback for a service request. **/
-  export type Callback<T> = (
-    error: any,
-    body?: T,
-    response?: RequestResponse
-  ) => void;
+  export type Callback<T> = (error: any, body?: T, response?: RequestResponse) => void;
 
   /** The body of a service request that returns no response data. **/
-  export interface Empty {}
+  export interface Empty { }
 
   /*************************
    * request interfaces
@@ -397,7 +354,7 @@ namespace LanguageTranslatorV2 {
   /** Parameters for the `translate` operation. **/
   export interface TranslateParams {
     /** Input text in UTF-8 encoding. It is a list so that multiple paragraphs can be submitted. Also accept a single string, instead of an array, as valid input. **/
-    text: string[];
+    text: string[ ];
     /** The unique model_id of the translation model being used to translate text. The model_id inherently specifies source language, target language, and domain. If the model_id is specified, there is no need for the source and target parameters and the values are ignored. **/
     model_id?: string;
     /** Used in combination with target as an alternative way to select the model for translation. When target and source are set, and model_id is not set, the system chooses a default model with the right language pair to translate (usually the model based on the news domain). **/
@@ -413,7 +370,8 @@ namespace LanguageTranslatorV2 {
   }
 
   /** Parameters for the `listIdentifiableLanguages` operation. **/
-  export interface ListIdentifiableLanguagesParams {}
+  export interface ListIdentifiableLanguagesParams {
+  }
 
   /** Parameters for the `createModel` operation. **/
   export interface CreateModelParams {
@@ -422,11 +380,11 @@ namespace LanguageTranslatorV2 {
     /** The model name. Valid characters are letters, numbers, -, and _. No spaces. **/
     name?: string;
     /** A TMX file with your customizations. The customizations in the file completely overwrite the domain data translation, including high frequency or high confidence phrase translations. You can upload only one glossary with a file size less than 10 MB per call. **/
-    forced_glossary?: NodeJS.ReadableStream | FileObject | Buffer;
+    forced_glossary?: ReadableStream|FileObject|Buffer;
     /** A TMX file that contains entries that are treated as a parallel corpus instead of a glossary. **/
-    parallel_corpus?: NodeJS.ReadableStream | FileObject | Buffer;
+    parallel_corpus?: ReadableStream|FileObject|Buffer;
     /** A UTF-8 encoded plain text file that is used to customize the target language model. **/
-    monolingual_corpus?: NodeJS.ReadableStream | FileObject | Buffer;
+    monolingual_corpus?: ReadableStream|FileObject|Buffer;
   }
 
   /** Parameters for the `deleteModel` operation. **/
@@ -472,7 +430,7 @@ namespace LanguageTranslatorV2 {
   /** IdentifiableLanguages. **/
   export interface IdentifiableLanguages {
     /** A list of all languages that the service can identify. **/
-    languages: IdentifiableLanguage[];
+    languages: IdentifiableLanguage[ ];
   }
 
   /** IdentifiedLanguage. **/
@@ -486,7 +444,7 @@ namespace LanguageTranslatorV2 {
   /** IdentifiedLanguages. **/
   export interface IdentifiedLanguages {
     /** A ranking of identified languages with confidence scores. **/
-    languages: IdentifiedLanguage[];
+    languages: IdentifiedLanguage[ ];
   }
 
   /** Translation. **/
@@ -522,7 +480,7 @@ namespace LanguageTranslatorV2 {
   /** The response type for listing existing translation models. **/
   export interface TranslationModels {
     /** An array of available models. **/
-    models: TranslationModel[];
+    models: TranslationModel[ ];
   }
 
   /** TranslationResult. **/
@@ -532,8 +490,9 @@ namespace LanguageTranslatorV2 {
     /** Number of characters of the complete input text. **/
     character_count: number;
     /** List of translation output in UTF-8, corresponding to the list of input text. **/
-    translations: Translation[];
+    translations: Translation[ ];
   }
+
 }
 
 export = LanguageTranslatorV2;

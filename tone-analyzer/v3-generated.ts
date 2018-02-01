@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 IBM All Rights Reserved.
+ * Copyright 2018 IBM All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ import { BaseService } from '../lib/base_service';
  */
 
 class ToneAnalyzerV3 extends BaseService {
+
   name: string; // set by prototype to 'tone_analyzer'
   version: string; // set by prototype to 'v3'
 
@@ -34,13 +35,13 @@ class ToneAnalyzerV3 extends BaseService {
    * Construct a ToneAnalyzerV3 object.
    *
    * @param {Object} options - Options for the service.
-   * @param {String} options.version_date - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses the API version for the date you specify, or the most recent version before that date. Note that you should not programmatically specify the current date at runtime, in case the API has been updated since your application's release. Instead, specify a version date that is compatible with your application, and don't change it until your application is ready for a later version.
-   * @param {String} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/tone-analyzer/api'). The base url may differ between Bluemix regions.
-   * @param {String} [options.username] - The username used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
-   * @param {String} [options.password] - The password used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
-   * @param {Boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
+   * @param {string} options.version_date - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses the API version for the date you specify, or the most recent version before that date. Note that you should not programmatically specify the current date at runtime, in case the API has been updated since your application's release. Instead, specify a version date that is compatible with your application, and don't change it until your application is ready for a later version.
+   * @param {string} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/tone-analyzer/api'). The base url may differ between Bluemix regions.
+   * @param {string} [options.username] - The username used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
+   * @param {string} [options.password] - The password used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
+   * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
    * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
-   * @param {Object} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
+   * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
    * @constructor
    * @returns {ToneAnalyzerV3}
    * @throws {Error}
@@ -67,47 +68,44 @@ class ToneAnalyzerV3 extends BaseService {
    * @param {ToneInput|string} params.tone_input - JSON, plain text, or HTML input that contains the content to be analyzed. For JSON input, provide an object of type `ToneInput`.
    * @param {string} params.content_type - The type of the input: application/json, text/plain, or text/html. A character encoding can be specified by including a `charset` parameter. For example, 'text/plain;charset=utf-8'.
    * @param {boolean} [params.sentences] - Indicates whether the service is to return an analysis of each individual sentence in addition to its analysis of the full document. If `true` (the default), the service returns results for each sentence.
-   * @param {string[]} [params.tones] - **`2017-09-21`:** Deprecated. The service continues to accept the parameter for backward-compatibility, but the parameter no longer affects the response.   **`2016-05-19`:** A comma-separated list of tones for which the service is to return its analysis of the input; the indicated tones apply both to the full document and to individual sentences of the document. You can specify one or more of the valid values. Omit the parameter to request results for all three tones.
+   * @param {string[ ]} [params.tones] - **`2017-09-21`:** Deprecated. The service continues to accept the parameter for backward-compatibility, but the parameter no longer affects the response.   **`2016-05-19`:** A comma-separated list of tones for which the service is to return its analysis of the input; the indicated tones apply both to the full document and to individual sentences of the document. You can specify one or more of the valid values. Omit the parameter to request results for all three tones.
    * @param {string} [params.content_language] - The language of the input text for the request: English or French. Regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. The input content must match the specified language. Do not submit content that contains both languages. You can specify any combination of languages for `content_language` and `Accept-Language`. * **`2017-09-21`:** Accepts `en` or `fr`. * **`2016-05-19`:** Accepts only `en`.
    * @param {string} [params.accept_language] - The desired language of the response. For two-character arguments, regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. You can specify any combination of languages for `Content-Language` and `accept_language`.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  tone(
-    params: ToneAnalyzerV3.ToneParams,
-    callback?: ToneAnalyzerV3.Callback<ToneAnalyzerV3.ToneAnalysis>
-  ): NodeJS.ReadableStream | void {
+  tone(params: ToneAnalyzerV3.ToneParams, callback?: ToneAnalyzerV3.Callback<ToneAnalyzerV3.ToneAnalysis>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['tone_input', 'content_type'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const body = _params.tone_input;
-    const query = {
+    const query = { 
       sentences: _params.sentences,
-      tones: _params.tones
+      tones: _params.tones.join(',')
     };
     const parameters = {
       options: {
         url: '/v3/tone',
         method: 'POST',
-        json: _params.content_type === 'application/json',
+        json: (_params.content_type === 'application/json'),
         body: body,
-        qs: query
+        qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': _params.content_type,
-          'Content-Language': _params.content_language,
+          'Accept': 'application/json',
+          'Content-Type': _params.content_type, 
+          'Content-Language': _params.content_language, 
           'Accept-Language': _params.accept_language
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Analyze customer engagement tone.
@@ -115,23 +113,20 @@ class ToneAnalyzerV3 extends BaseService {
    * Use the customer engagement endpoint to analyze the tone of customer service and customer support conversations. For each utterance of a conversation, the method reports the most prevalent subset of the following seven tones: sad, frustrated, satisfied, excited, polite, impolite, and sympathetic.   If you submit more than 50 utterances, the service returns a warning for the overall content and analyzes only the first 50 utterances. If you submit a single utterance that contains more than 500 characters, the service returns an error for that utterance and does not analyze the utterance. The request fails if all utterances have more than 500 characters.   Per the JSON specification, the default character encoding for JSON content is effectively always UTF-8.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {Utterance[]} params.utterances - An array of `Utterance` objects that provides the input content that the service is to analyze.
+   * @param {Utterance[ ]} params.utterances - An array of `Utterance` objects that provides the input content that the service is to analyze.
    * @param {string} [params.accept_language] - The desired language of the response. For two-character arguments, regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  toneChat(
-    params: ToneAnalyzerV3.ToneChatParams,
-    callback?: ToneAnalyzerV3.Callback<ToneAnalyzerV3.UtteranceAnalyses>
-  ): NodeJS.ReadableStream | void {
+  toneChat(params: ToneAnalyzerV3.ToneChatParams, callback?: ToneAnalyzerV3.Callback<ToneAnalyzerV3.UtteranceAnalyses>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['utterances'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const body = {
+    const body = { 
       utterances: _params.utterances
     };
     const parameters = {
@@ -139,18 +134,19 @@ class ToneAnalyzerV3 extends BaseService {
         url: '/v3/tone_chat',
         method: 'POST',
         json: true,
-        body: body
+        body: body,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
+          'Accept': 'application/json',
           'Content-Type': 'application/json',
           'Accept-Language': _params.accept_language
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
+
 }
 
 ToneAnalyzerV3.prototype.name = 'tone_analyzer';
@@ -161,6 +157,7 @@ ToneAnalyzerV3.prototype.version = 'v3';
  ************************/
 
 namespace ToneAnalyzerV3 {
+
   /** Options for the `ToneAnalyzerV3` constructor. **/
   export type Options = {
     version_date: string;
@@ -169,17 +166,13 @@ namespace ToneAnalyzerV3 {
     password?: string;
     use_unauthenticated?: boolean;
     headers?: object;
-  };
+  }
 
   /** The callback for a service request. **/
-  export type Callback<T> = (
-    error: any,
-    body?: T,
-    response?: RequestResponse
-  ) => void;
+  export type Callback<T> = (error: any, body?: T, response?: RequestResponse) => void;
 
   /** The body of a service request that returns no response data. **/
-  export interface Empty {}
+  export interface Empty { }
 
   /*************************
    * request interfaces
@@ -188,13 +181,13 @@ namespace ToneAnalyzerV3 {
   /** Parameters for the `tone` operation. **/
   export interface ToneParams {
     /** JSON, plain text, or HTML input that contains the content to be analyzed. For JSON input, provide an object of type `ToneInput`. **/
-    tone_input: ToneInput | string;
+    tone_input: ToneInput|string;
     /** The type of the input: application/json, text/plain, or text/html. A character encoding can be specified by including a `charset` parameter. For example, 'text/plain;charset=utf-8'. **/
     content_type: ToneConstants.ContentType | string;
     /** Indicates whether the service is to return an analysis of each individual sentence in addition to its analysis of the full document. If `true` (the default), the service returns results for each sentence. **/
     sentences?: boolean;
     /** **`2017-09-21`:** Deprecated. The service continues to accept the parameter for backward-compatibility, but the parameter no longer affects the response.   **`2016-05-19`:** A comma-separated list of tones for which the service is to return its analysis of the input; the indicated tones apply both to the full document and to individual sentences of the document. You can specify one or more of the valid values. Omit the parameter to request results for all three tones. **/
-    tones?: string[];
+    tones?: string[ ];
     /** The language of the input text for the request: English or French. Regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. The input content must match the specified language. Do not submit content that contains both languages. You can specify any combination of languages for `content_language` and `Accept-Language`. * **`2017-09-21`:** Accepts `en` or `fr`. * **`2016-05-19`:** Accepts only `en`. **/
     content_language?: ToneConstants.ContentLanguage | string;
     /** The desired language of the response. For two-character arguments, regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. You can specify any combination of languages for `Content-Language` and `accept_language`. **/
@@ -207,12 +200,12 @@ namespace ToneAnalyzerV3 {
     export enum ContentType {
       APPLICATION_JSON = 'application/json',
       TEXT_PLAIN = 'text/plain',
-      TEXT_HTML = 'text/html'
+      TEXT_HTML = 'text/html',
     }
     /** The language of the input text for the request: English or French. Regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. The input content must match the specified language. Do not submit content that contains both languages. You can specify any combination of languages for `content_language` and `Accept-Language`. * **`2017-09-21`:** Accepts `en` or `fr`. * **`2016-05-19`:** Accepts only `en`. **/
     export enum ContentLanguage {
       EN = 'en',
-      FR = 'fr'
+      FR = 'fr',
     }
     /** The desired language of the response. For two-character arguments, regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. You can specify any combination of languages for `Content-Language` and `accept_language`. **/
     export enum AcceptLanguage {
@@ -226,14 +219,14 @@ namespace ToneAnalyzerV3 {
       KO = 'ko',
       PT_BR = 'pt-br',
       ZH_CN = 'zh-cn',
-      ZH_TW = 'zh-tw'
+      ZH_TW = 'zh-tw',
     }
   }
 
   /** Parameters for the `toneChat` operation. **/
   export interface ToneChatParams {
     /** An array of `Utterance` objects that provides the input content that the service is to analyze. **/
-    utterances: Utterance[];
+    utterances: Utterance[ ];
     /** The desired language of the response. For two-character arguments, regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. **/
     accept_language?: ToneChatConstants.AcceptLanguage | string;
   }
@@ -252,7 +245,7 @@ namespace ToneAnalyzerV3 {
       KO = 'ko',
       PT_BR = 'pt-br',
       ZH_CN = 'zh-cn',
-      ZH_TW = 'zh-tw'
+      ZH_TW = 'zh-tw',
     }
   }
 
@@ -263,9 +256,9 @@ namespace ToneAnalyzerV3 {
   /** DocumentAnalysis. **/
   export interface DocumentAnalysis {
     /** **`2017-09-21`:** An array of `ToneScore` objects that provides the results of the analysis for each qualifying tone of the document. The array includes results for any tone whose score is at least 0.5. The array is empty if no tone has a score that meets this threshold. **`2016-05-19`:** Not returned. **/
-    tones?: ToneScore[];
+    tones?: ToneScore[ ];
     /** **`2017-09-21`:** Not returned. **`2016-05-19`:** An array of `ToneCategory` objects that provides the results of the tone analysis for the full document of the input content. The service returns results only for the tones specified with the `tones` parameter of the request. **/
-    tone_categories?: ToneCategory[];
+    tone_categories?: ToneCategory[ ];
     /** **`2017-09-21`:** A warning message if the overall content exceeds 128 KB or contains more than 1000 sentences. The service analyzes only the first 1000 sentences for document-level analysis and the first 100 sentences for sentence-level analysis. **`2016-05-19`:** Not returned. **/
     warning?: string;
   }
@@ -277,9 +270,9 @@ namespace ToneAnalyzerV3 {
     /** The text of the input sentence. **/
     text: string;
     /** **`2017-09-21`:** An array of `ToneScore` objects that provides the results of the analysis for each qualifying tone of the sentence. The array includes results for any tone whose score is at least 0.5. The array is empty if no tone has a score that meets this threshold. **`2016-05-19`:** Not returned. **/
-    tones?: ToneScore[];
+    tones?: ToneScore[ ];
     /** **`2017-09-21`:** Not returned. **`2016-05-19`:** An array of `ToneCategory` objects that provides the results of the tone analysis for the sentence. The service returns results only for the tones specified with the `tones` parameter of the request. **/
-    tone_categories?: ToneCategory[];
+    tone_categories?: ToneCategory[ ];
     /** **`2017-09-21`:** Not returned. **`2016-05-19`:** The offset of the first character of the sentence in the overall input content. **/
     input_from?: number;
     /** **`2017-09-21`:** Not returned. **`2016-05-19`:** The offset of the last character of the sentence in the overall input content. **/
@@ -291,13 +284,13 @@ namespace ToneAnalyzerV3 {
     /** An object of type `DocumentAnalysis` that provides the results of the analysis for the full input document. **/
     document_tone: DocumentAnalysis;
     /** An array of `SentenceAnalysis` objects that provides the results of the analysis for the individual sentences of the input content. The service returns results only for the first 100 sentences of the input. The field is omitted if the `sentences` parameter of the request is set to `false`. **/
-    sentences_tone?: SentenceAnalysis[];
+    sentences_tone?: SentenceAnalysis[ ];
   }
 
   /** ToneCategory. **/
   export interface ToneCategory {
     /** An array of `ToneScore` objects that provides the results for the tones of the category. **/
-    tones: ToneScore[];
+    tones: ToneScore[ ];
     /** The unique, non-localized identifier of the category for the results. The service can return results for the following category IDs: `emotion_tone`, `language_tone`, and `social_tone`. **/
     category_id: string;
     /** The user-visible, localized name of the category. **/
@@ -341,7 +334,7 @@ namespace ToneAnalyzerV3 {
   /** UtteranceAnalyses. **/
   export interface UtteranceAnalyses {
     /** An array of `UtteranceAnalysis` objects that provides the results for each utterance of the input. **/
-    utterances_tone: UtteranceAnalysis[];
+    utterances_tone: UtteranceAnalysis[ ];
     /** **`2017-09-21`:** A warning message if the content contains more than 50 utterances. The service analyzes only the first 50 utterances. **`2016-05-19`:** Not returned. **/
     warning?: string;
   }
@@ -353,10 +346,11 @@ namespace ToneAnalyzerV3 {
     /** The text of the utterance. **/
     utterance_text: string;
     /** An array of `ToneChatScore` objects that provides results for the most prevalent tones of the utterance. The array includes results for any tone whose score is at least 0.5. The array is empty if no tone has a score that meets this threshold. **/
-    tones: ToneChatScore[];
+    tones: ToneChatScore[ ];
     /** **`2017-09-21`:** An error message if the utterance contains more than 500 characters. The service does not analyze the utterance. **`2016-05-19`:** Not returned. **/
     error?: string;
   }
+
 }
 
 export = ToneAnalyzerV3;
