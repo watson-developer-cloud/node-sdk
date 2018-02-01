@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 IBM All Rights Reserved.
+ * Copyright 2018 IBM All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,10 +22,11 @@ import { BaseService } from '../lib/base_service';
 import { FileObject } from '../lib/helper';
 
 /**
- * ### Service Overview  The IBM Speech to Text service provides a Representational State Transfer (REST) Application Programming Interface (API) that enables you to add IBM's speech transcription capabilities to your applications. The service also supports an asynchronous HTTP interface for transcribing audio via non-blocking calls. And it supports a customization interface that lets you expand the vocabulary of a base model with domain-specific terminology or adapt a base model for the acoustic characteristics of your audio.   The service transcribes speech from various languages and audio formats to text with low latency. The service supports transcription of the following languages: Brazilian Portuguese, French, Japanese, Mandarin Chinese, Modern Standard Arabic, Spanish, UK English, and US English. For most languages, the service supports two sampling rates, broadband and narrowband.  ### API Overview The Speech to Text service provides the following endpoints: * `/v1/models` returns information about the language models that are available for speech recognition. * `/v1/recognize` (sessionless) includes a single method that provides a simple means of transcribing audio without the overhead of establishing and maintaining a session, but it lacks some of the capabilities available with sessions. * `/v1/sessions` provides a collection of methods that provide a mechanism for a client to maintain a long, multi-turn exchange, or session, with the service or to establish multiple parallel conversations with a particular instance of the service. * `/v1/recognitions` (asynchronous) provides a set of non-blocking methods for submitting, querying, and deleting jobs for recognition requests with the asynchronous HTTP interface. The interface includes calls to register (white-list) and unregister a callback URL. * `/v1/customizations` provides methods for creating and managing custom language models. Custom language models let you expand the vocabulary of a base model with domain-specific terminology. * `/v1/customizations/{customization_id}/corpora` provides methods for managing the corpora associated with a custom language model. You add corpora to extract out-of-vocabulary (OOV) words from the corpora into the custom language model's vocabulary. You can add, list, and delete corpora from a custom language model. * `/v1/customizations/{customization_id}/words` includes methods for managing individual words in a custom language model. You can add, modify, list, and delete words from a custom language model. * `/v1/acoustic_customizations` provides methods for creating and managing custom acoustic models. The interface lets you adapt a base model for the audio characteristics of your environment and speakers. * `/v1/acoustic_customizations/{customization_id}/audio` provides methods for managing the audio resources associated with a custom acoustic model. You add audio resources that closely match the acoustic characteristics of the audio that you want to transcribe. You can add, list, and delete audio resources from a custom acoustic model.    **Note about the Try It Out feature:** The `Try it out!` button lets you experiment with the methods of the API by making actual cURL calls to the service. The feature is **not** supported for use with the the session-based `POST /v1/sessions/{session_id}/recognize` and sessionless `POST /v1/recognize` methods. For examples of calls to these methods, see the [Speech to Text API reference](http://www.ibm.com/watson/developercloud/speech-to-text/api/v1/).  ### API Usage The following information provides details about using the service to transcribe audio: * **HTTP REST interfaces:** You can use methods of the session-based, sessionless, or asynchronous HTTP interfaces to pass audio data to the service. All interfaces let you send the data via the body of the request; the session-based and sessionless methods also let you pass data as multipart form data. With the former approach, you control the transcription via a collection of request headers and query parameters. With the latter, you control the transcription primarily via JSON metadata sent as form data. * **WebSocket interface:** The service also offers a WebSocket interface as an alternative to its HTTP interfaces. The WebSocket interface supports efficient implementation, lower latency, and higher throughput. The interface establishes a persistent connection with the service, eliminating the need for session-based calls from the HTTP interface. See [The WebSocket interface](https://console.bluemix.net/docs/services/speech-to-text/websockets.html). * **Audio formats:** The service supports a variety of popular audio formats. For more information, including links to a number of Internet sites that provide technical and usage details about the different formats, see [Audio formats](https://console.bluemix.net/docs/services/speech-to-text/audio-formats.html). * **Audio transmission:** You can pass the audio to be transcribed as a one-shot delivery or in streaming mode. With one-shot delivery, you pass all of the audio data to the service at one time. With streaming mode, you send audio data to the service in chunks over a persistent connection. To use streaming, you must pass the `Transfer-Encoding` request header with a value of `chunked`. Both forms of data transmission impose a limit of 100 MB of total data for transcription. See [Audio transmission](https://console.bluemix.net/docs/services/speech-to-text/input.html#transmission). * **Authentication:** You authenticate to the service by using your service credentials. You can use your credentials to authenticate via a proxy server that resides in IBM Cloud, or you can use your credentials to obtain a token and contact the service directly. See [Service credentials for Watson services](https://console.bluemix.net/docs/services/watson/getting-started-credentials.html) and [Tokens for authentication](https://console.bluemix.net/docs/services/watson/getting-started-tokens.html). * **Request Logging:** By default, all Watson services log requests and their results. Data is collected only to improve the Watson services. If you do not want to share your data, set the header parameter `X-Watson-Learning-Opt-Out` to `true` for each request. Data is collected for any request that omits this header. See [Controlling request logging for Watson services](https://console.bluemix.net/docs/services/watson/getting-started-logging.html).  For more information about the service and its various interfaces, see [About Speech to Text](https://console.bluemix.net/docs/services/speech-to-text/index.html). ### Customization API Usage   The following information pertains to methods of the customization interface: * Language model customization and acoustic model customization are available only for a limited set of languages. They are generally available for production use for some languages but are beta offerings for other languages. For a complete list of supported languages and the status of their availability, see [Language support for customization](https://console.bluemix.net/docs/services/speech-to-text/custom.html#languageSupport). * In all cases, you must use service credentials created for the instance of the service that owns a custom model to use the methods described in this documentation with that model. For more information, see [Ownership of custom language models](https://console.bluemix.net/docs/services/speech-to-text/custom.html#customOwner). * How the service handles request logging for the customization interface depends on the request. The service does not log data that are used to build custom models. But it does log data when a custom model is used with a recognition request. For more information, see [Request logging and data privacy](https://console.bluemix.net/docs/services/speech-to-text/custom.html#customLogging). * Each custom model is identified by a customization ID, which is a Globally Unique Identifier (GUID). A GUID is a hexadecimal string that has the same format as Watson service credentials: `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`. You specify a custom model's GUID with the appropriate customization parameter of methods that support customization.   For more information about using the service's customization interface, see [The customization interface](https://console.bluemix.net/docs/services/speech-to-text/custom.html).
+ * ### Service Overview  The IBM Speech to Text service provides a Representational State Transfer (REST) Application Programming Interface (API) that enables you to add IBM's speech transcription capabilities to your applications. The service also supports an asynchronous HTTP interface for transcribing audio via non-blocking calls. And it supports a customization interface that lets you expand the vocabulary of a base model with domain-specific terminology or adapt a base model for the acoustic characteristics of your audio.   The service transcribes speech from various languages and audio formats to text with low latency. The service supports transcription of the following languages: Brazilian Portuguese, French, Japanese, Mandarin Chinese, Modern Standard Arabic, Spanish, UK English, and US English. For most languages, the service supports two sampling rates, broadband and narrowband.  ### API Overview The Speech to Text service provides the following endpoints: * `/v1/models` returns information about the language models that are available for speech recognition. * `/v1/recognize` (sessionless) includes a single method that provides a simple means of transcribing audio without the overhead of establishing and maintaining a session, but it lacks some of the capabilities available with sessions. * `/v1/sessions` provides a collection of methods that provide a mechanism for a client to maintain a long, multi-turn exchange, or session, with the service or to establish multiple parallel conversations with a particular instance of the service. * `/v1/recognitions` (asynchronous) provides a set of non-blocking methods for submitting, querying, and deleting jobs for recognition requests with the asynchronous HTTP interface. The interface includes calls to register (white-list) and unregister a callback URL. * `/v1/customizations` provides methods for creating and managing custom language models. Custom language models let you expand the vocabulary of a base model with domain-specific terminology. * `/v1/customizations/{customization_id}/corpora` provides methods for managing the corpora associated with a custom language model. You add corpora to extract out-of-vocabulary (OOV) words from the corpora into the custom language model's vocabulary. You can add, list, and delete corpora from a custom language model. * `/v1/customizations/{customization_id}/words` includes methods for managing individual words in a custom language model. You can add, modify, list, and delete words from a custom language model. * `/v1/acoustic_customizations` provides methods for creating and managing custom acoustic models. The interface lets you adapt a base model for the audio characteristics of your environment and speakers. * `/v1/acoustic_customizations/{customization_id}/audio` provides methods for managing the audio resources associated with a custom acoustic model. You add audio resources that closely match the acoustic characteristics of the audio that you want to transcribe. You can add, list, and delete audio resources from a custom acoustic model.    **Note about the Try It Out feature:** The `Try it out!` button lets you experiment with the methods of the API by making actual cURL calls to the service. The feature is **not** supported for use with the session-based `POST /v1/sessions/{session_id}/recognize` and sessionless `POST /v1/recognize` methods. For examples of calls to these methods, see the [Speech to Text API reference](http://www.ibm.com/watson/developercloud/speech-to-text/api/v1/).  ### API Usage The following information provides details about using the service to transcribe audio: * **HTTP REST interfaces:** You can use methods of the session-based, sessionless, or asynchronous HTTP interfaces to pass audio data to the service. All interfaces let you send the data via the body of the request; the session-based and sessionless methods also let you pass data as multipart form data. With the former approach, you control the transcription via a collection of request headers and query parameters. With the latter, you control the transcription primarily via JSON metadata sent as form data. * **WebSocket interface:** The service also offers a WebSocket interface as an alternative to its HTTP interfaces. The WebSocket interface supports efficient implementation, lower latency, and higher throughput. The interface establishes a persistent connection with the service, eliminating the need for session-based calls from the HTTP interface. See [The WebSocket interface](https://console.bluemix.net/docs/services/speech-to-text/websockets.html). * **Audio formats:** The service supports a variety of popular audio formats. For more information, including links to a number of Internet sites that provide technical and usage details about the different formats, see [Audio formats](https://console.bluemix.net/docs/services/speech-to-text/audio-formats.html). * **Audio transmission:** You can pass the audio to be transcribed as a one-shot delivery or in streaming mode. With one-shot delivery, you pass all of the audio data to the service at one time. With streaming mode, you send audio data to the service in chunks over a persistent connection. To use streaming, you must pass the `Transfer-Encoding` request header with a value of `chunked`. Both forms of data transmission impose a limit of 100 MB of total data for transcription. See [Audio transmission](https://console.bluemix.net/docs/services/speech-to-text/input.html#transmission). * **Authentication:** You authenticate to the service by using your service credentials. You can use your credentials to authenticate via a proxy server that resides in IBM Cloud, or you can use your credentials to obtain a token and contact the service directly. See [Service credentials for Watson services](https://console.bluemix.net/docs/services/watson/getting-started-credentials.html) and [Tokens for authentication](https://console.bluemix.net/docs/services/watson/getting-started-tokens.html). * **Request Logging:** By default, all Watson services log requests and their results. Data is collected only to improve the Watson services. If you do not want to share your data, set the header parameter `X-Watson-Learning-Opt-Out` to `true` for each request. Data is collected for any request that omits this header. See [Controlling request logging for Watson services](https://console.bluemix.net/docs/services/watson/getting-started-logging.html).  For more information about the service and its various interfaces, see [About Speech to Text](https://console.bluemix.net/docs/services/speech-to-text/index.html). ### Customization API Usage   The following information pertains to methods of the customization interface: * Language model customization and acoustic model customization are available only for a limited set of languages. They are generally available for production use for some languages but are beta offerings for other languages. For a complete list of supported languages and the status of their availability, see [Language support for customization](https://console.bluemix.net/docs/services/speech-to-text/custom.html#languageSupport). * In all cases, you must use service credentials created for the instance of the service that owns a custom model to use the methods described in this documentation with that model. For more information, see [Ownership of custom language models](https://console.bluemix.net/docs/services/speech-to-text/custom.html#customOwner). * How the service handles request logging for the customization interface depends on the request. The service does not log data that are used to build custom models. But it does log data when a custom model is used with a recognition request. For more information, see [Request logging and data privacy](https://console.bluemix.net/docs/services/speech-to-text/custom.html#customLogging). * Each custom model is identified by a customization ID, which is a Globally Unique Identifier (GUID). A GUID is a hexadecimal string that has the same format as Watson service credentials: `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`. You specify a custom model's GUID with the appropriate customization parameter of methods that support customization.   For more information about using the service's customization interface, see [The customization interface](https://console.bluemix.net/docs/services/speech-to-text/custom.html).
  */
 
 class SpeechToTextV1 extends BaseService {
+
   name: string; // set by prototype to 'speech_to_text'
   version: string; // set by prototype to 'v1'
 
@@ -35,12 +36,12 @@ class SpeechToTextV1 extends BaseService {
    * Construct a SpeechToTextV1 object.
    *
    * @param {Object} options - Options for the service.
-   * @param {String} [options.url] - The base url to use when contacting the service (e.g. 'https://stream.watsonplatform.net/speech-to-text/api'). The base url may differ between Bluemix regions.
-   * @param {String} [options.username] - The username used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
-   * @param {String} [options.password] - The password used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
-   * @param {Boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
+   * @param {string} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/speech-to-text/api'). The base url may differ between Bluemix regions.
+   * @param {string} [options.username] - The username used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
+   * @param {string} [options.password] - The password used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
+   * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
    * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
-   * @param {Object} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
+   * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
    * @constructor
    * @returns {SpeechToTextV1}
    */
@@ -60,37 +61,34 @@ class SpeechToTextV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.model_id - The identifier of the desired model in the form of its `name` from the output of `GET /v1/models`.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  getModel(
-    params: SpeechToTextV1.GetModelParams,
-    callback?: SpeechToTextV1.Callback<SpeechToTextV1.SpeechModel>
-  ): ReadableStream | void {
+  getModel(params: SpeechToTextV1.GetModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.SpeechModel>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['model_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = {
+    const path = { 
       model_id: _params.model_id
     };
     const parameters = {
       options: {
         url: '/v1/models/{model_id}',
         method: 'GET',
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Retrieves the models available for the service.
@@ -99,32 +97,25 @@ class SpeechToTextV1 extends BaseService {
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  listModels(
-    params?: SpeechToTextV1.ListModelsParams,
-    callback?: SpeechToTextV1.Callback<SpeechToTextV1.SpeechModels>
-  ): ReadableStream | void {
-    const _params =
-      typeof params === 'function' && !callback ? {} : extend({}, params);
-    const _callback =
-      typeof params === 'function' && !callback
-        ? params
-        : callback ? callback : () => {};
+  listModels(params?: SpeechToTextV1.ListModelsParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.SpeechModels>): NodeJS.ReadableStream | void {
+    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
+    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {};
     const parameters = {
       options: {
         url: '/v1/models',
-        method: 'GET'
+        method: 'GET',
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /*************************
    * sessions
@@ -140,40 +131,35 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} [params.customization_id] - The GUID of a custom language model that is to be used with the new session. The base model of the specified custom language model must match the model specified with the `model` parameter. You must make the request with service credentials created for the instance of the service that owns the custom model. By default, no custom language model is used.
    * @param {string} [params.acoustic_customization_id] - The GUID of a custom acoustic model that is to be used with the new session. The base model of the specified custom acoustic model must match the model specified with the `model` parameter. You must make the request with service credentials created for the instance of the service that owns the custom model. By default, no custom acoustic model is used.
    * @param {number} [params.customization_weight] - If you specify a `customization_id` when you create the session, you can use the `customization_weight` parameter to tell the service how much weight to give to words from the custom language model compared to those from the base model for recognition requests made with the session.   Specify a value between 0.0 and 1.0. Unless a different customization weight was specified for the custom model when it was trained, the default value is 0.3. A customization weight that you specify overrides a weight that was specified when the custom model was trained.   The default value yields the best performance in general. Assign a higher value if your audio makes frequent use of OOV words from the custom model. Use caution when setting the weight: a higher value can improve the accuracy of phrases from the custom model's domain, but it can negatively affect performance on non-domain phrases.
+   * @param {string} [params.version] - The version of the specified base `model` that is to be used with the new session. Multiple versions of a base model can exist when a model is updated for internal improvements. The parameter is intended primarily for use with custom models that have been upgraded for a new base model. The default value depends on whether the parameter is used with or without a custom model. For more information, see [Base model version](https://console.bluemix.net/docs/services/speech-to-text/input.html#version).
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  createSession(
-    params?: SpeechToTextV1.CreateSessionParams,
-    callback?: SpeechToTextV1.Callback<SpeechToTextV1.SpeechSession>
-  ): ReadableStream | void {
-    const _params =
-      typeof params === 'function' && !callback ? {} : extend({}, params);
-    const _callback =
-      typeof params === 'function' && !callback
-        ? params
-        : callback ? callback : () => {};
-    const query = {
+  createSession(params?: SpeechToTextV1.CreateSessionParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.SpeechSession>): NodeJS.ReadableStream | void {
+    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
+    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {};
+    const query = { 
       model: _params.model,
       customization_id: _params.customization_id,
       acoustic_customization_id: _params.acoustic_customization_id,
-      customization_weight: _params.customization_weight
+      customization_weight: _params.customization_weight,
+      version: _params.version
     };
     const parameters = {
       options: {
         url: '/v1/sessions',
         method: 'POST',
-        qs: query
+        qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Deletes the specified session.
@@ -183,78 +169,72 @@ class SpeechToTextV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.session_id - The ID of the session to be deleted.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  deleteSession(
-    params: SpeechToTextV1.DeleteSessionParams,
-    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>
-  ): ReadableStream | void {
+  deleteSession(params: SpeechToTextV1.DeleteSessionParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['session_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = {
+    const path = { 
       session_id: _params.session_id
     };
     const parameters = {
       options: {
         url: '/v1/sessions/{session_id}',
         method: 'DELETE',
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Checks whether a session is ready to accept a new recognition task.
    *
-   * Checks whether a specified session can accept another recognition request. Concurrent recognition tasks during the same session are not allowed. The returned state must be `initialized` to indicate that you can send another recognition request with the `POST /v1/recognize` method. The request must pass the cookie that was returned by the `POST /v1/sessions` method.
+   * Checks whether a specified session can accept another recognition request. Concurrent recognition tasks during the same session are not allowed. The method blocks until the session is in the `initialized` state to indicate that you can send another recognition request. The request must pass the cookie that was returned by the `POST /v1/sessions` method.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.session_id - The ID of the session for the recognition task.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  getSessionStatus(
-    params: SpeechToTextV1.GetSessionStatusParams,
-    callback?: SpeechToTextV1.Callback<SpeechToTextV1.SessionStatus>
-  ): ReadableStream | void {
+  getSessionStatus(params: SpeechToTextV1.GetSessionStatusParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.SessionStatus>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['session_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = {
+    const path = { 
       session_id: _params.session_id
     };
     const parameters = {
       options: {
         url: '/v1/sessions/{session_id}/recognize',
         method: 'GET',
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
-  
+  };
+
   /*************************
    * asynchronous
    ************************/
@@ -267,37 +247,34 @@ class SpeechToTextV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.id - The ID of the job whose status is to be checked.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  checkJob(
-    params: SpeechToTextV1.CheckJobParams,
-    callback?: SpeechToTextV1.Callback<SpeechToTextV1.RecognitionJob>
-  ): ReadableStream | void {
+  checkJob(params: SpeechToTextV1.CheckJobParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.RecognitionJob>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = {
+    const path = { 
       id: _params.id
     };
     const parameters = {
       options: {
         url: '/v1/recognitions/{id}',
         method: 'GET',
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Checks the status of all asynchronous jobs.
@@ -306,37 +283,30 @@ class SpeechToTextV1 extends BaseService {
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  checkJobs(
-    params?: SpeechToTextV1.CheckJobsParams,
-    callback?: SpeechToTextV1.Callback<SpeechToTextV1.RecognitionJobs>
-  ): ReadableStream | void {
-    const _params =
-      typeof params === 'function' && !callback ? {} : extend({}, params);
-    const _callback =
-      typeof params === 'function' && !callback
-        ? params
-        : callback ? callback : () => {};
+  checkJobs(params?: SpeechToTextV1.CheckJobsParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.RecognitionJobs>): NodeJS.ReadableStream | void {
+    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
+    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {};
     const parameters = {
       options: {
         url: '/v1/recognitions',
-        method: 'GET'
+        method: 'GET',
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Creates a job for an asynchronous recognition request.
    *
-   * Creates a job for a new asynchronous recognition request. The job is owned by the user whose service credentials are used to create it. How you learn the status and results of a job depends on the parameters you include with the job creation request: * By callback notification: Include the `callback_url` query parameter to specify a URL to which the service is to send callback notifications when the status of the job changes. Optionally, you can also include the `events` and `user_token` query parameters to subscribe to specific events and to specify a string that is to be included with each notification for the job. * By polling the service: Omit the `callback_url`, `events`, and `user_token` query parameters. You must then use the `GET /v1/recognitions` or `GET /v1/recognitions/{id}` methods to check the status of the job, using the latter to retrieve the results when the job is complete.  The two approaches are not mutually exclusive. You can poll the service for job status or obtain results from the service manually even if you include a callback URL. In both cases, you can include the `results_ttl` parameter to specify how long the results are to remain available after the job is complete. Note that using the HTTPS `GET /v1/recognitions/{id}` method to retrieve results is more secure than receiving them via callback notification over HTTP because it provides confidentiality in addition to authentication and data integrity.   The method supports the same basic parameters as other HTTP and WebSocket recognition requests. The service imposes a data size limit of 100 MB. It automatically detects the endianness of the incoming audio and, for audio that includes multiple channels, downmixes the audio to one-channel mono during transcoding. (For the `audio/l16` format, you can specify the endianness.)   **Note:** You can pass the `interim_results` parameter with a recognition request made with the HTTP asynchronous interface. However, the service sends all results, both interim and final, at the same time, when the request completes. The service does **not** return interim results as it generates them.
+   * Creates a job for a new asynchronous recognition request. The job is owned by the user whose service credentials are used to create it. How you learn the status and results of a job depends on the parameters you include with the job creation request: * By callback notification: Include the `callback_url` query parameter to specify a URL to which the service is to send callback notifications when the status of the job changes. Optionally, you can also include the `events` and `user_token` query parameters to subscribe to specific events and to specify a string that is to be included with each notification for the job. * By polling the service: Omit the `callback_url`, `events`, and `user_token` query parameters. You must then use the `GET /v1/recognitions` or `GET /v1/recognitions/{id}` methods to check the status of the job, using the latter to retrieve the results when the job is complete.  The two approaches are not mutually exclusive. You can poll the service for job status or obtain results from the service manually even if you include a callback URL. In both cases, you can include the `results_ttl` parameter to specify how long the results are to remain available after the job is complete. Note that using the HTTPS `GET /v1/recognitions/{id}` method to retrieve results is more secure than receiving them via callback notification over HTTP because it provides confidentiality in addition to authentication and data integrity.   The method supports the same basic parameters as other HTTP and WebSocket recognition requests. The service imposes a data size limit of 100 MB. It automatically detects the endianness of the incoming audio and, for audio that includes multiple channels, downmixes the audio to one-channel mono during transcoding. (For the `audio/l16` format, you can specify the endianness.).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} [params.callback_url] - A URL to which callback notifications are to be sent. The URL must already be successfully white-listed by using the `POST /v1/register_callback` method. Omit the parameter to poll the service for job completion and results. You can include the same callback URL with any number of job creation requests. Use the `user_token` query parameter to specify a unique user-specified string with each job to differentiate the callback notifications for the jobs.
@@ -350,8 +320,9 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} [params.customization_id] - The GUID of a custom language model that is to be used with the request. The base model of the specified custom language model must match the model specified with the `model` parameter. You must make the request with service credentials created for the instance of the service that owns the custom model. By default, no custom language model is used.
    * @param {string} [params.acoustic_customization_id] - The GUID of a custom acoustic model that is to be used with the request. The base model of the specified custom acoustic model must match the model specified with the `model` parameter. You must make the request with service credentials created for the instance of the service that owns the custom model. By default, no custom acoustic model is used.
    * @param {number} [params.customization_weight] - If you specify a `customization_id` with the request, you can use the `customization_weight` parameter to tell the service how much weight to give to words from the custom language model compared to those from the base model for speech recognition.   Specify a value between 0.0 and 1.0. Unless a different customization weight was specified for the custom model when it was trained, the default value is 0.3. A customization weight that you specify overrides a weight that was specified when the custom model was trained.   The default value yields the best performance in general. Assign a higher value if your audio makes frequent use of OOV words from the custom model. Use caution when setting the weight: a higher value can improve the accuracy of phrases from the custom model's domain, but it can negatively affect  performance on non-domain phrases.
+   * @param {string} [params.version] - The version of the specified base `model` that is to be used with the request. Multiple versions of a base model can exist when a model is updated for internal improvements. The parameter is intended primarily for use with custom models that have been upgraded for a new base model. The default value depends on whether the parameter is used with or without a custom model. For more information, see [Base model version](https://console.bluemix.net/docs/services/speech-to-text/input.html#version).
    * @param {number} [params.inactivity_timeout] - The time in seconds after which, if only silence (no speech) is detected in submitted audio, the connection is closed with a 400 error. Useful for stopping audio submission from a live microphone when a user simply walks away. Use `-1` for infinity.
-   * @param {string[]} [params.keywords] - Array of keyword strings to spot in the audio. Each keyword string can include one or more tokens. Keywords are spotted only in the final hypothesis, not in interim results. Omit the parameter or specify an empty array if you do not need to spot keywords.
+   * @param {string[ ]} [params.keywords] - Array of keyword strings to spot in the audio. Each keyword string can include one or more tokens. Keywords are spotted only in the final hypothesis, not in interim results. If you specify any keywords, you must also specify a keywords threshold. Omit the parameter or specify an empty array if you do not need to spot keywords.
    * @param {number} [params.keywords_threshold] - Confidence value that is the lower bound for spotting a keyword. A word is considered to match a keyword if its confidence is greater than or equal to the threshold. Specify a probability between 0 and 1 inclusive. No keyword spotting is performed if you omit the parameter. If you specify a threshold, you must also specify one or more keywords.
    * @param {number} [params.max_alternatives] - Maximum number of alternative transcripts to be returned. By default, a single transcription is returned.
    * @param {number} [params.word_alternatives_threshold] - Confidence value that is the lower bound for identifying a hypothesis as a possible word alternative (also known as "Confusion Networks"). An alternative word is considered if its confidence is greater than or equal to the threshold. Specify a probability between 0 and 1 inclusive. No alternative words are computed if you omit the parameter.
@@ -361,21 +332,18 @@ class SpeechToTextV1 extends BaseService {
    * @param {boolean} [params.smart_formatting] - If `true`, converts dates, times, series of digits and numbers, phone numbers, currency values, and Internet addresses into more readable, conventional representations in the final transcript of a recognition request. If `false` (the default), no formatting is performed. Applies to US English transcription only.
    * @param {boolean} [params.speaker_labels] - Indicates whether labels that identify which words were spoken by which participants in a multi-person exchange are to be included in the response. The default is `false`; no speaker labels are returned. Setting `speaker_labels` to `true` forces the `timestamps` parameter to be `true`, regardless of whether you specify `false` for the parameter.   To determine whether a language model supports speaker labels, use the `GET /v1/models` method and check that the attribute `speaker_labels` is set to `true`. You can also refer to [Speaker labels](https://console.bluemix.net/docs/services/speech-to-text/output.html#speaker_labels).
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  createJob(
-    params: SpeechToTextV1.CreateJobParams,
-    callback?: SpeechToTextV1.Callback<SpeechToTextV1.RecognitionJob>
-  ): ReadableStream | void {
+  createJob(params: SpeechToTextV1.CreateJobParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.RecognitionJob>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['audio', 'content_type'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const body = _params.audio;
-    const query = {
+    const query = { 
       callback_url: _params.callback_url,
       events: _params.events,
       user_token: _params.user_token,
@@ -384,8 +352,9 @@ class SpeechToTextV1 extends BaseService {
       customization_id: _params.customization_id,
       acoustic_customization_id: _params.acoustic_customization_id,
       customization_weight: _params.customization_weight,
+      version: _params.version,
       inactivity_timeout: _params.inactivity_timeout,
-      keywords: _params.keywords,
+      keywords: _params.keywords.join(','),
       keywords_threshold: _params.keywords_threshold,
       max_alternatives: _params.max_alternatives,
       word_alternatives_threshold: _params.word_alternatives_threshold,
@@ -399,20 +368,20 @@ class SpeechToTextV1 extends BaseService {
       options: {
         url: '/v1/recognitions',
         method: 'POST',
-        json: _params.content_type === 'application/json',
+        json: (_params.content_type === 'application/json'),
         body: body,
-        qs: query
+        qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Transfer-Encoding': _params.transfer_encoding,
+          'Accept': 'application/json',
+          'Transfer-Encoding': _params.transfer_encoding, 
           'Content-Type': _params.content_type
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Deletes the specified asynchronous job.
@@ -422,37 +391,34 @@ class SpeechToTextV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.id - The ID of the job that is to be deleted.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  deleteJob(
-    params: SpeechToTextV1.DeleteJobParams,
-    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>
-  ): ReadableStream | void {
+  deleteJob(params: SpeechToTextV1.DeleteJobParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = {
+    const path = { 
       id: _params.id
     };
     const parameters = {
       options: {
         url: '/v1/recognitions/{id}',
         method: 'DELETE',
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Registers a callback URL for use with the asynchronous interface.
@@ -463,20 +429,17 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} params.callback_url - An HTTP or HTTPS URL to which callback notifications are to be sent. To be white-listed, the URL must successfully echo the challenge string during URL verification. During verification, the client can also check the signature that the service sends in the `X-Callback-Signature` header to verify the origin of the request.
    * @param {string} [params.user_secret] - A user-specified string that the service uses to generate the HMAC-SHA1 signature that it sends via the `X-Callback-Signature` header. The service includes the header during URL verification and with every notification sent to the callback URL. It calculates the signature over the payload of the notification. If you omit the parameter, the service does not send the header.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  registerCallback(
-    params: SpeechToTextV1.RegisterCallbackParams,
-    callback?: SpeechToTextV1.Callback<SpeechToTextV1.RegisterStatus>
-  ): ReadableStream | void {
+  registerCallback(params: SpeechToTextV1.RegisterCallbackParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.RegisterStatus>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['callback_url'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const query = {
+    const query = { 
       callback_url: _params.callback_url,
       user_secret: _params.user_secret
     };
@@ -484,17 +447,17 @@ class SpeechToTextV1 extends BaseService {
       options: {
         url: '/v1/register_callback',
         method: 'POST',
-        qs: query
+        qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Removes the registration for an asynchronous callback URL.
@@ -504,37 +467,34 @@ class SpeechToTextV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.callback_url - The callback URL that is to be unregistered.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  unregisterCallback(
-    params: SpeechToTextV1.UnregisterCallbackParams,
-    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>
-  ): ReadableStream | void {
+  unregisterCallback(params: SpeechToTextV1.UnregisterCallbackParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['callback_url'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const query = {
+    const query = { 
       callback_url: _params.callback_url
     };
     const parameters = {
       options: {
         url: '/v1/unregister_callback',
         method: 'POST',
-        qs: query
+        qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /*************************
    * customLanguageModels
@@ -552,20 +512,17 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} [params.dialect] - The dialect of the specified language that is to be used with the custom language model. The parameter is meaningful only for Spanish models, for which the service creates a custom language model that is suited for speech in one of the following dialects: * `es-ES` for Castilian Spanish (the default) * `es-LA` for Latin American Spanish * `es-US` for North American (Mexican) Spanish   A specified dialect must be valid for the base model. By default, the dialect matches the language of the base model; for example, `en-US` for either of the US English language models.
    * @param {string} [params.description] - A description of the new custom language model. Use a localized description that matches the language of the custom model.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  createLanguageModel(
-    params: SpeechToTextV1.CreateLanguageModelParams,
-    callback?: SpeechToTextV1.Callback<SpeechToTextV1.LanguageModel>
-  ): ReadableStream | void {
+  createLanguageModel(params: SpeechToTextV1.CreateLanguageModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.LanguageModel>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['content_type', 'name', 'base_model_name'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const body = {
+    const body = { 
       name: _params.name,
       base_model_name: _params.base_model_name,
       dialect: _params.dialect,
@@ -576,17 +533,18 @@ class SpeechToTextV1 extends BaseService {
         url: '/v1/customizations',
         method: 'POST',
         json: true,
-        body: body
+        body: body,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': _params.content_type || 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Content-Type': _params.content_type
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Deletes a custom language model.
@@ -596,37 +554,34 @@ class SpeechToTextV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The GUID of the custom language model that is to be deleted. You must make the request with service credentials created for the instance of the service that owns the custom model.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  deleteLanguageModel(
-    params: SpeechToTextV1.DeleteLanguageModelParams,
-    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>
-  ): ReadableStream | void {
+  deleteLanguageModel(params: SpeechToTextV1.DeleteLanguageModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['customization_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = {
+    const path = { 
       customization_id: _params.customization_id
     };
     const parameters = {
       options: {
         url: '/v1/customizations/{customization_id}',
         method: 'DELETE',
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Lists information about a custom language model.
@@ -636,37 +591,34 @@ class SpeechToTextV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The GUID of the custom language model for which information is to be returned. You must make the request with service credentials created for the instance of the service that owns the custom model.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  getLanguageModel(
-    params: SpeechToTextV1.GetLanguageModelParams,
-    callback?: SpeechToTextV1.Callback<SpeechToTextV1.LanguageModel>
-  ): ReadableStream | void {
+  getLanguageModel(params: SpeechToTextV1.GetLanguageModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.LanguageModel>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['customization_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = {
+    const path = { 
       customization_id: _params.customization_id
     };
     const parameters = {
       options: {
         url: '/v1/customizations/{customization_id}',
         method: 'GET',
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Lists information about all custom language models.
@@ -676,36 +628,29 @@ class SpeechToTextV1 extends BaseService {
    * @param {Object} [params] - The parameters to send to the service.
    * @param {string} [params.language] - The identifier of the language for which custom language models are to be returned (for example, `en-US`). Omit the parameter to see all custom language models owned by the requesting service credentials.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  listLanguageModels(
-    params?: SpeechToTextV1.ListLanguageModelsParams,
-    callback?: SpeechToTextV1.Callback<SpeechToTextV1.LanguageModels>
-  ): ReadableStream | void {
-    const _params =
-      typeof params === 'function' && !callback ? {} : extend({}, params);
-    const _callback =
-      typeof params === 'function' && !callback
-        ? params
-        : callback ? callback : () => {};
-    const query = {
+  listLanguageModels(params?: SpeechToTextV1.ListLanguageModelsParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.LanguageModels>): NodeJS.ReadableStream | void {
+    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
+    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {};
+    const query = { 
       language: _params.language
     };
     const parameters = {
       options: {
         url: '/v1/customizations',
         method: 'GET',
-        qs: query
+        qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Resets a custom language model.
@@ -715,37 +660,34 @@ class SpeechToTextV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The GUID of the custom language model that is to be reset. You must make the request with service credentials created for the instance of the service that owns the custom model.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  resetLanguageModel(
-    params: SpeechToTextV1.ResetLanguageModelParams,
-    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>
-  ): ReadableStream | void {
+  resetLanguageModel(params: SpeechToTextV1.ResetLanguageModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['customization_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = {
+    const path = { 
       customization_id: _params.customization_id
     };
     const parameters = {
       options: {
         url: '/v1/customizations/{customization_id}/reset',
         method: 'POST',
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Trains a custom language model.
@@ -757,24 +699,21 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} [params.word_type_to_add] - The type of words from the custom language model's words resource on which to train the model: * `all` (the default) trains the model on all new words, regardless of whether they were extracted from corpora or were added or modified by the user. * `user` trains the model only on new words that were added or modified by the user; the model is not trained on new words extracted from corpora.
    * @param {number} [params.customization_weight] - Specifies a customization weight for the custom language model. The customization weight tells the service how much weight to give to words from the custom language model compared to those from the base model for speech recognition. Specify a value between 0.0 and 1.0. The default value is 0.3.   The default value yields the best performance in general. Assign a higher value if your audio makes frequent use of OOV words from the custom model. Use caution when setting the weight: a higher value can improve the accuracy of phrases from the custom model's domain, but it can negatively affect performance on non-domain phrases.   The value that you assign is used for all recognition requests that use the model. You can override it for any recognition request by specifying a customization weight for that request.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  trainLanguageModel(
-    params: SpeechToTextV1.TrainLanguageModelParams,
-    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>
-  ): ReadableStream | void {
+  trainLanguageModel(params: SpeechToTextV1.TrainLanguageModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['customization_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const query = {
+    const query = { 
       word_type_to_add: _params.word_type_to_add,
       customization_weight: _params.customization_weight
     };
-    const path = {
+    const path = { 
       customization_id: _params.customization_id
     };
     const parameters = {
@@ -782,57 +721,54 @@ class SpeechToTextV1 extends BaseService {
         url: '/v1/customizations/{customization_id}/train',
         method: 'POST',
         qs: query,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Upgrades a custom language model.
    *
-   * Upgrades a custom language model to the latest release level of the Speech to Text service. The method bases the upgrade on the latest trained data stored for the custom model. If the corpora or words associated with the model have changed since the model was last trained, you must use the `POST /v1/customizations/{customization_id}/train` method to train the model on the new data. You must use credentials for the instance of the service that owns a model to upgrade it.   **Note:** This method is not currently implemented. It will be added for a future release of the API.
+   * Initiates the upgrade of a custom language model to the latest version of its base language model. The upgrade method is asynchronous. It can take on the order of minutes to complete depending on the amount of data in the custom model and the current load on the service. A custom model must be in the `ready` or `available` state to be upgraded. You must use credentials for the instance of the service that owns a model to upgrade it.   The method returns an HTTP 200 response code to indicate that the upgrade process has begun successfully. You can monitor the status of the upgrade by using the `GET /v1/customizations/{customization_id}` method to poll the model's status. Use a loop to check the status every 10 seconds. While it is being upgraded, the custom model has the status `upgrading`. When the upgrade is complete, the model resumes the status that it had prior to upgrade. The service cannot accept subsequent requests for the model until the upgrade completes.   For more information, see [Upgrading custom models](https://console.bluemix.net/docs/services/speech-to-text/custom-upgrade.html).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The GUID of the custom language model that is to be upgraded. You must make the request with service credentials created for the instance of the service that owns the custom model.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  upgradeLanguageModel(
-    params: SpeechToTextV1.UpgradeLanguageModelParams,
-    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>
-  ): ReadableStream | void {
+  upgradeLanguageModel(params: SpeechToTextV1.UpgradeLanguageModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['customization_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = {
+    const path = { 
       customization_id: _params.customization_id
     };
     const parameters = {
       options: {
         url: '/v1/customizations/{customization_id}/upgrade',
         method: 'POST',
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /*************************
    * customCorpora
@@ -850,14 +786,11 @@ class SpeechToTextV1 extends BaseService {
    * @param {ReadableStream|FileObject|Buffer} params.corpus_file - A plain text file that contains the training data for the corpus. Encode the file in UTF-8 if it contains non-ASCII characters; the service assumes UTF-8 encoding if it encounters non-ASCII characters. With cURL, use the `--data-binary` option to upload the file for the request.
    * @param {string} [params.corpus_file_content_type] - The content type of corpus_file.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  addCorpus(
-    params: SpeechToTextV1.AddCorpusParams,
-    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>
-  ): ReadableStream | void {
+  addCorpus(params: SpeechToTextV1.AddCorpusParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['customization_id', 'corpus_name', 'corpus_file'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -869,10 +802,10 @@ class SpeechToTextV1 extends BaseService {
         contentType: _params.corpus_file_content_type
       }
     };
-    const query = {
+    const query = { 
       allow_overwrite: _params.allow_overwrite
     };
-    const path = {
+    const path = { 
       customization_id: _params.customization_id,
       corpus_name: _params.corpus_name
     };
@@ -886,13 +819,13 @@ class SpeechToTextV1 extends BaseService {
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'text/plain'
+          'Accept': 'application/json',
+          'Content-Type': 'text/plain',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Deletes a corpus from a custom language model.
@@ -903,20 +836,17 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} params.customization_id - The GUID of the custom language model from which a corpus is to be deleted. You must make the request with service credentials created for the instance of the service that owns the custom model.
    * @param {string} params.corpus_name - The name of the corpus that is to be deleted from the custom language model.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  deleteCorpus(
-    params: SpeechToTextV1.DeleteCorpusParams,
-    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>
-  ): ReadableStream | void {
+  deleteCorpus(params: SpeechToTextV1.DeleteCorpusParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['customization_id', 'corpus_name'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = {
+    const path = { 
       customization_id: _params.customization_id,
       corpus_name: _params.corpus_name
     };
@@ -924,17 +854,17 @@ class SpeechToTextV1 extends BaseService {
       options: {
         url: '/v1/customizations/{customization_id}/corpora/{corpus_name}',
         method: 'DELETE',
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Lists information about a corpus for a custom language model.
@@ -945,20 +875,17 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} params.customization_id - The GUID of the custom language model for which a corpus is to be listed. You must make the request with service credentials created for the instance of the service that owns the custom model.
    * @param {string} params.corpus_name - The name of the corpus about which information is to be listed.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  getCorpus(
-    params: SpeechToTextV1.GetCorpusParams,
-    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Corpus>
-  ): ReadableStream | void {
+  getCorpus(params: SpeechToTextV1.GetCorpusParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Corpus>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['customization_id', 'corpus_name'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = {
+    const path = { 
       customization_id: _params.customization_id,
       corpus_name: _params.corpus_name
     };
@@ -966,17 +893,17 @@ class SpeechToTextV1 extends BaseService {
       options: {
         url: '/v1/customizations/{customization_id}/corpora/{corpus_name}',
         method: 'GET',
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Lists information about all corpora for a custom language model.
@@ -986,37 +913,34 @@ class SpeechToTextV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The GUID of the custom language model for which corpora are to be listed. You must make the request with service credentials created for the instance of the service that owns the custom model.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  listCorpora(
-    params: SpeechToTextV1.ListCorporaParams,
-    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Corpora>
-  ): ReadableStream | void {
+  listCorpora(params: SpeechToTextV1.ListCorporaParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Corpora>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['customization_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = {
+    const path = { 
       customization_id: _params.customization_id
     };
     const parameters = {
       options: {
         url: '/v1/customizations/{customization_id}/corpora',
         method: 'GET',
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /*************************
    * customWords
@@ -1032,28 +956,25 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} params.word_name - The custom word that is to be added to or updated in the custom model. Do not include spaces in the word. Use a - (dash) or _ (underscore) to connect the tokens of compound words.
    * @param {string} params.content_type - The type of the input.
    * @param {string} [params.word] - **When specifying an array of one or more words,** you must specify the custom word that is to be added to or updated in the custom model. Do not include spaces in the word. Use a - (dash) or _ (underscore) to connect the tokens of compound words. **When adding or updating a single word directly,** omit this field.
-   * @param {string[]} [params.sounds_like] - An array of sounds-like pronunciations for the custom word. Specify how words that are difficult to pronounce, foreign words, acronyms, and so on can be pronounced by users. For a word that is not in the service's base vocabulary, omit the parameter to have the service automatically generate a sounds-like pronunciation for the word. For a word that is in the service's base vocabulary, use the parameter to specify additional pronunciations for the word. You cannot override the default pronunciation of a word; pronunciations you add augment the pronunciation from the base vocabulary. A word can have at most five sounds-like pronunciations, and a pronunciation can include at most 40 characters not including spaces.
+   * @param {string[ ]} [params.sounds_like] - An array of sounds-like pronunciations for the custom word. Specify how words that are difficult to pronounce, foreign words, acronyms, and so on can be pronounced by users. For a word that is not in the service's base vocabulary, omit the parameter to have the service automatically generate a sounds-like pronunciation for the word. For a word that is in the service's base vocabulary, use the parameter to specify additional pronunciations for the word. You cannot override the default pronunciation of a word; pronunciations you add augment the pronunciation from the base vocabulary. A word can have at most five sounds-like pronunciations, and a pronunciation can include at most 40 characters not including spaces.
    * @param {string} [params.display_as] - An alternative spelling for the custom word when it appears in a transcript. Use the parameter when you want the word to have a spelling that is different from its usual representation or from its spelling in corpora training data.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  addWord(
-    params: SpeechToTextV1.AddWordParams,
-    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>
-  ): ReadableStream | void {
+  addWord(params: SpeechToTextV1.AddWordParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['customization_id', 'word_name', 'content_type'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const body = {
+    const body = { 
       word: _params.word,
       sounds_like: _params.sounds_like,
       display_as: _params.display_as
     };
-    const path = {
+    const path = { 
       customization_id: _params.customization_id,
       word_name: _params.word_name
     };
@@ -1063,17 +984,18 @@ class SpeechToTextV1 extends BaseService {
         method: 'PUT',
         json: true,
         body: body,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': _params.content_type || 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Content-Type': _params.content_type
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Adds one or more custom words to a custom language model.
@@ -1083,25 +1005,22 @@ class SpeechToTextV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The GUID of the custom language model to which words are to be added. You must make the request with service credentials created for the instance of the service that owns the custom model.
    * @param {string} params.content_type - The type of the input.
-   * @param {CustomWord[]} params.words - An array of objects that provides information about each custom word that is to be added to or updated in the custom language model.
+   * @param {CustomWord[ ]} params.words - An array of objects that provides information about each custom word that is to be added to or updated in the custom language model.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  addWords(
-    params: SpeechToTextV1.AddWordsParams,
-    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>
-  ): ReadableStream | void {
+  addWords(params: SpeechToTextV1.AddWordsParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['customization_id', 'content_type', 'words'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const body = {
+    const body = { 
       words: _params.words
     };
-    const path = {
+    const path = { 
       customization_id: _params.customization_id
     };
     const parameters = {
@@ -1110,17 +1029,18 @@ class SpeechToTextV1 extends BaseService {
         method: 'POST',
         json: true,
         body: body,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': _params.content_type || 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Content-Type': _params.content_type
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Deletes a custom word from a custom language model.
@@ -1131,20 +1051,17 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} params.customization_id - The GUID of the custom language model from which a word is to be deleted. You must make the request with service credentials created for the instance of the service that owns the custom model.
    * @param {string} params.word_name - The custom word that is to be deleted from the custom language model.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  deleteWord(
-    params: SpeechToTextV1.DeleteWordParams,
-    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>
-  ): ReadableStream | void {
+  deleteWord(params: SpeechToTextV1.DeleteWordParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['customization_id', 'word_name'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = {
+    const path = { 
       customization_id: _params.customization_id,
       word_name: _params.word_name
     };
@@ -1152,17 +1069,17 @@ class SpeechToTextV1 extends BaseService {
       options: {
         url: '/v1/customizations/{customization_id}/words/{word_name}',
         method: 'DELETE',
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Lists a custom word from a custom language model.
@@ -1173,20 +1090,17 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} params.customization_id - The GUID of the custom language model from which a word is to be queried. You must make the request with service credentials created for the instance of the service that owns the custom model.
    * @param {string} params.word_name - The custom word that is to be queried from the custom language model.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  getWord(
-    params: SpeechToTextV1.GetWordParams,
-    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Word>
-  ): ReadableStream | void {
+  getWord(params: SpeechToTextV1.GetWordParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Word>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['customization_id', 'word_name'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = {
+    const path = { 
       customization_id: _params.customization_id,
       word_name: _params.word_name
     };
@@ -1194,17 +1108,17 @@ class SpeechToTextV1 extends BaseService {
       options: {
         url: '/v1/customizations/{customization_id}/words/{word_name}',
         method: 'GET',
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Lists all custom words from a custom language model.
@@ -1214,26 +1128,23 @@ class SpeechToTextV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The GUID of the custom language model from which words are to be queried. You must make the request with service credentials created for the instance of the service that owns the custom model.
    * @param {string} [params.word_type] - The type of words to be listed from the custom language model's words resource: * `all` (the default) shows all words. * `user` shows only custom words that were added or modified by the user. * `corpora` shows only OOV that were extracted from corpora.
-   * @param {string} [params.sort] - Indicates the order in which the words are to be listed, `alphabetical` or by `count`. You can prepend an optional `+` or `-` to an argument to indicate whether the results are to be sorted in ascending or descending order. By default, words are sorted in ascending alphabetical order. For alphabetical ordering, the lexicographical precedence is numeric values, uppercase letters, and lowercase letters. For count ordering, values with the same count are not ordered. With cURL, URL encode the `+` symbol as `%2B`.
+   * @param {string} [params.sort] - Indicates the order in which the words are to be listed, `alphabetical` or by `count`. You can prepend an optional `+` or `-` to an argument to indicate whether the results are to be sorted in ascending or descending order. By default, words are sorted in ascending alphabetical order. For alphabetical ordering, the lexicographical precedence is numeric values, uppercase letters, and lowercase letters. For count ordering, values with the same count are ordered alphabetically. With cURL, URL encode the `+` symbol as `%2B`.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  listWords(
-    params: SpeechToTextV1.ListWordsParams,
-    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Words>
-  ): ReadableStream | void {
+  listWords(params: SpeechToTextV1.ListWordsParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Words>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['customization_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const query = {
+    const query = { 
       word_type: _params.word_type,
       sort: _params.sort
     };
-    const path = {
+    const path = { 
       customization_id: _params.customization_id
     };
     const parameters = {
@@ -1241,17 +1152,17 @@ class SpeechToTextV1 extends BaseService {
         url: '/v1/customizations/{customization_id}/words',
         method: 'GET',
         qs: query,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /*************************
    * customAcousticModels
@@ -1268,20 +1179,17 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} params.base_model_name - The name of the base language model that is to be customized by the new custom acoustic model. The new custom model can be used only with the base model that it customizes. To determine whether a base model supports acoustic model customization, refer to [Language support for customization](https://console.bluemix.net/docs/services/speech-to-text/custom.html#languageSupport).
    * @param {string} [params.description] - A description of the new custom acoustic model. Use a localized description that matches the language of the custom model.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  createAcousticModel(
-    params: SpeechToTextV1.CreateAcousticModelParams,
-    callback?: SpeechToTextV1.Callback<SpeechToTextV1.AcousticModel>
-  ): ReadableStream | void {
+  createAcousticModel(params: SpeechToTextV1.CreateAcousticModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.AcousticModel>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['content_type', 'name', 'base_model_name'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const body = {
+    const body = { 
       name: _params.name,
       base_model_name: _params.base_model_name,
       description: _params.description
@@ -1291,17 +1199,18 @@ class SpeechToTextV1 extends BaseService {
         url: '/v1/acoustic_customizations',
         method: 'POST',
         json: true,
-        body: body
+        body: body,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': _params.content_type || 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Content-Type': _params.content_type
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Deletes a custom acoustic model.
@@ -1311,37 +1220,34 @@ class SpeechToTextV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The GUID of the custom acoustic model that is to be deleted. You must make the request with service credentials created for the instance of the service that owns the custom model.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  deleteAcousticModel(
-    params: SpeechToTextV1.DeleteAcousticModelParams,
-    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>
-  ): ReadableStream | void {
+  deleteAcousticModel(params: SpeechToTextV1.DeleteAcousticModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['customization_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = {
+    const path = { 
       customization_id: _params.customization_id
     };
     const parameters = {
       options: {
         url: '/v1/acoustic_customizations/{customization_id}',
         method: 'DELETE',
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Lists information about a custom acoustic model.
@@ -1351,37 +1257,34 @@ class SpeechToTextV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The GUID of the custom acoustic model for which information is to be returned. You must make the request with service credentials created for the instance of the service that owns the custom model.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  getAcousticModel(
-    params: SpeechToTextV1.GetAcousticModelParams,
-    callback?: SpeechToTextV1.Callback<SpeechToTextV1.AcousticModel>
-  ): ReadableStream | void {
+  getAcousticModel(params: SpeechToTextV1.GetAcousticModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.AcousticModel>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['customization_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = {
+    const path = { 
       customization_id: _params.customization_id
     };
     const parameters = {
       options: {
         url: '/v1/acoustic_customizations/{customization_id}',
         method: 'GET',
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Lists information about all custom acoustic models.
@@ -1391,36 +1294,29 @@ class SpeechToTextV1 extends BaseService {
    * @param {Object} [params] - The parameters to send to the service.
    * @param {string} [params.language] - The identifier of the language for which custom acoustic models are to be returned (for example, `en-US`). Omit the parameter to see all custom acoustic models owned by the requesting service credentials.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  listAcousticModels(
-    params?: SpeechToTextV1.ListAcousticModelsParams,
-    callback?: SpeechToTextV1.Callback<SpeechToTextV1.AcousticModels>
-  ): ReadableStream | void {
-    const _params =
-      typeof params === 'function' && !callback ? {} : extend({}, params);
-    const _callback =
-      typeof params === 'function' && !callback
-        ? params
-        : callback ? callback : () => {};
-    const query = {
+  listAcousticModels(params?: SpeechToTextV1.ListAcousticModelsParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.AcousticModels>): NodeJS.ReadableStream | void {
+    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
+    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {};
+    const query = { 
       language: _params.language
     };
     const parameters = {
       options: {
         url: '/v1/acoustic_customizations',
         method: 'GET',
-        qs: query
+        qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Resets a custom acoustic model.
@@ -1430,37 +1326,34 @@ class SpeechToTextV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The GUID of the custom acoustic model that is to be reset. You must make the request with service credentials created for the instance of the service that owns the custom model.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  resetAcousticModel(
-    params: SpeechToTextV1.ResetAcousticModelParams,
-    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>
-  ): ReadableStream | void {
+  resetAcousticModel(params: SpeechToTextV1.ResetAcousticModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['customization_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = {
+    const path = { 
       customization_id: _params.customization_id
     };
     const parameters = {
       options: {
         url: '/v1/acoustic_customizations/{customization_id}/reset',
         method: 'POST',
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Trains a custom acoustic model.
@@ -1471,23 +1364,20 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} params.customization_id - The GUID of the custom acoustic model that is to be trained. You must make the request with service credentials created for the instance of the service that owns the custom model.
    * @param {string} [params.custom_language_model_id] - The GUID of a custom language model that is to be used during training of the custom acoustic model. Specify a custom language model that has been trained with verbatim transcriptions of the audio resources or that contains words that are relevant to the contents of the audio resources.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  trainAcousticModel(
-    params: SpeechToTextV1.TrainAcousticModelParams,
-    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>
-  ): ReadableStream | void {
+  trainAcousticModel(params: SpeechToTextV1.TrainAcousticModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['customization_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const query = {
+    const query = { 
       custom_language_model_id: _params.custom_language_model_id
     };
-    const path = {
+    const path = { 
       customization_id: _params.customization_id
     };
     const parameters = {
@@ -1495,17 +1385,59 @@ class SpeechToTextV1 extends BaseService {
         url: '/v1/acoustic_customizations/{customization_id}/train',
         method: 'POST',
         qs: query,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
+
+  /**
+   * Upgrades a custom acoustic model.
+   *
+   * Initiates the upgrade of a custom acoustic model to the latest version of its base language model. The upgrade method is asynchronous. It can take on the order of minutes or hours to complete depending on the amount of data in the custom model and the current load on the service; typically, upgrade takes approximately twice the length of the total audio contained in the custom model. A custom model must be in the `ready` or `available` state to be upgraded. You must use credentials for the instance of the service that owns a model to upgrade it.   The method returns an HTTP 200 response code to indicate that the upgrade process has begun successfully. You can monitor the status of the upgrade by using the `GET /v1/acoustic_customizations/{customization_id}` method to poll the model's status. Use a loop to check the status once a minute. While it is being upgraded, the custom model has the status `upgrading`. When the upgrade is complete, the model resumes the status that it had prior to upgrade. The service cannot accept subsequent requests for the model until the upgrade completes.   If the custom acoustic model was trained with a separately created custom language model, you must use the `custom_language_model_id` query parameter to specify the GUID of that custom language model. The custom language model must be upgraded before the custom acoustic model can be upgraded. Omit the parameter if the custom acoustic model was not trained with a custom language model.   For more information, see [Upgrading custom models](https://console.bluemix.net/docs/services/speech-to-text/custom-upgrade.html).
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.customization_id - The GUID of the custom acoustic model that is to be upgraded. You must make the request with service credentials created for the instance of the service that owns the custom model.
+   * @param {string} [params.custom_language_model_id] - If the custom acoustic model was trained with a custom language model, the GUID of that custom language model. The custom language model must be upgraded before the custom acoustic model can be upgraded.
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {NodeJS.ReadableStream|void}
+   */
+  upgradeAcousticModel(params: SpeechToTextV1.UpgradeAcousticModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): NodeJS.ReadableStream | void {
+    const _params = extend({}, params);
+    const _callback = (callback) ? callback : () => {};
+    const requiredParams = ['customization_id'];
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+    const query = { 
+      custom_language_model_id: _params.custom_language_model_id
+    };
+    const path = { 
+      customization_id: _params.customization_id
+    };
+    const parameters = {
+      options: {
+        url: '/v1/acoustic_customizations/{customization_id}/upgrade',
+        method: 'POST',
+        qs: query,
+        path: path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }
+      })
+    };
+    return createRequest(parameters, _callback);
+  };
 
   /*************************
    * customAudioResources
@@ -1521,55 +1453,46 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} params.audio_name - The name of the audio resource that is to be added to the custom acoustic model. The name cannot contain spaces. Use a localized name that matches the language of the custom model.
    * @param {string} [params.contained_content_type] - For an archive-type resource that contains audio files whose format is not `audio/wav`, specifies the format of the audio files. The header accepts all of the audio formats supported for use with speech recognition and with the `Content-Type` header, including the `rate`, `channels`, and `endianness` parameters that are used with some formats. For a complete list of supported audio formats, see [Audio formats](/docs/services/speech-to-text/input.html#formats).
    * @param {boolean} [params.allow_overwrite] - Indicates whether the specified audio resource is to overwrite an existing resource with the same name. If a resource with the same name already exists, the request fails unless `allow_overwrite` is set to `true`; by default, the parameter is `false`. The parameter has no effect if a resource with the same name does not already exist.
-   * @param {ByteArray[]} params.audio_resource - The audio resource that is to be added to the custom acoustic model, an individual audio file or an archive file.
+   * @param {ByteArray[ ]} params.audio_resource - The audio resource that is to be added to the custom acoustic model, an individual audio file or an archive file.
    * @param {string} params.content_type - The type of the input: application/zip, application/gzip, audio/basic, audio/flac, audio/l16, audio/mp3, audio/mpeg, audio/mulaw, audio/ogg, audio/ogg;codecs=opus, audio/ogg;codecs=vorbis, audio/wav, audio/webm, audio/webm;codecs=opus, or audio/webm;codecs=vorbis.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  addAudio(
-    params: SpeechToTextV1.AddAudioParams,
-    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>
-  ): ReadableStream | void {
+  addAudio(params: SpeechToTextV1.AddAudioParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
-    const requiredParams = [
-      'customization_id',
-      'audio_name',
-      'audio_resource',
-      'content_type'
-    ];
+    const _callback = (callback) ? callback : () => {};
+    const requiredParams = ['customization_id', 'audio_name', 'audio_resource', 'content_type'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const body = _params.audio_resource;
-    const query = {
+    const query = { 
       allow_overwrite: _params.allow_overwrite
     };
-    const path = {
+    const path = { 
       customization_id: _params.customization_id,
       audio_name: _params.audio_name
     };
     const parameters = {
       options: {
-        url:
-          '/v1/acoustic_customizations/{customization_id}/audio/{audio_name}',
+        url: '/v1/acoustic_customizations/{customization_id}/audio/{audio_name}',
         method: 'POST',
-        json: _params.content_type === 'application/json',
+        json: (_params.content_type === 'application/json'),
         body: body,
         qs: query,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Contained-Content-Type': _params.contained_content_type,
+          'Accept': 'application/json',
+          'Contained-Content-Type': _params.contained_content_type, 
           'Content-Type': _params.content_type
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Deletes an audio resource from a custom acoustic model.
@@ -1580,39 +1503,35 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} params.customization_id - The GUID of the custom acoustic model from which an audio resource is to be deleted. You must make the request with service credentials created for the instance of the service that owns the custom model.
    * @param {string} params.audio_name - The name of the audio resource that is to be deleted from the custom acoustic model.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  deleteAudio(
-    params: SpeechToTextV1.DeleteAudioParams,
-    callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>
-  ): ReadableStream | void {
+  deleteAudio(params: SpeechToTextV1.DeleteAudioParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['customization_id', 'audio_name'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = {
+    const path = { 
       customization_id: _params.customization_id,
       audio_name: _params.audio_name
     };
     const parameters = {
       options: {
-        url:
-          '/v1/acoustic_customizations/{customization_id}/audio/{audio_name}',
+        url: '/v1/acoustic_customizations/{customization_id}/audio/{audio_name}',
         method: 'DELETE',
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Lists information about an audio resource for a custom acoustic model.
@@ -1623,39 +1542,35 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} params.customization_id - The GUID of the custom acoustic model for which an audio resource is to be listed. You must make the request with service credentials created for the instance of the service that owns the custom model.
    * @param {string} params.audio_name - The name of the audio resource about which information is to be listed.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  getAudio(
-    params: SpeechToTextV1.GetAudioParams,
-    callback?: SpeechToTextV1.Callback<SpeechToTextV1.AudioListing>
-  ): ReadableStream | void {
+  getAudio(params: SpeechToTextV1.GetAudioParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.AudioListing>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['customization_id', 'audio_name'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = {
+    const path = { 
       customization_id: _params.customization_id,
       audio_name: _params.audio_name
     };
     const parameters = {
       options: {
-        url:
-          '/v1/acoustic_customizations/{customization_id}/audio/{audio_name}',
+        url: '/v1/acoustic_customizations/{customization_id}/audio/{audio_name}',
         method: 'GET',
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Lists information about all audio resources for a custom acoustic model.
@@ -1665,37 +1580,35 @@ class SpeechToTextV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The GUID of the custom acoustic model for which audio resources are to be listed. You must make the request with service credentials created for the instance of the service that owns the custom model.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  listAudio(
-    params: SpeechToTextV1.ListAudioParams,
-    callback?: SpeechToTextV1.Callback<SpeechToTextV1.AudioResources>
-  ): ReadableStream | void {
+  listAudio(params: SpeechToTextV1.ListAudioParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.AudioResources>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['customization_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = {
+    const path = { 
       customization_id: _params.customization_id
     };
     const parameters = {
       options: {
         url: '/v1/acoustic_customizations/{customization_id}/audio',
         method: 'GET',
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
+
 }
 
 SpeechToTextV1.prototype.name = 'speech_to_text';
@@ -1706,6 +1619,7 @@ SpeechToTextV1.prototype.version = 'v1';
  ************************/
 
 namespace SpeechToTextV1 {
+
   /** Options for the `SpeechToTextV1` constructor. **/
   export type Options = {
     url?: string;
@@ -1713,17 +1627,13 @@ namespace SpeechToTextV1 {
     password?: string;
     use_unauthenticated?: boolean;
     headers?: object;
-  };
+  }
 
   /** The callback for a service request. **/
-  export type Callback<T> = (
-    error: any,
-    body?: T,
-    response?: RequestResponse
-  ) => void;
+  export type Callback<T> = (error: any, body?: T, response?: RequestResponse) => void;
 
   /** The body of a service request that returns no response data. **/
-  export interface Empty {}
+  export interface Empty { }
 
   /*************************
    * request interfaces
@@ -1752,12 +1662,13 @@ namespace SpeechToTextV1 {
       PT_BR_BROADBANDMODEL = 'pt-BR_BroadbandModel',
       PT_BR_NARROWBANDMODEL = 'pt-BR_NarrowbandModel',
       ZH_CN_BROADBANDMODEL = 'zh-CN_BroadbandModel',
-      ZH_CN_NARROWBANDMODEL = 'zh-CN_NarrowbandModel'
+      ZH_CN_NARROWBANDMODEL = 'zh-CN_NarrowbandModel',
     }
   }
 
   /** Parameters for the `listModels` operation. **/
-  export interface ListModelsParams {}
+  export interface ListModelsParams {
+  }
 
   /** Parameters for the `createSession` operation. **/
   export interface CreateSessionParams {
@@ -1769,6 +1680,8 @@ namespace SpeechToTextV1 {
     acoustic_customization_id?: string;
     /** If you specify a `customization_id` when you create the session, you can use the `customization_weight` parameter to tell the service how much weight to give to words from the custom language model compared to those from the base model for recognition requests made with the session.   Specify a value between 0.0 and 1.0. Unless a different customization weight was specified for the custom model when it was trained, the default value is 0.3. A customization weight that you specify overrides a weight that was specified when the custom model was trained.   The default value yields the best performance in general. Assign a higher value if your audio makes frequent use of OOV words from the custom model. Use caution when setting the weight: a higher value can improve the accuracy of phrases from the custom model's domain, but it can negatively affect performance on non-domain phrases. **/
     customization_weight?: number;
+    /** The version of the specified base `model` that is to be used with the new session. Multiple versions of a base model can exist when a model is updated for internal improvements. The parameter is intended primarily for use with custom models that have been upgraded for a new base model. The default value depends on whether the parameter is used with or without a custom model. For more information, see [Base model version](https://console.bluemix.net/docs/services/speech-to-text/input.html#version). **/
+    version?: string;
   }
 
   /** Constants for the `createSession` operation. **/
@@ -1788,7 +1701,7 @@ namespace SpeechToTextV1 {
       PT_BR_BROADBANDMODEL = 'pt-BR_BroadbandModel',
       PT_BR_NARROWBANDMODEL = 'pt-BR_NarrowbandModel',
       ZH_CN_BROADBANDMODEL = 'zh-CN_BroadbandModel',
-      ZH_CN_NARROWBANDMODEL = 'zh-CN_NarrowbandModel'
+      ZH_CN_NARROWBANDMODEL = 'zh-CN_NarrowbandModel',
     }
   }
 
@@ -1811,7 +1724,8 @@ namespace SpeechToTextV1 {
   }
 
   /** Parameters for the `checkJobs` operation. **/
-  export interface CheckJobsParams {}
+  export interface CheckJobsParams {
+  }
 
   /** Parameters for the `createJob` operation. **/
   export interface CreateJobParams {
@@ -1837,10 +1751,12 @@ namespace SpeechToTextV1 {
     acoustic_customization_id?: string;
     /** If you specify a `customization_id` with the request, you can use the `customization_weight` parameter to tell the service how much weight to give to words from the custom language model compared to those from the base model for speech recognition.   Specify a value between 0.0 and 1.0. Unless a different customization weight was specified for the custom model when it was trained, the default value is 0.3. A customization weight that you specify overrides a weight that was specified when the custom model was trained.   The default value yields the best performance in general. Assign a higher value if your audio makes frequent use of OOV words from the custom model. Use caution when setting the weight: a higher value can improve the accuracy of phrases from the custom model's domain, but it can negatively affect  performance on non-domain phrases. **/
     customization_weight?: number;
+    /** The version of the specified base `model` that is to be used with the request. Multiple versions of a base model can exist when a model is updated for internal improvements. The parameter is intended primarily for use with custom models that have been upgraded for a new base model. The default value depends on whether the parameter is used with or without a custom model. For more information, see [Base model version](https://console.bluemix.net/docs/services/speech-to-text/input.html#version). **/
+    version?: string;
     /** The time in seconds after which, if only silence (no speech) is detected in submitted audio, the connection is closed with a 400 error. Useful for stopping audio submission from a live microphone when a user simply walks away. Use `-1` for infinity. **/
     inactivity_timeout?: number;
-    /** Array of keyword strings to spot in the audio. Each keyword string can include one or more tokens. Keywords are spotted only in the final hypothesis, not in interim results. Omit the parameter or specify an empty array if you do not need to spot keywords. **/
-    keywords?: string[];
+    /** Array of keyword strings to spot in the audio. Each keyword string can include one or more tokens. Keywords are spotted only in the final hypothesis, not in interim results. If you specify any keywords, you must also specify a keywords threshold. Omit the parameter or specify an empty array if you do not need to spot keywords. **/
+    keywords?: string[ ];
     /** Confidence value that is the lower bound for spotting a keyword. A word is considered to match a keyword if its confidence is greater than or equal to the threshold. Specify a probability between 0 and 1 inclusive. No keyword spotting is performed if you omit the parameter. If you specify a threshold, you must also specify one or more keywords. **/
     keywords_threshold?: number;
     /** Maximum number of alternative transcripts to be returned. By default, a single transcription is returned. **/
@@ -1866,11 +1782,11 @@ namespace SpeechToTextV1 {
       STARTED = 'recognitions.started',
       COMPLETED = 'recognitions.completed',
       COMPLETED_WITH_RESULTS = 'recognitions.completed_with_results',
-      FAILED = 'recognitions.failed'
+      FAILED = 'recognitions.failed',
     }
     /** Set to `chunked` to send the audio in streaming mode. The data does not need to exist fully before being streamed to the service. **/
     export enum TransferEncoding {
-      CHUNKED = 'chunked'
+      CHUNKED = 'chunked',
     }
     /** The type of the input: audio/basic, audio/flac, audio/l16, audio/mp3, audio/mpeg, audio/mulaw, audio/ogg, audio/ogg;codecs=opus, audio/ogg;codecs=vorbis, audio/wav, audio/webm, audio/webm;codecs=opus, or audio/webm;codecs=vorbis. **/
     export enum ContentType {
@@ -1886,7 +1802,7 @@ namespace SpeechToTextV1 {
       WAV = 'audio/wav',
       WEBM = 'audio/webm',
       WEBM_CODECS_OPUS = 'audio/webm;codecs=opus',
-      WEBM_CODECS_VORBIS = 'audio/webm;codecs=vorbis'
+      WEBM_CODECS_VORBIS = 'audio/webm;codecs=vorbis',
     }
     /** The identifier of the model to be used for the recognition request. (Use `GET /v1/models` for a list of available models.). **/
     export enum Model {
@@ -1903,7 +1819,7 @@ namespace SpeechToTextV1 {
       PT_BR_BROADBANDMODEL = 'pt-BR_BroadbandModel',
       PT_BR_NARROWBANDMODEL = 'pt-BR_NarrowbandModel',
       ZH_CN_BROADBANDMODEL = 'zh-CN_BroadbandModel',
-      ZH_CN_NARROWBANDMODEL = 'zh-CN_NarrowbandModel'
+      ZH_CN_NARROWBANDMODEL = 'zh-CN_NarrowbandModel',
     }
   }
 
@@ -1945,7 +1861,7 @@ namespace SpeechToTextV1 {
   export namespace CreateLanguageModelConstants {
     /** The type of the input. **/
     export enum ContentType {
-      JSON = 'application/json'
+      JSON = 'application/json',
     }
   }
 
@@ -1988,7 +1904,7 @@ namespace SpeechToTextV1 {
     /** The type of words from the custom language model's words resource on which to train the model: * `all` (the default) trains the model on all new words, regardless of whether they were extracted from corpora or were added or modified by the user. * `user` trains the model only on new words that were added or modified by the user; the model is not trained on new words extracted from corpora. **/
     export enum WordTypeToAdd {
       ALL = 'all',
-      USER = 'user'
+      USER = 'user',
     }
   }
 
@@ -2007,7 +1923,7 @@ namespace SpeechToTextV1 {
     /** Indicates whether the specified corpus is to overwrite an existing corpus with the same name. If a corpus with the same name already exists, the request fails unless `allow_overwrite` is set to `true`; by default, the parameter is `false`. The parameter has no effect if a corpus with the same name does not already exist. **/
     allow_overwrite?: boolean;
     /** A plain text file that contains the training data for the corpus. Encode the file in UTF-8 if it contains non-ASCII characters; the service assumes UTF-8 encoding if it encounters non-ASCII characters. With cURL, use the `--data-binary` option to upload the file for the request. **/
-    corpus_file: ReadableStream | FileObject | Buffer;
+    corpus_file: ReadableStream|FileObject|Buffer;
     /** The content type of corpus_file. **/
     corpus_file_content_type?: string;
   }
@@ -2045,7 +1961,7 @@ namespace SpeechToTextV1 {
     /** **When specifying an array of one or more words,** you must specify the custom word that is to be added to or updated in the custom model. Do not include spaces in the word. Use a - (dash) or _ (underscore) to connect the tokens of compound words. **When adding or updating a single word directly,** omit this field. **/
     word?: string;
     /** An array of sounds-like pronunciations for the custom word. Specify how words that are difficult to pronounce, foreign words, acronyms, and so on can be pronounced by users. For a word that is not in the service's base vocabulary, omit the parameter to have the service automatically generate a sounds-like pronunciation for the word. For a word that is in the service's base vocabulary, use the parameter to specify additional pronunciations for the word. You cannot override the default pronunciation of a word; pronunciations you add augment the pronunciation from the base vocabulary. A word can have at most five sounds-like pronunciations, and a pronunciation can include at most 40 characters not including spaces. **/
-    sounds_like?: string[];
+    sounds_like?: string[ ];
     /** An alternative spelling for the custom word when it appears in a transcript. Use the parameter when you want the word to have a spelling that is different from its usual representation or from its spelling in corpora training data. **/
     display_as?: string;
   }
@@ -2054,7 +1970,7 @@ namespace SpeechToTextV1 {
   export namespace AddWordConstants {
     /** The type of the input. **/
     export enum ContentType {
-      JSON = 'application/json'
+      JSON = 'application/json',
     }
   }
 
@@ -2065,14 +1981,14 @@ namespace SpeechToTextV1 {
     /** The type of the input. **/
     content_type: AddWordsConstants.ContentType | string;
     /** An array of objects that provides information about each custom word that is to be added to or updated in the custom language model. **/
-    words: CustomWord[];
+    words: CustomWord[ ];
   }
 
   /** Constants for the `addWords` operation. **/
   export namespace AddWordsConstants {
     /** The type of the input. **/
     export enum ContentType {
-      JSON = 'application/json'
+      JSON = 'application/json',
     }
   }
 
@@ -2098,7 +2014,7 @@ namespace SpeechToTextV1 {
     customization_id: string;
     /** The type of words to be listed from the custom language model's words resource: * `all` (the default) shows all words. * `user` shows only custom words that were added or modified by the user. * `corpora` shows only OOV that were extracted from corpora. **/
     word_type?: ListWordsConstants.WordType | string;
-    /** Indicates the order in which the words are to be listed, `alphabetical` or by `count`. You can prepend an optional `+` or `-` to an argument to indicate whether the results are to be sorted in ascending or descending order. By default, words are sorted in ascending alphabetical order. For alphabetical ordering, the lexicographical precedence is numeric values, uppercase letters, and lowercase letters. For count ordering, values with the same count are not ordered. With cURL, URL encode the `+` symbol as `%2B`. **/
+    /** Indicates the order in which the words are to be listed, `alphabetical` or by `count`. You can prepend an optional `+` or `-` to an argument to indicate whether the results are to be sorted in ascending or descending order. By default, words are sorted in ascending alphabetical order. For alphabetical ordering, the lexicographical precedence is numeric values, uppercase letters, and lowercase letters. For count ordering, values with the same count are ordered alphabetically. With cURL, URL encode the `+` symbol as `%2B`. **/
     sort?: ListWordsConstants.Sort | string;
   }
 
@@ -2108,12 +2024,12 @@ namespace SpeechToTextV1 {
     export enum WordType {
       ALL = 'all',
       USER = 'user',
-      CORPORA = 'corpora'
+      CORPORA = 'corpora',
     }
-    /** Indicates the order in which the words are to be listed, `alphabetical` or by `count`. You can prepend an optional `+` or `-` to an argument to indicate whether the results are to be sorted in ascending or descending order. By default, words are sorted in ascending alphabetical order. For alphabetical ordering, the lexicographical precedence is numeric values, uppercase letters, and lowercase letters. For count ordering, values with the same count are not ordered. With cURL, URL encode the `+` symbol as `%2B`. **/
+    /** Indicates the order in which the words are to be listed, `alphabetical` or by `count`. You can prepend an optional `+` or `-` to an argument to indicate whether the results are to be sorted in ascending or descending order. By default, words are sorted in ascending alphabetical order. For alphabetical ordering, the lexicographical precedence is numeric values, uppercase letters, and lowercase letters. For count ordering, values with the same count are ordered alphabetically. With cURL, URL encode the `+` symbol as `%2B`. **/
     export enum Sort {
       ALPHABETICAL = 'alphabetical',
-      COUNT = 'count'
+      COUNT = 'count',
     }
   }
 
@@ -2133,7 +2049,7 @@ namespace SpeechToTextV1 {
   export namespace CreateAcousticModelConstants {
     /** The type of the input. **/
     export enum ContentType {
-      JSON = 'application/json'
+      JSON = 'application/json',
     }
   }
 
@@ -2169,6 +2085,14 @@ namespace SpeechToTextV1 {
     custom_language_model_id?: string;
   }
 
+  /** Parameters for the `upgradeAcousticModel` operation. **/
+  export interface UpgradeAcousticModelParams {
+    /** The GUID of the custom acoustic model that is to be upgraded. You must make the request with service credentials created for the instance of the service that owns the custom model. **/
+    customization_id: string;
+    /** If the custom acoustic model was trained with a custom language model, the GUID of that custom language model. The custom language model must be upgraded before the custom acoustic model can be upgraded. **/
+    custom_language_model_id?: string;
+  }
+
   /** Parameters for the `addAudio` operation. **/
   export interface AddAudioParams {
     /** The GUID of the custom acoustic model to which an audio resource is to be added. You must make the request with service credentials created for the instance of the service that owns the custom model. **/
@@ -2180,7 +2104,7 @@ namespace SpeechToTextV1 {
     /** Indicates whether the specified audio resource is to overwrite an existing resource with the same name. If a resource with the same name already exists, the request fails unless `allow_overwrite` is set to `true`; by default, the parameter is `false`. The parameter has no effect if a resource with the same name does not already exist. **/
     allow_overwrite?: boolean;
     /** The audio resource that is to be added to the custom acoustic model, an individual audio file or an archive file. **/
-    audio_resource: Buffer[];
+    audio_resource: ByteArray[ ];
     /** The type of the input: application/zip, application/gzip, audio/basic, audio/flac, audio/l16, audio/mp3, audio/mpeg, audio/mulaw, audio/ogg, audio/ogg;codecs=opus, audio/ogg;codecs=vorbis, audio/wav, audio/webm, audio/webm;codecs=opus, or audio/webm;codecs=vorbis. **/
     content_type: AddAudioConstants.ContentType | string;
   }
@@ -2201,7 +2125,7 @@ namespace SpeechToTextV1 {
       WAV = 'audio/wav',
       WEBM = 'audio/webm',
       WEBM_CODECS_OPUS = 'audio/webm;codecs=opus',
-      WEBM_CODECS_VORBIS = 'audio/webm;codecs=vorbis'
+      WEBM_CODECS_VORBIS = 'audio/webm;codecs=vorbis',
     }
     /** The type of the input: application/zip, application/gzip, audio/basic, audio/flac, audio/l16, audio/mp3, audio/mpeg, audio/mulaw, audio/ogg, audio/ogg;codecs=opus, audio/ogg;codecs=vorbis, audio/wav, audio/webm, audio/webm;codecs=opus, or audio/webm;codecs=vorbis. **/
     export enum ContentType {
@@ -2219,7 +2143,7 @@ namespace SpeechToTextV1 {
       AUDIO_WAV = 'audio/wav',
       AUDIO_WEBM = 'audio/webm',
       AUDIO_WEBM_CODECS_OPUS = 'audio/webm;codecs=opus',
-      AUDIO_WEBM_CODECS_VORBIS = 'audio/webm;codecs=vorbis'
+      AUDIO_WEBM_CODECS_VORBIS = 'audio/webm;codecs=vorbis',
     }
   }
 
@@ -2257,6 +2181,8 @@ namespace SpeechToTextV1 {
     created?: string;
     /** The language identifier of the custom acoustic model (for example, `en-US`). **/
     language?: string;
+    /** A list of the available versions of the custom acoustic model. Each element of the array indicates a version of the base model with which the custom model can be used. Multiple versions exist only if the custom model has been upgraded; otherwise, only a single version is shown. **/
+    versions?: string[ ];
     /** The GUID of the service credentials for the instance of the service that owns the custom acoustic model. **/
     owner?: string;
     /** The name of the custom acoustic model. **/
@@ -2265,7 +2191,7 @@ namespace SpeechToTextV1 {
     description?: string;
     /** The name of the language model for which the custom acoustic model was created. **/
     base_model_name?: string;
-    /** The current status of the custom acoustic model: * `pending` indicates that the model was created but is waiting either for training data to be added or for the service to finish analyzing added data. * `ready` indicates that the model contains data and is ready to be trained. * `training` indicates that the model is currently being trained. * `available` indicates that the model is trained and ready to use. * `failed` indicates that training of the model failed. **/
+    /** The current status of the custom acoustic model: * `pending` indicates that the model was created but is waiting either for training data to be added or for the service to finish analyzing added data. * `ready` indicates that the model contains data and is ready to be trained. * `training` indicates that the model is currently being trained. * `available` indicates that the model is trained and ready to use. * `upgrading` indicates that the model is currently being upgraded. * `failed` indicates that training of the model failed. **/
     status?: string;
     /** A percentage that indicates the progress of the custom acoustic model's current training. A value of `100` means that the model is fully trained. **Note:** The `progress` field does not currently reflect the progress of the training; the field changes from `0` to `100` when training is complete. **/
     progress?: number;
@@ -2276,7 +2202,7 @@ namespace SpeechToTextV1 {
   /** AcousticModels. **/
   export interface AcousticModels {
     /** An array of objects that provides information about each available custom acoustic model. The array is empty if the requesting service credentials own no custom acoustic models (if no language is specified) or own no custom acoustic models for the specified language. **/
-    customizations: AcousticModel[];
+    customizations: AcousticModel[ ];
   }
 
   /** AudioDetails. **/
@@ -2304,7 +2230,7 @@ namespace SpeechToTextV1 {
     /** **For an archive-type resource,** an object of type `AudioResource` that provides information about the resource. Omitted for an audio-type resource. **/
     container?: AudioResource;
     /** **For an archive-type resource,** an array of `AudioResource` objects that provides information about the audio-type resources that are contained in the resource. Omitted for an audio-type resource. **/
-    audio?: AudioResource[];
+    audio?: AudioResource[ ];
   }
 
   /** AudioResource. **/
@@ -2324,13 +2250,13 @@ namespace SpeechToTextV1 {
     /** The total minutes of accumulated audio summed over all of the valid audio resources for the custom acoustic model. You can use this value to determine whether the custom model has too little or too much audio to begin training. **/
     total_minutes_of_audio: number;
     /** An array of `AudioResource` objects that provides information about the audio resources of the custom acoustic model. The array is empty if the custom model has no audio resources. **/
-    audio: AudioResource[];
+    audio: AudioResource[ ];
   }
 
   /** Corpora. **/
   export interface Corpora {
     /** Information about corpora of the custom model. The array is empty if the custom model has no corpora. **/
-    corpora: Corpus[];
+    corpora: Corpus[ ];
   }
 
   /** Corpus. **/
@@ -2352,7 +2278,7 @@ namespace SpeechToTextV1 {
     /** **When specifying an array of one or more words,** you must specify the custom word that is to be added to or updated in the custom model. Do not include spaces in the word. Use a - (dash) or _ (underscore) to connect the tokens of compound words. **When adding or updating a single word directly,** omit this field. **/
     word?: string;
     /** An array of sounds-like pronunciations for the custom word. Specify how words that are difficult to pronounce, foreign words, acronyms, and so on can be pronounced by users. For a word that is not in the service's base vocabulary, omit the parameter to have the service automatically generate a sounds-like pronunciation for the word. For a word that is in the service's base vocabulary, use the parameter to specify additional pronunciations for the word. You cannot override the default pronunciation of a word; pronunciations you add augment the pronunciation from the base vocabulary. A word can have at most five sounds-like pronunciations, and a pronunciation can include at most 40 characters not including spaces. **/
-    sounds_like?: string[];
+    sounds_like?: string[ ];
     /** An alternative spelling for the custom word when it appears in a transcript. Use the parameter when you want the word to have a spelling that is different from its usual representation or from its spelling in corpora training data. **/
     display_as?: string;
   }
@@ -2372,7 +2298,7 @@ namespace SpeechToTextV1 {
   /** KeywordResults. **/
   export interface KeywordResults {
     /** A list of each keyword entered via the `keywords` parameter and, for each keyword, an array of `KeywordResult` objects that provides information about its occurrences in the input audio. The keys of the list are the actual keyword strings. A keyword for which no matches are spotted in the input is omitted from the array. **/
-    keyword: KeywordResult[];
+    keyword: KeywordResult[ ];
   }
 
   /** LanguageModel. **/
@@ -2385,6 +2311,8 @@ namespace SpeechToTextV1 {
     language?: string;
     /** The dialect of the language for the custom language model. By default, the dialect matches the language of the base model; for example, `en-US` for either of the US English language models. For Spanish models, the field indicates the dialect for which the model was created: * `es-ES` for Castilian Spanish (the default) * `es-LA` for Latin American Spanish * `es-US` for North American (Mexican) Spanish. **/
     dialect?: string;
+    /** A list of the available versions of the custom language model. Each element of the array indicates a version of the base model with which the custom model can be used. Multiple versions exist only if the custom model has been upgraded; otherwise, only a single version is shown. **/
+    versions?: string[ ];
     /** The GUID of the service credentials for the instance of the service that owns the custom language model. **/
     owner?: string;
     /** The name of the custom language model. **/
@@ -2393,7 +2321,7 @@ namespace SpeechToTextV1 {
     description?: string;
     /** The name of the language model for which the custom language model was created. **/
     base_model_name?: string;
-    /** The current status of the custom language model: * `pending` indicates that the model was created but is waiting either for training data to be added or for the service to finish analyzing added data. * `ready` indicates that the model contains data and is ready to be trained. * `training` indicates that the model is currently being trained. * `available` indicates that the model is trained and ready to use. * `failed` indicates that training of the model failed. **/
+    /** The current status of the custom language model: * `pending` indicates that the model was created but is waiting either for training data to be added or for the service to finish analyzing added data. * `ready` indicates that the model contains data and is ready to be trained. * `training` indicates that the model is currently being trained. * `available` indicates that the model is trained and ready to use. * `upgrading` indicates that the model is currently being upgraded. * `failed` indicates that training of the model failed. **/
     status?: string;
     /** A percentage that indicates the progress of the custom language model's current training. A value of `100` means that the model is fully trained. **Note:** The `progress` field does not currently reflect the progress of the training; the field changes from `0` to `100` when training is complete. **/
     progress?: number;
@@ -2404,7 +2332,7 @@ namespace SpeechToTextV1 {
   /** LanguageModels. **/
   export interface LanguageModels {
     /** An array of objects that provides information about each available custom language model. The array is empty if the requesting service credentials own no custom language models (if no language is specified) or own no custom language models for the specified language. **/
-    customizations: LanguageModel[];
+    customizations: LanguageModel[ ];
   }
 
   /** RecognitionJob. **/
@@ -2422,15 +2350,15 @@ namespace SpeechToTextV1 {
     /** The user token associated with a job that was created with a callback URL and a user token. **Note:** This field can be returned only when you list information about all existing jobs. **/
     user_token?: string;
     /** If the status is `completed`, the results of the recognition request as an array that includes a single instance of a `SpeechRecognitionResults` object. **Note:** This field can be returned only when you list information about a specific existing job. **/
-    results?: SpeechRecognitionResults[];
+    results?: SpeechRecognitionResults[ ];
     /** An array of warning messages about invalid query parameters included with the request. Each warning includes a descriptive message and a list of invalid argument strings, for example, `"unexpected query parameter 'user_token', query parameter 'callback_url' was not specified"`. The request succeeds despite the warnings. **Note:** This field can be returned only when you create a new job. **/
-    warnings?: string[];
+    warnings?: string[ ];
   }
 
   /** RecognitionJobs. **/
   export interface RecognitionJobs {
     /** An array of objects that provides the status for each of the user's current jobs. The array is empty if the user has no current jobs. **/
-    recognitions: RecognitionJob[];
+    recognitions: RecognitionJob[ ];
   }
 
   /** RegisterStatus. **/
@@ -2482,7 +2410,7 @@ namespace SpeechToTextV1 {
   /** SpeechModels. **/
   export interface SpeechModels {
     /** Information about each available model. **/
-    models: SpeechModel[];
+    models: SpeechModel[ ];
   }
 
   /** SpeechRecognitionAlternative. **/
@@ -2492,9 +2420,9 @@ namespace SpeechToTextV1 {
     /** A score that indicates the service's confidence in the transcript in the range of 0 to 1. Available only for the best alternative and only in results marked as final. **/
     confidence?: number;
     /** Time alignments for each word from the transcript as a list of lists. Each inner list consists of three elements: the word followed by its start and end time in seconds. Example: `[["hello",0.0,1.2],["world",1.2,2.5]]`. Available only for the best alternative. **/
-    timestamps?: string[];
+    timestamps?: string[ ];
     /** A confidence score for each word of the transcript as a list of lists. Each inner list consists of two elements: the word and its confidence score in the range of 0 to 1. Example: `[["hello",0.95],["world",0.866]]`. Available only for the best alternative and only in results marked as final. **/
-    word_confidence?: string[];
+    word_confidence?: string[ ];
   }
 
   /** SpeechRecognitionResult. **/
@@ -2502,23 +2430,23 @@ namespace SpeechToTextV1 {
     /** An indication of whether the transcription results are final. If `true`, the results for this utterance are not updated further; no additional results are sent for a `result_index` once its results are indicated as final. **/
     final: boolean;
     /** An array of alternative transcripts. The `alternatives` array can include additional requested output such as word confidence or timestamps. **/
-    alternatives: SpeechRecognitionAlternative[];
+    alternatives: SpeechRecognitionAlternative[ ];
     /** A dictionary (or associative array) whose keys are the strings specified for `keywords` if both that parameter and `keywords_threshold` are specified. A keyword for which no matches are found is omitted from the array. The array is omitted if no keywords are found. **/
     keywords_result?: KeywordResults;
     /** An array of alternative hypotheses found for words of the input audio if a `word_alternatives_threshold` is specified. **/
-    word_alternatives?: WordAlternativeResults[];
+    word_alternatives?: WordAlternativeResults[ ];
   }
 
   /** SpeechRecognitionResults. **/
   export interface SpeechRecognitionResults {
     /** An array that can include interim and final results (interim results are returned only if supported by the method). Final results are guaranteed not to change; interim results might be replaced by further interim results and final results. The service periodically sends updates to the results list; the `result_index` is set to the lowest index in the array that has changed; it is incremented for new results. **/
-    results?: SpeechRecognitionResult[];
+    results?: SpeechRecognitionResult[ ];
     /** An index that indicates a change point in the `results` array. The service increments the index only for additional results that it sends for new audio for the same request. **/
     result_index?: number;
     /** An array that identifies which words were spoken by which speakers in a multi-person exchange. Returned in the response only if `speaker_labels` is `true`. When interim results are also requested for methods that support them, it is possible for a `SpeechRecognitionResults` object to include only the `speaker_labels` field. **/
-    speaker_labels?: SpeakerLabelsResult[];
-    /** An array of warning messages about invalid query parameters or JSON fields included with the request. Each warning includes a descriptive message and a list of invalid argument strings, for example, `"Unknown arguments:"` or `"Unknown url query arguments:"` followed by a list of the form `"invalid_arg_1, invalid_arg_2."` The request succeeds despite the warnings. **/
-    warnings?: string[];
+    speaker_labels?: SpeakerLabelsResult[ ];
+    /** An array of warning messages associated with the request: * Warnings for invalid query parameters or JSON fields can include a descriptive message and a list of invalid argument strings, for example, `"Unknown arguments:"` or `"Unknown url query arguments:"` followed by a list of the form `"invalid_arg_1, invalid_arg_2."` * The following warning is returned if the request passes a custom model that is based on an older version of a base model for which an updated version is available: `"Using previous version of base model, because your custom model has been built with it. Please note that this version will be supported only for a limited time. Consider updating your custom model to the new base model. If you do not do that you will be automatically switched to base model when you used the non-updated custom model."`  In both cases, the request succeeds despite the warnings. **/
+    warnings?: string[ ];
   }
 
   /** SpeechSession. **/
@@ -2533,7 +2461,7 @@ namespace SpeechToTextV1 {
     session_id?: string;
     /** URI for the new session. **Note:** This field is returned only when you create a new session. **/
     new_session_uri?: string;
-    /** State of the session. The state must be `initialized` to perform a new recognition request on the session. **Note:** This field is returned only when you request the status of an existing session. **/
+    /** State of the session. The state must be `initialized` for the session to accept another recognition request. Other internal states are possible, but they have no meaning for the user. **Note:** This field is returned only when you request the status of an existing session. **/
     state?: string;
     /** URI for information about the model that is used with the session. **Note:** This field is returned only when you request the status of an existing session. **/
     model?: string;
@@ -2552,15 +2480,15 @@ namespace SpeechToTextV1 {
     /** A word from the custom model's words resource. The spelling of the word is used to train the model. **/
     word: string;
     /** An array of pronunciations for the word. The array can include the sounds-like pronunciation automatically generated by the service if none is provided for the word; the service adds this pronunciation when it finishes processing the word. **/
-    sounds_like: string[];
+    sounds_like: string[ ];
     /** The spelling of the word that the service uses to display the word in a transcript. The field contains an empty string if no display-as value is provided for the word, in which case the word is displayed as it is spelled. **/
     display_as: string;
     /** A sum of the number of times the word is found across all corpora. For example, if the word occurs five times in one corpus and seven times in another, its count is `12`. If you add a custom word to a model before it is added by any corpora, the count begins at `1`; if the word is added from a corpus first and later modified, the count reflects only the number of times it is found in corpora. **/
     count: number;
     /** An array of sources that describes how the word was added to the custom model's words resource. For OOV words added from a corpus, includes the name of the corpus; if the word was added by multiple corpora, the names of all corpora are listed. If the word was modified or added by the user directly, the field includes the string `user`. **/
-    source: string[];
-    /** If the service discovered one or more problems with the word's definition that you need to correct, an array that describes each of the errors. **/
-    error?: WordError[];
+    source: string[ ];
+    /** If the service discovered one or more problems that you need to correct for the word's definition, an array that describes each of the errors. **/
+    error?: WordError[ ];
   }
 
   /** WordAlternativeResult. **/
@@ -2578,7 +2506,7 @@ namespace SpeechToTextV1 {
     /** The end time in seconds of the word from the input audio that corresponds to the word alternatives. **/
     end_time: number;
     /** An array of alternative hypotheses for a word from the input audio. **/
-    alternatives: WordAlternativeResult[];
+    alternatives: WordAlternativeResult[ ];
   }
 
   /** WordError. **/
@@ -2590,8 +2518,9 @@ namespace SpeechToTextV1 {
   /** Words. **/
   export interface Words {
     /** Information about each word in the custom model's words resource. The array is empty if the custom model has no words. **/
-    words: Word[];
+    words: Word[ ];
   }
+
 }
 
 export = SpeechToTextV1;

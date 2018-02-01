@@ -22,7 +22,7 @@ import { isReadable } from 'isstream';
 
 // exported interfaces
 export interface FileObject {
-  value: ReadableStream | Buffer | string;
+  value: NodeJS.ReadableStream | Buffer | string;
   options?: FileOptions;
 }
 
@@ -33,11 +33,11 @@ export interface FileOptions {
 }
 
 export interface FileParamAttributes {
-  data: ReadableStream | Buffer | FileObject;
+  data: NodeJS.ReadableStream | Buffer | FileObject;
   contentType: string;
 }
 
-export interface FileStream extends ReadableStream {
+export interface FileStream extends NodeJS.ReadableStream {
   path: string | Buffer;
 }
 
@@ -63,15 +63,15 @@ export function isEmptyObject(obj: any): boolean {
 
 /**
  * This function retrieves the content type of the input.
- * @param {ReadableStream|Buffer|string} inputData - The data to retrieve content type for.
+ * @param {NodeJS.ReadableStream|Buffer|string} inputData - The data to retrieve content type for.
  * @returns {string} the content type of the input.
  */
 export function getContentType(
-  inputData: ReadableStream | Buffer | string
+  inputData: NodeJS.ReadableStream | Buffer | string
 ): string {
   let contentType = null;
   if (isFileStream(inputData)) {
-    // if the inputData is a ReadableStream
+    // if the inputData is a NodeJS.ReadableStream
     const mimeType = lookup(inputData.path);
     contentType = { mime: mimeType || null };
   } else if (Buffer.isBuffer(inputData)) {
@@ -156,7 +156,7 @@ export function getFormat(
 /**
  * this function builds a `form-data` object for each file parameter
  * @param {FileParamAttributes} fileParams - the file parameter attributes
- * @param {ReadableStream|Buffer|FileObject} fileParams.data - the data content of the file
+ * @param {NodeJS.ReadableStream|Buffer|FileObject} fileParams.data - the data content of the file
  * @param {string} fileParams.contentType - the content type of the file
  * @returns {FileObject}
  */
@@ -208,7 +208,7 @@ export function buildRequestFileObject(
   }
 
   // build value
-  let value: ReadableStream | Buffer | string = isFileObject(fileParams.data)
+  let value: NodeJS.ReadableStream | Buffer | string = isFileObject(fileParams.data)
     ? fileParams.data.value
     : fileParams.data;
   if (typeof value === 'string') {

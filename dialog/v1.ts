@@ -62,7 +62,7 @@ class DialogV1 extends BaseService {
   getProfile(
     params: DialogV1.GetProfileParams,
     callback: DialogV1.Callback
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = params || {};
     const parameters = {
       options: {
@@ -85,7 +85,7 @@ class DialogV1 extends BaseService {
   updateProfile(
     params: DialogV1.UpdateProfileParams,
     callback: DialogV1.Callback
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = params || {};
     const parameters = {
       options: {
@@ -108,7 +108,7 @@ class DialogV1 extends BaseService {
   getConversation(
     params: DialogV1.GetConversationParams,
     callback: DialogV1.Callback
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = params || {};
     const parameters = {
       options: {
@@ -132,7 +132,7 @@ class DialogV1 extends BaseService {
   conversation(
     params: DialogV1.ConversationParams,
     callback: DialogV1.Callback
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = params || {};
     const parameters = {
       options: {
@@ -155,7 +155,7 @@ class DialogV1 extends BaseService {
   updateContent(
     params: DialogV1.UpdateContentParams,
     callback: DialogV1.Callback
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = params || {};
     const parameters = {
       options: {
@@ -182,7 +182,7 @@ class DialogV1 extends BaseService {
   getContent(
     params: DialogV1.GetContentParams,
     callback: DialogV1.Callback
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = params || {};
     const parameters = {
       options: {
@@ -204,7 +204,7 @@ class DialogV1 extends BaseService {
   createDialog(
     params: DialogV1.CreateDialogParams,
     callback: DialogV1.Callback
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = params || {};
     if (!_params['file']) {
       callback(new Error('Missing required parameters: file'));
@@ -233,7 +233,7 @@ class DialogV1 extends BaseService {
   getDialogs(
     params: DialogV1.GetDialogsParams,
     callback: DialogV1.Callback
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const parameters = {
       options: {
         url: '/v1/dialogs',
@@ -251,7 +251,7 @@ class DialogV1 extends BaseService {
   deleteDialog(
     params: DialogV1.DeleteDialogParams,
     callback: DialogV1.Callback
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const parameters = {
       options: {
         url: '/v1/dialogs/{dialog_id}',
@@ -272,7 +272,7 @@ class DialogV1 extends BaseService {
   updateDialog(
     params: DialogV1.UpdateDialogParams,
     callback: DialogV1.Callback
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = params || {};
     if (!_params['file']) {
       callback(new Error('Missing required parameters: file'));

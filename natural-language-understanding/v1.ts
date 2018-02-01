@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 IBM All Rights Reserved.
+ * Copyright 2018 IBM All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,11 +25,9 @@ import { BaseService } from '../lib/base_service';
  */
 
 class NaturalLanguageUnderstandingV1 extends BaseService {
+
   name: string; // set by prototype to 'natural-language-understanding'
   version: string; // set by prototype to 'v1'
-
-  static VERSION_DATE_2016_01_23: string = '2016-01-23';
-  static VERSION_DATE_2017_02_27: string = '2017-02-27';
 
   static URL: string = 'https://gateway.watsonplatform.net/natural-language-understanding/api';
 
@@ -37,13 +35,13 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * Construct a NaturalLanguageUnderstandingV1 object.
    *
    * @param {Object} options - Options for the service.
-   * @param {String} options.version_date - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses the API version for the date you specify, or the most recent version before that date. Note that you should not programmatically specify the current date at runtime, in case the API has been updated since your application's release. Instead, specify a version date that is compatible with your application, and don't change it until your application is ready for a later version.
-   * @param {String} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/natural-language-understanding/api'). The base url may differ between Bluemix regions.
-   * @param {String} [options.username] - The username used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
-   * @param {String} [options.password] - The password used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
-   * @param {Boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
+   * @param {string} options.version_date - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses the API version for the date you specify, or the most recent version before that date. Note that you should not programmatically specify the current date at runtime, in case the API has been updated since your application's release. Instead, specify a version date that is compatible with your application, and don't change it until your application is ready for a later version.
+   * @param {string} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/natural-language-understanding/api'). The base url may differ between Bluemix regions.
+   * @param {string} [options.username] - The username used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
+   * @param {string} [options.password] - The password used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
+   * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
    * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
-   * @param {Object} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
+   * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
    * @constructor
    * @returns {NaturalLanguageUnderstandingV1}
    * @throws {Error}
@@ -78,22 +76,17 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {string} [params.language] - ISO 639-1 code indicating the language to use in the analysis.
    * @param {number} [params.limit_text_characters] - Sets the maximum number of characters that are processed by the service.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  analyze(
-    params: NaturalLanguageUnderstandingV1.AnalyzeParams,
-    callback?: NaturalLanguageUnderstandingV1.Callback<
-      NaturalLanguageUnderstandingV1.AnalysisResults
-    >
-  ): ReadableStream | void {
+  analyze(params: NaturalLanguageUnderstandingV1.AnalyzeParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.AnalysisResults>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['features'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const body = {
+    const body = { 
       features: _params.features,
       text: _params.text,
       html: _params.html,
@@ -110,17 +103,17 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         url: '/v1/analyze',
         method: 'POST',
         json: true,
-        body: body
+        body: body,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /*************************
    * modelManagement
@@ -134,39 +127,34 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.model_id - model_id of the model to delete.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  deleteModel(
-    params: NaturalLanguageUnderstandingV1.DeleteModelParams,
-    callback?: NaturalLanguageUnderstandingV1.Callback<
-      NaturalLanguageUnderstandingV1.InlineResponse200
-    >
-  ): ReadableStream | void {
+  deleteModel(params: NaturalLanguageUnderstandingV1.DeleteModelParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.InlineResponse200>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => {};
     const requiredParams = ['model_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = {
+    const path = { 
       model_id: _params.model_id
     };
     const parameters = {
       options: {
         url: '/v1/models/{model_id}',
         method: 'DELETE',
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * List models.
@@ -175,38 +163,29 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
-  listModels(
-    params?: NaturalLanguageUnderstandingV1.ListModelsParams,
-    callback?: NaturalLanguageUnderstandingV1.Callback<
-      NaturalLanguageUnderstandingV1.ListModelsResults
-    >
-  ): ReadableStream | void {
-    const _params =
-      typeof params === 'function' && !callback ? {} : extend({}, params);
-    const _callback =
-      typeof params === 'function' && !callback
-        ? params
-        : callback ? callback : () => {};
+  listModels(params?: NaturalLanguageUnderstandingV1.ListModelsParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.ListModelsResults>): NodeJS.ReadableStream | void {
+    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
+    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {};
     const parameters = {
       options: {
         url: '/v1/models',
-        method: 'GET'
+        method: 'GET',
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         }
       })
     };
     return createRequest(parameters, _callback);
-  }
+  };
+
 }
 
-NaturalLanguageUnderstandingV1.prototype.name =
-  'natural-language-understanding';
+NaturalLanguageUnderstandingV1.prototype.name = 'natural-language-understanding';
 NaturalLanguageUnderstandingV1.prototype.version = 'v1';
 
 /*************************
@@ -214,6 +193,7 @@ NaturalLanguageUnderstandingV1.prototype.version = 'v1';
  ************************/
 
 namespace NaturalLanguageUnderstandingV1 {
+
   /** Options for the `NaturalLanguageUnderstandingV1` constructor. **/
   export type Options = {
     version_date: string;
@@ -222,17 +202,13 @@ namespace NaturalLanguageUnderstandingV1 {
     password?: string;
     use_unauthenticated?: boolean;
     headers?: object;
-  };
+  }
 
   /** The callback for a service request. **/
-  export type Callback<T> = (
-    error: any,
-    body?: T,
-    response?: RequestResponse
-  ) => void;
+  export type Callback<T> = (error: any, body?: T, response?: RequestResponse) => void;
 
   /** The body of a service request that returns no response data. **/
-  export interface Empty {}
+  export interface Empty { }
 
   /*************************
    * request interfaces
@@ -269,11 +245,42 @@ namespace NaturalLanguageUnderstandingV1 {
   }
 
   /** Parameters for the `listModels` operation. **/
-  export interface ListModelsParams {}
+  export interface ListModelsParams {
+  }
 
   /*************************
    * model interfaces
    ************************/
+
+  /** Results of the analysis, organized by feature. **/
+  export interface AnalysisResults {
+    /** Language used to analyze the text. **/
+    language?: string;
+    /** Text that was used in the analysis. **/
+    analyzed_text?: string;
+    /** URL that was used to retrieve HTML content. **/
+    retrieved_url?: string;
+    /** API usage information for the request. **/
+    usage?: Usage;
+    /** The general concepts referenced or alluded to in the specified content. **/
+    concepts?: ConceptsResult[ ];
+    /** The important entities in the specified content. **/
+    entities?: EntitiesResult[ ];
+    /** The important keywords in content organized by relevance. **/
+    keywords?: KeywordsResult[ ];
+    /** The hierarchical 5-level taxonomy the content is categorized into. **/
+    categories?: CategoriesResult[ ];
+    /** The anger, disgust, fear, joy, or sadness conveyed by the content. **/
+    emotion?: EmotionResult;
+    /** The metadata holds author information, publication date and the title of the text/HTML content. **/
+    metadata?: MetadataResult;
+    /** The relationships between entities in the content. **/
+    relations?: RelationsResult[ ];
+    /** The subjects of actions and the objects the actions act upon. **/
+    semantic_roles?: SemanticRolesResult[ ];
+    /** The sentiment of the content. **/
+    sentiment?: SentimentResult;
+  }
 
   /** The author of the analyzed content. **/
   export interface Author {
@@ -282,7 +289,8 @@ namespace NaturalLanguageUnderstandingV1 {
   }
 
   /** The hierarchical 5-level taxonomy the content is categorized into. **/
-  export interface CategoriesOptions {}
+  export interface CategoriesOptions {
+  }
 
   /** The hierarchical 5-level taxonomy the content is categorized into. **/
   export interface CategoriesResult {
@@ -315,7 +323,7 @@ namespace NaturalLanguageUnderstandingV1 {
     /** Link to the corresponding DBpedia resource. **/
     dbpedia_resource?: string;
     /** Entity subtype information. **/
-    subtype?: string[];
+    subtype?: string[ ];
   }
 
   /** An object containing the emotion results of a document. **/
@@ -337,7 +345,7 @@ namespace NaturalLanguageUnderstandingV1 {
     /** Set this to false to hide document-level emotion results. **/
     document?: boolean;
     /** Emotion results will be returned for each target string that is found in the document. **/
-    targets?: string[];
+    targets?: string[ ];
   }
 
   /** The detected anger, disgust, fear, joy, or sadness that is conveyed by the content. Emotion information can be returned for detected entities, keywords, or user-specified target phrases found in the text. **/
@@ -345,7 +353,7 @@ namespace NaturalLanguageUnderstandingV1 {
     /** The returned emotion results across the document. **/
     document?: DocumentEmotionResults;
     /** The returned emotion results per specified target. **/
-    targets?: TargetedEmotionResults[];
+    targets?: TargetedEmotionResults[ ];
   }
 
   /** EmotionScores. **/
@@ -385,7 +393,7 @@ namespace NaturalLanguageUnderstandingV1 {
     /** Relevance score from 0 to 1. Higher values indicate greater relevance. **/
     relevance?: number;
     /** Entity mentions and locations. **/
-    mentions?: EntityMention[];
+    mentions?: EntityMention[ ];
     /** How many times the entity was mentioned in the text. **/
     count?: number;
     /** Emotion analysis results for the entity, enabled with the "emotion" option. **/
@@ -401,7 +409,7 @@ namespace NaturalLanguageUnderstandingV1 {
     /** Entity mention text. **/
     text?: string;
     /** Character offsets indicating the beginning and end of the mention in the analyzed text. **/
-    location?: number[];
+    location?: number[ ];
   }
 
   /** FeatureSentimentResults. **/
@@ -430,6 +438,12 @@ namespace NaturalLanguageUnderstandingV1 {
     sentiment?: SentimentOptions;
     /** Whether or not to return the high level category the content is categorized as (i.e. news, art). **/
     categories?: CategoriesOptions;
+  }
+
+  /** RSS or ATOM feed found on the webpage. **/
+  export interface Feed {
+    /** URL of the RSS or ATOM feed. **/
+    link?: string;
   }
 
   /** InlineResponse200. **/
@@ -462,20 +476,25 @@ namespace NaturalLanguageUnderstandingV1 {
 
   /** Models available for Relations and Entities features. **/
   export interface ListModelsResults {
-    models?: Model[];
+    models?: Model[ ];
   }
 
   /** The Authors, Publication Date, and Title of the document. Supports URL and HTML input types. **/
-  export interface MetadataOptions {}
+  export interface MetadataOptions {
+  }
 
   /** The Authors, Publication Date, and Title of the document. Supports URL and HTML input types. **/
   export interface MetadataResult {
     /** The authors of the document. **/
-    authors?: Author[];
+    authors?: Author[ ];
     /** The publication date in the format ISO 8601. **/
     publication_date?: string;
     /** The title of the document. **/
     title?: string;
+    /** URL of a prominent image on the webpage. **/
+    image?: string;
+    /** RSS/ATOM feeds found on the webpage. **/
+    feeds?: Feed[ ];
   }
 
   /** Model. **/
@@ -492,12 +511,14 @@ namespace NaturalLanguageUnderstandingV1 {
 
   /** RelationArgument. **/
   export interface RelationArgument {
-    entities?: RelationEntity[];
+    entities?: RelationEntity[ ];
+    /** Character offsets indicating the beginning and end of the mention in the analyzed text. **/
+    location?: number[ ];
     /** Text that corresponds to the argument. **/
     text?: string;
   }
 
-  /** The entities extracted from a sentence in a given document. **/
+  /** An entity that corresponds with an argument in a relation. **/
   export interface RelationEntity {
     /** Text that corresponds to the entity. **/
     text?: string;
@@ -520,7 +541,7 @@ namespace NaturalLanguageUnderstandingV1 {
     /** The type of the relation. **/
     type?: string;
     /** The extracted relation objects from the text. **/
-    arguments?: RelationArgument[];
+    arguments?: RelationArgument[ ];
   }
 
   /** SemanticRolesAction. **/
@@ -550,7 +571,7 @@ namespace NaturalLanguageUnderstandingV1 {
   export interface SemanticRolesObject {
     /** Object text. **/
     text?: string;
-    keywords?: SemanticRolesKeyword[];
+    keywords?: SemanticRolesKeyword[ ];
   }
 
   /** An option specifying whether or not to identify the subjects, actions, and verbs in the analyzed content. **/
@@ -579,8 +600,8 @@ namespace NaturalLanguageUnderstandingV1 {
   export interface SemanticRolesSubject {
     /** Text that corresponds to the subject role. **/
     text?: string;
-    entities?: SemanticRolesEntity[];
-    keywords?: SemanticRolesKeyword[];
+    entities?: SemanticRolesEntity[ ];
+    keywords?: SemanticRolesKeyword[ ];
   }
 
   /** SemanticRolesVerb. **/
@@ -596,7 +617,7 @@ namespace NaturalLanguageUnderstandingV1 {
     /** Set this to false to hide document-level sentiment results. **/
     document?: boolean;
     /** Sentiment results will be returned for each target string that is found in the document. **/
-    targets?: string[];
+    targets?: string[ ];
   }
 
   /** The sentiment of the content. **/
@@ -604,7 +625,7 @@ namespace NaturalLanguageUnderstandingV1 {
     /** The document level sentiment. **/
     document?: DocumentSentimentResults;
     /** The targeted sentiment to analyze. **/
-    targets?: TargetedSentimentResults[];
+    targets?: TargetedSentimentResults[ ];
   }
 
   /** An object containing the emotion results for the target. **/
@@ -633,35 +654,6 @@ namespace NaturalLanguageUnderstandingV1 {
     text_units?: number;
   }
 
-  /** Results of the analysis, organized by feature. **/
-  export interface AnalysisResults {
-    /** Language used to analyze the text. **/
-    language?: string;
-    /** Text that was used in the analysis. **/
-    analyzed_text?: string;
-    /** URL that was used to retrieve HTML content. **/
-    retrieved_url?: string;
-    /** API usage information for the request. **/
-    usage?: Usage;
-    /** The general concepts referenced or alluded to in the specified content. **/
-    concepts?: ConceptsResult[];
-    /** The important entities in the specified content. **/
-    entities?: EntitiesResult[];
-    /** The important keywords in content organized by relevance. **/
-    keywords?: KeywordsResult[];
-    /** The hierarchical 5-level taxonomy the content is categorized into. **/
-    categories?: CategoriesResult[];
-    /** The anger, disgust, fear, joy, or sadness conveyed by the content. **/
-    emotion?: EmotionResult;
-    /** The metadata holds author information, publication date and the title of the text/HTML content. **/
-    metadata?: MetadataResult;
-    /** The relationships between entities in the content. **/
-    relations?: RelationsResult[];
-    /** The subjects of actions and the objects the actions act upon. **/
-    semantic_roles?: SemanticRolesResult[];
-    /** The sentiment of the content. **/
-    sentiment?: SentimentResult;
-  }
 }
 
 export = NaturalLanguageUnderstandingV1;

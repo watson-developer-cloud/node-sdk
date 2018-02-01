@@ -31,4 +31,5 @@ authorization/*.js
 index.js
 .nyc_output
 **/*.d.ts
+!*/blob.d.ts
 **/*.js.map
