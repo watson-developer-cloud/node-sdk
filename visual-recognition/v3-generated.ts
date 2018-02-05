@@ -64,19 +64,19 @@ class VisualRecognitionV3 extends BaseService {
    * Classify images with the built-in classes. You can analyze images against the built-in classifiers or against an array of classifier IDs. To identify custom classifiers, include the **classifier_ids** or **owners** parameters.
    *
    * @param {Object} [params] - The parameters to send to the service.
-   * @param {ReadableStream|FileObject|Buffer} [params.images_file] - An image file (.jpg, .png) or .zip file with images. Include no more than 20 images and limit the .zip file to 5 MB. You can also include images with the `url` property in the **parameters** object.
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.images_file] - An image file (.jpg, .png) or .zip file with images. Include no more than 20 images and limit the .zip file to 5 MB. You can also include images with the `url` property in the **parameters** object.
    * @param {string} [params.parameters] - Specifies input parameters. The parameter can include these inputs in a JSON object:  - url: A string with the image URL to analyze. You can also include images in the **images_file** parameter. - classifier_ids: An array of classifier IDs to classify the images against. - owners: An array with the values IBM, me, or both to specify which classifiers to run. - threshold: A floating point value that specifies the minimum score a class must have to be displayed in the response.  For example: {"url": "...", "classifier_ids": ["...","..."], "owners": ["IBM", "me"], "threshold": 0.4}.
    * @param {string} [params.accept_language] - Specifies the language of the output class names.  Can be `en` (English), `ar` (Arabic), `de` (German), `es` (Spanish), `it` (Italian), `ja` (Japanese), or `ko` (Korean).  Classes for which no translation is available are omitted.  The response might not be in the specified language under these conditions: - English is returned when the requested language is not supported. - Classes are not returned when there is no translation for them. - Custom classifiers returned with this method return tags in the language of the custom classifier.
    * @param {string} [params.images_file_content_type] - The content type of images_file.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   classify(
     params?: VisualRecognitionV3.ClassifyParams,
     callback?: VisualRecognitionV3.Callback<
       VisualRecognitionV3.ClassifiedImages
     >
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params =
       typeof params === 'function' && !callback ? {} : extend({}, params);
     const _callback =
@@ -113,16 +113,16 @@ class VisualRecognitionV3 extends BaseService {
    * Analyze and get data about faces in images. Responses can include estimated age and gender, and the service can identify celebrities. This feature uses a built-in classifier, so you do not train it on custom classifiers. The Detect faces method does not support general biometric facial recognition.
    *
    * @param {Object} [params] - The parameters to send to the service.
-   * @param {ReadableStream|FileObject|Buffer} [params.images_file] - An image file (.jpg, .png) or .zip file with images. Include no more than 15 images. You can also include images with the `url` property in the **parameters** object.  All faces are detected, but if there are more than 10 faces in an image, age and gender confidence scores might return scores of 0.
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.images_file] - An image file (.jpg, .png) or .zip file with images. Include no more than 15 images. You can also include images with the `url` property in the **parameters** object.  All faces are detected, but if there are more than 10 faces in an image, age and gender confidence scores might return scores of 0.
    * @param {string} [params.parameters] - A JSON string containing the image URL to analyze.   For example: {"url": "..."}.
    * @param {string} [params.images_file_content_type] - The content type of images_file.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   detectFaces(
     params?: VisualRecognitionV3.DetectFacesParams,
     callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.DetectedFaces>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params =
       typeof params === 'function' && !callback ? {} : extend({}, params);
     const _callback =
@@ -163,15 +163,15 @@ class VisualRecognitionV3 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.name - The name of the new classifier. Cannot contain special characters.
-   * @param {ReadableStream|FileObject|Buffer} params.classname_positive_examples - A .zip file of images that depict the visual subject of a class in the new classifier. You can include more than one positive example file in a call. Append `_positive_examples` to the form name. The prefix is used as the class name. For example, `goldenretriever_positive_examples` creates the class **goldenretriever**.  Include at least 10 images in .jpg or .png format. The minimum recommended image resolution is 32X32 pixels. The maximum number of images is 10,000 images or 100 MB per .zip file.  The API explorer limits you to training only one class. To train more classes, use the API functionality.
-   * @param {ReadableStream|FileObject|Buffer} [params.negative_examples] - A compressed (.zip) file of images that do not depict the visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images.
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} params.classname_positive_examples - A .zip file of images that depict the visual subject of a class in the new classifier. You can include more than one positive example file in a call. Append `_positive_examples` to the form name. The prefix is used as the class name. For example, `goldenretriever_positive_examples` creates the class **goldenretriever**.  Include at least 10 images in .jpg or .png format. The minimum recommended image resolution is 32X32 pixels. The maximum number of images is 10,000 images or 100 MB per .zip file.  The API explorer limits you to training only one class. To train more classes, use the API functionality.
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.negative_examples] - A compressed (.zip) file of images that do not depict the visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   createClassifier(
     params: VisualRecognitionV3.CreateClassifierParams,
     callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const _positive_example_classes = Object.keys(_params).filter(key => {
@@ -217,12 +217,12 @@ class VisualRecognitionV3 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.classifier_id - The ID of the classifier.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   deleteClassifier(
     params: VisualRecognitionV3.DeleteClassifierParams,
     callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Empty>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['classifier_id'];
@@ -257,12 +257,12 @@ class VisualRecognitionV3 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.classifier_id - The ID of the classifier.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   getClassifier(
     params: VisualRecognitionV3.GetClassifierParams,
     callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['classifier_id'];
@@ -295,12 +295,12 @@ class VisualRecognitionV3 extends BaseService {
    * @param {Object} [params] - The parameters to send to the service.
    * @param {boolean} [params.verbose] - Specify `true` to return classifier details. Omit this parameter to return a brief list of classifiers.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   listClassifiers(
     params?: VisualRecognitionV3.ListClassifiersParams,
     callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifiers>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params =
       typeof params === 'function' && !callback ? {} : extend({}, params);
     const _callback =
@@ -333,15 +333,15 @@ class VisualRecognitionV3 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.classifier_id - The ID of the classifier.
-   * @param {ReadableStream|FileObject|Buffer} [params.classname_positive_examples] - A .zip file of images that depict the visual subject of a class in the classifier. The positive examples create or update classes in the classifier. You can include more than one positive example file in a call. Append `_positive_examples` to the form name. The prefix is used to name the class. For example, `goldenretriever_positive_examples` creates the class `goldenretriever`.  Include at least 10 images in .jpg or .png format. The minimum recommended image resolution is 32X32 pixels. The maximum number of images is 10,000 images or 100 MB per .zip file.
-   * @param {ReadableStream|FileObject|Buffer} [params.negative_examples] - A compressed (.zip) file of images that do not depict the visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images.
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.classname_positive_examples] - A .zip file of images that depict the visual subject of a class in the classifier. The positive examples create or update classes in the classifier. You can include more than one positive example file in a call. Append `_positive_examples` to the form name. The prefix is used to name the class. For example, `goldenretriever_positive_examples` creates the class `goldenretriever`.  Include at least 10 images in .jpg or .png format. The minimum recommended image resolution is 32X32 pixels. The maximum number of images is 10,000 images or 100 MB per .zip file.
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.negative_examples] - A compressed (.zip) file of images that do not depict the visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   updateClassifier(
     params: VisualRecognitionV3.UpdateClassifierParams,
     callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const _positive_example_classes = Object.keys(_params).filter(key => {
@@ -421,7 +421,7 @@ namespace VisualRecognitionV3 {
   /** Parameters for the `classify` operation. **/
   export interface ClassifyParams {
     /** An image file (.jpg, .png) or .zip file with images. Include no more than 20 images and limit the .zip file to 5 MB. You can also include images with the `url` property in the **parameters** object. **/
-    images_file?: ReadableStream | FileObject | Buffer;
+    images_file?: NodeJS.ReadableStream | FileObject | Buffer;
     /** Specifies input parameters. The parameter can include these inputs in a JSON object:  - url: A string with the image URL to analyze. You can also include images in the **images_file** parameter. - classifier_ids: An array of classifier IDs to classify the images against. - owners: An array with the values IBM, me, or both to specify which classifiers to run. - threshold: A floating point value that specifies the minimum score a class must have to be displayed in the response.  For example: {"url": "...", "classifier_ids": ["...","..."], "owners": ["IBM", "me"], "threshold": 0.4}. **/
     parameters?: string;
     /** Specifies the language of the output class names.  Can be `en` (English), `ar` (Arabic), `de` (German), `es` (Spanish), `it` (Italian), `ja` (Japanese), or `ko` (Korean).  Classes for which no translation is available are omitted.  The response might not be in the specified language under these conditions: - English is returned when the requested language is not supported. - Classes are not returned when there is no translation for them. - Custom classifiers returned with this method return tags in the language of the custom classifier. **/
@@ -447,7 +447,7 @@ namespace VisualRecognitionV3 {
   /** Parameters for the `detectFaces` operation. **/
   export interface DetectFacesParams {
     /** An image file (.jpg, .png) or .zip file with images. Include no more than 15 images. You can also include images with the `url` property in the **parameters** object.  All faces are detected, but if there are more than 10 faces in an image, age and gender confidence scores might return scores of 0. **/
-    images_file?: ReadableStream | FileObject | Buffer;
+    images_file?: NodeJS.ReadableStream | FileObject | Buffer;
     /** A JSON string containing the image URL to analyze.   For example: {"url": "..."}. **/
     parameters?: string;
     /** The content type of images_file. **/
@@ -459,9 +459,9 @@ namespace VisualRecognitionV3 {
     /** The name of the new classifier. Cannot contain special characters. **/
     name: string;
     /** A .zip file of images that depict the visual subject of a class in the new classifier. You can include more than one positive example file in a call. Append `_positive_examples` to the form name. The prefix is used as the class name. For example, `goldenretriever_positive_examples` creates the class **goldenretriever**.  Include at least 10 images in .jpg or .png format. The minimum recommended image resolution is 32X32 pixels. The maximum number of images is 10,000 images or 100 MB per .zip file.  The API explorer limits you to training only one class. To train more classes, use the API functionality. **/
-    classname_positive_examples: ReadableStream | FileObject | Buffer;
+    classname_positive_examples: NodeJS.ReadableStream | FileObject | Buffer;
     /** A compressed (.zip) file of images that do not depict the visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images. **/
-    negative_examples?: ReadableStream | FileObject | Buffer;
+    negative_examples?: NodeJS.ReadableStream | FileObject | Buffer;
   }
 
   /** Parameters for the `deleteClassifier` operation. **/
@@ -487,9 +487,9 @@ namespace VisualRecognitionV3 {
     /** The ID of the classifier. **/
     classifier_id: string;
     /** A .zip file of images that depict the visual subject of a class in the classifier. The positive examples create or update classes in the classifier. You can include more than one positive example file in a call. Append `_positive_examples` to the form name. The prefix is used to name the class. For example, `goldenretriever_positive_examples` creates the class `goldenretriever`.  Include at least 10 images in .jpg or .png format. The minimum recommended image resolution is 32X32 pixels. The maximum number of images is 10,000 images or 100 MB per .zip file. **/
-    classname_positive_examples?: ReadableStream | FileObject | Buffer;
+    classname_positive_examples?: NodeJS.ReadableStream | FileObject | Buffer;
     /** A compressed (.zip) file of images that do not depict the visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images. **/
-    negative_examples?: ReadableStream | FileObject | Buffer;
+    negative_examples?: NodeJS.ReadableStream | FileObject | Buffer;
   }
 
   /*************************

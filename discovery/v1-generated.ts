@@ -69,12 +69,12 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.description] - Description of the environment.
    * @param {number} [params.size] - **Deprecated**: Size of the environment.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   createEnvironment(
     params: DiscoveryV1.CreateEnvironmentParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.Environment>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['name'];
@@ -110,12 +110,12 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   deleteEnvironment(
     params: DiscoveryV1.DeleteEnvironmentParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteEnvironmentResponse>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id'];
@@ -148,12 +148,12 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   getEnvironment(
     params: DiscoveryV1.GetEnvironmentParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.Environment>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id'];
@@ -188,12 +188,12 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} [params] - The parameters to send to the service.
    * @param {string} [params.name] - Show only the environment with the given name.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   listEnvironments(
     params?: DiscoveryV1.ListEnvironmentsParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.ListEnvironmentsResponse>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params =
       typeof params === 'function' && !callback ? {} : extend({}, params);
     const _callback =
@@ -228,12 +228,12 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string[]} params.collection_ids - A comma-separated list of collection IDs to be queried against.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   listFields(
     params: DiscoveryV1.ListFieldsParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.ListCollectionFieldsResponse>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_ids'];
@@ -274,12 +274,12 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.name] - Name that identifies the environment.
    * @param {string} [params.description] - Description of the environment.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   updateEnvironment(
     params: DiscoveryV1.UpdateEnvironmentParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.Environment>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id'];
@@ -329,12 +329,12 @@ class DiscoveryV1 extends BaseService {
    * @param {Enrichment[]} [params.enrichments] - An array of document enrichment settings for the configuration.
    * @param {NormalizationOperation[]} [params.normalizations] - Defines operations that can be used to transform the final output JSON into a normalized form. Operations are executed in the order that they appear in the array.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   createConfiguration(
     params: DiscoveryV1.CreateConfigurationParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.Configuration>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'name'];
@@ -379,12 +379,12 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.configuration_id - The ID of the configuration.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   deleteConfiguration(
     params: DiscoveryV1.DeleteConfigurationParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteConfigurationResponse>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'configuration_id'];
@@ -420,12 +420,12 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.configuration_id - The ID of the configuration.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   getConfiguration(
     params: DiscoveryV1.GetConfigurationParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.Configuration>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'configuration_id'];
@@ -463,12 +463,12 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} [params.name] - Find configurations with the given name.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   listConfigurations(
     params: DiscoveryV1.ListConfigurationsParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.ListConfigurationsResponse>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id'];
@@ -513,12 +513,12 @@ class DiscoveryV1 extends BaseService {
    * @param {Enrichment[]} [params.enrichments] - An array of document enrichment settings for the configuration.
    * @param {NormalizationOperation[]} [params.normalizations] - Defines operations that can be used to transform the final output JSON into a normalized form. Operations are executed in the order that they appear in the array.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   updateConfiguration(
     params: DiscoveryV1.UpdateConfigurationParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.Configuration>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'configuration_id', 'name'];
@@ -570,16 +570,16 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.configuration] - The configuration to use to process the document. If this part is provided, then the provided configuration is used to process the document. If the `configuration_id` is also provided (both are present at the same time), then request is rejected. The maximum supported configuration size is 1 MB. Configuration parts larger than 1 MB are rejected. See the `GET /configurations/{configuration_id}` operation for an example configuration.
    * @param {string} [params.step] - Specify to only run the input document through the given step instead of running the input document through the entire ingestion workflow. Valid values are `convert`, `enrich`, and `normalize`.
    * @param {string} [params.configuration_id] - The ID of the configuration to use to process the document. If the `configuration` form part is also provided (both are present at the same time), then request will be rejected.
-   * @param {ReadableStream|FileObject|Buffer} [params.file] - The content of the document to ingest. The maximum supported file size is 50 megabytes. Files larger than 50 megabytes is rejected.
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.file] - The content of the document to ingest. The maximum supported file size is 50 megabytes. Files larger than 50 megabytes is rejected.
    * @param {string} [params.metadata] - If you're using the Data Crawler to upload your documents, you can test a document against the type of metadata that the Data Crawler might send. The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected. Example:  ``` {   "Creator": "Johnny Appleseed",   "Subject": "Apples" } ```
    * @param {string} [params.file_content_type] - The content type of file.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   testConfigurationInEnvironment(
     params: DiscoveryV1.TestConfigurationInEnvironmentParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.TestDocument>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id'];
@@ -634,12 +634,12 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.configuration_id] - The ID of the configuration in which the collection is to be created.
    * @param {string} [params.language] - The language of the documents stored in the collection, in the form of an ISO 639-1 language code.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   createCollection(
     params: DiscoveryV1.CreateCollectionParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.Collection>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'name'];
@@ -681,12 +681,12 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   deleteCollection(
     params: DiscoveryV1.DeleteCollectionParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteCollectionResponse>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_id'];
@@ -721,12 +721,12 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   getCollection(
     params: DiscoveryV1.GetCollectionParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.Collection>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_id'];
@@ -763,12 +763,12 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   listCollectionFields(
     params: DiscoveryV1.ListCollectionFieldsParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.ListCollectionFieldsResponse>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_id'];
@@ -806,12 +806,12 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} [params.name] - Find collections with the given name.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   listCollections(
     params: DiscoveryV1.ListCollectionsParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.ListCollectionsResponse>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id'];
@@ -852,12 +852,12 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.description] - A description of the collection.
    * @param {string} [params.configuration_id] - The ID of the configuration in which the collection is to be updated.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   updateCollection(
     params: DiscoveryV1.UpdateCollectionParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.Collection>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_id'];
@@ -904,16 +904,16 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
-   * @param {ReadableStream|FileObject|Buffer} [params.file] - The content of the document to ingest. The maximum supported file size is 50 megabytes. Files larger than 50 megabytes is rejected.
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.file] - The content of the document to ingest. The maximum supported file size is 50 megabytes. Files larger than 50 megabytes is rejected.
    * @param {string} [params.metadata] - If you're using the Data Crawler to upload your documents, you can test a document against the type of metadata that the Data Crawler might send. The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected. Example:  ``` {   "Creator": "Johnny Appleseed",   "Subject": "Apples" } ```
    * @param {string} [params.file_content_type] - The content type of file.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   addDocument(
     params: DiscoveryV1.AddDocumentParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.DocumentAccepted>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_id'];
@@ -960,12 +960,12 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.collection_id - The ID of the collection.
    * @param {string} params.document_id - The ID of the document.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   deleteDocument(
     params: DiscoveryV1.DeleteDocumentParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteDocumentResponse>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_id', 'document_id'];
@@ -1005,12 +1005,12 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.collection_id - The ID of the collection.
    * @param {string} params.document_id - The ID of the document.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   getDocumentStatus(
     params: DiscoveryV1.GetDocumentStatusParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.DocumentStatus>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_id', 'document_id'];
@@ -1049,16 +1049,16 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
    * @param {string} params.document_id - The ID of the document.
-   * @param {ReadableStream|FileObject|Buffer} [params.file] - The content of the document to ingest. The maximum supported file size is 50 megabytes. Files larger than 50 megabytes is rejected.
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.file] - The content of the document to ingest. The maximum supported file size is 50 megabytes. Files larger than 50 megabytes is rejected.
    * @param {string} [params.metadata] - If you're using the Data Crawler to upload your documents, you can test a document against the type of metadata that the Data Crawler might send. The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected. Example:  ``` {   "Creator": "Johnny Appleseed",   "Subject": "Apples" } ```
    * @param {string} [params.file_content_type] - The content type of file.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   updateDocument(
     params: DiscoveryV1.UpdateDocumentParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.DocumentAccepted>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_id', 'document_id'];
@@ -1120,12 +1120,12 @@ class DiscoveryV1 extends BaseService {
    * @param {boolean} [params.deduplicate] - When `true` and used with a Watson Discovery News collection, duplicate results (based on the contents of the `title` field) are removed. Duplicate comparison is limited to the current query only, `offset` is not considered. Defaults to `false`. This parameter is currently Beta functionality.
    * @param {string} [params.deduplicate_field] - When specified, duplicate results based on the field specified are removed from the returned results. Duplicate comparison is limited to the current query only, `offset` is not considered. This parameter is currently Beta functionality.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   federatedQuery(
     params: DiscoveryV1.FederatedQueryParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.QueryResponse>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_ids'];
@@ -1186,12 +1186,12 @@ class DiscoveryV1 extends BaseService {
    * @param {boolean} [params.highlight] - When true a highlight field is returned for each result which contains the fields that match the query with `<em></em>` tags around the matching query terms. Defaults to false.
    * @param {string} [params.deduplicate_field] - When specified, duplicate results based on the field specified are removed from the returned results. Duplicate comparison is limited to the current query only, `offset` is not considered. This parameter is currently Beta functionality.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   federatedQueryNotices(
     params: DiscoveryV1.FederatedQueryNoticesParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.QueryNoticesResponse>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_ids'];
@@ -1256,12 +1256,12 @@ class DiscoveryV1 extends BaseService {
    * @param {boolean} [params.deduplicate] - When `true` and used with a Watson Discovery News collection, duplicate results (based on the contents of the `title` field) are removed. Duplicate comparison is limited to the current query only, `offset` is not considered. Defaults to `false`. This parameter is currently Beta functionality.
    * @param {string} [params.deduplicate_field] - When specified, duplicate results based on the field specified are removed from the returned results. Duplicate comparison is limited to the current query only, `offset` is not considered. This parameter is currently Beta functionality.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   query(
     params: DiscoveryV1.QueryParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.QueryResponse>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_id'];
@@ -1321,12 +1321,12 @@ class DiscoveryV1 extends BaseService {
    * @param {QueryEntitiesContext} [params.context] - Entity text to provide context for the queried entity and rank based on that association. For example, if you wanted to query the city of London in England your query would look for `London` with the context of `England`.
    * @param {number} [params.count] - The number of results to return. The default is `10`. The maximum is `1000`.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   queryEntities(
     params: DiscoveryV1.QueryEntitiesParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.QueryEntitiesResponse>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_id'];
@@ -1386,12 +1386,12 @@ class DiscoveryV1 extends BaseService {
    * @param {number} [params.passages_characters] - The approximate number of characters that any one passage will have. The default is `400`. The minimum is `50`. The maximum is `2000`.
    * @param {string} [params.deduplicate_field] - When specified, duplicate results based on the field specified are removed from the returned results. Duplicate comparison is limited to the current query only, `offset` is not considered. This parameter is currently Beta functionality.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   queryNotices(
     params: DiscoveryV1.QueryNoticesParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.QueryNoticesResponse>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_id'];
@@ -1451,12 +1451,12 @@ class DiscoveryV1 extends BaseService {
    * @param {QueryRelationsFilter} [params.filter] - Filters to apply to the relationship query
    * @param {number} [params.count] - The number of results to return. The default is `10`. The maximum is `1000`.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   queryRelations(
     params: DiscoveryV1.QueryRelationsParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.QueryRelationsResponse>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_id'];
@@ -1510,12 +1510,12 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.filter] -
    * @param {TrainingExample[]} [params.examples] -
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   addTrainingData(
     params: DiscoveryV1.AddTrainingDataParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingQuery>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_id'];
@@ -1564,12 +1564,12 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.cross_reference] -
    * @param {number} [params.relevance] -
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   createTrainingExample(
     params: DiscoveryV1.CreateTrainingExampleParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingExample>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_id', 'query_id'];
@@ -1615,12 +1615,12 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   deleteAllTrainingData(
     params: DiscoveryV1.DeleteAllTrainingDataParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_id'];
@@ -1659,12 +1659,12 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.collection_id - The ID of the collection.
    * @param {string} params.query_id - The ID of the query used for training.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   deleteTrainingData(
     params: DiscoveryV1.DeleteTrainingDataParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_id', 'query_id'];
@@ -1705,12 +1705,12 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.query_id - The ID of the query used for training.
    * @param {string} params.example_id - The ID of the document as it is indexed.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   deleteTrainingExample(
     params: DiscoveryV1.DeleteTrainingExampleParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = [
@@ -1756,12 +1756,12 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.collection_id - The ID of the collection.
    * @param {string} params.query_id - The ID of the query used for training.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   getTrainingData(
     params: DiscoveryV1.GetTrainingDataParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingQuery>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_id', 'query_id'];
@@ -1802,12 +1802,12 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.query_id - The ID of the query used for training.
    * @param {string} params.example_id - The ID of the document as it is indexed.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   getTrainingExample(
     params: DiscoveryV1.GetTrainingExampleParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingExample>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = [
@@ -1852,12 +1852,12 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   listTrainingData(
     params: DiscoveryV1.ListTrainingDataParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingDataSet>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_id'];
@@ -1896,12 +1896,12 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.collection_id - The ID of the collection.
    * @param {string} params.query_id - The ID of the query used for training.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   listTrainingExamples(
     params: DiscoveryV1.ListTrainingExamplesParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingExampleList>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['environment_id', 'collection_id', 'query_id'];
@@ -1944,12 +1944,12 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.cross_reference] -
    * @param {number} [params.relevance] -
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   updateTrainingExample(
     params: DiscoveryV1.UpdateTrainingExampleParams,
     callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingExample>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = [
@@ -2139,7 +2139,7 @@ namespace DiscoveryV1 {
     /** The ID of the configuration to use to process the document. If the `configuration` form part is also provided (both are present at the same time), then request will be rejected. **/
     configuration_id?: string;
     /** The content of the document to ingest. The maximum supported file size is 50 megabytes. Files larger than 50 megabytes is rejected. **/
-    file?: ReadableStream | FileObject | Buffer;
+    file?: NodeJS.ReadableStream | FileObject | Buffer;
     /** If you're using the Data Crawler to upload your documents, you can test a document against the type of metadata that the Data Crawler might send. The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected. Example:  ``` {   "Creator": "Johnny Appleseed",   "Subject": "Apples" } ``` **/
     metadata?: string;
     /** The content type of file. **/
@@ -2253,7 +2253,7 @@ namespace DiscoveryV1 {
     /** The ID of the collection. **/
     collection_id: string;
     /** The content of the document to ingest. The maximum supported file size is 50 megabytes. Files larger than 50 megabytes is rejected. **/
-    file?: ReadableStream | FileObject | Buffer;
+    file?: NodeJS.ReadableStream | FileObject | Buffer;
     /** If you're using the Data Crawler to upload your documents, you can test a document against the type of metadata that the Data Crawler might send. The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected. Example:  ``` {   "Creator": "Johnny Appleseed",   "Subject": "Apples" } ``` **/
     metadata?: string;
     /** The content type of file. **/
@@ -2302,7 +2302,7 @@ namespace DiscoveryV1 {
     /** The ID of the document. **/
     document_id: string;
     /** The content of the document to ingest. The maximum supported file size is 50 megabytes. Files larger than 50 megabytes is rejected. **/
-    file?: ReadableStream | FileObject | Buffer;
+    file?: NodeJS.ReadableStream | FileObject | Buffer;
     /** If you're using the Data Crawler to upload your documents, you can test a document against the type of metadata that the Data Crawler might send. The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected. Example:  ``` {   "Creator": "Johnny Appleseed",   "Subject": "Apples" } ``` **/
     metadata?: string;
     /** The content type of file. **/

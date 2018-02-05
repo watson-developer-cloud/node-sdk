@@ -78,14 +78,14 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {string} [params.language] - ISO 639-1 code indicating the language to use in the analysis.
    * @param {number} [params.limit_text_characters] - Sets the maximum number of characters that are processed by the service.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   analyze(
     params: NaturalLanguageUnderstandingV1.AnalyzeParams,
     callback?: NaturalLanguageUnderstandingV1.Callback<
       NaturalLanguageUnderstandingV1.AnalysisResults
     >
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['features'];
@@ -134,14 +134,14 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.model_id - model_id of the model to delete.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   deleteModel(
     params: NaturalLanguageUnderstandingV1.DeleteModelParams,
     callback?: NaturalLanguageUnderstandingV1.Callback<
       NaturalLanguageUnderstandingV1.InlineResponse200
     >
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['model_id'];
@@ -175,14 +175,14 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   listModels(
     params?: NaturalLanguageUnderstandingV1.ListModelsParams,
     callback?: NaturalLanguageUnderstandingV1.Callback<
       NaturalLanguageUnderstandingV1.ListModelsResults
     >
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params =
       typeof params === 'function' && !callback ? {} : extend({}, params);
     const _callback =

@@ -23,7 +23,6 @@ transform.js
 scripts/
 # this is created in the build on travis ci when it updates the docs in the gh-pages branch
 gh-pages/
-tsconfig.json
 tslint.json
 typings.json
 typings
@@ -34,4 +33,6 @@ typings
 .eslintcache
 .eslintignore
 .gitattributes
+*.ts
+!*.d.ts
 watson-developer-cloud-*.tgz

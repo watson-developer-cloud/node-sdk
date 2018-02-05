@@ -60,12 +60,12 @@ class TextToSpeechV1 extends BaseService {
    * @param {string} params.voice - The voice for which information is to be returned. Retrieve available voices with the `GET /v1/voices` method.
    * @param {string} [params.customization_id] - The GUID of a custom voice model for which information is to be returned. You must make the request with service credentials created for the instance of the service that owns the custom model. Omit the parameter to see information about the specified voice with no customization.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   getVoice(
     params: TextToSpeechV1.GetVoiceParams,
     callback?: TextToSpeechV1.Callback<TextToSpeechV1.Voice>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['voice'];
@@ -102,12 +102,12 @@ class TextToSpeechV1 extends BaseService {
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   listVoices(
     params?: TextToSpeechV1.ListVoicesParams,
     callback?: TextToSpeechV1.Callback<TextToSpeechV1.Voices>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params =
       typeof params === 'function' && !callback ? {} : extend({}, params);
     const _callback =
@@ -143,12 +143,12 @@ class TextToSpeechV1 extends BaseService {
    * @param {string} [params.customization_id] - The GUID of a custom voice model to use for the synthesis. If a custom voice model is specified, it is guaranteed to work only if it matches the language of the indicated voice. You must make the request with service credentials created for the instance of the service that owns the custom model. Omit the parameter to use the specified voice with no customization.
    * @param {string} params.text - The text to synthesize.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   synthesize(
     params: TextToSpeechV1.SynthesizeParams,
-    callback?: TextToSpeechV1.Callback<ReadableStream | Buffer>
-  ): ReadableStream | void {
+    callback?: TextToSpeechV1.Callback<NodeJS.ReadableStream | Buffer>
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['text'];
@@ -198,12 +198,12 @@ class TextToSpeechV1 extends BaseService {
    * @param {string} [params.format] - The phoneme format in which to return the pronunciation. Omit the parameter to obtain the pronunciation in the default format.
    * @param {string} [params.customization_id] - The GUID of a custom voice model for which the pronunciation is to be returned. The language of a specified custom model must match the language of the specified voice. If the word is not defined in the specified custom model, the service returns the default translation for the custom model's language. You must make the request with service credentials created for the instance of the service that owns the custom model. Omit the parameter to see the translation for the specified voice with no customization.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   getPronunciation(
     params: TextToSpeechV1.GetPronunciationParams,
     callback?: TextToSpeechV1.Callback<TextToSpeechV1.Pronunciation>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['text'];
@@ -246,12 +246,12 @@ class TextToSpeechV1 extends BaseService {
    * @param {string} [params.language] - The language of the new custom voice model. Omit the parameter to use the the default language, `en-US`.
    * @param {string} [params.description] - A description of the new custom voice model. Specifying a description is recommended.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   createVoiceModel(
     params: TextToSpeechV1.CreateVoiceModelParams,
     callback?: TextToSpeechV1.Callback<TextToSpeechV1.VoiceModel>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['name'];
@@ -289,12 +289,12 @@ class TextToSpeechV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The GUID of the custom voice model that is to be deleted. You must make the request with service credentials created for the instance of the service that owns the custom model.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   deleteVoiceModel(
     params: TextToSpeechV1.DeleteVoiceModelParams,
     callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['customization_id'];
@@ -326,12 +326,12 @@ class TextToSpeechV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The GUID of the custom voice model that is to be queried. You must make the request with service credentials created for the instance of the service that owns the custom model.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   getVoiceModel(
     params: TextToSpeechV1.GetVoiceModelParams,
     callback?: TextToSpeechV1.Callback<TextToSpeechV1.VoiceModel>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['customization_id'];
@@ -365,12 +365,12 @@ class TextToSpeechV1 extends BaseService {
    * @param {Object} [params] - The parameters to send to the service.
    * @param {string} [params.language] - The language for which custom voice models that are owned by the requesting service credentials are to be returned. Omit the parameter to see all custom voice models that are owned by the requester.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   listVoiceModels(
     params?: TextToSpeechV1.ListVoiceModelsParams,
     callback?: TextToSpeechV1.Callback<TextToSpeechV1.VoiceModels>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params =
       typeof params === 'function' && !callback ? {} : extend({}, params);
     const _callback =
@@ -406,12 +406,12 @@ class TextToSpeechV1 extends BaseService {
    * @param {string} [params.description] - A new description for the custom voice model.
    * @param {CustomWord[]} [params.words] - An array of words and their translations that are to be added or updated for the custom voice model. Pass an empty array to make no additions or updates.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   updateVoiceModel(
     params: TextToSpeechV1.UpdateVoiceModelParams,
     callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['customization_id'];
@@ -459,12 +459,12 @@ class TextToSpeechV1 extends BaseService {
    * @param {string} params.translation - The phonetic or sounds-like translation for the word. A phonetic translation is based on the SSML format for representing the phonetic string of a word either as an IPA translation or as an IBM SPR translation. A sounds-like is one or more words that, when combined, sound like the word.
    * @param {string} [params.part_of_speech] - **Japanese only.** The part of speech for the word. The service uses the value to produce the correct intonation for the word. You can create only a single entry, with or without a single part of speech, for any word; you cannot create multiple entries with different parts of speech for the same word. For more information, see [Working with Japanese entries](https://console.bluemix.net/docs/services/text-to-speech/custom-rules.html#jaNotes).
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   addWord(
     params: TextToSpeechV1.AddWordParams,
     callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['customization_id', 'word', 'translation'];
@@ -506,12 +506,12 @@ class TextToSpeechV1 extends BaseService {
    * @param {string} params.customization_id - The GUID of the custom voice model that is to be updated. You must make the request with service credentials created for the instance of the service that owns the custom model.
    * @param {CustomWord[]} params.words - An array of `CustomWord` objects that provides information about the words and their translations that are to be added or updated for the custom voice model.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   addWords(
     params: TextToSpeechV1.AddWordsParams,
     callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['customization_id', 'words'];
@@ -551,12 +551,12 @@ class TextToSpeechV1 extends BaseService {
    * @param {string} params.customization_id - The GUID of the custom voice model from which to delete a word. You must make the request with service credentials created for the instance of the service that owns the custom model.
    * @param {string} params.word - The word that is to be deleted from the custom voice model.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   deleteWord(
     params: TextToSpeechV1.DeleteWordParams,
     callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['customization_id', 'word'];
@@ -590,12 +590,12 @@ class TextToSpeechV1 extends BaseService {
    * @param {string} params.customization_id - The GUID of the custom voice model from which to query a word. You must make the request with service credentials created for the instance of the service that owns the custom model.
    * @param {string} params.word - The word that is to be queried from the custom voice model.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   getWord(
     params: TextToSpeechV1.GetWordParams,
     callback?: TextToSpeechV1.Callback<TextToSpeechV1.Translation>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['customization_id', 'word'];
@@ -630,12 +630,12 @@ class TextToSpeechV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The GUID of the custom voice model that is to be queried. You must make the request with service credentials created for the instance of the service that owns the custom model.
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {ReadableStream|void}
+   * @returns {NodeJS.ReadableStream|void}
    */
   listWords(
     params: TextToSpeechV1.ListWordsParams,
     callback?: TextToSpeechV1.Callback<TextToSpeechV1.Words>
-  ): ReadableStream | void {
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
     const requiredParams = ['customization_id'];
