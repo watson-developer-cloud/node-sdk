@@ -8,6 +8,7 @@ var textToSpeech = new TextToSpeechV1({
   // environment properties, and then Bluemix's VCAP_SERVICES environment property
   // username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
   // password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE'
+  url: 'https://stream.watsonplatform.net/text-to-speech/api/'
 });
 
 // Synthesize speech, correct the wav header, then save to disk

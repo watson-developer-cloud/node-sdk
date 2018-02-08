@@ -3,9 +3,9 @@
 var VisualRecognitionV3 = require('watson-developer-cloud/visual-recognition/v3');
 var fs = require('fs');
 
-var visual_recognition = new VisualRecognitionV3({
+var visualRecognition = new VisualRecognitionV3({
   api_key: 'INSERT YOUR API KEY HERE',
-  version_date: VisualRecognitionV3.VERSION_DATE_2016_05_20
+  version_date: '2016-05-20'
 });
 
 var params = {
@@ -14,7 +14,7 @@ var params = {
   images_file: fs.createReadStream('./resources/images.zip')
 };
 
-visual_recognition.classify(params, function(err, res) {
+visualRecognition.classify(params, function(err, res) {
   if (err) {
     console.log(err);
   } else {
