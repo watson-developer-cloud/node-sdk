@@ -27,7 +27,7 @@ import { FileObject } from '../lib/helper';
 
 class NaturalLanguageClassifierV1 extends BaseService {
   name: string; // set by prototype to 'natural_language_classifier'
-  version: string; // set by prototype to 'v1'
+  serviceVersion: string; // set by prototype to 'v1'
 
   static URL: string = 'https://gateway.watsonplatform.net/natural-language-classifier/api';
 
@@ -270,7 +270,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
 }
 
 NaturalLanguageClassifierV1.prototype.name = 'natural_language_classifier';
-NaturalLanguageClassifierV1.prototype.version = 'v1';
+NaturalLanguageClassifierV1.prototype.serviceVersion = 'v1';
 
 /*************************
  * interfaces

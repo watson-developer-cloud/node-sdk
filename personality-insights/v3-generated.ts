@@ -26,7 +26,7 @@ import { BaseService } from '../lib/base_service';
 
 class PersonalityInsightsV3 extends BaseService {
   name: string; // set by prototype to 'personality_insights'
-  version: string; // set by prototype to 'v3'
+  serviceVersion: string; // set by prototype to 'v3'
 
   static URL: string = 'https://gateway.watsonplatform.net/personality-insights/api';
 
@@ -111,7 +111,7 @@ class PersonalityInsightsV3 extends BaseService {
 }
 
 PersonalityInsightsV3.prototype.name = 'personality_insights';
-PersonalityInsightsV3.prototype.version = 'v3';
+PersonalityInsightsV3.prototype.serviceVersion = 'v3';
 
 /*************************
  * interfaces

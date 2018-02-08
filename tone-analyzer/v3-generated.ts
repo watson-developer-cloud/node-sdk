@@ -26,7 +26,7 @@ import { BaseService } from '../lib/base_service';
 
 class ToneAnalyzerV3 extends BaseService {
   name: string; // set by prototype to 'tone_analyzer'
-  version: string; // set by prototype to 'v3'
+  serviceVersion: string; // set by prototype to 'v3'
 
   static URL: string = 'https://gateway.watsonplatform.net/tone-analyzer/api';
 
@@ -154,7 +154,7 @@ class ToneAnalyzerV3 extends BaseService {
 }
 
 ToneAnalyzerV3.prototype.name = 'tone_analyzer';
-ToneAnalyzerV3.prototype.version = 'v3';
+ToneAnalyzerV3.prototype.serviceVersion = 'v3';
 
 /*************************
  * interfaces

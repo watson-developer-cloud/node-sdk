@@ -28,7 +28,7 @@ import { FileObject } from '../lib/helper';
 
 class SpeechToTextV1 extends BaseService {
   name: string; // set by prototype to 'speech_to_text'
-  version: string; // set by prototype to 'v1'
+  serviceVersion: string; // set by prototype to 'v1'
 
   static URL: string = 'https://stream.watsonplatform.net/speech-to-text/api';
 
@@ -255,7 +255,7 @@ class SpeechToTextV1 extends BaseService {
     };
     return createRequest(parameters, _callback);
   }
-  
+
   /*************************
    * asynchronous
    ************************/
@@ -1700,7 +1700,7 @@ class SpeechToTextV1 extends BaseService {
 }
 
 SpeechToTextV1.prototype.name = 'speech_to_text';
-SpeechToTextV1.prototype.version = 'v1';
+SpeechToTextV1.prototype.serviceVersion = 'v1';
 
 /*************************
  * interfaces

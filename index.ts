@@ -18,6 +18,8 @@
  * @module watson-developer-cloud
  */
 
+import * as extend from 'extend';
+
 export import AuthorizationV1 = require('./authorization/v1');
 
 export import ConversationV1 = require('./conversation/v1');
@@ -52,7 +54,7 @@ const servicesByVersion = {};
 Object.keys(exports).forEach(key => {
   const Service = exports[key];
   const name = Service.prototype.name;
-  const version = Service.prototype.version;
+  const version = Service.prototype.serviceVersion;
   servicesByVersion[name] = servicesByVersion[name] || {};
   servicesByVersion[name][version] = Service;
 });
@@ -63,6 +65,15 @@ Object.keys(servicesByVersion).forEach(serviceName => {
     configurable: true,
     writable: true,
     value: function(options) {
+
+      // eslint-disable-next-line no-console
+      console.warn(
+        'WARNING: This method of instantiating the Watson services has been deprecated ' +
+            'beginning with Version 3.0.0 of the Node SDK.  Please refer to the Node SDK ' +
+            'documentation for information on how to instantiate Watson services.  This ' +
+            'form of service instantiaion will be removed in a future release of the SDK.'
+      );
+
       options = options || {};
 
       // previously, AlchemyAPI did not require a version to be specified
@@ -78,7 +89,10 @@ Object.keys(servicesByVersion).forEach(serviceName => {
         );
       }
 
-      return new Service(options);
+      const _options = extend({}, options);
+      _options.serviceVersion = options.version;
+      _options.version = options.version_date;
+      return new Service(_options);
     }
   });
 });

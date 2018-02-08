@@ -27,7 +27,7 @@ import { FileObject } from '../lib/helper';
 
 class DiscoveryV1 extends BaseService {
   name: string; // set by prototype to 'discovery'
-  version: string; // set by prototype to 'v1'
+  serviceVersion: string; // set by prototype to 'v1'
 
   static URL: string = 'https://gateway.watsonplatform.net/discovery/api';
 
@@ -1993,7 +1993,7 @@ class DiscoveryV1 extends BaseService {
 }
 
 DiscoveryV1.prototype.name = 'discovery';
-DiscoveryV1.prototype.version = 'v1';
+DiscoveryV1.prototype.serviceVersion = 'v1';
 
 /*************************
  * interfaces
