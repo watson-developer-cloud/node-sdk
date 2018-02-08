@@ -18,8 +18,6 @@
  * @module watson-developer-cloud
  */
 
-import * as extend from 'extend';
-
 export import AuthorizationV1 = require('./authorization/v1');
 
 export import ConversationV1 = require('./conversation/v1');
@@ -89,10 +87,11 @@ Object.keys(servicesByVersion).forEach(serviceName => {
         );
       }
 
-      const _options = extend({}, options);
-      _options.serviceVersion = options.version;
-      _options.version = options.version_date;
-      return new Service(_options);
+      return new Service({
+        ...options,
+        serviceVersion: options.version,
+        version: options.version_date,
+      });
     }
   });
 });
