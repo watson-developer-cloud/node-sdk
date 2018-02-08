@@ -47,7 +47,7 @@ var conversation = new ConversationV1({
 /**
  * Instantiate the Watson Tone Analyzer Service
  */
-var tone_analyzer = new ToneAnalyzerV3({
+var toneAnalyzer = new ToneAnalyzerV3({
   username: process.env.TONE_ANALYZER_USERNAME || '<tone_analyzer_username>',
   password: process.env.TONE_ANALYZER_PASSWORD || '<tone_analyzer_password>',
   version_date: '2017-09-21'
@@ -82,7 +82,7 @@ var payload = {
  */
 function invokeToneConversation(payload, maintainToneHistoryInContext) {
   tone_detection
-    .invokeToneAsync(payload, tone_analyzer)
+    .invokeToneAsync(payload, toneAnalyzer)
     .then(tone => {
       tone_detection.updateUserTone(
         payload,

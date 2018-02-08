@@ -3,9 +3,10 @@
 var SpeechToTextV1 = require('watson-developer-cloud/speech-to-text/v1');
 var fs = require('fs');
 
-var speech_to_text = new SpeechToTextV1({
+var speechToText = new SpeechToTextV1({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
-  password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE'
+  password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
+  url: 'https://stream.watsonplatform.net/speech-to-text/api/'
 });
 
 var params = {
@@ -13,7 +14,7 @@ var params = {
 };
 
 // create the stream
-var recognizeStream = speech_to_text.createRecognizeStream(params);
+var recognizeStream = speechToText.createRecognizeStream(params);
 
 // pipe in some audio
 fs.createReadStream(__dirname + '/resources/speech.wav').pipe(recognizeStream);

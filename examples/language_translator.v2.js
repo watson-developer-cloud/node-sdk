@@ -3,13 +3,13 @@
 var LanguageTranslatorV2 = require('watson-developer-cloud/language-translator/v2');
 var fs = require('fs');
 
-var language_translator = new LanguageTranslatorV2({
+var languageTranslator = new LanguageTranslatorV2({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
   password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
   url: 'https://gateway.watsonplatform.net/language-translator/api/'
 });
 
-language_translator.translate(
+languageTranslator.translate(
   {
     text: 'A sentence must have a verb',
     source: 'en',
@@ -25,7 +25,7 @@ language_translator.translate(
 );
 
 // Create a translation model using a tmx file
-language_translator.createModel(
+languageTranslator.createModel(
   {
     base_model_id: 'en-fr',
     name: 'my-model',

@@ -3,16 +3,17 @@
 var PersonalityInsightsV2 = require('watson-developer-cloud/personality-insights/v2');
 var fs = require('fs');
 
-var personality_insights = new PersonalityInsightsV2({
+var personalityInsights = new PersonalityInsightsV2({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
-  password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE'
+  password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
+  url: 'https://gateway.watsonplatform.net/personality-insights/api/'
 });
 
 /*
  * English example:
  *   'text' parameter contains the input text.
  */
-personality_insights.profile(
+personalityInsights.profile(
   {
     text: 'Enter more than 100 unique words here...'
   },
@@ -30,7 +31,7 @@ personality_insights.profile(
  *   'language' parameter is needed in 'es' since our
  *   text content is in Spanish.
  */
-personality_insights.profile(
+personalityInsights.profile(
   {
     text: 'Ingrese un texto de más de 100 palabras aquí...',
     language: 'es'
@@ -52,7 +53,7 @@ personality_insights.profile(
  *   the expected language by passing 'accept_language'
  *   parameter with the locale.
  */
-personality_insights.profile(
+personalityInsights.profile(
   {
     text: 'Ingrese un texto de más de 100 palabras aquí...',
     language: 'es',
@@ -71,7 +72,7 @@ personality_insights.profile(
  * CSV output example:
  * https://console.bluemix.net/docs/services/personality-insights/output-csv.html#outputCSV
  */
-personality_insights
+personalityInsights
   .profile({
     text: 'Enter more than 100 unique words here...',
     csv: true,
