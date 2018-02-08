@@ -33,3 +33,4 @@ index.js
 **/*.d.ts
 !*/blob.d.ts
 **/*.js.map
+coverage.lcov

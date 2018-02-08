@@ -111,7 +111,7 @@ describe('conversation_integration', function() {
   let conversation;
 
   before(function() {
-    auth.conversation.version_date = ConversationV1.VERSION_DATE_2017_05_26;
+    auth.conversation.version_date = '2017-05-26';
     conversation = watson.conversation(auth.conversation);
     nock.enableNetConnect();
   });
