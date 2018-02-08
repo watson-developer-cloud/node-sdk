@@ -123,16 +123,6 @@ module.exports = {
     },
     version: 'v2'
   },
-  language_translation: {
-    url: 'https://gateway.watsonplatform.net/language-translation/api',
-    username: '',
-    password: '',
-    headers: {
-      'X-Watson-Learning-Opt-Out': 1,
-      'X-Watson-Test': 1
-    },
-    version: 'v2'
-  },
   tone_analyzer: {
     url: 'https://gateway.watsonplatform.net/tone-analyzer/api',
     username: '',
