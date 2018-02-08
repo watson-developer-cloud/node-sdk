@@ -27,7 +27,7 @@ import { BaseService } from '../lib/base_service';
 
 class ConversationV1 extends BaseService {
   name: string; // set by prototype to 'conversation'
-  version: string; // set by prototype to 'v1'
+  serviceVersion: string; // set by prototype to 'v1'
 
   static URL: string = 'https://gateway.watsonplatform.net/conversation/api';
 
@@ -2231,7 +2231,7 @@ class ConversationV1 extends BaseService {
 }
 
 ConversationV1.prototype.name = 'conversation';
-ConversationV1.prototype.version = 'v1';
+ConversationV1.prototype.serviceVersion = 'v1';
 
 /*************************
  * interfaces

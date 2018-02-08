@@ -20,7 +20,7 @@ import url = require('url');
 
 class AuthorizationV1 extends BaseService {
   name;
-  version;
+  serviceVersion;
   static URL: string = 'https://stream.watsonplatform.net/authorization/api';
 
   /**
@@ -73,6 +73,6 @@ class AuthorizationV1 extends BaseService {
 }
 
 AuthorizationV1.prototype.name = 'authorization';
-AuthorizationV1.prototype.version = 'v1';
+AuthorizationV1.prototype.serviceVersion = 'v1';
 
 export = AuthorizationV1;

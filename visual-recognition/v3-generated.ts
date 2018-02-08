@@ -27,7 +27,7 @@ import { FileObject } from '../lib/helper';
 
 class VisualRecognitionV3 extends BaseService {
   name: string; // set by prototype to 'visual_recognition'
-  version: string; // set by prototype to 'v3'
+  serviceVersion: string; // set by prototype to 'v3'
 
   static URL: string = 'https://gateway-a.watsonplatform.net/visual-recognition/api';
 
@@ -386,7 +386,7 @@ class VisualRecognitionV3 extends BaseService {
 }
 
 VisualRecognitionV3.prototype.name = 'visual_recognition';
-VisualRecognitionV3.prototype.version = 'v3';
+VisualRecognitionV3.prototype.serviceVersion = 'v3';
 
 /*************************
  * interfaces

@@ -27,7 +27,7 @@ import { FileObject } from '../lib/helper';
 
 class LanguageTranslatorV2 extends BaseService {
   name: string; // set by prototype to 'language_translator'
-  version: string; // set by prototype to 'v2'
+  serviceVersion: string; // set by prototype to 'v2'
 
   static URL: string = 'https://gateway.watsonplatform.net/language-translator/api';
 
@@ -364,7 +364,7 @@ class LanguageTranslatorV2 extends BaseService {
 }
 
 LanguageTranslatorV2.prototype.name = 'language_translator';
-LanguageTranslatorV2.prototype.version = 'v2';
+LanguageTranslatorV2.prototype.serviceVersion = 'v2';
 
 /*************************
  * interfaces
