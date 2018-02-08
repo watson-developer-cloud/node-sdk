@@ -62,25 +62,24 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<h1 id="watson-developer-cloud-node-js-sdk">Watson Developer Cloud Node.js SDK</h1>
-				<p><a href="https://www.codacy.com/app/gattana/node-sdk?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=watson-developer-cloud/node-sdk&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/460c1d01a56942dbb7dd15d9ee0da535" alt="Codacy Badge"></a>
-					<a href="http://travis-ci.org/watson-developer-cloud/node-sdk"><img src="https://secure.travis-ci.org/watson-developer-cloud/node-sdk.svg" alt="Build Status"></a>
-					<a href="https://gemnasium.com/watson-developer-cloud/node-sdk"><img src="https://gemnasium.com/watson-developer-cloud/node-sdk.svg" alt="Dependency Status"></a>
+				<h1 id="watson-apis-node-js-sdk">Watson APIs Node.js SDK</h1>
+				<p><a href="http://travis-ci.org/watson-developer-cloud/node-sdk"><img src="https://secure.travis-ci.org/watson-developer-cloud/node-sdk.svg" alt="Build Status"></a>
+					<a href="https://wdc-slack-inviter.mybluemix.net"><img src="https://wdc-slack-inviter.mybluemix.net/badge.svg" alt="Slack"></a>
 					<a href="https://www.npmjs.com/package/watson-developer-cloud"><img src="https://img.shields.io/npm/v/watson-developer-cloud.svg" alt="npm-version"></a>
 				<a href="https://www.npmjs.com/package/watson-developer-cloud"><img src="https://img.shields.io/npm/dm/watson-developer-cloud.svg" alt="npm-downloads"></a></p>
-				<p>Node.js client library to use the Watson Developer Cloud services, a collection of APIs that use cognitive computing to solve complex problems.</p>
+				<p>Node.js client library to use the Watson APIs.</p>
 				<details>
 					<summary>Table of Contents</summary>
 					<em> <a href="#installation">Installation</a>
-					</em> <a href="#usage">Usage</a>
-					<em> <a href="#documentation">Documentation</a>
 					</em> <a href="#getting-the-service-credentials">Getting the Service Credentials</a>
-					<em> <a href="#questions">Questions</a>
-					</em> <a href="#examples">Examples</a>
-					<em> <a href="#ibm-watson-services">IBM Watson Services</a>
-					</em> <a href="#authorization">Authorization</a>
-					<em> <a href="#conversation">Conversation</a>
-					</em> <a href="#dialog">Dialog</a>
+					<em> <a href="#usage">Usage</a>
+					</em> <a href="#client-side-usage">Client-side usage</a>
+					<em> <a href="#data-collection-opt-out">Data collection opt-out</a>
+					</em> <a href="#questions">Questions</a>
+					<em> <a href="#examples">Examples</a>
+					</em> <a href="#ibm-watson-services">IBM Watson Services</a>
+					<em> <a href="#authorization">Authorization</a>
+					</em> <a href="#conversation">Conversation</a>
 					<em> <a href="#discovery">Discovery</a>
 					</em> <a href="#language-translator">Language Translator</a>
 					<em> <a href="#natural-language-classifier">Natural Language Classifier</a>
@@ -93,17 +92,28 @@
 					</em> <a href="#composing-services">Composing Services</a>
 					<em> <a href="#debug">Debug</a>
 					</em> <a href="#tests">Tests</a>
-					<em> <a href="#open-source--ibm">Open Source @ IBM</a>
-					</em> <a href="#license">License</a>
-					* <a href="#contributing">Contributing</a>
+					<em> <a href="#license">License</a>
+					</em> <a href="#contributing">Contributing</a>
 				</details>
 				<h2 id="installation">Installation</h2>
-				<pre><code class="lang-sh">$ npm install watson-developer-cloud --save
+				<pre><code class="lang-sh">npm install watson-developer-cloud
 </code></pre>
+				<h2 id="getting-the-service-credentials">Getting the service credentials</h2>
+				<p>You will need the <code>username</code>, <code>password</code>, and <code>url</code> (<code>api_key</code> for Visual Recognition) for each service. Service credentials are different from your IBM Cloud account username and password.</p>
+				<p>To get your service credentials, follow these steps:</p>
+				<ol>
+					<li>Log in to IBM Cloud at <a href="https://console.bluemix.net/catalog/?category=watson">https://console.bluemix.net/catalog/?category=watson</a>.</li>
+					<li>In the IBM Cloud <strong>Catalog</strong>, select the service you want to use.</li>
+					<li>Type a unique name for the service instance in the <strong>Service name</strong> field. For example, type <code>my-service-name</code>. Leave the default values for the other options.</li>
+					<li>Click <strong>Create</strong>.</li>
+					<li>From the service dashboard, click <strong>Service credentials</strong>.</li>
+					<li>Click <strong>View credentials</strong> under <strong>Actions</strong>.</li>
+					<li>Copy <code>username</code>, <code>password</code> (or <code>api_key</code> for Visual Recognition), and <code>url</code>.</li>
+				</ol>
 				<h2 id="usage">Usage</h2>
 				<p>The examples below assume that you already have service credentials. If not,
-				you will have to create a service in <a href="https://console.bluemix.net">Bluemix</a>.</p>
-				<p>If you are running your application in Bluemix, you don&#39;t need to specify the
+				you will have to create a service in <a href="https://console.bluemix.net">IBM Cloud</a>.</p>
+				<p>If you are running your application in IBM Cloud, you don&#39;t need to specify the
 				credentials; the library will get them for you by looking at the <code>VCAP_SERVICES</code> environment variable.</p>
 				<p>Credentials are checked for in the following order:</p>
 				<ol>
@@ -111,7 +121,7 @@
 					</li>
 					<li><p><code>SERVICE_NAME_USERNAME</code> and <code>SERVICE_NAME_PASSWORD</code> environment properties (or <code>SERVICE_NAME_API_KEY</code> when appropriate) and, optionally, <code>SERVICE_NAME_URL</code></p>
 					</li>
-					<li><p>Bluemix-supplied credentials (via the <code>VCAP_SERVICES</code> JSON-encoded environment property)</p>
+					<li><p>IBM-Cloud-supplied credentials (via the <code>VCAP_SERVICES</code> JSON-encoded environment property)</p>
 					</li>
 				</ol>
 				<h3 id="client-side-usage">Client-side usage</h3>
@@ -121,7 +131,7 @@
 				<h3 id="data-collection-opt-out">Data collection opt-out</h3>
 				<p>By default, <a href="https://console.bluemix.net/docs/services/watson/getting-started-logging.html">all requests are logged</a>. This can be disabled of by setting the <code>X-Watson-Learning-Opt-Out</code> header when creating the service instance:</p>
 				<pre><code class="lang-js"><span class="hljs-keyword">var</span> myInstance = <span class="hljs-keyword">new</span> watson.WhateverServiceV1({
-  <span class="hljs-comment">/* username, password, version, etc... */</span>
+  <span class="hljs-comment">/* username, password, version, url, etc... */</span>
   headers: {
     <span class="hljs-string">"X-Watson-Learning-Opt-Out"</span>: <span class="hljs-literal">true</span>
   }
@@ -130,28 +140,10 @@
 				<h2 id="documentation">Documentation</h2>
 				<p>You can find links to the documentation at <a href="https://console.bluemix.net/developer/watson/documentation">https://console.bluemix.net/developer/watson/documentation</a>. Find the service that you&#39;re interested in, click <strong>API reference</strong>, and then select the <strong>Node</strong> tab.</p>
 				<p>There are also auto-generated JSDocs available at <a href="http://watson-developer-cloud.github.io/node-sdk/master/">http://watson-developer-cloud.github.io/node-sdk/master/</a></p>
-				<h2 id="getting-the-service-credentials">Getting the service credentials</h2>
-				<p>You will need the <code>username</code> and <code>password</code> (<code>api_key</code> for AlchemyAPI) credentials for each service. Service credentials are different from your Bluemix account username and password.</p>
-				<p>To get your service credentials, follow these steps:</p>
-				<ol>
-					<li>Log in to Bluemix at <a href="https://bluemix.net">https://bluemix.net</a>.</li>
-					<li>Create an instance of the service:<ol>
-							<li>In the Bluemix <strong>Catalog</strong>, select the service you want to use.</li>
-							<li>Type a unique name for the service instance in the <strong>Service name</strong> field. For example, type <code>my-service-name</code>. Leave the default values for the other options.</li>
-							<li>Click <strong>Create</strong>.</li>
-							<li>From the service dashboard, click <strong>Service credentials</strong>.</li>
-							<li>Click <strong>View credentials</strong> under <strong>Actions</strong>.</li>
-							<li>Copy <code>username</code> and <code>password</code> (or <code>api_key</code> for Visual Recognition).</li>
-						</ol>
-					</li>
-				</ol>
 				<h2 id="questions">Questions</h2>
 				<p>If you are having difficulties using the APIs or have a question about the Watson services, please ask a question at <a href="https://developer.ibm.com/answers/questions/ask/?topics=watson">dW Answers</a> or <a href="http://stackoverflow.com/questions/ask?tags=ibm-watson-cognitive">Stack Overflow</a>.</p>
 				<h2 id="examples">Examples</h2>
 				<p>The <a href="https://github.com/watson-developer-cloud/node-sdk/tree/master/examples">examples</a> folder has basic and advanced examples.</p>
-				<h2 id="ibm-watson-services">IBM Watson services</h2>
-				<p>The Watson Developer Cloud offers a variety of services for building cognitive
-				apps.</p>
 				<h3 id="authorization">Authorization</h3>
 				<p>The Authorization service can generate auth tokens for situations where providing the service username/password is undesirable.</p>
 				<p>Tokens are valid for 1 hour and may be sent using the <code>X-Watson-Authorization-Token</code> header or the <code>watson-token</code> query param.</p>
@@ -161,10 +153,13 @@
 <span class="hljs-keyword">var</span> authorization = <span class="hljs-keyword">new</span> watson.AuthorizationV1({
   <span class="hljs-attr">username</span>: <span class="hljs-string">'&lt;Text to Speech username&gt;'</span>,
   <span class="hljs-attr">password</span>: <span class="hljs-string">'&lt;Text to Speech password&gt;'</span>,
-  <span class="hljs-attr">url</span>: watson.TextToSpeechV1.URL
+  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://stream.watsonplatform.net/authorization/api'</span>, <span class="hljs-comment">// Speech tokens</span>
 });
 
-authorization.getToken(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err, token</span>) </span>{
+authorization.getToken({
+  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://stream.watsonplatform.net/text-to-speech/api'</span>
+},
+<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err, token</span>) </span>{
   <span class="hljs-keyword">if</span> (!token) {
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'error:'</span>, err);
   } <span class="hljs-keyword">else</span> {
@@ -180,7 +175,8 @@ authorization.getToken(<span class="hljs-function"><span class="hljs-keyword">fu
 <span class="hljs-keyword">var</span> conversation = <span class="hljs-keyword">new</span> ConversationV1({
   <span class="hljs-attr">username</span>: <span class="hljs-string">'&lt;username&gt;'</span>,
   <span class="hljs-attr">password</span>: <span class="hljs-string">'&lt;password&gt;'</span>,
-  <span class="hljs-attr">version_date</span>: ConversationV1.VERSION_DATE_2017_05_26
+  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/conversation/api/'</span>,
+  <span class="hljs-attr">version_date</span>: <span class="hljs-string">'2017-05-26'</span>
 });
 
 conversation.message(
@@ -197,8 +193,6 @@ conversation.message(
   }
 );
 </code></pre>
-				<h3 id="dialog">Dialog</h3>
-				<p>The Dialog service was deprecated on August 15, 2016, existing instances of the service will continue to function until August 9, 2017. Users of the Dialog service should migrate their applications to use the Conversation service. See the <a href="https://console.bluemix.net/docs/services/conversation/index.html">migration documentation</a> to learn how to migrate your dialogs to the Conversation service.</p>
 				<h3 id="discovery">Discovery</h3>
 				<p>Use the <a href="https://www.ibm.com/watson/services/discovery/">Discovery Service</a> to search and analyze structured and unstructured data.</p>
 				<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> DiscoveryV1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'watson-developer-cloud/discovery/v1'</span>);
@@ -206,7 +200,8 @@ conversation.message(
 <span class="hljs-keyword">var</span> discovery = <span class="hljs-keyword">new</span> DiscoveryV1({
   <span class="hljs-attr">username</span>: <span class="hljs-string">'&lt;username&gt;'</span>,
   <span class="hljs-attr">password</span>: <span class="hljs-string">'&lt;password&gt;'</span>,
-  <span class="hljs-attr">version_date</span>: DiscoveryV1.VERSION_DATE_2017_09_01
+  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/discovery/api/'</span>,
+  <span class="hljs-attr">version_date</span>: <span class="hljs-string">'2017-09-01'</span>
 });
 
 discovery.query(
@@ -228,13 +223,13 @@ discovery.query(
 				<p>Translate text from one language to another or idenfity a language using the <a href="https://www.ibm.com/watson/services/language-translator/">Language Translator</a> service.</p>
 				<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> LanguageTranslatorV2 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'watson-developer-cloud/language-translator/v2'</span>);
 
-<span class="hljs-keyword">var</span> language_translator = <span class="hljs-keyword">new</span> LanguageTranslatorV2({
+<span class="hljs-keyword">var</span> languageTranslator = <span class="hljs-keyword">new</span> LanguageTranslatorV2({
   <span class="hljs-attr">username</span>: <span class="hljs-string">'&lt;username&gt;'</span>,
   <span class="hljs-attr">password</span>: <span class="hljs-string">'&lt;password&gt;'</span>,
   <span class="hljs-attr">url</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/language-translator/api/'</span>
 });
 
-language_translator.translate(
+languageTranslator.translate(
   {
     <span class="hljs-attr">text</span>: <span class="hljs-string">'A sentence must have a verb'</span>,
     <span class="hljs-attr">source</span>: <span class="hljs-string">'en'</span>,
@@ -248,7 +243,7 @@ language_translator.translate(
   }
 );
 
-language_translator.identify(
+languageTranslator.identify(
   {
     <span class="hljs-attr">text</span>:
       <span class="hljs-string">'The language translator service takes text input and identifies the language used.'</span>
@@ -266,12 +261,13 @@ language_translator.identify(
 				<p>Use <a href="https://console.bluemix.net/docs/services/natural-language-classifier/getting-started.html">Natural Language Classifier</a> service to create a classifier instance by providing a set of representative strings and a set of one or more correct classes for each as training. Then use the trained classifier to classify your new question for best matching answers or to retrieve next actions for your application.</p>
 				<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> NaturalLanguageClassifierV1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'watson-developer-cloud/natural-language-classifier/v1'</span>);
 
-<span class="hljs-keyword">var</span> natural_language_classifier = <span class="hljs-keyword">new</span> NaturalLanguageClassifierV1({
+<span class="hljs-keyword">var</span> classifier = <span class="hljs-keyword">new</span> NaturalLanguageClassifierV1({
   <span class="hljs-attr">username</span>: <span class="hljs-string">'&lt;username&gt;'</span>,
-  <span class="hljs-attr">password</span>: <span class="hljs-string">'&lt;password&gt;'</span>
+  <span class="hljs-attr">password</span>: <span class="hljs-string">'&lt;password&gt;'</span>,
+  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/natural-language-classifier/api/'</span>
 });
 
-natural_language_classifier.classify(
+classifier.classify(
   {
     <span class="hljs-attr">text</span>: <span class="hljs-string">'Is it sunny?'</span>,
     <span class="hljs-attr">classifier_id</span>: <span class="hljs-string">'&lt;classifier-id&gt;'</span>
@@ -295,7 +291,8 @@ natural_language_classifier.classify(
 <span class="hljs-keyword">var</span> nlu = <span class="hljs-keyword">new</span> NaturalLanguageUnderstandingV1({
   <span class="hljs-attr">username</span>: <span class="hljs-string">'&lt;username&gt;'</span>,
   <span class="hljs-attr">password</span>: <span class="hljs-string">'&lt;password&gt;'</span>,
-  <span class="hljs-attr">version_date</span>: NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27
+  <span class="hljs-attr">version_date</span>: <span class="hljs-string">'2017-02-27'</span>,
+  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/natural-language-understanding/api/'</span>
 });
 
 nlu.analyze(
@@ -320,13 +317,14 @@ nlu.analyze(
 				<a href="https://www.ibm.com/watson/services/personality-insights/">Personality Insights</a> service.</p>
 				<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> PersonalityInsightsV3 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'watson-developer-cloud/personality-insights/v3'</span>);
 
-<span class="hljs-keyword">var</span> personality_insights = <span class="hljs-keyword">new</span> PersonalityInsightsV3({
+<span class="hljs-keyword">var</span> personalityInsights = <span class="hljs-keyword">new</span> PersonalityInsightsV3({
   <span class="hljs-attr">username</span>: <span class="hljs-string">'&lt;username&gt;'</span>,
   <span class="hljs-attr">password</span>: <span class="hljs-string">'&lt;password&gt;'</span>,
-  <span class="hljs-attr">version_date</span>: <span class="hljs-string">'2016-10-19'</span>
+  <span class="hljs-attr">version_date</span>: <span class="hljs-string">'2016-10-19'</span>,
+  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/personality-insights/api/'</span>
 });
 
-personality_insights.profile(
+personalityInsights.profile(
   {
     <span class="hljs-attr">content</span>: <span class="hljs-string">'Enter more than 100 unique words here...'</span>,
     <span class="hljs-attr">content_type</span>: <span class="hljs-string">'text/plain'</span>,
@@ -342,13 +340,14 @@ personality_insights.profile(
 );
 </code></pre>
 				<h3 id="speech-to-text">Speech to Text</h3>
-				<p>Use the <a href="https://www.ibm.com/watson/services/speech-to-text/">Speech to Text</a> service to recognize the text from a .wav file.</p>
+				<p>Use the <a href="https://www.ibm.com/watson/services/speech-to-text/">Speech to Text</a> service to recognize the text from a <code>.wav</code> file.</p>
 				<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> SpeechToTextV1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'watson-developer-cloud/speech-to-text/v1'</span>);
 <span class="hljs-keyword">var</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
 
-<span class="hljs-keyword">var</span> speech_to_text = <span class="hljs-keyword">new</span> SpeechToTextV1({
+<span class="hljs-keyword">var</span> speechToText = <span class="hljs-keyword">new</span> SpeechToTextV1({
   <span class="hljs-attr">username</span>: <span class="hljs-string">'&lt;username&gt;'</span>,
-  <span class="hljs-attr">password</span>: <span class="hljs-string">'&lt;password&gt;'</span>
+  <span class="hljs-attr">password</span>: <span class="hljs-string">'&lt;password&gt;'</span>,
+  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://stream.watsonplatform.net/speech-to-text/api/'</span>
 });
 
 <span class="hljs-keyword">var</span> params = {
@@ -357,7 +356,7 @@ personality_insights.profile(
   <span class="hljs-attr">content_type</span>: <span class="hljs-string">'audio/l16; rate=44100'</span>
 };
 
-speech_to_text.recognize(params, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, res</span>) </span>{
+speechToText.recognize(params, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, res</span>) </span>{
   <span class="hljs-keyword">if</span> (err)
     <span class="hljs-built_in">console</span>.log(err);
   <span class="hljs-keyword">else</span>
@@ -366,7 +365,7 @@ speech_to_text.recognize(params, <span class="hljs-function"><span class="hljs-k
 
 <span class="hljs-comment">// or streaming</span>
 fs.createReadStream(<span class="hljs-string">'./resources/speech.wav'</span>)
-  .pipe(speech_to_text.createRecognizeStream({ <span class="hljs-attr">content_type</span>: <span class="hljs-string">'audio/l16; rate=44100'</span> }))
+  .pipe(speechToText.createRecognizeStream({ <span class="hljs-attr">content_type</span>: <span class="hljs-string">'audio/l16; rate=44100'</span> }))
   .pipe(fs.createWriteStream(<span class="hljs-string">'./transcription.txt'</span>));
 </code></pre>
 				<h3 id="text-to-speech">Text to Speech</h3>
@@ -374,9 +373,10 @@ fs.createReadStream(<span class="hljs-string">'./resources/speech.wav'</span>)
 				<pre><code class="lang-js"><span class="hljs-keyword">var</span> TextToSpeechV1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'watson-developer-cloud/text-to-speech/v1'</span>);
 <span class="hljs-keyword">var</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
 
-<span class="hljs-keyword">var</span> text_to_speech = <span class="hljs-keyword">new</span> TextToSpeechV1({
+<span class="hljs-keyword">var</span> textToSpeech = <span class="hljs-keyword">new</span> TextToSpeechV1({
   <span class="hljs-attr">username</span>: <span class="hljs-string">'&lt;username&gt;'</span>,
-  <span class="hljs-attr">password</span>: <span class="hljs-string">'&lt;password&gt;'</span>
+  <span class="hljs-attr">password</span>: <span class="hljs-string">'&lt;password&gt;'</span>,
+  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://stream.watsonplatform.net/text-to-speech/api/'</span>
 });
 
 <span class="hljs-keyword">var</span> params = {
@@ -403,13 +403,14 @@ textToSpeech
 				emotion, writing and social tones of a text.</p>
 				<pre><code class="lang-js"><span class="hljs-keyword">var</span> ToneAnalyzerV3 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'watson-developer-cloud/tone-analyzer/v3'</span>);
 
-<span class="hljs-keyword">var</span> tone_analyzer = <span class="hljs-keyword">new</span> ToneAnalyzerV3({
+<span class="hljs-keyword">var</span> toneAnalyzer = <span class="hljs-keyword">new</span> ToneAnalyzerV3({
   <span class="hljs-attr">username</span>: <span class="hljs-string">'&lt;username&gt;'</span>,
   <span class="hljs-attr">password</span>: <span class="hljs-string">'&lt;password&gt;'</span>,
-  <span class="hljs-attr">version_date</span>: <span class="hljs-string">'2016-05-19'</span>
+  <span class="hljs-attr">version_date</span>: <span class="hljs-string">'2016-05-19'</span>,
+  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/tone-analyzer/api/'</span>
 });
 
-tone_analyzer.tone(
+toneAnalyzer.tone(
   {
     <span class="hljs-attr">tone_input</span>: <span class="hljs-string">'Greetings from Watson Developer Cloud!'</span>,
     <span class="hljs-attr">content_type</span>: <span class="hljs-string">'text/plain'</span>
@@ -426,20 +427,20 @@ tone_analyzer.tone(
 				<h3 id="visual-recognition">Visual Recognition</h3>
 				<p>Use the <a href="https://www.ibm.com/watson/services/visual-recognition/">Visual Recognition</a> service to recognize the
 				following picture.</p>
-				<p><img src="https://visual-recognition-demo.mybluemix.net/images/samples/5.jpg" width="150" /></p>
+				<p><img src="https://visual-recognition-demo.ng.bluemix.net/images/samples/5.jpg" /></p>
 				<pre><code class="lang-js"><span class="hljs-keyword">var</span> VisualRecognitionV3 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'watson-developer-cloud/visual-recognition/v3'</span>);
 <span class="hljs-keyword">var</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
 
-<span class="hljs-keyword">var</span> visual_recognition = <span class="hljs-keyword">new</span> VisualRecognitionV3({
+<span class="hljs-keyword">var</span> visualRecognition = <span class="hljs-keyword">new</span> VisualRecognitionV3({
   <span class="hljs-attr">api_key</span>: <span class="hljs-string">'&lt;api_key&gt;'</span>,
-  <span class="hljs-attr">version_date</span>: VisualRecognitionV3.VERSION_DATE_2016_05_20
+  <span class="hljs-attr">version_date</span>: <span class="hljs-string">'2016-05-20'</span>
 });
 
 <span class="hljs-keyword">var</span> params = {
   <span class="hljs-attr">images_file</span>: fs.createReadStream(<span class="hljs-string">'./resources/car.png'</span>)
 };
 
-visual_recognition.classify(params, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, res</span>) </span>{
+visualRecognition.classify(params, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, res</span>) </span>{
   <span class="hljs-keyword">if</span> (err) {
     <span class="hljs-built_in">console</span>.log(err);
   } <span class="hljs-keyword">else</span> {
@@ -455,7 +456,7 @@ visual_recognition.classify(params, <span class="hljs-function"><span class="hlj
 				<p><code>use_unauthenticated</code>.</p>
 				<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> watson = <span class="hljs-built_in">require</span>(<span class="hljs-string">'watson-developer-cloud'</span>);
 
-<span class="hljs-keyword">var</span> dialog = <span class="hljs-keyword">new</span> watson.DialogV1({
+<span class="hljs-keyword">var</span> conversation = <span class="hljs-keyword">new</span> watson.ConversationV1({
   <span class="hljs-attr">use_unauthenticated</span>: <span class="hljs-literal">true</span>
 });
 </code></pre>
