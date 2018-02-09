@@ -26,7 +26,7 @@ import { BaseService } from '../lib/base_service';
 
 class NaturalLanguageUnderstandingV1 extends BaseService {
   name: string; // set by prototype to 'natural-language-understanding'
-  version: string; // set by prototype to 'v1'
+  serviceVersion: string; // set by prototype to 'v1'
 
   static VERSION_DATE_2016_01_23: string = '2016-01-23';
   static VERSION_DATE_2017_02_27: string = '2017-02-27';
@@ -207,7 +207,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
 
 NaturalLanguageUnderstandingV1.prototype.name =
   'natural-language-understanding';
-NaturalLanguageUnderstandingV1.prototype.version = 'v1';
+NaturalLanguageUnderstandingV1.prototype.serviceVersion = 'v1';
 
 /*************************
  * interfaces
