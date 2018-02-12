@@ -30,7 +30,7 @@ export interface HeaderOptions {
 
 export interface UserOptions {
   url?: string;
-  version_date?: string;
+  version?: string;
   username?: string;
   password?: string;
   api_key?: string;

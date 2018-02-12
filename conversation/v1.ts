@@ -31,7 +31,10 @@ class ConversationV1 extends GeneratedConversationV1 {
   static VERSION_DATE_2016_07_11: string = '2016-07-11';
 
   constructor(options) {
-    super(options);
+    // For backward compatibility, allow version to be passed in version_date.
+    const _options = extend({}, options);
+    _options.version = _options.version_date || _options.version;
+    super(_options);
   }
 
   private static removedError: Error = new Error(

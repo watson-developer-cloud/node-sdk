@@ -24,7 +24,10 @@ import { BaseService } from '../lib/base_service';
 
 class PersonalityInsightsV3 extends GeneratedPersonalityInsightsV3 {
   constructor(options) {
-    super(options);
+    // For backward compatibility, allow version to be passed in version_date.
+    const _options = extend({}, options);
+    _options.version = _options.version_date || _options.version;
+    super(_options);
   }
 
   profile(params, callback) {

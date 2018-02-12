@@ -20,7 +20,10 @@ import { getMissingParams } from '../lib/helper';
 
 class ToneAnalyzerV3 extends GeneratedToneAnalyzerV3 {
   constructor(options) {
-    super(options);
+    // For backward compatibility, allow version to be passed in version_date.
+    const _options = extend({}, options);
+    _options.version = _options.version_date || _options.version;
+    super(_options);
   }
 
   tone(params, callback) {
