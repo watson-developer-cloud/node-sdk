@@ -4,21 +4,22 @@
 executedModules:
   npmScripts:
     dev:
+      - autofix
+      - browserify
+      - build
+      - codecov
+      - compat-check
+      - doc
       - lint
       - lint-depsnpm t
+      - minify
+      - report-coverage
       - test
-      - autofix
-      - doc
-      - codecov
+      - test-browser
       - test-integration
       - test-unit
-      - test-browser
       - watch
-      - browserify
       - watchify
-      - minify
-      - build
-      - compat-check
   shellScripts:
     dev: []
     ignore: []
