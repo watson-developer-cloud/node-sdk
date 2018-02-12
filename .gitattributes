@@ -4,3 +4,4 @@
 # (On Windows, git is often configured to automatically convert between the two - See https://git-scm.com/docs/git-config#git-config-coreautocrlf )
 
 *.js text eol=lf
+*.ts text eol=lf

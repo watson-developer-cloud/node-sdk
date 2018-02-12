@@ -1,3 +1,19 @@
+/**
+ * Copyright 2017 IBM All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import GeneratedDiscoveryV1 = require('./v1-generated');
 import extend = require('extend');
 import isStream = require('isstream');
@@ -154,7 +170,7 @@ class DiscoveryV1 extends GeneratedDiscoveryV1 {
   }
 
   query(params, callback) {
-    let _params = params || {};
+    const _params = params || {};
     // query and natural_language_query can't both be populated
     if (_params.query && _params.natural_language_query) {
       delete _params.natural_language_query;
