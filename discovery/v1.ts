@@ -177,7 +177,7 @@ class DiscoveryV1 extends GeneratedDiscoveryV1 {
   }
 
   query(params, callback) {
-    let _params = params || {};
+    const _params = params || {};
     // query and natural_language_query can't both be populated
     if (_params.query && _params.natural_language_query) {
       delete _params.natural_language_query;
