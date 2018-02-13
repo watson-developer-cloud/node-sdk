@@ -35,7 +35,7 @@ class DiscoveryV1 extends BaseService {
    * Construct a DiscoveryV1 object.
    *
    * @param {Object} options - Options for the service.
-   * @param {String} options.version_date - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses the API version for the date you specify, or the most recent version before that date. Note that you should not programmatically specify the current date at runtime, in case the API has been updated since your application's release. Instead, specify a version date that is compatible with your application, and don't change it until your application is ready for a later version.
+   * @param {String} options.version - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses the API version for the date you specify, or the most recent version before that date. Note that you should not programmatically specify the current date at runtime, in case the API has been updated since your application's release. Instead, specify a version date that is compatible with your application, and don't change it until your application is ready for a later version.
    * @param {String} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/discovery/api'). The base url may differ between Bluemix regions.
    * @param {String} [options.username] - The username used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
    * @param {String} [options.password] - The password used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
@@ -48,11 +48,11 @@ class DiscoveryV1 extends BaseService {
    */
   constructor(options: DiscoveryV1.Options) {
     super(options);
-    // check if 'version_date' was provided
-    if (typeof this._options.version_date === 'undefined') {
-      throw new Error('Argument error: version_date was not specified');
+    // check if 'version' was provided
+    if (typeof this._options.version === 'undefined') {
+      throw new Error('Argument error: version was not specified');
     }
-    this._options.qs.version = options.version_date;
+    this._options.qs.version = options.version;
   }
 
   /*************************
@@ -2002,7 +2002,7 @@ DiscoveryV1.prototype.serviceVersion = 'v1';
 namespace DiscoveryV1 {
   /** Options for the `DiscoveryV1` constructor. **/
   export type Options = {
-    version_date: string;
+    version: string;
     url?: string;
     username?: string;
     password?: string;

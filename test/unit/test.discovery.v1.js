@@ -42,7 +42,6 @@ describe('discovery-v1', function() {
   const service_without_version_date = {
     password: 'bruce-wayne',
     url: 'http://ibm.com:80',
-    version: 'v1',
     username: 'batman'
   };
 
@@ -78,12 +77,12 @@ describe('discovery-v1', function() {
     queryEntities: '/v1/environments/env-guid/collections/col-guid/query_entities'
   };
 
-  it('should generate version_date was not specified (negative test)', function() {
+  it('should generate version was not specified (negative test)', function() {
     function doThrowThing() {
       const discovery = new DiscoveryV1(service_without_version_date);
       assert(discovery);
     }
-    assert.throws(doThrowThing, /version_date/);
+    assert.throws(doThrowThing, /version was not specified/);
   });
 
   describe('discovery versions', function() {
