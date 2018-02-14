@@ -17,7 +17,7 @@ describe('text_to_speech_integration', function() {
   let text_to_speech;
 
   before(function() {
-    text_to_speech = watson.text_to_speech(auth.text_to_speech);
+    text_to_speech = new watson.TextToSpeechV1(auth.text_to_speech);
     nock.enableNetConnect();
   });
 

@@ -10,7 +10,7 @@ const describe = authHelper.describe; // this runs describe.skip if there is no 
 const TWENTY_SECONDS = 20000;
 const TWO_SECONDS = 2000;
 
-describe('tone_analyzer_integration', function() {
+describe('tone_analyzer_adapter_integration', function() {
   this.timeout(TWENTY_SECONDS);
   this.slow(TWO_SECONDS); // this controls when the tests get a colored warning for taking too long
   this.retries(1);
@@ -18,6 +18,8 @@ describe('tone_analyzer_integration', function() {
   let tone_analyzer;
 
   before(function() {
+    auth.tone_analyzer.version = 'v3';
+    auth.tone_analyzer.version_date = '2016-06-19';
     tone_analyzer = watson.tone_analyzer(auth.tone_analyzer);
     nock.enableNetConnect();
   });

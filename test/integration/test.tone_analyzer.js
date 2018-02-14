@@ -19,7 +19,8 @@ describe('tone_analyzer_integration', function() {
   let tone_analyzer;
 
   before(function() {
-    tone_analyzer = watson.tone_analyzer(auth.tone_analyzer);
+    auth.tone_analyzer.version = '2016-06-19';
+    tone_analyzer = new watson.ToneAnalyzerV3(auth.tone_analyzer);
     nock.enableNetConnect();
   });
 

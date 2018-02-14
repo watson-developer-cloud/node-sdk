@@ -7,7 +7,6 @@ const authHelper = require('./auth_helper.js');
 const auth = authHelper.auth;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const assign = require('object.assign'); // for node v0.12 compatibility
-const ConversationV1 = require('../../conversation/v1');
 
 const extend = require('extend');
 
@@ -102,7 +101,7 @@ const test_dialog_node_update = 'updated_node';
 // changing language is forbidden starting with VERSION_DATE_2017_05_26
 const workspace1 = extend(true, {}, workspace, intents, { language: workspace.language });
 
-describe('conversation_integration', function() {
+describe('conversation_adapter_integration', function() {
   this.timeout(TEN_SECONDS);
   this.slow(TWO_SECONDS); // this controls when the tests get a colored warning for taking too long
   // this.retries(1);
@@ -110,8 +109,11 @@ describe('conversation_integration', function() {
   let conversation;
 
   before(function() {
-    auth.conversation.version_date = ConversationV1.VERSION_DATE_2017_05_26;
-    conversation = watson.conversation(auth.conversation);
+    const constructorParams = assign({}, auth.conversation, {
+      version: 'v1',
+      version_date: '2017-05-26'
+    });
+    conversation = watson.conversation(constructorParams);
     nock.enableNetConnect();
   });
 
@@ -140,7 +142,8 @@ describe('conversation_integration', function() {
 
     it('dialog_stack with 2017-02-03 version_date', function(done) {
       const constructorParams = assign({}, auth.conversation, {
-        version_date: ConversationV1.VERSION_DATE_2017_02_03
+        version: 'v1',
+        version_date: '2017-02-03'
       });
       const conversation = watson.conversation(constructorParams);
 
@@ -162,7 +165,8 @@ describe('conversation_integration', function() {
 
     it('dialog_stack with 2016-09-20 version_date', function(done) {
       const constructorParams = assign({}, auth.conversation, {
-        version_date: ConversationV1.VERSION_DATE_2016_09_20
+        version: 'v1',
+        version_date: '2016-09-20'
       });
       const conversation = watson.conversation(constructorParams);
 
@@ -184,7 +188,8 @@ describe('conversation_integration', function() {
 
     it('dialog_stack with 2016-07-11 version_date', function(done) {
       const constructorParams = assign({}, auth.conversation, {
-        version_date: ConversationV1.VERSION_DATE_2016_07_11
+        version: 'v1',
+        version_date: '2016-07-11'
       });
       const conversation = watson.conversation(constructorParams);
 

@@ -16,8 +16,7 @@ describe('conversation-v1', function() {
     username: 'batman',
     password: 'bruce-wayne',
     url: 'http://ibm.com:80',
-    version: 'v1',
-    version_date: '2017-05-26'
+    version: '2017-05-26'
   };
 
   const payload = {
@@ -56,7 +55,7 @@ describe('conversation-v1', function() {
     nock.disableNetConnect();
     nock(service.url)
       .persist()
-      .post(paths.message + '?version=' + service.version_date)
+      .post(paths.message + '?version=' + service.version)
       .reply(200, {});
   });
 
@@ -68,7 +67,7 @@ describe('conversation-v1', function() {
     assert.ok(err instanceof Error && /required parameters/.test(err));
   };
 
-  const conversation = watson.conversation(service);
+  const conversation = new watson.ConversationV1(service);
 
   describe('message()', function() {
     const reqPayload = { input: 'foo', context: 'rab' };
@@ -90,7 +89,7 @@ describe('conversation-v1', function() {
     it('should generate a valid payload', function() {
       const req = conversation.message(params, noop);
       const body = Buffer.from(req.body).toString('ascii');
-      assert.equal(req.uri.href, service.url + paths.message + '?version=' + service.version_date);
+      assert.equal(req.uri.href, service.url + paths.message + '?version=' + service.version);
       assert.equal(req.method, 'POST');
       assert.deepEqual(JSON.parse(body), reqPayload);
     });
@@ -98,7 +97,7 @@ describe('conversation-v1', function() {
     it('should generate a valid payload but parse out the junk option', function() {
       const req = conversation.message(params1, noop);
       const body = Buffer.from(req.body).toString('ascii');
-      assert.equal(req.uri.href, service.url + paths.message + '?version=' + service.version_date);
+      assert.equal(req.uri.href, service.url + paths.message + '?version=' + service.version);
       assert.equal(req.method, 'POST');
       assert.deepEqual(JSON.parse(body), reqPayload2);
     });
@@ -129,7 +128,7 @@ describe('conversation-v1', function() {
       const body = Buffer.from(req.body).toString('ascii');
       assert.equal(
         req.uri.href,
-        service.url + paths.counterexamples + '?version=' + service.version_date
+        service.url + paths.counterexamples + '?version=' + service.version
       );
       assert.deepEqual(JSON.parse(body), pick(params, ['text']));
       assert.equal(req.method, 'POST');
@@ -152,12 +151,7 @@ describe('conversation-v1', function() {
       const req = conversation.deleteCounterexample(params, noop);
       assert.equal(
         req.uri.href,
-        service.url +
-          paths.counterexamples +
-          '/' +
-          reqPayload.text +
-          '?version=' +
-          service.version_date
+        service.url + paths.counterexamples + '/' + reqPayload.text + '?version=' + service.version
       );
       assert.equal(req.method, 'DELETE');
     });
@@ -179,12 +173,7 @@ describe('conversation-v1', function() {
       const req = conversation.getCounterexample(params, noop);
       assert.equal(
         req.uri.href,
-        service.url +
-          paths.counterexamples +
-          '/' +
-          reqPayload.text +
-          '?version=' +
-          service.version_date
+        service.url + paths.counterexamples + '/' + reqPayload.text + '?version=' + service.version
       );
       assert.equal(req.method, 'GET');
     });
@@ -201,7 +190,7 @@ describe('conversation-v1', function() {
       const req = conversation.listCounterexamples(payload, noop);
       assert.equal(
         req.uri.href,
-        service.url + paths.counterexamples + '?version=' + service.version_date
+        service.url + paths.counterexamples + '?version=' + service.version
       );
       assert.equal(req.method, 'GET');
     });
@@ -223,12 +212,7 @@ describe('conversation-v1', function() {
       const req = conversation.updateCounterexample(params, noop);
       assert.equal(
         req.uri.href,
-        service.url +
-          paths.counterexamples +
-          '/' +
-          reqPayload.text +
-          '?version=' +
-          service.version_date
+        service.url + paths.counterexamples + '/' + reqPayload.text + '?version=' + service.version
       );
       assert.equal(req.method, 'POST');
     });
@@ -248,10 +232,7 @@ describe('conversation-v1', function() {
 
     it('should generate a valid payload', function() {
       const req = conversation.createDialogNode(params, noop);
-      assert.equal(
-        req.uri.href,
-        service.url + paths.dialog_nodes + '?version=' + service.version_date
-      );
+      assert.equal(req.uri.href, service.url + paths.dialog_nodes + '?version=' + service.version);
       assert.equal(req.method, 'POST');
     });
   });
@@ -277,7 +258,7 @@ describe('conversation-v1', function() {
           '/' +
           reqPayload.dialog_node +
           '?version=' +
-          service.version_date
+          service.version
       );
       assert.equal(req.method, 'DELETE');
     });
@@ -304,7 +285,7 @@ describe('conversation-v1', function() {
           '/' +
           reqPayload.dialog_node +
           '?version=' +
-          service.version_date
+          service.version
       );
       assert.equal(req.method, 'GET');
     });
@@ -319,10 +300,7 @@ describe('conversation-v1', function() {
 
     it('should generate a valid payload', function() {
       const req = conversation.listDialogNodes(payload, noop);
-      assert.equal(
-        req.uri.href,
-        service.url + paths.dialog_nodes + '?version=' + service.version_date
-      );
+      assert.equal(req.uri.href, service.url + paths.dialog_nodes + '?version=' + service.version);
       assert.equal(req.method, 'GET');
     });
   });
@@ -349,7 +327,7 @@ describe('conversation-v1', function() {
           '/' +
           reqPayload.dialog_node +
           '?version=' +
-          service.version_date
+          service.version
       );
       assert.equal(req.method, 'POST');
     });
@@ -369,7 +347,7 @@ describe('conversation-v1', function() {
 
     it('should generate a valid payload', function() {
       const req = conversation.createEntity(params, noop);
-      assert.equal(req.uri.href, service.url + paths.entities + '?version=' + service.version_date);
+      assert.equal(req.uri.href, service.url + paths.entities + '?version=' + service.version);
       assert.equal(req.method, 'POST');
     });
   });
@@ -390,7 +368,7 @@ describe('conversation-v1', function() {
       const req = conversation.deleteEntity(params, noop);
       assert.equal(
         req.uri.href,
-        service.url + paths.entities + '/' + reqPayload.entity + '?version=' + service.version_date
+        service.url + paths.entities + '/' + reqPayload.entity + '?version=' + service.version
       );
       assert.equal(req.method, 'DELETE');
     });
@@ -412,7 +390,7 @@ describe('conversation-v1', function() {
       const req = conversation.getEntity(params, noop);
       assert.equal(
         req.uri.href,
-        service.url + paths.entities + '/' + reqPayload.entity + '?version=' + service.version_date
+        service.url + paths.entities + '/' + reqPayload.entity + '?version=' + service.version
       );
       assert.equal(req.method, 'GET');
     });
@@ -427,7 +405,7 @@ describe('conversation-v1', function() {
 
     it('should generate a valid payload', function() {
       const req = conversation.listEntities(payload, noop);
-      assert.equal(req.uri.href, service.url + paths.entities + '?version=' + service.version_date);
+      assert.equal(req.uri.href, service.url + paths.entities + '?version=' + service.version);
       assert.equal(req.method, 'GET');
     });
   });
@@ -448,7 +426,7 @@ describe('conversation-v1', function() {
       const req = conversation.updateEntity(params, noop);
       assert.equal(
         req.uri.href,
-        service.url + paths.entities + '/' + reqPayload.entity + '?version=' + service.version_date
+        service.url + paths.entities + '/' + reqPayload.entity + '?version=' + service.version
       );
       assert.equal(req.method, 'POST');
     });
@@ -469,7 +447,7 @@ describe('conversation-v1', function() {
 
     it('should generate a valid payload', function() {
       const req = conversation.createExample(params, noop);
-      assert.equal(req.uri.href, service.url + paths.examples + '?version=' + service.version_date);
+      assert.equal(req.uri.href, service.url + paths.examples + '?version=' + service.version);
       assert.equal(req.method, 'POST');
     });
   });
@@ -491,7 +469,7 @@ describe('conversation-v1', function() {
       const req = conversation.deleteExample(params, noop);
       assert.equal(
         req.uri.href,
-        service.url + paths.examples + '/' + reqPayload.text + '?version=' + service.version_date
+        service.url + paths.examples + '/' + reqPayload.text + '?version=' + service.version
       );
       assert.equal(req.method, 'DELETE');
     });
@@ -514,7 +492,7 @@ describe('conversation-v1', function() {
       const req = conversation.getExample(params, noop);
       assert.equal(
         req.uri.href,
-        service.url + paths.examples + '/' + reqPayload.text + '?version=' + service.version_date
+        service.url + paths.examples + '/' + reqPayload.text + '?version=' + service.version
       );
       assert.equal(req.method, 'GET');
     });
@@ -532,7 +510,7 @@ describe('conversation-v1', function() {
 
     it('should generate a valid payload', function() {
       const req = conversation.listExamples(params, noop);
-      assert.equal(req.uri.href, service.url + paths.examples + '?version=' + service.version_date);
+      assert.equal(req.uri.href, service.url + paths.examples + '?version=' + service.version);
       assert.equal(req.method, 'GET');
     });
   });
@@ -551,7 +529,7 @@ describe('conversation-v1', function() {
       const req = conversation.updateExample(params, noop);
       assert.equal(
         req.uri.href,
-        service.url + paths.examples + '/' + reqPayload.text + '?version=' + service.version_date
+        service.url + paths.examples + '/' + reqPayload.text + '?version=' + service.version
       );
       assert.equal(req.method, 'POST');
     });
@@ -569,7 +547,7 @@ describe('conversation-v1', function() {
 
     it('should generate a valid payload', function() {
       const req = conversation.createIntent(intentParams, noop);
-      assert.equal(req.uri.href, service.url + paths.intents + '?version=' + service.version_date);
+      assert.equal(req.uri.href, service.url + paths.intents + '?version=' + service.version);
       assert.equal(req.method, 'POST');
     });
   });
@@ -585,7 +563,7 @@ describe('conversation-v1', function() {
       const req = conversation.deleteIntent(intentParams, noop);
       assert.equal(
         req.uri.href,
-        service.url + paths.intents + '/' + intentParams.intent + '?version=' + service.version_date
+        service.url + paths.intents + '/' + intentParams.intent + '?version=' + service.version
       );
       assert.equal(req.method, 'DELETE');
     });
@@ -602,7 +580,7 @@ describe('conversation-v1', function() {
       const req = conversation.getIntent(intentParams, noop);
       assert.equal(
         req.uri.href,
-        service.url + paths.intents + '/' + intentParams.intent + '?version=' + service.version_date
+        service.url + paths.intents + '/' + intentParams.intent + '?version=' + service.version
       );
       assert.equal(req.method, 'GET');
     });
@@ -617,7 +595,7 @@ describe('conversation-v1', function() {
 
     it('should generate a valid payload', function() {
       const req = conversation.listIntents(payload, noop);
-      assert.equal(req.uri.href, service.url + paths.intents + '?version=' + service.version_date);
+      assert.equal(req.uri.href, service.url + paths.intents + '?version=' + service.version);
       assert.equal(req.method, 'GET');
     });
   });
@@ -633,7 +611,7 @@ describe('conversation-v1', function() {
       const req = conversation.updateIntent(intentParams, noop);
       assert.equal(
         req.uri.href,
-        service.url + paths.intents + '/' + intentParams.intent + '?version=' + service.version_date
+        service.url + paths.intents + '/' + intentParams.intent + '?version=' + service.version
       );
       assert.equal(req.method, 'POST');
     });
@@ -651,7 +629,7 @@ describe('conversation-v1', function() {
       const req = conversation.listAllLogs(param, noop);
       assert.equal(
         req.uri.href,
-        service.url + '/v1/logs' + '?version=' + service.version_date + '&filter=' + param.filter
+        service.url + '/v1/logs' + '?version=' + service.version + '&filter=' + param.filter
       );
       assert.equal(req.method, 'GET');
     });
@@ -666,7 +644,7 @@ describe('conversation-v1', function() {
 
     it('should generate a valid payload', function() {
       const req = conversation.listLogs(payload, noop);
-      assert.equal(req.uri.href, service.url + paths.logs + '?version=' + service.version_date);
+      assert.equal(req.uri.href, service.url + paths.logs + '?version=' + service.version);
       assert.equal(req.method, 'GET');
     });
   });
@@ -687,7 +665,7 @@ describe('conversation-v1', function() {
 
     it('should generate a valid payload', function() {
       const req = conversation.createSynonym(synParams, noop);
-      assert.equal(req.uri.href, service.url + paths.synonyms + '?version=' + service.version_date);
+      assert.equal(req.uri.href, service.url + paths.synonyms + '?version=' + service.version);
       assert.equal(req.method, 'POST');
     });
   });
@@ -703,7 +681,7 @@ describe('conversation-v1', function() {
       const req = conversation.deleteSynonym(synParams, noop);
       assert.equal(
         req.uri.href,
-        service.url + paths.synonyms + '/' + synParams.synonym + '?version=' + service.version_date
+        service.url + paths.synonyms + '/' + synParams.synonym + '?version=' + service.version
       );
       assert.equal(req.method, 'DELETE');
     });
@@ -720,7 +698,7 @@ describe('conversation-v1', function() {
       const req = conversation.getSynonym(synParams, noop);
       assert.equal(
         req.uri.href,
-        service.url + paths.synonyms + '/' + synParams.synonym + '?version=' + service.version_date
+        service.url + paths.synonyms + '/' + synParams.synonym + '?version=' + service.version
       );
       assert.equal(req.method, 'GET');
     });
@@ -735,7 +713,7 @@ describe('conversation-v1', function() {
 
     it('should generate a valid payload', function() {
       const req = conversation.listSynonyms(omit(synParams, ['synonym']), noop);
-      assert.equal(req.uri.href, service.url + paths.synonyms + '?version=' + service.version_date);
+      assert.equal(req.uri.href, service.url + paths.synonyms + '?version=' + service.version);
       assert.equal(req.method, 'GET');
     });
   });
@@ -751,7 +729,7 @@ describe('conversation-v1', function() {
       const req = conversation.updateSynonym(synParams, noop);
       assert.equal(
         req.uri.href,
-        service.url + paths.synonyms + '/' + synParams.synonym + '?version=' + service.version_date
+        service.url + paths.synonyms + '/' + synParams.synonym + '?version=' + service.version
       );
       assert.equal(req.method, 'POST');
     });
@@ -769,7 +747,7 @@ describe('conversation-v1', function() {
 
     it('should generate a valid payload', function() {
       const req = conversation.createValue(params, noop);
-      assert.equal(req.uri.href, service.url + paths.values + '?version=' + service.version_date);
+      assert.equal(req.uri.href, service.url + paths.values + '?version=' + service.version);
       assert.equal(req.method, 'POST');
     });
   });
@@ -788,7 +766,7 @@ describe('conversation-v1', function() {
       const req = conversation.deleteValue(params, noop);
       assert.equal(
         req.uri.href,
-        service.url + paths.values + '/' + reqPayload.value + '?version=' + service.version_date
+        service.url + paths.values + '/' + reqPayload.value + '?version=' + service.version
       );
       assert.equal(req.method, 'DELETE');
     });
@@ -808,7 +786,7 @@ describe('conversation-v1', function() {
       const req = conversation.getValue(params, noop);
       assert.equal(
         req.uri.href,
-        service.url + paths.values + '/' + reqPayload.value + '?version=' + service.version_date
+        service.url + paths.values + '/' + reqPayload.value + '?version=' + service.version
       );
       assert.equal(req.method, 'GET');
     });
@@ -826,7 +804,7 @@ describe('conversation-v1', function() {
 
     it('should generate a valid payload', function() {
       const req = conversation.listValues(params, noop);
-      assert.equal(req.uri.href, service.url + paths.values + '?version=' + service.version_date);
+      assert.equal(req.uri.href, service.url + paths.values + '?version=' + service.version);
       assert.equal(req.method, 'GET');
     });
   });
@@ -845,7 +823,7 @@ describe('conversation-v1', function() {
       const req = conversation.updateValue(params, noop);
       assert.equal(
         req.uri.href,
-        service.url + paths.values + '/' + reqPayload.value + '?version=' + service.version_date
+        service.url + paths.values + '/' + reqPayload.value + '?version=' + service.version
       );
       assert.equal(req.method, 'POST');
     });
@@ -860,10 +838,7 @@ describe('conversation-v1', function() {
 
     it('should generate a valid payload', function() {
       const req = conversation.createWorkspace({}, noop);
-      assert.equal(
-        req.uri.href,
-        service.url + paths.workspaces + '?version=' + service.version_date
-      );
+      assert.equal(req.uri.href, service.url + paths.workspaces + '?version=' + service.version);
       assert.equal(req.method, 'POST');
     });
   });
@@ -879,12 +854,7 @@ describe('conversation-v1', function() {
       const req = conversation.deleteWorkspace(payload, noop);
       assert.equal(
         req.uri.href,
-        service.url +
-          paths.workspaces +
-          '/' +
-          payload.workspace_id +
-          '?version=' +
-          service.version_date
+        service.url + paths.workspaces + '/' + payload.workspace_id + '?version=' + service.version
       );
       assert.equal(req.method, 'DELETE');
     });
@@ -901,12 +871,7 @@ describe('conversation-v1', function() {
       const req = conversation.getWorkspace(payload, noop);
       assert.equal(
         req.uri.href,
-        service.url +
-          paths.workspaces +
-          '/' +
-          payload.workspace_id +
-          '?version=' +
-          service.version_date
+        service.url + paths.workspaces + '/' + payload.workspace_id + '?version=' + service.version
       );
       assert.equal(req.method, 'GET');
     });
@@ -930,10 +895,7 @@ describe('conversation-v1', function() {
 
     it('should generate a valid payload', function() {
       const req = conversation.listWorkspaces({}, noop);
-      assert.equal(
-        req.uri.href,
-        service.url + paths.workspaces + '?version=' + service.version_date
-      );
+      assert.equal(req.uri.href, service.url + paths.workspaces + '?version=' + service.version);
       assert.equal(req.method, 'GET');
     });
   });
@@ -949,12 +911,7 @@ describe('conversation-v1', function() {
       const req = conversation.updateWorkspace(payload, noop);
       assert.equal(
         req.uri.href,
-        service.url +
-          paths.workspaces +
-          '/' +
-          payload.workspace_id +
-          '?version=' +
-          service.version_date
+        service.url + paths.workspaces + '/' + payload.workspace_id + '?version=' + service.version
       );
       assert.equal(req.method, 'POST');
     });

@@ -29,8 +29,7 @@ describe('personality_insights_v3', function() {
     username: 'batman',
     password: 'bruce-wayne',
     url: 'http://ibm.com:80',
-    version: 'v3',
-    version_date: '2016-10-19'
+    version: '2016-10-19'
   };
 
   before(function() {
@@ -49,7 +48,7 @@ describe('personality_insights_v3', function() {
     nock.cleanAll();
   });
 
-  const personality_insights = watson.personality_insights(service);
+  const personality_insights = new watson.PersonalityInsightsV3(service);
 
   const missingParameter = function(err) {
     assert.ok(err instanceof Error && /required parameters/.test(err));
