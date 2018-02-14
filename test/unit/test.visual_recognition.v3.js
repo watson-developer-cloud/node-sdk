@@ -115,19 +115,19 @@ describe('visual_recognition', function() {
     it('should accept an API key for regular usage', () =>
       new watson.VisualRecognitionV3({
         api_key: 'foo',
-        version_date: '2016-05-20'
+        version: '2016-05-20'
       }));
 
     it('should accept username/password for regular usage', () =>
       new watson.VisualRecognitionV3({
         username: 'foo',
         password: 'bar',
-        version_date: '2016-05-20'
+        version: '2016-05-20'
       }));
 
     it('should accept VISUAL_RECOGNITION_API_KEY env property', () => {
       process.env.VISUAL_RECOGNITION_API_KEY = 'foo';
-      return new watson.VisualRecognitionV3({ version_date: '2016-05-20' });
+      return new watson.VisualRecognitionV3({ version: '2016-05-20' });
     });
 
     it('should read VISUAL_RECOGNITION_API_KEY environment property', function() {
