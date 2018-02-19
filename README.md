@@ -1,26 +1,25 @@
-Watson Developer Cloud Node.js SDK
-============================================
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/460c1d01a56942dbb7dd15d9ee0da535)](https://www.codacy.com/app/gattana/node-sdk?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=watson-developer-cloud/node-sdk&amp;utm_campaign=Badge_Grade)
+# Watson APIs Node.js SDK
+
 [![Build Status](https://secure.travis-ci.org/watson-developer-cloud/node-sdk.svg)](http://travis-ci.org/watson-developer-cloud/node-sdk)
-[![Dependency Status](https://gemnasium.com/watson-developer-cloud/node-sdk.svg)](https://gemnasium.com/watson-developer-cloud/node-sdk)
+[![Slack](https://wdc-slack-inviter.mybluemix.net/badge.svg)](https://wdc-slack-inviter.mybluemix.net)
 [![npm-version](https://img.shields.io/npm/v/watson-developer-cloud.svg)](https://www.npmjs.com/package/watson-developer-cloud)
 [![npm-downloads](https://img.shields.io/npm/dm/watson-developer-cloud.svg)](https://www.npmjs.com/package/watson-developer-cloud)
 
-Node.js client library to use the Watson Developer Cloud services, a collection of APIs that use cognitive computing to solve complex problems.
+Node.js client library to use the Watson APIs.
 
 <details>
   <summary>Table of Contents</summary>
 
   * [Installation](#installation)
-  * [Usage](#usage)
-  * [Documentation](#documentation)
   * [Getting the Service Credentials](#getting-the-service-credentials)
+  * [Usage](#usage)
+  * [Client-side usage](#client-side-usage)
+  * [Data collection opt-out](#data-collection-opt-out)
   * [Questions](#questions)
   * [Examples](#examples)
   * [IBM Watson Services](#ibm-watson-services)
     * [Authorization](#authorization)
     * [Conversation](#conversation)
-    * [Dialog](#dialog)
     * [Discovery](#discovery)
     * [Language Translator](#language-translator)
     * [Natural Language Classifier](#natural-language-classifier)
@@ -33,7 +32,6 @@ Node.js client library to use the Watson Developer Cloud services, a collection 
   * [Composing Services](#composing-services)
   * [Debug](#debug)
   * [Tests](#tests)
-  * [Open Source @ IBM](#open-source--ibm)
   * [License](#license)
   * [Contributing](#contributing)
 
@@ -42,15 +40,29 @@ Node.js client library to use the Watson Developer Cloud services, a collection 
 ## Installation
 
 ```sh
-$ npm install watson-developer-cloud --save
+npm install watson-developer-cloud
 ```
+
+## Getting the service credentials
+
+You will need the `username`, `password`, and `url` (`api_key` for Visual Recognition) for each service. Service credentials are different from your IBM Cloud account username and password.
+
+To get your service credentials, follow these steps:
+
+1.  Log in to IBM Cloud at https://console.bluemix.net/catalog/?category=watson.
+1.  In the IBM Cloud **Catalog**, select the service you want to use.
+1.  Type a unique name for the service instance in the **Service name** field. For example, type `my-service-name`. Leave the default values for the other options.
+1.  Click **Create**.
+1.  From the service dashboard, click **Service credentials**.
+1.  Click **View credentials** under **Actions**.
+1.  Copy `username`, `password` (or `api_key` for Visual Recognition), and `url`.
 
 ## Usage
 
 The examples below assume that you already have service credentials. If not,
-you will have to create a service in [Bluemix][bluemix].
+you will have to create a service in [IBM Cloud][ibm_cloud].
 
-If you are running your application in Bluemix, you don't need to specify the
+If you are running your application in IBM Cloud, you don't need to specify the
 credentials; the library will get them for you by looking at the `VCAP_SERVICES` environment variable.
 
 Credentials are checked for in the following order:
@@ -59,9 +71,10 @@ Credentials are checked for in the following order:
 
 2. `SERVICE_NAME_USERNAME` and `SERVICE_NAME_PASSWORD` environment properties (or `SERVICE_NAME_API_KEY` when appropriate) and, optionally, `SERVICE_NAME_URL`
 
-3. Bluemix-supplied credentials (via the `VCAP_SERVICES` JSON-encoded environment property)
+3. IBM-Cloud-supplied credentials (via the `VCAP_SERVICES` JSON-encoded environment property)
 
 ### Client-side usage
+
 See the `examples/` folder for [Browserify](http://browserify.org/) and [Webpack](http://webpack.github.io/) client-side SDK examples (with server-side generation of auth tokens.)
 
 Note: not all services currently support CORS, and therefore not all services can be used client-side.
@@ -73,7 +86,7 @@ By default, [all requests are logged](https://console.bluemix.net/docs/services/
 
 ```js
 var myInstance = new watson.WhateverServiceV1({
-  /* username, password, version, etc... */
+  /* username, password, version, url, etc... */
   headers: {
     "X-Watson-Learning-Opt-Out": true
   }
@@ -86,33 +99,17 @@ You can find links to the documentation at https://console.bluemix.net/developer
 
 There are also auto-generated JSDocs available at http://watson-developer-cloud.github.io/node-sdk/master/
 
-## Getting the service credentials
-You will need the `username` and `password` (`api_key` for AlchemyAPI) credentials for each service. Service credentials are different from your Bluemix account username and password.
-
-To get your service credentials, follow these steps:
-
-1.  Log in to Bluemix at https://bluemix.net.
-1.  Create an instance of the service:
-    1.  In the Bluemix **Catalog**, select the service you want to use.
-    1.  Type a unique name for the service instance in the **Service name** field. For example, type `my-service-name`. Leave the default values for the other options.
-    1.  Click **Create**.
-    1.  From the service dashboard, click **Service credentials**.
-    1.  Click **View credentials** under **Actions**.
-    1.  Copy `username` and `password` (or `api_key` for Visual Recognition).
 
 ## Questions
 
 If you are having difficulties using the APIs or have a question about the Watson services, please ask a question at [dW Answers](https://developer.ibm.com/answers/questions/ask/?topics=watson) or [Stack Overflow](http://stackoverflow.com/questions/ask?tags=ibm-watson-cognitive).
 
 ## Examples
+
 The [examples][examples] folder has basic and advanced examples.
 
-## IBM Watson services
-The Watson Developer Cloud offers a variety of services for building cognitive
-apps.
-
-
 ### Authorization
+
 The Authorization service can generate auth tokens for situations where providing the service username/password is undesirable.
 
 Tokens are valid for 1 hour and may be sent using the `X-Watson-Authorization-Token` header or the `watson-token` query param.
@@ -125,10 +122,13 @@ var watson = require('watson-developer-cloud');
 var authorization = new watson.AuthorizationV1({
   username: '<Text to Speech username>',
   password: '<Text to Speech password>',
-  url: watson.TextToSpeechV1.URL
+  url: 'https://stream.watsonplatform.net/authorization/api', // Speech tokens
 });
 
-authorization.getToken(function (err, token) {
+authorization.getToken({
+  url: 'https://stream.watsonplatform.net/text-to-speech/api'
+},
+function (err, token) {
   if (!token) {
     console.log('error:', err);
   } else {
@@ -150,7 +150,8 @@ var ConversationV1 = require('watson-developer-cloud/conversation/v1');
 var conversation = new ConversationV1({
   username: '<username>',
   password: '<password>',
-  version_date: ConversationV1.VERSION_DATE_2017_05_26
+  url: 'https://gateway.watsonplatform.net/conversation/api/',
+  version: '2017-05-26'
 });
 
 conversation.message(
@@ -168,11 +169,6 @@ conversation.message(
 );
 ```
 
-
-### Dialog
-The Dialog service was deprecated on August 15, 2016, existing instances of the service will continue to function until August 9, 2017. Users of the Dialog service should migrate their applications to use the Conversation service. See the [migration documentation][dialog_migration] to learn how to migrate your dialogs to the Conversation service.
-
-
 ### Discovery
 
 Use the [Discovery Service][discovery] to search and analyze structured and unstructured data.
@@ -183,7 +179,8 @@ var DiscoveryV1 = require('watson-developer-cloud/discovery/v1');
 var discovery = new DiscoveryV1({
   username: '<username>',
   password: '<password>',
-  version_date: DiscoveryV1.VERSION_DATE_2017_09_01
+  url: 'https://gateway.watsonplatform.net/discovery/api/',
+  version: '2017-09-01'
 });
 
 discovery.query(
@@ -210,13 +207,13 @@ Translate text from one language to another or idenfity a language using the [La
 ```javascript
 var LanguageTranslatorV2 = require('watson-developer-cloud/language-translator/v2');
 
-var language_translator = new LanguageTranslatorV2({
+var languageTranslator = new LanguageTranslatorV2({
   username: '<username>',
   password: '<password>',
   url: 'https://gateway.watsonplatform.net/language-translator/api/'
 });
 
-language_translator.translate(
+languageTranslator.translate(
   {
     text: 'A sentence must have a verb',
     source: 'en',
@@ -230,7 +227,7 @@ language_translator.translate(
   }
 );
 
-language_translator.identify(
+languageTranslator.identify(
   {
     text:
       'The language translator service takes text input and identifies the language used.'
@@ -253,12 +250,13 @@ Use [Natural Language Classifier](https://console.bluemix.net/docs/services/natu
 ```javascript
 var NaturalLanguageClassifierV1 = require('watson-developer-cloud/natural-language-classifier/v1');
 
-var natural_language_classifier = new NaturalLanguageClassifierV1({
+var classifier = new NaturalLanguageClassifierV1({
   username: '<username>',
-  password: '<password>'
+  password: '<password>',
+  url: 'https://gateway.watsonplatform.net/natural-language-classifier/api/'
 });
 
-natural_language_classifier.classify(
+classifier.classify(
   {
     text: 'Is it sunny?',
     classifier_id: '<classifier-id>'
@@ -288,7 +286,8 @@ var NaturalLanguageUnderstandingV1 = require('watson-developer-cloud/natural-lan
 var nlu = new NaturalLanguageUnderstandingV1({
   username: '<username>',
   password: '<password>',
-  version_date: NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27
+  version: '2017-02-27',
+  url: 'https://gateway.watsonplatform.net/natural-language-understanding/api/'
 });
 
 nlu.analyze(
@@ -311,19 +310,21 @@ nlu.analyze(
 
 
 ### Personality Insights
+
 Analyze text in English and get a personality profile by using the
 [Personality Insights][personality_insights] service.
 
 ```javascript
 var PersonalityInsightsV3 = require('watson-developer-cloud/personality-insights/v3');
 
-var personality_insights = new PersonalityInsightsV3({
+var personalityInsights = new PersonalityInsightsV3({
   username: '<username>',
   password: '<password>',
-  version_date: '2016-10-19'
+  version: '2016-10-19',
+  url: 'https://gateway.watsonplatform.net/personality-insights/api/'
 });
 
-personality_insights.profile(
+personalityInsights.profile(
   {
     content: 'Enter more than 100 unique words here...',
     content_type: 'text/plain',
@@ -341,15 +342,17 @@ personality_insights.profile(
 
 
 ### Speech to Text
-Use the [Speech to Text][speech_to_text] service to recognize the text from a .wav file.
+
+Use the [Speech to Text][speech_to_text] service to recognize the text from a `.wav` file.
 
 ```javascript
 var SpeechToTextV1 = require('watson-developer-cloud/speech-to-text/v1');
 var fs = require('fs');
 
-var speech_to_text = new SpeechToTextV1({
+var speechToText = new SpeechToTextV1({
   username: '<username>',
-  password: '<password>'
+  password: '<password>',
+  url: 'https://stream.watsonplatform.net/speech-to-text/api/'
 });
 
 var params = {
@@ -358,7 +361,7 @@ var params = {
   content_type: 'audio/l16; rate=44100'
 };
 
-speech_to_text.recognize(params, function(err, res) {
+speechToText.recognize(params, function(err, res) {
   if (err)
     console.log(err);
   else
@@ -367,21 +370,23 @@ speech_to_text.recognize(params, function(err, res) {
 
 // or streaming
 fs.createReadStream('./resources/speech.wav')
-  .pipe(speech_to_text.createRecognizeStream({ content_type: 'audio/l16; rate=44100' }))
+  .pipe(speechToText.createRecognizeStream({ content_type: 'audio/l16; rate=44100' }))
   .pipe(fs.createWriteStream('./transcription.txt'));
 ```
 
 
 ### Text to Speech
+
 Use the [Text to Speech][text_to_speech] service to synthesize text into a .wav file.
 
 ```js
 var TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
 var fs = require('fs');
 
-var text_to_speech = new TextToSpeechV1({
+var textToSpeech = new TextToSpeechV1({
   username: '<username>',
-  password: '<password>'
+  password: '<password>',
+  url: 'https://stream.watsonplatform.net/text-to-speech/api/'
 });
 
 var params = {
@@ -404,21 +409,22 @@ textToSpeech
 });
 ```
 
-
 ### Tone Analyzer
+
 Use the [Tone Analyzer][tone_analyzer] service to analyze the
 emotion, writing and social tones of a text.
 
 ```js
 var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
 
-var tone_analyzer = new ToneAnalyzerV3({
+var toneAnalyzer = new ToneAnalyzerV3({
   username: '<username>',
   password: '<password>',
-  version_date: '2016-05-19'
+  version: '2016-05-19',
+  url: 'https://gateway.watsonplatform.net/tone-analyzer/api/'
 });
 
-tone_analyzer.tone(
+toneAnalyzer.tone(
   {
     tone_input: 'Greetings from Watson Developer Cloud!',
     content_type: 'text/plain'
@@ -435,25 +441,26 @@ tone_analyzer.tone(
 
 
 ### Visual Recognition
+
 Use the [Visual Recognition][visual_recognition] service to recognize the
 following picture.
 
-<img src="https://visual-recognition-demo.mybluemix.net/images/samples/5.jpg" width="150" />
+<img src="https://visual-recognition-demo.ng.bluemix.net/images/samples/5.jpg" />
 
 ```js
 var VisualRecognitionV3 = require('watson-developer-cloud/visual-recognition/v3');
 var fs = require('fs');
 
-var visual_recognition = new VisualRecognitionV3({
+var visualRecognition = new VisualRecognitionV3({
   api_key: '<api_key>',
-  version_date: VisualRecognitionV3.VERSION_DATE_2016_05_20
+  version: '2016-05-20'
 });
 
 var params = {
   images_file: fs.createReadStream('./resources/car.png')
 };
 
-visual_recognition.classify(params, function(err, res) {
+visualRecognition.classify(params, function(err, res) {
   if (err) {
     console.log(err);
   } else {
@@ -476,12 +483,13 @@ By default, the library tries to use Basic Auth and will ask for `api_key` or `u
 ```javascript
 var watson = require('watson-developer-cloud');
 
-var dialog = new watson.DialogV1({
+var conversation = new watson.ConversationV1({
   use_unauthenticated: true
 });
 ```
 
 ## Debug
+
 This library relies on the `request` npm module writted by
 [request][request_github] to call the Watson Services. To debug the apps, add
 'request' to the `NODE_DEBUG` environment variable:
@@ -511,6 +519,7 @@ This library is licensed under Apache 2.0. Full license text is available in
 [COPYING][license].
 
 ## Contributing
+
 See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/master/.github/CONTRIBUTING.md).
 
 [conversation]: https://www.ibm.com/watson/services/conversation/
@@ -522,7 +531,7 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/maste
 [speech_to_text]: https://www.ibm.com/watson/services/speech-to-text/
 [language_translator]: https://www.ibm.com/watson/services/language-translator/
 
-[bluemix]: https://console.bluemix.net
+[ibm_cloud]: https://console.bluemix.net
 [npm_link]: https://www.npmjs.com/package/watson-developer-cloud
 [request_github]: https://github.com/request/request
 [dialog_migration]: https://console.bluemix.net/docs/services/conversation/index.html

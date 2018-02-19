@@ -105,7 +105,7 @@ class PersonalityInsightsV2 extends BaseService {
 }
 
 PersonalityInsightsV2.prototype.name = 'personality_insights';
-PersonalityInsightsV2.prototype.version = 'v2';
+PersonalityInsightsV2.prototype.serviceVersion = 'v2';
 
 namespace PersonalityInsightsV2 {
   export type Callback = (

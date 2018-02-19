@@ -24,8 +24,7 @@ module.exports = {
     headers: {
       'X-Watson-Learning-Opt-Out': 1,
       'X-Watson-Test': 1
-    },
-    version: 'v1-beta'
+    }
   },
   concept_insights: {
     url: 'https://gateway.watsonplatform.net/concept-insights/api',
@@ -35,8 +34,7 @@ module.exports = {
       'X-Watson-Learning-Opt-Out': 1,
       'X-Watson-Test': 1
     },
-    account_id: 'larmu8up2pa3',
-    version: 'v2'
+    account_id: 'larmu8up2pa3'
   },
   speech_to_text: {
     url: 'https://stream.watsonplatform.net/speech-to-text/api',
@@ -45,8 +43,7 @@ module.exports = {
     headers: {
       'X-Watson-Learning-Opt-Out': 1,
       'X-Watson-Test': 1
-    },
-    version: 'v1'
+    }
   },
   text_to_speech: {
     url: 'https://stream.watsonplatform.net/text-to-speech/api',
@@ -55,8 +52,7 @@ module.exports = {
     headers: {
       'X-Watson-Learning-Opt-Out': 1,
       'X-Watson-Test': 1
-    },
-    version: 'v1'
+    }
   },
   tradeoff_analytics: {
     url: 'https://gateway.watsonplatform.net/tradeoff-analytics/api',
@@ -65,8 +61,7 @@ module.exports = {
     headers: {
       'X-Watson-Learning-Opt-Out': 1,
       'X-Watson-Test': 1
-    },
-    version: 'v1'
+    }
   },
   visual_recognition: {
     v3: {
@@ -75,8 +70,7 @@ module.exports = {
       headers: {
         'X-Watson-Learning-Opt-Out': 1,
         'X-Watson-Test': 1
-      },
-      version: 'v3'
+      }
     }
   },
   personality_insights: {
@@ -87,8 +81,7 @@ module.exports = {
       headers: {
         'X-Watson-Learning-Opt-Out': 1,
         'X-Watson-Test': 1
-      },
-      version: 'v2'
+      }
     },
     v3: {
       url: 'https://gateway.watsonplatform.net/personality-insights/api',
@@ -97,9 +90,7 @@ module.exports = {
       headers: {
         'X-Watson-Learning-Opt-Out': 1,
         'X-Watson-Test': 1
-      },
-      version: 'v3',
-      version_date: '2016-10-19'
+      }
     }
   },
   dialog: {
@@ -110,8 +101,7 @@ module.exports = {
     headers: {
       'X-Watson-Learning-Opt-Out': 1,
       'X-Watson-Test': 1
-    },
-    version: 'v1'
+    }
   },
   language_translator: {
     url: 'https://gateway.watsonplatform.net/language-translator/api',
@@ -120,18 +110,7 @@ module.exports = {
     headers: {
       'X-Watson-Learning-Opt-Out': 1,
       'X-Watson-Test': 1
-    },
-    version: 'v2'
-  },
-  language_translation: {
-    url: 'https://gateway.watsonplatform.net/language-translation/api',
-    username: '',
-    password: '',
-    headers: {
-      'X-Watson-Learning-Opt-Out': 1,
-      'X-Watson-Test': 1
-    },
-    version: 'v2'
+    }
   },
   tone_analyzer: {
     url: 'https://gateway.watsonplatform.net/tone-analyzer/api',
@@ -140,9 +119,7 @@ module.exports = {
     headers: {
       'X-Watson-Learning-Opt-Out': 1,
       'X-Watson-Test': 1
-    },
-    version: 'v3',
-    version_date: '2016-06-19'
+    }
   },
   alchemy: {
     api_key: ''
@@ -154,9 +131,7 @@ module.exports = {
     headers: {
       'X-Watson-Learning-Opt-Out': 1,
       'X-Watson-Test': 1
-    },
-    version: 'v1',
-    version_date: '2015-12-01'
+    }
   },
   retrieve_and_rank: {
     url: 'https://gateway.watsonplatform.net/retrieve-and-rank/api',
@@ -165,8 +140,7 @@ module.exports = {
     headers: {
       'X-Watson-Learning-Opt-Out': 1,
       'X-Watson-Test': 1
-    },
-    version: 'v1'
+    }
   },
   natural_language_classifier: {
     url: 'https://gateway.watsonplatform.net/natural-language-classifier/api',
@@ -176,8 +150,7 @@ module.exports = {
     headers: {
       'X-Watson-Learning-Opt-Out': 1,
       'X-Watson-Test': 1
-    },
-    version: 'v1'
+    }
   },
   conversation: {
     url: 'https://gateway.watsonplatform.net/conversation/api',
@@ -187,19 +160,16 @@ module.exports = {
     headers: {
       'X-Watson-Learning-Opt-Out': 1,
       'X-Watson-Test': 1
-    },
-    version: 'v1'
+    }
   },
   discovery: {
     username: '',
     password: '',
     environment_id: '',
     configuration_id: '',
-    version_date: '2016-07-11',
     headers: {
       'X-Watson-Learning-Opt-Out': 1,
       'X-Watson-Test': 1
     }
-  },
-  version: 'v1'
+  }
 };

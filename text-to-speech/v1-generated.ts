@@ -27,7 +27,7 @@ import { BaseService } from '../lib/base_service';
 class TextToSpeechV1 extends BaseService {
 
   name: string; // set by prototype to 'text_to_speech'
-  version: string; // set by prototype to 'v1'
+  serviceVersion: string; // set by prototype to 'v1'
 
   static URL: string = 'https://stream.watsonplatform.net/text-to-speech/api';
 
@@ -618,7 +618,7 @@ class TextToSpeechV1 extends BaseService {
 }
 
 TextToSpeechV1.prototype.name = 'text_to_speech';
-TextToSpeechV1.prototype.version = 'v1';
+TextToSpeechV1.prototype.serviceVersion = 'v1';
 
 /*************************
  * interfaces

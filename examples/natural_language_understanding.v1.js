@@ -9,7 +9,8 @@ var nlu = new NaturalLanguageUnderstandingV1({
   // NATURAL_LANGUAGE_UNDERSTANDING_USERNAME &  NATURAL_LANGUAGE_UNDERSTANDING_PASSWORD
   // username: '<username>'.
   // password: '<password>',
-  version_date: NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27
+  version: '2017-02-27',
+  url: 'https://gateway.watsonplatform.net/natural-language-understanding/api/'
 });
 
 var filename = '../test/resources/natural_language_understanding/energy-policy.html';

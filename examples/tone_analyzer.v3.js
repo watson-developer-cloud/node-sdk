@@ -2,13 +2,14 @@
 
 var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
 
-var tone_analyzer = new ToneAnalyzerV3({
+var toneAnalyzer = new ToneAnalyzerV3({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
   password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
-  version_date: '2017-09-21'
+  version: '2017-09-21',
+  url: 'https://gateway.watsonplatform.net/tone-analyzer/api/'
 });
 
-tone_analyzer.tone(
+toneAnalyzer.tone(
   {
     tone_input: 'Greetings from the Watson Developer Cloud Node SDK, we are pleased to say hello!',
     content_type: 'text/plain'
@@ -44,7 +45,7 @@ var params = {
   ]
 };
 
-tone_analyzer.toneChat(params, function(err, tone) {
+toneAnalyzer.toneChat(params, function(err, tone) {
   if (err) {
     console.log(err);
   } else {

@@ -111,8 +111,8 @@ describe('conversation_integration', function() {
   let conversation;
 
   before(function() {
-    auth.conversation.version_date = ConversationV1.VERSION_DATE_2017_05_26;
-    conversation = watson.conversation(auth.conversation);
+    auth.conversation.version = '2017-05-26';
+    conversation = new watson.ConversationV1(auth.conversation);
     nock.enableNetConnect();
   });
 
@@ -139,11 +139,11 @@ describe('conversation_integration', function() {
       });
     });
 
-    it('dialog_stack with 2017-02-03 version_date', function(done) {
+    it('dialog_stack with 2017-02-03 version', function(done) {
       const constructorParams = assign({}, auth.conversation, {
-        version_date: ConversationV1.VERSION_DATE_2017_02_03
+        version: ConversationV1.VERSION_DATE_2017_02_03
       });
-      const conversation = watson.conversation(constructorParams);
+      const conversation = new watson.ConversationV1(constructorParams);
 
       const params = {
         input: {
@@ -161,11 +161,11 @@ describe('conversation_integration', function() {
       });
     });
 
-    it('dialog_stack with 2016-09-20 version_date', function(done) {
+    it('dialog_stack with 2016-09-20 version', function(done) {
       const constructorParams = assign({}, auth.conversation, {
-        version_date: ConversationV1.VERSION_DATE_2016_09_20
+        version: ConversationV1.VERSION_DATE_2016_09_20
       });
-      const conversation = watson.conversation(constructorParams);
+      const conversation = new watson.ConversationV1(constructorParams);
 
       const params = {
         input: {
@@ -183,11 +183,11 @@ describe('conversation_integration', function() {
       });
     });
 
-    it('dialog_stack with 2016-07-11 version_date', function(done) {
+    it('dialog_stack with 2016-07-11 version', function(done) {
       const constructorParams = assign({}, auth.conversation, {
-        version_date: ConversationV1.VERSION_DATE_2016_07_11
+        version: ConversationV1.VERSION_DATE_2016_07_11
       });
-      const conversation = watson.conversation(constructorParams);
+      const conversation = new watson.ConversationV1(constructorParams);
 
       const params = {
         input: {

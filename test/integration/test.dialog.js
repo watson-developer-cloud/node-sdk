@@ -19,6 +19,7 @@ describe('dialog_integration', function() {
   const client_id = 31;
 
   before(function() {
+    auth.dialog.version = 'v1';
     dialog = watson.dialog(auth.dialog);
     dialog_id = auth.dialog.dialog_id;
     nock.enableNetConnect();

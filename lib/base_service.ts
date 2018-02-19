@@ -30,7 +30,7 @@ export interface HeaderOptions {
 
 export interface UserOptions {
   url?: string;
-  version_date?: string;
+  version?: string;
   username?: string;
   password?: string;
   api_key?: string;
@@ -71,7 +71,7 @@ export class BaseService {
   protected serviceDefaults: object;
   static URL: string;
   name: string;
-  version: string;
+  serviceVersion: string;
   /**
    * Internal base class that other services inherit from
    * @param {UserOptions} options
@@ -143,7 +143,7 @@ export class BaseService {
             .replace(
               /_/g,
               ' '
-            )} ${this.version.toUpperCase()} unless use_unauthenticated is set`
+            )} ${this.serviceVersion.toUpperCase()} unless use_unauthenticated is set`
         );
       } else if (!hasCredentials(_options)) {
         throw new Error(
@@ -152,7 +152,7 @@ export class BaseService {
             .replace(
               /_/g,
               ' '
-            )} ${this.version.toUpperCase()} unless use_unauthenticated is set`
+            )} ${this.serviceVersion.toUpperCase()} unless use_unauthenticated is set`
         );
       }
       if (hasBasicCredentials(_options)) {
@@ -213,7 +213,7 @@ export class BaseService {
   }
   /**
    * Retrieve this service's credentials - useful for passing to the authorization service
-   * 
+   *
    * Only returns a URL when token auth is used.
    *
    * @returns {Credentials}

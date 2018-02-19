@@ -10,7 +10,8 @@ var discovery = new DiscoveryV1({
   // password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE'
   username: 'YOUR USERNAME',
   password: 'YOUR PASSWORD',
-  version_date: DiscoveryV1.VERSION_DATE_2017_04_27
+  version: '2017_04_27',
+  url: 'https://gateway.watsonplatform.net/discovery/api/'
 });
 
 discovery.getEnvironments({}, function(error, data) {

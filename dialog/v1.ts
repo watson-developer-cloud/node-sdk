@@ -25,7 +25,7 @@ import { FileObject } from '../lib/helper';
 
 class DialogV1 extends BaseService {
   static URL: string = 'https://gateway.watsonplatform.net/dialog/api';
-  
+
   /**
    * Construct a DialogV1 object.
    *
@@ -298,7 +298,7 @@ class DialogV1 extends BaseService {
 }
 
 DialogV1.prototype.name = 'dialog';
-DialogV1.prototype.version = 'v1';
+DialogV1.prototype.serviceVersion = 'v1';
 
 namespace DialogV1 {
   /** Options for the `DialogV1` constructor. **/
