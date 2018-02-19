@@ -20,7 +20,8 @@ describe('personality_insights_v3_integration', function() {
 
   before(function() {
     mobydick = fs.readFileSync(path.join(__dirname, '../resources/mobydick.txt'), 'utf8');
-    personality_insights = watson.personality_insights(auth.personality_insights.v3);
+    auth.personality_insights.v3.version = '2016-10-19';
+    personality_insights = new watson.PersonalityInsightsV3(auth.personality_insights.v3);
     nock.enableNetConnect();
   });
 

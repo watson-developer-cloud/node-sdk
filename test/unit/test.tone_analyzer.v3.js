@@ -19,8 +19,7 @@ describe('tone_analyzer.v3', function() {
     username: 'batman',
     password: 'bruce-wayne',
     url: 'http://ibm.com:86',
-    version: 'v3',
-    version_date: '2017-09-21'
+    version: '2017-09-21'
   };
   const service_es = extend(service, {
     headers: {
@@ -41,8 +40,8 @@ describe('tone_analyzer.v3', function() {
     nock.cleanAll();
   });
 
-  const tone_analyzer = watson.tone_analyzer(service);
-  const tone_analyzer_es = watson.tone_analyzer(service_es);
+  const tone_analyzer = new watson.ToneAnalyzerV3(service);
+  const tone_analyzer_es = new watson.ToneAnalyzerV3(service_es);
 
   const missingParameter = function(err) {
     assert.ok(err instanceof Error && /required parameters/.test(err));
