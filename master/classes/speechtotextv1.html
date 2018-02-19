@@ -67,7 +67,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<h3 id="service-overview-the-ibm-speech-to-text-service-provides-a-representational-state-transfer-rest-application-programming-interface-api-that-enables-you-to-add-ibm-s-speech-transcription-capabilities-to-your-applications-the-service-also-supports-an-asynchronous-http-interface-for-transcribing-audio-via-non-blocking-calls-and-it-supports-a-customization-interface-that-lets-you-expand-the-vocabulary-of-a-base-model-with-domain-specific-terminology-or-adapt-a-base-model-for-the-acoustic-characteristics-of-your-audio-the-service-transcribes-speech-from-various-languages-and-audio-formats-to-text-with-low-latency-the-service-supports-transcription-of-the-following-languages-brazilian-portuguese-french-japanese-mandarin-chinese-modern-standard-arabic-spanish-uk-english-and-us-english-for-most-languages-the-service-supports-two-sampling-rates-broadband-and-narrowband-api-overview-the-speech-to-text-service-provides-the-following-endpoints-v1-models-returns-information-about-the-language-models-that-are-available-for-speech-recognition-v1-recognize-sessionless-includes-a-single-method-that-provides-a-simple-means-of-transcribing-audio-without-the-overhead-of-establishing-and-maintaining-a-session-but-it-lacks-some-of-the-capabilities-available-with-sessions-v1-sessions-provides-a-collection-of-methods-that-provide-a-mechanism-for-a-client-to-maintain-a-long-multi-turn-exchange-or-session-with-the-service-or-to-establish-multiple-parallel-conversations-with-a-particular-instance-of-the-service-v1-recognitions-asynchronous-provides-a-set-of-non-blocking-methods-for-submitting-querying-and-deleting-jobs-for-recognition-requests-with-the-asynchronous-http-interface-the-interface-includes-calls-to-register-white-list-and-unregister-a-callback-url-v1-customizations-provides-methods-for-creating-and-managing-custom-language-models-custom-language-models-let-you-expand-the-vocabulary-of-a-base-model-with-domain-specific-terminology-v1-customizations-customization_id-corpora-provides-methods-for-managing-the-corpora-associated-with-a-custom-language-model-you-add-corpora-to-extract-out-of-vocabulary-oov-words-from-the-corpora-into-the-custom-language-model-s-vocabulary-you-can-add-list-and-delete-corpora-from-a-custom-language-model-v1-customizations-customization_id-words-includes-methods-for-managing-individual-words-in-a-custom-language-model-you-can-add-modify-list-and-delete-words-from-a-custom-language-model-v1-acoustic_customizations-provides-methods-for-creating-and-managing-custom-acoustic-models-the-interface-lets-you-adapt-a-base-model-for-the-audio-characteristics-of-your-environment-and-speakers-v1-acoustic_customizations-customization_id-audio-provides-methods-for-managing-the-audio-resources-associated-with-a-custom-acoustic-model-you-add-audio-resources-that-closely-match-the-acoustic-characteristics-of-the-audio-that-you-want-to-transcribe-you-can-add-list-and-delete-audio-resources-from-a-custom-acoustic-model-note-about-the-try-it-out-feature-the-try-it-out-button-lets-you-experiment-with-the-methods-of-the-api-by-making-actual-curl-calls-to-the-service-the-feature-is-not-supported-for-use-with-the-the-session-based-post-v1-sessions-session_id-recognize-and-sessionless-post-v1-recognize-methods-for-examples-of-calls-to-these-methods-see-the-speech-to-text-api-reference-http-www-ibm-com-watson-developercloud-speech-to-text-api-v1-api-usage-the-following-information-provides-details-about-using-the-service-to-transcribe-audio-http-rest-interfaces-you-can-use-methods-of-the-session-based-sessionless-or-asynchronous-http-interfaces-to-pass-audio-data-to-the-service-all-interfaces-let-you-send-the-data-via-the-body-of-the-request-the-session-based-and-sessionless-methods-also-let-you-pass-data-as-multipart-form-data-with-the-former-approach-you-control-the-transcription-via-a-collection-of-request-headers-and-query-parameters-with-the-latter-you-control-the-transcription-primarily-via-json-metadata-sent-as-form-data-websocket-interface-the-service-also-offers-a-websocket-interface-as-an-alternative-to-its-http-interfaces-the-websocket-interface-supports-efficient-implementation-lower-latency-and-higher-throughput-the-interface-establishes-a-persistent-connection-with-the-service-eliminating-the-need-for-session-based-calls-from-the-http-interface-see-the-websocket-interface-https-console-bluemix-net-docs-services-speech-to-text-websockets-html-audio-formats-the-service-supports-a-variety-of-popular-audio-formats-for-more-information-including-links-to-a-number-of-internet-sites-that-provide-technical-and-usage-details-about-the-different-formats-see-audio-formats-https-console-bluemix-net-docs-services-speech-to-text-audio-formats-html-audio-transmission-you-can-pass-the-audio-to-be-transcribed-as-a-one-shot-delivery-or-in-streaming-mode-with-one-shot-delivery-you-pass-all-of-the-audio-data-to-the-service-at-one-time-with-streaming-mode-you-send-audio-data-to-the-service-in-chunks-over-a-persistent-connection-to-use-streaming-you-must-pass-the-transfer-encoding-request-header-with-a-value-of-chunked-both-forms-of-data-transmission-impose-a-limit-of-100-mb-of-total-data-for-transcription-see-audio-transmission-https-console-bluemix-net-docs-services-speech-to-text-input-html-transmission-authentication-you-authenticate-to-the-service-by-using-your-service-credentials-you-can-use-your-credentials-to-authenticate-via-a-proxy-server-that-resides-in-ibm-cloud-or-you-can-use-your-credentials-to-obtain-a-token-and-contact-the-service-directly-see-service-credentials-for-watson-services-https-console-bluemix-net-docs-services-watson-getting-started-credentials-html-and-tokens-for-authentication-https-console-bluemix-net-docs-services-watson-getting-started-tokens-html-request-logging-by-default-all-watson-services-log-requests-and-their-results-data-is-collected-only-to-improve-the-watson-services-if-you-do-not-want-to-share-your-data-set-the-header-parameter-x-watson-learning-opt-out-to-true-for-each-request-data-is-collected-for-any-request-that-omits-this-header-see-controlling-request-logging-for-watson-services-https-console-bluemix-net-docs-services-watson-getting-started-logging-html-for-more-information-about-the-service-and-its-various-interfaces-see-about-speech-to-text-https-console-bluemix-net-docs-services-speech-to-text-index-html-customization-api-usage-the-following-information-pertains-to-methods-of-the-customization-interface-language-model-customization-and-acoustic-model-customization-are-available-only-for-a-limited-set-of-languages-they-are-generally-available-for-production-use-for-some-languages-but-are-beta-offerings-for-other-languages-for-a-complete-list-of-supported-languages-and-the-status-of-their-availability-see-language-support-for-customization-https-console-bluemix-net-docs-services-speech-to-text-custom-html-languagesupport-in-all-cases-you-must-use-service-credentials-created-for-the-instance-of-the-service-that-owns-a-custom-model-to-use-the-methods-described-in-this-documentation-with-that-model-for-more-information-see-ownership-of-custom-language-models-https-console-bluemix-net-docs-services-speech-to-text-custom-html-customowner-how-the-service-handles-request-logging-for-the-customization-interface-depends-on-the-request-the-service-does-not-log-data-that-are-used-to-build-custom-models-but-it-does-log-data-when-a-custom-model-is-used-with-a-recognition-request-for-more-information-see-request-logging-and-data-privacy-https-console-bluemix-net-docs-services-speech-to-text-custom-html-customlogging-each-custom-model-is-identified-by-a-customization-id-which-is-a-globally-unique-identifier-guid-a-guid-is-a-hexadecimal-string-that-has-the-same-format-as-watson-service-credentials-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx-you-specify-a-custom-model-s-guid-with-the-appropriate-customization-parameter-of-methods-that-support-customization-for-more-information-about-using-the-service-s-customization-interface-see-the-customization-interface-https-console-bluemix-net-docs-services-speech-to-text-custom-html-">Service Overview  The IBM Speech to Text service provides a Representational State Transfer (REST) Application Programming Interface (API) that enables you to add IBM&#39;s speech transcription capabilities to your applications. The service also supports an asynchronous HTTP interface for transcribing audio via non-blocking calls. And it supports a customization interface that lets you expand the vocabulary of a base model with domain-specific terminology or adapt a base model for the acoustic characteristics of your audio.   The service transcribes speech from various languages and audio formats to text with low latency. The service supports transcription of the following languages: Brazilian Portuguese, French, Japanese, Mandarin Chinese, Modern Standard Arabic, Spanish, UK English, and US English. For most languages, the service supports two sampling rates, broadband and narrowband.  ### API Overview The Speech to Text service provides the following endpoints: <em> <code>/v1/models</code> returns information about the language models that are available for speech recognition. </em> <code>/v1/recognize</code> (sessionless) includes a single method that provides a simple means of transcribing audio without the overhead of establishing and maintaining a session, but it lacks some of the capabilities available with sessions. <em> <code>/v1/sessions</code> provides a collection of methods that provide a mechanism for a client to maintain a long, multi-turn exchange, or session, with the service or to establish multiple parallel conversations with a particular instance of the service. </em> <code>/v1/recognitions</code> (asynchronous) provides a set of non-blocking methods for submitting, querying, and deleting jobs for recognition requests with the asynchronous HTTP interface. The interface includes calls to register (white-list) and unregister a callback URL. <em> <code>/v1/customizations</code> provides methods for creating and managing custom language models. Custom language models let you expand the vocabulary of a base model with domain-specific terminology. </em> <code>/v1/customizations/{customization_id}/corpora</code> provides methods for managing the corpora associated with a custom language model. You add corpora to extract out-of-vocabulary (OOV) words from the corpora into the custom language model&#39;s vocabulary. You can add, list, and delete corpora from a custom language model. <em> <code>/v1/customizations/{customization_id}/words</code> includes methods for managing individual words in a custom language model. You can add, modify, list, and delete words from a custom language model. </em> <code>/v1/acoustic_customizations</code> provides methods for creating and managing custom acoustic models. The interface lets you adapt a base model for the audio characteristics of your environment and speakers. <em> <code>/v1/acoustic_customizations/{customization_id}/audio</code> provides methods for managing the audio resources associated with a custom acoustic model. You add audio resources that closely match the acoustic characteristics of the audio that you want to transcribe. You can add, list, and delete audio resources from a custom acoustic model.    <strong>Note about the Try It Out feature:</strong> The <code>Try it out!</code> button lets you experiment with the methods of the API by making actual cURL calls to the service. The feature is <strong>not</strong> supported for use with the the session-based <code>POST /v1/sessions/{session_id}/recognize</code> and sessionless <code>POST /v1/recognize</code> methods. For examples of calls to these methods, see the <a href="http://www.ibm.com/watson/developercloud/speech-to-text/api/v1/">Speech to Text API reference</a>.  ### API Usage The following information provides details about using the service to transcribe audio: </em> <strong>HTTP REST interfaces:</strong> You can use methods of the session-based, sessionless, or asynchronous HTTP interfaces to pass audio data to the service. All interfaces let you send the data via the body of the request; the session-based and sessionless methods also let you pass data as multipart form data. With the former approach, you control the transcription via a collection of request headers and query parameters. With the latter, you control the transcription primarily via JSON metadata sent as form data. <em> <strong>WebSocket interface:</strong> The service also offers a WebSocket interface as an alternative to its HTTP interfaces. The WebSocket interface supports efficient implementation, lower latency, and higher throughput. The interface establishes a persistent connection with the service, eliminating the need for session-based calls from the HTTP interface. See <a href="https://console.bluemix.net/docs/services/speech-to-text/websockets.html">The WebSocket interface</a>. </em> <strong>Audio formats:</strong> The service supports a variety of popular audio formats. For more information, including links to a number of Internet sites that provide technical and usage details about the different formats, see <a href="https://console.bluemix.net/docs/services/speech-to-text/audio-formats.html">Audio formats</a>. <em> <strong>Audio transmission:</strong> You can pass the audio to be transcribed as a one-shot delivery or in streaming mode. With one-shot delivery, you pass all of the audio data to the service at one time. With streaming mode, you send audio data to the service in chunks over a persistent connection. To use streaming, you must pass the <code>Transfer-Encoding</code> request header with a value of <code>chunked</code>. Both forms of data transmission impose a limit of 100 MB of total data for transcription. See <a href="https://console.bluemix.net/docs/services/speech-to-text/input.html#transmission">Audio transmission</a>. </em> <strong>Authentication:</strong> You authenticate to the service by using your service credentials. You can use your credentials to authenticate via a proxy server that resides in IBM Cloud, or you can use your credentials to obtain a token and contact the service directly. See <a href="https://console.bluemix.net/docs/services/watson/getting-started-credentials.html">Service credentials for Watson services</a> and <a href="https://console.bluemix.net/docs/services/watson/getting-started-tokens.html">Tokens for authentication</a>. <em> <strong>Request Logging:</strong> By default, all Watson services log requests and their results. Data is collected only to improve the Watson services. If you do not want to share your data, set the header parameter <code>X-Watson-Learning-Opt-Out</code> to <code>true</code> for each request. Data is collected for any request that omits this header. See <a href="https://console.bluemix.net/docs/services/watson/getting-started-logging.html">Controlling request logging for Watson services</a>.  For more information about the service and its various interfaces, see <a href="https://console.bluemix.net/docs/services/speech-to-text/index.html">About Speech to Text</a>. ### Customization API Usage   The following information pertains to methods of the customization interface: </em> Language model customization and acoustic model customization are available only for a limited set of languages. They are generally available for production use for some languages but are beta offerings for other languages. For a complete list of supported languages and the status of their availability, see <a href="https://console.bluemix.net/docs/services/speech-to-text/custom.html#languageSupport">Language support for customization</a>. <em> In all cases, you must use service credentials created for the instance of the service that owns a custom model to use the methods described in this documentation with that model. For more information, see <a href="https://console.bluemix.net/docs/services/speech-to-text/custom.html#customOwner">Ownership of custom language models</a>. </em> How the service handles request logging for the customization interface depends on the request. The service does not log data that are used to build custom models. But it does log data when a custom model is used with a recognition request. For more information, see <a href="https://console.bluemix.net/docs/services/speech-to-text/custom.html#customLogging">Request logging and data privacy</a>. * Each custom model is identified by a customization ID, which is a Globally Unique Identifier (GUID). A GUID is a hexadecimal string that has the same format as Watson service credentials: <code>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</code>. You specify a custom model&#39;s GUID with the appropriate customization parameter of methods that support customization.   For more information about using the service&#39;s customization interface, see <a href="https://console.bluemix.net/docs/services/speech-to-text/custom.html">The customization interface</a>.</h3>
+						<h3 id="service-overview-the-ibm-speech-to-text-service-provides-a-representational-state-transfer-rest-application-programming-interface-api-that-enables-you-to-add-ibm-s-speech-transcription-capabilities-to-your-applications-the-service-also-supports-an-asynchronous-http-interface-for-transcribing-audio-via-non-blocking-calls-and-it-supports-a-customization-interface-that-lets-you-expand-the-vocabulary-of-a-base-model-with-domain-specific-terminology-or-adapt-a-base-model-for-the-acoustic-characteristics-of-your-audio-the-service-transcribes-speech-from-various-languages-and-audio-formats-to-text-with-low-latency-the-service-supports-transcription-of-the-following-languages-brazilian-portuguese-french-japanese-mandarin-chinese-modern-standard-arabic-spanish-uk-english-and-us-english-for-most-languages-the-service-supports-two-sampling-rates-broadband-and-narrowband-api-overview-the-speech-to-text-service-provides-the-following-endpoints-v1-models-returns-information-about-the-language-models-that-are-available-for-speech-recognition-v1-recognize-sessionless-includes-a-single-method-that-provides-a-simple-means-of-transcribing-audio-without-the-overhead-of-establishing-and-maintaining-a-session-but-it-lacks-some-of-the-capabilities-available-with-sessions-v1-sessions-provides-a-collection-of-methods-that-provide-a-mechanism-for-a-client-to-maintain-a-long-multi-turn-exchange-or-session-with-the-service-or-to-establish-multiple-parallel-conversations-with-a-particular-instance-of-the-service-v1-recognitions-asynchronous-provides-a-set-of-non-blocking-methods-for-submitting-querying-and-deleting-jobs-for-recognition-requests-with-the-asynchronous-http-interface-the-interface-includes-calls-to-register-white-list-and-unregister-a-callback-url-v1-customizations-provides-methods-for-creating-and-managing-custom-language-models-custom-language-models-let-you-expand-the-vocabulary-of-a-base-model-with-domain-specific-terminology-v1-customizations-customization_id-corpora-provides-methods-for-managing-the-corpora-associated-with-a-custom-language-model-you-add-corpora-to-extract-out-of-vocabulary-oov-words-from-the-corpora-into-the-custom-language-model-s-vocabulary-you-can-add-list-and-delete-corpora-from-a-custom-language-model-v1-customizations-customization_id-words-includes-methods-for-managing-individual-words-in-a-custom-language-model-you-can-add-modify-list-and-delete-words-from-a-custom-language-model-v1-acoustic_customizations-provides-methods-for-creating-and-managing-custom-acoustic-models-the-interface-lets-you-adapt-a-base-model-for-the-audio-characteristics-of-your-environment-and-speakers-v1-acoustic_customizations-customization_id-audio-provides-methods-for-managing-the-audio-resources-associated-with-a-custom-acoustic-model-you-add-audio-resources-that-closely-match-the-acoustic-characteristics-of-the-audio-that-you-want-to-transcribe-you-can-add-list-and-delete-audio-resources-from-a-custom-acoustic-model-note-about-the-try-it-out-feature-the-try-it-out-button-lets-you-experiment-with-the-methods-of-the-api-by-making-actual-curl-calls-to-the-service-the-feature-is-not-supported-for-use-with-the-the-session-based-post-v1-sessions-session_id-recognize-and-sessionless-post-v1-recognize-methods-for-examples-of-calls-to-these-methods-see-the-speech-to-text-api-reference-api-usage-the-following-information-provides-details-about-using-the-service-to-transcribe-audio-http-rest-interfaces-you-can-use-methods-of-the-session-based-sessionless-or-asynchronous-http-interfaces-to-pass-audio-data-to-the-service-all-interfaces-let-you-send-the-data-via-the-body-of-the-request-the-session-based-and-sessionless-methods-also-let-you-pass-data-as-multipart-form-data-with-the-former-approach-you-control-the-transcription-via-a-collection-of-request-headers-and-query-parameters-with-the-latter-you-control-the-transcription-primarily-via-json-metadata-sent-as-form-data-websocket-interface-the-service-also-offers-a-websocket-interface-as-an-alternative-to-its-http-interfaces-the-websocket-interface-supports-efficient-implementation-lower-latency-and-higher-throughput-the-interface-establishes-a-persistent-connection-with-the-service-eliminating-the-need-for-session-based-calls-from-the-http-interface-see-the-websocket-interface-audio-formats-the-service-supports-a-variety-of-popular-audio-formats-for-more-information-including-links-to-a-number-of-internet-sites-that-provide-technical-and-usage-details-about-the-different-formats-see-audio-formats-audio-transmission-you-can-pass-the-audio-to-be-transcribed-as-a-one-shot-delivery-or-in-streaming-mode-with-one-shot-delivery-you-pass-all-of-the-audio-data-to-the-service-at-one-time-with-streaming-mode-you-send-audio-data-to-the-service-in-chunks-over-a-persistent-connection-to-use-streaming-you-must-pass-the-transfer-encoding-request-header-with-a-value-of-chunked-both-forms-of-data-transmission-impose-a-limit-of-100-mb-of-total-data-for-transcription-see-audio-transmission-authentication-you-authenticate-to-the-service-by-using-your-service-credentials-you-can-use-your-credentials-to-authenticate-via-a-proxy-server-that-resides-in-ibm-cloud-or-you-can-use-your-credentials-to-obtain-a-token-and-contact-the-service-directly-see-service-credentials-for-watson-services-and-tokens-for-authentication-request-logging-by-default-all-watson-services-log-requests-and-their-results-data-is-collected-only-to-improve-the-watson-services-if-you-do-not-want-to-share-your-data-set-the-header-parameter-x-watson-learning-opt-out-to-true-for-each-request-data-is-collected-for-any-request-that-omits-this-header-see-controlling-request-logging-for-watson-services-for-more-information-about-the-service-and-its-various-interfaces-see-about-speech-to-text-customization-api-usage-the-following-information-pertains-to-methods-of-the-customization-interface-language-model-customization-and-acoustic-model-customization-are-available-only-for-a-limited-set-of-languages-they-are-generally-available-for-production-use-for-some-languages-but-are-beta-offerings-for-other-languages-for-a-complete-list-of-supported-languages-and-the-status-of-their-availability-see-language-support-for-customization-in-all-cases-you-must-use-service-credentials-created-for-the-instance-of-the-service-that-owns-a-custom-model-to-use-the-methods-described-in-this-documentation-with-that-model-for-more-information-see-ownership-of-custom-language-models-how-the-service-handles-request-logging-for-the-customization-interface-depends-on-the-request-the-service-does-not-log-data-that-are-used-to-build-custom-models-but-it-does-log-data-when-a-custom-model-is-used-with-a-recognition-request-for-more-information-see-request-logging-and-data-privacy-each-custom-model-is-identified-by-a-customization-id-which-is-a-globally-unique-identifier-guid-a-guid-is-a-hexadecimal-string-that-has-the-same-format-as-watson-service-credentials-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx-you-specify-a-custom-model-s-guid-with-the-appropriate-customization-parameter-of-methods-that-support-customization-for-more-information-about-using-the-service-s-customization-interface-see-the-customization-interface-">Service Overview  The IBM Speech to Text service provides a Representational State Transfer (REST) Application Programming Interface (API) that enables you to add IBM&#39;s speech transcription capabilities to your applications. The service also supports an asynchronous HTTP interface for transcribing audio via non-blocking calls. And it supports a customization interface that lets you expand the vocabulary of a base model with domain-specific terminology or adapt a base model for the acoustic characteristics of your audio.   The service transcribes speech from various languages and audio formats to text with low latency. The service supports transcription of the following languages: Brazilian Portuguese, French, Japanese, Mandarin Chinese, Modern Standard Arabic, Spanish, UK English, and US English. For most languages, the service supports two sampling rates, broadband and narrowband.  ### API Overview The Speech to Text service provides the following endpoints: <em> <code>/v1/models</code> returns information about the language models that are available for speech recognition. </em> <code>/v1/recognize</code> (sessionless) includes a single method that provides a simple means of transcribing audio without the overhead of establishing and maintaining a session, but it lacks some of the capabilities available with sessions. <em> <code>/v1/sessions</code> provides a collection of methods that provide a mechanism for a client to maintain a long, multi-turn exchange, or session, with the service or to establish multiple parallel conversations with a particular instance of the service. </em> <code>/v1/recognitions</code> (asynchronous) provides a set of non-blocking methods for submitting, querying, and deleting jobs for recognition requests with the asynchronous HTTP interface. The interface includes calls to register (white-list) and unregister a callback URL. <em> <code>/v1/customizations</code> provides methods for creating and managing custom language models. Custom language models let you expand the vocabulary of a base model with domain-specific terminology. </em> <code>/v1/customizations/{customization_id}/corpora</code> provides methods for managing the corpora associated with a custom language model. You add corpora to extract out-of-vocabulary (OOV) words from the corpora into the custom language model&#39;s vocabulary. You can add, list, and delete corpora from a custom language model. <em> <code>/v1/customizations/{customization_id}/words</code> includes methods for managing individual words in a custom language model. You can add, modify, list, and delete words from a custom language model. </em> <code>/v1/acoustic_customizations</code> provides methods for creating and managing custom acoustic models. The interface lets you adapt a base model for the audio characteristics of your environment and speakers. <em> <code>/v1/acoustic_customizations/{customization_id}/audio</code> provides methods for managing the audio resources associated with a custom acoustic model. You add audio resources that closely match the acoustic characteristics of the audio that you want to transcribe. You can add, list, and delete audio resources from a custom acoustic model.    <strong>Note about the Try It Out feature:</strong> The <code>Try it out!</code> button lets you experiment with the methods of the API by making actual cURL calls to the service. The feature is <strong>not</strong> supported for use with the the session-based <code>POST /v1/sessions/{session_id}/recognize</code> and sessionless <code>POST /v1/recognize</code> methods. For examples of calls to these methods, see the <a href="http://www.ibm.com/watson/developercloud/speech-to-text/api/v1/">Speech to Text API reference</a>.  ### API Usage The following information provides details about using the service to transcribe audio: </em> <strong>HTTP REST interfaces:</strong> You can use methods of the session-based, sessionless, or asynchronous HTTP interfaces to pass audio data to the service. All interfaces let you send the data via the body of the request; the session-based and sessionless methods also let you pass data as multipart form data. With the former approach, you control the transcription via a collection of request headers and query parameters. With the latter, you control the transcription primarily via JSON metadata sent as form data. <em> <strong>WebSocket interface:</strong> The service also offers a WebSocket interface as an alternative to its HTTP interfaces. The WebSocket interface supports efficient implementation, lower latency, and higher throughput. The interface establishes a persistent connection with the service, eliminating the need for session-based calls from the HTTP interface. See <a href="https://console.bluemix.net/docs/services/speech-to-text/websockets.html">The WebSocket interface</a>. </em> <strong>Audio formats:</strong> The service supports a variety of popular audio formats. For more information, including links to a number of Internet sites that provide technical and usage details about the different formats, see <a href="https://console.bluemix.net/docs/services/speech-to-text/audio-formats.html">Audio formats</a>. <em> <strong>Audio transmission:</strong> You can pass the audio to be transcribed as a one-shot delivery or in streaming mode. With one-shot delivery, you pass all of the audio data to the service at one time. With streaming mode, you send audio data to the service in chunks over a persistent connection. To use streaming, you must pass the <code>Transfer-Encoding</code> request header with a value of <code>chunked</code>. Both forms of data transmission impose a limit of 100 MB of total data for transcription. See <a href="https://console.bluemix.net/docs/services/speech-to-text/input.html#transmission">Audio transmission</a>. </em> <strong>Authentication:</strong> You authenticate to the service by using your service credentials. You can use your credentials to authenticate via a proxy server that resides in IBM Cloud, or you can use your credentials to obtain a token and contact the service directly. See <a href="https://console.bluemix.net/docs/services/watson/getting-started-credentials.html">Service credentials for Watson services</a> and <a href="https://console.bluemix.net/docs/services/watson/getting-started-tokens.html">Tokens for authentication</a>. <em> <strong>Request Logging:</strong> By default, all Watson services log requests and their results. Data is collected only to improve the Watson services. If you do not want to share your data, set the header parameter <code>X-Watson-Learning-Opt-Out</code> to <code>true</code> for each request. Data is collected for any request that omits this header. See <a href="https://console.bluemix.net/docs/services/watson/getting-started-logging.html">Controlling request logging for Watson services</a>.  For more information about the service and its various interfaces, see <a href="https://console.bluemix.net/docs/services/speech-to-text/index.html">About Speech to Text</a>. ### Customization API Usage   The following information pertains to methods of the customization interface: </em> Language model customization and acoustic model customization are available only for a limited set of languages. They are generally available for production use for some languages but are beta offerings for other languages. For a complete list of supported languages and the status of their availability, see <a href="https://console.bluemix.net/docs/services/speech-to-text/custom.html#languageSupport">Language support for customization</a>. <em> In all cases, you must use service credentials created for the instance of the service that owns a custom model to use the methods described in this documentation with that model. For more information, see <a href="https://console.bluemix.net/docs/services/speech-to-text/custom.html#customOwner">Ownership of custom language models</a>. </em> How the service handles request logging for the customization interface depends on the request. The service does not log data that are used to build custom models. But it does log data when a custom model is used with a recognition request. For more information, see <a href="https://console.bluemix.net/docs/services/speech-to-text/custom.html#customLogging">Request logging and data privacy</a>. * Each custom model is identified by a customization ID, which is a Globally Unique Identifier (GUID). A GUID is a hexadecimal string that has the same format as Watson service credentials: <code>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</code>. You specify a custom model&#39;s GUID with the appropriate customization parameter of methods that support customization.   For more information about using the service&#39;s customization interface, see <a href="https://console.bluemix.net/docs/services/speech-to-text/custom.html">The customization interface</a>.</h3>
 						<p>interfaces</p>
 					</div>
 				</div>
@@ -254,7 +254,7 @@
 					<div class="tsd-signature tsd-kind-icon">Callback<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L1720">speech-to-text/v1-generated.ts:1720</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L1720">speech-to-text/v1-generated.ts:1720</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -296,7 +296,7 @@
 					<div class="tsd-signature tsd-kind-icon">Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L1711">speech-to-text/v1-generated.ts:1711</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L1711">speech-to-text/v1-generated.ts:1711</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -339,7 +339,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides BaseService.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L33">speech-to-text/v1-generated.ts:33</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L33">speech-to-text/v1-generated.ts:33</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -376,7 +376,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseService._options</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/lib/base_service.ts#L70">lib/base_service.ts:70</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/lib/base_service.ts#L70">lib/base_service.ts:70</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -387,7 +387,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.name</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L30">speech-to-text/v1-generated.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L30">speech-to-text/v1-generated.ts:30</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -398,7 +398,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseService.serviceDefaults</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/lib/base_service.ts#L71">lib/base_service.ts:71</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/lib/base_service.ts#L71">lib/base_service.ts:71</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -409,7 +409,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.serviceVersion</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L31">speech-to-text/v1-generated.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L31">speech-to-text/v1-generated.ts:31</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -420,7 +420,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.URL</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L33">speech-to-text/v1-generated.ts:33</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L33">speech-to-text/v1-generated.ts:33</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -437,7 +437,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L1530">speech-to-text/v1-generated.ts:1530</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L1530">speech-to-text/v1-generated.ts:1530</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -475,7 +475,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L856">speech-to-text/v1-generated.ts:856</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L856">speech-to-text/v1-generated.ts:856</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -513,7 +513,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L1041">speech-to-text/v1-generated.ts:1041</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L1041">speech-to-text/v1-generated.ts:1041</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -551,7 +551,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L1091">speech-to-text/v1-generated.ts:1091</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L1091">speech-to-text/v1-generated.ts:1091</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -589,7 +589,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L273">speech-to-text/v1-generated.ts:273</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L273">speech-to-text/v1-generated.ts:273</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -627,7 +627,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L312">speech-to-text/v1-generated.ts:312</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L312">speech-to-text/v1-generated.ts:312</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -662,7 +662,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L1274">speech-to-text/v1-generated.ts:1274</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L1274">speech-to-text/v1-generated.ts:1274</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -700,7 +700,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L367">speech-to-text/v1-generated.ts:367</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L367">speech-to-text/v1-generated.ts:367</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -738,7 +738,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L558">speech-to-text/v1-generated.ts:558</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L558">speech-to-text/v1-generated.ts:558</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -776,7 +776,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L147">speech-to-text/v1-generated.ts:147</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L147">speech-to-text/v1-generated.ts:147</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -811,7 +811,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L1317">speech-to-text/v1-generated.ts:1317</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L1317">speech-to-text/v1-generated.ts:1317</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -849,7 +849,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L1586">speech-to-text/v1-generated.ts:1586</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L1586">speech-to-text/v1-generated.ts:1586</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -887,7 +887,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L909">speech-to-text/v1-generated.ts:909</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L909">speech-to-text/v1-generated.ts:909</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -925,7 +925,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L428">speech-to-text/v1-generated.ts:428</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L428">speech-to-text/v1-generated.ts:428</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -963,7 +963,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L602">speech-to-text/v1-generated.ts:602</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L602">speech-to-text/v1-generated.ts:602</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1001,7 +1001,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L189">speech-to-text/v1-generated.ts:189</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L189">speech-to-text/v1-generated.ts:189</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1039,7 +1039,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L1137">speech-to-text/v1-generated.ts:1137</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L1137">speech-to-text/v1-generated.ts:1137</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1077,7 +1077,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L1357">speech-to-text/v1-generated.ts:1357</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L1357">speech-to-text/v1-generated.ts:1357</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1115,7 +1115,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L1629">speech-to-text/v1-generated.ts:1629</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L1629">speech-to-text/v1-generated.ts:1629</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1153,7 +1153,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L951">speech-to-text/v1-generated.ts:951</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L951">speech-to-text/v1-generated.ts:951</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1192,7 +1192,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.getCredentials</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/lib/base_service.ts#L221">lib/base_service.ts:221</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/lib/base_service.ts#L221">lib/base_service.ts:221</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1215,7 +1215,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L642">speech-to-text/v1-generated.ts:642</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L642">speech-to-text/v1-generated.ts:642</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1253,7 +1253,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L66">speech-to-text/v1-generated.ts:66</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L66">speech-to-text/v1-generated.ts:66</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1291,7 +1291,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L229">speech-to-text/v1-generated.ts:229</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L229">speech-to-text/v1-generated.ts:229</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1329,7 +1329,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L1179">speech-to-text/v1-generated.ts:1179</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L1179">speech-to-text/v1-generated.ts:1179</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1367,7 +1367,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L1397">speech-to-text/v1-generated.ts:1397</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L1397">speech-to-text/v1-generated.ts:1397</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1402,7 +1402,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L1671">speech-to-text/v1-generated.ts:1671</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L1671">speech-to-text/v1-generated.ts:1671</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1440,7 +1440,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L992">speech-to-text/v1-generated.ts:992</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L992">speech-to-text/v1-generated.ts:992</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1478,7 +1478,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L682">speech-to-text/v1-generated.ts:682</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L682">speech-to-text/v1-generated.ts:682</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1513,7 +1513,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L105">speech-to-text/v1-generated.ts:105</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L105">speech-to-text/v1-generated.ts:105</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1548,7 +1548,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L1222">speech-to-text/v1-generated.ts:1222</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L1222">speech-to-text/v1-generated.ts:1222</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1586,7 +1586,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L469">speech-to-text/v1-generated.ts:469</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L469">speech-to-text/v1-generated.ts:469</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1624,7 +1624,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L1436">speech-to-text/v1-generated.ts:1436</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L1436">speech-to-text/v1-generated.ts:1436</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1662,7 +1662,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L721">speech-to-text/v1-generated.ts:721</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L721">speech-to-text/v1-generated.ts:721</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1700,7 +1700,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L1477">speech-to-text/v1-generated.ts:1477</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L1477">speech-to-text/v1-generated.ts:1477</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1738,7 +1738,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L763">speech-to-text/v1-generated.ts:763</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L763">speech-to-text/v1-generated.ts:763</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1776,7 +1776,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L510">speech-to-text/v1-generated.ts:510</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L510">speech-to-text/v1-generated.ts:510</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1814,7 +1814,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e05e8ee/speech-to-text/v1-generated.ts#L808">speech-to-text/v1-generated.ts:808</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/49663ba/speech-to-text/v1-generated.ts#L808">speech-to-text/v1-generated.ts:808</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
