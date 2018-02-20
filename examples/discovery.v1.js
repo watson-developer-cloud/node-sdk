@@ -8,7 +8,7 @@ var discovery = new DiscoveryV1({
   // environment properties, and then Bluemix's VCAP_SERVICES environment property
   // username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
   // password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE'
-  // url: 'INSERT YOUR HR< FOR THE SERVICE HERE'
+  // url: 'INSERT YOUR URL FOR THE SERVICE HERE'
   username: 'YOUR USERNAME',
   password: 'YOUR PASSWORD',
   version_date: '2017_04_27',
