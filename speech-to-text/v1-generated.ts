@@ -180,7 +180,7 @@ class SpeechToTextV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = { 
+    const path = {
       session_id: _params.session_id
     };
     const parameters = {
