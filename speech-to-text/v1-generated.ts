@@ -72,7 +72,7 @@ class SpeechToTextV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = { 
+    const path = {
       model_id: _params.model_id
     };
     const parameters = {
@@ -139,7 +139,7 @@ class SpeechToTextV1 extends BaseService {
   createSession(params?: SpeechToTextV1.CreateSessionParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.SpeechSession>): NodeJS.ReadableStream | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {};
-    const query = { 
+    const query = {
       model: _params.model,
       customization_id: _params.customization_id,
       acoustic_customization_id: _params.acoustic_customization_id,
@@ -217,7 +217,7 @@ class SpeechToTextV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = { 
+    const path = {
       session_id: _params.session_id
     };
     const parameters = {
@@ -258,7 +258,7 @@ class SpeechToTextV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = { 
+    const path = {
       id: _params.id
     };
     const parameters = {
@@ -344,7 +344,7 @@ class SpeechToTextV1 extends BaseService {
       return _callback(missingParams);
     }
     const body = _params.audio;
-    const query = { 
+    const query = {
       callback_url: _params.callback_url,
       events: _params.events,
       user_token: _params.user_token,
@@ -376,7 +376,7 @@ class SpeechToTextV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: {
           'Accept': 'application/json',
-          'Transfer-Encoding': _params.transfer_encoding, 
+          'Transfer-Encoding': _params.transfer_encoding,
           'Content-Type': _params.content_type
         }
       })
@@ -402,7 +402,7 @@ class SpeechToTextV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = { 
+    const path = {
       id: _params.id
     };
     const parameters = {
@@ -440,7 +440,7 @@ class SpeechToTextV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
-    const query = { 
+    const query = {
       callback_url: _params.callback_url,
       user_secret: _params.user_secret
     };
@@ -478,7 +478,7 @@ class SpeechToTextV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
-    const query = { 
+    const query = {
       callback_url: _params.callback_url
     };
     const parameters = {
@@ -523,7 +523,7 @@ class SpeechToTextV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
-    const body = { 
+    const body = {
       name: _params.name,
       base_model_name: _params.base_model_name,
       dialect: _params.dialect,
@@ -539,8 +539,7 @@ class SpeechToTextV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Content-Type': _params.content_type
+          'Content-Type': _params.content_type || 'application/json'
         }
       })
     };
@@ -970,12 +969,12 @@ class SpeechToTextV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
-    const body = { 
+    const body = {
       word: _params.word,
       sounds_like: _params.sounds_like,
       display_as: _params.display_as
     };
-    const path = { 
+    const path = {
       customization_id: _params.customization_id,
       word_name: _params.word_name
     };
@@ -990,8 +989,7 @@ class SpeechToTextV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Content-Type': _params.content_type
+          'Content-Type': _params.content_type || 'application/json',
         }
       })
     };
@@ -1018,10 +1016,10 @@ class SpeechToTextV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
-    const body = { 
+    const body = {
       words: _params.words
     };
-    const path = { 
+    const path = {
       customization_id: _params.customization_id
     };
     const parameters = {
@@ -1035,8 +1033,7 @@ class SpeechToTextV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Content-Type': _params.content_type
+          'Content-Type': _params.content_type || 'application/json'
         }
       })
     };
@@ -1190,7 +1187,7 @@ class SpeechToTextV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
-    const body = { 
+    const body = {
       name: _params.name,
       base_model_name: _params.base_model_name,
       description: _params.description
@@ -1205,8 +1202,7 @@ class SpeechToTextV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Content-Type': _params.content_type
+          'Content-Type': _params.content_type || 'application/json'
         }
       })
     };

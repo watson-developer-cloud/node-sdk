@@ -997,7 +997,7 @@ class DiscoveryV1 extends BaseService {
       },
       metadata: _params.metadata
     };
-    const path = { 
+    const path = {
       environment_id: _params.environment_id,
       collection_id: _params.collection_id,
       document_id: _params.document_id
@@ -1053,7 +1053,7 @@ class DiscoveryV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
-    const query = { 
+    const query = {
       collection_ids: _params.collection_ids.join(','),
       filter: _params.filter,
       query: _params.query,
@@ -1065,9 +1065,9 @@ class DiscoveryV1 extends BaseService {
       sort: _params.sort.join(','),
       highlight: _params.highlight,
       deduplicate: _params.deduplicate,
-      deduplicate.field: _params.deduplicate_field
+      'deduplicate.field': _params.deduplicate_field
     };
-    const path = { 
+    const path = {
       environment_id: _params.environment_id
     };
     const parameters = {
@@ -1116,7 +1116,7 @@ class DiscoveryV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
-    const query = { 
+    const query = {
       collection_ids: _params.collection_ids.join(','),
       filter: _params.filter,
       query: _params.query,
@@ -1127,9 +1127,9 @@ class DiscoveryV1 extends BaseService {
       offset: _params.offset,
       sort: _params.sort.join(','),
       highlight: _params.highlight,
-      deduplicate.field: _params.deduplicate_field
+      'deduplicate.field': _params.deduplicate_field
     };
-    const path = { 
+    const path = {
       environment_id: _params.environment_id
     };
     const parameters = {
@@ -1183,7 +1183,7 @@ class DiscoveryV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
-    const query = { 
+    const query = {
       filter: _params.filter,
       query: _params.query,
       natural_language_query: _params.natural_language_query,
@@ -1194,13 +1194,13 @@ class DiscoveryV1 extends BaseService {
       offset: _params.offset,
       sort: _params.sort.join(','),
       highlight: _params.highlight,
-      passages.fields: _params.passages_fields.join(','),
-      passages.count: _params.passages_count,
-      passages.characters: _params.passages_characters,
+      'passages.fields': _params.passages_fields.join(','),
+      'passages.count': _params.passages_count,
+      'passages.characters': _params.passages_characters,
       deduplicate: _params.deduplicate,
-      deduplicate.field: _params.deduplicate_field
+      'deduplicate.field': _params.deduplicate_field
     };
-    const path = { 
+    const path = {
       environment_id: _params.environment_id,
       collection_id: _params.collection_id
     };
@@ -1244,13 +1244,13 @@ class DiscoveryV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
-    const body = { 
+    const body = {
       feature: _params.feature,
       entity: _params.entity,
       context: _params.context,
       count: _params.count
     };
-    const path = { 
+    const path = {
       environment_id: _params.environment_id,
       collection_id: _params.collection_id
     };
@@ -1305,7 +1305,7 @@ class DiscoveryV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
-    const query = { 
+    const query = {
       filter: _params.filter,
       query: _params.query,
       natural_language_query: _params.natural_language_query,
@@ -1316,12 +1316,12 @@ class DiscoveryV1 extends BaseService {
       offset: _params.offset,
       sort: _params.sort.join(','),
       highlight: _params.highlight,
-      passages.fields: _params.passages_fields.join(','),
-      passages.count: _params.passages_count,
-      passages.characters: _params.passages_characters,
-      deduplicate.field: _params.deduplicate_field
+      'passages.fields': _params.passages_fields.join(','),
+      'passages.count': _params.passages_count,
+      'passages.characters': _params.passages_characters,
+      'deduplicate.field': _params.deduplicate_field
     };
-    const path = { 
+    const path = {
       environment_id: _params.environment_id,
       collection_id: _params.collection_id
     };
@@ -1366,14 +1366,14 @@ class DiscoveryV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
-    const body = { 
+    const body = {
       entities: _params.entities,
       context: _params.context,
       sort: _params.sort,
       filter: _params.filter,
       count: _params.count
     };
-    const path = { 
+    const path = {
       environment_id: _params.environment_id,
       collection_id: _params.collection_id
     };
@@ -1400,16 +1400,16 @@ class DiscoveryV1 extends BaseService {
    ************************/
 
   /**
-   * 
+   *
    *
    * Adds a query to the training data for this collection. The query can contain a filter and natural language query.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
-   * @param {string} [params.natural_language_query] - 
-   * @param {string} [params.filter] - 
-   * @param {TrainingExample[ ]} [params.examples] - 
+   * @param {string} [params.natural_language_query] -
+   * @param {string} [params.filter] -
+   * @param {TrainingExample[ ]} [params.examples] -
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1421,12 +1421,12 @@ class DiscoveryV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
-    const body = { 
+    const body = {
       natural_language_query: _params.natural_language_query,
       filter: _params.filter,
       examples: _params.examples
     };
-    const path = { 
+    const path = {
       environment_id: _params.environment_id,
       collection_id: _params.collection_id
     };
@@ -1449,7 +1449,7 @@ class DiscoveryV1 extends BaseService {
   };
 
   /**
-   * 
+   *
    *
    * Adds a new example to this training data query.
    *

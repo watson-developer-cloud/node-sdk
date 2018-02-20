@@ -80,7 +80,7 @@ class ConversationV1 extends BaseService {
   createWorkspace(params?: ConversationV1.CreateWorkspaceParams, callback?: ConversationV1.Callback<ConversationV1.Workspace>): NodeJS.ReadableStream | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {};
-    const body = { 
+    const body = {
       name: _params.name,
       description: _params.description,
       language: _params.language,
