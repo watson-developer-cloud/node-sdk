@@ -8,7 +8,7 @@ var ConversationV1 = require('watson-developer-cloud/conversation/v1');
 var conversation = new ConversationV1({
   username: process.env.CONVERSATION_USERNAME || '<conversation_username>',
   password: process.env.CONVERSATION_PASSWORD || '<conversation_password>',
-  version: '2017-05-26'
+  version_date: '2017-05-26'
 });
 
 /**

@@ -110,7 +110,8 @@ module.exports = {
     headers: {
       'X-Watson-Learning-Opt-Out': 1,
       'X-Watson-Test': 1
-    }
+    },
+    version: 'v2'
   },
   tone_analyzer: {
     url: 'https://gateway.watsonplatform.net/tone-analyzer/api',

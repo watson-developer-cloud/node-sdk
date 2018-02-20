@@ -6,7 +6,7 @@ var fs = require('fs');
 var personalityInsights = new PersonalityInsightsV3({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
   password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
-  version: '2016-10-19',
+  version_date: '2016-10-19',
   url: 'https://gateway.watsonplatform.net/personality-insights/api/'
 });
 
