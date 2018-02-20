@@ -130,7 +130,6 @@ class TextToSpeechV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} [params.accept] - The requested audio format (MIME type) of the audio. You can use this header or the `accept` query parameter to specify the audio format. (For the `audio/l16` format, you can optionally specify `endianness=big-endian` or `endianness=little-endian`; the default is little endian.).
-   * @param {string} [params.accept2] - The requested audio format (MIME type) of the audio. You can use this query parameter or the `Accept` header to specify the audio format. (For the `audio/l16` format, you can optionally specify `endianness=big-endian` or `endianness=little-endian`; the default is little endian.).
    * @param {string} [params.voice] - The voice to use for synthesis. Retrieve available voices with the `GET /v1/voices` method.
    * @param {string} [params.customization_id] - The GUID of a custom voice model to use for the synthesis. If a custom voice model is specified, it is guaranteed to work only if it matches the language of the indicated voice. You must make the request with service credentials created for the instance of the service that owns the custom model. Omit the parameter to use the specified voice with no customization.
    * @param {string} params.text - The text to synthesize.
@@ -149,7 +148,6 @@ class TextToSpeechV1 extends BaseService {
       text: _params.text
     };
     const query = { 
-      accept: _params.accept2,
       voice: _params.voice,
       customization_id: _params.customization_id
     };
@@ -160,6 +158,7 @@ class TextToSpeechV1 extends BaseService {
         json: true,
         body: body,
         qs: query,
+        encoding: null
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
@@ -683,8 +682,6 @@ namespace TextToSpeechV1 {
     /** The requested audio format (MIME type) of the audio. You can use this header or the `accept` query parameter to specify the audio format. (For the `audio/l16` format, you can optionally specify `endianness=big-endian` or `endianness=little-endian`; the default is little endian.). **/
     accept?: SynthesizeConstants.Accept | string;
     /** The requested audio format (MIME type) of the audio. You can use this query parameter or the `Accept` header to specify the audio format. (For the `audio/l16` format, you can optionally specify `endianness=big-endian` or `endianness=little-endian`; the default is little endian.). **/
-    accept2?: SynthesizeConstants.Accept | string;
-    /** The voice to use for synthesis. Retrieve available voices with the `GET /v1/voices` method. **/
     voice?: SynthesizeConstants.Voice | string;
     /** The GUID of a custom voice model to use for the synthesis. If a custom voice model is specified, it is guaranteed to work only if it matches the language of the indicated voice. You must make the request with service credentials created for the instance of the service that owns the custom model. Omit the parameter to use the specified voice with no customization. **/
     customization_id?: string;
@@ -710,22 +707,7 @@ namespace TextToSpeechV1 {
       WEBM_CODECS_OPUS = 'audio/webm:codecs=opus',
       WEBM_CODECS_VORBIS = 'audio/webm:codecs=vorbis',
     }
-    /** The requested audio format (MIME type) of the audio. You can use this query parameter or the `Accept` header to specify the audio format. (For the `audio/l16` format, you can optionally specify `endianness=big-endian` or `endianness=little-endian`; the default is little endian.). **/
-    export enum Accept {
-      BASIC = 'audio/basic',
-      FLAC = 'audio/flac',
-      L16_RATE_NNNN = 'audio/l16;rate=nnnn',
-      OGG = 'audio/ogg',
-      OGG_CODECS_OPUS = 'audio/ogg;codecs=opus',
-      OGG_CODECS_VORBIS = 'audio/ogg;codecs=vorbis',
-      MP3 = 'audio/mp3',
-      MPEG = 'audio/mpeg',
-      MULAW_RATE_NNNN = 'audio/mulaw;rate=nnnn',
-      WAV = 'audio/wav',
-      WEBM = 'audio/webm',
-      WEBM_CODECS_OPUS = 'audio/webm:codecs=opus',
-      WEBM_CODECS_VORBIS = 'audio/webm:codecs=vorbis',
-    }
+
     /** The voice to use for synthesis. Retrieve available voices with the `GET /v1/voices` method. **/
     export enum Voice {
       EN_US_ALLISONVOICE = 'en-US_AllisonVoice',

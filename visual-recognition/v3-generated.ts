@@ -159,11 +159,20 @@ class VisualRecognitionV3 extends BaseService {
   createClassifier(params: VisualRecognitionV3.CreateClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => {};
-    const requiredParams = ['name', 'classname_positive_examples'];
+    const _positive_example_classes = Object.keys(_params).filter(key => {
+      return key.match(/^.+positive_examples$/);
+    }) || ['<classname>_positive_examples'];
+    const requiredParams = ['name', ..._positive_example_classes];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+    _positive_example_classes.forEach(positive_example_class => {
+      formData[positive_example_class] = {
+        data: _params[positive_example_class],
+        contentType: 'application/octet-stream'
+      };
+    });
     const formData = {
       name: _params.name,
       classname_positive_examples: {
@@ -308,6 +317,9 @@ class VisualRecognitionV3 extends BaseService {
   updateClassifier(params: VisualRecognitionV3.UpdateClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => {};
+    const _positive_example_classes = Object.keys(_params).filter(key => {
+      return key.match(/^.+positive_examples$/);
+    });
     const requiredParams = ['classifier_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -323,7 +335,13 @@ class VisualRecognitionV3 extends BaseService {
         contentType: 'application/octet-stream'
       }
     };
-    const path = { 
+    _positive_example_classes.forEach(positive_example_class => {
+      formData[positive_example_class] = {
+        data: _params[positive_example_class],
+        contentType: 'application/octet-stream'
+      };
+    });
+    const path = {
       classifier_id: _params.classifier_id
     };
     const parameters = {
