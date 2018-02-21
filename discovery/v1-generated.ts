@@ -1518,7 +1518,7 @@ class DiscoveryV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = { 
+    const path = {
       environment_id: _params.environment_id,
       collection_id: _params.collection_id
     };

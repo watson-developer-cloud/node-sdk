@@ -85,7 +85,7 @@ export function getContentType(
 }
 
 /**
- * 
+ *
  * @param {string} url - the url string.
  * @returns {string}
  */

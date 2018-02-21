@@ -1450,7 +1450,7 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} params.audio_name - The name of the audio resource that is to be added to the custom acoustic model. The name cannot contain spaces. Use a localized name that matches the language of the custom model.
    * @param {string} [params.contained_content_type] - For an archive-type resource that contains audio files whose format is not `audio/wav`, specifies the format of the audio files. The header accepts all of the audio formats supported for use with speech recognition and with the `Content-Type` header, including the `rate`, `channels`, and `endianness` parameters that are used with some formats. For a complete list of supported audio formats, see [Audio formats](/docs/services/speech-to-text/input.html#formats).
    * @param {boolean} [params.allow_overwrite] - Indicates whether the specified audio resource is to overwrite an existing resource with the same name. If a resource with the same name already exists, the request fails unless `allow_overwrite` is set to `true`; by default, the parameter is `false`. The parameter has no effect if a resource with the same name does not already exist.
-   * @param {ByteArray[ ]} params.audio_resource - The audio resource that is to be added to the custom acoustic model, an individual audio file or an archive file.
+   * @param {string[]} params.audio_resource - The audio resource that is to be added to the custom acoustic model, an individual audio file or an archive file.
    * @param {string} params.content_type - The type of the input: application/zip, application/gzip, audio/basic, audio/flac, audio/l16, audio/mp3, audio/mpeg, audio/mulaw, audio/ogg, audio/ogg;codecs=opus, audio/ogg;codecs=vorbis, audio/wav, audio/webm, audio/webm;codecs=opus, or audio/webm;codecs=vorbis.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -1464,10 +1464,10 @@ class SpeechToTextV1 extends BaseService {
       return _callback(missingParams);
     }
     const body = _params.audio_resource;
-    const query = { 
+    const query = {
       allow_overwrite: _params.allow_overwrite
     };
-    const path = { 
+    const path = {
       customization_id: _params.customization_id,
       audio_name: _params.audio_name
     };
@@ -1483,7 +1483,7 @@ class SpeechToTextV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: {
           'Accept': 'application/json',
-          'Contained-Content-Type': _params.contained_content_type, 
+          'Contained-Content-Type': _params.contained_content_type,
           'Content-Type': _params.content_type
         }
       })
@@ -2101,7 +2101,7 @@ namespace SpeechToTextV1 {
     /** Indicates whether the specified audio resource is to overwrite an existing resource with the same name. If a resource with the same name already exists, the request fails unless `allow_overwrite` is set to `true`; by default, the parameter is `false`. The parameter has no effect if a resource with the same name does not already exist. **/
     allow_overwrite?: boolean;
     /** The audio resource that is to be added to the custom acoustic model, an individual audio file or an archive file. **/
-    audio_resource: ByteArray[ ];
+    audio_resource: string[];
     /** The type of the input: application/zip, application/gzip, audio/basic, audio/flac, audio/l16, audio/mp3, audio/mpeg, audio/mulaw, audio/ogg, audio/ogg;codecs=opus, audio/ogg;codecs=vorbis, audio/wav, audio/webm, audio/webm;codecs=opus, or audio/webm;codecs=vorbis. **/
     content_type: AddAudioConstants.ContentType | string;
   }
