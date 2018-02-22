@@ -493,7 +493,7 @@ describe('discovery-v1', function() {
               collection_id: 'col-guid',
               filter: 'yesplease',
               count: 10,
-              sort: '+field_1,-field_2',
+              sort: ['+field_1', '-field_2'],
               natural_language_query: 'a question about stuff and things',
               passages: true
             },
@@ -517,7 +517,7 @@ describe('discovery-v1', function() {
               collection_id: 'col-guid',
               filter: 'yesplease',
               count: 10,
-              sort: '+field_1,-field_2',
+              sort: ['+field_1', '-field_2'],
               natural_language_query: 'a question about stuff and things',
               passages: true
             },
@@ -538,10 +538,10 @@ describe('discovery-v1', function() {
           const req = discovery.federatedQuery(
             {
               environment_id: 'env-guid',
-              collection_ids: '[col1-guid,col2-guid]',
+              collection_ids: ['col1-guid', 'col2-guid'],
               filter: 'yesplease',
               count: 10,
-              sort: '+field_1,-field_2',
+              sort: ['+field_1', '-field_2'],
               natural_language_query: 'a question about stuff and things'
             },
             noop
@@ -561,10 +561,10 @@ describe('discovery-v1', function() {
           const req = discovery.federatedQueryNotices(
             {
               environment_id: 'env-guid',
-              collection_ids: '[col1-guid,col2-guid]',
+              collection_ids: ['col1-guid', 'col2-guid'],
               filter: 'yesplease',
               count: 10,
-              sort: '+field_1,-field_2',
+              sort: ['+field_1', '-field_2'],
               natural_language_query: 'a question about stuff and things'
             },
             noop

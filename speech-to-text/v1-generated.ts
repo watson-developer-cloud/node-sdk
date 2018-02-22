@@ -355,7 +355,7 @@ class SpeechToTextV1 extends BaseService {
       customization_weight: _params.customization_weight,
       version: _params.version,
       inactivity_timeout: _params.inactivity_timeout,
-      keywords: _params.keywords.join(','),
+      keywords: _params.keywords ? _params.keywords.join(',') : undefined,
       keywords_threshold: _params.keywords_threshold,
       max_alternatives: _params.max_alternatives,
       word_alternatives_threshold: _params.word_alternatives_threshold,
