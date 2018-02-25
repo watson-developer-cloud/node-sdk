@@ -5,7 +5,10 @@ class VisualRecognitionV3 extends GeneratedVisualRecognitionV3 {
   static VERSION_DATE_2016_05_20: string = '2016-05-20';
 
   constructor(options) {
-    super(options);
+    // For backward compatibility, allow version to be passed in version_date.
+    const _options = extend({}, options);
+    _options.version = _options.version_date || _options.version;
+    super(_options);
   }
 
   private static betaError: Error = new Error(

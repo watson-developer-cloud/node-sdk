@@ -23,7 +23,7 @@ describe('natural_language_understanding', function() {
     nlu = new watson.NaturalLanguageUnderstandingV1({
       username: 'user',
       password: 'pass',
-      version_date: watson.NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27
+      version: watson.NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27
     });
     nock.disableNetConnect();
   });
@@ -72,7 +72,7 @@ describe('natural_language_understanding', function() {
         ]
       });
       const nluHyphenated = new watson.NaturalLanguageUnderstandingV1({
-        version_date: watson.NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27
+        version: watson.NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27
       });
       assert(nluHyphenated);
       assert.equal(nluHyphenated.getCredentials().username, 'hyphenated-user');
@@ -84,7 +84,7 @@ describe('natural_language_understanding', function() {
       process.env.NATURAL_LANGUAGE_UNDERSTANDING_URL =
         'https://gateway.watsonplatform.net/natural-language-understanding/api';
       const nluUnderscore = new watson.NaturalLanguageUnderstandingV1({
-        version_date: watson.NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27
+        version: watson.NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27
       });
       assert(nluUnderscore);
       assert.equal(nluUnderscore.getCredentials().username, 'user');
@@ -99,7 +99,7 @@ describe('natural_language_understanding', function() {
     const nlu_old_version = new watson.NaturalLanguageUnderstandingV1({
       username: 'user',
       password: 'pass',
-      version_date: watson.NaturalLanguageUnderstandingV1.VERSION_DATE_2016_01_23
+      version: watson.NaturalLanguageUnderstandingV1.VERSION_DATE_2016_01_23
     });
 
     const options = {
