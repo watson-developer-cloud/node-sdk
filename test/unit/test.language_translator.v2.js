@@ -11,8 +11,7 @@ describe('language_translator', function() {
   const service = {
     username: 'batman',
     password: 'bruce-wayne',
-    url: 'http://ibm.com:80',
-    version: 'v2'
+    url: 'http://ibm.com:80'
   };
 
   before(function() {
@@ -23,7 +22,7 @@ describe('language_translator', function() {
     nock.cleanAll();
   });
 
-  const language_translator = watson.language_translator(service);
+  const language_translator = new watson.LanguageTranslatorV2(service);
 
   const missingParameter = function(err) {
     assert.ok(err instanceof Error && /required parameters/.test(err));
@@ -59,9 +58,8 @@ describe('language_translator', function() {
       process.env.VCAP_SERVICES = JSON.stringify({
         language_translator: details
       });
-      const instance = watson.language_translator({
-        version: 'v2',
-        version_date: '2016-07-01'
+      const instance = new watson.LanguageTranslatorV2({
+        version: '2016-07-01'
       });
       assert(instance._options.headers.Authorization);
     });
@@ -70,9 +68,8 @@ describe('language_translator', function() {
       process.env.VCAP_SERVICES = JSON.stringify({
         language_translator: details
       });
-      const instance = watson.language_translator({
-        version: 'v2',
-        version_date: '2016-07-01'
+      const instance = new watson.LanguageTranslatorV2({
+        version: '2016-07-01'
       });
       assert(instance._options.headers.Authorization);
     });

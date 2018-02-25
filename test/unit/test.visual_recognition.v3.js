@@ -15,12 +15,11 @@ describe('visual_recognition', function() {
   const service = {
     api_key: 'batman',
     url: 'http://ibm.com:80/visual-recognition/api',
-    version: 'v3',
-    version_date: '2016-05-20'
+    version: '2016-05-20'
   };
 
   const api_key_qs = 'api_key=' + service.api_key;
-  const version_qs = 'version=' + service.version_date;
+  const version_qs = 'version=' + service.version;
   const fake_file = fs.createReadStream(__dirname + '/../resources/car.png');
   const fake_buffer = fs.readFileSync(__dirname + '/../resources/car.png');
   const service_request = {
@@ -86,7 +85,7 @@ describe('visual_recognition', function() {
     nock.cleanAll();
   });
 
-  const visual_recognition = watson.visual_recognition(service);
+  const visual_recognition = new watson.VisualRecognitionV3(service);
 
   const missingParameter = function(err) {
     assert(
@@ -108,35 +107,34 @@ describe('visual_recognition', function() {
     it('should throw when no/insufficient credentials are provided', () => {
       assert.throws(() => new watson.VisualRecognitionV3(), /key/);
       assert.throws(() => new watson.VisualRecognitionV3({}), /key/);
-      assert.throws(() => new watson.VisualRecognitionV3({ version_date: '2016-05-20' }), /key/);
+      assert.throws(() => new watson.VisualRecognitionV3({ version: '2016-05-20' }), /key/);
       assert.throws(() => new watson.VisualRecognitionV3({ username: 'foo' }), /key/);
     });
 
     it('should accept an API key for regular usage', () =>
       new watson.VisualRecognitionV3({
         api_key: 'foo',
-        version_date: '2016-05-20'
+        version: '2016-05-20'
       }));
 
     it('should accept username/password for regular usage', () =>
       new watson.VisualRecognitionV3({
         username: 'foo',
         password: 'bar',
-        version_date: '2016-05-20'
+        version: '2016-05-20'
       }));
 
     it('should accept VISUAL_RECOGNITION_API_KEY env property', () => {
       process.env.VISUAL_RECOGNITION_API_KEY = 'foo';
-      return new watson.VisualRecognitionV3({ version_date: '2016-05-20' });
+      return new watson.VisualRecognitionV3({ version: '2016-05-20' });
     });
 
     it('should read VISUAL_RECOGNITION_API_KEY environment property', function() {
       process.env = {
         VISUAL_RECOGNITION_API_KEY: 'foo'
       };
-      const instance = watson.visual_recognition({
-        version: 'v3',
-        version_date: '2016-05-20'
+      const instance = new watson.VisualRecognitionV3({
+        version: '2016-05-20'
       });
       assert.equal(instance._options.api_key, 'foo');
       assert.equal(instance._options.username, undefined);
@@ -148,9 +146,8 @@ describe('visual_recognition', function() {
         VISUAL_RECOGNITION_USERNAME: 'foo',
         VISUAL_RECOGNITION_PASSWORD: 'bar'
       };
-      const instance = watson.visual_recognition({
-        version: 'v3',
-        version_date: '2016-05-20'
+      const instance = new watson.VisualRecognitionV3({
+        version: '2016-05-20'
       });
       assert.equal(instance._options.api_key, undefined);
       assert.equal(instance._options.username, 'foo');
@@ -174,9 +171,8 @@ describe('visual_recognition', function() {
           ]
         })
       };
-      const instance = watson.visual_recognition({
-        version: 'v3',
-        version_date: '2016-05-20'
+      const instance = new watson.VisualRecognitionV3({
+        version: '2016-05-20'
       });
       assert.equal(instance._options.api_key, 'foo');
       assert.equal(instance._options.username, undefined);
@@ -201,9 +197,8 @@ describe('visual_recognition', function() {
           ]
         })
       };
-      const instance = watson.visual_recognition({
-        version: 'v3',
-        version_date: '2016-05-20'
+      const instance = new watson.VisualRecognitionV3({
+        version: '2016-05-20'
       });
       assert.equal(instance._options.api_key, undefined);
       assert.equal(instance._options.username, 'foo');
@@ -211,14 +206,14 @@ describe('visual_recognition', function() {
     });
   });
 
-  describe('version_date', function() {
-    it('should check no version_date provided', function(done) {
+  describe('version', function() {
+    it('should check no version provided', function(done) {
       try {
-        watson.visual_recognition(omit(service, ['version_date']));
+        new watson.VisualRecognitionV3(omit(service, ['version']));
       } catch (e) {
         return done();
       }
-      done('version_date should be requested');
+      done('version should be requested');
     });
   });
 

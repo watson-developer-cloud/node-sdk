@@ -64,7 +64,7 @@ const createWithObject = {
   }
 };
 
-describe('natural_language_classifer', function() {
+describe('natural_language_classifier', function() {
   it('should fail if no parameters are provided for create, classify, status and delete requests', function() {
     // classify
     natural_language_classifier.classify({}, missingParameter);

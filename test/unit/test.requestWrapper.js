@@ -26,21 +26,19 @@ describe('requestwrapper', () => {
       username: 'batman',
       password: 'bruce-wayne',
       url: 'http://ibm.com:80',
-      version: 'v1',
-      version_date: '2017-05-26'
+      version: '2017-05-26'
     };
     const service2 = {
       username: 'batman',
       password: 'bruce-wayne',
       url: 'http://ibm.com:80',
-      version: 'v1',
-      version_date: '2017-05-26',
+      version: '2017-05-26',
       headers: {
         'User-Agent': 'openwhisk'
       }
     };
-    const conversation = watson.conversation(service);
-    const conversation_ow = watson.conversation(service2);
+    const conversation = new watson.ConversationV1(service);
+    const conversation_ow = new watson.ConversationV1(service2);
     const payload = {
       workspace_id: 'workspace1'
     };

@@ -26,7 +26,7 @@ describe.skip('discovery_integration', function() {
     nock.enableNetConnect();
     discovery = new DiscoveryV1(
       Object.assign({}, auth.discovery, {
-        version_date: DiscoveryV1.VERSION_DATE_2017_04_27
+        version: DiscoveryV1.VERSION_DATE_2017_04_27
       })
     );
     environment_id = auth.discovery.environment_id;
