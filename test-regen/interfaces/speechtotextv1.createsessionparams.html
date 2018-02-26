@@ -93,6 +93,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.createsessionparams.html#customization_id" class="tsd-kind-icon">customization_<wbr>id</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.createsessionparams.html#customization_weight" class="tsd-kind-icon">customization_<wbr>weight</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.createsessionparams.html#model" class="tsd-kind-icon">model</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.createsessionparams.html#version" class="tsd-kind-icon">version</a></li>
 							</ul>
 						</section>
 					</div>
@@ -106,7 +107,7 @@
 					<div class="tsd-signature tsd-kind-icon">acoustic_<wbr>customization_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/speech-to-text/v1-generated.ts#L1770">speech-to-text/v1-generated.ts:1770</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/speech-to-text/v1-generated.ts#L1677">speech-to-text/v1-generated.ts:1677</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -121,7 +122,7 @@
 					<div class="tsd-signature tsd-kind-icon">customization_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/speech-to-text/v1-generated.ts#L1768">speech-to-text/v1-generated.ts:1768</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/speech-to-text/v1-generated.ts#L1675">speech-to-text/v1-generated.ts:1675</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -136,7 +137,7 @@
 					<div class="tsd-signature tsd-kind-icon">customization_<wbr>weight<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/speech-to-text/v1-generated.ts#L1772">speech-to-text/v1-generated.ts:1772</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/speech-to-text/v1-generated.ts#L1679">speech-to-text/v1-generated.ts:1679</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -151,12 +152,27 @@
 					<div class="tsd-signature tsd-kind-icon">model<span class="tsd-signature-symbol">:</span> <a href="../enums/speechtotextv1.createsessionconstants.model.html" class="tsd-signature-type">Model</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/speech-to-text/v1-generated.ts#L1766">speech-to-text/v1-generated.ts:1766</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/speech-to-text/v1-generated.ts#L1673">speech-to-text/v1-generated.ts:1673</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>The identifier of the model to be used by the new session. (Use <code>GET /v1/models</code> or <code>GET /v1/models/{model_id}</code> for information about available models.).</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="version" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> version</h3>
+					<div class="tsd-signature tsd-kind-icon">version<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/speech-to-text/v1-generated.ts#L1681">speech-to-text/v1-generated.ts:1681</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The version of the specified base <code>model</code> that is to be used with the new session. Multiple versions of a base model can exist when a model is updated for internal improvements. The parameter is intended primarily for use with custom models that have been upgraded for a new base model. The default value depends on whether the parameter is used with or without a custom model. For more information, see <a href="https://console.bluemix.net/docs/services/speech-to-text/input.html#version">Base model version</a>.</p>
 						</div>
 					</div>
 				</section>
@@ -221,6 +237,9 @@
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="speechtotextv1.createsessionparams.html#model" class="tsd-kind-icon">model</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="speechtotextv1.createsessionparams.html#version" class="tsd-kind-icon">version</a>
 									</li>
 								</ul>
 							</li>

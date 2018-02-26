@@ -101,6 +101,7 @@
 						<section class="tsd-index-section ">
 							<h3>Interfaces</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/conversationv1.capturegroup.html" class="tsd-kind-icon">Capture<wbr>Group</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/conversationv1.context.html" class="tsd-kind-icon">Context</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/conversationv1.counterexample.html" class="tsd-kind-icon">Counterexample</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/conversationv1.counterexamplecollection.html" class="tsd-kind-icon">Counterexample<wbr>Collection</a></li>
@@ -192,7 +193,7 @@
 						<section class="tsd-index-section ">
 							<h3>Type aliases</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-is-static"><a href="conversationv1.html#callback" class="tsd-kind-icon">Callback</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="conversationv1.html#callback" class="tsd-kind-icon">Callback</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-is-static"><a href="conversationv1.html#options" class="tsd-kind-icon">Options</a></li>
 							</ul>
 						</section>
@@ -208,7 +209,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="conversationv1.html#_options" class="tsd-kind-icon">_options</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite"><a href="conversationv1.html#name" class="tsd-kind-icon">name</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="conversationv1.html#servicedefaults" class="tsd-kind-icon">service<wbr>Defaults</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite"><a href="conversationv1.html#version" class="tsd-kind-icon">version</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite"><a href="conversationv1.html#serviceversion" class="tsd-kind-icon">service<wbr>Version</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-static"><a href="conversationv1.html#url-1" class="tsd-kind-icon">URL</a></li>
 							</ul>
 						</section>
@@ -266,13 +267,13 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Type aliases</h2>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
 					<a name="callback" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> Callback</h3>
 					<div class="tsd-signature tsd-kind-icon">Callback<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L2252">conversation/v1-generated.ts:2252</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L2117">conversation/v1-generated.ts:2117</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -314,7 +315,7 @@
 					<div class="tsd-signature tsd-kind-icon">Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L2242">conversation/v1-generated.ts:2242</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L2107">conversation/v1-generated.ts:2107</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -341,7 +342,7 @@
 								<h5><span class="tsd-flag ts-flagOptional">Optional</span> username<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
 							</li>
 							<li class="tsd-parameter">
-								<h5>version_<wbr>date<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+								<h5>version<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
 							</li>
 						</ul>
 					</div>
@@ -360,7 +361,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides BaseService.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L32">conversation/v1-generated.ts:32</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L32">conversation/v1-generated.ts:32</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -400,7 +401,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseService._options</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/lib/base_service.ts#L70">lib/base_service.ts:70</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/lib/base_service.ts#L70">lib/base_service.ts:70</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -411,7 +412,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.name</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L29">conversation/v1-generated.ts:29</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L29">conversation/v1-generated.ts:29</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -422,18 +423,18 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseService.serviceDefaults</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/lib/base_service.ts#L71">lib/base_service.ts:71</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/lib/base_service.ts#L71">lib/base_service.ts:71</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-overwrite">
-					<a name="version" class="tsd-anchor"></a>
-					<h3>version</h3>
-					<div class="tsd-signature tsd-kind-icon">version<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="serviceversion" class="tsd-anchor"></a>
+					<h3>service<wbr>Version</h3>
+					<div class="tsd-signature tsd-kind-icon">service<wbr>Version<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
-						<p>Overrides BaseService.version</p>
+						<p>Overrides BaseService.serviceVersion</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L30">conversation/v1-generated.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L30">conversation/v1-generated.ts:30</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -444,7 +445,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.URL</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L32">conversation/v1-generated.ts:32</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L32">conversation/v1-generated.ts:32</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -461,7 +462,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L2017">conversation/v1-generated.ts:2017</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L1895">conversation/v1-generated.ts:1895</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -499,7 +500,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L1649">conversation/v1-generated.ts:1649</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L1548">conversation/v1-generated.ts:1548</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -537,7 +538,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L869">conversation/v1-generated.ts:869</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L818">conversation/v1-generated.ts:818</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -575,7 +576,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L626">conversation/v1-generated.ts:626</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L590">conversation/v1-generated.ts:590</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -613,7 +614,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L382">conversation/v1-generated.ts:382</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L361">conversation/v1-generated.ts:361</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -651,7 +652,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L1383">conversation/v1-generated.ts:1383</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L1302">conversation/v1-generated.ts:1302</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -689,7 +690,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L1123">conversation/v1-generated.ts:1123</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L1057">conversation/v1-generated.ts:1057</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -727,7 +728,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L80">conversation/v1-generated.ts:80</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L80">conversation/v1-generated.ts:80</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -762,7 +763,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L2063">conversation/v1-generated.ts:2063</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L1938">conversation/v1-generated.ts:1938</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -800,7 +801,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L1708">conversation/v1-generated.ts:1708</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L1604">conversation/v1-generated.ts:1604</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -838,7 +839,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L919">conversation/v1-generated.ts:919</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L865">conversation/v1-generated.ts:865</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -876,7 +877,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L674">conversation/v1-generated.ts:674</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L635">conversation/v1-generated.ts:635</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -914,7 +915,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L430">conversation/v1-generated.ts:430</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L406">conversation/v1-generated.ts:406</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -952,7 +953,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L1434">conversation/v1-generated.ts:1434</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L1349">conversation/v1-generated.ts:1349</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -990,7 +991,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L1175">conversation/v1-generated.ts:1175</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L1106">conversation/v1-generated.ts:1106</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1028,7 +1029,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L128">conversation/v1-generated.ts:128</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L121">conversation/v1-generated.ts:121</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1066,7 +1067,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L2104">conversation/v1-generated.ts:2104</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L1976">conversation/v1-generated.ts:1976</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1105,7 +1106,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.getCredentials</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/lib/base_service.ts#L221">lib/base_service.ts:221</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/lib/base_service.ts#L221">lib/base_service.ts:221</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1128,7 +1129,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L1749">conversation/v1-generated.ts:1749</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L1642">conversation/v1-generated.ts:1642</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1166,7 +1167,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L961">conversation/v1-generated.ts:961</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L904">conversation/v1-generated.ts:904</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1204,7 +1205,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L717">conversation/v1-generated.ts:717</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L675">conversation/v1-generated.ts:675</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1242,7 +1243,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L472">conversation/v1-generated.ts:472</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L445">conversation/v1-generated.ts:445</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1280,7 +1281,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L1480">conversation/v1-generated.ts:1480</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L1391">conversation/v1-generated.ts:1391</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1318,7 +1319,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L1219">conversation/v1-generated.ts:1219</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L1147">conversation/v1-generated.ts:1147</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1356,7 +1357,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L168">conversation/v1-generated.ts:168</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L158">conversation/v1-generated.ts:158</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1394,7 +1395,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L1920">conversation/v1-generated.ts:1920</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L1804">conversation/v1-generated.ts:1804</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1432,7 +1433,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L2148">conversation/v1-generated.ts:2148</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L2017">conversation/v1-generated.ts:2017</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1470,7 +1471,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L1793">conversation/v1-generated.ts:1793</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L1683">conversation/v1-generated.ts:1683</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1508,7 +1509,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L1010">conversation/v1-generated.ts:1010</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L950">conversation/v1-generated.ts:950</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1546,7 +1547,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L763">conversation/v1-generated.ts:763</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L718">conversation/v1-generated.ts:718</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1584,7 +1585,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L521">conversation/v1-generated.ts:521</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L491">conversation/v1-generated.ts:491</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1622,7 +1623,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L1966">conversation/v1-generated.ts:1966</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L1847">conversation/v1-generated.ts:1847</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1660,7 +1661,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L1529">conversation/v1-generated.ts:1529</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L1436">conversation/v1-generated.ts:1436</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1698,7 +1699,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L1270">conversation/v1-generated.ts:1270</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L1195">conversation/v1-generated.ts:1195</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1736,7 +1737,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L214">conversation/v1-generated.ts:214</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L201">conversation/v1-generated.ts:201</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1771,7 +1772,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L325">conversation/v1-generated.ts:325</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L307">conversation/v1-generated.ts:307</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1808,7 +1809,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L2196">conversation/v1-generated.ts:2196</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L2062">conversation/v1-generated.ts:2062</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1846,7 +1847,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L1854">conversation/v1-generated.ts:1854</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L1741">conversation/v1-generated.ts:1741</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1884,7 +1885,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L1063">conversation/v1-generated.ts:1063</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L1000">conversation/v1-generated.ts:1000</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1922,7 +1923,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L813">conversation/v1-generated.ts:813</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L765">conversation/v1-generated.ts:765</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1960,7 +1961,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L572">conversation/v1-generated.ts:572</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L539">conversation/v1-generated.ts:539</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1998,7 +1999,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L1582">conversation/v1-generated.ts:1582</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L1485">conversation/v1-generated.ts:1485</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2036,7 +2037,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L1325">conversation/v1-generated.ts:1325</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L1247">conversation/v1-generated.ts:1247</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2074,7 +2075,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/92c884e/conversation/v1-generated.ts#L264">conversation/v1-generated.ts:264</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/conversation/v1-generated.ts#L245">conversation/v1-generated.ts:245</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2122,6 +2123,9 @@
 					<li class="current tsd-kind-class">
 						<a href="conversationv1.html" class="tsd-kind-icon">Conversation<wbr>V1</a>
 						<ul>
+							<li class=" tsd-kind-interface tsd-parent-kind-class">
+								<a href="../interfaces/conversationv1.capturegroup.html" class="tsd-kind-icon">Capture<wbr>Group</a>
+							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class">
 								<a href="../interfaces/conversationv1.context.html" class="tsd-kind-icon">Context</a>
 							</li>
@@ -2380,7 +2384,7 @@
 							<li class=" tsd-kind-interface tsd-parent-kind-class">
 								<a href="../interfaces/conversationv1.workspaceexport.html" class="tsd-kind-icon">Workspace<wbr>Export</a>
 							</li>
-							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
+							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
 								<a href="conversationv1.html#callback" class="tsd-kind-icon">Callback</a>
 							</li>
 							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
@@ -2399,7 +2403,7 @@
 								<a href="conversationv1.html#servicedefaults" class="tsd-kind-icon">service<wbr>Defaults</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite">
-								<a href="conversationv1.html#version" class="tsd-kind-icon">version</a>
+								<a href="conversationv1.html#serviceversion" class="tsd-kind-icon">service<wbr>Version</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-static">
 								<a href="conversationv1.html#url-1" class="tsd-kind-icon">URL</a>
