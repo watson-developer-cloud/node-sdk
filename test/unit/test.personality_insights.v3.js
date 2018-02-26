@@ -107,7 +107,7 @@ describe('personality_insights_v3', function() {
 
     const req = personality_insights.profile(params, noop);
     const body = Buffer.from(req.body).toString('ascii');
-    const query_string = '?version=2016-10-19&raw_scores=true&consumption_preferences=true';
+    const query_string = '?version=2016-10-19&raw_scores=true&csv_headers=false&consumption_preferences=true';
     assert.equal(req.uri.href, service.url + service_path + query_string);
     assert.equal(body, JSON.stringify(params.content));
     assert.equal(req.method, 'POST');

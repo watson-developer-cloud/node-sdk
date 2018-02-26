@@ -124,22 +124,31 @@ class TextToSpeechV1 extends BaseService {
    * synthesize
    ************************/
 
+  /*************************
+   * synthesize
+   ************************/
+
   /**
    * Streaming speech synthesis of the text in the body parameter.
    *
    * Synthesizes text to spoken audio, returning the synthesized audio stream as an array of bytes. Identical to the `GET` method but passes longer text in the body of the request, not with the URL. Text size is limited to 5 KB.   If a request includes invalid query parameters, the service returns a `Warnings` response header that provides messages about the invalid parameters. The warning includes a descriptive message and a list of invalid argument strings. For example, a message such as `\"Unknown arguments:\"` or `\"Unknown url query arguments:\"` followed by a list of the form `\"invalid_arg_1, invalid_arg_2.\"` The request succeeds despite the warnings.   **Note about the Try It Out feature:** The `Try it out!` button is **not** supported for use with the the `POST /v1/synthesize` method. For examples of calls to the method, see the [Text to Speech API reference](http://www.ibm.com/watson/developercloud/text-to-speech/api/v1/).
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} [params.accept] - The requested audio format (MIME type) of the audio. You can use this header or the `accept` query parameter to specify the audio format. (For the `audio/l16` format, you can optionally specify `endianness=big-endian` or `endianness=little-endian`; the default is little endian.).
+   * @param {string} [params.accept] - The requested audio format (MIME type) of the audio. You can use this query parameter or the `Accept` header to specify the audio format. (For the `audio/l16` format, you can optionally specify `endianness=big-endian` or `endianness=little-endian`; the default is little endian.).
    * @param {string} [params.voice] - The voice to use for synthesis. Retrieve available voices with the `GET /v1/voices` method.
    * @param {string} [params.customization_id] - The GUID of a custom voice model to use for the synthesis. If a custom voice model is specified, it is guaranteed to work only if it matches the language of the indicated voice. You must make the request with service credentials created for the instance of the service that owns the custom model. Omit the parameter to use the specified voice with no customization.
    * @param {string} params.text - The text to synthesize.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  synthesize(params: TextToSpeechV1.SynthesizeParams, callback?: TextToSpeechV1.Callback<NodeJS.ReadableStream|FileObject|Buffer>): NodeJS.ReadableStream | void {
+  synthesize(
+    params: TextToSpeechV1.SynthesizeParams,
+    callback?: TextToSpeechV1.Callback<
+      NodeJS.ReadableStream | FileObject | Buffer
+    >
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['text'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -149,6 +158,7 @@ class TextToSpeechV1 extends BaseService {
       text: _params.text
     };
     const query = {
+      accept: _params.accept,
       voice: _params.voice,
       customization_id: _params.customization_id
     };
@@ -158,18 +168,17 @@ class TextToSpeechV1 extends BaseService {
         method: 'POST',
         json: true,
         body: body,
-        qs: query,
-        encoding: null
+        qs: query
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'audio/basic',
-          'Content-Type': _params.accept || 'application/json',
+          Accept: 'audio/basic',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /*************************
    * pronunciation

@@ -107,32 +107,36 @@ class LanguageTranslatorV2 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  identify(params: LanguageTranslatorV2.IdentifyParams, callback?: LanguageTranslatorV2.Callback<LanguageTranslatorV2.IdentifiedLanguages>): NodeJS.ReadableStream | void {
+  identify(
+    params: LanguageTranslatorV2.IdentifyParams,
+    callback?: LanguageTranslatorV2.Callback<
+      LanguageTranslatorV2.IdentifiedLanguages
+    >
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['text'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const body = { 
-    };
+    const body = _params.text;
     const parameters = {
       options: {
         url: '/v2/identify',
         method: 'POST',
-        json: true,
-        body: body,
+        json: false,
+        body: body
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'text/plain',
+          Accept: 'application/json',
+          'Content-Type': 'text/plain'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
    * Lists all languages that can be identified by the API.

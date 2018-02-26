@@ -48,7 +48,7 @@
     "codecov": "^3.0.0",
     "concat-stream": "~1.6.0",
     "dependency-lint": "~5.0.1",
-    "eslint": "~4.17.0",
+    "eslint": "~4.18.1",
     "eslint-config-google": "~0.9.1",
     "eslint-config-prettier": "~2.9.0",
     "eslint-plugin-node": "^6.0.0",

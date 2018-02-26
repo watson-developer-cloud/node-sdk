@@ -216,7 +216,7 @@ class VisualRecognitionV3 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = { 
+    const path = {
       classifier_id: _params.classifier_id
     };
     const parameters = {
