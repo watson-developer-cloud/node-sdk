@@ -167,12 +167,7 @@ class VisualRecognitionV3 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
-    _positive_example_classes.forEach(positive_example_class => {
-      formData[positive_example_class] = {
-        data: _params[positive_example_class],
-        contentType: 'application/octet-stream'
-      };
-    });
+
     const formData = {
       name: _params.name,
       classname_positive_examples: {
@@ -184,6 +179,12 @@ class VisualRecognitionV3 extends BaseService {
         contentType: 'application/octet-stream'
       }
     };
+    _positive_example_classes.forEach(positive_example_class => {
+      formData[positive_example_class] = {
+        data: _params[positive_example_class],
+        contentType: 'application/octet-stream'
+      };
+    });
     const parameters = {
       options: {
         url: '/v3/classifiers',

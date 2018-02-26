@@ -23,8 +23,7 @@ describe('text_to_speech', function() {
   };
   const synthesize_path = '/v1/synthesize';
   const voices_path = '/v1/voices';
-  const synthesize_request =
-    synthesize_path + '?' + qs.stringify(omit(service_request, ['text', 'accept']));
+  const synthesize_request = synthesize_path + '?' + qs.stringify(omit(service_request, ['text']));
 
   const mock_voices = [
     {
@@ -97,7 +96,7 @@ describe('text_to_speech', function() {
     });
 
     it('should support the customization_id option', function() {
-      const params = { customization_id: 'foo', text: 'test' };
+      const params = { customization_id: 'foo', text: 'test', accept: 'audio/ogg; codecs=opus' };
       const req = text_to_speech.synthesize(params, noop);
       assert(req.url);
       assert(req.url.query);

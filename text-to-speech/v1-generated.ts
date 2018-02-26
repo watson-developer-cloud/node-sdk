@@ -149,7 +149,7 @@ class TextToSpeechV1 extends BaseService {
   ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = callback ? callback : () => {};
-    const requiredParams = ['text'];
+    const requiredParams = ['text', 'accept'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
@@ -168,11 +168,12 @@ class TextToSpeechV1 extends BaseService {
         method: 'POST',
         json: true,
         body: body,
-        qs: query
+        qs: query,
+        encoding: null
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'audio/basic',
+          Accept: _params.accept,
           'Content-Type': 'application/json'
         }
       })
