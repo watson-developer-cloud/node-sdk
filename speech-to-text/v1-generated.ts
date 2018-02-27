@@ -157,8 +157,8 @@ class SpeechToTextV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  recognizeSessionless(
-    params?: SpeechToTextV1.RecognizeSessionlessParams,
+  recognize(
+    params?: SpeechToTextV1.RecognizeParams,
     callback?: SpeechToTextV1.Callback<SpeechToTextV1.SpeechRecognitionResults>
   ): NodeJS.ReadableStream | void {
     const _params =
@@ -1748,10 +1748,10 @@ namespace SpeechToTextV1 {
   /** Parameters for the `listModels` operation. **/
   export interface ListModelsParams {}
 
-  /** Parameters for the `recognizeSessionless` operation. **/
-  export interface RecognizeSessionlessParams {
+  /** Parameters for the `recognize` operation. **/
+  export interface RecognizeParams {
     /** The identifier of the model to be used for the recognition request. (Use `GET /v1/models` for a list of available models.). **/
-    model?: RecognizeSessionlessConstants.Model | string;
+    model?: RecognizeConstants.Model | string;
     /** The GUID of a custom language model that is to be used with the request. The base model of the specified custom language model must match the model specified with the `model` parameter. You must make the request with service credentials created for the instance of the service that owns the custom model. By default, no custom language model is used. **/
     customization_id?: string;
     /** The GUID of a custom acoustic model that is to be used with the request. The base model of the specified custom acoustic model must match the model specified with the `model` parameter. You must make the request with service credentials created for the instance of the service that owns the custom model. By default, no custom acoustic model is used. **/
@@ -1763,7 +1763,7 @@ namespace SpeechToTextV1 {
     /** NON-MULTIPART ONLY: Audio to transcribe in the format specified by the `Content-Type` header. **Required for a non-multipart request.**. **/
     audio?: Blob;
     /** The type of the input: audio/basic, audio/flac, audio/l16, audio/mp3, audio/mpeg, audio/mulaw, audio/ogg, audio/ogg;codecs=opus, audio/ogg;codecs=vorbis, audio/wav, audio/webm, audio/webm;codecs=opus, audio/webm;codecs=vorbis, or multipart/form-data. **/
-    content_type?: RecognizeSessionlessConstants.ContentType | string;
+    content_type?: RecognizeConstants.ContentType | string;
     /** NON-MULTIPART ONLY: The time in seconds after which, if only silence (no speech) is detected in submitted audio, the connection is closed with a 400 error. Useful for stopping audio submission from a live microphone when a user simply walks away. Use `-1` for infinity. **/
     inactivity_timeout?: number;
     /** NON-MULTIPART ONLY: Array of keyword strings to spot in the audio. Each keyword string can include one or more tokens. Keywords are spotted only in the final hypothesis, not in interim results. If you specify any keywords, you must also specify a keywords threshold. Omit the parameter or specify an empty array if you do not need to spot keywords. **/
@@ -1786,8 +1786,8 @@ namespace SpeechToTextV1 {
     speaker_labels?: boolean;
   }
 
-  /** Constants for the `recognizeSessionless` operation. **/
-  export namespace RecognizeSessionlessConstants {
+  /** Constants for the `recognize` operation. **/
+  export namespace RecognizeConstants {
     /** The identifier of the model to be used for the recognition request. (Use `GET /v1/models` for a list of available models.). **/
     export enum Model {
       AR_AR_BROADBANDMODEL = 'ar-AR_BroadbandModel',
