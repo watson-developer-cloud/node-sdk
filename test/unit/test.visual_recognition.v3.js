@@ -352,6 +352,14 @@ describe('visual_recognition', function() {
     });
   });
 
+  describe('listClassifiers()', function() {
+    it('should generate a valid payload', function() {
+      const req = visual_recognition.listClassifiers({}, noop);
+      assert.equal(req.uri.href, service.url + classifiers_path);
+      assert.equal(req.method, 'GET');
+    });
+  });
+
   describe('createClassifier()', function() {
     it('should check no/insufficient parameters provided', function() {
       visual_recognition.createClassifier({}, missingParameter);

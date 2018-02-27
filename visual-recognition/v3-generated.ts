@@ -156,53 +156,6 @@ class VisualRecognitionV3 extends BaseService {
     return createRequest(parameters, _callback);
   }
 
-  /**
-   * Detect faces in images (Beta).
-   *
-   * Analyze and get data about faces in images. Responses can include estimated age and gender. This feature uses a built-in classifier, so no training is necessary. The Detect faces method does not support general biometric facial recognition.  Supported image formats include .gif, .jpg, .png, and .tif. The maximum image size is 10 MB. The minimum recommended pixel density is 32X32 pixels per inch.
-   *
-   * @param {Object} [params] - The parameters to send to the service.
-   * @param {ReadableStream|FileObject|Buffer} [params.images_file] - An image file or .zip file with images. Limit the .zip file to 100 MB. You can include a maximum of 15 images in a request.  Encode the image and .zip file names in UTF-8 if they contain non-ASCII characters. The service assumes UTF-8 encoding if it encounters non-ASCII characters.
-   * @param {string} [params.url] - A string with the image URL to analyze. Redirects are followed, so you can use a shortened URL.
-   * @param {string} [params.images_file_content_type] - The content type of images_file.
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
-   */
-  detectFacesBeta(
-    params?: VisualRecognitionV3.DetectFacesBetaParams,
-    callback?: VisualRecognitionV3.Callback<
-      VisualRecognitionV3.DetectedFacesBeta
-    >
-  ): NodeJS.ReadableStream | void {
-    const _params =
-      typeof params === 'function' && !callback ? {} : extend({}, params);
-    const _callback =
-      typeof params === 'function' && !callback
-        ? params
-        : callback ? callback : () => {};
-    const formData = {
-      images_file: {
-        data: _params.images_file,
-        contentType: _params.images_file_content_type
-      },
-      url: _params.url
-    };
-    const parameters = {
-      options: {
-        url: '/v3/detect_faces_beta',
-        method: 'POST',
-        formData: formData
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'multipart/form-data'
-        }
-      })
-    };
-    return createRequest(parameters, _callback);
-  }
-
   /*************************
    * custom
    ************************/
@@ -250,6 +203,7 @@ class VisualRecognitionV3 extends BaseService {
         contentType: 'application/octet-stream'
       };
     });
+
     const parameters = {
       options: {
         url: '/v3/classifiers',
@@ -333,6 +287,43 @@ class VisualRecognitionV3 extends BaseService {
         url: '/v3/classifiers/{classifier_id}',
         method: 'GET',
         path: path
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+    };
+    return createRequest(parameters, _callback);
+  }
+
+  /**
+   * Retrieve a list of custom classifiers.
+   *
+   * @param {Object} [params] - The parameters to send to the service.
+   * @param {boolean} [params.verbose] - Specify `true` to return details about the classifiers. Omit this parameter to return a brief list of classifiers.
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {NodeJS.ReadableStream|void}
+   */
+  listClassifiers(
+    params?: VisualRecognitionV3.ListClassifiersParams,
+    callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifiers>
+  ): NodeJS.ReadableStream | void {
+    const _params =
+      typeof params === 'function' && !callback ? {} : extend({}, params);
+    const _callback =
+      typeof params === 'function' && !callback
+        ? params
+        : callback ? callback : () => {};
+    const query = {
+      verbose: _params.verbose
+    };
+    const parameters = {
+      options: {
+        url: '/v3/classifiers',
+        method: 'GET',
+        qs: query
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
@@ -476,16 +467,6 @@ namespace VisualRecognitionV3 {
     images_file_content_type?: string;
   }
 
-  /** Parameters for the `detectFacesBeta` operation. **/
-  export interface DetectFacesBetaParams {
-    /** An image file or .zip file with images. Limit the .zip file to 100 MB. You can include a maximum of 15 images in a request.  Encode the image and .zip file names in UTF-8 if they contain non-ASCII characters. The service assumes UTF-8 encoding if it encounters non-ASCII characters. **/
-    images_file?: ReadableStream | FileObject | Buffer;
-    /** A string with the image URL to analyze. Redirects are followed, so you can use a shortened URL. **/
-    url?: string;
-    /** The content type of images_file. **/
-    images_file_content_type?: string;
-  }
-
   /** Parameters for the `createClassifier` operation. **/
   export interface CreateClassifierParams {
     /** The name of the new classifier. Encode special characters in UTF-8. **/
@@ -506,6 +487,12 @@ namespace VisualRecognitionV3 {
   export interface GetClassifierParams {
     /** The ID of the classifier. **/
     classifier_id: string;
+  }
+
+  /** Parameters for the `listClassifiers` operation. **/
+  export interface ListClassifiersParams {
+    /** Specify `true` to return details about the classifiers. Omit this parameter to return a brief list of classifiers. **/
+    verbose?: boolean;
   }
 
   /** Parameters for the `updateClassifier` operation. **/
@@ -592,22 +579,17 @@ namespace VisualRecognitionV3 {
     classes: ClassResult[];
   }
 
+  /** Verbose list of classifiers retrieved in the GET v2/classifiers call. **/
+  export interface Classifiers {
+    classifiers: Classifier[];
+  }
+
   /** DetectedFaces. **/
   export interface DetectedFaces {
     /** Number of images processed for the API call. **/
     images_processed?: number;
     /** The array of images. **/
     images: ImageWithFaces[];
-    /** Information about what might cause less than optimal output. For example, a request sent with a corrupt .zip file and a list of image URLs will still complete, but does not return the expected output. Not returned when there is no warning. **/
-    warnings?: WarningInfo[];
-  }
-
-  /** DetectedFacesBeta. **/
-  export interface DetectedFacesBeta {
-    /** Number of images processed for the API call. **/
-    images_processed?: number;
-    /** The array of images. **/
-    images: ImageWithFacesBeta[];
     /** Information about what might cause less than optimal output. For example, a request sent with a corrupt .zip file and a list of image URLs will still complete, but does not return the expected output. Not returned when there is no warning. **/
     warnings?: WarningInfo[];
   }
@@ -638,13 +620,6 @@ namespace VisualRecognitionV3 {
     max?: number;
     /** Confidence score for the property in the range of 0 to 1. A higher score indicates greater likelihood that the class is depicted in the image. The default threshold for returning scores from a classifier is 0.5. **/
     score?: number;
-  }
-
-  /** Provides information about the face. **/
-  export interface FaceBeta {
-    age?: FaceAge;
-    gender?: FaceGender;
-    face_location?: FaceLocation;
   }
 
   /** Provides information about the gender of the face. If there are more than 10 faces in an image, the response might return the confidence score 0. **/
@@ -681,19 +656,6 @@ namespace VisualRecognitionV3 {
   export interface ImageWithFaces {
     /** An array of the faces detected in the images. **/
     faces: Face[];
-    /** Relative path of the image file if uploaded directly. Not returned when the image is passed by URL. **/
-    image?: string;
-    /** Source of the image before any redirects. Not returned when the image is uploaded. **/
-    source_url?: string;
-    /** Fully resolved URL of the image after redirects are followed. Not returned when the image is uploaded. **/
-    resolved_url?: string;
-    error?: ErrorInfo;
-  }
-
-  /** ImageWithFacesBeta. **/
-  export interface ImageWithFacesBeta {
-    /** An array of the faces detected in the images. **/
-    faces: FaceBeta[];
     /** Relative path of the image file if uploaded directly. Not returned when the image is passed by URL. **/
     image?: string;
     /** Source of the image before any redirects. Not returned when the image is uploaded. **/
