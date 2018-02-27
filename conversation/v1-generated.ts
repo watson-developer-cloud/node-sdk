@@ -3190,9 +3190,9 @@ namespace ConversationV1 {
 
   /** The next step to execute following this dialog node. **/
   export interface DialogNodeNextStep {
-    /** How the `next_step` reference is processed. **/
+    /** How the `next_step` reference is processed. If you specify `jump_to`, then you must also specify a value for the `dialog_node` property. **/
     behavior: string;
-    /** The ID of the dialog node to process next. **/
+    /** The ID of the dialog node to process next. This parameter is required if `behavior`=`jump_to`. **/
     dialog_node?: string;
     /** Which part of the dialog node to process next. **/
     selector?: string;
