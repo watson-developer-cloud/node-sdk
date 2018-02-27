@@ -26,7 +26,6 @@ import { FileObject } from '../lib/helper';
  */
 
 class NaturalLanguageClassifierV1 extends BaseService {
-
   name: string; // set by prototype to 'natural_language_classifier'
   serviceVersion: string; // set by prototype to 'v1'
 
@@ -50,13 +49,13 @@ class NaturalLanguageClassifierV1 extends BaseService {
   }
 
   /*************************
-   * naturallanguageclassifier
+   * classifyText
    ************************/
 
   /**
-   * Classify.
+   * Classify a phrase.
    *
-   * Returns label information for the input. The status must be `Available` before you can use the classifier to classify text. Use `Get information about a classifier` to retrieve the status.
+   * Returns label information for the input. The status must be `Available` before you can use the classifier to classify text.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.classifier_id - Classifier ID to use.
@@ -64,18 +63,23 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  classify(params: NaturalLanguageClassifierV1.ClassifyParams, callback?: NaturalLanguageClassifierV1.Callback<NaturalLanguageClassifierV1.Classification>): NodeJS.ReadableStream | void {
+  classify(
+    params: NaturalLanguageClassifierV1.ClassifyParams,
+    callback?: NaturalLanguageClassifierV1.Callback<
+      NaturalLanguageClassifierV1.Classification
+    >
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['classifier_id', 'text'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const body = { 
+    const body = {
       text: _params.text
     };
-    const path = { 
+    const path = {
       classifier_id: _params.classifier_id
     };
     const parameters = {
@@ -84,17 +88,21 @@ class NaturalLanguageClassifierV1 extends BaseService {
         method: 'POST',
         json: true,
         body: body,
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
+
+  /*************************
+   * manageClassifiers
+   ************************/
 
   /**
    * Create classifier.
@@ -102,14 +110,19 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * Sends data to create and train a classifier and returns information about the new classifier.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {ReadableStream|FileObject|Buffer} params.metadata - Metadata in JSON format. The metadata identifies the language of the data, and an optional name to identify the classifier. For details, see the [API reference](https://www.ibm.com/watson/developercloud/natural-language-classifier/api/v1/#create_classifier).
-   * @param {ReadableStream|FileObject|Buffer} params.training_data - Training data in CSV format. Each text value must have at least one class. The data can include up to 15,000 records. For details, see [Using your own data](https://www.ibm.com/watson/developercloud/doc/natural-language-classifier/using-your-data.html).
+   * @param {ReadableStream|FileObject|Buffer} params.metadata - Metadata in JSON format. The metadata identifies the language of the data, and an optional name to identify the classifier.
+   * @param {ReadableStream|FileObject|Buffer} params.training_data - Training data in CSV format. Each text value must have at least one class. The data can include up to 15,000 records. For details, see [Using your own data](https://console.bluemix.net/docs/services/natural-language-classifier/using-your-data.html).
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  createClassifier(params: NaturalLanguageClassifierV1.CreateClassifierParams, callback?: NaturalLanguageClassifierV1.Callback<NaturalLanguageClassifierV1.Classifier>): NodeJS.ReadableStream | void {
+  createClassifier(
+    params: NaturalLanguageClassifierV1.CreateClassifierParams,
+    callback?: NaturalLanguageClassifierV1.Callback<
+      NaturalLanguageClassifierV1.Classifier
+    >
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['metadata', 'training_data'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -133,13 +146,13 @@ class NaturalLanguageClassifierV1 extends BaseService {
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
+          Accept: 'application/json',
+          'Content-Type': 'multipart/form-data'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
    * Delete classifier.
@@ -149,32 +162,37 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  deleteClassifier(params: NaturalLanguageClassifierV1.DeleteClassifierParams, callback?: NaturalLanguageClassifierV1.Callback<NaturalLanguageClassifierV1.Empty>): NodeJS.ReadableStream | void {
+  deleteClassifier(
+    params: NaturalLanguageClassifierV1.DeleteClassifierParams,
+    callback?: NaturalLanguageClassifierV1.Callback<
+      NaturalLanguageClassifierV1.Empty
+    >
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['classifier_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = { 
+    const path = {
       classifier_id: _params.classifier_id
     };
     const parameters = {
       options: {
         url: '/v1/classifiers/{classifier_id}',
         method: 'DELETE',
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
    * Get information about a classifier.
@@ -186,32 +204,37 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  getClassifier(params: NaturalLanguageClassifierV1.GetClassifierParams, callback?: NaturalLanguageClassifierV1.Callback<NaturalLanguageClassifierV1.Classifier>): NodeJS.ReadableStream | void {
+  getClassifier(
+    params: NaturalLanguageClassifierV1.GetClassifierParams,
+    callback?: NaturalLanguageClassifierV1.Callback<
+      NaturalLanguageClassifierV1.Classifier
+    >
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['classifier_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = { 
+    const path = {
       classifier_id: _params.classifier_id
     };
     const parameters = {
       options: {
         url: '/v1/classifiers/{classifier_id}',
         method: 'GET',
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
    * List classifiers.
@@ -222,24 +245,32 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  listClassifiers(params?: NaturalLanguageClassifierV1.ListClassifiersParams, callback?: NaturalLanguageClassifierV1.Callback<NaturalLanguageClassifierV1.ClassifierList>): NodeJS.ReadableStream | void {
-    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {};
+  listClassifiers(
+    params?: NaturalLanguageClassifierV1.ListClassifiersParams,
+    callback?: NaturalLanguageClassifierV1.Callback<
+      NaturalLanguageClassifierV1.ClassifierList
+    >
+  ): NodeJS.ReadableStream | void {
+    const _params =
+      typeof params === 'function' && !callback ? {} : extend({}, params);
+    const _callback =
+      typeof params === 'function' && !callback
+        ? params
+        : callback ? callback : () => {};
     const parameters = {
       options: {
         url: '/v1/classifiers',
-        method: 'GET',
+        method: 'GET'
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
-
+  }
 }
 
 NaturalLanguageClassifierV1.prototype.name = 'natural_language_classifier';
@@ -250,7 +281,6 @@ NaturalLanguageClassifierV1.prototype.serviceVersion = 'v1';
  ************************/
 
 namespace NaturalLanguageClassifierV1 {
-
   /** Options for the `NaturalLanguageClassifierV1` constructor. **/
   export type Options = {
     url?: string;
@@ -258,13 +288,17 @@ namespace NaturalLanguageClassifierV1 {
     password?: string;
     use_unauthenticated?: boolean;
     headers?: object;
-  }
+  };
 
   /** The callback for a service request. **/
-  export type Callback<T> = (error: any, body?: T, response?: RequestResponse) => void;
+  export type Callback<T> = (
+    error: any,
+    body?: T,
+    response?: RequestResponse
+  ) => void;
 
   /** The body of a service request that returns no response data. **/
-  export interface Empty { }
+  export interface Empty {}
 
   /*************************
    * request interfaces
@@ -280,10 +314,10 @@ namespace NaturalLanguageClassifierV1 {
 
   /** Parameters for the `createClassifier` operation. **/
   export interface CreateClassifierParams {
-    /** Metadata in JSON format. The metadata identifies the language of the data, and an optional name to identify the classifier. For details, see the [API reference](https://www.ibm.com/watson/developercloud/natural-language-classifier/api/v1/#create_classifier). **/
-    metadata: ReadableStream|FileObject|Buffer;
-    /** Training data in CSV format. Each text value must have at least one class. The data can include up to 15,000 records. For details, see [Using your own data](https://www.ibm.com/watson/developercloud/doc/natural-language-classifier/using-your-data.html). **/
-    training_data: ReadableStream|FileObject|Buffer;
+    /** Metadata in JSON format. The metadata identifies the language of the data, and an optional name to identify the classifier. **/
+    metadata: ReadableStream | FileObject | Buffer;
+    /** Training data in CSV format. Each text value must have at least one class. The data can include up to 15,000 records. For details, see [Using your own data](https://console.bluemix.net/docs/services/natural-language-classifier/using-your-data.html). **/
+    training_data: ReadableStream | FileObject | Buffer;
   }
 
   /** Parameters for the `deleteClassifier` operation. **/
@@ -299,8 +333,7 @@ namespace NaturalLanguageClassifierV1 {
   }
 
   /** Parameters for the `listClassifiers` operation. **/
-  export interface ListClassifiersParams {
-  }
+  export interface ListClassifiersParams {}
 
   /*************************
    * model interfaces
@@ -317,7 +350,7 @@ namespace NaturalLanguageClassifierV1 {
     /** The class with the highest confidence. **/
     top_class?: string;
     /** An array of up to ten class-confidence pairs sorted in descending order of confidence. **/
-    classes?: ClassifiedClass[ ];
+    classes?: ClassifiedClass[];
   }
 
   /** Class and confidence. **/
@@ -349,9 +382,8 @@ namespace NaturalLanguageClassifierV1 {
   /** List of available classifiers. **/
   export interface ClassifierList {
     /** The classifiers available to the user. Returns an empty array if no classifiers are available. **/
-    classifiers: Classifier[ ];
+    classifiers: Classifier[];
   }
-
 }
 
 export = NaturalLanguageClassifierV1;

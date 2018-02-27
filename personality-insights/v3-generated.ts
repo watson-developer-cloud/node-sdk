@@ -25,7 +25,6 @@ import { BaseService } from '../lib/base_service';
  */
 
 class PersonalityInsightsV3 extends BaseService {
-
   name: string; // set by prototype to 'personality_insights'
   serviceVersion: string; // set by prototype to 'v3'
 
@@ -35,11 +34,11 @@ class PersonalityInsightsV3 extends BaseService {
    * Construct a PersonalityInsightsV3 object.
    *
    * @param {Object} options - Options for the service.
-   * @param {String} options.version - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses the API version for the date you specify, or the most recent version before that date. Note that you should not programmatically specify the current date at runtime, in case the API has been updated since your application's release. Instead, specify a version date that is compatible with your application, and don't change it until your application is ready for a later version.
-   * @param {String} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/personality-insights/api'). The base url may differ between Bluemix regions.
-   * @param {String} [options.username] - The username used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
-   * @param {String} [options.password] - The password used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
-   * @param {Boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
+   * @param {string} options.version - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses the API version for the date you specify, or the most recent version before that date. Note that you should not programmatically specify the current date at runtime, in case the API has been updated since your application's release. Instead, specify a version date that is compatible with your application, and don't change it until your application is ready for a later version.
+   * @param {string} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/personality-insights/api'). The base url may differ between Bluemix regions.
+   * @param {string} [options.username] - The username used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
+   * @param {string} [options.password] - The password used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
+   * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
    * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
    * @constructor
@@ -75,16 +74,19 @@ class PersonalityInsightsV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  profile(params: PersonalityInsightsV3.ProfileParams, callback?: PersonalityInsightsV3.Callback<PersonalityInsightsV3.Profile>): NodeJS.ReadableStream | void {
+  profile(
+    params: PersonalityInsightsV3.ProfileParams,
+    callback?: PersonalityInsightsV3.Callback<PersonalityInsightsV3.Profile>
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['content', 'content_type'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const body = _params.content;
-    const query = { 
+    const query = {
       raw_scores: _params.raw_scores,
       csv_headers: _params.csv_headers,
       consumption_preferences: _params.consumption_preferences
@@ -93,22 +95,21 @@ class PersonalityInsightsV3 extends BaseService {
       options: {
         url: '/v3/profile',
         method: 'POST',
-        json: (_params.content_type === 'application/json'),
+        json: _params.content_type === 'application/json',
         body: body,
-        qs: query,
+        qs: query
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': _params.content_type, 
-          'Content-Language': _params.content_language, 
+          Accept: 'application/json',
+          'Content-Type': _params.content_type,
+          'Content-Language': _params.content_language,
           'Accept-Language': _params.accept_language
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
-
+  }
 }
 
 PersonalityInsightsV3.prototype.name = 'personality_insights';
@@ -119,7 +120,6 @@ PersonalityInsightsV3.prototype.serviceVersion = 'v3';
  ************************/
 
 namespace PersonalityInsightsV3 {
-
   /** Options for the `PersonalityInsightsV3` constructor. **/
   export type Options = {
     version: string;
@@ -128,13 +128,17 @@ namespace PersonalityInsightsV3 {
     password?: string;
     use_unauthenticated?: boolean;
     headers?: object;
-  }
+  };
 
   /** The callback for a service request. **/
-  export type Callback<T> = (error: any, body?: T, response?: RequestResponse) => void;
+  export type Callback<T> = (
+    error: any,
+    body?: T,
+    response?: RequestResponse
+  ) => void;
 
   /** The body of a service request that returns no response data. **/
-  export interface Empty { }
+  export interface Empty {}
 
   /*************************
    * request interfaces
@@ -143,7 +147,7 @@ namespace PersonalityInsightsV3 {
   /** Parameters for the `profile` operation. **/
   export interface ProfileParams {
     /** A maximum of 20 MB of content to analyze, though the service requires much less text; for more information, see [Providing sufficient input](https://console.bluemix.net/docs/services/personality-insights/input.html#sufficient). A JSON request must conform to the `Content` model. **/
-    content: Content|string;
+    content: Content | string;
     /** The type of the input: application/json, text/html, or text/plain. A character encoding can be specified by including a `charset` parameter. For example, 'text/html;charset=utf-8'. **/
     content_type: ProfileConstants.ContentType | string;
     /** The language of the input text for the request: Arabic, English, Japanese, Korean, or Spanish. Regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. The effect of the `content_language` header depends on the `Content-Type` header. When `Content-Type` is `text/plain` or `text/html`, `content_language` is the only way to specify the language. When `Content-Type` is `application/json`, `content_language` overrides a language specified with the `language` parameter of a `ContentItem` object, and content items that specify a different language are ignored; omit this header to base the language on the specification of the content items. You can specify any combination of languages for `content_language` and `Accept-Language`. **/
@@ -164,7 +168,7 @@ namespace PersonalityInsightsV3 {
     export enum ContentType {
       APPLICATION_JSON = 'application/json',
       TEXT_HTML = 'text/html',
-      TEXT_PLAIN = 'text/plain',
+      TEXT_PLAIN = 'text/plain'
     }
     /** The language of the input text for the request: Arabic, English, Japanese, Korean, or Spanish. Regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. The effect of the `content_language` header depends on the `Content-Type` header. When `Content-Type` is `text/plain` or `text/html`, `content_language` is the only way to specify the language. When `Content-Type` is `application/json`, `content_language` overrides a language specified with the `language` parameter of a `ContentItem` object, and content items that specify a different language are ignored; omit this header to base the language on the specification of the content items. You can specify any combination of languages for `content_language` and `Accept-Language`. **/
     export enum ContentLanguage {
@@ -172,7 +176,7 @@ namespace PersonalityInsightsV3 {
       EN = 'en',
       ES = 'es',
       JA = 'ja',
-      KO = 'ko',
+      KO = 'ko'
     }
     /** The desired language of the response. For two-character arguments, regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. You can specify any combination of languages for the input and response content. **/
     export enum AcceptLanguage {
@@ -186,7 +190,7 @@ namespace PersonalityInsightsV3 {
       KO = 'ko',
       PT_BR = 'pt-br',
       ZH_CN = 'zh-cn',
-      ZH_TW = 'zh-tw',
+      ZH_TW = 'zh-tw'
     }
   }
 
@@ -223,13 +227,13 @@ namespace PersonalityInsightsV3 {
     /** The user-visible name of the consumption preferences category. **/
     name: string;
     /** Detailed results inferred from the input text for the individual preferences of the category. **/
-    consumption_preferences: ConsumptionPreferences[ ];
+    consumption_preferences: ConsumptionPreferences[];
   }
 
   /** Content. **/
   export interface Content {
     /** An array of `ContentItem` objects that provides the text that is to be analyzed. **/
-    content_items: ContentItem[ ];
+    content_items: ContentItem[];
   }
 
   /** ContentItem. **/
@@ -263,17 +267,17 @@ namespace PersonalityInsightsV3 {
     /** When guidance is appropriate, a string that provides a message that indicates the number of words found and where that value falls in the range of required or suggested number of words. **/
     word_count_message?: string;
     /** Detailed results for the Big Five personality characteristics (dimensions and facets) inferred from the input text. **/
-    personality: Trait[ ];
+    personality: Trait[];
     /** Detailed results for the Needs characteristics inferred from the input text. **/
-    values: Trait[ ];
+    values: Trait[];
     /** Detailed results for the Values characteristics inferred from the input text. **/
-    needs: Trait[ ];
+    needs: Trait[];
     /** For JSON content that is timestamped, detailed results about the social behavior disclosed by the input in terms of temporal characteristics. The results include information about the distribution of the content over the days of the week and the hours of the day. **/
-    behavior?: Behavior[ ];
+    behavior?: Behavior[];
     /** If the `consumption_preferences` query parameter is `true`, detailed results for each category of consumption preferences. Each element of the array provides information inferred from the input text for the individual preferences of that category. **/
-    consumption_preferences?: ConsumptionPreferencesCategory[ ];
+    consumption_preferences?: ConsumptionPreferencesCategory[];
     /** Warning messages associated with the input text submitted with the request. The array is empty if the input generated no warnings. **/
-    warnings: Warning[ ];
+    warnings: Warning[];
   }
 
   /** Trait. **/
@@ -291,7 +295,7 @@ namespace PersonalityInsightsV3 {
     /** **`2017-10-13`**: Indicates whether the characteristic is meaningful for the input language. The field is always `true` for all characteristics of English, Spanish, and Japanese input. The field is `false` for the subset of characteristics of Arabic and Korean input for which the service's models are unable to generate meaningful results. **`2016-10-19`**: Not returned. **/
     significant?: boolean;
     /** For `personality` (Big Five) dimensions, more detailed results for the facets of each dimension as inferred from the input text. **/
-    children?: Trait[ ];
+    children?: Trait[];
   }
 
   /** Warning. **/
@@ -301,7 +305,6 @@ namespace PersonalityInsightsV3 {
     /** The message associated with the `warning_id`: * `WORD_COUNT_MESSAGE`: "There were {number} words in the input. We need a minimum of 600, preferably 1,200 or more, to compute statistically significant estimates." * `JSON_AS_TEXT`: "Request input was processed as text/plain as indicated, however detected a JSON input. Did you mean application/json?" * `CONTENT_TRUNCATED`: "For maximum accuracy while also optimizing processing time, only the first 250KB of input text (excluding markup) was analyzed. Accuracy levels off at approximately 3,000 words so this did not affect the accuracy of the profile." * `PARTIAL_TEXT_USED`, "The text provided to compute the profile was trimmed for performance reasons. This action does not affect the accuracy of the output, as not all of the input text was required." Applies only when Arabic input text exceeds a threshold at which additional words do not contribute to the accuracy of the profile. **/
     message: string;
   }
-
 }
 
 export = PersonalityInsightsV3;

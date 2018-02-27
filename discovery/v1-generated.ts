@@ -677,6 +677,55 @@ class DiscoveryV1 extends BaseService {
   }
 
   /**
+   * Set the expansion list.
+   *
+   * Create or replace the Expansion list for this collection. The maximum number of expanded terms per collection is `500`. The current expansion list is replaced with the uploaded content.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.environment_id - The ID of the environment.
+   * @param {string} params.collection_id - The ID of the collection.
+   * @param {Expansion[ ]} params.expansions - An array of query expansion definitions.    Each object in the `expansions` array represents a term or set of terms that will be expanded into other terms. Each expansion object can be configured so that all terms are expanded to all other terms in the object - bi-directional, or a set list of terms can be expanded into a second list of terms - uni-directional.   To create a bi-directional expansion specify an `expanded_terms` array. When found in a query, all items in the `expanded_terms` array are then expanded to the other items in the same array.   To create a uni-directional expansion, specify both an array of `input_terms` and an array of `expanded_terms`. When items in the `input_terms` array are present in a query, they are expanded using the items listed in the `expanded_terms` array.
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {NodeJS.ReadableStream|void}
+   */
+  createExpansions(
+    params: DiscoveryV1.CreateExpansionsParams,
+    callback?: DiscoveryV1.Callback<DiscoveryV1.Expansions>
+  ): NodeJS.ReadableStream | void {
+    const _params = extend({}, params);
+    const _callback = callback ? callback : () => {};
+    const requiredParams = ['environment_id', 'collection_id', 'expansions'];
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+    const body = {
+      expansions: _params.expansions
+    };
+    const path = {
+      environment_id: _params.environment_id,
+      collection_id: _params.collection_id
+    };
+    const parameters = {
+      options: {
+        url:
+          '/v1/environments/{environment_id}/collections/{collection_id}/expansions',
+        method: 'POST',
+        json: true,
+        body: body,
+        path: path
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+    };
+    return createRequest(parameters, _callback);
+  }
+
+  /**
    * Delete a collection.
    *
    * @param {Object} params - The parameters to send to the service.
@@ -703,6 +752,49 @@ class DiscoveryV1 extends BaseService {
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}',
+        method: 'DELETE',
+        path: path
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+    };
+    return createRequest(parameters, _callback);
+  }
+
+  /**
+   * Delete the expansions list.
+   *
+   * Remove the expansion information for this collection. The expansion list must be deleted to disable query expansion for a collection.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.environment_id - The ID of the environment.
+   * @param {string} params.collection_id - The ID of the collection.
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {NodeJS.ReadableStream|void}
+   */
+  deleteExpansions(
+    params: DiscoveryV1.DeleteExpansionsParams,
+    callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>
+  ): NodeJS.ReadableStream | void {
+    const _params = extend({}, params);
+    const _callback = callback ? callback : () => {};
+    const requiredParams = ['environment_id', 'collection_id'];
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+    const path = {
+      environment_id: _params.environment_id,
+      collection_id: _params.collection_id
+    };
+    const parameters = {
+      options: {
+        url:
+          '/v1/environments/{environment_id}/collections/{collection_id}/expansions',
         method: 'DELETE',
         path: path
       },
@@ -832,6 +924,49 @@ class DiscoveryV1 extends BaseService {
         url: '/v1/environments/{environment_id}/collections',
         method: 'GET',
         qs: query,
+        path: path
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+    };
+    return createRequest(parameters, _callback);
+  }
+
+  /**
+   * List current expansions.
+   *
+   * Returns the current expansion list for the specified collection. If an expansion list is not specified, an object with empty expansion arrays is returned.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.environment_id - The ID of the environment.
+   * @param {string} params.collection_id - The ID of the collection.
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {NodeJS.ReadableStream|void}
+   */
+  listExpansions(
+    params: DiscoveryV1.ListExpansionsParams,
+    callback?: DiscoveryV1.Callback<DiscoveryV1.Expansions>
+  ): NodeJS.ReadableStream | void {
+    const _params = extend({}, params);
+    const _callback = callback ? callback : () => {};
+    const requiredParams = ['environment_id', 'collection_id'];
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+    const path = {
+      environment_id: _params.environment_id,
+      collection_id: _params.collection_id
+    };
+    const parameters = {
+      options: {
+        url:
+          '/v1/environments/{environment_id}/collections/{collection_id}/expansions',
+        method: 'GET',
         path: path
       },
       defaultOptions: extend(true, {}, this._options, {
@@ -2214,12 +2349,30 @@ namespace DiscoveryV1 {
       IT = 'it',
       JA = 'ja',
       KO = 'ko',
-      PT_BR = 'pt-br'
+      PT = 'pt'
     }
+  }
+
+  /** Parameters for the `createExpansions` operation. **/
+  export interface CreateExpansionsParams {
+    /** The ID of the environment. **/
+    environment_id: string;
+    /** The ID of the collection. **/
+    collection_id: string;
+    /** An array of query expansion definitions.    Each object in the `expansions` array represents a term or set of terms that will be expanded into other terms. Each expansion object can be configured so that all terms are expanded to all other terms in the object - bi-directional, or a set list of terms can be expanded into a second list of terms - uni-directional.   To create a bi-directional expansion specify an `expanded_terms` array. When found in a query, all items in the `expanded_terms` array are then expanded to the other items in the same array.   To create a uni-directional expansion, specify both an array of `input_terms` and an array of `expanded_terms`. When items in the `input_terms` array are present in a query, they are expanded using the items listed in the `expanded_terms` array. **/
+    expansions: Expansion[];
   }
 
   /** Parameters for the `deleteCollection` operation. **/
   export interface DeleteCollectionParams {
+    /** The ID of the environment. **/
+    environment_id: string;
+    /** The ID of the collection. **/
+    collection_id: string;
+  }
+
+  /** Parameters for the `deleteExpansions` operation. **/
+  export interface DeleteExpansionsParams {
     /** The ID of the environment. **/
     environment_id: string;
     /** The ID of the collection. **/
@@ -2248,6 +2401,14 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** Find collections with the given name. **/
     name?: string;
+  }
+
+  /** Parameters for the `listExpansions` operation. **/
+  export interface ListExpansionsParams {
+    /** The ID of the environment. **/
+    environment_id: string;
+    /** The ID of the collection. **/
+    collection_id: string;
   }
 
   /** Parameters for the `updateCollection` operation. **/
@@ -2653,7 +2814,7 @@ namespace DiscoveryV1 {
     status?: string;
     /** The unique identifier of the collection's configuration. **/
     configuration_id?: string;
-    /** The language of the documents stored in the collection. Permitted values include `en_us` (U.S. English), `de` (German), and `es` (Spanish). **/
+    /** The language of the documents stored in the collection. Permitted values include `en` (English), `de` (German), and `es` (Spanish). **/
     language?: string;
     /** The object providing information about the documents in the collection. Present only when retrieving details of a collection. **/
     document_counts?: DocumentCounts;
@@ -2863,6 +3024,20 @@ namespace DiscoveryV1 {
     indexed?: number;
     /** Total number of documents allowed in the environment's capacity. **/
     maximum_allowed?: number;
+  }
+
+  /** An expansion definition. Each object respresents one set of expandable strings. For example, you could have expansions for the word `hot` in one object, and expansions for the word `cold` in another. **/
+  export interface Expansion {
+    /** A list of terms that will be expanded for this expansion. If specified, only the items in this list are expanded. **/
+    input_terms?: string[];
+    /** A list of terms that this expansion will be expanded to. If specified without `input_terms`, it also functions as the input term list. **/
+    expanded_terms: string[];
+  }
+
+  /** The query expansion definitions for the specified collection. **/
+  export interface Expansions {
+    /** An array of query expansion definitions.    Each object in the `expansions` array represents a term or set of terms that will be expanded into other terms. Each expansion object can be configured so that all terms are expanded to all other terms in the object - bi-directional, or a set list of terms can be expanded into a second list of terms - uni-directional.   To create a bi-directional expansion specify an `expanded_terms` array. When found in a query, all items in the `expanded_terms` array are then expanded to the other items in the same array.   To create a uni-directional expansion, specify both an array of `input_terms` and an array of `expanded_terms`. When items in the `input_terms` array are present in a query, they are expanded using the items listed in the `expanded_terms` array. **/
+    expansions: Expansion[];
   }
 
   /** Field. **/

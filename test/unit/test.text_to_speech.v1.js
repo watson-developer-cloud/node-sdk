@@ -96,7 +96,7 @@ describe('text_to_speech', function() {
     });
 
     it('should support the customization_id option', function() {
-      const params = { customization_id: 'foo', text: 'test', accept: 'audio/ogg; codecs=opus' };
+      const params = { customization_id: 'foo', text: 'test' };
       const req = text_to_speech.synthesize(params, noop);
       assert(req.url);
       assert(req.url.query);

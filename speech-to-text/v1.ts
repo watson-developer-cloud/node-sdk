@@ -101,10 +101,6 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
     return super.getLanguageModel(params, callback);
   }
 
-  getRecognizeStatus(params, callback) {
-    return super.getSessionStatus(params, callback);
-  }
-
   getRecognitionJob(params, callback) {
     return super.checkJob(params, callback);
   }
@@ -204,27 +200,6 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
 
   resetCustomization(params, callback) {
     return super.resetLanguageModel(params, callback);
-  }
-
-  createSession(params, callback) {
-    /**
-     * Add the cookie_session to the response
-     * @private
-     * @param cb
-     * @return {Function}
-     */
-    function addSessionId(cb) {
-      return function(error, body, response) {
-        if (error) {
-          cb(error, body, response);
-          return;
-        }
-        const cookies = cookie.parse(response.headers['set-cookie'][0]);
-        body.cookie_session = cookies.SESSIONID;
-        cb(error, body, response);
-      };
-    }
-    return super.createSession(params, addSessionId(callback));
   }
 
   /**

@@ -26,7 +26,6 @@ import { FileObject } from '../lib/helper';
  */
 
 class LanguageTranslatorV2 extends BaseService {
-
   name: string; // set by prototype to 'language_translator'
   serviceVersion: string; // set by prototype to 'v2'
 
@@ -54,25 +53,32 @@ class LanguageTranslatorV2 extends BaseService {
    ************************/
 
   /**
+   * Translate.
+   *
    * Translates the input text from the source language to the target language.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string[ ]} params.text - Input text in UTF-8 encoding. It is a list so that multiple paragraphs can be submitted. Also accept a single string, instead of an array, as valid input.
-   * @param {string} [params.model_id] - The unique model_id of the translation model being used to translate text. The model_id inherently specifies source language, target language, and domain. If the model_id is specified, there is no need for the source and target parameters and the values are ignored.
-   * @param {string} [params.source] - Used in combination with target as an alternative way to select the model for translation. When target and source are set, and model_id is not set, the system chooses a default model with the right language pair to translate (usually the model based on the news domain).
-   * @param {string} [params.target] - Used in combination with source as an alternative way to select the model for translation. When target and source are set, and model_id is not set, the system chooses a default model with the right language pair to translate (usually the model based on the news domain).
+   * @param {string[ ]} params.text - Input text in UTF-8 encoding. Multiple entries will result in multiple translations in the response.
+   * @param {string} [params.model_id] - Model ID of the translation model to use. If this is specified, the `source` and `target` parameters will be ignored. The method requires either a model ID or both the `source` and `target` parameters.
+   * @param {string} [params.source] - Language code of the source text language. Use with `target` as an alternative way to select a translation model. When `source` and `target` are set, and a model ID is not set, the system chooses a default model for the language pair (usually the model based on the news domain).
+   * @param {string} [params.target] - Language code of the translation target language. Use with source as an alternative way to select a translation model.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  translate(params: LanguageTranslatorV2.TranslateParams, callback?: LanguageTranslatorV2.Callback<LanguageTranslatorV2.TranslationResult>): NodeJS.ReadableStream | void {
+  translate(
+    params: LanguageTranslatorV2.TranslateParams,
+    callback?: LanguageTranslatorV2.Callback<
+      LanguageTranslatorV2.TranslationResult
+    >
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['text'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const body = { 
+    const body = {
       text: _params.text,
       model_id: _params.model_id,
       source: _params.source,
@@ -83,23 +89,25 @@ class LanguageTranslatorV2 extends BaseService {
         url: '/v2/translate',
         method: 'POST',
         json: true,
-        body: body,
+        body: body
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /*************************
    * identify
    ************************/
 
   /**
+   * Identify language.
+   *
    * Identifies the language of the input text.
    *
    * @param {Object} params - The parameters to send to the service.
@@ -139,50 +147,66 @@ class LanguageTranslatorV2 extends BaseService {
   }
 
   /**
-   * Lists all languages that can be identified by the API.
+   * List identifiable languages.
    *
-   * Lists all languages that the service can identify. Returns the two-letter code (for example, `en` for English or `es` for Spanish) and name of each language.
+   * Lists the languages that the service can identify. Returns the language code (for example, `en` for English or `es` for Spanish) and name of each language.
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  listIdentifiableLanguages(params?: LanguageTranslatorV2.ListIdentifiableLanguagesParams, callback?: LanguageTranslatorV2.Callback<LanguageTranslatorV2.IdentifiableLanguages>): NodeJS.ReadableStream | void {
-    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {};
+  listIdentifiableLanguages(
+    params?: LanguageTranslatorV2.ListIdentifiableLanguagesParams,
+    callback?: LanguageTranslatorV2.Callback<
+      LanguageTranslatorV2.IdentifiableLanguages
+    >
+  ): NodeJS.ReadableStream | void {
+    const _params =
+      typeof params === 'function' && !callback ? {} : extend({}, params);
+    const _callback =
+      typeof params === 'function' && !callback
+        ? params
+        : callback ? callback : () => {};
     const parameters = {
       options: {
         url: '/v2/identifiable_languages',
-        method: 'GET',
+        method: 'GET'
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
+          Accept: 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /*************************
    * models
    ************************/
 
   /**
-   * Uploads a TMX glossary file on top of a domain to customize a translation model.
+   * Create model.
+   *
+   * Uploads a TMX glossary file on top of a domain to customize a translation model.  Depending on the size of the file, training can range from minutes for a glossary to several hours for a large parallel corpus. Glossary files must be less than 10 MB. The cumulative file size of all uploaded glossary and corpus files is limited to 250 MB.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.base_model_id - Specifies the domain model that is used as the base for the training. To see current supported domain models, use the GET /v2/models parameter.
-   * @param {string} [params.name] - The model name. Valid characters are letters, numbers, -, and _. No spaces.
-   * @param {ReadableStream|FileObject|Buffer} [params.forced_glossary] - A TMX file with your customizations. The customizations in the file completely overwrite the domain data translation, including high frequency or high confidence phrase translations. You can upload only one glossary with a file size less than 10 MB per call.
+   * @param {string} params.base_model_id - The model ID of the model to use as the base for customization. To see available models, use the `List models` method.
+   * @param {string} [params.name] - An optional model name that you can use to identify the model. Valid characters are letters, numbers, dashes, underscores, spaces and apostrophes. The maximum length is 32 characters.
+   * @param {ReadableStream|FileObject|Buffer} [params.forced_glossary] - A TMX file with your customizations. The customizations in the file completely overwrite the domain translaton data, including high frequency or high confidence phrase translations. You can upload only one glossary with a file size less than 10 MB per call.
    * @param {ReadableStream|FileObject|Buffer} [params.parallel_corpus] - A TMX file that contains entries that are treated as a parallel corpus instead of a glossary.
    * @param {ReadableStream|FileObject|Buffer} [params.monolingual_corpus] - A UTF-8 encoded plain text file that is used to customize the target language model.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  createModel(params: LanguageTranslatorV2.CreateModelParams, callback?: LanguageTranslatorV2.Callback<LanguageTranslatorV2.TranslationModel>): NodeJS.ReadableStream | void {
+  createModel(
+    params: LanguageTranslatorV2.CreateModelParams,
+    callback?: LanguageTranslatorV2.Callback<
+      LanguageTranslatorV2.TranslationModel
+    >
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['base_model_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -202,7 +226,7 @@ class LanguageTranslatorV2 extends BaseService {
         contentType: 'text/plain'
       }
     };
-    const query = { 
+    const query = {
       base_model_id: _params.base_model_id,
       name: _params.name
     };
@@ -215,96 +239,121 @@ class LanguageTranslatorV2 extends BaseService {
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
+          Accept: 'application/json',
+          'Content-Type': 'multipart/form-data'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
+   * Delete model.
+   *
    * Deletes a custom translation model.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.model_id - The model identifier.
+   * @param {string} params.model_id - Model ID of the model to delete.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  deleteModel(params: LanguageTranslatorV2.DeleteModelParams, callback?: LanguageTranslatorV2.Callback<LanguageTranslatorV2.DeleteModelResult>): NodeJS.ReadableStream | void {
+  deleteModel(
+    params: LanguageTranslatorV2.DeleteModelParams,
+    callback?: LanguageTranslatorV2.Callback<
+      LanguageTranslatorV2.DeleteModelResult
+    >
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['model_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = { 
+    const path = {
       model_id: _params.model_id
     };
     const parameters = {
       options: {
         url: '/v2/models/{model_id}',
         method: 'DELETE',
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
+          Accept: 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
-   * Get information about the given translation model, including training status.
+   * Get model details.
+   *
+   * Gets information about a translation model, including training status for custom models.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.model_id - Model ID to use.
+   * @param {string} params.model_id - Model ID of the model to get.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  getModel(params: LanguageTranslatorV2.GetModelParams, callback?: LanguageTranslatorV2.Callback<LanguageTranslatorV2.TranslationModel>): NodeJS.ReadableStream | void {
+  getModel(
+    params: LanguageTranslatorV2.GetModelParams,
+    callback?: LanguageTranslatorV2.Callback<
+      LanguageTranslatorV2.TranslationModel
+    >
+  ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => {};
+    const _callback = callback ? callback : () => {};
     const requiredParams = ['model_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const path = { 
+    const path = {
       model_id: _params.model_id
     };
     const parameters = {
       options: {
         url: '/v2/models/{model_id}',
         method: 'GET',
-        path: path,
+        path: path
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
+          Accept: 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
+  }
 
   /**
-   * Lists available standard and custom models by source or target language.
+   * List models.
+   *
+   * Lists available translation models.
    *
    * @param {Object} [params] - The parameters to send to the service.
-   * @param {string} [params.source] - Filter models by source language.
-   * @param {string} [params.target] - Filter models by target language.
-   * @param {boolean} [params.default_models] - Valid values are leaving it unset, `true`, and `false`. When `true`, it filters models to return the default_models model or models. When `false`, it returns the non-default_models model or models. If not set, it returns all models, default_models and non-default_models.
+   * @param {string} [params.source] - Specify a language code to filter results by source language.
+   * @param {string} [params.target] - Specify a language code to filter results by target language.
+   * @param {boolean} [params.default_models] - If the default_models parameter isn't specified, the service will return all models (default_models and non-default_models) for each language pair. To return only default_models models, set this to `true`. To return only non-default_models models, set this to `false`.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  listModels(params?: LanguageTranslatorV2.ListModelsParams, callback?: LanguageTranslatorV2.Callback<LanguageTranslatorV2.TranslationModels>): NodeJS.ReadableStream | void {
-    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {};
-    const query = { 
+  listModels(
+    params?: LanguageTranslatorV2.ListModelsParams,
+    callback?: LanguageTranslatorV2.Callback<
+      LanguageTranslatorV2.TranslationModels
+    >
+  ): NodeJS.ReadableStream | void {
+    const _params =
+      typeof params === 'function' && !callback ? {} : extend({}, params);
+    const _callback =
+      typeof params === 'function' && !callback
+        ? params
+        : callback ? callback : () => {};
+    const query = {
       source: _params.source,
       target: _params.target,
       default: _params.default_models
@@ -313,18 +362,16 @@ class LanguageTranslatorV2 extends BaseService {
       options: {
         url: '/v2/models',
         method: 'GET',
-        qs: query,
+        qs: query
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/x-www-form-urlencoded',
+          Accept: 'application/json'
         }
       })
     };
     return createRequest(parameters, _callback);
-  };
-
+  }
 }
 
 LanguageTranslatorV2.prototype.name = 'language_translator';
@@ -335,7 +382,6 @@ LanguageTranslatorV2.prototype.serviceVersion = 'v2';
  ************************/
 
 namespace LanguageTranslatorV2 {
-
   /** Options for the `LanguageTranslatorV2` constructor. **/
   export type Options = {
     url?: string;
@@ -343,13 +389,17 @@ namespace LanguageTranslatorV2 {
     password?: string;
     use_unauthenticated?: boolean;
     headers?: object;
-  }
+  };
 
   /** The callback for a service request. **/
-  export type Callback<T> = (error: any, body?: T, response?: RequestResponse) => void;
+  export type Callback<T> = (
+    error: any,
+    body?: T,
+    response?: RequestResponse
+  ) => void;
 
   /** The body of a service request that returns no response data. **/
-  export interface Empty { }
+  export interface Empty {}
 
   /*************************
    * request interfaces
@@ -357,13 +407,13 @@ namespace LanguageTranslatorV2 {
 
   /** Parameters for the `translate` operation. **/
   export interface TranslateParams {
-    /** Input text in UTF-8 encoding. It is a list so that multiple paragraphs can be submitted. Also accept a single string, instead of an array, as valid input. **/
-    text: string[ ];
-    /** The unique model_id of the translation model being used to translate text. The model_id inherently specifies source language, target language, and domain. If the model_id is specified, there is no need for the source and target parameters and the values are ignored. **/
+    /** Input text in UTF-8 encoding. Multiple entries will result in multiple translations in the response. **/
+    text: string[];
+    /** Model ID of the translation model to use. If this is specified, the `source` and `target` parameters will be ignored. The method requires either a model ID or both the `source` and `target` parameters. **/
     model_id?: string;
-    /** Used in combination with target as an alternative way to select the model for translation. When target and source are set, and model_id is not set, the system chooses a default model with the right language pair to translate (usually the model based on the news domain). **/
+    /** Language code of the source text language. Use with `target` as an alternative way to select a translation model. When `source` and `target` are set, and a model ID is not set, the system chooses a default model for the language pair (usually the model based on the news domain). **/
     source?: string;
-    /** Used in combination with source as an alternative way to select the model for translation. When target and source are set, and model_id is not set, the system chooses a default model with the right language pair to translate (usually the model based on the news domain). **/
+    /** Language code of the translation target language. Use with source as an alternative way to select a translation model. **/
     target?: string;
   }
 
@@ -374,42 +424,41 @@ namespace LanguageTranslatorV2 {
   }
 
   /** Parameters for the `listIdentifiableLanguages` operation. **/
-  export interface ListIdentifiableLanguagesParams {
-  }
+  export interface ListIdentifiableLanguagesParams {}
 
   /** Parameters for the `createModel` operation. **/
   export interface CreateModelParams {
-    /** Specifies the domain model that is used as the base for the training. To see current supported domain models, use the GET /v2/models parameter. **/
+    /** The model ID of the model to use as the base for customization. To see available models, use the `List models` method. **/
     base_model_id: string;
-    /** The model name. Valid characters are letters, numbers, -, and _. No spaces. **/
+    /** An optional model name that you can use to identify the model. Valid characters are letters, numbers, dashes, underscores, spaces and apostrophes. The maximum length is 32 characters. **/
     name?: string;
-    /** A TMX file with your customizations. The customizations in the file completely overwrite the domain data translation, including high frequency or high confidence phrase translations. You can upload only one glossary with a file size less than 10 MB per call. **/
-    forced_glossary?: ReadableStream|FileObject|Buffer;
+    /** A TMX file with your customizations. The customizations in the file completely overwrite the domain translaton data, including high frequency or high confidence phrase translations. You can upload only one glossary with a file size less than 10 MB per call. **/
+    forced_glossary?: ReadableStream | FileObject | Buffer;
     /** A TMX file that contains entries that are treated as a parallel corpus instead of a glossary. **/
-    parallel_corpus?: ReadableStream|FileObject|Buffer;
+    parallel_corpus?: ReadableStream | FileObject | Buffer;
     /** A UTF-8 encoded plain text file that is used to customize the target language model. **/
-    monolingual_corpus?: ReadableStream|FileObject|Buffer;
+    monolingual_corpus?: ReadableStream | FileObject | Buffer;
   }
 
   /** Parameters for the `deleteModel` operation. **/
   export interface DeleteModelParams {
-    /** The model identifier. **/
+    /** Model ID of the model to delete. **/
     model_id: string;
   }
 
   /** Parameters for the `getModel` operation. **/
   export interface GetModelParams {
-    /** Model ID to use. **/
+    /** Model ID of the model to get. **/
     model_id: string;
   }
 
   /** Parameters for the `listModels` operation. **/
   export interface ListModelsParams {
-    /** Filter models by source language. **/
+    /** Specify a language code to filter results by source language. **/
     source?: string;
-    /** Filter models by target language. **/
+    /** Specify a language code to filter results by target language. **/
     target?: string;
-    /** Valid values are leaving it unset, `true`, and `false`. When `true`, it filters models to return the default_models model or models. When `false`, it returns the non-default_models model or models. If not set, it returns all models, default_models and non-default_models. **/
+    /** If the default_models parameter isn't specified, the service will return all models (default_models and non-default_models) for each language pair. To return only default_models models, set this to `true`. To return only non-default_models models, set this to `false`. **/
     default_models?: boolean;
   }
 
@@ -425,7 +474,7 @@ namespace LanguageTranslatorV2 {
 
   /** IdentifiableLanguage. **/
   export interface IdentifiableLanguage {
-    /** The code for an identifiable language. **/
+    /** The language code for an identifiable language. **/
     language: string;
     /** The name of the identifiable language. **/
     name: string;
@@ -434,12 +483,12 @@ namespace LanguageTranslatorV2 {
   /** IdentifiableLanguages. **/
   export interface IdentifiableLanguages {
     /** A list of all languages that the service can identify. **/
-    languages: IdentifiableLanguage[ ];
+    languages: IdentifiableLanguage[];
   }
 
   /** IdentifiedLanguage. **/
   export interface IdentifiedLanguage {
-    /** The code for an identified language. **/
+    /** The language code for an identified language. **/
     language: string;
     /** The confidence score for the identified language. **/
     confidence: number;
@@ -448,7 +497,7 @@ namespace LanguageTranslatorV2 {
   /** IdentifiedLanguages. **/
   export interface IdentifiedLanguages {
     /** A ranking of identified languages with confidence scores. **/
-    languages: IdentifiedLanguage[ ];
+    languages: IdentifiedLanguage[];
   }
 
   /** Translation. **/
@@ -459,23 +508,23 @@ namespace LanguageTranslatorV2 {
 
   /** Response payload for models. **/
   export interface TranslationModel {
-    /** A globally unique string that identifies the underlying model that is used for translation. This string contains all the information about source language, target language, domain, and various other related configurations. **/
+    /** A globally unique string that identifies the underlying model that is used for translation. **/
     model_id: string;
-    /** If a model is trained by a user, there might be an optional “name” parameter attached during training to help the user identify the model. **/
+    /** Optional name that can be specified when the model is created. **/
     name?: string;
-    /** Source language in two letter language code. Use the five letter code when clarifying between multiple supported languages. When model_id is used directly, it will override the source-target language combination. Also, when a two letter language code is used, but no suitable default is found, it returns an error. **/
+    /** Translation source language code. **/
     source?: string;
-    /** Target language in two letter language code. **/
+    /** Translation target language code. **/
     target?: string;
-    /** If this model is a custom model, this returns the base model that it is trained on. For a base model, this response value is empty. **/
+    /** Model ID of the base model that was used to customize the model. If the model is not a custom model, this will be an empty string. **/
     base_model_id?: string;
     /** The domain of the translation model. **/
     domain?: string;
-    /** Whether this model can be used as a base for customization. Customized models are not further customizable, and we don't allow the customization of certain base models. **/
+    /** Whether this model can be used as a base for customization. Customized models are not further customizable, and some base models are not customizable. **/
     customizable?: boolean;
-    /** Whether this model is considered a default model and is used when the source and target languages are specified without the model_id. **/
+    /** Whether or not the model is a default model. A default model is the model for a given language pair that will be used when that language pair is specified in the source and target parameters. **/
     default_model?: boolean;
-    /** Returns the ID of the Language Translator service instance that created the model, or an empty string if it is a model that is trained by IBM. **/
+    /** Either an empty string, indicating the model is not a custom model, or the ID of the service instance that created the model. **/
     owner?: string;
     /** Availability of a model. **/
     status?: string;
@@ -484,19 +533,18 @@ namespace LanguageTranslatorV2 {
   /** The response type for listing existing translation models. **/
   export interface TranslationModels {
     /** An array of available models. **/
-    models: TranslationModel[ ];
+    models: TranslationModel[];
   }
 
   /** TranslationResult. **/
   export interface TranslationResult {
-    /** Number of words of the complete input text. **/
+    /** Number of words in the input text. **/
     word_count: number;
-    /** Number of characters of the complete input text. **/
+    /** Number of characters in the input text. **/
     character_count: number;
-    /** List of translation output in UTF-8, corresponding to the list of input text. **/
-    translations: Translation[ ];
+    /** List of translation output in UTF-8, corresponding to the input text entries. **/
+    translations: Translation[];
   }
-
 }
 
 export = LanguageTranslatorV2;

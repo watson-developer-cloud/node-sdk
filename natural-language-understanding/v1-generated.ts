@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 IBM All Rights Reserved.
+ * Copyright 2018 IBM All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,22 +28,19 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
   name: string; // set by prototype to 'natural-language-understanding'
   serviceVersion: string; // set by prototype to 'v1'
 
-  static VERSION_DATE_2016_01_23: string = '2016-01-23';
-  static VERSION_DATE_2017_02_27: string = '2017-02-27';
-
   static URL: string = 'https://gateway.watsonplatform.net/natural-language-understanding/api';
 
   /**
    * Construct a NaturalLanguageUnderstandingV1 object.
    *
    * @param {Object} options - Options for the service.
-   * @param {String} options.version - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses the API version for the date you specify, or the most recent version before that date. Note that you should not programmatically specify the current date at runtime, in case the API has been updated since your application's release. Instead, specify a version date that is compatible with your application, and don't change it until your application is ready for a later version.
-   * @param {String} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/natural-language-understanding/api'). The base url may differ between Bluemix regions.
-   * @param {String} [options.username] - The username used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
-   * @param {String} [options.password] - The password used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
-   * @param {Boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
+   * @param {string} options.version - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses the API version for the date you specify, or the most recent version before that date. Note that you should not programmatically specify the current date at runtime, in case the API has been updated since your application's release. Instead, specify a version date that is compatible with your application, and don't change it until your application is ready for a later version.
+   * @param {string} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/natural-language-understanding/api'). The base url may differ between Bluemix regions.
+   * @param {string} [options.username] - The username used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
+   * @param {string} [options.password] - The password used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
+   * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
    * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
-   * @param {Object} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
+   * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
    * @constructor
    * @returns {NaturalLanguageUnderstandingV1}
    * @throws {Error}
@@ -275,6 +272,36 @@ namespace NaturalLanguageUnderstandingV1 {
    * model interfaces
    ************************/
 
+  /** Results of the analysis, organized by feature. **/
+  export interface AnalysisResults {
+    /** Language used to analyze the text. **/
+    language?: string;
+    /** Text that was used in the analysis. **/
+    analyzed_text?: string;
+    /** URL that was used to retrieve HTML content. **/
+    retrieved_url?: string;
+    /** API usage information for the request. **/
+    usage?: Usage;
+    /** The general concepts referenced or alluded to in the specified content. **/
+    concepts?: ConceptsResult[];
+    /** The important entities in the specified content. **/
+    entities?: EntitiesResult[];
+    /** The important keywords in content organized by relevance. **/
+    keywords?: KeywordsResult[];
+    /** The hierarchical 5-level taxonomy the content is categorized into. **/
+    categories?: CategoriesResult[];
+    /** The anger, disgust, fear, joy, or sadness conveyed by the content. **/
+    emotion?: EmotionResult;
+    /** The metadata holds author information, publication date and the title of the text/HTML content. **/
+    metadata?: MetadataResult;
+    /** The relationships between entities in the content. **/
+    relations?: RelationsResult[];
+    /** The subjects of actions and the objects the actions act upon. **/
+    semantic_roles?: SemanticRolesResult[];
+    /** The sentiment of the content. **/
+    sentiment?: SentimentResult;
+  }
+
   /** The author of the analyzed content. **/
   export interface Author {
     /** Name of the author. **/
@@ -432,6 +459,12 @@ namespace NaturalLanguageUnderstandingV1 {
     categories?: CategoriesOptions;
   }
 
+  /** RSS or ATOM feed found on the webpage. **/
+  export interface Feed {
+    /** URL of the RSS or ATOM feed. **/
+    link?: string;
+  }
+
   /** InlineResponse200. **/
   export interface InlineResponse200 {
     /** model_id of the deleted model. **/
@@ -476,6 +509,10 @@ namespace NaturalLanguageUnderstandingV1 {
     publication_date?: string;
     /** The title of the document. **/
     title?: string;
+    /** URL of a prominent image on the webpage. **/
+    image?: string;
+    /** RSS/ATOM feeds found on the webpage. **/
+    feeds?: Feed[];
   }
 
   /** Model. **/
@@ -493,11 +530,13 @@ namespace NaturalLanguageUnderstandingV1 {
   /** RelationArgument. **/
   export interface RelationArgument {
     entities?: RelationEntity[];
+    /** Character offsets indicating the beginning and end of the mention in the analyzed text. **/
+    location?: number[];
     /** Text that corresponds to the argument. **/
     text?: string;
   }
 
-  /** The entities extracted from a sentence in a given document. **/
+  /** An entity that corresponds with an argument in a relation. **/
   export interface RelationEntity {
     /** Text that corresponds to the entity. **/
     text?: string;
@@ -631,36 +670,6 @@ namespace NaturalLanguageUnderstandingV1 {
     text_characters?: number;
     /** Number of 10,000-character units processed. **/
     text_units?: number;
-  }
-
-  /** Results of the analysis, organized by feature. **/
-  export interface AnalysisResults {
-    /** Language used to analyze the text. **/
-    language?: string;
-    /** Text that was used in the analysis. **/
-    analyzed_text?: string;
-    /** URL that was used to retrieve HTML content. **/
-    retrieved_url?: string;
-    /** API usage information for the request. **/
-    usage?: Usage;
-    /** The general concepts referenced or alluded to in the specified content. **/
-    concepts?: ConceptsResult[];
-    /** The important entities in the specified content. **/
-    entities?: EntitiesResult[];
-    /** The important keywords in content organized by relevance. **/
-    keywords?: KeywordsResult[];
-    /** The hierarchical 5-level taxonomy the content is categorized into. **/
-    categories?: CategoriesResult[];
-    /** The anger, disgust, fear, joy, or sadness conveyed by the content. **/
-    emotion?: EmotionResult;
-    /** The metadata holds author information, publication date and the title of the text/HTML content. **/
-    metadata?: MetadataResult;
-    /** The relationships between entities in the content. **/
-    relations?: RelationsResult[];
-    /** The subjects of actions and the objects the actions act upon. **/
-    semantic_roles?: SemanticRolesResult[];
-    /** The sentiment of the content. **/
-    sentiment?: SentimentResult;
   }
 }
 

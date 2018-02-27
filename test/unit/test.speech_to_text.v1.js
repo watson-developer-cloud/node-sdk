@@ -33,57 +33,6 @@ describe('speech_to_text', function() {
     assert.ok(/required parameters/.test(err));
   };
 
-  describe('createSession()', function() {
-    const path = '/v1/sessions';
-    const new_session = {
-      session_id: 'foo',
-      new_session_uri: '#',
-      recognize: '#',
-      observe_result: '#'
-    };
-    const new_session_with_cookie = extend({}, new_session, {
-      cookie_session: 'foobar'
-    });
-
-    it('should generate a valid payload', function() {
-      const req = speech_to_text.createSession({}, noop);
-      assert.equal(req.uri.href, service.url + path);
-      assert.equal(req.method, 'POST');
-    });
-
-    it('should generate a valid response', function() {
-      nock(service.url)
-        .persist()
-        .post(path)
-        .reply(200, new_session, {
-          'set-cookie': ['SESSIONID=foobar']
-        });
-
-      const checkSession = function(err, res) {
-        assert.equal(JSON.stringify(res), JSON.stringify(new_session_with_cookie));
-      };
-      speech_to_text.createSession({}, checkSession);
-      speech_to_text.createSession(null, checkSession);
-      speech_to_text.createSession(undefined, checkSession);
-    });
-  });
-
-  describe('deleteSession()', function() {
-    const path = '/v1/sessions/foo';
-
-    it('should check no parameters provided', function() {
-      speech_to_text.deleteSession({}, missingParameter);
-      speech_to_text.deleteSession(null, missingParameter);
-      speech_to_text.deleteSession({ session_id: 'foo' }, missingParameter);
-    });
-
-    it('should generate a valid payload', function() {
-      const req = speech_to_text.deleteSession({ session_id: 'foo' }, noop);
-      assert.equal(req.uri.href, service.url + path);
-      assert.equal(req.method, 'DELETE');
-    });
-  });
-
   describe('getModels()', function() {
     const path = '/v1/models';
     const models = { models: [{ foo: 'foo' }, { bar: 'bar' }] };
@@ -133,22 +82,6 @@ describe('speech_to_text', function() {
         assert.equal(JSON.stringify(res), JSON.stringify(model));
       };
       speech_to_text.getModel({ model_id: 'foo' }, checkModel);
-    });
-  });
-
-  describe('getRecognizeStatus()', function() {
-    const path = '/v1/sessions/foo/recognize';
-
-    it('should check no parameters provided', function() {
-      speech_to_text.getRecognizeStatus({}, missingParameter);
-      speech_to_text.getRecognizeStatus(null, missingParameter);
-      speech_to_text.getRecognizeStatus({ session_id: 'foo' }, missingParameter);
-    });
-
-    it('should generate a valid payload', function() {
-      const req = speech_to_text.getRecognizeStatus({ session_id: 'foo' }, noop);
-      assert.equal(req.uri.href, service.url + path);
-      assert.equal(req.method, 'GET');
     });
   });
 
