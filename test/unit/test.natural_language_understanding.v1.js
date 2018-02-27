@@ -23,7 +23,7 @@ describe('natural_language_understanding', function() {
     nlu = new watson.NaturalLanguageUnderstandingV1({
       username: 'user',
       password: 'pass',
-      version: watson.NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27
+      version: '2017-02-27'
     });
     nock.disableNetConnect();
   });
@@ -72,7 +72,7 @@ describe('natural_language_understanding', function() {
         ]
       });
       const nluHyphenated = new watson.NaturalLanguageUnderstandingV1({
-        version: watson.NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27
+        version: '2017-02-27'
       });
       assert(nluHyphenated);
       assert.equal(nluHyphenated.getCredentials().username, 'hyphenated-user');
@@ -84,7 +84,7 @@ describe('natural_language_understanding', function() {
       process.env.NATURAL_LANGUAGE_UNDERSTANDING_URL =
         'https://gateway.watsonplatform.net/natural-language-understanding/api';
       const nluUnderscore = new watson.NaturalLanguageUnderstandingV1({
-        version: watson.NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27
+        version: '2017-02-27'
       });
       assert(nluUnderscore);
       assert.equal(nluUnderscore.getCredentials().username, 'user');
@@ -93,13 +93,13 @@ describe('natural_language_understanding', function() {
 
   it('2016_01_23 version should work', function(done) {
     const mockApi = nock(watson.NaturalLanguageUnderstandingV1.URL)
-      .post('/v1/analyze?version=' + watson.NaturalLanguageUnderstandingV1.VERSION_DATE_2016_01_23)
+      .post('/v1/analyze?version=' + '2017-02-27')
       .reply(200, {});
 
     const nlu_old_version = new watson.NaturalLanguageUnderstandingV1({
       username: 'user',
       password: 'pass',
-      version: watson.NaturalLanguageUnderstandingV1.VERSION_DATE_2016_01_23
+      version: '2016-01-23'
     });
 
     const options = {
@@ -116,7 +116,7 @@ describe('natural_language_understanding', function() {
 
   it('analyze()', function(done) {
     const mockApi = nock(watson.NaturalLanguageUnderstandingV1.URL)
-      .post('/v1/analyze?version=' + watson.NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27)
+      .post('/v1/analyze?version=' + '2017-02-27')
       .reply(200, {});
 
     const options = {
@@ -133,7 +133,7 @@ describe('natural_language_understanding', function() {
 
   it('should list models', function(done) {
     const mockApi = nock(watson.NaturalLanguageUnderstandingV1.URL)
-      .get('/v1/models?version=' + watson.NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27)
+      .get('/v1/models?version=' + '2017-02-27')
       .reply(200, {});
 
     nlu.listModels({}, err => {
@@ -160,7 +160,7 @@ describe('natural_language_understanding', function() {
           '/v1/models/' +
           payload.model_id +
           '?version=' +
-          watson.NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27
+          '2017-02-27'
       );
       assert.equal(req.method, 'DELETE');
     });

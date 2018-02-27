@@ -23,7 +23,7 @@ describe('text_to_speech', function() {
   };
   const synthesize_path = '/v1/synthesize';
   const voices_path = '/v1/voices';
-  const synthesize_request = synthesize_path + '?' + qs.stringify(omit(service_request, ['text']));
+  const synthesize_request = synthesize_path + '?' + qs.stringify(omit(service_request, ['text', 'accept']));
 
   const mock_voices = [
     {

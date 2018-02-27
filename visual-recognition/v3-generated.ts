@@ -345,43 +345,6 @@ class VisualRecognitionV3 extends BaseService {
   }
 
   /**
-   * Retrieve a list of custom classifiers.
-   *
-   * @param {Object} [params] - The parameters to send to the service.
-   * @param {boolean} [params.verbose] - Specify `true` to return details about the classifiers. Omit this parameter to return a brief list of classifiers.
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
-   */
-  listClassifiers(
-    params?: VisualRecognitionV3.ListClassifiersParams,
-    callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifiers>
-  ): NodeJS.ReadableStream | void {
-    const _params =
-      typeof params === 'function' && !callback ? {} : extend({}, params);
-    const _callback =
-      typeof params === 'function' && !callback
-        ? params
-        : callback ? callback : () => {};
-    const query = {
-      verbose: _params.verbose
-    };
-    const parameters = {
-      options: {
-        url: '/v3/classifiers',
-        method: 'GET',
-        qs: query
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
-    };
-    return createRequest(parameters, _callback);
-  }
-
-  /**
    * Update a classifier.
    *
    * Update a custom classifier by adding new positive or negative classes (examples) or by adding new images to existing classes. You must supply at least one set of positive or negative examples. For details, see [Updating custom classifiers](https://console.bluemix.net/docs/services/visual-recognition/customizing.html#updating-custom-classifiers).  Encode all names in UTF-8 if they contain non-ASCII characters (.zip and image file names, and classifier and class names). The service assumes UTF-8 encoding if it encounters non-ASCII characters.  **Important:** You can't update a custom classifier with an API key for a Lite plan. To update a custom classifer on a Lite plan, create another service instance on a Standard plan and re-create your custom classifier.  **Tip:** Don't make retraining calls on a classifier until the status is ready. When you submit retraining requests in parallel, the last request overwrites the previous requests. The retrained property shows the last time the classifier retraining finished.
@@ -545,12 +508,6 @@ namespace VisualRecognitionV3 {
     classifier_id: string;
   }
 
-  /** Parameters for the `listClassifiers` operation. **/
-  export interface ListClassifiersParams {
-    /** Specify `true` to return details about the classifiers. Omit this parameter to return a brief list of classifiers. **/
-    verbose?: boolean;
-  }
-
   /** Parameters for the `updateClassifier` operation. **/
   export interface UpdateClassifierParams {
     /** The ID of the classifier. **/
@@ -633,11 +590,6 @@ namespace VisualRecognitionV3 {
     classifier_id: string;
     /** An array of classes within the classifier. **/
     classes: ClassResult[];
-  }
-
-  /** Verbose list of classifiers retrieved in the GET v2/classifiers call. **/
-  export interface Classifiers {
-    classifiers: Classifier[];
   }
 
   /** DetectedFaces. **/
