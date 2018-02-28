@@ -34,11 +34,11 @@ class ConversationV1 extends BaseService {
    * Construct a ConversationV1 object.
    *
    * @param {Object} options - Options for the service.
-   * @param {string} options.version - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses the API version for the date you specify, or the most recent version before that date. Note that you should not programmatically specify the current date at runtime, in case the API has been updated since your application's release. Instead, specify a version date that is compatible with your application, and don't change it until your application is ready for a later version.
-   * @param {string} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/conversation/api'). The base url may differ between Bluemix regions.
-   * @param {string} [options.username] - The username used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
-   * @param {string} [options.password] - The password used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
-   * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
+   * @param {String} options.version - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses the API version for the date you specify, or the most recent version before that date. Note that you should not programmatically specify the current date at runtime, in case the API has been updated since your application's release. Instead, specify a version date that is compatible with your application, and don't change it until your application is ready for a later version.
+   * @param {String} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/conversation/api'). The base url may differ between Bluemix regions.
+   * @param {String} [options.username] - The username used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
+   * @param {String} [options.password] - The password used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
+   * @param {Boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
    * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
    * @constructor
@@ -80,12 +80,9 @@ class ConversationV1 extends BaseService {
     params?: ConversationV1.CreateWorkspaceParams,
     callback?: ConversationV1.Callback<ConversationV1.Workspace>
   ): NodeJS.ReadableStream | void {
-    const _params =
-      typeof params === 'function' && !callback ? {} : extend({}, params);
+    const _params = typeof params === 'function' && !callback ? {} : extend({}, params);
     const _callback =
-      typeof params === 'function' && !callback
-        ? params
-        : callback ? callback : () => {};
+      typeof params === 'function' && !callback ? params : callback ? callback : () => {};
     const body = {
       name: _params.name,
       description: _params.description,
@@ -95,21 +92,21 @@ class ConversationV1 extends BaseService {
       dialog_nodes: _params.dialog_nodes,
       counterexamples: _params.counterexamples,
       metadata: _params.metadata,
-      learning_opt_out: _params.learning_opt_out
+      learning_opt_out: _params.learning_opt_out,
     };
     const parameters = {
       options: {
         url: '/v1/workspaces',
         method: 'POST',
         json: true,
-        body: body
+        body: body,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
+          'Content-Type': 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -136,19 +133,19 @@ class ConversationV1 extends BaseService {
       return _callback(missingParams);
     }
     const path = {
-      workspace_id: _params.workspace_id
+      workspace_id: _params.workspace_id,
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}',
         method: 'DELETE',
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json'
-        }
-      })
+          Accept: 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -178,23 +175,23 @@ class ConversationV1 extends BaseService {
     }
     const query = {
       export: _params.export,
-      include_audit: _params.include_audit
+      include_audit: _params.include_audit,
     };
     const path = {
-      workspace_id: _params.workspace_id
+      workspace_id: _params.workspace_id,
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}',
         method: 'GET',
         qs: query,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json'
-        }
-      })
+          Accept: 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -217,30 +214,27 @@ class ConversationV1 extends BaseService {
     params?: ConversationV1.ListWorkspacesParams,
     callback?: ConversationV1.Callback<ConversationV1.WorkspaceCollection>
   ): NodeJS.ReadableStream | void {
-    const _params =
-      typeof params === 'function' && !callback ? {} : extend({}, params);
+    const _params = typeof params === 'function' && !callback ? {} : extend({}, params);
     const _callback =
-      typeof params === 'function' && !callback
-        ? params
-        : callback ? callback : () => {};
+      typeof params === 'function' && !callback ? params : callback ? callback : () => {};
     const query = {
       page_limit: _params.page_limit,
       include_count: _params.include_count,
       sort: _params.sort,
       cursor: _params.cursor,
-      include_audit: _params.include_audit
+      include_audit: _params.include_audit,
     };
     const parameters = {
       options: {
         url: '/v1/workspaces',
         method: 'GET',
-        qs: query
+        qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json'
-        }
-      })
+          Accept: 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -285,13 +279,13 @@ class ConversationV1 extends BaseService {
       dialog_nodes: _params.dialog_nodes,
       counterexamples: _params.counterexamples,
       metadata: _params.metadata,
-      learning_opt_out: _params.learning_opt_out
+      learning_opt_out: _params.learning_opt_out,
     };
     const query = {
-      append: _params.append
+      append: _params.append,
     };
     const path = {
-      workspace_id: _params.workspace_id
+      workspace_id: _params.workspace_id,
     };
     const parameters = {
       options: {
@@ -300,14 +294,14 @@ class ConversationV1 extends BaseService {
         json: true,
         body: body,
         qs: query,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
+          'Content-Type': 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -348,13 +342,13 @@ class ConversationV1 extends BaseService {
       context: _params.context,
       entities: _params.entities,
       intents: _params.intents,
-      output: _params.output
+      output: _params.output,
     };
     const query = {
-      nodes_visited_details: _params.nodes_visited_details
+      nodes_visited_details: _params.nodes_visited_details,
     };
     const path = {
-      workspace_id: _params.workspace_id
+      workspace_id: _params.workspace_id,
     };
     const parameters = {
       options: {
@@ -363,14 +357,14 @@ class ConversationV1 extends BaseService {
         json: true,
         body: body,
         qs: query,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
+          'Content-Type': 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -406,10 +400,10 @@ class ConversationV1 extends BaseService {
     const body = {
       intent: _params.intent,
       description: _params.description,
-      examples: _params.examples
+      examples: _params.examples,
     };
     const path = {
-      workspace_id: _params.workspace_id
+      workspace_id: _params.workspace_id,
     };
     const parameters = {
       options: {
@@ -417,14 +411,14 @@ class ConversationV1 extends BaseService {
         method: 'POST',
         json: true,
         body: body,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
+          'Content-Type': 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -453,19 +447,19 @@ class ConversationV1 extends BaseService {
     }
     const path = {
       workspace_id: _params.workspace_id,
-      intent: _params.intent
+      intent: _params.intent,
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/intents/{intent}',
         method: 'DELETE',
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json'
-        }
-      })
+          Accept: 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -496,24 +490,24 @@ class ConversationV1 extends BaseService {
     }
     const query = {
       export: _params.export,
-      include_audit: _params.include_audit
+      include_audit: _params.include_audit,
     };
     const path = {
       workspace_id: _params.workspace_id,
-      intent: _params.intent
+      intent: _params.intent,
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/intents/{intent}',
         method: 'GET',
         qs: query,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json'
-        }
-      })
+          Accept: 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -551,23 +545,23 @@ class ConversationV1 extends BaseService {
       include_count: _params.include_count,
       sort: _params.sort,
       cursor: _params.cursor,
-      include_audit: _params.include_audit
+      include_audit: _params.include_audit,
     };
     const path = {
-      workspace_id: _params.workspace_id
+      workspace_id: _params.workspace_id,
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/intents',
         method: 'GET',
         qs: query,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json'
-        }
-      })
+          Accept: 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -600,11 +594,11 @@ class ConversationV1 extends BaseService {
     const body = {
       intent: _params.new_intent,
       description: _params.new_description,
-      examples: _params.new_examples
+      examples: _params.new_examples,
     };
     const path = {
       workspace_id: _params.workspace_id,
-      intent: _params.intent
+      intent: _params.intent,
     };
     const parameters = {
       options: {
@@ -612,14 +606,14 @@ class ConversationV1 extends BaseService {
         method: 'POST',
         json: true,
         body: body,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
+          'Content-Type': 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -652,11 +646,11 @@ class ConversationV1 extends BaseService {
       return _callback(missingParams);
     }
     const body = {
-      text: _params.text
+      text: _params.text,
     };
     const path = {
       workspace_id: _params.workspace_id,
-      intent: _params.intent
+      intent: _params.intent,
     };
     const parameters = {
       options: {
@@ -664,14 +658,14 @@ class ConversationV1 extends BaseService {
         method: 'POST',
         json: true,
         body: body,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
+          'Content-Type': 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -702,19 +696,19 @@ class ConversationV1 extends BaseService {
     const path = {
       workspace_id: _params.workspace_id,
       intent: _params.intent,
-      text: _params.text
+      text: _params.text,
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
         method: 'DELETE',
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json'
-        }
-      })
+          Accept: 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -744,25 +738,25 @@ class ConversationV1 extends BaseService {
       return _callback(missingParams);
     }
     const query = {
-      include_audit: _params.include_audit
+      include_audit: _params.include_audit,
     };
     const path = {
       workspace_id: _params.workspace_id,
       intent: _params.intent,
-      text: _params.text
+      text: _params.text,
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
         method: 'GET',
         qs: query,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json'
-        }
-      })
+          Accept: 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -799,24 +793,24 @@ class ConversationV1 extends BaseService {
       include_count: _params.include_count,
       sort: _params.sort,
       cursor: _params.cursor,
-      include_audit: _params.include_audit
+      include_audit: _params.include_audit,
     };
     const path = {
       workspace_id: _params.workspace_id,
-      intent: _params.intent
+      intent: _params.intent,
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples',
         method: 'GET',
         qs: query,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json'
-        }
-      })
+          Accept: 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -846,12 +840,12 @@ class ConversationV1 extends BaseService {
       return _callback(missingParams);
     }
     const body = {
-      text: _params.new_text
+      text: _params.new_text,
     };
     const path = {
       workspace_id: _params.workspace_id,
       intent: _params.intent,
-      text: _params.text
+      text: _params.text,
     };
     const parameters = {
       options: {
@@ -859,14 +853,14 @@ class ConversationV1 extends BaseService {
         method: 'POST',
         json: true,
         body: body,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
+          'Content-Type': 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -906,10 +900,10 @@ class ConversationV1 extends BaseService {
       description: _params.description,
       metadata: _params.metadata,
       values: _params.values,
-      fuzzy_match: _params.fuzzy_match
+      fuzzy_match: _params.fuzzy_match,
     };
     const path = {
-      workspace_id: _params.workspace_id
+      workspace_id: _params.workspace_id,
     };
     const parameters = {
       options: {
@@ -917,14 +911,14 @@ class ConversationV1 extends BaseService {
         method: 'POST',
         json: true,
         body: body,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
+          'Content-Type': 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -953,19 +947,19 @@ class ConversationV1 extends BaseService {
     }
     const path = {
       workspace_id: _params.workspace_id,
-      entity: _params.entity
+      entity: _params.entity,
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities/{entity}',
         method: 'DELETE',
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json'
-        }
-      })
+          Accept: 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -996,24 +990,24 @@ class ConversationV1 extends BaseService {
     }
     const query = {
       export: _params.export,
-      include_audit: _params.include_audit
+      include_audit: _params.include_audit,
     };
     const path = {
       workspace_id: _params.workspace_id,
-      entity: _params.entity
+      entity: _params.entity,
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities/{entity}',
         method: 'GET',
         qs: query,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json'
-        }
-      })
+          Accept: 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -1051,23 +1045,23 @@ class ConversationV1 extends BaseService {
       include_count: _params.include_count,
       sort: _params.sort,
       cursor: _params.cursor,
-      include_audit: _params.include_audit
+      include_audit: _params.include_audit,
     };
     const path = {
-      workspace_id: _params.workspace_id
+      workspace_id: _params.workspace_id,
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities',
         method: 'GET',
         qs: query,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json'
-        }
-      })
+          Accept: 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -1104,11 +1098,11 @@ class ConversationV1 extends BaseService {
       description: _params.new_description,
       metadata: _params.new_metadata,
       fuzzy_match: _params.new_fuzzy_match,
-      values: _params.new_values
+      values: _params.new_values,
     };
     const path = {
       workspace_id: _params.workspace_id,
-      entity: _params.entity
+      entity: _params.entity,
     };
     const parameters = {
       options: {
@@ -1116,14 +1110,14 @@ class ConversationV1 extends BaseService {
         method: 'POST',
         json: true,
         body: body,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
+          'Content-Type': 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -1164,11 +1158,11 @@ class ConversationV1 extends BaseService {
       metadata: _params.metadata,
       synonyms: _params.synonyms,
       patterns: _params.patterns,
-      type: _params.value_type
+      type: _params.value_type,
     };
     const path = {
       workspace_id: _params.workspace_id,
-      entity: _params.entity
+      entity: _params.entity,
     };
     const parameters = {
       options: {
@@ -1176,14 +1170,14 @@ class ConversationV1 extends BaseService {
         method: 'POST',
         json: true,
         body: body,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
+          'Content-Type': 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -1214,19 +1208,19 @@ class ConversationV1 extends BaseService {
     const path = {
       workspace_id: _params.workspace_id,
       entity: _params.entity,
-      value: _params.value
+      value: _params.value,
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}',
         method: 'DELETE',
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json'
-        }
-      })
+          Accept: 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -1258,25 +1252,25 @@ class ConversationV1 extends BaseService {
     }
     const query = {
       export: _params.export,
-      include_audit: _params.include_audit
+      include_audit: _params.include_audit,
     };
     const path = {
       workspace_id: _params.workspace_id,
       entity: _params.entity,
-      value: _params.value
+      value: _params.value,
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}',
         method: 'GET',
         qs: query,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json'
-        }
-      })
+          Accept: 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -1315,24 +1309,24 @@ class ConversationV1 extends BaseService {
       include_count: _params.include_count,
       sort: _params.sort,
       cursor: _params.cursor,
-      include_audit: _params.include_audit
+      include_audit: _params.include_audit,
     };
     const path = {
       workspace_id: _params.workspace_id,
-      entity: _params.entity
+      entity: _params.entity,
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities/{entity}/values',
         method: 'GET',
         qs: query,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json'
-        }
-      })
+          Accept: 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -1370,12 +1364,12 @@ class ConversationV1 extends BaseService {
       metadata: _params.new_metadata,
       type: _params.new_type,
       synonyms: _params.new_synonyms,
-      patterns: _params.new_patterns
+      patterns: _params.new_patterns,
     };
     const path = {
       workspace_id: _params.workspace_id,
       entity: _params.entity,
-      value: _params.value
+      value: _params.value,
     };
     const parameters = {
       options: {
@@ -1383,14 +1377,14 @@ class ConversationV1 extends BaseService {
         method: 'POST',
         json: true,
         body: body,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
+          'Content-Type': 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -1424,28 +1418,27 @@ class ConversationV1 extends BaseService {
       return _callback(missingParams);
     }
     const body = {
-      synonym: _params.synonym
+      synonym: _params.synonym,
     };
     const path = {
       workspace_id: _params.workspace_id,
       entity: _params.entity,
-      value: _params.value
+      value: _params.value,
     };
     const parameters = {
       options: {
-        url:
-          '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms',
+        url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms',
         method: 'POST',
         json: true,
         body: body,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
+          'Content-Type': 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -1478,20 +1471,19 @@ class ConversationV1 extends BaseService {
       workspace_id: _params.workspace_id,
       entity: _params.entity,
       value: _params.value,
-      synonym: _params.synonym
+      synonym: _params.synonym,
     };
     const parameters = {
       options: {
-        url:
-          '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}',
+        url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}',
         method: 'DELETE',
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json'
-        }
-      })
+          Accept: 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -1522,27 +1514,26 @@ class ConversationV1 extends BaseService {
       return _callback(missingParams);
     }
     const query = {
-      include_audit: _params.include_audit
+      include_audit: _params.include_audit,
     };
     const path = {
       workspace_id: _params.workspace_id,
       entity: _params.entity,
       value: _params.value,
-      synonym: _params.synonym
+      synonym: _params.synonym,
     };
     const parameters = {
       options: {
-        url:
-          '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}',
+        url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}',
         method: 'GET',
         qs: query,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json'
-        }
-      })
+          Accept: 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -1580,26 +1571,25 @@ class ConversationV1 extends BaseService {
       include_count: _params.include_count,
       sort: _params.sort,
       cursor: _params.cursor,
-      include_audit: _params.include_audit
+      include_audit: _params.include_audit,
     };
     const path = {
       workspace_id: _params.workspace_id,
       entity: _params.entity,
-      value: _params.value
+      value: _params.value,
     };
     const parameters = {
       options: {
-        url:
-          '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms',
+        url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms',
         method: 'GET',
         qs: query,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json'
-        }
-      })
+          Accept: 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -1630,29 +1620,28 @@ class ConversationV1 extends BaseService {
       return _callback(missingParams);
     }
     const body = {
-      synonym: _params.new_synonym
+      synonym: _params.new_synonym,
     };
     const path = {
       workspace_id: _params.workspace_id,
       entity: _params.entity,
       value: _params.value,
-      synonym: _params.synonym
+      synonym: _params.synonym,
     };
     const parameters = {
       options: {
-        url:
-          '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}',
+        url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}',
         method: 'POST',
         json: true,
         body: body,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
+          'Content-Type': 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -1710,10 +1699,10 @@ class ConversationV1 extends BaseService {
       title: _params.title,
       type: _params.node_type,
       event_name: _params.event_name,
-      variable: _params.variable
+      variable: _params.variable,
     };
     const path = {
-      workspace_id: _params.workspace_id
+      workspace_id: _params.workspace_id,
     };
     const parameters = {
       options: {
@@ -1721,14 +1710,14 @@ class ConversationV1 extends BaseService {
         method: 'POST',
         json: true,
         body: body,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
+          'Content-Type': 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -1757,19 +1746,19 @@ class ConversationV1 extends BaseService {
     }
     const path = {
       workspace_id: _params.workspace_id,
-      dialog_node: _params.dialog_node
+      dialog_node: _params.dialog_node,
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/dialog_nodes/{dialog_node}',
         method: 'DELETE',
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json'
-        }
-      })
+          Accept: 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -1798,24 +1787,24 @@ class ConversationV1 extends BaseService {
       return _callback(missingParams);
     }
     const query = {
-      include_audit: _params.include_audit
+      include_audit: _params.include_audit,
     };
     const path = {
       workspace_id: _params.workspace_id,
-      dialog_node: _params.dialog_node
+      dialog_node: _params.dialog_node,
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/dialog_nodes/{dialog_node}',
         method: 'GET',
         qs: query,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json'
-        }
-      })
+          Accept: 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -1851,23 +1840,23 @@ class ConversationV1 extends BaseService {
       include_count: _params.include_count,
       sort: _params.sort,
       cursor: _params.cursor,
-      include_audit: _params.include_audit
+      include_audit: _params.include_audit,
     };
     const path = {
-      workspace_id: _params.workspace_id
+      workspace_id: _params.workspace_id,
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/dialog_nodes',
         method: 'GET',
         qs: query,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json'
-        }
-      })
+          Accept: 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -1922,11 +1911,11 @@ class ConversationV1 extends BaseService {
       type: _params.new_type,
       event_name: _params.new_event_name,
       variable: _params.new_variable,
-      actions: _params.new_actions
+      actions: _params.new_actions,
     };
     const path = {
       workspace_id: _params.workspace_id,
-      dialog_node: _params.dialog_node
+      dialog_node: _params.dialog_node,
     };
     const parameters = {
       options: {
@@ -1934,14 +1923,14 @@ class ConversationV1 extends BaseService {
         method: 'POST',
         json: true,
         body: body,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
+          'Content-Type': 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -1978,19 +1967,19 @@ class ConversationV1 extends BaseService {
       filter: _params.filter,
       sort: _params.sort,
       page_limit: _params.page_limit,
-      cursor: _params.cursor
+      cursor: _params.cursor,
     };
     const parameters = {
       options: {
         url: '/v1/logs',
         method: 'GET',
-        qs: query
+        qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json'
-        }
-      })
+          Accept: 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -2024,23 +2013,23 @@ class ConversationV1 extends BaseService {
       sort: _params.sort,
       filter: _params.filter,
       page_limit: _params.page_limit,
-      cursor: _params.cursor
+      cursor: _params.cursor,
     };
     const path = {
-      workspace_id: _params.workspace_id
+      workspace_id: _params.workspace_id,
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/logs',
         method: 'GET',
         qs: query,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json'
-        }
-      })
+          Accept: 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -2072,10 +2061,10 @@ class ConversationV1 extends BaseService {
       return _callback(missingParams);
     }
     const body = {
-      text: _params.text
+      text: _params.text,
     };
     const path = {
-      workspace_id: _params.workspace_id
+      workspace_id: _params.workspace_id,
     };
     const parameters = {
       options: {
@@ -2083,14 +2072,14 @@ class ConversationV1 extends BaseService {
         method: 'POST',
         json: true,
         body: body,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
+          'Content-Type': 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -2119,19 +2108,19 @@ class ConversationV1 extends BaseService {
     }
     const path = {
       workspace_id: _params.workspace_id,
-      text: _params.text
+      text: _params.text,
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/counterexamples/{text}',
         method: 'DELETE',
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json'
-        }
-      })
+          Accept: 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -2160,24 +2149,24 @@ class ConversationV1 extends BaseService {
       return _callback(missingParams);
     }
     const query = {
-      include_audit: _params.include_audit
+      include_audit: _params.include_audit,
     };
     const path = {
       workspace_id: _params.workspace_id,
-      text: _params.text
+      text: _params.text,
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/counterexamples/{text}',
         method: 'GET',
         qs: query,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json'
-        }
-      })
+          Accept: 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -2213,23 +2202,23 @@ class ConversationV1 extends BaseService {
       include_count: _params.include_count,
       sort: _params.sort,
       cursor: _params.cursor,
-      include_audit: _params.include_audit
+      include_audit: _params.include_audit,
     };
     const path = {
-      workspace_id: _params.workspace_id
+      workspace_id: _params.workspace_id,
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/counterexamples',
         method: 'GET',
         qs: query,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json'
-        }
-      })
+          Accept: 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -2258,11 +2247,11 @@ class ConversationV1 extends BaseService {
       return _callback(missingParams);
     }
     const body = {
-      text: _params.new_text
+      text: _params.new_text,
     };
     const path = {
       workspace_id: _params.workspace_id,
-      text: _params.text
+      text: _params.text,
     };
     const parameters = {
       options: {
@@ -2270,14 +2259,14 @@ class ConversationV1 extends BaseService {
         method: 'POST',
         json: true,
         body: body,
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
+          'Content-Type': 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -2302,11 +2291,7 @@ namespace ConversationV1 {
   };
 
   /** The callback for a service request. **/
-  export type Callback<T> = (
-    error: any,
-    body?: T,
-    response?: RequestResponse
-  ) => void;
+  export type Callback<T> = (error: any, body?: T, response?: RequestResponse) => void;
 
   /** The body of a service request that returns no response data. **/
   export interface Empty {}
@@ -2634,7 +2619,7 @@ namespace ConversationV1 {
     /** Specifies the type of value (`synonyms` or `patterns`). The default value is `synonyms`. **/
     export enum ValueType {
       SYNONYMS = 'synonyms',
-      PATTERNS = 'patterns'
+      PATTERNS = 'patterns',
     }
   }
 
@@ -2707,7 +2692,7 @@ namespace ConversationV1 {
     /** Specifies the type of value (`synonyms` or `patterns`). The default value is `synonyms`. **/
     export enum ValueType {
       SYNONYMS = 'synonyms',
-      PATTERNS = 'patterns'
+      PATTERNS = 'patterns',
     }
   }
 
@@ -2825,7 +2810,7 @@ namespace ConversationV1 {
       EVENT_HANDLER = 'event_handler',
       FRAME = 'frame',
       SLOT = 'slot',
-      RESPONSE_CONDITION = 'response_condition'
+      RESPONSE_CONDITION = 'response_condition',
     }
     /** How an `event_handler` node is processed. **/
     export enum EventName {
@@ -2836,7 +2821,7 @@ namespace ConversationV1 {
       FILLED_MULTIPLE = 'filled_multiple',
       GENERIC = 'generic',
       NOMATCH = 'nomatch',
-      NOMATCH_RESPONSES_DEPLETED = 'nomatch_responses_depleted'
+      NOMATCH_RESPONSES_DEPLETED = 'nomatch_responses_depleted',
     }
   }
 
@@ -2918,7 +2903,7 @@ namespace ConversationV1 {
       EVENT_HANDLER = 'event_handler',
       FRAME = 'frame',
       SLOT = 'slot',
-      RESPONSE_CONDITION = 'response_condition'
+      RESPONSE_CONDITION = 'response_condition',
     }
     /** How an `event_handler` node is processed. **/
     export enum EventName {
@@ -2929,7 +2914,7 @@ namespace ConversationV1 {
       FILLED_MULTIPLE = 'filled_multiple',
       GENERIC = 'generic',
       NOMATCH = 'nomatch',
-      NOMATCH_RESPONSES_DEPLETED = 'nomatch_responses_depleted'
+      NOMATCH_RESPONSES_DEPLETED = 'nomatch_responses_depleted',
     }
   }
 

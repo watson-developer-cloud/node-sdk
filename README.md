@@ -151,7 +151,7 @@ var conversation = new ConversationV1({
   username: '<username>',
   password: '<password>',
   url: 'https://gateway.watsonplatform.net/conversation/api/',
-  version_date: '2017-05-26'
+  version: '2017-05-26'
 });
 
 conversation.message(
@@ -180,7 +180,7 @@ var discovery = new DiscoveryV1({
   username: '<username>',
   password: '<password>',
   url: 'https://gateway.watsonplatform.net/discovery/api/',
-  version_date: '2017-09-01'
+  version: '2017-09-01'
 });
 
 discovery.query(
@@ -286,7 +286,7 @@ var NaturalLanguageUnderstandingV1 = require('watson-developer-cloud/natural-lan
 var nlu = new NaturalLanguageUnderstandingV1({
   username: '<username>',
   password: '<password>',
-  version_date: '2017-02-27',
+  version: '2017-02-27',
   url: 'https://gateway.watsonplatform.net/natural-language-understanding/api/'
 });
 
@@ -320,7 +320,7 @@ var PersonalityInsightsV3 = require('watson-developer-cloud/personality-insights
 var personalityInsights = new PersonalityInsightsV3({
   username: '<username>',
   password: '<password>',
-  version_date: '2016-10-19',
+  version: '2016-10-19',
   url: 'https://gateway.watsonplatform.net/personality-insights/api/'
 });
 
@@ -420,7 +420,7 @@ var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
 var toneAnalyzer = new ToneAnalyzerV3({
   username: '<username>',
   password: '<password>',
-  version_date: '2016-05-19',
+  version: '2016-05-19',
   url: 'https://gateway.watsonplatform.net/tone-analyzer/api/'
 });
 
@@ -453,7 +453,7 @@ var fs = require('fs');
 
 var visualRecognition = new VisualRecognitionV3({
   api_key: '<api_key>',
-  version_date: '2016-05-20'
+  version: '2016-05-20'
 });
 
 var params = {

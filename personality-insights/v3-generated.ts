@@ -34,11 +34,11 @@ class PersonalityInsightsV3 extends BaseService {
    * Construct a PersonalityInsightsV3 object.
    *
    * @param {Object} options - Options for the service.
-   * @param {string} options.version - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses the API version for the date you specify, or the most recent version before that date. Note that you should not programmatically specify the current date at runtime, in case the API has been updated since your application's release. Instead, specify a version date that is compatible with your application, and don't change it until your application is ready for a later version.
-   * @param {string} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/personality-insights/api'). The base url may differ between Bluemix regions.
-   * @param {string} [options.username] - The username used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
-   * @param {string} [options.password] - The password used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
-   * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
+   * @param {String} options.version - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses the API version for the date you specify, or the most recent version before that date. Note that you should not programmatically specify the current date at runtime, in case the API has been updated since your application's release. Instead, specify a version date that is compatible with your application, and don't change it until your application is ready for a later version.
+   * @param {String} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/personality-insights/api'). The base url may differ between Bluemix regions.
+   * @param {String} [options.username] - The username used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
+   * @param {String} [options.password] - The password used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
+   * @param {Boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
    * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
    * @constructor
@@ -89,7 +89,7 @@ class PersonalityInsightsV3 extends BaseService {
     const query = {
       raw_scores: _params.raw_scores,
       csv_headers: _params.csv_headers,
-      consumption_preferences: _params.consumption_preferences
+      consumption_preferences: _params.consumption_preferences,
     };
     const parameters = {
       options: {
@@ -97,16 +97,16 @@ class PersonalityInsightsV3 extends BaseService {
         method: 'POST',
         json: _params.content_type === 'application/json',
         body: body,
-        qs: query
+        qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
           Accept: 'application/json',
           'Content-Type': _params.content_type,
           'Content-Language': _params.content_language,
-          'Accept-Language': _params.accept_language
-        }
-      })
+          'Accept-Language': _params.accept_language,
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -131,11 +131,7 @@ namespace PersonalityInsightsV3 {
   };
 
   /** The callback for a service request. **/
-  export type Callback<T> = (
-    error: any,
-    body?: T,
-    response?: RequestResponse
-  ) => void;
+  export type Callback<T> = (error: any, body?: T, response?: RequestResponse) => void;
 
   /** The body of a service request that returns no response data. **/
   export interface Empty {}
@@ -168,7 +164,7 @@ namespace PersonalityInsightsV3 {
     export enum ContentType {
       APPLICATION_JSON = 'application/json',
       TEXT_HTML = 'text/html',
-      TEXT_PLAIN = 'text/plain'
+      TEXT_PLAIN = 'text/plain',
     }
     /** The language of the input text for the request: Arabic, English, Japanese, Korean, or Spanish. Regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. The effect of the `content_language` header depends on the `Content-Type` header. When `Content-Type` is `text/plain` or `text/html`, `content_language` is the only way to specify the language. When `Content-Type` is `application/json`, `content_language` overrides a language specified with the `language` parameter of a `ContentItem` object, and content items that specify a different language are ignored; omit this header to base the language on the specification of the content items. You can specify any combination of languages for `content_language` and `Accept-Language`. **/
     export enum ContentLanguage {
@@ -176,7 +172,7 @@ namespace PersonalityInsightsV3 {
       EN = 'en',
       ES = 'es',
       JA = 'ja',
-      KO = 'ko'
+      KO = 'ko',
     }
     /** The desired language of the response. For two-character arguments, regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. You can specify any combination of languages for the input and response content. **/
     export enum AcceptLanguage {
@@ -190,7 +186,7 @@ namespace PersonalityInsightsV3 {
       KO = 'ko',
       PT_BR = 'pt-br',
       ZH_CN = 'zh-cn',
-      ZH_TW = 'zh-tw'
+      ZH_TW = 'zh-tw',
     }
   }
 

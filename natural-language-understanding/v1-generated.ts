@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 IBM All Rights Reserved.
+ * Copyright 2017 IBM All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -100,21 +100,21 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
       fallback_to_raw: _params.fallback_to_raw,
       return_analyzed_text: _params.return_analyzed_text,
       language: _params.language,
-      limit_text_characters: _params.limit_text_characters
+      limit_text_characters: _params.limit_text_characters,
     };
     const parameters = {
       options: {
         url: '/v1/analyze',
         method: 'POST',
         json: true,
-        body: body
+        body: body,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
+          'Content-Type': 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -147,20 +147,20 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
       return _callback(missingParams);
     }
     const path = {
-      model_id: _params.model_id
+      model_id: _params.model_id,
     };
     const parameters = {
       options: {
         url: '/v1/models/{model_id}',
         method: 'DELETE',
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
+          'Content-Type': 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -180,30 +180,26 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
       NaturalLanguageUnderstandingV1.ListModelsResults
     >
   ): NodeJS.ReadableStream | void {
-    const _params =
-      typeof params === 'function' && !callback ? {} : extend({}, params);
+    const _params = typeof params === 'function' && !callback ? {} : extend({}, params);
     const _callback =
-      typeof params === 'function' && !callback
-        ? params
-        : callback ? callback : () => {};
+      typeof params === 'function' && !callback ? params : callback ? callback : () => {};
     const parameters = {
       options: {
         url: '/v1/models',
-        method: 'GET'
+        method: 'GET',
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
+          'Content-Type': 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
 }
 
-NaturalLanguageUnderstandingV1.prototype.name =
-  'natural-language-understanding';
+NaturalLanguageUnderstandingV1.prototype.name = 'natural-language-understanding';
 NaturalLanguageUnderstandingV1.prototype.serviceVersion = 'v1';
 
 /*************************
@@ -222,11 +218,7 @@ namespace NaturalLanguageUnderstandingV1 {
   };
 
   /** The callback for a service request. **/
-  export type Callback<T> = (
-    error: any,
-    body?: T,
-    response?: RequestResponse
-  ) => void;
+  export type Callback<T> = (error: any, body?: T, response?: RequestResponse) => void;
 
   /** The body of a service request that returns no response data. **/
   export interface Empty {}

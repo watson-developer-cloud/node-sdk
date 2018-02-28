@@ -23,11 +23,11 @@ const workspace = {
       values: [
         {
           value: 'hola',
-          synonyms: ['yo', 'yoo']
-        }
-      ]
-    }
-  ]
+          synonyms: ['yo', 'yoo'],
+        },
+      ],
+    },
+  ],
 };
 
 const intents = {
@@ -37,11 +37,11 @@ const intents = {
       intent: 'test',
       examples: [
         {
-          text: 'I test'
-        }
-      ]
-    }
-  ]
+          text: 'I test',
+        },
+      ],
+    },
+  ],
 };
 
 const test_intents = [
@@ -50,19 +50,19 @@ const test_intents = [
     description: 'description_1',
     examples: [
       {
-        text: 'Hi, here\'s a URL ☺ http://example.com/?a=$+*^;&c=%20#!"`~'
-      }
-    ]
-  }
+        text: 'Hi, here\'s a URL ☺ http://example.com/?a=$+*^;&c=%20#!"`~',
+      },
+    ],
+  },
 ];
 const test_intents_update = {
   intent: 'intent_2',
   description: 'description_2',
   examples: [
     {
-      text: 'Hey, here\'s a URL ☺ http://example.com/?a=$+*^;&c=%20#!"`~'
-    }
-  ]
+      text: 'Hey, here\'s a URL ☺ http://example.com/?a=$+*^;&c=%20#!"`~',
+    },
+  ],
 };
 const test_examples_new = 'Oh, here\'s a URL ☺ http://example.com/?a=$+*^;&c=%20#!"`~';
 const counterexampleText = 'Hey, here\'s a URL ☺ http://example.com/?a=$+*^;&c=%20#!"`~';
@@ -73,27 +73,27 @@ const test_entities = [
     values: [
       {
         value: 'value_1',
-        synonyms: ['syn_1']
-      }
-    ]
-  }
+        synonyms: ['syn_1'],
+      },
+    ],
+  },
 ];
 const test_entities_update = {
   entity: 'entity_2',
   values: [
     {
       value: 'v1',
-      synonyms: ['s1']
-    }
-  ]
+      synonyms: ['s1'],
+    },
+  ],
 };
 const test_value = {
   value: 'value_1',
-  synonyms: ['syn_1']
+  synonyms: ['syn_1'],
 };
 const test_value_update = {
   value: 'value_2',
-  synonyms: ['syn_2']
+  synonyms: ['syn_2'],
 };
 const test_synonym = 'synonym_1';
 const test_synonym_update = 'synonym_2';
@@ -111,8 +111,8 @@ describe('conversation_integration', function() {
   let conversation;
 
   before(function() {
-    auth.conversation.version_date = '2017-05-26';
-    conversation = watson.conversation(auth.conversation);
+    auth.conversation.version = '2017-05-26';
+    conversation = new watson.ConversationV1(auth.conversation);
     nock.enableNetConnect();
   });
 
@@ -124,10 +124,10 @@ describe('conversation_integration', function() {
     it('alternate_intents', function(done) {
       const params = {
         input: {
-          text: 'Turn on the lights'
+          text: 'Turn on the lights',
         },
         alternate_intents: true,
-        workspace_id: auth.conversation.workspace_id
+        workspace_id: auth.conversation.workspace_id,
       };
 
       conversation.message(params, function(err, result) {
@@ -141,15 +141,15 @@ describe('conversation_integration', function() {
 
     it('dialog_stack with 2017-02-03 version', function(done) {
       const constructorParams = assign({}, auth.conversation, {
-        version: ConversationV1.VERSION_DATE_2017_02_03
+        version: ConversationV1.VERSION_DATE_2017_02_03,
       });
       const conversation = new watson.ConversationV1(constructorParams);
 
       const params = {
         input: {
-          text: 'Turn on the lights'
+          text: 'Turn on the lights',
         },
-        workspace_id: auth.conversation.workspace_id
+        workspace_id: auth.conversation.workspace_id,
       };
 
       conversation.message(params, function(err, result) {
@@ -163,15 +163,15 @@ describe('conversation_integration', function() {
 
     it('dialog_stack with 2016-09-20 version', function(done) {
       const constructorParams = assign({}, auth.conversation, {
-        version: ConversationV1.VERSION_DATE_2016_09_20
+        version: ConversationV1.VERSION_DATE_2016_09_20,
       });
       const conversation = new watson.ConversationV1(constructorParams);
 
       const params = {
         input: {
-          text: 'Turn on the lights'
+          text: 'Turn on the lights',
         },
-        workspace_id: auth.conversation.workspace_id
+        workspace_id: auth.conversation.workspace_id,
       };
 
       conversation.message(params, function(err, result) {
@@ -185,15 +185,15 @@ describe('conversation_integration', function() {
 
     it('dialog_stack with 2016-07-11 version', function(done) {
       const constructorParams = assign({}, auth.conversation, {
-        version: ConversationV1.VERSION_DATE_2016_07_11
+        version: ConversationV1.VERSION_DATE_2016_07_11,
       });
       const conversation = new watson.ConversationV1(constructorParams);
 
       const params = {
         input: {
-          text: 'Turn on the lights'
+          text: 'Turn on the lights',
         },
-        workspace_id: auth.conversation.workspace_id
+        workspace_id: auth.conversation.workspace_id,
       };
 
       conversation.message(params, function(err, result) {
@@ -231,7 +231,7 @@ describe('conversation_integration', function() {
       const params = {
         page_limit: 2,
         include_count: true,
-        sort: '-name'
+        sort: '-name',
       };
       conversation.listWorkspaces(params, function(err, result) {
         if (err) {
@@ -282,7 +282,7 @@ describe('conversation_integration', function() {
     it('should get the workspace with the right intent', function(done) {
       const params = {
         export: true,
-        workspace_id: workspace1.workspace_id
+        workspace_id: workspace1.workspace_id,
       };
 
       conversation.getWorkspace(params, function(err, result) {
@@ -301,7 +301,7 @@ describe('conversation_integration', function() {
         workspace_id: workspace1.workspace_id,
         intent: test_intents[0].intent,
         description: test_intents[0].description,
-        examples: test_intents[0].examples
+        examples: test_intents[0].examples,
       };
 
       conversation.createIntent(params, function(err, result) {
@@ -319,7 +319,7 @@ describe('conversation_integration', function() {
     it('should get intents of the workspace', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        export: true
+        export: true,
       };
 
       conversation.listIntents(params, function(err, result) {
@@ -338,7 +338,7 @@ describe('conversation_integration', function() {
         export: true,
         page_limit: 1,
         include_count: true,
-        sort: 'intent'
+        sort: 'intent',
       };
 
       conversation.listIntents(params, function(err, result) {
@@ -355,7 +355,7 @@ describe('conversation_integration', function() {
     it('should get an intent of the workspace', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        intent: test_intents[0].intent
+        intent: test_intents[0].intent,
       };
 
       conversation.getIntent(params, function(err, result) {
@@ -376,7 +376,7 @@ describe('conversation_integration', function() {
         intent: test_intents[0].intent,
         new_intent: test_intents_update.intent,
         new_description: test_intents_update.description,
-        new_examples: test_intents_update.examples
+        new_examples: test_intents_update.examples,
       };
 
       conversation.updateIntent(params, function(err, result) {
@@ -393,7 +393,7 @@ describe('conversation_integration', function() {
     it('should get all examples of intent', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        intent: test_intents_update.intent
+        intent: test_intents_update.intent,
       };
 
       conversation.listExamples(params, function(err, result) {
@@ -411,7 +411,7 @@ describe('conversation_integration', function() {
         intent: test_intents_update.intent,
         page_limit: 2,
         include_count: true,
-        sort: '-text'
+        sort: '-text',
       };
 
       conversation.listExamples(params, function(err, result) {
@@ -429,7 +429,7 @@ describe('conversation_integration', function() {
       const params = {
         workspace_id: workspace1.workspace_id,
         intent: test_intents_update.intent,
-        text: 'new_example'
+        text: 'new_example',
       };
 
       conversation.createExample(params, function(err, result) {
@@ -447,7 +447,7 @@ describe('conversation_integration', function() {
       const params = {
         workspace_id: workspace1.workspace_id,
         intent: test_intents_update.intent,
-        text: test_intents_update.examples[0].text
+        text: test_intents_update.examples[0].text,
       };
 
       conversation.getExample(params, function(err, result) {
@@ -466,7 +466,7 @@ describe('conversation_integration', function() {
         workspace_id: workspace1.workspace_id,
         intent: test_intents_update.intent,
         text: test_intents_update.examples[0].text,
-        new_text: test_examples_new
+        new_text: test_examples_new,
       };
 
       conversation.updateExample(params, function(err, result) {
@@ -484,7 +484,7 @@ describe('conversation_integration', function() {
       const params = {
         workspace_id: workspace1.workspace_id,
         intent: test_intents_update.intent,
-        text: test_examples_new
+        text: test_examples_new,
       };
 
       conversation.deleteExample(params, function(err, result) {
@@ -500,7 +500,7 @@ describe('conversation_integration', function() {
     it('should delete an intent of the workspace', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        intent: test_intents_update.intent
+        intent: test_intents_update.intent,
       };
 
       conversation.deleteIntent(params, function(err, result) {
@@ -516,7 +516,7 @@ describe('conversation_integration', function() {
     it('should return the newly created counterexample of the workspace', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        text: counterexampleText
+        text: counterexampleText,
       };
 
       conversation.createCounterexample(params, function(err, result) {
@@ -533,7 +533,7 @@ describe('conversation_integration', function() {
     it('should return a counterexample', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        text: counterexampleText
+        text: counterexampleText,
       };
 
       conversation.getCounterexample(params, function(err, result) {
@@ -549,7 +549,7 @@ describe('conversation_integration', function() {
   describe('listCounterexamples()', function() {
     it('should return counterexamples of the workspace', function(done) {
       const params = {
-        workspace_id: workspace1.workspace_id
+        workspace_id: workspace1.workspace_id,
       };
 
       conversation.listCounterexamples(params, function(err, result) {
@@ -565,7 +565,7 @@ describe('conversation_integration', function() {
         workspace_id: workspace1.workspace_id,
         page_limit: 1,
         include_count: true,
-        sort: 'text'
+        sort: 'text',
       };
 
       conversation.listCounterexamples(params, function(err, result) {
@@ -584,7 +584,7 @@ describe('conversation_integration', function() {
       const params = {
         workspace_id: workspace1.workspace_id,
         text: counterexampleText,
-        new_text: counterexampleText_new
+        new_text: counterexampleText_new,
       };
 
       conversation.updateCounterexample(params, function(err, result) {
@@ -601,7 +601,7 @@ describe('conversation_integration', function() {
     it('should delete a counterexample', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        text: counterexampleText_new
+        text: counterexampleText_new,
       };
 
       conversation.deleteCounterexample(params, function(err, result) {
@@ -619,7 +619,7 @@ describe('conversation_integration', function() {
         workspace_id: workspace1.workspace_id,
         entity: test_entities[0].entity,
         values: test_entities[0].values,
-        fuzzy_match: true
+        fuzzy_match: true,
       };
 
       conversation.createEntity(params, function(err, result) {
@@ -637,7 +637,7 @@ describe('conversation_integration', function() {
     it('should get entities of the workspace', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        export: true
+        export: true,
       };
 
       conversation.listEntities(params, function(err, result) {
@@ -656,7 +656,7 @@ describe('conversation_integration', function() {
         export: true,
         page_limit: 1,
         include_count: true,
-        sort: 'entity'
+        sort: 'entity',
       };
 
       conversation.listEntities(params, function(err, result) {
@@ -673,7 +673,7 @@ describe('conversation_integration', function() {
     it('should get an entity of the workspace', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        entity: test_entities[0].entity
+        entity: test_entities[0].entity,
       };
 
       conversation.getEntity(params, function(err, result) {
@@ -695,7 +695,7 @@ describe('conversation_integration', function() {
         entity: test_entities[0].entity,
         new_entity: test_entities_update.entity,
         new_values: test_entities_update.values,
-        fuzzy_match: false
+        fuzzy_match: false,
       };
 
       conversation.updateEntity(params, function(err, result) {
@@ -714,7 +714,7 @@ describe('conversation_integration', function() {
         workspace_id: workspace1.workspace_id,
         entity: test_entities_update.entity,
         value: test_value.value,
-        synonyms: test_value.synonyms
+        synonyms: test_value.synonyms,
       };
 
       conversation.createValue(params, function(err, result) {
@@ -733,7 +733,7 @@ describe('conversation_integration', function() {
       const params = {
         workspace_id: workspace1.workspace_id,
         entity: test_entities_update.entity,
-        export: true
+        export: true,
       };
 
       conversation.listValues(params, function(err, result) {
@@ -753,7 +753,7 @@ describe('conversation_integration', function() {
         export: true,
         page_limit: 1,
         include_count: true,
-        sort: 'value'
+        sort: 'value',
       };
 
       conversation.listValues(params, function(err, result) {
@@ -771,7 +771,7 @@ describe('conversation_integration', function() {
       const params = {
         workspace_id: workspace1.workspace_id,
         entity: test_entities_update.entity,
-        value: test_value.value
+        value: test_value.value,
       };
 
       conversation.getValue(params, function(err, result) {
@@ -792,7 +792,7 @@ describe('conversation_integration', function() {
         entity: test_entities_update.entity,
         value: test_value.value,
         new_value: test_value_update.value,
-        new_synonyms: test_value_update.synonyms
+        new_synonyms: test_value_update.synonyms,
       };
 
       conversation.updateValue(params, function(err, result) {
@@ -811,7 +811,7 @@ describe('conversation_integration', function() {
         workspace_id: workspace1.workspace_id,
         entity: test_entities_update.entity,
         value: test_value_update.value,
-        synonym: test_synonym
+        synonym: test_synonym,
       };
 
       conversation.createSynonym(params, function(err, result) {
@@ -830,7 +830,7 @@ describe('conversation_integration', function() {
         workspace_id: workspace1.workspace_id,
         entity: test_entities_update.entity,
         value: test_value_update.value,
-        export: true
+        export: true,
       };
 
       conversation.listSynonyms(params, function(err, result) {
@@ -849,7 +849,7 @@ describe('conversation_integration', function() {
         value: test_value_update.value,
         export: true,
         page_limit: 1,
-        include_count: true
+        include_count: true,
       };
 
       conversation.listSynonyms(params, function(err, result) {
@@ -868,7 +868,7 @@ describe('conversation_integration', function() {
         workspace_id: workspace1.workspace_id,
         entity: test_entities_update.entity,
         value: test_value_update.value,
-        synonym: test_synonym
+        synonym: test_synonym,
       };
 
       conversation.getSynonym(params, function(err, result) {
@@ -888,7 +888,7 @@ describe('conversation_integration', function() {
         entity: test_entities_update.entity,
         value: test_value_update.value,
         synonym: test_synonym,
-        new_synonym: test_synonym_update
+        new_synonym: test_synonym_update,
       };
 
       conversation.updateSynonym(params, function(err, result) {
@@ -906,7 +906,7 @@ describe('conversation_integration', function() {
       const params = {
         workspace_id: workspace1.workspace_id,
         export: true,
-        page_limit: 1
+        page_limit: 1,
       };
 
       conversation.listLogs(params, function(err, result) {
@@ -925,7 +925,7 @@ describe('conversation_integration', function() {
         workspace_id: workspace1.workspace_id,
         entity: test_entities_update.entity,
         value: test_value_update.value,
-        synonym: test_synonym_update
+        synonym: test_synonym_update,
       };
 
       conversation.deleteSynonym(params, function(err, result) {
@@ -942,7 +942,7 @@ describe('conversation_integration', function() {
       const params = {
         workspace_id: workspace1.workspace_id,
         entity: test_entities_update.entity,
-        value: test_value_update.value
+        value: test_value_update.value,
       };
 
       conversation.deleteValue(params, function(err, result) {
@@ -958,7 +958,7 @@ describe('conversation_integration', function() {
     it('should delete an entity of the workspace', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        entity: test_entities_update.entity
+        entity: test_entities_update.entity,
       };
 
       conversation.deleteEntity(params, function(err, result) {
@@ -975,7 +975,7 @@ describe('conversation_integration', function() {
       const params = {
         workspace_id: workspace1.workspace_id,
         dialog_node: test_dialog_node,
-        conditions: 'true'
+        conditions: 'true',
       };
 
       conversation.createDialogNode(params, function(err, result) {
@@ -998,7 +998,7 @@ describe('conversation_integration', function() {
   describe('listDialogNodes()', function() {
     it('should get dialog nodes of the workspace', function(done) {
       const params = {
-        workspace_id: workspace1.workspace_id
+        workspace_id: workspace1.workspace_id,
       };
 
       conversation.listDialogNodes(params, function(err, result) {
@@ -1015,7 +1015,7 @@ describe('conversation_integration', function() {
         workspace_id: workspace1.workspace_id,
         page_limit: 1,
         include_count: true,
-        sort: 'dialog_node'
+        sort: 'dialog_node',
       };
 
       conversation.listDialogNodes(params, function(err, result) {
@@ -1032,7 +1032,7 @@ describe('conversation_integration', function() {
     it('should get a dialog node of the workspace', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        dialog_node: test_dialog_node
+        dialog_node: test_dialog_node,
       };
 
       conversation.getDialogNode(params, function(err, result) {
@@ -1052,7 +1052,7 @@ describe('conversation_integration', function() {
         workspace_id: workspace1.workspace_id,
         dialog_node: test_dialog_node,
         new_dialog_node: test_dialog_node_update,
-        new_conditions: 'false'
+        new_conditions: 'false',
       };
 
       conversation.updateDialogNode(params, function(err, result) {
@@ -1070,7 +1070,7 @@ describe('conversation_integration', function() {
     it('should delete a dialog node of the workspace', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        dialog_node: test_dialog_node_update
+        dialog_node: test_dialog_node_update,
       };
 
       conversation.deleteDialogNode(params, function(err, result) {
@@ -1085,7 +1085,7 @@ describe('conversation_integration', function() {
   describe('deleteWorkspace()', function() {
     it('should delete the workplace', function(done) {
       const params = {
-        workspace_id: workspace1.workspace_id
+        workspace_id: workspace1.workspace_id,
       };
 
       conversation.deleteWorkspace(params, function(err, result) {

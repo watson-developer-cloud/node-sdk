@@ -23,7 +23,7 @@ describe('natural_language_understanding', function() {
     nlu = new watson.NaturalLanguageUnderstandingV1({
       username: 'user',
       password: 'pass',
-      version: '2017-02-27'
+      version: '2017-02-27',
     });
     nock.disableNetConnect();
   });
@@ -36,7 +36,7 @@ describe('natural_language_understanding', function() {
     assert.throws(function() {
       const badnlu = new watson.NaturalLanguageUnderstandingV1({
         username: 'user',
-        password: 'pass'
+        password: 'pass',
       });
       assert(badnlu);
     });
@@ -60,19 +60,19 @@ describe('natural_language_understanding', function() {
             credentials: {
               url: 'https://gateway.watsonplatform.net/natural-language-understanding/api',
               username: 'hyphenated-user',
-              password: 'hpyhenated-pass'
+              password: 'hpyhenated-pass',
             },
             syslog_drain_url: null,
             label: 'natural-language-understanding',
             provider: null,
             plan: 'standard',
             name: 'my-nlu-service',
-            tags: ['watson', 'ibm_created']
-          }
-        ]
+            tags: ['watson', 'ibm_created'],
+          },
+        ],
       });
       const nluHyphenated = new watson.NaturalLanguageUnderstandingV1({
-        version: '2017-02-27'
+        version: '2017-02-27',
       });
       assert(nluHyphenated);
       assert.equal(nluHyphenated.getCredentials().username, 'hyphenated-user');
@@ -84,7 +84,7 @@ describe('natural_language_understanding', function() {
       process.env.NATURAL_LANGUAGE_UNDERSTANDING_URL =
         'https://gateway.watsonplatform.net/natural-language-understanding/api';
       const nluUnderscore = new watson.NaturalLanguageUnderstandingV1({
-        version: '2017-02-27'
+        version: '2017-02-27',
       });
       assert(nluUnderscore);
       assert.equal(nluUnderscore.getCredentials().username, 'user');
@@ -99,12 +99,12 @@ describe('natural_language_understanding', function() {
     const nlu_old_version = new watson.NaturalLanguageUnderstandingV1({
       username: 'user',
       password: 'pass',
-      version: '2016-01-23'
+      version: '2016-01-23',
     });
 
     const options = {
       features: { concepts: {}, keywords: {} },
-      text: 'hello, this is a test'
+      text: 'hello, this is a test',
     };
 
     nlu_old_version.analyze(options, err => {
@@ -121,7 +121,7 @@ describe('natural_language_understanding', function() {
 
     const options = {
       features: { concepts: {}, keywords: {} },
-      text: 'hello, this is a test'
+      text: 'hello, this is a test',
     };
 
     nlu.analyze(options, err => {

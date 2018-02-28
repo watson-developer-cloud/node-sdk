@@ -35,10 +35,10 @@ class VisualRecognitionV3 extends BaseService {
    * Construct a VisualRecognitionV3 object.
    *
    * @param {Object} options - Options for the service.
-   * @param {string} options.version - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses the API version for the date you specify, or the most recent version before that date. Note that you should not programmatically specify the current date at runtime, in case the API has been updated since your application's release. Instead, specify a version date that is compatible with your application, and don't change it until your application is ready for a later version.
-   * @param {string} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/visual-recognition/api'). The base url may differ between Bluemix regions.
-   * @param {string} [options.api_key] - The API key used to authenticate with the service. The API key credential is only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
-   * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
+   * @param {String} options.version - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses the API version for the date you specify, or the most recent version before that date. Note that you should not programmatically specify the current date at runtime, in case the API has been updated since your application's release. Instead, specify a version date that is compatible with your application, and don't change it until your application is ready for a later version.
+   * @param {String} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/visual-recognition/api'). The base url may differ between Bluemix regions.
+   * @param {String} [options.api_key] - The API key used to authenticate with the service. The API key credential is only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
+   * @param {Boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
    * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
    * @constructor
@@ -73,36 +73,31 @@ class VisualRecognitionV3 extends BaseService {
    */
   classify(
     params?: VisualRecognitionV3.ClassifyParams,
-    callback?: VisualRecognitionV3.Callback<
-      VisualRecognitionV3.ClassifiedImages
-    >
+    callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.ClassifiedImages>
   ): NodeJS.ReadableStream | void {
-    const _params =
-      typeof params === 'function' && !callback ? {} : extend({}, params);
+    const _params = typeof params === 'function' && !callback ? {} : extend({}, params);
     const _callback =
-      typeof params === 'function' && !callback
-        ? params
-        : callback ? callback : () => {};
+      typeof params === 'function' && !callback ? params : callback ? callback : () => {};
     const formData = {
       images_file: {
         data: _params.images_file,
-        contentType: _params.images_file_content_type
+        contentType: _params.images_file_content_type,
       },
-      parameters: _params.parameters
+      parameters: _params.parameters,
     };
     const parameters = {
       options: {
         url: '/v3/classify',
         method: 'POST',
-        formData: formData
+        formData: formData,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'multipart/form-data',
-          'Accept-Language': _params.accept_language
-        }
-      })
+          'Accept-Language': _params.accept_language,
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -127,31 +122,28 @@ class VisualRecognitionV3 extends BaseService {
     params?: VisualRecognitionV3.DetectFacesParams,
     callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.DetectedFaces>
   ): NodeJS.ReadableStream | void {
-    const _params =
-      typeof params === 'function' && !callback ? {} : extend({}, params);
+    const _params = typeof params === 'function' && !callback ? {} : extend({}, params);
     const _callback =
-      typeof params === 'function' && !callback
-        ? params
-        : callback ? callback : () => {};
+      typeof params === 'function' && !callback ? params : callback ? callback : () => {};
     const formData = {
       images_file: {
         data: _params.images_file,
-        contentType: _params.images_file_content_type
+        contentType: _params.images_file_content_type,
       },
-      parameters: _params.parameters
+      parameters: _params.parameters,
     };
     const parameters = {
       options: {
         url: '/v3/detect_faces',
         method: 'POST',
-        formData: formData
+        formData: formData,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'multipart/form-data'
-        }
-      })
+          'Content-Type': 'multipart/form-data',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -190,17 +182,17 @@ class VisualRecognitionV3 extends BaseService {
       name: _params.name,
       classname_positive_examples: {
         data: _params.classname_positive_examples,
-        contentType: 'application/octet-stream'
+        contentType: 'application/octet-stream',
       },
       negative_examples: {
         data: _params.negative_examples,
-        contentType: 'application/octet-stream'
-      }
+        contentType: 'application/octet-stream',
+      },
     };
     _positive_example_classes.forEach(positive_example_class => {
       formData[positive_example_class] = {
         data: _params[positive_example_class],
-        contentType: 'application/octet-stream'
+        contentType: 'application/octet-stream',
       };
     });
 
@@ -208,14 +200,14 @@ class VisualRecognitionV3 extends BaseService {
       options: {
         url: '/v3/classifiers',
         method: 'POST',
-        formData: formData
+        formData: formData,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'multipart/form-data'
-        }
-      })
+          'Content-Type': 'multipart/form-data',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -240,20 +232,20 @@ class VisualRecognitionV3 extends BaseService {
       return _callback(missingParams);
     }
     const path = {
-      classifier_id: _params.classifier_id
+      classifier_id: _params.classifier_id,
     };
     const parameters = {
       options: {
         url: '/v3/classifiers/{classifier_id}',
         method: 'DELETE',
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
+          'Content-Type': 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -280,20 +272,20 @@ class VisualRecognitionV3 extends BaseService {
       return _callback(missingParams);
     }
     const path = {
-      classifier_id: _params.classifier_id
+      classifier_id: _params.classifier_id,
     };
     const parameters = {
       options: {
         url: '/v3/classifiers/{classifier_id}',
         method: 'GET',
-        path: path
+        path: path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
+          'Content-Type': 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -310,27 +302,24 @@ class VisualRecognitionV3 extends BaseService {
     params?: VisualRecognitionV3.ListClassifiersParams,
     callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifiers>
   ): NodeJS.ReadableStream | void {
-    const _params =
-      typeof params === 'function' && !callback ? {} : extend({}, params);
+    const _params = typeof params === 'function' && !callback ? {} : extend({}, params);
     const _callback =
-      typeof params === 'function' && !callback
-        ? params
-        : callback ? callback : () => {};
+      typeof params === 'function' && !callback ? params : callback ? callback : () => {};
     const query = {
-      verbose: _params.verbose
+      verbose: _params.verbose,
     };
     const parameters = {
       options: {
         url: '/v3/classifiers',
         method: 'GET',
-        qs: query
+        qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
+          'Content-Type': 'application/json',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -364,35 +353,35 @@ class VisualRecognitionV3 extends BaseService {
     const formData = {
       classname_positive_examples: {
         data: _params.classname_positive_examples,
-        contentType: 'application/octet-stream'
+        contentType: 'application/octet-stream',
       },
       negative_examples: {
         data: _params.negative_examples,
-        contentType: 'application/octet-stream'
-      }
+        contentType: 'application/octet-stream',
+      },
     };
     _positive_example_classes.forEach(positive_example_class => {
       formData[positive_example_class] = {
         data: _params[positive_example_class],
-        contentType: 'application/octet-stream'
+        contentType: 'application/octet-stream',
       };
     });
     const path = {
-      classifier_id: _params.classifier_id
+      classifier_id: _params.classifier_id,
     };
     const parameters = {
       options: {
         url: '/v3/classifiers/{classifier_id}',
         method: 'POST',
         path: path,
-        formData: formData
+        formData: formData,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'multipart/form-data'
-        }
-      })
+          'Content-Type': 'multipart/form-data',
+        },
+      }),
     };
     return createRequest(parameters, _callback);
   }
@@ -418,11 +407,7 @@ namespace VisualRecognitionV3 {
   };
 
   /** The callback for a service request. **/
-  export type Callback<T> = (
-    error: any,
-    body?: T,
-    response?: RequestResponse
-  ) => void;
+  export type Callback<T> = (error: any, body?: T, response?: RequestResponse) => void;
 
   /** The body of a service request that returns no response data. **/
   export interface Empty {}
@@ -453,7 +438,7 @@ namespace VisualRecognitionV3 {
       ES = 'es',
       IT = 'it',
       JA = 'ja',
-      KO = 'ko'
+      KO = 'ko',
     }
   }
 
