@@ -1,6 +1,12 @@
 {
   "extends": ["tslint:recommended", "tslint-eslint-rules", "tslint-config-prettier"],
   "rules": {
+    "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"],
+    "interface-name": [true, "never-prefix"],
+    "no-string-literal": false,
+    "no-empty-interface":false,
+    "object-literal-sort-keys": false,
+    "member-access":false,
     "no-console": {
       "severity": "warning",
       "options": ["debug", "info", "log", "time", "timeEnd", "trace"]
