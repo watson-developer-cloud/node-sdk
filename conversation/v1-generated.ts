@@ -81,7 +81,7 @@ class ConversationV1 extends BaseService {
    */
   public createWorkspace(params?: ConversationV1.CreateWorkspaceParams, callback?: ConversationV1.Callback<ConversationV1.Workspace>): NodeJS.ReadableStream | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => { /* noop */ };
+    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
     const body = {
       'name': _params.name,
       'description': _params.description,
@@ -205,7 +205,7 @@ class ConversationV1 extends BaseService {
    */
   public listWorkspaces(params?: ConversationV1.ListWorkspacesParams, callback?: ConversationV1.Callback<ConversationV1.WorkspaceCollection>): NodeJS.ReadableStream | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => { /* noop */ };
+    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
     const query = {
       'page_limit': _params.page_limit,
       'include_count': _params.include_count,

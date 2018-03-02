@@ -18,8 +18,8 @@
 import * as extend from 'extend';
 import { RequestResponse } from 'request';
 import { BaseService } from '../lib/base_service';
-import { getMissingParams } from '../lib/helper';
 import { FileObject } from '../lib/helper';
+import { getMissingParams } from '../lib/helper';
 import { createRequest } from '../lib/requestwrapper';
 
 /**
@@ -186,7 +186,7 @@ class DiscoveryV1 extends BaseService {
    */
   public listEnvironments(params?: DiscoveryV1.ListEnvironmentsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.ListEnvironmentsResponse>): NodeJS.ReadableStream | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => { /* noop */ };
+    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
     const query = {
       'name': _params.name
     };
@@ -226,7 +226,7 @@ class DiscoveryV1 extends BaseService {
       return _callback(missingParams);
     }
     const query = {
-      'collection_ids': _params.collection_ids ? _params.collection_ids.join(',') : undefined
+      'collection_ids': _params.collection_ids
     };
     const path = {
       'environment_id': _params.environment_id
@@ -1179,15 +1179,15 @@ class DiscoveryV1 extends BaseService {
       return _callback(missingParams);
     }
     const query = {
-      'collection_ids': _params.collection_ids ? _params.collection_ids.join(',') : undefined,
+      'collection_ids': _params.collection_ids,
       'filter': _params.filter,
       'query': _params.query,
       'natural_language_query': _params.natural_language_query,
       'aggregation': _params.aggregation,
       'count': _params.count,
-      'return_fields': _params.return_fields ? _params.return_fields.join(',') : undefined,
+      'return_fields': _params.return_fields,
       'offset': _params.offset,
-      'sort': _params.sort ? _params.sort.join(',') : undefined,
+      'sort': _params.sort,
       'highlight': _params.highlight,
       'deduplicate': _params.deduplicate,
       'deduplicate.field': _params.deduplicate_field
@@ -1242,15 +1242,15 @@ class DiscoveryV1 extends BaseService {
       return _callback(missingParams);
     }
     const query = {
-      'collection_ids': _params.collection_ids ? _params.collection_ids.join(',') : undefined,
+      'collection_ids': _params.collection_ids,
       'filter': _params.filter,
       'query': _params.query,
       'natural_language_query': _params.natural_language_query,
       'aggregation': _params.aggregation,
       'count': _params.count,
-      'return_fields': _params.return_fields ? _params.return_fields.join(',') : undefined,
+      'return_fields': _params.return_fields,
       'offset': _params.offset,
-      'sort': _params.sort ? _params.sort.join(',') : undefined,
+      'sort': _params.sort,
       'highlight': _params.highlight,
       'deduplicate.field': _params.deduplicate_field
     };
@@ -1315,11 +1315,11 @@ class DiscoveryV1 extends BaseService {
       'passages': _params.passages,
       'aggregation': _params.aggregation,
       'count': _params.count,
-      'return': _params.return_fields ? _params.return_fields.join(',') : undefined,
+      'return': _params.return_fields,
       'offset': _params.offset,
-      'sort': _params.sort ? _params.sort.join(',') : undefined,
+      'sort': _params.sort,
       'highlight': _params.highlight,
-      'passages.fields': _params.passages_fields ? _params.passages_fields.join(',') : undefined,
+      'passages.fields': _params.passages_fields,
       'passages.count': _params.passages_count,
       'passages.characters': _params.passages_characters,
       'deduplicate': _params.deduplicate,
@@ -1437,11 +1437,11 @@ class DiscoveryV1 extends BaseService {
       'passages': _params.passages,
       'aggregation': _params.aggregation,
       'count': _params.count,
-      'return_fields': _params.return_fields ? _params.return_fields.join(',') : undefined,
+      'return_fields': _params.return_fields,
       'offset': _params.offset,
-      'sort': _params.sort ? _params.sort.join(',') : undefined,
+      'sort': _params.sort,
       'highlight': _params.highlight,
-      'passages.fields': _params.passages_fields ? _params.passages_fields.join(',') : undefined,
+      'passages.fields': _params.passages_fields,
       'passages.count': _params.passages_count,
       'passages.characters': _params.passages_characters,
       'deduplicate.field': _params.deduplicate_field

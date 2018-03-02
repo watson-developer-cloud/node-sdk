@@ -18,9 +18,10 @@
 import * as extend from 'extend';
 import { RequestResponse } from 'request';
 import { BaseService } from '../lib/base_service';
-import { getMissingParams } from '../lib/helper';
 import { FileObject } from '../lib/helper';
+import { getMissingParams } from '../lib/helper';
 import { createRequest } from '../lib/requestwrapper';
+
 
 /**
  * Language Translator translates text from one language to another. The service offers multiple domain-specific models that you can customize based on your unique terminology and language. Use Language Translator to take news from across the globe and present it in your language, communicate with your customers in their own language, and more.
@@ -150,7 +151,7 @@ class LanguageTranslatorV2 extends BaseService {
    */
   public listIdentifiableLanguages(params?: LanguageTranslatorV2.ListIdentifiableLanguagesParams, callback?: LanguageTranslatorV2.Callback<LanguageTranslatorV2.IdentifiableLanguages>): NodeJS.ReadableStream | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => { /* noop */ };
+    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
     const parameters = {
       options: {
         url: '/v2/identifiable_languages',
@@ -312,7 +313,7 @@ class LanguageTranslatorV2 extends BaseService {
    */
   public listModels(params?: LanguageTranslatorV2.ListModelsParams, callback?: LanguageTranslatorV2.Callback<LanguageTranslatorV2.TranslationModels>): NodeJS.ReadableStream | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => { /* noop */ };
+    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
     const query = {
       'source': _params.source,
       'target': _params.target,

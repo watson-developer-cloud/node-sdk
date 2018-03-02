@@ -67,11 +67,12 @@ function acceptsApiKey(name: string): boolean {
 }
 
 export class BaseService {
-  protected _options: BaseServiceOptions;
-  protected serviceDefaults: object;
   static URL: string;
   name: string;
   serviceVersion: string;
+  protected _options: BaseServiceOptions;
+  protected serviceDefaults: object;
+
   /**
    * Internal base class that other services inherit from
    * @param {UserOptions} options
@@ -87,7 +88,7 @@ export class BaseService {
    * @throws {Error}
    * @returns {BaseService}
    */
-  constructor(user_options: UserOptions) {
+  constructor(userOptions: UserOptions) {
     if (!(this instanceof BaseService)) {
       // it might be better to just create a new instance and return that..
       // but that can't be done here, it has to be done in each individual service.
@@ -96,7 +97,7 @@ export class BaseService {
         'the "new" keyword is required to create Watson service instances'
       );
     }
-    const options = extend({}, user_options);
+    const options = extend({}, userOptions);
     const _options = this.initCredentials(options);
     if (options.url) {
       _options.url = stripTrailingSlash(options.url);
@@ -109,6 +110,31 @@ export class BaseService {
       _options
     );
   }
+
+  /**
+   * Retrieve this service's credentials - useful for passing to the authorization service
+   *
+   * Only returns a URL when token auth is used.
+   *
+   * @returns {Credentials}
+   */
+  public getCredentials(): Credentials {
+    const _credentials = {} as Credentials;
+    if (this._options.username) {
+      _credentials.username = this._options.username;
+    }
+    if (this._options.password) {
+      _credentials.password = this._options.password;
+    }
+    if (this._options.api_key) {
+      _credentials.api_key = this._options.api_key;
+    }
+    if (this._options.url) {
+      _credentials.url = this._options.url;
+    }
+    return _credentials;
+  }
+
   /**
    * @private
    * @param {UserOptions} options
@@ -181,18 +207,18 @@ export class BaseService {
    * @returns {Credentials}
    */
   private getCredentialsFromEnvironment(name: string): Credentials {
-    const _name: string = (name == 'watson_vision_combined' ? 'visual_recognition' : name).toUpperCase();
+    const _name: string = (name === 'watson_vision_combined' ? 'visual_recognition' : name).toUpperCase();
     // https://github.com/watson-developer-cloud/node-sdk/issues/605
     const _nameWithUnderscore: string = _name.replace(/-/g, '_');
     const _username: string = process.env[`${_name}_USERNAME`] || process.env[`${_nameWithUnderscore}_USERNAME`];
     const _password: string = process.env[`${_name}_PASSWORD`] || process.env[`${_nameWithUnderscore}_PASSWORD`];
-    const _api_key: string = process.env[`${_name}_API_KEY`] || process.env[`${_nameWithUnderscore}_API_KEY`];
+    const _apiKey: string = process.env[`${_name}_API_KEY`] || process.env[`${_nameWithUnderscore}_API_KEY`];
     const _url: string = process.env[`${_name}_URL`] || process.env[`${_nameWithUnderscore}_URL`];
 
     return {
       username: _username,
       password: _password,
-      api_key: _api_key,
+      api_key: _apiKey,
       url: _url
     };
   }
@@ -202,36 +228,14 @@ export class BaseService {
    * @private
    * @returns {Credentials}
    */
-  private getCredentialsFromBluemix(vcap_services_name: string): Credentials {
+  private getCredentialsFromBluemix(vcapServicesName: string): Credentials {
     let _credentials: Credentials;
     if (this.name === 'visual_recognition') {
       _credentials = vcapServices.getCredentials('watson_vision_combined');
     } else {
-      _credentials = vcapServices.getCredentials(vcap_services_name);
+      _credentials = vcapServices.getCredentials(vcapServicesName);
     }
     return _credentials;
   }
-  /**
-   * Retrieve this service's credentials - useful for passing to the authorization service
-   *
-   * Only returns a URL when token auth is used.
-   *
-   * @returns {Credentials}
-   */
-  public getCredentials(): Credentials {
-    const _credentials = {} as Credentials;
-    if (this._options.username) {
-      _credentials.username = this._options.username;
-    }
-    if (this._options.password) {
-      _credentials.password = this._options.password;
-    }
-    if (this._options.api_key) {
-      _credentials.api_key = this._options.api_key;
-    }
-    if (this._options.url) {
-      _credentials.url = this._options.url;
-    }
-    return _credentials;
-  }
+
 }

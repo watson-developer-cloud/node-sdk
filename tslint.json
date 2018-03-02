@@ -7,7 +7,16 @@
     "no-empty-interface":false,
     "object-literal-sort-keys": false,
     "interface-over-type-literal": false,
-    "no-namespace": false,
+    "ban-types": [false, ["Object", "Use {} instead."]],
+    "no-namespace": {
+      "severity": "warning"
+    },
+    "no-reference": {
+      "severity": "warning"
+    },
+    "no-shadowed-variable": {
+      "severity": "warning"
+    },
     "member-access":false,
     "no-console": {
       "severity": "warning",

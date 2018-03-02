@@ -77,7 +77,7 @@ export function getContentType(
   } else if (Buffer.isBuffer(inputData)) {
     // if the inputData is a Buffer
     contentType = fileType(inputData);
-  } else if (typeof inputData == 'string') {
+  } else if (typeof inputData === 'string') {
     // if the inputData is a string
     contentType = fileType(Buffer.from(inputData));
   }
@@ -111,7 +111,7 @@ export function getMissingParams(
     missing = requires;
   } else {
     missing = [];
-    requires.forEach(function(require) {
+    requires.forEach((require) => {
       if (!params[require]) {
         missing.push(require);
       }
@@ -123,10 +123,10 @@ export function getMissingParams(
 }
 
 /**
-   * Return true if 'text' is html
-   * @param  {string} text - The 'text' to analyze
-   * @returns {boolean} true if 'text' has html tags
-   */
+ * Return true if 'text' is html
+ * @param  {string} text - The 'text' to analyze
+ * @returns {boolean} true if 'text' has html tags
+ */
 export function isHTML(text: string): boolean {
   return /<[a-z][\s\S]*>/i.test(text);
 }
@@ -137,7 +137,7 @@ export function isHTML(text: string): boolean {
  * @param  {Object} params - The parameters.
  * @param  {string[]} requires - The keys we want to check
  * @returns {string|null}
- *  */
+ */
 export function getFormat(
   params: { [key: string]: any },
   formats: string[]
@@ -145,11 +145,12 @@ export function getFormat(
   if (!formats || !params) {
     return null;
   }
-  for (let i = 0; i < formats.length; i++) {
-    if (formats[i] in params) {
-      return formats[i];
+  for (const item of formats) {
+    if (item in params) {
+      return item;
     }
   }
+
   return null;
 }
 

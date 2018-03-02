@@ -107,7 +107,7 @@ class TextToSpeechV1 extends BaseService {
    */
   public listVoices(params?: TextToSpeechV1.ListVoicesParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Voices>): NodeJS.ReadableStream | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => { /* noop */ };
+    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
     const parameters = {
       options: {
         url: '/v1/voices',
@@ -348,7 +348,7 @@ class TextToSpeechV1 extends BaseService {
    */
   public listVoiceModels(params?: TextToSpeechV1.ListVoiceModelsParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.VoiceModels>): NodeJS.ReadableStream | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => { /* noop */ };
+    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
     const query = {
       'language': _params.language
     };
@@ -681,7 +681,7 @@ namespace TextToSpeechV1 {
 
   /** Parameters for the `synthesize` operation. */
   export interface SynthesizeParams {
-    /** The requested audio format (MIME type) of the audio. You can use this header or the `accept` query parameter to specify the audio format. (For the `audio/l16` format, you can optionally specify `endianness=big-endian` or `endianness=little-endian`; the default is little endian.). **/
+    /** The requested audio format (MIME type) of the audio. You can use this header or the `accept` query parameter to specify the audio format. (For the `audio/l16` format, you can optionally specify `endianness=big-endian` or `endianness=little-endian`; the default is little endian.). */
     accept?: SynthesizeConstants.Accept | string;
     /** The voice to use for synthesis. Retrieve available voices with the `GET /v1/voices` method. */
     voice?: SynthesizeConstants.Voice | string;
@@ -693,7 +693,7 @@ namespace TextToSpeechV1 {
 
   /** Constants for the `synthesize` operation. */
   export namespace SynthesizeConstants {
-    /** The requested audio format (MIME type) of the audio. You can use this header or the `accept` query parameter to specify the audio format. (For the `audio/l16` format, you can optionally specify `endianness=big-endian` or `endianness=little-endian`; the default is little endian.). **/
+    /** The requested audio format (MIME type) of the audio. You can use this header or the `accept` query parameter to specify the audio format. (For the `audio/l16` format, you can optionally specify `endianness=big-endian` or `endianness=little-endian`; the default is little endian.). */
     export enum Accept {
       BASIC = 'audio/basic',
       FLAC = 'audio/flac',
@@ -709,7 +709,6 @@ namespace TextToSpeechV1 {
       WEBM_CODECS_OPUS = 'audio/webm:codecs=opus',
       WEBM_CODECS_VORBIS = 'audio/webm:codecs=vorbis',
     }
-
     /** The voice to use for synthesis. Retrieve available voices with the `GET /v1/voices` method. */
     export enum Voice {
       EN_US_ALLISONVOICE = 'en-US_AllisonVoice',

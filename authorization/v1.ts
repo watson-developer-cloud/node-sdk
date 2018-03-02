@@ -19,9 +19,9 @@ import { BaseService } from '../lib/base_service';
 import { createRequest } from '../lib/requestwrapper';
 
 class AuthorizationV1 extends BaseService {
+  static URL: string = 'https://stream.watsonplatform.net/authorization/api';
   name;
   serviceVersion;
-  static URL: string = 'https://stream.watsonplatform.net/authorization/api';
 
   /**
    * Authorization Service

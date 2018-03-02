@@ -93,7 +93,7 @@ describe('natural_language_understanding', function() {
 
   it('2016_01_23 version should work', function(done) {
     const mockApi = nock(watson.NaturalLanguageUnderstandingV1.URL)
-      .post('/v1/analyze?version=' + '2017-02-27')
+      .post('/v1/analyze?version=' + '2016-01-23')
       .reply(200, {});
 
     const nlu_old_version = new watson.NaturalLanguageUnderstandingV1({

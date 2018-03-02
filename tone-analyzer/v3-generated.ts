@@ -87,7 +87,7 @@ class ToneAnalyzerV3 extends BaseService {
     const body = _params.tone_input;
     const query = {
       'sentences': _params.sentences,
-      'tones': _params.tones ? _params.tones.join(',') : undefined
+      'tones': _params.tones
     };
     const parameters = {
       options: {

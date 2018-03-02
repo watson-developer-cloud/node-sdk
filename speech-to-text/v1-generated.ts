@@ -19,9 +19,10 @@
 import * as extend from 'extend';
 import { RequestResponse } from 'request';
 import { BaseService } from '../lib/base_service';
-import { getMissingParams } from '../lib/helper';
 import { FileObject } from '../lib/helper';
+import { getMissingParams } from '../lib/helper';
 import { createRequest } from '../lib/requestwrapper';
+
 
 /**
  * ### Service Overview  The IBM Speech to Text service provides a Representational State Transfer (REST) Application Programming Interface (API) that enables you to add IBM's speech transcription capabilities to your applications. The service also supports an asynchronous HTTP interface for transcribing audio via non-blocking calls. And it supports a customization interface that lets you expand the vocabulary of a base model with domain-specific terminology or adapt a base model for the acoustic characteristics of your audio.   The service transcribes speech from various languages and audio formats to text with low latency. The service supports transcription of the following languages: Brazilian Portuguese, French, Japanese, Mandarin Chinese, Modern Standard Arabic, Spanish, UK English, and US English. For most languages, the service supports two sampling rates, broadband and narrowband.  ### API Overview The Speech to Text service provides the following endpoints: * `/v1/models` returns information about the language models that are available for speech recognition. * `/v1/recognize` (sessionless) includes a single method that provides a simple means of transcribing audio without the overhead of establishing and maintaining a session, but it lacks some of the capabilities available with sessions. * `/v1/sessions` provides a collection of methods that provide a mechanism for a client to maintain a long, multi-turn exchange, or session, with the service or to establish multiple parallel conversations with a particular instance of the service. * `/v1/recognitions` (asynchronous) provides a set of non-blocking methods for submitting, querying, and deleting jobs for recognition requests with the asynchronous HTTP interface. The interface includes calls to register (white-list) and unregister a callback URL. * `/v1/customizations` provides methods for creating and managing custom language models. Custom language models let you expand the vocabulary of a base model with domain-specific terminology. * `/v1/customizations/{customization_id}/corpora` provides methods for managing the corpora associated with a custom language model. You add corpora to extract out-of-vocabulary (OOV) words from the corpora into the custom language model's vocabulary. You can add, list, and delete corpora from a custom language model. * `/v1/customizations/{customization_id}/words` includes methods for managing individual words in a custom language model. You can add, modify, list, and delete words from a custom language model. * `/v1/acoustic_customizations` provides methods for creating and managing custom acoustic models. The interface lets you adapt a base model for the audio characteristics of your environment and speakers. * `/v1/acoustic_customizations/{customization_id}/audio` provides methods for managing the audio resources associated with a custom acoustic model. You add audio resources that closely match the acoustic characteristics of the audio that you want to transcribe. You can add, list, and delete audio resources from a custom acoustic model.    **Note about the Try It Out feature:** The `Try it out!` button lets you experiment with the methods of the API by making actual cURL calls to the service. The feature is **not** supported for use with the session-based `POST /v1/sessions/{session_id}/recognize` and sessionless `POST /v1/recognize` methods. For examples of calls to these methods, see the [Speech to Text API reference](http://www.ibm.com/watson/developercloud/speech-to-text/api/v1/).  ### API Usage The following information provides details about using the service to transcribe audio: * **HTTP REST interfaces:** You can use methods of the session-based, sessionless, or asynchronous HTTP interfaces to pass audio data to the service. All interfaces let you send the data via the body of the request; the session-based and sessionless methods also let you pass data as multipart form data. With the former approach, you control the transcription via a collection of request headers and query parameters. With the latter, you control the transcription primarily via JSON metadata sent as form data. * **WebSocket interface:** The service also offers a WebSocket interface as an alternative to its HTTP interfaces. The WebSocket interface supports efficient implementation, lower latency, and higher throughput. The interface establishes a persistent connection with the service, eliminating the need for session-based calls from the HTTP interface. See [The WebSocket interface](https://console.bluemix.net/docs/services/speech-to-text/websockets.html). * **Audio formats:** The service supports a variety of popular audio formats. For more information, including links to a number of Internet sites that provide technical and usage details about the different formats, see [Audio formats](https://console.bluemix.net/docs/services/speech-to-text/audio-formats.html). * **Audio transmission:** You can pass the audio to be transcribed as a one-shot delivery or in streaming mode. With one-shot delivery, you pass all of the audio data to the service at one time. With streaming mode, you send audio data to the service in chunks over a persistent connection. To use streaming, you must pass the `Transfer-Encoding` request header with a value of `chunked`. Both forms of data transmission impose a limit of 100 MB of total data for transcription. See [Audio transmission](https://console.bluemix.net/docs/services/speech-to-text/input.html#transmission). * **Authentication:** You authenticate to the service by using your service credentials. You can use your credentials to authenticate via a proxy server that resides in IBM Cloud, or you can use your credentials to obtain a token and contact the service directly. See [Service credentials for Watson services](https://console.bluemix.net/docs/services/watson/getting-started-credentials.html) and [Tokens for authentication](https://console.bluemix.net/docs/services/watson/getting-started-tokens.html). * **Request Logging:** By default, all Watson services log requests and their results. Data is collected only to improve the Watson services. If you do not want to share your data, set the header parameter `X-Watson-Learning-Opt-Out` to `true` for each request. Data is collected for any request that omits this header. See [Controlling request logging for Watson services](https://console.bluemix.net/docs/services/watson/getting-started-logging.html).  For more information about the service and its various interfaces, see [About Speech to Text](https://console.bluemix.net/docs/services/speech-to-text/index.html). ### Customization API Usage   The following information pertains to methods of the customization interface: * Language model customization and acoustic model customization are available only for a limited set of languages. They are generally available for production use for some languages but are beta offerings for other languages. For a complete list of supported languages and the status of their availability, see [Language support for customization](https://console.bluemix.net/docs/services/speech-to-text/custom.html#languageSupport). * In all cases, you must use service credentials created for the instance of the service that owns a custom model to use the methods described in this documentation with that model. For more information, see [Ownership of custom language models](https://console.bluemix.net/docs/services/speech-to-text/custom.html#customOwner). * How the service handles request logging for the customization interface depends on the request. The service does not log data that are used to build custom models. But it does log data when a custom model is used with a recognition request. For more information, see [Request logging and data privacy](https://console.bluemix.net/docs/services/speech-to-text/custom.html#customLogging). * Each custom model is identified by a customization ID, which is a Globally Unique Identifier (GUID). A GUID is a hexadecimal string that has the same format as Watson service credentials: `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`. You specify a custom model's GUID with the appropriate customization parameter of methods that support customization.   For more information about using the service's customization interface, see [The customization interface](https://console.bluemix.net/docs/services/speech-to-text/custom.html).
@@ -104,7 +105,7 @@ class SpeechToTextV1 extends BaseService {
    */
   public listModels(params?: SpeechToTextV1.ListModelsParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.SpeechModels>): NodeJS.ReadableStream | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => { /* noop */ };
+    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
     const parameters = {
       options: {
         url: '/v1/models',
@@ -135,7 +136,7 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} [params.acoustic_customization_id] - The GUID of a custom acoustic model that is to be used with the request. The base model of the specified custom acoustic model must match the model specified with the `model` parameter. You must make the request with service credentials created for the instance of the service that owns the custom model. By default, no custom acoustic model is used.
    * @param {number} [params.customization_weight] - If you specify a `customization_id` with the request, you can use the `customization_weight` parameter to tell the service how much weight to give to words from the custom language model compared to those from the base model for speech recognition.   Specify a value between 0.0 and 1.0. Unless a different customization weight was specified for the custom model when it was trained, the default value is 0.3. A customization weight that you specify overrides a weight that was specified when the custom model was trained.   The default value yields the best performance in general. Assign a higher value if your audio makes frequent use of OOV words from the custom model. Use caution when setting the weight: a higher value can improve the accuracy of phrases from the custom model's domain, but it can negatively affect performance on non-domain phrases.
    * @param {string} [params.version] - The version of the specified base `model` that is to be used for speech recognition. Multiple versions of a base model can exist when a model is updated for internal improvements. The parameter is intended primarily for use with custom models that have been upgraded for a new base model. The default value depends on whether the parameter is used with or without a custom model. For more information, see [Base model version](https://console.bluemix.net/docs/services/speech-to-text/input.html#version).
-   * @param {Blob} [params.audio] - NON-MULTIPART ONLY: Audio to transcribe in the format specified by the `Content-Type` header. **Required for a non-multipart request.**.
+   * @param {ReadableStream|FileObject|Buffer} [params.audio] - NON-MULTIPART ONLY: Audio to transcribe in the format specified by the `Content-Type` header. **Required for a non-multipart request.**.
    * @param {string} [params.content_type] - The type of the input: audio/basic, audio/flac, audio/l16, audio/mp3, audio/mpeg, audio/mulaw, audio/ogg, audio/ogg;codecs=opus, audio/ogg;codecs=vorbis, audio/wav, audio/webm, audio/webm;codecs=opus, audio/webm;codecs=vorbis, or multipart/form-data.
    * @param {number} [params.inactivity_timeout] - NON-MULTIPART ONLY: The time in seconds after which, if only silence (no speech) is detected in submitted audio, the connection is closed with a 400 error. Useful for stopping audio submission from a live microphone when a user simply walks away. Use `-1` for infinity.
    * @param {string[]} [params.keywords] - NON-MULTIPART ONLY: Array of keyword strings to spot in the audio. Each keyword string can include one or more tokens. Keywords are spotted only in the final hypothesis, not in interim results. If you specify any keywords, you must also specify a keywords threshold. Omit the parameter or specify an empty array if you do not need to spot keywords.
@@ -152,7 +153,7 @@ class SpeechToTextV1 extends BaseService {
    */
   public recognize(params?: SpeechToTextV1.RecognizeParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.SpeechRecognitionResults>): NodeJS.ReadableStream | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => { /* noop */ };
+    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
     const body = _params.audio;
     const query = {
       'model': _params.model,
@@ -161,7 +162,7 @@ class SpeechToTextV1 extends BaseService {
       'customization_weight': _params.customization_weight,
       'version': _params.version,
       'inactivity_timeout': _params.inactivity_timeout,
-      'keywords': _params.keywords ? _params.keywords.join(',') : undefined,
+      'keywords': _params.keywords,
       'keywords_threshold': _params.keywords_threshold,
       'max_alternatives': _params.max_alternatives,
       'word_alternatives_threshold': _params.word_alternatives_threshold,
@@ -241,7 +242,7 @@ class SpeechToTextV1 extends BaseService {
    */
   public checkJobs(params?: SpeechToTextV1.CheckJobsParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.RecognitionJobs>): NodeJS.ReadableStream | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => { /* noop */ };
+    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
     const parameters = {
       options: {
         url: '/v1/recognitions',
@@ -263,10 +264,9 @@ class SpeechToTextV1 extends BaseService {
    * Creates a job for a new asynchronous recognition request. The job is owned by the user whose service credentials are used to create it. How you learn the status and results of a job depends on the parameters you include with the job creation request: * By callback notification: Include the `callback_url` query parameter to specify a URL to which the service is to send callback notifications when the status of the job changes. Optionally, you can also include the `events` and `user_token` query parameters to subscribe to specific events and to specify a string that is to be included with each notification for the job. * By polling the service: Omit the `callback_url`, `events`, and `user_token` query parameters. You must then use the `GET /v1/recognitions` or `GET /v1/recognitions/{id}` methods to check the status of the job, using the latter to retrieve the results when the job is complete.  The two approaches are not mutually exclusive. You can poll the service for job status or obtain results from the service manually even if you include a callback URL. In both cases, you can include the `results_ttl` parameter to specify how long the results are to remain available after the job is complete. Note that using the HTTPS `GET /v1/recognitions/{id}` method to retrieve results is more secure than receiving them via callback notification over HTTP because it provides confidentiality in addition to authentication and data integrity.   The method supports the same basic parameters as other HTTP and WebSocket recognition requests. The service imposes a data size limit of 100 MB. It automatically detects the endianness of the incoming audio and, for audio that includes multiple channels, downmixes the audio to one-channel mono during transcoding. (For the `audio/l16` format, you can specify the endianness.).
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {Blob} params.audio - Audio to transcribe in the format specified by the `Content-Type` header.
+   * @param {ReadableStream|FileObject|Buffer} params.audio - Audio to transcribe in the format specified by the `Content-Type` header.
    * @param {string} params.content_type - The type of the input: audio/basic, audio/flac, audio/l16, audio/mp3, audio/mpeg, audio/mulaw, audio/ogg, audio/ogg;codecs=opus, audio/ogg;codecs=vorbis, audio/wav, audio/webm, audio/webm;codecs=opus, or audio/webm;codecs=vorbis.
    * @param {string} [params.transfer_encoding] - Set to `chunked` to send the audio in streaming mode. The data does not need to exist fully before being streamed to the service.
-   * @param {Blob} params.audio2 - Audio to transcribe in the format specified by the `Content-Type` header.
    * @param {string} [params.model] - The identifier of the model to be used for the recognition request. (Use `GET /v1/models` for a list of available models.).
    * @param {string} [params.callback_url] - A URL to which callback notifications are to be sent. The URL must already be successfully white-listed by using the `POST /v1/register_callback` method. Omit the parameter to poll the service for job completion and results. You can include the same callback URL with any number of job creation requests. Use the `user_token` query parameter to specify a unique user-specified string with each job to differentiate the callback notifications for the jobs.
    * @param {string} [params.events] - If the job includes a callback URL, a comma-separated list of notification events to which to subscribe. Valid events are: `recognitions.started` generates a callback notification when the service begins to process the job. `recognitions.completed` generates a callback notification when the job is complete; you must use the `GET /v1/recognitions/{id}` method to retrieve the results before they time out or are deleted. `recognitions.completed_with_results` generates a callback notification when the job is complete; the notification includes the results of the request. `recognitions.failed` generates a callback notification if the service experiences an error while processing the job. Omit the parameter to subscribe to the default events: `recognitions.started`, `recognitions.completed`, and `recognitions.failed`. The `recognitions.completed` and `recognitions.completed_with_results` events are incompatible; you can specify only of the two events. If the job does not include a callback URL, omit the parameter.
@@ -293,12 +293,12 @@ class SpeechToTextV1 extends BaseService {
   public createJob(params: SpeechToTextV1.CreateJobParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.RecognitionJob>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
-    const requiredParams = ['audio', 'content_type', 'audio2'];
+    const requiredParams = ['audio', 'content_type'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const body = _params.audio2;
+    const body = _params.audio;
     const query = {
       'model': _params.model,
       'callback_url': _params.callback_url,
@@ -310,7 +310,7 @@ class SpeechToTextV1 extends BaseService {
       'customization_weight': _params.customization_weight,
       'version': _params.version,
       'inactivity_timeout': _params.inactivity_timeout,
-      'keywords': _params.keywords ? _params.keywords.join(',') : undefined,
+      'keywords': _params.keywords,
       'keywords_threshold': _params.keywords_threshold,
       'max_alternatives': _params.max_alternatives,
       'word_alternatives_threshold': _params.word_alternatives_threshold,
@@ -586,7 +586,7 @@ class SpeechToTextV1 extends BaseService {
    */
   public listLanguageModels(params?: SpeechToTextV1.ListLanguageModelsParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.LanguageModels>): NodeJS.ReadableStream | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => { /* noop */ };
+    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
     const query = {
       'language': _params.language
     };
@@ -1246,7 +1246,7 @@ class SpeechToTextV1 extends BaseService {
    */
   public listAcousticModels(params?: SpeechToTextV1.ListAcousticModelsParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.AcousticModels>): NodeJS.ReadableStream | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => { /* noop */ };
+    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
     const query = {
       'language': _params.language
     };
@@ -1631,7 +1631,7 @@ namespace SpeechToTextV1 {
     /** The version of the specified base `model` that is to be used for speech recognition. Multiple versions of a base model can exist when a model is updated for internal improvements. The parameter is intended primarily for use with custom models that have been upgraded for a new base model. The default value depends on whether the parameter is used with or without a custom model. For more information, see [Base model version](https://console.bluemix.net/docs/services/speech-to-text/input.html#version). */
     version?: string;
     /** NON-MULTIPART ONLY: Audio to transcribe in the format specified by the `Content-Type` header. **Required for a non-multipart request.**. */
-    audio?: Blob;
+    audio?: ReadableStream|FileObject|Buffer;
     /** The type of the input: audio/basic, audio/flac, audio/l16, audio/mp3, audio/mpeg, audio/mulaw, audio/ogg, audio/ogg;codecs=opus, audio/ogg;codecs=vorbis, audio/wav, audio/webm, audio/webm;codecs=opus, audio/webm;codecs=vorbis, or multipart/form-data. */
     content_type?: RecognizeConstants.ContentType | string;
     /** NON-MULTIPART ONLY: The time in seconds after which, if only silence (no speech) is detected in submitted audio, the connection is closed with a 400 error. Useful for stopping audio submission from a live microphone when a user simply walks away. Use `-1` for infinity. */
@@ -1707,13 +1707,11 @@ namespace SpeechToTextV1 {
   /** Parameters for the `createJob` operation. */
   export interface CreateJobParams {
     /** Audio to transcribe in the format specified by the `Content-Type` header. */
-    audio: Blob;
+    audio: ReadableStream|FileObject|Buffer;
     /** The type of the input: audio/basic, audio/flac, audio/l16, audio/mp3, audio/mpeg, audio/mulaw, audio/ogg, audio/ogg;codecs=opus, audio/ogg;codecs=vorbis, audio/wav, audio/webm, audio/webm;codecs=opus, or audio/webm;codecs=vorbis. */
     content_type: CreateJobConstants.ContentType | string;
     /** Set to `chunked` to send the audio in streaming mode. The data does not need to exist fully before being streamed to the service. */
     transfer_encoding?: CreateJobConstants.TransferEncoding | string;
-    /** Audio to transcribe in the format specified by the `Content-Type` header. */
-    audio2: Blob;
     /** The identifier of the model to be used for the recognition request. (Use `GET /v1/models` for a list of available models.). */
     model?: CreateJobConstants.Model | string;
     /** A URL to which callback notifications are to be sent. The URL must already be successfully white-listed by using the `POST /v1/register_callback` method. Omit the parameter to poll the service for job completion and results. You can include the same callback URL with any number of job creation requests. Use the `user_token` query parameter to specify a unique user-specified string with each job to differentiate the callback notifications for the jobs. */

@@ -301,7 +301,7 @@ DialogV1.prototype.name = 'dialog';
 DialogV1.prototype.serviceVersion = 'v1';
 
 namespace DialogV1 {
-  /** Options for the `DialogV1` constructor. **/
+  /** Options for the `DialogV1` constructor. */
   export type Options = {
     url?: string;
     username?: string;
@@ -310,7 +310,7 @@ namespace DialogV1 {
     headers?: object;
   };
 
-  /** The callback for a service request. **/
+  /** The callback for a service request. */
   export type Callback = (
     error: any,
     body?: any,
@@ -318,20 +318,20 @@ namespace DialogV1 {
   ) => void;
 
   export interface UpdateDialogParams {
-    /** The dialog template identifier. **/
+    /** The dialog template identifier.  */
     dialog_id: string;
-    /** The dialog template file. Valid file extensions are .mct for encrypeed dialog files, .json and .xml. **/
+    /** The dialog template file. Valid file extensions are .mct for encrypeed dialog files, .json and .xml.  */
     file: FileObject;
   }
 
   export interface UpdateContentParams {
-    /** The dialog template identifier. **/
+    /** The dialog template identifier.  */
     dialog_id: string;
     [key: string]: any;
   }
 
   export interface GetContentParams {
-    /** The dialog template identifier. **/
+    /** The dialog template identifier.  */
     dialog_id: string;
     [key: string]: any;
   }
@@ -339,53 +339,53 @@ namespace DialogV1 {
   export interface GetDialogsParams {}
 
   export interface CreateDialogParams {
-    /** The dialog template name. **/
+    /** The dialog template name.  */
     name: string;
-    /** The dialog template file. Valid file extensions are .mct for encrypeed dialog files, .json and .xml. **/
+    /** The dialog template file. Valid file extensions are .mct for encrypeed dialog files, .json and .xml.  */
     file: FileObject;
   }
 
   export interface DeleteDialogParams {
-    /** The dialog identifier. **/
+    /** The dialog identifier.  */
     id: string;
   }
 
   export interface ConversationParams {
-    /** The dialog template indentifier. **/
+    /** The dialog template indentifier.  */
     dialog_id: string;
-    /** A generated conversation identifier number. If it is not specified, a new conversation is started. **/
+    /** A generated conversation identifier number. If it is not specified, a new conversation is started.  */
     conversation_id: string;
-    /** A generated client identifier number. If it is not specified, a new client identifier is issued. **/
+    /** A generated client identifier number. If it is not specified, a new client identifier is issued.  */
     client_id: string;
-    /** The user input to be processed. If the conversation_id parameter is blank, this parameter is optional. **/
+    /** The user input to be processed. If the conversation_id parameter is blank, this parameter is optional.  */
     input: string;
   }
 
   export interface GetConversationParams {
-    /** The dialog template identifier. **/
+    /** The dialog template identifier.  */
     dialog_id: string;
-    /** The start of the range in YYYY-MM-DD HH:MM:SS format. **/
+    /** The start of the range in YYYY-MM-DD HH:MM:SS format.  */
     date_from: string;
-    /** The end of the range in YYYY-MM-DD HH:MM:SS format. **/
+    /** The end of the range in YYYY-MM-DD HH:MM:SS format.  */
     date_to: string;
-    /** The offset starting point in the conversation result list. The default value is 0. **/
+    /** The offset starting point in the conversation result list. The default value is 0.  */
     offset: number;
-    /** The maximum number of conversations to retrieve. The default value is 10000. **/
+    /** The maximum number of conversations to retrieve. The default value is 10000.  */
     limit: number;
   }
 
   export interface GetProfileParams {
-    /** The dialog template identifier. **/
+    /** The dialog template identifier.  */
     dialog_id: string;
-    /** A client ID obtained from /dialog. **/
+    /** A client ID obtained from /dialog.  */
     client_id: string;
     name: string | string[];
   }
 
   export interface UpdateProfileParams {
-    /** The dialog template identifier. **/
+    /** The dialog template identifier.  */
     dialog_id: string;
-    /** A client ID obtained from /dialog. **/
+    /** A client ID obtained from /dialog.  */
     client_id: string;
     name_values: string;
   }
