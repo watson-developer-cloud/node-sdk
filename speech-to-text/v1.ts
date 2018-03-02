@@ -1,13 +1,13 @@
-import cookie = require('cookie');
-import pick = require('object.pick');
 import async = require('async');
-import isStream = require('isstream');
+import cookie = require('cookie');
 import extend = require('extend');
-import GeneratedSpeechToTextV1 = require('./v1-generated');
-import RecognizeStream = require('../lib/recognize-stream');
-import { createRequest as requestFactory } from '../lib/requestwrapper';
+import isStream = require('isstream');
+import pick = require('object.pick');
 import { parse } from 'url';
 import { getMissingParams } from '../lib/helper';
+import RecognizeStream = require('../lib/recognize-stream');
+import { createRequest as requestFactory } from '../lib/requestwrapper';
+import GeneratedSpeechToTextV1 = require('./v1-generated');
 
 const pkg = require('../package.json');
 

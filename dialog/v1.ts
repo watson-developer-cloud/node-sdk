@@ -15,13 +15,13 @@
  */
 
 import extend = require('extend');
-import pick = require('object.pick');
-import omit = require('object.omit');
 import isStream = require('isstream');
+import omit = require('object.omit');
+import pick = require('object.pick');
 import { RequestResponse } from 'request';
-import { createRequest } from '../lib/requestwrapper';
 import { BaseService } from '../lib/base_service';
 import { FileObject } from '../lib/helper';
+import { createRequest } from '../lib/requestwrapper';
 
 class DialogV1 extends BaseService {
   static URL: string = 'https://gateway.watsonplatform.net/dialog/api';
@@ -379,7 +379,7 @@ namespace DialogV1 {
     dialog_id: string;
     /** A client ID obtained from /dialog. **/
     client_id: string;
-    name: string | Array<string>;
+    name: string | string[];
   }
 
   export interface UpdateProfileParams {

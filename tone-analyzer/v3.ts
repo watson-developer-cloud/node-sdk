@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import GeneratedToneAnalyzerV3 = require('./v3-generated');
 import extend = require('extend');
 import { getMissingParams } from '../lib/helper';
+import GeneratedToneAnalyzerV3 = require('./v3-generated');
 
 class ToneAnalyzerV3 extends GeneratedToneAnalyzerV3 {
   constructor(options) {
@@ -32,16 +32,16 @@ class ToneAnalyzerV3 extends GeneratedToneAnalyzerV3 {
     }
 
     const missingParams = getMissingParams(params, ['text']);
-    if (missingParams) return callback(missingParams);
+    if (missingParams) { return callback(missingParams); }
 
-    let _params: GeneratedToneAnalyzerV3.ToneParams = {
+    const _params: GeneratedToneAnalyzerV3.ToneParams = {
       tone_input: params.text,
       content_type: params.isHTML ? 'text/html' : 'text/plain'
     };
 
-    if (params.tones) _params.tones = params.tones.split(',');
-    if (params.sentences) _params.sentences = params.sentences;
-    if (params.language) _params.content_language = params.language;
+    if (params.tones) { _params.tones = params.tones.split(','); }
+    if (params.sentences) { _params.sentences = params.sentences; }
+    if (params.language) { _params.content_language = params.language; }
 
     return super.tone(_params, callback);
   }
@@ -52,9 +52,9 @@ class ToneAnalyzerV3 extends GeneratedToneAnalyzerV3 {
     }
 
     const missingParams = getMissingParams(params, ['utterances']);
-    if (missingParams) return callback(missingParams);
+    if (missingParams) { return callback(missingParams); }
 
-    let _params: GeneratedToneAnalyzerV3.ToneChatParams = {
+    const _params: GeneratedToneAnalyzerV3.ToneChatParams = {
       utterances: params.utterances
     };
 

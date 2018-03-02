@@ -6,6 +6,8 @@
     "no-string-literal": false,
     "no-empty-interface":false,
     "object-literal-sort-keys": false,
+    "interface-over-type-literal": false,
+    "no-namespace": false,
     "member-access":false,
     "no-console": {
       "severity": "warning",

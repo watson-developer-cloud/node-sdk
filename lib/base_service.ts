@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-import extend = require('extend');
-import request = require('request');
-import vcapServices = require('vcap_services');
 // new Buffer() is deprecated, replaced with Buffer.from() in node v4.5.0+ -
 // `buffer-from` uses the new api when possible but falls back to the old one otherwise
 import bufferFrom = require('buffer-from');
+import extend = require('extend');
+import request = require('request');
+import vcapServices = require('vcap_services');
 import { stripTrailingSlash } from './helper';
 
 // custom interfaces
@@ -115,7 +115,7 @@ export class BaseService {
    * @returns {BaseServiceOptions}
    */
   private initCredentials(options: UserOptions): BaseServiceOptions {
-    let _options: BaseServiceOptions = <BaseServiceOptions>{};
+    let _options: BaseServiceOptions = {} as BaseServiceOptions;
     if (options.token) {
       options.headers = options.headers || {};
       options.headers['X-Watson-Authorization-Token'] = options.token;
@@ -219,7 +219,7 @@ export class BaseService {
    * @returns {Credentials}
    */
   public getCredentials(): Credentials {
-    const _credentials = <Credentials>{};
+    const _credentials = {} as Credentials;
     if (this._options.username) {
       _credentials.username = this._options.username;
     }

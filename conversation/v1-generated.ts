@@ -14,31 +14,34 @@
  * limitations under the License.
  */
 
+
 import * as extend from 'extend';
 import { RequestResponse } from 'request';
-import { createRequest } from '../lib/requestwrapper';
-import { getMissingParams } from '../lib/helper';
 import { BaseService } from '../lib/base_service';
+import { getMissingParams } from '../lib/helper';
+import { createRequest } from '../lib/requestwrapper';
 
 /**
  * The IBM Watson Conversation service combines machine learning, natural language understanding, and integrated dialog tools to create conversation flows between your apps and your users.
  */
 
+
+
 class ConversationV1 extends BaseService {
-  name: string; // set by prototype to 'conversation'
-  serviceVersion: string; // set by prototype to 'v1'
 
   static URL: string = 'https://gateway.watsonplatform.net/conversation/api';
+  name: string; // set by prototype to 'conversation'
+  serviceVersion: string; // set by prototype to 'v1'
 
   /**
    * Construct a ConversationV1 object.
    *
    * @param {Object} options - Options for the service.
-   * @param {String} options.version - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses the API version for the date you specify, or the most recent version before that date. Note that you should not programmatically specify the current date at runtime, in case the API has been updated since your application's release. Instead, specify a version date that is compatible with your application, and don't change it until your application is ready for a later version.
-   * @param {String} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/conversation/api'). The base url may differ between Bluemix regions.
-   * @param {String} [options.username] - The username used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
-   * @param {String} [options.password] - The password used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
-   * @param {Boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
+   * @param {string} options.version - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses the API version for the date you specify, or the most recent version before that date. Note that you should not programmatically specify the current date at runtime, in case the API has been updated since your application's release. Instead, specify a version date that is compatible with your application, and don't change it until your application is ready for a later version.
+   * @param {string} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/conversation/api'). The base url may differ between Bluemix regions.
+   * @param {string} [options.username] - The username used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
+   * @param {string} [options.password] - The password used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
+   * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
    * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
    * @constructor
@@ -67,49 +70,45 @@ class ConversationV1 extends BaseService {
    * @param {string} [params.name] - The name of the workspace.
    * @param {string} [params.description] - The description of the workspace.
    * @param {string} [params.language] - The language of the workspace.
-   * @param {CreateIntent[ ]} [params.intents] - An array of objects defining the intents for the workspace.
-   * @param {CreateEntity[ ]} [params.entities] - An array of objects defining the entities for the workspace.
-   * @param {CreateDialogNode[ ]} [params.dialog_nodes] - An array of objects defining the nodes in the workspace dialog.
-   * @param {CreateCounterexample[ ]} [params.counterexamples] - An array of objects defining input examples that have been marked as irrelevant input.
+   * @param {CreateIntent[]} [params.intents] - An array of objects defining the intents for the workspace.
+   * @param {CreateEntity[]} [params.entities] - An array of objects defining the entities for the workspace.
+   * @param {CreateDialogNode[]} [params.dialog_nodes] - An array of objects defining the nodes in the workspace dialog.
+   * @param {CreateCounterexample[]} [params.counterexamples] - An array of objects defining input examples that have been marked as irrelevant input.
    * @param {Object} [params.metadata] - Any metadata related to the workspace.
    * @param {boolean} [params.learning_opt_out] - Whether training data from the workspace can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  createWorkspace(
-    params?: ConversationV1.CreateWorkspaceParams,
-    callback?: ConversationV1.Callback<ConversationV1.Workspace>
-  ): NodeJS.ReadableStream | void {
-    const _params = typeof params === 'function' && !callback ? {} : extend({}, params);
-    const _callback =
-      typeof params === 'function' && !callback ? params : callback ? callback : () => {};
+  public createWorkspace(params?: ConversationV1.CreateWorkspaceParams, callback?: ConversationV1.Callback<ConversationV1.Workspace>): NodeJS.ReadableStream | void {
+    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
+    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => { /* noop */ };
     const body = {
-      name: _params.name,
-      description: _params.description,
-      language: _params.language,
-      intents: _params.intents,
-      entities: _params.entities,
-      dialog_nodes: _params.dialog_nodes,
-      counterexamples: _params.counterexamples,
-      metadata: _params.metadata,
-      learning_opt_out: _params.learning_opt_out,
+      'name': _params.name,
+      'description': _params.description,
+      'language': _params.language,
+      'intents': _params.intents,
+      'entities': _params.entities,
+      'dialog_nodes': _params.dialog_nodes,
+      'counterexamples': _params.counterexamples,
+      'metadata': _params.metadata,
+      'learning_opt_out': _params.learning_opt_out
     };
     const parameters = {
       options: {
         url: '/v1/workspaces',
         method: 'POST',
         json: true,
-        body: body,
+        body,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
+          'Accept': 'application/json',
           'Content-Type': 'application/json',
-        },
-      }),
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Delete workspace.
@@ -121,34 +120,31 @@ class ConversationV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  deleteWorkspace(
-    params: ConversationV1.DeleteWorkspaceParams,
-    callback?: ConversationV1.Callback<ConversationV1.Empty>
-  ): NodeJS.ReadableStream | void {
+  public deleteWorkspace(params: ConversationV1.DeleteWorkspaceParams, callback?: ConversationV1.Callback<ConversationV1.Empty>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const path = {
-      workspace_id: _params.workspace_id,
+      'workspace_id': _params.workspace_id
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}',
         method: 'DELETE',
-        path: path,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-        },
-      }),
+          'Accept': 'application/json',
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Get information about a workspace.
@@ -162,39 +158,36 @@ class ConversationV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  getWorkspace(
-    params: ConversationV1.GetWorkspaceParams,
-    callback?: ConversationV1.Callback<ConversationV1.WorkspaceExport>
-  ): NodeJS.ReadableStream | void {
+  public getWorkspace(params: ConversationV1.GetWorkspaceParams, callback?: ConversationV1.Callback<ConversationV1.WorkspaceExport>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const query = {
-      export: _params.export,
-      include_audit: _params.include_audit,
+      'export': _params.export,
+      'include_audit': _params.include_audit
     };
     const path = {
-      workspace_id: _params.workspace_id,
+      'workspace_id': _params.workspace_id
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}',
         method: 'GET',
         qs: query,
-        path: path,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-        },
-      }),
+          'Accept': 'application/json',
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * List workspaces.
@@ -210,19 +203,15 @@ class ConversationV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  listWorkspaces(
-    params?: ConversationV1.ListWorkspacesParams,
-    callback?: ConversationV1.Callback<ConversationV1.WorkspaceCollection>
-  ): NodeJS.ReadableStream | void {
-    const _params = typeof params === 'function' && !callback ? {} : extend({}, params);
-    const _callback =
-      typeof params === 'function' && !callback ? params : callback ? callback : () => {};
+  public listWorkspaces(params?: ConversationV1.ListWorkspacesParams, callback?: ConversationV1.Callback<ConversationV1.WorkspaceCollection>): NodeJS.ReadableStream | void {
+    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
+    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => { /* noop */ };
     const query = {
-      page_limit: _params.page_limit,
-      include_count: _params.include_count,
-      sort: _params.sort,
-      cursor: _params.cursor,
-      include_audit: _params.include_audit,
+      'page_limit': _params.page_limit,
+      'include_count': _params.include_count,
+      'sort': _params.sort,
+      'cursor': _params.cursor,
+      'include_audit': _params.include_audit
     };
     const parameters = {
       options: {
@@ -232,12 +221,12 @@ class ConversationV1 extends BaseService {
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-        },
-      }),
+          'Accept': 'application/json',
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Update workspace.
@@ -249,62 +238,59 @@ class ConversationV1 extends BaseService {
    * @param {string} [params.name] - The name of the workspace.
    * @param {string} [params.description] - The description of the workspace.
    * @param {string} [params.language] - The language of the workspace.
-   * @param {CreateIntent[ ]} [params.intents] - An array of objects defining the intents for the workspace.
-   * @param {CreateEntity[ ]} [params.entities] - An array of objects defining the entities for the workspace.
-   * @param {CreateDialogNode[ ]} [params.dialog_nodes] - An array of objects defining the nodes in the workspace dialog.
-   * @param {CreateCounterexample[ ]} [params.counterexamples] - An array of objects defining input examples that have been marked as irrelevant input.
+   * @param {CreateIntent[]} [params.intents] - An array of objects defining the intents for the workspace.
+   * @param {CreateEntity[]} [params.entities] - An array of objects defining the entities for the workspace.
+   * @param {CreateDialogNode[]} [params.dialog_nodes] - An array of objects defining the nodes in the workspace dialog.
+   * @param {CreateCounterexample[]} [params.counterexamples] - An array of objects defining input examples that have been marked as irrelevant input.
    * @param {Object} [params.metadata] - Any metadata related to the workspace.
    * @param {boolean} [params.learning_opt_out] - Whether training data from the workspace can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used.
    * @param {boolean} [params.append] - Specifies that the elements included in the request body are to be appended to the existing data in the workspace. The default value is `false`.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  updateWorkspace(
-    params: ConversationV1.UpdateWorkspaceParams,
-    callback?: ConversationV1.Callback<ConversationV1.Workspace>
-  ): NodeJS.ReadableStream | void {
+  public updateWorkspace(params: ConversationV1.UpdateWorkspaceParams, callback?: ConversationV1.Callback<ConversationV1.Workspace>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const body = {
-      name: _params.name,
-      description: _params.description,
-      language: _params.language,
-      intents: _params.intents,
-      entities: _params.entities,
-      dialog_nodes: _params.dialog_nodes,
-      counterexamples: _params.counterexamples,
-      metadata: _params.metadata,
-      learning_opt_out: _params.learning_opt_out,
+      'name': _params.name,
+      'description': _params.description,
+      'language': _params.language,
+      'intents': _params.intents,
+      'entities': _params.entities,
+      'dialog_nodes': _params.dialog_nodes,
+      'counterexamples': _params.counterexamples,
+      'metadata': _params.metadata,
+      'learning_opt_out': _params.learning_opt_out
     };
     const query = {
-      append: _params.append,
+      'append': _params.append
     };
     const path = {
-      workspace_id: _params.workspace_id,
+      'workspace_id': _params.workspace_id
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}',
         method: 'POST',
         json: true,
-        body: body,
+        body,
         qs: query,
-        path: path,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
+          'Accept': 'application/json',
           'Content-Type': 'application/json',
-        },
-      }),
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /*************************
    * message
@@ -318,56 +304,53 @@ class ConversationV1 extends BaseService {
    * @param {InputData} [params.input] - An input object that includes the input text.
    * @param {boolean} [params.alternate_intents] - Whether to return more than one intent. Set to `true` to return all matching intents.
    * @param {Context} [params.context] - State information for the conversation. Continue a conversation by including the context object from the previous response.
-   * @param {RuntimeEntity[ ]} [params.entities] - Include the entities from the previous response when they do not need to change and to prevent Watson from trying to identify them.
-   * @param {RuntimeIntent[ ]} [params.intents] - An array of name-confidence pairs for the user input. Include the intents from the previous response when they do not need to change and to prevent Watson from trying to identify them.
+   * @param {RuntimeEntity[]} [params.entities] - Include the entities from the previous response when they do not need to change and to prevent Watson from trying to identify them.
+   * @param {RuntimeIntent[]} [params.intents] - An array of name-confidence pairs for the user input. Include the intents from the previous response when they do not need to change and to prevent Watson from trying to identify them.
    * @param {OutputData} [params.output] - System output. Include the output from the request when you have several requests within the same Dialog turn to pass back in the intermediate information.
    * @param {boolean} [params.nodes_visited_details] - Whether to include additional diagnostic information about the dialog nodes that were visited during processing of the message.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  message(
-    params: ConversationV1.MessageParams,
-    callback?: ConversationV1.Callback<ConversationV1.MessageResponse>
-  ): NodeJS.ReadableStream | void {
+  public message(params: ConversationV1.MessageParams, callback?: ConversationV1.Callback<ConversationV1.MessageResponse>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const body = {
-      input: _params.input,
-      alternate_intents: _params.alternate_intents,
-      context: _params.context,
-      entities: _params.entities,
-      intents: _params.intents,
-      output: _params.output,
+      'input': _params.input,
+      'alternate_intents': _params.alternate_intents,
+      'context': _params.context,
+      'entities': _params.entities,
+      'intents': _params.intents,
+      'output': _params.output
     };
     const query = {
-      nodes_visited_details: _params.nodes_visited_details,
+      'nodes_visited_details': _params.nodes_visited_details
     };
     const path = {
-      workspace_id: _params.workspace_id,
+      'workspace_id': _params.workspace_id
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/message',
         method: 'POST',
         json: true,
-        body: body,
+        body,
         qs: query,
-        path: path,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
+          'Accept': 'application/json',
           'Content-Type': 'application/json',
-        },
-      }),
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /*************************
    * intents
@@ -382,46 +365,43 @@ class ConversationV1 extends BaseService {
    * @param {string} params.workspace_id - The workspace ID.
    * @param {string} params.intent - The name of the intent.
    * @param {string} [params.description] - The description of the intent.
-   * @param {CreateExample[ ]} [params.examples] - An array of user input examples.
+   * @param {CreateExample[]} [params.examples] - An array of user input examples.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  createIntent(
-    params: ConversationV1.CreateIntentParams,
-    callback?: ConversationV1.Callback<ConversationV1.Intent>
-  ): NodeJS.ReadableStream | void {
+  public createIntent(params: ConversationV1.CreateIntentParams, callback?: ConversationV1.Callback<ConversationV1.Intent>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'intent'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const body = {
-      intent: _params.intent,
-      description: _params.description,
-      examples: _params.examples,
+      'intent': _params.intent,
+      'description': _params.description,
+      'examples': _params.examples
     };
     const path = {
-      workspace_id: _params.workspace_id,
+      'workspace_id': _params.workspace_id
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/intents',
         method: 'POST',
         json: true,
-        body: body,
-        path: path,
+        body,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
+          'Accept': 'application/json',
           'Content-Type': 'application/json',
-        },
-      }),
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Delete intent.
@@ -434,35 +414,32 @@ class ConversationV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  deleteIntent(
-    params: ConversationV1.DeleteIntentParams,
-    callback?: ConversationV1.Callback<ConversationV1.Empty>
-  ): NodeJS.ReadableStream | void {
+  public deleteIntent(params: ConversationV1.DeleteIntentParams, callback?: ConversationV1.Callback<ConversationV1.Empty>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'intent'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const path = {
-      workspace_id: _params.workspace_id,
-      intent: _params.intent,
+      'workspace_id': _params.workspace_id,
+      'intent': _params.intent
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/intents/{intent}',
         method: 'DELETE',
-        path: path,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-        },
-      }),
+          'Accept': 'application/json',
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Get intent.
@@ -477,40 +454,37 @@ class ConversationV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  getIntent(
-    params: ConversationV1.GetIntentParams,
-    callback?: ConversationV1.Callback<ConversationV1.IntentExport>
-  ): NodeJS.ReadableStream | void {
+  public getIntent(params: ConversationV1.GetIntentParams, callback?: ConversationV1.Callback<ConversationV1.IntentExport>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'intent'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const query = {
-      export: _params.export,
-      include_audit: _params.include_audit,
+      'export': _params.export,
+      'include_audit': _params.include_audit
     };
     const path = {
-      workspace_id: _params.workspace_id,
-      intent: _params.intent,
+      'workspace_id': _params.workspace_id,
+      'intent': _params.intent
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/intents/{intent}',
         method: 'GET',
         qs: query,
-        path: path,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-        },
-      }),
+          'Accept': 'application/json',
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * List intents.
@@ -528,43 +502,40 @@ class ConversationV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  listIntents(
-    params: ConversationV1.ListIntentsParams,
-    callback?: ConversationV1.Callback<ConversationV1.IntentCollection>
-  ): NodeJS.ReadableStream | void {
+  public listIntents(params: ConversationV1.ListIntentsParams, callback?: ConversationV1.Callback<ConversationV1.IntentCollection>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const query = {
-      export: _params.export,
-      page_limit: _params.page_limit,
-      include_count: _params.include_count,
-      sort: _params.sort,
-      cursor: _params.cursor,
-      include_audit: _params.include_audit,
+      'export': _params.export,
+      'page_limit': _params.page_limit,
+      'include_count': _params.include_count,
+      'sort': _params.sort,
+      'cursor': _params.cursor,
+      'include_audit': _params.include_audit
     };
     const path = {
-      workspace_id: _params.workspace_id,
+      'workspace_id': _params.workspace_id
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/intents',
         method: 'GET',
         qs: query,
-        path: path,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-        },
-      }),
+          'Accept': 'application/json',
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Update intent.
@@ -576,47 +547,44 @@ class ConversationV1 extends BaseService {
    * @param {string} params.intent - The intent name (for example, `pizza_order`).
    * @param {string} [params.new_intent] - The name of the intent.
    * @param {string} [params.new_description] - The description of the intent.
-   * @param {CreateExample[ ]} [params.new_examples] - An array of user input examples for the intent.
+   * @param {CreateExample[]} [params.new_examples] - An array of user input examples for the intent.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  updateIntent(
-    params: ConversationV1.UpdateIntentParams,
-    callback?: ConversationV1.Callback<ConversationV1.Intent>
-  ): NodeJS.ReadableStream | void {
+  public updateIntent(params: ConversationV1.UpdateIntentParams, callback?: ConversationV1.Callback<ConversationV1.Intent>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'intent'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const body = {
-      intent: _params.new_intent,
-      description: _params.new_description,
-      examples: _params.new_examples,
+      'intent': _params.new_intent,
+      'description': _params.new_description,
+      'examples': _params.new_examples
     };
     const path = {
-      workspace_id: _params.workspace_id,
-      intent: _params.intent,
+      'workspace_id': _params.workspace_id,
+      'intent': _params.intent
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/intents/{intent}',
         method: 'POST',
         json: true,
-        body: body,
-        path: path,
+        body,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
+          'Accept': 'application/json',
           'Content-Type': 'application/json',
-        },
-      }),
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /*************************
    * examples
@@ -634,41 +602,38 @@ class ConversationV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  createExample(
-    params: ConversationV1.CreateExampleParams,
-    callback?: ConversationV1.Callback<ConversationV1.Example>
-  ): NodeJS.ReadableStream | void {
+  public createExample(params: ConversationV1.CreateExampleParams, callback?: ConversationV1.Callback<ConversationV1.Example>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'intent', 'text'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const body = {
-      text: _params.text,
+      'text': _params.text
     };
     const path = {
-      workspace_id: _params.workspace_id,
-      intent: _params.intent,
+      'workspace_id': _params.workspace_id,
+      'intent': _params.intent
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples',
         method: 'POST',
         json: true,
-        body: body,
-        path: path,
+        body,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
+          'Accept': 'application/json',
           'Content-Type': 'application/json',
-        },
-      }),
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Delete user input example.
@@ -682,36 +647,33 @@ class ConversationV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  deleteExample(
-    params: ConversationV1.DeleteExampleParams,
-    callback?: ConversationV1.Callback<ConversationV1.Empty>
-  ): NodeJS.ReadableStream | void {
+  public deleteExample(params: ConversationV1.DeleteExampleParams, callback?: ConversationV1.Callback<ConversationV1.Empty>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'intent', 'text'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const path = {
-      workspace_id: _params.workspace_id,
-      intent: _params.intent,
-      text: _params.text,
+      'workspace_id': _params.workspace_id,
+      'intent': _params.intent,
+      'text': _params.text
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
         method: 'DELETE',
-        path: path,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-        },
-      }),
+          'Accept': 'application/json',
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Get user input example.
@@ -726,40 +688,37 @@ class ConversationV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  getExample(
-    params: ConversationV1.GetExampleParams,
-    callback?: ConversationV1.Callback<ConversationV1.Example>
-  ): NodeJS.ReadableStream | void {
+  public getExample(params: ConversationV1.GetExampleParams, callback?: ConversationV1.Callback<ConversationV1.Example>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'intent', 'text'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const query = {
-      include_audit: _params.include_audit,
+      'include_audit': _params.include_audit
     };
     const path = {
-      workspace_id: _params.workspace_id,
-      intent: _params.intent,
-      text: _params.text,
+      'workspace_id': _params.workspace_id,
+      'intent': _params.intent,
+      'text': _params.text
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
         method: 'GET',
         qs: query,
-        path: path,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-        },
-      }),
+          'Accept': 'application/json',
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * List user input examples.
@@ -777,43 +736,40 @@ class ConversationV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  listExamples(
-    params: ConversationV1.ListExamplesParams,
-    callback?: ConversationV1.Callback<ConversationV1.ExampleCollection>
-  ): NodeJS.ReadableStream | void {
+  public listExamples(params: ConversationV1.ListExamplesParams, callback?: ConversationV1.Callback<ConversationV1.ExampleCollection>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'intent'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const query = {
-      page_limit: _params.page_limit,
-      include_count: _params.include_count,
-      sort: _params.sort,
-      cursor: _params.cursor,
-      include_audit: _params.include_audit,
+      'page_limit': _params.page_limit,
+      'include_count': _params.include_count,
+      'sort': _params.sort,
+      'cursor': _params.cursor,
+      'include_audit': _params.include_audit
     };
     const path = {
-      workspace_id: _params.workspace_id,
-      intent: _params.intent,
+      'workspace_id': _params.workspace_id,
+      'intent': _params.intent
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples',
         method: 'GET',
         qs: query,
-        path: path,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-        },
-      }),
+          'Accept': 'application/json',
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Update user input example.
@@ -828,42 +784,39 @@ class ConversationV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  updateExample(
-    params: ConversationV1.UpdateExampleParams,
-    callback?: ConversationV1.Callback<ConversationV1.Example>
-  ): NodeJS.ReadableStream | void {
+  public updateExample(params: ConversationV1.UpdateExampleParams, callback?: ConversationV1.Callback<ConversationV1.Example>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'intent', 'text'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const body = {
-      text: _params.new_text,
+      'text': _params.new_text
     };
     const path = {
-      workspace_id: _params.workspace_id,
-      intent: _params.intent,
-      text: _params.text,
+      'workspace_id': _params.workspace_id,
+      'intent': _params.intent,
+      'text': _params.text
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
         method: 'POST',
         json: true,
-        body: body,
-        path: path,
+        body,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
+          'Accept': 'application/json',
           'Content-Type': 'application/json',
-        },
-      }),
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /*************************
    * entities
@@ -879,49 +832,46 @@ class ConversationV1 extends BaseService {
    * @param {string} params.entity - The name of the entity.
    * @param {string} [params.description] - The description of the entity.
    * @param {Object} [params.metadata] - Any metadata related to the value.
-   * @param {CreateValue[ ]} [params.values] - An array of entity values.
+   * @param {CreateValue[]} [params.values] - An array of entity values.
    * @param {boolean} [params.fuzzy_match] - Whether to use fuzzy matching for the entity.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  createEntity(
-    params: ConversationV1.CreateEntityParams,
-    callback?: ConversationV1.Callback<ConversationV1.Entity>
-  ): NodeJS.ReadableStream | void {
+  public createEntity(params: ConversationV1.CreateEntityParams, callback?: ConversationV1.Callback<ConversationV1.Entity>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'entity'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const body = {
-      entity: _params.entity,
-      description: _params.description,
-      metadata: _params.metadata,
-      values: _params.values,
-      fuzzy_match: _params.fuzzy_match,
+      'entity': _params.entity,
+      'description': _params.description,
+      'metadata': _params.metadata,
+      'values': _params.values,
+      'fuzzy_match': _params.fuzzy_match
     };
     const path = {
-      workspace_id: _params.workspace_id,
+      'workspace_id': _params.workspace_id
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities',
         method: 'POST',
         json: true,
-        body: body,
-        path: path,
+        body,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
+          'Accept': 'application/json',
           'Content-Type': 'application/json',
-        },
-      }),
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Delete entity.
@@ -934,35 +884,32 @@ class ConversationV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  deleteEntity(
-    params: ConversationV1.DeleteEntityParams,
-    callback?: ConversationV1.Callback<ConversationV1.Empty>
-  ): NodeJS.ReadableStream | void {
+  public deleteEntity(params: ConversationV1.DeleteEntityParams, callback?: ConversationV1.Callback<ConversationV1.Empty>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'entity'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const path = {
-      workspace_id: _params.workspace_id,
-      entity: _params.entity,
+      'workspace_id': _params.workspace_id,
+      'entity': _params.entity
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities/{entity}',
         method: 'DELETE',
-        path: path,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-        },
-      }),
+          'Accept': 'application/json',
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Get entity.
@@ -977,40 +924,37 @@ class ConversationV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  getEntity(
-    params: ConversationV1.GetEntityParams,
-    callback?: ConversationV1.Callback<ConversationV1.EntityExport>
-  ): NodeJS.ReadableStream | void {
+  public getEntity(params: ConversationV1.GetEntityParams, callback?: ConversationV1.Callback<ConversationV1.EntityExport>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'entity'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const query = {
-      export: _params.export,
-      include_audit: _params.include_audit,
+      'export': _params.export,
+      'include_audit': _params.include_audit
     };
     const path = {
-      workspace_id: _params.workspace_id,
-      entity: _params.entity,
+      'workspace_id': _params.workspace_id,
+      'entity': _params.entity
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities/{entity}',
         method: 'GET',
         qs: query,
-        path: path,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-        },
-      }),
+          'Accept': 'application/json',
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * List entities.
@@ -1028,43 +972,40 @@ class ConversationV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  listEntities(
-    params: ConversationV1.ListEntitiesParams,
-    callback?: ConversationV1.Callback<ConversationV1.EntityCollection>
-  ): NodeJS.ReadableStream | void {
+  public listEntities(params: ConversationV1.ListEntitiesParams, callback?: ConversationV1.Callback<ConversationV1.EntityCollection>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const query = {
-      export: _params.export,
-      page_limit: _params.page_limit,
-      include_count: _params.include_count,
-      sort: _params.sort,
-      cursor: _params.cursor,
-      include_audit: _params.include_audit,
+      'export': _params.export,
+      'page_limit': _params.page_limit,
+      'include_count': _params.include_count,
+      'sort': _params.sort,
+      'cursor': _params.cursor,
+      'include_audit': _params.include_audit
     };
     const path = {
-      workspace_id: _params.workspace_id,
+      'workspace_id': _params.workspace_id
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities',
         method: 'GET',
         qs: query,
-        path: path,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-        },
-      }),
+          'Accept': 'application/json',
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Update entity.
@@ -1078,49 +1019,46 @@ class ConversationV1 extends BaseService {
    * @param {string} [params.new_description] - The description of the entity.
    * @param {Object} [params.new_metadata] - Any metadata related to the entity.
    * @param {boolean} [params.new_fuzzy_match] - Whether to use fuzzy matching for the entity.
-   * @param {CreateValue[ ]} [params.new_values] - An array of entity values.
+   * @param {CreateValue[]} [params.new_values] - An array of entity values.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  updateEntity(
-    params: ConversationV1.UpdateEntityParams,
-    callback?: ConversationV1.Callback<ConversationV1.Entity>
-  ): NodeJS.ReadableStream | void {
+  public updateEntity(params: ConversationV1.UpdateEntityParams, callback?: ConversationV1.Callback<ConversationV1.Entity>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'entity'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const body = {
-      entity: _params.new_entity,
-      description: _params.new_description,
-      metadata: _params.new_metadata,
-      fuzzy_match: _params.new_fuzzy_match,
-      values: _params.new_values,
+      'entity': _params.new_entity,
+      'description': _params.new_description,
+      'metadata': _params.new_metadata,
+      'fuzzy_match': _params.new_fuzzy_match,
+      'values': _params.new_values
     };
     const path = {
-      workspace_id: _params.workspace_id,
-      entity: _params.entity,
+      'workspace_id': _params.workspace_id,
+      'entity': _params.entity
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities/{entity}',
         method: 'POST',
         json: true,
-        body: body,
-        path: path,
+        body,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
+          'Accept': 'application/json',
           'Content-Type': 'application/json',
-        },
-      }),
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /*************************
    * values
@@ -1136,51 +1074,48 @@ class ConversationV1 extends BaseService {
    * @param {string} params.entity - The name of the entity.
    * @param {string} params.value - The text of the entity value.
    * @param {Object} [params.metadata] - Any metadata related to the entity value.
-   * @param {string[ ]} [params.synonyms] - An array of synonyms for the entity value.
-   * @param {string[ ]} [params.patterns] - An array of patterns for the entity value. A pattern is specified as a regular expression.
+   * @param {string[]} [params.synonyms] - An array of synonyms for the entity value.
+   * @param {string[]} [params.patterns] - An array of patterns for the entity value. A pattern is specified as a regular expression.
    * @param {string} [params.value_type] - Specifies the type of value (`synonyms` or `patterns`). The default value is `synonyms`.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  createValue(
-    params: ConversationV1.CreateValueParams,
-    callback?: ConversationV1.Callback<ConversationV1.Value>
-  ): NodeJS.ReadableStream | void {
+  public createValue(params: ConversationV1.CreateValueParams, callback?: ConversationV1.Callback<ConversationV1.Value>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'entity', 'value'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const body = {
-      value: _params.value,
-      metadata: _params.metadata,
-      synonyms: _params.synonyms,
-      patterns: _params.patterns,
-      type: _params.value_type,
+      'value': _params.value,
+      'metadata': _params.metadata,
+      'synonyms': _params.synonyms,
+      'patterns': _params.patterns,
+      'type': _params.value_type
     };
     const path = {
-      workspace_id: _params.workspace_id,
-      entity: _params.entity,
+      'workspace_id': _params.workspace_id,
+      'entity': _params.entity
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities/{entity}/values',
         method: 'POST',
         json: true,
-        body: body,
-        path: path,
+        body,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
+          'Accept': 'application/json',
           'Content-Type': 'application/json',
-        },
-      }),
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Delete entity value.
@@ -1194,36 +1129,33 @@ class ConversationV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  deleteValue(
-    params: ConversationV1.DeleteValueParams,
-    callback?: ConversationV1.Callback<ConversationV1.Empty>
-  ): NodeJS.ReadableStream | void {
+  public deleteValue(params: ConversationV1.DeleteValueParams, callback?: ConversationV1.Callback<ConversationV1.Empty>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'entity', 'value'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const path = {
-      workspace_id: _params.workspace_id,
-      entity: _params.entity,
-      value: _params.value,
+      'workspace_id': _params.workspace_id,
+      'entity': _params.entity,
+      'value': _params.value
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}',
         method: 'DELETE',
-        path: path,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-        },
-      }),
+          'Accept': 'application/json',
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Get entity value.
@@ -1239,41 +1171,38 @@ class ConversationV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  getValue(
-    params: ConversationV1.GetValueParams,
-    callback?: ConversationV1.Callback<ConversationV1.ValueExport>
-  ): NodeJS.ReadableStream | void {
+  public getValue(params: ConversationV1.GetValueParams, callback?: ConversationV1.Callback<ConversationV1.ValueExport>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'entity', 'value'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const query = {
-      export: _params.export,
-      include_audit: _params.include_audit,
+      'export': _params.export,
+      'include_audit': _params.include_audit
     };
     const path = {
-      workspace_id: _params.workspace_id,
-      entity: _params.entity,
-      value: _params.value,
+      'workspace_id': _params.workspace_id,
+      'entity': _params.entity,
+      'value': _params.value
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}',
         method: 'GET',
         qs: query,
-        path: path,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-        },
-      }),
+          'Accept': 'application/json',
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * List entity values.
@@ -1292,44 +1221,41 @@ class ConversationV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  listValues(
-    params: ConversationV1.ListValuesParams,
-    callback?: ConversationV1.Callback<ConversationV1.ValueCollection>
-  ): NodeJS.ReadableStream | void {
+  public listValues(params: ConversationV1.ListValuesParams, callback?: ConversationV1.Callback<ConversationV1.ValueCollection>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'entity'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const query = {
-      export: _params.export,
-      page_limit: _params.page_limit,
-      include_count: _params.include_count,
-      sort: _params.sort,
-      cursor: _params.cursor,
-      include_audit: _params.include_audit,
+      'export': _params.export,
+      'page_limit': _params.page_limit,
+      'include_count': _params.include_count,
+      'sort': _params.sort,
+      'cursor': _params.cursor,
+      'include_audit': _params.include_audit
     };
     const path = {
-      workspace_id: _params.workspace_id,
-      entity: _params.entity,
+      'workspace_id': _params.workspace_id,
+      'entity': _params.entity
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities/{entity}/values',
         method: 'GET',
         qs: query,
-        path: path,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-        },
-      }),
+          'Accept': 'application/json',
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Update entity value.
@@ -1343,51 +1269,48 @@ class ConversationV1 extends BaseService {
    * @param {string} [params.new_value] - The text of the entity value.
    * @param {Object} [params.new_metadata] - Any metadata related to the entity value.
    * @param {string} [params.new_type] - Specifies the type of value (`synonyms` or `patterns`). The default value is `synonyms`.
-   * @param {string[ ]} [params.new_synonyms] - An array of synonyms for the entity value.
-   * @param {string[ ]} [params.new_patterns] - An array of patterns for the entity value. A pattern is specified as a regular expression.
+   * @param {string[]} [params.new_synonyms] - An array of synonyms for the entity value.
+   * @param {string[]} [params.new_patterns] - An array of patterns for the entity value. A pattern is specified as a regular expression.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  updateValue(
-    params: ConversationV1.UpdateValueParams,
-    callback?: ConversationV1.Callback<ConversationV1.Value>
-  ): NodeJS.ReadableStream | void {
+  public updateValue(params: ConversationV1.UpdateValueParams, callback?: ConversationV1.Callback<ConversationV1.Value>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'entity', 'value'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const body = {
-      value: _params.new_value,
-      metadata: _params.new_metadata,
-      type: _params.new_type,
-      synonyms: _params.new_synonyms,
-      patterns: _params.new_patterns,
+      'value': _params.new_value,
+      'metadata': _params.new_metadata,
+      'type': _params.new_type,
+      'synonyms': _params.new_synonyms,
+      'patterns': _params.new_patterns
     };
     const path = {
-      workspace_id: _params.workspace_id,
-      entity: _params.entity,
-      value: _params.value,
+      'workspace_id': _params.workspace_id,
+      'entity': _params.entity,
+      'value': _params.value
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}',
         method: 'POST',
         json: true,
-        body: body,
-        path: path,
+        body,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
+          'Accept': 'application/json',
           'Content-Type': 'application/json',
-        },
-      }),
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /*************************
    * synonyms
@@ -1406,42 +1329,39 @@ class ConversationV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  createSynonym(
-    params: ConversationV1.CreateSynonymParams,
-    callback?: ConversationV1.Callback<ConversationV1.Synonym>
-  ): NodeJS.ReadableStream | void {
+  public createSynonym(params: ConversationV1.CreateSynonymParams, callback?: ConversationV1.Callback<ConversationV1.Synonym>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const body = {
-      synonym: _params.synonym,
+      'synonym': _params.synonym
     };
     const path = {
-      workspace_id: _params.workspace_id,
-      entity: _params.entity,
-      value: _params.value,
+      'workspace_id': _params.workspace_id,
+      'entity': _params.entity,
+      'value': _params.value
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms',
         method: 'POST',
         json: true,
-        body: body,
-        path: path,
+        body,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
+          'Accept': 'application/json',
           'Content-Type': 'application/json',
-        },
-      }),
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Delete entity value synonym.
@@ -1456,37 +1376,34 @@ class ConversationV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  deleteSynonym(
-    params: ConversationV1.DeleteSynonymParams,
-    callback?: ConversationV1.Callback<ConversationV1.Empty>
-  ): NodeJS.ReadableStream | void {
+  public deleteSynonym(params: ConversationV1.DeleteSynonymParams, callback?: ConversationV1.Callback<ConversationV1.Empty>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const path = {
-      workspace_id: _params.workspace_id,
-      entity: _params.entity,
-      value: _params.value,
-      synonym: _params.synonym,
+      'workspace_id': _params.workspace_id,
+      'entity': _params.entity,
+      'value': _params.value,
+      'synonym': _params.synonym
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}',
         method: 'DELETE',
-        path: path,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-        },
-      }),
+          'Accept': 'application/json',
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Get entity value synonym.
@@ -1502,41 +1419,38 @@ class ConversationV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  getSynonym(
-    params: ConversationV1.GetSynonymParams,
-    callback?: ConversationV1.Callback<ConversationV1.Synonym>
-  ): NodeJS.ReadableStream | void {
+  public getSynonym(params: ConversationV1.GetSynonymParams, callback?: ConversationV1.Callback<ConversationV1.Synonym>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const query = {
-      include_audit: _params.include_audit,
+      'include_audit': _params.include_audit
     };
     const path = {
-      workspace_id: _params.workspace_id,
-      entity: _params.entity,
-      value: _params.value,
-      synonym: _params.synonym,
+      'workspace_id': _params.workspace_id,
+      'entity': _params.entity,
+      'value': _params.value,
+      'synonym': _params.synonym
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}',
         method: 'GET',
         qs: query,
-        path: path,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-        },
-      }),
+          'Accept': 'application/json',
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * List entity value synonyms.
@@ -1555,44 +1469,41 @@ class ConversationV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  listSynonyms(
-    params: ConversationV1.ListSynonymsParams,
-    callback?: ConversationV1.Callback<ConversationV1.SynonymCollection>
-  ): NodeJS.ReadableStream | void {
+  public listSynonyms(params: ConversationV1.ListSynonymsParams, callback?: ConversationV1.Callback<ConversationV1.SynonymCollection>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'entity', 'value'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const query = {
-      page_limit: _params.page_limit,
-      include_count: _params.include_count,
-      sort: _params.sort,
-      cursor: _params.cursor,
-      include_audit: _params.include_audit,
+      'page_limit': _params.page_limit,
+      'include_count': _params.include_count,
+      'sort': _params.sort,
+      'cursor': _params.cursor,
+      'include_audit': _params.include_audit
     };
     const path = {
-      workspace_id: _params.workspace_id,
-      entity: _params.entity,
-      value: _params.value,
+      'workspace_id': _params.workspace_id,
+      'entity': _params.entity,
+      'value': _params.value
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms',
         method: 'GET',
         qs: query,
-        path: path,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-        },
-      }),
+          'Accept': 'application/json',
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Update entity value synonym.
@@ -1608,43 +1519,40 @@ class ConversationV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  updateSynonym(
-    params: ConversationV1.UpdateSynonymParams,
-    callback?: ConversationV1.Callback<ConversationV1.Synonym>
-  ): NodeJS.ReadableStream | void {
+  public updateSynonym(params: ConversationV1.UpdateSynonymParams, callback?: ConversationV1.Callback<ConversationV1.Synonym>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const body = {
-      synonym: _params.new_synonym,
+      'synonym': _params.new_synonym
     };
     const path = {
-      workspace_id: _params.workspace_id,
-      entity: _params.entity,
-      value: _params.value,
-      synonym: _params.synonym,
+      'workspace_id': _params.workspace_id,
+      'entity': _params.entity,
+      'value': _params.value,
+      'synonym': _params.synonym
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}',
         method: 'POST',
         json: true,
-        body: body,
-        path: path,
+        body,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
+          'Accept': 'application/json',
           'Content-Type': 'application/json',
-        },
-      }),
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /*************************
    * dialogNodes
@@ -1666,7 +1574,7 @@ class ConversationV1 extends BaseService {
    * @param {Object} [params.context] - The context for the dialog node.
    * @param {Object} [params.metadata] - The metadata for the dialog node.
    * @param {DialogNodeNextStep} [params.next_step] - The next step to execute following this dialog node.
-   * @param {DialogNodeAction[ ]} [params.actions] - The actions for the dialog node.
+   * @param {DialogNodeAction[]} [params.actions] - The actions for the dialog node.
    * @param {string} [params.title] - The alias used to identify the dialog node.
    * @param {string} [params.node_type] - How the dialog node is processed.
    * @param {string} [params.event_name] - How an `event_handler` node is processed.
@@ -1674,53 +1582,50 @@ class ConversationV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  createDialogNode(
-    params: ConversationV1.CreateDialogNodeParams,
-    callback?: ConversationV1.Callback<ConversationV1.DialogNode>
-  ): NodeJS.ReadableStream | void {
+  public createDialogNode(params: ConversationV1.CreateDialogNodeParams, callback?: ConversationV1.Callback<ConversationV1.DialogNode>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'dialog_node'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const body = {
-      dialog_node: _params.dialog_node,
-      description: _params.description,
-      conditions: _params.conditions,
-      parent: _params.parent,
-      previous_sibling: _params.previous_sibling,
-      output: _params.output,
-      context: _params.context,
-      metadata: _params.metadata,
-      next_step: _params.next_step,
-      actions: _params.actions,
-      title: _params.title,
-      type: _params.node_type,
-      event_name: _params.event_name,
-      variable: _params.variable,
+      'dialog_node': _params.dialog_node,
+      'description': _params.description,
+      'conditions': _params.conditions,
+      'parent': _params.parent,
+      'previous_sibling': _params.previous_sibling,
+      'output': _params.output,
+      'context': _params.context,
+      'metadata': _params.metadata,
+      'next_step': _params.next_step,
+      'actions': _params.actions,
+      'title': _params.title,
+      'type': _params.node_type,
+      'event_name': _params.event_name,
+      'variable': _params.variable
     };
     const path = {
-      workspace_id: _params.workspace_id,
+      'workspace_id': _params.workspace_id
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/dialog_nodes',
         method: 'POST',
         json: true,
-        body: body,
-        path: path,
+        body,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
+          'Accept': 'application/json',
           'Content-Type': 'application/json',
-        },
-      }),
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Delete dialog node.
@@ -1733,35 +1638,32 @@ class ConversationV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  deleteDialogNode(
-    params: ConversationV1.DeleteDialogNodeParams,
-    callback?: ConversationV1.Callback<ConversationV1.Empty>
-  ): NodeJS.ReadableStream | void {
+  public deleteDialogNode(params: ConversationV1.DeleteDialogNodeParams, callback?: ConversationV1.Callback<ConversationV1.Empty>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'dialog_node'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const path = {
-      workspace_id: _params.workspace_id,
-      dialog_node: _params.dialog_node,
+      'workspace_id': _params.workspace_id,
+      'dialog_node': _params.dialog_node
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/dialog_nodes/{dialog_node}',
         method: 'DELETE',
-        path: path,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-        },
-      }),
+          'Accept': 'application/json',
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Get dialog node.
@@ -1775,39 +1677,36 @@ class ConversationV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  getDialogNode(
-    params: ConversationV1.GetDialogNodeParams,
-    callback?: ConversationV1.Callback<ConversationV1.DialogNode>
-  ): NodeJS.ReadableStream | void {
+  public getDialogNode(params: ConversationV1.GetDialogNodeParams, callback?: ConversationV1.Callback<ConversationV1.DialogNode>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'dialog_node'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const query = {
-      include_audit: _params.include_audit,
+      'include_audit': _params.include_audit
     };
     const path = {
-      workspace_id: _params.workspace_id,
-      dialog_node: _params.dialog_node,
+      'workspace_id': _params.workspace_id,
+      'dialog_node': _params.dialog_node
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/dialog_nodes/{dialog_node}',
         method: 'GET',
         qs: query,
-        path: path,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-        },
-      }),
+          'Accept': 'application/json',
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * List dialog nodes.
@@ -1824,42 +1723,39 @@ class ConversationV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  listDialogNodes(
-    params: ConversationV1.ListDialogNodesParams,
-    callback?: ConversationV1.Callback<ConversationV1.DialogNodeCollection>
-  ): NodeJS.ReadableStream | void {
+  public listDialogNodes(params: ConversationV1.ListDialogNodesParams, callback?: ConversationV1.Callback<ConversationV1.DialogNodeCollection>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const query = {
-      page_limit: _params.page_limit,
-      include_count: _params.include_count,
-      sort: _params.sort,
-      cursor: _params.cursor,
-      include_audit: _params.include_audit,
+      'page_limit': _params.page_limit,
+      'include_count': _params.include_count,
+      'sort': _params.sort,
+      'cursor': _params.cursor,
+      'include_audit': _params.include_audit
     };
     const path = {
-      workspace_id: _params.workspace_id,
+      'workspace_id': _params.workspace_id
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/dialog_nodes',
         method: 'GET',
         qs: query,
-        path: path,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-        },
-      }),
+          'Accept': 'application/json',
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Update dialog node.
@@ -1882,58 +1778,55 @@ class ConversationV1 extends BaseService {
    * @param {string} [params.new_type] - How the dialog node is processed.
    * @param {string} [params.new_event_name] - How an `event_handler` node is processed.
    * @param {string} [params.new_variable] - The location in the dialog context where output is stored.
-   * @param {DialogNodeAction[ ]} [params.new_actions] - The actions for the dialog node.
+   * @param {DialogNodeAction[]} [params.new_actions] - The actions for the dialog node.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  updateDialogNode(
-    params: ConversationV1.UpdateDialogNodeParams,
-    callback?: ConversationV1.Callback<ConversationV1.DialogNode>
-  ): NodeJS.ReadableStream | void {
+  public updateDialogNode(params: ConversationV1.UpdateDialogNodeParams, callback?: ConversationV1.Callback<ConversationV1.DialogNode>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'dialog_node'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const body = {
-      dialog_node: _params.new_dialog_node,
-      description: _params.new_description,
-      conditions: _params.new_conditions,
-      parent: _params.new_parent,
-      previous_sibling: _params.new_previous_sibling,
-      output: _params.new_output,
-      context: _params.new_context,
-      metadata: _params.new_metadata,
-      next_step: _params.new_next_step,
-      title: _params.new_title,
-      type: _params.new_type,
-      event_name: _params.new_event_name,
-      variable: _params.new_variable,
-      actions: _params.new_actions,
+      'dialog_node': _params.new_dialog_node,
+      'description': _params.new_description,
+      'conditions': _params.new_conditions,
+      'parent': _params.new_parent,
+      'previous_sibling': _params.new_previous_sibling,
+      'output': _params.new_output,
+      'context': _params.new_context,
+      'metadata': _params.new_metadata,
+      'next_step': _params.new_next_step,
+      'title': _params.new_title,
+      'type': _params.new_type,
+      'event_name': _params.new_event_name,
+      'variable': _params.new_variable,
+      'actions': _params.new_actions
     };
     const path = {
-      workspace_id: _params.workspace_id,
-      dialog_node: _params.dialog_node,
+      'workspace_id': _params.workspace_id,
+      'dialog_node': _params.dialog_node
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/dialog_nodes/{dialog_node}',
         method: 'POST',
         json: true,
-        body: body,
-        path: path,
+        body,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
+          'Accept': 'application/json',
           'Content-Type': 'application/json',
-        },
-      }),
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /*************************
    * logs
@@ -1952,22 +1845,19 @@ class ConversationV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  listAllLogs(
-    params: ConversationV1.ListAllLogsParams,
-    callback?: ConversationV1.Callback<ConversationV1.LogCollection>
-  ): NodeJS.ReadableStream | void {
+  public listAllLogs(params: ConversationV1.ListAllLogsParams, callback?: ConversationV1.Callback<ConversationV1.LogCollection>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['filter'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const query = {
-      filter: _params.filter,
-      sort: _params.sort,
-      page_limit: _params.page_limit,
-      cursor: _params.cursor,
+      'filter': _params.filter,
+      'sort': _params.sort,
+      'page_limit': _params.page_limit,
+      'cursor': _params.cursor
     };
     const parameters = {
       options: {
@@ -1977,12 +1867,12 @@ class ConversationV1 extends BaseService {
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-        },
-      }),
+          'Accept': 'application/json',
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * List log events in a workspace.
@@ -1998,41 +1888,38 @@ class ConversationV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  listLogs(
-    params: ConversationV1.ListLogsParams,
-    callback?: ConversationV1.Callback<ConversationV1.LogCollection>
-  ): NodeJS.ReadableStream | void {
+  public listLogs(params: ConversationV1.ListLogsParams, callback?: ConversationV1.Callback<ConversationV1.LogCollection>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const query = {
-      sort: _params.sort,
-      filter: _params.filter,
-      page_limit: _params.page_limit,
-      cursor: _params.cursor,
+      'sort': _params.sort,
+      'filter': _params.filter,
+      'page_limit': _params.page_limit,
+      'cursor': _params.cursor
     };
     const path = {
-      workspace_id: _params.workspace_id,
+      'workspace_id': _params.workspace_id
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/logs',
         method: 'GET',
         qs: query,
-        path: path,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-        },
-      }),
+          'Accept': 'application/json',
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /*************************
    * counterexamples
@@ -2049,40 +1936,37 @@ class ConversationV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  createCounterexample(
-    params: ConversationV1.CreateCounterexampleParams,
-    callback?: ConversationV1.Callback<ConversationV1.Counterexample>
-  ): NodeJS.ReadableStream | void {
+  public createCounterexample(params: ConversationV1.CreateCounterexampleParams, callback?: ConversationV1.Callback<ConversationV1.Counterexample>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'text'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const body = {
-      text: _params.text,
+      'text': _params.text
     };
     const path = {
-      workspace_id: _params.workspace_id,
+      'workspace_id': _params.workspace_id
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/counterexamples',
         method: 'POST',
         json: true,
-        body: body,
-        path: path,
+        body,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
+          'Accept': 'application/json',
           'Content-Type': 'application/json',
-        },
-      }),
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Delete counterexample.
@@ -2095,35 +1979,32 @@ class ConversationV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  deleteCounterexample(
-    params: ConversationV1.DeleteCounterexampleParams,
-    callback?: ConversationV1.Callback<ConversationV1.Empty>
-  ): NodeJS.ReadableStream | void {
+  public deleteCounterexample(params: ConversationV1.DeleteCounterexampleParams, callback?: ConversationV1.Callback<ConversationV1.Empty>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'text'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const path = {
-      workspace_id: _params.workspace_id,
-      text: _params.text,
+      'workspace_id': _params.workspace_id,
+      'text': _params.text
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/counterexamples/{text}',
         method: 'DELETE',
-        path: path,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-        },
-      }),
+          'Accept': 'application/json',
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Get counterexample.
@@ -2137,39 +2018,36 @@ class ConversationV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  getCounterexample(
-    params: ConversationV1.GetCounterexampleParams,
-    callback?: ConversationV1.Callback<ConversationV1.Counterexample>
-  ): NodeJS.ReadableStream | void {
+  public getCounterexample(params: ConversationV1.GetCounterexampleParams, callback?: ConversationV1.Callback<ConversationV1.Counterexample>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'text'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const query = {
-      include_audit: _params.include_audit,
+      'include_audit': _params.include_audit
     };
     const path = {
-      workspace_id: _params.workspace_id,
-      text: _params.text,
+      'workspace_id': _params.workspace_id,
+      'text': _params.text
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/counterexamples/{text}',
         method: 'GET',
         qs: query,
-        path: path,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-        },
-      }),
+          'Accept': 'application/json',
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * List counterexamples.
@@ -2186,42 +2064,39 @@ class ConversationV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  listCounterexamples(
-    params: ConversationV1.ListCounterexamplesParams,
-    callback?: ConversationV1.Callback<ConversationV1.CounterexampleCollection>
-  ): NodeJS.ReadableStream | void {
+  public listCounterexamples(params: ConversationV1.ListCounterexamplesParams, callback?: ConversationV1.Callback<ConversationV1.CounterexampleCollection>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const query = {
-      page_limit: _params.page_limit,
-      include_count: _params.include_count,
-      sort: _params.sort,
-      cursor: _params.cursor,
-      include_audit: _params.include_audit,
+      'page_limit': _params.page_limit,
+      'include_count': _params.include_count,
+      'sort': _params.sort,
+      'cursor': _params.cursor,
+      'include_audit': _params.include_audit
     };
     const path = {
-      workspace_id: _params.workspace_id,
+      'workspace_id': _params.workspace_id
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/counterexamples',
         method: 'GET',
         qs: query,
-        path: path,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
-        },
-      }),
+          'Accept': 'application/json',
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
 
   /**
    * Update counterexample.
@@ -2235,41 +2110,39 @@ class ConversationV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  updateCounterexample(
-    params: ConversationV1.UpdateCounterexampleParams,
-    callback?: ConversationV1.Callback<ConversationV1.Counterexample>
-  ): NodeJS.ReadableStream | void {
+  public updateCounterexample(params: ConversationV1.UpdateCounterexampleParams, callback?: ConversationV1.Callback<ConversationV1.Counterexample>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'text'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const body = {
-      text: _params.new_text,
+      'text': _params.new_text
     };
     const path = {
-      workspace_id: _params.workspace_id,
-      text: _params.text,
+      'workspace_id': _params.workspace_id,
+      'text': _params.text
     };
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/counterexamples/{text}',
         method: 'POST',
         json: true,
-        body: body,
-        path: path,
+        body,
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          Accept: 'application/json',
+          'Accept': 'application/json',
           'Content-Type': 'application/json',
-        },
-      }),
+        }
+      })
     };
     return createRequest(parameters, _callback);
-  }
+  };
+
 }
 
 ConversationV1.prototype.name = 'conversation';
@@ -2280,7 +2153,8 @@ ConversationV1.prototype.serviceVersion = 'v1';
  ************************/
 
 namespace ConversationV1 {
-  /** Options for the `ConversationV1` constructor. **/
+
+  /** Options for the `ConversationV1` constructor. */
   export type Options = {
     version: string;
     url?: string;
@@ -2288,523 +2162,523 @@ namespace ConversationV1 {
     password?: string;
     use_unauthenticated?: boolean;
     headers?: object;
-  };
+  }
 
-  /** The callback for a service request. **/
+  /** The callback for a service request. */
   export type Callback<T> = (error: any, body?: T, response?: RequestResponse) => void;
 
-  /** The body of a service request that returns no response data. **/
-  export interface Empty {}
+  /** The body of a service request that returns no response data. */
+  export interface Empty { }
 
   /*************************
    * request interfaces
    ************************/
 
-  /** Parameters for the `createWorkspace` operation. **/
+  /** Parameters for the `createWorkspace` operation. */
   export interface CreateWorkspaceParams {
-    /** The name of the workspace. **/
+    /** The name of the workspace. */
     name?: string;
-    /** The description of the workspace. **/
+    /** The description of the workspace. */
     description?: string;
-    /** The language of the workspace. **/
+    /** The language of the workspace. */
     language?: string;
-    /** An array of objects defining the intents for the workspace. **/
+    /** An array of objects defining the intents for the workspace. */
     intents?: CreateIntent[];
-    /** An array of objects defining the entities for the workspace. **/
+    /** An array of objects defining the entities for the workspace. */
     entities?: CreateEntity[];
-    /** An array of objects defining the nodes in the workspace dialog. **/
+    /** An array of objects defining the nodes in the workspace dialog. */
     dialog_nodes?: CreateDialogNode[];
-    /** An array of objects defining input examples that have been marked as irrelevant input. **/
+    /** An array of objects defining input examples that have been marked as irrelevant input. */
     counterexamples?: CreateCounterexample[];
-    /** Any metadata related to the workspace. **/
+    /** Any metadata related to the workspace. */
     metadata?: Object;
-    /** Whether training data from the workspace can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used. **/
+    /** Whether training data from the workspace can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used. */
     learning_opt_out?: boolean;
   }
 
-  /** Parameters for the `deleteWorkspace` operation. **/
+  /** Parameters for the `deleteWorkspace` operation. */
   export interface DeleteWorkspaceParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
   }
 
-  /** Parameters for the `getWorkspace` operation. **/
+  /** Parameters for the `getWorkspace` operation. */
   export interface GetWorkspaceParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`. **/
+    /** Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`. */
     export?: boolean;
-    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. **/
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
   }
 
-  /** Parameters for the `listWorkspaces` operation. **/
+  /** Parameters for the `listWorkspaces` operation. */
   export interface ListWorkspacesParams {
-    /** The number of records to return in each page of results. The default page limit is 100. **/
+    /** The number of records to return in each page of results. The default page limit is 100. */
     page_limit?: number;
-    /** Whether to include information about the number of records returned. **/
+    /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** Sorts the response according to the value of the specified property, in ascending or descending order. **/
+    /** Sorts the response according to the value of the specified property, in ascending or descending order. */
     sort?: string;
-    /** A token identifying the last value from the previous page of results. **/
+    /** A token identifying the last value from the previous page of results. */
     cursor?: string;
-    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. **/
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
   }
 
-  /** Parameters for the `updateWorkspace` operation. **/
+  /** Parameters for the `updateWorkspace` operation. */
   export interface UpdateWorkspaceParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** The name of the workspace. **/
+    /** The name of the workspace. */
     name?: string;
-    /** The description of the workspace. **/
+    /** The description of the workspace. */
     description?: string;
-    /** The language of the workspace. **/
+    /** The language of the workspace. */
     language?: string;
-    /** An array of objects defining the intents for the workspace. **/
+    /** An array of objects defining the intents for the workspace. */
     intents?: CreateIntent[];
-    /** An array of objects defining the entities for the workspace. **/
+    /** An array of objects defining the entities for the workspace. */
     entities?: CreateEntity[];
-    /** An array of objects defining the nodes in the workspace dialog. **/
+    /** An array of objects defining the nodes in the workspace dialog. */
     dialog_nodes?: CreateDialogNode[];
-    /** An array of objects defining input examples that have been marked as irrelevant input. **/
+    /** An array of objects defining input examples that have been marked as irrelevant input. */
     counterexamples?: CreateCounterexample[];
-    /** Any metadata related to the workspace. **/
+    /** Any metadata related to the workspace. */
     metadata?: Object;
-    /** Whether training data from the workspace can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used. **/
+    /** Whether training data from the workspace can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used. */
     learning_opt_out?: boolean;
-    /** Specifies that the elements included in the request body are to be appended to the existing data in the workspace. The default value is `false`. **/
+    /** Specifies that the elements included in the request body are to be appended to the existing data in the workspace. The default value is `false`. */
     append?: boolean;
   }
 
-  /** Parameters for the `message` operation. **/
+  /** Parameters for the `message` operation. */
   export interface MessageParams {
-    /** Unique identifier of the workspace. **/
+    /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** An input object that includes the input text. **/
+    /** An input object that includes the input text. */
     input?: InputData;
-    /** Whether to return more than one intent. Set to `true` to return all matching intents. **/
+    /** Whether to return more than one intent. Set to `true` to return all matching intents. */
     alternate_intents?: boolean;
-    /** State information for the conversation. Continue a conversation by including the context object from the previous response. **/
+    /** State information for the conversation. Continue a conversation by including the context object from the previous response. */
     context?: Context;
-    /** Include the entities from the previous response when they do not need to change and to prevent Watson from trying to identify them. **/
+    /** Include the entities from the previous response when they do not need to change and to prevent Watson from trying to identify them. */
     entities?: RuntimeEntity[];
-    /** An array of name-confidence pairs for the user input. Include the intents from the previous response when they do not need to change and to prevent Watson from trying to identify them. **/
+    /** An array of name-confidence pairs for the user input. Include the intents from the previous response when they do not need to change and to prevent Watson from trying to identify them. */
     intents?: RuntimeIntent[];
-    /** System output. Include the output from the request when you have several requests within the same Dialog turn to pass back in the intermediate information. **/
+    /** System output. Include the output from the request when you have several requests within the same Dialog turn to pass back in the intermediate information. */
     output?: OutputData;
-    /** Whether to include additional diagnostic information about the dialog nodes that were visited during processing of the message. **/
+    /** Whether to include additional diagnostic information about the dialog nodes that were visited during processing of the message. */
     nodes_visited_details?: boolean;
   }
 
-  /** Parameters for the `createIntent` operation. **/
+  /** Parameters for the `createIntent` operation. */
   export interface CreateIntentParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** The name of the intent. **/
+    /** The name of the intent. */
     intent: string;
-    /** The description of the intent. **/
+    /** The description of the intent. */
     description?: string;
-    /** An array of user input examples. **/
+    /** An array of user input examples. */
     examples?: CreateExample[];
   }
 
-  /** Parameters for the `deleteIntent` operation. **/
+  /** Parameters for the `deleteIntent` operation. */
   export interface DeleteIntentParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** The intent name (for example, `pizza_order`). **/
+    /** The intent name (for example, `pizza_order`). */
     intent: string;
   }
 
-  /** Parameters for the `getIntent` operation. **/
+  /** Parameters for the `getIntent` operation. */
   export interface GetIntentParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** The intent name (for example, `pizza_order`). **/
+    /** The intent name (for example, `pizza_order`). */
     intent: string;
-    /** Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`. **/
+    /** Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`. */
     export?: boolean;
-    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. **/
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
   }
 
-  /** Parameters for the `listIntents` operation. **/
+  /** Parameters for the `listIntents` operation. */
   export interface ListIntentsParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`. **/
+    /** Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`. */
     export?: boolean;
-    /** The number of records to return in each page of results. The default page limit is 100. **/
+    /** The number of records to return in each page of results. The default page limit is 100. */
     page_limit?: number;
-    /** Whether to include information about the number of records returned. **/
+    /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** Sorts the response according to the value of the specified property, in ascending or descending order. **/
+    /** Sorts the response according to the value of the specified property, in ascending or descending order. */
     sort?: string;
-    /** A token identifying the last value from the previous page of results. **/
+    /** A token identifying the last value from the previous page of results. */
     cursor?: string;
-    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. **/
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
   }
 
-  /** Parameters for the `updateIntent` operation. **/
+  /** Parameters for the `updateIntent` operation. */
   export interface UpdateIntentParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** The intent name (for example, `pizza_order`). **/
+    /** The intent name (for example, `pizza_order`). */
     intent: string;
-    /** The name of the intent. **/
+    /** The name of the intent. */
     new_intent?: string;
-    /** The description of the intent. **/
+    /** The description of the intent. */
     new_description?: string;
-    /** An array of user input examples for the intent. **/
+    /** An array of user input examples for the intent. */
     new_examples?: CreateExample[];
   }
 
-  /** Parameters for the `createExample` operation. **/
+  /** Parameters for the `createExample` operation. */
   export interface CreateExampleParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** The intent name (for example, `pizza_order`). **/
+    /** The intent name (for example, `pizza_order`). */
     intent: string;
-    /** The text of a user input example. **/
+    /** The text of a user input example. */
     text: string;
   }
 
-  /** Parameters for the `deleteExample` operation. **/
+  /** Parameters for the `deleteExample` operation. */
   export interface DeleteExampleParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** The intent name (for example, `pizza_order`). **/
+    /** The intent name (for example, `pizza_order`). */
     intent: string;
-    /** The text of the user input example. **/
+    /** The text of the user input example. */
     text: string;
   }
 
-  /** Parameters for the `getExample` operation. **/
+  /** Parameters for the `getExample` operation. */
   export interface GetExampleParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** The intent name (for example, `pizza_order`). **/
+    /** The intent name (for example, `pizza_order`). */
     intent: string;
-    /** The text of the user input example. **/
+    /** The text of the user input example. */
     text: string;
-    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. **/
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
   }
 
-  /** Parameters for the `listExamples` operation. **/
+  /** Parameters for the `listExamples` operation. */
   export interface ListExamplesParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** The intent name (for example, `pizza_order`). **/
+    /** The intent name (for example, `pizza_order`). */
     intent: string;
-    /** The number of records to return in each page of results. The default page limit is 100. **/
+    /** The number of records to return in each page of results. The default page limit is 100. */
     page_limit?: number;
-    /** Whether to include information about the number of records returned. **/
+    /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** Sorts the response according to the value of the specified property, in ascending or descending order. **/
+    /** Sorts the response according to the value of the specified property, in ascending or descending order. */
     sort?: string;
-    /** A token identifying the last value from the previous page of results. **/
+    /** A token identifying the last value from the previous page of results. */
     cursor?: string;
-    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. **/
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
   }
 
-  /** Parameters for the `updateExample` operation. **/
+  /** Parameters for the `updateExample` operation. */
   export interface UpdateExampleParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** The intent name (for example, `pizza_order`). **/
+    /** The intent name (for example, `pizza_order`). */
     intent: string;
-    /** The text of the user input example. **/
+    /** The text of the user input example. */
     text: string;
-    /** The text of the user input example. **/
+    /** The text of the user input example. */
     new_text?: string;
   }
 
-  /** Parameters for the `createEntity` operation. **/
+  /** Parameters for the `createEntity` operation. */
   export interface CreateEntityParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** The name of the entity. **/
+    /** The name of the entity. */
     entity: string;
-    /** The description of the entity. **/
+    /** The description of the entity. */
     description?: string;
-    /** Any metadata related to the value. **/
+    /** Any metadata related to the value. */
     metadata?: Object;
-    /** An array of entity values. **/
+    /** An array of entity values. */
     values?: CreateValue[];
-    /** Whether to use fuzzy matching for the entity. **/
+    /** Whether to use fuzzy matching for the entity. */
     fuzzy_match?: boolean;
   }
 
-  /** Parameters for the `deleteEntity` operation. **/
+  /** Parameters for the `deleteEntity` operation. */
   export interface DeleteEntityParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** The name of the entity. **/
+    /** The name of the entity. */
     entity: string;
   }
 
-  /** Parameters for the `getEntity` operation. **/
+  /** Parameters for the `getEntity` operation. */
   export interface GetEntityParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** The name of the entity. **/
+    /** The name of the entity. */
     entity: string;
-    /** Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`. **/
+    /** Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`. */
     export?: boolean;
-    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. **/
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
   }
 
-  /** Parameters for the `listEntities` operation. **/
+  /** Parameters for the `listEntities` operation. */
   export interface ListEntitiesParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`. **/
+    /** Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`. */
     export?: boolean;
-    /** The number of records to return in each page of results. The default page limit is 100. **/
+    /** The number of records to return in each page of results. The default page limit is 100. */
     page_limit?: number;
-    /** Whether to include information about the number of records returned. **/
+    /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** Sorts the response according to the value of the specified property, in ascending or descending order. **/
+    /** Sorts the response according to the value of the specified property, in ascending or descending order. */
     sort?: string;
-    /** A token identifying the last value from the previous page of results. **/
+    /** A token identifying the last value from the previous page of results. */
     cursor?: string;
-    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. **/
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
   }
 
-  /** Parameters for the `updateEntity` operation. **/
+  /** Parameters for the `updateEntity` operation. */
   export interface UpdateEntityParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** The name of the entity. **/
+    /** The name of the entity. */
     entity: string;
-    /** The name of the entity. **/
+    /** The name of the entity. */
     new_entity?: string;
-    /** The description of the entity. **/
+    /** The description of the entity. */
     new_description?: string;
-    /** Any metadata related to the entity. **/
+    /** Any metadata related to the entity. */
     new_metadata?: Object;
-    /** Whether to use fuzzy matching for the entity. **/
+    /** Whether to use fuzzy matching for the entity. */
     new_fuzzy_match?: boolean;
-    /** An array of entity values. **/
+    /** An array of entity values. */
     new_values?: CreateValue[];
   }
 
-  /** Parameters for the `createValue` operation. **/
+  /** Parameters for the `createValue` operation. */
   export interface CreateValueParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** The name of the entity. **/
+    /** The name of the entity. */
     entity: string;
-    /** The text of the entity value. **/
+    /** The text of the entity value. */
     value: string;
-    /** Any metadata related to the entity value. **/
+    /** Any metadata related to the entity value. */
     metadata?: Object;
-    /** An array of synonyms for the entity value. **/
+    /** An array of synonyms for the entity value. */
     synonyms?: string[];
-    /** An array of patterns for the entity value. A pattern is specified as a regular expression. **/
+    /** An array of patterns for the entity value. A pattern is specified as a regular expression. */
     patterns?: string[];
-    /** Specifies the type of value (`synonyms` or `patterns`). The default value is `synonyms`. **/
+    /** Specifies the type of value (`synonyms` or `patterns`). The default value is `synonyms`. */
     value_type?: CreateValueConstants.ValueType | string;
   }
 
-  /** Constants for the `createValue` operation. **/
+  /** Constants for the `createValue` operation. */
   export namespace CreateValueConstants {
-    /** Specifies the type of value (`synonyms` or `patterns`). The default value is `synonyms`. **/
+    /** Specifies the type of value (`synonyms` or `patterns`). The default value is `synonyms`. */
     export enum ValueType {
       SYNONYMS = 'synonyms',
       PATTERNS = 'patterns',
     }
   }
 
-  /** Parameters for the `deleteValue` operation. **/
+  /** Parameters for the `deleteValue` operation. */
   export interface DeleteValueParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** The name of the entity. **/
+    /** The name of the entity. */
     entity: string;
-    /** The text of the entity value. **/
+    /** The text of the entity value. */
     value: string;
   }
 
-  /** Parameters for the `getValue` operation. **/
+  /** Parameters for the `getValue` operation. */
   export interface GetValueParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** The name of the entity. **/
+    /** The name of the entity. */
     entity: string;
-    /** The text of the entity value. **/
+    /** The text of the entity value. */
     value: string;
-    /** Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`. **/
+    /** Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`. */
     export?: boolean;
-    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. **/
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
   }
 
-  /** Parameters for the `listValues` operation. **/
+  /** Parameters for the `listValues` operation. */
   export interface ListValuesParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** The name of the entity. **/
+    /** The name of the entity. */
     entity: string;
-    /** Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`. **/
+    /** Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`. */
     export?: boolean;
-    /** The number of records to return in each page of results. The default page limit is 100. **/
+    /** The number of records to return in each page of results. The default page limit is 100. */
     page_limit?: number;
-    /** Whether to include information about the number of records returned. **/
+    /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** Sorts the response according to the value of the specified property, in ascending or descending order. **/
+    /** Sorts the response according to the value of the specified property, in ascending or descending order. */
     sort?: string;
-    /** A token identifying the last value from the previous page of results. **/
+    /** A token identifying the last value from the previous page of results. */
     cursor?: string;
-    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. **/
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
   }
 
-  /** Parameters for the `updateValue` operation. **/
+  /** Parameters for the `updateValue` operation. */
   export interface UpdateValueParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** The name of the entity. **/
+    /** The name of the entity. */
     entity: string;
-    /** The text of the entity value. **/
+    /** The text of the entity value. */
     value: string;
-    /** The text of the entity value. **/
+    /** The text of the entity value. */
     new_value?: string;
-    /** Any metadata related to the entity value. **/
+    /** Any metadata related to the entity value. */
     new_metadata?: Object;
-    /** Specifies the type of value (`synonyms` or `patterns`). The default value is `synonyms`. **/
+    /** Specifies the type of value (`synonyms` or `patterns`). The default value is `synonyms`. */
     new_type?: UpdateValueConstants.ValueType | string;
-    /** An array of synonyms for the entity value. **/
+    /** An array of synonyms for the entity value. */
     new_synonyms?: string[];
-    /** An array of patterns for the entity value. A pattern is specified as a regular expression. **/
+    /** An array of patterns for the entity value. A pattern is specified as a regular expression. */
     new_patterns?: string[];
   }
 
-  /** Constants for the `updateValue` operation. **/
+  /** Constants for the `updateValue` operation. */
   export namespace UpdateValueConstants {
-    /** Specifies the type of value (`synonyms` or `patterns`). The default value is `synonyms`. **/
+    /** Specifies the type of value (`synonyms` or `patterns`). The default value is `synonyms`. */
     export enum ValueType {
       SYNONYMS = 'synonyms',
       PATTERNS = 'patterns',
     }
   }
 
-  /** Parameters for the `createSynonym` operation. **/
+  /** Parameters for the `createSynonym` operation. */
   export interface CreateSynonymParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** The name of the entity. **/
+    /** The name of the entity. */
     entity: string;
-    /** The text of the entity value. **/
+    /** The text of the entity value. */
     value: string;
-    /** The text of the synonym. **/
+    /** The text of the synonym. */
     synonym: string;
   }
 
-  /** Parameters for the `deleteSynonym` operation. **/
+  /** Parameters for the `deleteSynonym` operation. */
   export interface DeleteSynonymParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** The name of the entity. **/
+    /** The name of the entity. */
     entity: string;
-    /** The text of the entity value. **/
+    /** The text of the entity value. */
     value: string;
-    /** The text of the synonym. **/
+    /** The text of the synonym. */
     synonym: string;
   }
 
-  /** Parameters for the `getSynonym` operation. **/
+  /** Parameters for the `getSynonym` operation. */
   export interface GetSynonymParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** The name of the entity. **/
+    /** The name of the entity. */
     entity: string;
-    /** The text of the entity value. **/
+    /** The text of the entity value. */
     value: string;
-    /** The text of the synonym. **/
+    /** The text of the synonym. */
     synonym: string;
-    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. **/
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
   }
 
-  /** Parameters for the `listSynonyms` operation. **/
+  /** Parameters for the `listSynonyms` operation. */
   export interface ListSynonymsParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** The name of the entity. **/
+    /** The name of the entity. */
     entity: string;
-    /** The text of the entity value. **/
+    /** The text of the entity value. */
     value: string;
-    /** The number of records to return in each page of results. The default page limit is 100. **/
+    /** The number of records to return in each page of results. The default page limit is 100. */
     page_limit?: number;
-    /** Whether to include information about the number of records returned. **/
+    /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** Sorts the response according to the value of the specified property, in ascending or descending order. **/
+    /** Sorts the response according to the value of the specified property, in ascending or descending order. */
     sort?: string;
-    /** A token identifying the last value from the previous page of results. **/
+    /** A token identifying the last value from the previous page of results. */
     cursor?: string;
-    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. **/
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
   }
 
-  /** Parameters for the `updateSynonym` operation. **/
+  /** Parameters for the `updateSynonym` operation. */
   export interface UpdateSynonymParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** The name of the entity. **/
+    /** The name of the entity. */
     entity: string;
-    /** The text of the entity value. **/
+    /** The text of the entity value. */
     value: string;
-    /** The text of the synonym. **/
+    /** The text of the synonym. */
     synonym: string;
-    /** The text of the synonym. **/
+    /** The text of the synonym. */
     new_synonym?: string;
   }
 
-  /** Parameters for the `createDialogNode` operation. **/
+  /** Parameters for the `createDialogNode` operation. */
   export interface CreateDialogNodeParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** The dialog node ID. **/
+    /** The dialog node ID. */
     dialog_node: string;
-    /** The description of the dialog node. **/
+    /** The description of the dialog node. */
     description?: string;
-    /** The condition that will trigger the dialog node. **/
+    /** The condition that will trigger the dialog node. */
     conditions?: string;
-    /** The ID of the parent dialog node (if any). **/
+    /** The ID of the parent dialog node (if any). */
     parent?: string;
-    /** The previous dialog node. **/
+    /** The previous dialog node. */
     previous_sibling?: string;
-    /** The output of the dialog node. **/
+    /** The output of the dialog node. */
     output?: Object;
-    /** The context for the dialog node. **/
+    /** The context for the dialog node. */
     context?: Object;
-    /** The metadata for the dialog node. **/
+    /** The metadata for the dialog node. */
     metadata?: Object;
-    /** The next step to execute following this dialog node. **/
+    /** The next step to execute following this dialog node. */
     next_step?: DialogNodeNextStep;
-    /** The actions for the dialog node. **/
+    /** The actions for the dialog node. */
     actions?: DialogNodeAction[];
-    /** The alias used to identify the dialog node. **/
+    /** The alias used to identify the dialog node. */
     title?: string;
-    /** How the dialog node is processed. **/
+    /** How the dialog node is processed. */
     node_type?: CreateDialogNodeConstants.NodeType | string;
-    /** How an `event_handler` node is processed. **/
+    /** How an `event_handler` node is processed. */
     event_name?: CreateDialogNodeConstants.EventName | string;
-    /** The location in the dialog context where output is stored. **/
+    /** The location in the dialog context where output is stored. */
     variable?: string;
   }
 
-  /** Constants for the `createDialogNode` operation. **/
+  /** Constants for the `createDialogNode` operation. */
   export namespace CreateDialogNodeConstants {
-    /** How the dialog node is processed. **/
+    /** How the dialog node is processed. */
     export enum NodeType {
       STANDARD = 'standard',
       EVENT_HANDLER = 'event_handler',
@@ -2812,7 +2686,7 @@ namespace ConversationV1 {
       SLOT = 'slot',
       RESPONSE_CONDITION = 'response_condition',
     }
-    /** How an `event_handler` node is processed. **/
+    /** How an `event_handler` node is processed. */
     export enum EventName {
       FOCUS = 'focus',
       INPUT = 'input',
@@ -2825,79 +2699,79 @@ namespace ConversationV1 {
     }
   }
 
-  /** Parameters for the `deleteDialogNode` operation. **/
+  /** Parameters for the `deleteDialogNode` operation. */
   export interface DeleteDialogNodeParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** The dialog node ID (for example, `get_order`). **/
+    /** The dialog node ID (for example, `get_order`). */
     dialog_node: string;
   }
 
-  /** Parameters for the `getDialogNode` operation. **/
+  /** Parameters for the `getDialogNode` operation. */
   export interface GetDialogNodeParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** The dialog node ID (for example, `get_order`). **/
+    /** The dialog node ID (for example, `get_order`). */
     dialog_node: string;
-    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. **/
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
   }
 
-  /** Parameters for the `listDialogNodes` operation. **/
+  /** Parameters for the `listDialogNodes` operation. */
   export interface ListDialogNodesParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** The number of records to return in each page of results. The default page limit is 100. **/
+    /** The number of records to return in each page of results. The default page limit is 100. */
     page_limit?: number;
-    /** Whether to include information about the number of records returned. **/
+    /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** Sorts the response according to the value of the specified property, in ascending or descending order. **/
+    /** Sorts the response according to the value of the specified property, in ascending or descending order. */
     sort?: string;
-    /** A token identifying the last value from the previous page of results. **/
+    /** A token identifying the last value from the previous page of results. */
     cursor?: string;
-    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. **/
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
   }
 
-  /** Parameters for the `updateDialogNode` operation. **/
+  /** Parameters for the `updateDialogNode` operation. */
   export interface UpdateDialogNodeParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** The dialog node ID (for example, `get_order`). **/
+    /** The dialog node ID (for example, `get_order`). */
     dialog_node: string;
-    /** The dialog node ID. **/
+    /** The dialog node ID. */
     new_dialog_node?: string;
-    /** The description of the dialog node. **/
+    /** The description of the dialog node. */
     new_description?: string;
-    /** The condition that will trigger the dialog node. **/
+    /** The condition that will trigger the dialog node. */
     new_conditions?: string;
-    /** The ID of the parent dialog node (if any). **/
+    /** The ID of the parent dialog node (if any). */
     new_parent?: string;
-    /** The previous dialog node. **/
+    /** The previous dialog node. */
     new_previous_sibling?: string;
-    /** The output of the dialog node. **/
+    /** The output of the dialog node. */
     new_output?: Object;
-    /** The context for the dialog node. **/
+    /** The context for the dialog node. */
     new_context?: Object;
-    /** The metadata for the dialog node. **/
+    /** The metadata for the dialog node. */
     new_metadata?: Object;
-    /** The next step to execute following this dialog node. **/
+    /** The next step to execute following this dialog node. */
     new_next_step?: DialogNodeNextStep;
-    /** The alias used to identify the dialog node. **/
+    /** The alias used to identify the dialog node. */
     new_title?: string;
-    /** How the dialog node is processed. **/
+    /** How the dialog node is processed. */
     new_type?: UpdateDialogNodeConstants.NodeType | string;
-    /** How an `event_handler` node is processed. **/
+    /** How an `event_handler` node is processed. */
     new_event_name?: UpdateDialogNodeConstants.EventName | string;
-    /** The location in the dialog context where output is stored. **/
+    /** The location in the dialog context where output is stored. */
     new_variable?: string;
-    /** The actions for the dialog node. **/
+    /** The actions for the dialog node. */
     new_actions?: DialogNodeAction[];
   }
 
-  /** Constants for the `updateDialogNode` operation. **/
+  /** Constants for the `updateDialogNode` operation. */
   export namespace UpdateDialogNodeConstants {
-    /** How the dialog node is processed. **/
+    /** How the dialog node is processed. */
     export enum NodeType {
       STANDARD = 'standard',
       EVENT_HANDLER = 'event_handler',
@@ -2905,7 +2779,7 @@ namespace ConversationV1 {
       SLOT = 'slot',
       RESPONSE_CONDITION = 'response_condition',
     }
-    /** How an `event_handler` node is processed. **/
+    /** How an `event_handler` node is processed. */
     export enum EventName {
       FOCUS = 'focus',
       INPUT = 'input',
@@ -2918,81 +2792,81 @@ namespace ConversationV1 {
     }
   }
 
-  /** Parameters for the `listAllLogs` operation. **/
+  /** Parameters for the `listAllLogs` operation. */
   export interface ListAllLogsParams {
-    /** A cacheable parameter that limits the results to those matching the specified filter. You must specify a filter query that includes a value for `language`, as well as a value for `workspace_id` or `request.context.metadata.deployment`. For more information, see the [documentation](https://console.bluemix.net/docs/services/conversation/filter-reference.html#filter-query-syntax). **/
+    /** A cacheable parameter that limits the results to those matching the specified filter. You must specify a filter query that includes a value for `language`, as well as a value for `workspace_id` or `request.context.metadata.deployment`. For more information, see the [documentation](https://console.bluemix.net/docs/services/conversation/filter-reference.html#filter-query-syntax). */
     filter: string;
-    /** Sorts the response according to the value of the specified property, in ascending or descending order. **/
+    /** Sorts the response according to the value of the specified property, in ascending or descending order. */
     sort?: string;
-    /** The number of records to return in each page of results. The default page limit is 100. **/
+    /** The number of records to return in each page of results. The default page limit is 100. */
     page_limit?: number;
-    /** A token identifying the last value from the previous page of results. **/
+    /** A token identifying the last value from the previous page of results. */
     cursor?: string;
   }
 
-  /** Parameters for the `listLogs` operation. **/
+  /** Parameters for the `listLogs` operation. */
   export interface ListLogsParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** Sorts the response according to the value of the specified property, in ascending or descending order. **/
+    /** Sorts the response according to the value of the specified property, in ascending or descending order. */
     sort?: string;
-    /** A cacheable parameter that limits the results to those matching the specified filter. For more information, see the [documentation](https://console.bluemix.net/docs/services/conversation/filter-reference.html#filter-query-syntax). **/
+    /** A cacheable parameter that limits the results to those matching the specified filter. For more information, see the [documentation](https://console.bluemix.net/docs/services/conversation/filter-reference.html#filter-query-syntax). */
     filter?: string;
-    /** The number of records to return in each page of results. The default page limit is 100. **/
+    /** The number of records to return in each page of results. The default page limit is 100. */
     page_limit?: number;
-    /** A token identifying the last value from the previous page of results. **/
+    /** A token identifying the last value from the previous page of results. */
     cursor?: string;
   }
 
-  /** Parameters for the `createCounterexample` operation. **/
+  /** Parameters for the `createCounterexample` operation. */
   export interface CreateCounterexampleParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** The text of a user input marked as irrelevant input. **/
+    /** The text of a user input marked as irrelevant input. */
     text: string;
   }
 
-  /** Parameters for the `deleteCounterexample` operation. **/
+  /** Parameters for the `deleteCounterexample` operation. */
   export interface DeleteCounterexampleParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** The text of a user input counterexample (for example, `What are you wearing?`). **/
+    /** The text of a user input counterexample (for example, `What are you wearing?`). */
     text: string;
   }
 
-  /** Parameters for the `getCounterexample` operation. **/
+  /** Parameters for the `getCounterexample` operation. */
   export interface GetCounterexampleParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** The text of a user input counterexample (for example, `What are you wearing?`). **/
+    /** The text of a user input counterexample (for example, `What are you wearing?`). */
     text: string;
-    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. **/
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
   }
 
-  /** Parameters for the `listCounterexamples` operation. **/
+  /** Parameters for the `listCounterexamples` operation. */
   export interface ListCounterexamplesParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** The number of records to return in each page of results. The default page limit is 100. **/
+    /** The number of records to return in each page of results. The default page limit is 100. */
     page_limit?: number;
-    /** Whether to include information about the number of records returned. **/
+    /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** Sorts the response according to the value of the specified property, in ascending or descending order. **/
+    /** Sorts the response according to the value of the specified property, in ascending or descending order. */
     sort?: string;
-    /** A token identifying the last value from the previous page of results. **/
+    /** A token identifying the last value from the previous page of results. */
     cursor?: string;
-    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. **/
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
   }
 
-  /** Parameters for the `updateCounterexample` operation. **/
+  /** Parameters for the `updateCounterexample` operation. */
   export interface UpdateCounterexampleParams {
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** The text of a user input counterexample (for example, `What are you wearing?`). **/
+    /** The text of a user input counterexample (for example, `What are you wearing?`). */
     text: string;
-    /** The text of the example to be marked as irrelevant input. **/
+    /** The text of the example to be marked as irrelevant input. */
     new_text?: string;
   }
 
@@ -3000,547 +2874,549 @@ namespace ConversationV1 {
    * model interfaces
    ************************/
 
-  /** CaptureGroup. **/
+  /** CaptureGroup. */
   export interface CaptureGroup {
-    /** A recognized capture group for the entity. **/
+    /** A recognized capture group for the entity. */
     group: string;
-    /** Zero-based character offsets that indicate where the entity value begins and ends in the input text. **/
+    /** Zero-based character offsets that indicate where the entity value begins and ends in the input text. */
     location?: number[];
   }
 
-  /** Context information for the message. Include the context from the previous response to maintain state for the conversation. **/
+  /** Context information for the message. Include the context from the previous response to maintain state for the conversation. */
   export interface Context {
-    /** The unique identifier of the conversation. **/
+    /** The unique identifier of the conversation. */
     conversation_id: string;
-    /** For internal use only. **/
+    /** For internal use only. */
     system: SystemResponse;
   }
 
-  /** Counterexample. **/
+  /** Counterexample. */
   export interface Counterexample {
-    /** The text of the counterexample. **/
+    /** The text of the counterexample. */
     text: string;
-    /** The timestamp for creation of the counterexample. **/
+    /** The timestamp for creation of the counterexample. */
     created: string;
-    /** The timestamp for the last update to the counterexample. **/
+    /** The timestamp for the last update to the counterexample. */
     updated: string;
   }
 
-  /** CounterexampleCollection. **/
+  /** CounterexampleCollection. */
   export interface CounterexampleCollection {
-    /** An array of objects describing the examples marked as irrelevant input. **/
+    /** An array of objects describing the examples marked as irrelevant input. */
     counterexamples: Counterexample[];
-    /** An object defining the pagination data for the returned objects. **/
+    /** An object defining the pagination data for the returned objects. */
     pagination: Pagination;
   }
 
-  /** CreateCounterexample. **/
+  /** CreateCounterexample. */
   export interface CreateCounterexample {
-    /** The text of a user input marked as irrelevant input. **/
+    /** The text of a user input marked as irrelevant input. */
     text: string;
   }
 
-  /** CreateDialogNode. **/
+  /** CreateDialogNode. */
   export interface CreateDialogNode {
-    /** The dialog node ID. **/
+    /** The dialog node ID. */
     dialog_node: string;
-    /** The description of the dialog node. **/
+    /** The description of the dialog node. */
     description?: string;
-    /** The condition that will trigger the dialog node. **/
+    /** The condition that will trigger the dialog node. */
     conditions?: string;
-    /** The ID of the parent dialog node (if any). **/
+    /** The ID of the parent dialog node (if any). */
     parent?: string;
-    /** The previous dialog node. **/
+    /** The previous dialog node. */
     previous_sibling?: string;
-    /** The output of the dialog node. **/
+    /** The output of the dialog node. */
     output?: Object;
-    /** The context for the dialog node. **/
+    /** The context for the dialog node. */
     context?: Object;
-    /** The metadata for the dialog node. **/
+    /** The metadata for the dialog node. */
     metadata?: Object;
-    /** The next step to execute following this dialog node. **/
+    /** The next step to execute following this dialog node. */
     next_step?: DialogNodeNextStep;
-    /** The actions for the dialog node. **/
+    /** The actions for the dialog node. */
     actions?: DialogNodeAction[];
-    /** The alias used to identify the dialog node. **/
+    /** The alias used to identify the dialog node. */
     title?: string;
-    /** How the dialog node is processed. **/
+    /** How the dialog node is processed. */
     node_type?: string;
-    /** How an `event_handler` node is processed. **/
+    /** How an `event_handler` node is processed. */
     event_name?: string;
-    /** The location in the dialog context where output is stored. **/
+    /** The location in the dialog context where output is stored. */
     variable?: string;
   }
 
-  /** CreateEntity. **/
+  /** CreateEntity. */
   export interface CreateEntity {
-    /** The name of the entity. **/
+    /** The name of the entity. */
     entity: string;
-    /** The description of the entity. **/
+    /** The description of the entity. */
     description?: string;
-    /** Any metadata related to the value. **/
+    /** Any metadata related to the value. */
     metadata?: Object;
-    /** An array of entity values. **/
+    /** An array of entity values. */
     values?: CreateValue[];
-    /** Whether to use fuzzy matching for the entity. **/
+    /** Whether to use fuzzy matching for the entity. */
     fuzzy_match?: boolean;
   }
 
-  /** CreateExample. **/
+  /** CreateExample. */
   export interface CreateExample {
-    /** The text of a user input example. **/
+    /** The text of a user input example. */
     text: string;
   }
 
-  /** CreateIntent. **/
+  /** CreateIntent. */
   export interface CreateIntent {
-    /** The name of the intent. **/
+    /** The name of the intent. */
     intent: string;
-    /** The description of the intent. **/
+    /** The description of the intent. */
     description?: string;
-    /** An array of user input examples. **/
+    /** An array of user input examples. */
     examples?: CreateExample[];
   }
 
-  /** CreateValue. **/
+  /** CreateValue. */
   export interface CreateValue {
-    /** The text of the entity value. **/
+    /** The text of the entity value. */
     value: string;
-    /** Any metadata related to the entity value. **/
+    /** Any metadata related to the entity value. */
     metadata?: Object;
-    /** An array of synonyms for the entity value. **/
+    /** An array of synonyms for the entity value. */
     synonyms?: string[];
-    /** An array of patterns for the entity value. A pattern is specified as a regular expression. **/
+    /** An array of patterns for the entity value. A pattern is specified as a regular expression. */
     patterns?: string[];
-    /** Specifies the type of value (`synonyms` or `patterns`). The default value is `synonyms`. **/
+    /** Specifies the type of value (`synonyms` or `patterns`). The default value is `synonyms`. */
     value_type?: string;
   }
 
-  /** DialogNode. **/
+  /** DialogNode. */
   export interface DialogNode {
-    /** The dialog node ID. **/
+    /** The dialog node ID. */
     dialog_node_id: string;
-    /** The description of the dialog node. **/
+    /** The description of the dialog node. */
     description?: string;
-    /** The condition that triggers the dialog node. **/
+    /** The condition that triggers the dialog node. */
     conditions?: string;
-    /** The ID of the parent dialog node. **/
+    /** The ID of the parent dialog node. */
     parent?: string;
-    /** The ID of the previous sibling dialog node. **/
+    /** The ID of the previous sibling dialog node. */
     previous_sibling?: string;
-    /** The output of the dialog node. **/
+    /** The output of the dialog node. */
     output?: Object;
-    /** The context (if defined) for the dialog node. **/
+    /** The context (if defined) for the dialog node. */
     context?: Object;
-    /** The metadata (if any) for the dialog node. **/
+    /** The metadata (if any) for the dialog node. */
     metadata?: Object;
-    /** The next step to execute following this dialog node. **/
+    /** The next step to execute following this dialog node. */
     next_step?: DialogNodeNextStep;
-    /** The timestamp for creation of the dialog node. **/
+    /** The timestamp for creation of the dialog node. */
     created: string;
-    /** The timestamp for the most recent update to the dialog node. **/
+    /** The timestamp for the most recent update to the dialog node. */
     updated: string;
-    /** The actions for the dialog node. **/
+    /** The actions for the dialog node. */
     actions?: DialogNodeAction[];
-    /** The alias used to identify the dialog node. **/
+    /** The alias used to identify the dialog node. */
     title?: string;
-    /** How the dialog node is processed. **/
+    /** How the dialog node is processed. */
     node_type?: string;
-    /** How an `event_handler` node is processed. **/
+    /** How an `event_handler` node is processed. */
     event_name?: string;
-    /** The location in the dialog context where output is stored. **/
+    /** The location in the dialog context where output is stored. */
     variable?: string;
   }
 
-  /** DialogNodeAction. **/
+  /** DialogNodeAction. */
   export interface DialogNodeAction {
-    /** The name of the action. **/
+    /** The name of the action. */
     name: string;
-    /** The type of action to invoke. **/
+    /** The type of action to invoke. */
     action_type?: string;
-    /** A map of key/value pairs to be provided to the action. **/
+    /** A map of key/value pairs to be provided to the action. */
     parameters?: Object;
-    /** The location in the dialog context where the result of the action is stored. **/
+    /** The location in the dialog context where the result of the action is stored. */
     result_variable: string;
-    /** The name of the context variable that the client application will use to pass in credentials for the action. **/
+    /** The name of the context variable that the client application will use to pass in credentials for the action. */
     credentials?: string;
   }
 
-  /** DialogNodeCollection. **/
+  /** DialogNodeCollection. */
   export interface DialogNodeCollection {
     dialog_nodes: DialogNode[];
-    /** An object defining the pagination data for the returned objects. **/
+    /** An object defining the pagination data for the returned objects. */
     pagination: Pagination;
   }
 
-  /** The next step to execute following this dialog node. **/
+  /** The next step to execute following this dialog node. */
   export interface DialogNodeNextStep {
-    /** How the `next_step` reference is processed. If you specify `jump_to`, then you must also specify a value for the `dialog_node` property. **/
+    /** How the `next_step` reference is processed. If you specify `jump_to`, then you must also specify a value for the `dialog_node` property. */
     behavior: string;
-    /** The ID of the dialog node to process next. This parameter is required if `behavior`=`jump_to`. **/
+    /** The ID of the dialog node to process next. This parameter is required if `behavior`=`jump_to`. */
     dialog_node?: string;
-    /** Which part of the dialog node to process next. **/
+    /** Which part of the dialog node to process next. */
     selector?: string;
   }
 
-  /** DialogNodeVisitedDetails. **/
+  /** DialogNodeVisitedDetails. */
   export interface DialogNodeVisitedDetails {
-    /** A dialog node that was triggered during processing of the input message. **/
+    /** A dialog node that was triggered during processing of the input message. */
     dialog_node?: string;
-    /** The title of the dialog node. **/
+    /** The title of the dialog node. */
     title?: string;
   }
 
-  /** Entity. **/
+  /** Entity. */
   export interface Entity {
-    /** The name of the entity. **/
+    /** The name of the entity. */
     entity_name: string;
-    /** The timestamp for creation of the entity. **/
+    /** The timestamp for creation of the entity. */
     created: string;
-    /** The timestamp for the last update to the entity. **/
+    /** The timestamp for the last update to the entity. */
     updated: string;
-    /** The description of the entity. **/
+    /** The description of the entity. */
     description?: string;
-    /** Any metadata related to the entity. **/
+    /** Any metadata related to the entity. */
     metadata?: Object;
-    /** Whether fuzzy matching is used for the entity. **/
+    /** Whether fuzzy matching is used for the entity. */
     fuzzy_match?: boolean;
   }
 
-  /** An array of entities. **/
+  /** An array of entities. */
   export interface EntityCollection {
-    /** An array of entities. **/
+    /** An array of entities. */
     entities: EntityExport[];
-    /** An object defining the pagination data for the returned objects. **/
+    /** An object defining the pagination data for the returned objects. */
     pagination: Pagination;
   }
 
-  /** EntityExport. **/
+  /** EntityExport. */
   export interface EntityExport {
-    /** The name of the entity. **/
+    /** The name of the entity. */
     entity_name: string;
-    /** The timestamp for creation of the entity. **/
+    /** The timestamp for creation of the entity. */
     created: string;
-    /** The timestamp for the last update to the entity. **/
+    /** The timestamp for the last update to the entity. */
     updated: string;
-    /** The description of the entity. **/
+    /** The description of the entity. */
     description?: string;
-    /** Any metadata related to the entity. **/
+    /** Any metadata related to the entity. */
     metadata?: Object;
-    /** Whether fuzzy matching is used for the entity. **/
+    /** Whether fuzzy matching is used for the entity. */
     fuzzy_match?: boolean;
-    /** An array of entity values. **/
+    /** An array of entity values. */
     values?: ValueExport[];
   }
 
-  /** Example. **/
+  /** Example. */
   export interface Example {
-    /** The text of the example. **/
+    /** The text of the example. */
     example_text: string;
-    /** The timestamp for creation of the example. **/
+    /** The timestamp for creation of the example. */
     created: string;
-    /** The timestamp for the last update to the example. **/
+    /** The timestamp for the last update to the example. */
     updated: string;
   }
 
-  /** ExampleCollection. **/
+  /** ExampleCollection. */
   export interface ExampleCollection {
-    /** An array of Example objects describing the examples defined for the intent. **/
+    /** An array of Example objects describing the examples defined for the intent. */
     examples: Example[];
-    /** An object defining the pagination data for the returned objects. **/
+    /** An object defining the pagination data for the returned objects. */
     pagination: Pagination;
   }
 
-  /** An object defining the user input. **/
+  /** An object defining the user input. */
   export interface InputData {
-    /** The text of the user input. **/
+    /** The text of the user input. */
     text: string;
   }
 
-  /** Intent. **/
+  /** Intent. */
   export interface Intent {
-    /** The name of the intent. **/
+    /** The name of the intent. */
     intent_name: string;
-    /** The timestamp for creation of the intent. **/
+    /** The timestamp for creation of the intent. */
     created: string;
-    /** The timestamp for the last update to the intent. **/
+    /** The timestamp for the last update to the intent. */
     updated: string;
-    /** The description of the intent. **/
+    /** The description of the intent. */
     description?: string;
   }
 
-  /** IntentCollection. **/
+  /** IntentCollection. */
   export interface IntentCollection {
-    /** An array of intents. **/
+    /** An array of intents. */
     intents: IntentExport[];
-    /** An object defining the pagination data for the returned objects. **/
+    /** An object defining the pagination data for the returned objects. */
     pagination: Pagination;
   }
 
-  /** IntentExport. **/
+  /** IntentExport. */
   export interface IntentExport {
-    /** The name of the intent. **/
+    /** The name of the intent. */
     intent_name: string;
-    /** The timestamp for creation of the intent. **/
+    /** The timestamp for creation of the intent. */
     created: string;
-    /** The timestamp for the last update to the intent. **/
+    /** The timestamp for the last update to the intent. */
     updated: string;
-    /** The description of the intent. **/
+    /** The description of the intent. */
     description?: string;
-    /** An array of user input examples. **/
+    /** An array of user input examples. */
     examples?: Example[];
   }
 
-  /** LogCollection. **/
+  /** LogCollection. */
   export interface LogCollection {
-    /** An array of log events. **/
+    /** An array of log events. */
     logs: LogExport[];
-    /** An object defining the pagination data for the returned objects. **/
+    /** An object defining the pagination data for the returned objects. */
     pagination: LogPagination;
   }
 
-  /** LogExport. **/
+  /** LogExport. */
   export interface LogExport {
-    /** A request formatted for the Conversation service. **/
+    /** A request formatted for the Conversation service. */
     request: MessageRequest;
-    /** A response from the Conversation service. **/
+    /** A response from the Conversation service. */
     response: MessageResponse;
-    /** A unique identifier for the logged message. **/
+    /** A unique identifier for the logged message. */
     log_id: string;
-    /** The timestamp for receipt of the message. **/
+    /** The timestamp for receipt of the message. */
     request_timestamp: string;
-    /** The timestamp for the system response to the message. **/
+    /** The timestamp for the system response to the message. */
     response_timestamp: string;
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** The language of the workspace where the message request was made. **/
+    /** The language of the workspace where the message request was made. */
     language: string;
   }
 
-  /** Log message details. **/
+  /** Log message details. */
   export interface LogMessage {
-    /** The severity of the message. **/
+    /** The severity of the message. */
     level: string;
-    /** The text of the message. **/
+    /** The text of the message. */
     msg: string;
   }
 
-  /** The pagination data for the returned objects. **/
+  /** The pagination data for the returned objects. */
   export interface LogPagination {
-    /** The URL that will return the next page of results. **/
+    /** The URL that will return the next page of results. */
     next_url?: string;
-    /** Reserved for future use. **/
+    /** Reserved for future use. */
     matched?: number;
   }
 
-  /** An input object that includes the input text. **/
+  /** An input object that includes the input text. */
   export interface MessageInput {
-    /** The user's input. **/
+    /** The user's input. */
     text?: string;
   }
 
-  /** A request formatted for the Conversation service. **/
+  /** A request formatted for the Conversation service. */
   export interface MessageRequest {
-    /** An input object that includes the input text. **/
+    /** An input object that includes the input text. */
     input?: InputData;
-    /** Whether to return more than one intent. Set to `true` to return all matching intents. **/
+    /** Whether to return more than one intent. Set to `true` to return all matching intents. */
     alternate_intents?: boolean;
-    /** State information for the conversation. Continue a conversation by including the context object from the previous response. **/
+    /** State information for the conversation. Continue a conversation by including the context object from the previous response. */
     context?: Context;
-    /** Include the entities from the previous response when they do not need to change and to prevent Watson from trying to identify them. **/
+    /** Include the entities from the previous response when they do not need to change and to prevent Watson from trying to identify them. */
     entities?: RuntimeEntity[];
-    /** An array of name-confidence pairs for the user input. Include the intents from the previous response when they do not need to change and to prevent Watson from trying to identify them. **/
+    /** An array of name-confidence pairs for the user input. Include the intents from the previous response when they do not need to change and to prevent Watson from trying to identify them. */
     intents?: RuntimeIntent[];
-    /** System output. Include the output from the request when you have several requests within the same Dialog turn to pass back in the intermediate information. **/
+    /** System output. Include the output from the request when you have several requests within the same Dialog turn to pass back in the intermediate information. */
     output?: OutputData;
   }
 
-  /** A response from the Conversation service. **/
+  /** A response from the Conversation service. */
   export interface MessageResponse {
-    /** The user input from the request. **/
+    /** The user input from the request. */
     input?: MessageInput;
-    /** An array of intents recognized in the user input, sorted in descending order of confidence. **/
+    /** An array of intents recognized in the user input, sorted in descending order of confidence. */
     intents: RuntimeIntent[];
-    /** An array of entities identified in the user input. **/
+    /** An array of entities identified in the user input. */
     entities: RuntimeEntity[];
-    /** Whether to return more than one intent. `true` indicates that all matching intents are returned. **/
+    /** Whether to return more than one intent. `true` indicates that all matching intents are returned. */
     alternate_intents?: boolean;
-    /** State information for the conversation. **/
+    /** State information for the conversation. */
     context: Context;
-    /** Output from the dialog, including the response to the user, the nodes that were triggered, and log messages. **/
+    /** Output from the dialog, including the response to the user, the nodes that were triggered, and log messages. */
     output: OutputData;
   }
 
-  /** An output object that includes the response to the user, the nodes that were hit, and messages from the log. **/
+  /** An output object that includes the response to the user, the nodes that were hit, and messages from the log. */
   export interface OutputData {
-    /** Up to 50 messages logged with the request. **/
+    /** Up to 50 messages logged with the request. */
     log_messages: LogMessage[];
-    /** An array of responses to the user. **/
+    /** An array of responses to the user. */
     text: string[];
-    /** An array of the nodes that were triggered to create the response. **/
+    /** An array of the nodes that were triggered to create the response. */
     nodes_visited?: string[];
-    /** An array of objects containing detailed diagnostic information about the nodes that were triggered during processing of the input message. **/
+    /** An array of objects containing detailed diagnostic information about the nodes that were triggered during processing of the input message. */
     nodes_visited_details?: DialogNodeVisitedDetails[];
   }
 
-  /** The pagination data for the returned objects. **/
+  /** The pagination data for the returned objects. */
   export interface Pagination {
-    /** The URL that will return the same page of results. **/
+    /** The URL that will return the same page of results. */
     refresh_url: string;
-    /** The URL that will return the next page of results. **/
+    /** The URL that will return the next page of results. */
     next_url?: string;
-    /** Reserved for future use. **/
+    /** Reserved for future use. */
     total?: number;
-    /** Reserved for future use. **/
+    /** Reserved for future use. */
     matched?: number;
   }
 
-  /** A term from the request that was identified as an entity. **/
+  /** A term from the request that was identified as an entity. */
   export interface RuntimeEntity {
-    /** The recognized entity from a term in the input. **/
+    /** The recognized entity from a term in the input. */
     entity: string;
-    /** Zero-based character offsets that indicate where the entity value begins and ends in the input text. **/
+    /** Zero-based character offsets that indicate where the entity value begins and ends in the input text. */
     location: number[];
-    /** The term in the input text that was recognized. **/
+    /** The term in the input text that was recognized. */
     value: string;
-    /** A decimal percentage that represents Watson's confidence in the entity. **/
+    /** A decimal percentage that represents Watson's confidence in the entity. */
     confidence?: number;
-    /** The metadata for the entity. **/
+    /** The metadata for the entity. */
     metadata?: Object;
-    /** The recognized capture groups for the entity, as defined by the entity pattern. **/
+    /** The recognized capture groups for the entity, as defined by the entity pattern. */
     groups?: CaptureGroup[];
   }
 
-  /** An intent identified in the user input. **/
+  /** An intent identified in the user input. */
   export interface RuntimeIntent {
-    /** The name of the recognized intent. **/
+    /** The name of the recognized intent. */
     intent: string;
-    /** A decimal percentage that represents Watson's confidence in the intent. **/
+    /** A decimal percentage that represents Watson's confidence in the intent. */
     confidence: number;
   }
 
-  /** Synonym. **/
+  /** Synonym. */
   export interface Synonym {
-    /** The text of the synonym. **/
+    /** The text of the synonym. */
     synonym_text: string;
-    /** The timestamp for creation of the synonym. **/
+    /** The timestamp for creation of the synonym. */
     created: string;
-    /** The timestamp for the most recent update to the synonym. **/
+    /** The timestamp for the most recent update to the synonym. */
     updated: string;
   }
 
-  /** SynonymCollection. **/
+  /** SynonymCollection. */
   export interface SynonymCollection {
-    /** An array of synonyms. **/
+    /** An array of synonyms. */
     synonyms: Synonym[];
-    /** An object defining the pagination data for the returned objects. **/
+    /** An object defining the pagination data for the returned objects. */
     pagination: Pagination;
   }
 
-  /** For internal use only. **/
-  export interface SystemResponse {}
+  /** For internal use only. */
+  export interface SystemResponse {
+  }
 
-  /** Value. **/
+  /** Value. */
   export interface Value {
-    /** The text of the entity value. **/
+    /** The text of the entity value. */
     value_text: string;
-    /** Any metadata related to the entity value. **/
+    /** Any metadata related to the entity value. */
     metadata?: Object;
-    /** The timestamp for creation of the entity value. **/
+    /** The timestamp for creation of the entity value. */
     created: string;
-    /** The timestamp for the last update to the entity value. **/
+    /** The timestamp for the last update to the entity value. */
     updated: string;
-    /** An array of synonyms for the entity value. **/
+    /** An array of synonyms for the entity value. */
     synonyms?: string[];
-    /** An array of patterns for the entity value. A pattern is specified as a regular expression. **/
+    /** An array of patterns for the entity value. A pattern is specified as a regular expression. */
     patterns?: string[];
-    /** Specifies the type of value (`synonyms` or `patterns`). The default value is `synonyms`. **/
+    /** Specifies the type of value (`synonyms` or `patterns`). The default value is `synonyms`. */
     value_type: string;
   }
 
-  /** ValueCollection. **/
+  /** ValueCollection. */
   export interface ValueCollection {
-    /** An array of entity values. **/
+    /** An array of entity values. */
     values: ValueExport[];
-    /** An object defining the pagination data for the returned objects. **/
+    /** An object defining the pagination data for the returned objects. */
     pagination: Pagination;
   }
 
-  /** ValueExport. **/
+  /** ValueExport. */
   export interface ValueExport {
-    /** The text of the entity value. **/
+    /** The text of the entity value. */
     value_text: string;
-    /** Any metadata related to the entity value. **/
+    /** Any metadata related to the entity value. */
     metadata?: Object;
-    /** The timestamp for creation of the entity value. **/
+    /** The timestamp for creation of the entity value. */
     created: string;
-    /** The timestamp for the last update to the entity value. **/
+    /** The timestamp for the last update to the entity value. */
     updated: string;
-    /** An array of synonyms for the entity value. **/
+    /** An array of synonyms for the entity value. */
     synonyms?: string[];
-    /** An array of patterns for the entity value. A pattern is specified as a regular expression. **/
+    /** An array of patterns for the entity value. A pattern is specified as a regular expression. */
     patterns?: string[];
-    /** Specifies the type of value (`synonyms` or `patterns`). The default value is `synonyms`. **/
+    /** Specifies the type of value (`synonyms` or `patterns`). The default value is `synonyms`. */
     value_type: string;
   }
 
-  /** Workspace. **/
+  /** Workspace. */
   export interface Workspace {
-    /** The name of the workspace. **/
+    /** The name of the workspace. */
     name: string;
-    /** The language of the workspace. **/
+    /** The language of the workspace. */
     language: string;
-    /** The timestamp for creation of the workspace. **/
+    /** The timestamp for creation of the workspace. */
     created: string;
-    /** The timestamp for the last update to the workspace. **/
+    /** The timestamp for the last update to the workspace. */
     updated: string;
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** The description of the workspace. **/
+    /** The description of the workspace. */
     description?: string;
-    /** Any metadata that is required by the workspace. **/
+    /** Any metadata that is required by the workspace. */
     metadata?: Object;
-    /** Whether training data from the workspace can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used. **/
+    /** Whether training data from the workspace can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used. */
     learning_opt_out?: boolean;
   }
 
-  /** WorkspaceCollection. **/
+  /** WorkspaceCollection. */
   export interface WorkspaceCollection {
-    /** An array of workspaces. **/
+    /** An array of workspaces. */
     workspaces: Workspace[];
-    /** An object defining the pagination data for the returned objects. **/
+    /** An object defining the pagination data for the returned objects. */
     pagination: Pagination;
   }
 
-  /** WorkspaceExport. **/
+  /** WorkspaceExport. */
   export interface WorkspaceExport {
-    /** The name of the workspace. **/
+    /** The name of the workspace. */
     name: string;
-    /** The description of the workspace. **/
+    /** The description of the workspace. */
     description: string;
-    /** The language of the workspace. **/
+    /** The language of the workspace. */
     language: string;
-    /** Any metadata that is required by the workspace. **/
+    /** Any metadata that is required by the workspace. */
     metadata: Object;
-    /** The timestamp for creation of the workspace. **/
+    /** The timestamp for creation of the workspace. */
     created: string;
-    /** The timestamp for the last update to the workspace. **/
+    /** The timestamp for the last update to the workspace. */
     updated: string;
-    /** The workspace ID. **/
+    /** The workspace ID. */
     workspace_id: string;
-    /** The current status of the workspace. **/
+    /** The current status of the workspace. */
     status: string;
-    /** Whether training data from the workspace can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used. **/
+    /** Whether training data from the workspace can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used. */
     learning_opt_out: boolean;
-    /** An array of intents. **/
+    /** An array of intents. */
     intents?: IntentExport[];
-    /** An array of entities. **/
+    /** An array of entities. */
     entities?: EntityExport[];
-    /** An array of counterexamples. **/
+    /** An array of counterexamples. */
     counterexamples?: Counterexample[];
-    /** An array of objects describing the dialog nodes in the workspace. **/
+    /** An array of objects describing the dialog nodes in the workspace. */
     dialog_nodes?: DialogNode[];
   }
+
 }
 
 export = ConversationV1;

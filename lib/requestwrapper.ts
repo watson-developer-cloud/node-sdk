@@ -16,13 +16,13 @@
 
 import extend = require('extend');
 import request = require('request');
-import {
-  getMissingParams,
-  buildRequestFileObject,
-  isFileParam,
-  isEmptyObject
-} from './helper';
 import { PassThrough as readableStream } from 'stream';
+import {
+  buildRequestFileObject,
+  getMissingParams,
+  isEmptyObject,
+  isFileParam
+} from './helper';
 
 const pkg = require('../package.json');
 const isBrowser = typeof window === 'object';

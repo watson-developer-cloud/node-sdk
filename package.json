@@ -99,7 +99,6 @@
   },
   "scripts": {
     "precommit": "lint-staged",
-
     "tslint:config": "tslint-config-prettier-check ./tslint.json",
     "tslint:fix": "tslint --fix -p . -c tslint.json",
     "tslint:check": "tslint -p . -c ./tslint.json",

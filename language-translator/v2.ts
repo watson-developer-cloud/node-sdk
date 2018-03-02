@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import GeneratedLanguageTranslatorV2 = require('./v2-generated');
 import isStream = require('isstream');
 import { getMissingParams } from '../lib/helper';
+import GeneratedLanguageTranslatorV2 = require('./v2-generated');
 
 class LanguageTranslatorV2 extends GeneratedLanguageTranslatorV2 {
   constructor(options) {

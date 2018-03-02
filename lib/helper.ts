@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-import fileType = require('file-type');
 import extend = require('extend');
-import { basename } from 'path';
-import { lookup } from 'mime-types';
+import fileType = require('file-type');
 import { isReadable } from 'isstream';
+import { lookup } from 'mime-types';
+import { basename } from 'path';
 
 // exported interfaces
 export interface FileObject {
@@ -215,10 +215,10 @@ export function buildRequestFileObject(
     value = Buffer.from(value);
   }
   return {
-    value: value,
+    value,
     options: {
-      filename: filename,
-      contentType: contentType
+      filename,
+      contentType
     }
   };
 }

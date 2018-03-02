@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import GeneratedNaturalLanguageUnderstandingV1 = require('./v1-generated');
 import extend = require('extend');
+import GeneratedNaturalLanguageUnderstandingV1 = require('./v1-generated');
 
 class NaturalLanguageUnderstandingV1 extends GeneratedNaturalLanguageUnderstandingV1 {
   constructor(options) {

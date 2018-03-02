@@ -14,10 +14,10 @@
  * limitations under the License
  */
 
-import { Duplex } from 'stream';
 import extend = require('extend');
-import pick = require('object.pick');
 import omit = require('object.omit');
+import pick = require('object.pick');
+import { Duplex } from 'stream';
 import contentType = require('./content-type');
 import qs = require('./querystring');
 const W3CWebSocket = require('websocket').w3cwebsocket;

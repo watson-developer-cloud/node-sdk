@@ -1,5 +1,5 @@
-import GeneratedVisualRecognitionV3 = require('./v3-generated');
 import extend = require('extend');
+import GeneratedVisualRecognitionV3 = require('./v3-generated');
 
 class VisualRecognitionV3 extends GeneratedVisualRecognitionV3 {
   static VERSION_DATE_2016_05_20: string = '2016-05-20';

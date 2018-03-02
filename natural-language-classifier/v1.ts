@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-import GeneratedNaturalLanguageClassifierV1 = require('./v1-generated');
-import toCSV = require('../lib/json-training-to-csv');
 import isStream = require('isstream');
 import omit = require('object.omit');
 import { getMissingParams } from '../lib/helper';
+import toCSV = require('../lib/json-training-to-csv');
+import GeneratedNaturalLanguageClassifierV1 = require('./v1-generated');
 
 class NaturalLanguageClassifierV1 extends GeneratedNaturalLanguageClassifierV1 {
   constructor(options) {

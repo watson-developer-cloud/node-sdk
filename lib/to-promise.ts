@@ -10,7 +10,7 @@ import { Stream } from 'stream';
 function promise(stream: Stream): Promise<any> {
   stream = stream || this;
   return new Promise(function(resolve, reject) {
-    var results = [];
+    let results = [];
     stream
       .on('data', function(result) {
         results.push(result);

@@ -33,7 +33,7 @@ const filenameContentTypes: { [key: string]: string } = {
  * @return {String|undefined} - the contentType of undefined
  */
 export function fromHeader(buffer: Buffer): string {
-  var headerStr = buffer
+  let headerStr = buffer
     .slice(0, 4)
     .toString()
     .substr(0, 4);
