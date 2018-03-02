@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>SpeechSession | watson-developer-cloud</title>
+	<title>CreateExpansionsParams | watson-developer-cloud</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,13 +54,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../classes/speechtotextv1.html">SpeechToTextV1</a>
+					<a href="../classes/discoveryv1.html">DiscoveryV1</a>
 				</li>
 				<li>
-					<a href="speechtotextv1.speechsession.html">SpeechSession</a>
+					<a href="discoveryv1.createexpansionsparams.html">CreateExpansionsParams</a>
 				</li>
 			</ul>
-			<h1>Interface SpeechSession</h1>
+			<h1>Interface CreateExpansionsParams</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>SpeechSession.</p>
+						<p>Parameters for the <code>createExpansions</code> operation.</p>
 					</div>
 				</div>
 			</section>
@@ -78,7 +78,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">SpeechSession</span>
+						<span class="target">CreateExpansionsParams</span>
 					</li>
 				</ul>
 			</section>
@@ -89,13 +89,9 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.speechsession.html#model" class="tsd-kind-icon">model</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.speechsession.html#new_session_uri" class="tsd-kind-icon">new_<wbr>session_<wbr>uri</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.speechsession.html#observe_result" class="tsd-kind-icon">observe_<wbr>result</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.speechsession.html#recognize" class="tsd-kind-icon">recognize</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.speechsession.html#recognize_ws" class="tsd-kind-icon">recognize_<wbr>ws</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.speechsession.html#session_id" class="tsd-kind-icon">session_<wbr>id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.speechsession.html#state" class="tsd-kind-icon">state</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.createexpansionsparams.html#collection_id" class="tsd-kind-icon">collection_<wbr>id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.createexpansionsparams.html#environment_id" class="tsd-kind-icon">environment_<wbr>id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.createexpansionsparams.html#expansions" class="tsd-kind-icon">expansions</a></li>
 							</ul>
 						</section>
 					</div>
@@ -104,107 +100,47 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="model" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> model</h3>
-					<div class="tsd-signature tsd-kind-icon">model<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="collection_id" class="tsd-anchor"></a>
+					<h3>collection_<wbr>id</h3>
+					<div class="tsd-signature tsd-kind-icon">collection_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/speech-to-text/v1-generated.ts#L2464">speech-to-text/v1-generated.ts:2464</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4ffd14d/discovery/v1-generated.ts#L2175">discovery/v1-generated.ts:2175</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>URI for information about the model that is used with the session. <strong>Note:</strong> This field is returned only when you request the status of an existing session.</p>
+							<p>The ID of the collection.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="new_session_uri" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> new_<wbr>session_<wbr>uri</h3>
-					<div class="tsd-signature tsd-kind-icon">new_<wbr>session_<wbr>uri<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="environment_id" class="tsd-anchor"></a>
+					<h3>environment_<wbr>id</h3>
+					<div class="tsd-signature tsd-kind-icon">environment_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/speech-to-text/v1-generated.ts#L2460">speech-to-text/v1-generated.ts:2460</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4ffd14d/discovery/v1-generated.ts#L2173">discovery/v1-generated.ts:2173</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>URI for the new session. <strong>Note:</strong> This field is returned only when you create a new session.</p>
+							<p>The ID of the environment.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="observe_result" class="tsd-anchor"></a>
-					<h3>observe_<wbr>result</h3>
-					<div class="tsd-signature tsd-kind-icon">observe_<wbr>result<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="expansions" class="tsd-anchor"></a>
+					<h3>expansions</h3>
+					<div class="tsd-signature tsd-kind-icon">expansions<span class="tsd-signature-symbol">:</span> <a href="discoveryv1.expansion.html" class="tsd-signature-type">Expansion</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/speech-to-text/v1-generated.ts#L2456">speech-to-text/v1-generated.ts:2456</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4ffd14d/discovery/v1-generated.ts#L2177">discovery/v1-generated.ts:2177</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>URI for HTTP REST results observers.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="recognize" class="tsd-anchor"></a>
-					<h3>recognize</h3>
-					<div class="tsd-signature tsd-kind-icon">recognize<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/speech-to-text/v1-generated.ts#L2452">speech-to-text/v1-generated.ts:2452</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>URI for HTTP REST recognition requests.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="recognize_ws" class="tsd-anchor"></a>
-					<h3>recognize_<wbr>ws</h3>
-					<div class="tsd-signature tsd-kind-icon">recognize_<wbr>ws<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/speech-to-text/v1-generated.ts#L2454">speech-to-text/v1-generated.ts:2454</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>URI for WebSocket recognition requests. Needed only for working with the WebSocket interface.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="session_id" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> session_<wbr>id</h3>
-					<div class="tsd-signature tsd-kind-icon">session_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/speech-to-text/v1-generated.ts#L2458">speech-to-text/v1-generated.ts:2458</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Identifier for the new session. <strong>Note:</strong> This field is returned only when you create a new session.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="state" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> state</h3>
-					<div class="tsd-signature tsd-kind-icon">state<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/speech-to-text/v1-generated.ts#L2462">speech-to-text/v1-generated.ts:2462</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>State of the session. The state must be <code>initialized</code> for the session to accept another recognition request. Other internal states are possible, but they have no meaning for the user. <strong>Note:</strong> This field is returned only when you request the status of an existing session.</p>
+							<p>An array of query expansion definitions.    Each object in the <code>expansions</code> array represents a term or set of terms that will be expanded into other terms. Each expansion object can be configured so that all terms are expanded to all other terms in the object - bi-directional, or a set list of terms can be expanded into a second list of terms - uni-directional.   To create a bi-directional expansion specify an <code>expanded_terms</code> array. When found in a query, all items in the <code>expanded_terms</code> array are then expanded to the other items in the same array.   To create a uni-directional expansion, specify both an array of <code>input_terms</code> and an array of <code>expanded_terms</code>. When items in the <code>input_terms</code> array are present in a query, they are expanded using the items listed in the <code>expanded_terms</code> array.</p>
 						</div>
 					</div>
 				</section>
@@ -229,9 +165,29 @@
 					<li class=" tsd-kind-class">
 						<a href="../classes/dialogv1.html" class="tsd-kind-icon">Dialog<wbr>V1</a>
 					</li>
-					<li class=" tsd-kind-class">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class">
 						<a href="../classes/discoveryv1.html" class="tsd-kind-icon">Discovery<wbr>V1</a>
+						<ul>
+							<li class="current tsd-kind-interface tsd-parent-kind-class">
+								<a href="discoveryv1.createexpansionsparams.html" class="tsd-kind-icon">Create<wbr>Expansions<wbr>Params</a>
+								<ul>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="discoveryv1.createexpansionsparams.html#collection_id" class="tsd-kind-icon">collection_<wbr>id</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="discoveryv1.createexpansionsparams.html#environment_id" class="tsd-kind-icon">environment_<wbr>id</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="discoveryv1.createexpansionsparams.html#expansions" class="tsd-kind-icon">expansions</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
 					</li>
+				</ul>
+				<ul class="after-current">
 					<li class=" tsd-kind-class">
 						<a href="../classes/languagetranslatorv2.html" class="tsd-kind-icon">Language<wbr>Translator<wbr>V2</a>
 					</li>
@@ -250,41 +206,9 @@
 					<li class=" tsd-kind-class">
 						<a href="../classes/recognizestream.html" class="tsd-kind-icon">Recognize<wbr>Stream</a>
 					</li>
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-class">
+					<li class=" tsd-kind-class">
 						<a href="../classes/speechtotextv1.html" class="tsd-kind-icon">Speech<wbr>ToText<wbr>V1</a>
-						<ul>
-							<li class="current tsd-kind-interface tsd-parent-kind-class">
-								<a href="speechtotextv1.speechsession.html" class="tsd-kind-icon">Speech<wbr>Session</a>
-								<ul>
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="speechtotextv1.speechsession.html#model" class="tsd-kind-icon">model</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="speechtotextv1.speechsession.html#new_session_uri" class="tsd-kind-icon">new_<wbr>session_<wbr>uri</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="speechtotextv1.speechsession.html#observe_result" class="tsd-kind-icon">observe_<wbr>result</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="speechtotextv1.speechsession.html#recognize" class="tsd-kind-icon">recognize</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="speechtotextv1.speechsession.html#recognize_ws" class="tsd-kind-icon">recognize_<wbr>ws</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="speechtotextv1.speechsession.html#session_id" class="tsd-kind-icon">session_<wbr>id</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="speechtotextv1.speechsession.html#state" class="tsd-kind-icon">state</a>
-									</li>
-								</ul>
-							</li>
-						</ul>
 					</li>
-				</ul>
-				<ul class="after-current">
 					<li class=" tsd-kind-class">
 						<a href="../classes/texttospeechv1.html" class="tsd-kind-icon">Text<wbr>ToSpeech<wbr>V1</a>
 					</li>

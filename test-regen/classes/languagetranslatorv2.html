@@ -158,7 +158,7 @@
 					<div class="tsd-signature tsd-kind-icon">Callback<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/language-translator/v2-generated.ts#L349">language-translator/v2-generated.ts:349</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4ffd14d/language-translator/v2-generated.ts#L358">language-translator/v2-generated.ts:358</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -200,7 +200,7 @@
 					<div class="tsd-signature tsd-kind-icon">Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/language-translator/v2-generated.ts#L340">language-translator/v2-generated.ts:340</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4ffd14d/language-translator/v2-generated.ts#L349">language-translator/v2-generated.ts:349</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -243,7 +243,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides BaseService.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/language-translator/v2-generated.ts#L33">language-translator/v2-generated.ts:33</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4ffd14d/language-translator/v2-generated.ts#L36">language-translator/v2-generated.ts:36</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -280,7 +280,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseService._options</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/lib/base_service.ts#L70">lib/base_service.ts:70</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4ffd14d/lib/base_service.ts#L73">lib/base_service.ts:73</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -291,7 +291,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.name</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/language-translator/v2-generated.ts#L30">language-translator/v2-generated.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4ffd14d/language-translator/v2-generated.ts#L35">language-translator/v2-generated.ts:35</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -302,7 +302,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseService.serviceDefaults</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/lib/base_service.ts#L71">lib/base_service.ts:71</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4ffd14d/lib/base_service.ts#L74">lib/base_service.ts:74</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -313,7 +313,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.serviceVersion</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/language-translator/v2-generated.ts#L31">language-translator/v2-generated.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4ffd14d/language-translator/v2-generated.ts#L36">language-translator/v2-generated.ts:36</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -324,7 +324,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.URL</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/language-translator/v2-generated.ts#L33">language-translator/v2-generated.ts:33</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4ffd14d/language-translator/v2-generated.ts#L34">language-translator/v2-generated.ts:34</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -341,13 +341,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/language-translator/v2-generated.ts#L183">language-translator/v2-generated.ts:183</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4ffd14d/language-translator/v2-generated.ts#L187">language-translator/v2-generated.ts:187</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Uploads a TMX glossary file on top of a domain to customize a translation model.</p>
+									<p>Create model.</p>
 								</div>
+								<p>Uploads a TMX glossary file on top of a domain to customize a translation model.  Depending on the size of the file, training can range from minutes for a glossary to several hours for a large parallel corpus. Glossary files must be less than 10 MB. The cumulative file size of all uploaded glossary and corpus files is limited to 250 MB.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -378,13 +379,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/language-translator/v2-generated.ts#L234">language-translator/v2-generated.ts:234</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4ffd14d/language-translator/v2-generated.ts#L240">language-translator/v2-generated.ts:240</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Deletes a custom translation model.</p>
+									<p>Delete model.</p>
 								</div>
+								<p>Deletes a custom translation model.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -416,7 +418,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.getCredentials</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/lib/base_service.ts#L221">lib/base_service.ts:221</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4ffd14d/lib/base_service.ts#L121">lib/base_service.ts:121</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -439,13 +441,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/language-translator/v2-generated.ts#L268">language-translator/v2-generated.ts:268</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4ffd14d/language-translator/v2-generated.ts#L276">language-translator/v2-generated.ts:276</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Get information about the given translation model, including training status.</p>
+									<p>Get model details.</p>
 								</div>
+								<p>Gets information about a translation model, including training status for custom models.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -476,13 +479,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/language-translator/v2-generated.ts#L110">language-translator/v2-generated.ts:110</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4ffd14d/language-translator/v2-generated.ts#L117">language-translator/v2-generated.ts:117</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Identifies the language of the input text.</p>
+									<p>Identify language.</p>
 								</div>
+								<p>Identifies the language of the input text.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -513,14 +517,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/language-translator/v2-generated.ts#L150">language-translator/v2-generated.ts:150</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4ffd14d/language-translator/v2-generated.ts#L152">language-translator/v2-generated.ts:152</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Lists all languages that can be identified by the API.</p>
+									<p>List identifiable languages.</p>
 								</div>
-								<p>Lists all languages that the service can identify. Returns the two-letter code (for example, <code>en</code> for English or <code>es</code> for Spanish) and name of each language.</p>
+								<p>Lists the languages that the service can identify. Returns the language code (for example, <code>en</code> for English or <code>es</code> for Spanish) and name of each language.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -548,13 +552,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/language-translator/v2-generated.ts#L304">language-translator/v2-generated.ts:304</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4ffd14d/language-translator/v2-generated.ts#L314">language-translator/v2-generated.ts:314</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Lists available standard and custom models by source or target language.</p>
+									<p>List models.</p>
 								</div>
+								<p>Lists available translation models.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -582,13 +587,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/language-translator/v2-generated.ts#L67">language-translator/v2-generated.ts:67</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4ffd14d/language-translator/v2-generated.ts#L72">language-translator/v2-generated.ts:72</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Translates the input text from the source language to the target language.</p>
+									<p>Translate.</p>
 								</div>
+								<p>Translates the input text from the source language to the target language.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">

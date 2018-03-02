@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>KeywordResults | watson-developer-cloud</title>
+	<title>ListExpansionsParams | watson-developer-cloud</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,13 +54,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../classes/speechtotextv1.html">SpeechToTextV1</a>
+					<a href="../classes/discoveryv1.html">DiscoveryV1</a>
 				</li>
 				<li>
-					<a href="speechtotextv1.keywordresults.html">KeywordResults</a>
+					<a href="discoveryv1.listexpansionsparams.html">ListExpansionsParams</a>
 				</li>
 			</ul>
-			<h1>Interface KeywordResults</h1>
+			<h1>Interface ListExpansionsParams</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>KeywordResults.</p>
+						<p>Parameters for the <code>listExpansions</code> operation.</p>
 					</div>
 				</div>
 			</section>
@@ -78,7 +78,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">KeywordResults</span>
+						<span class="target">ListExpansionsParams</span>
 					</li>
 				</ul>
 			</section>
@@ -89,7 +89,8 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.keywordresults.html#keyword" class="tsd-kind-icon">keyword</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.listexpansionsparams.html#collection_id" class="tsd-kind-icon">collection_<wbr>id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.listexpansionsparams.html#environment_id" class="tsd-kind-icon">environment_<wbr>id</a></li>
 							</ul>
 						</section>
 					</div>
@@ -98,17 +99,32 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="keyword" class="tsd-anchor"></a>
-					<h3>keyword</h3>
-					<div class="tsd-signature tsd-kind-icon">keyword<span class="tsd-signature-symbol">:</span> <a href="speechtotextv1.keywordresult.html" class="tsd-signature-type">KeywordResult</a><span class="tsd-signature-symbol">[]</span></div>
+					<a name="collection_id" class="tsd-anchor"></a>
+					<h3>collection_<wbr>id</h3>
+					<div class="tsd-signature tsd-kind-icon">collection_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ffd7bc1/speech-to-text/v1-generated.ts#L2298">speech-to-text/v1-generated.ts:2298</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4ffd14d/discovery/v1-generated.ts#L2225">discovery/v1-generated.ts:2225</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>A list of each keyword entered via the <code>keywords</code> parameter and, for each keyword, an array of <code>KeywordResult</code> objects that provides information about its occurrences in the input audio. The keys of the list are the actual keyword strings. A keyword for which no matches are spotted in the input is omitted from the array.</p>
+							<p>The ID of the collection.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="environment_id" class="tsd-anchor"></a>
+					<h3>environment_<wbr>id</h3>
+					<div class="tsd-signature tsd-kind-icon">environment_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4ffd14d/discovery/v1-generated.ts#L2223">discovery/v1-generated.ts:2223</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The ID of the environment.</p>
 						</div>
 					</div>
 				</section>
@@ -133,9 +149,26 @@
 					<li class=" tsd-kind-class">
 						<a href="../classes/dialogv1.html" class="tsd-kind-icon">Dialog<wbr>V1</a>
 					</li>
-					<li class=" tsd-kind-class">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class">
 						<a href="../classes/discoveryv1.html" class="tsd-kind-icon">Discovery<wbr>V1</a>
+						<ul>
+							<li class="current tsd-kind-interface tsd-parent-kind-class">
+								<a href="discoveryv1.listexpansionsparams.html" class="tsd-kind-icon">List<wbr>Expansions<wbr>Params</a>
+								<ul>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="discoveryv1.listexpansionsparams.html#collection_id" class="tsd-kind-icon">collection_<wbr>id</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="discoveryv1.listexpansionsparams.html#environment_id" class="tsd-kind-icon">environment_<wbr>id</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
 					</li>
+				</ul>
+				<ul class="after-current">
 					<li class=" tsd-kind-class">
 						<a href="../classes/languagetranslatorv2.html" class="tsd-kind-icon">Language<wbr>Translator<wbr>V2</a>
 					</li>
@@ -154,23 +187,9 @@
 					<li class=" tsd-kind-class">
 						<a href="../classes/recognizestream.html" class="tsd-kind-icon">Recognize<wbr>Stream</a>
 					</li>
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-class">
+					<li class=" tsd-kind-class">
 						<a href="../classes/speechtotextv1.html" class="tsd-kind-icon">Speech<wbr>ToText<wbr>V1</a>
-						<ul>
-							<li class="current tsd-kind-interface tsd-parent-kind-class">
-								<a href="speechtotextv1.keywordresults.html" class="tsd-kind-icon">Keyword<wbr>Results</a>
-								<ul>
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="speechtotextv1.keywordresults.html#keyword" class="tsd-kind-icon">keyword</a>
-									</li>
-								</ul>
-							</li>
-						</ul>
 					</li>
-				</ul>
-				<ul class="after-current">
 					<li class=" tsd-kind-class">
 						<a href="../classes/texttospeechv1.html" class="tsd-kind-icon">Text<wbr>ToSpeech<wbr>V1</a>
 					</li>

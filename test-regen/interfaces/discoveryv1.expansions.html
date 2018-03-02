@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>AddWordConstants | watson-developer-cloud</title>
+	<title>Expansions | watson-developer-cloud</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,13 +54,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../classes/speechtotextv1.html">SpeechToTextV1</a>
+					<a href="../classes/discoveryv1.html">DiscoveryV1</a>
 				</li>
 				<li>
-					<a href="speechtotextv1.addwordconstants.html">AddWordConstants</a>
+					<a href="discoveryv1.expansions.html">Expansions</a>
 				</li>
 			</ul>
-			<h1>Module AddWordConstants</h1>
+			<h1>Interface Expansions</h1>
 		</div>
 	</div>
 </header>
@@ -70,20 +70,46 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Constants for the <code>addWord</code> operation.</p>
+						<p>The query expansion definitions for the specified collection.</p>
 					</div>
 				</div>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">Expansions</span>
+					</li>
+				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Enumerations</h3>
+							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-enum tsd-parent-kind-module"><a href="../enums/speechtotextv1.addwordconstants.contenttype.html" class="tsd-kind-icon">Content<wbr>Type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.expansions.html#expansions" class="tsd-kind-icon">expansions</a></li>
 							</ul>
 						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="expansions" class="tsd-anchor"></a>
+					<h3>expansions</h3>
+					<div class="tsd-signature tsd-kind-icon">expansions<span class="tsd-signature-symbol">:</span> <a href="discoveryv1.expansion.html" class="tsd-signature-type">Expansion</a><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4ffd14d/discovery/v1-generated.ts#L2854">discovery/v1-generated.ts:2854</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An array of query expansion definitions.    Each object in the <code>expansions</code> array represents a term or set of terms that will be expanded into other terms. Each expansion object can be configured so that all terms are expanded to all other terms in the object - bi-directional, or a set list of terms can be expanded into a second list of terms - uni-directional.   To create a bi-directional expansion specify an <code>expanded_terms</code> array. When found in a query, all items in the <code>expanded_terms</code> array are then expanded to the other items in the same array.   To create a uni-directional expansion, specify both an array of <code>input_terms</code> and an array of <code>expanded_terms</code>. When items in the <code>input_terms</code> array are present in a query, they are expanded using the items listed in the <code>expanded_terms</code> array.</p>
+						</div>
 					</div>
 				</section>
 			</section>
@@ -98,8 +124,70 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-enum tsd-parent-kind-module">
-						<a href="../enums/speechtotextv1.addwordconstants.contenttype.html" class="tsd-kind-icon">Content<wbr>Type</a>
+					<li class=" tsd-kind-class">
+						<a href="../classes/authorizationv1.html" class="tsd-kind-icon">Authorization<wbr>V1</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/conversationv1.html" class="tsd-kind-icon">Conversation<wbr>V1</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/dialogv1.html" class="tsd-kind-icon">Dialog<wbr>V1</a>
+					</li>
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class">
+						<a href="../classes/discoveryv1.html" class="tsd-kind-icon">Discovery<wbr>V1</a>
+						<ul>
+							<li class="current tsd-kind-interface tsd-parent-kind-class">
+								<a href="discoveryv1.expansions.html" class="tsd-kind-icon">Expansions</a>
+								<ul>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="discoveryv1.expansions.html#expansions" class="tsd-kind-icon">expansions</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+					<li class=" tsd-kind-class">
+						<a href="../classes/languagetranslatorv2.html" class="tsd-kind-icon">Language<wbr>Translator<wbr>V2</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/naturallanguageclassifierv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Classifier<wbr>V1</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/naturallanguageunderstandingv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Understanding<wbr>V1</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/personalityinsightsv2.html" class="tsd-kind-icon">Personality<wbr>Insights<wbr>V2</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/personalityinsightsv3.html" class="tsd-kind-icon">Personality<wbr>Insights<wbr>V3</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/recognizestream.html" class="tsd-kind-icon">Recognize<wbr>Stream</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/speechtotextv1.html" class="tsd-kind-icon">Speech<wbr>ToText<wbr>V1</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/texttospeechv1.html" class="tsd-kind-icon">Text<wbr>ToSpeech<wbr>V1</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/toneanalyzerv3.html" class="tsd-kind-icon">Tone<wbr>Analyzer<wbr>V3</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/visualrecognitionv3.html" class="tsd-kind-icon">Visual<wbr>Recognition<wbr>V3</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="../globals.html#opening_message_params_allowed" class="tsd-kind-icon">OPENING_<wbr>MESSAGE_<wbr>PARAMS_<wbr>ALLOWED</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="../globals.html#query_params_allowed" class="tsd-kind-icon">QUERY_<wbr>PARAMS_<wbr>ALLOWED</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="../globals.html#w3cwebsocket" class="tsd-kind-icon">W3CWeb<wbr>Socket</a>
 					</li>
 				</ul>
 			</nav>
