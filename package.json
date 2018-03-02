@@ -61,8 +61,11 @@
     "nock": "^9.1.6",
     "nyc": "^11.4.1",
     "object.assign": "~4.1.0",
-    "prettier": "~1.10.2",
+    "prettier": "1.10.2",
     "sinon": "^4.3.0",
+    "tslint-config-prettier": "^1.9.0",
+    "tslint-eslint-rules": "^5.1.0",
+    "tslint": "^5.9.1",
     "typedoc": "^0.10.0",
     "typescript": "~2.7.1",
     "uglify-es": "^3.3.10",
@@ -96,12 +99,17 @@
   },
   "scripts": {
     "precommit": "lint-staged",
-    "autofix": "eslint . --fix",
+
+    "tslint:config": "tslint-config-prettier-check ./tslint.json",
+    "tslint:fix": "tslint --fix -p . -c tslint.json",
+    "tslint:check": "tslint -p . -c ./tslint.json",
+    "eslint:config": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
+    "eslint:fix": "eslint . --fix",
+    "eslint:check": "eslint . --cache",
+    "lint": "npm run eslint:check && npm run tslint:check && dependency-lint",
     "browserify": "browserify index.js --standalone Watson --outfile dist/watson.js",
     "build": "tsc && npm run browserify && npm run minify",
-    "compat-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
     "doc": "jsdoc -c scripts/jsdoc/config.json",
-    "lint": "npm run compat-check && eslint . --cache && dependency-lint",
     "minify": "uglifyjs --compress --mangle --output dist/watson.min.js --preamble \"// Watson Developer Cloud\n// JavaScript SDK$npm_package_version\n// Generated at `date`\n// Copyright IBM ($npm_package_license)\n// $npm_package_homepage\" -- dist/watson.js",
     "prepublishOnly": "npm run build",
     "test-browser": "karma start --single-run",
@@ -116,6 +124,7 @@
   "lint-staged": {
     "**/*.ts": [
       "tsc",
+      "prettier --write",
       "test-unit",
       "git add"
     ],

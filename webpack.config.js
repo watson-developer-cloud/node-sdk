@@ -9,12 +9,12 @@ module.exports = {
   output: {
     filename: 'watson-developer-cloud.js',
     library: 'WatsonDeveloperCloud',
-    libraryTarget: 'umd'
+    libraryTarget: 'umd',
   },
   // http://webpack.github.io/docs/configuration.html#node
   node: {
     fs: 'empty',
     net: 'empty',
-    tls: 'empty'
-  }
+    tls: 'empty',
+  },
 };

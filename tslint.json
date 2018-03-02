@@ -1,0 +1,12 @@
+{
+  "extends": ["tslint:recommended", "tslint-eslint-rules", "tslint-config-prettier"],
+  "rules": {
+    "no-console": {
+      "severity": "warning",
+      "options": ["debug", "info", "log", "time", "timeEnd", "trace"]
+    }
+  },
+  "cliOptions": {
+    "exclude": ["jsdoc", "doc", "coverage", "dist", "node_modules", "jsdoc"]
+  }
+}
