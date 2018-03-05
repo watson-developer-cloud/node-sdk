@@ -388,7 +388,7 @@ class RecognizeStream extends Duplex {
       return;
     }
     if (!this.initialized) {
-      if (!this.options['content-type']) {
+      if (!this.options['content-type'] && !this.options.content_type) {
         const ct = RecognizeStream.getContentType(chunk);
         if (ct) {
           this.options['content-type'] = ct;
