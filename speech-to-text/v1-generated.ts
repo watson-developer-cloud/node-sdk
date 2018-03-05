@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-/// <reference path="../lib/blob.d.ts" />
-
 import * as extend from 'extend';
 import { RequestResponse } from 'request';
 import { BaseService } from '../lib/base_service';
