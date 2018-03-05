@@ -16,14 +16,15 @@
 
 import extend = require('extend');
 import request = require('request');
-import {
-  getMissingParams,
-  buildRequestFileObject,
-  isFileParam,
-  isEmptyObject
-} from './helper';
 import { PassThrough as readableStream } from 'stream';
+import {
+  buildRequestFileObject,
+  getMissingParams,
+  isEmptyObject,
+  isFileParam
+} from './helper';
 
+// tslint:disable-next-line:no-var-requires
 const pkg = require('../package.json');
 const isBrowser = typeof window === 'object';
 const globalTransactionId = 'x-global-transaction-id';
@@ -51,7 +52,7 @@ function parsePath(path: string, params: Object): string {
  * @returns {request.RequestCallback}
  */
 export function formatErrorIfExists(cb: Function): request.RequestCallback {
-  return function(error, response, body) {
+  return (error, response, body) => {
     // eslint-disable-line complexity
 
     // If we have an error return it.
@@ -94,13 +95,16 @@ export function formatErrorIfExists(cb: Function): request.RequestCallback {
       // visual recognition sets body.error to a json object with code/description/error_id instead of putting them top-left
       if (typeof body.error === 'object' && body.error.description) {
         const errObj = body.error; // just in case there's a body.error.error...
-        Object.keys(body.error).forEach(function(key) {
+        Object.keys(body.error).forEach((key) => {
+          body[key] = body.error[key];
+        });
+        Object.keys(body.error).forEach((key) => {
           body[key] = body.error[key];
         });
         body.error = errObj.description;
       } else if (
-        typeof body.error == 'object' &&
-        typeof body.error.error == 'object'
+        typeof body.error === 'object' &&
+        typeof body.error.error === 'object'
       ) {
         // this can happen with, for example, the conversation createSynonym() API
         body.rawError = body.error;
@@ -111,7 +115,7 @@ export function formatErrorIfExists(cb: Function): request.RequestCallback {
         body.error || body.error_message || 'Error Code: ' + body.error_code
       );
       error.code = body.error_code;
-      Object.keys(body).forEach(function(key) {
+      Object.keys(body).forEach((key) => {
         error[key] = body[key];
       });
       body = null;
@@ -121,7 +125,7 @@ export function formatErrorIfExists(cb: Function): request.RequestCallback {
     if (!error && (response.statusCode < 200 || response.statusCode >= 300)) {
       // The JSON stringify for the error below is for the Dialog service
       // It stringifies "[object Object]" into the correct error (PR #445)
-      error = new Error(typeof body == 'object' ? JSON.stringify(body) : body);
+      error = new Error(typeof body === 'object' ? JSON.stringify(body) : body);
       error.code = response.statusCode;
       if (error.code === 401 || error.code === 403) {
         error.body = error.message;
@@ -178,7 +182,7 @@ export function createRequest(parameters, _callback) {
       return _callback(missingParams);
     } else {
       const errorStream = new readableStream();
-      setTimeout(function() {
+      setTimeout(() => {
         errorStream.emit('error', missingParams);
       }, 0);
       return errorStream;
@@ -192,6 +196,7 @@ export function createRequest(parameters, _callback) {
     // Remove non-valid inputs for buildRequestFileObject,
     // i.e things like {contentType: <contentType>}
     Object.keys(formData).forEach(key => {
+      // tslint:disable-next-line:no-unused-expression
       (formData[key] == null ||
         isEmptyObject(formData[key]) ||
         (formData[key].hasOwnProperty('contentType') &&

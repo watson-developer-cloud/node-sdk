@@ -1,13 +1,13 @@
-import cookie = require('cookie');
-import pick = require('object.pick');
 import async = require('async');
-import isStream = require('isstream');
+import cookie = require('cookie');
 import extend = require('extend');
-import GeneratedSpeechToTextV1 = require('./v1-generated');
-import RecognizeStream = require('../lib/recognize-stream');
-import { createRequest as requestFactory } from '../lib/requestwrapper';
+import isStream = require('isstream');
+import pick = require('object.pick');
 import { parse } from 'url';
 import { getMissingParams } from '../lib/helper';
+import RecognizeStream = require('../lib/recognize-stream');
+import { createRequest as requestFactory } from '../lib/requestwrapper';
+import GeneratedSpeechToTextV1 = require('./v1-generated');
 
 const pkg = require('../package.json');
 
@@ -99,10 +99,6 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
 
   getCustomization(params, callback) {
     return super.getLanguageModel(params, callback);
-  }
-
-  getRecognizeStatus(params, callback) {
-    return super.getSessionStatus(params, callback);
   }
 
   getRecognitionJob(params, callback) {
@@ -204,27 +200,6 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
 
   resetCustomization(params, callback) {
     return super.resetLanguageModel(params, callback);
-  }
-
-  createSession(params, callback) {
-    /**
-     * Add the cookie_session to the response
-     * @private
-     * @param cb
-     * @return {Function}
-     */
-    function addSessionId(cb) {
-      return function(error, body, response) {
-        if (error) {
-          cb(error, body, response);
-          return;
-        }
-        const cookies = cookie.parse(response.headers['set-cookie'][0]);
-        body.cookie_session = cookies.SESSIONID;
-        cb(error, body, response);
-      };
-    }
-    return super.createSession(params, addSessionId(callback));
   }
 
   /**

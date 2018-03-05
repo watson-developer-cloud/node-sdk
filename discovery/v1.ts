@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import GeneratedDiscoveryV1 = require('./v1-generated');
 import extend = require('extend');
 import isStream = require('isstream');
+import GeneratedDiscoveryV1 = require('./v1-generated');
 
 class DiscoveryV1 extends GeneratedDiscoveryV1 {
   static VERSION_DATE_2017_09_01: string = '2017-09-01';

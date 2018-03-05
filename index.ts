@@ -62,7 +62,7 @@ Object.keys(servicesByVersion).forEach(serviceName => {
     enumerable: false,
     configurable: true,
     writable: true,
-    value: function(options) {
+    value(options) {
 
       // eslint-disable-next-line no-console
       console.warn(
@@ -115,7 +115,7 @@ Object.keys(servicesByVersion).forEach(serviceName => {
     enumerable: false,
     configurable: true,
     writable: true,
-    value: function() {
+    value() {
       throw new Error('The ' + serviceName + ' service is no longer available');
     }
   });
@@ -125,7 +125,7 @@ Object.keys(servicesByVersion).forEach(serviceName => {
     enumerable: false,
     configurable: true,
     writable: true,
-    value: function() {
+    value() {
       throw new Error(
         'The Alchemy Vision service is no longer available, please use Visual Recognition instead.'
       );

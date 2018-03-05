@@ -1,6 +1,5 @@
 import { extname } from 'path';
-
-/// <reference path="blob.d.ts" />
+import { FileObject } from '../lib/helper';
 
 // This module attempts to identify common content-types based on the filename or header
 // It is not exhaustive, and for best results, you should always manually specify the content-type option.
@@ -33,7 +32,7 @@ const filenameContentTypes: { [key: string]: string } = {
  * @return {String|undefined} - the contentType of undefined
  */
 export function fromHeader(buffer: Buffer): string {
-  var headerStr = buffer
+  const headerStr = buffer
     .slice(0, 4)
     .toString()
     .substr(0, 4);
@@ -49,10 +48,10 @@ export function fromHeader(buffer: Buffer): string {
  * Note: Blob and File objects include a .type property, but we're ignoring it because it's frequently either
  * incorrect (e.g. video/ogg instead of audio/ogg) or else a different format than what's expected (e.g. audio/x-wav)
  *
- * @param {String|Blob|File} file - string filename or url, or binary File/Blob object
+ * @param {String|ReadableStream|FileObject|Buffer|File} file - string filename or url, or binary File/Blob object
  * @return {String|undefined}
  */
-export function fromFilename(file: String | Blob | File): string {
+export function fromFilename(file: String | ReadableStream| FileObject |Buffer | File): string {
   const ext: string = extname(
     (typeof file === 'string' && file) || file['name'] || ''
   );

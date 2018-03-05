@@ -1,0 +1,29 @@
+{
+  "extends": ["tslint:recommended", "tslint-eslint-rules", "tslint-config-prettier"],
+  "rules": {
+    "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"],
+    "interface-name": [true, "never-prefix"],
+    "no-string-literal": false,
+    "no-empty-interface":false,
+    "object-literal-sort-keys": false,
+    "interface-over-type-literal": false,
+    "ban-types": [false, ["Object", "Use {} instead."]],
+    "no-namespace": {
+      "severity": "warning"
+    },
+    "no-reference": {
+      "severity": "warning"
+    },
+    "no-shadowed-variable": {
+      "severity": "warning"
+    },
+    "member-access":false,
+    "no-console": {
+      "severity": "warning",
+      "options": ["debug", "info", "log", "time", "timeEnd", "trace"]
+    }
+  },
+  "cliOptions": {
+    "exclude": ["jsdoc", "doc", "coverage", "dist", "node_modules", "jsdoc"]
+  }
+}

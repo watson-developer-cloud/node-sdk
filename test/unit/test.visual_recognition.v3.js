@@ -105,10 +105,16 @@ describe('visual_recognition', function() {
     });
 
     it('should throw when no/insufficient credentials are provided', () => {
-      assert.throws(() => new watson.VisualRecognitionV3(), /key/);
-      assert.throws(() => new watson.VisualRecognitionV3({}), /key/);
-      assert.throws(() => new watson.VisualRecognitionV3({ version: '2016-05-20' }), /key/);
-      assert.throws(() => new watson.VisualRecognitionV3({ username: 'foo' }), /key/);
+      assert.throws(() => new watson.VisualRecognitionV3(), /use_unauthenticated/);
+      assert.throws(() => new watson.VisualRecognitionV3({}), /use_unauthenticated/);
+      assert.throws(
+        () => new watson.VisualRecognitionV3({ version: '2016-05-20' }),
+        /use_unauthenticated/
+      );
+      assert.throws(
+        () => new watson.VisualRecognitionV3({ username: 'foo' }),
+        /use_unauthenticated/
+      );
     });
 
     it('should accept an API key for regular usage', () =>

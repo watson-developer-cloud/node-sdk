@@ -12,7 +12,7 @@ describe('contentType', () => {
   });
   it('should return content type from a File object', () => {
     const File = {
-      name: 'fake.mp3'
+      name: 'fake.mp3',
     };
     assert(contentType.fromFilename(File) === 'audio/mp3');
   });

@@ -15,10 +15,10 @@
  */
 
 import pick = require('object.pick');
-import { isHTML } from '../lib/helper';
 import { RequestResponse } from 'request';
-import { createRequest } from '../lib/requestwrapper';
 import { BaseService } from '../lib/base_service';
+import { isHTML } from '../lib/helper';
+import { createRequest } from '../lib/requestwrapper';
 
 class PersonalityInsightsV2 extends BaseService {
   static URL: string = 'https://gateway.watsonplatform.net/personality-insights/api';
@@ -90,7 +90,7 @@ class PersonalityInsightsV2 extends BaseService {
         body: _params.text || pick(_params, ['contentItems']),
         json: true,
         qs: pick(_params, ['include_raw']),
-        headers: headers
+        headers
       },
       defaultOptions: this._options
     };
