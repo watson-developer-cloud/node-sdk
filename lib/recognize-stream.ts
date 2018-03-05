@@ -18,9 +18,11 @@ import extend = require('extend');
 import omit = require('object.omit');
 import pick = require('object.pick');
 import { Duplex } from 'stream';
+import websocket = require ('websocket');
 import contentType = require('./content-type');
 import qs = require('./querystring');
-const W3CWebSocket = require('websocket').w3cwebsocket;
+
+const w3cWebSocket = websocket.w3cwebsocket;
 
 const OPENING_MESSAGE_PARAMS_ALLOWED = [
   'inactivity_timeout',
@@ -60,14 +62,23 @@ interface RecognizeStream extends Duplex {
  * @constructor
  */
 class RecognizeStream extends Duplex {
+  static WEBSOCKET_CONNECTION_ERROR: string = 'WebSocket connection error';
+  static ERROR_UNRECOGNIZED_FORMAT: string = 'UNRECOGNIZED_FORMAT';
+
+  static getContentType(buffer: Buffer): string {
+    // the substr really shouldn't be necessary, but there's a bug somewhere that can cause buffer.slice(0,4) to return
+    // the entire contents of the buffer, so it's a failsafe to catch that
+    return contentType.fromHeader(buffer);
+  }
+
   private options;
   private listening: boolean;
   private initialized: boolean;
   private finished: boolean;
   private socket;
-  static WEBSOCKET_CONNECTION_ERROR: string = 'WebSocket connection error';
-  static ERROR_UNRECOGNIZED_FORMAT: string = 'UNRECOGNIZED_FORMAT';
   private promise = require('./to-promise');
+
+
 
   /**
    * pipe()-able Node.js Duplex stream - accepts binary audio and emits text/objects in it's `data` events.
@@ -193,7 +204,7 @@ class RecognizeStream extends Duplex {
 
     // node params: requestUrl, protocols, origin, headers, extraRequestOptions
     // browser params: requestUrl, protocols (all others ignored)
-    const socket = (this.socket = new W3CWebSocket(
+    const socket = (this.socket = new w3cWebSocket(
       url,
       null,
       null,
@@ -210,7 +221,7 @@ class RecognizeStream extends Duplex {
      *
      * @param {Event} event - event object with essentially no useful information
      */
-    socket.onerror = function(event) {
+    socket.onerror = (event) => {
       self.listening = false;
       const err = new Error('WebSocket connection error');
       err.name = RecognizeStream.WEBSOCKET_CONNECTION_ERROR;
@@ -219,7 +230,7 @@ class RecognizeStream extends Duplex {
       self.push(null);
     };
 
-    this.socket.onopen = function() {
+    this.socket.onopen = () => {
       self.sendJSON(openingMessage);
       /**
        * emitted once the WebSocket connection has been established
@@ -228,7 +239,7 @@ class RecognizeStream extends Duplex {
       self.emit('open');
     };
 
-    this.socket.onclose = function(e) {
+    this.socket.onclose = (e) => {
       self.listening = false;
       self.push(null);
       /**
@@ -255,7 +266,7 @@ class RecognizeStream extends Duplex {
       self.emit('error', err);
     }
 
-    socket.onmessage = function(frame) {
+    socket.onmessage = (frame) => {
       if (typeof frame.data !== 'string') {
         return emitError('Unexpected binary data received from server', frame);
       }
@@ -294,19 +305,19 @@ class RecognizeStream extends Duplex {
       } else {
         if (options.readableObjectMode) {
           /**
-             * Object with interim or final results, possibly including confidence scores, alternatives, and word timing.
-             * @event RecognizeStream#data
-             * @param {Object} data
-             */
+           * Object with interim or final results, possibly including confidence scores, alternatives, and word timing.
+           * @event RecognizeStream#data
+           * @param {Object} data
+           */
           self.push(data);
         } else if (Array.isArray(data.results)) {
-          data.results.forEach(function(result) {
+          data.results.forEach((result) => {
             if (result.final && result.alternatives) {
               /**
-                 * Finalized text
-                 * @event RecognizeStream#data
-                 * @param {String} transcript
-                 */
+               * Finalized text
+               * @event RecognizeStream#data
+               * @param {String} transcript
+               */
               self.push(result.alternatives[0].transcript, 'utf8');
             }
           });
@@ -404,7 +415,7 @@ class RecognizeStream extends Duplex {
       }
       this.initialize();
 
-      this.once('open', function() {
+      this.once('open', () => {
         self.sendData(chunk);
         self.afterSend(callback);
       });
@@ -425,7 +436,7 @@ class RecognizeStream extends Duplex {
     if (self.socket && self.socket.readyState === self.socket.OPEN) {
       self.sendJSON(closingMessage);
     } else {
-      this.once('open', function() {
+      this.once('open', () => {
         self.sendJSON(closingMessage);
       });
     }
@@ -458,12 +469,6 @@ class RecognizeStream extends Duplex {
         this.on('error', reject);
       }
     });
-  }
-
-  static getContentType(buffer: Buffer): string {
-    // the substr really shouldn't be necessary, but there's a bug somewhere that can cause buffer.slice(0,4) to return
-    // the entire contents of the buffer, so it's a failsafe to catch that
-    return contentType.fromHeader(buffer);
   }
 }
 

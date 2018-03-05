@@ -9,13 +9,13 @@ import { Stream } from 'stream';
  */
 function promise(stream: Stream): Promise<any> {
   stream = stream || this;
-  return new Promise(function(resolve, reject) {
+  return new Promise((resolve, reject) => {
     const results = [];
     stream
-      .on('data', function(result) {
+      .on('data', (result) => {
         results.push(result);
       })
-      .on('end', function() {
+      .on('end', () => {
         resolve(
           Buffer.isBuffer(results[0])
             ? Buffer.concat(results).toString()
