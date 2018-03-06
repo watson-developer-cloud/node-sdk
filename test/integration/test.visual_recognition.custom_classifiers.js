@@ -227,7 +227,7 @@ describe('visual_recognition_integration_custom_classifiers', function() {
           assert.equal(result.images[0].classifiers[0].classifier_id, classifier_id);
           assert(
             result.images[0].classifiers[0].classes.every(function(cl) {
-              if (['beach', 'water', 'still', 'forest'].includes(cl.class)) {
+              if (['beach', 'water', 'still', 'forest'].indexOf(cl.class) !== -1) {
                 return true;
               } else {
                 logit('Rogue class ' + cl.class + ' found.');
