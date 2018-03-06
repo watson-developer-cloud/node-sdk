@@ -5,12 +5,13 @@ node_js:
 - 6
 - stable
 before_install:
+- openssl aes-256-cbc -K $encrypted_e4ebf4573484_key -iv $encrypted_e4ebf4573484_iv
+  -in auth.js.enc -out test/resources/auth.js -d
 - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && openssl aes-256-cbc -K $encrypted_e4ebf4573484_key
-  -iv $encrypted_e4ebf4573484 -in auth.js.enc -out test/resources/auth.js -d ||
-  true'
+  -iv $encrypted_e4ebf4573484 -in auth.js.enc -out test/resources/auth.js -d || true'
 - npm install -g typescript
 script:
-- tsc # use the tsconfig.json to transpile specified service-files
+- tsc
 - npm test
 - sh scripts/typedoc/generate_typedoc.sh
 after_success:
