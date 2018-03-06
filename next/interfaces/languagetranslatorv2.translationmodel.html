@@ -112,12 +112,12 @@
 					<div class="tsd-signature tsd-kind-icon">base_<wbr>model_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/language-translator/v2-generated.ts#L509">language-translator/v2-generated.ts:509</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d41409f/language-translator/v2-generated.ts#L480">language-translator/v2-generated.ts:480</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>If this model is a custom model, this returns the base model that it is trained on. For a base model, this response value is empty.</p>
+							<p>Model ID of the base model that was used to customize the model. If the model is not a custom model, this will be an empty string.</p>
 						</div>
 					</div>
 				</section>
@@ -127,12 +127,12 @@
 					<div class="tsd-signature tsd-kind-icon">customizable<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/language-translator/v2-generated.ts#L513">language-translator/v2-generated.ts:513</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d41409f/language-translator/v2-generated.ts#L484">language-translator/v2-generated.ts:484</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Whether this model can be used as a base for customization. Customized models are not further customizable, and we don&#39;t allow the customization of certain base models.</p>
+							<p>Whether this model can be used as a base for customization. Customized models are not further customizable, and some base models are not customizable.</p>
 						</div>
 					</div>
 				</section>
@@ -142,12 +142,12 @@
 					<div class="tsd-signature tsd-kind-icon">default_<wbr>model<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/language-translator/v2-generated.ts#L515">language-translator/v2-generated.ts:515</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d41409f/language-translator/v2-generated.ts#L486">language-translator/v2-generated.ts:486</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Whether this model is considered a default model and is used when the source and target languages are specified without the model_id.</p>
+							<p>Whether or not the model is a default model. A default model is the model for a given language pair that will be used when that language pair is specified in the source and target parameters.</p>
 						</div>
 					</div>
 				</section>
@@ -157,7 +157,7 @@
 					<div class="tsd-signature tsd-kind-icon">domain<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/language-translator/v2-generated.ts#L511">language-translator/v2-generated.ts:511</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d41409f/language-translator/v2-generated.ts#L482">language-translator/v2-generated.ts:482</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -172,12 +172,12 @@
 					<div class="tsd-signature tsd-kind-icon">model_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/language-translator/v2-generated.ts#L501">language-translator/v2-generated.ts:501</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d41409f/language-translator/v2-generated.ts#L472">language-translator/v2-generated.ts:472</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>A globally unique string that identifies the underlying model that is used for translation. This string contains all the information about source language, target language, domain, and various other related configurations.</p>
+							<p>A globally unique string that identifies the underlying model that is used for translation.</p>
 						</div>
 					</div>
 				</section>
@@ -187,12 +187,12 @@
 					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/language-translator/v2-generated.ts#L503">language-translator/v2-generated.ts:503</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d41409f/language-translator/v2-generated.ts#L474">language-translator/v2-generated.ts:474</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>If a model is trained by a user, there might be an optional “name” parameter attached during training to help the user identify the model.</p>
+							<p>Optional name that can be specified when the model is created.</p>
 						</div>
 					</div>
 				</section>
@@ -202,12 +202,12 @@
 					<div class="tsd-signature tsd-kind-icon">owner<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/language-translator/v2-generated.ts#L517">language-translator/v2-generated.ts:517</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d41409f/language-translator/v2-generated.ts#L488">language-translator/v2-generated.ts:488</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Returns the ID of the Language Translator service instance that created the model, or an empty string if it is a model that is trained by IBM.</p>
+							<p>Either an empty string, indicating the model is not a custom model, or the ID of the service instance that created the model.</p>
 						</div>
 					</div>
 				</section>
@@ -217,12 +217,12 @@
 					<div class="tsd-signature tsd-kind-icon">source<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/language-translator/v2-generated.ts#L505">language-translator/v2-generated.ts:505</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d41409f/language-translator/v2-generated.ts#L476">language-translator/v2-generated.ts:476</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Source language in two letter language code. Use the five letter code when clarifying between multiple supported languages. When model_id is used directly, it will override the source-target language combination. Also, when a two letter language code is used, but no suitable default is found, it returns an error.</p>
+							<p>Translation source language code.</p>
 						</div>
 					</div>
 				</section>
@@ -232,7 +232,7 @@
 					<div class="tsd-signature tsd-kind-icon">status<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/language-translator/v2-generated.ts#L519">language-translator/v2-generated.ts:519</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d41409f/language-translator/v2-generated.ts#L490">language-translator/v2-generated.ts:490</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -247,12 +247,12 @@
 					<div class="tsd-signature tsd-kind-icon">target<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/language-translator/v2-generated.ts#L507">language-translator/v2-generated.ts:507</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d41409f/language-translator/v2-generated.ts#L478">language-translator/v2-generated.ts:478</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Target language in two letter language code.</p>
+							<p>Translation target language code.</p>
 						</div>
 					</div>
 				</section>
@@ -454,7 +454,7 @@
 						<a href="../globals.html#query_params_allowed" class="tsd-kind-icon">QUERY_<wbr>PARAMS_<wbr>ALLOWED</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="../globals.html#w3cwebsocket" class="tsd-kind-icon">W3CWeb<wbr>Socket</a>
+						<a href="../globals.html#w3cwebsocket" class="tsd-kind-icon">w3c<wbr>Web<wbr>Socket</a>
 					</li>
 				</ul>
 			</nav>

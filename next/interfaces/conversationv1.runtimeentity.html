@@ -91,6 +91,7 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="conversationv1.runtimeentity.html#confidence" class="tsd-kind-icon">confidence</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="conversationv1.runtimeentity.html#entity" class="tsd-kind-icon">entity</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="conversationv1.runtimeentity.html#groups" class="tsd-kind-icon">groups</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="conversationv1.runtimeentity.html#location" class="tsd-kind-icon">location</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="conversationv1.runtimeentity.html#metadata" class="tsd-kind-icon">metadata</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="conversationv1.runtimeentity.html#value" class="tsd-kind-icon">value</a></li>
@@ -107,7 +108,7 @@
 					<div class="tsd-signature tsd-kind-icon">confidence<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/conversation/v1-generated.ts#L3249">conversation/v1-generated.ts:3249</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d41409f/conversation/v1-generated.ts#L3280">conversation/v1-generated.ts:3280</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -122,7 +123,7 @@
 					<div class="tsd-signature tsd-kind-icon">entity<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/conversation/v1-generated.ts#L3243">conversation/v1-generated.ts:3243</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d41409f/conversation/v1-generated.ts#L3274">conversation/v1-generated.ts:3274</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -132,12 +133,27 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="groups" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> groups</h3>
+					<div class="tsd-signature tsd-kind-icon">groups<span class="tsd-signature-symbol">:</span> <a href="conversationv1.capturegroup.html" class="tsd-signature-type">CaptureGroup</a><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d41409f/conversation/v1-generated.ts#L3284">conversation/v1-generated.ts:3284</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The recognized capture groups for the entity, as defined by the entity pattern.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="location" class="tsd-anchor"></a>
 					<h3>location</h3>
 					<div class="tsd-signature tsd-kind-icon">location<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/conversation/v1-generated.ts#L3245">conversation/v1-generated.ts:3245</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d41409f/conversation/v1-generated.ts#L3276">conversation/v1-generated.ts:3276</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -152,7 +168,7 @@
 					<div class="tsd-signature tsd-kind-icon">metadata<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/conversation/v1-generated.ts#L3251">conversation/v1-generated.ts:3251</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d41409f/conversation/v1-generated.ts#L3282">conversation/v1-generated.ts:3282</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -167,7 +183,7 @@
 					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/conversation/v1-generated.ts#L3247">conversation/v1-generated.ts:3247</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d41409f/conversation/v1-generated.ts#L3278">conversation/v1-generated.ts:3278</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -204,6 +220,9 @@
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="conversationv1.runtimeentity.html#entity" class="tsd-kind-icon">entity</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="conversationv1.runtimeentity.html#groups" class="tsd-kind-icon">groups</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="conversationv1.runtimeentity.html#location" class="tsd-kind-icon">location</a>
@@ -263,7 +282,7 @@
 						<a href="../globals.html#query_params_allowed" class="tsd-kind-icon">QUERY_<wbr>PARAMS_<wbr>ALLOWED</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="../globals.html#w3cwebsocket" class="tsd-kind-icon">W3CWeb<wbr>Socket</a>
+						<a href="../globals.html#w3cwebsocket" class="tsd-kind-icon">w3c<wbr>Web<wbr>Socket</a>
 					</li>
 				</ul>
 			</nav>
