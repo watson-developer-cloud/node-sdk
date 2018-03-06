@@ -253,7 +253,7 @@ describe('visual_recognition', function() {
       // we always convert files to request-style objects
       assert.equal(req.formData.images_file.value, params.images_file);
       const parameters = req.formData;
-      assert.deepEqual(parameters.owners, JSON.stringify(['me', 'IBM']));
+      assert.deepEqual(parameters.owners, 'me,IBM');
       assert.equal(parameters.url, undefined);
       assert.equal(parameters.threshold, undefined);
     });
@@ -269,7 +269,7 @@ describe('visual_recognition', function() {
       assert.equal(req.method, 'POST');
       // we always convert files to request-style objects
       assert.equal(req.formData.images_file.value.path, fake_file.path);
-      assert.deepEqual(req.formData.classifier_ids, JSON.stringify(params.classifier_ids));
+      assert.deepEqual(req.formData.classifier_ids, params.classifier_ids.join(','));
     });
 
     it('should generate a valid payload with a url', function() {
@@ -283,7 +283,7 @@ describe('visual_recognition', function() {
       assert.equal(req.uri.pathname, URL.parse(service.url + classify_path).pathname);
       assert(req.formData);
       const parameters = req.formData;
-      assert.deepEqual(parameters.classifier_ids, JSON.stringify(params.classifier_ids));
+      assert.deepEqual(parameters.classifier_ids, params.classifier_ids.join(','));
     });
   });
 

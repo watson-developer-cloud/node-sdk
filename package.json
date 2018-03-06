@@ -123,12 +123,13 @@
   "lint-staged": {
     "**/*.ts": [
       "tsc",
-      "prettier --write",
+      "tslint --fix -p . -c tslint.json",
       "test-unit",
       "git add"
     ],
     "test/**/*.js": [
       "eslint --fix",
+      "prettier --write",
       "test-unit",
       "git add"
     ],

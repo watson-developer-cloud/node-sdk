@@ -17,12 +17,7 @@
 import extend = require('extend');
 import request = require('request');
 import { PassThrough as readableStream } from 'stream';
-import {
-  buildRequestFileObject,
-  getMissingParams,
-  isEmptyObject,
-  isFileParam
-} from './helper';
+import { buildRequestFileObject, getMissingParams, isEmptyObject, isFileParam } from './helper';
 
 // tslint:disable-next-line:no-var-requires
 const pkg = require('../package.json');
@@ -81,7 +76,7 @@ export function formatErrorIfExists(cb: Function): request.RequestCallback {
     if (response.statusMessage === 'invalid-api-key') {
       const error = {
         error: response.statusMessage,
-        code: response.statusMessage === 'invalid-api-key' ? 401 : 400
+        code: response.statusMessage === 'invalid-api-key' ? 401 : 400,
       };
       if (response.headers) {
         error[globalTransactionId] = response.headers[globalTransactionId];
@@ -95,27 +90,22 @@ export function formatErrorIfExists(cb: Function): request.RequestCallback {
       // visual recognition sets body.error to a json object with code/description/error_id instead of putting them top-left
       if (typeof body.error === 'object' && body.error.description) {
         const errObj = body.error; // just in case there's a body.error.error...
-        Object.keys(body.error).forEach((key) => {
+        Object.keys(body.error).forEach(key => {
           body[key] = body.error[key];
         });
-        Object.keys(body.error).forEach((key) => {
+        Object.keys(body.error).forEach(key => {
           body[key] = body.error[key];
         });
         body.error = errObj.description;
-      } else if (
-        typeof body.error === 'object' &&
-        typeof body.error.error === 'object'
-      ) {
+      } else if (typeof body.error === 'object' && typeof body.error.error === 'object') {
         // this can happen with, for example, the conversation createSynonym() API
         body.rawError = body.error;
         body.error = JSON.stringify(body.error.error); //
       }
       // language translaton returns json with error_code and error_message
-      error = new Error(
-        body.error || body.error_message || 'Error Code: ' + body.error_code
-      );
+      error = new Error(body.error || body.error_message || 'Error Code: ' + body.error_code);
       error.code = body.error_code;
-      Object.keys(body).forEach((key) => {
+      Object.keys(body).forEach(key => {
         error[key] = body[key];
       });
       body = null;
@@ -129,8 +119,7 @@ export function formatErrorIfExists(cb: Function): request.RequestCallback {
       error.code = response.statusCode;
       if (error.code === 401 || error.code === 403) {
         error.body = error.message;
-        error.message =
-          'Unauthorized: Access is denied due to invalid credentials.';
+        error.message = 'Unauthorized: Access is denied due to invalid credentials.';
       }
       body = null;
     }
@@ -154,12 +143,7 @@ export function formatErrorIfExists(cb: Function): request.RequestCallback {
  */
 export function createRequest(parameters, _callback) {
   let missingParams = null;
-  const options = extend(
-    true,
-    {},
-    parameters.defaultOptions,
-    parameters.options
-  );
+  const options = extend(true, {}, parameters.defaultOptions, parameters.options);
   const { path, body, form, formData, qs } = options;
 
   // Missing parameters
@@ -199,29 +183,26 @@ export function createRequest(parameters, _callback) {
       // tslint:disable-next-line:no-unused-expression
       (formData[key] == null ||
         isEmptyObject(formData[key]) ||
-        (formData[key].hasOwnProperty('contentType') &&
-          !formData[key].hasOwnProperty('data'))) &&
+        (formData[key].hasOwnProperty('contentType') && !formData[key].hasOwnProperty('data'))) &&
         delete formData[key];
     });
     // Convert file form parameters to request-style objects
     Object.keys(formData).forEach(
-      key =>
-        formData[key].data != null &&
-        (formData[key] = buildRequestFileObject(formData[key]))
+      key => formData[key].data != null && (formData[key] = buildRequestFileObject(formData[key]))
     );
+
+    // Stringify arrays
+    Object.keys(formData).forEach(
+      key => Array.isArray(formData[key]) && (formData[key] = formData[key].join(','))
+    );
+
     // Convert non-file form parameters to strings
     Object.keys(formData).forEach(
       key =>
         !isFileParam(formData[key]) &&
+        !Array.isArray(formData[key]) &&
         typeof formData[key] === 'object' &&
         (formData[key] = JSON.stringify(formData[key]))
-    );
-
-    // Stringify arrays
-    Object.keys(options.formData).forEach(
-      key =>
-        Array.isArray(options.formData[key]) &&
-        (options.formData[key] = options.formData[key].join(','))
     );
   }
 
@@ -232,7 +213,9 @@ export function createRequest(parameters, _callback) {
   // Headers
   options.headers = extend({}, options.headers);
   if (!isBrowser) {
-    options.headers['User-Agent'] = `${pkg.name}-nodejs-${pkg.version};${options.headers['User-Agent'] || ''}`;
+    options.headers['User-Agent'] = `${pkg.name}-nodejs-${pkg.version};${options.headers[
+      'User-Agent'
+    ] || ''}`;
   }
 
   // Query params
@@ -240,9 +223,7 @@ export function createRequest(parameters, _callback) {
     // dialog doesn't like qs params joined with a `,`
     if (!parameters.defaultOptions.url.match(/dialog\/api/)) {
       Object.keys(options.qs).forEach(
-        key =>
-          Array.isArray(options.qs[key]) &&
-          (options.qs[key] = options.qs[key].join(','))
+        key => Array.isArray(options.qs[key]) && (options.qs[key] = options.qs[key].join(','))
       );
     }
     options.useQuerystring = true;
