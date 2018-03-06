@@ -28,7 +28,7 @@ describe('visual_recognition_integration_custom_classifiers', function() {
   before(function(done) {
     visual_recognition = new watson.VisualRecognitionV3(
       Object.assign({}, auth.visual_recognition.v3, {
-        version: watson.VisualRecognitionV3.VERSION_DATE_2016_05_20
+        version: watson.VisualRecognitionV3.VERSION_DATE_2016_05_20,
       })
     );
     nock.enableNetConnect();
@@ -80,7 +80,9 @@ describe('visual_recognition_integration_custom_classifiers', function() {
           light_positive_examples: fs.createReadStream(
             path.join(__dirname, '../resources/light.zip')
           ),
-          dark_positive_examples: fs.createReadStream(path.join(__dirname, '../resources/dark.zip'))
+          dark_positive_examples: fs.createReadStream(
+            path.join(__dirname, '../resources/dark.zip')
+          ),
         },
         function(err, response) {
           if (err) {
@@ -150,7 +152,7 @@ describe('visual_recognition_integration_custom_classifiers', function() {
                 beach_positive_examples: fs.createReadStream(path.join(p, 'beach.zip')),
                 forest_positive_examples: fs.createReadStream(path.join(p, 'forest.zip')),
                 still_positive_examples: fs.createReadStream(path.join(p, 'still.zip')),
-                water_positive_examples: fs.createReadStream(path.join(p, 'water.zip'))
+                water_positive_examples: fs.createReadStream(path.join(p, 'water.zip')),
               },
               function(err, response) {
                 if (err) {
@@ -213,8 +215,8 @@ describe('visual_recognition_integration_custom_classifiers', function() {
           images_file: fs.createReadStream(
             __dirname + '/../resources/183px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg'
           ),
-          classifier_ids: [classifier_id],
-          threshold: '0.0'
+          classifier_ids: classifier_id,
+          threshold: '0.0',
         };
         visual_recognition.classify(params, function(err, result) {
           if (err) {
@@ -252,12 +254,13 @@ describe('visual_recognition_integration_custom_classifiers', function() {
     it('should come back empty when nothing passes the classification threshold ', function() {
       return new Promise(function(resolve, reject) {
         logit('Classifing with classifier_id = ' + classifier_id);
+
         const params = {
           images_file: fs.createReadStream(
             __dirname + '/../resources/183px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg'
           ),
-          classifier_ids: [classifier_id],
-          threshold: '0.9'
+          classifier_ids: classifier_id,
+          threshold: '0.9',
         };
         visual_recognition.classify(params, function(err, result) {
           if (err) {

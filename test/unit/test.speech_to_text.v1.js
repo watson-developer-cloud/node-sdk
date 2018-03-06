@@ -15,7 +15,7 @@ describe('speech_to_text', function() {
     password: 'bruce-wayne',
     url: 'http://ibm.com:80',
     version: 'v1',
-    silent: true // hide deprecation warnings for recognizeLive and friends
+    silent: true, // hide deprecation warnings for recognizeLive and friends
   };
 
   before(function() {
@@ -93,7 +93,7 @@ describe('speech_to_text', function() {
 
     it('should generate a valid payload', function(done) {
       const expectation = nock('http://ibm.com:80', {
-        encodedQueryParams: true
+        encodedQueryParams: true,
       })
         .matchHeader('Cookie', /SESSIONID=bar/)
         .get('/v1/sessions/foo/observe_result')
@@ -102,7 +102,7 @@ describe('speech_to_text', function() {
       speech_to_text.observeResult(
         {
           session_id: 'foo',
-          cookie_session: 'bar'
+          cookie_session: 'bar',
         },
         err => {
           assert.ifError(err);
@@ -114,7 +114,7 @@ describe('speech_to_text', function() {
 
     it('should generate a valid payload with interim_results enabled', function(done) {
       const expectation = nock('http://ibm.com:80', {
-        encodedQueryParams: true
+        encodedQueryParams: true,
       })
         .matchHeader('Cookie', /SESSIONID=bar/)
         .get('/v1/sessions/foo/observe_result?interim_results=true')
@@ -124,7 +124,7 @@ describe('speech_to_text', function() {
         {
           session_id: 'foo',
           cookie_session: 'bar',
-          interim_results: true
+          interim_results: true,
         },
         err => {
           assert.ifError(err);
@@ -140,7 +140,7 @@ describe('speech_to_text', function() {
     const session_path = '/v1/sessions/foo/recognize';
     const payload = {
       audio: fs.createReadStream(__dirname + '/../resources/weather.wav'),
-      content_type: 'audio/l16;rate=41100'
+      content_type: 'audio/l16;rate=41100',
     };
 
     it('should check no parameters provided', function() {
@@ -179,7 +179,7 @@ describe('speech_to_text', function() {
       const session_path = '/v1/sessions/foo/recognize';
       const payload = {
         audio: webm_stream,
-        content_type: 'audio/webm'
+        content_type: 'audio/webm',
       };
       const req = speech_to_text.recognize(extend({ session_id: 'foo' }, payload), noop);
       assert.equal(req.uri.href, service.url + session_path);
@@ -202,13 +202,13 @@ describe('speech_to_text', function() {
         {
           alternative: [
             {
-              transcript: 'one two three'
-            }
+              transcript: 'one two three',
+            },
           ],
-          final: true
-        }
+          final: true,
+        },
       ],
-      result_index: 0
+      result_index: 0,
     };
 
     const options = {
@@ -220,7 +220,7 @@ describe('speech_to_text', function() {
       interim_results: false,
       keywords: ['one', 'Three'],
       keywords_threshold: 0.9,
-      word_alternatives_threshold: 0.25
+      word_alternatives_threshold: 0.25,
     };
     const recognizeStream = speech_to_text.createRecognizeStream(options);
     fs.createReadStream(__dirname + '/../resources/weather.wav').pipe(recognizeStream);
@@ -257,20 +257,20 @@ describe('speech_to_text', function() {
     const payload = {
       session_id: 'foo',
       cookie_session: 'foobar',
-      content_type: 'audio/l16; rate=41100'
+      content_type: 'audio/l16; rate=41100',
     };
     const service_response = {
       result: [
         {
           alternative: [
             {
-              transcript: 'one two three'
-            }
+              transcript: 'one two three',
+            },
           ],
-          final: true
-        }
+          final: true,
+        },
       ],
-      result_index: 0
+      result_index: 0,
     };
 
     it('should check no parameters provided', function() {
@@ -329,7 +329,7 @@ describe('speech_to_text', function() {
         '/v1/register_callback?callback_url=http%3A%2F%2Fwatson-test-resources.mybluemix.net%2Fresults&user_secret=ThisIsMySecret';
       const response = {
         status: 200,
-        url: 'http://watson-test-resources.mybluemix.net/results'
+        url: 'http://watson-test-resources.mybluemix.net/results',
       };
 
       nock(service.url)
@@ -344,7 +344,7 @@ describe('speech_to_text', function() {
 
       const params = {
         callback_url: 'http://watson-test-resources.mybluemix.net/results',
-        user_secret: 'ThisIsMySecret'
+        user_secret: 'ThisIsMySecret',
       };
       const req = speech_to_text.registerCallback(params, checkRes);
 
@@ -360,7 +360,7 @@ describe('speech_to_text', function() {
         status: 'waiting',
         created: '2017-02-17T19:15:17.926Z',
         url:
-          'https://stream.watsonplatform.net/speech-to-text/api/v1/recognitions/4bd734c0-e575-21f3-de03-f932aa0468a0'
+          'https://stream.watsonplatform.net/speech-to-text/api/v1/recognitions/4bd734c0-e575-21f3-de03-f932aa0468a0',
       };
 
       nock(service.url)
@@ -379,7 +379,7 @@ describe('speech_to_text', function() {
         callback_url: 'http://watson-test-resources.mybluemix.net/results',
         user_token: 'myArbitraryIdentifier1',
         events: 'recognitions.completed',
-        results_ttl: 60
+        results_ttl: 60,
       };
       const req = speech_to_text.createRecognitionJob(params, checkRes);
 
@@ -395,7 +395,7 @@ describe('speech_to_text', function() {
         status: 'waiting',
         created: '2017-02-17T19:15:17.926Z',
         url:
-          'https://stream.watsonplatform.net/speech-to-text/api/v1/recognitions/4bd734c0-e575-21f3-de03-f932aa0468a0'
+          'https://stream.watsonplatform.net/speech-to-text/api/v1/recognitions/4bd734c0-e575-21f3-de03-f932aa0468a0',
       };
 
       nock(service.url)
@@ -416,9 +416,9 @@ describe('speech_to_text', function() {
         events: [
           'recognitions.started',
           'recognitions.failed',
-          'recognitions.completed_with_results'
+          'recognitions.completed_with_results',
         ],
-        results_ttl: 60
+        results_ttl: 60,
       };
       const req = speech_to_text.createRecognitionJob(params, checkRes);
 
@@ -435,21 +435,21 @@ describe('speech_to_text', function() {
             created: '2017-02-17T19:15:17.926Z',
             updated: '2017-02-17T19:15:17.926Z',
             status: 'waiting',
-            user_token: 'myArbitraryIdentifier1'
+            user_token: 'myArbitraryIdentifier1',
           },
           {
             id: '4bb1dca0-f6b1-11e5-80bc-71fb7b058b20',
             created: '2017-02-17T19:13:23.622Z',
             updated: '2017-02-17T19:13:24.434Z',
-            status: 'processing'
+            status: 'processing',
           },
           {
             id: '398fcd80-330a-22ba-93ce-1a73f454dd98',
             created: '2017-02-17T19:11:04.298Z',
             updated: '2017-02-17T19:11:16.003Z',
-            status: 'completed'
-          }
-        ]
+            status: 'completed',
+          },
+        ],
       };
 
       nock(service.url)
@@ -483,16 +483,16 @@ describe('speech_to_text', function() {
                     transcript:
                       'several tornadoes touch down as a line of severe thunderstorms swept through Colorado on Sunday ',
                     timestamps: [['several', 1, 1.52]],
-                    confidence: 0.885
-                  }
-                ]
-              }
-            ]
-          }
+                    confidence: 0.885,
+                  },
+                ],
+              },
+            ],
+          },
         ],
         created: '2016-08-17T19:11:04.298Z',
         updated: '2016-08-17T19:11:16.003Z',
-        status: 'completed'
+        status: 'completed',
       };
 
       nock(service.url)
@@ -598,7 +598,7 @@ describe('speech_to_text', function() {
         {
           customization_id: 'customer_id_1',
           corpus_name: 'corpus_name_1',
-          corpus_file: 'file_1'
+          corpus_file: 'file_1',
         },
         noop
       );
@@ -609,7 +609,7 @@ describe('speech_to_text', function() {
         {
           customization_id: 'customer_id_1',
           name: 'corpus_name_1',
-          corpus: 'file_1'
+          corpus: 'file_1',
         },
         noop
       );

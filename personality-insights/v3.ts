@@ -44,16 +44,16 @@ class PersonalityInsightsV3 extends GeneratedPersonalityInsightsV3 {
       return;
     }
 
-    let content_type = null;
+    let contentType = null;
     if (params.text) {
-      content_type = isHTML(params.text) ? 'text/html' : 'text/plain';
+      contentType = isHTML(params.text) ? 'text/html' : 'text/plain';
     } else {
-      content_type = 'application/json';
+      contentType = 'application/json';
     }
 
     const _params: GeneratedPersonalityInsightsV3.ProfileParams = {
       content: params.text || pick(params, ['contentItems']),
-      content_type,
+      content_type: contentType,
       raw_scores: params.raw_scores,
       csv_headers: params.csv_headers,
       consumption_preferences: params.consumption_preferences
@@ -100,7 +100,7 @@ class PersonalityInsightsV3 extends GeneratedPersonalityInsightsV3 {
     >
   ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = callback ? callback : () => { /*noop*/ };
     const requiredParams = ['content', 'content_type'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {

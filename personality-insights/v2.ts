@@ -66,14 +66,14 @@ class PersonalityInsightsV2 extends BaseService {
       return;
     }
     // Content-Type
-    let content_type = null;
+    let contentType = null;
     if (_params.text) {
-      content_type = isHTML(_params.text) ? 'text/html' : 'text/plain';
+      contentType = isHTML(_params.text) ? 'text/html' : 'text/plain';
     } else {
-      content_type = 'application/json';
+      contentType = 'application/json';
     }
     const headers = {
-      'Content-type': content_type,
+      'Content-type': contentType,
       'Accept-language':
         _params.accept_language || _params.acceptLanguage || 'en',
       Accept: undefined

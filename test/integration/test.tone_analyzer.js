@@ -53,18 +53,18 @@ describe('tone_analyzer_integration', function() {
         { text: 'My charger isn’t working.', user: 'customer' },
         {
           text: 'Thanks for reaching out. Can you give me some more detail about the issue?',
-          user: 'agent'
+          user: 'agent',
         },
         {
           text:
             "I put my charger in my phone last night to charge and it isn't working. Which is ridiculous, it's a new charger, I bought it yesterday.",
-          user: 'customer'
+          user: 'customer',
         },
         {
           text: 'I’m sorry you’re having issues with charging. What kind of charger do you have?',
-          user: 'agent'
-        }
-      ]
+          user: 'agent',
+        },
+      ],
     };
     tone_analyzer.toneChat(utterances, done);
   });

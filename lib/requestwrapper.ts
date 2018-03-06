@@ -216,6 +216,13 @@ export function createRequest(parameters, _callback) {
         typeof formData[key] === 'object' &&
         (formData[key] = JSON.stringify(formData[key]))
     );
+
+    // Stringify arrays
+    Object.keys(options.formData).forEach(
+      key =>
+        Array.isArray(options.formData[key]) &&
+        (options.formData[key] = options.formData[key].join(','))
+    );
   }
 
   // Path params

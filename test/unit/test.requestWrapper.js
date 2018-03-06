@@ -13,10 +13,10 @@ describe('requestwrapper', () => {
     const parameters = {
       options: {
         url: '/stuff/',
-        qs: { fake: 'fake' }
+        qs: { fake: 'fake' },
       },
       requiredParams: ['fake_param'],
-      defaultOptions: { url: 'more' }
+      defaultOptions: { url: 'more' },
     };
     assert(isStream(createRequest(parameters, '')));
   });
@@ -26,7 +26,7 @@ describe('requestwrapper', () => {
       username: 'batman',
       password: 'bruce-wayne',
       url: 'http://ibm.com:80',
-      version: '2017-05-26'
+      version: '2017-05-26',
     };
     const service2 = {
       username: 'batman',
@@ -34,13 +34,13 @@ describe('requestwrapper', () => {
       url: 'http://ibm.com:80',
       version: '2017-05-26',
       headers: {
-        'User-Agent': 'openwhisk'
-      }
+        'User-Agent': 'openwhisk',
+      },
     };
     const conversation = new watson.ConversationV1(service);
     const conversation_ow = new watson.ConversationV1(service2);
     const payload = {
-      workspace_id: 'workspace1'
+      workspace_id: 'workspace1',
     };
     const req = conversation.getIntents(payload, noop);
     const req2 = conversation_ow.getIntents(payload, noop);
@@ -85,7 +85,7 @@ describe('formatError', () => {
     const _response = {};
     const _body = {
       error: { description: 'fake description' },
-      fake_key: 'fake_value'
+      fake_key: 'fake_value',
     };
     const cb = (err, body, res) => {
       assert.equal(body, null);
@@ -102,7 +102,7 @@ describe('formatError', () => {
     const _response = {};
     const _body = {
       error: { error: { error: 'fake description' } },
-      fake_key: 'fake_value'
+      fake_key: 'fake_value',
     };
     const cb = (err, body, res) => {
       assert.equal(body, null);

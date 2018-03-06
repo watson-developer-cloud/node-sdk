@@ -4,18 +4,37 @@ import GeneratedVisualRecognitionV3 = require('./v3-generated');
 class VisualRecognitionV3 extends GeneratedVisualRecognitionV3 {
   static VERSION_DATE_2016_05_20: string = '2016-05-20';
 
+  private static betaError: Error = new Error(
+    'As of September 8, 2017, the beta period for Similarity Search is closed.' +
+      'For more information, see [Visual Recognition API – Similarity Search Update]' +
+      '(https://www.ibm.com/blogs/bluemix/2017/08/visual-recognition-api-similarity-search-update)'
+  );
+
   constructor(options) {
     // For backward compatibility, allow version to be passed in version_date.
     const _options = extend({}, options);
     _options.version = _options.version_date || _options.version;
     super(_options);
   }
+  classify(params, callback) {
+    if (params && params.image_file) {
+      params.images_file = params.image_file;
+    }
+    const _params = params? extend({}, params, ...(params.parameters || {})) : params;
+    return super.classify(_params, callback);
+  }
 
-  private static betaError: Error = new Error(
-    'As of September 8, 2017, the beta period for Similarity Search is closed.' +
-      'For more information, see [Visual Recognition API – Similarity Search Update]' +
-      '(https://www.ibm.com/blogs/bluemix/2017/08/visual-recognition-api-similarity-search-update)'
-  );
+  detectFaces(params, callback) {
+    if (params && params.image_file) {
+      params.images_file = params.image_file;
+    }
+    const _params = params? extend({}, params, ...(params.parameters || {})) : params;
+    return super.detectFaces(_params, callback);
+  }
+
+  retrainClassifier(params, callback) {
+    return super.updateClassifier(params, callback);
+  }
 
   recognizeText(params, callback) {
     console.warn(VisualRecognitionV3.betaError);
@@ -67,40 +86,6 @@ class VisualRecognitionV3 extends GeneratedVisualRecognitionV3 {
 
   findSimilar(params, callback) {
     console.warn(VisualRecognitionV3.betaError);
-  }
-
-  private parseParameters(params) {
-    const _params = params || {};
-    if (_params.parameters) {
-      return _params.parameters;
-    }
-    const _parameters = {};
-    ['url', 'classifier_ids', 'owners', 'threshold'].forEach(
-      key => _params[key] && (_parameters[key] = _params[key])
-    );
-    return _parameters;
-  }
-
-  classify(params, callback) {
-    if (params && params.image_file) {
-      params.images_file = params.image_file;
-    }
-    const _parameters = this.parseParameters(params);
-    const _params = extend(params, { parameters: _parameters });
-    return super.classify(_params, callback);
-  }
-
-  detectFaces(params, callback) {
-    if (params && params.image_file) {
-      params.images_file = params.image_file;
-    }
-    const _parameters = this.parseParameters(params);
-    const _params = extend(params, { parameters: _parameters });
-    return super.detectFaces(_params, callback);
-  }
-
-  retrainClassifier(params, callback) {
-    return super.updateClassifier(params, callback);
   }
 }
 

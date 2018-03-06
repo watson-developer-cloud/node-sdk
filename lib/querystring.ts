@@ -10,7 +10,7 @@
  */
 const stringify = (queryParams: Object): string => {
   return Object.keys(queryParams)
-    .map(function(key) {
+    .map((key) => {
       return (
         key +
         '=' +

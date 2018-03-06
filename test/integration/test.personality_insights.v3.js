@@ -32,7 +32,7 @@ describe('personality_insights_v3_integration', function() {
   it('profile with text content', function(done) {
     const params = {
       content: mobydick,
-      content_type: 'text/plain'
+      content_type: 'text/plain',
     };
     personality_insights.profile(params, done);
   });
@@ -44,7 +44,7 @@ describe('personality_insights_v3_integration', function() {
       content_language: 'en',
       accept_language: 'en',
       raw_scores: true,
-      consumption_preferences: true
+      consumption_preferences: true,
     };
     personality_insights.profile(params, done);
   });
@@ -52,7 +52,7 @@ describe('personality_insights_v3_integration', function() {
   it('profile with html content', function(done) {
     const params = {
       content: '<div>' + mobydick + '</div>',
-      content_type: 'text/html'
+      content_type: 'text/html',
     };
     personality_insights.profile(params, done);
   });
@@ -65,8 +65,8 @@ describe('personality_insights_v3_integration', function() {
       consumption_preferences: true,
       csv_headers: true,
       headers: {
-        accept: 'text/csv'
-      }
+        accept: 'text/csv',
+      },
     };
     personality_insights.profile_csv(params, done);
   });

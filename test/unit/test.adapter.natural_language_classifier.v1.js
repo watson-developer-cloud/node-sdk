@@ -10,7 +10,7 @@ const service = {
   username: 'foo',
   password: 'bar',
   url: 'http://ibm.com:80',
-  version: 'v1'
+  version: 'v1',
 };
 
 before(function() {
@@ -58,7 +58,7 @@ const createWithString = extend({ training_data: 'foo' }, noTrainingData);
 // training with a stream variable (CSV)
 const createWithStream = extend(
   {
-    training_data: fs.createReadStream(__dirname + '/../resources/weather_data_train.csv')
+    training_data: fs.createReadStream(__dirname + '/../resources/weather_data_train.csv'),
   },
   noTrainingData
 );
@@ -66,7 +66,7 @@ const createWithStream = extend(
 // training with an object variable (JSON)
 const createWithJson = extend(
   {
-    training_data: [{ text: 'text', classes: ['class1'] }, { text: 'text2', classes: ['class2'] }]
+    training_data: [{ text: 'text', classes: ['class1'] }, { text: 'text2', classes: ['class2'] }],
   },
   noTrainingData
 );

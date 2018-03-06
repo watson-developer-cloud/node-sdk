@@ -9,6 +9,7 @@ import RecognizeStream = require('../lib/recognize-stream');
 import { createRequest as requestFactory } from '../lib/requestwrapper';
 import GeneratedSpeechToTextV1 = require('./v1-generated');
 
+// tslint:disable-next-line:no-var-requires
 const pkg = require('../package.json');
 
 const protocols = {
@@ -86,12 +87,14 @@ function formatChunk(chunk: string) {
 }
 
 class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
+  static ERR_NO_CORPORA = 'ERR_NO_CORPORA';
+  static ERR_TIMEOUT = 'ERR_TIMEOUT';
+  
   constructor(options) {
     super(options);
   }
 
-  static ERR_NO_CORPORA = 'ERR_NO_CORPORA';
-  static ERR_TIMEOUT = 'ERR_TIMEOUT';
+
 
   getModels(params, callback) {
     return super.listModels(params, callback);
@@ -220,8 +223,8 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
     async.parallel(
       [
         // validate that it has at least one corpus
-        function(next) {
-          self.getCorpora(params, function(err, res) {
+        (next) => {
+          self.getCorpora(params, (err, res) => {
             if (err) {
               return next(err);
             }
@@ -236,7 +239,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
           });
         },
         // check the customization status repeatedly until it's available
-        function(next) {
+        (next) => {
           const options = extend(
             {
               interval: 5000,
@@ -244,7 +247,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
             },
             params
           );
-          options.errorFilter = function(err) {
+          options.errorFilter = (err) => {
             // if it's a timeout error, then getCorpora is called again after params.interval
             // otherwise the error is passed back to the user
             // if the params.times limit is reached, the error will be passed to the user regardless
@@ -252,8 +255,8 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
           };
           async.retry(
             options,
-            function(done) {
-              self.getCorpora(params, function(err, corpora) {
+            (done) => {
+              self.getCorpora(params, (err, corpora) => {
                 if (err) {
                   done(err);
                 } else if (isProcessing(corpora)) {
@@ -274,7 +277,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
           );
         }
       ],
-      function(err, res) {
+      (err, res) => {
         if (err) {
           return callback(err);
         }
@@ -330,15 +333,15 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
       )
     };
     const protocol = protocols[parts.protocol.match(/https?/)[0]];
-    const recognize_req = protocol.request(options, function(result) {
+    const recognizeReq = protocol.request(options, (result) => {
       result.setEncoding('utf-8');
       let transcript = '';
 
-      result.on('data', function(chunk) {
+      result.on('data', (chunk) => {
         transcript += chunk;
       });
 
-      result.on('end', function() {
+      result.on('end', () => {
         try {
           transcript = formatChunk(transcript);
         } catch (e) {
@@ -349,10 +352,10 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
       });
     });
 
-    recognize_req.on('error', function(error) {
+    recognizeReq.on('error', (error) => {
       callback(error);
     });
-    return recognize_req;
+    return recognizeReq;
   }
 
   /**
@@ -400,9 +403,9 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
       )
     };
     const protocol = protocols[parts.protocol.match(/https?/)[0]];
-    const req = protocol.request(options, function(result) {
+    const req = protocol.request(options, (result) => {
       result.setEncoding('utf-8');
-      result.on('data', function(chunk) {
+      result.on('data', (chunk) => {
         try {
           chunk = formatChunk(chunk);
         } catch (e) {
@@ -413,7 +416,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
       });
     });
 
-    req.on('error', function(error) {
+    req.on('error', (error) => {
       callback(error);
     });
 
@@ -498,7 +501,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
       defaultOptions: this._options
     };
     return params.audio
-      .on('response', function(response) {
+      .on('response', (response) => {
         // Replace content-type
         response.headers['content-type'] = params.content_type;
       })
@@ -534,7 +537,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
       },
       params
     );
-    options.errorFilter = function(err) {
+    options.errorFilter = (err) => {
       // if it's a timeout error, then getCustomization is called again after params.interval
       // otherwise the error is passed back to the user
       // if the params.times limit is reached, the error will be passed to the user regardless
@@ -542,8 +545,8 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
     };
     async.retry(
       options,
-      function(next) {
-        self.getCustomization(params, function(err, customization) {
+      (next) => {
+        self.getCustomization(params, (err, customization) => {
           if (err) {
             next(err);
           } else if (

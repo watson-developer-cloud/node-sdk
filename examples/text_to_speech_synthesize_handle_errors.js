@@ -18,7 +18,7 @@ var stream = textToSpeech
     {
       text: 'Hello from IBM Watson',
       voice: 'INVALID_VOICE', // comment this line to show the example working correctly
-      accept: 'audio/wav' // default is audio/ogg; codec=opus
+      accept: 'audio/wav', // default is audio/ogg; codec=opus
     },
     function(error) {
       if (error) {

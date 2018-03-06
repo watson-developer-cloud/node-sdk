@@ -50,11 +50,11 @@ export import VisualRecognitionV3 = require('./visual-recognition/v3');
 // e.g. servicesByVersion.text_to_speech.v1 === export import TextToSpeechV1;
 const servicesByVersion = {};
 Object.keys(exports).forEach(key => {
-  const Service = exports[key];
-  const name = Service.prototype.name;
-  const version = Service.prototype.serviceVersion;
+  const service = exports[key];
+  const name = service.prototype.name;
+  const version = service.prototype.serviceVersion;
   servicesByVersion[name] = servicesByVersion[name] || {};
-  servicesByVersion[name][version] = Service;
+  servicesByVersion[name][version] = service;
 });
 
 Object.keys(servicesByVersion).forEach(serviceName => {
@@ -79,15 +79,15 @@ Object.keys(servicesByVersion).forEach(serviceName => {
         options.version = 'v1';
       }
 
-      const Service = servicesByVersion[serviceName][options.version];
+      const service = servicesByVersion[serviceName][options.version];
 
-      if (!Service) {
+      if (!service) {
         throw new Error(
           'Unable to find ' + serviceName + ' version ' + options.version
         );
       }
 
-      return new Service({
+      return new service({
         ...options,
         serviceVersion: options.version,
         version: options.version_date,

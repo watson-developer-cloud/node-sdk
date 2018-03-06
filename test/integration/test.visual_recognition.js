@@ -21,7 +21,7 @@ describe('visual_recognition_integration', function() {
   before(function() {
     visual_recognition = new watson.VisualRecognitionV3(
       Object.assign({}, auth.visual_recognition.v3, {
-        version: watson.VisualRecognitionV3.VERSION_DATE_2016_05_20
+        version: watson.VisualRecognitionV3.VERSION_DATE_2016_05_20,
       })
     );
     nock.enableNetConnect();
@@ -34,7 +34,7 @@ describe('visual_recognition_integration', function() {
   describe('classify()', function() {
     it('should classify an uploaded image', function(done) {
       const params = {
-        images_file: fs.createReadStream(__dirname + '/../resources/car.png')
+        images_file: fs.createReadStream(__dirname + '/../resources/car.png'),
       };
       visual_recognition.classify(params, function(err, result) {
         if (err) {
@@ -57,7 +57,7 @@ describe('visual_recognition_integration', function() {
     it('should classify from a buffer', function(done) {
       this.retries(0);
       const params = {
-        images_file: fs.readFileSync(__dirname + '/../resources/car.png')
+        images_file: fs.readFileSync(__dirname + '/../resources/car.png'),
       };
       visual_recognition.classify(params, function(err, result) {
         if (err) {
@@ -78,7 +78,7 @@ describe('visual_recognition_integration', function() {
 
     it('should classify an image via url', function(done) {
       const params = {
-        url: 'https://watson-test-resources.mybluemix.net/resources/car.png'
+        url: 'https://watson-test-resources.mybluemix.net/resources/car.png',
       };
       visual_recognition.classify(params, function(err, result) {
         if (err) {
@@ -109,7 +109,7 @@ describe('visual_recognition_integration', function() {
   describe('detectFaces()', function() {
     it('should detect faces in an uploaded image', function(done) {
       const params = {
-        images_file: fs.createReadStream(__dirname + '/../resources/obama.jpg')
+        images_file: fs.createReadStream(__dirname + '/../resources/obama.jpg'),
       };
       visual_recognition.detectFaces(params, function(err, result) {
         if (err) {
@@ -128,7 +128,7 @@ describe('visual_recognition_integration', function() {
 
     it('should detect faces in an image via url', function(done) {
       const params = {
-        url: 'https://watson-test-resources.mybluemix.net/resources/obama.jpg'
+        url: 'https://watson-test-resources.mybluemix.net/resources/obama.jpg',
       };
       visual_recognition.detectFaces(params, function(err, result) {
         if (err) {

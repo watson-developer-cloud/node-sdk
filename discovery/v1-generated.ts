@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-
 import * as extend from 'extend';
 import { RequestResponse } from 'request';
 import { BaseService } from '../lib/base_service';
-import { FileObject } from '../lib/helper';
 import { getMissingParams } from '../lib/helper';
+import { FileObject } from '../lib/helper';
 import { createRequest } from '../lib/requestwrapper';
 
 /**

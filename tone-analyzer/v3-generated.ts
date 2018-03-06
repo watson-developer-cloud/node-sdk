@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-
 import * as extend from 'extend';
 import { RequestResponse } from 'request';
 import { BaseService } from '../lib/base_service';

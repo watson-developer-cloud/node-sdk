@@ -15,11 +15,11 @@ var lineIn = new LineIn(); // 2-channel 16-bit little-endian signed integer pcm 
 
 var wavStream = new wav.Writer({
   sampleRate: 44100,
-  channels: 2
+  channels: 2,
 });
 
 var recognizeStream = speechToText.createRecognizeStream({
-  content_type: 'audio/wav'
+  content_type: 'audio/wav',
 });
 
 lineIn.pipe(wavStream);
