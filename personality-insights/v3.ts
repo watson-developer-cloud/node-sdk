@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-import GeneratedPersonalityInsightsV3 = require('./v3-generated');
 import extend = require('extend');
 import pick = require('object.pick');
 import { RequestResponse } from 'request';
-import { createRequest } from '../lib/requestwrapper';
-import { getMissingParams, isHTML, toLowerKeys } from '../lib/helper';
 import { BaseService } from '../lib/base_service';
+import { getMissingParams, isHTML, toLowerKeys } from '../lib/helper';
+import { createRequest } from '../lib/requestwrapper';
+import GeneratedPersonalityInsightsV3 = require('./v3-generated');
 
 class PersonalityInsightsV3 extends GeneratedPersonalityInsightsV3 {
   constructor(options) {
@@ -44,16 +44,16 @@ class PersonalityInsightsV3 extends GeneratedPersonalityInsightsV3 {
       return;
     }
 
-    let content_type = null;
+    let contentType = null;
     if (params.text) {
-      content_type = isHTML(params.text) ? 'text/html' : 'text/plain';
+      contentType = isHTML(params.text) ? 'text/html' : 'text/plain';
     } else {
-      content_type = 'application/json';
+      contentType = 'application/json';
     }
 
-    let _params: GeneratedPersonalityInsightsV3.ProfileParams = {
+    const _params: GeneratedPersonalityInsightsV3.ProfileParams = {
       content: params.text || pick(params, ['contentItems']),
-      content_type: content_type,
+      content_type: contentType,
       raw_scores: params.raw_scores,
       csv_headers: params.csv_headers,
       consumption_preferences: params.consumption_preferences
@@ -100,7 +100,7 @@ class PersonalityInsightsV3 extends GeneratedPersonalityInsightsV3 {
     >
   ): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
-    const _callback = callback ? callback : () => {};
+    const _callback = callback ? callback : () => { /*noop*/ };
     const requiredParams = ['content', 'content_type'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -117,7 +117,7 @@ class PersonalityInsightsV3 extends GeneratedPersonalityInsightsV3 {
         url: '/v3/profile',
         method: 'POST',
         json: _params.content_type === 'application/json',
-        body: body,
+        body,
         qs: query
       },
       defaultOptions: extend(true, this._options, {

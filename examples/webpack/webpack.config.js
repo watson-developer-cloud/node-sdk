@@ -3,13 +3,13 @@
 module.exports = {
   entry: './public/client.js',
   output: {
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   // http://webpack.github.io/docs/configuration.html#node
   node: {
     fs: 'empty',
     net: 'empty',
-    tls: 'empty'
+    tls: 'empty',
   },
   // Loader for Retrieve & Rank
   // Retrieve & Rank depends on solr-client, which depends on JSONStream, which starts with a shebang line, which
@@ -23,8 +23,8 @@ module.exports = {
     rules: [
       {
         test: /JSONStream/,
-        use: 'shebang-loader'
-      }
-    ]
-  }
+        use: 'shebang-loader',
+      },
+    ],
+  },
 };

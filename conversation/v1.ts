@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-import GeneratedConversationV1 = require('./v1-generated');
 import extend = require('extend');
 import { getMissingParams } from '../lib/helper';
 import { createRequest } from '../lib/requestwrapper';
+import GeneratedConversationV1 = require('./v1-generated');
 
 class ConversationV1 extends GeneratedConversationV1 {
   static VERSION_DATE_2017_05_26: string = '2017-05-26';
@@ -30,16 +30,16 @@ class ConversationV1 extends GeneratedConversationV1 {
 
   static VERSION_DATE_2016_07_11: string = '2016-07-11';
 
+  private static removedError: Error = new Error(
+    'This endpoint has been deprecated.'
+  );
+
   constructor(options) {
     // For backward compatibility, allow version to be passed in version_date.
     const _options = extend({}, options);
     _options.version = _options.version_date || _options.version;
     super(_options);
   }
-
-  private static removedError: Error = new Error(
-    'This endpoint has been deprecated.'
-  );
 
   workspaceStatus(params, callback) {
     console.warn(ConversationV1.removedError);
@@ -62,7 +62,7 @@ class ConversationV1 extends GeneratedConversationV1 {
 
     const requiredParams = ['workspace_id', 'old_intent', 'intent'];
     const missingParams = getMissingParams(params, requiredParams);
-    if (missingParams) return callback(missingParams);
+    if (missingParams) { return callback(missingParams); }
 
     const _params: GeneratedConversationV1.UpdateIntentParams = {
       workspace_id: params.workspace_id,
@@ -86,7 +86,7 @@ class ConversationV1 extends GeneratedConversationV1 {
 
     const requiredParams = ['workspace_id', 'intent', 'old_text', 'text'];
     const missingParams = getMissingParams(params, requiredParams);
-    if (missingParams) return callback(missingParams);
+    if (missingParams) { return callback(missingParams); }
 
     const _params: GeneratedConversationV1.UpdateExampleParams = {
       workspace_id: params.workspace_id,
@@ -121,7 +121,7 @@ class ConversationV1 extends GeneratedConversationV1 {
 
     const requiredParams = ['workspace_id', 'old_text', 'text'];
     const missingParams = getMissingParams(params, requiredParams);
-    if (missingParams) return callback(missingParams);
+    if (missingParams) { return callback(missingParams); }
 
     const _params: GeneratedConversationV1.UpdateCounterexampleParams = {
       workspace_id: params.workspace_id,
@@ -151,7 +151,7 @@ class ConversationV1 extends GeneratedConversationV1 {
 
     const requiredParams = ['workspace_id', 'old_entity', 'entity'];
     const missingParams = getMissingParams(params, requiredParams);
-    if (missingParams) return callback(missingParams);
+    if (missingParams) { return callback(missingParams); }
 
     const _params: GeneratedConversationV1.UpdateEntityParams = {
       workspace_id: params.workspace_id,
@@ -185,7 +185,7 @@ class ConversationV1 extends GeneratedConversationV1 {
 
     const requiredParams = ['workspace_id', 'entity', 'old_value', 'value'];
     const missingParams = getMissingParams(params, requiredParams);
-    if (missingParams) return callback(missingParams);
+    if (missingParams) { return callback(missingParams); }
 
     const _params: GeneratedConversationV1.UpdateValueParams = {
       workspace_id: params.workspace_id,
@@ -218,7 +218,7 @@ class ConversationV1 extends GeneratedConversationV1 {
       'synonym'
     ];
     const missingParams = getMissingParams(params, requiredParams);
-    if (missingParams) return callback(missingParams);
+    if (missingParams) { return callback(missingParams); }
 
     const _params: GeneratedConversationV1.UpdateSynonymParams = {
       workspace_id: params.workspace_id,
@@ -236,7 +236,7 @@ class ConversationV1 extends GeneratedConversationV1 {
   }
 
   createDialogNode(params, callback) {
-    let _params = extend({}, params);
+    const _params = extend({}, params);
     if (params && params.type && !_params.node_type) {
       _params.node_type = params.type;
     }
@@ -271,7 +271,7 @@ class ConversationV1 extends GeneratedConversationV1 {
 
     const requiredParams = ['workspace_id', 'old_dialog_node', 'dialog_node'];
     const missingParams = getMissingParams(params, requiredParams);
-    if (missingParams) return callback(missingParams);
+    if (missingParams) { return callback(missingParams); }
 
     const _params: GeneratedConversationV1.UpdateDialogNodeParams = {
       workspace_id: params.workspace_id,

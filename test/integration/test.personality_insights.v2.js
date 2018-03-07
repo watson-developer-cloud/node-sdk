@@ -31,14 +31,14 @@ describe('personality_insights_v2_integration', function() {
 
   it('profile()', function(done) {
     const params = {
-      text: mobydick
+      text: mobydick,
     };
     personality_insights.profile(params, done);
   });
 
   it('profile_html()', function(done) {
     const params = {
-      text: '<div>' + mobydick + '</div>'
+      text: '<div>' + mobydick + '</div>',
     };
     personality_insights.profile(params, done);
   });

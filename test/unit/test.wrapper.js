@@ -12,10 +12,10 @@ describe('wrapper', function() {
         credentials: {
           password: 'pass',
           url: 'http://ibm.com',
-          username: 'user'
-        }
-      }
-    ]
+          username: 'user',
+        },
+      },
+    ],
   };
 
   it('should check for missing parameters', function() {
@@ -31,13 +31,13 @@ describe('wrapper', function() {
     assert.ok(
       create_service({
         use_unauthenticated: true,
-        version: 'v1'
+        version: 'v1',
       })
     );
     assert.throws(function() {
       create_service({
         use_unauthenticated: false,
-        version: 'v1'
+        version: 'v1',
       });
     }, /use_unauthenticated/);
   });
@@ -46,12 +46,12 @@ describe('wrapper', function() {
     assert.throws(function() {
       create_service({
         username: 'user',
-        password: 'pass'
+        password: 'pass',
       });
     }, /version/);
     assert.throws(function() {
       create_service({
-        api_key: 'keykeykey'
+        api_key: 'keykeykey',
       });
     }, /version/);
   });
@@ -60,13 +60,13 @@ describe('wrapper', function() {
     assert.throws(function() {
       create_service({
         version: 'v1',
-        username: 'user'
+        username: 'user',
       });
     }, /password/);
     assert.throws(function() {
       create_service({
         version: 'v1',
-        password: 'pass'
+        password: 'pass',
       });
     }, /username/);
 
@@ -74,7 +74,7 @@ describe('wrapper', function() {
       create_service({
         password: 'pass',
         username: 'user',
-        version: 'v1'
+        version: 'v1',
       })
     );
   });
@@ -93,7 +93,7 @@ describe('wrapper', function() {
       process.env.VCAP_SERVICES = JSON.stringify(vcap_services);
       const service = create_service({
         version: 'v1',
-        api_key: 'not-gonna-work'
+        api_key: 'not-gonna-work',
       });
 
       // check api_key we get from VCAP_SERVICES
@@ -105,7 +105,7 @@ describe('wrapper', function() {
       const service = create_service({
         version: 'v1',
         api_key: 'not-gonna-work',
-        use_vcap_services: false
+        use_vcap_services: false,
       });
 
       // don't use VCAP_SERVICES if user_vcap_services == false
@@ -121,7 +121,7 @@ describe('wrapper', function() {
       password: 'bar',
       foo: 'bar',
       use_vcap_services: false,
-      bar: 'foo'
+      bar: 'foo',
     });
 
     // don't use VCAP_SERVICES if user_vcap_services == false

@@ -32,7 +32,7 @@ describe('text_to_speech_integration', function() {
   it('synthesize()', function(done) {
     const params = {
       text: 'test',
-      accept: 'audio/wav'
+      accept: 'audio/wav',
     };
     // wav.Reader parses the wav header and will throw if it isn't valid
     const reader = new wav.Reader();
@@ -48,7 +48,7 @@ describe('text_to_speech_integration', function() {
       assert.equal(
         JSON.stringify(res),
         JSON.stringify({
-          pronunciation: '.ˈaɪ .ˈi .ˈi .ˈi'
+          pronunciation: '.ˈaɪ .ˈi .ˈi .ˈi',
         })
       );
       done();
@@ -70,7 +70,7 @@ describe('text_to_speech_integration', function() {
           description:
             'Created by Node.js SDK integration tests on ' +
             new Date() +
-            '. Should be automatically deleted within 10 minutes.'
+            '. Should be automatically deleted within 10 minutes.',
         },
         function(err, response) {
           // console.log(JSON.stringify(err || response, null, 2));
@@ -119,7 +119,7 @@ describe('text_to_speech_integration', function() {
         {
           customization_id: customization_id,
           description: 'Updated. Should be automatically deleted within 10 minutes.',
-          words: [{ word: 'NCAA', translation: 'N C double A' }]
+          words: [{ word: 'NCAA', translation: 'N C double A' }],
         },
         done
       );
@@ -144,7 +144,7 @@ describe('text_to_speech_integration', function() {
       text_to_speech.addWords(
         {
           customization_id: customization_id,
-          words: [{ word: 'iPhone', translation: 'I phone' }]
+          words: [{ word: 'iPhone', translation: 'I phone' }],
         },
         done
       );
@@ -155,7 +155,7 @@ describe('text_to_speech_integration', function() {
         {
           customization_id: customization_id,
           word: 'IEEE',
-          translation: 'I tipple E'
+          translation: 'I tipple E',
         },
         done
       );
@@ -190,7 +190,7 @@ describe('text_to_speech_integration', function() {
       text_to_speech.deleteWord(
         {
           customization_id: customization_id,
-          word: 'NCAA'
+          word: 'NCAA',
         },
         done
       );

@@ -34,7 +34,7 @@ describe('BaseService', function() {
     const expected = {
       username: 'user',
       password: 'pass',
-      url: 'https://gateway.watsonplatform.net/test/api'
+      url: 'https://gateway.watsonplatform.net/test/api',
     };
     assert.deepEqual(actual, expected);
   });
@@ -48,7 +48,7 @@ describe('BaseService', function() {
     const expected = {
       username: 'env_user',
       password: 'env_pass',
-      url: 'http://foo'
+      url: 'http://foo',
     };
     assert.deepEqual(actual, expected);
   });
@@ -61,7 +61,7 @@ describe('BaseService', function() {
     const expected = {
       username: 'env_user',
       password: 'env_pass',
-      url: 'https://gateway.watsonplatform.net/test/api'
+      url: 'https://gateway.watsonplatform.net/test/api',
     };
     assert.deepEqual(actual, expected);
   });
@@ -73,17 +73,17 @@ describe('BaseService', function() {
           credentials: {
             password: 'vcap_pass',
             url: 'https://gateway.watsonplatform.net/test/api',
-            username: 'vcap_user'
-          }
-        }
-      ]
+            username: 'vcap_user',
+          },
+        },
+      ],
     });
     const instance = new TestService();
     const actual = instance.getCredentials();
     const expected = {
       username: 'vcap_user',
       password: 'vcap_pass',
-      url: 'https://gateway.watsonplatform.net/test/api'
+      url: 'https://gateway.watsonplatform.net/test/api',
     };
     assert.deepEqual(actual, expected);
   });
@@ -96,7 +96,7 @@ describe('BaseService', function() {
     const expected = {
       username: 'user',
       password: 'pass',
-      url: 'https://gateway.watsonplatform.net/test/api'
+      url: 'https://gateway.watsonplatform.net/test/api',
     };
     assert.deepEqual(actual, expected);
   });
@@ -108,10 +108,10 @@ describe('BaseService', function() {
           credentials: {
             password: 'vcap_pass',
             url: 'https://gateway.watsonplatform.net/test/api',
-            username: 'vcap_user'
-          }
-        }
-      ]
+            username: 'vcap_user',
+          },
+        },
+      ],
     });
     process.env.TEST_USERNAME = 'env_user';
     process.env.TEST_PASSWORD = 'env_pass';
@@ -120,7 +120,7 @@ describe('BaseService', function() {
     const expected = {
       username: 'env_user',
       password: 'env_pass',
-      url: 'https://gateway.watsonplatform.net/test/api'
+      url: 'https://gateway.watsonplatform.net/test/api',
     };
     assert.deepEqual(actual, expected);
   });

@@ -47,7 +47,7 @@ class TextToSpeechV1 extends GeneratedTextToSpeechV1 {
    * @param {Buffer} wavFileData - Wave audio - will be edited in place and returned
    * @return {Buffer} wavFileData - the original Buffer, with a correct header
    */
-  repairWavHeader = function(wavFileData) {
+  repairWavHeader = (wavFileData) => {
     const totalBytes = wavFileData.length;
 
     // bytes 4-8 in header give the total file size,

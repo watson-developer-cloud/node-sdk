@@ -23,8 +23,8 @@ module.exports = {
     password: '',
     headers: {
       'X-Watson-Learning-Opt-Out': 1,
-      'X-Watson-Test': 1
-    }
+      'X-Watson-Test': 1,
+    },
   },
   concept_insights: {
     url: 'https://gateway.watsonplatform.net/concept-insights/api',
@@ -32,9 +32,9 @@ module.exports = {
     password: '',
     headers: {
       'X-Watson-Learning-Opt-Out': 1,
-      'X-Watson-Test': 1
+      'X-Watson-Test': 1,
     },
-    account_id: 'larmu8up2pa3'
+    account_id: 'larmu8up2pa3',
   },
   speech_to_text: {
     url: 'https://stream.watsonplatform.net/speech-to-text/api',
@@ -42,8 +42,8 @@ module.exports = {
     password: '',
     headers: {
       'X-Watson-Learning-Opt-Out': 1,
-      'X-Watson-Test': 1
-    }
+      'X-Watson-Test': 1,
+    },
   },
   text_to_speech: {
     url: 'https://stream.watsonplatform.net/text-to-speech/api',
@@ -51,8 +51,8 @@ module.exports = {
     password: '',
     headers: {
       'X-Watson-Learning-Opt-Out': 1,
-      'X-Watson-Test': 1
-    }
+      'X-Watson-Test': 1,
+    },
   },
   tradeoff_analytics: {
     url: 'https://gateway.watsonplatform.net/tradeoff-analytics/api',
@@ -60,8 +60,8 @@ module.exports = {
     password: '',
     headers: {
       'X-Watson-Learning-Opt-Out': 1,
-      'X-Watson-Test': 1
-    }
+      'X-Watson-Test': 1,
+    },
   },
   visual_recognition: {
     v3: {
@@ -69,9 +69,9 @@ module.exports = {
       api_key: '',
       headers: {
         'X-Watson-Learning-Opt-Out': 1,
-        'X-Watson-Test': 1
-      }
-    }
+        'X-Watson-Test': 1,
+      },
+    },
   },
   personality_insights: {
     v2: {
@@ -80,8 +80,8 @@ module.exports = {
       password: '',
       headers: {
         'X-Watson-Learning-Opt-Out': 1,
-        'X-Watson-Test': 1
-      }
+        'X-Watson-Test': 1,
+      },
     },
     v3: {
       url: 'https://gateway.watsonplatform.net/personality-insights/api',
@@ -89,9 +89,9 @@ module.exports = {
       password: '',
       headers: {
         'X-Watson-Learning-Opt-Out': 1,
-        'X-Watson-Test': 1
-      }
-    }
+        'X-Watson-Test': 1,
+      },
+    },
   },
   dialog: {
     url: 'https://gateway.watsonplatform.net/dialog/api',
@@ -100,8 +100,8 @@ module.exports = {
     dialog_id: '',
     headers: {
       'X-Watson-Learning-Opt-Out': 1,
-      'X-Watson-Test': 1
-    }
+      'X-Watson-Test': 1,
+    },
   },
   language_translator: {
     url: 'https://gateway.watsonplatform.net/language-translator/api',
@@ -109,8 +109,8 @@ module.exports = {
     password: '',
     headers: {
       'X-Watson-Learning-Opt-Out': 1,
-      'X-Watson-Test': 1
-    }
+      'X-Watson-Test': 1,
+    },
   },
   tone_analyzer: {
     url: 'https://gateway.watsonplatform.net/tone-analyzer/api',
@@ -118,11 +118,11 @@ module.exports = {
     password: '',
     headers: {
       'X-Watson-Learning-Opt-Out': 1,
-      'X-Watson-Test': 1
-    }
+      'X-Watson-Test': 1,
+    },
   },
   alchemy: {
-    api_key: ''
+    api_key: '',
   },
   document_conversion: {
     url: 'https://gateway.watsonplatform.net/document-conversion/api',
@@ -130,8 +130,8 @@ module.exports = {
     password: '',
     headers: {
       'X-Watson-Learning-Opt-Out': 1,
-      'X-Watson-Test': 1
-    }
+      'X-Watson-Test': 1,
+    },
   },
   retrieve_and_rank: {
     url: 'https://gateway.watsonplatform.net/retrieve-and-rank/api',
@@ -139,8 +139,8 @@ module.exports = {
     password: '',
     headers: {
       'X-Watson-Learning-Opt-Out': 1,
-      'X-Watson-Test': 1
-    }
+      'X-Watson-Test': 1,
+    },
   },
   natural_language_classifier: {
     url: 'https://gateway.watsonplatform.net/natural-language-classifier/api',
@@ -149,8 +149,8 @@ module.exports = {
     classifier_id: '',
     headers: {
       'X-Watson-Learning-Opt-Out': 1,
-      'X-Watson-Test': 1
-    }
+      'X-Watson-Test': 1,
+    },
   },
   conversation: {
     url: 'https://gateway.watsonplatform.net/conversation/api',
@@ -159,8 +159,8 @@ module.exports = {
     workspace_id: '',
     headers: {
       'X-Watson-Learning-Opt-Out': 1,
-      'X-Watson-Test': 1
-    }
+      'X-Watson-Test': 1,
+    },
   },
   discovery: {
     username: '',
@@ -169,7 +169,7 @@ module.exports = {
     configuration_id: '',
     headers: {
       'X-Watson-Learning-Opt-Out': 1,
-      'X-Watson-Test': 1
-    }
-  }
+      'X-Watson-Test': 1,
+    },
+  },
 };

@@ -7,13 +7,13 @@ const nock = require('nock');
 describe('authorization', function() {
   // Test params
   const service_request = {
-    url: 'http://ibm.com:80/text-to-speech-beta/api/foo/bar'
+    url: 'http://ibm.com:80/text-to-speech-beta/api/foo/bar',
   };
   const service = {
     username: 'batman',
     password: 'bruce-wayne',
     url: service_request.url,
-    version: 'v1'
+    version: 'v1',
   };
 
   // tokens are URL-encoded when recieved from the service
@@ -55,7 +55,7 @@ describe('authorization', function() {
   describe('getToken()', function() {
     it('should check for missing url param', function(done) {
       const params = {
-        noturl: service_request.url
+        noturl: service_request.url,
       };
       authorization.getToken(params, missingParameter(done));
     });

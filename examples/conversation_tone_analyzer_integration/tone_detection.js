@@ -23,7 +23,7 @@ var Promise = require('bluebird');
  */
 module.exports = {
   updateUserTone: updateUserTone,
-  invokeToneAsync: invokeToneAsync
+  invokeToneAsync: invokeToneAsync,
 };
 
 /**
@@ -85,9 +85,9 @@ function initUser() {
   return {
     user: {
       tone: {
-        current: null
-      }
-    }
+        current: null,
+      },
+    },
   };
 }
 
@@ -118,7 +118,7 @@ function updateTone(user, tones, maintainHistory) {
     }
     user.tone.history.push({
       tone_name: primaryTone,
-      score: primaryToneScore
+      score: primaryToneScore,
     });
   }
 }

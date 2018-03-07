@@ -35,7 +35,7 @@ describe('speech_to_text_integration', function() {
   it('recognize()', function(done) {
     const params = {
       audio: fs.createReadStream(path.join(__dirname, '../resources/weather.ogg')),
-      content_type: 'audio/ogg; codec=opus'
+      content_type: 'audio/ogg; codec=opus',
     };
     speech_to_text.recognize(params, done);
   });
@@ -45,7 +45,7 @@ describe('speech_to_text_integration', function() {
       audio: fs.createReadStream(path.join(__dirname, '../resources/weather.ogg')),
       keywords: ['hail', 'tornadoes', 'rain'],
       keywords_threshold: 0.6,
-      content_type: 'audio/ogg; codec=opus'
+      content_type: 'audio/ogg; codec=opus',
     };
     speech_to_text.recognize(params, function(err, res) {
       if (err) {
@@ -135,7 +135,7 @@ describe('speech_to_text_integration', function() {
 
     it('works when stream has no words', function(done) {
       const recognizeStream = speech_to_text.createRecognizeStream({
-        content_type: 'audio/l16; rate=44100'
+        content_type: 'audio/l16; rate=44100',
       });
       recognizeStream.setEncoding('utf8');
       fs
@@ -206,7 +206,7 @@ describe('speech_to_text_integration', function() {
           name: 'js-sdk-test-temporary',
           base_model_name: 'en-US_BroadbandModel',
           description:
-            'Temporary customization to test the JS SDK. Should be automatically deleted within a few minutes.'
+            'Temporary customization to test the JS SDK. Should be automatically deleted within a few minutes.',
         },
         function(err, result) {
           if (err) {
@@ -253,7 +253,7 @@ describe('speech_to_text_integration', function() {
           name: 'test_corpus_1',
           corpus: fs.createReadStream(
             path.join(__dirname, '../resources/speech_to_text/corpus-short-1.txt')
-          )
+          ),
         },
         done
       );
@@ -269,7 +269,7 @@ describe('speech_to_text_integration', function() {
             name: 'test_corpus_2',
             corpus: fs.readFileSync(
               path.join(__dirname, '../resources/speech_to_text/corpus-short-2.txt')
-            )
+            ),
           },
           done
         );
@@ -286,7 +286,7 @@ describe('speech_to_text_integration', function() {
             corpus: fs
               .readFileSync(path.join(__dirname, '../resources/speech_to_text/corpus-short-2.txt'))
               .toString(),
-            allow_overwrite: true
+            allow_overwrite: true,
           },
           done
         );
@@ -307,14 +307,14 @@ describe('speech_to_text_integration', function() {
               {
                 word: 'hhonors',
                 sounds_like: ['hilton honors', 'h honors'],
-                display_as: 'HHonors'
+                display_as: 'HHonors',
               },
               {
                 word: 'ieee',
                 sounds_like: ['i triple e'],
-                display_as: 'IEEE'
-              }
-            ]
+                display_as: 'IEEE',
+              },
+            ],
           },
           done
         );
@@ -328,7 +328,7 @@ describe('speech_to_text_integration', function() {
           {
             customization_id: customization_id,
             word: 'tomato',
-            sounds_like: ['tomatoh', 'tomayto']
+            sounds_like: ['tomatoh', 'tomayto'],
           },
           done
         );
@@ -343,7 +343,7 @@ describe('speech_to_text_integration', function() {
       speech_to_text.getWord(
         {
           customization_id: customization_id,
-          word: 'ieee'
+          word: 'ieee',
         },
         done
       );
@@ -355,7 +355,7 @@ describe('speech_to_text_integration', function() {
         speech_to_text.deleteWord(
           {
             customization_id: customization_id,
-            word: 'tomato'
+            word: 'tomato',
           },
           done
         );
@@ -368,7 +368,35 @@ describe('speech_to_text_integration', function() {
         speech_to_text.deleteWord(
           {
             customization_id: customization_id,
-            word: 'hhonors'
+            word: 'hhonors',
+          },
+          done
+        );
+      })
+    );
+
+    it(
+      'addAudio()',
+      waitUntilReady(function(done) {
+        speech_to_text.addAudio(
+          {
+            customization_id: customization_id,
+            audio_name: 'blank',
+            audio_resource: fs.readFileSync(path.join(__dirname, '../resources/blank.wav')),
+            content_type: 'audio/wav',
+          },
+          done
+        );
+      })
+    );
+
+    it(
+      'deleteAudio()',
+      waitUntilReady(function(done) {
+        speech_to_text.deleteAudio(
+          {
+            customization_id: customization_id,
+            audio_name: 'blank',
           },
           done
         );
@@ -398,7 +426,7 @@ describe('speech_to_text_integration', function() {
         const params = {
           audio: fs.createReadStream(path.join(__dirname, '../resources/weather.ogg')),
           content_type: 'audio/ogg; codec=opus',
-          customization_id: customization_id
+          customization_id: customization_id,
         };
         speech_to_text.recognize(params, done);
       })
@@ -440,7 +468,7 @@ describe('speech_to_text_integration', function() {
           // if this fails, logs are available at https://watson-test-resources.mybluemix.net/speech-to-text-async/secure
           callback_url:
             'https://watson-test-resources.mybluemix.net/speech-to-text-async/secure/callback',
-          user_secret: 'ThisIsMySecret'
+          user_secret: 'ThisIsMySecret',
         },
         done
       );
@@ -455,7 +483,7 @@ describe('speech_to_text_integration', function() {
           'https://watson-test-resources.mybluemix.net/speech-to-text-async/secure/callback',
         user_token: 'Node.js SDK Integration Test at ' + new Date(),
         events: 'recognitions.completed',
-        results_ttl: 1
+        results_ttl: 1,
       };
       speech_to_text.createRecognitionJob(params, function(err, res) {
         assert.ifError(err);
@@ -483,7 +511,7 @@ describe('speech_to_text_integration', function() {
         {
           name: 'testName',
           base_model_name: 'en-US_BroadbandModel',
-          content_type: 'application/json'
+          content_type: 'application/json',
         },
         done
       );

@@ -13,13 +13,13 @@ describe('text_to_speech', function() {
   const service_request = {
     accept: 'audio/ogg; codecs=opus',
     voice: 'VoiceEnUsMichael',
-    text: 'Hi test'
+    text: 'Hi test',
   };
   const service = {
     username: 'batman',
     password: 'bruce-wayne',
     url: 'http://ibm.com:80',
-    version: 'v1'
+    version: 'v1',
   };
   const synthesize_path = '/v1/synthesize';
   const voices_path = '/v1/voices';
@@ -31,14 +31,14 @@ describe('text_to_speech', function() {
       name: 'michael',
       language: 'en',
       gender: 'male',
-      url: 'url'
+      url: 'url',
     },
     {
       name: 'jenny',
       language: 'en',
       gender: 'female',
-      url: 'url2'
-    }
+      url: 'url2',
+    },
   ];
 
   before(function() {
@@ -65,7 +65,7 @@ describe('text_to_speech', function() {
     it('should check for missing text', function() {
       const params = {
         voice: service_request.voice,
-        accept: service_request.accept
+        accept: service_request.accept,
       };
       text_to_speech.synthesize(params, missingParameter);
     });
@@ -158,7 +158,7 @@ describe('text_to_speech', function() {
 
   describe('pronunciation()', function() {
     const mock_pronunciation = {
-      pronunciation: '.ˈaɪ .ˈi .ˈi .ˈi'
+      pronunciation: '.ˈaɪ .ˈi .ˈi .ˈi',
     };
 
     beforeEach(function() {
@@ -316,7 +316,7 @@ describe('text_to_speech', function() {
         {
           customization_id: 'customer_id_1',
           word: 'word1',
-          translation: 'translation1'
+          translation: 'translation1',
         },
         noop
       );

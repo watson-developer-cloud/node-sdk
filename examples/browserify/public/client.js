@@ -28,11 +28,11 @@ function getToken() {
 function analyze(token) {
   var toneAnalyzer = new ToneAnalyzerV3({
     token: token,
-    version: '2016-05-19'
+    version: '2016-05-19',
   });
   toneAnalyzer.tone(
     {
-      text: input.value
+      text: input.value,
     },
     function(err, result) {
       if (err) {

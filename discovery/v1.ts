@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import GeneratedDiscoveryV1 = require('./v1-generated');
 import extend = require('extend');
 import isStream = require('isstream');
+import GeneratedDiscoveryV1 = require('./v1-generated');
 
 class DiscoveryV1 extends GeneratedDiscoveryV1 {
   static VERSION_DATE_2017_09_01: string = '2017-09-01';
@@ -26,13 +26,6 @@ class DiscoveryV1 extends GeneratedDiscoveryV1 {
   static VERSION_DATE_2016_12_01: string = '2016-12-01';
   static VERSION_DATE_2017_04_27: string = '2017-04-27';
   static VERSION_DATE_2016_12_15: string = '2016-12-15';
-
-  constructor(options) {
-    // For backward compatibility, allow version to be passed in version_date.
-    const _options = extend({}, options);
-    _options.version = _options.version_date || _options.version;
-    super(_options);
-  }
 
   static _ensureFilename(file) {
     // no changes needed for streams created by fs.ReadStream (or similar looking streams)
@@ -62,6 +55,13 @@ class DiscoveryV1 extends GeneratedDiscoveryV1 {
         filename: '_'
       }
     };
+  }
+
+  constructor(options) {
+    // For backward compatibility, allow version to be passed in version_date.
+    const _options = extend({}, options);
+    _options.version = _options.version_date || _options.version;
+    super(_options);
   }
 
   getEnvironments(params, callback) {

@@ -11,7 +11,7 @@ describe('language_translator', function() {
   const service = {
     username: 'batman',
     password: 'bruce-wayne',
-    url: 'http://ibm.com:80'
+    url: 'http://ibm.com:80',
   };
 
   before(function() {
@@ -43,33 +43,33 @@ describe('language_translator', function() {
         credentials: {
           password: 'FAKE_PASSWORD',
           url: 'https://gateway.watsonplatform.net/language-translator/api',
-          username: 'FAKE_USERNAME'
+          username: 'FAKE_USERNAME',
         },
         label: 'language_translator',
         name: 'Language Translator-4t',
         plan: 'standard',
         provider: null,
         syslog_drain_url: null,
-        tags: ['watson', 'ibm_created', 'ibm_dedicated_public']
-      }
+        tags: ['watson', 'ibm_created', 'ibm_dedicated_public'],
+      },
     ];
 
     it('should initialize with old-style VCAP_SERVICES credentials', function() {
       process.env.VCAP_SERVICES = JSON.stringify({
-        language_translator: details
+        language_translator: details,
       });
       const instance = new watson.LanguageTranslatorV2({
-        version: '2016-07-01'
+        version: '2016-07-01',
       });
       assert(instance._options.headers.Authorization);
     });
 
     it('should initialize with new-style VCAP_SERVICES credentials', function() {
       process.env.VCAP_SERVICES = JSON.stringify({
-        language_translator: details
+        language_translator: details,
       });
       const instance = new watson.LanguageTranslatorV2({
-        version: '2016-07-01'
+        version: '2016-07-01',
       });
       assert(instance._options.headers.Authorization);
     });
@@ -103,7 +103,7 @@ describe('language_translator', function() {
       const path = '/v2/translate';
       const service_request = {
         text: 'bar',
-        model_id: 'foo'
+        model_id: 'foo',
       };
       nock(service.url)
         .persist()
@@ -152,7 +152,7 @@ describe('language_translator', function() {
       assert.equal(req.uri.href, service.url + path);
       assert.equal(req.method, 'POST');
       const body = Buffer.from(req.body).toString('ascii');
-      assert.equal(body, JSON.stringify(service_request));
+      assert.equal(body, service_request.text);
     });
   });
 
@@ -169,7 +169,7 @@ describe('language_translator', function() {
         base_model_id: 'foo',
         forced_glossary: fs.createReadStream(__dirname + '/../resources/glossary.tmx'),
         parallel_corpus: fs.createReadStream(__dirname + '/../resources/glossary.tmx'),
-        monolingual_corpus: fs.createReadStream(__dirname + '/../resources/glossary.tmx')
+        monolingual_corpus: fs.createReadStream(__dirname + '/../resources/glossary.tmx'),
       };
 
       nock(service.url)
@@ -193,7 +193,7 @@ describe('language_translator', function() {
     it('should generate a valid payload', function() {
       const path = '/v2/models/foo';
       const service_request = {
-        model_id: 'foo'
+        model_id: 'foo',
       };
 
       nock(service.url)
@@ -217,7 +217,7 @@ describe('language_translator', function() {
     it('should generate a valid payload', function() {
       const path = '/v2/models/foo';
       const service_request = {
-        model_id: 'foo'
+        model_id: 'foo',
       };
 
       nock(service.url)

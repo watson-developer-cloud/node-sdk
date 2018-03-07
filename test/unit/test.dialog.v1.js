@@ -17,19 +17,19 @@ describe('dialog', function() {
     username: 'batman',
     password: 'bruce-wayne',
     url: 'http://ibm.com:80',
-    version: 'v1'
+    version: 'v1',
   };
 
   const payload = {
     dialog_id: 'dialog1',
-    client_id: 'client1'
+    client_id: 'client1',
   };
 
   const paths = {
     profile: '/v1/dialogs/' + payload.dialog_id + '/profile',
     conversation: '/v1/dialogs/' + payload.dialog_id + '/conversation',
     content: '/v1/dialogs/' + payload.dialog_id + '/content',
-    dialog: '/v1/dialogs/' + payload.dialog_id
+    dialog: '/v1/dialogs/' + payload.dialog_id,
   };
 
   before(function() {
@@ -162,7 +162,7 @@ describe('dialog', function() {
   describe('createDialog()', function() {
     const params = {
       file: fs.createReadStream(__dirname + '/../resources/pizza.xml'),
-      name: 'foo'
+      name: 'foo',
     };
 
     it('should check no parameters provided', function() {
@@ -207,7 +207,7 @@ describe('dialog', function() {
   describe('updateDialog()', function() {
     const params = {
       file: fs.createReadStream(__dirname + '/../resources/pizza.xml'),
-      dialog_id: payload.dialog_id
+      dialog_id: payload.dialog_id,
     };
 
     it('should check no parameters provided', function() {

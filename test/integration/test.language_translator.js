@@ -33,7 +33,7 @@ describe.skip('language_translator_integration', function() {
     const params = {
       text: 'this is a test',
       source: 'en',
-      target: 'es'
+      target: 'es',
     };
     language_translator.translate(params, done);
   });
@@ -44,7 +44,7 @@ describe.skip('language_translator_integration', function() {
 
   it('identify()', function(done) {
     const params = {
-      text: 'this is an important test that needs to work'
+      text: 'this is an important test that needs to work',
     };
     language_translator.identify(params, done);
   });

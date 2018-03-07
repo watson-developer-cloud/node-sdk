@@ -16,18 +16,18 @@ describe('conversation-v1', function() {
     username: 'batman',
     password: 'bruce-wayne',
     url: 'http://ibm.com:80',
-    version: '2017-05-26'
+    version: '2017-05-26',
   };
 
   const payload = {
-    workspace_id: 'workspace1'
+    workspace_id: 'workspace1',
   };
 
   const payload2 = {
     intent: 'intent1',
     text: 'text',
     entity: 'entity1',
-    value: 'value1'
+    value: 'value1',
   };
 
   const paths = {
@@ -48,7 +48,7 @@ describe('conversation-v1', function() {
       '/values/' +
       payload2.value +
       '/synonyms',
-    workspaces: '/v1/workspaces'
+    workspaces: '/v1/workspaces',
   };
 
   before(function() {
@@ -76,13 +76,13 @@ describe('conversation-v1', function() {
       alternate_intents: true,
       entities: '1entity',
       intents: '1intent',
-      junk: 'junk'
+      junk: 'junk',
     };
     const reqPayload2 = {
       output: 'foo',
       alternate_intents: true,
       entities: '1entity',
-      intents: '1intent'
+      intents: '1intent',
     };
     const params = extend({}, reqPayload, payload);
     const params1 = extend({}, reqPayload1, payload);
@@ -652,7 +652,7 @@ describe('conversation-v1', function() {
   const synPayload = {
     entity: payload2.entity,
     value: payload2.value,
-    synonym: 'syn'
+    synonym: 'syn',
   };
   const synParams = extend({}, synPayload, payload);
 

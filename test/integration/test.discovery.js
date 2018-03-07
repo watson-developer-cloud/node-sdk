@@ -8,25 +8,27 @@ const describe = authHelper.describe; // this runs describe.skip if there is no 
 const assert = require('assert');
 const async = require('async');
 const fs = require('fs');
+const path = require('path');
 
 const THIRTY_SECONDS = 30000;
 const TWO_SECONDS = 2000;
 
-describe.skip('discovery_integration', function() {
+describe('discovery_integration', function() {
   this.timeout(THIRTY_SECONDS);
   this.slow(TWO_SECONDS); // this controls when the tests get a colored warning for taking too long
   // this.retries(1);
 
   let discovery;
-  let environment_id; // = auth.discovery.environment_id;
-  let configuration_id; // = auth.discovery.configuration_id;
-  let collection_id;
+  let environment_id = auth.discovery.environment_id;
+  let configuration_id = auth.discovery.configuration_id;
+  let collection_id = auth.discovery.collection_id;
+  const collection_id2 = auth.discovery.collection_id_2;
 
   before(function() {
     nock.enableNetConnect();
     discovery = new DiscoveryV1(
       Object.assign({}, auth.discovery, {
-        version: DiscoveryV1.VERSION_DATE_2017_04_27
+        version: '2017-11-07',
       })
     );
     environment_id = auth.discovery.environment_id;
@@ -64,7 +66,6 @@ describe.skip('discovery_integration', function() {
       assert(Array.isArray(res.configurations));
       assert(res.configurations.length);
       assert(res.configurations[0]);
-      assert.equal(res.configurations[0].configuration_id, configuration_id);
       done();
     });
   });
@@ -73,7 +74,7 @@ describe.skip('discovery_integration', function() {
     discovery.getConfiguration(
       {
         environment_id: environment_id,
-        configuration_id: configuration_id
+        configuration_id: configuration_id,
       },
       function(err, conf) {
         assert.ifError(err);
@@ -95,7 +96,7 @@ describe.skip('discovery_integration', function() {
           new Date() +
           '. Should be deleted shortly',
         configuration_id: configuration_id,
-        language_code: 'en_us'
+        language_code: 'en_us',
       },
       function(err, res) {
         assert.ifError(err); // Error: This operation is invalid for read-only environments. (?)
@@ -110,7 +111,7 @@ describe.skip('discovery_integration', function() {
     discovery.getCollections(
       {
         environment_id: environment_id,
-        configuration_id: configuration_id
+        configuration_id: configuration_id,
       },
       function(err, res) {
         assert.ifError(err);
@@ -122,12 +123,32 @@ describe.skip('discovery_integration', function() {
     );
   });
 
+  it('should perform a federated query for notices', function(done) {
+    discovery.federatedQueryNotices(
+      {
+        environment_id: environment_id,
+        configuration_id: configuration_id,
+        collection_ids: [collection_id, collection_id2],
+        filter: 'yesplease',
+        count: 10,
+        sort: ['+field_1', '-field_2'],
+        natural_language_query: 'a question about stuff and things',
+      },
+      function(err, res) {
+        assert.ifError(err);
+        assert(res);
+        assert(Array.isArray(res.results));
+        done(err);
+      }
+    );
+  });
+
   describe('add-query-delete', function() {
     it('addDocument()', function(done) {
       const document_obj = {
         environment_id: environment_id,
         collection_id: collection_id,
-        file: fs.createReadStream(__dirname + '../resources/sample-docx.docx')
+        file: fs.createReadStream(path.join(__dirname, '../resources/sampleWord.docx')),
       };
 
       discovery.addDocument(document_obj, function(err, response) {
@@ -144,8 +165,8 @@ describe.skip('discovery_integration', function() {
         file: {
           foo: 'bar',
           from: 'node-sdk integration test',
-          test_date: new Date().toString()
-        }
+          test_date: new Date().toString(),
+        },
       };
 
       discovery.addJsonDocument(document_obj, function(err, response) {
@@ -160,7 +181,7 @@ describe.skip('discovery_integration', function() {
         {
           environment_id: environment_id,
           collection_id: collection_id,
-          query: ''
+          query: '',
         },
         function(err, res) {
           assert.ifError(err);
@@ -177,7 +198,7 @@ describe.skip('discovery_integration', function() {
         {
           environment_id: environment_id,
           collection_id: collection_id,
-          query: ''
+          query: '',
         },
         function(err, res) {
           assert.ifError(err);
@@ -189,7 +210,7 @@ describe.skip('discovery_integration', function() {
                 {
                   environment_id: environment_id,
                   collection_id: collection_id,
-                  document_id: doc.id
+                  document_id: doc.id,
                 },
                 function(err, res) {
                   // console.log('deleted', err, res);

@@ -33,7 +33,7 @@ describe('dialog_integration', function() {
     const params = {
       dialog_id: dialog_id,
       client_id: client_id,
-      name: ['size', 'method']
+      name: ['size', 'method'],
     };
     dialog.getProfile(params, done);
   });
@@ -45,13 +45,13 @@ describe('dialog_integration', function() {
       name_values: [
         {
           name: 'size',
-          value: 'large'
+          value: 'large',
         },
         {
           name: 'topping1',
-          value: 'cheese'
-        }
-      ]
+          value: 'cheese',
+        },
+      ],
     };
     dialog.updateProfile(params, done);
   });
@@ -61,7 +61,7 @@ describe('dialog_integration', function() {
       dialog_id: dialog_id,
       client_id: client_id,
       date_from: '2015-07-20 00:00:00',
-      date_to: '2015-07-30 00:00:00'
+      date_to: '2015-07-30 00:00:00',
     };
     dialog.getConversation(params, done);
   });
@@ -70,7 +70,7 @@ describe('dialog_integration', function() {
     const params = {
       dialog_id: dialog_id,
       client_id: client_id,
-      input: 'Hello'
+      input: 'Hello',
     };
     dialog.conversation(params, done);
   });
@@ -81,14 +81,14 @@ describe('dialog_integration', function() {
     this.timeout(TEN_SECONDS);
     const params = {
       dialog_id: dialog_id,
-      client_id: client_id
+      client_id: client_id,
     };
     dialog.updateContent(params, done);
   });
 
   it('getContent()', function(done) {
     const params = {
-      dialog_id: dialog_id
+      dialog_id: dialog_id,
     };
     dialog.getContent(params, done);
   });

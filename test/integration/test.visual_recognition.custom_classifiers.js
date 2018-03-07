@@ -13,7 +13,7 @@ const THIRTY_SECONDS = 30000;
 const TWO_SECONDS = 2000;
 
 const logit = function(string) {
-  // console.log('==> ' + string);
+  console.log('==> ' + string); // eslint-disable-line
   return string;
 };
 
@@ -28,7 +28,7 @@ describe('visual_recognition_integration_custom_classifiers', function() {
   before(function(done) {
     visual_recognition = new watson.VisualRecognitionV3(
       Object.assign({}, auth.visual_recognition.v3, {
-        version: watson.VisualRecognitionV3.VERSION_DATE_2016_05_20
+        version: watson.VisualRecognitionV3.VERSION_DATE_2016_05_20,
       })
     );
     nock.enableNetConnect();
@@ -80,7 +80,9 @@ describe('visual_recognition_integration_custom_classifiers', function() {
           light_positive_examples: fs.createReadStream(
             path.join(__dirname, '../resources/light.zip')
           ),
-          dark_positive_examples: fs.createReadStream(path.join(__dirname, '../resources/dark.zip'))
+          dark_positive_examples: fs.createReadStream(
+            path.join(__dirname, '../resources/dark.zip')
+          ),
         },
         function(err, response) {
           if (err) {
@@ -150,7 +152,7 @@ describe('visual_recognition_integration_custom_classifiers', function() {
                 beach_positive_examples: fs.createReadStream(path.join(p, 'beach.zip')),
                 forest_positive_examples: fs.createReadStream(path.join(p, 'forest.zip')),
                 still_positive_examples: fs.createReadStream(path.join(p, 'still.zip')),
-                water_positive_examples: fs.createReadStream(path.join(p, 'water.zip'))
+                water_positive_examples: fs.createReadStream(path.join(p, 'water.zip')),
               },
               function(err, response) {
                 if (err) {
@@ -187,16 +189,10 @@ describe('visual_recognition_integration_custom_classifiers', function() {
         }
         if (response.status !== 'ready') {
           logit(JSON.stringify(response));
-          logit(
-            'Classifier ' +
-              classifier_id +
-              ' status is "' +
-              response.status +
-              '".  Waiting 10 seconds.'
-          );
+          logit(`Classifier ${classifier_id} status is ${response.status}. Waiting 10 seconds.`);
           setTimeout(test_training_status, 10 * 1000, resolve, reject); // wait 10 seconds and try again
         } else {
-          logit('Classifier ' + classifier_id + ' is ready.');
+          logit(`Classifier ${classifier_id} is ready.`);
           resolve();
         }
       });
@@ -208,13 +204,13 @@ describe('visual_recognition_integration_custom_classifiers', function() {
 
     it('should classify an uploaded image ', function() {
       return new Promise(function(resolve, reject) {
-        logit('Classifing with classifier_id = ' + classifier_id);
+        logit('Classifing with classifier_id = ' + classifier_id); // eslint-disable-line
         const params = {
           images_file: fs.createReadStream(
             __dirname + '/../resources/183px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg'
           ),
           classifier_ids: [classifier_id],
-          threshold: '0.0'
+          threshold: '0.0',
         };
         visual_recognition.classify(params, function(err, result) {
           if (err) {
@@ -231,12 +227,7 @@ describe('visual_recognition_integration_custom_classifiers', function() {
           assert.equal(result.images[0].classifiers[0].classifier_id, classifier_id);
           assert(
             result.images[0].classifiers[0].classes.every(function(cl) {
-              if (
-                cl.class === 'beach' ||
-                cl.class === 'water' ||
-                cl.class === 'still' ||
-                cl.class === 'forest'
-              ) {
+              if (['beach', 'water', 'still', 'forest'].indexOf(cl.class) !== -1) {
                 return true;
               } else {
                 logit('Rogue class ' + cl.class + ' found.');
@@ -251,13 +242,13 @@ describe('visual_recognition_integration_custom_classifiers', function() {
 
     it('should come back empty when nothing passes the classification threshold ', function() {
       return new Promise(function(resolve, reject) {
-        logit('Classifing with classifier_id = ' + classifier_id);
+        logit('Classifing with classifier_id = ' + classifier_id); // eslint-disable-line
         const params = {
           images_file: fs.createReadStream(
             __dirname + '/../resources/183px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg'
           ),
           classifier_ids: [classifier_id],
-          threshold: '0.9'
+          threshold: '0.9',
         };
         visual_recognition.classify(params, function(err, result) {
           if (err) {

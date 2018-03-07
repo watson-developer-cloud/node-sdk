@@ -34,3 +34,4 @@ index.js
 !*/blob.d.ts
 **/*.js.map
 coverage.lcov
+.swagger-codegen-ignore

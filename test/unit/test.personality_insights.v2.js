@@ -9,7 +9,7 @@ describe('personality_insights_v2', function() {
   const noop = function() {};
 
   const service_request = {
-    text: 'IBM Watson Developer Cloud'
+    text: 'IBM Watson Developer Cloud',
   };
 
   const payload = {
@@ -20,12 +20,12 @@ describe('personality_insights_v2', function() {
         sourceid: 'freetext',
         contenttype: 'text/plain',
         language: 'en',
-        content: service_request.text
-      }
-    ]
+        content: service_request.text,
+      },
+    ],
   };
   const service_response = {
-    tree: {}
+    tree: {},
   };
 
   const service_path = '/v2/profile';
@@ -34,7 +34,7 @@ describe('personality_insights_v2', function() {
     username: 'batman',
     password: 'bruce-wayne',
     url: 'http://ibm.com:80',
-    version: 'v2'
+    version: 'v2',
   };
 
   before(function() {

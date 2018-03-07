@@ -15,10 +15,10 @@
  */
 
 import pick = require('object.pick');
-import { isHTML } from '../lib/helper';
 import { RequestResponse } from 'request';
-import { createRequest } from '../lib/requestwrapper';
 import { BaseService } from '../lib/base_service';
+import { isHTML } from '../lib/helper';
+import { createRequest } from '../lib/requestwrapper';
 
 class PersonalityInsightsV2 extends BaseService {
   static URL: string = 'https://gateway.watsonplatform.net/personality-insights/api';
@@ -66,14 +66,14 @@ class PersonalityInsightsV2 extends BaseService {
       return;
     }
     // Content-Type
-    let content_type = null;
+    let contentType = null;
     if (_params.text) {
-      content_type = isHTML(_params.text) ? 'text/html' : 'text/plain';
+      contentType = isHTML(_params.text) ? 'text/html' : 'text/plain';
     } else {
-      content_type = 'application/json';
+      contentType = 'application/json';
     }
     const headers = {
-      'Content-type': content_type,
+      'Content-type': contentType,
       'Accept-language':
         _params.accept_language || _params.acceptLanguage || 'en',
       Accept: undefined
@@ -90,7 +90,7 @@ class PersonalityInsightsV2 extends BaseService {
         body: _params.text || pick(_params, ['contentItems']),
         json: true,
         qs: pick(_params, ['include_raw']),
-        headers: headers
+        headers
       },
       defaultOptions: this._options
     };

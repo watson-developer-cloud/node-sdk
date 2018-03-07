@@ -15,12 +15,12 @@ describe('personality_insights_v3', function() {
       sourceid: 'freetext',
       contenttype: 'text/plain',
       language: 'en',
-      content: text
-    }
+      content: text,
+    },
   ];
 
   const service_response = {
-    tree: {}
+    tree: {},
   };
 
   const service_path = '/v3/profile';
@@ -29,7 +29,7 @@ describe('personality_insights_v3', function() {
     username: 'batman',
     password: 'bruce-wayne',
     url: 'http://ibm.com:80',
-    version: '2016-10-19'
+    version: '2016-10-19',
   };
 
   before(function() {
@@ -84,7 +84,7 @@ describe('personality_insights_v3', function() {
   it('should generate a valid payload with html', function() {
     const params = {
       content: '<div>' + text + '</div>',
-      content_type: 'text/html'
+      content_type: 'text/html',
     };
     const req = personality_insights.profile(params, noop);
     const body = Buffer.from(req.body).toString('ascii');
@@ -102,12 +102,13 @@ describe('personality_insights_v3', function() {
       accept_language: 'es',
       raw_scores: true,
       csv_headers: false,
-      consumption_preferences: true
+      consumption_preferences: true,
     };
 
     const req = personality_insights.profile(params, noop);
     const body = Buffer.from(req.body).toString('ascii');
-    const query_string = '?version=2016-10-19&raw_scores=true&consumption_preferences=true';
+    const query_string =
+      '?version=2016-10-19&raw_scores=true&csv_headers=false&consumption_preferences=true';
     assert.equal(req.uri.href, service.url + service_path + query_string);
     assert.equal(body, JSON.stringify(params.content));
     assert.equal(req.method, 'POST');
@@ -129,7 +130,7 @@ describe('personality_insights_v3', function() {
     const params = {
       content: content_items,
       content_type: 'application/json',
-      csv_headers: true
+      csv_headers: true,
     };
     const req = personality_insights.profile_csv(params, noop);
     const body = Buffer.from(req.body).toString('ascii');

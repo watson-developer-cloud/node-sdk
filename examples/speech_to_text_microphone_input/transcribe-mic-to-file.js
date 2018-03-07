@@ -15,18 +15,18 @@ var speechToText = new SpeechToText({
 var micInstance = mic({
   rate: '48000',
   channels: '1',
-  debug: false
+  debug: false,
 });
 
 var micInputStream = micInstance.getAudioStream();
 
 var wavStream = new wav.FileWriter('./audio.wav', {
   sampleRate: 48000,
-  channels: 1
+  channels: 1,
 });
 
 var recognizeStream = speechToText.createRecognizeStream({
-  content_type: 'audio/wav'
+  content_type: 'audio/wav',
 });
 
 micInputStream.pipe(wavStream);
