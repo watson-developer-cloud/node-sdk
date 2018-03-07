@@ -1166,6 +1166,9 @@ class DiscoveryV1 extends BaseService {
    * @param {boolean} [params.highlight] - When true a highlight field is returned for each result which contains the fields that match the query with `<em></em>` tags around the matching query terms. Defaults to false.
    * @param {boolean} [params.deduplicate] - When `true` and used with a Watson Discovery News collection, duplicate results (based on the contents of the `title` field) are removed. Duplicate comparison is limited to the current query only, `offset` is not considered. Defaults to `false`. This parameter is currently Beta functionality.
    * @param {string} [params.deduplicate_field] - When specified, duplicate results based on the field specified are removed from the returned results. Duplicate comparison is limited to the current query only, `offset` is not considered. This parameter is currently Beta functionality.
+   * @param {boolean} [params.similar] - When `true`, results are returned based on their similarity to the document IDs specified in the `similar.document_ids` parameter. The default is `false`.
+   * @param {string[]} [params.similar_document_ids] - A comma-separated list of document IDs that will be used to find similar documents.   **Note:** If the `natural_language_query` parameter is also specified, it will be used to expand the scope of the document similarity search to include the natural language query. Other query parameters, such as `filter` and `query` are subsequently applied and reduce the query scope.
+   * @param {string[]} [params.similar_fields] - A comma-separated list of field names that will be used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1189,7 +1192,10 @@ class DiscoveryV1 extends BaseService {
       'sort': _params.sort,
       'highlight': _params.highlight,
       'deduplicate': _params.deduplicate,
-      'deduplicate.field': _params.deduplicate_field
+      'deduplicate.field': _params.deduplicate_field,
+      'similar': _params.similar,
+      'similar.document_ids': _params.similar_document_ids,
+      'similar.fields': _params.similar_fields
     };
     const path = {
       'environment_id': _params.environment_id
@@ -1229,6 +1235,9 @@ class DiscoveryV1 extends BaseService {
    * @param {string[]} [params.sort] - A comma separated list of fields in the document to sort on. You can optionally specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the default sort direction if no prefix is specified.
    * @param {boolean} [params.highlight] - When true a highlight field is returned for each result which contains the fields that match the query with `<em></em>` tags around the matching query terms. Defaults to false.
    * @param {string} [params.deduplicate_field] - When specified, duplicate results based on the field specified are removed from the returned results. Duplicate comparison is limited to the current query only, `offset` is not considered. This parameter is currently Beta functionality.
+   * @param {boolean} [params.similar] - When `true`, results are returned based on their similarity to the document IDs specified in the `similar.document_ids` parameter. The default is `false`.
+   * @param {string[]} [params.similar_document_ids] - A comma-separated list of document IDs that will be used to find similar documents.   **Note:** If the `natural_language_query` parameter is also specified, it will be used to expand the scope of the document similarity search to include the natural language query. Other query parameters, such as `filter` and `query` are subsequently applied and reduce the query scope.
+   * @param {string[]} [params.similar_fields] - A comma-separated list of field names that will be used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1251,7 +1260,10 @@ class DiscoveryV1 extends BaseService {
       'offset': _params.offset,
       'sort': _params.sort,
       'highlight': _params.highlight,
-      'deduplicate.field': _params.deduplicate_field
+      'deduplicate.field': _params.deduplicate_field,
+      'similar': _params.similar,
+      'similar.document_ids': _params.similar_document_ids,
+      'similar.fields': _params.similar_fields
     };
     const path = {
       'environment_id': _params.environment_id
@@ -1287,7 +1299,7 @@ class DiscoveryV1 extends BaseService {
    * @param {boolean} [params.passages] - A passages query that returns the most relevant passages from the results.
    * @param {string} [params.aggregation] - An aggregation search uses combinations of filters and query search to return an exact answer. Aggregations are useful for building applications, because you can use them to build lists, tables, and time series. For a full list of possible aggregrations, see the Query reference.
    * @param {number} [params.count] - Number of documents to return.
-   * @param {string[]} [params.return_fields] - A comma separated list of the portion of the document hierarchy to return_fields.
+   * @param {string[]} [params.return_fields] - A comma separated list of the portion of the document hierarchy to return.
    * @param {number} [params.offset] - The number of query results to skip at the beginning. For example, if the total number of results that are returned is 10, and the offset is 8, it returns the last two results.
    * @param {string[]} [params.sort] - A comma separated list of fields in the document to sort on. You can optionally specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the default sort direction if no prefix is specified.
    * @param {boolean} [params.highlight] - When true a highlight field is returned for each result which contains the fields that match the query with `<em></em>` tags around the matching query terms. Defaults to false.
@@ -1296,6 +1308,9 @@ class DiscoveryV1 extends BaseService {
    * @param {number} [params.passages_characters] - The approximate number of characters that any one passage will have. The default is `400`. The minimum is `50`. The maximum is `2000`.
    * @param {boolean} [params.deduplicate] - When `true` and used with a Watson Discovery News collection, duplicate results (based on the contents of the `title` field) are removed. Duplicate comparison is limited to the current query only, `offset` is not considered. Defaults to `false`. This parameter is currently Beta functionality.
    * @param {string} [params.deduplicate_field] - When specified, duplicate results based on the field specified are removed from the returned results. Duplicate comparison is limited to the current query only, `offset` is not considered. This parameter is currently Beta functionality.
+   * @param {boolean} [params.similar] - When `true`, results are returned based on their similarity to the document IDs specified in the `similar.document_ids` parameter. The default is `false`.
+   * @param {string[]} [params.similar_document_ids] - A comma-separated list of document IDs that will be used to find similar documents.   **Note:** If the `natural_language_query` parameter is also specified, it will be used to expand the scope of the document similarity search to include the natural language query. Other query parameters, such as `filter` and `query` are subsequently applied and reduce the query scope.
+   * @param {string[]} [params.similar_fields] - A comma-separated list of field names that will be used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1322,7 +1337,10 @@ class DiscoveryV1 extends BaseService {
       'passages.count': _params.passages_count,
       'passages.characters': _params.passages_characters,
       'deduplicate': _params.deduplicate,
-      'deduplicate.field': _params.deduplicate_field
+      'deduplicate.field': _params.deduplicate_field,
+      'similar': _params.similar,
+      'similar.document_ids': _params.similar_document_ids,
+      'similar.fields': _params.similar_fields
     };
     const path = {
       'environment_id': _params.environment_id,
@@ -1418,6 +1436,9 @@ class DiscoveryV1 extends BaseService {
    * @param {number} [params.passages_count] - The maximum number of passages to return. The search returns fewer passages if the requested total is not found. The default is `10`. The maximum is `100`.
    * @param {number} [params.passages_characters] - The approximate number of characters that any one passage will have. The default is `400`. The minimum is `50`. The maximum is `2000`.
    * @param {string} [params.deduplicate_field] - When specified, duplicate results based on the field specified are removed from the returned results. Duplicate comparison is limited to the current query only, `offset` is not considered. This parameter is currently Beta functionality.
+   * @param {boolean} [params.similar] - When `true`, results are returned based on their similarity to the document IDs specified in the `similar.document_ids` parameter. The default is `false`.
+   * @param {string[]} [params.similar_document_ids] - A comma-separated list of document IDs that will be used to find similar documents.   **Note:** If the `natural_language_query` parameter is also specified, it will be used to expand the scope of the document similarity search to include the natural language query. Other query parameters, such as `filter` and `query` are subsequently applied and reduce the query scope.
+   * @param {string[]} [params.similar_fields] - A comma-separated list of field names that will be used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1443,7 +1464,10 @@ class DiscoveryV1 extends BaseService {
       'passages.fields': _params.passages_fields,
       'passages.count': _params.passages_count,
       'passages.characters': _params.passages_characters,
-      'deduplicate.field': _params.deduplicate_field
+      'deduplicate.field': _params.deduplicate_field,
+      'similar': _params.similar,
+      'similar.document_ids': _params.similar_document_ids,
+      'similar.fields': _params.similar_fields
     };
     const path = {
       'environment_id': _params.environment_id,
@@ -2342,6 +2366,12 @@ namespace DiscoveryV1 {
     deduplicate?: boolean;
     /** When specified, duplicate results based on the field specified are removed from the returned results. Duplicate comparison is limited to the current query only, `offset` is not considered. This parameter is currently Beta functionality. */
     deduplicate_field?: string;
+    /** When `true`, results are returned based on their similarity to the document IDs specified in the `similar.document_ids` parameter. The default is `false`. */
+    similar?: boolean;
+    /** A comma-separated list of document IDs that will be used to find similar documents.   **Note:** If the `natural_language_query` parameter is also specified, it will be used to expand the scope of the document similarity search to include the natural language query. Other query parameters, such as `filter` and `query` are subsequently applied and reduce the query scope. */
+    similar_document_ids?: string[];
+    /** A comma-separated list of field names that will be used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison. */
+    similar_fields?: string[];
   }
 
   /** Parameters for the `federatedQueryNotices` operation. */
@@ -2370,6 +2400,12 @@ namespace DiscoveryV1 {
     highlight?: boolean;
     /** When specified, duplicate results based on the field specified are removed from the returned results. Duplicate comparison is limited to the current query only, `offset` is not considered. This parameter is currently Beta functionality. */
     deduplicate_field?: string;
+    /** When `true`, results are returned based on their similarity to the document IDs specified in the `similar.document_ids` parameter. The default is `false`. */
+    similar?: boolean;
+    /** A comma-separated list of document IDs that will be used to find similar documents.   **Note:** If the `natural_language_query` parameter is also specified, it will be used to expand the scope of the document similarity search to include the natural language query. Other query parameters, such as `filter` and `query` are subsequently applied and reduce the query scope. */
+    similar_document_ids?: string[];
+    /** A comma-separated list of field names that will be used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison. */
+    similar_fields?: string[];
   }
 
   /** Parameters for the `query` operation. */
@@ -2390,7 +2426,7 @@ namespace DiscoveryV1 {
     aggregation?: string;
     /** Number of documents to return. */
     count?: number;
-    /** A comma separated list of the portion of the document hierarchy to return_fields. */
+    /** A comma separated list of the portion of the document hierarchy to return. */
     return_fields?: string[];
     /** The number of query results to skip at the beginning. For example, if the total number of results that are returned is 10, and the offset is 8, it returns the last two results. */
     offset?: number;
@@ -2408,6 +2444,12 @@ namespace DiscoveryV1 {
     deduplicate?: boolean;
     /** When specified, duplicate results based on the field specified are removed from the returned results. Duplicate comparison is limited to the current query only, `offset` is not considered. This parameter is currently Beta functionality. */
     deduplicate_field?: string;
+    /** When `true`, results are returned based on their similarity to the document IDs specified in the `similar.document_ids` parameter. The default is `false`. */
+    similar?: boolean;
+    /** A comma-separated list of document IDs that will be used to find similar documents.   **Note:** If the `natural_language_query` parameter is also specified, it will be used to expand the scope of the document similarity search to include the natural language query. Other query parameters, such as `filter` and `query` are subsequently applied and reduce the query scope. */
+    similar_document_ids?: string[];
+    /** A comma-separated list of field names that will be used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison. */
+    similar_fields?: string[];
   }
 
   /** Parameters for the `queryEntities` operation. */
@@ -2460,6 +2502,12 @@ namespace DiscoveryV1 {
     passages_characters?: number;
     /** When specified, duplicate results based on the field specified are removed from the returned results. Duplicate comparison is limited to the current query only, `offset` is not considered. This parameter is currently Beta functionality. */
     deduplicate_field?: string;
+    /** When `true`, results are returned based on their similarity to the document IDs specified in the `similar.document_ids` parameter. The default is `false`. */
+    similar?: boolean;
+    /** A comma-separated list of document IDs that will be used to find similar documents.   **Note:** If the `natural_language_query` parameter is also specified, it will be used to expand the scope of the document similarity search to include the natural language query. Other query parameters, such as `filter` and `query` are subsequently applied and reduce the query scope. */
+    similar_document_ids?: string[];
+    /** A comma-separated list of field names that will be used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison. */
+    similar_fields?: string[];
   }
 
   /** Parameters for the `queryRelations` operation. */

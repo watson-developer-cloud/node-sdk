@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-
 import * as extend from 'extend';
 import { RequestResponse } from 'request';
 import { BaseService } from '../lib/base_service';
@@ -22,12 +21,9 @@ import { FileObject } from '../lib/helper';
 import { getMissingParams } from '../lib/helper';
 import { createRequest } from '../lib/requestwrapper';
 
-
 /**
  * Language Translator translates text from one language to another. The service offers multiple domain-specific models that you can customize based on your unique terminology and language. Use Language Translator to take news from across the globe and present it in your language, communicate with your customers in their own language, and more.
  */
-
-
 
 class LanguageTranslatorV2 extends BaseService {
 
@@ -307,7 +303,7 @@ class LanguageTranslatorV2 extends BaseService {
    * @param {Object} [params] - The parameters to send to the service.
    * @param {string} [params.source] - Specify a language code to filter results by source language.
    * @param {string} [params.target] - Specify a language code to filter results by target language.
-   * @param {boolean} [params.default_models] - If the default_models parameter isn't specified, the service will return all models (default_models and non-default_models) for each language pair. To return only default_models models, set this to `true`. To return only non-default_models models, set this to `false`.
+   * @param {boolean} [params.default_models] - If the default parameter isn't specified, the service will return all models (default and non-default) for each language pair. To return only default models, set this to `true`. To return only non-default models, set this to `false`.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -418,7 +414,7 @@ namespace LanguageTranslatorV2 {
     source?: string;
     /** Specify a language code to filter results by target language. */
     target?: string;
-    /** If the default_models parameter isn't specified, the service will return all models (default_models and non-default_models) for each language pair. To return only default_models models, set this to `true`. To return only non-default_models models, set this to `false`. */
+    /** If the default parameter isn't specified, the service will return all models (default and non-default) for each language pair. To return only default models, set this to `true`. To return only non-default models, set this to `false`. */
     default_models?: boolean;
   }
 

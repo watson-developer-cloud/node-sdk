@@ -132,7 +132,7 @@ class TextToSpeechV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.text - The text to synthesize.
-   * @param {string} params.accept - The type of the response: audio/basic, audio/flac, audio/l16;rate=nnnn, audio/ogg, audio/ogg;codecs=opus, audio/ogg;codecs=vorbis, audio/mp3, audio/mpeg, audio/mulaw;rate=nnnn, audio/wav, audio/webm, audio/webm;codecs=opus, or audio/webm;codecs=vorbis.
+   * @param {string} [params.accept] - The type of the response: audio/basic, audio/flac, audio/l16;rate=nnnn, audio/ogg, audio/ogg;codecs=opus, audio/ogg;codecs=vorbis, audio/mp3, audio/mpeg, audio/mulaw;rate=nnnn, audio/wav, audio/webm, audio/webm;codecs=opus, or audio/webm;codecs=vorbis.
    * @param {string} [params.voice] - The voice to use for synthesis. Retrieve available voices with the `GET /v1/voices` method.
    * @param {string} [params.customization_id] - The GUID of a custom voice model to use for the synthesis. If a custom voice model is specified, it is guaranteed to work only if it matches the language of the indicated voice. You must make the request with service credentials created for the instance of the service that owns the custom model. Omit the parameter to use the specified voice with no customization.
    * @param {Function} [callback] - The callback that handles the response.
@@ -164,8 +164,8 @@ class TextToSpeechV1 extends BaseService {
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: {
-          'Accept': _params.accept || 'audio/basic',
           'Content-Type': 'application/json',
+          'Accept': _params.accept
         }
       })
     };
@@ -683,7 +683,7 @@ namespace TextToSpeechV1 {
     /** The text to synthesize. */
     text: string;
     /** The type of the response: audio/basic, audio/flac, audio/l16;rate=nnnn, audio/ogg, audio/ogg;codecs=opus, audio/ogg;codecs=vorbis, audio/mp3, audio/mpeg, audio/mulaw;rate=nnnn, audio/wav, audio/webm, audio/webm;codecs=opus, or audio/webm;codecs=vorbis. */
-    accept: SynthesizeConstants.Accept | string;
+    accept?: SynthesizeConstants.Accept | string;
     /** The voice to use for synthesis. Retrieve available voices with the `GET /v1/voices` method. */
     voice?: SynthesizeConstants.Voice | string;
     /** The GUID of a custom voice model to use for the synthesis. If a custom voice model is specified, it is guaranteed to work only if it matches the language of the indicated voice. You must make the request with service credentials created for the instance of the service that owns the custom model. Omit the parameter to use the specified voice with no customization. */
