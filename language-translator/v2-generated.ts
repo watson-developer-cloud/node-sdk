@@ -25,6 +25,8 @@ import { createRequest } from '../lib/requestwrapper';
  * Language Translator translates text from one language to another. The service offers multiple domain-specific models that you can customize based on your unique terminology and language. Use Language Translator to take news from across the globe and present it in your language, communicate with your customers in their own language, and more.
  */
 
+
+
 class LanguageTranslatorV2 extends BaseService {
 
   static URL: string = 'https://gateway.watsonplatform.net/language-translator/api';
@@ -136,6 +138,7 @@ class LanguageTranslatorV2 extends BaseService {
     return createRequest(parameters, _callback);
   };
 
+
   /**
    * List identifiable languages.
    *
@@ -174,9 +177,9 @@ class LanguageTranslatorV2 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.base_model_id - The model ID of the model to use as the base for customization. To see available models, use the `List models` method.
    * @param {string} [params.name] - An optional model name that you can use to identify the model. Valid characters are letters, numbers, dashes, underscores, spaces and apostrophes. The maximum length is 32 characters.
-   * @param {ReadableStream|FileObject|Buffer} [params.forced_glossary] - A TMX file with your customizations. The customizations in the file completely overwrite the domain translaton data, including high frequency or high confidence phrase translations. You can upload only one glossary with a file size less than 10 MB per call.
-   * @param {ReadableStream|FileObject|Buffer} [params.parallel_corpus] - A TMX file that contains entries that are treated as a parallel corpus instead of a glossary.
-   * @param {ReadableStream|FileObject|Buffer} [params.monolingual_corpus] - A UTF-8 encoded plain text file that is used to customize the target language model.
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.forced_glossary] - A TMX file with your customizations. The customizations in the file completely overwrite the domain translaton data, including high frequency or high confidence phrase translations. You can upload only one glossary with a file size less than 10 MB per call.
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.parallel_corpus] - A TMX file that contains entries that are treated as a parallel corpus instead of a glossary.
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.monolingual_corpus] - A UTF-8 encoded plain text file that is used to customize the target language model.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -378,6 +381,12 @@ namespace LanguageTranslatorV2 {
     text: string;
   }
 
+  /** Parameters for the `identifyAsPlain` operation. */
+  export interface IdentifyAsPlainParams {
+    /** Input text in UTF-8 format. */
+    text: string;
+  }
+
   /** Parameters for the `listIdentifiableLanguages` operation. */
   export interface ListIdentifiableLanguagesParams {
   }
@@ -389,11 +398,11 @@ namespace LanguageTranslatorV2 {
     /** An optional model name that you can use to identify the model. Valid characters are letters, numbers, dashes, underscores, spaces and apostrophes. The maximum length is 32 characters. */
     name?: string;
     /** A TMX file with your customizations. The customizations in the file completely overwrite the domain translaton data, including high frequency or high confidence phrase translations. You can upload only one glossary with a file size less than 10 MB per call. */
-    forced_glossary?: ReadableStream|FileObject|Buffer;
+    forced_glossary?: NodeJS.ReadableStream|FileObject|Buffer;
     /** A TMX file that contains entries that are treated as a parallel corpus instead of a glossary. */
-    parallel_corpus?: ReadableStream|FileObject|Buffer;
+    parallel_corpus?: NodeJS.ReadableStream|FileObject|Buffer;
     /** A UTF-8 encoded plain text file that is used to customize the target language model. */
-    monolingual_corpus?: ReadableStream|FileObject|Buffer;
+    monolingual_corpus?: NodeJS.ReadableStream|FileObject|Buffer;
   }
 
   /** Parameters for the `deleteModel` operation. */

@@ -107,8 +107,8 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * Sends data to create and train a classifier and returns information about the new classifier.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {ReadableStream|FileObject|Buffer} params.metadata - Metadata in JSON format. The metadata identifies the language of the data, and an optional name to identify the classifier.
-   * @param {ReadableStream|FileObject|Buffer} params.training_data - Training data in CSV format. Each text value must have at least one class. The data can include up to 15,000 records. For details, see [Using your own data](https://console.bluemix.net/docs/services/natural-language-classifier/using-your-data.html).
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} params.metadata - Metadata in JSON format. The metadata identifies the language of the data, and an optional name to identify the classifier.
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} params.training_data - Training data in CSV format. Each text value must have at least one class. The data can include up to 15,000 records. For details, see [Using your own data](https://console.bluemix.net/docs/services/natural-language-classifier/using-your-data.html).
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -286,9 +286,9 @@ namespace NaturalLanguageClassifierV1 {
   /** Parameters for the `createClassifier` operation. */
   export interface CreateClassifierParams {
     /** Metadata in JSON format. The metadata identifies the language of the data, and an optional name to identify the classifier. */
-    metadata: ReadableStream|FileObject|Buffer;
+    metadata: NodeJS.ReadableStream|FileObject|Buffer;
     /** Training data in CSV format. Each text value must have at least one class. The data can include up to 15,000 records. For details, see [Using your own data](https://console.bluemix.net/docs/services/natural-language-classifier/using-your-data.html). */
-    training_data: ReadableStream|FileObject|Buffer;
+    training_data: NodeJS.ReadableStream|FileObject|Buffer;
   }
 
   /** Parameters for the `deleteClassifier` operation. */
