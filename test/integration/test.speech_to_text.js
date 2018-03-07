@@ -376,6 +376,34 @@ describe('speech_to_text_integration', function() {
     );
 
     it(
+      'addAudio()',
+      waitUntilReady(function(done) {
+        speech_to_text.addAudio(
+          {
+            customization_id: customization_id,
+            audio_name: 'blank',
+            audio_resource: fs.readFileSync(path.join(__dirname, '../resources/blank.wav')),
+            content_type: 'audio/wav',
+          },
+          done
+        );
+      })
+    );
+
+    it(
+      'deleteAudio()',
+      waitUntilReady(function(done) {
+        speech_to_text.deleteAudio(
+          {
+            customization_id: customization_id,
+            audio_name: 'blank',
+          },
+          done
+        );
+      })
+    );
+
+    it(
       'deleteCorpus()',
       waitUntilReady(function(done) {
         speech_to_text.deleteCorpus(
