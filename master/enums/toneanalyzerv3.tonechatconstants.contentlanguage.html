@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>AddWordConstants | watson-developer-cloud</title>
+	<title>ContentLanguage | watson-developer-cloud</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,13 +54,16 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../classes/speechtotextv1.html">SpeechToTextV1</a>
+					<a href="../classes/toneanalyzerv3.html">ToneAnalyzerV3</a>
 				</li>
 				<li>
-					<a href="speechtotextv1.addwordconstants.html">AddWordConstants</a>
+					<a href="../modules/toneanalyzerv3.tonechatconstants.html">ToneChatConstants</a>
+				</li>
+				<li>
+					<a href="toneanalyzerv3.tonechatconstants.contentlanguage.html">ContentLanguage</a>
 				</li>
 			</ul>
-			<h1>Module AddWordConstants</h1>
+			<h1>Enumeration ContentLanguage</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +73,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Constants for the <code>addWord</code> operation.</p>
+						<p>The language of the input text for the request: English or French. Regional variants are treated as their parent language; for example, <code>en-US</code> is interpreted as <code>en</code>. The input content must match the specified language. Do not submit content that contains both languages. You can specify any combination of languages for <code>Content-Language</code> and <code>Accept-Language</code>. <em> <strong><code>2017-09-21</code>:</strong> Accepts <code>en</code> or <code>fr</code>. </em> <strong><code>2016-05-19</code>:</strong> Accepts only <code>en</code>.</p>
 					</div>
 				</div>
 			</section>
@@ -79,12 +82,36 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Enumerations</h3>
+							<h3>Enumeration members</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-enum tsd-parent-kind-module"><a href="../enums/speechtotextv1.addwordconstants.contenttype.html" class="tsd-kind-icon">Content<wbr>Type</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="toneanalyzerv3.tonechatconstants.contentlanguage.html#en" class="tsd-kind-icon">EN</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="toneanalyzerv3.tonechatconstants.contentlanguage.html#fr" class="tsd-kind-icon">FR</a></li>
 							</ul>
 						</section>
 					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Enumeration members</h2>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="en" class="tsd-anchor"></a>
+					<h3>EN</h3>
+					<div class="tsd-signature tsd-kind-icon">EN<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;en&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/tone-analyzer/v3-generated.ts#L243">tone-analyzer/v3-generated.ts:243</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="fr" class="tsd-anchor"></a>
+					<h3>FR</h3>
+					<div class="tsd-signature tsd-kind-icon">FR<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;fr&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/tone-analyzer/v3-generated.ts#L244">tone-analyzer/v3-generated.ts:244</a></li>
+						</ul>
+					</aside>
 				</section>
 			</section>
 		</div>
@@ -99,8 +126,23 @@
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-enum tsd-parent-kind-module">
-						<a href="../enums/speechtotextv1.addwordconstants.contenttype.html" class="tsd-kind-icon">Content<wbr>Type</a>
+						<a href="toneanalyzerv3.tonechatconstants.acceptlanguage.html" class="tsd-kind-icon">Accept<wbr>Language</a>
 					</li>
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-enum tsd-parent-kind-module">
+						<a href="toneanalyzerv3.tonechatconstants.contentlanguage.html" class="tsd-kind-icon">Content<wbr>Language</a>
+						<ul>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="toneanalyzerv3.tonechatconstants.contentlanguage.html#en" class="tsd-kind-icon">EN</a>
+							</li>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="toneanalyzerv3.tonechatconstants.contentlanguage.html#fr" class="tsd-kind-icon">FR</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
 				</ul>
 			</nav>
 		</div>

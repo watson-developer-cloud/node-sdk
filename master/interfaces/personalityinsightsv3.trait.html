@@ -67,6 +67,13 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Trait.</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -102,9 +109,14 @@
 					<div class="tsd-signature tsd-kind-icon">category<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/personality-insights/v3-generated.ts#L234">personality-insights/v3-generated.ts:234</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/personality-insights/v3-generated.ts#L387">personality-insights/v3-generated.ts:387</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The category of the characteristic: <em> <code>personality</code> for Big Five personality characteristics </em> <code>needs</code> for Needs * <code>values</code> for Values.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="children" class="tsd-anchor"></a>
@@ -112,9 +124,14 @@
 					<div class="tsd-signature tsd-kind-icon">children<span class="tsd-signature-symbol">:</span> <a href="personalityinsightsv3.trait.html" class="tsd-signature-type">Trait</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/personality-insights/v3-generated.ts#L238">personality-insights/v3-generated.ts:238</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/personality-insights/v3-generated.ts#L395">personality-insights/v3-generated.ts:395</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>For <code>personality</code> (Big Five) dimensions, more detailed results for the facets of each dimension as inferred from the input text.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="name" class="tsd-anchor"></a>
@@ -122,9 +139,14 @@
 					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/personality-insights/v3-generated.ts#L233">personality-insights/v3-generated.ts:233</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/personality-insights/v3-generated.ts#L385">personality-insights/v3-generated.ts:385</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The user-visible name of the characteristic.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="percentile" class="tsd-anchor"></a>
@@ -132,9 +154,14 @@
 					<div class="tsd-signature tsd-kind-icon">percentile<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/personality-insights/v3-generated.ts#L235">personality-insights/v3-generated.ts:235</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/personality-insights/v3-generated.ts#L389">personality-insights/v3-generated.ts:389</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The normalized percentile score for the characteristic. The range is 0 to 1. For example, if the percentage for Openness is 0.60, the author scored in the 60th percentile; the author is more open than 59 percent of the population and less open than 39 percent of the population.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="raw_score" class="tsd-anchor"></a>
@@ -142,9 +169,14 @@
 					<div class="tsd-signature tsd-kind-icon">raw_<wbr>score<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/personality-insights/v3-generated.ts#L236">personality-insights/v3-generated.ts:236</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/personality-insights/v3-generated.ts#L391">personality-insights/v3-generated.ts:391</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The raw score for the characteristic. The range is 0 to 1. A higher score generally indicates a greater likelihood that the author has that characteristic, but raw scores must be considered in aggregate: The range of values in practice might be much smaller than 0 to 1, so an individual score must be considered in the context of the overall scores and their range. The raw score is computed based on the input and the service model; it is not normalized or compared with a sample population. The raw score enables comparison of the results against a different sampling population and with a custom normalization approach.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="significant" class="tsd-anchor"></a>
@@ -152,9 +184,14 @@
 					<div class="tsd-signature tsd-kind-icon">significant<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/personality-insights/v3-generated.ts#L237">personality-insights/v3-generated.ts:237</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/personality-insights/v3-generated.ts#L393">personality-insights/v3-generated.ts:393</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>*<code>2017-10-13</code><strong>: Indicates whether the characteristic is meaningful for the input language. The field is always <code>true</code> for all characteristics of English, Spanish, and Japanese input. The field is <code>false</code> for the subset of characteristics of Arabic and Korean input for which the service&#39;s models are unable to generate meaningful results. </strong><code>2016-10-19</code>**: Not returned.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="trait_id" class="tsd-anchor"></a>
@@ -162,9 +199,14 @@
 					<div class="tsd-signature tsd-kind-icon">trait_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/personality-insights/v3-generated.ts#L232">personality-insights/v3-generated.ts:232</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/personality-insights/v3-generated.ts#L383">personality-insights/v3-generated.ts:383</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The unique identifier of the characteristic to which the results pertain. IDs have the form <code>big5_{characteristic}</code> for Big Five personality characteristics, <code>need_{characteristic}</code> for Needs, or <code>value_{characteristic}</code> for Values.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -229,6 +271,9 @@
 								<a href="personalityinsightsv3.profile.html" class="tsd-kind-icon">Profile</a>
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class">
+								<a href="personalityinsightsv3.profileascsvparams.html" class="tsd-kind-icon">Profile<wbr>AsCsv<wbr>Params</a>
+							</li>
+							<li class=" tsd-kind-interface tsd-parent-kind-class">
 								<a href="personalityinsightsv3.profileparams.html" class="tsd-kind-icon">Profile<wbr>Params</a>
 							</li>
 							<li class="current tsd-kind-interface tsd-parent-kind-class">
@@ -290,6 +335,9 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="../classes/personalityinsightsv3.html#profile-1" class="tsd-kind-icon">profile</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="../classes/personalityinsightsv3.html#profileascsv" class="tsd-kind-icon">profile<wbr>AsCsv</a>
+							</li>
 						</ul>
 					</li>
 				</ul>
@@ -316,7 +364,7 @@
 						<a href="../globals.html#query_params_allowed" class="tsd-kind-icon">QUERY_<wbr>PARAMS_<wbr>ALLOWED</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="../globals.html#w3cwebsocket" class="tsd-kind-icon">W3CWeb<wbr>Socket</a>
+						<a href="../globals.html#w3cwebsocket" class="tsd-kind-icon">w3c<wbr>Web<wbr>Socket</a>
 					</li>
 				</ul>
 			</nav>

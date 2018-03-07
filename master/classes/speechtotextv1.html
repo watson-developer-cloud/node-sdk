@@ -67,7 +67,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<h3 id="service-overview-the-ibm-speech-to-text-service-provides-a-representational-state-transfer-rest-application-programming-interface-api-that-enables-you-to-add-ibm-s-speech-transcription-capabilities-to-your-applications-the-service-also-supports-an-asynchronous-http-interface-for-transcribing-audio-via-non-blocking-calls-and-it-supports-a-customization-interface-that-lets-you-expand-the-vocabulary-of-a-base-model-with-domain-specific-terminology-or-adapt-a-base-model-for-the-acoustic-characteristics-of-your-audio-the-service-transcribes-speech-from-various-languages-and-audio-formats-to-text-with-low-latency-the-service-supports-transcription-of-the-following-languages-brazilian-portuguese-french-japanese-mandarin-chinese-modern-standard-arabic-spanish-uk-english-and-us-english-for-most-languages-the-service-supports-two-sampling-rates-broadband-and-narrowband-api-overview-the-speech-to-text-service-provides-the-following-endpoints-v1-models-returns-information-about-the-language-models-that-are-available-for-speech-recognition-v1-recognize-sessionless-includes-a-single-method-that-provides-a-simple-means-of-transcribing-audio-without-the-overhead-of-establishing-and-maintaining-a-session-but-it-lacks-some-of-the-capabilities-available-with-sessions-v1-sessions-provides-a-collection-of-methods-that-provide-a-mechanism-for-a-client-to-maintain-a-long-multi-turn-exchange-or-session-with-the-service-or-to-establish-multiple-parallel-conversations-with-a-particular-instance-of-the-service-v1-recognitions-asynchronous-provides-a-set-of-non-blocking-methods-for-submitting-querying-and-deleting-jobs-for-recognition-requests-with-the-asynchronous-http-interface-the-interface-includes-calls-to-register-white-list-and-unregister-a-callback-url-v1-customizations-provides-methods-for-creating-and-managing-custom-language-models-custom-language-models-let-you-expand-the-vocabulary-of-a-base-model-with-domain-specific-terminology-v1-customizations-customization_id-corpora-provides-methods-for-managing-the-corpora-associated-with-a-custom-language-model-you-add-corpora-to-extract-out-of-vocabulary-oov-words-from-the-corpora-into-the-custom-language-model-s-vocabulary-you-can-add-list-and-delete-corpora-from-a-custom-language-model-v1-customizations-customization_id-words-includes-methods-for-managing-individual-words-in-a-custom-language-model-you-can-add-modify-list-and-delete-words-from-a-custom-language-model-v1-acoustic_customizations-provides-methods-for-creating-and-managing-custom-acoustic-models-the-interface-lets-you-adapt-a-base-model-for-the-audio-characteristics-of-your-environment-and-speakers-v1-acoustic_customizations-customization_id-audio-provides-methods-for-managing-the-audio-resources-associated-with-a-custom-acoustic-model-you-add-audio-resources-that-closely-match-the-acoustic-characteristics-of-the-audio-that-you-want-to-transcribe-you-can-add-list-and-delete-audio-resources-from-a-custom-acoustic-model-note-about-the-try-it-out-feature-the-try-it-out-button-lets-you-experiment-with-the-methods-of-the-api-by-making-actual-curl-calls-to-the-service-the-feature-is-not-supported-for-use-with-the-the-session-based-post-v1-sessions-session_id-recognize-and-sessionless-post-v1-recognize-methods-for-examples-of-calls-to-these-methods-see-the-speech-to-text-api-reference-api-usage-the-following-information-provides-details-about-using-the-service-to-transcribe-audio-http-rest-interfaces-you-can-use-methods-of-the-session-based-sessionless-or-asynchronous-http-interfaces-to-pass-audio-data-to-the-service-all-interfaces-let-you-send-the-data-via-the-body-of-the-request-the-session-based-and-sessionless-methods-also-let-you-pass-data-as-multipart-form-data-with-the-former-approach-you-control-the-transcription-via-a-collection-of-request-headers-and-query-parameters-with-the-latter-you-control-the-transcription-primarily-via-json-metadata-sent-as-form-data-websocket-interface-the-service-also-offers-a-websocket-interface-as-an-alternative-to-its-http-interfaces-the-websocket-interface-supports-efficient-implementation-lower-latency-and-higher-throughput-the-interface-establishes-a-persistent-connection-with-the-service-eliminating-the-need-for-session-based-calls-from-the-http-interface-see-the-websocket-interface-audio-formats-the-service-supports-a-variety-of-popular-audio-formats-for-more-information-including-links-to-a-number-of-internet-sites-that-provide-technical-and-usage-details-about-the-different-formats-see-audio-formats-audio-transmission-you-can-pass-the-audio-to-be-transcribed-as-a-one-shot-delivery-or-in-streaming-mode-with-one-shot-delivery-you-pass-all-of-the-audio-data-to-the-service-at-one-time-with-streaming-mode-you-send-audio-data-to-the-service-in-chunks-over-a-persistent-connection-to-use-streaming-you-must-pass-the-transfer-encoding-request-header-with-a-value-of-chunked-both-forms-of-data-transmission-impose-a-limit-of-100-mb-of-total-data-for-transcription-see-audio-transmission-authentication-you-authenticate-to-the-service-by-using-your-service-credentials-you-can-use-your-credentials-to-authenticate-via-a-proxy-server-that-resides-in-ibm-cloud-or-you-can-use-your-credentials-to-obtain-a-token-and-contact-the-service-directly-see-service-credentials-for-watson-services-and-tokens-for-authentication-request-logging-by-default-all-watson-services-log-requests-and-their-results-data-is-collected-only-to-improve-the-watson-services-if-you-do-not-want-to-share-your-data-set-the-header-parameter-x-watson-learning-opt-out-to-true-for-each-request-data-is-collected-for-any-request-that-omits-this-header-see-controlling-request-logging-for-watson-services-for-more-information-about-the-service-and-its-various-interfaces-see-about-speech-to-text-customization-api-usage-the-following-information-pertains-to-methods-of-the-customization-interface-language-model-customization-and-acoustic-model-customization-are-available-only-for-a-limited-set-of-languages-they-are-generally-available-for-production-use-for-some-languages-but-are-beta-offerings-for-other-languages-for-a-complete-list-of-supported-languages-and-the-status-of-their-availability-see-language-support-for-customization-in-all-cases-you-must-use-service-credentials-created-for-the-instance-of-the-service-that-owns-a-custom-model-to-use-the-methods-described-in-this-documentation-with-that-model-for-more-information-see-ownership-of-custom-language-models-how-the-service-handles-request-logging-for-the-customization-interface-depends-on-the-request-the-service-does-not-log-data-that-are-used-to-build-custom-models-but-it-does-log-data-when-a-custom-model-is-used-with-a-recognition-request-for-more-information-see-request-logging-and-data-privacy-each-custom-model-is-identified-by-a-customization-id-which-is-a-globally-unique-identifier-guid-a-guid-is-a-hexadecimal-string-that-has-the-same-format-as-watson-service-credentials-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx-you-specify-a-custom-model-s-guid-with-the-appropriate-customization-parameter-of-methods-that-support-customization-for-more-information-about-using-the-service-s-customization-interface-see-the-customization-interface-">Service Overview  The IBM Speech to Text service provides a Representational State Transfer (REST) Application Programming Interface (API) that enables you to add IBM&#39;s speech transcription capabilities to your applications. The service also supports an asynchronous HTTP interface for transcribing audio via non-blocking calls. And it supports a customization interface that lets you expand the vocabulary of a base model with domain-specific terminology or adapt a base model for the acoustic characteristics of your audio.   The service transcribes speech from various languages and audio formats to text with low latency. The service supports transcription of the following languages: Brazilian Portuguese, French, Japanese, Mandarin Chinese, Modern Standard Arabic, Spanish, UK English, and US English. For most languages, the service supports two sampling rates, broadband and narrowband.  ### API Overview The Speech to Text service provides the following endpoints: <em> <code>/v1/models</code> returns information about the language models that are available for speech recognition. </em> <code>/v1/recognize</code> (sessionless) includes a single method that provides a simple means of transcribing audio without the overhead of establishing and maintaining a session, but it lacks some of the capabilities available with sessions. <em> <code>/v1/sessions</code> provides a collection of methods that provide a mechanism for a client to maintain a long, multi-turn exchange, or session, with the service or to establish multiple parallel conversations with a particular instance of the service. </em> <code>/v1/recognitions</code> (asynchronous) provides a set of non-blocking methods for submitting, querying, and deleting jobs for recognition requests with the asynchronous HTTP interface. The interface includes calls to register (white-list) and unregister a callback URL. <em> <code>/v1/customizations</code> provides methods for creating and managing custom language models. Custom language models let you expand the vocabulary of a base model with domain-specific terminology. </em> <code>/v1/customizations/{customization_id}/corpora</code> provides methods for managing the corpora associated with a custom language model. You add corpora to extract out-of-vocabulary (OOV) words from the corpora into the custom language model&#39;s vocabulary. You can add, list, and delete corpora from a custom language model. <em> <code>/v1/customizations/{customization_id}/words</code> includes methods for managing individual words in a custom language model. You can add, modify, list, and delete words from a custom language model. </em> <code>/v1/acoustic_customizations</code> provides methods for creating and managing custom acoustic models. The interface lets you adapt a base model for the audio characteristics of your environment and speakers. <em> <code>/v1/acoustic_customizations/{customization_id}/audio</code> provides methods for managing the audio resources associated with a custom acoustic model. You add audio resources that closely match the acoustic characteristics of the audio that you want to transcribe. You can add, list, and delete audio resources from a custom acoustic model.    <strong>Note about the Try It Out feature:</strong> The <code>Try it out!</code> button lets you experiment with the methods of the API by making actual cURL calls to the service. The feature is <strong>not</strong> supported for use with the the session-based <code>POST /v1/sessions/{session_id}/recognize</code> and sessionless <code>POST /v1/recognize</code> methods. For examples of calls to these methods, see the <a href="http://www.ibm.com/watson/developercloud/speech-to-text/api/v1/">Speech to Text API reference</a>.  ### API Usage The following information provides details about using the service to transcribe audio: </em> <strong>HTTP REST interfaces:</strong> You can use methods of the session-based, sessionless, or asynchronous HTTP interfaces to pass audio data to the service. All interfaces let you send the data via the body of the request; the session-based and sessionless methods also let you pass data as multipart form data. With the former approach, you control the transcription via a collection of request headers and query parameters. With the latter, you control the transcription primarily via JSON metadata sent as form data. <em> <strong>WebSocket interface:</strong> The service also offers a WebSocket interface as an alternative to its HTTP interfaces. The WebSocket interface supports efficient implementation, lower latency, and higher throughput. The interface establishes a persistent connection with the service, eliminating the need for session-based calls from the HTTP interface. See <a href="https://console.bluemix.net/docs/services/speech-to-text/websockets.html">The WebSocket interface</a>. </em> <strong>Audio formats:</strong> The service supports a variety of popular audio formats. For more information, including links to a number of Internet sites that provide technical and usage details about the different formats, see <a href="https://console.bluemix.net/docs/services/speech-to-text/audio-formats.html">Audio formats</a>. <em> <strong>Audio transmission:</strong> You can pass the audio to be transcribed as a one-shot delivery or in streaming mode. With one-shot delivery, you pass all of the audio data to the service at one time. With streaming mode, you send audio data to the service in chunks over a persistent connection. To use streaming, you must pass the <code>Transfer-Encoding</code> request header with a value of <code>chunked</code>. Both forms of data transmission impose a limit of 100 MB of total data for transcription. See <a href="https://console.bluemix.net/docs/services/speech-to-text/input.html#transmission">Audio transmission</a>. </em> <strong>Authentication:</strong> You authenticate to the service by using your service credentials. You can use your credentials to authenticate via a proxy server that resides in IBM Cloud, or you can use your credentials to obtain a token and contact the service directly. See <a href="https://console.bluemix.net/docs/services/watson/getting-started-credentials.html">Service credentials for Watson services</a> and <a href="https://console.bluemix.net/docs/services/watson/getting-started-tokens.html">Tokens for authentication</a>. <em> <strong>Request Logging:</strong> By default, all Watson services log requests and their results. Data is collected only to improve the Watson services. If you do not want to share your data, set the header parameter <code>X-Watson-Learning-Opt-Out</code> to <code>true</code> for each request. Data is collected for any request that omits this header. See <a href="https://console.bluemix.net/docs/services/watson/getting-started-logging.html">Controlling request logging for Watson services</a>.  For more information about the service and its various interfaces, see <a href="https://console.bluemix.net/docs/services/speech-to-text/index.html">About Speech to Text</a>. ### Customization API Usage   The following information pertains to methods of the customization interface: </em> Language model customization and acoustic model customization are available only for a limited set of languages. They are generally available for production use for some languages but are beta offerings for other languages. For a complete list of supported languages and the status of their availability, see <a href="https://console.bluemix.net/docs/services/speech-to-text/custom.html#languageSupport">Language support for customization</a>. <em> In all cases, you must use service credentials created for the instance of the service that owns a custom model to use the methods described in this documentation with that model. For more information, see <a href="https://console.bluemix.net/docs/services/speech-to-text/custom.html#customOwner">Ownership of custom language models</a>. </em> How the service handles request logging for the customization interface depends on the request. The service does not log data that are used to build custom models. But it does log data when a custom model is used with a recognition request. For more information, see <a href="https://console.bluemix.net/docs/services/speech-to-text/custom.html#customLogging">Request logging and data privacy</a>. * Each custom model is identified by a customization ID, which is a Globally Unique Identifier (GUID). A GUID is a hexadecimal string that has the same format as Watson service credentials: <code>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</code>. You specify a custom model&#39;s GUID with the appropriate customization parameter of methods that support customization.   For more information about using the service&#39;s customization interface, see <a href="https://console.bluemix.net/docs/services/speech-to-text/custom.html">The customization interface</a>.</h3>
+						<h3 id="service-overview-the-ibm-speech-to-text-service-provides-a-representational-state-transfer-rest-application-programming-interface-api-that-enables-you-to-add-ibm-s-speech-transcription-capabilities-to-your-applications-the-service-also-supports-an-asynchronous-http-interface-for-transcribing-audio-via-non-blocking-calls-and-it-supports-a-customization-interface-that-lets-you-expand-the-vocabulary-of-a-base-model-with-domain-specific-terminology-or-adapt-a-base-model-for-the-acoustic-characteristics-of-your-audio-the-service-transcribes-speech-from-various-languages-and-audio-formats-to-text-with-low-latency-the-service-supports-transcription-of-the-following-languages-brazilian-portuguese-french-japanese-mandarin-chinese-modern-standard-arabic-spanish-uk-english-and-us-english-for-most-languages-the-service-supports-two-sampling-rates-broadband-and-narrowband-api-overview-the-speech-to-text-service-provides-the-following-endpoints-v1-models-returns-information-about-the-language-models-that-are-available-for-speech-recognition-v1-recognize-sessionless-includes-a-single-method-that-provides-a-simple-means-of-transcribing-audio-without-the-overhead-of-establishing-and-maintaining-a-session-but-it-lacks-some-of-the-capabilities-available-with-sessions-v1-sessions-provides-a-collection-of-methods-that-provide-a-mechanism-for-a-client-to-maintain-a-long-multi-turn-exchange-or-session-with-the-service-or-to-establish-multiple-parallel-conversations-with-a-particular-instance-of-the-service-v1-recognitions-asynchronous-provides-a-set-of-non-blocking-methods-for-submitting-querying-and-deleting-jobs-for-recognition-requests-with-the-asynchronous-http-interface-the-interface-includes-calls-to-register-white-list-and-unregister-a-callback-url-v1-customizations-provides-methods-for-creating-and-managing-custom-language-models-custom-language-models-let-you-expand-the-vocabulary-of-a-base-model-with-domain-specific-terminology-v1-customizations-customization_id-corpora-provides-methods-for-managing-the-corpora-associated-with-a-custom-language-model-you-add-corpora-to-extract-out-of-vocabulary-oov-words-from-the-corpora-into-the-custom-language-model-s-vocabulary-you-can-add-list-and-delete-corpora-from-a-custom-language-model-v1-customizations-customization_id-words-includes-methods-for-managing-individual-words-in-a-custom-language-model-you-can-add-modify-list-and-delete-words-from-a-custom-language-model-v1-acoustic_customizations-provides-methods-for-creating-and-managing-custom-acoustic-models-the-interface-lets-you-adapt-a-base-model-for-the-audio-characteristics-of-your-environment-and-speakers-v1-acoustic_customizations-customization_id-audio-provides-methods-for-managing-the-audio-resources-associated-with-a-custom-acoustic-model-you-add-audio-resources-that-closely-match-the-acoustic-characteristics-of-the-audio-that-you-want-to-transcribe-you-can-add-list-and-delete-audio-resources-from-a-custom-acoustic-model-note-about-the-try-it-out-feature-the-try-it-out-button-lets-you-experiment-with-the-methods-of-the-api-by-making-actual-curl-calls-to-the-service-the-feature-is-not-supported-for-use-with-the-session-based-post-v1-sessions-session_id-recognize-and-sessionless-post-v1-recognize-methods-for-examples-of-calls-to-these-methods-see-the-speech-to-text-api-reference-api-usage-the-following-information-provides-details-about-using-the-service-to-transcribe-audio-http-rest-interfaces-you-can-use-methods-of-the-session-based-sessionless-or-asynchronous-http-interfaces-to-pass-audio-data-to-the-service-all-interfaces-let-you-send-the-data-via-the-body-of-the-request-the-session-based-and-sessionless-methods-also-let-you-pass-data-as-multipart-form-data-with-the-former-approach-you-control-the-transcription-via-a-collection-of-request-headers-and-query-parameters-with-the-latter-you-control-the-transcription-primarily-via-json-metadata-sent-as-form-data-websocket-interface-the-service-also-offers-a-websocket-interface-as-an-alternative-to-its-http-interfaces-the-websocket-interface-supports-efficient-implementation-lower-latency-and-higher-throughput-the-interface-establishes-a-persistent-connection-with-the-service-eliminating-the-need-for-session-based-calls-from-the-http-interface-see-the-websocket-interface-audio-formats-the-service-supports-a-variety-of-popular-audio-formats-for-more-information-including-links-to-a-number-of-internet-sites-that-provide-technical-and-usage-details-about-the-different-formats-see-audio-formats-audio-transmission-you-can-pass-the-audio-to-be-transcribed-as-a-one-shot-delivery-or-in-streaming-mode-with-one-shot-delivery-you-pass-all-of-the-audio-data-to-the-service-at-one-time-with-streaming-mode-you-send-audio-data-to-the-service-in-chunks-over-a-persistent-connection-to-use-streaming-you-must-pass-the-transfer-encoding-request-header-with-a-value-of-chunked-both-forms-of-data-transmission-impose-a-limit-of-100-mb-of-total-data-for-transcription-see-audio-transmission-authentication-you-authenticate-to-the-service-by-using-your-service-credentials-you-can-use-your-credentials-to-authenticate-via-a-proxy-server-that-resides-in-ibm-cloud-or-you-can-use-your-credentials-to-obtain-a-token-and-contact-the-service-directly-see-service-credentials-for-watson-services-and-tokens-for-authentication-request-logging-by-default-all-watson-services-log-requests-and-their-results-data-is-collected-only-to-improve-the-watson-services-if-you-do-not-want-to-share-your-data-set-the-header-parameter-x-watson-learning-opt-out-to-true-for-each-request-data-is-collected-for-any-request-that-omits-this-header-see-controlling-request-logging-for-watson-services-for-more-information-about-the-service-and-its-various-interfaces-see-about-speech-to-text-customization-api-usage-the-following-information-pertains-to-methods-of-the-customization-interface-language-model-customization-and-acoustic-model-customization-are-available-only-for-a-limited-set-of-languages-they-are-generally-available-for-production-use-for-some-languages-but-are-beta-offerings-for-other-languages-for-a-complete-list-of-supported-languages-and-the-status-of-their-availability-see-language-support-for-customization-in-all-cases-you-must-use-service-credentials-created-for-the-instance-of-the-service-that-owns-a-custom-model-to-use-the-methods-described-in-this-documentation-with-that-model-for-more-information-see-ownership-of-custom-language-models-how-the-service-handles-request-logging-for-the-customization-interface-depends-on-the-request-the-service-does-not-log-data-that-are-used-to-build-custom-models-but-it-does-log-data-when-a-custom-model-is-used-with-a-recognition-request-for-more-information-see-request-logging-and-data-privacy-each-custom-model-is-identified-by-a-customization-id-which-is-a-globally-unique-identifier-guid-a-guid-is-a-hexadecimal-string-that-has-the-same-format-as-watson-service-credentials-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx-you-specify-a-custom-model-s-guid-with-the-appropriate-customization-parameter-of-methods-that-support-customization-for-more-information-about-using-the-service-s-customization-interface-see-the-customization-interface-">Service Overview  The IBM Speech to Text service provides a Representational State Transfer (REST) Application Programming Interface (API) that enables you to add IBM&#39;s speech transcription capabilities to your applications. The service also supports an asynchronous HTTP interface for transcribing audio via non-blocking calls. And it supports a customization interface that lets you expand the vocabulary of a base model with domain-specific terminology or adapt a base model for the acoustic characteristics of your audio.   The service transcribes speech from various languages and audio formats to text with low latency. The service supports transcription of the following languages: Brazilian Portuguese, French, Japanese, Mandarin Chinese, Modern Standard Arabic, Spanish, UK English, and US English. For most languages, the service supports two sampling rates, broadband and narrowband.  ### API Overview The Speech to Text service provides the following endpoints: <em> <code>/v1/models</code> returns information about the language models that are available for speech recognition. </em> <code>/v1/recognize</code> (sessionless) includes a single method that provides a simple means of transcribing audio without the overhead of establishing and maintaining a session, but it lacks some of the capabilities available with sessions. <em> <code>/v1/sessions</code> provides a collection of methods that provide a mechanism for a client to maintain a long, multi-turn exchange, or session, with the service or to establish multiple parallel conversations with a particular instance of the service. </em> <code>/v1/recognitions</code> (asynchronous) provides a set of non-blocking methods for submitting, querying, and deleting jobs for recognition requests with the asynchronous HTTP interface. The interface includes calls to register (white-list) and unregister a callback URL. <em> <code>/v1/customizations</code> provides methods for creating and managing custom language models. Custom language models let you expand the vocabulary of a base model with domain-specific terminology. </em> <code>/v1/customizations/{customization_id}/corpora</code> provides methods for managing the corpora associated with a custom language model. You add corpora to extract out-of-vocabulary (OOV) words from the corpora into the custom language model&#39;s vocabulary. You can add, list, and delete corpora from a custom language model. <em> <code>/v1/customizations/{customization_id}/words</code> includes methods for managing individual words in a custom language model. You can add, modify, list, and delete words from a custom language model. </em> <code>/v1/acoustic_customizations</code> provides methods for creating and managing custom acoustic models. The interface lets you adapt a base model for the audio characteristics of your environment and speakers. <em> <code>/v1/acoustic_customizations/{customization_id}/audio</code> provides methods for managing the audio resources associated with a custom acoustic model. You add audio resources that closely match the acoustic characteristics of the audio that you want to transcribe. You can add, list, and delete audio resources from a custom acoustic model.    <strong>Note about the Try It Out feature:</strong> The <code>Try it out!</code> button lets you experiment with the methods of the API by making actual cURL calls to the service. The feature is <strong>not</strong> supported for use with the session-based <code>POST /v1/sessions/{session_id}/recognize</code> and sessionless <code>POST /v1/recognize</code> methods. For examples of calls to these methods, see the <a href="http://www.ibm.com/watson/developercloud/speech-to-text/api/v1/">Speech to Text API reference</a>.  ### API Usage The following information provides details about using the service to transcribe audio: </em> <strong>HTTP REST interfaces:</strong> You can use methods of the session-based, sessionless, or asynchronous HTTP interfaces to pass audio data to the service. All interfaces let you send the data via the body of the request; the session-based and sessionless methods also let you pass data as multipart form data. With the former approach, you control the transcription via a collection of request headers and query parameters. With the latter, you control the transcription primarily via JSON metadata sent as form data. <em> <strong>WebSocket interface:</strong> The service also offers a WebSocket interface as an alternative to its HTTP interfaces. The WebSocket interface supports efficient implementation, lower latency, and higher throughput. The interface establishes a persistent connection with the service, eliminating the need for session-based calls from the HTTP interface. See <a href="https://console.bluemix.net/docs/services/speech-to-text/websockets.html">The WebSocket interface</a>. </em> <strong>Audio formats:</strong> The service supports a variety of popular audio formats. For more information, including links to a number of Internet sites that provide technical and usage details about the different formats, see <a href="https://console.bluemix.net/docs/services/speech-to-text/audio-formats.html">Audio formats</a>. <em> <strong>Audio transmission:</strong> You can pass the audio to be transcribed as a one-shot delivery or in streaming mode. With one-shot delivery, you pass all of the audio data to the service at one time. With streaming mode, you send audio data to the service in chunks over a persistent connection. To use streaming, you must pass the <code>Transfer-Encoding</code> request header with a value of <code>chunked</code>. Both forms of data transmission impose a limit of 100 MB of total data for transcription. See <a href="https://console.bluemix.net/docs/services/speech-to-text/input.html#transmission">Audio transmission</a>. </em> <strong>Authentication:</strong> You authenticate to the service by using your service credentials. You can use your credentials to authenticate via a proxy server that resides in IBM Cloud, or you can use your credentials to obtain a token and contact the service directly. See <a href="https://console.bluemix.net/docs/services/watson/getting-started-credentials.html">Service credentials for Watson services</a> and <a href="https://console.bluemix.net/docs/services/watson/getting-started-tokens.html">Tokens for authentication</a>. <em> <strong>Request Logging:</strong> By default, all Watson services log requests and their results. Data is collected only to improve the Watson services. If you do not want to share your data, set the header parameter <code>X-Watson-Learning-Opt-Out</code> to <code>true</code> for each request. Data is collected for any request that omits this header. See <a href="https://console.bluemix.net/docs/services/watson/getting-started-logging.html">Controlling request logging for Watson services</a>.  For more information about the service and its various interfaces, see <a href="https://console.bluemix.net/docs/services/speech-to-text/index.html">About Speech to Text</a>. ### Customization API Usage   The following information pertains to methods of the customization interface: </em> Language model customization and acoustic model customization are available only for a limited set of languages. They are generally available for production use for some languages but are beta offerings for other languages. For a complete list of supported languages and the status of their availability, see <a href="https://console.bluemix.net/docs/services/speech-to-text/custom.html#languageSupport">Language support for customization</a>. <em> In all cases, you must use service credentials created for the instance of the service that owns a custom model to use the methods described in this documentation with that model. For more information, see <a href="https://console.bluemix.net/docs/services/speech-to-text/custom.html#customOwner">Ownership of custom language models</a>. </em> How the service handles request logging for the customization interface depends on the request. The service does not log data that are used to build custom models. But it does log data when a custom model is used with a recognition request. For more information, see <a href="https://console.bluemix.net/docs/services/speech-to-text/custom.html#customLogging">Request logging and data privacy</a>. * Each custom model is identified by a customization ID, which is a Globally Unique Identifier (GUID). A GUID is a hexadecimal string that has the same format as Watson service credentials: <code>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</code>. You specify a custom model&#39;s GUID with the appropriate customization parameter of methods that support customization.   For more information about using the service&#39;s customization interface, see <a href="https://console.bluemix.net/docs/services/speech-to-text/custom.html">The customization interface</a>.</h3>
 						<p>interfaces</p>
 					</div>
 				</div>
@@ -93,14 +93,10 @@
 							<h3>Modules</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-module tsd-parent-kind-class"><a href="../modules/speechtotextv1.addaudioconstants.html" class="tsd-kind-icon">Add<wbr>Audio<wbr>Constants</a></li>
-								<li class="tsd-kind-module tsd-parent-kind-class"><a href="../modules/speechtotextv1.addwordconstants.html" class="tsd-kind-icon">Add<wbr>Word<wbr>Constants</a></li>
-								<li class="tsd-kind-module tsd-parent-kind-class"><a href="../modules/speechtotextv1.addwordsconstants.html" class="tsd-kind-icon">Add<wbr>Words<wbr>Constants</a></li>
-								<li class="tsd-kind-module tsd-parent-kind-class"><a href="../modules/speechtotextv1.createacousticmodelconstants.html" class="tsd-kind-icon">Create<wbr>Acoustic<wbr>Model<wbr>Constants</a></li>
 								<li class="tsd-kind-module tsd-parent-kind-class"><a href="../modules/speechtotextv1.createjobconstants.html" class="tsd-kind-icon">Create<wbr>Job<wbr>Constants</a></li>
-								<li class="tsd-kind-module tsd-parent-kind-class"><a href="../modules/speechtotextv1.createlanguagemodelconstants.html" class="tsd-kind-icon">Create<wbr>Language<wbr>Model<wbr>Constants</a></li>
-								<li class="tsd-kind-module tsd-parent-kind-class"><a href="../modules/speechtotextv1.createsessionconstants.html" class="tsd-kind-icon">Create<wbr>Session<wbr>Constants</a></li>
 								<li class="tsd-kind-module tsd-parent-kind-class"><a href="../modules/speechtotextv1.getmodelconstants.html" class="tsd-kind-icon">Get<wbr>Model<wbr>Constants</a></li>
 								<li class="tsd-kind-module tsd-parent-kind-class"><a href="../modules/speechtotextv1.listwordsconstants.html" class="tsd-kind-icon">List<wbr>Words<wbr>Constants</a></li>
+								<li class="tsd-kind-module tsd-parent-kind-class"><a href="../modules/speechtotextv1.recognizeconstants.html" class="tsd-kind-icon">Recognize<wbr>Constants</a></li>
 								<li class="tsd-kind-module tsd-parent-kind-class"><a href="../modules/speechtotextv1.trainlanguagemodelconstants.html" class="tsd-kind-icon">Train<wbr>Language<wbr>Model<wbr>Constants</a></li>
 							</ul>
 						</section>
@@ -124,14 +120,12 @@
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.createacousticmodelparams.html" class="tsd-kind-icon">Create<wbr>Acoustic<wbr>Model<wbr>Params</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.createjobparams.html" class="tsd-kind-icon">Create<wbr>Job<wbr>Params</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.createlanguagemodelparams.html" class="tsd-kind-icon">Create<wbr>Language<wbr>Model<wbr>Params</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.createsessionparams.html" class="tsd-kind-icon">Create<wbr>Session<wbr>Params</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.customword.html" class="tsd-kind-icon">Custom<wbr>Word</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.deleteacousticmodelparams.html" class="tsd-kind-icon">Delete<wbr>Acoustic<wbr>Model<wbr>Params</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.deleteaudioparams.html" class="tsd-kind-icon">Delete<wbr>Audio<wbr>Params</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.deletecorpusparams.html" class="tsd-kind-icon">Delete<wbr>Corpus<wbr>Params</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.deletejobparams.html" class="tsd-kind-icon">Delete<wbr>Job<wbr>Params</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.deletelanguagemodelparams.html" class="tsd-kind-icon">Delete<wbr>Language<wbr>Model<wbr>Params</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.deletesessionparams.html" class="tsd-kind-icon">Delete<wbr>Session<wbr>Params</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.deletewordparams.html" class="tsd-kind-icon">Delete<wbr>Word<wbr>Params</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.empty.html" class="tsd-kind-icon">Empty</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.getacousticmodelparams.html" class="tsd-kind-icon">Get<wbr>Acoustic<wbr>Model<wbr>Params</a></li>
@@ -139,10 +133,8 @@
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.getcorpusparams.html" class="tsd-kind-icon">Get<wbr>Corpus<wbr>Params</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.getlanguagemodelparams.html" class="tsd-kind-icon">Get<wbr>Language<wbr>Model<wbr>Params</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.getmodelparams.html" class="tsd-kind-icon">Get<wbr>Model<wbr>Params</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.getsessionstatusparams.html" class="tsd-kind-icon">Get<wbr>Session<wbr>Status<wbr>Params</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.getwordparams.html" class="tsd-kind-icon">Get<wbr>Word<wbr>Params</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.keywordresult.html" class="tsd-kind-icon">Keyword<wbr>Result</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.keywordresults.html" class="tsd-kind-icon">Keyword<wbr>Results</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.languagemodel.html" class="tsd-kind-icon">Language<wbr>Model</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.languagemodels.html" class="tsd-kind-icon">Language<wbr>Models</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.listacousticmodelsparams.html" class="tsd-kind-icon">List<wbr>Acoustic<wbr>Models<wbr>Params</a></li>
@@ -153,22 +145,22 @@
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.listwordsparams.html" class="tsd-kind-icon">List<wbr>Words<wbr>Params</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.recognitionjob.html" class="tsd-kind-icon">Recognition<wbr>Job</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.recognitionjobs.html" class="tsd-kind-icon">Recognition<wbr>Jobs</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.recognizeparams.html" class="tsd-kind-icon">Recognize<wbr>Params</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.registercallbackparams.html" class="tsd-kind-icon">Register<wbr>Callback<wbr>Params</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.registerstatus.html" class="tsd-kind-icon">Register<wbr>Status</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.resetacousticmodelparams.html" class="tsd-kind-icon">Reset<wbr>Acoustic<wbr>Model<wbr>Params</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.resetlanguagemodelparams.html" class="tsd-kind-icon">Reset<wbr>Language<wbr>Model<wbr>Params</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.sessionstatus.html" class="tsd-kind-icon">Session<wbr>Status</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.speakerlabelsresult.html" class="tsd-kind-icon">Speaker<wbr>Labels<wbr>Result</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.speechmodel.html" class="tsd-kind-icon">Speech<wbr>Model</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.speechmodels.html" class="tsd-kind-icon">Speech<wbr>Models</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.speechrecognitionalternative.html" class="tsd-kind-icon">Speech<wbr>Recognition<wbr>Alternative</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.speechrecognitionresult.html" class="tsd-kind-icon">Speech<wbr>Recognition<wbr>Result</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.speechrecognitionresults.html" class="tsd-kind-icon">Speech<wbr>Recognition<wbr>Results</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.speechsession.html" class="tsd-kind-icon">Speech<wbr>Session</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.supportedfeatures.html" class="tsd-kind-icon">Supported<wbr>Features</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.trainacousticmodelparams.html" class="tsd-kind-icon">Train<wbr>Acoustic<wbr>Model<wbr>Params</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.trainlanguagemodelparams.html" class="tsd-kind-icon">Train<wbr>Language<wbr>Model<wbr>Params</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.unregistercallbackparams.html" class="tsd-kind-icon">Unregister<wbr>Callback<wbr>Params</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.upgradeacousticmodelparams.html" class="tsd-kind-icon">Upgrade<wbr>Acoustic<wbr>Model<wbr>Params</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.upgradelanguagemodelparams.html" class="tsd-kind-icon">Upgrade<wbr>Language<wbr>Model<wbr>Params</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.word.html" class="tsd-kind-icon">Word</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.wordalternativeresult.html" class="tsd-kind-icon">Word<wbr>Alternative<wbr>Result</a></li>
@@ -212,13 +204,11 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#createacousticmodel" class="tsd-kind-icon">create<wbr>Acoustic<wbr>Model</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#createjob" class="tsd-kind-icon">create<wbr>Job</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#createlanguagemodel" class="tsd-kind-icon">create<wbr>Language<wbr>Model</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#createsession" class="tsd-kind-icon">create<wbr>Session</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#deleteacousticmodel" class="tsd-kind-icon">delete<wbr>Acoustic<wbr>Model</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#deleteaudio" class="tsd-kind-icon">delete<wbr>Audio</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#deletecorpus" class="tsd-kind-icon">delete<wbr>Corpus</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#deletejob" class="tsd-kind-icon">delete<wbr>Job</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#deletelanguagemodel" class="tsd-kind-icon">delete<wbr>Language<wbr>Model</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#deletesession" class="tsd-kind-icon">delete<wbr>Session</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#deleteword" class="tsd-kind-icon">delete<wbr>Word</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#getacousticmodel" class="tsd-kind-icon">get<wbr>Acoustic<wbr>Model</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#getaudio" class="tsd-kind-icon">get<wbr>Audio</a></li>
@@ -226,7 +216,6 @@
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="speechtotextv1.html#getcredentials" class="tsd-kind-icon">get<wbr>Credentials</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#getlanguagemodel" class="tsd-kind-icon">get<wbr>Language<wbr>Model</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#getmodel" class="tsd-kind-icon">get<wbr>Model</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#getsessionstatus" class="tsd-kind-icon">get<wbr>Session<wbr>Status</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#getword" class="tsd-kind-icon">get<wbr>Word</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#listacousticmodels" class="tsd-kind-icon">list<wbr>Acoustic<wbr>Models</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#listaudio" class="tsd-kind-icon">list<wbr>Audio</a></li>
@@ -234,12 +223,14 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#listlanguagemodels" class="tsd-kind-icon">list<wbr>Language<wbr>Models</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#listmodels" class="tsd-kind-icon">list<wbr>Models</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#listwords" class="tsd-kind-icon">list<wbr>Words</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#recognize" class="tsd-kind-icon">recognize</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#registercallback" class="tsd-kind-icon">register<wbr>Callback</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#resetacousticmodel" class="tsd-kind-icon">reset<wbr>Acoustic<wbr>Model</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#resetlanguagemodel" class="tsd-kind-icon">reset<wbr>Language<wbr>Model</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#trainacousticmodel" class="tsd-kind-icon">train<wbr>Acoustic<wbr>Model</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#trainlanguagemodel" class="tsd-kind-icon">train<wbr>Language<wbr>Model</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#unregistercallback" class="tsd-kind-icon">unregister<wbr>Callback</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#upgradeacousticmodel" class="tsd-kind-icon">upgrade<wbr>Acoustic<wbr>Model</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#upgradelanguagemodel" class="tsd-kind-icon">upgrade<wbr>Language<wbr>Model</a></li>
 							</ul>
 						</section>
@@ -254,7 +245,7 @@
 					<div class="tsd-signature tsd-kind-icon">Callback<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L1720">speech-to-text/v1-generated.ts:1720</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L1581">speech-to-text/v1-generated.ts:1581</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -296,7 +287,7 @@
 					<div class="tsd-signature tsd-kind-icon">Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L1711">speech-to-text/v1-generated.ts:1711</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L1572">speech-to-text/v1-generated.ts:1572</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -339,7 +330,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides BaseService.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L33">speech-to-text/v1-generated.ts:33</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L34">speech-to-text/v1-generated.ts:34</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -376,7 +367,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseService._options</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/lib/base_service.ts#L70">lib/base_service.ts:70</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/lib/base_service.ts#L73">lib/base_service.ts:73</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -387,7 +378,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.name</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L30">speech-to-text/v1-generated.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L33">speech-to-text/v1-generated.ts:33</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -398,7 +389,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseService.serviceDefaults</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/lib/base_service.ts#L71">lib/base_service.ts:71</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/lib/base_service.ts#L74">lib/base_service.ts:74</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -409,7 +400,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.serviceVersion</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L31">speech-to-text/v1-generated.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L34">speech-to-text/v1-generated.ts:34</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -420,7 +411,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.URL</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L33">speech-to-text/v1-generated.ts:33</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L32">speech-to-text/v1-generated.ts:32</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -437,7 +428,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L1530">speech-to-text/v1-generated.ts:1530</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L1409">speech-to-text/v1-generated.ts:1409</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -475,7 +466,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L856">speech-to-text/v1-generated.ts:856</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L745">speech-to-text/v1-generated.ts:745</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -513,7 +504,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L1041">speech-to-text/v1-generated.ts:1041</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L917">speech-to-text/v1-generated.ts:917</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -551,7 +542,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L1091">speech-to-text/v1-generated.ts:1091</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L963">speech-to-text/v1-generated.ts:963</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -589,7 +580,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L273">speech-to-text/v1-generated.ts:273</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L209">speech-to-text/v1-generated.ts:209</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -627,14 +618,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L312">speech-to-text/v1-generated.ts:312</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L245">speech-to-text/v1-generated.ts:245</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Checks the status of all asynchronous jobs.</p>
 								</div>
-								<p>Returns the ID and status of all outstanding jobs associated with the service credentials with which it is called. The method also returns the creation and update times of each job, and, if a job was created with a callback URL and a user token, the user token for the job. To obtain the results for a job whose status is <code>completed</code>, use the <code>GET /v1/recognitions/{id}</code> method. A job and its results remain available until you delete them with the <code>DELETE /v1/recognitions/{id}</code> method or until the job&#39;s time to live expires, whichever comes first.</p>
+								<p>Returns the ID and status of the latest 100 outstanding jobs associated with the service credentials with which it is called. The method also returns the creation and update times of each job, and, if a job was created with a callback URL and a user token, the user token for the job. To obtain the results for a job whose status is <code>completed</code> or not one of the latest 100 outstanding jobs, use the <code>GET /v1/recognitions/{id}</code> method. A job and its results remain available until you delete them with the <code>DELETE /v1/recognitions/{id}</code> method or until the job&#39;s time to live expires, whichever comes first.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -662,7 +653,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L1274">speech-to-text/v1-generated.ts:1274</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L1133">speech-to-text/v1-generated.ts:1133</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -700,14 +691,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L367">speech-to-text/v1-generated.ts:367</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L294">speech-to-text/v1-generated.ts:294</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Creates a job for an asynchronous recognition request.</p>
 								</div>
-								<p>Creates a job for a new asynchronous recognition request. The job is owned by the user whose service credentials are used to create it. How you learn the status and results of a job depends on the parameters you include with the job creation request: <em> By callback notification: Include the <code>callback_url</code> query parameter to specify a URL to which the service is to send callback notifications when the status of the job changes. Optionally, you can also include the <code>events</code> and <code>user_token</code> query parameters to subscribe to specific events and to specify a string that is to be included with each notification for the job. </em> By polling the service: Omit the <code>callback_url</code>, <code>events</code>, and <code>user_token</code> query parameters. You must then use the <code>GET /v1/recognitions</code> or <code>GET /v1/recognitions/{id}</code> methods to check the status of the job, using the latter to retrieve the results when the job is complete.  The two approaches are not mutually exclusive. You can poll the service for job status or obtain results from the service manually even if you include a callback URL. In both cases, you can include the <code>results_ttl</code> parameter to specify how long the results are to remain available after the job is complete. Note that using the HTTPS <code>GET /v1/recognitions/{id}</code> method to retrieve results is more secure than receiving them via callback notification over HTTP because it provides confidentiality in addition to authentication and data integrity.   The method supports the same basic parameters as other HTTP and WebSocket recognition requests. The service imposes a data size limit of 100 MB. It automatically detects the endianness of the incoming audio and, for audio that includes multiple channels, downmixes the audio to one-channel mono during transcoding. (For the <code>audio/l16</code> format, you can specify the endianness.)   <strong>Note:</strong> You can pass the <code>interim_results</code> parameter with a recognition request made with the HTTP asynchronous interface. However, the service sends all results, both interim and final, at the same time, when the request completes. The service does <strong>not</strong> return interim results as it generates them.</p>
+								<p>Creates a job for a new asynchronous recognition request. The job is owned by the user whose service credentials are used to create it. How you learn the status and results of a job depends on the parameters you include with the job creation request: <em> By callback notification: Include the <code>callback_url</code> query parameter to specify a URL to which the service is to send callback notifications when the status of the job changes. Optionally, you can also include the <code>events</code> and <code>user_token</code> query parameters to subscribe to specific events and to specify a string that is to be included with each notification for the job. </em> By polling the service: Omit the <code>callback_url</code>, <code>events</code>, and <code>user_token</code> query parameters. You must then use the <code>GET /v1/recognitions</code> or <code>GET /v1/recognitions/{id}</code> methods to check the status of the job, using the latter to retrieve the results when the job is complete.  The two approaches are not mutually exclusive. You can poll the service for job status or obtain results from the service manually even if you include a callback URL. In both cases, you can include the <code>results_ttl</code> parameter to specify how long the results are to remain available after the job is complete. Note that using the HTTPS <code>GET /v1/recognitions/{id}</code> method to retrieve results is more secure than receiving them via callback notification over HTTP because it provides confidentiality in addition to authentication and data integrity.   The method supports the same basic parameters as other HTTP and WebSocket recognition requests. The service imposes a data size limit of 100 MB. It automatically detects the endianness of the incoming audio and, for audio that includes multiple channels, downmixes the audio to one-channel mono during transcoding. (For the <code>audio/l16</code> format, you can specify the endianness.).</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -738,7 +729,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L558">speech-to-text/v1-generated.ts:558</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L472">speech-to-text/v1-generated.ts:472</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -767,41 +758,6 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="createsession" class="tsd-anchor"></a>
-					<h3>create<wbr>Session</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>Session<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/speechtotextv1.createsessionparams.html" class="tsd-signature-type">CreateSessionParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="speechtotextv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/speechtotextv1.speechsession.html" class="tsd-signature-type">SpeechSession</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L147">speech-to-text/v1-generated.ts:147</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Creates a session.</p>
-								</div>
-								<p>Creates a session and locks recognition requests to that engine. You can use the session for multiple recognition requests so that each request is processed with the same Speech to Text engine. The session expires after 30 seconds of inactivity. For information about avoiding session timeouts, see <a href="https://console.bluemix.net/docs/services/speech-to-text/input.html#timeouts">Timeouts</a>.   The method returns a cookie in the <code>Set-Cookie</code> response header. You must pass this cookie with each request that uses the session. For more information, see <a href="https://console.bluemix.net/docs/services/speech-to-text/http.html#cookies">Using cookies with sessions</a>.</p>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> params: <a href="../interfaces/speechtotextv1.createsessionparams.html" class="tsd-signature-type">CreateSessionParams</a></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="speechtotextv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/speechtotextv1.speechsession.html" class="tsd-signature-type">SpeechSession</a><span class="tsd-signature-symbol">&gt;</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ReadableStream</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">void</span>
-							</h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="deleteacousticmodel" class="tsd-anchor"></a>
 					<h3>delete<wbr>Acoustic<wbr>Model</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -811,7 +767,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L1317">speech-to-text/v1-generated.ts:1317</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L1173">speech-to-text/v1-generated.ts:1173</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -849,7 +805,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L1586">speech-to-text/v1-generated.ts:1586</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L1456">speech-to-text/v1-generated.ts:1456</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -887,7 +843,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L909">speech-to-text/v1-generated.ts:909</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L795">speech-to-text/v1-generated.ts:795</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -925,7 +881,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L428">speech-to-text/v1-generated.ts:428</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L352">speech-to-text/v1-generated.ts:352</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -963,7 +919,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L602">speech-to-text/v1-generated.ts:602</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L513">speech-to-text/v1-generated.ts:513</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -992,44 +948,6 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="deletesession" class="tsd-anchor"></a>
-					<h3>delete<wbr>Session</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">delete<wbr>Session<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/speechtotextv1.deletesessionparams.html" class="tsd-signature-type">DeleteSessionParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="speechtotextv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/speechtotextv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L189">speech-to-text/v1-generated.ts:189</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Deletes the specified session.</p>
-								</div>
-								<p>Deletes an existing session and its engine. The request must pass the cookie that was returned by the <code>POST /v1/sessions</code> method. You cannot send requests to a session after it is deleted. By default, a session expires after 30 seconds of inactivity if you do not delete it first.</p>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>params: <a href="../interfaces/speechtotextv1.deletesessionparams.html" class="tsd-signature-type">DeleteSessionParams</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The parameters to send to the service.</p>
-									</div>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="speechtotextv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/speechtotextv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ReadableStream</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">void</span>
-							</h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="deleteword" class="tsd-anchor"></a>
 					<h3>delete<wbr>Word</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -1039,7 +957,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L1137">speech-to-text/v1-generated.ts:1137</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L1006">speech-to-text/v1-generated.ts:1006</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1077,7 +995,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L1357">speech-to-text/v1-generated.ts:1357</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L1210">speech-to-text/v1-generated.ts:1210</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1115,7 +1033,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L1629">speech-to-text/v1-generated.ts:1629</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L1495">speech-to-text/v1-generated.ts:1495</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1153,7 +1071,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L951">speech-to-text/v1-generated.ts:951</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L834">speech-to-text/v1-generated.ts:834</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1192,7 +1110,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.getCredentials</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/lib/base_service.ts#L221">lib/base_service.ts:221</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/lib/base_service.ts#L121">lib/base_service.ts:121</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1215,7 +1133,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L642">speech-to-text/v1-generated.ts:642</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L550">speech-to-text/v1-generated.ts:550</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1253,7 +1171,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L66">speech-to-text/v1-generated.ts:66</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L67">speech-to-text/v1-generated.ts:67</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1282,44 +1200,6 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="getsessionstatus" class="tsd-anchor"></a>
-					<h3>get<wbr>Session<wbr>Status</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Session<wbr>Status<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/speechtotextv1.getsessionstatusparams.html" class="tsd-signature-type">GetSessionStatusParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="speechtotextv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/speechtotextv1.sessionstatus.html" class="tsd-signature-type">SessionStatus</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L229">speech-to-text/v1-generated.ts:229</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Checks whether a session is ready to accept a new recognition task.</p>
-								</div>
-								<p>Checks whether a specified session can accept another recognition request. Concurrent recognition tasks during the same session are not allowed. The returned state must be <code>initialized</code> to indicate that you can send another recognition request with the <code>POST /v1/recognize</code> method. The request must pass the cookie that was returned by the <code>POST /v1/sessions</code> method.</p>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>params: <a href="../interfaces/speechtotextv1.getsessionstatusparams.html" class="tsd-signature-type">GetSessionStatusParams</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The parameters to send to the service.</p>
-									</div>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="speechtotextv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/speechtotextv1.sessionstatus.html" class="tsd-signature-type">SessionStatus</a><span class="tsd-signature-symbol">&gt;</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ReadableStream</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">void</span>
-							</h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="getword" class="tsd-anchor"></a>
 					<h3>get<wbr>Word</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -1329,7 +1209,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L1179">speech-to-text/v1-generated.ts:1179</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L1045">speech-to-text/v1-generated.ts:1045</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1367,7 +1247,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L1397">speech-to-text/v1-generated.ts:1397</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L1247">speech-to-text/v1-generated.ts:1247</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1402,7 +1282,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L1671">speech-to-text/v1-generated.ts:1671</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L1533">speech-to-text/v1-generated.ts:1533</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1440,7 +1320,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L992">speech-to-text/v1-generated.ts:992</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L872">speech-to-text/v1-generated.ts:872</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1478,7 +1358,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L682">speech-to-text/v1-generated.ts:682</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L587">speech-to-text/v1-generated.ts:587</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1513,7 +1393,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L105">speech-to-text/v1-generated.ts:105</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L103">speech-to-text/v1-generated.ts:103</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1548,7 +1428,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L1222">speech-to-text/v1-generated.ts:1222</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L1085">speech-to-text/v1-generated.ts:1085</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1577,6 +1457,41 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="recognize" class="tsd-anchor"></a>
+					<h3>recognize</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">recognize<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/speechtotextv1.recognizeparams.html" class="tsd-signature-type">RecognizeParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="speechtotextv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/speechtotextv1.speechrecognitionresults.html" class="tsd-signature-type">SpeechRecognitionResults</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L151">speech-to-text/v1-generated.ts:151</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Sends audio for speech recognition in sessionless mode.</p>
+								</div>
+								<p>Sends audio and returns transcription results for a sessionless recognition request.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> params: <a href="../interfaces/speechtotextv1.recognizeparams.html" class="tsd-signature-type">RecognizeParams</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="speechtotextv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/speechtotextv1.speechrecognitionresults.html" class="tsd-signature-type">SpeechRecognitionResults</a><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ReadableStream</span>
+								<span class="tsd-signature-symbol"> | </span>
+								<span class="tsd-signature-type">void</span>
+							</h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="registercallback" class="tsd-anchor"></a>
 					<h3>register<wbr>Callback</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -1586,7 +1501,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L469">speech-to-text/v1-generated.ts:469</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L390">speech-to-text/v1-generated.ts:390</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1624,7 +1539,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L1436">speech-to-text/v1-generated.ts:1436</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L1279">speech-to-text/v1-generated.ts:1279</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1662,7 +1577,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L721">speech-to-text/v1-generated.ts:721</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L619">speech-to-text/v1-generated.ts:619</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1700,14 +1615,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L1477">speech-to-text/v1-generated.ts:1477</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L1317">speech-to-text/v1-generated.ts:1317</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Trains a custom acoustic model.</p>
 								</div>
-								<p>Initiates the training of a custom acoustic model with new or changed audio resources. After adding or deleting audio resources for a custom acoustic model, use this method to begin the actual training of the model on the latest audio data. The custom acoustic model does not reflect its changed data until you train it. You must use credentials for the instance of the service that owns a model to train it.   The training method is asynchronous. It can take on the order of minutes or hours to complete depending on the total amount of audio data on which the model is being trained and the current load on the service. Typically, training takes approximately twice the length of the total audio contained in the custom model. The method returns an HTTP 200 response code to indicate that the training process has begun.   You can monitor the status of the training by using the <code>GET /v1/acoustic_customizations/{customization_id}</code> method to poll the model&#39;s status. Use a loop to check the status once a minute. The method returns an <code>Customization</code> object that includes <code>status</code> and <code>progress</code> fields. A status of <code>available</code> indicates that the custom model is trained and ready to use. The service cannot accept subsequent training requests, or requests to add new audio resources, until the existing request completes.   You can use the optional <code>custom_language_model_id</code> query parameter to specify the GUID of a separately created custom language model that is to be used during training. Specify a custom language model if you have verbatim transcriptions of the audio files that you have added to the custom model or you have either corpora (text files) or a list of words that are relevant to the contents of the audio files. For information about creating a separate custom language model, see <a href="https://console.bluemix.net/docs/services/speech-to-text/language-create.html">Creating a custom language model</a>.   Training can fail to start for the following reasons: <em> The service is currently handling another request for the custom model, such as another training request or a request to add audio resources to the model. </em> The custom model contains less than 10 minutes or more than 50 hours of audio data. * One or more of the custom model&#39;s audio resources is invalid.</p>
+								<p>Initiates the training of a custom acoustic model with new or changed audio resources. After adding or deleting audio resources for a custom acoustic model, use this method to begin the actual training of the model on the latest audio data. The custom acoustic model does not reflect its changed data until you train it. You must use credentials for the instance of the service that owns a model to train it.   The training method is asynchronous. It can take on the order of minutes or hours to complete depending on the total amount of audio data on which the model is being trained and the current load on the service. Typically, training takes approximately two to four times the length of its audio data. The range of time depends on the model being trained and the nature of the audio, such as whether the audio is clean or noisy. The method returns an HTTP 200 response code to indicate that the training process has begun.   You can monitor the status of the training by using the <code>GET /v1/acoustic_customizations/{customization_id}</code> method to poll the model&#39;s status. Use a loop to check the status once a minute. The method returns an <code>Customization</code> object that includes <code>status</code> and <code>progress</code> fields. A status of <code>available</code> indicates that the custom model is trained and ready to use. The service cannot accept subsequent training requests, or requests to add new audio resources, until the existing request completes.   You can use the optional <code>custom_language_model_id</code> query parameter to specify the GUID of a separately created custom language model that is to be used during training. Specify a custom language model if you have verbatim transcriptions of the audio files that you have added to the custom model or you have either corpora (text files) or a list of words that are relevant to the contents of the audio files. For information about creating a separate custom language model, see <a href="https://console.bluemix.net/docs/services/speech-to-text/language-create.html">Creating a custom language model</a>.   Training can fail to start for the following reasons: <em> The service is currently handling another request for the custom model, such as another training request or a request to add audio resources to the model. </em> The custom model contains less than 10 minutes or more than 50 hours of audio data. * One or more of the custom model&#39;s audio resources is invalid.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -1738,7 +1653,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L763">speech-to-text/v1-generated.ts:763</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L658">speech-to-text/v1-generated.ts:658</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1776,7 +1691,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L510">speech-to-text/v1-generated.ts:510</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L428">speech-to-text/v1-generated.ts:428</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1805,6 +1720,44 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="upgradeacousticmodel" class="tsd-anchor"></a>
+					<h3>upgrade<wbr>Acoustic<wbr>Model</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">upgrade<wbr>Acoustic<wbr>Model<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/speechtotextv1.upgradeacousticmodelparams.html" class="tsd-signature-type">UpgradeAcousticModelParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="speechtotextv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/speechtotextv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L1359">speech-to-text/v1-generated.ts:1359</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Upgrades a custom acoustic model.</p>
+								</div>
+								<p>Initiates the upgrade of a custom acoustic model to the latest version of its base language model. The upgrade method is asynchronous. It can take on the order of minutes or hours to complete depending on the amount of data in the custom model and the current load on the service; typically, upgrade takes approximately twice the length of the total audio contained in the custom model. A custom model must be in the <code>ready</code> or <code>available</code> state to be upgraded. You must use credentials for the instance of the service that owns a model to upgrade it.   The method returns an HTTP 200 response code to indicate that the upgrade process has begun successfully. You can monitor the status of the upgrade by using the <code>GET /v1/acoustic_customizations/{customization_id}</code> method to poll the model&#39;s status. Use a loop to check the status once a minute. While it is being upgraded, the custom model has the status <code>upgrading</code>. When the upgrade is complete, the model resumes the status that it had prior to upgrade. The service cannot accept subsequent requests for the model until the upgrade completes.   If the custom acoustic model was trained with a separately created custom language model, you must use the <code>custom_language_model_id</code> query parameter to specify the GUID of that custom language model. The custom language model must be upgraded before the custom acoustic model can be upgraded. Omit the parameter if the custom acoustic model was not trained with a custom language model.   For more information, see <a href="https://console.bluemix.net/docs/services/speech-to-text/custom-upgrade.html">Upgrading custom models</a>.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>params: <a href="../interfaces/speechtotextv1.upgradeacousticmodelparams.html" class="tsd-signature-type">UpgradeAcousticModelParams</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The parameters to send to the service.</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="speechtotextv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/speechtotextv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ReadableStream</span>
+								<span class="tsd-signature-symbol"> | </span>
+								<span class="tsd-signature-type">void</span>
+							</h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="upgradelanguagemodel" class="tsd-anchor"></a>
 					<h3>upgrade<wbr>Language<wbr>Model</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -1814,14 +1767,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/speech-to-text/v1-generated.ts#L808">speech-to-text/v1-generated.ts:808</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/speech-to-text/v1-generated.ts#L700">speech-to-text/v1-generated.ts:700</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Upgrades a custom language model.</p>
 								</div>
-								<p>Upgrades a custom language model to the latest release level of the Speech to Text service. The method bases the upgrade on the latest trained data stored for the custom model. If the corpora or words associated with the model have changed since the model was last trained, you must use the <code>POST /v1/customizations/{customization_id}/train</code> method to train the model on the new data. You must use credentials for the instance of the service that owns a model to upgrade it.   <strong>Note:</strong> This method is not currently implemented. It will be added for a future release of the API.</p>
+								<p>Initiates the upgrade of a custom language model to the latest version of its base language model. The upgrade method is asynchronous. It can take on the order of minutes to complete depending on the amount of data in the custom model and the current load on the service. A custom model must be in the <code>ready</code> or <code>available</code> state to be upgraded. You must use credentials for the instance of the service that owns a model to upgrade it.   The method returns an HTTP 200 response code to indicate that the upgrade process has begun successfully. You can monitor the status of the upgrade by using the <code>GET /v1/customizations/{customization_id}</code> method to poll the model&#39;s status. Use a loop to check the status every 10 seconds. While it is being upgraded, the custom model has the status <code>upgrading</code>. When the upgrade is complete, the model resumes the status that it had prior to upgrade. The service cannot accept subsequent requests for the model until the upgrade completes.   For more information, see <a href="https://console.bluemix.net/docs/services/speech-to-text/custom-upgrade.html">Upgrading custom models</a>.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -1941,9 +1894,6 @@
 								<a href="../interfaces/speechtotextv1.createlanguagemodelparams.html" class="tsd-kind-icon">Create<wbr>Language<wbr>Model<wbr>Params</a>
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class">
-								<a href="../interfaces/speechtotextv1.createsessionparams.html" class="tsd-kind-icon">Create<wbr>Session<wbr>Params</a>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class">
 								<a href="../interfaces/speechtotextv1.customword.html" class="tsd-kind-icon">Custom<wbr>Word</a>
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class">
@@ -1960,9 +1910,6 @@
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class">
 								<a href="../interfaces/speechtotextv1.deletelanguagemodelparams.html" class="tsd-kind-icon">Delete<wbr>Language<wbr>Model<wbr>Params</a>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class">
-								<a href="../interfaces/speechtotextv1.deletesessionparams.html" class="tsd-kind-icon">Delete<wbr>Session<wbr>Params</a>
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class">
 								<a href="../interfaces/speechtotextv1.deletewordparams.html" class="tsd-kind-icon">Delete<wbr>Word<wbr>Params</a>
@@ -1986,16 +1933,10 @@
 								<a href="../interfaces/speechtotextv1.getmodelparams.html" class="tsd-kind-icon">Get<wbr>Model<wbr>Params</a>
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class">
-								<a href="../interfaces/speechtotextv1.getsessionstatusparams.html" class="tsd-kind-icon">Get<wbr>Session<wbr>Status<wbr>Params</a>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class">
 								<a href="../interfaces/speechtotextv1.getwordparams.html" class="tsd-kind-icon">Get<wbr>Word<wbr>Params</a>
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class">
 								<a href="../interfaces/speechtotextv1.keywordresult.html" class="tsd-kind-icon">Keyword<wbr>Result</a>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class">
-								<a href="../interfaces/speechtotextv1.keywordresults.html" class="tsd-kind-icon">Keyword<wbr>Results</a>
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class">
 								<a href="../interfaces/speechtotextv1.languagemodel.html" class="tsd-kind-icon">Language<wbr>Model</a>
@@ -2028,6 +1969,9 @@
 								<a href="../interfaces/speechtotextv1.recognitionjobs.html" class="tsd-kind-icon">Recognition<wbr>Jobs</a>
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class">
+								<a href="../interfaces/speechtotextv1.recognizeparams.html" class="tsd-kind-icon">Recognize<wbr>Params</a>
+							</li>
+							<li class=" tsd-kind-interface tsd-parent-kind-class">
 								<a href="../interfaces/speechtotextv1.registercallbackparams.html" class="tsd-kind-icon">Register<wbr>Callback<wbr>Params</a>
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class">
@@ -2038,9 +1982,6 @@
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class">
 								<a href="../interfaces/speechtotextv1.resetlanguagemodelparams.html" class="tsd-kind-icon">Reset<wbr>Language<wbr>Model<wbr>Params</a>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class">
-								<a href="../interfaces/speechtotextv1.sessionstatus.html" class="tsd-kind-icon">Session<wbr>Status</a>
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class">
 								<a href="../interfaces/speechtotextv1.speakerlabelsresult.html" class="tsd-kind-icon">Speaker<wbr>Labels<wbr>Result</a>
@@ -2061,9 +2002,6 @@
 								<a href="../interfaces/speechtotextv1.speechrecognitionresults.html" class="tsd-kind-icon">Speech<wbr>Recognition<wbr>Results</a>
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class">
-								<a href="../interfaces/speechtotextv1.speechsession.html" class="tsd-kind-icon">Speech<wbr>Session</a>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class">
 								<a href="../interfaces/speechtotextv1.supportedfeatures.html" class="tsd-kind-icon">Supported<wbr>Features</a>
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class">
@@ -2074,6 +2012,9 @@
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class">
 								<a href="../interfaces/speechtotextv1.unregistercallbackparams.html" class="tsd-kind-icon">Unregister<wbr>Callback<wbr>Params</a>
+							</li>
+							<li class=" tsd-kind-interface tsd-parent-kind-class">
+								<a href="../interfaces/speechtotextv1.upgradeacousticmodelparams.html" class="tsd-kind-icon">Upgrade<wbr>Acoustic<wbr>Model<wbr>Params</a>
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class">
 								<a href="../interfaces/speechtotextv1.upgradelanguagemodelparams.html" class="tsd-kind-icon">Upgrade<wbr>Language<wbr>Model<wbr>Params</a>
@@ -2145,9 +2086,6 @@
 								<a href="speechtotextv1.html#createlanguagemodel" class="tsd-kind-icon">create<wbr>Language<wbr>Model</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="speechtotextv1.html#createsession" class="tsd-kind-icon">create<wbr>Session</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="speechtotextv1.html#deleteacousticmodel" class="tsd-kind-icon">delete<wbr>Acoustic<wbr>Model</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
@@ -2161,9 +2099,6 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="speechtotextv1.html#deletelanguagemodel" class="tsd-kind-icon">delete<wbr>Language<wbr>Model</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="speechtotextv1.html#deletesession" class="tsd-kind-icon">delete<wbr>Session</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="speechtotextv1.html#deleteword" class="tsd-kind-icon">delete<wbr>Word</a>
@@ -2187,9 +2122,6 @@
 								<a href="speechtotextv1.html#getmodel" class="tsd-kind-icon">get<wbr>Model</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="speechtotextv1.html#getsessionstatus" class="tsd-kind-icon">get<wbr>Session<wbr>Status</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="speechtotextv1.html#getword" class="tsd-kind-icon">get<wbr>Word</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
@@ -2211,6 +2143,9 @@
 								<a href="speechtotextv1.html#listwords" class="tsd-kind-icon">list<wbr>Words</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="speechtotextv1.html#recognize" class="tsd-kind-icon">recognize</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="speechtotextv1.html#registercallback" class="tsd-kind-icon">register<wbr>Callback</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
@@ -2227,6 +2162,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="speechtotextv1.html#unregistercallback" class="tsd-kind-icon">unregister<wbr>Callback</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="speechtotextv1.html#upgradeacousticmodel" class="tsd-kind-icon">upgrade<wbr>Acoustic<wbr>Model</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="speechtotextv1.html#upgradelanguagemodel" class="tsd-kind-icon">upgrade<wbr>Language<wbr>Model</a>
@@ -2251,7 +2189,7 @@
 						<a href="../globals.html#query_params_allowed" class="tsd-kind-icon">QUERY_<wbr>PARAMS_<wbr>ALLOWED</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="../globals.html#w3cwebsocket" class="tsd-kind-icon">W3CWeb<wbr>Socket</a>
+						<a href="../globals.html#w3cwebsocket" class="tsd-kind-icon">w3c<wbr>Web<wbr>Socket</a>
 					</li>
 				</ul>
 			</nav>

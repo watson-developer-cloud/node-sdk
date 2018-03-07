@@ -105,12 +105,12 @@
 					<div class="tsd-signature tsd-kind-icon">classname_<wbr>positive_<wbr>examples<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">FileObject</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/visual-recognition/v3-generated.ts#L462">visual-recognition/v3-generated.ts:462</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/visual-recognition/v3-generated.ts#L451">visual-recognition/v3-generated.ts:451</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>A .zip file of images that depict the visual subject of a class in the new classifier. You can include more than one positive example file in a call. Append <code>_positive_examples</code> to the form name. The prefix is used as the class name. For example, <code>goldenretriever_positive_examples</code> creates the class <strong>goldenretriever</strong>.  Include at least 10 images in .jpg or .png format. The minimum recommended image resolution is 32X32 pixels. The maximum number of images is 10,000 images or 100 MB per .zip file.  The API explorer limits you to training only one class. To train more classes, use the API functionality.</p>
+							<p>A .zip file of images that depict the visual subject of a class in the new classifier. You can include more than one positive example file in a call. Append <code>_positive_examples</code> to the form name. The prefix is used as the class name. For example, <code>goldenretriever_positive_examples</code> creates the class <strong>goldenretriever</strong>.  Include at least 10 images in .jpg or .png format. The minimum recommended image resolution is 32X32 pixels. The maximum number of images is 10,000 images or 100 MB per .zip file.  Encode special characters in the file name in UTF-8.  The API explorer limits you to training only one class. To train more classes, use the API functionality.</p>
 						</div>
 					</div>
 				</section>
@@ -120,12 +120,12 @@
 					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/visual-recognition/v3-generated.ts#L460">visual-recognition/v3-generated.ts:460</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/visual-recognition/v3-generated.ts#L449">visual-recognition/v3-generated.ts:449</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The name of the new classifier. Cannot contain special characters.</p>
+							<p>The name of the new classifier. Encode special characters in UTF-8.</p>
 						</div>
 					</div>
 				</section>
@@ -135,12 +135,12 @@
 					<div class="tsd-signature tsd-kind-icon">negative_<wbr>examples<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">FileObject</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/465a754/visual-recognition/v3-generated.ts#L464">visual-recognition/v3-generated.ts:464</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a723954/visual-recognition/v3-generated.ts#L453">visual-recognition/v3-generated.ts:453</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>A compressed (.zip) file of images that do not depict the visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images.</p>
+							<p>A compressed (.zip) file of images that do not depict the visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images.  Encode special characters in the file name in UTF-8.</p>
 						</div>
 					</div>
 				</section>
@@ -225,7 +225,7 @@
 						<a href="../globals.html#query_params_allowed" class="tsd-kind-icon">QUERY_<wbr>PARAMS_<wbr>ALLOWED</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="../globals.html#w3cwebsocket" class="tsd-kind-icon">W3CWeb<wbr>Socket</a>
+						<a href="../globals.html#w3cwebsocket" class="tsd-kind-icon">w3c<wbr>Web<wbr>Socket</a>
 					</li>
 				</ul>
 			</nav>
