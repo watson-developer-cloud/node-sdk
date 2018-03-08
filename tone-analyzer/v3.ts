@@ -34,11 +34,9 @@ class ToneAnalyzerV3 extends GeneratedToneAnalyzerV3 {
     const missingParams = getMissingParams(params, ['text']);
     if (missingParams) { return callback(missingParams); }
 
-    const _params: GeneratedToneAnalyzerV3.ToneParams = {
-      tone_input: params.text,
-      content_type: params.isHTML ? 'text/html' : 'text/plain'
-    };
-
+    const _params = extend({}, params);
+    _params.tone_input = params.text;
+    _params.content_type = params.isHTML ? 'text/html' : 'text/plain';
     if (params.tones) { _params.tones = params.tones.split(','); }
     if (params.sentences) { _params.sentences = params.sentences; }
     if (params.language) { _params.content_language = params.language; }

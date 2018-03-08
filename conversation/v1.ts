@@ -65,13 +65,11 @@ class ConversationV1 extends GeneratedConversationV1 {
     const missingParams = getMissingParams(params, requiredParams);
     if (missingParams) { return callback(missingParams); }
 
-    const _params: GeneratedConversationV1.UpdateIntentParams = {
-      workspace_id: params.workspace_id,
-      intent: params.old_intent,
-      new_intent: params.intent,
-      new_description: params.description,
-      new_examples: params.examples
-    };
+    const _params = extend({}, params);
+    _params.intent = params.old_intent;
+    _params.new_intent = params.intent;
+    _params.new_description = params.description;
+    _params.new_examples = params.examples;
 
     return super.updateIntent(_params, callback);
   }
@@ -90,12 +88,9 @@ class ConversationV1 extends GeneratedConversationV1 {
     const missingParams = getMissingParams(params, requiredParams);
     if (missingParams) { return callback(missingParams); }
 
-    const _params: GeneratedConversationV1.UpdateExampleParams = {
-      workspace_id: params.workspace_id,
-      intent: params.intent,
-      text: params.old_text,
-      new_text: params.text
-    };
+    const _params = extend({}, params);
+    _params.text = params.old_text;
+    _params.new_text = params.old_text;
 
     return super.updateExample(_params, callback);
   }
@@ -126,11 +121,9 @@ class ConversationV1 extends GeneratedConversationV1 {
     const missingParams = getMissingParams(params, requiredParams);
     if (missingParams) { return callback(missingParams); }
 
-    const _params: GeneratedConversationV1.UpdateCounterexampleParams = {
-      workspace_id: params.workspace_id,
-      text: params.old_text,
-      new_text: params.text
-    };
+    const _params = extend({}, params);
+    _params.text = params.old_text;
+    _params.new_text = params.text;
 
     return super.updateCounterexample(_params, callback);
   }
@@ -157,15 +150,13 @@ class ConversationV1 extends GeneratedConversationV1 {
     const missingParams = getMissingParams(params, requiredParams);
     if (missingParams) { return callback(missingParams); }
 
-    const _params: GeneratedConversationV1.UpdateEntityParams = {
-      workspace_id: params.workspace_id,
-      entity: params.old_entity,
-      new_entity: params.entity,
-      new_description: params.description,
-      new_metadata: params.metadata,
-      new_fuzzy_match: params.fuzzy_match,
-      new_values: params.values
-    };
+    const _params = extend({}, params);
+    _params.entity = params.old_entity;
+    _params.new_entity = params.entity;
+    _params.new_description = params.description;
+    _params.new_metadata = params.metadata;
+    _params.new_fuzzy_match = params.fuzzy_match;
+    _params.new_values = params.values;
 
     return super.updateEntity(_params, callback);
   }
@@ -192,16 +183,13 @@ class ConversationV1 extends GeneratedConversationV1 {
     const missingParams = getMissingParams(params, requiredParams);
     if (missingParams) { return callback(missingParams); }
 
-    const _params: GeneratedConversationV1.UpdateValueParams = {
-      workspace_id: params.workspace_id,
-      entity: params.entity,
-      value: params.old_value,
-      new_value: params.value,
-      new_metadata: params.metadata,
-      new_type: params.type,
-      new_synonyms: params.synonyms,
-      new_patterns: params.patterns
-    };
+    const _params = extend({}, params);
+    _params.value = params.old_value;
+    _params.new_value = params.value;
+    _params.new_metadata = params.metadata;
+    _params.new_type = params.type;
+    _params.new_synonyms = params.synonyms;
+    _params.new_patterns = params.patterns;
 
     return super.updateValue(_params, callback);
   }
@@ -226,13 +214,9 @@ class ConversationV1 extends GeneratedConversationV1 {
     const missingParams = getMissingParams(params, requiredParams);
     if (missingParams) { return callback(missingParams); }
 
-    const _params: GeneratedConversationV1.UpdateSynonymParams = {
-      workspace_id: params.workspace_id,
-      entity: params.entity,
-      value: params.value,
-      synonym: params.old_synonym,
-      new_synonym: params.synonym
-    };
+    const _params = extend({}, params);
+    _params.synonym = params.old_synonym;
+    _params.new_synonym = params.synonym;
 
     return super.updateSynonym(_params, callback);
   }
@@ -281,24 +265,22 @@ class ConversationV1 extends GeneratedConversationV1 {
     const missingParams = getMissingParams(params, requiredParams);
     if (missingParams) { return callback(missingParams); }
 
-    const _params: GeneratedConversationV1.UpdateDialogNodeParams = {
-      workspace_id: params.workspace_id,
-      dialog_node: params.old_dialog_node,
-      new_dialog_node: params.dialog_node,
-      new_description: params.description,
-      new_conditions: params.conditions,
-      new_parent: params.parent,
-      new_previous_sibling: params.previous_sibling,
-      new_output: params.output,
-      new_context: params.context,
-      new_metadata: params.metadata,
-      new_next_step: params.next_step,
-      new_title: params.title,
-      new_type: params.type,
-      new_event_name: params.event_name,
-      new_variable: params.variable,
-      new_actions: params.actions
-    };
+    const _params = extend({}, params);
+    _params.dialog_node = params.old_dialog_node;
+    _params.new_dialog_node = params.dialog_node;
+    _params.new_description = params.description;
+    _params.new_conditions = params.conditions;
+    _params.new_parent = params.parent;
+    _params.new_previous_sibling = params.previous_sibling;
+    _params.new_output = params.output;
+    _params.new_context = params.context;
+    _params.new_metadata = params.metadata;
+    _params.new_next_step = params.next_step;
+    _params.new_title = params.title;
+    _params.new_type = params.type;
+    _params.new_event_name = params.event_name;
+    _params.new_variable = params.variable;
+    _params.new_actions = params.actions;
 
     return super.updateDialogNode(_params, callback);
   }
