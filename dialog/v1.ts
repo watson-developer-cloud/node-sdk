@@ -63,14 +63,14 @@ class DialogV1 extends BaseService {
     params: DialogV1.GetProfileParams,
     callback: DialogV1.Callback
   ): NodeJS.ReadableStream | void {
-    const _params = params || {};
+    const newParams = params || {};
     const parameters = {
       options: {
         url: '/v1/dialogs/{dialog_id}/profile',
         method: 'GET',
         json: true,
-        path: _params,
-        qs: pick(_params, ['client_id', 'name'])
+        path: newParams,
+        qs: pick(newParams, ['client_id', 'name'])
       },
       requiredParams: ['dialog_id', 'client_id'],
       defaultOptions: this._options
@@ -86,13 +86,13 @@ class DialogV1 extends BaseService {
     params: DialogV1.UpdateProfileParams,
     callback: DialogV1.Callback
   ): NodeJS.ReadableStream | void {
-    const _params = params || {};
+    const newParams = params || {};
     const parameters = {
       options: {
         url: '/v1/dialogs/{dialog_id}/profile',
         method: 'PUT',
         json: true,
-        body: pick(_params, ['name_values', 'client_id']),
+        body: pick(newParams, ['name_values', 'client_id']),
         path: params
       },
       requiredParams: ['dialog_id', 'name_values'],
@@ -109,14 +109,14 @@ class DialogV1 extends BaseService {
     params: DialogV1.GetConversationParams,
     callback: DialogV1.Callback
   ): NodeJS.ReadableStream | void {
-    const _params = params || {};
+    const newParams = params || {};
     const parameters = {
       options: {
         url: '/v1/dialogs/{dialog_id}/conversation',
         method: 'GET',
         json: true,
-        qs: omit(_params, ['dialog_id']),
-        path: _params
+        qs: omit(newParams, ['dialog_id']),
+        path: newParams
       },
       requiredParams: ['dialog_id', 'date_from', 'date_to'],
       defaultOptions: this._options
@@ -133,14 +133,14 @@ class DialogV1 extends BaseService {
     params: DialogV1.ConversationParams,
     callback: DialogV1.Callback
   ): NodeJS.ReadableStream | void {
-    const _params = params || {};
+    const newParams = params || {};
     const parameters = {
       options: {
         url: '/v1/dialogs/{dialog_id}/conversation',
         method: 'POST',
         json: true,
-        form: omit(_params, ['dialog_id']),
-        path: _params
+        form: omit(newParams, ['dialog_id']),
+        path: newParams
       },
       requiredParams: ['dialog_id'],
       defaultOptions: this._options
@@ -156,20 +156,20 @@ class DialogV1 extends BaseService {
     params: DialogV1.UpdateContentParams,
     callback: DialogV1.Callback
   ): NodeJS.ReadableStream | void {
-    const _params = params || {};
+    const newParams = params || {};
     const parameters = {
       options: {
         url: '/v1/dialogs/{dialog_id}/content',
         method: 'PUT',
         json: true,
-        path: _params
+        path: newParams
       },
       requiredParams: ['dialog_id'],
       defaultOptions: extend(
         true,
         {},
         this._options,
-        pick(_params, ['headers'])
+        pick(newParams, ['headers'])
       )
     };
     return createRequest(parameters, callback);
@@ -183,13 +183,13 @@ class DialogV1 extends BaseService {
     params: DialogV1.GetContentParams,
     callback: DialogV1.Callback
   ): NodeJS.ReadableStream | void {
-    const _params = params || {};
+    const newParams = params || {};
     const parameters = {
       options: {
         url: '/v1/dialogs/{dialog_id}/content',
         method: 'GET',
         json: true,
-        path: _params
+        path: newParams
       },
       requiredParams: ['dialog_id'],
       defaultOptions: this._options
@@ -205,12 +205,12 @@ class DialogV1 extends BaseService {
     params: DialogV1.CreateDialogParams,
     callback: DialogV1.Callback
   ): NodeJS.ReadableStream | void {
-    const _params = params || {};
-    if (!_params['file']) {
+    const newParams = params || {};
+    if (!newParams['file']) {
       callback(new Error('Missing required parameters: file'));
       return;
     }
-    if (!isStream(_params['file'])) {
+    if (!isStream(newParams['file'])) {
       callback(new Error('file is not a standard Node.js Stream'));
       return;
     }
@@ -219,7 +219,7 @@ class DialogV1 extends BaseService {
         url: '/v1/dialogs',
         method: 'POST',
         json: true,
-        formData: pick(_params, ['name', 'file'])
+        formData: pick(newParams, ['name', 'file'])
       },
       requiredParams: ['name'],
       defaultOptions: this._options
@@ -273,12 +273,12 @@ class DialogV1 extends BaseService {
     params: DialogV1.UpdateDialogParams,
     callback: DialogV1.Callback
   ): NodeJS.ReadableStream | void {
-    const _params = params || {};
-    if (!_params['file']) {
+    const newParams = params || {};
+    if (!newParams['file']) {
       callback(new Error('Missing required parameters: file'));
       return;
     }
-    if (!isStream(_params['file'])) {
+    if (!isStream(newParams['file'])) {
       callback(new Error('file is not a standard Node.js Stream'));
       return;
     }
@@ -287,8 +287,8 @@ class DialogV1 extends BaseService {
         url: '/v1/dialogs/{dialog_id}',
         method: 'PUT',
         json: true,
-        path: _params,
-        formData: omit(_params, ['dialog_id'])
+        path: newParams,
+        formData: omit(newParams, ['dialog_id'])
       },
       requiredParams: ['dialog_id'],
       defaultOptions: this._options

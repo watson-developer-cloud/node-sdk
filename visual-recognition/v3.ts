@@ -20,16 +20,16 @@ class VisualRecognitionV3 extends GeneratedVisualRecognitionV3 {
     if (params && params.image_file) {
       params.images_file = params.image_file;
     }
-    const _params = params? extend({}, params, ...(params.parameters || {})) : params;
-    return super.classify(_params, callback);
+    const newParams = params? extend({}, params, ...(params.parameters || {})) : params;
+    return super.classify(newParams, callback);
   }
 
   detectFaces(params, callback) {
     if (params && params.image_file) {
       params.images_file = params.image_file;
     }
-    const _params = params? extend({}, params, ...(params.parameters || {})) : params;
-    return super.detectFaces(_params, callback);
+    const newParams = params? extend({}, params, ...(params.parameters || {})) : params;
+    return super.detectFaces(newParams, callback);
   }
 
   retrainClassifier(params, callback) {

@@ -84,15 +84,15 @@ class DiscoveryV1 extends GeneratedDiscoveryV1 {
   updateConfiguration(params, callback) {
     // name is now a required parameter
     // file is now split into conversions, enrichments and normalizations
-    const _params = params || {};
-    if (_params.file) {
-      const { conversions, enrichments, normalizations } = _params.file;
-      _params.conversions = conversions;
-      _params.enrichments = enrichments;
-      _params.normalizations = normalizations;
+    const newParams = params || {};
+    if (newParams.file) {
+      const { conversions, enrichments, normalizations } = newParams.file;
+      newParams.conversions = conversions;
+      newParams.enrichments = enrichments;
+      newParams.normalizations = normalizations;
     }
-    _params.name = _params.name || '_';
-    return super.updateConfiguration(_params, callback);
+    newParams.name = newParams.name || '_';
+    return super.updateConfiguration(newParams, callback);
   }
 
   getCollections(params, callback) {
@@ -133,15 +133,15 @@ class DiscoveryV1 extends GeneratedDiscoveryV1 {
   createConfiguration(params, callback) {
     // name is now a required parameter
     // file is now split into conversions, enrichments and normalizations
-    const _params = params || {};
-    if (_params.file) {
-      const { conversions, enrichments, normalizations } = _params.file;
-      _params.conversions = conversions;
-      _params.enrichments = enrichments;
-      _params.normalizations = normalizations;
+    const newParams = params || {};
+    if (newParams.file) {
+      const { conversions, enrichments, normalizations } = newParams.file;
+      newParams.conversions = conversions;
+      newParams.enrichments = enrichments;
+      newParams.normalizations = normalizations;
     }
-    _params.name = _params.name || '_';
-    return super.createConfiguration(_params, callback);
+    newParams.name = newParams.name || '_';
+    return super.createConfiguration(newParams, callback);
   }
 
   addJsonDocument(params, callback) {
@@ -152,7 +152,7 @@ class DiscoveryV1 extends GeneratedDiscoveryV1 {
         `Argument error: params.file must be an object, but got ${fileParamType}.`
       );
     }
-    const _params = extend(params, {
+    const newParams = extend(params, {
       file: {
         value: JSON.stringify(params.file),
         options: {
@@ -160,7 +160,7 @@ class DiscoveryV1 extends GeneratedDiscoveryV1 {
         }
       }
     });
-    return this.addDocument(_params, callback);
+    return this.addDocument(newParams, callback);
   }
 
   updateJsonDocument(params, callback) {
@@ -171,7 +171,7 @@ class DiscoveryV1 extends GeneratedDiscoveryV1 {
         `Argument error: params.file must be an object, but got ${fileParamType}.`
       );
     }
-    const _params = extend(params, {
+    const newParams = extend(params, {
       file: {
         value: JSON.stringify(params.file),
         options: {
@@ -179,25 +179,25 @@ class DiscoveryV1 extends GeneratedDiscoveryV1 {
         }
       }
     });
-    return this.updateDocument(_params, callback);
+    return this.updateDocument(newParams, callback);
   }
 
   query(params, callback) {
-    const _params = params || {};
+    const newParams = params || {};
     // query and natural_language_query can't both be populated
-    if (_params.query && _params.natural_language_query) {
-      delete _params.natural_language_query;
+    if (newParams.query && newParams.natural_language_query) {
+      delete newParams.natural_language_query;
     }
-    if (_params.return) {
-      _params.return_fields = _params.return;
+    if (newParams.return) {
+      newParams.return_fields = newParams.return;
     }
     // passages parameters are now snake case
-    Object.keys(_params).forEach(
+    Object.keys(newParams).forEach(
       key =>
         key.match(/passages\..*/i) &&
-        (_params[key.replace('.', '_')] = _params[key])
+        (newParams[key.replace('.', '_')] = newParams[key])
     );
-    return super.query(_params, callback);
+    return super.query(newParams, callback);
   }
 }
 

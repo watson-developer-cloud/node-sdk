@@ -34,14 +34,14 @@ class ToneAnalyzerV3 extends GeneratedToneAnalyzerV3 {
     const missingParams = getMissingParams(params, ['text']);
     if (missingParams) { return callback(missingParams); }
 
-    const _params = extend({}, params);
-    _params.tone_input = params.text;
-    _params.content_type = params.isHTML ? 'text/html' : 'text/plain';
-    if (params.tones) { _params.tones = params.tones.split(','); }
-    if (params.sentences) { _params.sentences = params.sentences; }
-    if (params.language) { _params.content_language = params.language; }
+    const newParams = extend({}, params);
+    newParams.tone_input = params.text;
+    newParams.content_type = params.isHTML ? 'text/html' : 'text/plain';
+    if (params.tones) { newParams.tones = params.tones.split(','); }
+    if (params.sentences) { newParams.sentences = params.sentences; }
+    if (params.language) { newParams.content_language = params.language; }
 
-    return super.tone(_params, callback);
+    return super.tone(newParams, callback);
   }
 
   tone_chat(params, callback) {
@@ -49,11 +49,11 @@ class ToneAnalyzerV3 extends GeneratedToneAnalyzerV3 {
     const missingParams = getMissingParams(params, ['utterances']);
     if (missingParams) { return callback(missingParams); }
 
-    const _params = extend({}, params);
+    const newParams = extend({}, params);
     if (params.utterances.utterances) {
-        _params.utterances = params.utterances.utterances;
+        newParams.utterances = params.utterances.utterances;
     }
-    return super.toneChat(_params, callback);
+    return super.toneChat(newParams, callback);
   }
 }
 

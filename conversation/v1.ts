@@ -65,13 +65,13 @@ class ConversationV1 extends GeneratedConversationV1 {
     const missingParams = getMissingParams(params, requiredParams);
     if (missingParams) { return callback(missingParams); }
 
-    const _params = extend({}, params);
-    _params.intent = params.old_intent;
-    _params.new_intent = params.intent;
-    _params.new_description = params.description;
-    _params.new_examples = params.examples;
+    const newParams = extend({}, params);
+    newParams.intent = params.old_intent;
+    newParams.new_intent = params.intent;
+    newParams.new_description = params.description;
+    newParams.new_examples = params.examples;
 
-    return super.updateIntent(_params, callback);
+    return super.updateIntent(newParams, callback);
   }
 
   getExamples(params, callback) {
@@ -88,11 +88,11 @@ class ConversationV1 extends GeneratedConversationV1 {
     const missingParams = getMissingParams(params, requiredParams);
     if (missingParams) { return callback(missingParams); }
 
-    const _params = extend({}, params);
-    _params.text = params.old_text;
-    _params.new_text = params.text;
+    const newParams = extend({}, params);
+    newParams.text = params.old_text;
+    newParams.new_text = params.text;
 
-    return super.updateExample(_params, callback);
+    return super.updateExample(newParams, callback);
   }
 
   getCounterExamples(params, callback) {
@@ -121,11 +121,11 @@ class ConversationV1 extends GeneratedConversationV1 {
     const missingParams = getMissingParams(params, requiredParams);
     if (missingParams) { return callback(missingParams); }
 
-    const _params = extend({}, params);
-    _params.text = params.old_text;
-    _params.new_text = params.text;
+    const newParams = extend({}, params);
+    newParams.text = params.old_text;
+    newParams.new_text = params.text;
 
-    return super.updateCounterexample(_params, callback);
+    return super.updateCounterexample(newParams, callback);
   }
 
   getEntities(params, callback) {
@@ -150,15 +150,15 @@ class ConversationV1 extends GeneratedConversationV1 {
     const missingParams = getMissingParams(params, requiredParams);
     if (missingParams) { return callback(missingParams); }
 
-    const _params = extend({}, params);
-    _params.entity = params.old_entity;
-    _params.new_entity = params.entity;
-    _params.new_description = params.description;
-    _params.new_metadata = params.metadata;
-    _params.new_fuzzy_match = params.fuzzy_match;
-    _params.new_values = params.values;
+    const newParams = extend({}, params);
+    newParams.entity = params.old_entity;
+    newParams.new_entity = params.entity;
+    newParams.new_description = params.description;
+    newParams.new_metadata = params.metadata;
+    newParams.new_fuzzy_match = params.fuzzy_match;
+    newParams.new_values = params.values;
 
-    return super.updateEntity(_params, callback);
+    return super.updateEntity(newParams, callback);
   }
 
   getValues(params, callback) {
@@ -183,15 +183,15 @@ class ConversationV1 extends GeneratedConversationV1 {
     const missingParams = getMissingParams(params, requiredParams);
     if (missingParams) { return callback(missingParams); }
 
-    const _params = extend({}, params);
-    _params.value = params.old_value;
-    _params.new_value = params.value;
-    _params.new_metadata = params.metadata;
-    _params.new_type = params.type;
-    _params.new_synonyms = params.synonyms;
-    _params.new_patterns = params.patterns;
+    const newParams = extend({}, params);
+    newParams.value = params.old_value;
+    newParams.new_value = params.value;
+    newParams.new_metadata = params.metadata;
+    newParams.new_type = params.type;
+    newParams.new_synonyms = params.synonyms;
+    newParams.new_patterns = params.patterns;
 
-    return super.updateValue(_params, callback);
+    return super.updateValue(newParams, callback);
   }
 
   getSynonyms(params, callback) {
@@ -214,11 +214,11 @@ class ConversationV1 extends GeneratedConversationV1 {
     const missingParams = getMissingParams(params, requiredParams);
     if (missingParams) { return callback(missingParams); }
 
-    const _params = extend({}, params);
-    _params.synonym = params.old_synonym;
-    _params.new_synonym = params.synonym;
+    const newParams = extend({}, params);
+    newParams.synonym = params.old_synonym;
+    newParams.new_synonym = params.synonym;
 
-    return super.updateSynonym(_params, callback);
+    return super.updateSynonym(newParams, callback);
   }
 
   getLogs(params, callback) {
@@ -227,11 +227,11 @@ class ConversationV1 extends GeneratedConversationV1 {
   }
 
   createDialogNode(params, callback) {
-    const _params = extend({}, params);
-    if (params && params.type && !_params.node_type) {
-      _params.node_type = params.type;
+    const newParams = extend({}, params);
+    if (params && params.type && !newParams.node_type) {
+      newParams.node_type = params.type;
     }
-    return super.createDialogNode(_params, callback);
+    return super.createDialogNode(newParams, callback);
   }
 
   getDialogNodes(params, callback) {
@@ -265,24 +265,24 @@ class ConversationV1 extends GeneratedConversationV1 {
     const missingParams = getMissingParams(params, requiredParams);
     if (missingParams) { return callback(missingParams); }
 
-    const _params = extend({}, params);
-    _params.dialog_node = params.old_dialog_node;
-    _params.new_dialog_node = params.dialog_node;
-    _params.new_description = params.description;
-    _params.new_conditions = params.conditions;
-    _params.new_parent = params.parent;
-    _params.new_previous_sibling = params.previous_sibling;
-    _params.new_output = params.output;
-    _params.new_context = params.context;
-    _params.new_metadata = params.metadata;
-    _params.new_next_step = params.next_step;
-    _params.new_title = params.title;
-    _params.new_type = params.type;
-    _params.new_event_name = params.event_name;
-    _params.new_variable = params.variable;
-    _params.new_actions = params.actions;
+    const newParams = extend({}, params);
+    newParams.dialog_node = params.old_dialog_node;
+    newParams.new_dialog_node = params.dialog_node;
+    newParams.new_description = params.description;
+    newParams.new_conditions = params.conditions;
+    newParams.new_parent = params.parent;
+    newParams.new_previous_sibling = params.previous_sibling;
+    newParams.new_output = params.output;
+    newParams.new_context = params.context;
+    newParams.new_metadata = params.metadata;
+    newParams.new_next_step = params.next_step;
+    newParams.new_title = params.title;
+    newParams.new_type = params.type;
+    newParams.new_event_name = params.event_name;
+    newParams.new_variable = params.variable;
+    newParams.new_actions = params.actions;
 
-    return super.updateDialogNode(_params, callback);
+    return super.updateDialogNode(newParams, callback);
   }
 }
 
