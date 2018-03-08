@@ -47,17 +47,13 @@ class ToneAnalyzerV3 extends GeneratedToneAnalyzerV3 {
   }
 
   tone_chat(params, callback) {
-    if (params && params.utterances && params.utterances.utterances) {
-      params.utterances = params.utterances.utterances;
-    }
-
     const missingParams = getMissingParams(params, ['utterances']);
     if (missingParams) { return callback(missingParams); }
 
-    const _params: GeneratedToneAnalyzerV3.ToneChatParams = {
-      utterances: params.utterances
-    };
-
+    const _params = extend({}, params);
+    if (params.utterances.utterances) {
+        _params.utterances = params.utterances.utterances;
+    }
     return super.toneChat(_params, callback);
   }
 }
