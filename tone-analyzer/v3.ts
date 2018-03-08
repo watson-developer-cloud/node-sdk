@@ -45,7 +45,7 @@ class ToneAnalyzerV3 extends GeneratedToneAnalyzerV3 {
   }
 
   tone_chat(params, callback) {
-    console.warn("WARNING: tone_chat() was renamed to toneChat(). Support for the old method name will be removed in the next major release");
+    console.warn("WARNING: tone_chat() was renamed to toneChat(). Support for tone_chat() will be removed in the next major release");
     const missingParams = getMissingParams(params, ['utterances']);
     if (missingParams) { return callback(missingParams); }
 
