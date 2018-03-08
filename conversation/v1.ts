@@ -90,7 +90,7 @@ class ConversationV1 extends GeneratedConversationV1 {
 
     const _params = extend({}, params);
     _params.text = params.old_text;
-    _params.new_text = params.old_text;
+    _params.new_text = params.text;
 
     return super.updateExample(_params, callback);
   }
