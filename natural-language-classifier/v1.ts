@@ -26,6 +26,7 @@ class NaturalLanguageClassifierV1 extends GeneratedNaturalLanguageClassifierV1 {
   }
 
   create(params, callback) {
+    console.warn("WARNING: create() was renamed to createClassifier(). Support for the old method name will be removed in the next major release");
     if (!params || !params.training_data) {
       callback(new Error('Missing required parameters: training_data'));
       return;
@@ -71,6 +72,7 @@ class NaturalLanguageClassifierV1 extends GeneratedNaturalLanguageClassifierV1 {
   }
 
   status(params, callback) {
+    console.warn("WARNING: status() was renamed to getClassifier(). Support for the old method name will be removed in the next major release");
     const _params = params || {};
     if (!_params.classifier_id) {
       _params.classifier_id = _params.classifier;
@@ -79,10 +81,12 @@ class NaturalLanguageClassifierV1 extends GeneratedNaturalLanguageClassifierV1 {
   }
 
   list(params, callback) {
+    console.warn("WARNING: list() was renamed to listClassifiers(). Support for the old method name will be removed in the next major release");
     return super.listClassifiers(params, callback);
   }
 
   remove(params, callback) {
+    console.warn("WARNING: remove() was renamed to deleteClassifier(). Support for the old method name will be removed in the next major release");
     const _params = params || {};
     if (!_params.classifier_id) {
       _params.classifier_id = _params.classifier;

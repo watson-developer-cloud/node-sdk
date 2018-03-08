@@ -24,6 +24,7 @@ class LanguageTranslatorV2 extends GeneratedLanguageTranslatorV2 {
   }
 
   getModels(params, callback) {
+    console.warn("WARNING: getModels() was renamed to listModels(). Support for the old method name will be removed in the next major release");
     return super.listModels(params, callback);
   }
 
@@ -59,6 +60,7 @@ class LanguageTranslatorV2 extends GeneratedLanguageTranslatorV2 {
   }
 
   getIdentifiableLanguages(params, callback) {
+    console.warn("WARNING: getIdentifiableLanguages() was renamed to listIdentifiableLanguages(). Support for the old method name will be removed in the next major release");
     return super.listIdentifiableLanguages(params, callback);
   }
 }

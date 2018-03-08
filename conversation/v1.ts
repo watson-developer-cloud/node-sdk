@@ -46,6 +46,7 @@ class ConversationV1 extends GeneratedConversationV1 {
   }
 
   getIntents(params, callback) {
+    console.warn("WARNING: getIntents() was renamed to listIntents(). Support for the old method name will be removed in the next major release");
     return super.listIntents(params, callback);
   }
 
@@ -76,6 +77,7 @@ class ConversationV1 extends GeneratedConversationV1 {
   }
 
   getExamples(params, callback) {
+    console.warn("WARNING: getExamples() was renamed to listExamples(). Support for the old method name will be removed in the next major release");
     return super.listExamples(params, callback);
   }
 
@@ -99,6 +101,7 @@ class ConversationV1 extends GeneratedConversationV1 {
   }
 
   getCounterExamples(params, callback) {
+    console.warn("WARNING: getCounterExamples() was renamed to listCounterExamples(). Support for the old method name will be removed in the next major release");
     return super.listCounterexamples(params, callback);
   }
 
@@ -133,6 +136,7 @@ class ConversationV1 extends GeneratedConversationV1 {
   }
 
   getEntities(params, callback) {
+    console.warn("WARNING: getEntities() was renamed to listEntities(). Support for the old method name will be removed in the next major release");
     return super.listEntities(params, callback);
   }
 
@@ -167,6 +171,7 @@ class ConversationV1 extends GeneratedConversationV1 {
   }
 
   getValues(params, callback) {
+    console.warn("WARNING: getValues() was renamed to listValues(). Support for the old method name will be removed in the next major release");
     return super.listValues(params, callback);
   }
 
@@ -202,6 +207,7 @@ class ConversationV1 extends GeneratedConversationV1 {
   }
 
   getSynonyms(params, callback) {
+    console.warn("WARNING: getSynonyms() was renamed to listSynonyms(). Support for the old method name will be removed in the next major release");
     return super.listSynonyms(params, callback);
   }
 
@@ -232,6 +238,7 @@ class ConversationV1 extends GeneratedConversationV1 {
   }
 
   getLogs(params, callback) {
+    console.warn("WARNING: getLogs() was renamed to listLogs(). Support for the old method name will be removed in the next major release");
     return super.listLogs(params, callback);
   }
 
@@ -244,6 +251,7 @@ class ConversationV1 extends GeneratedConversationV1 {
   }
 
   getDialogNodes(params, callback) {
+    console.warn("WARNING: getDialogNodes() was renamed to listDialogNodes(). Support for the old method name will be removed in the next major release");
     return super.listDialogNodes(params, callback);
   }
 

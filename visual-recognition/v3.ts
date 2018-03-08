@@ -33,6 +33,7 @@ class VisualRecognitionV3 extends GeneratedVisualRecognitionV3 {
   }
 
   retrainClassifier(params, callback) {
+    console.warn("WARNING: retrainClassifier() was renamed to updateClassifier(). Support for the old method name will be removed in the next major release");
     return super.updateClassifier(params, callback);
   }
 

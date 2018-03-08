@@ -65,6 +65,7 @@ class DiscoveryV1 extends GeneratedDiscoveryV1 {
   }
 
   getEnvironments(params, callback) {
+    console.warn("WARNING: getEnvironments() was renamed to listEnvironments(). Support for the old method name will be removed in the next major release");
     return super.listEnvironments(params, callback);
   }
 
@@ -95,6 +96,7 @@ class DiscoveryV1 extends GeneratedDiscoveryV1 {
   }
 
   getCollections(params, callback) {
+    console.warn("WARNING: getCollections() was renamed to listCollections(). Support for the old method name will be removed in the next major release");
     return super.listCollections(params, callback);
   }
 
@@ -115,6 +117,7 @@ class DiscoveryV1 extends GeneratedDiscoveryV1 {
   }
 
   getCollectionFields(params, callback) {
+    console.warn("WARNING: getCollectionFields() was renamed to listCollectionFields(). Support for the old method name will be removed in the next major release");
     // listFields expects an array of collection ids
     if (params && !Array.isArray(params.collection_id)) {
       params.collection_ids = [params.collection_id];
@@ -123,6 +126,7 @@ class DiscoveryV1 extends GeneratedDiscoveryV1 {
   }
 
   getConfigurations(params, callback) {
+    console.warn("WARNING: getConfigurations() was renamed to listConfigurations(). Support for the old method name will be removed in the next major release");
     return super.listConfigurations(params, callback);
   }
 
@@ -141,6 +145,7 @@ class DiscoveryV1 extends GeneratedDiscoveryV1 {
   }
 
   addJsonDocument(params, callback) {
+    console.warn("WARNING: addJsonDocument() was renamed to addDocument(). Support for the old method name will be removed in the next major release");
     const fileParamType: string = typeof params.file;
     if (fileParamType !== 'object') {
       throw new Error(
@@ -159,6 +164,7 @@ class DiscoveryV1 extends GeneratedDiscoveryV1 {
   }
 
   updateJsonDocument(params, callback) {
+    console.warn("WARNING: updateJsonDocument() was renamed to updateDocument(). Support for the old method name will be removed in the next major release");
     const fileParamType = typeof params.file;
     if (fileParamType !== 'object') {
       throw new Error(
