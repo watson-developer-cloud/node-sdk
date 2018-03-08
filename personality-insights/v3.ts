@@ -51,7 +51,7 @@ class PersonalityInsightsV3 extends GeneratedPersonalityInsightsV3 {
       contentType = 'application/json';
     }
 
-    const _params: GeneratedPersonalityInsightsV3.ProfileParams = {
+    const newParams: GeneratedPersonalityInsightsV3.ProfileParams = {
       content: params.text || pick(params, ['contentItems']),
       content_type: contentType,
       raw_scores: params.raw_scores,
@@ -62,19 +62,19 @@ class PersonalityInsightsV3 extends GeneratedPersonalityInsightsV3 {
     const headers = toLowerKeys(params.headers);
 
     if (headers['accept-language']) {
-      _params.accept_language = headers['accept-language'];
+      newParams.accept_language = headers['accept-language'];
     }
     if (headers['content-type']) {
-      _params.content_type = headers['content-type'];
+      newParams.content_type = headers['content-type'];
     }
     if (headers['content-language']) {
-      _params.content_language = headers['content-language'];
+      newParams.content_language = headers['content-language'];
     }
     if (headers['accept'] === 'text/csv') {
-      return this.profile_csv(_params, callback);
+      return this.profile_csv(newParams, callback);
     }
 
-    return super.profile(_params, callback);
+    return super.profile(newParams, callback);
   }
 
   /**
@@ -99,33 +99,33 @@ class PersonalityInsightsV3 extends GeneratedPersonalityInsightsV3 {
       GeneratedPersonalityInsightsV3.Profile
     >
   ): NodeJS.ReadableStream | void {
-    const _params = extend({}, params);
+    const newParams = extend({}, params);
     const _callback = callback ? callback : () => { /*noop*/ };
     const requiredParams = ['content', 'content_type'];
-    const missingParams = getMissingParams(_params, requiredParams);
+    const missingParams = getMissingParams(newParams, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const body = _params.content;
+    const body = newParams.content;
     const query = {
-      raw_scores: _params.raw_scores,
-      csv_headers: _params.csv_headers,
-      consumption_preferences: _params.consumption_preferences
+      raw_scores: newParams.raw_scores,
+      csv_headers: newParams.csv_headers,
+      consumption_preferences: newParams.consumption_preferences
     };
     const parameters = {
       options: {
         url: '/v3/profile',
         method: 'POST',
-        json: _params.content_type === 'application/json',
+        json: newParams.content_type === 'application/json',
         body,
         qs: query
       },
       defaultOptions: extend(true, this._options, {
         headers: {
           Accept: 'text/csv',
-          'Content-Type': _params.content_type,
-          'Content-Language': _params.content_language,
-          'Accept-Language': _params.accept_language
+          'Content-Type': newParams.content_type,
+          'Content-Language': newParams.content_language,
+          'Accept-Language': newParams.accept_language
         }
       })
     };

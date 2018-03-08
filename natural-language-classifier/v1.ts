@@ -26,6 +26,7 @@ class NaturalLanguageClassifierV1 extends GeneratedNaturalLanguageClassifierV1 {
   }
 
   create(params, callback) {
+    console.warn("WARNING: create() was renamed to createClassifier(). Support for create() will be removed in the next major release");
     if (!params || !params.training_data) {
       callback(new Error('Missing required parameters: training_data'));
       return;
@@ -50,7 +51,7 @@ class NaturalLanguageClassifierV1 extends GeneratedNaturalLanguageClassifierV1 {
         return;
       }
 
-      const _params: GeneratedNaturalLanguageClassifierV1.CreateClassifierParams = {
+      const newParams: GeneratedNaturalLanguageClassifierV1.CreateClassifierParams = {
         metadata: Buffer.from(
           JSON.stringify(omit(params, ['training_data'])),
           'utf8'
@@ -58,36 +59,39 @@ class NaturalLanguageClassifierV1 extends GeneratedNaturalLanguageClassifierV1 {
         training_data: csv
       };
 
-      return super.createClassifier(_params, callback);
+      return super.createClassifier(newParams, callback);
     });
   }
 
   classify(params, callback) {
-    const _params = params || {};
-    if (!_params.classifier_id) {
-      _params.classifier_id = _params.classifier;
+    const newParams = params || {};
+    if (!newParams.classifier_id) {
+      newParams.classifier_id = newParams.classifier;
     }
-    return super.classify(_params, callback);
+    return super.classify(newParams, callback);
   }
 
   status(params, callback) {
-    const _params = params || {};
-    if (!_params.classifier_id) {
-      _params.classifier_id = _params.classifier;
+    console.warn("WARNING: status() was renamed to getClassifier(). Support for status() will be removed in the next major release");
+    const newParams = params || {};
+    if (!newParams.classifier_id) {
+      newParams.classifier_id = newParams.classifier;
     }
-    return super.getClassifier(_params, callback);
+    return super.getClassifier(newParams, callback);
   }
 
   list(params, callback) {
+    console.warn("WARNING: list() was renamed to listClassifiers(). Support for list() will be removed in the next major release");
     return super.listClassifiers(params, callback);
   }
 
   remove(params, callback) {
-    const _params = params || {};
-    if (!_params.classifier_id) {
-      _params.classifier_id = _params.classifier;
+    console.warn("WARNING: remove() was renamed to deleteClassifier(). Support for remove() will be removed in the next major release");
+    const newParams = params || {};
+    if (!newParams.classifier_id) {
+      newParams.classifier_id = newParams.classifier;
     }
-    return super.deleteClassifier(_params, callback);
+    return super.deleteClassifier(newParams, callback);
   }
 }
 

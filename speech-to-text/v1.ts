@@ -89,7 +89,7 @@ function formatChunk(chunk: string) {
 class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
   static ERR_NO_CORPORA = 'ERR_NO_CORPORA';
   static ERR_TIMEOUT = 'ERR_TIMEOUT';
-  
+
   constructor(options) {
     super(options);
   }
@@ -97,18 +97,22 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
 
 
   getModels(params, callback) {
+    console.warn("WARNING: getModels() was renamed to listModels(). Support for getModels() will be removed in the next major release");
     return super.listModels(params, callback);
   }
 
   getCustomization(params, callback) {
+    console.warn("WARNING: getCustomization() was renamed to getLanguageModel(). Support for getCustomization() will be removed in the next major release");
     return super.getLanguageModel(params, callback);
   }
 
   getRecognitionJob(params, callback) {
+    console.warn("WARNING: getRecognitionJob() was renamed to checkJob(). Support for getRecognitionJob() will be removed in the next major release");
     return super.checkJob(params, callback);
   }
 
   createCustomization(params, callback) {
+    console.warn("WARNING: createCustomization() was renamed to createLanguageModel(). Support for createCustomization() will be removed in the next major release");
     if (params && !params.content_type) {
       params.content_type = 'application/json';
     }
@@ -116,18 +120,22 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
   }
 
   getRecognitionJobs(params, callback) {
+    console.warn("WARNING: getRecognitionJobs() was renamed to checkJobs(). Support for getRecognitionJobs() will be removed in the next major release");
     return super.checkJobs(params, callback);
   }
 
   deleteRecognitionJob(params, callback) {
+    console.warn("WARNING: deleteRecognitionJob() was renamed to deleteJob(). Support for deleteRecognitionJob() will be removed in the next major release");
     return super.deleteJob(params, callback);
   }
 
   getCustomizations(params, callback) {
+    console.warn("WARNING: getCustomizations() was renamed to listLanguageModels(). Support for getCustomizations() will be removed in the next major release");
     return super.listLanguageModels(params, callback);
   }
 
   createRecognitionJob(params, callback) {
+    console.warn("WARNING: createRecognitionJob() was renamed to createJob(). Support for createRecognitionJob() will be removed in the next major release");
     if (params && Array.isArray(params.events)) {
       params.events = params.events.join(',');
     }
@@ -159,6 +167,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
   }
 
   getCorpora(params, callback) {
+    console.warn("WARNING: getCorpora() was renamed to listCorpora(). Support for getCorpora() will be removed in the next major release");
     return super.listCorpora(params, callback);
   }
 
@@ -180,6 +189,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
   }
 
   getWords(params, callback) {
+    console.warn("WARNING: getWords() was renamed to listWords(). Support for getWords() will be removed in the next major release");
     return super.listWords(params, callback);
   }
 
@@ -198,10 +208,12 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
   }
 
   trainCustomization(params, callback) {
+    console.warn("WARNING: trainCustomization() was renamed to trainLanguageModel(). Support for trainCustomization() will be removed in the next major release");
     return super.trainLanguageModel(params, callback);
   }
 
   resetCustomization(params, callback) {
+    console.warn("WARNING: resetCustomization() was renamed to resetLanguageModel(). Support for resetCustomization() will be removed in the next major release");
     return super.resetLanguageModel(params, callback);
   }
 
@@ -509,6 +521,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
   }
 
   deleteCustomization(params, callback) {
+    console.warn("WARNING: deleteCustomization() was renamed to deleteLanguageModel(). Support for deleteCustomization() will be removed in the next major release");
     return super.deleteLanguageModel(params, callback);
   }
 

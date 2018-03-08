@@ -34,31 +34,26 @@ class ToneAnalyzerV3 extends GeneratedToneAnalyzerV3 {
     const missingParams = getMissingParams(params, ['text']);
     if (missingParams) { return callback(missingParams); }
 
-    const _params: GeneratedToneAnalyzerV3.ToneParams = {
-      tone_input: params.text,
-      content_type: params.isHTML ? 'text/html' : 'text/plain'
-    };
+    const newParams = extend({}, params);
+    newParams.tone_input = params.text;
+    newParams.content_type = params.isHTML ? 'text/html' : 'text/plain';
+    if (params.tones) { newParams.tones = params.tones.split(','); }
+    if (params.sentences) { newParams.sentences = params.sentences; }
+    if (params.language) { newParams.content_language = params.language; }
 
-    if (params.tones) { _params.tones = params.tones.split(','); }
-    if (params.sentences) { _params.sentences = params.sentences; }
-    if (params.language) { _params.content_language = params.language; }
-
-    return super.tone(_params, callback);
+    return super.tone(newParams, callback);
   }
 
   tone_chat(params, callback) {
-    if (params && params.utterances && params.utterances.utterances) {
-      params.utterances = params.utterances.utterances;
-    }
-
+    console.warn("WARNING: tone_chat() was renamed to toneChat(). Support for tone_chat() will be removed in the next major release");
     const missingParams = getMissingParams(params, ['utterances']);
     if (missingParams) { return callback(missingParams); }
 
-    const _params: GeneratedToneAnalyzerV3.ToneChatParams = {
-      utterances: params.utterances
-    };
-
-    return super.toneChat(_params, callback);
+    const newParams = extend({}, params);
+    if (params.utterances.utterances) {
+        newParams.utterances = params.utterances.utterances;
+    }
+    return super.toneChat(newParams, callback);
   }
 }
 
