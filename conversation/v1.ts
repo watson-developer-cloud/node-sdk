@@ -46,6 +46,7 @@ class ConversationV1 extends GeneratedConversationV1 {
   }
 
   getIntents(params, callback) {
+    console.warn("WARNING: getIntents() was renamed to listIntents(). Support for getIntents() will be removed in the next major release");
     return super.listIntents(params, callback);
   }
 
@@ -64,18 +65,17 @@ class ConversationV1 extends GeneratedConversationV1 {
     const missingParams = getMissingParams(params, requiredParams);
     if (missingParams) { return callback(missingParams); }
 
-    const _params: GeneratedConversationV1.UpdateIntentParams = {
-      workspace_id: params.workspace_id,
-      intent: params.old_intent,
-      new_intent: params.intent,
-      new_description: params.description,
-      new_examples: params.examples
-    };
+    const newParams = extend({}, params);
+    newParams.intent = params.old_intent;
+    newParams.new_intent = params.intent;
+    newParams.new_description = params.description;
+    newParams.new_examples = params.examples;
 
-    return super.updateIntent(_params, callback);
+    return super.updateIntent(newParams, callback);
   }
 
   getExamples(params, callback) {
+    console.warn("WARNING: getExamples() was renamed to listExamples(). Support for getExamples() will be removed in the next major release");
     return super.listExamples(params, callback);
   }
 
@@ -88,17 +88,15 @@ class ConversationV1 extends GeneratedConversationV1 {
     const missingParams = getMissingParams(params, requiredParams);
     if (missingParams) { return callback(missingParams); }
 
-    const _params: GeneratedConversationV1.UpdateExampleParams = {
-      workspace_id: params.workspace_id,
-      intent: params.intent,
-      text: params.old_text,
-      new_text: params.text
-    };
+    const newParams = extend({}, params);
+    newParams.text = params.old_text;
+    newParams.new_text = params.text;
 
-    return super.updateExample(_params, callback);
+    return super.updateExample(newParams, callback);
   }
 
   getCounterExamples(params, callback) {
+    console.warn("WARNING: getCounterExamples() was renamed to listCounterExamples(). Support for getCounterExamples() will be removed in the next major release");
     return super.listCounterexamples(params, callback);
   }
 
@@ -123,16 +121,15 @@ class ConversationV1 extends GeneratedConversationV1 {
     const missingParams = getMissingParams(params, requiredParams);
     if (missingParams) { return callback(missingParams); }
 
-    const _params: GeneratedConversationV1.UpdateCounterexampleParams = {
-      workspace_id: params.workspace_id,
-      text: params.old_text,
-      new_text: params.text
-    };
+    const newParams = extend({}, params);
+    newParams.text = params.old_text;
+    newParams.new_text = params.text;
 
-    return super.updateCounterexample(_params, callback);
+    return super.updateCounterexample(newParams, callback);
   }
 
   getEntities(params, callback) {
+    console.warn("WARNING: getEntities() was renamed to listEntities(). Support for getEntities() will be removed in the next major release");
     return super.listEntities(params, callback);
   }
 
@@ -153,20 +150,19 @@ class ConversationV1 extends GeneratedConversationV1 {
     const missingParams = getMissingParams(params, requiredParams);
     if (missingParams) { return callback(missingParams); }
 
-    const _params: GeneratedConversationV1.UpdateEntityParams = {
-      workspace_id: params.workspace_id,
-      entity: params.old_entity,
-      new_entity: params.entity,
-      new_description: params.description,
-      new_metadata: params.metadata,
-      new_fuzzy_match: params.fuzzy_match,
-      new_values: params.values
-    };
+    const newParams = extend({}, params);
+    newParams.entity = params.old_entity;
+    newParams.new_entity = params.entity;
+    newParams.new_description = params.description;
+    newParams.new_metadata = params.metadata;
+    newParams.new_fuzzy_match = params.fuzzy_match;
+    newParams.new_values = params.values;
 
-    return super.updateEntity(_params, callback);
+    return super.updateEntity(newParams, callback);
   }
 
   getValues(params, callback) {
+    console.warn("WARNING: getValues() was renamed to listValues(). Support for getValues() will be removed in the next major release");
     return super.listValues(params, callback);
   }
 
@@ -187,21 +183,19 @@ class ConversationV1 extends GeneratedConversationV1 {
     const missingParams = getMissingParams(params, requiredParams);
     if (missingParams) { return callback(missingParams); }
 
-    const _params: GeneratedConversationV1.UpdateValueParams = {
-      workspace_id: params.workspace_id,
-      entity: params.entity,
-      value: params.old_value,
-      new_value: params.value,
-      new_metadata: params.metadata,
-      new_type: params.type,
-      new_synonyms: params.synonyms,
-      new_patterns: params.patterns
-    };
+    const newParams = extend({}, params);
+    newParams.value = params.old_value;
+    newParams.new_value = params.value;
+    newParams.new_metadata = params.metadata;
+    newParams.new_type = params.type;
+    newParams.new_synonyms = params.synonyms;
+    newParams.new_patterns = params.patterns;
 
-    return super.updateValue(_params, callback);
+    return super.updateValue(newParams, callback);
   }
 
   getSynonyms(params, callback) {
+    console.warn("WARNING: getSynonyms() was renamed to listSynonyms(). Support for getSynonyms() will be removed in the next major release");
     return super.listSynonyms(params, callback);
   }
 
@@ -220,30 +214,28 @@ class ConversationV1 extends GeneratedConversationV1 {
     const missingParams = getMissingParams(params, requiredParams);
     if (missingParams) { return callback(missingParams); }
 
-    const _params: GeneratedConversationV1.UpdateSynonymParams = {
-      workspace_id: params.workspace_id,
-      entity: params.entity,
-      value: params.value,
-      synonym: params.old_synonym,
-      new_synonym: params.synonym
-    };
+    const newParams = extend({}, params);
+    newParams.synonym = params.old_synonym;
+    newParams.new_synonym = params.synonym;
 
-    return super.updateSynonym(_params, callback);
+    return super.updateSynonym(newParams, callback);
   }
 
   getLogs(params, callback) {
+    console.warn("WARNING: getLogs() was renamed to listLogs(). Support for getLogs() will be removed in the next major release");
     return super.listLogs(params, callback);
   }
 
   createDialogNode(params, callback) {
-    const _params = extend({}, params);
-    if (params && params.type && !_params.node_type) {
-      _params.node_type = params.type;
+    const newParams = extend({}, params);
+    if (params && params.type && !newParams.node_type) {
+      newParams.node_type = params.type;
     }
-    return super.createDialogNode(_params, callback);
+    return super.createDialogNode(newParams, callback);
   }
 
   getDialogNodes(params, callback) {
+    console.warn("WARNING: getDialogNodes() was renamed to listDialogNodes(). Support for getDialogNodes() will be removed in the next major release");
     return super.listDialogNodes(params, callback);
   }
 
@@ -273,26 +265,24 @@ class ConversationV1 extends GeneratedConversationV1 {
     const missingParams = getMissingParams(params, requiredParams);
     if (missingParams) { return callback(missingParams); }
 
-    const _params: GeneratedConversationV1.UpdateDialogNodeParams = {
-      workspace_id: params.workspace_id,
-      dialog_node: params.old_dialog_node,
-      new_dialog_node: params.dialog_node,
-      new_description: params.description,
-      new_conditions: params.conditions,
-      new_parent: params.parent,
-      new_previous_sibling: params.previous_sibling,
-      new_output: params.output,
-      new_context: params.context,
-      new_metadata: params.metadata,
-      new_next_step: params.next_step,
-      new_title: params.title,
-      new_type: params.type,
-      new_event_name: params.event_name,
-      new_variable: params.variable,
-      new_actions: params.actions
-    };
+    const newParams = extend({}, params);
+    newParams.dialog_node = params.old_dialog_node;
+    newParams.new_dialog_node = params.dialog_node;
+    newParams.new_description = params.description;
+    newParams.new_conditions = params.conditions;
+    newParams.new_parent = params.parent;
+    newParams.new_previous_sibling = params.previous_sibling;
+    newParams.new_output = params.output;
+    newParams.new_context = params.context;
+    newParams.new_metadata = params.metadata;
+    newParams.new_next_step = params.next_step;
+    newParams.new_title = params.title;
+    newParams.new_type = params.type;
+    newParams.new_event_name = params.event_name;
+    newParams.new_variable = params.variable;
+    newParams.new_actions = params.actions;
 
-    return super.updateDialogNode(_params, callback);
+    return super.updateDialogNode(newParams, callback);
   }
 }
 
