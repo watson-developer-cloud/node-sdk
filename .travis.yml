@@ -5,10 +5,9 @@ node_js:
 - 6
 - stable
 before_install:
-- openssl aes-256-cbc -K $encrypted_7f9951a7b27b_key -iv $encrypted_7f9951a7b27b_iv
-  -in auth.js.enc -out test/resources/auth.js -d
 - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && openssl aes-256-cbc -K $encrypted_7f9951a7b27b_key
-  -iv $encrypted_7f9951a7b27b_iv -in auth.js.enc -out test/resources/auth.js -d || true'
+  -iv $encrypted_7f9951a7b27b_iv -in auth.js.enc -out test/resources/auth.js -d ||
+  true'
 - npm install -g typescript
 script:
 - tsc
