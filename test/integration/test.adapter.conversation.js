@@ -111,7 +111,7 @@ describe('conversation_adapter_integration', function() {
   before(function() {
     const constructorParams = assign({}, auth.conversation, {
       version: 'v1',
-      version_date: '2017-05-26',
+      version_date: '2018-02-16',
     });
     conversation = watson.conversation(constructorParams);
     nock.enableNetConnect();
