@@ -19,7 +19,7 @@ Node.js client library to use the Watson APIs.
   * [Examples](#examples)
   * [IBM Watson Services](#ibm-watson-services)
     * [Authorization](#authorization)
-    * [Assistant] (#assistant)
+    * [Assistant]
     * [Discovery](#discovery)
     * [Language Translator](#language-translator)
     * [Natural Language Classifier](#natural-language-classifier)
@@ -139,7 +139,7 @@ function (err, token) {
 
 ### Assistant
 
-Use the [Assistant][assistant] service to determine the intent of a message.
+Use the [Assistant][conversation] service to determine the intent of a message.
 
 Note: you must first create a workspace via Bluemix. See [the documentation](https://console.bluemix.net/docs/services/assistant/index.html#about) for details.
 
@@ -526,7 +526,7 @@ This library is licensed under Apache 2.0. Full license text is available in
 
 See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/master/.github/CONTRIBUTING.md).
 
-[assistant]: https://www.ibm.com/watson/services/assistant/
+[assistant]: https://www.ibm.com/watson/services/conversation/
 [conversation]: https://www.ibm.com/watson/services/conversation/
 [discovery]: https://www.ibm.com/watson/services/discovery/
 [personality_insights]: https://www.ibm.com/watson/services/personality-insights/
