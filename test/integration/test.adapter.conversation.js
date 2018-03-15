@@ -992,7 +992,6 @@ describe('conversation_adapter_integration', function() {
         );
         assert.equal(result.conditions, 'true', 'conditions field has unexpected value');
         assert.equal(result.description, null, 'description field is not null');
-        assert.notEqual(result.created, null, 'created field is null');
         done();
       });
     });
