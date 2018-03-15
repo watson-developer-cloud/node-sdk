@@ -207,7 +207,14 @@ export class BaseService {
    * @returns {Credentials}
    */
   private getCredentialsFromEnvironment(name: string): Credentials {
-    const _name: string = (name === 'watson_vision_combined' ? 'visual_recognition' : name).toUpperCase();
+    if (name === 'watson_vision_combined') {
+      return this.getCredentialsFromEnvironment('visual_recognition');
+    }
+    // Case handling for assistant - should look for assistant env variables before conversation
+    if (name === 'conversation' && process.env[`ASSISTANT_USERNAME`]) {
+       return this.getCredentialsFromEnvironment('assistant');
+    }
+    const _name: string = name.toUpperCase();
     // https://github.com/watson-developer-cloud/node-sdk/issues/605
     const _nameWithUnderscore: string = _name.replace(/-/g, '_');
     const _username: string = process.env[`${_name}_USERNAME`] || process.env[`${_nameWithUnderscore}_USERNAME`];

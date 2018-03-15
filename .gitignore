@@ -28,6 +28,7 @@ visual-recognition/*.js
 text-to-speech/*.js
 speech-to-text/*.js
 authorization/*.js
+assistant/*.js
 index.js
 .nyc_output
 **/*.d.ts

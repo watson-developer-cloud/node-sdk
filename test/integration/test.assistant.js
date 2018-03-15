@@ -7,6 +7,7 @@ const authHelper = require('./auth_helper.js');
 const auth = authHelper.auth;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const assign = require('object.assign'); // for node v0.12 compatibility
+const AssistantV1 = require('../../assistant/v1-generated');
 
 const extend = require('extend');
 
@@ -46,6 +47,7 @@ const intents = {
 const test_intents = [
   {
     intent: 'intent_1',
+    description: 'description_1',
     examples: [
       {
         text: 'Hi, here\'s a URL ☺ http://example.com/?a=$+*^;&c=%20#!"`~',
@@ -63,8 +65,8 @@ const test_intents_update = {
   ],
 };
 const test_examples_new = 'Oh, here\'s a URL ☺ http://example.com/?a=$+*^;&c=%20#!"`~';
-const counterExampleText = 'Hey, here\'s a URL ☺ http://example.com/?a=$+*^;&c=%20#!"`~';
-const counterExampleText_new = 'Oh, here\'s a URL ☺ http://example.com/?a=$+*^;&c=%20#!"`~';
+const counterexampleText = 'Hey, here\'s a URL ☺ http://example.com/?a=$+*^;&c=%20#!"`~';
+const counterexampleText_new = 'Oh, here\'s a URL ☺ http://example.com/?a=$+*^;&c=%20#!"`~';
 const test_entities = [
   {
     entity: 'entity_1',
@@ -101,19 +103,16 @@ const test_dialog_node_update = 'updated_node';
 // changing language is forbidden starting with VERSION_DATE_2017_05_26
 const workspace1 = extend(true, {}, workspace, intents, { language: workspace.language });
 
-describe('conversation_adapter_integration', function() {
+describe('assistant_integration', function() {
   this.timeout(TEN_SECONDS);
   this.slow(TWO_SECONDS); // this controls when the tests get a colored warning for taking too long
   // this.retries(1);
 
-  let conversation;
+  let assistant;
 
   before(function() {
-    const constructorParams = assign({}, auth.conversation, {
-      version: 'v1',
-      version_date: '2018-02-16',
-    });
-    conversation = watson.conversation(constructorParams);
+    auth.conversation.version = '2018-02-16';
+    assistant = new watson.AssistantV1(auth.conversation);
     nock.enableNetConnect();
   });
 
@@ -131,7 +130,7 @@ describe('conversation_adapter_integration', function() {
         workspace_id: auth.conversation.workspace_id,
       };
 
-      conversation.message(params, function(err, result) {
+      assistant.message(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -140,12 +139,11 @@ describe('conversation_adapter_integration', function() {
       });
     });
 
-    it('dialog_stack with 2017-02-03 version_date', function(done) {
+    it('dialog_stack with 2017-02-03 version', function(done) {
       const constructorParams = assign({}, auth.conversation, {
-        version: 'v1',
-        version_date: '2017-02-03',
+        version: '2017-02-03',
       });
-      const conversation = watson.conversation(constructorParams);
+      const assistant = new watson.AssistantV1(constructorParams);
 
       const params = {
         input: {
@@ -154,7 +152,7 @@ describe('conversation_adapter_integration', function() {
         workspace_id: auth.conversation.workspace_id,
       };
 
-      conversation.message(params, function(err, result) {
+      assistant.message(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -163,12 +161,11 @@ describe('conversation_adapter_integration', function() {
       });
     });
 
-    it('dialog_stack with 2016-09-20 version_date', function(done) {
+    it('dialog_stack with 2016-09-20 version', function(done) {
       const constructorParams = assign({}, auth.conversation, {
-        version: 'v1',
-        version_date: '2016-09-20',
+        version: '2016-09-20',
       });
-      const conversation = watson.conversation(constructorParams);
+      const assistant = new watson.AssistantV1(constructorParams);
 
       const params = {
         input: {
@@ -177,7 +174,7 @@ describe('conversation_adapter_integration', function() {
         workspace_id: auth.conversation.workspace_id,
       };
 
-      conversation.message(params, function(err, result) {
+      assistant.message(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -186,12 +183,11 @@ describe('conversation_adapter_integration', function() {
       });
     });
 
-    it('dialog_stack with 2016-07-11 version_date', function(done) {
+    it('dialog_stack with 2016-07-11 version', function(done) {
       const constructorParams = assign({}, auth.conversation, {
-        version: 'v1',
-        version_date: '2016-07-11',
+        version: '2016-07-11',
       });
-      const conversation = watson.conversation(constructorParams);
+      const assistant = new watson.AssistantV1(constructorParams);
 
       const params = {
         input: {
@@ -200,7 +196,7 @@ describe('conversation_adapter_integration', function() {
         workspace_id: auth.conversation.workspace_id,
       };
 
-      conversation.message(params, function(err, result) {
+      assistant.message(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -212,7 +208,7 @@ describe('conversation_adapter_integration', function() {
 
   describe('listWorkspaces()', function() {
     it('result should contain workspaces key', function(done) {
-      conversation.listWorkspaces(function(err, result) {
+      assistant.listWorkspaces(function(err, result) {
         if (err) {
           return done(err);
         }
@@ -222,7 +218,7 @@ describe('conversation_adapter_integration', function() {
     });
 
     it('result should contain an array of workspaces', function(done) {
-      conversation.listWorkspaces(function(err, result) {
+      assistant.listWorkspaces(function(err, result) {
         if (err) {
           return done(err);
         }
@@ -237,7 +233,7 @@ describe('conversation_adapter_integration', function() {
         include_count: true,
         sort: '-name',
       };
-      conversation.listWorkspaces(params, function(err, result) {
+      assistant.listWorkspaces(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -251,7 +247,7 @@ describe('conversation_adapter_integration', function() {
     it('should create a new workspace', function(done) {
       const params = workspace;
 
-      conversation.createWorkspace(params, function(err, result) {
+      assistant.createWorkspace(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -269,7 +265,7 @@ describe('conversation_adapter_integration', function() {
     it('should update the workspace with intents', function(done) {
       const params = workspace1;
 
-      conversation.updateWorkspace(params, function(err, result) {
+      assistant.updateWorkspace(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -289,7 +285,7 @@ describe('conversation_adapter_integration', function() {
         workspace_id: workspace1.workspace_id,
       };
 
-      conversation.getWorkspace(params, function(err, result) {
+      assistant.getWorkspace(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -304,15 +300,16 @@ describe('conversation_adapter_integration', function() {
       const params = {
         workspace_id: workspace1.workspace_id,
         intent: test_intents[0].intent,
+        description: test_intents[0].description,
         examples: test_intents[0].examples,
       };
 
-      conversation.createIntent(params, function(err, result) {
+      assistant.createIntent(params, function(err, result) {
         if (err) {
           return done(err);
         }
         assert.equal(result.intent, test_intents[0].intent);
-        assert.equal(result.description, null);
+        assert.equal(result.description, test_intents[0].description);
         done();
       });
     });
@@ -325,7 +322,7 @@ describe('conversation_adapter_integration', function() {
         export: true,
       };
 
-      conversation.getIntents(params, function(err, result) {
+      assistant.listIntents(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -344,7 +341,7 @@ describe('conversation_adapter_integration', function() {
         sort: 'intent',
       };
 
-      conversation.getIntents(params, function(err, result) {
+      assistant.listIntents(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -361,12 +358,12 @@ describe('conversation_adapter_integration', function() {
         intent: test_intents[0].intent,
       };
 
-      conversation.getIntent(params, function(err, result) {
+      assistant.getIntent(params, function(err, result) {
         if (err) {
           return done(err);
         }
         assert.equal(result.intent, test_intents[0].intent);
-        assert.equal(result.description, null);
+        assert.equal(result.description, test_intents[0].description);
         done();
       });
     });
@@ -376,13 +373,13 @@ describe('conversation_adapter_integration', function() {
     it('should update an intent of the workspace', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        old_intent: test_intents[0].intent,
-        intent: test_intents_update.intent,
-        description: test_intents_update.description,
-        examples: test_intents_update.examples,
+        intent: test_intents[0].intent,
+        new_intent: test_intents_update.intent,
+        new_description: test_intents_update.description,
+        new_examples: test_intents_update.examples,
       };
 
-      conversation.updateIntent(params, function(err, result) {
+      assistant.updateIntent(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -399,7 +396,7 @@ describe('conversation_adapter_integration', function() {
         intent: test_intents_update.intent,
       };
 
-      conversation.getExamples(params, function(err, result) {
+      assistant.listExamples(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -417,7 +414,7 @@ describe('conversation_adapter_integration', function() {
         sort: '-text',
       };
 
-      conversation.getExamples(params, function(err, result) {
+      assistant.listExamples(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -435,7 +432,7 @@ describe('conversation_adapter_integration', function() {
         text: 'new_example',
       };
 
-      conversation.createExample(params, function(err, result) {
+      assistant.createExample(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -453,7 +450,7 @@ describe('conversation_adapter_integration', function() {
         text: test_intents_update.examples[0].text,
       };
 
-      conversation.getExample(params, function(err, result) {
+      assistant.getExample(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -468,11 +465,11 @@ describe('conversation_adapter_integration', function() {
       const params = {
         workspace_id: workspace1.workspace_id,
         intent: test_intents_update.intent,
-        old_text: test_intents_update.examples[0].text,
-        text: test_examples_new,
+        text: test_intents_update.examples[0].text,
+        new_text: test_examples_new,
       };
 
-      conversation.updateExample(params, function(err, result) {
+      assistant.updateExample(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -490,7 +487,7 @@ describe('conversation_adapter_integration', function() {
         text: test_examples_new,
       };
 
-      conversation.deleteExample(params, function(err, result) {
+      assistant.deleteExample(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -506,7 +503,7 @@ describe('conversation_adapter_integration', function() {
         intent: test_intents_update.intent,
       };
 
-      conversation.deleteIntent(params, function(err, result) {
+      assistant.deleteIntent(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -515,55 +512,55 @@ describe('conversation_adapter_integration', function() {
     });
   });
 
-  describe('createCounterExample()', function() {
-    it('should return the newly created counterExample of the workspace', function(done) {
+  describe('createCounterexample()', function() {
+    it('should return the newly created counterexample of the workspace', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        text: counterExampleText,
+        text: counterexampleText,
       };
 
-      conversation.createCounterExample(params, function(err, result) {
+      assistant.createCounterexample(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.text, counterExampleText);
+        assert.equal(result.text, counterexampleText);
         done();
       });
     });
   });
 
-  describe('getCounterExample()', function() {
-    it('should return a counterExample', function(done) {
+  describe('getCounterexample()', function() {
+    it('should return a counterexample', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        text: counterExampleText,
+        text: counterexampleText,
       };
 
-      conversation.getCounterExample(params, function(err, result) {
+      assistant.getCounterexample(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.text, counterExampleText);
+        assert.equal(result.text, counterexampleText);
         done();
       });
     });
   });
 
-  describe('getCounterExamples()', function() {
-    it('should return counterExamples of the workspace', function(done) {
+  describe('listCounterexamples()', function() {
+    it('should return counterexamples of the workspace', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
       };
 
-      conversation.getCounterExamples(params, function(err, result) {
+      assistant.listCounterexamples(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.counterexamples[0].text, counterExampleText);
+        assert.equal(result.counterexamples[0].text, counterexampleText);
         done();
       });
     });
-    it('should return counterExamples of the workspace with pagination', function(done) {
+    it('should return counterexamples of the workspace with pagination', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
         page_limit: 1,
@@ -571,43 +568,43 @@ describe('conversation_adapter_integration', function() {
         sort: 'text',
       };
 
-      conversation.getCounterExamples(params, function(err, result) {
+      assistant.listCounterexamples(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.counterexamples[0].text, counterExampleText);
+        assert.equal(result.counterexamples[0].text, counterexampleText);
         assert.equal(result.hasOwnProperty('pagination'), true);
         done();
       });
     });
   });
 
-  describe('updateCounterExample()', function() {
-    it('should return an updated counterExample', function(done) {
+  describe('updateCounterexample()', function() {
+    it('should return an updated counterexample', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        old_text: counterExampleText,
-        text: counterExampleText_new,
+        text: counterexampleText,
+        new_text: counterexampleText_new,
       };
 
-      conversation.updateCounterExample(params, function(err, result) {
+      assistant.updateCounterexample(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.text, counterExampleText_new);
+        assert.equal(result.text, counterexampleText_new);
         done();
       });
     });
   });
 
-  describe('deleteCounterExample()', function() {
-    it('should delete a counterExample', function(done) {
+  describe('deleteCounterexample()', function() {
+    it('should delete a counterexample', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        text: counterExampleText_new,
+        text: counterexampleText_new,
       };
 
-      conversation.deleteCounterExample(params, function(err, result) {
+      assistant.deleteCounterexample(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -625,7 +622,7 @@ describe('conversation_adapter_integration', function() {
         fuzzy_match: true,
       };
 
-      conversation.createEntity(params, function(err, result) {
+      assistant.createEntity(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -636,14 +633,14 @@ describe('conversation_adapter_integration', function() {
     });
   });
 
-  describe('getEntities()', function() {
+  describe('listEntities()', function() {
     it('should get entities of the workspace', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
         export: true,
       };
 
-      conversation.getEntities(params, function(err, result) {
+      assistant.listEntities(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -662,7 +659,7 @@ describe('conversation_adapter_integration', function() {
         sort: 'entity',
       };
 
-      conversation.getEntities(params, function(err, result) {
+      assistant.listEntities(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -679,7 +676,7 @@ describe('conversation_adapter_integration', function() {
         entity: test_entities[0].entity,
       };
 
-      conversation.getEntity(params, function(err, result) {
+      assistant.getEntity(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -695,13 +692,13 @@ describe('conversation_adapter_integration', function() {
     it('should update an entity of the workspace', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        old_entity: test_entities[0].entity,
-        entity: test_entities_update.entity,
-        values: test_entities_update.values,
+        entity: test_entities[0].entity,
+        new_entity: test_entities_update.entity,
+        new_values: test_entities_update.values,
         fuzzy_match: false,
       };
 
-      conversation.updateEntity(params, function(err, result) {
+      assistant.updateEntity(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -720,7 +717,7 @@ describe('conversation_adapter_integration', function() {
         synonyms: test_value.synonyms,
       };
 
-      conversation.createValue(params, function(err, result) {
+      assistant.createValue(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -731,7 +728,7 @@ describe('conversation_adapter_integration', function() {
     });
   });
 
-  describe('getValues()', function() {
+  describe('listValues()', function() {
     it('should get values of the entity', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
@@ -739,7 +736,7 @@ describe('conversation_adapter_integration', function() {
         export: true,
       };
 
-      conversation.getValues(params, function(err, result) {
+      assistant.listValues(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -759,7 +756,7 @@ describe('conversation_adapter_integration', function() {
         sort: 'value',
       };
 
-      conversation.getValues(params, function(err, result) {
+      assistant.listValues(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -777,7 +774,7 @@ describe('conversation_adapter_integration', function() {
         value: test_value.value,
       };
 
-      conversation.getValue(params, function(err, result) {
+      assistant.getValue(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -793,12 +790,12 @@ describe('conversation_adapter_integration', function() {
       const params = {
         workspace_id: workspace1.workspace_id,
         entity: test_entities_update.entity,
-        old_value: test_value.value,
-        value: test_value_update.value,
-        synonyms: test_value_update.synonyms,
+        value: test_value.value,
+        new_value: test_value_update.value,
+        new_synonyms: test_value_update.synonyms,
       };
 
-      conversation.updateValue(params, function(err, result) {
+      assistant.updateValue(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -817,7 +814,7 @@ describe('conversation_adapter_integration', function() {
         synonym: test_synonym,
       };
 
-      conversation.createSynonym(params, function(err, result) {
+      assistant.createSynonym(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -827,7 +824,7 @@ describe('conversation_adapter_integration', function() {
     });
   });
 
-  describe('getSynonyms()', function() {
+  describe('listSynonyms()', function() {
     it('should get synonyms of the value', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
@@ -836,7 +833,7 @@ describe('conversation_adapter_integration', function() {
         export: true,
       };
 
-      conversation.getSynonyms(params, function(err, result) {
+      assistant.listSynonyms(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -855,7 +852,7 @@ describe('conversation_adapter_integration', function() {
         include_count: true,
       };
 
-      conversation.getSynonyms(params, function(err, result) {
+      assistant.listSynonyms(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -874,7 +871,7 @@ describe('conversation_adapter_integration', function() {
         synonym: test_synonym,
       };
 
-      conversation.getSynonym(params, function(err, result) {
+      assistant.getSynonym(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -890,11 +887,11 @@ describe('conversation_adapter_integration', function() {
         workspace_id: workspace1.workspace_id,
         entity: test_entities_update.entity,
         value: test_value_update.value,
-        old_synonym: test_synonym,
-        synonym: test_synonym_update,
+        synonym: test_synonym,
+        new_synonym: test_synonym_update,
       };
 
-      conversation.updateSynonym(params, function(err, result) {
+      assistant.updateSynonym(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -904,7 +901,7 @@ describe('conversation_adapter_integration', function() {
     });
   });
 
-  describe('getLogs()', function() {
+  describe('listLogs()', function() {
     it('should return logs', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
@@ -912,7 +909,7 @@ describe('conversation_adapter_integration', function() {
         page_limit: 1,
       };
 
-      conversation.getLogs(params, function(err, result) {
+      assistant.listLogs(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -931,7 +928,7 @@ describe('conversation_adapter_integration', function() {
         synonym: test_synonym_update,
       };
 
-      conversation.deleteSynonym(params, function(err, result) {
+      assistant.deleteSynonym(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -948,7 +945,7 @@ describe('conversation_adapter_integration', function() {
         value: test_value_update.value,
       };
 
-      conversation.deleteValue(params, function(err, result) {
+      assistant.deleteValue(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -964,7 +961,7 @@ describe('conversation_adapter_integration', function() {
         entity: test_entities_update.entity,
       };
 
-      conversation.deleteEntity(params, function(err, result) {
+      assistant.deleteEntity(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -981,7 +978,7 @@ describe('conversation_adapter_integration', function() {
         conditions: 'true',
       };
 
-      conversation.createDialogNode(params, function(err, result) {
+      assistant.createDialogNode(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -997,13 +994,13 @@ describe('conversation_adapter_integration', function() {
     });
   });
 
-  describe('getDialogNodes()', function() {
+  describe('listDialogNodes()', function() {
     it('should get dialog nodes of the workspace', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
       };
 
-      conversation.getDialogNodes(params, function(err, result) {
+      assistant.listDialogNodes(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -1020,7 +1017,7 @@ describe('conversation_adapter_integration', function() {
         sort: 'dialog_node',
       };
 
-      conversation.getDialogNodes(params, function(err, result) {
+      assistant.listDialogNodes(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -1037,7 +1034,7 @@ describe('conversation_adapter_integration', function() {
         dialog_node: test_dialog_node,
       };
 
-      conversation.getDialogNode(params, function(err, result) {
+      assistant.getDialogNode(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -1052,12 +1049,12 @@ describe('conversation_adapter_integration', function() {
     it('should update a dialog node of the workspace', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        old_dialog_node: test_dialog_node,
-        dialog_node: test_dialog_node_update,
-        conditions: 'false',
+        dialog_node: test_dialog_node,
+        new_dialog_node: test_dialog_node_update,
+        new_conditions: 'false',
       };
 
-      conversation.updateDialogNode(params, function(err, result) {
+      assistant.updateDialogNode(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -1075,7 +1072,7 @@ describe('conversation_adapter_integration', function() {
         dialog_node: test_dialog_node_update,
       };
 
-      conversation.deleteDialogNode(params, function(err, result) {
+      assistant.deleteDialogNode(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -1090,7 +1087,7 @@ describe('conversation_adapter_integration', function() {
         workspace_id: workspace1.workspace_id,
       };
 
-      conversation.deleteWorkspace(params, function(err, result) {
+      assistant.deleteWorkspace(params, function(err, result) {
         if (err) {
           return done(err);
         }

@@ -19,7 +19,7 @@ Node.js client library to use the Watson APIs.
   * [Examples](#examples)
   * [IBM Watson Services](#ibm-watson-services)
     * [Authorization](#authorization)
-    * [Conversation](#conversation)
+    * [Assistant] (#assistant)
     * [Discovery](#discovery)
     * [Language Translator](#language-translator)
     * [Natural Language Classifier](#natural-language-classifier)
@@ -137,24 +137,23 @@ function (err, token) {
 });
 ```
 
+### Assistant
 
-### Conversation
+Use the [Assistant][assistant] service to determine the intent of a message.
 
-Use the [Conversation][conversation] service to determine the intent of a message.
-
-Note: you must first create a workspace via Bluemix. See [the documentation](https://console.bluemix.net/docs/services/conversation/index.html#about) for details.
+Note: you must first create a workspace via Bluemix. See [the documentation](https://console.bluemix.net/docs/services/assistant/index.html#about) for details.
 
 ```js
-var ConversationV1 = require('watson-developer-cloud/conversation/v1');
+var AssistantV1 = require('watson-developer-cloud/assistant/v1');
 
-var conversation = new ConversationV1({
+var assistant = new AssistantV1({
   username: '<username>',
   password: '<password>',
-  url: 'https://gateway.watsonplatform.net/conversation/api/',
-  version: '2017-05-26'
+  url: 'https://gateway.watsonplatform.net/assistant/api/',
+  version: '2018-02-16'
 });
 
-conversation.message(
+assistant.message(
   {
     input: { text: "What's the weather?" },
     workspace_id: '<workspace id>'
@@ -168,6 +167,11 @@ conversation.message(
   }
 );
 ```
+
+
+### Conversation
+
+This service has been renamed to Assistant.
 
 ### Discovery
 
@@ -483,7 +487,7 @@ By default, the library tries to use Basic Auth and will ask for `api_key` or `u
 ```javascript
 var watson = require('watson-developer-cloud');
 
-var conversation = new watson.ConversationV1({
+var assistant = new watson.AssistantV1({
   use_unauthenticated: true
 });
 ```
@@ -522,6 +526,7 @@ This library is licensed under Apache 2.0. Full license text is available in
 
 See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/master/.github/CONTRIBUTING.md).
 
+[assistant]: https://www.ibm.com/watson/services/assistant/
 [conversation]: https://www.ibm.com/watson/services/conversation/
 [discovery]: https://www.ibm.com/watson/services/discovery/
 [personality_insights]: https://www.ibm.com/watson/services/personality-insights/
