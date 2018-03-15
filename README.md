@@ -19,6 +19,7 @@ Node.js client library to use the Watson APIs.
   * [Examples](#examples)
   * [IBM Watson Services](#ibm-watson-services)
     * [Authorization](#authorization)
+    * [Assistant] (#assistant)
     * [Conversation](#conversation)
     * [Discovery](#discovery)
     * [Language Translator](#language-translator)
@@ -135,6 +136,37 @@ function (err, token) {
     // Use your token here
   }
 });
+```
+
+### Assistant
+
+Use the [Assistant][assistant] service to determine the intent of a message.
+
+Note: you must first create a workspace via Bluemix. See [the documentation](https://console.bluemix.net/docs/services/assistant/index.html#about) for details.
+
+```js
+var AssistantV1 = require('watson-developer-cloud/assistant/v1');
+
+var assistant = new AssistantV1({
+  username: '<username>',
+  password: '<password>',
+  url: 'https://gateway.watsonplatform.net/assistant/api/',
+  version: '2018-02-16'
+});
+
+assistant.message(
+  {
+    input: { text: "What's the weather?" },
+    workspace_id: '<workspace id>'
+  },
+  function(err, response) {
+    if (err) {
+      console.error(err);
+    } else {
+      console.log(JSON.stringify(response, null, 2));
+    }
+  }
+);
 ```
 
 
@@ -522,6 +554,7 @@ This library is licensed under Apache 2.0. Full license text is available in
 
 See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/master/.github/CONTRIBUTING.md).
 
+[assistant]: https://www.ibm.com/watson/services/assistant/
 [conversation]: https://www.ibm.com/watson/services/conversation/
 [discovery]: https://www.ibm.com/watson/services/discovery/
 [personality_insights]: https://www.ibm.com/watson/services/personality-insights/
