@@ -79,7 +79,7 @@
 					<em> <a href="#examples">Examples</a>
 					</em> <a href="#ibm-watson-services">IBM Watson Services</a>
 					<em> <a href="#authorization">Authorization</a>
-					</em> <a href="#conversation">Conversation</a>
+					</em> <a href="https://www.ibm.com/watson/services/assistant/">Assistant</a> (#assistant)
 					<em> <a href="#discovery">Discovery</a>
 					</em> <a href="#language-translator">Language Translator</a>
 					<em> <a href="#natural-language-classifier">Natural Language Classifier</a>
@@ -167,19 +167,19 @@ authorization.getToken({
   }
 });
 </code></pre>
-				<h3 id="conversation">Conversation</h3>
-				<p>Use the <a href="https://www.ibm.com/watson/services/conversation/">Conversation</a> service to determine the intent of a message.</p>
-				<p>Note: you must first create a workspace via Bluemix. See <a href="https://console.bluemix.net/docs/services/conversation/index.html#about">the documentation</a> for details.</p>
-				<pre><code class="lang-js"><span class="hljs-keyword">var</span> ConversationV1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'watson-developer-cloud/conversation/v1'</span>);
+				<h3 id="assistant">Assistant</h3>
+				<p>Use the <a href="https://www.ibm.com/watson/services/assistant/">Assistant</a> service to determine the intent of a message.</p>
+				<p>Note: you must first create a workspace via Bluemix. See <a href="https://console.bluemix.net/docs/services/assistant/index.html#about">the documentation</a> for details.</p>
+				<pre><code class="lang-js"><span class="hljs-keyword">var</span> AssistantV1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'watson-developer-cloud/assistant/v1'</span>);
 
-<span class="hljs-keyword">var</span> conversation = <span class="hljs-keyword">new</span> ConversationV1({
+<span class="hljs-keyword">var</span> assistant = <span class="hljs-keyword">new</span> AssistantV1({
   <span class="hljs-attr">username</span>: <span class="hljs-string">'&lt;username&gt;'</span>,
   <span class="hljs-attr">password</span>: <span class="hljs-string">'&lt;password&gt;'</span>,
-  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/conversation/api/'</span>,
-  <span class="hljs-attr">version</span>: <span class="hljs-string">'2017-05-26'</span>
+  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/assistant/api/'</span>,
+  <span class="hljs-attr">version</span>: <span class="hljs-string">'2018-02-16'</span>
 });
 
-conversation.message(
+assistant.message(
   {
     <span class="hljs-attr">input</span>: { <span class="hljs-attr">text</span>: <span class="hljs-string">"What's the weather?"</span> },
     <span class="hljs-attr">workspace_id</span>: <span class="hljs-string">'&lt;workspace id&gt;'</span>
@@ -193,6 +193,8 @@ conversation.message(
   }
 );
 </code></pre>
+				<h3 id="conversation">Conversation</h3>
+				<p>This service has been renamed to Assistant.</p>
 				<h3 id="discovery">Discovery</h3>
 				<p>Use the <a href="https://www.ibm.com/watson/services/discovery/">Discovery Service</a> to search and analyze structured and unstructured data.</p>
 				<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> DiscoveryV1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'watson-developer-cloud/discovery/v1'</span>);
@@ -456,7 +458,7 @@ visualRecognition.classify(params, <span class="hljs-function"><span class="hljs
 				<p><code>use_unauthenticated</code>.</p>
 				<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> watson = <span class="hljs-built_in">require</span>(<span class="hljs-string">'watson-developer-cloud'</span>);
 
-<span class="hljs-keyword">var</span> conversation = <span class="hljs-keyword">new</span> watson.ConversationV1({
+<span class="hljs-keyword">var</span> assistant = <span class="hljs-keyword">new</span> watson.AssistantV1({
   <span class="hljs-attr">use_unauthenticated</span>: <span class="hljs-literal">true</span>
 });
 </code></pre>
