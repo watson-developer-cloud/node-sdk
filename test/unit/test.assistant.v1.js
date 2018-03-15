@@ -907,4 +907,47 @@ describe('assistant-v1', function() {
       assert.equal(req.method, 'POST');
     });
   });
+
+  describe('credentials()', function() {
+    it('should load its credentials from bluemix (conversation)', function() {
+      process.env.VCAP_SERVICES = JSON.stringify({
+        conversation: [
+          {
+            credentials: {
+              url: 'https://gateway.watsonplatform.net/assistant/api',
+              username: 'hyphenated-user',
+              password: 'hpyhenated-pass',
+            },
+          },
+        ],
+      });
+      const assistant = new watson.AssistantV1({
+        version: '2018-02-16',
+      });
+      assert(assistant);
+      assert.equal(assistant.getCredentials().username, 'hyphenated-user');
+    });
+
+    it('should load its credentials from environment (conversation)', function() {
+      process.env.CONVERSATION_USERNAME = 'user';
+      process.env.CONVERSATION_PASSWORD = 'password';
+      process.env.CONVERSATION_URL = 'https://gateway.watsonplatform.net/assistant/api';
+      const assistant = new watson.AssistantV1({
+        version: '2018-02-16',
+      });
+      assert(assistant);
+      assert.equal(assistant.getCredentials().username, 'user');
+    });
+
+    it('should load its credentials from environment (assistant)', function() {
+      process.env.ASSISTANT_USERNAME = 'user';
+      process.env.ASSISTANT_PASSWORD = 'password';
+      process.env.ASSISTANT_URL = 'https://gateway.watsonplatform.net/assistant/api';
+      const assistant = new watson.AssistantV1({
+        version: '2018-02-16',
+      });
+      assert(assistant);
+      assert.equal(assistant.getCredentials().username, 'user');
+    });
+  });
 });
