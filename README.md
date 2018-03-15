@@ -19,7 +19,7 @@ Node.js client library to use the Watson APIs.
   * [Examples](#examples)
   * [IBM Watson Services](#ibm-watson-services)
     * [Authorization](#authorization)
-    * [Assistant] (#conversation)
+    * [Assistant]
     * [Discovery](#discovery)
     * [Language Translator](#language-translator)
     * [Natural Language Classifier](#natural-language-classifier)
