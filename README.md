@@ -20,7 +20,6 @@ Node.js client library to use the Watson APIs.
   * [IBM Watson Services](#ibm-watson-services)
     * [Authorization](#authorization)
     * [Assistant] (#assistant)
-    * [Conversation](#conversation)
     * [Discovery](#discovery)
     * [Language Translator](#language-translator)
     * [Natural Language Classifier](#natural-language-classifier)
@@ -172,34 +171,7 @@ assistant.message(
 
 ### Conversation
 
-Use the [Conversation][conversation] service to determine the intent of a message.
-
-Note: you must first create a workspace via Bluemix. See [the documentation](https://console.bluemix.net/docs/services/conversation/index.html#about) for details.
-
-```js
-var ConversationV1 = require('watson-developer-cloud/conversation/v1');
-
-var conversation = new ConversationV1({
-  username: '<username>',
-  password: '<password>',
-  url: 'https://gateway.watsonplatform.net/conversation/api/',
-  version: '2017-05-26'
-});
-
-conversation.message(
-  {
-    input: { text: "What's the weather?" },
-    workspace_id: '<workspace id>'
-  },
-  function(err, response) {
-    if (err) {
-      console.error(err);
-    } else {
-      console.log(JSON.stringify(response, null, 2));
-    }
-  }
-);
-```
+This service has been renamed to Assistant.
 
 ### Discovery
 
@@ -515,7 +487,7 @@ By default, the library tries to use Basic Auth and will ask for `api_key` or `u
 ```javascript
 var watson = require('watson-developer-cloud');
 
-var conversation = new watson.ConversationV1({
+var assistant = new watson.AssistantV1({
   use_unauthenticated: true
 });
 ```
