@@ -17,8 +17,8 @@
 import * as extend from 'extend';
 import { RequestResponse } from 'request';
 import { BaseService } from '../lib/base_service';
-import { getMissingParams } from '../lib/helper';
 import { FileObject } from '../lib/helper';
+import { getMissingParams } from '../lib/helper';
 import { createRequest } from '../lib/requestwrapper';
 
 /**
@@ -97,6 +97,49 @@ class NaturalLanguageClassifierV1 extends BaseService {
     return createRequest(parameters, _callback);
   };
 
+  /**
+   * Classify multiple phrases.
+   *
+   * Returns label information for multiple phrases. The status must be `Available` before you can use the classifier to classify text.  Note that classifying Japanese texts is a beta feature.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.classifier_id - Classifier ID to use.
+   * @param {ClassifyInput[]} params.collection - The submitted phrases.
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {NodeJS.ReadableStream|void}
+   */
+  public classifyCollection(params: NaturalLanguageClassifierV1.ClassifyCollectionParams, callback?: NaturalLanguageClassifierV1.Callback<NaturalLanguageClassifierV1.ClassificationCollection>): NodeJS.ReadableStream | void {
+    const _params = extend({}, params);
+    const _callback = (callback) ? callback : () => { /* noop */ };
+    const requiredParams = ['classifier_id', 'collection'];
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+    const body = {
+      'collection': _params.collection
+    };
+    const path = {
+      'classifier_id': _params.classifier_id
+    };
+    const parameters = {
+      options: {
+        url: '/v1/classifiers/{classifier_id}/classify_collection',
+        method: 'POST',
+        json: true,
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }
+      })
+    };
+    return createRequest(parameters, _callback);
+  };
+
   /*************************
    * manageClassifiers
    ************************/
@@ -107,8 +150,8 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * Sends data to create and train a classifier and returns information about the new classifier.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} params.metadata - Metadata in JSON format. The metadata identifies the language of the data, and an optional name to identify the classifier.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} params.training_data - Training data in CSV format. Each text value must have at least one class. The data can include up to 15,000 records. For details, see [Using your own data](https://console.bluemix.net/docs/services/natural-language-classifier/using-your-data.html).
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} params.metadata - Metadata in JSON format. The metadata identifies the language of the data, and an optional name to identify the classifier. Specify the language with the 2-letter primary language code as assigned in ISO standard 639.  Supported languages are English (`en`), Arabic (`ar`), French (`fr`), German, (`de`), Italian (`it`), Japanese (`ja`), Korean (`ko`), Brazilian Portuguese (`pt`), and Spanish (`es`).
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} params.training_data - Training data in CSV format. Each text value must have at least one class. The data can include up to 20,000 records. For details, see [Data preparation](https://console.bluemix.net/docs/services/natural-language-classifier/using-your-data.html).
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -283,11 +326,19 @@ namespace NaturalLanguageClassifierV1 {
     text: string;
   }
 
+  /** Parameters for the `classifyCollection` operation. */
+  export interface ClassifyCollectionParams {
+    /** Classifier ID to use. */
+    classifier_id: string;
+    /** The submitted phrases. */
+    collection: ClassifyInput[];
+  }
+
   /** Parameters for the `createClassifier` operation. */
   export interface CreateClassifierParams {
-    /** Metadata in JSON format. The metadata identifies the language of the data, and an optional name to identify the classifier. */
+    /** Metadata in JSON format. The metadata identifies the language of the data, and an optional name to identify the classifier. Specify the language with the 2-letter primary language code as assigned in ISO standard 639.  Supported languages are English (`en`), Arabic (`ar`), French (`fr`), German, (`de`), Italian (`it`), Japanese (`ja`), Korean (`ko`), Brazilian Portuguese (`pt`), and Spanish (`es`). */
     metadata: NodeJS.ReadableStream|FileObject|Buffer;
-    /** Training data in CSV format. Each text value must have at least one class. The data can include up to 15,000 records. For details, see [Using your own data](https://console.bluemix.net/docs/services/natural-language-classifier/using-your-data.html). */
+    /** Training data in CSV format. Each text value must have at least one class. The data can include up to 20,000 records. For details, see [Data preparation](https://console.bluemix.net/docs/services/natural-language-classifier/using-your-data.html). */
     training_data: NodeJS.ReadableStream|FileObject|Buffer;
   }
 
@@ -313,9 +364,9 @@ namespace NaturalLanguageClassifierV1 {
 
   /** Response from the classifier for a phrase. */
   export interface Classification {
-    /** Unique identifier for this classifier. */
+    /** Unique identifier for this classifier. Not returned by the request to classify multiple phrases. */
     classifier_id?: string;
-    /** Link to the classifier. */
+    /** Link to the classifier. Not returned by the request to classify multiple phrases. */
     url?: string;
     /** The submitted phrase. */
     text?: string;
@@ -323,6 +374,16 @@ namespace NaturalLanguageClassifierV1 {
     top_class?: string;
     /** An array of up to ten class-confidence pairs sorted in descending order of confidence. */
     classes?: ClassifiedClass[];
+  }
+
+  /** Response from the classifier for a phrase. */
+  export interface ClassificationCollection {
+    /** The submitted phrase. */
+    text?: string;
+    /** The class with the highest confidence. */
+    top_class?: string;
+    /** An array of up to ten class-confidence pairs sorted in descending order of confidence. */
+    classes?: Classification[];
   }
 
   /** Class and confidence. */
@@ -355,6 +416,12 @@ namespace NaturalLanguageClassifierV1 {
   export interface ClassifierList {
     /** The classifiers available to the user. Returns an empty array if no classifiers are available. */
     classifiers: Classifier[];
+  }
+
+  /** Request payload to classify. */
+  export interface ClassifyInput {
+    /** The submitted phrase. */
+    text: string;
   }
 
 }
