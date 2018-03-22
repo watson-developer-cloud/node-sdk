@@ -105,12 +105,12 @@
 					<div class="tsd-signature tsd-kind-icon">behavior<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/feb0e29/conversation/v1-generated.ts#L3052">conversation/v1-generated.ts:3052</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/795084f/conversation/v1-generated.ts#L3127">conversation/v1-generated.ts:3127</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>How the <code>next_step</code> reference is processed. If you specify <code>jump_to</code>, then you must also specify a value for the <code>dialog_node</code> property.</p>
+							<p>What happens after the dialog node completes. The valid values depend on the node type:  - The following values are valid for any node:    - <code>get_user_input</code>    - <code>skip_user_input</code>    - <code>jump_to</code>  - If the node is of type <code>event_handler</code> and its parent node is of type <code>slot</code> or <code>frame</code>, additional values are also valid:    - if <strong>event_name</strong>=<code>filled</code> and the type of the parent node is <code>slot</code>:      - <code>reprompt</code>      - <code>skip_all_slots</code>  - if <strong>event_name</strong>=<code>nomatch</code> and the type of the parent node is <code>slot</code>:      - <code>reprompt</code>      - <code>skip_slot</code>      - <code>skip_all_slots</code>  - if <strong>event_name</strong>=<code>generic</code> and the type of the parent node is <code>frame</code>:      - <code>reprompt</code>      - <code>skip_slot</code>      - <code>skip_all_slots</code>        If you specify <code>jump_to</code>, then you must also specify a value for the <code>dialog_node</code> property.</p>
 						</div>
 					</div>
 				</section>
@@ -120,12 +120,12 @@
 					<div class="tsd-signature tsd-kind-icon">dialog_<wbr>node<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/feb0e29/conversation/v1-generated.ts#L3054">conversation/v1-generated.ts:3054</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/795084f/conversation/v1-generated.ts#L3129">conversation/v1-generated.ts:3129</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The ID of the dialog node to process next. This parameter is required if <code>behavior</code>=<code>jump_to</code>.</p>
+							<p>The ID of the dialog node to process next. This parameter is required if <strong>behavior</strong>=<code>jump_to</code>.</p>
 						</div>
 					</div>
 				</section>
@@ -135,7 +135,7 @@
 					<div class="tsd-signature tsd-kind-icon">selector<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/feb0e29/conversation/v1-generated.ts#L3056">conversation/v1-generated.ts:3056</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/795084f/conversation/v1-generated.ts#L3131">conversation/v1-generated.ts:3131</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">

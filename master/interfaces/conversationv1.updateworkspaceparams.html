@@ -113,12 +113,12 @@
 					<div class="tsd-signature tsd-kind-icon">append<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/feb0e29/conversation/v1-generated.ts#L2251">conversation/v1-generated.ts:2251</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/795084f/conversation/v1-generated.ts#L2283">conversation/v1-generated.ts:2283</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Specifies that the elements included in the request body are to be appended to the existing data in the workspace. The default value is <code>false</code>.</p>
+							<p>Whether the new data is to be appended to the existing data in the workspace. If <strong>append</strong>=<code>false</code>, elements included in the new data completely replace the corresponding existing elements, including all subelements. For example, if the new data includes <strong>entities</strong> and <strong>append</strong>=<code>false</code>, all existing entities in the workspace are discarded and replaced with the new entities.    If <strong>append</strong>=<code>true</code>, existing elements are preserved, and the new elements are added. If any elements in the new data collide with existing elements, the update request fails.</p>
 						</div>
 					</div>
 				</section>
@@ -128,7 +128,7 @@
 					<div class="tsd-signature tsd-kind-icon">counterexamples<span class="tsd-signature-symbol">:</span> <a href="conversationv1.createcounterexample.html" class="tsd-signature-type">CreateCounterexample</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/feb0e29/conversation/v1-generated.ts#L2245">conversation/v1-generated.ts:2245</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/795084f/conversation/v1-generated.ts#L2277">conversation/v1-generated.ts:2277</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -143,12 +143,12 @@
 					<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/feb0e29/conversation/v1-generated.ts#L2235">conversation/v1-generated.ts:2235</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/795084f/conversation/v1-generated.ts#L2267">conversation/v1-generated.ts:2267</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The description of the workspace.</p>
+							<p>The description of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters.</p>
 						</div>
 					</div>
 				</section>
@@ -158,7 +158,7 @@
 					<div class="tsd-signature tsd-kind-icon">dialog_<wbr>nodes<span class="tsd-signature-symbol">:</span> <a href="conversationv1.createdialognode.html" class="tsd-signature-type">CreateDialogNode</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/feb0e29/conversation/v1-generated.ts#L2243">conversation/v1-generated.ts:2243</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/795084f/conversation/v1-generated.ts#L2275">conversation/v1-generated.ts:2275</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -173,7 +173,7 @@
 					<div class="tsd-signature tsd-kind-icon">entities<span class="tsd-signature-symbol">:</span> <a href="conversationv1.createentity.html" class="tsd-signature-type">CreateEntity</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/feb0e29/conversation/v1-generated.ts#L2241">conversation/v1-generated.ts:2241</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/795084f/conversation/v1-generated.ts#L2273">conversation/v1-generated.ts:2273</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -188,7 +188,7 @@
 					<div class="tsd-signature tsd-kind-icon">intents<span class="tsd-signature-symbol">:</span> <a href="conversationv1.createintent.html" class="tsd-signature-type">CreateIntent</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/feb0e29/conversation/v1-generated.ts#L2239">conversation/v1-generated.ts:2239</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/795084f/conversation/v1-generated.ts#L2271">conversation/v1-generated.ts:2271</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -203,7 +203,7 @@
 					<div class="tsd-signature tsd-kind-icon">language<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/feb0e29/conversation/v1-generated.ts#L2237">conversation/v1-generated.ts:2237</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/795084f/conversation/v1-generated.ts#L2269">conversation/v1-generated.ts:2269</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -218,7 +218,7 @@
 					<div class="tsd-signature tsd-kind-icon">learning_<wbr>opt_<wbr>out<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/feb0e29/conversation/v1-generated.ts#L2249">conversation/v1-generated.ts:2249</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/795084f/conversation/v1-generated.ts#L2281">conversation/v1-generated.ts:2281</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -233,7 +233,7 @@
 					<div class="tsd-signature tsd-kind-icon">metadata<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/feb0e29/conversation/v1-generated.ts#L2247">conversation/v1-generated.ts:2247</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/795084f/conversation/v1-generated.ts#L2279">conversation/v1-generated.ts:2279</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -248,12 +248,12 @@
 					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/feb0e29/conversation/v1-generated.ts#L2233">conversation/v1-generated.ts:2233</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/795084f/conversation/v1-generated.ts#L2265">conversation/v1-generated.ts:2265</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The name of the workspace.</p>
+							<p>The name of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 64 characters.</p>
 						</div>
 					</div>
 				</section>
@@ -263,12 +263,12 @@
 					<div class="tsd-signature tsd-kind-icon">workspace_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/feb0e29/conversation/v1-generated.ts#L2231">conversation/v1-generated.ts:2231</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/795084f/conversation/v1-generated.ts#L2263">conversation/v1-generated.ts:2263</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The workspace ID.</p>
+							<p>Unique identifier of the workspace.</p>
 						</div>
 					</div>
 				</section>

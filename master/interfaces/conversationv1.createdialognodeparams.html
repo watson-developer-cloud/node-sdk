@@ -94,6 +94,9 @@
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="conversationv1.createdialognodeparams.html#context" class="tsd-kind-icon">context</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="conversationv1.createdialognodeparams.html#description" class="tsd-kind-icon">description</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="conversationv1.createdialognodeparams.html#dialog_node" class="tsd-kind-icon">dialog_<wbr>node</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="conversationv1.createdialognodeparams.html#digress_in" class="tsd-kind-icon">digress_<wbr>in</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="conversationv1.createdialognodeparams.html#digress_out" class="tsd-kind-icon">digress_<wbr>out</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="conversationv1.createdialognodeparams.html#digress_out_slots" class="tsd-kind-icon">digress_<wbr>out_<wbr>slots</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="conversationv1.createdialognodeparams.html#event_name" class="tsd-kind-icon">event_<wbr>name</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="conversationv1.createdialognodeparams.html#metadata" class="tsd-kind-icon">metadata</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="conversationv1.createdialognodeparams.html#next_step" class="tsd-kind-icon">next_<wbr>step</a></li>
@@ -117,12 +120,12 @@
 					<div class="tsd-signature tsd-kind-icon">actions<span class="tsd-signature-symbol">:</span> <a href="conversationv1.dialognodeaction.html" class="tsd-signature-type">DialogNodeAction</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/feb0e29/conversation/v1-generated.ts#L2667">conversation/v1-generated.ts:2667</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/795084f/conversation/v1-generated.ts#L2731">conversation/v1-generated.ts:2731</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The actions for the dialog node.</p>
+							<p>An array of objects describing any actions to be invoked by the dialog node.</p>
 						</div>
 					</div>
 				</section>
@@ -132,12 +135,12 @@
 					<div class="tsd-signature tsd-kind-icon">conditions<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/feb0e29/conversation/v1-generated.ts#L2653">conversation/v1-generated.ts:2653</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/795084f/conversation/v1-generated.ts#L2717">conversation/v1-generated.ts:2717</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The condition that will trigger the dialog node.</p>
+							<p>The condition that will trigger the dialog node. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 2048 characters.</p>
 						</div>
 					</div>
 				</section>
@@ -147,7 +150,7 @@
 					<div class="tsd-signature tsd-kind-icon">context<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/feb0e29/conversation/v1-generated.ts#L2661">conversation/v1-generated.ts:2661</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/795084f/conversation/v1-generated.ts#L2725">conversation/v1-generated.ts:2725</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -162,12 +165,12 @@
 					<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/feb0e29/conversation/v1-generated.ts#L2651">conversation/v1-generated.ts:2651</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/795084f/conversation/v1-generated.ts#L2715">conversation/v1-generated.ts:2715</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The description of the dialog node.</p>
+							<p>The description of the dialog node. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters.</p>
 						</div>
 					</div>
 				</section>
@@ -177,12 +180,57 @@
 					<div class="tsd-signature tsd-kind-icon">dialog_<wbr>node<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/feb0e29/conversation/v1-generated.ts#L2649">conversation/v1-generated.ts:2649</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/795084f/conversation/v1-generated.ts#L2713">conversation/v1-generated.ts:2713</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The dialog node ID.</p>
+							<p>The dialog node ID. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.  - It must be no longer than 1024 characters.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="digress_in" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> digress_<wbr>in</h3>
+					<div class="tsd-signature tsd-kind-icon">digress_<wbr>in<span class="tsd-signature-symbol">:</span> <a href="../enums/conversationv1.createdialognodeconstants.digressin.html" class="tsd-signature-type">DigressIn</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/795084f/conversation/v1-generated.ts#L2741">conversation/v1-generated.ts:2741</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Whether this top-level dialog node can be digressed into.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="digress_out" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> digress_<wbr>out</h3>
+					<div class="tsd-signature tsd-kind-icon">digress_<wbr>out<span class="tsd-signature-symbol">:</span> <a href="../enums/conversationv1.createdialognodeconstants.digressout.html" class="tsd-signature-type">DigressOut</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/795084f/conversation/v1-generated.ts#L2743">conversation/v1-generated.ts:2743</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Whether this dialog node can be returned to after a digression.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="digress_out_slots" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> digress_<wbr>out_<wbr>slots</h3>
+					<div class="tsd-signature tsd-kind-icon">digress_<wbr>out_<wbr>slots<span class="tsd-signature-symbol">:</span> <a href="../enums/conversationv1.createdialognodeconstants.digressoutslots.html" class="tsd-signature-type">DigressOutSlots</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/795084f/conversation/v1-generated.ts#L2745">conversation/v1-generated.ts:2745</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Whether the user can digress to top-level nodes while filling out slots.</p>
 						</div>
 					</div>
 				</section>
@@ -192,7 +240,7 @@
 					<div class="tsd-signature tsd-kind-icon">event_<wbr>name<span class="tsd-signature-symbol">:</span> <a href="../enums/conversationv1.createdialognodeconstants.eventname.html" class="tsd-signature-type">EventName</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/feb0e29/conversation/v1-generated.ts#L2673">conversation/v1-generated.ts:2673</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/795084f/conversation/v1-generated.ts#L2737">conversation/v1-generated.ts:2737</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -207,7 +255,7 @@
 					<div class="tsd-signature tsd-kind-icon">metadata<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/feb0e29/conversation/v1-generated.ts#L2663">conversation/v1-generated.ts:2663</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/795084f/conversation/v1-generated.ts#L2727">conversation/v1-generated.ts:2727</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -222,12 +270,12 @@
 					<div class="tsd-signature tsd-kind-icon">next_<wbr>step<span class="tsd-signature-symbol">:</span> <a href="conversationv1.dialognodenextstep.html" class="tsd-signature-type">DialogNodeNextStep</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/feb0e29/conversation/v1-generated.ts#L2665">conversation/v1-generated.ts:2665</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/795084f/conversation/v1-generated.ts#L2729">conversation/v1-generated.ts:2729</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The next step to execute following this dialog node.</p>
+							<p>The next step to be executed in dialog processing.</p>
 						</div>
 					</div>
 				</section>
@@ -237,7 +285,7 @@
 					<div class="tsd-signature tsd-kind-icon">node_<wbr>type<span class="tsd-signature-symbol">:</span> <a href="../enums/conversationv1.createdialognodeconstants.nodetype.html" class="tsd-signature-type">NodeType</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/feb0e29/conversation/v1-generated.ts#L2671">conversation/v1-generated.ts:2671</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/795084f/conversation/v1-generated.ts#L2735">conversation/v1-generated.ts:2735</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -252,12 +300,12 @@
 					<div class="tsd-signature tsd-kind-icon">output<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/feb0e29/conversation/v1-generated.ts#L2659">conversation/v1-generated.ts:2659</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/795084f/conversation/v1-generated.ts#L2723">conversation/v1-generated.ts:2723</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The output of the dialog node.</p>
+							<p>The output of the dialog node. For more information about how to specify dialog node output, see the <a href="https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex">documentation</a>.</p>
 						</div>
 					</div>
 				</section>
@@ -267,12 +315,12 @@
 					<div class="tsd-signature tsd-kind-icon">parent<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/feb0e29/conversation/v1-generated.ts#L2655">conversation/v1-generated.ts:2655</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/795084f/conversation/v1-generated.ts#L2719">conversation/v1-generated.ts:2719</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The ID of the parent dialog node (if any).</p>
+							<p>The ID of the parent dialog node.</p>
 						</div>
 					</div>
 				</section>
@@ -282,12 +330,12 @@
 					<div class="tsd-signature tsd-kind-icon">previous_<wbr>sibling<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/feb0e29/conversation/v1-generated.ts#L2657">conversation/v1-generated.ts:2657</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/795084f/conversation/v1-generated.ts#L2721">conversation/v1-generated.ts:2721</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The previous dialog node.</p>
+							<p>The ID of the previous dialog node.</p>
 						</div>
 					</div>
 				</section>
@@ -297,12 +345,12 @@
 					<div class="tsd-signature tsd-kind-icon">title<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/feb0e29/conversation/v1-generated.ts#L2669">conversation/v1-generated.ts:2669</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/795084f/conversation/v1-generated.ts#L2733">conversation/v1-generated.ts:2733</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The alias used to identify the dialog node.</p>
+							<p>The alias used to identify the dialog node. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.  - It must be no longer than 64 characters.</p>
 						</div>
 					</div>
 				</section>
@@ -312,7 +360,7 @@
 					<div class="tsd-signature tsd-kind-icon">variable<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/feb0e29/conversation/v1-generated.ts#L2675">conversation/v1-generated.ts:2675</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/795084f/conversation/v1-generated.ts#L2739">conversation/v1-generated.ts:2739</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -327,12 +375,12 @@
 					<div class="tsd-signature tsd-kind-icon">workspace_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/feb0e29/conversation/v1-generated.ts#L2647">conversation/v1-generated.ts:2647</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/795084f/conversation/v1-generated.ts#L2711">conversation/v1-generated.ts:2711</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The workspace ID.</p>
+							<p>Unique identifier of the workspace.</p>
 						</div>
 					</div>
 				</section>
@@ -373,6 +421,15 @@
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="conversationv1.createdialognodeparams.html#dialog_node" class="tsd-kind-icon">dialog_<wbr>node</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="conversationv1.createdialognodeparams.html#digress_in" class="tsd-kind-icon">digress_<wbr>in</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="conversationv1.createdialognodeparams.html#digress_out" class="tsd-kind-icon">digress_<wbr>out</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="conversationv1.createdialognodeparams.html#digress_out_slots" class="tsd-kind-icon">digress_<wbr>out_<wbr>slots</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="conversationv1.createdialognodeparams.html#event_name" class="tsd-kind-icon">event_<wbr>name</a>
