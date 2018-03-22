@@ -57,17 +57,77 @@ class ConversationV1 extends BaseService {
   }
 
   /*************************
+   * message
+   ************************/
+
+  /**
+   * Get a response to a user's input.    There is no rate limit for this operation.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {InputData} [params.input] - An input object that includes the input text.
+   * @param {boolean} [params.alternate_intents] - Whether to return more than one intent. Set to `true` to return all matching intents.
+   * @param {Context} [params.context] - State information for the conversation. Continue a conversation by including the context object from the previous response.
+   * @param {RuntimeEntity[]} [params.entities] - Entities to use when evaluating the message. Include entities from the previous response to continue using those entities rather than detecting entities in the new input.
+   * @param {RuntimeIntent[]} [params.intents] - Intents to use when evaluating the user input. Include intents from the previous response to continue using those intents rather than trying to recognize intents in the new input.
+   * @param {OutputData} [params.output] - System output. Include the output from the previous response to maintain intermediate information over multiple requests.
+   * @param {boolean} [params.nodes_visited_details] - Whether to include additional diagnostic information about the dialog nodes that were visited during processing of the message.
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {NodeJS.ReadableStream|void}
+   */
+  public message(params: ConversationV1.MessageParams, callback?: ConversationV1.Callback<ConversationV1.MessageResponse>): NodeJS.ReadableStream | void {
+    const _params = extend({}, params);
+    const _callback = (callback) ? callback : () => { /* noop */ };
+    const requiredParams = ['workspace_id'];
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+    const body = {
+      'input': _params.input,
+      'alternate_intents': _params.alternate_intents,
+      'context': _params.context,
+      'entities': _params.entities,
+      'intents': _params.intents,
+      'output': _params.output
+    };
+    const query = {
+      'nodes_visited_details': _params.nodes_visited_details
+    };
+    const path = {
+      'workspace_id': _params.workspace_id
+    };
+    const parameters = {
+      options: {
+        url: '/v1/workspaces/{workspace_id}/message',
+        method: 'POST',
+        json: true,
+        body,
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }
+      })
+    };
+    return createRequest(parameters, _callback);
+  };
+
+  /*************************
    * workspaces
    ************************/
 
   /**
    * Create workspace.
    *
-   * Create a workspace based on component objects. You must provide workspace components defining the content of the new workspace.
+   * Create a workspace based on component objects. You must provide workspace components defining the content of the new workspace.    This operation is limited to 30 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} [params] - The parameters to send to the service.
-   * @param {string} [params.name] - The name of the workspace.
-   * @param {string} [params.description] - The description of the workspace.
+   * @param {string} [params.name] - The name of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 64 characters.
+   * @param {string} [params.description] - The description of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters.
    * @param {string} [params.language] - The language of the workspace.
    * @param {CreateIntent[]} [params.intents] - An array of objects defining the intents for the workspace.
    * @param {CreateEntity[]} [params.entities] - An array of objects defining the entities for the workspace.
@@ -112,10 +172,10 @@ class ConversationV1 extends BaseService {
   /**
    * Delete workspace.
    *
-   * Delete a workspace from the service instance.
+   * Delete a workspace from the service instance.    This operation is limited to 30 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -148,11 +208,11 @@ class ConversationV1 extends BaseService {
   /**
    * Get information about a workspace.
    *
-   * Get information about a workspace, optionally including all workspace content.
+   * Get information about a workspace, optionally including all workspace content.    With **export**=`false`, this operation is limited to 6000 requests per 5 minutes. With **export**=`true`, the limit is 20 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
-   * @param {boolean} [params.export] - Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {boolean} [params.export] - Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -191,13 +251,13 @@ class ConversationV1 extends BaseService {
   /**
    * List workspaces.
    *
-   * List the workspaces associated with a Conversation service instance.
+   * List the workspaces associated with a Conversation service instance.    This operation is limited to 500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} [params] - The parameters to send to the service.
-   * @param {number} [params.page_limit] - The number of records to return in each page of results. The default page limit is 100.
+   * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
-   * @param {string} [params.cursor] - A token identifying the last value from the previous page of results.
+   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
+   * @param {string} [params.cursor] - A token identifying the last object from the previous page of results.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -230,12 +290,12 @@ class ConversationV1 extends BaseService {
   /**
    * Update workspace.
    *
-   * Update an existing workspace with new or modified data. You must provide component objects defining the content of the updated workspace.
+   * Update an existing workspace with new or modified data. You must provide component objects defining the content of the updated workspace.    This operation is limited to 30 request per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
-   * @param {string} [params.name] - The name of the workspace.
-   * @param {string} [params.description] - The description of the workspace.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} [params.name] - The name of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 64 characters.
+   * @param {string} [params.description] - The description of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters.
    * @param {string} [params.language] - The language of the workspace.
    * @param {CreateIntent[]} [params.intents] - An array of objects defining the intents for the workspace.
    * @param {CreateEntity[]} [params.entities] - An array of objects defining the entities for the workspace.
@@ -243,7 +303,7 @@ class ConversationV1 extends BaseService {
    * @param {CreateCounterexample[]} [params.counterexamples] - An array of objects defining input examples that have been marked as irrelevant input.
    * @param {Object} [params.metadata] - Any metadata related to the workspace.
    * @param {boolean} [params.learning_opt_out] - Whether training data from the workspace can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used.
-   * @param {boolean} [params.append] - Specifies that the elements included in the request body are to be appended to the existing data in the workspace. The default value is `false`.
+   * @param {boolean} [params.append] - Whether the new data is to be appended to the existing data in the workspace. If **append**=`false`, elements included in the new data completely replace the corresponding existing elements, including all subelements. For example, if the new data includes **entities** and **append**=`false`, all existing entities in the workspace are discarded and replaced with the new entities.    If **append**=`true`, existing elements are preserved, and the new elements are added. If any elements in the new data collide with existing elements, the update request fails.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -292,79 +352,19 @@ class ConversationV1 extends BaseService {
   };
 
   /*************************
-   * message
-   ************************/
-
-  /**
-   * Get a response to a user's input.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {InputData} [params.input] - An input object that includes the input text.
-   * @param {boolean} [params.alternate_intents] - Whether to return more than one intent. Set to `true` to return all matching intents.
-   * @param {Context} [params.context] - State information for the conversation. Continue a conversation by including the context object from the previous response.
-   * @param {RuntimeEntity[]} [params.entities] - Include the entities from the previous response when they do not need to change and to prevent Watson from trying to identify them.
-   * @param {RuntimeIntent[]} [params.intents] - An array of name-confidence pairs for the user input. Include the intents from the previous response when they do not need to change and to prevent Watson from trying to identify them.
-   * @param {OutputData} [params.output] - System output. Include the output from the request when you have several requests within the same Dialog turn to pass back in the intermediate information.
-   * @param {boolean} [params.nodes_visited_details] - Whether to include additional diagnostic information about the dialog nodes that were visited during processing of the message.
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
-   */
-  public message(params: ConversationV1.MessageParams, callback?: ConversationV1.Callback<ConversationV1.MessageResponse>): NodeJS.ReadableStream | void {
-    const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
-    const requiredParams = ['workspace_id'];
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-    const body = {
-      'input': _params.input,
-      'alternate_intents': _params.alternate_intents,
-      'context': _params.context,
-      'entities': _params.entities,
-      'intents': _params.intents,
-      'output': _params.output
-    };
-    const query = {
-      'nodes_visited_details': _params.nodes_visited_details
-    };
-    const path = {
-      'workspace_id': _params.workspace_id
-    };
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/message',
-        method: 'POST',
-        json: true,
-        body,
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }
-      })
-    };
-    return createRequest(parameters, _callback);
-  };
-
-  /*************************
    * intents
    ************************/
 
   /**
    * Create intent.
    *
-   * Create a new intent.
+   * Create a new intent.    This operation is limited to 2000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
-   * @param {string} params.intent - The name of the intent.
-   * @param {string} [params.description] - The description of the intent.
-   * @param {CreateExample[]} [params.examples] - An array of user input examples.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.intent - The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 128 characters.
+   * @param {string} [params.description] - The description of the intent. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters.
+   * @param {CreateExample[]} [params.examples] - An array of user input examples for the intent.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -405,11 +405,11 @@ class ConversationV1 extends BaseService {
   /**
    * Delete intent.
    *
-   * Delete an intent from a workspace.
+   * Delete an intent from a workspace.    This operation is limited to 2000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
-   * @param {string} params.intent - The intent name (for example, `pizza_order`).
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.intent - The intent name.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -443,12 +443,12 @@ class ConversationV1 extends BaseService {
   /**
    * Get intent.
    *
-   * Get information about an intent, optionally including all intent content.
+   * Get information about an intent, optionally including all intent content.    With **export**=`false`, this operation is limited to 6000 requests per 5 minutes. With **export**=`true`, the limit is 400 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
-   * @param {string} params.intent - The intent name (for example, `pizza_order`).
-   * @param {boolean} [params.export] - Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.intent - The intent name.
+   * @param {boolean} [params.export] - Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -488,15 +488,15 @@ class ConversationV1 extends BaseService {
   /**
    * List intents.
    *
-   * List the intents for a workspace.
+   * List the intents for a workspace.    With **export**=`false`, this operation is limited to 2000 requests per 30 minutes. With **export**=`true`, the limit is 400 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
-   * @param {boolean} [params.export] - Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`.
-   * @param {number} [params.page_limit] - The number of records to return in each page of results. The default page limit is 100.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {boolean} [params.export] - Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included.
+   * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
-   * @param {string} [params.cursor] - A token identifying the last value from the previous page of results.
+   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
+   * @param {string} [params.cursor] - A token identifying the last object from the previous page of results.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -539,12 +539,12 @@ class ConversationV1 extends BaseService {
   /**
    * Update intent.
    *
-   * Update an existing intent with new or modified data. You must provide data defining the content of the updated intent.
+   * Update an existing intent with new or modified data. You must provide component objects defining the content of the updated intent.    This operation is limited to 2000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
-   * @param {string} params.intent - The intent name (for example, `pizza_order`).
-   * @param {string} [params.new_intent] - The name of the intent.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.intent - The intent name.
+   * @param {string} [params.new_intent] - The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 128 characters.
    * @param {string} [params.new_description] - The description of the intent.
    * @param {CreateExample[]} [params.new_examples] - An array of user input examples for the intent.
    * @param {Function} [callback] - The callback that handles the response.
@@ -592,12 +592,12 @@ class ConversationV1 extends BaseService {
   /**
    * Create user input example.
    *
-   * Add a new user input example to an intent.
+   * Add a new user input example to an intent.    This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
-   * @param {string} params.intent - The intent name (for example, `pizza_order`).
-   * @param {string} params.text - The text of a user input example.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.intent - The intent name.
+   * @param {string} params.text - The text of a user input example. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 1024 characters.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -637,11 +637,11 @@ class ConversationV1 extends BaseService {
   /**
    * Delete user input example.
    *
-   * Delete a user input example from an intent.
+   * Delete a user input example from an intent.    This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
-   * @param {string} params.intent - The intent name (for example, `pizza_order`).
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.intent - The intent name.
    * @param {string} params.text - The text of the user input example.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -677,11 +677,11 @@ class ConversationV1 extends BaseService {
   /**
    * Get user input example.
    *
-   * Get information about a user input example.
+   * Get information about a user input example.    This operation is limited to 6000 requests per 5 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
-   * @param {string} params.intent - The intent name (for example, `pizza_order`).
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.intent - The intent name.
    * @param {string} params.text - The text of the user input example.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
    * @param {Function} [callback] - The callback that handles the response.
@@ -722,15 +722,15 @@ class ConversationV1 extends BaseService {
   /**
    * List user input examples.
    *
-   * List the user input examples for an intent.
+   * List the user input examples for an intent.    This operation is limited to 2500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
-   * @param {string} params.intent - The intent name (for example, `pizza_order`).
-   * @param {number} [params.page_limit] - The number of records to return in each page of results. The default page limit is 100.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.intent - The intent name.
+   * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
-   * @param {string} [params.cursor] - A token identifying the last value from the previous page of results.
+   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
+   * @param {string} [params.cursor] - A token identifying the last object from the previous page of results.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -773,13 +773,13 @@ class ConversationV1 extends BaseService {
   /**
    * Update user input example.
    *
-   * Update the text of a user input example.
+   * Update the text of a user input example.    This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
-   * @param {string} params.intent - The intent name (for example, `pizza_order`).
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.intent - The intent name.
    * @param {string} params.text - The text of the user input example.
-   * @param {string} [params.new_text] - The text of the user input example.
+   * @param {string} [params.new_text] - The text of the user input example. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 1024 characters.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -818,20 +818,242 @@ class ConversationV1 extends BaseService {
   };
 
   /*************************
+   * counterexamples
+   ************************/
+
+  /**
+   * Create counterexample.
+   *
+   * Add a new counterexample to a workspace. Counterexamples are examples that have been marked as irrelevant input.    This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.text - The text of a user input marked as irrelevant input. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters  - It cannot consist of only whitespace characters  - It must be no longer than 1024 characters.
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {NodeJS.ReadableStream|void}
+   */
+  public createCounterexample(params: ConversationV1.CreateCounterexampleParams, callback?: ConversationV1.Callback<ConversationV1.Counterexample>): NodeJS.ReadableStream | void {
+    const _params = extend({}, params);
+    const _callback = (callback) ? callback : () => { /* noop */ };
+    const requiredParams = ['workspace_id', 'text'];
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+    const body = {
+      'text': _params.text
+    };
+    const path = {
+      'workspace_id': _params.workspace_id
+    };
+    const parameters = {
+      options: {
+        url: '/v1/workspaces/{workspace_id}/counterexamples',
+        method: 'POST',
+        json: true,
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }
+      })
+    };
+    return createRequest(parameters, _callback);
+  };
+
+  /**
+   * Delete counterexample.
+   *
+   * Delete a counterexample from a workspace. Counterexamples are examples that have been marked as irrelevant input.    This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.text - The text of a user input counterexample (for example, `What are you wearing?`).
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {NodeJS.ReadableStream|void}
+   */
+  public deleteCounterexample(params: ConversationV1.DeleteCounterexampleParams, callback?: ConversationV1.Callback<ConversationV1.Empty>): NodeJS.ReadableStream | void {
+    const _params = extend({}, params);
+    const _callback = (callback) ? callback : () => { /* noop */ };
+    const requiredParams = ['workspace_id', 'text'];
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+    const path = {
+      'workspace_id': _params.workspace_id,
+      'text': _params.text
+    };
+    const parameters = {
+      options: {
+        url: '/v1/workspaces/{workspace_id}/counterexamples/{text}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: {
+          'Accept': 'application/json',
+        }
+      })
+    };
+    return createRequest(parameters, _callback);
+  };
+
+  /**
+   * Get counterexample.
+   *
+   * Get information about a counterexample. Counterexamples are examples that have been marked as irrelevant input.    This operation is limited to 6000 requests per 5 minutes. For more information, see **Rate limiting**.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.text - The text of a user input counterexample (for example, `What are you wearing?`).
+   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {NodeJS.ReadableStream|void}
+   */
+  public getCounterexample(params: ConversationV1.GetCounterexampleParams, callback?: ConversationV1.Callback<ConversationV1.Counterexample>): NodeJS.ReadableStream | void {
+    const _params = extend({}, params);
+    const _callback = (callback) ? callback : () => { /* noop */ };
+    const requiredParams = ['workspace_id', 'text'];
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+    const query = {
+      'include_audit': _params.include_audit
+    };
+    const path = {
+      'workspace_id': _params.workspace_id,
+      'text': _params.text
+    };
+    const parameters = {
+      options: {
+        url: '/v1/workspaces/{workspace_id}/counterexamples/{text}',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: {
+          'Accept': 'application/json',
+        }
+      })
+    };
+    return createRequest(parameters, _callback);
+  };
+
+  /**
+   * List counterexamples.
+   *
+   * List the counterexamples for a workspace. Counterexamples are examples that have been marked as irrelevant input.    This operation is limited to 2500 requests per 30 minutes. For more information, see **Rate limiting**.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {number} [params.page_limit] - The number of records to return in each page of results.
+   * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
+   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
+   * @param {string} [params.cursor] - A token identifying the last object from the previous page of results.
+   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {NodeJS.ReadableStream|void}
+   */
+  public listCounterexamples(params: ConversationV1.ListCounterexamplesParams, callback?: ConversationV1.Callback<ConversationV1.CounterexampleCollection>): NodeJS.ReadableStream | void {
+    const _params = extend({}, params);
+    const _callback = (callback) ? callback : () => { /* noop */ };
+    const requiredParams = ['workspace_id'];
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+    const query = {
+      'page_limit': _params.page_limit,
+      'include_count': _params.include_count,
+      'sort': _params.sort,
+      'cursor': _params.cursor,
+      'include_audit': _params.include_audit
+    };
+    const path = {
+      'workspace_id': _params.workspace_id
+    };
+    const parameters = {
+      options: {
+        url: '/v1/workspaces/{workspace_id}/counterexamples',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: {
+          'Accept': 'application/json',
+        }
+      })
+    };
+    return createRequest(parameters, _callback);
+  };
+
+  /**
+   * Update counterexample.
+   *
+   * Update the text of a counterexample. Counterexamples are examples that have been marked as irrelevant input.    This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.text - The text of a user input counterexample (for example, `What are you wearing?`).
+   * @param {string} [params.new_text] - The text of a user input counterexample.
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {NodeJS.ReadableStream|void}
+   */
+  public updateCounterexample(params: ConversationV1.UpdateCounterexampleParams, callback?: ConversationV1.Callback<ConversationV1.Counterexample>): NodeJS.ReadableStream | void {
+    const _params = extend({}, params);
+    const _callback = (callback) ? callback : () => { /* noop */ };
+    const requiredParams = ['workspace_id', 'text'];
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+    const body = {
+      'text': _params.new_text
+    };
+    const path = {
+      'workspace_id': _params.workspace_id,
+      'text': _params.text
+    };
+    const parameters = {
+      options: {
+        url: '/v1/workspaces/{workspace_id}/counterexamples/{text}',
+        method: 'POST',
+        json: true,
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }
+      })
+    };
+    return createRequest(parameters, _callback);
+  };
+
+  /*************************
    * entities
    ************************/
 
   /**
    * Create entity.
    *
-   * Create a new entity.
+   * Create a new entity.    This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
-   * @param {string} params.entity - The name of the entity.
-   * @param {string} [params.description] - The description of the entity.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.entity - The name of the entity. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 64 characters.
+   * @param {string} [params.description] - The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters.
    * @param {Object} [params.metadata] - Any metadata related to the value.
-   * @param {CreateValue[]} [params.values] - An array of entity values.
+   * @param {CreateValue[]} [params.values] - An array of objects describing the entity values.
    * @param {boolean} [params.fuzzy_match] - Whether to use fuzzy matching for the entity.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -875,10 +1097,10 @@ class ConversationV1 extends BaseService {
   /**
    * Delete entity.
    *
-   * Delete an entity from a workspace.
+   * Delete an entity from a workspace.    This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -913,12 +1135,12 @@ class ConversationV1 extends BaseService {
   /**
    * Get entity.
    *
-   * Get information about an entity, optionally including all entity content.
+   * Get information about an entity, optionally including all entity content.    With **export**=`false`, this operation is limited to 6000 requests per 5 minutes. With **export**=`true`, the limit is 200 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
-   * @param {boolean} [params.export] - Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`.
+   * @param {boolean} [params.export] - Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -958,15 +1180,15 @@ class ConversationV1 extends BaseService {
   /**
    * List entities.
    *
-   * List the entities for a workspace.
+   * List the entities for a workspace.    With **export**=`false`, this operation is limited to 1000 requests per 30 minutes. With **export**=`true`, the limit is 200 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
-   * @param {boolean} [params.export] - Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`.
-   * @param {number} [params.page_limit] - The number of records to return in each page of results. The default page limit is 100.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {boolean} [params.export] - Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included.
+   * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
-   * @param {string} [params.cursor] - A token identifying the last value from the previous page of results.
+   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
+   * @param {string} [params.cursor] - A token identifying the last object from the previous page of results.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -1009,13 +1231,13 @@ class ConversationV1 extends BaseService {
   /**
    * Update entity.
    *
-   * Update an existing entity with new or modified data.
+   * Update an existing entity with new or modified data. You must provide component objects defining the content of the updated entity.    This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
-   * @param {string} [params.new_entity] - The name of the entity.
-   * @param {string} [params.new_description] - The description of the entity.
+   * @param {string} [params.new_entity] - The name of the entity. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 64 characters.
+   * @param {string} [params.new_description] - The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters.
    * @param {Object} [params.new_metadata] - Any metadata related to the entity.
    * @param {boolean} [params.new_fuzzy_match] - Whether to use fuzzy matching for the entity.
    * @param {CreateValue[]} [params.new_values] - An array of entity values.
@@ -1066,16 +1288,16 @@ class ConversationV1 extends BaseService {
   /**
    * Add entity value.
    *
-   * Create a new value for an entity.
+   * Create a new value for an entity.    This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
-   * @param {string} params.value - The text of the entity value.
+   * @param {string} params.value - The text of the entity value. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters.
    * @param {Object} [params.metadata] - Any metadata related to the entity value.
-   * @param {string[]} [params.synonyms] - An array of synonyms for the entity value.
-   * @param {string[]} [params.patterns] - An array of patterns for the entity value. A pattern is specified as a regular expression.
-   * @param {string} [params.value_type] - Specifies the type of value (`synonyms` or `patterns`). The default value is `synonyms`.
+   * @param {string[]} [params.synonyms] - An array containing any synonyms for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A synonym must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters.
+   * @param {string[]} [params.patterns] - An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 128 characters. For more information about how to specify a pattern, see the [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities).
+   * @param {string} [params.value_type] - Specifies the type of value.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1119,10 +1341,10 @@ class ConversationV1 extends BaseService {
   /**
    * Delete entity value.
    *
-   * Delete a value for an entity.
+   * Delete a value from an entity.    This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
    * @param {string} params.value - The text of the entity value.
    * @param {Function} [callback] - The callback that handles the response.
@@ -1159,13 +1381,13 @@ class ConversationV1 extends BaseService {
   /**
    * Get entity value.
    *
-   * Get information about an entity value.
+   * Get information about an entity value.    This operation is limited to 6000 requests per 5 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
    * @param {string} params.value - The text of the entity value.
-   * @param {boolean} [params.export] - Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`.
+   * @param {boolean} [params.export] - Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -1206,16 +1428,16 @@ class ConversationV1 extends BaseService {
   /**
    * List entity values.
    *
-   * List the values for an entity.
+   * List the values for an entity.    This operation is limited to 2500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
-   * @param {boolean} [params.export] - Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`.
-   * @param {number} [params.page_limit] - The number of records to return in each page of results. The default page limit is 100.
+   * @param {boolean} [params.export] - Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included.
+   * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
-   * @param {string} [params.cursor] - A token identifying the last value from the previous page of results.
+   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
+   * @param {string} [params.cursor] - A token identifying the last object from the previous page of results.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -1259,17 +1481,17 @@ class ConversationV1 extends BaseService {
   /**
    * Update entity value.
    *
-   * Update the content of a value for an entity.
+   * Update an existing entity value with new or modified data. You must provide component objects defining the content of the updated entity value.    This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
    * @param {string} params.value - The text of the entity value.
-   * @param {string} [params.new_value] - The text of the entity value.
+   * @param {string} [params.new_value] - The text of the entity value. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters.
    * @param {Object} [params.new_metadata] - Any metadata related to the entity value.
-   * @param {string} [params.new_type] - Specifies the type of value (`synonyms` or `patterns`). The default value is `synonyms`.
-   * @param {string[]} [params.new_synonyms] - An array of synonyms for the entity value.
-   * @param {string[]} [params.new_patterns] - An array of patterns for the entity value. A pattern is specified as a regular expression.
+   * @param {string} [params.new_type] - Specifies the type of value.
+   * @param {string[]} [params.new_synonyms] - An array of synonyms for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A synonym must conform to the following resrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters.
+   * @param {string[]} [params.new_patterns] - An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 128 characters. For more information about how to specify a pattern, see the [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities).
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1318,13 +1540,13 @@ class ConversationV1 extends BaseService {
   /**
    * Add entity value synonym.
    *
-   * Add a new synonym to an entity value.
+   * Add a new synonym to an entity value.    This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
    * @param {string} params.value - The text of the entity value.
-   * @param {string} params.synonym - The text of the synonym.
+   * @param {string} params.synonym - The text of the synonym. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1365,10 +1587,10 @@ class ConversationV1 extends BaseService {
   /**
    * Delete entity value synonym.
    *
-   * Delete a synonym for an entity value.
+   * Delete a synonym from an entity value.    This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
    * @param {string} params.value - The text of the entity value.
    * @param {string} params.synonym - The text of the synonym.
@@ -1407,10 +1629,10 @@ class ConversationV1 extends BaseService {
   /**
    * Get entity value synonym.
    *
-   * Get information about a synonym for an entity value.
+   * Get information about a synonym of an entity value.    This operation is limited to 6000 requests per 5 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
    * @param {string} params.value - The text of the entity value.
    * @param {string} params.synonym - The text of the synonym.
@@ -1454,16 +1676,16 @@ class ConversationV1 extends BaseService {
   /**
    * List entity value synonyms.
    *
-   * List the synonyms for an entity value.
+   * List the synonyms for an entity value.    This operation is limited to 2500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
    * @param {string} params.value - The text of the entity value.
-   * @param {number} [params.page_limit] - The number of records to return in each page of results. The default page limit is 100.
+   * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
-   * @param {string} [params.cursor] - A token identifying the last value from the previous page of results.
+   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
+   * @param {string} [params.cursor] - A token identifying the last object from the previous page of results.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -1507,14 +1729,14 @@ class ConversationV1 extends BaseService {
   /**
    * Update entity value synonym.
    *
-   * Update the information about a synonym for an entity value.
+   * Update an existing entity value synonym with new text.    This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
    * @param {string} params.value - The text of the entity value.
    * @param {string} params.synonym - The text of the synonym.
-   * @param {string} [params.new_synonym] - The text of the synonym.
+   * @param {string} [params.new_synonym] - The text of the synonym. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1560,24 +1782,27 @@ class ConversationV1 extends BaseService {
   /**
    * Create dialog node.
    *
-   * Create a dialog node.
+   * Create a new dialog node.    This operation is limited to 500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
-   * @param {string} params.dialog_node - The dialog node ID.
-   * @param {string} [params.description] - The description of the dialog node.
-   * @param {string} [params.conditions] - The condition that will trigger the dialog node.
-   * @param {string} [params.parent] - The ID of the parent dialog node (if any).
-   * @param {string} [params.previous_sibling] - The previous dialog node.
-   * @param {Object} [params.output] - The output of the dialog node.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.dialog_node - The dialog node ID. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.  - It must be no longer than 1024 characters.
+   * @param {string} [params.description] - The description of the dialog node. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters.
+   * @param {string} [params.conditions] - The condition that will trigger the dialog node. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 2048 characters.
+   * @param {string} [params.parent] - The ID of the parent dialog node.
+   * @param {string} [params.previous_sibling] - The ID of the previous dialog node.
+   * @param {Object} [params.output] - The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex).
    * @param {Object} [params.context] - The context for the dialog node.
    * @param {Object} [params.metadata] - The metadata for the dialog node.
-   * @param {DialogNodeNextStep} [params.next_step] - The next step to execute following this dialog node.
-   * @param {DialogNodeAction[]} [params.actions] - The actions for the dialog node.
-   * @param {string} [params.title] - The alias used to identify the dialog node.
+   * @param {DialogNodeNextStep} [params.next_step] - The next step to be executed in dialog processing.
+   * @param {DialogNodeAction[]} [params.actions] - An array of objects describing any actions to be invoked by the dialog node.
+   * @param {string} [params.title] - The alias used to identify the dialog node. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.  - It must be no longer than 64 characters.
    * @param {string} [params.node_type] - How the dialog node is processed.
    * @param {string} [params.event_name] - How an `event_handler` node is processed.
    * @param {string} [params.variable] - The location in the dialog context where output is stored.
+   * @param {string} [params.digress_in] - Whether this top-level dialog node can be digressed into.
+   * @param {string} [params.digress_out] - Whether this dialog node can be returned to after a digression.
+   * @param {string} [params.digress_out_slots] - Whether the user can digress to top-level nodes while filling out slots.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1603,7 +1828,10 @@ class ConversationV1 extends BaseService {
       'title': _params.title,
       'type': _params.node_type,
       'event_name': _params.event_name,
-      'variable': _params.variable
+      'variable': _params.variable,
+      'digress_in': _params.digress_in,
+      'digress_out': _params.digress_out,
+      'digress_out_slots': _params.digress_out_slots
     };
     const path = {
       'workspace_id': _params.workspace_id
@@ -1629,10 +1857,10 @@ class ConversationV1 extends BaseService {
   /**
    * Delete dialog node.
    *
-   * Delete a dialog node from the workspace.
+   * Delete a dialog node from a workspace.    This operation is limited to 500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.dialog_node - The dialog node ID (for example, `get_order`).
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -1667,10 +1895,10 @@ class ConversationV1 extends BaseService {
   /**
    * Get dialog node.
    *
-   * Get information about a dialog node.
+   * Get information about a dialog node.    This operation is limited to 6000 requests per 5 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.dialog_node - The dialog node ID (for example, `get_order`).
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
    * @param {Function} [callback] - The callback that handles the response.
@@ -1710,14 +1938,14 @@ class ConversationV1 extends BaseService {
   /**
    * List dialog nodes.
    *
-   * List the dialog nodes in the workspace.
+   * List the dialog nodes for a workspace.    This operation is limited to 2500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
-   * @param {number} [params.page_limit] - The number of records to return in each page of results. The default page limit is 100.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
-   * @param {string} [params.cursor] - A token identifying the last value from the previous page of results.
+   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
+   * @param {string} [params.cursor] - A token identifying the last object from the previous page of results.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -1759,25 +1987,28 @@ class ConversationV1 extends BaseService {
   /**
    * Update dialog node.
    *
-   * Update information for a dialog node.
+   * Update an existing dialog node with new or modified data.    This operation is limited to 500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.dialog_node - The dialog node ID (for example, `get_order`).
-   * @param {string} [params.new_dialog_node] - The dialog node ID.
-   * @param {string} [params.new_description] - The description of the dialog node.
-   * @param {string} [params.new_conditions] - The condition that will trigger the dialog node.
-   * @param {string} [params.new_parent] - The ID of the parent dialog node (if any).
-   * @param {string} [params.new_previous_sibling] - The previous dialog node.
-   * @param {Object} [params.new_output] - The output of the dialog node.
+   * @param {string} [params.new_dialog_node] - The dialog node ID. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.  - It must be no longer than 1024 characters.
+   * @param {string} [params.new_description] - The description of the dialog node. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters.
+   * @param {string} [params.new_conditions] - The condition that will trigger the dialog node. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 2048 characters.
+   * @param {string} [params.new_parent] - The ID of the parent dialog node.
+   * @param {string} [params.new_previous_sibling] - The ID of the previous sibling dialog node.
+   * @param {Object} [params.new_output] - The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex).
    * @param {Object} [params.new_context] - The context for the dialog node.
    * @param {Object} [params.new_metadata] - The metadata for the dialog node.
-   * @param {DialogNodeNextStep} [params.new_next_step] - The next step to execute following this dialog node.
-   * @param {string} [params.new_title] - The alias used to identify the dialog node.
+   * @param {DialogNodeNextStep} [params.new_next_step] - The next step to be executed in dialog processing.
+   * @param {string} [params.new_title] - The alias used to identify the dialog node. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.  - It must be no longer than 64 characters.
    * @param {string} [params.new_type] - How the dialog node is processed.
    * @param {string} [params.new_event_name] - How an `event_handler` node is processed.
    * @param {string} [params.new_variable] - The location in the dialog context where output is stored.
-   * @param {DialogNodeAction[]} [params.new_actions] - The actions for the dialog node.
+   * @param {DialogNodeAction[]} [params.new_actions] - An array of objects describing any actions to be invoked by the dialog node.
+   * @param {string} [params.new_digress_in] - Whether this top-level dialog node can be digressed into.
+   * @param {string} [params.new_digress_out] - Whether this dialog node can be returned to after a digression.
+   * @param {string} [params.new_digress_out_slots] - Whether the user can digress to top-level nodes while filling out slots.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1803,7 +2034,10 @@ class ConversationV1 extends BaseService {
       'type': _params.new_type,
       'event_name': _params.new_event_name,
       'variable': _params.new_variable,
-      'actions': _params.new_actions
+      'actions': _params.new_actions,
+      'digress_in': _params.new_digress_in,
+      'digress_out': _params.new_digress_out,
+      'digress_out_slots': _params.new_digress_out_slots
     };
     const path = {
       'workspace_id': _params.workspace_id,
@@ -1834,13 +2068,13 @@ class ConversationV1 extends BaseService {
   /**
    * List log events in all workspaces.
    *
-   * List log events in all workspaces in the service instance.
+   * List the events from the logs of all workspaces in the service instance.    If **cursor** is not specified, this operation is limited to 40 requests per 30 minutes. If **cursor** is specified, the limit is 120 requests per minute. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.filter - A cacheable parameter that limits the results to those matching the specified filter. You must specify a filter query that includes a value for `language`, as well as a value for `workspace_id` or `request.context.metadata.deployment`. For more information, see the [documentation](https://console.bluemix.net/docs/services/conversation/filter-reference.html#filter-query-syntax).
-   * @param {string} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
-   * @param {number} [params.page_limit] - The number of records to return in each page of results. The default page limit is 100.
-   * @param {string} [params.cursor] - A token identifying the last value from the previous page of results.
+   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
+   * @param {number} [params.page_limit] - The number of records to return in each page of results.
+   * @param {string} [params.cursor] - A token identifying the last object from the previous page of results.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1876,14 +2110,14 @@ class ConversationV1 extends BaseService {
   /**
    * List log events in a workspace.
    *
-   * List log events in a specific workspace.
+   * List the events from the log of a specific workspace.    If **cursor** is not specified, this operation is limited to 40 requests per 30 minutes. If **cursor** is specified, the limit is 120 requests per minute. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
-   * @param {string} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
    * @param {string} [params.filter] - A cacheable parameter that limits the results to those matching the specified filter. For more information, see the [documentation](https://console.bluemix.net/docs/services/conversation/filter-reference.html#filter-query-syntax).
-   * @param {number} [params.page_limit] - The number of records to return in each page of results. The default page limit is 100.
-   * @param {string} [params.cursor] - A token identifying the last value from the previous page of results.
+   * @param {number} [params.page_limit] - The number of records to return in each page of results.
+   * @param {string} [params.cursor] - A token identifying the last object from the previous page of results.
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1914,228 +2148,6 @@ class ConversationV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: {
           'Accept': 'application/json',
-        }
-      })
-    };
-    return createRequest(parameters, _callback);
-  };
-
-  /*************************
-   * counterexamples
-   ************************/
-
-  /**
-   * Create counterexample.
-   *
-   * Add a new counterexample to a workspace. Counterexamples are examples that have been marked as irrelevant input.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
-   * @param {string} params.text - The text of a user input marked as irrelevant input.
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
-   */
-  public createCounterexample(params: ConversationV1.CreateCounterexampleParams, callback?: ConversationV1.Callback<ConversationV1.Counterexample>): NodeJS.ReadableStream | void {
-    const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
-    const requiredParams = ['workspace_id', 'text'];
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-    const body = {
-      'text': _params.text
-    };
-    const path = {
-      'workspace_id': _params.workspace_id
-    };
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/counterexamples',
-        method: 'POST',
-        json: true,
-        body,
-        path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }
-      })
-    };
-    return createRequest(parameters, _callback);
-  };
-
-  /**
-   * Delete counterexample.
-   *
-   * Delete a counterexample from a workspace. Counterexamples are examples that have been marked as irrelevant input.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
-   * @param {string} params.text - The text of a user input counterexample (for example, `What are you wearing?`).
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
-   */
-  public deleteCounterexample(params: ConversationV1.DeleteCounterexampleParams, callback?: ConversationV1.Callback<ConversationV1.Empty>): NodeJS.ReadableStream | void {
-    const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
-    const requiredParams = ['workspace_id', 'text'];
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-    const path = {
-      'workspace_id': _params.workspace_id,
-      'text': _params.text
-    };
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/counterexamples/{text}',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: {
-          'Accept': 'application/json',
-        }
-      })
-    };
-    return createRequest(parameters, _callback);
-  };
-
-  /**
-   * Get counterexample.
-   *
-   * Get information about a counterexample. Counterexamples are examples that have been marked as irrelevant input.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
-   * @param {string} params.text - The text of a user input counterexample (for example, `What are you wearing?`).
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
-   */
-  public getCounterexample(params: ConversationV1.GetCounterexampleParams, callback?: ConversationV1.Callback<ConversationV1.Counterexample>): NodeJS.ReadableStream | void {
-    const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
-    const requiredParams = ['workspace_id', 'text'];
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-    const query = {
-      'include_audit': _params.include_audit
-    };
-    const path = {
-      'workspace_id': _params.workspace_id,
-      'text': _params.text
-    };
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/counterexamples/{text}',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: {
-          'Accept': 'application/json',
-        }
-      })
-    };
-    return createRequest(parameters, _callback);
-  };
-
-  /**
-   * List counterexamples.
-   *
-   * List the counterexamples for a workspace. Counterexamples are examples that have been marked as irrelevant input.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
-   * @param {number} [params.page_limit] - The number of records to return in each page of results. The default page limit is 100.
-   * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - Sorts the response according to the value of the specified property, in ascending or descending order.
-   * @param {string} [params.cursor] - A token identifying the last value from the previous page of results.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
-   */
-  public listCounterexamples(params: ConversationV1.ListCounterexamplesParams, callback?: ConversationV1.Callback<ConversationV1.CounterexampleCollection>): NodeJS.ReadableStream | void {
-    const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
-    const requiredParams = ['workspace_id'];
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-    const query = {
-      'page_limit': _params.page_limit,
-      'include_count': _params.include_count,
-      'sort': _params.sort,
-      'cursor': _params.cursor,
-      'include_audit': _params.include_audit
-    };
-    const path = {
-      'workspace_id': _params.workspace_id
-    };
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/counterexamples',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: {
-          'Accept': 'application/json',
-        }
-      })
-    };
-    return createRequest(parameters, _callback);
-  };
-
-  /**
-   * Update counterexample.
-   *
-   * Update the text of a counterexample. Counterexamples are examples that have been marked as irrelevant input.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - The workspace ID.
-   * @param {string} params.text - The text of a user input counterexample (for example, `What are you wearing?`).
-   * @param {string} [params.new_text] - The text of the example to be marked as irrelevant input.
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
-   */
-  public updateCounterexample(params: ConversationV1.UpdateCounterexampleParams, callback?: ConversationV1.Callback<ConversationV1.Counterexample>): NodeJS.ReadableStream | void {
-    const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
-    const requiredParams = ['workspace_id', 'text'];
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-    const body = {
-      'text': _params.new_text
-    };
-    const path = {
-      'workspace_id': _params.workspace_id,
-      'text': _params.text
-    };
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/counterexamples/{text}',
-        method: 'POST',
-        json: true,
-        body,
-        path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }
       })
     };
@@ -2173,11 +2185,31 @@ namespace ConversationV1 {
    * request interfaces
    ************************/
 
+  /** Parameters for the `message` operation. */
+  export interface MessageParams {
+    /** Unique identifier of the workspace. */
+    workspace_id: string;
+    /** An input object that includes the input text. */
+    input?: InputData;
+    /** Whether to return more than one intent. Set to `true` to return all matching intents. */
+    alternate_intents?: boolean;
+    /** State information for the conversation. Continue a conversation by including the context object from the previous response. */
+    context?: Context;
+    /** Entities to use when evaluating the message. Include entities from the previous response to continue using those entities rather than detecting entities in the new input. */
+    entities?: RuntimeEntity[];
+    /** Intents to use when evaluating the user input. Include intents from the previous response to continue using those intents rather than trying to recognize intents in the new input. */
+    intents?: RuntimeIntent[];
+    /** System output. Include the output from the previous response to maintain intermediate information over multiple requests. */
+    output?: OutputData;
+    /** Whether to include additional diagnostic information about the dialog nodes that were visited during processing of the message. */
+    nodes_visited_details?: boolean;
+  }
+
   /** Parameters for the `createWorkspace` operation. */
   export interface CreateWorkspaceParams {
-    /** The name of the workspace. */
+    /** The name of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 64 characters. */
     name?: string;
-    /** The description of the workspace. */
+    /** The description of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     description?: string;
     /** The language of the workspace. */
     language?: string;
@@ -2197,15 +2229,15 @@ namespace ConversationV1 {
 
   /** Parameters for the `deleteWorkspace` operation. */
   export interface DeleteWorkspaceParams {
-    /** The workspace ID. */
+    /** Unique identifier of the workspace. */
     workspace_id: string;
   }
 
   /** Parameters for the `getWorkspace` operation. */
   export interface GetWorkspaceParams {
-    /** The workspace ID. */
+    /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`. */
+    /** Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included. */
     export?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
@@ -2213,13 +2245,13 @@ namespace ConversationV1 {
 
   /** Parameters for the `listWorkspaces` operation. */
   export interface ListWorkspacesParams {
-    /** The number of records to return in each page of results. The default page limit is 100. */
+    /** The number of records to return in each page of results. */
     page_limit?: number;
     /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** Sorts the response according to the value of the specified property, in ascending or descending order. */
+    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
     sort?: string;
-    /** A token identifying the last value from the previous page of results. */
+    /** A token identifying the last object from the previous page of results. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
@@ -2227,11 +2259,11 @@ namespace ConversationV1 {
 
   /** Parameters for the `updateWorkspace` operation. */
   export interface UpdateWorkspaceParams {
-    /** The workspace ID. */
+    /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** The name of the workspace. */
+    /** The name of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 64 characters. */
     name?: string;
-    /** The description of the workspace. */
+    /** The description of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     description?: string;
     /** The language of the workspace. */
     language?: string;
@@ -2247,57 +2279,37 @@ namespace ConversationV1 {
     metadata?: Object;
     /** Whether training data from the workspace can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used. */
     learning_opt_out?: boolean;
-    /** Specifies that the elements included in the request body are to be appended to the existing data in the workspace. The default value is `false`. */
+    /** Whether the new data is to be appended to the existing data in the workspace. If **append**=`false`, elements included in the new data completely replace the corresponding existing elements, including all subelements. For example, if the new data includes **entities** and **append**=`false`, all existing entities in the workspace are discarded and replaced with the new entities.    If **append**=`true`, existing elements are preserved, and the new elements are added. If any elements in the new data collide with existing elements, the update request fails. */
     append?: boolean;
-  }
-
-  /** Parameters for the `message` operation. */
-  export interface MessageParams {
-    /** Unique identifier of the workspace. */
-    workspace_id: string;
-    /** An input object that includes the input text. */
-    input?: InputData;
-    /** Whether to return more than one intent. Set to `true` to return all matching intents. */
-    alternate_intents?: boolean;
-    /** State information for the conversation. Continue a conversation by including the context object from the previous response. */
-    context?: Context;
-    /** Include the entities from the previous response when they do not need to change and to prevent Watson from trying to identify them. */
-    entities?: RuntimeEntity[];
-    /** An array of name-confidence pairs for the user input. Include the intents from the previous response when they do not need to change and to prevent Watson from trying to identify them. */
-    intents?: RuntimeIntent[];
-    /** System output. Include the output from the request when you have several requests within the same Dialog turn to pass back in the intermediate information. */
-    output?: OutputData;
-    /** Whether to include additional diagnostic information about the dialog nodes that were visited during processing of the message. */
-    nodes_visited_details?: boolean;
   }
 
   /** Parameters for the `createIntent` operation. */
   export interface CreateIntentParams {
-    /** The workspace ID. */
+    /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** The name of the intent. */
+    /** The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 128 characters. */
     intent: string;
-    /** The description of the intent. */
+    /** The description of the intent. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     description?: string;
-    /** An array of user input examples. */
+    /** An array of user input examples for the intent. */
     examples?: CreateExample[];
   }
 
   /** Parameters for the `deleteIntent` operation. */
   export interface DeleteIntentParams {
-    /** The workspace ID. */
+    /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** The intent name (for example, `pizza_order`). */
+    /** The intent name. */
     intent: string;
   }
 
   /** Parameters for the `getIntent` operation. */
   export interface GetIntentParams {
-    /** The workspace ID. */
+    /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** The intent name (for example, `pizza_order`). */
+    /** The intent name. */
     intent: string;
-    /** Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`. */
+    /** Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included. */
     export?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
@@ -2305,17 +2317,17 @@ namespace ConversationV1 {
 
   /** Parameters for the `listIntents` operation. */
   export interface ListIntentsParams {
-    /** The workspace ID. */
+    /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`. */
+    /** Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included. */
     export?: boolean;
-    /** The number of records to return in each page of results. The default page limit is 100. */
+    /** The number of records to return in each page of results. */
     page_limit?: number;
     /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** Sorts the response according to the value of the specified property, in ascending or descending order. */
+    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
     sort?: string;
-    /** A token identifying the last value from the previous page of results. */
+    /** A token identifying the last object from the previous page of results. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
@@ -2323,11 +2335,11 @@ namespace ConversationV1 {
 
   /** Parameters for the `updateIntent` operation. */
   export interface UpdateIntentParams {
-    /** The workspace ID. */
+    /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** The intent name (for example, `pizza_order`). */
+    /** The intent name. */
     intent: string;
-    /** The name of the intent. */
+    /** The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 128 characters. */
     new_intent?: string;
     /** The description of the intent. */
     new_description?: string;
@@ -2337,19 +2349,19 @@ namespace ConversationV1 {
 
   /** Parameters for the `createExample` operation. */
   export interface CreateExampleParams {
-    /** The workspace ID. */
+    /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** The intent name (for example, `pizza_order`). */
+    /** The intent name. */
     intent: string;
-    /** The text of a user input example. */
+    /** The text of a user input example. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 1024 characters. */
     text: string;
   }
 
   /** Parameters for the `deleteExample` operation. */
   export interface DeleteExampleParams {
-    /** The workspace ID. */
+    /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** The intent name (for example, `pizza_order`). */
+    /** The intent name. */
     intent: string;
     /** The text of the user input example. */
     text: string;
@@ -2357,9 +2369,9 @@ namespace ConversationV1 {
 
   /** Parameters for the `getExample` operation. */
   export interface GetExampleParams {
-    /** The workspace ID. */
+    /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** The intent name (for example, `pizza_order`). */
+    /** The intent name. */
     intent: string;
     /** The text of the user input example. */
     text: string;
@@ -2369,17 +2381,17 @@ namespace ConversationV1 {
 
   /** Parameters for the `listExamples` operation. */
   export interface ListExamplesParams {
-    /** The workspace ID. */
+    /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** The intent name (for example, `pizza_order`). */
+    /** The intent name. */
     intent: string;
-    /** The number of records to return in each page of results. The default page limit is 100. */
+    /** The number of records to return in each page of results. */
     page_limit?: number;
     /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** Sorts the response according to the value of the specified property, in ascending or descending order. */
+    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
     sort?: string;
-    /** A token identifying the last value from the previous page of results. */
+    /** A token identifying the last object from the previous page of results. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
@@ -2387,27 +2399,79 @@ namespace ConversationV1 {
 
   /** Parameters for the `updateExample` operation. */
   export interface UpdateExampleParams {
-    /** The workspace ID. */
+    /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** The intent name (for example, `pizza_order`). */
+    /** The intent name. */
     intent: string;
     /** The text of the user input example. */
     text: string;
-    /** The text of the user input example. */
+    /** The text of the user input example. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 1024 characters. */
+    new_text?: string;
+  }
+
+  /** Parameters for the `createCounterexample` operation. */
+  export interface CreateCounterexampleParams {
+    /** Unique identifier of the workspace. */
+    workspace_id: string;
+    /** The text of a user input marked as irrelevant input. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters  - It cannot consist of only whitespace characters  - It must be no longer than 1024 characters. */
+    text: string;
+  }
+
+  /** Parameters for the `deleteCounterexample` operation. */
+  export interface DeleteCounterexampleParams {
+    /** Unique identifier of the workspace. */
+    workspace_id: string;
+    /** The text of a user input counterexample (for example, `What are you wearing?`). */
+    text: string;
+  }
+
+  /** Parameters for the `getCounterexample` operation. */
+  export interface GetCounterexampleParams {
+    /** Unique identifier of the workspace. */
+    workspace_id: string;
+    /** The text of a user input counterexample (for example, `What are you wearing?`). */
+    text: string;
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
+    include_audit?: boolean;
+  }
+
+  /** Parameters for the `listCounterexamples` operation. */
+  export interface ListCounterexamplesParams {
+    /** Unique identifier of the workspace. */
+    workspace_id: string;
+    /** The number of records to return in each page of results. */
+    page_limit?: number;
+    /** Whether to include information about the number of records returned. */
+    include_count?: boolean;
+    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
+    sort?: string;
+    /** A token identifying the last object from the previous page of results. */
+    cursor?: string;
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
+    include_audit?: boolean;
+  }
+
+  /** Parameters for the `updateCounterexample` operation. */
+  export interface UpdateCounterexampleParams {
+    /** Unique identifier of the workspace. */
+    workspace_id: string;
+    /** The text of a user input counterexample (for example, `What are you wearing?`). */
+    text: string;
+    /** The text of a user input counterexample. */
     new_text?: string;
   }
 
   /** Parameters for the `createEntity` operation. */
   export interface CreateEntityParams {
-    /** The workspace ID. */
+    /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** The name of the entity. */
+    /** The name of the entity. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 64 characters. */
     entity: string;
-    /** The description of the entity. */
+    /** The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     description?: string;
     /** Any metadata related to the value. */
     metadata?: Object;
-    /** An array of entity values. */
+    /** An array of objects describing the entity values. */
     values?: CreateValue[];
     /** Whether to use fuzzy matching for the entity. */
     fuzzy_match?: boolean;
@@ -2415,7 +2479,7 @@ namespace ConversationV1 {
 
   /** Parameters for the `deleteEntity` operation. */
   export interface DeleteEntityParams {
-    /** The workspace ID. */
+    /** Unique identifier of the workspace. */
     workspace_id: string;
     /** The name of the entity. */
     entity: string;
@@ -2423,11 +2487,11 @@ namespace ConversationV1 {
 
   /** Parameters for the `getEntity` operation. */
   export interface GetEntityParams {
-    /** The workspace ID. */
+    /** Unique identifier of the workspace. */
     workspace_id: string;
     /** The name of the entity. */
     entity: string;
-    /** Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`. */
+    /** Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included. */
     export?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
@@ -2435,17 +2499,17 @@ namespace ConversationV1 {
 
   /** Parameters for the `listEntities` operation. */
   export interface ListEntitiesParams {
-    /** The workspace ID. */
+    /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`. */
+    /** Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included. */
     export?: boolean;
-    /** The number of records to return in each page of results. The default page limit is 100. */
+    /** The number of records to return in each page of results. */
     page_limit?: number;
     /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** Sorts the response according to the value of the specified property, in ascending or descending order. */
+    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
     sort?: string;
-    /** A token identifying the last value from the previous page of results. */
+    /** A token identifying the last object from the previous page of results. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
@@ -2453,13 +2517,13 @@ namespace ConversationV1 {
 
   /** Parameters for the `updateEntity` operation. */
   export interface UpdateEntityParams {
-    /** The workspace ID. */
+    /** Unique identifier of the workspace. */
     workspace_id: string;
     /** The name of the entity. */
     entity: string;
-    /** The name of the entity. */
+    /** The name of the entity. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 64 characters. */
     new_entity?: string;
-    /** The description of the entity. */
+    /** The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     new_description?: string;
     /** Any metadata related to the entity. */
     new_metadata?: Object;
@@ -2471,25 +2535,25 @@ namespace ConversationV1 {
 
   /** Parameters for the `createValue` operation. */
   export interface CreateValueParams {
-    /** The workspace ID. */
+    /** Unique identifier of the workspace. */
     workspace_id: string;
     /** The name of the entity. */
     entity: string;
-    /** The text of the entity value. */
+    /** The text of the entity value. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
     value: string;
     /** Any metadata related to the entity value. */
     metadata?: Object;
-    /** An array of synonyms for the entity value. */
+    /** An array containing any synonyms for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A synonym must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
     synonyms?: string[];
-    /** An array of patterns for the entity value. A pattern is specified as a regular expression. */
+    /** An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 128 characters. For more information about how to specify a pattern, see the [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities). */
     patterns?: string[];
-    /** Specifies the type of value (`synonyms` or `patterns`). The default value is `synonyms`. */
+    /** Specifies the type of value. */
     value_type?: CreateValueConstants.ValueType | string;
   }
 
   /** Constants for the `createValue` operation. */
   export namespace CreateValueConstants {
-    /** Specifies the type of value (`synonyms` or `patterns`). The default value is `synonyms`. */
+    /** Specifies the type of value. */
     export enum ValueType {
       SYNONYMS = 'synonyms',
       PATTERNS = 'patterns',
@@ -2498,7 +2562,7 @@ namespace ConversationV1 {
 
   /** Parameters for the `deleteValue` operation. */
   export interface DeleteValueParams {
-    /** The workspace ID. */
+    /** Unique identifier of the workspace. */
     workspace_id: string;
     /** The name of the entity. */
     entity: string;
@@ -2508,13 +2572,13 @@ namespace ConversationV1 {
 
   /** Parameters for the `getValue` operation. */
   export interface GetValueParams {
-    /** The workspace ID. */
+    /** Unique identifier of the workspace. */
     workspace_id: string;
     /** The name of the entity. */
     entity: string;
     /** The text of the entity value. */
     value: string;
-    /** Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`. */
+    /** Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included. */
     export?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
@@ -2522,19 +2586,19 @@ namespace ConversationV1 {
 
   /** Parameters for the `listValues` operation. */
   export interface ListValuesParams {
-    /** The workspace ID. */
+    /** Unique identifier of the workspace. */
     workspace_id: string;
     /** The name of the entity. */
     entity: string;
-    /** Whether to include all element content in the returned data. If export=`false`, the returned data includes only information about the element itself. If export=`true`, all content, including subelements, is included. The default value is `false`. */
+    /** Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included. */
     export?: boolean;
-    /** The number of records to return in each page of results. The default page limit is 100. */
+    /** The number of records to return in each page of results. */
     page_limit?: number;
     /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** Sorts the response according to the value of the specified property, in ascending or descending order. */
+    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
     sort?: string;
-    /** A token identifying the last value from the previous page of results. */
+    /** A token identifying the last object from the previous page of results. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
@@ -2542,27 +2606,27 @@ namespace ConversationV1 {
 
   /** Parameters for the `updateValue` operation. */
   export interface UpdateValueParams {
-    /** The workspace ID. */
+    /** Unique identifier of the workspace. */
     workspace_id: string;
     /** The name of the entity. */
     entity: string;
     /** The text of the entity value. */
     value: string;
-    /** The text of the entity value. */
+    /** The text of the entity value. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
     new_value?: string;
     /** Any metadata related to the entity value. */
     new_metadata?: Object;
-    /** Specifies the type of value (`synonyms` or `patterns`). The default value is `synonyms`. */
+    /** Specifies the type of value. */
     new_type?: UpdateValueConstants.ValueType | string;
-    /** An array of synonyms for the entity value. */
+    /** An array of synonyms for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A synonym must conform to the following resrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
     new_synonyms?: string[];
-    /** An array of patterns for the entity value. A pattern is specified as a regular expression. */
+    /** An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 128 characters. For more information about how to specify a pattern, see the [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities). */
     new_patterns?: string[];
   }
 
   /** Constants for the `updateValue` operation. */
   export namespace UpdateValueConstants {
-    /** Specifies the type of value (`synonyms` or `patterns`). The default value is `synonyms`. */
+    /** Specifies the type of value. */
     export enum ValueType {
       SYNONYMS = 'synonyms',
       PATTERNS = 'patterns',
@@ -2571,19 +2635,19 @@ namespace ConversationV1 {
 
   /** Parameters for the `createSynonym` operation. */
   export interface CreateSynonymParams {
-    /** The workspace ID. */
+    /** Unique identifier of the workspace. */
     workspace_id: string;
     /** The name of the entity. */
     entity: string;
     /** The text of the entity value. */
     value: string;
-    /** The text of the synonym. */
+    /** The text of the synonym. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
     synonym: string;
   }
 
   /** Parameters for the `deleteSynonym` operation. */
   export interface DeleteSynonymParams {
-    /** The workspace ID. */
+    /** Unique identifier of the workspace. */
     workspace_id: string;
     /** The name of the entity. */
     entity: string;
@@ -2595,7 +2659,7 @@ namespace ConversationV1 {
 
   /** Parameters for the `getSynonym` operation. */
   export interface GetSynonymParams {
-    /** The workspace ID. */
+    /** Unique identifier of the workspace. */
     workspace_id: string;
     /** The name of the entity. */
     entity: string;
@@ -2609,19 +2673,19 @@ namespace ConversationV1 {
 
   /** Parameters for the `listSynonyms` operation. */
   export interface ListSynonymsParams {
-    /** The workspace ID. */
+    /** Unique identifier of the workspace. */
     workspace_id: string;
     /** The name of the entity. */
     entity: string;
     /** The text of the entity value. */
     value: string;
-    /** The number of records to return in each page of results. The default page limit is 100. */
+    /** The number of records to return in each page of results. */
     page_limit?: number;
     /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** Sorts the response according to the value of the specified property, in ascending or descending order. */
+    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
     sort?: string;
-    /** A token identifying the last value from the previous page of results. */
+    /** A token identifying the last object from the previous page of results. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
@@ -2629,7 +2693,7 @@ namespace ConversationV1 {
 
   /** Parameters for the `updateSynonym` operation. */
   export interface UpdateSynonymParams {
-    /** The workspace ID. */
+    /** Unique identifier of the workspace. */
     workspace_id: string;
     /** The name of the entity. */
     entity: string;
@@ -2637,35 +2701,35 @@ namespace ConversationV1 {
     value: string;
     /** The text of the synonym. */
     synonym: string;
-    /** The text of the synonym. */
+    /** The text of the synonym. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
     new_synonym?: string;
   }
 
   /** Parameters for the `createDialogNode` operation. */
   export interface CreateDialogNodeParams {
-    /** The workspace ID. */
+    /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** The dialog node ID. */
+    /** The dialog node ID. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.  - It must be no longer than 1024 characters. */
     dialog_node: string;
-    /** The description of the dialog node. */
+    /** The description of the dialog node. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     description?: string;
-    /** The condition that will trigger the dialog node. */
+    /** The condition that will trigger the dialog node. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 2048 characters. */
     conditions?: string;
-    /** The ID of the parent dialog node (if any). */
+    /** The ID of the parent dialog node. */
     parent?: string;
-    /** The previous dialog node. */
+    /** The ID of the previous dialog node. */
     previous_sibling?: string;
-    /** The output of the dialog node. */
+    /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex). */
     output?: Object;
     /** The context for the dialog node. */
     context?: Object;
     /** The metadata for the dialog node. */
     metadata?: Object;
-    /** The next step to execute following this dialog node. */
+    /** The next step to be executed in dialog processing. */
     next_step?: DialogNodeNextStep;
-    /** The actions for the dialog node. */
+    /** An array of objects describing any actions to be invoked by the dialog node. */
     actions?: DialogNodeAction[];
-    /** The alias used to identify the dialog node. */
+    /** The alias used to identify the dialog node. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.  - It must be no longer than 64 characters. */
     title?: string;
     /** How the dialog node is processed. */
     node_type?: CreateDialogNodeConstants.NodeType | string;
@@ -2673,6 +2737,12 @@ namespace ConversationV1 {
     event_name?: CreateDialogNodeConstants.EventName | string;
     /** The location in the dialog context where output is stored. */
     variable?: string;
+    /** Whether this top-level dialog node can be digressed into. */
+    digress_in?: CreateDialogNodeConstants.DigressIn | string;
+    /** Whether this dialog node can be returned to after a digression. */
+    digress_out?: CreateDialogNodeConstants.DigressOut | string;
+    /** Whether the user can digress to top-level nodes while filling out slots. */
+    digress_out_slots?: CreateDialogNodeConstants.DigressOutSlots | string;
   }
 
   /** Constants for the `createDialogNode` operation. */
@@ -2684,6 +2754,7 @@ namespace ConversationV1 {
       FRAME = 'frame',
       SLOT = 'slot',
       RESPONSE_CONDITION = 'response_condition',
+      FOLDER = 'folder',
     }
     /** How an `event_handler` node is processed. */
     export enum EventName {
@@ -2696,11 +2767,29 @@ namespace ConversationV1 {
       NOMATCH = 'nomatch',
       NOMATCH_RESPONSES_DEPLETED = 'nomatch_responses_depleted',
     }
+    /** Whether this top-level dialog node can be digressed into. */
+    export enum DigressIn {
+      NOT_AVAILABLE = 'not_available',
+      RETURNS = 'returns',
+      DOES_NOT_RETURN = 'does_not_return',
+    }
+    /** Whether this dialog node can be returned to after a digression. */
+    export enum DigressOut {
+      RETURNING = 'allow_returning',
+      ALL = 'allow_all',
+      ALL_NEVER_RETURN = 'allow_all_never_return',
+    }
+    /** Whether the user can digress to top-level nodes while filling out slots. */
+    export enum DigressOutSlots {
+      NOT_ALLOWED = 'not_allowed',
+      ALLOW_RETURNING = 'allow_returning',
+      ALLOW_ALL = 'allow_all',
+    }
   }
 
   /** Parameters for the `deleteDialogNode` operation. */
   export interface DeleteDialogNodeParams {
-    /** The workspace ID. */
+    /** Unique identifier of the workspace. */
     workspace_id: string;
     /** The dialog node ID (for example, `get_order`). */
     dialog_node: string;
@@ -2708,7 +2797,7 @@ namespace ConversationV1 {
 
   /** Parameters for the `getDialogNode` operation. */
   export interface GetDialogNodeParams {
-    /** The workspace ID. */
+    /** Unique identifier of the workspace. */
     workspace_id: string;
     /** The dialog node ID (for example, `get_order`). */
     dialog_node: string;
@@ -2718,15 +2807,15 @@ namespace ConversationV1 {
 
   /** Parameters for the `listDialogNodes` operation. */
   export interface ListDialogNodesParams {
-    /** The workspace ID. */
+    /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** The number of records to return in each page of results. The default page limit is 100. */
+    /** The number of records to return in each page of results. */
     page_limit?: number;
     /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** Sorts the response according to the value of the specified property, in ascending or descending order. */
+    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
     sort?: string;
-    /** A token identifying the last value from the previous page of results. */
+    /** A token identifying the last object from the previous page of results. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
@@ -2734,29 +2823,29 @@ namespace ConversationV1 {
 
   /** Parameters for the `updateDialogNode` operation. */
   export interface UpdateDialogNodeParams {
-    /** The workspace ID. */
+    /** Unique identifier of the workspace. */
     workspace_id: string;
     /** The dialog node ID (for example, `get_order`). */
     dialog_node: string;
-    /** The dialog node ID. */
+    /** The dialog node ID. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.  - It must be no longer than 1024 characters. */
     new_dialog_node?: string;
-    /** The description of the dialog node. */
+    /** The description of the dialog node. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     new_description?: string;
-    /** The condition that will trigger the dialog node. */
+    /** The condition that will trigger the dialog node. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 2048 characters. */
     new_conditions?: string;
-    /** The ID of the parent dialog node (if any). */
+    /** The ID of the parent dialog node. */
     new_parent?: string;
-    /** The previous dialog node. */
+    /** The ID of the previous sibling dialog node. */
     new_previous_sibling?: string;
-    /** The output of the dialog node. */
+    /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex). */
     new_output?: Object;
     /** The context for the dialog node. */
     new_context?: Object;
     /** The metadata for the dialog node. */
     new_metadata?: Object;
-    /** The next step to execute following this dialog node. */
+    /** The next step to be executed in dialog processing. */
     new_next_step?: DialogNodeNextStep;
-    /** The alias used to identify the dialog node. */
+    /** The alias used to identify the dialog node. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.  - It must be no longer than 64 characters. */
     new_title?: string;
     /** How the dialog node is processed. */
     new_type?: UpdateDialogNodeConstants.NodeType | string;
@@ -2764,8 +2853,14 @@ namespace ConversationV1 {
     new_event_name?: UpdateDialogNodeConstants.EventName | string;
     /** The location in the dialog context where output is stored. */
     new_variable?: string;
-    /** The actions for the dialog node. */
+    /** An array of objects describing any actions to be invoked by the dialog node. */
     new_actions?: DialogNodeAction[];
+    /** Whether this top-level dialog node can be digressed into. */
+    new_digress_in?: UpdateDialogNodeConstants.DigressIn | string;
+    /** Whether this dialog node can be returned to after a digression. */
+    new_digress_out?: UpdateDialogNodeConstants.DigressOut | string;
+    /** Whether the user can digress to top-level nodes while filling out slots. */
+    new_digress_out_slots?: UpdateDialogNodeConstants.DigressOutSlots | string;
   }
 
   /** Constants for the `updateDialogNode` operation. */
@@ -2777,6 +2872,7 @@ namespace ConversationV1 {
       FRAME = 'frame',
       SLOT = 'slot',
       RESPONSE_CONDITION = 'response_condition',
+      FOLDER = 'folder',
     }
     /** How an `event_handler` node is processed. */
     export enum EventName {
@@ -2789,84 +2885,50 @@ namespace ConversationV1 {
       NOMATCH = 'nomatch',
       NOMATCH_RESPONSES_DEPLETED = 'nomatch_responses_depleted',
     }
+    /** Whether this top-level dialog node can be digressed into. */
+    export enum DigressIn {
+      NOT_AVAILABLE = 'not_available',
+      RETURNS = 'returns',
+      DOES_NOT_RETURN = 'does_not_return',
+    }
+    /** Whether this dialog node can be returned to after a digression. */
+    export enum DigressOut {
+      RETURNING = 'allow_returning',
+      ALL = 'allow_all',
+      ALL_NEVER_RETURN = 'allow_all_never_return',
+    }
+    /** Whether the user can digress to top-level nodes while filling out slots. */
+    export enum DigressOutSlots {
+      NOT_ALLOWED = 'not_allowed',
+      ALLOW_RETURNING = 'allow_returning',
+      ALLOW_ALL = 'allow_all',
+    }
   }
 
   /** Parameters for the `listAllLogs` operation. */
   export interface ListAllLogsParams {
     /** A cacheable parameter that limits the results to those matching the specified filter. You must specify a filter query that includes a value for `language`, as well as a value for `workspace_id` or `request.context.metadata.deployment`. For more information, see the [documentation](https://console.bluemix.net/docs/services/conversation/filter-reference.html#filter-query-syntax). */
     filter: string;
-    /** Sorts the response according to the value of the specified property, in ascending or descending order. */
+    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
     sort?: string;
-    /** The number of records to return in each page of results. The default page limit is 100. */
+    /** The number of records to return in each page of results. */
     page_limit?: number;
-    /** A token identifying the last value from the previous page of results. */
+    /** A token identifying the last object from the previous page of results. */
     cursor?: string;
   }
 
   /** Parameters for the `listLogs` operation. */
   export interface ListLogsParams {
-    /** The workspace ID. */
+    /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** Sorts the response according to the value of the specified property, in ascending or descending order. */
+    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
     sort?: string;
     /** A cacheable parameter that limits the results to those matching the specified filter. For more information, see the [documentation](https://console.bluemix.net/docs/services/conversation/filter-reference.html#filter-query-syntax). */
     filter?: string;
-    /** The number of records to return in each page of results. The default page limit is 100. */
+    /** The number of records to return in each page of results. */
     page_limit?: number;
-    /** A token identifying the last value from the previous page of results. */
+    /** A token identifying the last object from the previous page of results. */
     cursor?: string;
-  }
-
-  /** Parameters for the `createCounterexample` operation. */
-  export interface CreateCounterexampleParams {
-    /** The workspace ID. */
-    workspace_id: string;
-    /** The text of a user input marked as irrelevant input. */
-    text: string;
-  }
-
-  /** Parameters for the `deleteCounterexample` operation. */
-  export interface DeleteCounterexampleParams {
-    /** The workspace ID. */
-    workspace_id: string;
-    /** The text of a user input counterexample (for example, `What are you wearing?`). */
-    text: string;
-  }
-
-  /** Parameters for the `getCounterexample` operation. */
-  export interface GetCounterexampleParams {
-    /** The workspace ID. */
-    workspace_id: string;
-    /** The text of a user input counterexample (for example, `What are you wearing?`). */
-    text: string;
-    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
-    include_audit?: boolean;
-  }
-
-  /** Parameters for the `listCounterexamples` operation. */
-  export interface ListCounterexamplesParams {
-    /** The workspace ID. */
-    workspace_id: string;
-    /** The number of records to return in each page of results. The default page limit is 100. */
-    page_limit?: number;
-    /** Whether to include information about the number of records returned. */
-    include_count?: boolean;
-    /** Sorts the response according to the value of the specified property, in ascending or descending order. */
-    sort?: string;
-    /** A token identifying the last value from the previous page of results. */
-    cursor?: string;
-    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
-    include_audit?: boolean;
-  }
-
-  /** Parameters for the `updateCounterexample` operation. */
-  export interface UpdateCounterexampleParams {
-    /** The workspace ID. */
-    workspace_id: string;
-    /** The text of a user input counterexample (for example, `What are you wearing?`). */
-    text: string;
-    /** The text of the example to be marked as irrelevant input. */
-    new_text?: string;
   }
 
   /*************************
@@ -2881,12 +2943,12 @@ namespace ConversationV1 {
     location?: number[];
   }
 
-  /** Context information for the message. Include the context from the previous response to maintain state for the conversation. */
+  /** State information for the conversation. To maintain state, include the context from the previous response. */
   export interface Context {
     /** The unique identifier of the conversation. */
-    conversation_id: string;
+    conversation_id?: string;
     /** For internal use only. */
-    system: SystemResponse;
+    system?: SystemResponse;
   }
 
   /** Counterexample. */
@@ -2894,48 +2956,48 @@ namespace ConversationV1 {
     /** The text of the counterexample. */
     text: string;
     /** The timestamp for creation of the counterexample. */
-    created: string;
+    created?: string;
     /** The timestamp for the last update to the counterexample. */
-    updated: string;
+    updated?: string;
   }
 
   /** CounterexampleCollection. */
   export interface CounterexampleCollection {
     /** An array of objects describing the examples marked as irrelevant input. */
     counterexamples: Counterexample[];
-    /** An object defining the pagination data for the returned objects. */
+    /** The pagination data for the returned objects. */
     pagination: Pagination;
   }
 
   /** CreateCounterexample. */
   export interface CreateCounterexample {
-    /** The text of a user input marked as irrelevant input. */
+    /** The text of a user input marked as irrelevant input. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters  - It cannot consist of only whitespace characters  - It must be no longer than 1024 characters. */
     text: string;
   }
 
   /** CreateDialogNode. */
   export interface CreateDialogNode {
-    /** The dialog node ID. */
+    /** The dialog node ID. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.  - It must be no longer than 1024 characters. */
     dialog_node: string;
-    /** The description of the dialog node. */
+    /** The description of the dialog node. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     description?: string;
-    /** The condition that will trigger the dialog node. */
+    /** The condition that will trigger the dialog node. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 2048 characters. */
     conditions?: string;
-    /** The ID of the parent dialog node (if any). */
+    /** The ID of the parent dialog node. */
     parent?: string;
-    /** The previous dialog node. */
+    /** The ID of the previous dialog node. */
     previous_sibling?: string;
-    /** The output of the dialog node. */
+    /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex). */
     output?: Object;
     /** The context for the dialog node. */
     context?: Object;
     /** The metadata for the dialog node. */
     metadata?: Object;
-    /** The next step to execute following this dialog node. */
+    /** The next step to be executed in dialog processing. */
     next_step?: DialogNodeNextStep;
-    /** The actions for the dialog node. */
+    /** An array of objects describing any actions to be invoked by the dialog node. */
     actions?: DialogNodeAction[];
-    /** The alias used to identify the dialog node. */
+    /** The alias used to identify the dialog node. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.  - It must be no longer than 64 characters. */
     title?: string;
     /** How the dialog node is processed. */
     node_type?: string;
@@ -2943,17 +3005,23 @@ namespace ConversationV1 {
     event_name?: string;
     /** The location in the dialog context where output is stored. */
     variable?: string;
+    /** Whether this top-level dialog node can be digressed into. */
+    digress_in?: string;
+    /** Whether this dialog node can be returned to after a digression. */
+    digress_out?: string;
+    /** Whether the user can digress to top-level nodes while filling out slots. */
+    digress_out_slots?: string;
   }
 
   /** CreateEntity. */
   export interface CreateEntity {
-    /** The name of the entity. */
+    /** The name of the entity. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 64 characters. */
     entity: string;
-    /** The description of the entity. */
+    /** The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     description?: string;
     /** Any metadata related to the value. */
     metadata?: Object;
-    /** An array of entity values. */
+    /** An array of objects describing the entity values. */
     values?: CreateValue[];
     /** Whether to use fuzzy matching for the entity. */
     fuzzy_match?: boolean;
@@ -2961,31 +3029,31 @@ namespace ConversationV1 {
 
   /** CreateExample. */
   export interface CreateExample {
-    /** The text of a user input example. */
+    /** The text of a user input example. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 1024 characters. */
     text: string;
   }
 
   /** CreateIntent. */
   export interface CreateIntent {
-    /** The name of the intent. */
+    /** The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 128 characters. */
     intent: string;
-    /** The description of the intent. */
+    /** The description of the intent. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     description?: string;
-    /** An array of user input examples. */
+    /** An array of user input examples for the intent. */
     examples?: CreateExample[];
   }
 
   /** CreateValue. */
   export interface CreateValue {
-    /** The text of the entity value. */
+    /** The text of the entity value. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
     value: string;
     /** Any metadata related to the entity value. */
     metadata?: Object;
-    /** An array of synonyms for the entity value. */
+    /** An array containing any synonyms for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A synonym must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
     synonyms?: string[];
-    /** An array of patterns for the entity value. A pattern is specified as a regular expression. */
+    /** An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 128 characters. For more information about how to specify a pattern, see the [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities). */
     patterns?: string[];
-    /** Specifies the type of value (`synonyms` or `patterns`). The default value is `synonyms`. */
+    /** Specifies the type of value. */
     value_type?: string;
   }
 
@@ -2997,22 +3065,22 @@ namespace ConversationV1 {
     description?: string;
     /** The condition that triggers the dialog node. */
     conditions?: string;
-    /** The ID of the parent dialog node. */
+    /** The ID of the parent dialog node. This property is not returned if the dialog node has no parent. */
     parent?: string;
-    /** The ID of the previous sibling dialog node. */
+    /** The ID of the previous sibling dialog node. This property is not returned if the dialog node has no previous sibling. */
     previous_sibling?: string;
     /** The output of the dialog node. */
     output?: Object;
     /** The context (if defined) for the dialog node. */
     context?: Object;
-    /** The metadata (if any) for the dialog node. */
+    /** Any metadata for the dialog node. */
     metadata?: Object;
     /** The next step to execute following this dialog node. */
     next_step?: DialogNodeNextStep;
     /** The timestamp for creation of the dialog node. */
-    created: string;
+    created?: string;
     /** The timestamp for the most recent update to the dialog node. */
-    updated: string;
+    updated?: string;
     /** The actions for the dialog node. */
     actions?: DialogNodeAction[];
     /** The alias used to identify the dialog node. */
@@ -3023,6 +3091,12 @@ namespace ConversationV1 {
     event_name?: string;
     /** The location in the dialog context where output is stored. */
     variable?: string;
+    /** Whether this top-level dialog node can be digressed into. */
+    digress_in?: string;
+    /** Whether this dialog node can be returned to after a digression. */
+    digress_out?: string;
+    /** Whether the user can digress to top-level nodes while filling out slots. */
+    digress_out_slots?: string;
   }
 
   /** DialogNodeAction. */
@@ -3039,18 +3113,19 @@ namespace ConversationV1 {
     credentials?: string;
   }
 
-  /** DialogNodeCollection. */
+  /** An array of dialog nodes. */
   export interface DialogNodeCollection {
+    /** An array of objects describing the dialog nodes defined for the workspace. */
     dialog_nodes: DialogNode[];
-    /** An object defining the pagination data for the returned objects. */
+    /** The pagination data for the returned objects. */
     pagination: Pagination;
   }
 
   /** The next step to execute following this dialog node. */
   export interface DialogNodeNextStep {
-    /** How the `next_step` reference is processed. If you specify `jump_to`, then you must also specify a value for the `dialog_node` property. */
+    /** What happens after the dialog node completes. The valid values depend on the node type:  - The following values are valid for any node:    - `get_user_input`    - `skip_user_input`    - `jump_to`  - If the node is of type `event_handler` and its parent node is of type `slot` or `frame`, additional values are also valid:    - if **event_name**=`filled` and the type of the parent node is `slot`:      - `reprompt`      - `skip_all_slots`  - if **event_name**=`nomatch` and the type of the parent node is `slot`:      - `reprompt`      - `skip_slot`      - `skip_all_slots`  - if **event_name**=`generic` and the type of the parent node is `frame`:      - `reprompt`      - `skip_slot`      - `skip_all_slots`        If you specify `jump_to`, then you must also specify a value for the `dialog_node` property. */
     behavior: string;
-    /** The ID of the dialog node to process next. This parameter is required if `behavior`=`jump_to`. */
+    /** The ID of the dialog node to process next. This parameter is required if **behavior**=`jump_to`. */
     dialog_node?: string;
     /** Which part of the dialog node to process next. */
     selector?: string;
@@ -3069,9 +3144,9 @@ namespace ConversationV1 {
     /** The name of the entity. */
     entity_name: string;
     /** The timestamp for creation of the entity. */
-    created: string;
+    created?: string;
     /** The timestamp for the last update to the entity. */
-    updated: string;
+    updated?: string;
     /** The description of the entity. */
     description?: string;
     /** Any metadata related to the entity. */
@@ -3082,9 +3157,9 @@ namespace ConversationV1 {
 
   /** An array of entities. */
   export interface EntityCollection {
-    /** An array of entities. */
+    /** An array of objects describing the entities defined for the workspace. */
     entities: EntityExport[];
-    /** An object defining the pagination data for the returned objects. */
+    /** The pagination data for the returned objects. */
     pagination: Pagination;
   }
 
@@ -3093,40 +3168,40 @@ namespace ConversationV1 {
     /** The name of the entity. */
     entity_name: string;
     /** The timestamp for creation of the entity. */
-    created: string;
+    created?: string;
     /** The timestamp for the last update to the entity. */
-    updated: string;
+    updated?: string;
     /** The description of the entity. */
     description?: string;
     /** Any metadata related to the entity. */
     metadata?: Object;
     /** Whether fuzzy matching is used for the entity. */
     fuzzy_match?: boolean;
-    /** An array of entity values. */
+    /** An array objects describing the entity values. */
     values?: ValueExport[];
   }
 
   /** Example. */
   export interface Example {
-    /** The text of the example. */
+    /** The text of the user input example. */
     example_text: string;
     /** The timestamp for creation of the example. */
-    created: string;
+    created?: string;
     /** The timestamp for the last update to the example. */
-    updated: string;
+    updated?: string;
   }
 
   /** ExampleCollection. */
   export interface ExampleCollection {
-    /** An array of Example objects describing the examples defined for the intent. */
+    /** An array of objects describing the examples defined for the intent. */
     examples: Example[];
-    /** An object defining the pagination data for the returned objects. */
+    /** The pagination data for the returned objects. */
     pagination: Pagination;
   }
 
-  /** An object defining the user input. */
+  /** The user input. */
   export interface InputData {
-    /** The text of the user input. */
+    /** The text of the user input. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 2048 characters. */
     text: string;
   }
 
@@ -3135,18 +3210,18 @@ namespace ConversationV1 {
     /** The name of the intent. */
     intent_name: string;
     /** The timestamp for creation of the intent. */
-    created: string;
+    created?: string;
     /** The timestamp for the last update to the intent. */
-    updated: string;
+    updated?: string;
     /** The description of the intent. */
     description?: string;
   }
 
   /** IntentCollection. */
   export interface IntentCollection {
-    /** An array of intents. */
+    /** An array of objects describing the intents defined for the workspace. */
     intents: IntentExport[];
-    /** An object defining the pagination data for the returned objects. */
+    /** The pagination data for the returned objects. */
     pagination: Pagination;
   }
 
@@ -3155,36 +3230,36 @@ namespace ConversationV1 {
     /** The name of the intent. */
     intent_name: string;
     /** The timestamp for creation of the intent. */
-    created: string;
+    created?: string;
     /** The timestamp for the last update to the intent. */
-    updated: string;
+    updated?: string;
     /** The description of the intent. */
     description?: string;
-    /** An array of user input examples. */
+    /** An array of objects describing the user input examples for the intent. */
     examples?: Example[];
   }
 
   /** LogCollection. */
   export interface LogCollection {
-    /** An array of log events. */
+    /** An array of objects describing log events. */
     logs: LogExport[];
-    /** An object defining the pagination data for the returned objects. */
+    /** The pagination data for the returned objects. */
     pagination: LogPagination;
   }
 
   /** LogExport. */
   export interface LogExport {
-    /** A request formatted for the Conversation service. */
+    /** A request received by the workspace, including the user input and context. */
     request: MessageRequest;
-    /** A response from the Conversation service. */
+    /** The response sent by the workspace, including the output text, detected intents and entities, and context. */
     response: MessageResponse;
-    /** A unique identifier for the logged message. */
+    /** A unique identifier for the logged event. */
     log_id: string;
     /** The timestamp for receipt of the message. */
     request_timestamp: string;
     /** The timestamp for the system response to the message. */
     response_timestamp: string;
-    /** The workspace ID. */
+    /** The unique identifier of the workspace where the request was made. */
     workspace_id: string;
     /** The language of the workspace where the message request was made. */
     language: string;
@@ -3192,21 +3267,21 @@ namespace ConversationV1 {
 
   /** Log message details. */
   export interface LogMessage {
-    /** The severity of the message. */
+    /** The severity of the log message. */
     level: string;
-    /** The text of the message. */
+    /** The text of the log message. */
     msg: string;
   }
 
   /** The pagination data for the returned objects. */
   export interface LogPagination {
-    /** The URL that will return the next page of results. */
+    /** The URL that will return the next page of results, if any. */
     next_url?: string;
     /** Reserved for future use. */
     matched?: number;
   }
 
-  /** An input object that includes the input text. */
+  /** The text of the user input. */
   export interface MessageInput {
     /** The user's input. */
     text?: string;
@@ -3220,11 +3295,11 @@ namespace ConversationV1 {
     alternate_intents?: boolean;
     /** State information for the conversation. Continue a conversation by including the context object from the previous response. */
     context?: Context;
-    /** Include the entities from the previous response when they do not need to change and to prevent Watson from trying to identify them. */
+    /** Entities to use when evaluating the message. Include entities from the previous response to continue using those entities rather than detecting entities in the new input. */
     entities?: RuntimeEntity[];
-    /** An array of name-confidence pairs for the user input. Include the intents from the previous response when they do not need to change and to prevent Watson from trying to identify them. */
+    /** Intents to use when evaluating the user input. Include intents from the previous response to continue using those intents rather than trying to recognize intents in the new input. */
     intents?: RuntimeIntent[];
-    /** System output. Include the output from the request when you have several requests within the same Dialog turn to pass back in the intermediate information. */
+    /** System output. Include the output from the previous response to maintain intermediate information over multiple requests. */
     output?: OutputData;
   }
 
@@ -3236,7 +3311,7 @@ namespace ConversationV1 {
     intents: RuntimeIntent[];
     /** An array of entities identified in the user input. */
     entities: RuntimeEntity[];
-    /** Whether to return more than one intent. `true` indicates that all matching intents are returned. */
+    /** Whether to return more than one intent. A value of `true` indicates that all matching intents are returned. */
     alternate_intents?: boolean;
     /** State information for the conversation. */
     context: Context;
@@ -3246,13 +3321,13 @@ namespace ConversationV1 {
 
   /** An output object that includes the response to the user, the nodes that were hit, and messages from the log. */
   export interface OutputData {
-    /** Up to 50 messages logged with the request. */
+    /** An array of up to 50 messages logged with the request. */
     log_messages: LogMessage[];
     /** An array of responses to the user. */
     text: string[];
-    /** An array of the nodes that were triggered to create the response. */
+    /** An array of the nodes that were triggered to create the response, in the order in which they were visited. This information is useful for debugging and for tracing the path taken through the node tree. */
     nodes_visited?: string[];
-    /** An array of objects containing detailed diagnostic information about the nodes that were triggered during processing of the input message. */
+    /** An array of objects containing detailed diagnostic information about the nodes that were triggered during processing of the input message. Included only if **nodes_visited_details** is set to `true` in the message request. */
     nodes_visited_details?: DialogNodeVisitedDetails[];
   }
 
@@ -3270,15 +3345,15 @@ namespace ConversationV1 {
 
   /** A term from the request that was identified as an entity. */
   export interface RuntimeEntity {
-    /** The recognized entity from a term in the input. */
+    /** An entity detected in the input. */
     entity: string;
-    /** Zero-based character offsets that indicate where the entity value begins and ends in the input text. */
+    /** An array of zero-based character offsets that indicate where the detected entity values begin and end in the input text. */
     location: number[];
-    /** The term in the input text that was recognized. */
+    /** The term in the input text that was recognized as an entity value. */
     value: string;
     /** A decimal percentage that represents Watson's confidence in the entity. */
     confidence?: number;
-    /** The metadata for the entity. */
+    /** Any metadata for the entity. */
     metadata?: Object;
     /** The recognized capture groups for the entity, as defined by the entity pattern. */
     groups?: CaptureGroup[];
@@ -3297,16 +3372,16 @@ namespace ConversationV1 {
     /** The text of the synonym. */
     synonym_text: string;
     /** The timestamp for creation of the synonym. */
-    created: string;
+    created?: string;
     /** The timestamp for the most recent update to the synonym. */
-    updated: string;
+    updated?: string;
   }
 
   /** SynonymCollection. */
   export interface SynonymCollection {
     /** An array of synonyms. */
     synonyms: Synonym[];
-    /** An object defining the pagination data for the returned objects. */
+    /** The pagination data for the returned objects. */
     pagination: Pagination;
   }
 
@@ -3321,14 +3396,14 @@ namespace ConversationV1 {
     /** Any metadata related to the entity value. */
     metadata?: Object;
     /** The timestamp for creation of the entity value. */
-    created: string;
+    created?: string;
     /** The timestamp for the last update to the entity value. */
-    updated: string;
-    /** An array of synonyms for the entity value. */
+    updated?: string;
+    /** An array containing any synonyms for the entity value. */
     synonyms?: string[];
-    /** An array of patterns for the entity value. A pattern is specified as a regular expression. */
+    /** An array containing any patterns for the entity value. */
     patterns?: string[];
-    /** Specifies the type of value (`synonyms` or `patterns`). The default value is `synonyms`. */
+    /** Specifies the type of value. */
     value_type: string;
   }
 
@@ -3347,14 +3422,14 @@ namespace ConversationV1 {
     /** Any metadata related to the entity value. */
     metadata?: Object;
     /** The timestamp for creation of the entity value. */
-    created: string;
+    created?: string;
     /** The timestamp for the last update to the entity value. */
-    updated: string;
-    /** An array of synonyms for the entity value. */
+    updated?: string;
+    /** An array containing any synonyms for the entity value. */
     synonyms?: string[];
-    /** An array of patterns for the entity value. A pattern is specified as a regular expression. */
+    /** An array containing any patterns for the entity value. */
     patterns?: string[];
-    /** Specifies the type of value (`synonyms` or `patterns`). The default value is `synonyms`. */
+    /** Specifies the type of value. */
     value_type: string;
   }
 
@@ -3365,22 +3440,22 @@ namespace ConversationV1 {
     /** The language of the workspace. */
     language: string;
     /** The timestamp for creation of the workspace. */
-    created: string;
+    created?: string;
     /** The timestamp for the last update to the workspace. */
-    updated: string;
+    updated?: string;
     /** The workspace ID. */
     workspace_id: string;
     /** The description of the workspace. */
     description?: string;
-    /** Any metadata that is required by the workspace. */
+    /** Any metadata related to the workspace. */
     metadata?: Object;
-    /** Whether training data from the workspace can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used. */
+    /** Whether training data from the workspace (including artifacts such as intents and entities) can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used. */
     learning_opt_out?: boolean;
   }
 
   /** WorkspaceCollection. */
   export interface WorkspaceCollection {
-    /** An array of workspaces. */
+    /** An array of objects describing the workspaces associated with the service instance. */
     workspaces: Workspace[];
     /** An object defining the pagination data for the returned objects. */
     pagination: Pagination;
@@ -3397,9 +3472,9 @@ namespace ConversationV1 {
     /** Any metadata that is required by the workspace. */
     metadata: Object;
     /** The timestamp for creation of the workspace. */
-    created: string;
+    created?: string;
     /** The timestamp for the last update to the workspace. */
-    updated: string;
+    updated?: string;
     /** The workspace ID. */
     workspace_id: string;
     /** The current status of the workspace. */
