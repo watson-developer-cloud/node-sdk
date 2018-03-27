@@ -7,7 +7,6 @@ const authHelper = require('./auth_helper.js');
 const auth = authHelper.auth;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const assign = require('object.assign'); // for node v0.12 compatibility
-const AssistantV1 = require('../../assistant/v1');
 
 const extend = require('extend');
 
