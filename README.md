@@ -46,7 +46,7 @@ npm install watson-developer-cloud
 ## Getting the service credentials
 
 You will need the `username`, `password`, and `url` (`api_key` for Visual Recognition) for each service. Service credentials are different from your IBM Cloud account username and password.
-
+Follow these instructions to get into IBM Cloud 
 To get your service credentials, follow these steps:
 
 1.  Log in to IBM Cloud at https://console.bluemix.net/catalog/?category=watson.
