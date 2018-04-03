@@ -236,6 +236,15 @@ export class BaseService {
               ' '
             )} ${this.serviceVersion.toUpperCase()} unless use_unauthenticated is set`
         );
+      } else if (!hasCredentials(_options) && supportsIamTokens(this.tokenInfo)) {
+        throw new Error(
+          `Argument error: platform_api_key or username/password are required for ${this.name
+            .toUpperCase()
+            .replace(
+              /_/g,
+              ' '
+            )} ${this.serviceVersion.toUpperCase()} unless use_unauthenticated is set`
+        );
       } else if (!hasCredentials(_options)) {
         throw new Error(
           `Argument error: username and password are required for ${this.name
