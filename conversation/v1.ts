@@ -16,7 +16,6 @@
 
 import extend = require('extend');
 import { getMissingParams } from '../lib/helper';
-import { createRequest } from '../lib/requestwrapper';
 import GeneratedConversationV1 = require('./v1-generated');
 
 class ConversationV1 extends GeneratedConversationV1 {

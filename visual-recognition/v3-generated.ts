@@ -19,7 +19,6 @@ import { RequestResponse } from 'request';
 import { BaseService } from '../lib/base_service';
 import { getMissingParams } from '../lib/helper';
 import { FileObject } from '../lib/helper';
-import { createRequest } from '../lib/requestwrapper';
 
 /**
  * **Important:** As of September 8, 2017, the beta period for Similarity Search is closed. For more information, see [Visual Recognition API – Similarity Search Update](https://www.ibm.com/blogs/bluemix/2017/08/visual-recognition-api-similarity-search-update).  The IBM Watson Visual Recognition service uses deep learning algorithms to identify scenes, objects, and faces  in images you upload to the service. You can create and train a custom classifier to identify subjects that suit your needs.   **Tip:** To test calls to the **Custom classifiers** methods with the API explorer, provide your `api_key` from your IBM&reg; Cloud service instance.
@@ -103,7 +102,7 @@ class VisualRecognitionV3 extends BaseService {
         }
       })
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /*************************
@@ -145,7 +144,7 @@ class VisualRecognitionV3 extends BaseService {
         }
       })
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /*************************
@@ -205,7 +204,7 @@ class VisualRecognitionV3 extends BaseService {
         }
       })
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -240,7 +239,7 @@ class VisualRecognitionV3 extends BaseService {
         }
       })
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -277,7 +276,7 @@ class VisualRecognitionV3 extends BaseService {
         }
       })
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -307,7 +306,7 @@ class VisualRecognitionV3 extends BaseService {
         }
       })
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -366,7 +365,7 @@ class VisualRecognitionV3 extends BaseService {
         }
       })
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
 }

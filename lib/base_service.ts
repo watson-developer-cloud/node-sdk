@@ -20,7 +20,8 @@ import bufferFrom = require('buffer-from');
 import extend = require('extend');
 import request = require('request');
 import vcapServices = require('vcap_services');
-import { stripTrailingSlash } from './helper';
+import { stripTrailingSlash, tokenRequest } from './helper';
+import { sendRequest } from './requestwrapper';
 
 // custom interfaces
 export interface HeaderOptions {
@@ -34,6 +35,7 @@ export interface UserOptions {
   username?: string;
   password?: string;
   api_key?: string;
+  platform_api_key?: string;
   apikey?: string;
   use_unauthenticated?: boolean;
   headers?: HeaderOptions;
@@ -51,11 +53,20 @@ export interface Credentials {
   username: string;
   password: string;
   api_key: string;
+  platform_api_key?: string;
   url: string;
 }
 
+export interface TokenData {
+  access_token?: string;
+  refresh_token?: string;
+  token_type?: string;
+  expires_in?: number;
+  expiration?: number;
+}
+
 function hasCredentials(obj: any): boolean {
-  return obj && ((obj.username && obj.password) || obj.api_key);
+  return obj && ((obj.username && obj.password) || obj.api_key || obj.platform_api_key);
 }
 
 function hasBasicCredentials(obj: any): boolean {
@@ -66,12 +77,17 @@ function acceptsApiKey(name: string): boolean {
   return name === 'visual_recognition';
 }
 
+function supportsIamTokens(tokenInfo: any): boolean {
+  return !!tokenInfo;
+}
+
 export class BaseService {
   static URL: string;
   name: string;
   serviceVersion: string;
   protected _options: BaseServiceOptions;
   protected serviceDefaults: object;
+  protected tokenInfo: TokenData;
 
   /**
    * Internal base class that other services inherit from
@@ -129,10 +145,56 @@ export class BaseService {
     if (this._options.api_key) {
       _credentials.api_key = this._options.api_key;
     }
+    if (this._options.platform_api_key) {
+      _credentials.platform_api_key = this._options.platform_api_key;
+    }
     if (this._options.url) {
       _credentials.url = this._options.url;
     }
     return _credentials;
+  }
+
+/**
+ * Wrapper around `sendRequest` that manages access tokens if applicable
+ * 1. If tokens are unsupported or not being used, call `sendRequest`
+ * 2. If tokens are being used but no token is saved, request an access token
+ * 3. If a token is saved but it is expired, refresh the access token
+ * 4. If token is saved and valid, use it to authenticate the service request
+ *
+ * @param {Object} parameters - service request options passed in by user
+ * @param {Function} _callback - callback function to pass the reponse back to
+ * @returns {ReadableStream|undefined}
+ */
+  protected createRequest(parameters, _callback) {
+    // condition 1: using basic or other auth, no need for any tokens
+    if (this.notUsingTokens()) {
+      return sendRequest(parameters, _callback);
+
+      // condition 2: no token has been retrieved, make a call to get the token
+    } else if (this.needToRequestToken()) {
+      tokenRequest(this._options.platform_api_key, (tokenResponse) => {
+        this.setTokenObject(tokenResponse);
+        parameters.defaultOptions.headers.Authorization =
+          `Bearer ${this.tokenInfo.access_token}`;
+        return sendRequest(parameters, _callback);
+      });
+
+      // condition 3: the token was retrieved, but has expired
+    } else if (this.tokenIsExpired()) {
+      tokenRequest(this.tokenInfo.refresh_token, (tokenResponse) => {
+        this.setTokenObject(tokenResponse);
+        parameters.defaultOptions.headers.Authorization =
+          `Bearer ${this.tokenInfo.access_token}`;
+        return sendRequest(parameters, _callback);
+        // this 'true' argument specifies that we're refreshing an existing token
+      }, true);
+
+      // condition 4: the token is good to go, use it as is
+    } else {
+      parameters.defaultOptions.headers.Authorization =
+        `Bearer ${this.tokenInfo.access_token}`;
+      return sendRequest(parameters, _callback);
+    }
   }
 
   /**
@@ -150,6 +212,9 @@ export class BaseService {
     }
     if (options.api_key || options.apikey) {
       _options.api_key = options.api_key || options.apikey;
+    }
+    if (options.platform_api_key) {
+      _options.platform_api_key = options.platform_api_key;
     }
     _options.jar = request.jar();
     // Get credentials from environment properties or Bluemix,
@@ -220,12 +285,14 @@ export class BaseService {
     const _username: string = process.env[`${_name}_USERNAME`] || process.env[`${_nameWithUnderscore}_USERNAME`];
     const _password: string = process.env[`${_name}_PASSWORD`] || process.env[`${_nameWithUnderscore}_PASSWORD`];
     const _apiKey: string = process.env[`${_name}_API_KEY`] || process.env[`${_nameWithUnderscore}_API_KEY`];
+    const _platformApiKey: string = process.env[`${_name}_PLATFORM_API_KEY`] || process.env[`${_nameWithUnderscore}_PLATFORM_API_KEY`];
     const _url: string = process.env[`${_name}_URL`] || process.env[`${_nameWithUnderscore}_URL`];
 
     return {
       username: _username,
       password: _password,
       api_key: _apiKey,
+      platform_api_key: _platformApiKey,
       url: _url
     };
   }
@@ -245,4 +312,49 @@ export class BaseService {
     return _credentials;
   }
 
+  /**
+   * Determines if tokens are being used for authentication or not
+   * @private
+   * @returns {boolean}
+   */
+  private notUsingTokens(): boolean {
+    // if tokens are not supported, tokenInfo will be undefined
+    // if tokens are supported but the user chose to pass in
+    // username and password, use basic auth
+    return !supportsIamTokens(this.tokenInfo) || !this._options.platform_api_key;
+  }
+
+  /**
+   * Determines if an access token is already stored
+   * @private
+   * @returns {boolean}
+   */
+  private needToRequestToken(): boolean {
+    return !this.tokenInfo.access_token;
+  }
+
+  /**
+   * Saves the token response data to the object state
+   * @private
+   * @param {TokenData} tokenResponse
+   * @returns {void}
+   */
+  private setTokenObject(tokenResponse: TokenData): void {
+    this.tokenInfo = extend({}, tokenResponse);
+  }
+
+  /**
+   * Checks if token is nearing its expiration time
+   * The token should be refreshed if past a certain percentage of its time to live
+   * @private
+   * @returns {boolean}
+   */
+  private tokenIsExpired(): boolean {
+     // use a buffer to prevent the edge case of the token
+     // expiring before the request could be made
+     // the buffer will be a fraction of the total TTL
+    const fractionOfTtl = 0.8;
+    return this.tokenInfo.expiration * fractionOfTtl
+      < Math.floor(Date.now() / 1000);
+  }
 }

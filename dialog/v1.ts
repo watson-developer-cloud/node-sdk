@@ -21,7 +21,6 @@ import pick = require('object.pick');
 import { RequestResponse } from 'request';
 import { BaseService } from '../lib/base_service';
 import { FileObject } from '../lib/helper';
-import { createRequest } from '../lib/requestwrapper';
 
 class DialogV1 extends BaseService {
   static URL: string = 'https://gateway.watsonplatform.net/dialog/api';
@@ -75,7 +74,7 @@ class DialogV1 extends BaseService {
       requiredParams: ['dialog_id', 'client_id'],
       defaultOptions: this._options
     };
-    return createRequest(parameters, callback);
+    return this.createRequest(parameters, callback);
   }
 
   /**
@@ -98,7 +97,7 @@ class DialogV1 extends BaseService {
       requiredParams: ['dialog_id', 'name_values'],
       defaultOptions: this._options
     };
-    return createRequest(parameters, callback);
+    return this.createRequest(parameters, callback);
   }
 
   /**
@@ -121,7 +120,7 @@ class DialogV1 extends BaseService {
       requiredParams: ['dialog_id', 'date_from', 'date_to'],
       defaultOptions: this._options
     };
-    return createRequest(parameters, callback);
+    return this.createRequest(parameters, callback);
   }
 
   /**
@@ -145,7 +144,7 @@ class DialogV1 extends BaseService {
       requiredParams: ['dialog_id'],
       defaultOptions: this._options
     };
-    return createRequest(parameters, callback);
+    return this.createRequest(parameters, callback);
   }
 
   /**
@@ -172,7 +171,7 @@ class DialogV1 extends BaseService {
         pick(newParams, ['headers'])
       )
     };
-    return createRequest(parameters, callback);
+    return this.createRequest(parameters, callback);
   }
 
   /**
@@ -194,7 +193,7 @@ class DialogV1 extends BaseService {
       requiredParams: ['dialog_id'],
       defaultOptions: this._options
     };
-    return createRequest(parameters, callback);
+    return this.createRequest(parameters, callback);
   }
 
   /**
@@ -224,7 +223,7 @@ class DialogV1 extends BaseService {
       requiredParams: ['name'],
       defaultOptions: this._options
     };
-    return createRequest(parameters, callback);
+    return this.createRequest(parameters, callback);
   }
 
   /**
@@ -242,7 +241,7 @@ class DialogV1 extends BaseService {
       },
       defaultOptions: this._options
     };
-    return createRequest(parameters, callback);
+    return this.createRequest(parameters, callback);
   }
 
   /**
@@ -262,7 +261,7 @@ class DialogV1 extends BaseService {
       requiredParams: ['dialog_id'],
       defaultOptions: this._options
     };
-    return createRequest(parameters, callback);
+    return this.createRequest(parameters, callback);
   }
 
   /**
@@ -293,7 +292,7 @@ class DialogV1 extends BaseService {
       requiredParams: ['dialog_id'],
       defaultOptions: this._options
     };
-    return createRequest(parameters, callback);
+    return this.createRequest(parameters, callback);
   }
 }
 

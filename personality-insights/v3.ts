@@ -19,7 +19,6 @@ import pick = require('object.pick');
 import { RequestResponse } from 'request';
 import { BaseService } from '../lib/base_service';
 import { getMissingParams, isHTML, toLowerKeys } from '../lib/helper';
-import { createRequest } from '../lib/requestwrapper';
 import GeneratedPersonalityInsightsV3 = require('./v3-generated');
 
 class PersonalityInsightsV3 extends GeneratedPersonalityInsightsV3 {
@@ -129,7 +128,7 @@ class PersonalityInsightsV3 extends GeneratedPersonalityInsightsV3 {
         }
       })
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   }
 }
 

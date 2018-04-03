@@ -19,7 +19,6 @@ import { RequestResponse } from 'request';
 import { BaseService } from '../lib/base_service';
 import { getMissingParams } from '../lib/helper';
 import { FileObject } from '../lib/helper';
-import { createRequest } from '../lib/requestwrapper';
 
 /**
  * IBM Watson Natural Language Classifier uses machine learning algorithms to return the top matching predefined classes for short text input. You create and train a classifier to connect predefined classes to example texts so that the service can apply those classes to new inputs.
@@ -94,7 +93,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
         }
       })
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /*************************
@@ -143,7 +142,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
         }
       })
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -178,7 +177,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
         }
       })
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -215,7 +214,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
         }
       })
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -242,7 +241,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
         }
       })
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
 }

@@ -6,7 +6,6 @@ import pick = require('object.pick');
 import { parse } from 'url';
 import { getMissingParams } from '../lib/helper';
 import RecognizeStream = require('../lib/recognize-stream');
-import { createRequest as requestFactory } from '../lib/requestwrapper';
 import GeneratedSpeechToTextV1 = require('./v1-generated');
 
 // tslint:disable-next-line:no-var-requires
@@ -517,7 +516,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
         // Replace content-type
         response.headers['content-type'] = params.content_type;
       })
-      .pipe(requestFactory(parameters, callback));
+      .pipe(this.createRequest(parameters, callback));
   }
 
   deleteCustomization(params, callback) {
