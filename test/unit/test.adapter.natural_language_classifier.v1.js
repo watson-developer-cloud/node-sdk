@@ -5,6 +5,7 @@ const watson = require('../../index');
 const nock = require('nock');
 const fs = require('fs');
 const extend = require('extend');
+const pick = require('object.pick');
 
 const service = {
   username: 'foo',
@@ -176,7 +177,10 @@ describe('natural_language_classifer', function() {
       classifier_id: 'good',
       collection: { text: 'text' },
     };
-
-    natural_language_classifier.classifyCollection(params, goodRequest);
+    const req = natural_language_classifier.classifyCollection(params, goodRequest);
+    const body = Buffer.from(req.body).toString('ascii');
+    assert.deepEqual(JSON.parse(body), pick(params, ['collection']));
+    assert.equal(req.method, 'POST');
+    assert.equal(req.uri.href, 'http://ibm.com:80/v1/classifiers/good/classify_collection');
   });
 });
