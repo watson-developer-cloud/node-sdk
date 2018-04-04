@@ -523,6 +523,25 @@ describe('visual_recognition', function() {
     });
   });
 
+  describe('getCoreMlModel()', function() {
+    it('should check no parameters provided', function() {
+      visual_recognition.getCoreMlModel({}, missingParameter);
+      visual_recognition.getCoreMlModel(null, missingParameter);
+      visual_recognition.getCoreMlModel(undefined, missingParameter);
+    });
+
+    it('should generate a valid payload ', function() {
+      const params = { classifier_id: 'foo' };
+
+      const req = visual_recognition.getCoreMlModel(params, noop);
+      assert.equal(
+        req.uri.href,
+        service.url + '/v3/classifiers/foo/core_ml_model?' + api_key_qs + '&' + version_qs
+      );
+      assert.equal(req.method, 'GET');
+    });
+  });
+
   describe('Print a warning for deprecated methods()', function() {
     let spy;
     beforeEach(function() {

@@ -72,7 +72,7 @@ const createWithJson = extend(
 );
 
 describe('natural_language_classifer', function() {
-  it('should fail if no parameters are provided for create, classify, status and delete requests', function() {
+  it('should fail if no parameters are provided for create, classify, classifyCollection, status and delete requests', function() {
     natural_language_classifier.classify({}, missingParameter);
     natural_language_classifier.classify(null, missingParameter);
     natural_language_classifier.classify(undefined, missingParameter);
@@ -88,9 +88,13 @@ describe('natural_language_classifer', function() {
     natural_language_classifier.remove({}, missingParameter);
     natural_language_classifier.remove(null, missingParameter);
     natural_language_classifier.remove(undefined, missingParameter);
+
+    natural_language_classifier.classifyCollection({}, missingParameter);
+    natural_language_classifier.classifyCollection(null, missingParameter);
+    natural_language_classifier.classifyCollection(undefined, missingParameter);
   });
 
-  it('should fail if no classifier is provided for classify, status and delete requests', function() {
+  it('should fail if no classifier is provided for classify, status, classifyCollection, and delete requests', function() {
     natural_language_classifier.classify(emptyData, missingParameter);
     natural_language_classifier.classify(emptyClassifier, missingParameter);
     natural_language_classifier.classify(nullClassifier, missingParameter);
@@ -110,6 +114,13 @@ describe('natural_language_classifer', function() {
     natural_language_classifier.remove(undefinedClassifier, missingParameter);
     natural_language_classifier.remove(emptyDataClassifier, missingParameter);
     natural_language_classifier.remove(nullDataClassifier, missingParameter);
+
+    natural_language_classifier.classifyCollection(emptyData, missingParameter);
+    natural_language_classifier.classifyCollection(emptyClassifier, missingParameter);
+    natural_language_classifier.classifyCollection(nullClassifier, missingParameter);
+    natural_language_classifier.classifyCollection(undefinedClassifier, missingParameter);
+    natural_language_classifier.classifyCollection(emptyDataClassifier, missingParameter);
+    natural_language_classifier.classifyCollection(nullDataClassifier, missingParameter);
   });
 
   it('should fail if no data provided create and classify requests', function() {
@@ -158,5 +169,14 @@ describe('natural_language_classifer', function() {
 
     params.training_data = [{ json: 'bad' }];
     natural_language_classifier.create(params, invalidFormatParameter);
+  });
+
+  it('should classify collection', function() {
+    const params = {
+      classifier_id: 'good',
+      collection: { text: 'text' },
+    };
+
+    natural_language_classifier.classifyCollection(params, goodRequest);
   });
 });
