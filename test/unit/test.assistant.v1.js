@@ -2,7 +2,6 @@
 
 const assert = require('assert');
 const watson = require('../../index');
-const sinon = require('sinon');
 const nock = require('nock');
 const extend = require('extend');
 const pick = require('object.pick');

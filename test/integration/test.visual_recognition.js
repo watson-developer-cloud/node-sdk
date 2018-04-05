@@ -121,7 +121,6 @@ describe('visual_recognition_integration', function() {
         assert.equal(result.images[0].faces.length, 1, 'There should be exactly one face detected'); // note: the api was sometimes failing to detect any faces right after the release
         const face = result.images[0].faces[0];
         assert.equal(face.gender.gender, 'MALE');
-        assert.equal(face.identity.name, 'Barack Obama');
         done();
       });
     });
@@ -147,7 +146,6 @@ describe('visual_recognition_integration', function() {
         assert.equal(result.images[0].faces.length, 1, 'There should be exactly one face detected'); // note: the api was sometimes failing to detect any faces right after the release
         const face = result.images[0].faces[0];
         assert.equal(face.gender.gender, 'MALE');
-        assert.equal(face.identity.name, 'Barack Obama');
         done();
       });
     });
