@@ -244,9 +244,7 @@ describe('visual_recognition_integration_custom_classifiers', function() {
       return new Promise(function(resolve, reject) {
         logit('Classifing with classifier_id = ' + classifier_id); // eslint-disable-line
         const params = {
-          images_file: fs.createReadStream(
-            __dirname + '/../resources/183px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg'
-          ),
+          images_file: fs.createReadStream(__dirname + '/../resources/potato.jpeg'),
           classifier_ids: [classifier_id],
           threshold: '0.9',
         };
@@ -257,11 +255,8 @@ describe('visual_recognition_integration_custom_classifiers', function() {
           }
           logit(JSON.stringify(result, null, 2));
           assert.equal(result.images_processed, 1);
-          assert.equal(
-            result.images[0].image,
-            '183px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg'
-          );
-          assert.equal(result.images[0].classifiers.length, 0);
+          assert.equal(result.images[0].image, 'potato.jpeg');
+          assert.equal(result.images[0].classifiers[0].classes.length, 0);
           assert(result.custom_classes > 0);
           resolve();
         });
