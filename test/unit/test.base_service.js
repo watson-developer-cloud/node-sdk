@@ -124,4 +124,17 @@ describe('BaseService', function() {
     };
     assert.deepEqual(actual, expected);
   });
+
+  it('should set header with access_token parameter', function() {
+    const token = 'abc-1234';
+    const instance = new TestService({ access_token: token });
+    assert.equal(instance._options.headers['Authorization'], `Bearer ${token}`);
+  });
+
+  it('should update header with setAccessToken', function() {
+    const instance = new TestService({ access_token: 'abc-1234' });
+    const newToken = 'zyx-9876';
+    instance.setAccessToken(newToken);
+    assert.equal(instance._options.headers['Authorization'], `Bearer ${newToken}`);
+  });
 });
