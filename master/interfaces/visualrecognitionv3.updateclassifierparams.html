@@ -105,7 +105,7 @@
 					<div class="tsd-signature tsd-kind-icon">classifier_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/795084f/visual-recognition/v3-generated.ts#L477">visual-recognition/v3-generated.ts:477</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a9b63ac/visual-recognition/v3-generated.ts#L519">visual-recognition/v3-generated.ts:519</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -120,12 +120,12 @@
 					<div class="tsd-signature tsd-kind-icon">classname_<wbr>positive_<wbr>examples<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">FileObject</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/795084f/visual-recognition/v3-generated.ts#L479">visual-recognition/v3-generated.ts:479</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a9b63ac/visual-recognition/v3-generated.ts#L521">visual-recognition/v3-generated.ts:521</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>A .zip file of images that depict the visual subject of a class in the classifier. The positive examples create or update classes in the classifier. You can include more than one positive example file in a call. Append <code>_positive_examples</code> to the form name. The prefix is used to name the class. For example, <code>goldenretriever_positive_examples</code> creates the class <code>goldenretriever</code>.  Include at least 10 images in .jpg or .png format. The minimum recommended image resolution is 32X32 pixels. The maximum number of images is 10,000 images or 100 MB per .zip file.  Encode special characters in the file name in UTF-8.</p>
+							<p>A .zip file of images that depict the visual subject of a class in the classifier. The positive examples create or update classes in the classifier. You can include more than one positive example file in a call.  Specify the parameter name by appending <code>_positive_examples</code> to the class name. For example, <code>goldenretriever_positive_examples</code> creates the class <code>goldenretriever</code>.  Include at least 10 images in .jpg or .png format. The minimum recommended image resolution is 32X32 pixels. The maximum number of images is 10,000 images or 100 MB per .zip file.  Encode special characters in the file name in UTF-8.</p>
 						</div>
 					</div>
 				</section>
@@ -135,12 +135,12 @@
 					<div class="tsd-signature tsd-kind-icon">negative_<wbr>examples<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">FileObject</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/795084f/visual-recognition/v3-generated.ts#L481">visual-recognition/v3-generated.ts:481</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a9b63ac/visual-recognition/v3-generated.ts#L523">visual-recognition/v3-generated.ts:523</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>A compressed (.zip) file of images that do not depict the visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images.  Encode special characters in the file name in UTF-8.</p>
+							<p>A .zip file of images that do not depict the visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images.  Encode special characters in the file name in UTF-8.</p>
 						</div>
 					</div>
 				</section>
