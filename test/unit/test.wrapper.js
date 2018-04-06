@@ -39,7 +39,7 @@ describe('wrapper', function() {
         use_unauthenticated: false,
         version: 'v1',
       });
-    }, /use_unauthenticated/);
+    }, /Insufficient credentials/);
   });
 
   it('should check for missing version', function() {

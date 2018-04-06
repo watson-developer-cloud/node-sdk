@@ -38,6 +38,7 @@ export interface UserOptions {
   use_unauthenticated?: boolean;
   headers?: HeaderOptions;
   token?: string;
+  access_token?: string;
 }
 
 export interface BaseServiceOptions extends UserOptions {
@@ -52,18 +53,19 @@ export interface Credentials {
   password: string;
   api_key: string;
   url: string;
+  access_token: string;
 }
 
 function hasCredentials(obj: any): boolean {
-  return obj && ((obj.username && obj.password) || obj.api_key);
+  return obj && ((obj.username && obj.password) || obj.api_key || obj.access_token);
 }
 
 function hasBasicCredentials(obj: any): boolean {
   return obj && obj.username && obj.password;
 }
 
-function acceptsApiKey(name: string): boolean {
-  return name === 'visual_recognition';
+function hasAccessToken(obj: any): boolean {
+  return obj && obj.access_token;
 }
 
 export class BaseService {
@@ -132,7 +134,24 @@ export class BaseService {
     if (this._options.url) {
       _credentials.url = this._options.url;
     }
+    if (this._options.access_token) {
+      _credentials.access_token = this._options.access_token;
+    }
     return _credentials;
+  }
+
+  /**
+   * Set an IAM access token to authenticate the service with
+   * The SDK will assume this token is valid and that this method
+   * will be used to set a new token upon expiration.
+   *
+   * @param {string} accessToken - Valid IAM access token
+   * @returns {void}
+   */
+  public setAccessToken(accessToken: string) {
+    this._options.access_token = accessToken;
+    this._options.headers = this._options.headers || {};
+    this._options.headers.Authorization = `Bearer ${accessToken}`;
   }
 
   /**
@@ -162,24 +181,12 @@ export class BaseService {
       _options
     );
     if (!_options.use_unauthenticated) {
-      if (!hasCredentials(_options) && acceptsApiKey(this.name)) {
-        throw new Error(
-          `Argument error: api_key or username/password are required for ${this.name
-            .toUpperCase()
-            .replace(
-              /_/g,
-              ' '
-            )} ${this.serviceVersion.toUpperCase()} unless use_unauthenticated is set`
-        );
-      } else if (!hasCredentials(_options)) {
-        throw new Error(
-          `Argument error: username and password are required for ${this.name
-            .toUpperCase()
-            .replace(
-              /_/g,
-              ' '
-            )} ${this.serviceVersion.toUpperCase()} unless use_unauthenticated is set`
-        );
+      if (!hasCredentials(_options)) {
+        const errorMessage = 'Insufficient credentials provided in ' +
+          'constructor argument. Refer to the documentation for the ' +
+          'required parameters. Common examples are username/password, ' +
+          'api_key, and access_token.';
+        throw new Error(errorMessage);
       }
       if (hasBasicCredentials(_options)) {
         // Calculate and add Authorization header to base options
@@ -187,6 +194,9 @@ export class BaseService {
           `${_options.username}:${_options.password}`
         ).toString('base64');
         const authHeader = { Authorization: `Basic ${encodedCredentials}` };
+        _options.headers = extend(authHeader, _options.headers);
+      } else if (hasAccessToken(_options)) {
+        const authHeader = { Authorization: `Bearer ${_options.access_token}` };
         _options.headers = extend(authHeader, _options.headers);
       } else {
         _options.qs = extend({ api_key: _options.api_key }, _options.qs);
@@ -221,12 +231,14 @@ export class BaseService {
     const _password: string = process.env[`${_name}_PASSWORD`] || process.env[`${_nameWithUnderscore}_PASSWORD`];
     const _apiKey: string = process.env[`${_name}_API_KEY`] || process.env[`${_nameWithUnderscore}_API_KEY`];
     const _url: string = process.env[`${_name}_URL`] || process.env[`${_nameWithUnderscore}_URL`];
+    const _accessToken: string = process.env[`${_name}_ACCESS_TOKEN`] || process.env[`${_nameWithUnderscore}_ACCESS_TOKEN`];
 
     return {
       username: _username,
       password: _password,
       api_key: _apiKey,
-      url: _url
+      url: _url,
+      access_token: _accessToken
     };
   }
   /**
