@@ -105,15 +105,15 @@ describe('visual_recognition', function() {
     });
 
     it('should throw when no/insufficient credentials are provided', () => {
-      assert.throws(() => new watson.VisualRecognitionV3(), /use_unauthenticated/);
-      assert.throws(() => new watson.VisualRecognitionV3({}), /use_unauthenticated/);
+      assert.throws(() => new watson.VisualRecognitionV3(), /Insufficient credentials/);
+      assert.throws(() => new watson.VisualRecognitionV3({}), /Insufficient credentials/);
       assert.throws(
         () => new watson.VisualRecognitionV3({ version: '2016-05-20' }),
-        /use_unauthenticated/
+        /Insufficient credentials/
       );
       assert.throws(
         () => new watson.VisualRecognitionV3({ username: 'foo' }),
-        /use_unauthenticated/
+        /Insufficient credentials/
       );
     });
 
@@ -520,6 +520,25 @@ describe('visual_recognition', function() {
           done();
         }
       );
+    });
+  });
+
+  describe('getCoreMlModel()', function() {
+    it('should check no parameters provided', function() {
+      visual_recognition.getCoreMlModel({}, missingParameter);
+      visual_recognition.getCoreMlModel(null, missingParameter);
+      visual_recognition.getCoreMlModel(undefined, missingParameter);
+    });
+
+    it('should generate a valid payload ', function() {
+      const params = { classifier_id: 'foo' };
+
+      const req = visual_recognition.getCoreMlModel(params, noop);
+      assert.equal(
+        req.uri.href,
+        service.url + '/v3/classifiers/foo/core_ml_model?' + api_key_qs + '&' + version_qs
+      );
+      assert.equal(req.method, 'GET');
     });
   });
 

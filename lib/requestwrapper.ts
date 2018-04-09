@@ -110,18 +110,19 @@ export function formatErrorIfExists(cb: Function): request.RequestCallback {
       });
       body = null;
     }
-
     // If we still don't have an error and there was an error...
     if (!error && (response.statusCode < 200 || response.statusCode >= 300)) {
       // The JSON stringify for the error below is for the Dialog service
       // It stringifies "[object Object]" into the correct error (PR #445)
       error = new Error(typeof body === 'object' ? JSON.stringify(body) : body);
       error.code = response.statusCode;
-      if (error.code === 401 || error.code === 403) {
-        error.body = error.message;
-        error.message = 'Unauthorized: Access is denied due to invalid credentials.';
-      }
       body = null;
+    }
+
+    // ensure a more descriptive error message
+    if (error && (error.code === 401 || error.code === 403)) {
+      error.body = error.message;
+      error.message = 'Unauthorized: Access is denied due to invalid credentials.';
     }
     if (error && response && response.headers) {
       error[globalTransactionId] = response.headers[globalTransactionId];

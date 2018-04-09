@@ -9,7 +9,7 @@ var nlu = new NaturalLanguageUnderstandingV1({
   // NATURAL_LANGUAGE_UNDERSTANDING_USERNAME &  NATURAL_LANGUAGE_UNDERSTANDING_PASSWORD
   // username: '<username>'.
   // password: '<password>',
-  version: '2017-02-27',
+  version: '2018-04-05',
   url: 'https://gateway.watsonplatform.net/natural-language-understanding/api/'
 });
 

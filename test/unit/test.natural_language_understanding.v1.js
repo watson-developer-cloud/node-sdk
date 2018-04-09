@@ -23,7 +23,7 @@ describe('natural_language_understanding', function() {
     nlu = new watson.NaturalLanguageUnderstandingV1({
       username: 'user',
       password: 'pass',
-      version: '2017-02-27',
+      version: '2018-04-05',
     });
     nock.disableNetConnect();
   });
@@ -72,7 +72,7 @@ describe('natural_language_understanding', function() {
         ],
       });
       const nluHyphenated = new watson.NaturalLanguageUnderstandingV1({
-        version: '2017-02-27',
+        version: '2018-04-05',
       });
       assert(nluHyphenated);
       assert.equal(nluHyphenated.getCredentials().username, 'hyphenated-user');
@@ -84,7 +84,7 @@ describe('natural_language_understanding', function() {
       process.env.NATURAL_LANGUAGE_UNDERSTANDING_URL =
         'https://gateway.watsonplatform.net/natural-language-understanding/api';
       const nluUnderscore = new watson.NaturalLanguageUnderstandingV1({
-        version: '2017-02-27',
+        version: '2018-04-05',
       });
       assert(nluUnderscore);
       assert.equal(nluUnderscore.getCredentials().username, 'user');
@@ -116,7 +116,7 @@ describe('natural_language_understanding', function() {
 
   it('analyze()', function(done) {
     const mockApi = nock(watson.NaturalLanguageUnderstandingV1.URL)
-      .post('/v1/analyze?version=' + '2017-02-27')
+      .post('/v1/analyze?version=' + '2018-04-05')
       .reply(200, {});
 
     const options = {
@@ -133,7 +133,7 @@ describe('natural_language_understanding', function() {
 
   it('should list models', function(done) {
     const mockApi = nock(watson.NaturalLanguageUnderstandingV1.URL)
-      .get('/v1/models?version=' + '2017-02-27')
+      .get('/v1/models?version=' + '2018-04-05')
       .reply(200, {});
 
     nlu.listModels({}, err => {
@@ -160,7 +160,7 @@ describe('natural_language_understanding', function() {
           '/v1/models/' +
           payload.model_id +
           '?version=' +
-          '2017-02-27'
+          '2018-04-05'
       );
       assert.equal(req.method, 'DELETE');
     });
