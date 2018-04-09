@@ -20,7 +20,6 @@ import GeneratedNaturalLanguageUnderstandingV1 = require('./v1-generated');
 class NaturalLanguageUnderstandingV1 extends GeneratedNaturalLanguageUnderstandingV1 {
   static VERSION_DATE_2016_01_23: string = '2016-01-23';
   static VERSION_DATE_2017_02_27: string = '2017-02-27';
-  static VERSION_DATE_2018_04_05: string = '2018-04-05';
 
   constructor(options) {
     // For backward compatibility, allow version to be passed in version_date.
