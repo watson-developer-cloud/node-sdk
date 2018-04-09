@@ -141,17 +141,21 @@ export class BaseService {
   }
 
   /**
-   * Set an IAM access token to authenticate the service with
-   * The SDK will assume this token is valid and that this method
-   * will be used to set a new token upon expiration.
+   * Set an IAM access token to use when authenticating with the service.
+   * The access token should be valid and not yet expired.
    *
-   * @param {string} accessToken - Valid IAM access token
+   * By using this method, you accept responsibility for managing the
+   * access token yourself. You must set a new access token before this
+   * one expires. Failing to do so will result in authentication errors
+   * after this token expires.
+   *
+   * @param {string} access_token - A valid, non-expired IAM access token
    * @returns {void}
    */
-  public setAccessToken(accessToken: string) {
-    this._options.access_token = accessToken;
+  public setAccessToken(access_token: string) { // tslint:disable-line variable-name
+    this._options.access_token = access_token;
     this._options.headers = this._options.headers || {};
-    this._options.headers.Authorization = `Bearer ${accessToken}`;
+    this._options.headers.Authorization = `Bearer ${access_token}`;
   }
 
   /**
