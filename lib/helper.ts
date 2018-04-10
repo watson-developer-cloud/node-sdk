@@ -19,7 +19,6 @@ import fileType = require('file-type');
 import { isReadable } from 'isstream';
 import { lookup } from 'mime-types';
 import { basename } from 'path';
-import request = require('request');
 
 // exported interfaces
 export interface FileObject {
@@ -241,78 +240,4 @@ export function toLowerKeys(obj: Object): Object {
     );
   }
   return _obj;
-}
-
-/**
- * make a request for an access token
- * @param {string} keyValue - user key used to authenticate the token request
- * @param {Function} cb - callback function to pass result to
- * @param {boolean} refresh - flag specifying if refresh token is being used. default is false
- * @param {string} tokenType - type of access token to retrieve. default is 'iam'
- * @returns {void}
- */
-export function tokenRequest(
-  keyValue: string,
-  cb: Function,
-  refresh: boolean = false,
-  tokenType: string = 'iam'
-): void {
-  const requestOptions = getTokenRequestOptions(tokenType, keyValue, refresh);
-
-  request.post(requestOptions, (err, res, body) => {
-    if (err) {
-      throw new Error(err);
-    } else if (res.statusCode < 200 || res.statusCode >= 300) {
-      throw new Error(JSON.stringify(res, null, 2));
-    } else {
-      const tokenResponse = JSON.parse(body);
-      cb(tokenResponse);
-    }
-  });
-}
-
-/**
- * get token-type-dependent request options
- * @param {string} tokenType - type of access token to retrieve
- * @param {string} keyValue -user key used to authenticate the token request
- * @param {boolean} refresh - flag specifying if refresh token is being used
- * @returns {Object}
- */
-function getTokenRequestOptions(
-  tokenType: string,
-  keyValue: string,
-  refresh: boolean
-): any {
-  tokenType = tokenType.toLowerCase();
-  const generalOptions = {
-    iam: {
-      url: 'https://iam.ng.bluemix.net/oidc/token',
-      headers: {
-        'Content-type': 'application/x-www-form-urlencoded',
-        'Authorization': 'Basic Yng6Yng=',
-      }
-    }
-  };
-
-  const grantOptions = {
-    iam: {
-      refresh: {
-        'refresh_token': keyValue,
-        'grant_type': 'refresh_token'
-      },
-      access: {
-        'apikey': keyValue,
-        'grant_type': 'urn:ibm:params:oauth:grant-type:apikey'
-      }
-    }
-  };
-
-  const optionsToUse = generalOptions[tokenType];
-  if (refresh) {
-    optionsToUse.form = grantOptions[tokenType].refresh;
-  } else {
-    optionsToUse.form = grantOptions[tokenType].access;
-  }
-
-  return optionsToUse;
 }

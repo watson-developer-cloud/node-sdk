@@ -20,7 +20,8 @@ import bufferFrom = require('buffer-from');
 import extend = require('extend');
 import request = require('request');
 import vcapServices = require('vcap_services');
-import { stripTrailingSlash, tokenRequest } from './helper';
+import { stripTrailingSlash } from './helper';
+import { refreshToken, requestToken } from './iamTokenManager';
 import { sendRequest } from './requestwrapper';
 
 // custom interfaces
@@ -41,6 +42,7 @@ export interface UserOptions {
   token?: string;
   access_token?: string;
   iam_apikey?: string;
+  iam_url?: string;
 }
 
 export interface BaseServiceOptions extends UserOptions {
@@ -51,24 +53,32 @@ export interface BaseServiceOptions extends UserOptions {
 }
 
 export interface Credentials {
-  username: string;
-  password: string;
-  api_key: string;
-  url: string;
-  access_token: string;
+  username?: string;
+  password?: string;
+  api_key?: string;
+  url?: string;
+  access_token?: string;
   iam_apikey?: string;
+  iam_url?: string;
 }
 
-export interface TokenData {
-  access_token?: string;
-  refresh_token?: string;
-  token_type?: string;
-  expires_in?: number;
-  expiration?: number;
+export interface IamTokenData {
+  access_token: string;
+  refresh_token: string;
+  token_type: string;
+  expires_in: number;
+  expiration: number;
 }
 
 function hasCredentials(obj: any): boolean {
-  return obj && ((obj.username && obj.password) || obj.api_key || obj.access_token || obj.iam_apikey);
+  return (
+    obj &&
+    ((obj.username && obj.password) ||
+      obj.api_key ||
+      obj.access_token ||
+      obj.refresh_token ||
+      obj.iam_apikey)
+  );
 }
 
 function hasBasicCredentials(obj: any): boolean {
@@ -79,17 +89,13 @@ function hasAccessToken(obj: any): boolean {
   return obj && obj.access_token;
 }
 
-function supportsIamTokens(tokenInfo: any): boolean {
-  return !!tokenInfo;
-}
-
 export class BaseService {
   static URL: string;
   name: string;
   serviceVersion: string;
   protected _options: BaseServiceOptions;
   protected serviceDefaults: object;
-  protected tokenInfo: TokenData;
+  protected tokenInfo: IamTokenData;
 
   /**
    * Internal base class that other services inherit from
@@ -127,6 +133,7 @@ export class BaseService {
       options,
       _options
     );
+    this.tokenInfo = {} as IamTokenData;
   }
 
   /**
@@ -156,6 +163,9 @@ export class BaseService {
     if (this._options.iam_apikey) {
       _credentials.iam_apikey = this._options.iam_apikey;
     }
+    if (this._options.iam_url) {
+      _credentials.iam_url = this._options.iam_url;
+    }
     return _credentials;
   }
 
@@ -179,47 +189,43 @@ export class BaseService {
 
 /**
  * Wrapper around `sendRequest` that manages access tokens if applicable
- * 1. If tokens are unsupported or not being used, call `sendRequest`
- * 2. If tokens are being used but no token is saved, request an access token
- * 3. If a token is saved but it is expired, refresh the access token
- * 4. If token is saved and valid, use it to authenticate the service request
+ * 1. If user gives an iam_apikey, start managing tokens
+ *   a. If user gives an iam_apikey and no token is saved, request an access token
+ *   b. If a token is saved but is expired, refresh the token
+ *   c. If token is saved and valid, use it to authenticate the service request
+ * 2. If the user gives the access token, basic auth credentials, or an api key:
+ *    don't manage tokens and call sendRequest
  *
  * @param {Object} parameters - service request options passed in by user
  * @param {Function} _callback - callback function to pass the reponse back to
  * @returns {ReadableStream|undefined}
  */
   protected createRequest(parameters, _callback) {
-    // condition 1: using basic or other auth, no need for any tokens
-    if (this.notUsingTokens()) {
-      return sendRequest(parameters, _callback);
-
-      // condition 2: no token has been retrieved, make a call to get the token
-    } else if (this.needToRequestToken()) {
-      tokenRequest(this._options.iam_apikey, (tokenResponse) => {
-        this.setTokenObject(tokenResponse);
+    const URL = this._options.iam_url || 'https://iam.ng.bluemix.net/identity/token';
+    if (this.managingTokens()) {
+      if (this.needToRequestToken()) {
+        requestToken(this._options.iam_apikey, URL, (tokenResponse) => {
+          this.saveTokenInfo(tokenResponse);
+          parameters.defaultOptions.headers.Authorization =
+            `Bearer ${this.tokenInfo.access_token}`;
+          return sendRequest(parameters, _callback);
+        });
+      } else if (this.tokenIsExpired()) {
+        refreshToken(this.tokenInfo.refresh_token, URL, (tokenResponse) => {
+          this.saveTokenInfo(tokenResponse);
+          parameters.defaultOptions.headers.Authorization =
+            `Bearer ${this.tokenInfo.access_token}`;
+          return sendRequest(parameters, _callback);
+        });
+      } else {
         parameters.defaultOptions.headers.Authorization =
           `Bearer ${this.tokenInfo.access_token}`;
         return sendRequest(parameters, _callback);
-      });
-
-      // condition 3: the token was retrieved, but has expired
-    } else if (this.tokenIsExpired()) {
-      tokenRequest(this.tokenInfo.refresh_token, (tokenResponse) => {
-        this.setTokenObject(tokenResponse);
-        parameters.defaultOptions.headers.Authorization =
-          `Bearer ${this.tokenInfo.access_token}`;
-        return sendRequest(parameters, _callback);
-        // this 'true' argument specifies that we're refreshing an existing token
-      }, true);
-
-      // condition 4: the token is good to go, use it as is
+      }
     } else {
-      parameters.defaultOptions.headers.Authorization =
-        `Bearer ${this.tokenInfo.access_token}`;
       return sendRequest(parameters, _callback);
     }
   }
-
   /**
    * @private
    * @param {UserOptions} options
@@ -317,45 +323,46 @@ export class BaseService {
    */
   private getCredentialsFromBluemix(vcapServicesName: string): Credentials {
     let _credentials: Credentials;
+    let temp: any;
     if (this.name === 'visual_recognition') {
-      _credentials = vcapServices.getCredentials('watson_vision_combined');
+      temp = vcapServices.getCredentials('watson_vision_combined');
     } else {
-      _credentials = vcapServices.getCredentials(vcapServicesName);
+      temp = vcapServices.getCredentials(vcapServicesName);
     }
+    // convert an iam apikey to use the identifier iam_apikey
+    if (temp.apikey && temp.iam_apikey_name) {
+      temp.iam_apikey = temp.apikey;
+    }
+    _credentials = temp;
     return _credentials;
   }
-
   /**
-   * Determines if tokens are being used for authentication or not
+   * Determines if access tokens need to be internally managed based on
+   * user provided input.
    * @private
    * @returns {boolean}
    */
-  private notUsingTokens(): boolean {
-    // if tokens are not supported, tokenInfo will be undefined
-    // if tokens are supported but the user chose to pass in
-    // username and password, use basic auth
-    return !supportsIamTokens(this.tokenInfo) || !this._options.iam_apikey;
+  private managingTokens(): boolean {
+    return !!this._options.iam_apikey;
   }
-
   /**
-   * Determines if an access token is already stored
+   * Determines if a token needs to be requested based on the presence
+   * of an access_token
    * @private
    * @returns {boolean}
    */
   private needToRequestToken(): boolean {
     return !this.tokenInfo.access_token;
   }
-
   /**
    * Saves the token response data to the object state
    * @private
-   * @param {TokenData} tokenResponse
+   * @param {IamTokenData} tokenResponse
    * @returns {void}
    */
-  private setTokenObject(tokenResponse: TokenData): void {
+  private saveTokenInfo(tokenResponse: IamTokenData): void {
     this.tokenInfo = extend({}, tokenResponse);
   }
-
   /**
    * Checks if token is nearing its expiration time
    * The token should be refreshed if past a certain percentage of its time to live
@@ -363,11 +370,13 @@ export class BaseService {
    * @returns {boolean}
    */
   private tokenIsExpired(): boolean {
-     // use a buffer to prevent the edge case of the token
-     // expiring before the request could be made
-     // the buffer will be a fraction of the total TTL
+    // use a buffer to prevent the edge case of the token
+    // expiring before the request could be made
+    // the buffer will be a fraction of the total TTL
     const fractionOfTtl = 0.8;
-    return this.tokenInfo.expiration * fractionOfTtl
+    const timeToLive = this.tokenInfo.expires_in;
+    const expireTime = this.tokenInfo.expiration;
+    return expireTime - (timeToLive * (1.0 - fractionOfTtl))
       < Math.floor(Date.now() / 1000);
   }
 }
