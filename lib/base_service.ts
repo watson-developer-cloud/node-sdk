@@ -204,14 +204,19 @@ export class BaseService {
     const URL = this._options.iam_url || 'https://iam.ng.bluemix.net/identity/token';
     if (this.managingTokens()) {
       if (this.needToRequestToken()) {
-        requestToken(this._options.iam_apikey, URL, (tokenResponse) => {
+        const params = { iam_apikey: this._options.iam_apikey, iam_url: URL };
+        requestToken(params, tokenResponse => {
           this.saveTokenInfo(tokenResponse);
           parameters.defaultOptions.headers.Authorization =
             `Bearer ${this.tokenInfo.access_token}`;
           return sendRequest(parameters, _callback);
         });
       } else if (this.tokenIsExpired()) {
-        refreshToken(this.tokenInfo.refresh_token, URL, (tokenResponse) => {
+        const params = {
+          refresh_token: this.tokenInfo.refresh_token,
+          iam_url: URL
+        };
+        refreshToken(params, tokenResponse => {
           this.saveTokenInfo(tokenResponse);
           parameters.defaultOptions.headers.Authorization =
             `Bearer ${this.tokenInfo.access_token}`;
@@ -304,7 +309,7 @@ export class BaseService {
     const _apiKey: string = process.env[`${_name}_API_KEY`] || process.env[`${_nameWithUnderscore}_API_KEY`];
     const _url: string = process.env[`${_name}_URL`] || process.env[`${_nameWithUnderscore}_URL`];
     const _accessToken: string = process.env[`${_name}_ACCESS_TOKEN`] || process.env[`${_nameWithUnderscore}_ACCESS_TOKEN`];
-    const _iamApiKey: string = process.env[`${_name}_PLATFORM_API_KEY`] || process.env[`${_nameWithUnderscore}_PLATFORM_API_KEY`];
+    const _iamApiKey: string = process.env[`${_name}_IAM_APIKEY`] || process.env[`${_nameWithUnderscore}_IAM_APIKEY`];
 
     return {
       username: _username,
@@ -332,6 +337,7 @@ export class BaseService {
     // convert an iam apikey to use the identifier iam_apikey
     if (temp.apikey && temp.iam_apikey_name) {
       temp.iam_apikey = temp.apikey;
+      delete temp.apikey;
     }
     _credentials = temp;
     return _credentials;

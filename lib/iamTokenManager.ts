@@ -16,27 +16,34 @@
 
 import request = require('request');
 
+export interface TokenRequestParams {
+  iam_apikey: string;
+  iam_url: string;
+}
+
+export interface TokenRefreshParams {
+  refresh_token: string;
+  iam_url: string;
+}
+
 /**
  * make a request for an access token
- * @param {string} apikey - api key used to authenticate the access token request
- * @param {string} url - IAM token retrieval endpoint
+ * @param {TokenRequestParams} params
+ * @param {string} params.iam_apikey - API key used to authenticate the access token request
+ * @param {string} params.iam_url - IAM token retrieval endpoint
  * @param {Function} cb - callback function to pass result to
  * @returns {void}
  */
-export function requestToken(
-  apikey: string,
-  url: string,
-  cb: Function
-): void {
+export function requestToken(params: TokenRequestParams, cb: Function): void {
   const requestOptions = {
-    url,
+    url: params.iam_url,
     headers: {
       'Content-type': 'application/x-www-form-urlencoded',
       Authorization: 'Basic Yng6Yng='
     },
     form: {
       grant_type: 'urn:ibm:params:oauth:grant-type:apikey',
-      apikey,
+      apikey: params.iam_apikey,
       response_type: 'cloud_iam'
     }
   };
@@ -54,25 +61,22 @@ export function requestToken(
 
 /**
  * make a request to refresh an access token
- * @param {string} refresh_token - token used to refresh an access token
- * @param {string} url - IAM token retrieval endpoint
+ * @param {TokenRefreshParams} params
+ * @param {string} params.refresh_token - Token used to refresh the access token
+ * @param {string} params.iam_url - IAM token retrieval endpoint
  * @param {Function} cb - callback function to pass result to
  * @returns {void}
  */
-export function refreshToken(
-  refresh_token: string, // tslint:disable-line variable-name
-  url: string,
-  cb: Function
-): void {
+export function refreshToken(params: TokenRefreshParams, cb: Function): void {
   const requestOptions = {
-    url,
+    url: params.iam_url,
     headers: {
       'Content-type': 'application/x-www-form-urlencoded',
       Authorization: 'Basic Yng6Yng='
     },
     form: {
       grant_type: 'refresh_token',
-      refresh_token
+      refresh_token: params.refresh_token
     }
   };
   request.post(requestOptions, (err, res, body) => {
