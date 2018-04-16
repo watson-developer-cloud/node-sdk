@@ -88,6 +88,30 @@ describe('BaseService', function() {
     assert.deepEqual(actual, expected);
   });
 
+  it('should handle iam apikey credential from VCAP_SERVICES', function() {
+    process.env.VCAP_SERVICES = JSON.stringify({
+      test: [
+        {
+          credentials: {
+            apikey: '123456789',
+            iam_apikey_description: 'Auto generated apikey...',
+            iam_apikey_name: 'auto-generated-apikey-111-222-333',
+            iam_role_crn: 'crn:v1:bluemix:public:iam::::serviceRole:Manager',
+            iam_serviceid_crn: 'crn:v1:staging:public:iam-identity::a/::serviceid:ServiceID-1234',
+            url: 'https://gateway.watsonplatform.net/test/api',
+          },
+        },
+      ],
+    });
+    const instance = new TestService();
+    const actual = instance.getCredentials();
+    const expected = {
+      iam_apikey: '123456789',
+      url: 'https://gateway.watsonplatform.net/test/api',
+    };
+    assert.deepEqual(actual, expected);
+  });
+
   it('should prefer hard-coded credentials over environment properties', function() {
     process.env.TEST_USERNAME = 'env_user';
     process.env.TEST_PASSWORD = 'env_pass';
@@ -123,18 +147,5 @@ describe('BaseService', function() {
       url: 'https://gateway.watsonplatform.net/test/api',
     };
     assert.deepEqual(actual, expected);
-  });
-
-  it('should set header with access_token parameter', function() {
-    const token = 'abc-1234';
-    const instance = new TestService({ access_token: token });
-    assert.equal(instance._options.headers['Authorization'], `Bearer ${token}`);
-  });
-
-  it('should update header with setAccessToken', function() {
-    const instance = new TestService({ access_token: 'abc-1234' });
-    const newToken = 'zyx-9876';
-    instance.setAccessToken(newToken);
-    assert.equal(instance._options.headers['Authorization'], `Bearer ${newToken}`);
   });
 });

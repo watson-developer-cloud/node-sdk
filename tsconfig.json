@@ -68,6 +68,7 @@
     "./text-to-speech/*.ts",
     "./speech-to-text/*.ts",
     "./authorization/*.ts",
+    "./iam-token-manager/*.ts",
     "./dialog/*.ts",
     "index.ts"
   ]
