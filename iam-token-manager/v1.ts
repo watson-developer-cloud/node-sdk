@@ -120,7 +120,6 @@ export class IamTokenManagerV1 {
     sendRequest(parameters, (error, body, response) => {
       cb(error, body);
     });
-
   }
 
   /**
