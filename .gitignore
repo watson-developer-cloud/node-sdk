@@ -29,6 +29,7 @@ text-to-speech/*.js
 speech-to-text/*.js
 authorization/*.js
 assistant/*.js
+iam-token-manager/*.js
 index.js
 .nyc_output
 **/*.d.ts

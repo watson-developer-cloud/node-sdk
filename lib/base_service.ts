@@ -40,7 +40,7 @@ export interface UserOptions {
   use_unauthenticated?: boolean;
   headers?: HeaderOptions;
   token?: string;
-  access_token?: string;
+  iam_access_token?: string;
   iam_apikey?: string;
   iam_url?: string;
 }
@@ -57,7 +57,7 @@ export interface Credentials {
   password?: string;
   api_key?: string;
   url?: string;
-  access_token?: string;
+  iam_access_token?: string;
   iam_apikey?: string;
   iam_url?: string;
 }
@@ -67,8 +67,7 @@ function hasCredentials(obj: any): boolean {
     obj &&
     ((obj.username && obj.password) ||
       obj.api_key ||
-      obj.access_token ||
-      obj.refresh_token ||
+      obj.iam_access_token ||
       obj.iam_apikey)
   );
 }
@@ -121,10 +120,10 @@ export class BaseService {
       options,
       _options
     );
-     if (options.iam_apikey || options.access_token) {
+     if (options.iam_apikey || options.iam_access_token) {
       this.tokenManager = new IamTokenManagerV1({
         iam_apikey: options.iam_apikey,
-        access_token: options.access_token,
+        iam_access_token: options.iam_access_token,
         iam_url: options.iam_url
       });
     } else {
@@ -153,8 +152,8 @@ export class BaseService {
     if (this._options.url) {
       _credentials.url = this._options.url;
     }
-    if (this._options.access_token) {
-      _credentials.access_token = this._options.access_token;
+    if (this._options.iam_access_token) {
+      _credentials.iam_access_token = this._options.iam_access_token;
     }
     if (this._options.iam_apikey) {
       _credentials.iam_apikey = this._options.iam_apikey;
@@ -174,11 +173,11 @@ export class BaseService {
    * one expires. Failing to do so will result in authentication errors
    * after this token expires.
    *
-   * @param {string} access_token - A valid, non-expired IAM access token
+   * @param {string} iam_access_token - A valid, non-expired IAM access token
    * @returns {void}
    */
-  public setAccessToken(access_token: string) { // tslint:disable-line variable-name
-    this.tokenManager.setAccessToken(access_token);
+  public setAccessToken(iam_access_token: string) { // tslint:disable-line variable-name
+    this.tokenManager.setAccessToken(iam_access_token);
   }
 
   /**
@@ -191,11 +190,14 @@ export class BaseService {
    * @returns {ReadableStream|undefined}
    */
   protected createRequest(parameters, _callback) {
-     if (this.usingTokenManager()) {
-      this.tokenManager.getManagedToken(accessToken => {
+     if (Boolean(this.tokenManager)) {
+      this.tokenManager.getToken((err, accessToken) => {
+        if (err) {
+          return _callback(err, null);
+        }
         parameters.defaultOptions.headers.Authorization =
           `Bearer ${accessToken}`;
-          return sendRequest(parameters, _callback);
+        return sendRequest(parameters, _callback);
       });
     } else {
       return sendRequest(parameters, _callback);
@@ -232,7 +234,7 @@ export class BaseService {
         const errorMessage = 'Insufficient credentials provided in ' +
           'constructor argument. Refer to the documentation for the ' +
           'required parameters. Common examples are username/password, ' +
-          'api_key, and access_token.';
+          'api_key, and iam_access_token.';
         throw new Error(errorMessage);
       }
       if (hasBasicCredentials(_options)) {
@@ -275,7 +277,7 @@ export class BaseService {
     const _password: string = process.env[`${_name}_PASSWORD`] || process.env[`${_nameWithUnderscore}_PASSWORD`];
     const _apiKey: string = process.env[`${_name}_API_KEY`] || process.env[`${_nameWithUnderscore}_API_KEY`];
     const _url: string = process.env[`${_name}_URL`] || process.env[`${_nameWithUnderscore}_URL`];
-    const _accessToken: string = process.env[`${_name}_ACCESS_TOKEN`] || process.env[`${_nameWithUnderscore}_ACCESS_TOKEN`];
+    const _iamAccessToken: string = process.env[`${_name}_IAM_ACCESS_TOKEN`] || process.env[`${_nameWithUnderscore}_IAM_ACCESS_TOKEN`];
     const _iamApiKey: string = process.env[`${_name}_IAM_APIKEY`] || process.env[`${_nameWithUnderscore}_IAM_APIKEY`];
     const _iamUrl: string = process.env[`${_name}_IAM_URL`] || process.env[`${_nameWithUnderscore}_IAM_URL`];
 
@@ -284,7 +286,7 @@ export class BaseService {
       password: _password,
       api_key: _apiKey,
       url: _url,
-      access_token: _accessToken,
+      iam_access_token: _iamAccessToken,
       iam_apikey: _iamApiKey,
       iam_url: _iamUrl
     };
@@ -310,15 +312,5 @@ export class BaseService {
     }
     _credentials = temp;
     return _credentials;
-  }
-  /**
-   * Determines if access tokens need to be internally managed based on
-   * user provided input.
-   * @private
-   * @returns {boolean}
-   */
-  private usingTokenManager(): boolean {
-    const result = Boolean(this.tokenManager);
-    return result;
   }
 }
