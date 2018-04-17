@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENS[params.headers] -2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -87,7 +87,7 @@ class TextToSpeechV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -114,7 +114,7 @@ class TextToSpeechV1 extends BaseService {
         method: 'GET',
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -165,7 +165,7 @@ class TextToSpeechV1 extends BaseService {
         encoding: null,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Content-Type': 'application/json',
           'Accept': _params.accept
         }, _params.headers),
@@ -213,7 +213,7 @@ class TextToSpeechV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -259,7 +259,7 @@ class TextToSpeechV1 extends BaseService {
         body,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -297,7 +297,7 @@ class TextToSpeechV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
         }, _params.headers),
       }),
     };
@@ -333,7 +333,7 @@ class TextToSpeechV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -365,7 +365,7 @@ class TextToSpeechV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -412,7 +412,7 @@ class TextToSpeechV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Content-Type': 'application/json',
         }, _params.headers),
       }),
@@ -463,7 +463,7 @@ class TextToSpeechV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Content-Type': 'application/json',
         }, _params.headers),
       }),
@@ -506,7 +506,7 @@ class TextToSpeechV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Content-Type': 'application/json',
         }, _params.headers),
       }),
@@ -545,7 +545,7 @@ class TextToSpeechV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
         }, _params.headers),
       }),
     };
@@ -583,7 +583,7 @@ class TextToSpeechV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -620,7 +620,7 @@ class TextToSpeechV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
         }, _params.headers),
       }),

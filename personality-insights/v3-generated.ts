@@ -99,7 +99,7 @@ class PersonalityInsightsV3 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': _params.content_type,
           'Content-Language': _params.content_language,
@@ -150,7 +150,7 @@ class PersonalityInsightsV3 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'text/csv',
           'Content-Type': _params.content_type,
           'Content-Language': _params.content_language,

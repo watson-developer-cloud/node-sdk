@@ -82,7 +82,7 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -110,7 +110,7 @@ class SpeechToTextV1 extends BaseService {
         method: 'GET',
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -180,7 +180,7 @@ class SpeechToTextV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': _params.content_type
         }, _params.headers),
@@ -222,7 +222,7 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -250,7 +250,7 @@ class SpeechToTextV1 extends BaseService {
         method: 'GET',
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -330,7 +330,7 @@ class SpeechToTextV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': _params.content_type
         }, _params.headers),
@@ -368,7 +368,7 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -408,7 +408,7 @@ class SpeechToTextV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -446,7 +446,7 @@ class SpeechToTextV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -495,7 +495,7 @@ class SpeechToTextV1 extends BaseService {
         body,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -533,7 +533,7 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -571,7 +571,7 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -604,7 +604,7 @@ class SpeechToTextV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -642,7 +642,7 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -687,7 +687,7 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -725,7 +725,7 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -783,7 +783,7 @@ class SpeechToTextV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'text/plain',
         }, _params.headers),
@@ -823,7 +823,7 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -863,7 +863,7 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -901,7 +901,7 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -955,7 +955,7 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -999,7 +999,7 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -1039,7 +1039,7 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -1079,7 +1079,7 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -1124,7 +1124,7 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -1171,7 +1171,7 @@ class SpeechToTextV1 extends BaseService {
         body,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -1209,7 +1209,7 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -1247,7 +1247,7 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -1280,7 +1280,7 @@ class SpeechToTextV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -1318,7 +1318,7 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -1361,7 +1361,7 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -1404,7 +1404,7 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -1459,7 +1459,7 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': _params.content_type,
           'Contained-Content-Type': _params.contained_content_type
@@ -1500,7 +1500,7 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -1540,7 +1540,7 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -1578,7 +1578,7 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true,{
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
