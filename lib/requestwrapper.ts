@@ -40,24 +40,6 @@ function parsePath(path: string, params: Object): string {
   }, path);
 }
 
-export function addResponseHeaders(detailedResponse: boolean, cb: Function): request.RequestCallback {
-/*   if (options.detailedResponse) {
-    console.log(options);
-   // options.body.headers = extend(true, {}, options.headers);
-    delete options.body.headers['Set-Cookie'];
-  }
-  return options; */
-  //return (error, response, body) => {
-    return (cb) => {
-/*      if (detailedResponse) {
-      console.log(response);
-      body.headers = extend(true, {}, response.headers);
-      delete body.headers['Set-Cookie'];
-    }
-    cb(error, body, response); */
-    return;
-  }
-}
 /**
  * Check if the service/request have error and try to format them.
  * @param  {Function} cb the request callback
@@ -256,5 +238,4 @@ export function createRequest(parameters, _callback) {
   // Compression support
   options.gzip = true;
   return request(options, formatErrorIfExists(_callback));
- //return request(options, addResponseHeaders(options.detailedResponse, formatErrorIfExists(_callback)));
 }

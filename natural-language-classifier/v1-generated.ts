@@ -306,7 +306,6 @@ namespace NaturalLanguageClassifierV1 {
     password?: string;
     use_unauthenticated?: boolean;
     headers?: object;
-    detailedResponse?: boolean;
   }
 
   /** The callback for a service request. */
