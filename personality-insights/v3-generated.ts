@@ -72,7 +72,7 @@ class PersonalityInsightsV3 extends BaseService {
    * @param {boolean} [params.raw_scores] - Whether a raw score in addition to a normalized percentile is returned for each characteristic; raw scores are not compared with a sample population.
    * @param {boolean} [params.csv_headers] - Whether column labels are returned with a CSV response. Applies only when the **Accept** parameter is set to `text/csv`.
    * @param {boolean} [params.consumption_preferences] - Whether consumption preferences are returned with the results.
-   * @param {Object} [params.headers] - Headers
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -123,7 +123,7 @@ class PersonalityInsightsV3 extends BaseService {
    * @param {boolean} [params.raw_scores] - Whether a raw score in addition to a normalized percentile is returned for each characteristic; raw scores are not compared with a sample population.
    * @param {boolean} [params.csv_headers] - Whether column labels are returned with a CSV response. Applies only when the **Accept** parameter is set to `text/csv`.
    * @param {boolean} [params.consumption_preferences] - Whether consumption preferences are returned with the results.
-   * @param {Object} [params.headers] - Headers
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -180,6 +180,7 @@ namespace PersonalityInsightsV3 {
     password?: string;
     use_unauthenticated?: boolean;
     headers?: object;
+    detailedResponse?: boolean;
   }
 
   /** The callback for a service request. */

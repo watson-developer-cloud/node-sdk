@@ -67,6 +67,7 @@ describe('assistant-v1', function() {
   };
 
   const assistant = new watson.AssistantV1(service);
+  const assistant2 = new watson.AssistantV1(extend({}, service, { detailedResponse: true }));
 
   describe('message()', function() {
     const reqPayload = { input: 'foo', context: 'rab' };
@@ -152,6 +153,19 @@ describe('assistant-v1', function() {
         req.uri.href,
         service.url + paths.counterexamples + '/' + reqPayload.text + '?version=' + service.version
       );
+      assert.equal(req.method, 'DELETE');
+    });
+
+    it('should generate a valid payload with detailed response', function() {
+      const params2 = { text: 'foo', workspace_id: 'foo', headers: { customheader: 'custom' } };
+      const req = assistant2.deleteCounterexample(params2, function(err, res) {
+        console.log(JSON.stringify(res));
+      });
+      assert.equal(
+        req.uri.href,
+        service.url + paths.counterexamples + '/' + reqPayload.text + '?version=' + service.version
+      );
+
       assert.equal(req.method, 'DELETE');
     });
   });
