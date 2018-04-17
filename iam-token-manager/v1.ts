@@ -18,9 +18,9 @@ import extend = require('extend');
 import { sendRequest } from '../lib/requestwrapper';
 
 export type Options = {
-  iam_apikey?: string;
-  iam_access_token?: string;
-  iam_url?: string;
+  iamApikey?: string;
+  iamAccessToken?: string;
+  iamUrl?: string;
 }
 
 export interface IamTokenData {
@@ -36,7 +36,7 @@ export class IamTokenManagerV1 {
   serviceVersion: string;
   protected url: string;
   protected tokenInfo: IamTokenData;
-  private iam_apikey: string; // tslint:disable-line variable-name
+  private iamApikey: string;
   private userAccessToken: string;
 
   /**
@@ -45,19 +45,19 @@ export class IamTokenManagerV1 {
    * Retreives, stores, and refreshes IAM tokens.
    *
    * @param {Object} options
-   * @param {String} options.iam_apikey
-   * @param {String} options.iam_access_token
-   * @param {String} options.iam_url - url of the iam api to retrieve tokens from
+   * @param {String} options.iamApikey
+   * @param {String} options.iamAccessToken
+   * @param {String} options.iamUrl - url of the iam api to retrieve tokens from
    * @constructor
    */
   constructor(options: Options) {
-    this.url = options.iam_url || 'https://iam.ng.bluemix.net/identity/token';
+    this.url = options.iamUrl || 'https://iam.ng.bluemix.net/identity/token';
     this.tokenInfo = {} as IamTokenData;
-    if (options.iam_apikey) {
-      this.iam_apikey = options.iam_apikey;
+    if (options.iamApikey) {
+      this.iamApikey = options.iamApikey;
     }
-    if (options.iam_access_token) {
-      this.userAccessToken = options.iam_access_token;
+    if (options.iamAccessToken) {
+      this.userAccessToken = options.iamAccessToken;
     }
   }
 
@@ -77,13 +77,13 @@ export class IamTokenManagerV1 {
       return cb(null, this.userAccessToken);
     } else if (!this.tokenInfo.access_token) {
       // 2. request an initial token
-      this.requestToken(null, (err, tokenResponse) => {
+      this.requestToken((err, tokenResponse) => {
         this.saveTokenInfo(tokenResponse);
         return cb(err, this.tokenInfo.access_token);
       });
     } else if (this.isTokenExpired()) {
       // 3. refresh a token
-      this.refreshToken(null, (err, tokenResponse) => {
+      this.refreshToken((err, tokenResponse) => {
         this.saveTokenInfo(tokenResponse);
         return cb(err, this.tokenInfo.access_token);
       });
@@ -96,48 +96,42 @@ export class IamTokenManagerV1 {
   /**
    * Request an IAM token using an API key.
    *
-   * @param {string} authHeader - The authorization header to send to the service. Defaults to 'Basic Yng6Yng='.
    * @param {Function} cb - The callback that handles the response.
    * @returns {void}
    */
-  public requestToken(authHeader: string, cb: Function): void {
-    const authorization = authHeader || 'Basic Yng6Yng=';
+  public requestToken(cb: Function): void {
     const parameters = {
       options: {
         url: this.url,
         method: 'POST',
         headers: {
           'Content-type': 'application/x-www-form-urlencoded',
-          Authorization: authorization
+          Authorization: 'Basic Yng6Yng='
         },
         form: {
           grant_type: 'urn:ibm:params:oauth:grant-type:apikey',
-          apikey: this.iam_apikey,
+          apikey: this.iamApikey,
           response_type: 'cloud_iam'
         }
       }
     };
-    sendRequest(parameters, (error, body, response) => {
-      cb(error, body);
-    });
+    sendRequest(parameters, cb);
   }
 
   /**
    * Refresh an IAM token using a refresh token.
    *
-   * @param {string} authHeader - The authorization header to send to the service. Defaults to 'Basic Yng6Yng='.
    * @param {Function} cb - The callback that handles the response.
    * @returns {void}
    */
-  public refreshToken(authHeader: string, cb: Function) {
-    const authorization = authHeader || 'Basic Yng6Yng=';
+  public refreshToken(cb: Function) {
     const parameters = {
       options: {
         url: this.url,
         method: 'POST',
         headers: {
           'Content-type': 'application/x-www-form-urlencoded',
-          Authorization: authorization
+          Authorization: 'Basic Yng6Yng='
         },
         form: {
           grant_type: 'refresh_token',
@@ -145,9 +139,7 @@ export class IamTokenManagerV1 {
         }
       }
     };
-    sendRequest(parameters, (error, body, response) => {
-      cb(error, body);
-    });
+    sendRequest(parameters, cb);
   }
 
   /**
@@ -159,11 +151,11 @@ export class IamTokenManagerV1 {
    * one expires. Failing to do so will result in authentication errors
    * after this token expires.
    *
-   * @param {string} iam_access_token - A valid, non-expired IAM access token
+   * @param {string} iamAccessToken - A valid, non-expired IAM access token
    * @returns {void}
    */
-  public setAccessToken(iam_access_token: string): void { // tslint:disable-line variable-name
-    this.userAccessToken = iam_access_token;
+  public setAccessToken(iamAccessToken: string): void {
+    this.userAccessToken = iamAccessToken;
   }
 
   /**

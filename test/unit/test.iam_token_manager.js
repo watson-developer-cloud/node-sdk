@@ -7,7 +7,7 @@ const IamTokenManagerV1 = require('../../iam-token-manager/v1').IamTokenManagerV
 describe('iam_token_manager_v1', function() {
   it('should return an access token given by the user', function(done) {
     const userManagedToken = 'abcd-1234';
-    const instance = new IamTokenManagerV1({ iam_access_token: userManagedToken });
+    const instance = new IamTokenManagerV1({ iamAccessToken: userManagedToken });
     const requestSpy = sinon.spy(instance, 'requestToken');
     const refreshSpy = sinon.spy(instance, 'refreshToken');
 

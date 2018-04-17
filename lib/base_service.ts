@@ -122,9 +122,9 @@ export class BaseService {
     );
      if (options.iam_apikey || options.iam_access_token) {
       this.tokenManager = new IamTokenManagerV1({
-        iam_apikey: options.iam_apikey,
-        iam_access_token: options.iam_access_token,
-        iam_url: options.iam_url
+        iamApikey: options.iam_apikey,
+        iamAccessToken: options.iam_access_token,
+        iamUrl: options.iam_url
       });
     } else {
       this.tokenManager = null;
@@ -139,29 +139,29 @@ export class BaseService {
    * @returns {Credentials}
    */
   public getCredentials(): Credentials {
-    const _credentials = {} as Credentials;
+    const credentials = {} as Credentials;
     if (this._options.username) {
-      _credentials.username = this._options.username;
+      credentials.username = this._options.username;
     }
     if (this._options.password) {
-      _credentials.password = this._options.password;
+      credentials.password = this._options.password;
     }
     if (this._options.api_key) {
-      _credentials.api_key = this._options.api_key;
+      credentials.api_key = this._options.api_key;
     }
     if (this._options.url) {
-      _credentials.url = this._options.url;
+      credentials.url = this._options.url;
     }
     if (this._options.iam_access_token) {
-      _credentials.iam_access_token = this._options.iam_access_token;
+      credentials.iam_access_token = this._options.iam_access_token;
     }
     if (this._options.iam_apikey) {
-      _credentials.iam_apikey = this._options.iam_apikey;
+      credentials.iam_apikey = this._options.iam_apikey;
     }
     if (this._options.iam_url) {
-      _credentials.iam_url = this._options.iam_url;
+      credentials.iam_url = this._options.iam_url;
     }
-    return _credentials;
+    return credentials;
   }
 
   /**
@@ -186,21 +186,21 @@ export class BaseService {
    * retrieved by the token manager.
    *
    * @param {Object} parameters - service request options passed in by user
-   * @param {Function} _callback - callback function to pass the reponse back to
+   * @param {Function} callback - callback function to pass the reponse back to
    * @returns {ReadableStream|undefined}
    */
-  protected createRequest(parameters, _callback) {
+  protected createRequest(parameters, callback) {
      if (Boolean(this.tokenManager)) {
       this.tokenManager.getToken((err, accessToken) => {
         if (err) {
-          return _callback(err, null);
+          return callback(err);
         }
         parameters.defaultOptions.headers.Authorization =
           `Bearer ${accessToken}`;
-        return sendRequest(parameters, _callback);
+        return sendRequest(parameters, callback);
       });
     } else {
-      return sendRequest(parameters, _callback);
+      return sendRequest(parameters, callback);
     }
   }
   /**
@@ -272,23 +272,23 @@ export class BaseService {
     }
     const _name: string = name.toUpperCase();
     // https://github.com/watson-developer-cloud/node-sdk/issues/605
-    const _nameWithUnderscore: string = _name.replace(/-/g, '_');
-    const _username: string = process.env[`${_name}_USERNAME`] || process.env[`${_nameWithUnderscore}_USERNAME`];
-    const _password: string = process.env[`${_name}_PASSWORD`] || process.env[`${_nameWithUnderscore}_PASSWORD`];
-    const _apiKey: string = process.env[`${_name}_API_KEY`] || process.env[`${_nameWithUnderscore}_API_KEY`];
-    const _url: string = process.env[`${_name}_URL`] || process.env[`${_nameWithUnderscore}_URL`];
-    const _iamAccessToken: string = process.env[`${_name}_IAM_ACCESS_TOKEN`] || process.env[`${_nameWithUnderscore}_IAM_ACCESS_TOKEN`];
-    const _iamApiKey: string = process.env[`${_name}_IAM_APIKEY`] || process.env[`${_nameWithUnderscore}_IAM_APIKEY`];
-    const _iamUrl: string = process.env[`${_name}_IAM_URL`] || process.env[`${_nameWithUnderscore}_IAM_URL`];
+    const nameWithUnderscore: string = _name.replace(/-/g, '_');
+    const username: string = process.env[`${_name}_USERNAME`] || process.env[`${nameWithUnderscore}_USERNAME`];
+    const password: string = process.env[`${_name}_PASSWORD`] || process.env[`${nameWithUnderscore}_PASSWORD`];
+    const apiKey: string = process.env[`${_name}_API_KEY`] || process.env[`${nameWithUnderscore}_API_KEY`];
+    const url: string = process.env[`${_name}_URL`] || process.env[`${nameWithUnderscore}_URL`];
+    const iamAccessToken: string = process.env[`${_name}_IAM_ACCESS_TOKEN`] || process.env[`${nameWithUnderscore}_IAM_ACCESS_TOKEN`];
+    const iamApiKey: string = process.env[`${_name}_IAM_APIKEY`] || process.env[`${nameWithUnderscore}_IAM_APIKEY`];
+    const iamUrl: string = process.env[`${_name}_IAM_URL`] || process.env[`${nameWithUnderscore}_IAM_URL`];
 
     return {
-      username: _username,
-      password: _password,
-      api_key: _apiKey,
-      url: _url,
-      iam_access_token: _iamAccessToken,
-      iam_apikey: _iamApiKey,
-      iam_url: _iamUrl
+      username,
+      password,
+      api_key: apiKey,
+      url,
+      iam_access_token: iamAccessToken,
+      iam_apikey: iamApiKey,
+      iam_url: iamUrl
     };
   }
   /**
@@ -298,7 +298,7 @@ export class BaseService {
    * @returns {Credentials}
    */
   private getCredentialsFromBluemix(vcapServicesName: string): Credentials {
-    let _credentials: Credentials;
+    let credentials: Credentials;
     let temp: any;
     if (this.name === 'visual_recognition') {
       temp = vcapServices.getCredentials('watson_vision_combined');
@@ -310,7 +310,7 @@ export class BaseService {
       temp.iam_apikey = temp.apikey;
       delete temp.apikey;
     }
-    _credentials = temp;
-    return _credentials;
+    credentials = temp;
+    return credentials;
   }
 }
