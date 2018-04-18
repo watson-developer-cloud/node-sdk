@@ -82,7 +82,6 @@
     "@types/request": "~2.47.0",
     "async": "~2.6.0",
     "buffer-from": "~0.1.1",
-    "cookie": "~0.3.1",
     "csv-stringify": "~1.0.2",
     "extend": "~3.0.0",
     "file-type": "~7.5.0",

@@ -132,6 +132,20 @@ describe('assistant-v1', function() {
       assert.deepEqual(JSON.parse(body), pick(params, ['text']));
       assert.equal(req.method, 'POST');
     });
+
+    it('should generate a valid payload with detailed response', function() {
+      const paramsWithHeaders = extend({}, params, { headers: { customheader: 'custom' } });
+      assistant.createCounterexample(paramsWithHeaders, function(err, result, request) {
+        const body = Buffer.from(result.body).toString('ascii');
+        assert.equal(
+          result.uri.href,
+          service.url + paths.counterexamples + '?version=' + service.version
+        );
+        assert.deepEqual(JSON.parse(body), pick(params, ['text']));
+        assert.equal(result.method, 'POST');
+        return;
+      });
+    });
   });
 
   describe('deleteCounterexample()', function() {

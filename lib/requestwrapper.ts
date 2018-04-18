@@ -237,6 +237,5 @@ export function createRequest(parameters, _callback) {
 
   // Compression support
   options.gzip = true;
-
   return request(options, formatErrorIfExists(_callback));
 }

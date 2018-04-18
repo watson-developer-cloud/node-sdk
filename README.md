@@ -14,6 +14,8 @@ Node.js client library to use the Watson APIs.
   * [Getting the Service Credentials](#getting-the-service-credentials)
   * [Usage](#usage)
   * [Client-side usage](#client-side-usage)
+  * [Sending Request Headers](#sending-request-headers)
+  * [Parsing HTTP Response](#parsing-http-response)
   * [Data collection opt-out](#data-collection-opt-out)
   * [Questions](#questions)
   * [Examples](#examples)
@@ -79,6 +81,54 @@ See the `examples/` folder for [Browserify](http://browserify.org/) and [Webpack
 
 Note: not all services currently support CORS, and therefore not all services can be used client-side.
 Of those that do, most require an auth token to be generated server-side via the [Authorization Service](#authorization).
+
+### Sending Request Headers
+
+Custom headers can be passed with any request. Each method has an optional parameter `headers` which can be used to pass in these custom headers, which can override headers that we use as parameters.
+
+For example, this is how you can pass in custom headers to Watson Assistant service. In this example, the `'custom'` value for `'Accept-Language'` will override the default header for `'Accept-Language'`, and the `'Custom-Header'` while not overriding the default headers, will additionally be sent with the request.
+
+```js
+var assistant = new watson.AssistantV1({
+/* username, password, version, url, etc... */
+});
+
+assistant.message({
+  workspace_id: 'something',
+  input: {'text': 'Hello'},
+  headers: {
+    'Custom-Header': 'custom',
+    'Accept-Language': 'custom'
+  
+  }
+},  function(err, result, response) {
+  if (err)
+    console.log('error:', err);
+  else
+    console.log(JSON.stringify(result, null, 2));
+});
+
+```
+
+### Parsing HTTP Response
+
+To retrieve the HTTP response, all methods can be called with a callback function with three parameters, with the third being the response. Users for example may retrieve the response headers with this usage pattern.
+
+Here is an example of how to access the response headers for Watson Assistant:
+
+```js
+var assistant = new watson.AssistantV1({
+/* username, password, version, url, etc... */
+});
+
+assistant.message(params,  function(err, result, response) {
+  if (err)
+    console.log('error:', err);
+  else
+    console.log(response.headers);
+});
+
+```
 
 ### Data collection opt-out
 

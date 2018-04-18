@@ -24,8 +24,6 @@ import { createRequest } from '../lib/requestwrapper';
  * The IBM Watson Conversation service combines machine learning, natural language understanding, and integrated dialog tools to create conversation flows between your apps and your users.
  */
 
-
-
 class ConversationV1 extends BaseService {
 
   static URL: string = 'https://gateway.watsonplatform.net/conversation/api';
@@ -61,6 +59,8 @@ class ConversationV1 extends BaseService {
    ************************/
 
   /**
+   * Get response to user input.
+   *
    * Get a response to a user's input.    There is no rate limit for this operation.
    *
    * @param {Object} params - The parameters to send to the service.
@@ -72,6 +72,7 @@ class ConversationV1 extends BaseService {
    * @param {RuntimeIntent[]} [params.intents] - Intents to use when evaluating the user input. Include intents from the previous response to continue using those intents rather than trying to recognize intents in the new input.
    * @param {OutputData} [params.output] - System output. Include the output from the previous response to maintain intermediate information over multiple requests.
    * @param {boolean} [params.nodes_visited_details] - Whether to include additional diagnostic information about the dialog nodes that were visited during processing of the message.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -107,11 +108,11 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -135,6 +136,7 @@ class ConversationV1 extends BaseService {
    * @param {CreateCounterexample[]} [params.counterexamples] - An array of objects defining input examples that have been marked as irrelevant input.
    * @param {Object} [params.metadata] - Any metadata related to the workspace.
    * @param {boolean} [params.learning_opt_out] - Whether training data from the workspace can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -160,11 +162,11 @@ class ConversationV1 extends BaseService {
         body,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -176,6 +178,7 @@ class ConversationV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -197,10 +200,10 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -214,6 +217,7 @@ class ConversationV1 extends BaseService {
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {boolean} [params.export] - Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -240,10 +244,10 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -257,8 +261,9 @@ class ConversationV1 extends BaseService {
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
    * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
-   * @param {string} [params.cursor] - A token identifying the last object from the previous page of results.
+   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -279,10 +284,10 @@ class ConversationV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -304,6 +309,7 @@ class ConversationV1 extends BaseService {
    * @param {Object} [params.metadata] - Any metadata related to the workspace.
    * @param {boolean} [params.learning_opt_out] - Whether training data from the workspace can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used.
    * @param {boolean} [params.append] - Whether the new data is to be appended to the existing data in the workspace. If **append**=`false`, elements included in the new data completely replace the corresponding existing elements, including all subelements. For example, if the new data includes **entities** and **append**=`false`, all existing entities in the workspace are discarded and replaced with the new entities.    If **append**=`true`, existing elements are preserved, and the new elements are added. If any elements in the new data collide with existing elements, the update request fails.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -342,11 +348,11 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -365,6 +371,7 @@ class ConversationV1 extends BaseService {
    * @param {string} params.intent - The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 128 characters.
    * @param {string} [params.description] - The description of the intent. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters.
    * @param {CreateExample[]} [params.examples] - An array of user input examples for the intent.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -393,11 +400,11 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -410,6 +417,7 @@ class ConversationV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.intent - The intent name.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -432,10 +440,10 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -450,6 +458,7 @@ class ConversationV1 extends BaseService {
    * @param {string} params.intent - The intent name.
    * @param {boolean} [params.export] - Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -477,10 +486,10 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -496,8 +505,9 @@ class ConversationV1 extends BaseService {
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
    * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
-   * @param {string} [params.cursor] - A token identifying the last object from the previous page of results.
+   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -528,10 +538,10 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -547,6 +557,7 @@ class ConversationV1 extends BaseService {
    * @param {string} [params.new_intent] - The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 128 characters.
    * @param {string} [params.new_description] - The description of the intent.
    * @param {CreateExample[]} [params.new_examples] - An array of user input examples for the intent.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -576,11 +587,11 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -598,6 +609,7 @@ class ConversationV1 extends BaseService {
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.intent - The intent name.
    * @param {string} params.text - The text of a user input example. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 1024 characters.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -625,11 +637,11 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -643,6 +655,7 @@ class ConversationV1 extends BaseService {
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.intent - The intent name.
    * @param {string} params.text - The text of the user input example.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -666,10 +679,10 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -684,6 +697,7 @@ class ConversationV1 extends BaseService {
    * @param {string} params.intent - The intent name.
    * @param {string} params.text - The text of the user input example.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -711,10 +725,10 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -730,8 +744,9 @@ class ConversationV1 extends BaseService {
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
    * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
-   * @param {string} [params.cursor] - A token identifying the last object from the previous page of results.
+   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -762,10 +777,10 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -780,6 +795,7 @@ class ConversationV1 extends BaseService {
    * @param {string} params.intent - The intent name.
    * @param {string} params.text - The text of the user input example.
    * @param {string} [params.new_text] - The text of the user input example. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 1024 characters.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -808,11 +824,11 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -829,6 +845,7 @@ class ConversationV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.text - The text of a user input marked as irrelevant input. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters  - It cannot consist of only whitespace characters  - It must be no longer than 1024 characters.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -855,11 +872,11 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -872,6 +889,7 @@ class ConversationV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.text - The text of a user input counterexample (for example, `What are you wearing?`).
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -894,10 +912,10 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -911,6 +929,7 @@ class ConversationV1 extends BaseService {
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.text - The text of a user input counterexample (for example, `What are you wearing?`).
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -937,10 +956,10 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -955,8 +974,9 @@ class ConversationV1 extends BaseService {
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
    * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
-   * @param {string} [params.cursor] - A token identifying the last object from the previous page of results.
+   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -986,10 +1006,10 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -1003,6 +1023,7 @@ class ConversationV1 extends BaseService {
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.text - The text of a user input counterexample (for example, `What are you wearing?`).
    * @param {string} [params.new_text] - The text of a user input counterexample.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1030,11 +1051,11 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -1055,6 +1076,7 @@ class ConversationV1 extends BaseService {
    * @param {Object} [params.metadata] - Any metadata related to the value.
    * @param {CreateValue[]} [params.values] - An array of objects describing the entity values.
    * @param {boolean} [params.fuzzy_match] - Whether to use fuzzy matching for the entity.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1085,11 +1107,11 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -1102,6 +1124,7 @@ class ConversationV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1124,10 +1147,10 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -1142,6 +1165,7 @@ class ConversationV1 extends BaseService {
    * @param {string} params.entity - The name of the entity.
    * @param {boolean} [params.export] - Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1169,10 +1193,10 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -1188,8 +1212,9 @@ class ConversationV1 extends BaseService {
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
    * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
-   * @param {string} [params.cursor] - A token identifying the last object from the previous page of results.
+   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1220,10 +1245,10 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -1241,6 +1266,7 @@ class ConversationV1 extends BaseService {
    * @param {Object} [params.new_metadata] - Any metadata related to the entity.
    * @param {boolean} [params.new_fuzzy_match] - Whether to use fuzzy matching for the entity.
    * @param {CreateValue[]} [params.new_values] - An array of entity values.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1272,11 +1298,11 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -1298,6 +1324,7 @@ class ConversationV1 extends BaseService {
    * @param {string[]} [params.synonyms] - An array containing any synonyms for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A synonym must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters.
    * @param {string[]} [params.patterns] - An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 128 characters. For more information about how to specify a pattern, see the [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities).
    * @param {string} [params.value_type] - Specifies the type of value.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1329,11 +1356,11 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -1347,6 +1374,7 @@ class ConversationV1 extends BaseService {
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
    * @param {string} params.value - The text of the entity value.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1370,10 +1398,10 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -1389,6 +1417,7 @@ class ConversationV1 extends BaseService {
    * @param {string} params.value - The text of the entity value.
    * @param {boolean} [params.export] - Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1417,10 +1446,10 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -1437,8 +1466,9 @@ class ConversationV1 extends BaseService {
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
    * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
-   * @param {string} [params.cursor] - A token identifying the last object from the previous page of results.
+   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1470,10 +1500,10 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -1492,6 +1522,7 @@ class ConversationV1 extends BaseService {
    * @param {string} [params.new_type] - Specifies the type of value.
    * @param {string[]} [params.new_synonyms] - An array of synonyms for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A synonym must conform to the following resrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters.
    * @param {string[]} [params.new_patterns] - An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 128 characters. For more information about how to specify a pattern, see the [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities).
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1524,11 +1555,11 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -1547,6 +1578,7 @@ class ConversationV1 extends BaseService {
    * @param {string} params.entity - The name of the entity.
    * @param {string} params.value - The text of the entity value.
    * @param {string} params.synonym - The text of the synonym. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1575,11 +1607,11 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -1594,6 +1626,7 @@ class ConversationV1 extends BaseService {
    * @param {string} params.entity - The name of the entity.
    * @param {string} params.value - The text of the entity value.
    * @param {string} params.synonym - The text of the synonym.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1618,10 +1651,10 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -1637,6 +1670,7 @@ class ConversationV1 extends BaseService {
    * @param {string} params.value - The text of the entity value.
    * @param {string} params.synonym - The text of the synonym.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1665,10 +1699,10 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -1685,8 +1719,9 @@ class ConversationV1 extends BaseService {
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
    * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
-   * @param {string} [params.cursor] - A token identifying the last object from the previous page of results.
+   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1718,10 +1753,10 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -1737,6 +1772,7 @@ class ConversationV1 extends BaseService {
    * @param {string} params.value - The text of the entity value.
    * @param {string} params.synonym - The text of the synonym.
    * @param {string} [params.new_synonym] - The text of the synonym. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1766,11 +1802,11 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -1803,6 +1839,7 @@ class ConversationV1 extends BaseService {
    * @param {string} [params.digress_in] - Whether this top-level dialog node can be digressed into.
    * @param {string} [params.digress_out] - Whether this dialog node can be returned to after a digression.
    * @param {string} [params.digress_out_slots] - Whether the user can digress to top-level nodes while filling out slots.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1845,11 +1882,11 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -1862,6 +1899,7 @@ class ConversationV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.dialog_node - The dialog node ID (for example, `get_order`).
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1884,10 +1922,10 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -1901,6 +1939,7 @@ class ConversationV1 extends BaseService {
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.dialog_node - The dialog node ID (for example, `get_order`).
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1927,10 +1966,10 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -1945,8 +1984,9 @@ class ConversationV1 extends BaseService {
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
    * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
-   * @param {string} [params.cursor] - A token identifying the last object from the previous page of results.
+   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1976,10 +2016,10 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -2009,6 +2049,7 @@ class ConversationV1 extends BaseService {
    * @param {string} [params.new_digress_in] - Whether this top-level dialog node can be digressed into.
    * @param {string} [params.new_digress_out] - Whether this dialog node can be returned to after a digression.
    * @param {string} [params.new_digress_out_slots] - Whether the user can digress to top-level nodes while filling out slots.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -2052,11 +2093,11 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -2074,7 +2115,8 @@ class ConversationV1 extends BaseService {
    * @param {string} params.filter - A cacheable parameter that limits the results to those matching the specified filter. You must specify a filter query that includes a value for `language`, as well as a value for `workspace_id` or `request.context.metadata.deployment`. For more information, see the [documentation](https://console.bluemix.net/docs/services/conversation/filter-reference.html#filter-query-syntax).
    * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
-   * @param {string} [params.cursor] - A token identifying the last object from the previous page of results.
+   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -2099,10 +2141,10 @@ class ConversationV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -2117,7 +2159,8 @@ class ConversationV1 extends BaseService {
    * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
    * @param {string} [params.filter] - A cacheable parameter that limits the results to those matching the specified filter. For more information, see the [documentation](https://console.bluemix.net/docs/services/conversation/filter-reference.html#filter-query-syntax).
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
-   * @param {string} [params.cursor] - A token identifying the last object from the previous page of results.
+   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -2146,10 +2189,10 @@ class ConversationV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return createRequest(parameters, _callback);
   };
@@ -2203,6 +2246,7 @@ namespace ConversationV1 {
     output?: OutputData;
     /** Whether to include additional diagnostic information about the dialog nodes that were visited during processing of the message. */
     nodes_visited_details?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `createWorkspace` operation. */
@@ -2225,12 +2269,14 @@ namespace ConversationV1 {
     metadata?: Object;
     /** Whether training data from the workspace can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used. */
     learning_opt_out?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `deleteWorkspace` operation. */
   export interface DeleteWorkspaceParams {
     /** Unique identifier of the workspace. */
     workspace_id: string;
+    headers?: Object;
   }
 
   /** Parameters for the `getWorkspace` operation. */
@@ -2241,6 +2287,7 @@ namespace ConversationV1 {
     export?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `listWorkspaces` operation. */
@@ -2251,10 +2298,11 @@ namespace ConversationV1 {
     include_count?: boolean;
     /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
     sort?: string;
-    /** A token identifying the last object from the previous page of results. */
+    /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `updateWorkspace` operation. */
@@ -2281,6 +2329,7 @@ namespace ConversationV1 {
     learning_opt_out?: boolean;
     /** Whether the new data is to be appended to the existing data in the workspace. If **append**=`false`, elements included in the new data completely replace the corresponding existing elements, including all subelements. For example, if the new data includes **entities** and **append**=`false`, all existing entities in the workspace are discarded and replaced with the new entities.    If **append**=`true`, existing elements are preserved, and the new elements are added. If any elements in the new data collide with existing elements, the update request fails. */
     append?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `createIntent` operation. */
@@ -2293,6 +2342,7 @@ namespace ConversationV1 {
     description?: string;
     /** An array of user input examples for the intent. */
     examples?: CreateExample[];
+    headers?: Object;
   }
 
   /** Parameters for the `deleteIntent` operation. */
@@ -2301,6 +2351,7 @@ namespace ConversationV1 {
     workspace_id: string;
     /** The intent name. */
     intent: string;
+    headers?: Object;
   }
 
   /** Parameters for the `getIntent` operation. */
@@ -2313,6 +2364,7 @@ namespace ConversationV1 {
     export?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `listIntents` operation. */
@@ -2327,10 +2379,11 @@ namespace ConversationV1 {
     include_count?: boolean;
     /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
     sort?: string;
-    /** A token identifying the last object from the previous page of results. */
+    /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `updateIntent` operation. */
@@ -2345,6 +2398,7 @@ namespace ConversationV1 {
     new_description?: string;
     /** An array of user input examples for the intent. */
     new_examples?: CreateExample[];
+    headers?: Object;
   }
 
   /** Parameters for the `createExample` operation. */
@@ -2355,6 +2409,7 @@ namespace ConversationV1 {
     intent: string;
     /** The text of a user input example. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 1024 characters. */
     text: string;
+    headers?: Object;
   }
 
   /** Parameters for the `deleteExample` operation. */
@@ -2365,6 +2420,7 @@ namespace ConversationV1 {
     intent: string;
     /** The text of the user input example. */
     text: string;
+    headers?: Object;
   }
 
   /** Parameters for the `getExample` operation. */
@@ -2377,6 +2433,7 @@ namespace ConversationV1 {
     text: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `listExamples` operation. */
@@ -2391,10 +2448,11 @@ namespace ConversationV1 {
     include_count?: boolean;
     /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
     sort?: string;
-    /** A token identifying the last object from the previous page of results. */
+    /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `updateExample` operation. */
@@ -2407,6 +2465,7 @@ namespace ConversationV1 {
     text: string;
     /** The text of the user input example. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 1024 characters. */
     new_text?: string;
+    headers?: Object;
   }
 
   /** Parameters for the `createCounterexample` operation. */
@@ -2415,6 +2474,7 @@ namespace ConversationV1 {
     workspace_id: string;
     /** The text of a user input marked as irrelevant input. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters  - It cannot consist of only whitespace characters  - It must be no longer than 1024 characters. */
     text: string;
+    headers?: Object;
   }
 
   /** Parameters for the `deleteCounterexample` operation. */
@@ -2423,6 +2483,7 @@ namespace ConversationV1 {
     workspace_id: string;
     /** The text of a user input counterexample (for example, `What are you wearing?`). */
     text: string;
+    headers?: Object;
   }
 
   /** Parameters for the `getCounterexample` operation. */
@@ -2433,6 +2494,7 @@ namespace ConversationV1 {
     text: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `listCounterexamples` operation. */
@@ -2445,10 +2507,11 @@ namespace ConversationV1 {
     include_count?: boolean;
     /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
     sort?: string;
-    /** A token identifying the last object from the previous page of results. */
+    /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `updateCounterexample` operation. */
@@ -2459,6 +2522,7 @@ namespace ConversationV1 {
     text: string;
     /** The text of a user input counterexample. */
     new_text?: string;
+    headers?: Object;
   }
 
   /** Parameters for the `createEntity` operation. */
@@ -2475,6 +2539,7 @@ namespace ConversationV1 {
     values?: CreateValue[];
     /** Whether to use fuzzy matching for the entity. */
     fuzzy_match?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `deleteEntity` operation. */
@@ -2483,6 +2548,7 @@ namespace ConversationV1 {
     workspace_id: string;
     /** The name of the entity. */
     entity: string;
+    headers?: Object;
   }
 
   /** Parameters for the `getEntity` operation. */
@@ -2495,6 +2561,7 @@ namespace ConversationV1 {
     export?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `listEntities` operation. */
@@ -2509,10 +2576,11 @@ namespace ConversationV1 {
     include_count?: boolean;
     /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
     sort?: string;
-    /** A token identifying the last object from the previous page of results. */
+    /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `updateEntity` operation. */
@@ -2531,6 +2599,7 @@ namespace ConversationV1 {
     new_fuzzy_match?: boolean;
     /** An array of entity values. */
     new_values?: CreateValue[];
+    headers?: Object;
   }
 
   /** Parameters for the `createValue` operation. */
@@ -2549,6 +2618,7 @@ namespace ConversationV1 {
     patterns?: string[];
     /** Specifies the type of value. */
     value_type?: CreateValueConstants.ValueType | string;
+    headers?: Object;
   }
 
   /** Constants for the `createValue` operation. */
@@ -2568,6 +2638,7 @@ namespace ConversationV1 {
     entity: string;
     /** The text of the entity value. */
     value: string;
+    headers?: Object;
   }
 
   /** Parameters for the `getValue` operation. */
@@ -2582,6 +2653,7 @@ namespace ConversationV1 {
     export?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `listValues` operation. */
@@ -2598,10 +2670,11 @@ namespace ConversationV1 {
     include_count?: boolean;
     /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
     sort?: string;
-    /** A token identifying the last object from the previous page of results. */
+    /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `updateValue` operation. */
@@ -2622,6 +2695,7 @@ namespace ConversationV1 {
     new_synonyms?: string[];
     /** An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 128 characters. For more information about how to specify a pattern, see the [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities). */
     new_patterns?: string[];
+    headers?: Object;
   }
 
   /** Constants for the `updateValue` operation. */
@@ -2643,6 +2717,7 @@ namespace ConversationV1 {
     value: string;
     /** The text of the synonym. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
     synonym: string;
+    headers?: Object;
   }
 
   /** Parameters for the `deleteSynonym` operation. */
@@ -2655,6 +2730,7 @@ namespace ConversationV1 {
     value: string;
     /** The text of the synonym. */
     synonym: string;
+    headers?: Object;
   }
 
   /** Parameters for the `getSynonym` operation. */
@@ -2669,6 +2745,7 @@ namespace ConversationV1 {
     synonym: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `listSynonyms` operation. */
@@ -2685,10 +2762,11 @@ namespace ConversationV1 {
     include_count?: boolean;
     /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
     sort?: string;
-    /** A token identifying the last object from the previous page of results. */
+    /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `updateSynonym` operation. */
@@ -2703,6 +2781,7 @@ namespace ConversationV1 {
     synonym: string;
     /** The text of the synonym. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
     new_synonym?: string;
+    headers?: Object;
   }
 
   /** Parameters for the `createDialogNode` operation. */
@@ -2743,6 +2822,7 @@ namespace ConversationV1 {
     digress_out?: CreateDialogNodeConstants.DigressOut | string;
     /** Whether the user can digress to top-level nodes while filling out slots. */
     digress_out_slots?: CreateDialogNodeConstants.DigressOutSlots | string;
+    headers?: Object;
   }
 
   /** Constants for the `createDialogNode` operation. */
@@ -2793,6 +2873,7 @@ namespace ConversationV1 {
     workspace_id: string;
     /** The dialog node ID (for example, `get_order`). */
     dialog_node: string;
+    headers?: Object;
   }
 
   /** Parameters for the `getDialogNode` operation. */
@@ -2803,6 +2884,7 @@ namespace ConversationV1 {
     dialog_node: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `listDialogNodes` operation. */
@@ -2815,10 +2897,11 @@ namespace ConversationV1 {
     include_count?: boolean;
     /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
     sort?: string;
-    /** A token identifying the last object from the previous page of results. */
+    /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `updateDialogNode` operation. */
@@ -2861,6 +2944,7 @@ namespace ConversationV1 {
     new_digress_out?: UpdateDialogNodeConstants.DigressOut | string;
     /** Whether the user can digress to top-level nodes while filling out slots. */
     new_digress_out_slots?: UpdateDialogNodeConstants.DigressOutSlots | string;
+    headers?: Object;
   }
 
   /** Constants for the `updateDialogNode` operation. */
@@ -2913,8 +2997,9 @@ namespace ConversationV1 {
     sort?: string;
     /** The number of records to return in each page of results. */
     page_limit?: number;
-    /** A token identifying the last object from the previous page of results. */
+    /** A token identifying the page of results to retrieve. */
     cursor?: string;
+    headers?: Object;
   }
 
   /** Parameters for the `listLogs` operation. */
@@ -2927,8 +3012,9 @@ namespace ConversationV1 {
     filter?: string;
     /** The number of records to return in each page of results. */
     page_limit?: number;
-    /** A token identifying the last object from the previous page of results. */
+    /** A token identifying the page of results to retrieve. */
     cursor?: string;
+    headers?: Object;
   }
 
   /*************************
@@ -3137,6 +3223,8 @@ namespace ConversationV1 {
     dialog_node?: string;
     /** The title of the dialog node. */
     title?: string;
+    /** The conditions that trigger the dialog node. */
+    conditions?: string;
   }
 
   /** Entity. */
@@ -3279,6 +3367,8 @@ namespace ConversationV1 {
     next_url?: string;
     /** Reserved for future use. */
     matched?: number;
+    /** A token identifying the next page of results. */
+    next_cursor?: string;
   }
 
   /** The text of the user input. */
@@ -3341,6 +3431,10 @@ namespace ConversationV1 {
     total?: number;
     /** Reserved for future use. */
     matched?: number;
+    /** A token identifying the current page of results. */
+    refresh_cursor?: string;
+    /** A token identifying the next page of results. */
+    next_cursor?: string;
   }
 
   /** A term from the request that was identified as an entity. */

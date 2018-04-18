@@ -120,19 +120,24 @@ describe('assistant_integration', function() {
   });
 
   describe('message()', function() {
-    it('alternate_intents', function(done) {
+    it('alternate_intents with custom headers', function(done) {
       const params = {
         input: {
           text: 'Turn on the lights',
         },
         alternate_intents: true,
         workspace_id: auth.conversation.workspace_id,
+        headers: {
+          customheader: 'custom',
+        },
       };
 
-      assistant.message(params, function(err, result) {
+      assistant.message(params, function(err, result, response) {
         if (err) {
           return done(err);
         }
+
+        assert(response.headers && response.headers != {});
         assert(result.intents.length > 1);
         done();
       });

@@ -122,6 +122,15 @@ describe('text_to_speech', function() {
 
       text_to_speech.voices({}, checkVoices);
     });
+
+    it('should generate a valid payload with detailedREsponse', function(done) {
+      const checkVoices = function(err, res) {
+        assert.equal(JSON.stringify(res), JSON.stringify(mock_voices));
+        done();
+      };
+
+      text_to_speech.voices({}, checkVoices);
+    });
   });
 
   describe('voice()', function() {
