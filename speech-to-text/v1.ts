@@ -1,5 +1,4 @@
 import async = require('async');
-import cookie = require('cookie');
 import extend = require('extend');
 import isStream = require('isstream');
 import pick = require('object.pick');

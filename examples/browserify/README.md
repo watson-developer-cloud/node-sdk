@@ -21,7 +21,9 @@ The following services support CORS
  * Text to Speech*
  * Personality Insights
  * Document Conversion
+ * Visual Recognition (`version=2018-03-19`)
  * All Alchemy services
+ 
 
 \* Speech to Text and Text to Speech should be usable via the Node.js SDK, but we also have a [Speech JavaScript SDK](https://www.npmjs.com/package/watson-speech) that was specifically written for browser support.
 

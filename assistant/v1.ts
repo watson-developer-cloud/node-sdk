@@ -23,8 +23,6 @@ import { getMissingParams } from '../lib/helper';
  * The IBM Watson Assistant service combines machine learning, natural language understanding, and integrated dialog tools to create conversation flows between your apps and your users.
  */
 
-
-
 class AssistantV1 extends BaseService {
 
   static URL: string = 'https://gateway.watsonplatform.net/assistant/api';
@@ -35,7 +33,7 @@ class AssistantV1 extends BaseService {
    * Construct a AssistantV1 object.
    *
    * @param {Object} options - Options for the service.
-   * @param {string} options.version - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses the API version for the date you specify, or the most recent version before that date. Note that you should not programmatically specify the current date at runtime, in case the API has been updated since your application's release. Instead, specify a version date that is compatible with your application, and don't change it until your application is ready for a later version.
+   * @param {string} options.version - The API version date to use with the service, in "YYYY-M[params.headers] -DD" format. Whenever the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses the API version for the date you specify, or the most recent version before that date. Note that you should not programmatically specify the current date at runtime, in case the API has been updated since your application's release. Instead, specify a version date that is compatible with your application, and don't change it until your application is ready for a later version.
    * @param {string} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/assistant/api'). The base url may differ between Bluemix regions.
    * @param {string} [options.username] - The username used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
    * @param {string} [options.password] - The password used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
@@ -60,6 +58,8 @@ class AssistantV1 extends BaseService {
    ************************/
 
   /**
+   * Get response to user input.
+   *
    * Get a response to a user's input.    There is no rate limit for this operation.
    *
    * @param {Object} params - The parameters to send to the service.
@@ -71,6 +71,7 @@ class AssistantV1 extends BaseService {
    * @param {RuntimeIntent[]} [params.intents] - Intents to use when evaluating the user input. Include intents from the previous response to continue using those intents rather than trying to recognize intents in the new input.
    * @param {OutputData} [params.output] - System output. Include the output from the previous response to maintain intermediate information over multiple requests.
    * @param {boolean} [params.nodes_visited_details] - Whether to include additional diagnostic information about the dialog nodes that were visited during processing of the message.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -106,11 +107,11 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -134,6 +135,7 @@ class AssistantV1 extends BaseService {
    * @param {CreateCounterexample[]} [params.counterexamples] - An array of objects defining input examples that have been marked as irrelevant input.
    * @param {Object} [params.metadata] - Any metadata related to the workspace.
    * @param {boolean} [params.learning_opt_out] - Whether training data from the workspace can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -159,11 +161,11 @@ class AssistantV1 extends BaseService {
         body,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -175,6 +177,7 @@ class AssistantV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -196,10 +199,10 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -213,6 +216,7 @@ class AssistantV1 extends BaseService {
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {boolean} [params.export] - Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -239,10 +243,10 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -250,14 +254,15 @@ class AssistantV1 extends BaseService {
   /**
    * List workspaces.
    *
-   * List the workspaces associated with an Assistant service instance.    This operation is limited to 500 requests per 30 minutes. For more information, see **Rate limiting**.
+   * List the workspaces associated with a Watson Assistant service instance.    This operation is limited to 500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
    * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
-   * @param {string} [params.cursor] - A token identifying the last object from the previous page of results.
+   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -278,10 +283,10 @@ class AssistantV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -303,6 +308,7 @@ class AssistantV1 extends BaseService {
    * @param {Object} [params.metadata] - Any metadata related to the workspace.
    * @param {boolean} [params.learning_opt_out] - Whether training data from the workspace can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used.
    * @param {boolean} [params.append] - Whether the new data is to be appended to the existing data in the workspace. If **append**=`false`, elements included in the new data completely replace the corresponding existing elements, including all subelements. For example, if the new data includes **entities** and **append**=`false`, all existing entities in the workspace are discarded and replaced with the new entities.    If **append**=`true`, existing elements are preserved, and the new elements are added. If any elements in the new data collide with existing elements, the update request fails.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -341,11 +347,11 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -361,9 +367,10 @@ class AssistantV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {string} params.intent - The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 128 characters.
+   * @param {string} params.intent - The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sy[params.headers] -`.  - It must be no longer than 128 characters.
    * @param {string} [params.description] - The description of the intent. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters.
    * @param {CreateExample[]} [params.examples] - An array of user input examples for the intent.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -392,11 +399,11 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -409,6 +416,7 @@ class AssistantV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.intent - The intent name.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -431,10 +439,10 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -449,6 +457,7 @@ class AssistantV1 extends BaseService {
    * @param {string} params.intent - The intent name.
    * @param {boolean} [params.export] - Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -476,10 +485,10 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -495,8 +504,9 @@ class AssistantV1 extends BaseService {
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
    * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
-   * @param {string} [params.cursor] - A token identifying the last object from the previous page of results.
+   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -527,10 +537,10 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -543,9 +553,10 @@ class AssistantV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.intent - The intent name.
-   * @param {string} [params.new_intent] - The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 128 characters.
+   * @param {string} [params.new_intent] - The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sy[params.headers] -`.  - It must be no longer than 128 characters.
    * @param {string} [params.new_description] - The description of the intent.
    * @param {CreateExample[]} [params.new_examples] - An array of user input examples for the intent.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -575,11 +586,11 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -597,6 +608,7 @@ class AssistantV1 extends BaseService {
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.intent - The intent name.
    * @param {string} params.text - The text of a user input example. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 1024 characters.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -624,11 +636,11 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -642,6 +654,7 @@ class AssistantV1 extends BaseService {
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.intent - The intent name.
    * @param {string} params.text - The text of the user input example.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -665,10 +678,10 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -683,6 +696,7 @@ class AssistantV1 extends BaseService {
    * @param {string} params.intent - The intent name.
    * @param {string} params.text - The text of the user input example.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -710,10 +724,10 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -729,8 +743,9 @@ class AssistantV1 extends BaseService {
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
    * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
-   * @param {string} [params.cursor] - A token identifying the last object from the previous page of results.
+   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -761,10 +776,10 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -779,6 +794,7 @@ class AssistantV1 extends BaseService {
    * @param {string} params.intent - The intent name.
    * @param {string} params.text - The text of the user input example.
    * @param {string} [params.new_text] - The text of the user input example. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 1024 characters.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -807,11 +823,11 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -828,6 +844,7 @@ class AssistantV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.text - The text of a user input marked as irrelevant input. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters  - It cannot consist of only whitespace characters  - It must be no longer than 1024 characters.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -854,11 +871,11 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -871,6 +888,7 @@ class AssistantV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.text - The text of a user input counterexample (for example, `What are you wearing?`).
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -893,10 +911,10 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -910,6 +928,7 @@ class AssistantV1 extends BaseService {
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.text - The text of a user input counterexample (for example, `What are you wearing?`).
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -936,10 +955,10 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -954,8 +973,9 @@ class AssistantV1 extends BaseService {
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
    * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
-   * @param {string} [params.cursor] - A token identifying the last object from the previous page of results.
+   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -985,10 +1005,10 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1002,6 +1022,7 @@ class AssistantV1 extends BaseService {
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.text - The text of a user input counterexample (for example, `What are you wearing?`).
    * @param {string} [params.new_text] - The text of a user input counterexample.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1029,11 +1050,11 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1049,11 +1070,12 @@ class AssistantV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {string} params.entity - The name of the entity. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 64 characters.
+   * @param {string} params.entity - The name of the entity. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.  - It cannot begin with the reserved prefix `sy[params.headers] -`.  - It must be no longer than 64 characters.
    * @param {string} [params.description] - The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters.
    * @param {Object} [params.metadata] - Any metadata related to the value.
    * @param {CreateValue[]} [params.values] - An array of objects describing the entity values.
    * @param {boolean} [params.fuzzy_match] - Whether to use fuzzy matching for the entity.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1084,11 +1106,11 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1101,6 +1123,7 @@ class AssistantV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1123,10 +1146,10 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1141,6 +1164,7 @@ class AssistantV1 extends BaseService {
    * @param {string} params.entity - The name of the entity.
    * @param {boolean} [params.export] - Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1168,10 +1192,10 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1187,8 +1211,9 @@ class AssistantV1 extends BaseService {
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
    * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
-   * @param {string} [params.cursor] - A token identifying the last object from the previous page of results.
+   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1219,10 +1244,10 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1235,11 +1260,12 @@ class AssistantV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
-   * @param {string} [params.new_entity] - The name of the entity. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 64 characters.
+   * @param {string} [params.new_entity] - The name of the entity. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.  - It cannot begin with the reserved prefix `sy[params.headers] -`.  - It must be no longer than 64 characters.
    * @param {string} [params.new_description] - The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters.
    * @param {Object} [params.new_metadata] - Any metadata related to the entity.
    * @param {boolean} [params.new_fuzzy_match] - Whether to use fuzzy matching for the entity.
    * @param {CreateValue[]} [params.new_values] - An array of entity values.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1271,11 +1297,11 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1297,6 +1323,7 @@ class AssistantV1 extends BaseService {
    * @param {string[]} [params.synonyms] - An array containing any synonyms for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A synonym must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters.
    * @param {string[]} [params.patterns] - An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 128 characters. For more information about how to specify a pattern, see the [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities).
    * @param {string} [params.value_type] - Specifies the type of value.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1328,11 +1355,11 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1346,6 +1373,7 @@ class AssistantV1 extends BaseService {
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
    * @param {string} params.value - The text of the entity value.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1369,10 +1397,10 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1388,6 +1416,7 @@ class AssistantV1 extends BaseService {
    * @param {string} params.value - The text of the entity value.
    * @param {boolean} [params.export] - Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1416,10 +1445,10 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1436,8 +1465,9 @@ class AssistantV1 extends BaseService {
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
    * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
-   * @param {string} [params.cursor] - A token identifying the last object from the previous page of results.
+   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1469,10 +1499,10 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1491,6 +1521,7 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.new_type] - Specifies the type of value.
    * @param {string[]} [params.new_synonyms] - An array of synonyms for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A synonym must conform to the following resrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters.
    * @param {string[]} [params.new_patterns] - An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 128 characters. For more information about how to specify a pattern, see the [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities).
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1523,11 +1554,11 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1546,6 +1577,7 @@ class AssistantV1 extends BaseService {
    * @param {string} params.entity - The name of the entity.
    * @param {string} params.value - The text of the entity value.
    * @param {string} params.synonym - The text of the synonym. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1574,11 +1606,11 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1593,6 +1625,7 @@ class AssistantV1 extends BaseService {
    * @param {string} params.entity - The name of the entity.
    * @param {string} params.value - The text of the entity value.
    * @param {string} params.synonym - The text of the synonym.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1617,10 +1650,10 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1636,6 +1669,7 @@ class AssistantV1 extends BaseService {
    * @param {string} params.value - The text of the entity value.
    * @param {string} params.synonym - The text of the synonym.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1664,10 +1698,10 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1684,8 +1718,9 @@ class AssistantV1 extends BaseService {
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
    * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
-   * @param {string} [params.cursor] - A token identifying the last object from the previous page of results.
+   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1717,10 +1752,10 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1736,6 +1771,7 @@ class AssistantV1 extends BaseService {
    * @param {string} params.value - The text of the entity value.
    * @param {string} params.synonym - The text of the synonym.
    * @param {string} [params.new_synonym] - The text of the synonym. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1765,11 +1801,11 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1799,9 +1835,10 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.node_type] - How the dialog node is processed.
    * @param {string} [params.event_name] - How an `event_handler` node is processed.
    * @param {string} [params.variable] - The location in the dialog context where output is stored.
-   * @param {string} [params.digress_in] - Whether this top-level dialog node can be digressed into.
+   * @param {string} [params.digress_in] - Whether this to[params.headers] -level dialog node can be digressed into.
    * @param {string} [params.digress_out] - Whether this dialog node can be returned to after a digression.
-   * @param {string} [params.digress_out_slots] - Whether the user can digress to top-level nodes while filling out slots.
+   * @param {string} [params.digress_out_slots] - Whether the user can digress to to[params.headers] -level nodes while filling out slots.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1844,11 +1881,11 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1861,6 +1898,7 @@ class AssistantV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.dialog_node - The dialog node ID (for example, `get_order`).
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1883,10 +1921,10 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1900,6 +1938,7 @@ class AssistantV1 extends BaseService {
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.dialog_node - The dialog node ID (for example, `get_order`).
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1926,10 +1965,10 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1944,8 +1983,9 @@ class AssistantV1 extends BaseService {
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
    * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
-   * @param {string} [params.cursor] - A token identifying the last object from the previous page of results.
+   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1975,10 +2015,10 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -2005,9 +2045,10 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.new_event_name] - How an `event_handler` node is processed.
    * @param {string} [params.new_variable] - The location in the dialog context where output is stored.
    * @param {DialogNodeAction[]} [params.new_actions] - An array of objects describing any actions to be invoked by the dialog node.
-   * @param {string} [params.new_digress_in] - Whether this top-level dialog node can be digressed into.
+   * @param {string} [params.new_digress_in] - Whether this to[params.headers] -level dialog node can be digressed into.
    * @param {string} [params.new_digress_out] - Whether this dialog node can be returned to after a digression.
-   * @param {string} [params.new_digress_out_slots] - Whether the user can digress to top-level nodes while filling out slots.
+   * @param {string} [params.new_digress_out_slots] - Whether the user can digress to to[params.headers] -level nodes while filling out slots.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -2051,11 +2092,11 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -2070,10 +2111,11 @@ class AssistantV1 extends BaseService {
    * List the events from the logs of all workspaces in the service instance.    If **cursor** is not specified, this operation is limited to 40 requests per 30 minutes. If **cursor** is specified, the limit is 120 requests per minute. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.filter - A cacheable parameter that limits the results to those matching the specified filter. You must specify a filter query that includes a value for `language`, as well as a value for `workspace_id` or `request.context.metadata.deployment`. For more information, see the [documentation](https://console.bluemix.net/docs/services/conversation/filter-reference.html#filter-query-syntax).
+   * @param {string} params.filter - A cacheable parameter that limits the results to those matching the specified filter. You must specify a filter query that includes a value for `language`, as well as a value for `workspace_id` or `request.context.metadata.deployment`. For more information, see the [documentation](https://console.bluemix.net/docs/services/conversation/filte[params.headers] -reference.html#filte[params.headers] -query-syntax).
    * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
-   * @param {string} [params.cursor] - A token identifying the last object from the previous page of results.
+   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -2098,10 +2140,10 @@ class AssistantV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -2114,9 +2156,10 @@ class AssistantV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
-   * @param {string} [params.filter] - A cacheable parameter that limits the results to those matching the specified filter. For more information, see the [documentation](https://console.bluemix.net/docs/services/conversation/filter-reference.html#filter-query-syntax).
+   * @param {string} [params.filter] - A cacheable parameter that limits the results to those matching the specified filter. For more information, see the [documentation](https://console.bluemix.net/docs/services/conversation/filte[params.headers] -reference.html#filte[params.headers] -query-syntax).
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
-   * @param {string} [params.cursor] - A token identifying the last object from the previous page of results.
+   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -2145,10 +2188,10 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -2202,6 +2245,7 @@ namespace AssistantV1 {
     output?: OutputData;
     /** Whether to include additional diagnostic information about the dialog nodes that were visited during processing of the message. */
     nodes_visited_details?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `createWorkspace` operation. */
@@ -2224,12 +2268,14 @@ namespace AssistantV1 {
     metadata?: Object;
     /** Whether training data from the workspace can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used. */
     learning_opt_out?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `deleteWorkspace` operation. */
   export interface DeleteWorkspaceParams {
     /** Unique identifier of the workspace. */
     workspace_id: string;
+    headers?: Object;
   }
 
   /** Parameters for the `getWorkspace` operation. */
@@ -2240,6 +2286,7 @@ namespace AssistantV1 {
     export?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `listWorkspaces` operation. */
@@ -2250,10 +2297,11 @@ namespace AssistantV1 {
     include_count?: boolean;
     /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
     sort?: string;
-    /** A token identifying the last object from the previous page of results. */
+    /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `updateWorkspace` operation. */
@@ -2280,18 +2328,20 @@ namespace AssistantV1 {
     learning_opt_out?: boolean;
     /** Whether the new data is to be appended to the existing data in the workspace. If **append**=`false`, elements included in the new data completely replace the corresponding existing elements, including all subelements. For example, if the new data includes **entities** and **append**=`false`, all existing entities in the workspace are discarded and replaced with the new entities.    If **append**=`true`, existing elements are preserved, and the new elements are added. If any elements in the new data collide with existing elements, the update request fails. */
     append?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `createIntent` operation. */
   export interface CreateIntentParams {
     /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 128 characters. */
+    /** The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sy[params.headers] -`.  - It must be no longer than 128 characters. */
     intent: string;
     /** The description of the intent. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     description?: string;
     /** An array of user input examples for the intent. */
     examples?: CreateExample[];
+    headers?: Object;
   }
 
   /** Parameters for the `deleteIntent` operation. */
@@ -2300,6 +2350,7 @@ namespace AssistantV1 {
     workspace_id: string;
     /** The intent name. */
     intent: string;
+    headers?: Object;
   }
 
   /** Parameters for the `getIntent` operation. */
@@ -2312,6 +2363,7 @@ namespace AssistantV1 {
     export?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `listIntents` operation. */
@@ -2326,10 +2378,11 @@ namespace AssistantV1 {
     include_count?: boolean;
     /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
     sort?: string;
-    /** A token identifying the last object from the previous page of results. */
+    /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `updateIntent` operation. */
@@ -2338,12 +2391,13 @@ namespace AssistantV1 {
     workspace_id: string;
     /** The intent name. */
     intent: string;
-    /** The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 128 characters. */
+    /** The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sy[params.headers] -`.  - It must be no longer than 128 characters. */
     new_intent?: string;
     /** The description of the intent. */
     new_description?: string;
     /** An array of user input examples for the intent. */
     new_examples?: CreateExample[];
+    headers?: Object;
   }
 
   /** Parameters for the `createExample` operation. */
@@ -2354,6 +2408,7 @@ namespace AssistantV1 {
     intent: string;
     /** The text of a user input example. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 1024 characters. */
     text: string;
+    headers?: Object;
   }
 
   /** Parameters for the `deleteExample` operation. */
@@ -2364,6 +2419,7 @@ namespace AssistantV1 {
     intent: string;
     /** The text of the user input example. */
     text: string;
+    headers?: Object;
   }
 
   /** Parameters for the `getExample` operation. */
@@ -2376,6 +2432,7 @@ namespace AssistantV1 {
     text: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `listExamples` operation. */
@@ -2390,10 +2447,11 @@ namespace AssistantV1 {
     include_count?: boolean;
     /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
     sort?: string;
-    /** A token identifying the last object from the previous page of results. */
+    /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `updateExample` operation. */
@@ -2406,6 +2464,7 @@ namespace AssistantV1 {
     text: string;
     /** The text of the user input example. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 1024 characters. */
     new_text?: string;
+    headers?: Object;
   }
 
   /** Parameters for the `createCounterexample` operation. */
@@ -2414,6 +2473,7 @@ namespace AssistantV1 {
     workspace_id: string;
     /** The text of a user input marked as irrelevant input. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters  - It cannot consist of only whitespace characters  - It must be no longer than 1024 characters. */
     text: string;
+    headers?: Object;
   }
 
   /** Parameters for the `deleteCounterexample` operation. */
@@ -2422,6 +2482,7 @@ namespace AssistantV1 {
     workspace_id: string;
     /** The text of a user input counterexample (for example, `What are you wearing?`). */
     text: string;
+    headers?: Object;
   }
 
   /** Parameters for the `getCounterexample` operation. */
@@ -2432,6 +2493,7 @@ namespace AssistantV1 {
     text: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `listCounterexamples` operation. */
@@ -2444,10 +2506,11 @@ namespace AssistantV1 {
     include_count?: boolean;
     /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
     sort?: string;
-    /** A token identifying the last object from the previous page of results. */
+    /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `updateCounterexample` operation. */
@@ -2458,13 +2521,14 @@ namespace AssistantV1 {
     text: string;
     /** The text of a user input counterexample. */
     new_text?: string;
+    headers?: Object;
   }
 
   /** Parameters for the `createEntity` operation. */
   export interface CreateEntityParams {
     /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** The name of the entity. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 64 characters. */
+    /** The name of the entity. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.  - It cannot begin with the reserved prefix `sy[params.headers] -`.  - It must be no longer than 64 characters. */
     entity: string;
     /** The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     description?: string;
@@ -2474,6 +2538,7 @@ namespace AssistantV1 {
     values?: CreateValue[];
     /** Whether to use fuzzy matching for the entity. */
     fuzzy_match?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `deleteEntity` operation. */
@@ -2482,6 +2547,7 @@ namespace AssistantV1 {
     workspace_id: string;
     /** The name of the entity. */
     entity: string;
+    headers?: Object;
   }
 
   /** Parameters for the `getEntity` operation. */
@@ -2494,6 +2560,7 @@ namespace AssistantV1 {
     export?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `listEntities` operation. */
@@ -2508,10 +2575,11 @@ namespace AssistantV1 {
     include_count?: boolean;
     /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
     sort?: string;
-    /** A token identifying the last object from the previous page of results. */
+    /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `updateEntity` operation. */
@@ -2520,7 +2588,7 @@ namespace AssistantV1 {
     workspace_id: string;
     /** The name of the entity. */
     entity: string;
-    /** The name of the entity. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 64 characters. */
+    /** The name of the entity. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.  - It cannot begin with the reserved prefix `sy[params.headers] -`.  - It must be no longer than 64 characters. */
     new_entity?: string;
     /** The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     new_description?: string;
@@ -2530,6 +2598,7 @@ namespace AssistantV1 {
     new_fuzzy_match?: boolean;
     /** An array of entity values. */
     new_values?: CreateValue[];
+    headers?: Object;
   }
 
   /** Parameters for the `createValue` operation. */
@@ -2548,6 +2617,7 @@ namespace AssistantV1 {
     patterns?: string[];
     /** Specifies the type of value. */
     value_type?: CreateValueConstants.ValueType | string;
+    headers?: Object;
   }
 
   /** Constants for the `createValue` operation. */
@@ -2567,6 +2637,7 @@ namespace AssistantV1 {
     entity: string;
     /** The text of the entity value. */
     value: string;
+    headers?: Object;
   }
 
   /** Parameters for the `getValue` operation. */
@@ -2581,6 +2652,7 @@ namespace AssistantV1 {
     export?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `listValues` operation. */
@@ -2597,10 +2669,11 @@ namespace AssistantV1 {
     include_count?: boolean;
     /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
     sort?: string;
-    /** A token identifying the last object from the previous page of results. */
+    /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `updateValue` operation. */
@@ -2621,6 +2694,7 @@ namespace AssistantV1 {
     new_synonyms?: string[];
     /** An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 128 characters. For more information about how to specify a pattern, see the [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities). */
     new_patterns?: string[];
+    headers?: Object;
   }
 
   /** Constants for the `updateValue` operation. */
@@ -2642,6 +2716,7 @@ namespace AssistantV1 {
     value: string;
     /** The text of the synonym. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
     synonym: string;
+    headers?: Object;
   }
 
   /** Parameters for the `deleteSynonym` operation. */
@@ -2654,6 +2729,7 @@ namespace AssistantV1 {
     value: string;
     /** The text of the synonym. */
     synonym: string;
+    headers?: Object;
   }
 
   /** Parameters for the `getSynonym` operation. */
@@ -2668,6 +2744,7 @@ namespace AssistantV1 {
     synonym: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `listSynonyms` operation. */
@@ -2684,10 +2761,11 @@ namespace AssistantV1 {
     include_count?: boolean;
     /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
     sort?: string;
-    /** A token identifying the last object from the previous page of results. */
+    /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `updateSynonym` operation. */
@@ -2702,6 +2780,7 @@ namespace AssistantV1 {
     synonym: string;
     /** The text of the synonym. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
     new_synonym?: string;
+    headers?: Object;
   }
 
   /** Parameters for the `createDialogNode` operation. */
@@ -2736,12 +2815,13 @@ namespace AssistantV1 {
     event_name?: CreateDialogNodeConstants.EventName | string;
     /** The location in the dialog context where output is stored. */
     variable?: string;
-    /** Whether this top-level dialog node can be digressed into. */
+    /** Whether this to[params.headers] -level dialog node can be digressed into. */
     digress_in?: CreateDialogNodeConstants.DigressIn | string;
     /** Whether this dialog node can be returned to after a digression. */
     digress_out?: CreateDialogNodeConstants.DigressOut | string;
-    /** Whether the user can digress to top-level nodes while filling out slots. */
+    /** Whether the user can digress to to[params.headers] -level nodes while filling out slots. */
     digress_out_slots?: CreateDialogNodeConstants.DigressOutSlots | string;
+    headers?: Object;
   }
 
   /** Constants for the `createDialogNode` operation. */
@@ -2766,7 +2846,7 @@ namespace AssistantV1 {
       NOMATCH = 'nomatch',
       NOMATCH_RESPONSES_DEPLETED = 'nomatch_responses_depleted',
     }
-    /** Whether this top-level dialog node can be digressed into. */
+    /** Whether this to[params.headers] -level dialog node can be digressed into. */
     export enum DigressIn {
       NOT_AVAILABLE = 'not_available',
       RETURNS = 'returns',
@@ -2778,7 +2858,7 @@ namespace AssistantV1 {
       ALL = 'allow_all',
       ALL_NEVER_RETURN = 'allow_all_never_return',
     }
-    /** Whether the user can digress to top-level nodes while filling out slots. */
+    /** Whether the user can digress to to[params.headers] -level nodes while filling out slots. */
     export enum DigressOutSlots {
       NOT_ALLOWED = 'not_allowed',
       ALLOW_RETURNING = 'allow_returning',
@@ -2792,6 +2872,7 @@ namespace AssistantV1 {
     workspace_id: string;
     /** The dialog node ID (for example, `get_order`). */
     dialog_node: string;
+    headers?: Object;
   }
 
   /** Parameters for the `getDialogNode` operation. */
@@ -2802,6 +2883,7 @@ namespace AssistantV1 {
     dialog_node: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `listDialogNodes` operation. */
@@ -2814,10 +2896,11 @@ namespace AssistantV1 {
     include_count?: boolean;
     /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
     sort?: string;
-    /** A token identifying the last object from the previous page of results. */
+    /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `updateDialogNode` operation. */
@@ -2854,12 +2937,13 @@ namespace AssistantV1 {
     new_variable?: string;
     /** An array of objects describing any actions to be invoked by the dialog node. */
     new_actions?: DialogNodeAction[];
-    /** Whether this top-level dialog node can be digressed into. */
+    /** Whether this to[params.headers] -level dialog node can be digressed into. */
     new_digress_in?: UpdateDialogNodeConstants.DigressIn | string;
     /** Whether this dialog node can be returned to after a digression. */
     new_digress_out?: UpdateDialogNodeConstants.DigressOut | string;
-    /** Whether the user can digress to top-level nodes while filling out slots. */
+    /** Whether the user can digress to to[params.headers] -level nodes while filling out slots. */
     new_digress_out_slots?: UpdateDialogNodeConstants.DigressOutSlots | string;
+    headers?: Object;
   }
 
   /** Constants for the `updateDialogNode` operation. */
@@ -2884,7 +2968,7 @@ namespace AssistantV1 {
       NOMATCH = 'nomatch',
       NOMATCH_RESPONSES_DEPLETED = 'nomatch_responses_depleted',
     }
-    /** Whether this top-level dialog node can be digressed into. */
+    /** Whether this to[params.headers] -level dialog node can be digressed into. */
     export enum DigressIn {
       NOT_AVAILABLE = 'not_available',
       RETURNS = 'returns',
@@ -2896,7 +2980,7 @@ namespace AssistantV1 {
       ALL = 'allow_all',
       ALL_NEVER_RETURN = 'allow_all_never_return',
     }
-    /** Whether the user can digress to top-level nodes while filling out slots. */
+    /** Whether the user can digress to to[params.headers] -level nodes while filling out slots. */
     export enum DigressOutSlots {
       NOT_ALLOWED = 'not_allowed',
       ALLOW_RETURNING = 'allow_returning',
@@ -2906,14 +2990,15 @@ namespace AssistantV1 {
 
   /** Parameters for the `listAllLogs` operation. */
   export interface ListAllLogsParams {
-    /** A cacheable parameter that limits the results to those matching the specified filter. You must specify a filter query that includes a value for `language`, as well as a value for `workspace_id` or `request.context.metadata.deployment`. For more information, see the [documentation](https://console.bluemix.net/docs/services/conversation/filter-reference.html#filter-query-syntax). */
+    /** A cacheable parameter that limits the results to those matching the specified filter. You must specify a filter query that includes a value for `language`, as well as a value for `workspace_id` or `request.context.metadata.deployment`. For more information, see the [documentation](https://console.bluemix.net/docs/services/conversation/filte[params.headers] -reference.html#filte[params.headers] -query-syntax). */
     filter: string;
     /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
     sort?: string;
     /** The number of records to return in each page of results. */
     page_limit?: number;
-    /** A token identifying the last object from the previous page of results. */
+    /** A token identifying the page of results to retrieve. */
     cursor?: string;
+    headers?: Object;
   }
 
   /** Parameters for the `listLogs` operation. */
@@ -2922,12 +3007,13 @@ namespace AssistantV1 {
     workspace_id: string;
     /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
     sort?: string;
-    /** A cacheable parameter that limits the results to those matching the specified filter. For more information, see the [documentation](https://console.bluemix.net/docs/services/conversation/filter-reference.html#filter-query-syntax). */
+    /** A cacheable parameter that limits the results to those matching the specified filter. For more information, see the [documentation](https://console.bluemix.net/docs/services/conversation/filte[params.headers] -reference.html#filte[params.headers] -query-syntax). */
     filter?: string;
     /** The number of records to return in each page of results. */
     page_limit?: number;
-    /** A token identifying the last object from the previous page of results. */
+    /** A token identifying the page of results to retrieve. */
     cursor?: string;
+    headers?: Object;
   }
 
   /*************************
@@ -3004,17 +3090,17 @@ namespace AssistantV1 {
     event_name?: string;
     /** The location in the dialog context where output is stored. */
     variable?: string;
-    /** Whether this top-level dialog node can be digressed into. */
+    /** Whether this to[params.headers] -level dialog node can be digressed into. */
     digress_in?: string;
     /** Whether this dialog node can be returned to after a digression. */
     digress_out?: string;
-    /** Whether the user can digress to top-level nodes while filling out slots. */
+    /** Whether the user can digress to to[params.headers] -level nodes while filling out slots. */
     digress_out_slots?: string;
   }
 
   /** CreateEntity. */
   export interface CreateEntity {
-    /** The name of the entity. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 64 characters. */
+    /** The name of the entity. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.  - It cannot begin with the reserved prefix `sy[params.headers] -`.  - It must be no longer than 64 characters. */
     entity: string;
     /** The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     description?: string;
@@ -3034,7 +3120,7 @@ namespace AssistantV1 {
 
   /** CreateIntent. */
   export interface CreateIntent {
-    /** The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 128 characters. */
+    /** The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sy[params.headers] -`.  - It must be no longer than 128 characters. */
     intent: string;
     /** The description of the intent. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     description?: string;
@@ -3090,11 +3176,11 @@ namespace AssistantV1 {
     event_name?: string;
     /** The location in the dialog context where output is stored. */
     variable?: string;
-    /** Whether this top-level dialog node can be digressed into. */
+    /** Whether this to[params.headers] -level dialog node can be digressed into. */
     digress_in?: string;
     /** Whether this dialog node can be returned to after a digression. */
     digress_out?: string;
-    /** Whether the user can digress to top-level nodes while filling out slots. */
+    /** Whether the user can digress to to[params.headers] -level nodes while filling out slots. */
     digress_out_slots?: string;
   }
 
@@ -3136,6 +3222,8 @@ namespace AssistantV1 {
     dialog_node?: string;
     /** The title of the dialog node. */
     title?: string;
+    /** The conditions that trigger the dialog node. */
+    conditions?: string;
   }
 
   /** Entity. */
@@ -3278,6 +3366,8 @@ namespace AssistantV1 {
     next_url?: string;
     /** Reserved for future use. */
     matched?: number;
+    /** A token identifying the next page of results. */
+    next_cursor?: string;
   }
 
   /** The text of the user input. */
@@ -3286,7 +3376,7 @@ namespace AssistantV1 {
     text?: string;
   }
 
-  /** A request formatted for the Assistant service. */
+  /** A request formatted for the Watson Assistant service. */
   export interface MessageRequest {
     /** An input object that includes the input text. */
     input?: InputData;
@@ -3302,7 +3392,7 @@ namespace AssistantV1 {
     output?: OutputData;
   }
 
-  /** A response from the Assistant service. */
+  /** A response from the Watson Assistant service. */
   export interface MessageResponse {
     /** The user input from the request. */
     input?: MessageInput;
@@ -3340,6 +3430,10 @@ namespace AssistantV1 {
     total?: number;
     /** Reserved for future use. */
     matched?: number;
+    /** A token identifying the current page of results. */
+    refresh_cursor?: string;
+    /** A token identifying the next page of results. */
+    next_cursor?: string;
   }
 
   /** A term from the request that was identified as an entity. */

@@ -24,8 +24,6 @@ import { FileObject } from '../lib/helper';
  * The IBM Watson Visual Recognition service uses deep learning algorithms to identify scenes, objects, and faces  in images you upload to the service. You can create and train a custom classifier to identify subjects that suit your needs.
  */
 
-
-
 class VisualRecognitionV3 extends BaseService {
 
   static URL: string = 'https://gateway-a.watsonplatform.net/visual-recognition/api';
@@ -72,6 +70,7 @@ class VisualRecognitionV3 extends BaseService {
    * @param {string[]} [params.owners] - The categories of classifiers to apply. Use `IBM` to classify against the `default` general classifier, and use `me` to classify against your custom classifiers. To analyze the image against both classifier categories, set the value to both `IBM` and `me`.   The built-in `default` classifier is used if both **classifier_ids** and **owners** parameters are empty.  The **classifier_ids** parameter overrides **owners**, so make sure that **classifier_ids** is empty.
    * @param {string[]} [params.classifier_ids] - Which classifiers to apply. Overrides the **owners** parameter. You can specify both custom and built-in classifier IDs. The built-in `default` classifier is used if both **classifier_ids** and **owners** parameters are empty.  The following built-in classifier IDs require no training: - `default`: Returns classes from thousands of general tags. - `food`: (Beta) Enhances specificity and accuracy for images of food items. - `explicit`: (Beta) Evaluates whether the image might be pornographic.
    * @param {string} [params.images_file_content_type] - The content type of images_file.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -95,12 +94,12 @@ class VisualRecognitionV3 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'multipart/form-data',
           'Accept-Language': _params.accept_language
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -118,6 +117,7 @@ class VisualRecognitionV3 extends BaseService {
    * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.images_file] - An image file (gif, .jpg, .png, .tif.) or .zip file with images. Limit the .zip file to 100 MB. You can include a maximum of 15 images in a request.  Encode the image and .zip file names in UTF-8 if they contain non-ASCII characters. The service assumes UTF-8 encoding if it encounters non-ASCII characters.  You can also include an image with the **url** parameter.
    * @param {string} [params.url] - The URL of an image to analyze. Must be in .gif, .jpg, .png, or .tif format. The minimum recommended pixel density is 32X32 pixels per inch, and the maximum image size is 10 MB. Redirects are followed, so you can use a shortened URL.  You can also include images with the **images_file** parameter.
    * @param {string} [params.images_file_content_type] - The content type of images_file.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -138,11 +138,11 @@ class VisualRecognitionV3 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'multipart/form-data',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -160,6 +160,7 @@ class VisualRecognitionV3 extends BaseService {
    * @param {string} params.name - The name of the new classifier. Encode special characters in UTF-8.
    * @param {NodeJS.ReadableStream|FileObject|Buffer} params.classname_positive_examples - A .zip file of images that depict the visual subject of a class in the new classifier. You can include more than one positive example file in a call.  Specify the parameter name by appending `_positive_examples` to the class name. For example, `goldenretriever_positive_examples` creates the class **goldenretriever**.  Include at least 10 images in .jpg or .png format. The minimum recommended image resolution is 32X32 pixels. The maximum number of images is 10,000 images or 100 MB per .zip file.  Encode special characters in the file name in UTF-8.
    * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.negative_examples] - A .zip file of images that do not depict the visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images.  Encode special characters in the file name in UTF-8.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -198,11 +199,11 @@ class VisualRecognitionV3 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'multipart/form-data',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -212,6 +213,7 @@ class VisualRecognitionV3 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.classifier_id - The ID of the classifier.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -233,11 +235,11 @@ class VisualRecognitionV3 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -249,6 +251,7 @@ class VisualRecognitionV3 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.classifier_id - The ID of the classifier.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -270,11 +273,11 @@ class VisualRecognitionV3 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -284,6 +287,7 @@ class VisualRecognitionV3 extends BaseService {
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {boolean} [params.verbose] - Specify `true` to return details about the classifiers. Omit this parameter to return a brief list of classifiers.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -300,11 +304,11 @@ class VisualRecognitionV3 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -312,12 +316,13 @@ class VisualRecognitionV3 extends BaseService {
   /**
    * Update a classifier.
    *
-   * Update a custom classifier by adding new positive or negative classes (examples) or by adding new images to existing classes. You must supply at least one set of positive or negative examples. For details, see [Updating custom classifiers](https://console.bluemix.net/docs/services/visual-recognition/customizing.html#updating-custom-classifiers).  Encode all names in UTF-8 if they contain non-ASCII characters (.zip and image file names, and classifier and class names). The service assumes UTF-8 encoding if it encounters non-ASCII characters.  **Important:** You can't update a custom classifier with an API key for a Lite plan. To update a custom classifier on a Lite plan, create another service instance on a Standard plan and re-create your custom classifier.  **Tip:** Don't make retraining calls on a classifier until the status is ready. When you submit retraining requests in parallel, the last request overwrites the previous requests. The retrained property shows the last time the classifier retraining finished.
+   * Update a custom classifier by adding new positive or negative classes (examples) or by adding new images to existing classes. You must supply at least one set of positive or negative examples. For details, see [Updating custom classifiers](https://console.bluemix.net/docs/services/visual-recognition/customizing.html#updating-custom-classifiers).  Encode all names in UTF-8 if they contain non-ASCII characters (.zip and image file names, and classifier and class names). The service assumes UTF-8 encoding if it encounters non-ASCII characters.  **Tip:** Don't make retraining calls on a classifier until the status is ready. When you submit retraining requests in parallel, the last request overwrites the previous requests. The retrained property shows the last time the classifier retraining finished.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.classifier_id - The ID of the classifier.
    * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.classname_positive_examples] - A .zip file of images that depict the visual subject of a class in the classifier. The positive examples create or update classes in the classifier. You can include more than one positive example file in a call.  Specify the parameter name by appending `_positive_examples` to the class name. For example, `goldenretriever_positive_examples` creates the class `goldenretriever`.  Include at least 10 images in .jpg or .png format. The minimum recommended image resolution is 32X32 pixels. The maximum number of images is 10,000 images or 100 MB per .zip file.  Encode special characters in the file name in UTF-8.
    * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.negative_examples] - A .zip file of images that do not depict the visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images.  Encode special characters in the file name in UTF-8.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -359,11 +364,11 @@ class VisualRecognitionV3 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'multipart/form-data',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -379,6 +384,7 @@ class VisualRecognitionV3 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.classifier_id - The ID of the classifier.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -400,11 +406,11 @@ class VisualRecognitionV3 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/octet-stream',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -457,6 +463,7 @@ namespace VisualRecognitionV3 {
     classifier_ids?: string[];
     /** The content type of images_file. */
     images_file_content_type?: string;
+    headers?: Object;
   }
 
   /** Constants for the `classify` operation. */
@@ -482,6 +489,7 @@ namespace VisualRecognitionV3 {
     url?: string;
     /** The content type of images_file. */
     images_file_content_type?: string;
+    headers?: Object;
   }
 
   /** Parameters for the `createClassifier` operation. */
@@ -492,24 +500,28 @@ namespace VisualRecognitionV3 {
     classname_positive_examples: NodeJS.ReadableStream|FileObject|Buffer;
     /** A .zip file of images that do not depict the visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images.  Encode special characters in the file name in UTF-8. */
     negative_examples?: NodeJS.ReadableStream|FileObject|Buffer;
+    headers?: Object;
   }
 
   /** Parameters for the `deleteClassifier` operation. */
   export interface DeleteClassifierParams {
     /** The ID of the classifier. */
     classifier_id: string;
+    headers?: Object;
   }
 
   /** Parameters for the `getClassifier` operation. */
   export interface GetClassifierParams {
     /** The ID of the classifier. */
     classifier_id: string;
+    headers?: Object;
   }
 
   /** Parameters for the `listClassifiers` operation. */
   export interface ListClassifiersParams {
     /** Specify `true` to return details about the classifiers. Omit this parameter to return a brief list of classifiers. */
     verbose?: boolean;
+    headers?: Object;
   }
 
   /** Parameters for the `updateClassifier` operation. */
@@ -520,12 +532,14 @@ namespace VisualRecognitionV3 {
     classname_positive_examples?: NodeJS.ReadableStream|FileObject|Buffer;
     /** A .zip file of images that do not depict the visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images.  Encode special characters in the file name in UTF-8. */
     negative_examples?: NodeJS.ReadableStream|FileObject|Buffer;
+    headers?: Object;
   }
 
   /** Parameters for the `getCoreMlModel` operation. */
   export interface GetCoreMlModelParams {
     /** The ID of the classifier. */
     classifier_id: string;
+    headers?: Object;
   }
 
   /*************************

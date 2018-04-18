@@ -17,14 +17,13 @@
 import * as extend from 'extend';
 import { RequestResponse } from 'request';
 import { BaseService } from '../lib/base_service';
-import { getMissingParams } from '../lib/helper';
 import { FileObject } from '../lib/helper';
+import { getMissingParams } from '../lib/helper';
+
 
 /**
  * The IBM Watson Discovery Service is a cognitive search and content analytics engine that you can add to applications to identify patterns, trends and actionable insights to drive better decision-making. Securely unify structured and unstructured data with pre-enriched content, and use a simplified query language to eliminate the need for manual filtering of results.
  */
-
-
 
 class DiscoveryV1 extends BaseService {
 
@@ -69,6 +68,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.name - Name that identifies the environment.
    * @param {string} [params.description] - Description of the environment.
    * @param {number} [params.size] - **Deprecated**: Size of the environment.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -93,11 +93,11 @@ class DiscoveryV1 extends BaseService {
         body,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -107,6 +107,7 @@ class DiscoveryV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -128,11 +129,11 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -142,6 +143,7 @@ class DiscoveryV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -163,11 +165,11 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -179,6 +181,7 @@ class DiscoveryV1 extends BaseService {
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {string} [params.name] - Show only the environment with the given name.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -195,11 +198,11 @@ class DiscoveryV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -212,6 +215,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string[]} params.collection_ids - A comma-separated list of collection IDs to be queried against.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -237,11 +241,11 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -255,6 +259,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} [params.name] - Name that identifies the environment.
    * @param {string} [params.description] - Description of the environment.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -282,11 +287,11 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -307,6 +312,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Conversions} [params.conversions] - The document conversion settings for the configuration.
    * @param {Enrichment[]} [params.enrichments] - An array of document enrichment settings for the configuration.
    * @param {NormalizationOperation[]} [params.normalizations] - Defines operations that can be used to transform the final output JSON into a normalized form. Operations are executed in the order that they appear in the array.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -337,11 +343,11 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -354,6 +360,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.configuration_id - The ID of the configuration.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -376,11 +383,11 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -391,6 +398,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.configuration_id - The ID of the configuration.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -413,11 +421,11 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -430,6 +438,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} [params.name] - Find configurations with the given name.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -455,11 +464,11 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -477,6 +486,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Conversions} [params.conversions] - The document conversion settings for the configuration.
    * @param {Enrichment[]} [params.enrichments] - An array of document enrichment settings for the configuration.
    * @param {NormalizationOperation[]} [params.normalizations] - Defines operations that can be used to transform the final output JSON into a normalized form. Operations are executed in the order that they appear in the array.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -508,11 +518,11 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -534,6 +544,7 @@ class DiscoveryV1 extends BaseService {
    * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.file] - The content of the document to ingest. The maximum supported file size is 50 megabytes. Files larger than 50 megabytes is rejected.
    * @param {string} [params.metadata] - If you're using the Data Crawler to upload your documents, you can test a document against the type of metadata that the Data Crawler might send. The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected. Example:  ``` {   "Creator": "Johnny Appleseed",   "Subject": "Apples" } ```.
    * @param {string} [params.file_content_type] - The content type of file.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -569,11 +580,11 @@ class DiscoveryV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'multipart/form-data',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -591,6 +602,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.description] - A description of the collection.
    * @param {string} [params.configuration_id] - The ID of the configuration in which the collection is to be created.
    * @param {string} [params.language] - The language of the documents stored in the collection, in the form of an ISO 639-1 language code.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -620,56 +632,11 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
-    };
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
-   * Set the expansion list.
-   *
-   * Create or replace the Expansion list for this collection. The maximum number of expanded terms per collection is `500`. The current expansion list is replaced with the uploaded content.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.environment_id - The ID of the environment.
-   * @param {string} params.collection_id - The ID of the collection.
-   * @param {Expansion[]} params.expansions - An array of query expansion definitions.    Each object in the `expansions` array represents a term or set of terms that will be expanded into other terms. Each expansion object can be configured so that all terms are expanded to all other terms in the object - bi-directional, or a set list of terms can be expanded into a second list of terms - uni-directional.   To create a bi-directional expansion specify an `expanded_terms` array. When found in a query, all items in the `expanded_terms` array are then expanded to the other items in the same array.   To create a uni-directional expansion, specify both an array of `input_terms` and an array of `expanded_terms`. When items in the `input_terms` array are present in a query, they are expanded using the items listed in the `expanded_terms` array.
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
-   */
-  public createExpansions(params: DiscoveryV1.CreateExpansionsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Expansions>): NodeJS.ReadableStream | void {
-    const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
-    const requiredParams = ['environment_id', 'collection_id', 'expansions'];
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-    const body = {
-      'expansions': _params.expansions
-    };
-    const path = {
-      'environment_id': _params.environment_id,
-      'collection_id': _params.collection_id
-    };
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/expansions',
-        method: 'POST',
-        json: true,
-        body,
-        path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -680,6 +647,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -702,50 +670,11 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
-    };
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
-   * Delete the expansions list.
-   *
-   * Remove the expansion information for this collection. The expansion list must be deleted to disable query expansion for a collection.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.environment_id - The ID of the environment.
-   * @param {string} params.collection_id - The ID of the collection.
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
-   */
-  public deleteExpansions(params: DiscoveryV1.DeleteExpansionsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): NodeJS.ReadableStream | void {
-    const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
-    const requiredParams = ['environment_id', 'collection_id'];
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-    const path = {
-      'environment_id': _params.environment_id,
-      'collection_id': _params.collection_id
-    };
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/expansions',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -756,6 +685,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -778,11 +708,11 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -795,6 +725,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -817,11 +748,11 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -834,6 +765,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} [params.name] - Find collections with the given name.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -859,50 +791,11 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
-    };
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
-   * List current expansions.
-   *
-   * Returns the current expansion list for the specified collection. If an expansion list is not specified, an object with empty expansion arrays is returned.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.environment_id - The ID of the environment.
-   * @param {string} params.collection_id - The ID of the collection.
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
-   */
-  public listExpansions(params: DiscoveryV1.ListExpansionsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Expansions>): NodeJS.ReadableStream | void {
-    const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
-    const requiredParams = ['environment_id', 'collection_id'];
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-    const path = {
-      'environment_id': _params.environment_id,
-      'collection_id': _params.collection_id
-    };
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/expansions',
-        method: 'GET',
-        path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -916,6 +809,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.name - The name of the collection.
    * @param {string} [params.description] - A description of the collection.
    * @param {string} [params.configuration_id] - The ID of the configuration in which the collection is to be updated.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -945,11 +839,141 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
+    };
+    return this.createRequest(parameters, _callback);
+  };
+
+  /*************************
+   * expansions
+   ************************/
+
+  /**
+   * Set the expansion list.
+   *
+   * Create or replace the Expansion list for this collection. The maximum number of expanded terms per collection is `500`. The current expansion list is replaced with the uploaded content.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.environment_id - The ID of the environment.
+   * @param {string} params.collection_id - The ID of the collection.
+   * @param {Expansion[]} params.expansions - An array of query expansion definitions.    Each object in the `expansions` array represents a term or set of terms that will be expanded into other terms. Each expansion object can be configured so that all terms are expanded to all other terms in the object - bi-directional, or a set list of terms can be expanded into a second list of terms - uni-directional.   To create a bi-directional expansion specify an `expanded_terms` array. When found in a query, all items in the `expanded_terms` array are then expanded to the other items in the same array.   To create a uni-directional expansion, specify both an array of `input_terms` and an array of `expanded_terms`. When items in the `input_terms` array are present in a query, they are expanded using the items listed in the `expanded_terms` array.
+   * @param {Object} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {NodeJS.ReadableStream|void}
+   */
+  public createExpansions(params: DiscoveryV1.CreateExpansionsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Expansions>): NodeJS.ReadableStream | void {
+    const _params = extend({}, params);
+    const _callback = (callback) ? callback : () => { /* noop */ };
+    const requiredParams = ['environment_id', 'collection_id', 'expansions'];
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+    const body = {
+      'expansions': _params.expansions
+    };
+    const path = {
+      'environment_id': _params.environment_id,
+      'collection_id': _params.collection_id
+    };
+    const parameters = {
+      options: {
+        url: '/v1/environments/{environment_id}/collections/{collection_id}/expansions',
+        method: 'POST',
+        json: true,
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+    return this.createRequest(parameters, _callback);
+  };
+
+  /**
+   * Delete the expansions list.
+   *
+   * Remove the expansion information for this collection. The expansion list must be deleted to disable query expansion for a collection.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.environment_id - The ID of the environment.
+   * @param {string} params.collection_id - The ID of the collection.
+   * @param {Object} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {NodeJS.ReadableStream|void}
+   */
+  public deleteExpansions(params: DiscoveryV1.DeleteExpansionsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): NodeJS.ReadableStream | void {
+    const _params = extend({}, params);
+    const _callback = (callback) ? callback : () => { /* noop */ };
+    const requiredParams = ['environment_id', 'collection_id'];
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+    const path = {
+      'environment_id': _params.environment_id,
+      'collection_id': _params.collection_id
+    };
+    const parameters = {
+      options: {
+        url: '/v1/environments/{environment_id}/collections/{collection_id}/expansions',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+    return this.createRequest(parameters, _callback);
+  };
+
+  /**
+   * List current expansions.
+   *
+   * Returns the current expansion list for the specified collection. If an expansion list is not specified, an object with empty expansion arrays is returned.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.environment_id - The ID of the environment.
+   * @param {string} params.collection_id - The ID of the collection.
+   * @param {Object} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {NodeJS.ReadableStream|void}
+   */
+  public listExpansions(params: DiscoveryV1.ListExpansionsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Expansions>): NodeJS.ReadableStream | void {
+    const _params = extend({}, params);
+    const _callback = (callback) ? callback : () => { /* noop */ };
+    const requiredParams = ['environment_id', 'collection_id'];
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+    const path = {
+      'environment_id': _params.environment_id,
+      'collection_id': _params.collection_id
+    };
+    const parameters = {
+      options: {
+        url: '/v1/environments/{environment_id}/collections/{collection_id}/expansions',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -969,6 +993,7 @@ class DiscoveryV1 extends BaseService {
    * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.file] - The content of the document to ingest. The maximum supported file size is 50 megabytes. Files larger than 50 megabytes is rejected.
    * @param {string} [params.metadata] - If you're using the Data Crawler to upload your documents, you can test a document against the type of metadata that the Data Crawler might send. The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected. Example:  ``` {   "Creator": "Johnny Appleseed",   "Subject": "Apples" } ```.
    * @param {string} [params.file_content_type] - The content type of file.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -999,11 +1024,11 @@ class DiscoveryV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'multipart/form-data',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1017,6 +1042,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
    * @param {string} params.document_id - The ID of the document.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1040,11 +1066,11 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1058,6 +1084,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
    * @param {string} params.document_id - The ID of the document.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1081,11 +1108,11 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1102,6 +1129,7 @@ class DiscoveryV1 extends BaseService {
    * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.file] - The content of the document to ingest. The maximum supported file size is 50 megabytes. Files larger than 50 megabytes is rejected.
    * @param {string} [params.metadata] - If you're using the Data Crawler to upload your documents, you can test a document against the type of metadata that the Data Crawler might send. The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected. Example:  ``` {   "Creator": "Johnny Appleseed",   "Subject": "Apples" } ```.
    * @param {string} [params.file_content_type] - The content type of file.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1133,11 +1161,11 @@ class DiscoveryV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'multipart/form-data',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1168,6 +1196,7 @@ class DiscoveryV1 extends BaseService {
    * @param {boolean} [params.similar] - When `true`, results are returned based on their similarity to the document IDs specified in the `similar.document_ids` parameter. The default is `false`.
    * @param {string[]} [params.similar_document_ids] - A comma-separated list of document IDs that will be used to find similar documents.   **Note:** If the `natural_language_query` parameter is also specified, it will be used to expand the scope of the document similarity search to include the natural language query. Other query parameters, such as `filter` and `query` are subsequently applied and reduce the query scope.
    * @param {string[]} [params.similar_fields] - A comma-separated list of field names that will be used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1207,11 +1236,11 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1237,6 +1266,7 @@ class DiscoveryV1 extends BaseService {
    * @param {boolean} [params.similar] - When `true`, results are returned based on their similarity to the document IDs specified in the `similar.document_ids` parameter. The default is `false`.
    * @param {string[]} [params.similar_document_ids] - A comma-separated list of document IDs that will be used to find similar documents.   **Note:** If the `natural_language_query` parameter is also specified, it will be used to expand the scope of the document similarity search to include the natural language query. Other query parameters, such as `filter` and `query` are subsequently applied and reduce the query scope.
    * @param {string[]} [params.similar_fields] - A comma-separated list of field names that will be used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1275,11 +1305,11 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1310,6 +1340,7 @@ class DiscoveryV1 extends BaseService {
    * @param {boolean} [params.similar] - When `true`, results are returned based on their similarity to the document IDs specified in the `similar.document_ids` parameter. The default is `false`.
    * @param {string[]} [params.similar_document_ids] - A comma-separated list of document IDs that will be used to find similar documents.   **Note:** If the `natural_language_query` parameter is also specified, it will be used to expand the scope of the document similarity search to include the natural language query. Other query parameters, such as `filter` and `query` are subsequently applied and reduce the query scope.
    * @param {string[]} [params.similar_fields] - A comma-separated list of field names that will be used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1353,11 +1384,11 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1370,10 +1401,12 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
-   * @param {string} [params.feature] - The entity query feature to perform. Must be `disambiguate`.
+   * @param {string} [params.feature] - The entity query feature to perform. Supported features are `disambiguate` and `similar_entities`.
    * @param {QueryEntitiesEntity} [params.entity] - A text string that appears within the entity text field.
    * @param {QueryEntitiesContext} [params.context] - Entity text to provide context for the queried entity and rank based on that association. For example, if you wanted to query the city of London in England your query would look for `London` with the context of `England`.
    * @param {number} [params.count] - The number of results to return. The default is `10`. The maximum is `1000`.
+   * @param {number} [params.evidence_count] - The number of evidence items to return for each result. The default is `0`. The maximum number of evidence items per query is 10,000.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1389,7 +1422,8 @@ class DiscoveryV1 extends BaseService {
       'feature': _params.feature,
       'entity': _params.entity,
       'context': _params.context,
-      'count': _params.count
+      'count': _params.count,
+      'evidence_count': _params.evidence_count
     };
     const path = {
       'environment_id': _params.environment_id,
@@ -1404,11 +1438,11 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1438,6 +1472,7 @@ class DiscoveryV1 extends BaseService {
    * @param {boolean} [params.similar] - When `true`, results are returned based on their similarity to the document IDs specified in the `similar.document_ids` parameter. The default is `false`.
    * @param {string[]} [params.similar_document_ids] - A comma-separated list of document IDs that will be used to find similar documents.   **Note:** If the `natural_language_query` parameter is also specified, it will be used to expand the scope of the document similarity search to include the natural language query. Other query parameters, such as `filter` and `query` are subsequently applied and reduce the query scope.
    * @param {string[]} [params.similar_fields] - A comma-separated list of field names that will be used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1480,11 +1515,11 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1502,6 +1537,8 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.sort] - The sorting method for the relationships, can be `score` or `frequency`. `frequency` is the number of unique times each entity is identified. The default is `score`.
    * @param {QueryRelationsFilter} [params.filter] - Filters to apply to the relationship query.
    * @param {number} [params.count] - The number of results to return. The default is `10`. The maximum is `1000`.
+   * @param {number} [params.evidence_count] - The number of evidence items to return for each result. The default is `0`. The maximum number of evidence items per query is 10,000.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1518,7 +1555,8 @@ class DiscoveryV1 extends BaseService {
       'context': _params.context,
       'sort': _params.sort,
       'filter': _params.filter,
-      'count': _params.count
+      'count': _params.count,
+      'evidence_count': _params.evidence_count
     };
     const path = {
       'environment_id': _params.environment_id,
@@ -1533,11 +1571,11 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1557,6 +1595,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.natural_language_query] - 
    * @param {string} [params.filter] - 
    * @param {TrainingExample[]} [params.examples] - 
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1586,11 +1625,11 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1607,6 +1646,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.document_id] - 
    * @param {string} [params.cross_reference] - 
    * @param {number} [params.relevance] - 
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1637,11 +1677,11 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1654,6 +1694,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1676,11 +1717,11 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1694,6 +1735,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
    * @param {string} params.query_id - The ID of the query used for training.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1717,11 +1759,11 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1736,6 +1778,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.collection_id - The ID of the collection.
    * @param {string} params.query_id - The ID of the query used for training.
    * @param {string} params.example_id - The ID of the document as it is indexed.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1760,11 +1803,11 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1778,6 +1821,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
    * @param {string} params.query_id - The ID of the query used for training.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1801,11 +1845,11 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1820,6 +1864,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.collection_id - The ID of the collection.
    * @param {string} params.query_id - The ID of the query used for training.
    * @param {string} params.example_id - The ID of the document as it is indexed.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1844,11 +1889,11 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1861,6 +1906,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1883,11 +1929,11 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1901,6 +1947,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
    * @param {string} params.query_id - The ID of the query used for training.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1924,11 +1971,11 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -1945,6 +1992,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.example_id - The ID of the document as it is indexed.
    * @param {string} [params.cross_reference] - 
    * @param {number} [params.relevance] - 
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -1975,11 +2023,11 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -2023,24 +2071,28 @@ namespace DiscoveryV1 {
     description?: string;
     /** **Deprecated**: Size of the environment. */
     size?: number;
+    headers?: Object;
   }
 
   /** Parameters for the `deleteEnvironment` operation. */
   export interface DeleteEnvironmentParams {
     /** The ID of the environment. */
     environment_id: string;
+    headers?: Object;
   }
 
   /** Parameters for the `getEnvironment` operation. */
   export interface GetEnvironmentParams {
     /** The ID of the environment. */
     environment_id: string;
+    headers?: Object;
   }
 
   /** Parameters for the `listEnvironments` operation. */
   export interface ListEnvironmentsParams {
     /** Show only the environment with the given name. */
     name?: string;
+    headers?: Object;
   }
 
   /** Parameters for the `listFields` operation. */
@@ -2049,6 +2101,7 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** A comma-separated list of collection IDs to be queried against. */
     collection_ids: string[];
+    headers?: Object;
   }
 
   /** Parameters for the `updateEnvironment` operation. */
@@ -2059,6 +2112,7 @@ namespace DiscoveryV1 {
     name?: string;
     /** Description of the environment. */
     description?: string;
+    headers?: Object;
   }
 
   /** Parameters for the `createConfiguration` operation. */
@@ -2075,6 +2129,7 @@ namespace DiscoveryV1 {
     enrichments?: Enrichment[];
     /** Defines operations that can be used to transform the final output JSON into a normalized form. Operations are executed in the order that they appear in the array. */
     normalizations?: NormalizationOperation[];
+    headers?: Object;
   }
 
   /** Parameters for the `deleteConfiguration` operation. */
@@ -2083,6 +2138,7 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the configuration. */
     configuration_id: string;
+    headers?: Object;
   }
 
   /** Parameters for the `getConfiguration` operation. */
@@ -2091,6 +2147,7 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the configuration. */
     configuration_id: string;
+    headers?: Object;
   }
 
   /** Parameters for the `listConfigurations` operation. */
@@ -2099,6 +2156,7 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** Find configurations with the given name. */
     name?: string;
+    headers?: Object;
   }
 
   /** Parameters for the `updateConfiguration` operation. */
@@ -2117,6 +2175,7 @@ namespace DiscoveryV1 {
     enrichments?: Enrichment[];
     /** Defines operations that can be used to transform the final output JSON into a normalized form. Operations are executed in the order that they appear in the array. */
     normalizations?: NormalizationOperation[];
+    headers?: Object;
   }
 
   /** Parameters for the `testConfigurationInEnvironment` operation. */
@@ -2135,6 +2194,7 @@ namespace DiscoveryV1 {
     metadata?: string;
     /** The content type of file. */
     file_content_type?: TestConfigurationInEnvironmentConstants.FileContentType | string;
+    headers?: Object;
   }
 
   /** Constants for the `testConfigurationInEnvironment` operation. */
@@ -2171,6 +2231,7 @@ namespace DiscoveryV1 {
     configuration_id?: string;
     /** The language of the documents stored in the collection, in the form of an ISO 639-1 language code. */
     language?: CreateCollectionConstants.Language | string;
+    headers?: Object;
   }
 
   /** Constants for the `createCollection` operation. */
@@ -2189,30 +2250,13 @@ namespace DiscoveryV1 {
     }
   }
 
-  /** Parameters for the `createExpansions` operation. */
-  export interface CreateExpansionsParams {
-    /** The ID of the environment. */
-    environment_id: string;
-    /** The ID of the collection. */
-    collection_id: string;
-    /** An array of query expansion definitions.    Each object in the `expansions` array represents a term or set of terms that will be expanded into other terms. Each expansion object can be configured so that all terms are expanded to all other terms in the object - bi-directional, or a set list of terms can be expanded into a second list of terms - uni-directional.   To create a bi-directional expansion specify an `expanded_terms` array. When found in a query, all items in the `expanded_terms` array are then expanded to the other items in the same array.   To create a uni-directional expansion, specify both an array of `input_terms` and an array of `expanded_terms`. When items in the `input_terms` array are present in a query, they are expanded using the items listed in the `expanded_terms` array. */
-    expansions: Expansion[];
-  }
-
   /** Parameters for the `deleteCollection` operation. */
   export interface DeleteCollectionParams {
     /** The ID of the environment. */
     environment_id: string;
     /** The ID of the collection. */
     collection_id: string;
-  }
-
-  /** Parameters for the `deleteExpansions` operation. */
-  export interface DeleteExpansionsParams {
-    /** The ID of the environment. */
-    environment_id: string;
-    /** The ID of the collection. */
-    collection_id: string;
+    headers?: Object;
   }
 
   /** Parameters for the `getCollection` operation. */
@@ -2221,6 +2265,7 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the collection. */
     collection_id: string;
+    headers?: Object;
   }
 
   /** Parameters for the `listCollectionFields` operation. */
@@ -2229,6 +2274,7 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the collection. */
     collection_id: string;
+    headers?: Object;
   }
 
   /** Parameters for the `listCollections` operation. */
@@ -2237,14 +2283,7 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** Find collections with the given name. */
     name?: string;
-  }
-
-  /** Parameters for the `listExpansions` operation. */
-  export interface ListExpansionsParams {
-    /** The ID of the environment. */
-    environment_id: string;
-    /** The ID of the collection. */
-    collection_id: string;
+    headers?: Object;
   }
 
   /** Parameters for the `updateCollection` operation. */
@@ -2259,6 +2298,36 @@ namespace DiscoveryV1 {
     description?: string;
     /** The ID of the configuration in which the collection is to be updated. */
     configuration_id?: string;
+    headers?: Object;
+  }
+
+  /** Parameters for the `createExpansions` operation. */
+  export interface CreateExpansionsParams {
+    /** The ID of the environment. */
+    environment_id: string;
+    /** The ID of the collection. */
+    collection_id: string;
+    /** An array of query expansion definitions.    Each object in the `expansions` array represents a term or set of terms that will be expanded into other terms. Each expansion object can be configured so that all terms are expanded to all other terms in the object - bi-directional, or a set list of terms can be expanded into a second list of terms - uni-directional.   To create a bi-directional expansion specify an `expanded_terms` array. When found in a query, all items in the `expanded_terms` array are then expanded to the other items in the same array.   To create a uni-directional expansion, specify both an array of `input_terms` and an array of `expanded_terms`. When items in the `input_terms` array are present in a query, they are expanded using the items listed in the `expanded_terms` array. */
+    expansions: Expansion[];
+    headers?: Object;
+  }
+
+  /** Parameters for the `deleteExpansions` operation. */
+  export interface DeleteExpansionsParams {
+    /** The ID of the environment. */
+    environment_id: string;
+    /** The ID of the collection. */
+    collection_id: string;
+    headers?: Object;
+  }
+
+  /** Parameters for the `listExpansions` operation. */
+  export interface ListExpansionsParams {
+    /** The ID of the environment. */
+    environment_id: string;
+    /** The ID of the collection. */
+    collection_id: string;
+    headers?: Object;
   }
 
   /** Parameters for the `addDocument` operation. */
@@ -2273,6 +2342,7 @@ namespace DiscoveryV1 {
     metadata?: string;
     /** The content type of file. */
     file_content_type?: AddDocumentConstants.FileContentType | string;
+    headers?: Object;
   }
 
   /** Constants for the `addDocument` operation. */
@@ -2296,6 +2366,7 @@ namespace DiscoveryV1 {
     collection_id: string;
     /** The ID of the document. */
     document_id: string;
+    headers?: Object;
   }
 
   /** Parameters for the `getDocumentStatus` operation. */
@@ -2306,6 +2377,7 @@ namespace DiscoveryV1 {
     collection_id: string;
     /** The ID of the document. */
     document_id: string;
+    headers?: Object;
   }
 
   /** Parameters for the `updateDocument` operation. */
@@ -2322,6 +2394,7 @@ namespace DiscoveryV1 {
     metadata?: string;
     /** The content type of file. */
     file_content_type?: UpdateDocumentConstants.FileContentType | string;
+    headers?: Object;
   }
 
   /** Constants for the `updateDocument` operation. */
@@ -2371,6 +2444,7 @@ namespace DiscoveryV1 {
     similar_document_ids?: string[];
     /** A comma-separated list of field names that will be used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison. */
     similar_fields?: string[];
+    headers?: Object;
   }
 
   /** Parameters for the `federatedQueryNotices` operation. */
@@ -2405,6 +2479,7 @@ namespace DiscoveryV1 {
     similar_document_ids?: string[];
     /** A comma-separated list of field names that will be used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison. */
     similar_fields?: string[];
+    headers?: Object;
   }
 
   /** Parameters for the `query` operation. */
@@ -2449,6 +2524,7 @@ namespace DiscoveryV1 {
     similar_document_ids?: string[];
     /** A comma-separated list of field names that will be used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison. */
     similar_fields?: string[];
+    headers?: Object;
   }
 
   /** Parameters for the `queryEntities` operation. */
@@ -2457,7 +2533,7 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the collection. */
     collection_id: string;
-    /** The entity query feature to perform. Must be `disambiguate`. */
+    /** The entity query feature to perform. Supported features are `disambiguate` and `similar_entities`. */
     feature?: string;
     /** A text string that appears within the entity text field. */
     entity?: QueryEntitiesEntity;
@@ -2465,6 +2541,9 @@ namespace DiscoveryV1 {
     context?: QueryEntitiesContext;
     /** The number of results to return. The default is `10`. The maximum is `1000`. */
     count?: number;
+    /** The number of evidence items to return for each result. The default is `0`. The maximum number of evidence items per query is 10,000. */
+    evidence_count?: number;
+    headers?: Object;
   }
 
   /** Parameters for the `queryNotices` operation. */
@@ -2507,6 +2586,7 @@ namespace DiscoveryV1 {
     similar_document_ids?: string[];
     /** A comma-separated list of field names that will be used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison. */
     similar_fields?: string[];
+    headers?: Object;
   }
 
   /** Parameters for the `queryRelations` operation. */
@@ -2525,6 +2605,9 @@ namespace DiscoveryV1 {
     filter?: QueryRelationsFilter;
     /** The number of results to return. The default is `10`. The maximum is `1000`. */
     count?: number;
+    /** The number of evidence items to return for each result. The default is `0`. The maximum number of evidence items per query is 10,000. */
+    evidence_count?: number;
+    headers?: Object;
   }
 
   /** Constants for the `queryRelations` operation. */
@@ -2545,6 +2628,7 @@ namespace DiscoveryV1 {
     natural_language_query?: string;
     filter?: string;
     examples?: TrainingExample[];
+    headers?: Object;
   }
 
   /** Parameters for the `createTrainingExample` operation. */
@@ -2558,6 +2642,7 @@ namespace DiscoveryV1 {
     document_id?: string;
     cross_reference?: string;
     relevance?: number;
+    headers?: Object;
   }
 
   /** Parameters for the `deleteAllTrainingData` operation. */
@@ -2566,6 +2651,7 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the collection. */
     collection_id: string;
+    headers?: Object;
   }
 
   /** Parameters for the `deleteTrainingData` operation. */
@@ -2576,6 +2662,7 @@ namespace DiscoveryV1 {
     collection_id: string;
     /** The ID of the query used for training. */
     query_id: string;
+    headers?: Object;
   }
 
   /** Parameters for the `deleteTrainingExample` operation. */
@@ -2588,6 +2675,7 @@ namespace DiscoveryV1 {
     query_id: string;
     /** The ID of the document as it is indexed. */
     example_id: string;
+    headers?: Object;
   }
 
   /** Parameters for the `getTrainingData` operation. */
@@ -2598,6 +2686,7 @@ namespace DiscoveryV1 {
     collection_id: string;
     /** The ID of the query used for training. */
     query_id: string;
+    headers?: Object;
   }
 
   /** Parameters for the `getTrainingExample` operation. */
@@ -2610,6 +2699,7 @@ namespace DiscoveryV1 {
     query_id: string;
     /** The ID of the document as it is indexed. */
     example_id: string;
+    headers?: Object;
   }
 
   /** Parameters for the `listTrainingData` operation. */
@@ -2618,6 +2708,7 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the collection. */
     collection_id: string;
+    headers?: Object;
   }
 
   /** Parameters for the `listTrainingExamples` operation. */
@@ -2628,6 +2719,7 @@ namespace DiscoveryV1 {
     collection_id: string;
     /** The ID of the query used for training. */
     query_id: string;
+    headers?: Object;
   }
 
   /** Parameters for the `updateTrainingExample` operation. */
@@ -2642,6 +2734,7 @@ namespace DiscoveryV1 {
     example_id: string;
     cross_reference?: string;
     relevance?: number;
+    headers?: Object;
   }
 
   /*************************
@@ -2726,6 +2819,8 @@ namespace DiscoveryV1 {
     word?: WordSettings;
     /** A list of HTML conversion settings. */
     html?: HtmlSettings;
+    /** A list of Document Segmentation settings. */
+    segment?: SegmentSettings;
     /** Defines operations that can be used to transform the final output JSON into a normalized form. Operations are executed in the order that they appear in the array. */
     json_normalizations?: NormalizationOperation[];
   }
@@ -2811,11 +2906,11 @@ namespace DiscoveryV1 {
     /** The unique identifier of the document. */
     document_id: string;
     /** The unique identifier for the configuration. */
-    configuration_id: string;
+    configuration_id?: string;
     /** The creation date of the document in the format yyyy-MM-dd'T'HH:mm:ss.SSS'Z'. */
-    created: string;
+    created?: string;
     /** Date of the most recent document update, in the format yyyy-MM-dd'T'HH:mm:ss.SSS'Z'. */
-    updated: string;
+    updated?: string;
     /** Status of the document in the ingestion process. */
     status: string;
     /** Description of the document status. */
@@ -3102,11 +3197,7 @@ namespace DiscoveryV1 {
   export interface QueryAggregation {
     /** The type of aggregation command used. For example: term, filter, max, min, etc. */
     type?: string;
-    /** The field where the aggregation is located in the document. */
-    field?: string;
     results?: AggregationResult[];
-    /** The match the aggregated results queried for. */
-    match?: string;
     /** Number of matching results. */
     matching_results?: number;
     /** Aggregations returned by the Discovery service. */
@@ -3129,7 +3220,43 @@ namespace DiscoveryV1 {
 
   /** An array of entities resulting from the query. */
   export interface QueryEntitiesResponse {
-    entities?: QueryEntitiesEntity[];
+    entities?: QueryEntitiesResponseItem[];
+  }
+
+  /** Object containing Entity query response information. */
+  export interface QueryEntitiesResponseItem {
+    /** Entity text content. */
+    text?: string;
+    /** The type of the result entity. */
+    type?: string;
+    /** List of different evidentiary items to support the result. */
+    evidence?: QueryEvidence[];
+  }
+
+  /** Description of evidence location supporting Knoweldge Graph query result. */
+  export interface QueryEvidence {
+    /** The docuemnt ID (as indexed in Discovery) of the evidence location. */
+    document_id?: string;
+    /** The field of the document where the supporting evidence was identified. */
+    field?: string;
+    /** The start location of the evidence in the identified field. This value is inclusive. */
+    start_offset?: number;
+    /** The end location of the evidence in the identified field. This value is inclusive. */
+    end_offset?: number;
+    /** An array of entity objects that show evidence of the result. */
+    entities?: QueryEvidenceEntity[];
+  }
+
+  /** Entity description and location within evidence field. */
+  export interface QueryEvidenceEntity {
+    /** The entity type for this entity. Possible types vary based on model used. */
+    type?: string;
+    /** The original text of this entity as found in the evidence field. */
+    text?: string;
+    /** The start location of the entity text in the identified field. This value is inclusive. */
+    start_offset?: number;
+    /** The end location of the entity text in the identified field. This value is exclusive. */
+    end_offset?: number;
   }
 
   /** QueryFilterType. */
@@ -3159,7 +3286,18 @@ namespace DiscoveryV1 {
     metadata?: Object;
     /** The collection ID of the collection containing the document for this result. */
     collection_id?: string;
+    /** Metadata of the query result. */
     result_metadata?: QueryResultResultMetadata;
+    /** The internal status code returned by the ingestion subsystem indicating the overall result of ingesting the source document. */
+    code?: number;
+    /** Name of the original source file (if available). */
+    filename?: string;
+    /** The type of the original source file. */
+    file_type?: string;
+    /** The SHA-1 hash of the original source file (formatted as a hexadecimal string). */
+    sha1?: string;
+    /** Array of notices for the document. */
+    notices?: Notice[];
   }
 
   /** QueryPassages. */
@@ -3189,7 +3327,7 @@ namespace DiscoveryV1 {
     text?: string;
     /** The type of the specified entity. */
     type?: string;
-    /** If false, implicit disambiguation is performed. The default is `false`. */
+    /** If false, implicit querying is performed. The default is `false`. */
     exact?: boolean;
   }
 
@@ -3211,6 +3349,8 @@ namespace DiscoveryV1 {
     frequency?: number;
     /** Information about the relationship. */
     arguments?: QueryRelationsArgument[];
+    /** List of different evidentiary items to support the result. */
+    evidence?: QueryEvidence[];
   }
 
   /** QueryRelationsResponse. */
@@ -3237,13 +3377,22 @@ namespace DiscoveryV1 {
     metadata?: Object;
     /** The collection ID of the collection containing the document for this result. */
     collection_id?: string;
+    /** Metadata of the query result. */
     result_metadata?: QueryResultResultMetadata;
   }
 
-  /** QueryResultResultMetadata. */
+  /** Metadata of a query result. */
   export interface QueryResultResultMetadata {
     /** The confidence score of the result's analysis. A higher score indicating greater confidence. */
     score?: number;
+  }
+
+  /** A list of Document Segmentation settings. */
+  export interface SegmentSettings {
+    /** Enables/disables the Document Segmentation feature. */
+    enabled?: boolean;
+    /** Defines the heading level that splits into document segments. Valid values are h1, h2, h3, h4, h5, h6. */
+    selector_tags?: string[];
   }
 
   /** TestDocument. */
