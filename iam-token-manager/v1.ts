@@ -23,6 +23,9 @@ export type Options = {
   iamUrl?: string;
 }
 
+// this interface is a representation of the response
+// object from the IAM service, hence the snake_case 
+// parameter names
 export interface IamTokenData {
   access_token: string;
   refresh_token: string;
@@ -75,7 +78,7 @@ export class IamTokenManagerV1 {
     if (this.userAccessToken) {
       // 1. use user-managed token
       return cb(null, this.userAccessToken);
-    } else if (!this.tokenInfo.access_token) {
+    } else if (!this.tokenInfo.access_token || this.isRefreshTokenExpired()) {
       // 2. request an initial token
       this.requestToken((err, tokenResponse) => {
         this.saveTokenInfo(tokenResponse);
@@ -170,11 +173,34 @@ export class IamTokenManagerV1 {
    * @returns {boolean}
    */
   private isTokenExpired(): boolean {
+    if (!this.tokenInfo.expires_in || !this.tokenInfo.expiration) {
+      return true;
+    };
     const fractionOfTtl = 0.8;
     const timeToLive = this.tokenInfo.expires_in;
     const expireTime = this.tokenInfo.expiration;
-    return expireTime - (timeToLive * (1.0 - fractionOfTtl))
-      < Math.floor(Date.now() / 1000);
+    const currentTime = Math.floor(Date.now() / 1000);
+    const refreshTime = expireTime - (timeToLive * (1.0 - fractionOfTtl));
+    return refreshTime < currentTime;
+  }
+
+  /**
+   * Used as a fail-safe to prevent the condition of a refresh token expiring,
+   * which could happen after around 30 days. This function will return true
+   * if it has been at least 7 days and 1 hour since the last token was
+   * retrieved.
+   *
+   * @private
+   * @returns {boolean}
+   */
+  private isRefreshTokenExpired(): boolean {
+    if (!this.tokenInfo.expiration) {
+      return true;
+    };
+    const sevenDays = 7 * 24 * 3600;
+    const currentTime = Math.floor(Date.now() / 1000);
+    const newTokenTime = this.tokenInfo.expiration + sevenDays;
+    return newTokenTime < currentTime;
   }
 
   /**

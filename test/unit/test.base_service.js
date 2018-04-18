@@ -2,8 +2,10 @@
 // note: this has a lot of overlap with test.wrapper.js
 // many/most of those tests should be moved here
 const BaseService = require('../../lib/base_service').BaseService;
+const requestwrapper = require('../../lib/requestwrapper');
 const assert = require('assert');
 const util = require('util');
+const sinon = require('sinon');
 
 function TestService(options) {
   BaseService.call(this, options);
@@ -147,5 +149,65 @@ describe('BaseService', function() {
       url: 'https://gateway.watsonplatform.net/test/api',
     };
     assert.deepEqual(actual, expected);
+  });
+
+  it('should set authorization header after getting a token from the token manager', function(done) {
+    const instance = new TestService({ iam_apikey: 'abcd-1234' });
+    const sendRequestStub = sinon.stub(requestwrapper, 'sendRequest');
+    const getTokenStub = sinon.stub(instance.tokenManager, 'getToken');
+    const accessToken = '567890';
+    const responseMessage = 'response';
+    const parameters = {
+      defaultOptions: {
+        headers: {},
+      },
+    };
+
+    sendRequestStub.yields(null, responseMessage);
+    getTokenStub.yields(null, accessToken);
+
+    instance.createRequest(parameters, function(err, res) {
+      const authHeader = sendRequestStub.args[0][0].defaultOptions.headers.Authorization;
+      assert.equal(`Bearer ${accessToken}`, authHeader);
+      assert.equal(responseMessage, res);
+
+      sendRequestStub.restore();
+      getTokenStub.restore();
+      done();
+    });
+  });
+
+  it('should send an error back to the user if the token request went bad', function(done) {
+    const instance = new TestService({ iam_apikey: 'abcd-1234' });
+    const sendRequestSpy = sinon.spy(requestwrapper, 'sendRequest');
+    const getTokenStub = sinon.stub(instance.tokenManager, 'getToken');
+    const errorMessage = 'Error in the token request.';
+
+    getTokenStub.yields(errorMessage);
+
+    instance.createRequest({}, function(err, res) {
+      assert.equal(err, errorMessage);
+      assert.equal(sendRequestSpy.notCalled, true);
+
+      sendRequestSpy.restore();
+      getTokenStub.restore();
+      done();
+    });
+  });
+
+  it('should call sendRequest right away if token manager is null', function(done) {
+    const instance = new TestService({ username: 'user', password: 'pass' });
+    const sendRequestStub = sinon.stub(requestwrapper, 'sendRequest');
+    const responseMessage = 'response';
+
+    sendRequestStub.yields(null, responseMessage);
+
+    instance.createRequest({}, function(err, res) {
+      assert.equal(res, responseMessage);
+      assert.equal(instance.tokenManager, null);
+
+      sendRequestStub.restore();
+      done();
+    });
   });
 });
