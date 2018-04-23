@@ -20,7 +20,9 @@ import bufferFrom = require('buffer-from');
 import extend = require('extend');
 import request = require('request');
 import vcapServices = require('vcap_services');
+import { IamTokenManagerV1 } from '../iam-token-manager/v1';
 import { stripTrailingSlash } from './helper';
+import { sendRequest } from './requestwrapper';
 
 // custom interfaces
 export interface HeaderOptions {
@@ -38,7 +40,9 @@ export interface UserOptions {
   use_unauthenticated?: boolean;
   headers?: HeaderOptions;
   token?: string;
-  access_token?: string;
+  iam_access_token?: string;
+  iam_apikey?: string;
+  iam_url?: string;
 }
 
 export interface BaseServiceOptions extends UserOptions {
@@ -49,23 +53,27 @@ export interface BaseServiceOptions extends UserOptions {
 }
 
 export interface Credentials {
-  username: string;
-  password: string;
-  api_key: string;
-  url: string;
-  access_token: string;
+  username?: string;
+  password?: string;
+  api_key?: string;
+  url?: string;
+  iam_access_token?: string;
+  iam_apikey?: string;
+  iam_url?: string;
 }
 
 function hasCredentials(obj: any): boolean {
-  return obj && ((obj.username && obj.password) || obj.api_key || obj.access_token);
+  return (
+    obj &&
+    ((obj.username && obj.password) ||
+      obj.api_key ||
+      obj.iam_access_token ||
+      obj.iam_apikey)
+  );
 }
 
 function hasBasicCredentials(obj: any): boolean {
   return obj && obj.username && obj.password;
-}
-
-function hasAccessToken(obj: any): boolean {
-  return obj && obj.access_token;
 }
 
 export class BaseService {
@@ -74,6 +82,7 @@ export class BaseService {
   serviceVersion: string;
   protected _options: BaseServiceOptions;
   protected serviceDefaults: object;
+  protected tokenManager;
 
   /**
    * Internal base class that other services inherit from
@@ -111,6 +120,15 @@ export class BaseService {
       options,
       _options
     );
+     if (options.iam_apikey || options.iam_access_token) {
+      this.tokenManager = new IamTokenManagerV1({
+        iamApikey: options.iam_apikey,
+        iamAccessToken: options.iam_access_token,
+        iamUrl: options.iam_url
+      });
+    } else {
+      this.tokenManager = null;
+    }
   }
 
   /**
@@ -121,23 +139,29 @@ export class BaseService {
    * @returns {Credentials}
    */
   public getCredentials(): Credentials {
-    const _credentials = {} as Credentials;
+    const credentials = {} as Credentials;
     if (this._options.username) {
-      _credentials.username = this._options.username;
+      credentials.username = this._options.username;
     }
     if (this._options.password) {
-      _credentials.password = this._options.password;
+      credentials.password = this._options.password;
     }
     if (this._options.api_key) {
-      _credentials.api_key = this._options.api_key;
+      credentials.api_key = this._options.api_key;
     }
     if (this._options.url) {
-      _credentials.url = this._options.url;
+      credentials.url = this._options.url;
     }
-    if (this._options.access_token) {
-      _credentials.access_token = this._options.access_token;
+    if (this._options.iam_access_token) {
+      credentials.iam_access_token = this._options.iam_access_token;
     }
-    return _credentials;
+    if (this._options.iam_apikey) {
+      credentials.iam_apikey = this._options.iam_apikey;
+    }
+    if (this._options.iam_url) {
+      credentials.iam_url = this._options.iam_url;
+    }
+    return credentials;
   }
 
   /**
@@ -149,15 +173,42 @@ export class BaseService {
    * one expires. Failing to do so will result in authentication errors
    * after this token expires.
    *
-   * @param {string} access_token - A valid, non-expired IAM access token
+   * @param {string} iam_access_token - A valid, non-expired IAM access token
    * @returns {void}
    */
-  public setAccessToken(access_token: string) { // tslint:disable-line variable-name
-    this._options.access_token = access_token;
-    this._options.headers = this._options.headers || {};
-    this._options.headers.Authorization = `Bearer ${access_token}`;
+  public setAccessToken(iam_access_token: string) { // tslint:disable-line variable-name
+    if (this.tokenManager) {
+      this.tokenManager.setAccessToken(iam_access_token);
+    } else {
+      this.tokenManager = new IamTokenManagerV1({
+        iamAccessToken: iam_access_token
+      });
+    }
   }
 
+  /**
+   * Wrapper around `sendRequest` that determines whether or not IAM tokens
+   * are being used to authenticate the request. If so, the token is 
+   * retrieved by the token manager.
+   *
+   * @param {Object} parameters - service request options passed in by user
+   * @param {Function} callback - callback function to pass the reponse back to
+   * @returns {ReadableStream|undefined}
+   */
+  protected createRequest(parameters, callback) {
+     if (Boolean(this.tokenManager)) {
+      this.tokenManager.getToken((err, accessToken) => {
+        if (err) {
+          return callback(err);
+        }
+        parameters.defaultOptions.headers.Authorization =
+          `Bearer ${accessToken}`;
+        return sendRequest(parameters, callback);
+      });
+    } else {
+      return sendRequest(parameters, callback);
+    }
+  }
   /**
    * @private
    * @param {UserOptions} options
@@ -189,7 +240,7 @@ export class BaseService {
         const errorMessage = 'Insufficient credentials provided in ' +
           'constructor argument. Refer to the documentation for the ' +
           'required parameters. Common examples are username/password, ' +
-          'api_key, and access_token.';
+          'api_key, and iam_access_token.';
         throw new Error(errorMessage);
       }
       if (hasBasicCredentials(_options)) {
@@ -198,9 +249,6 @@ export class BaseService {
           `${_options.username}:${_options.password}`
         ).toString('base64');
         const authHeader = { Authorization: `Basic ${encodedCredentials}` };
-        _options.headers = extend(authHeader, _options.headers);
-      } else if (hasAccessToken(_options)) {
-        const authHeader = { Authorization: `Bearer ${_options.access_token}` };
         _options.headers = extend(authHeader, _options.headers);
       } else {
         _options.qs = extend({ api_key: _options.api_key }, _options.qs);
@@ -230,19 +278,23 @@ export class BaseService {
     }
     const _name: string = name.toUpperCase();
     // https://github.com/watson-developer-cloud/node-sdk/issues/605
-    const _nameWithUnderscore: string = _name.replace(/-/g, '_');
-    const _username: string = process.env[`${_name}_USERNAME`] || process.env[`${_nameWithUnderscore}_USERNAME`];
-    const _password: string = process.env[`${_name}_PASSWORD`] || process.env[`${_nameWithUnderscore}_PASSWORD`];
-    const _apiKey: string = process.env[`${_name}_API_KEY`] || process.env[`${_nameWithUnderscore}_API_KEY`];
-    const _url: string = process.env[`${_name}_URL`] || process.env[`${_nameWithUnderscore}_URL`];
-    const _accessToken: string = process.env[`${_name}_ACCESS_TOKEN`] || process.env[`${_nameWithUnderscore}_ACCESS_TOKEN`];
+    const nameWithUnderscore: string = _name.replace(/-/g, '_');
+    const username: string = process.env[`${_name}_USERNAME`] || process.env[`${nameWithUnderscore}_USERNAME`];
+    const password: string = process.env[`${_name}_PASSWORD`] || process.env[`${nameWithUnderscore}_PASSWORD`];
+    const apiKey: string = process.env[`${_name}_API_KEY`] || process.env[`${nameWithUnderscore}_API_KEY`];
+    const url: string = process.env[`${_name}_URL`] || process.env[`${nameWithUnderscore}_URL`];
+    const iamAccessToken: string = process.env[`${_name}_IAM_ACCESS_TOKEN`] || process.env[`${nameWithUnderscore}_IAM_ACCESS_TOKEN`];
+    const iamApiKey: string = process.env[`${_name}_IAM_APIKEY`] || process.env[`${nameWithUnderscore}_IAM_APIKEY`];
+    const iamUrl: string = process.env[`${_name}_IAM_URL`] || process.env[`${nameWithUnderscore}_IAM_URL`];
 
     return {
-      username: _username,
-      password: _password,
-      api_key: _apiKey,
-      url: _url,
-      access_token: _accessToken
+      username,
+      password,
+      api_key: apiKey,
+      url,
+      iam_access_token: iamAccessToken,
+      iam_apikey: iamApiKey,
+      iam_url: iamUrl
     };
   }
   /**
@@ -252,13 +304,19 @@ export class BaseService {
    * @returns {Credentials}
    */
   private getCredentialsFromBluemix(vcapServicesName: string): Credentials {
-    let _credentials: Credentials;
+    let credentials: Credentials;
+    let temp: any;
     if (this.name === 'visual_recognition') {
-      _credentials = vcapServices.getCredentials('watson_vision_combined');
+      temp = vcapServices.getCredentials('watson_vision_combined');
     } else {
-      _credentials = vcapServices.getCredentials(vcapServicesName);
+      temp = vcapServices.getCredentials(vcapServicesName);
     }
-    return _credentials;
+    // convert an iam apikey to use the identifier iam_apikey
+    if (temp.apikey && temp.iam_apikey_name) {
+      temp.iam_apikey = temp.apikey;
+      delete temp.apikey;
+    }
+    credentials = temp;
+    return credentials;
   }
-
 }

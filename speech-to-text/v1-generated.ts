@@ -19,7 +19,6 @@ import { RequestResponse } from 'request';
 import { BaseService } from '../lib/base_service';
 import { getMissingParams } from '../lib/helper';
 import { FileObject } from '../lib/helper';
-import { createRequest } from '../lib/requestwrapper';
 
 /**
  * The IBM Watson Speech to Text service provides an API that enables you to add IBM's speech recognition capabilities to your applications. The service transcribes speech from various languages and audio formats to text with low latency. For most languages, the service supports two sampling rates, broadband and narrowband. The service returns all JSON response content in the UTF-8 character set.  The Speech to Text service provides the following endpoints: * **Models** includes methods that return information about the language models that are available for speech recognition. * **WebSockets** includes a single method that establishes a persistent connection with the service over the WebSocket protocol. * **Sessionless** includes a method that provides a simple means of transcribing audio without the overhead of establishing and maintaining a session. * **Sessions** provides methods that allow a client to maintain a long, multi-turn exchange, or session, with the service or to establish multiple parallel conversations with a particular instance of the service. * **Asynchronous** provides a non-blocking interface for transcribing audio. You can register a callback URL to be notified of job status and, optionally, results, or you can poll the service to learn job status and retrieve results manually. * **Custom language models** provides an interface for creating and managing custom language models. The interface lets you expand the vocabulary of a base model with domain-specific terminology. * **Custom corpora** provides an interface for managing the corpora associated with a custom language model. You add corpora to extract out-of-vocabulary (OOV) words from the corpora into the custom language model's vocabulary. You can add, list, and delete corpora from a custom language model. * **Custom words** provides an interface for managing individual words in a custom language model. You can add, modify, list, and delete words from a custom language model. * **Custom acoustic models** provides an interface for creating and managing custom acoustic models. The interface lets you adapt a base model for the audio characteristics of your environment and speakers. * **Custom audio resources** provides an interface for managing the audio resources associated with a custom acoustic model. You add audio resources that closely match the acoustic characteristics of the audio that you want to transcribe. You can add, list, and delete audio resources from a custom acoustic model.  ### Usage guidelines for customization The following information pertains to methods of the customization interface: * Language model customization and acoustic model customization are available only for a limited set of languages. They are generally available for production use for some languages but are beta offerings for other languages. For a complete list of supported languages and the status of their availability, see [Language support for customization](https://console.bluemix.net/docs/services/speech-to-text/custom.html#languageSupport). * In all cases, you must use service credentials created for the instance of the service that owns a custom model to use the methods described in this documentation with that model. For more information, see [Ownership of custom language models](https://console.bluemix.net/docs/services/speech-to-text/custom.html#customOwner). * How the service handles request logging for the customization interface depends on the request. The service does not log data that are used to build custom models. But it does log data when a custom model is used with a recognition request. For more information, see [Request logging and data privacy](https://console.bluemix.net/docs/services/speech-to-text/custom.html#customLogging). * Each custom model is identified by a customization ID, which is a Globally Unique Identifier (GUID). A GUID is a hexadecimal string that has the same format as Watson service credentials: `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`. You specify a custom model's GUID with the appropriate customization parameter of methods that support customization.   For more information about using the service's customization interface, see [The customization interface](https://console.bluemix.net/docs/services/speech-to-text/custom.html).
@@ -87,7 +86,7 @@ class SpeechToTextV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -115,7 +114,7 @@ class SpeechToTextV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /*************************
@@ -185,7 +184,7 @@ class SpeechToTextV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /*************************
@@ -227,7 +226,7 @@ class SpeechToTextV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -255,7 +254,7 @@ class SpeechToTextV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -335,7 +334,7 @@ class SpeechToTextV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -373,7 +372,7 @@ class SpeechToTextV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -413,7 +412,7 @@ class SpeechToTextV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -451,7 +450,7 @@ class SpeechToTextV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /*************************
@@ -500,7 +499,7 @@ class SpeechToTextV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -538,7 +537,7 @@ class SpeechToTextV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -576,7 +575,7 @@ class SpeechToTextV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -609,7 +608,7 @@ class SpeechToTextV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -647,7 +646,7 @@ class SpeechToTextV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -692,7 +691,7 @@ class SpeechToTextV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -730,7 +729,7 @@ class SpeechToTextV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /*************************
@@ -788,7 +787,7 @@ class SpeechToTextV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -828,7 +827,7 @@ class SpeechToTextV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -868,7 +867,7 @@ class SpeechToTextV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -906,7 +905,7 @@ class SpeechToTextV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /*************************
@@ -960,7 +959,7 @@ class SpeechToTextV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -1004,7 +1003,7 @@ class SpeechToTextV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -1044,7 +1043,7 @@ class SpeechToTextV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -1084,7 +1083,7 @@ class SpeechToTextV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -1129,7 +1128,7 @@ class SpeechToTextV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /*************************
@@ -1176,7 +1175,7 @@ class SpeechToTextV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -1214,7 +1213,7 @@ class SpeechToTextV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -1252,7 +1251,7 @@ class SpeechToTextV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -1285,7 +1284,7 @@ class SpeechToTextV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -1323,7 +1322,7 @@ class SpeechToTextV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -1366,7 +1365,7 @@ class SpeechToTextV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -1409,7 +1408,7 @@ class SpeechToTextV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /*************************
@@ -1465,7 +1464,7 @@ class SpeechToTextV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -1505,7 +1504,7 @@ class SpeechToTextV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -1545,7 +1544,7 @@ class SpeechToTextV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -1583,7 +1582,7 @@ class SpeechToTextV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
 }

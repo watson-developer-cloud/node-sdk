@@ -18,7 +18,6 @@ import * as extend from 'extend';
 import { RequestResponse } from 'request';
 import { BaseService } from '../lib/base_service';
 import { getMissingParams } from '../lib/helper';
-import { createRequest } from '../lib/requestwrapper';
 
 /**
  * The IBM Watson Personality Insights service enables applications to derive insights from social media, enterprise data, or other digital communications. The service uses linguistic analytics to infer individuals' intrinsic personality characteristics, including Big Five, Needs, and Values, from digital communications such as email, text messages, tweets, and forum posts.  The service can automatically infer, from potentially noisy social media, portraits of individuals that reflect their personality characteristics. The service can infer consumption preferences based on the results of its analysis and, for JSON content that is timestamped, can report temporal behavior.  For information about the meaning of the models that the service uses to describe personality characteristics, see [Personality models](https://console.bluemix.net/docs/services/personality-insights/models.html). For information about the meaning of the consumption preferences, see [Consumption preferences](https://console.bluemix.net/docs/services/personality-insights/preferences.html).
@@ -106,7 +105,7 @@ class PersonalityInsightsV3 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -157,7 +156,7 @@ class PersonalityInsightsV3 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
 }

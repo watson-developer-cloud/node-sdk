@@ -18,7 +18,6 @@ import pick = require('object.pick');
 import { RequestResponse } from 'request';
 import { BaseService } from '../lib/base_service';
 import { isHTML } from '../lib/helper';
-import { createRequest } from '../lib/requestwrapper';
 
 class PersonalityInsightsV2 extends BaseService {
   static URL: string = 'https://gateway.watsonplatform.net/personality-insights/api';
@@ -100,7 +99,7 @@ class PersonalityInsightsV2 extends BaseService {
         parameters.options.qs.headers = 'true';
       }
     }
-    return createRequest(parameters, callback);
+    return this.createRequest(parameters, callback);
   }
 }
 

@@ -18,7 +18,6 @@ import * as extend from 'extend';
 import { RequestResponse } from 'request';
 import { BaseService } from '../lib/base_service';
 import { getMissingParams } from '../lib/helper';
-import { createRequest } from '../lib/requestwrapper';
 
 /**
  * The IBM Watson Assistant service combines machine learning, natural language understanding, and integrated dialog tools to create conversation flows between your apps and your users.
@@ -114,7 +113,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /*************************
@@ -168,7 +167,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -205,7 +204,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -249,7 +248,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -289,7 +288,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -354,7 +353,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /*************************
@@ -406,7 +405,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -445,7 +444,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -491,7 +490,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -543,7 +542,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -593,7 +592,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /*************************
@@ -643,7 +642,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -684,7 +683,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -730,7 +729,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -782,7 +781,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -830,7 +829,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /*************************
@@ -878,7 +877,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -917,7 +916,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -961,7 +960,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -1011,7 +1010,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -1057,7 +1056,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /*************************
@@ -1113,7 +1112,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -1152,7 +1151,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -1198,7 +1197,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -1250,7 +1249,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -1304,7 +1303,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /*************************
@@ -1362,7 +1361,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -1403,7 +1402,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -1451,7 +1450,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -1505,7 +1504,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -1561,7 +1560,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /*************************
@@ -1613,7 +1612,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -1656,7 +1655,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -1704,7 +1703,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -1758,7 +1757,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -1808,7 +1807,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /*************************
@@ -1888,7 +1887,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -1927,7 +1926,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -1971,7 +1970,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -2021,7 +2020,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -2099,7 +2098,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /*************************
@@ -2146,7 +2145,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -2194,7 +2193,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
 }

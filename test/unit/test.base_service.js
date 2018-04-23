@@ -2,8 +2,10 @@
 // note: this has a lot of overlap with test.wrapper.js
 // many/most of those tests should be moved here
 const BaseService = require('../../lib/base_service').BaseService;
+const requestwrapper = require('../../lib/requestwrapper');
 const assert = require('assert');
 const util = require('util');
+const sinon = require('sinon');
 
 function TestService(options) {
   BaseService.call(this, options);
@@ -88,6 +90,30 @@ describe('BaseService', function() {
     assert.deepEqual(actual, expected);
   });
 
+  it('should handle iam apikey credential from VCAP_SERVICES', function() {
+    process.env.VCAP_SERVICES = JSON.stringify({
+      test: [
+        {
+          credentials: {
+            apikey: '123456789',
+            iam_apikey_description: 'Auto generated apikey...',
+            iam_apikey_name: 'auto-generated-apikey-111-222-333',
+            iam_role_crn: 'crn:v1:bluemix:public:iam::::serviceRole:Manager',
+            iam_serviceid_crn: 'crn:v1:staging:public:iam-identity::a/::serviceid:ServiceID-1234',
+            url: 'https://gateway.watsonplatform.net/test/api',
+          },
+        },
+      ],
+    });
+    const instance = new TestService();
+    const actual = instance.getCredentials();
+    const expected = {
+      iam_apikey: '123456789',
+      url: 'https://gateway.watsonplatform.net/test/api',
+    };
+    assert.deepEqual(actual, expected);
+  });
+
   it('should prefer hard-coded credentials over environment properties', function() {
     process.env.TEST_USERNAME = 'env_user';
     process.env.TEST_PASSWORD = 'env_pass';
@@ -125,16 +151,71 @@ describe('BaseService', function() {
     assert.deepEqual(actual, expected);
   });
 
-  it('should set header with access_token parameter', function() {
-    const token = 'abc-1234';
-    const instance = new TestService({ access_token: token });
-    assert.equal(instance._options.headers['Authorization'], `Bearer ${token}`);
+  it('should set authorization header after getting a token from the token manager', function(done) {
+    const instance = new TestService({ iam_apikey: 'abcd-1234' });
+    const sendRequestStub = sinon.stub(requestwrapper, 'sendRequest');
+    const getTokenStub = sinon.stub(instance.tokenManager, 'getToken');
+    const accessToken = '567890';
+    const responseMessage = 'response';
+    const parameters = {
+      defaultOptions: {
+        headers: {},
+      },
+    };
+
+    sendRequestStub.yields(null, responseMessage);
+    getTokenStub.yields(null, accessToken);
+
+    instance.createRequest(parameters, function(err, res) {
+      const authHeader = sendRequestStub.args[0][0].defaultOptions.headers.Authorization;
+      assert.equal(`Bearer ${accessToken}`, authHeader);
+      assert.equal(responseMessage, res);
+
+      sendRequestStub.restore();
+      getTokenStub.restore();
+      done();
+    });
   });
 
-  it('should update header with setAccessToken', function() {
-    const instance = new TestService({ access_token: 'abc-1234' });
-    const newToken = 'zyx-9876';
-    instance.setAccessToken(newToken);
-    assert.equal(instance._options.headers['Authorization'], `Bearer ${newToken}`);
+  it('should send an error back to the user if the token request went bad', function(done) {
+    const instance = new TestService({ iam_apikey: 'abcd-1234' });
+    const sendRequestSpy = sinon.spy(requestwrapper, 'sendRequest');
+    const getTokenStub = sinon.stub(instance.tokenManager, 'getToken');
+    const errorMessage = 'Error in the token request.';
+
+    getTokenStub.yields(errorMessage);
+
+    instance.createRequest({}, function(err, res) {
+      assert.equal(err, errorMessage);
+      assert.equal(sendRequestSpy.notCalled, true);
+
+      sendRequestSpy.restore();
+      getTokenStub.restore();
+      done();
+    });
+  });
+
+  it('should call sendRequest right away if token manager is null', function(done) {
+    const instance = new TestService({ username: 'user', password: 'pass' });
+    const sendRequestStub = sinon.stub(requestwrapper, 'sendRequest');
+    const responseMessage = 'response';
+
+    sendRequestStub.yields(null, responseMessage);
+
+    instance.createRequest({}, function(err, res) {
+      assert.equal(res, responseMessage);
+      assert.equal(instance.tokenManager, null);
+
+      sendRequestStub.restore();
+      done();
+    });
+  });
+
+  it('should not fail if setAccessToken is called and token manager is null', function() {
+    const instance = new TestService({ username: 'user', password: 'pass' });
+
+    assert.equal(instance.tokenManager, null);
+    instance.setAccessToken('abcd-1234');
+    assert.notEqual(instance.tokenManager, null);
   });
 });

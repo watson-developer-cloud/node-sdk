@@ -16,7 +16,6 @@
 
 import url = require('url');
 import { BaseService } from '../lib/base_service';
-import { createRequest } from '../lib/requestwrapper';
 
 class AuthorizationV1 extends BaseService {
   static URL: string = 'https://stream.watsonplatform.net/authorization/api';
@@ -68,7 +67,7 @@ class AuthorizationV1 extends BaseService {
       },
       defaultOptions: this._options
     };
-    return createRequest(parameters, callback);
+    return this.createRequest(parameters, callback);
   }
 }
 

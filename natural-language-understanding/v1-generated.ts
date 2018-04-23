@@ -18,7 +18,6 @@ import * as extend from 'extend';
 import { RequestResponse } from 'request';
 import { BaseService } from '../lib/base_service';
 import { getMissingParams } from '../lib/helper';
-import { createRequest } from '../lib/requestwrapper';
 
 /**
  * Analyze various features of text content at scale. Provide text, raw HTML, or a public URL, and IBM Watson Natural Language Understanding will give you results for the features you request. The service cleans HTML content before analysis by default, so the results can ignore most advertisements and other unwanted content.  You can create <a target=\"_blank\" href=\"https://www.ibm.com/watson/developercloud/doc/natural-language-understanding/customizing.html\">custom models</a> with Watson Knowledge Studio that can be used to detect custom entities and relations in Natural Language Understanding.
@@ -112,7 +111,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /*************************
@@ -154,7 +153,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**
@@ -182,7 +181,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
 }

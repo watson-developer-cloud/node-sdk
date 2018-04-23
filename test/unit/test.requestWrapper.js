@@ -1,6 +1,6 @@
 'use strict';
 
-const createRequest = require('../../lib/requestwrapper').createRequest;
+const sendRequest = require('../../lib/requestwrapper').sendRequest;
 const formatError = require('../../lib/requestwrapper').formatErrorIfExists;
 const assert = require('assert');
 const isStream = require('isstream');
@@ -18,7 +18,7 @@ describe('requestwrapper', () => {
       requiredParams: ['fake_param'],
       defaultOptions: { url: 'more' },
     };
-    assert(isStream(createRequest(parameters, '')));
+    assert(isStream(sendRequest(parameters, '')));
   });
 
   it('header should be accurate', () => {
