@@ -37,7 +37,7 @@ export interface IamTokenData {
 export class IamTokenManagerV1 {
   name: string;
   serviceVersion: string;
-  protected url: string;
+  protected iamUrl: string;
   protected tokenInfo: IamTokenData;
   private iamApikey: string;
   private userAccessToken: string;
@@ -54,7 +54,7 @@ export class IamTokenManagerV1 {
    * @constructor
    */
   constructor(options: Options) {
-    this.url = options.iamUrl || 'https://iam.ng.bluemix.net/identity/token';
+    this.iamUrl = options.iamUrl || 'https://iam.ng.bluemix.net/identity/token';
     this.tokenInfo = {} as IamTokenData;
     if (options.iamApikey) {
       this.iamApikey = options.iamApikey;
@@ -121,7 +121,7 @@ export class IamTokenManagerV1 {
   private requestToken(cb: Function): void {
     const parameters = {
       options: {
-        url: this.url,
+        url: this.iamUrl,
         method: 'POST',
         headers: {
           'Content-type': 'application/x-www-form-urlencoded',
@@ -146,7 +146,7 @@ export class IamTokenManagerV1 {
   private refreshToken(cb: Function) {
     const parameters = {
       options: {
-        url: this.url,
+        url: this.iamUrl,
         method: 'POST',
         headers: {
           'Content-type': 'application/x-www-form-urlencoded',
