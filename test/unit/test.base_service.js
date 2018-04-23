@@ -210,4 +210,12 @@ describe('BaseService', function() {
       done();
     });
   });
+
+  it('should not fail if setAccessToken is called and token manager is null', function() {
+    const instance = new TestService({ username: 'user', password: 'pass' });
+
+    assert.equal(instance.tokenManager, null);
+    instance.setAccessToken('abcd-1234');
+    assert.notEqual(instance.tokenManager, null);
+  });
 });

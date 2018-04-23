@@ -177,7 +177,13 @@ export class BaseService {
    * @returns {void}
    */
   public setAccessToken(iam_access_token: string) { // tslint:disable-line variable-name
-    this.tokenManager.setAccessToken(iam_access_token);
+    if (this.tokenManager) {
+      this.tokenManager.setAccessToken(iam_access_token);
+    } else {
+      this.tokenManager = new IamTokenManagerV1({
+        iamAccessToken: iam_access_token
+      });
+    }
   }
 
   /**
