@@ -171,7 +171,7 @@ class LanguageTranslatorV2 extends BaseService {
         }, _params.headers),
       }),
     };
-    return createRequest(parameters, _callback);
+    return this.createRequest(parameters, _callback);
   };
 
   /**

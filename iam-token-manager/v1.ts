@@ -97,12 +97,28 @@ export class IamTokenManagerV1 {
   }
 
   /**
+   * Set a self-managed IAM access token.
+   * The access token should be valid and not yet expired.
+   *
+   * By using this method, you accept responsibility for managing the
+   * access token yourself. You must set a new access token before this
+   * one expires. Failing to do so will result in authentication errors
+   * after this token expires.
+   *
+   * @param {string} iamAccessToken - A valid, non-expired IAM access token
+   * @returns {void}
+   */
+  public setAccessToken(iamAccessToken: string): void {
+    this.userAccessToken = iamAccessToken;
+  }
+
+  /**
    * Request an IAM token using an API key.
    *
    * @param {Function} cb - The callback that handles the response.
    * @returns {void}
    */
-  public requestToken(cb: Function): void {
+  private requestToken(cb: Function): void {
     const parameters = {
       options: {
         url: this.url,
@@ -127,7 +143,7 @@ export class IamTokenManagerV1 {
    * @param {Function} cb - The callback that handles the response.
    * @returns {void}
    */
-  public refreshToken(cb: Function) {
+  private refreshToken(cb: Function) {
     const parameters = {
       options: {
         url: this.url,
@@ -143,22 +159,6 @@ export class IamTokenManagerV1 {
       }
     };
     sendRequest(parameters, cb);
-  }
-
-  /**
-   * Set a self-managed IAM access token.
-   * The access token should be valid and not yet expired.
-   *
-   * By using this method, you accept responsibility for managing the
-   * access token yourself. You must set a new access token before this
-   * one expires. Failing to do so will result in authentication errors
-   * after this token expires.
-   *
-   * @param {string} iamAccessToken - A valid, non-expired IAM access token
-   * @returns {void}
-   */
-  public setAccessToken(iamAccessToken: string): void {
-    this.userAccessToken = iamAccessToken;
   }
 
   /**
