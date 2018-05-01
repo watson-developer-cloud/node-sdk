@@ -113,7 +113,7 @@ describe('speech_to_text_integration', function() {
     speech_to_text.getModels({}, done);
   });
 
-  describe('createRecognizeStream() @slow', () => {
+  describe('createRecognizeStream()', () => {
     it('transcribes audio over a websocket', function(done) {
       const recognizeStream = speech_to_text.createRecognizeStream();
       recognizeStream.setEncoding('utf8');
