@@ -151,6 +151,7 @@ assistant.message({
   <span class="hljs-keyword">else</span>
     <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">JSON</span>.stringify(result, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>));
 });
+
 </code></pre>
 				<h3 id="parsing-http-response">Parsing HTTP Response</h3>
 				<p>To retrieve the HTTP response, all methods can be called with a callback function with three parameters, with the third being the response. Users for example may retrieve the response headers with this usage pattern.</p>
@@ -165,6 +166,7 @@ assistant.message(params,  <span class="hljs-function"><span class="hljs-keyword
   <span class="hljs-keyword">else</span>
     <span class="hljs-built_in">console</span>.log(response.headers);
 });
+
 </code></pre>
 				<h3 id="data-collection-opt-out">Data collection opt-out</h3>
 				<p>By default, <a href="https://console.bluemix.net/docs/services/watson/getting-started-logging.html">all requests are logged</a>. This can be disabled of by setting the <code>X-Watson-Learning-Opt-Out</code> header when creating the service instance:</p>
