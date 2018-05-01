@@ -11,8 +11,7 @@ before_install:
 - npm install -g typescript
 script:
 - tsc
-- [[ "$TRAVIS_COMMIT_MESSAGE" =~ \[semver\ (major|minor|patch)\] ]] && npm test
-- npm test-travis
+- npm run test-travis
 - sh scripts/typedoc/generate_typedoc.sh
 after_success:
 - npm run report-coverage
