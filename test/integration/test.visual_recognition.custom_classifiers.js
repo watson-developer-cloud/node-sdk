@@ -129,7 +129,7 @@ describe('visual_recognition_integration_custom_classifiers', function() {
     });
   }); // custom classifiers
 
-  describe('pre-populated classifier', function() {
+  describe('pre-populated classifier @slow', function() {
     let classifier_id;
 
     before(function() {
