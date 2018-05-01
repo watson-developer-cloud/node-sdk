@@ -33,7 +33,7 @@ class AssistantV1 extends BaseService {
    * Construct a AssistantV1 object.
    *
    * @param {Object} options - Options for the service.
-   * @param {string} options.version - The API version date to use with the service, in "YYYY-M[params.headers] -DD" format. Whenever the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses the API version for the date you specify, or the most recent version before that date. Note that you should not programmatically specify the current date at runtime, in case the API has been updated since your application's release. Instead, specify a version date that is compatible with your application, and don't change it until your application is ready for a later version.
+   * @param {string} options.version - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses the API version for the date you specify, or the most recent version before that date. Note that you should not programmatically specify the current date at runtime, in case the API has been updated since your application's release. Instead, specify a version date that is compatible with your application, and don't change it until your application is ready for a later version.
    * @param {string} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/assistant/api'). The base url may differ between Bluemix regions.
    * @param {string} [options.username] - The username used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
    * @param {string} [options.password] - The password used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
@@ -367,7 +367,7 @@ class AssistantV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {string} params.intent - The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sy[params.headers] -`.  - It must be no longer than 128 characters.
+   * @param {string} params.intent - The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 128 characters.
    * @param {string} [params.description] - The description of the intent. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters.
    * @param {CreateExample[]} [params.examples] - An array of user input examples for the intent.
    * @param {Object} [params.headers] - Custom request headers
@@ -553,7 +553,7 @@ class AssistantV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.intent - The intent name.
-   * @param {string} [params.new_intent] - The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sy[params.headers] -`.  - It must be no longer than 128 characters.
+   * @param {string} [params.new_intent] - The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 128 characters.
    * @param {string} [params.new_description] - The description of the intent.
    * @param {CreateExample[]} [params.new_examples] - An array of user input examples for the intent.
    * @param {Object} [params.headers] - Custom request headers
@@ -1070,7 +1070,7 @@ class AssistantV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {string} params.entity - The name of the entity. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.  - It cannot begin with the reserved prefix `sy[params.headers] -`.  - It must be no longer than 64 characters.
+   * @param {string} params.entity - The name of the entity. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 64 characters.
    * @param {string} [params.description] - The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters.
    * @param {Object} [params.metadata] - Any metadata related to the value.
    * @param {CreateValue[]} [params.values] - An array of objects describing the entity values.
@@ -1260,7 +1260,7 @@ class AssistantV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
-   * @param {string} [params.new_entity] - The name of the entity. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.  - It cannot begin with the reserved prefix `sy[params.headers] -`.  - It must be no longer than 64 characters.
+   * @param {string} [params.new_entity] - The name of the entity. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 64 characters.
    * @param {string} [params.new_description] - The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters.
    * @param {Object} [params.new_metadata] - Any metadata related to the entity.
    * @param {boolean} [params.new_fuzzy_match] - Whether to use fuzzy matching for the entity.
@@ -1835,9 +1835,9 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.node_type] - How the dialog node is processed.
    * @param {string} [params.event_name] - How an `event_handler` node is processed.
    * @param {string} [params.variable] - The location in the dialog context where output is stored.
-   * @param {string} [params.digress_in] - Whether this to[params.headers] -level dialog node can be digressed into.
+   * @param {string} [params.digress_in] - Whether this top-level dialog node can be digressed into.
    * @param {string} [params.digress_out] - Whether this dialog node can be returned to after a digression.
-   * @param {string} [params.digress_out_slots] - Whether the user can digress to to[params.headers] -level nodes while filling out slots.
+   * @param {string} [params.digress_out_slots] - Whether the user can digress to top-level nodes while filling out slots.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -2045,9 +2045,9 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.new_event_name] - How an `event_handler` node is processed.
    * @param {string} [params.new_variable] - The location in the dialog context where output is stored.
    * @param {DialogNodeAction[]} [params.new_actions] - An array of objects describing any actions to be invoked by the dialog node.
-   * @param {string} [params.new_digress_in] - Whether this to[params.headers] -level dialog node can be digressed into.
+   * @param {string} [params.new_digress_in] - Whether this top-level dialog node can be digressed into.
    * @param {string} [params.new_digress_out] - Whether this dialog node can be returned to after a digression.
-   * @param {string} [params.new_digress_out_slots] - Whether the user can digress to to[params.headers] -level nodes while filling out slots.
+   * @param {string} [params.new_digress_out_slots] - Whether the user can digress to top-level nodes while filling out slots.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -2111,7 +2111,7 @@ class AssistantV1 extends BaseService {
    * List the events from the logs of all workspaces in the service instance.    If **cursor** is not specified, this operation is limited to 40 requests per 30 minutes. If **cursor** is specified, the limit is 120 requests per minute. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.filter - A cacheable parameter that limits the results to those matching the specified filter. You must specify a filter query that includes a value for `language`, as well as a value for `workspace_id` or `request.context.metadata.deployment`. For more information, see the [documentation](https://console.bluemix.net/docs/services/conversation/filte[params.headers] -reference.html#filte[params.headers] -query-syntax).
+   * @param {string} params.filter - A cacheable parameter that limits the results to those matching the specified filter. You must specify a filter query that includes a value for `language`, as well as a value for `workspace_id` or `request.context.metadata.deployment`. For more information, see the [documentation](https://console.bluemix.net/docs/services/conversation/filter-reference.html#filter-query-syntax).
    * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
@@ -2156,7 +2156,7 @@ class AssistantV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
-   * @param {string} [params.filter] - A cacheable parameter that limits the results to those matching the specified filter. For more information, see the [documentation](https://console.bluemix.net/docs/services/conversation/filte[params.headers] -reference.html#filte[params.headers] -query-syntax).
+   * @param {string} [params.filter] - A cacheable parameter that limits the results to those matching the specified filter. For more information, see the [documentation](https://console.bluemix.net/docs/services/conversation/filter-reference.html#filter-query-syntax).
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {Object} [params.headers] - Custom request headers
@@ -2335,7 +2335,7 @@ namespace AssistantV1 {
   export interface CreateIntentParams {
     /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sy[params.headers] -`.  - It must be no longer than 128 characters. */
+    /** The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 128 characters. */
     intent: string;
     /** The description of the intent. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     description?: string;
@@ -2391,7 +2391,7 @@ namespace AssistantV1 {
     workspace_id: string;
     /** The intent name. */
     intent: string;
-    /** The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sy[params.headers] -`.  - It must be no longer than 128 characters. */
+    /** The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 128 characters. */
     new_intent?: string;
     /** The description of the intent. */
     new_description?: string;
@@ -2528,7 +2528,7 @@ namespace AssistantV1 {
   export interface CreateEntityParams {
     /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** The name of the entity. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.  - It cannot begin with the reserved prefix `sy[params.headers] -`.  - It must be no longer than 64 characters. */
+    /** The name of the entity. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 64 characters. */
     entity: string;
     /** The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     description?: string;
@@ -2588,7 +2588,7 @@ namespace AssistantV1 {
     workspace_id: string;
     /** The name of the entity. */
     entity: string;
-    /** The name of the entity. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.  - It cannot begin with the reserved prefix `sy[params.headers] -`.  - It must be no longer than 64 characters. */
+    /** The name of the entity. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 64 characters. */
     new_entity?: string;
     /** The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     new_description?: string;
@@ -2815,11 +2815,11 @@ namespace AssistantV1 {
     event_name?: CreateDialogNodeConstants.EventName | string;
     /** The location in the dialog context where output is stored. */
     variable?: string;
-    /** Whether this to[params.headers] -level dialog node can be digressed into. */
+    /** Whether this top-level dialog node can be digressed into. */
     digress_in?: CreateDialogNodeConstants.DigressIn | string;
     /** Whether this dialog node can be returned to after a digression. */
     digress_out?: CreateDialogNodeConstants.DigressOut | string;
-    /** Whether the user can digress to to[params.headers] -level nodes while filling out slots. */
+    /** Whether the user can digress to top-level nodes while filling out slots. */
     digress_out_slots?: CreateDialogNodeConstants.DigressOutSlots | string;
     headers?: Object;
   }
@@ -2846,7 +2846,7 @@ namespace AssistantV1 {
       NOMATCH = 'nomatch',
       NOMATCH_RESPONSES_DEPLETED = 'nomatch_responses_depleted',
     }
-    /** Whether this to[params.headers] -level dialog node can be digressed into. */
+    /** Whether this top-level dialog node can be digressed into. */
     export enum DigressIn {
       NOT_AVAILABLE = 'not_available',
       RETURNS = 'returns',
@@ -2858,7 +2858,7 @@ namespace AssistantV1 {
       ALL = 'allow_all',
       ALL_NEVER_RETURN = 'allow_all_never_return',
     }
-    /** Whether the user can digress to to[params.headers] -level nodes while filling out slots. */
+    /** Whether the user can digress to top-level nodes while filling out slots. */
     export enum DigressOutSlots {
       NOT_ALLOWED = 'not_allowed',
       ALLOW_RETURNING = 'allow_returning',
@@ -2937,11 +2937,11 @@ namespace AssistantV1 {
     new_variable?: string;
     /** An array of objects describing any actions to be invoked by the dialog node. */
     new_actions?: DialogNodeAction[];
-    /** Whether this to[params.headers] -level dialog node can be digressed into. */
+    /** Whether this top-level dialog node can be digressed into. */
     new_digress_in?: UpdateDialogNodeConstants.DigressIn | string;
     /** Whether this dialog node can be returned to after a digression. */
     new_digress_out?: UpdateDialogNodeConstants.DigressOut | string;
-    /** Whether the user can digress to to[params.headers] -level nodes while filling out slots. */
+    /** Whether the user can digress to top-level nodes while filling out slots. */
     new_digress_out_slots?: UpdateDialogNodeConstants.DigressOutSlots | string;
     headers?: Object;
   }
@@ -2968,7 +2968,7 @@ namespace AssistantV1 {
       NOMATCH = 'nomatch',
       NOMATCH_RESPONSES_DEPLETED = 'nomatch_responses_depleted',
     }
-    /** Whether this to[params.headers] -level dialog node can be digressed into. */
+    /** Whether this top-level dialog node can be digressed into. */
     export enum DigressIn {
       NOT_AVAILABLE = 'not_available',
       RETURNS = 'returns',
@@ -2980,7 +2980,7 @@ namespace AssistantV1 {
       ALL = 'allow_all',
       ALL_NEVER_RETURN = 'allow_all_never_return',
     }
-    /** Whether the user can digress to to[params.headers] -level nodes while filling out slots. */
+    /** Whether the user can digress to top-level nodes while filling out slots. */
     export enum DigressOutSlots {
       NOT_ALLOWED = 'not_allowed',
       ALLOW_RETURNING = 'allow_returning',
@@ -2990,7 +2990,7 @@ namespace AssistantV1 {
 
   /** Parameters for the `listAllLogs` operation. */
   export interface ListAllLogsParams {
-    /** A cacheable parameter that limits the results to those matching the specified filter. You must specify a filter query that includes a value for `language`, as well as a value for `workspace_id` or `request.context.metadata.deployment`. For more information, see the [documentation](https://console.bluemix.net/docs/services/conversation/filte[params.headers] -reference.html#filte[params.headers] -query-syntax). */
+    /** A cacheable parameter that limits the results to those matching the specified filter. You must specify a filter query that includes a value for `language`, as well as a value for `workspace_id` or `request.context.metadata.deployment`. For more information, see the [documentation](https://console.bluemix.net/docs/services/conversation/filter-reference.html#filter-query-syntax). */
     filter: string;
     /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
     sort?: string;
@@ -3007,7 +3007,7 @@ namespace AssistantV1 {
     workspace_id: string;
     /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
     sort?: string;
-    /** A cacheable parameter that limits the results to those matching the specified filter. For more information, see the [documentation](https://console.bluemix.net/docs/services/conversation/filte[params.headers] -reference.html#filte[params.headers] -query-syntax). */
+    /** A cacheable parameter that limits the results to those matching the specified filter. For more information, see the [documentation](https://console.bluemix.net/docs/services/conversation/filter-reference.html#filter-query-syntax). */
     filter?: string;
     /** The number of records to return in each page of results. */
     page_limit?: number;
@@ -3090,17 +3090,17 @@ namespace AssistantV1 {
     event_name?: string;
     /** The location in the dialog context where output is stored. */
     variable?: string;
-    /** Whether this to[params.headers] -level dialog node can be digressed into. */
+    /** Whether this top-level dialog node can be digressed into. */
     digress_in?: string;
     /** Whether this dialog node can be returned to after a digression. */
     digress_out?: string;
-    /** Whether the user can digress to to[params.headers] -level nodes while filling out slots. */
+    /** Whether the user can digress to top-level nodes while filling out slots. */
     digress_out_slots?: string;
   }
 
   /** CreateEntity. */
   export interface CreateEntity {
-    /** The name of the entity. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.  - It cannot begin with the reserved prefix `sy[params.headers] -`.  - It must be no longer than 64 characters. */
+    /** The name of the entity. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 64 characters. */
     entity: string;
     /** The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     description?: string;
@@ -3120,7 +3120,7 @@ namespace AssistantV1 {
 
   /** CreateIntent. */
   export interface CreateIntent {
-    /** The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sy[params.headers] -`.  - It must be no longer than 128 characters. */
+    /** The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 128 characters. */
     intent: string;
     /** The description of the intent. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     description?: string;
@@ -3176,11 +3176,11 @@ namespace AssistantV1 {
     event_name?: string;
     /** The location in the dialog context where output is stored. */
     variable?: string;
-    /** Whether this to[params.headers] -level dialog node can be digressed into. */
+    /** Whether this top-level dialog node can be digressed into. */
     digress_in?: string;
     /** Whether this dialog node can be returned to after a digression. */
     digress_out?: string;
-    /** Whether the user can digress to to[params.headers] -level nodes while filling out slots. */
+    /** Whether the user can digress to top-level nodes while filling out slots. */
     digress_out_slots?: string;
   }
 
