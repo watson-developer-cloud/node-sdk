@@ -138,43 +138,6 @@ class LanguageTranslatorV2 extends BaseService {
   };
 
   /**
-   * Identify language. as plain
-   *
-   * Identifies the language of the input text.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.text - Input text in UTF-8 format.
-   * @param {Object} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
-   */
-  public identifyAsPlain(params: LanguageTranslatorV2.IdentifyAsPlainParams, callback?: LanguageTranslatorV2.Callback<LanguageTranslatorV2.IdentifiedLanguages>): NodeJS.ReadableStream | void {
-    const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
-    const requiredParams = ['text'];
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-    const body = _params.text;
-    const parameters = {
-      options: {
-        url: '/v2/identify',
-        method: 'POST',
-        json: false,
-        body,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
-          'Accept': 'text/plain',
-          'Content-Type': 'text/plain',
-        }, _params.headers),
-      }),
-    };
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
    * List identifiable languages.
    *
    * Lists the languages that the service can identify. Returns the language code (for example, `en` for English or `es` for Spanish) and name of each language.
@@ -418,13 +381,6 @@ namespace LanguageTranslatorV2 {
 
   /** Parameters for the `identify` operation. */
   export interface IdentifyParams {
-    /** Input text in UTF-8 format. */
-    text: string;
-    headers?: Object;
-  }
-
-  /** Parameters for the `identifyAsPlain` operation. */
-  export interface IdentifyAsPlainParams {
     /** Input text in UTF-8 format. */
     text: string;
     headers?: Object;

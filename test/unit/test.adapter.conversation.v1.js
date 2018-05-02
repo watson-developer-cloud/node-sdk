@@ -107,8 +107,6 @@ describe('conversation-v1', function() {
       conversation.message({}, missingParameter);
       conversation.message(null, missingParameter);
       conversation.message(undefined, missingParameter);
-      conversation.message(pick(params, ['workspace_id']), missingParameter);
-      conversation.message(pick(params, ['input']), missingParameter);
     });
   });
 
