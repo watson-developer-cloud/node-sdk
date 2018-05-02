@@ -54,6 +54,7 @@
     "eslint-plugin-node": "~6.0.0",
     "eslint-plugin-prettier": "~2.6.0",
     "husky": "~0.14.3",
+    "hoek": "~4.2.1",
     "jsdoc": "~3.5.5",
     "lint-staged": "~6.1.1",
     "memory-fs": "~0.4.1",
