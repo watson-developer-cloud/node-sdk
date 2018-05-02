@@ -105,8 +105,6 @@ describe('assistant-v1', function() {
       assistant.message({}, missingParameter);
       assistant.message(null, missingParameter);
       assistant.message(undefined, missingParameter);
-      assistant.message(pick(params, ['workspace_id']), missingParameter);
-      assistant.message(pick(params, ['input']), missingParameter);
     });
   });
 
