@@ -81,7 +81,7 @@
 					<em> <a href="#examples">Examples</a>
 					</em> <a href="#ibm-watson-services">IBM Watson Services</a>
 					<em> <a href="#authorization">Authorization</a>
-					</em> <a href="https://www.ibm.com/watson/services/conversation/">Assistant</a>
+					</em> <a href="#assistant">Assistant</a>
 					<em> <a href="#discovery">Discovery</a>
 					</em> <a href="#language-translator">Language Translator</a>
 					<em> <a href="#natural-language-classifier">Natural Language Classifier</a>
@@ -101,6 +101,7 @@
 				<pre><code class="lang-sh">npm install watson-developer-cloud
 </code></pre>
 				<h2 id="getting-the-service-credentials">Getting the service credentials</h2>
+				<h3 id="basic-auth-or-api-key-for-visual-recognition-">Basic Auth (or API key for Visual Recognition)</h3>
 				<p>You will need the <code>username</code>, <code>password</code>, and <code>url</code> (<code>api_key</code> for Visual Recognition) for each service. Service credentials are different from your IBM Cloud account username and password.</p>
 				<p>To get your service credentials, follow these steps:</p>
 				<ol>
@@ -112,6 +113,36 @@
 					<li>Click <strong>View credentials</strong> under <strong>Actions</strong>.</li>
 					<li>Copy <code>username</code>, <code>password</code> (or <code>api_key</code> for Visual Recognition), and <code>url</code>.</li>
 				</ol>
+				<h3 id="iam-authentication">IAM Authentication</h3>
+				<p>When authenticating with IAM, you have the option of passing in:</p>
+				<ul>
+					<li>the IAM API key and, optionally, the IAM service URL</li>
+					<li>an IAM access token</li>
+				</ul>
+				<p><strong>Be aware that passing in an access token means that you&#39;re assuming responsibility for maintaining that token&#39;s lifecycle.</strong> If you instead pass in an IAM API key, the SDK will manage it for you.</p>
+				<pre><code class="lang-js"><span class="hljs-comment">// in the constructor, letting the SDK manage the IAM token</span>
+<span class="hljs-keyword">const</span> discovery = <span class="hljs-keyword">new</span> DiscoveryV1({
+  <span class="hljs-attr">url</span>: <span class="hljs-string">'&lt;service_url&gt;'</span>,
+  <span class="hljs-attr">version</span>: <span class="hljs-string">'&lt;version-date&gt;'</span>,
+  <span class="hljs-attr">iam_apikey</span>: <span class="hljs-string">'&lt;iam_api_key&gt;'</span>,
+  <span class="hljs-attr">iam_url</span>: <span class="hljs-string">'&lt;iam_url&gt;'</span>, <span class="hljs-comment">// optional - the default value is https://iam.ng.bluemix.net/identity/token</span>
+});
+</code></pre>
+				<pre><code class="lang-js"><span class="hljs-comment">// in the constructor, assuming control of managing IAM token</span>
+<span class="hljs-keyword">const</span> discovery = <span class="hljs-keyword">new</span> DiscoveryV1({
+  <span class="hljs-attr">url</span>: <span class="hljs-string">'&lt;service_url&gt;'</span>,
+  <span class="hljs-attr">version</span>: <span class="hljs-string">'&lt;version-date&gt;'</span>,
+  <span class="hljs-attr">iam_access_token</span>: <span class="hljs-string">'&lt;access-token&gt;'</span>
+});
+</code></pre>
+				<pre><code class="lang-js"><span class="hljs-comment">// after instantiation, assuming control of managing IAM token</span>
+<span class="hljs-keyword">const</span> discovery = <span class="hljs-keyword">new</span> DiscoveryV1({
+  <span class="hljs-attr">url</span>: <span class="hljs-string">'&lt;service_url&gt;'</span>,
+  <span class="hljs-attr">version</span>: <span class="hljs-string">'&lt;version-date&gt;'</span>
+});
+
+discovery.setAccessToken(<span class="hljs-string">'&lt;access-token&gt;'</span>)
+</code></pre>
 				<h2 id="usage">Usage</h2>
 				<p>The examples below assume that you already have service credentials. If not,
 				you will have to create a service in <a href="https://console.bluemix.net">IBM Cloud</a>.</p>
@@ -121,7 +152,10 @@
 				<ol>
 					<li><p>Hard-coded or programatic credentials passed to the service constructor</p>
 					</li>
-					<li><p><code>SERVICE_NAME_USERNAME</code> and <code>SERVICE_NAME_PASSWORD</code> environment properties (or <code>SERVICE_NAME_API_KEY</code> when appropriate) and, optionally, <code>SERVICE_NAME_URL</code></p>
+					<li><p>Environment variables:</p>
+					</li>
+					<li><code>SERVICE_NAME_USERNAME</code> and <code>SERVICE_NAME_PASSWORD</code> environment properties (or <code>SERVICE_NAME_API_KEY</code> when appropriate) and, optionally, <code>SERVICE_NAME_URL</code></li>
+					<li><p>If using IAM: <code>SERVICE_NAME_IAM_APIKEY</code> and optionally <code>SERVICE_NAME_IAM_URL</code>, or <code>SERVICE_NAME_IAM_ACCESS_TOKEN</code></p>
 					</li>
 					<li><p>IBM-Cloud-supplied credentials (via the <code>VCAP_SERVICES</code> JSON-encoded environment property)</p>
 					</li>
