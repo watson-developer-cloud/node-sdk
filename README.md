@@ -21,7 +21,7 @@ Node.js client library to use the Watson APIs.
   * [Examples](#examples)
   * [IBM Watson Services](#ibm-watson-services)
     * [Authorization](#authorization)
-    * [Assistant]
+    * [Assistant](#assistant)
     * [Discovery](#discovery)
     * [Language Translator](#language-translator)
     * [Natural Language Classifier](#natural-language-classifier)
@@ -46,7 +46,7 @@ npm install watson-developer-cloud
 ```
 
 ## Getting the service credentials
-
+### Basic Auth (or API key for Visual Recognition)
 You will need the `username`, `password`, and `url` (`api_key` for Visual Recognition) for each service. Service credentials are different from your IBM Cloud account username and password.
 
 To get your service credentials, follow these steps:
@@ -58,6 +58,43 @@ To get your service credentials, follow these steps:
 1.  From the service dashboard, click **Service credentials**.
 1.  Click **View credentials** under **Actions**.
 1.  Copy `username`, `password` (or `api_key` for Visual Recognition), and `url`.
+
+### IAM Authentication
+
+When authenticating with IAM, you have the option of passing in:
+- the IAM API key and, optionally, the IAM service URL
+- an IAM access token
+
+**Be aware that passing in an access token means that you're assuming responsibility for maintaining that token's lifecycle.** If you instead pass in an IAM API key, the SDK will manage it for you.
+
+```js
+// in the constructor, letting the SDK manage the IAM token
+const discovery = new DiscoveryV1({
+  url: '<service_url>',
+  version: '<version-date>',
+  iam_apikey: '<iam_api_key>',
+  iam_url: '<iam_url>', // optional - the default value is https://iam.ng.bluemix.net/identity/token
+});
+```
+
+```js
+// in the constructor, assuming control of managing IAM token
+const discovery = new DiscoveryV1({
+  url: '<service_url>',
+  version: '<version-date>',
+  iam_access_token: '<access-token>'
+});
+```
+
+```js
+// after instantiation, assuming control of managing IAM token
+const discovery = new DiscoveryV1({
+  url: '<service_url>',
+  version: '<version-date>'
+});
+
+discovery.setAccessToken('<access-token>')
+```
 
 ## Usage
 
@@ -71,7 +108,9 @@ Credentials are checked for in the following order:
 
 1. Hard-coded or programatic credentials passed to the service constructor
 
-2. `SERVICE_NAME_USERNAME` and `SERVICE_NAME_PASSWORD` environment properties (or `SERVICE_NAME_API_KEY` when appropriate) and, optionally, `SERVICE_NAME_URL`
+2. Environment variables:
+- `SERVICE_NAME_USERNAME` and `SERVICE_NAME_PASSWORD` environment properties (or `SERVICE_NAME_API_KEY` when appropriate) and, optionally, `SERVICE_NAME_URL`
+- If using IAM: `SERVICE_NAME_IAM_APIKEY` and optionally `SERVICE_NAME_IAM_URL`, or `SERVICE_NAME_IAM_ACCESS_TOKEN`
 
 3. IBM-Cloud-supplied credentials (via the `VCAP_SERVICES` JSON-encoded environment property)
 
