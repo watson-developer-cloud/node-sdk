@@ -21,7 +21,7 @@ Node.js client library to use the Watson APIs.
   * [Examples](#examples)
   * [IBM Watson Services](#ibm-watson-services)
     * [Authorization](#authorization)
-    * [Assistant] (#assistant)
+    * [Assistant](#assistant)
     * [Discovery](#discovery)
     * [Language Translator](#language-translator)
     * [Natural Language Classifier](#natural-language-classifier)
@@ -59,7 +59,7 @@ To get your service credentials, follow these steps:
 1.  Click **View credentials** under **Actions**.
 1.  Copy `username`, `password` (or `api_key` for Visual Recognition), and `url`.
 
-### IAM
+### IAM Authentication
 
 When authenticating with IAM, you have the option of passing in:
 - the IAM API key and, optionally, the IAM service URL
