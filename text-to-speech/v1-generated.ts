@@ -18,10 +18,9 @@ import * as extend from 'extend';
 import { RequestResponse } from 'request';
 import { BaseService } from '../lib/base_service';
 import { getMissingParams } from '../lib/helper';
-import { FileObject } from '../lib/helper';
 
 /**
- * ### Service Overview The IBM Watson Text to Speech service provides an API that uses IBM's speec[params.headers] -synthesis capabilities to synthesize text into natural-sounding speech in a variety of languages, dialects, and voices. The service supports at least one male or female voice, sometimes both, for each language. The audio is streamed back to the client with minimal delay. ### API Overview The Text to Speech service consists of the following related endpoints: * **Voices** provides information about the voices available for synthesized speech. * **Synthesis** synthesizes written text to audio speech. * **Pronunciation** returns the pronunciation for a specified word. The **Get pronunciation** method is currently beta. * **Custom models** and let users create custom voice models, which are dictionaries of words and their translations for use in speech synthesis. All custom model methods are currently beta features. * **Custom words** let users manage the words in a custom voice model. All custom word methods are currently beta features.    **Note about the Try It Out feature:** The `Try it out!` button lets you experiment with the methods of the API by making actual cURL calls to the service. The feature is **not** supported for use with the `POST /v1/synthesize` method. For examples of calls to this method, see the [Text to Speech API reference](http://www.ibm.com/watson/developercloud/text-to-speech/api/v1/). ### API Usage The following information provides details about using the service to synthesize audio: * **Audio formats:** The service supports a number of audio formats (MIME types). For more information about audio formats and sampling rates, including links to a number of Internet sites that provide technical and usage details about the different formats, see [Specifying an audio format](https://console.bluemix.net/docs/services/text-to-speech/http.html#format). * **SSML:** Many methods refer to the Speech Synthesis Markup Language (SSML), an XML-based markup language that provides annotations of text for speec[params.headers] -synthesis applications; for example, many methods accept or produce translations that use an SSML-based phoneme format. See [Using SSML](https://console.bluemix.net/docs/services/text-to-speech/SSML.html) and [Using IBM SPR](https://console.bluemix.net/docs/services/text-to-speech/SPRs.html). * **Word translations:** Many customization methods accept or return sound[params.headers] -like or phonetic translations for words. A phonetic translation is based on the SSML format for representing the phonetic string of a word. Phonetic translations can use standard International Phonetic Alphabet (IPA) representation:   &lt;phoneme alphabet=\"ipa\" ph=\"t&#601;m&#712;&#593;to\"&gt;&lt;/phoneme&gt;   or the proprietary IBM Symbolic Phonetic Representation (SPR):   &lt;phoneme alphabet=\"ibm\" ph=\"1gAstroEntxrYFXs\"&gt;&lt;/phoneme&gt;   For more information about customization and about sound[params.headers] -like and phonetic translations, see [Understanding customization](https://console.bluemix.net/docs/services/text-to-speech/custo[params.headers] -intro.html). * **GUIDs:** The pronunciation and customization methods accept or return a Globally Unique Identifier (GUID). For example, customization IDs (specified with the `customization_id` parameter) and service credentials are GUIDs. GUIDs are hexadecimal strings that have the format `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`. * **WebSocket interface:** The service also offers a WebSocket interface as an alternative to its HTTP REST interface for speech synthesis. The WebSocket interface supports both plain text and SSML input, including the SSML &lt;mark&gt; element and word timings. See [The WebSocket interface](https://console.bluemix.net/docs/services/text-to-speech/websockets.html). * **Custom voice model ownership:** In all cases, you must use service credentials created for the instance of the service that owns a custom voice model to use the methods described in this documentation with that model. For more information, see [Ownership of custom voice models](https://console.bluemix.net/docs/services/text-to-speech/custo[params.headers] -models.html#customOwner).
+ * ### Service Overview The IBM Watson Text to Speech service provides an API that uses IBM's speech-synthesis capabilities to synthesize text into natural-sounding speech in a variety of languages, dialects, and voices. The service supports at least one male or female voice, sometimes both, for each language. The audio is streamed back to the client with minimal delay. ### API Overview The Text to Speech service consists of the following related endpoints: * **Voices** provides information about the voices available for synthesized speech. * **Synthesis** synthesizes written text to audio speech. * **Pronunciation** returns the pronunciation for a specified word. The **Get pronunciation** method is currently beta. * **Custom models** and let users create custom voice models, which are dictionaries of words and their translations for use in speech synthesis. All custom model methods are currently beta features. * **Custom words** let users manage the words in a custom voice model. All custom word methods are currently beta features.    **Note about the Try It Out feature:** The `Try it out!` button lets you experiment with the methods of the API by making actual cURL calls to the service. The feature is **not** supported for use with the `POST /v1/synthesize` method. For examples of calls to this method, see the [Text to Speech API reference](http://www.ibm.com/watson/developercloud/text-to-speech/api/v1/). ### API Usage The following information provides details about using the service to synthesize audio: * **Audio formats:** The service supports a number of audio formats (MIME types). For more information about audio formats and sampling rates, including links to a number of Internet sites that provide technical and usage details about the different formats, see [Specifying an audio format](https://console.bluemix.net/docs/services/text-to-speech/http.html#format). * **SSML:** Many methods refer to the Speech Synthesis Markup Language (SSML), an XML-based markup language that provides annotations of text for speech-synthesis applications; for example, many methods accept or produce translations that use an SSML-based phoneme format. See [Using SSML](https://console.bluemix.net/docs/services/text-to-speech/SSML.html) and [Using IBM SPR](https://console.bluemix.net/docs/services/text-to-speech/SPRs.html). * **Word translations:** Many customization methods accept or return sounds-like or phonetic translations for words. A phonetic translation is based on the SSML format for representing the phonetic string of a word. Phonetic translations can use standard International Phonetic Alphabet (IPA) representation:   &lt;phoneme alphabet=\"ipa\" ph=\"t&#601;m&#712;&#593;to\"&gt;&lt;/phoneme&gt;   or the proprietary IBM Symbolic Phonetic Representation (SPR):   &lt;phoneme alphabet=\"ibm\" ph=\"1gAstroEntxrYFXs\"&gt;&lt;/phoneme&gt;   For more information about customization and about sounds-like and phonetic translations, see [Understanding customization](https://console.bluemix.net/docs/services/text-to-speech/custom-intro.html). * **GUIDs:** The pronunciation and customization methods accept or return a Globally Unique Identifier (GUID). For example, customization IDs (specified with the `customization_id` parameter) and service credentials are GUIDs. GUIDs are hexadecimal strings that have the format `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`. * **WebSocket interface:** The service also offers a WebSocket interface as an alternative to its HTTP REST interface for speech synthesis. The WebSocket interface supports both plain text and SSML input, including the SSML &lt;mark&gt; element and word timings. See [The WebSocket interface](https://console.bluemix.net/docs/services/text-to-speech/websockets.html). * **Custom voice model ownership:** In all cases, you must use service credentials created for the instance of the service that owns a custom voice model to use the methods described in this documentation with that model. For more information, see [Ownership of custom voice models](https://console.bluemix.net/docs/services/text-to-speech/custom-models.html#customOwner).
  */
 
 class TextToSpeechV1 extends BaseService {
@@ -121,13 +120,13 @@ class TextToSpeechV1 extends BaseService {
   };
 
   /*************************
-   * synthesize
+   * synthesis
    ************************/
 
   /**
    * Synthesize audio.
    *
-   * Synthesizes text to spoken audio, returning the synthesized audio stream as an array of bytes. Text size is limited to 5 KB. (For the `audio/l16` format, you can optionally specify `endianness=big-endian` or `endianness=littl[params.headers] -endian`; the default is little endian.)   If a request includes invalid query parameters, the service returns a `Warnings` response header that provides messages about the invalid parameters. The warning includes a descriptive message and a list of invalid argument strings. For example, a message such as `\"Unknown arguments:\"` or `\"Unknown url query arguments:\"` followed by a list of the form `\"invalid_arg_1, invalid_arg_2.\"` The request succeeds despite the warnings.  **Note about the Try It Out feature:** The `Try it out!` button is **not** supported for use with the the `POST /v1/synthesize` method. For examples of calls to the method, see the [Text to Speech API reference](http://www.ibm.com/watson/developercloud/text-to-speech/api/v1/).
+   * Synthesizes text to spoken audio, returning the synthesized audio stream as an array of bytes. You can pass a maximum of 5 KB of text. (For the `audio/l16` format, you can optionally specify `endianness=big-endian` or `endianness=little-endian`; the default is little endian.)   If a request includes invalid query parameters, the service returns a `Warnings` response header that provides messages about the invalid parameters. The warning includes a descriptive message and a list of invalid argument strings. For example, a message such as `\"Unknown arguments:\"` or `\"Unknown url query arguments:\"` followed by a list of the form `\"invalid_arg_1, invalid_arg_2.\"` The request succeeds despite the warnings.  **Note about the Try It Out feature:** The `Try it out!` button is **not** supported for use with the the `POST /v1/synthesize` method. For examples of calls to the method, see the [Text to Speech API reference](http://www.ibm.com/watson/developercloud/text-to-speech/api/v1/).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.text - The text to synthesize.
@@ -138,7 +137,7 @@ class TextToSpeechV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public synthesize(params: TextToSpeechV1.SynthesizeParams, callback?: TextToSpeechV1.Callback<NodeJS.ReadableStream|FileObject|Buffer>): NodeJS.ReadableStream | void {
+  public synthesize(params: TextToSpeechV1.SynthesizeParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.NodeJS.ReadableStream|FileObject|Buffer>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['text'];
@@ -160,7 +159,6 @@ class TextToSpeechV1 extends BaseService {
         json: true,
         body,
         qs: query,
-        encoding: null,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, {
@@ -430,8 +428,8 @@ class TextToSpeechV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The GUID of the custom voice model.
    * @param {string} params.word - The word that is to be added or updated for the custom voice model.
-   * @param {string} params.translation - The phonetic or sound[params.headers] -like translation for the word. A phonetic translation is based on the SSML format for representing the phonetic string of a word either as an IPA translation or as an IBM SPR translation. A sound[params.headers] -like is one or more words that, when combined, sound like the word.
-   * @param {string} [params.part_of_speech] - **Japanese only.** The part of speech for the word. The service uses the value to produce the correct intonation for the word. You can create only a single entry, with or without a single part of speech, for any word; you cannot create multiple entries with different parts of speech for the same word. For more information, see [Working with Japanese entries](https://console.bluemix.net/docs/services/text-to-speech/custo[params.headers] -rules.html#jaNotes).
+   * @param {string} params.translation - The phonetic or sounds-like translation for the word. A phonetic translation is based on the SSML format for representing the phonetic string of a word either as an IPA translation or as an IBM SPR translation. A sounds-like is one or more words that, when combined, sound like the word.
+   * @param {string} [params.part_of_speech] - **Japanese only.** The part of speech for the word. The service uses the value to produce the correct intonation for the word. You can create only a single entry, with or without a single part of speech, for any word; you cannot create multiple entries with different parts of speech for the same word. For more information, see [Working with Japanese entries](https://console.bluemix.net/docs/services/text-to-speech/custom-rules.html#jaNotes).
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -673,15 +671,15 @@ namespace TextToSpeechV1 {
       EN_US_LISAVOICE = 'en-US_LisaVoice',
       EN_US_MICHAELVOICE = 'en-US_MichaelVoice',
       EN_GB_KATEVOICE = 'en-GB_KateVoice',
-      ES_ES_ENRIQUEVOICE = 'e[params.headers] -ES_EnriqueVoice',
-      ES_ES_LAURAVOICE = 'e[params.headers] -ES_LauraVoice',
-      ES_LA_SOFIAVOICE = 'e[params.headers] -LA_SofiaVoice',
-      ES_US_SOFIAVOICE = 'e[params.headers] -US_SofiaVoice',
-      DE_DE_DIETERVOICE = 'd[params.headers] -DE_DieterVoice',
-      DE_DE_BIRGITVOICE = 'd[params.headers] -DE_BirgitVoice',
-      FR_FR_RENEEVOICE = 'f[params.headers] -FR_ReneeVoice',
+      ES_ES_ENRIQUEVOICE = 'es-ES_EnriqueVoice',
+      ES_ES_LAURAVOICE = 'es-ES_LauraVoice',
+      ES_LA_SOFIAVOICE = 'es-LA_SofiaVoice',
+      ES_US_SOFIAVOICE = 'es-US_SofiaVoice',
+      DE_DE_DIETERVOICE = 'de-DE_DieterVoice',
+      DE_DE_BIRGITVOICE = 'de-DE_BirgitVoice',
+      FR_FR_RENEEVOICE = 'fr-FR_ReneeVoice',
       IT_IT_FRANCESCAVOICE = 'it-IT_FrancescaVoice',
-      JA_JP_EMIVOICE = 'j[params.headers] -JP_EmiVoice',
+      JA_JP_EMIVOICE = 'ja-JP_EmiVoice',
       PT_BR_ISABELAVOICE = 'pt-BR_IsabelaVoice',
     }
   }
@@ -728,15 +726,15 @@ namespace TextToSpeechV1 {
       EN_US_LISAVOICE = 'en-US_LisaVoice',
       EN_US_MICHAELVOICE = 'en-US_MichaelVoice',
       EN_GB_KATEVOICE = 'en-GB_KateVoice',
-      ES_ES_ENRIQUEVOICE = 'e[params.headers] -ES_EnriqueVoice',
-      ES_ES_LAURAVOICE = 'e[params.headers] -ES_LauraVoice',
-      ES_LA_SOFIAVOICE = 'e[params.headers] -LA_SofiaVoice',
-      ES_US_SOFIAVOICE = 'e[params.headers] -US_SofiaVoice',
-      DE_DE_DIETERVOICE = 'd[params.headers] -DE_DieterVoice',
-      DE_DE_BIRGITVOICE = 'd[params.headers] -DE_BirgitVoice',
-      FR_FR_RENEEVOICE = 'f[params.headers] -FR_ReneeVoice',
+      ES_ES_ENRIQUEVOICE = 'es-ES_EnriqueVoice',
+      ES_ES_LAURAVOICE = 'es-ES_LauraVoice',
+      ES_LA_SOFIAVOICE = 'es-LA_SofiaVoice',
+      ES_US_SOFIAVOICE = 'es-US_SofiaVoice',
+      DE_DE_DIETERVOICE = 'de-DE_DieterVoice',
+      DE_DE_BIRGITVOICE = 'de-DE_BirgitVoice',
+      FR_FR_RENEEVOICE = 'fr-FR_ReneeVoice',
       IT_IT_FRANCESCAVOICE = 'it-IT_FrancescaVoice',
-      JA_JP_EMIVOICE = 'j[params.headers] -JP_EmiVoice',
+      JA_JP_EMIVOICE = 'ja-JP_EmiVoice',
       PT_BR_ISABELAVOICE = 'pt-BR_IsabelaVoice',
     }
   }
@@ -762,15 +760,15 @@ namespace TextToSpeechV1 {
       EN_US_LISAVOICE = 'en-US_LisaVoice',
       EN_US_MICHAELVOICE = 'en-US_MichaelVoice',
       EN_GB_KATEVOICE = 'en-GB_KateVoice',
-      ES_ES_ENRIQUEVOICE = 'e[params.headers] -ES_EnriqueVoice',
-      ES_ES_LAURAVOICE = 'e[params.headers] -ES_LauraVoice',
-      ES_LA_SOFIAVOICE = 'e[params.headers] -LA_SofiaVoice',
-      ES_US_SOFIAVOICE = 'e[params.headers] -US_SofiaVoice',
-      DE_DE_DIETERVOICE = 'd[params.headers] -DE_DieterVoice',
-      DE_DE_BIRGITVOICE = 'd[params.headers] -DE_BirgitVoice',
-      FR_FR_RENEEVOICE = 'f[params.headers] -FR_ReneeVoice',
+      ES_ES_ENRIQUEVOICE = 'es-ES_EnriqueVoice',
+      ES_ES_LAURAVOICE = 'es-ES_LauraVoice',
+      ES_LA_SOFIAVOICE = 'es-LA_SofiaVoice',
+      ES_US_SOFIAVOICE = 'es-US_SofiaVoice',
+      DE_DE_DIETERVOICE = 'de-DE_DieterVoice',
+      DE_DE_BIRGITVOICE = 'de-DE_BirgitVoice',
+      FR_FR_RENEEVOICE = 'fr-FR_ReneeVoice',
       IT_IT_FRANCESCAVOICE = 'it-IT_FrancescaVoice',
-      JA_JP_EMIVOICE = 'j[params.headers] -JP_EmiVoice',
+      JA_JP_EMIVOICE = 'ja-JP_EmiVoice',
       PT_BR_ISABELAVOICE = 'pt-BR_IsabelaVoice',
     }
     /** The phoneme format in which to return the pronunciation. Omit the parameter to obtain the pronunciation in the default format. */
@@ -795,15 +793,15 @@ namespace TextToSpeechV1 {
   export namespace CreateVoiceModelConstants {
     /** The language of the new custom voice model. Omit the parameter to use the the default language, `en-US`. */
     export enum Language {
-      DE_DE = 'd[params.headers] -DE',
+      DE_DE = 'de-DE',
       EN_US = 'en-US',
       EN_GB = 'en-GB',
-      ES_ES = 'e[params.headers] -ES',
-      ES_LA = 'e[params.headers] -LA',
-      ES_US = 'e[params.headers] -US',
-      FR_FR = 'f[params.headers] -FR',
+      ES_ES = 'es-ES',
+      ES_LA = 'es-LA',
+      ES_US = 'es-US',
+      FR_FR = 'fr-FR',
       IT_IT = 'it-IT',
-      JA_JP = 'j[params.headers] -JP',
+      JA_JP = 'ja-JP',
       PT_BR = 'pt-BR',
     }
   }
@@ -833,15 +831,15 @@ namespace TextToSpeechV1 {
   export namespace ListVoiceModelsConstants {
     /** The language for which custom voice models that are owned by the requesting service credentials are to be returned. Omit the parameter to see all custom voice models that are owned by the requester. */
     export enum Language {
-      DE_DE = 'd[params.headers] -DE',
+      DE_DE = 'de-DE',
       EN_US = 'en-US',
       EN_GB = 'en-GB',
-      ES_ES = 'e[params.headers] -ES',
-      ES_LA = 'e[params.headers] -LA',
-      ES_US = 'e[params.headers] -US',
-      FR_FR = 'f[params.headers] -FR',
+      ES_ES = 'es-ES',
+      ES_LA = 'es-LA',
+      ES_US = 'es-US',
+      FR_FR = 'fr-FR',
       IT_IT = 'it-IT',
-      JA_JP = 'j[params.headers] -JP',
+      JA_JP = 'ja-JP',
       PT_BR = 'pt-BR',
     }
   }
@@ -865,16 +863,16 @@ namespace TextToSpeechV1 {
     customization_id: string;
     /** The word that is to be added or updated for the custom voice model. */
     word: string;
-    /** The phonetic or sound[params.headers] -like translation for the word. A phonetic translation is based on the SSML format for representing the phonetic string of a word either as an IPA translation or as an IBM SPR translation. A sound[params.headers] -like is one or more words that, when combined, sound like the word. */
+    /** The phonetic or sounds-like translation for the word. A phonetic translation is based on the SSML format for representing the phonetic string of a word either as an IPA translation or as an IBM SPR translation. A sounds-like is one or more words that, when combined, sound like the word. */
     translation: string;
-    /** **Japanese only.** The part of speech for the word. The service uses the value to produce the correct intonation for the word. You can create only a single entry, with or without a single part of speech, for any word; you cannot create multiple entries with different parts of speech for the same word. For more information, see [Working with Japanese entries](https://console.bluemix.net/docs/services/text-to-speech/custo[params.headers] -rules.html#jaNotes). */
+    /** **Japanese only.** The part of speech for the word. The service uses the value to produce the correct intonation for the word. You can create only a single entry, with or without a single part of speech, for any word; you cannot create multiple entries with different parts of speech for the same word. For more information, see [Working with Japanese entries](https://console.bluemix.net/docs/services/text-to-speech/custom-rules.html#jaNotes). */
     part_of_speech?: AddWordConstants.PartOfSpeech | string;
     headers?: Object;
   }
 
   /** Constants for the `addWord` operation. */
   export namespace AddWordConstants {
-    /** **Japanese only.** The part of speech for the word. The service uses the value to produce the correct intonation for the word. You can create only a single entry, with or without a single part of speech, for any word; you cannot create multiple entries with different parts of speech for the same word. For more information, see [Working with Japanese entries](https://console.bluemix.net/docs/services/text-to-speech/custo[params.headers] -rules.html#jaNotes). */
+    /** **Japanese only.** The part of speech for the word. The service uses the value to produce the correct intonation for the word. You can create only a single entry, with or without a single part of speech, for any word; you cannot create multiple entries with different parts of speech for the same word. For more information, see [Working with Japanese entries](https://console.bluemix.net/docs/services/text-to-speech/custom-rules.html#jaNotes). */
     export enum PartOfSpeech {
       JOSI = 'Josi',
       MESI = 'Mesi',
@@ -944,15 +942,15 @@ namespace TextToSpeechV1 {
   export interface SupportedFeatures {
     /** If `true`, the voice can be customized; if `false`, the voice cannot be customized. (Same as `customizable`.). */
     custom_pronunciation: boolean;
-    /** If `true`, the voice can be transformed by using the SSML &lt;voic[params.headers] -transformation&gt; element; if `false`, the voice cannot be transformed. */
+    /** If `true`, the voice can be transformed by using the SSML &lt;voice-transformation&gt; element; if `false`, the voice cannot be transformed. */
     voice_transformation: boolean;
   }
 
   /** Translation. */
   export interface Translation {
-    /** The phonetic or sound[params.headers] -like translation for the word. A phonetic translation is based on the SSML format for representing the phonetic string of a word either as an IPA translation or as an IBM SPR translation. A sound[params.headers] -like is one or more words that, when combined, sound like the word. */
+    /** The phonetic or sounds-like translation for the word. A phonetic translation is based on the SSML format for representing the phonetic string of a word either as an IPA translation or as an IBM SPR translation. A sounds-like is one or more words that, when combined, sound like the word. */
     translation: string;
-    /** **Japanese only.** The part of speech for the word. The service uses the value to produce the correct intonation for the word. You can create only a single entry, with or without a single part of speech, for any word; you cannot create multiple entries with different parts of speech for the same word. For more information, see [Working with Japanese entries](https://console.bluemix.net/docs/services/text-to-speech/custo[params.headers] -rules.html#jaNotes). */
+    /** **Japanese only.** The part of speech for the word. The service uses the value to produce the correct intonation for the word. You can create only a single entry, with or without a single part of speech, for any word; you cannot create multiple entries with different parts of speech for the same word. For more information, see [Working with Japanese entries](https://console.bluemix.net/docs/services/text-to-speech/custom-rules.html#jaNotes). */
     part_of_speech?: string;
   }
 
@@ -986,9 +984,9 @@ namespace TextToSpeechV1 {
     language?: string;
     /** The GUID of the service credentials for the instance of the service that owns the custom voice model. */
     owner?: string;
-    /** The date and time in Coordinated Universal Time (UTC) at which the custom voice model was created. The value is provided in full ISO 8601 format (`YYYY-M[params.headers] -DDThh:mm:ss.sTZD`). */
+    /** The date and time in Coordinated Universal Time (UTC) at which the custom voice model was created. The value is provided in full ISO 8601 format (`YYYY-MM-DDThh:mm:ss.sTZD`). */
     created?: string;
-    /** The date and time in Coordinated Universal Time (UTC) at which the custom voice model was last modified. Equals `created` when a new voice model is first added but has yet to be updated. The value is provided in full ISO 8601 format (`YYYY-M[params.headers] -DDThh:mm:ss.sTZD`). */
+    /** The date and time in Coordinated Universal Time (UTC) at which the custom voice model was last modified. Equals `created` when a new voice model is first added but has yet to be updated. The value is provided in full ISO 8601 format (`YYYY-MM-DDThh:mm:ss.sTZD`). */
     last_modified?: string;
     /** The description of the custom voice model. */
     description?: string;
@@ -1012,9 +1010,9 @@ namespace TextToSpeechV1 {
   export interface Word {
     /** A word from the custom voice model. */
     word: string;
-    /** The phonetic or sound[params.headers] -like translation for the word. A phonetic translation is based on the SSML format for representing the phonetic string of a word either as an IPA or IBM SPR translation. A sound[params.headers] -like translation consists of one or more words that, when combined, sound like the word. */
+    /** The phonetic or sounds-like translation for the word. A phonetic translation is based on the SSML format for representing the phonetic string of a word either as an IPA or IBM SPR translation. A sounds-like translation consists of one or more words that, when combined, sound like the word. */
     translation: string;
-    /** **Japanese only.** The part of speech for the word. The service uses the value to produce the correct intonation for the word. You can create only a single entry, with or without a single part of speech, for any word; you cannot create multiple entries with different parts of speech for the same word. For more information, see [Working with Japanese entries](https://console.bluemix.net/docs/services/text-to-speech/custo[params.headers] -rules.html#jaNotes). */
+    /** **Japanese only.** The part of speech for the word. The service uses the value to produce the correct intonation for the word. You can create only a single entry, with or without a single part of speech, for any word; you cannot create multiple entries with different parts of speech for the same word. For more information, see [Working with Japanese entries](https://console.bluemix.net/docs/services/text-to-speech/custom-rules.html#jaNotes). */
     part_of_speech?: string;
   }
 

@@ -24,8 +24,6 @@ import { FileObject } from '../lib/helper';
  * IBM Watson Natural Language Classifier uses machine learning algorithms to return the top matching predefined classes for short text input. You create and train a classifier to connect predefined classes to example texts so that the service can apply those classes to new inputs.
  */
 
-
-
 class NaturalLanguageClassifierV1 extends BaseService {
 
   static URL: string = 'https://gateway.watsonplatform.net/natural-language-classifier/api';
@@ -61,6 +59,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.classifier_id - Classifier ID to use.
    * @param {string} params.text - The submitted phrase.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -87,11 +86,11 @@ class NaturalLanguageClassifierV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -104,6 +103,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.classifier_id - Classifier ID to use.
    * @param {ClassifyInput[]} params.collection - The submitted phrases.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -130,11 +130,11 @@ class NaturalLanguageClassifierV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -151,6 +151,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {NodeJS.ReadableStream|FileObject|Buffer} params.metadata - Metadata in JSON format. The metadata identifies the language of the data, and an optional name to identify the classifier. Specify the language with the 2-letter primary language code as assigned in ISO standard 639.  Supported languages are English (`en`), Arabic (`ar`), French (`fr`), German, (`de`), Italian (`it`), Japanese (`ja`), Korean (`ko`), Brazilian Portuguese (`pt`), and Spanish (`es`).
    * @param {NodeJS.ReadableStream|FileObject|Buffer} params.training_data - Training data in CSV format. Each text value must have at least one class. The data can include up to 20,000 records. For details, see [Data preparation](https://console.bluemix.net/docs/services/natural-language-classifier/using-your-data.html).
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -179,11 +180,11 @@ class NaturalLanguageClassifierV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'multipart/form-data',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -193,6 +194,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.classifier_id - Classifier ID to delete.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -214,11 +216,11 @@ class NaturalLanguageClassifierV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -230,6 +232,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.classifier_id - Classifier ID to query.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -251,11 +254,11 @@ class NaturalLanguageClassifierV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -266,6 +269,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * Returns an empty array if no classifiers are available.
    *
    * @param {Object} [params] - The parameters to send to the service.
+   * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
@@ -278,11 +282,11 @@ class NaturalLanguageClassifierV1 extends BaseService {
         method: 'GET',
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: {
+        headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
-      })
+        }, _params.headers),
+      }),
     };
     return this.createRequest(parameters, _callback);
   };
@@ -323,6 +327,7 @@ namespace NaturalLanguageClassifierV1 {
     classifier_id: string;
     /** The submitted phrase. */
     text: string;
+    headers?: Object;
   }
 
   /** Parameters for the `classifyCollection` operation. */
@@ -331,6 +336,7 @@ namespace NaturalLanguageClassifierV1 {
     classifier_id: string;
     /** The submitted phrases. */
     collection: ClassifyInput[];
+    headers?: Object;
   }
 
   /** Parameters for the `createClassifier` operation. */
@@ -339,22 +345,26 @@ namespace NaturalLanguageClassifierV1 {
     metadata: NodeJS.ReadableStream|FileObject|Buffer;
     /** Training data in CSV format. Each text value must have at least one class. The data can include up to 20,000 records. For details, see [Data preparation](https://console.bluemix.net/docs/services/natural-language-classifier/using-your-data.html). */
     training_data: NodeJS.ReadableStream|FileObject|Buffer;
+    headers?: Object;
   }
 
   /** Parameters for the `deleteClassifier` operation. */
   export interface DeleteClassifierParams {
     /** Classifier ID to delete. */
     classifier_id: string;
+    headers?: Object;
   }
 
   /** Parameters for the `getClassifier` operation. */
   export interface GetClassifierParams {
     /** Classifier ID to query. */
     classifier_id: string;
+    headers?: Object;
   }
 
   /** Parameters for the `listClassifiers` operation. */
   export interface ListClassifiersParams {
+    headers?: Object;
   }
 
   /*************************

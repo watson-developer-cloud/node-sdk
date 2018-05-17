@@ -17,8 +17,8 @@
 import * as extend from 'extend';
 import { RequestResponse } from 'request';
 import { BaseService } from '../lib/base_service';
-import { FileObject } from '../lib/helper';
 import { getMissingParams } from '../lib/helper';
+import { FileObject } from '../lib/helper';
 
 /**
  * IBM Watson Language Translator translates text from one language to another. The service offers multiple domain-specific models that you can customize based on your unique terminology and language. Use Language Translator to take news from across the globe and present it in your language, communicate with your customers in their own language, and more.
@@ -96,6 +96,51 @@ class LanguageTranslatorV2 extends BaseService {
     return this.createRequest(parameters, _callback);
   };
 
+  /**
+   * Translate. as plain
+   *
+   * Translates the input text from the source language to the target language.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string[]} params.text - Input text in UTF-8 encoding. Multiple entries will result in multiple translations in the response.
+   * @param {string} [params.model_id] - Model ID of the translation model to use. If this is specified, the **source** and **target** parameters will be ignored. The method requires either a model ID or both the **source** and **target** parameters.
+   * @param {string} [params.source] - Language code of the source text language. Use with `target` as an alternative way to select a translation model. When `source` and `target` are set, and a model ID is not set, the system chooses a default model for the language pair (usually the model based on the news domain).
+   * @param {string} [params.target] - Language code of the translation target language. Use with source as an alternative way to select a translation model.
+   * @param {Object} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {NodeJS.ReadableStream|void}
+   */
+  public translateAsPlain(params: LanguageTranslatorV2.TranslateAsPlainParams, callback?: LanguageTranslatorV2.Callback<LanguageTranslatorV2.TranslationResult>): NodeJS.ReadableStream | void {
+    const _params = extend({}, params);
+    const _callback = (callback) ? callback : () => { /* noop */ };
+    const requiredParams = ['text'];
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+    const body = {
+      'text': _params.text,
+      'model_id': _params.model_id,
+      'source': _params.source,
+      'target': _params.target
+    };
+    const parameters = {
+      options: {
+        url: '/v2/translate',
+        method: 'POST',
+        json: true,
+        body,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, {
+          'Accept': 'text/plain',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+    return this.createRequest(parameters, _callback);
+  };
+
   /*************************
    * identification
    ************************/
@@ -130,6 +175,43 @@ class LanguageTranslatorV2 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, {
           'Accept': 'application/json',
+          'Content-Type': 'text/plain',
+        }, _params.headers),
+      }),
+    };
+    return this.createRequest(parameters, _callback);
+  };
+
+  /**
+   * Identify language. as plain
+   *
+   * Identifies the language of the input text.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.text - Input text in UTF-8 format.
+   * @param {Object} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {NodeJS.ReadableStream|void}
+   */
+  public identifyAsPlain(params: LanguageTranslatorV2.IdentifyAsPlainParams, callback?: LanguageTranslatorV2.Callback<LanguageTranslatorV2.IdentifiedLanguages>): NodeJS.ReadableStream | void {
+    const _params = extend({}, params);
+    const _callback = (callback) ? callback : () => { /* noop */ };
+    const requiredParams = ['text'];
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+    const body = _params.text;
+    const parameters = {
+      options: {
+        url: '/v2/identify',
+        method: 'POST',
+        json: false,
+        body,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, {
+          'Accept': 'text/plain',
           'Content-Type': 'text/plain',
         }, _params.headers),
       }),
@@ -379,8 +461,28 @@ namespace LanguageTranslatorV2 {
     headers?: Object;
   }
 
+  /** Parameters for the `translateAsPlain` operation. */
+  export interface TranslateAsPlainParams {
+    /** Input text in UTF-8 encoding. Multiple entries will result in multiple translations in the response. */
+    text: string[];
+    /** Model ID of the translation model to use. If this is specified, the **source** and **target** parameters will be ignored. The method requires either a model ID or both the **source** and **target** parameters. */
+    model_id?: string;
+    /** Language code of the source text language. Use with `target` as an alternative way to select a translation model. When `source` and `target` are set, and a model ID is not set, the system chooses a default model for the language pair (usually the model based on the news domain). */
+    source?: string;
+    /** Language code of the translation target language. Use with source as an alternative way to select a translation model. */
+    target?: string;
+    headers?: Object;
+  }
+
   /** Parameters for the `identify` operation. */
   export interface IdentifyParams {
+    /** Input text in UTF-8 format. */
+    text: string;
+    headers?: Object;
+  }
+
+  /** Parameters for the `identifyAsPlain` operation. */
+  export interface IdentifyAsPlainParams {
     /** Input text in UTF-8 format. */
     text: string;
     headers?: Object;
