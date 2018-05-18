@@ -2196,6 +2196,47 @@ class ConversationV1 extends BaseService {
     return this.createRequest(parameters, _callback);
   };
 
+  /*************************
+   * userData
+   ************************/
+
+  /**
+   * Delete labeled data.
+   *
+   * Deletes all data associated with a specified customer ID. The method has no effect if no data is associated with the customer ID.   You associate a customer ID with data by passing the `X-Watson-Metadata` header with a request that passes data. For more information about personal data and customer IDs, see [Information security](https://console.bluemix.net/docs/services/conversation/information-security.html).
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.customer_id - The customer ID for which all data is to be deleted.
+   * @param {Object} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {NodeJS.ReadableStream|void}
+   */
+  public deleteUserData(params: ConversationV1.DeleteUserDataParams, callback?: ConversationV1.Callback<ConversationV1.Empty>): NodeJS.ReadableStream | void {
+    const _params = extend({}, params);
+    const _callback = (callback) ? callback : () => { /* noop */ };
+    const requiredParams = ['customer_id'];
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+    const query = {
+      'customer_id': _params.customer_id
+    };
+    const parameters = {
+      options: {
+        url: '/v1/user_data',
+        method: 'DELETE',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+    return this.createRequest(parameters, _callback);
+  };
+
 }
 
 ConversationV1.prototype.name = 'conversation';
@@ -2845,6 +2886,7 @@ namespace ConversationV1 {
       GENERIC = 'generic',
       NOMATCH = 'nomatch',
       NOMATCH_RESPONSES_DEPLETED = 'nomatch_responses_depleted',
+      DIGRESSION_RETURN_PROMPT = 'digression_return_prompt',
     }
     /** Whether this top-level dialog node can be digressed into. */
     export enum DigressIn {
@@ -2967,6 +3009,7 @@ namespace ConversationV1 {
       GENERIC = 'generic',
       NOMATCH = 'nomatch',
       NOMATCH_RESPONSES_DEPLETED = 'nomatch_responses_depleted',
+      DIGRESSION_RETURN_PROMPT = 'digression_return_prompt',
     }
     /** Whether this top-level dialog node can be digressed into. */
     export enum DigressIn {
@@ -3013,6 +3056,13 @@ namespace ConversationV1 {
     page_limit?: number;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
+    headers?: Object;
+  }
+
+  /** Parameters for the `deleteUserData` operation. */
+  export interface DeleteUserDataParams {
+    /** The customer ID for which all data is to be deleted. */
+    customer_id: string;
     headers?: Object;
   }
 
