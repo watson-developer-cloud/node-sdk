@@ -17,9 +17,8 @@
 import * as extend from 'extend';
 import { RequestResponse } from 'request';
 import { BaseService } from '../lib/base_service';
-import { FileObject } from '../lib/helper';
 import { getMissingParams } from '../lib/helper';
-
+import { FileObject } from '../lib/helper';
 
 /**
  * The IBM Watson Discovery Service is a cognitive search and content analytics engine that you can add to applications to identify patterns, trends and actionable insights to drive better decision-making. Securely unify structured and unstructured data with pre-enriched content, and use a simplified query language to eliminate the need for manual filtering of results.
@@ -60,9 +59,9 @@ class DiscoveryV1 extends BaseService {
    ************************/
 
   /**
-   * Add an environment.
+   * Create an environment.
    *
-   * Creates a new environment.  You can create only one environment per service instance. An attempt to create another environment results in an error.
+   * Creates a new environment for private data. An environment must be created before collections can be created.   **Note**: You can create only one environment for private data per service instance. An attempt to create another environment results in an error.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.name - Name that identifies the environment.
@@ -208,7 +207,7 @@ class DiscoveryV1 extends BaseService {
   };
 
   /**
-   * List fields in specified collections.
+   * List fields across collections.
    *
    * Gets a list of the unique fields (and their types) stored in the indexes of the specified collections.
    *
@@ -718,7 +717,7 @@ class DiscoveryV1 extends BaseService {
   };
 
   /**
-   * List unique fields.
+   * List collection fields.
    *
    * Gets a list of the unique fields (and their types) stored in the index.
    *
@@ -853,7 +852,7 @@ class DiscoveryV1 extends BaseService {
    ************************/
 
   /**
-   * Set the expansion list.
+   * Create or update expansion list.
    *
    * Create or replace the Expansion list for this collection. The maximum number of expanded terms per collection is `500`. The current expansion list is replaced with the uploaded content.
    *
@@ -899,7 +898,7 @@ class DiscoveryV1 extends BaseService {
   };
 
   /**
-   * Delete the expansions list.
+   * Delete the expansion list.
    *
    * Remove the expansion information for this collection. The expansion list must be deleted to disable query expansion for a collection.
    *
@@ -939,7 +938,7 @@ class DiscoveryV1 extends BaseService {
   };
 
   /**
-   * List current expansions.
+   * Get the expansion list.
    *
    * Returns the current expansion list for the specified collection. If an expansion list is not specified, an object with empty expansion arrays is returned.
    *
@@ -1315,9 +1314,9 @@ class DiscoveryV1 extends BaseService {
   };
 
   /**
-   * Query documents.
+   * Query your collection.
    *
-   * See the [Discovery service documentation](https://console.bluemix.net/docs/services/discovery/using.html) for more details.
+   * After your content is uploaded and enriched by the Discovery service, you can build queries to search your content. For details, see the [Discovery service documentation](https://console.bluemix.net/docs/services/discovery/using.html).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
@@ -1585,7 +1584,7 @@ class DiscoveryV1 extends BaseService {
    ************************/
 
   /**
-   * 
+   * Add query to training data.
    *
    * Adds a query to the training data for this collection. The query can contain a filter and natural language query.
    *
@@ -1635,9 +1634,9 @@ class DiscoveryV1 extends BaseService {
   };
 
   /**
-   * 
+   * Add example to training data query.
    *
-   * Adds a new example to this training data query.
+   * Adds a example to this training data query.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
@@ -1687,9 +1686,9 @@ class DiscoveryV1 extends BaseService {
   };
 
   /**
-   * 
+   * Delete all training data.
    *
-   * Clears all training data for this collection.
+   * Deletes all training data from a collection.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
@@ -1727,9 +1726,9 @@ class DiscoveryV1 extends BaseService {
   };
 
   /**
-   * 
+   * Delete a training data query.
    *
-   * Removes the training data and all associated examples from the training data set.
+   * Removes the training data query and all associated examples from the training data set.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
@@ -1769,9 +1768,9 @@ class DiscoveryV1 extends BaseService {
   };
 
   /**
-   * 
+   * Delete example for training data query.
    *
-   * Removes the example with the given ID for the training data query.
+   * Deletes the example document with the given ID from the training data query.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
@@ -1813,9 +1812,9 @@ class DiscoveryV1 extends BaseService {
   };
 
   /**
-   * 
+   * Get details about a query.
    *
-   * Shows details for a specific training data query, including the query string and all examples.
+   * Gets details for a specific training data query, including the query string and all examples.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
@@ -1855,7 +1854,7 @@ class DiscoveryV1 extends BaseService {
   };
 
   /**
-   * 
+   * Get details for training data example.
    *
    * Gets the details for this training example.
    *
@@ -1899,9 +1898,9 @@ class DiscoveryV1 extends BaseService {
   };
 
   /**
-   * 
+   * List training data.
    *
-   * Lists the training data for this collection.
+   * Lists the training data for the specified collection.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
@@ -1939,7 +1938,7 @@ class DiscoveryV1 extends BaseService {
   };
 
   /**
-   * 
+   * List examples for a training data query.
    *
    * List all examples for this training data query.
    *
@@ -1981,9 +1980,9 @@ class DiscoveryV1 extends BaseService {
   };
 
   /**
-   * 
+   * Change label or cross reference for example.
    *
-   * Changes the label or cross reference query for this training example.
+   * Changes the label or cross reference query for this training data example.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
@@ -2021,6 +2020,48 @@ class DiscoveryV1 extends BaseService {
         json: true,
         body,
         path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+    return this.createRequest(parameters, _callback);
+  };
+
+  /*************************
+   * userData
+   ************************/
+
+  /**
+   * Delete labeled data.
+   *
+   * Deletes all data associated with a specified customer ID. The method has no effect if no data is associated with the customer ID.   You associate a customer ID with data by passing the **X-Watson-Metadata** header with a request that passes data. For more information about personal data and customer IDs, see [Information security](https://console.bluemix.net/docs/services/discovery/information-security.html).
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.customer_id - The customer ID for which all data is to be deleted.
+   * @param {Object} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {NodeJS.ReadableStream|void}
+   */
+  public deleteUserData(params: DiscoveryV1.DeleteUserDataParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): NodeJS.ReadableStream | void {
+    const _params = extend({}, params);
+    const _callback = (callback) ? callback : () => { /* noop */ };
+    const requiredParams = ['customer_id'];
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+    const query = {
+      'customer_id': _params.customer_id
+    };
+    const parameters = {
+      options: {
+        url: '/v1/user_data',
+        method: 'DELETE',
+        qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, {
@@ -2734,6 +2775,13 @@ namespace DiscoveryV1 {
     example_id: string;
     cross_reference?: string;
     relevance?: number;
+    headers?: Object;
+  }
+
+  /** Parameters for the `deleteUserData` operation. */
+  export interface DeleteUserDataParams {
+    /** The customer ID for which all data is to be deleted. */
+    customer_id: string;
     headers?: Object;
   }
 

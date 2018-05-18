@@ -167,10 +167,7 @@ class VisualRecognitionV3 extends BaseService {
   public createClassifier(params: VisualRecognitionV3.CreateClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
-    const positiveExampleClasses = Object.keys(_params).filter(key => {
-      return key.match(/^.+positive_examples$/);
-    }) || ['<classname>_positive_examples'];
-    const requiredParams = ['name', ...positiveExampleClasses];
+    const requiredParams = ['name', 'classname_positive_examples'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
@@ -186,12 +183,6 @@ class VisualRecognitionV3 extends BaseService {
         contentType: 'application/octet-stream'
       }
     };
-    positiveExampleClasses.forEach(positiveExampleClass => {
-      formData[positiveExampleClass] = {
-        data: _params[positiveExampleClass],
-        contentType: 'application/octet-stream',
-      };
-    });
     const parameters = {
       options: {
         url: '/v3/classifiers',
@@ -329,9 +320,6 @@ class VisualRecognitionV3 extends BaseService {
   public updateClassifier(params: VisualRecognitionV3.UpdateClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
-    const positiveExampleClasses = Object.keys(_params).filter(key => {
-      return key.match(/^.+positive_examples$/);
-    });
     const requiredParams = ['classifier_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -350,12 +338,6 @@ class VisualRecognitionV3 extends BaseService {
     const path = {
       'classifier_id': _params.classifier_id
     };
-    positiveExampleClasses.forEach(positiveExampleClass => {
-      formData[positiveExampleClass] = {
-        data: _params[positiveExampleClass],
-        contentType: 'application/octet-stream',
-      };
-    });
     const parameters = {
       options: {
         url: '/v3/classifiers/{classifier_id}',
@@ -388,7 +370,7 @@ class VisualRecognitionV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getCoreMlModel(params: VisualRecognitionV3.GetCoreMlModelParams, callback?: VisualRecognitionV3.Callback<NodeJS.ReadableStream|FileObject|Buffer>): NodeJS.ReadableStream | void {
+  public getCoreMlModel(params: VisualRecognitionV3.GetCoreMlModelParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.NodeJS.ReadableStream|FileObject|Buffer>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['classifier_id'];
@@ -554,7 +536,7 @@ namespace VisualRecognitionV3 {
 
   /** Result of a class within a classifier. */
   export interface ClassResult {
-    /** The name of the class. */
+    /** Name of the class. */
     class_name: string;
     /** Confidence score for the property in the range of 0 to 1. A higher score indicates greater likelihood that the class is depicted in the image. The default threshold for returning scores from a classifier is 0.5. */
     score?: number;
@@ -562,7 +544,7 @@ namespace VisualRecognitionV3 {
     type_hierarchy?: string;
   }
 
-  /** Classifier results for one image. */
+  /** Results for one image. */
   export interface ClassifiedImage {
     /** Source of the image before any redirects. Not returned when the image is uploaded. */
     source_url?: string;
@@ -571,16 +553,17 @@ namespace VisualRecognitionV3 {
     /** Relative path of the image file if uploaded directly. Not returned when the image is passed by URL. */
     image?: string;
     error?: ErrorInfo;
+    /** The classifiers. */
     classifiers: ClassifierResult[];
   }
 
-  /** Classify results for multiple images. */
+  /** Results for all images. */
   export interface ClassifiedImages {
-    /** The number of custom classes identified in the images. */
+    /** Number of custom classes identified in the images. */
     custom_classes?: number;
     /** Number of images processed for the API call. */
     images_processed?: number;
-    /** The array of classified images. */
+    /** Classified images. */
     images: ClassifiedImage[];
     /** Information about what might cause less than optimal output. For example, a request sent with a corrupt .zip file and a list of image URLs will still complete, but does not return the expected output. Not returned when there is no warning. */
     warnings?: WarningInfo[];
@@ -594,7 +577,7 @@ namespace VisualRecognitionV3 {
     name: string;
     /** Unique ID of the account who owns the classifier. Returned when verbose=`true`. Might not be returned by some requests. */
     owner?: string;
-    /** The training status of classifier. */
+    /** Training status of classifier. */
     status?: string;
     /** Whether the classifier can be downloaded as a Core ML model after the training status is `ready`. */
     core_ml_enabled: boolean;
@@ -602,7 +585,7 @@ namespace VisualRecognitionV3 {
     explanation?: string;
     /** Date and time in Coordinated Universal Time (UTC) that the classifier was created. */
     created?: string;
-    /** Array of classes that define a classifier. */
+    /** Classes that define a classifier. */
     classes?: Class[];
     /** Date and time in Coordinated Universal Time (UTC) that the classifier was updated. Returned when verbose=`true`. Might not be returned by some requests. Identical to `updated` and retained for backward compatibility. */
     retrained?: string;
@@ -614,22 +597,23 @@ namespace VisualRecognitionV3 {
   export interface ClassifierResult {
     /** Name of the classifier. */
     name: string;
-    /** The ID of a classifier identified in the image. */
+    /** ID of a classifier identified in the image. */
     classifier_id: string;
-    /** An array of classes within the classifier. */
+    /** Classes within the classifier. */
     classes: ClassResult[];
   }
 
-  /** List of classifiers. */
+  /** A container for the list of classifiers. */
   export interface Classifiers {
+    /** List of classifiers. */
     classifiers: Classifier[];
   }
 
-  /** DetectedFaces. */
+  /** Results for all faces. */
   export interface DetectedFaces {
     /** Number of images processed for the API call. */
     images_processed?: number;
-    /** The array of images. */
+    /** The images. */
     images: ImageWithFaces[];
     /** Information about what might cause less than optimal output. For example, a request sent with a corrupt .zip file and a list of image URLs will still complete, but does not return the expected output. Not returned when there is no warning. */
     warnings?: WarningInfo[];
@@ -645,14 +629,14 @@ namespace VisualRecognitionV3 {
     error_id: string;
   }
 
-  /** Provides information about the face. */
+  /** Information about the face. */
   export interface Face {
     age?: FaceAge;
     gender?: FaceGender;
     face_location?: FaceLocation;
   }
 
-  /** Provides age information about a face. */
+  /** Age information about a face. */
   export interface FaceAge {
     /** Estimated minimum age. */
     min?: number;
@@ -662,7 +646,7 @@ namespace VisualRecognitionV3 {
     score?: number;
   }
 
-  /** Provides information about the gender of the face. */
+  /** Information about the gender of the face. */
   export interface FaceGender {
     /** Gender identified by the face. For example, `MALE` or `FEMALE`. */
     gender: string;
@@ -670,7 +654,7 @@ namespace VisualRecognitionV3 {
     score?: number;
   }
 
-  /** Defines the location of the bounding box around the face. */
+  /** The location of the bounding box around the face. */
   export interface FaceLocation {
     /** Width in pixels of face region. */
     width: number;
@@ -682,9 +666,9 @@ namespace VisualRecognitionV3 {
     top: number;
   }
 
-  /** ImageWithFaces. */
+  /** Information about faces in the image. */
   export interface ImageWithFaces {
-    /** An array of the faces detected in the images. */
+    /** Faces detected in the images. */
     faces: Face[];
     /** Relative path of the image file if uploaded directly. Not returned when the image is passed by URL. */
     image?: string;
