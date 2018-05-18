@@ -111,12 +111,12 @@
 					<div class="tsd-signature tsd-kind-icon">content<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/personality-insights/v3-generated.ts#L340">personality-insights/v3-generated.ts:340</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/personality-insights/v3-generated.ts#L340">personality-insights/v3-generated.ts:340</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Content that is to be analyzed. The service supports up to 20 MB of content for all items combined.</p>
+							<p>The content that is to be analyzed. The service supports up to 20 MB of content for all <code>ContentItem</code> objects combined.</p>
 						</div>
 					</div>
 				</section>
@@ -126,12 +126,12 @@
 					<div class="tsd-signature tsd-kind-icon">contenttype<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/personality-insights/v3-generated.ts#L348">personality-insights/v3-generated.ts:348</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/personality-insights/v3-generated.ts#L348">personality-insights/v3-generated.ts:348</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>MIME type of the content. The default is plain text. The tags are stripped from HTML content before it is analyzed; plain text is processed as submitted.</p>
+							<p>The MIME type of the content. The default is plain text. The tags are stripped from HTML content before it is analyzed; plain text is processed as submitted.</p>
 						</div>
 					</div>
 				</section>
@@ -141,12 +141,12 @@
 					<div class="tsd-signature tsd-kind-icon">created<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/personality-insights/v3-generated.ts#L344">personality-insights/v3-generated.ts:344</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/personality-insights/v3-generated.ts#L344">personality-insights/v3-generated.ts:344</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Timestamp that identifies when this content was created. Specify a value in milliseconds since the UNIX Epoch (January 1, 1970, at 0:00 UTC). Required only for results that include temporal behavior data.</p>
+							<p>A timestamp that identifies when this content was created. Specify a value in milliseconds since the UNIX Epoch (January 1, 1970, at 0:00 UTC). Required only for results that include temporal behavior data.</p>
 						</div>
 					</div>
 				</section>
@@ -156,7 +156,7 @@
 					<div class="tsd-signature tsd-kind-icon">forward<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/personality-insights/v3-generated.ts#L356">personality-insights/v3-generated.ts:356</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/personality-insights/v3-generated.ts#L356">personality-insights/v3-generated.ts:356</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -171,12 +171,12 @@
 					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/personality-insights/v3-generated.ts#L342">personality-insights/v3-generated.ts:342</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/personality-insights/v3-generated.ts#L342">personality-insights/v3-generated.ts:342</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Unique identifier for this content item.</p>
+							<p>A unique identifier for this content item.</p>
 						</div>
 					</div>
 				</section>
@@ -186,12 +186,12 @@
 					<div class="tsd-signature tsd-kind-icon">language<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/personality-insights/v3-generated.ts#L350">personality-insights/v3-generated.ts:350</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/personality-insights/v3-generated.ts#L350">personality-insights/v3-generated.ts:350</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Language identifier (two-letter ISO 639-1 identifier) for the language of the content item. The default is <code>en</code> (English). Regional variants are treated as their parent language; for example, <code>en-US</code> is interpreted as <code>en</code>. A language specified with the <strong>Content-Type</strong> parameter overrides the value of this parameter; any content items that specify a different language are ignored. Omit the <strong>Content-Type</strong> parameter to base the language on the most prevalent specification among the content items; again, content items that specify a different language are ignored. You can specify any combination of languages for the input and response content.</p>
+							<p>The language identifier (two-letter ISO 639-1 identifier) for the language of the content item. The default is <code>en</code> (English). Regional variants are treated as their parent language; for example, <code>en-US</code> is interpreted as <code>en</code>. A language specified with the <strong>Content-Type</strong> parameter overrides the value of this parameter; any content items that specify a different language are ignored. Omit the <strong>Content-Type</strong> parameter to base the language on the most prevalent specification among the content items; again, content items that specify a different language are ignored. You can specify any combination of languages for the input and response content.</p>
 						</div>
 					</div>
 				</section>
@@ -201,12 +201,12 @@
 					<div class="tsd-signature tsd-kind-icon">parentid<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/personality-insights/v3-generated.ts#L352">personality-insights/v3-generated.ts:352</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/personality-insights/v3-generated.ts#L352">personality-insights/v3-generated.ts:352</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Unique ID of the parent content item for this item. Used to identify hierarchical relationships between posts/replies, messages/replies, and so on.</p>
+							<p>The unique ID of the parent content item for this item. Used to identify hierarchical relationships between posts/replies, messages/replies, and so on.</p>
 						</div>
 					</div>
 				</section>
@@ -216,7 +216,7 @@
 					<div class="tsd-signature tsd-kind-icon">reply<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/personality-insights/v3-generated.ts#L354">personality-insights/v3-generated.ts:354</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/personality-insights/v3-generated.ts#L354">personality-insights/v3-generated.ts:354</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -231,12 +231,12 @@
 					<div class="tsd-signature tsd-kind-icon">updated<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/personality-insights/v3-generated.ts#L346">personality-insights/v3-generated.ts:346</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/personality-insights/v3-generated.ts#L346">personality-insights/v3-generated.ts:346</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Timestamp that identifies when this content was last updated. Specify a value in milliseconds since the UNIX Epoch (January 1, 1970, at 0:00 UTC). Required only for results that include temporal behavior data.</p>
+							<p>A timestamp that identifies when this content was last updated. Specify a value in milliseconds since the UNIX Epoch (January 1, 1970, at 0:00 UTC). Required only for results that include temporal behavior data.</p>
 						</div>
 					</div>
 				</section>

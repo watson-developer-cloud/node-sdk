@@ -67,7 +67,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>The IBM Watson Speech to Text service provides an API that enables you to add IBM&#39;s speech recognition capabilities to your applications. The service transcribes speech from various languages and audio formats to text with low latency. For most languages, the service supports two sampling rates, broadband and narrowband. The service returns all JSON response content in the UTF-8 character set.  The Speech to Text service provides the following endpoints: <em> <strong>Models</strong> includes methods that return information about the language models that are available for speech recognition. </em> <strong>WebSockets</strong> includes a single method that establishes a persistent connection with the service over the WebSocket protocol. <em> <strong>Sessionless</strong> includes a method that provides a simple means of transcribing audio without the overhead of establishing and maintaining a session. </em> <strong>Sessions</strong> provides methods that allow a client to maintain a long, multi-turn exchange, or session, with the service or to establish multiple parallel conversations with a particular instance of the service. <em> <strong>Asynchronous</strong> provides a non-blocking interface for transcribing audio. You can register a callback URL to be notified of job status and, optionally, results, or you can poll the service to learn job status and retrieve results manually. </em> <strong>Custom language models</strong> provides an interface for creating and managing custom language models. The interface lets you expand the vocabulary of a base model with domain-specific terminology. <em> <strong>Custom corpora</strong> provides an interface for managing the corpora associated with a custom language model. You add corpora to extract out-of-vocabulary (OOV) words from the corpora into the custom language model&#39;s vocabulary. You can add, list, and delete corpora from a custom language model. </em> <strong>Custom words</strong> provides an interface for managing individual words in a custom language model. You can add, modify, list, and delete words from a custom language model. <em> <strong>Custom acoustic models</strong> provides an interface for creating and managing custom acoustic models. The interface lets you adapt a base model for the audio characteristics of your environment and speakers. </em> <strong>Custom audio resources</strong> provides an interface for managing the audio resources associated with a custom acoustic model. You add audio resources that closely match the acoustic characteristics of the audio that you want to transcribe. You can add, list, and delete audio resources from a custom acoustic model.  ### Usage guidelines for customization The following information pertains to methods of the customization interface: <em> Language model customization and acoustic model customization are available only for a limited set of languages. They are generally available for production use for some languages but are beta offerings for other languages. For a complete list of supported languages and the status of their availability, see <a href="https://console.bluemix.net/docs/services/speech-to-text/custom.html#languageSupport">Language support for customization</a>. </em> In all cases, you must use service credentials created for the instance of the service that owns a custom model to use the methods described in this documentation with that model. For more information, see <a href="https://console.bluemix.net/docs/services/speech-to-text/custom.html#customOwner">Ownership of custom language models</a>. <em> How the service handles request logging for the customization interface depends on the request. The service does not log data that are used to build custom models. But it does log data when a custom model is used with a recognition request. For more information, see <a href="https://console.bluemix.net/docs/services/speech-to-text/custom.html#customLogging">Request logging and data privacy</a>. </em> Each custom model is identified by a customization ID, which is a Globally Unique Identifier (GUID). A GUID is a hexadecimal string that has the same format as Watson service credentials: <code>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</code>. You specify a custom model&#39;s GUID with the appropriate customization parameter of methods that support customization.   For more information about using the service&#39;s customization interface, see <a href="https://console.bluemix.net/docs/services/speech-to-text/custom.html">The customization interface</a>.
+						<p>The IBM&reg; Speech to Text service provides an API that enables you to add IBM&#39;s speech recognition capabilities to your applications. The service transcribes speech from various languages and audio formats to text with low latency. For most languages, the service supports two sampling rates, broadband and narrowband. The service returns all JSON response content in the UTF-8 character set. For more information about the service, see the <a href="https://console.bluemix.net/docs/services/speech-to-text/getting-started.html">IBM&reg; Cloud documentation</a>. ### API Overview The Speech to Text service provides the following endpoints: <em> <strong>Models</strong> includes methods that return information about the language models that are available for speech recognition. </em> <strong>WebSockets</strong> includes a single method that establishes a persistent connection with the service over the WebSocket protocol. <em> <strong>Sessionless</strong> includes a method that provides a simple means of transcribing audio without the overhead of establishing and maintaining a session. </em> <strong>Sessions</strong> provides methods that allow a client to maintain a long, multi-turn exchange, or session, with the service or to establish multiple parallel conversations with a particular instance of the service. <em> <strong>Asynchronous</strong> provides a non-blocking interface for transcribing audio. You can register a callback URL to be notified of job status and, optionally, results, or you can poll the service to learn job status and retrieve results manually. </em> <strong>Custom language models</strong> provides an interface for creating and managing custom language models. The interface lets you expand the vocabulary of a base model with domain-specific terminology. <em> <strong>Custom corpora</strong> provides an interface for managing the corpora associated with a custom language model. You add corpora to extract out-of-vocabulary (OOV) words from the corpora into the custom language model&#39;s vocabulary. You can add, list, and delete corpora from a custom language model. </em> <strong>Custom words</strong> provides an interface for managing individual words in a custom language model. You can add, modify, list, and delete words from a custom language model. <em> <strong>Custom acoustic models</strong> provides an interface for creating and managing custom acoustic models. The interface lets you adapt a base model for the audio characteristics of your environment and speakers. </em> <strong>Custom audio resources</strong> provides an interface for managing the audio resources associated with a custom acoustic model. You add audio resources that closely match the acoustic characteristics of the audio that you want to transcribe. You can add, list, and delete audio resources from a custom acoustic model.   The <code>X-Watson-Metadata</code> header allows you to associate a customer ID with personal data that is passed with a request. For more information, see <a href="https://console.bluemix.net/docs/services/speech-to-text/information-security.html">Information security</a>. ### Usage guidelines for customization The following information pertains to methods of the customization interface: <em> Language model customization is not available for all languages; it is generally available for production use for all languages for which it is available. Acoustic model customization is beta functionality that is available for all languages supported by the service. For a complete list of supported languages and the status of their availability, see <a href="https://console.bluemix.net/docs/services/speech-to-text/custom.html#languageSupport">Language support for customization</a>. </em> In all cases, you must use service credentials created for the instance of the service that owns a custom model to use the methods described in this documentation with that model. For more information, see <a href="https://console.bluemix.net/docs/services/speech-to-text/custom.html#customOwner">Ownership of custom language models</a>. <em> How the service handles request logging for the customization interface depends on the request. The service does not log data that are used to build custom models. But it does log data when a custom model is used with a recognition request. For more information, see <a href="https://console.bluemix.net/docs/services/speech-to-text/custom.html#customLogging">Request logging and data privacy</a>. </em> Each custom model is identified by a customization ID, which is a Globally Unique Identifier (GUID). A GUID is a hexadecimal string that has the same format as Watson service credentials: <code>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</code>. You specify a custom model&#39;s GUID with the appropriate customization parameter of methods that support customization.   For more information about using the service&#39;s customization interface, see <a href="https://console.bluemix.net/docs/services/speech-to-text/custom.html">The customization interface</a>.
 						interfaces</p>
 					</div>
 				</div>
@@ -93,7 +93,9 @@
 							<h3>Modules</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-module tsd-parent-kind-class"><a href="../modules/speechtotextv1.addaudioconstants.html" class="tsd-kind-icon">Add<wbr>Audio<wbr>Constants</a></li>
+								<li class="tsd-kind-module tsd-parent-kind-class"><a href="../modules/speechtotextv1.createacousticmodelconstants.html" class="tsd-kind-icon">Create<wbr>Acoustic<wbr>Model<wbr>Constants</a></li>
 								<li class="tsd-kind-module tsd-parent-kind-class"><a href="../modules/speechtotextv1.createjobconstants.html" class="tsd-kind-icon">Create<wbr>Job<wbr>Constants</a></li>
+								<li class="tsd-kind-module tsd-parent-kind-class"><a href="../modules/speechtotextv1.createlanguagemodelconstants.html" class="tsd-kind-icon">Create<wbr>Language<wbr>Model<wbr>Constants</a></li>
 								<li class="tsd-kind-module tsd-parent-kind-class"><a href="../modules/speechtotextv1.getmodelconstants.html" class="tsd-kind-icon">Get<wbr>Model<wbr>Constants</a></li>
 								<li class="tsd-kind-module tsd-parent-kind-class"><a href="../modules/speechtotextv1.listwordsconstants.html" class="tsd-kind-icon">List<wbr>Words<wbr>Constants</a></li>
 								<li class="tsd-kind-module tsd-parent-kind-class"><a href="../modules/speechtotextv1.recognizeconstants.html" class="tsd-kind-icon">Recognize<wbr>Constants</a></li>
@@ -125,6 +127,7 @@
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.deleteaudioparams.html" class="tsd-kind-icon">Delete<wbr>Audio<wbr>Params</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.deletecorpusparams.html" class="tsd-kind-icon">Delete<wbr>Corpus<wbr>Params</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.deletejobparams.html" class="tsd-kind-icon">Delete<wbr>Job<wbr>Params</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.deletelabeleddataparams.html" class="tsd-kind-icon">Delete<wbr>Labeled<wbr>Data<wbr>Params</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.deletelanguagemodelparams.html" class="tsd-kind-icon">Delete<wbr>Language<wbr>Model<wbr>Params</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.deletewordparams.html" class="tsd-kind-icon">Delete<wbr>Word<wbr>Params</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/speechtotextv1.empty.html" class="tsd-kind-icon">Empty</a></li>
@@ -210,6 +213,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#deleteaudio" class="tsd-kind-icon">delete<wbr>Audio</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#deletecorpus" class="tsd-kind-icon">delete<wbr>Corpus</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#deletejob" class="tsd-kind-icon">delete<wbr>Job</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#deletelabeleddata" class="tsd-kind-icon">delete<wbr>Labeled<wbr>Data</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#deletelanguagemodel" class="tsd-kind-icon">delete<wbr>Language<wbr>Model</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#deleteword" class="tsd-kind-icon">delete<wbr>Word</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="speechtotextv1.html#getacousticmodel" class="tsd-kind-icon">get<wbr>Acoustic<wbr>Model</a></li>
@@ -248,7 +252,7 @@
 					<div class="tsd-signature tsd-kind-icon">Callback<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L1609">speech-to-text/v1-generated.ts:1609</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L1655">speech-to-text/v1-generated.ts:1655</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -290,7 +294,7 @@
 					<div class="tsd-signature tsd-kind-icon">Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L1600">speech-to-text/v1-generated.ts:1600</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L1646">speech-to-text/v1-generated.ts:1646</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -333,7 +337,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides BaseService.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L31">speech-to-text/v1-generated.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L31">speech-to-text/v1-generated.ts:31</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -370,7 +374,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseService._options</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/lib/base_service.ts#L83">lib/base_service.ts:83</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/lib/base_service.ts#L83">lib/base_service.ts:83</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -381,7 +385,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.name</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L30">speech-to-text/v1-generated.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L30">speech-to-text/v1-generated.ts:30</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -392,7 +396,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseService.serviceDefaults</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/lib/base_service.ts#L84">lib/base_service.ts:84</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/lib/base_service.ts#L84">lib/base_service.ts:84</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -403,7 +407,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.serviceVersion</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L31">speech-to-text/v1-generated.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L31">speech-to-text/v1-generated.ts:31</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -414,7 +418,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseService.tokenManager</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/lib/base_service.ts#L85">lib/base_service.ts:85</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/lib/base_service.ts#L85">lib/base_service.ts:85</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -425,7 +429,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.URL</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L29">speech-to-text/v1-generated.ts:29</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L29">speech-to-text/v1-generated.ts:29</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -442,14 +446,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L1434">speech-to-text/v1-generated.ts:1434</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L1438">speech-to-text/v1-generated.ts:1438</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Add an audio resource.</p>
 								</div>
-								<p>Adds an audio resource to a custom acoustic model. Add audio content that reflects the acoustic characteristics of the audio that you plan to transcribe. You must use credentials for the instance of the service that owns a model to add an audio resource to it. Adding audio data does not affect the custom acoustic model until you train the model for the new data by using the <strong>Train a custom acoustic model</strong> method.   You can add individual audio files or an archive file that contains multiple audio files. Adding multiple audio files via a single archive file is significantly more efficient than adding each file individually. <em> You can add an individual audio file in any format that the service supports for speech recognition. Use the <code>Content-Type</code> header to specify the format of the audio file. </em> You can add an archive file (<strong>.zip</strong> or <strong>.tar.gz</strong> file) that contains audio files in any format that the service supports for speech recognition. All audio files added with the same archive file must have the same audio format. Use the <code>Content-Type</code> header to specify the archive type, <code>application/zip</code> or <code>application/gzip</code>. Use the <code>Contained-Content-Type</code> header to specify the format of the contained audio files; the default format is <code>audio/wav</code>.   You can use this method to add any number of audio resources to a custom model by calling the method once for each audio or archive file. But the addition of one audio resource must be fully complete before you can add another. You must add a minimum of 10 minutes and a maximum of 50 hours of audio that includes speech, not just silence, to a custom acoustic model before you can train it. No audio resource, audio- or archive-type, can be larger than 100 MB.   The method is asynchronous. It can take several seconds to complete depending on the duration of the audio and, in the case of an archive file, the total number of audio files being processed. The service returns a 201 response code if the audio is valid. It then asynchronously analyzes the contents of the audio file or files and automatically extracts information about the audio such as its length, sampling rate, and encoding. You cannot submit requests to add additional audio resources to a custom acoustic model, or to train the model, until the service&#39;s analysis of all audio files for the current request completes.   To determine the status of the service&#39;s analysis of the audio, use the <strong>List an audio resource</strong> method to poll the status of the audio. The method accepts the GUID of the custom model and the name of the audio resource, and it returns the status of the resource. Use a loop to check the status of the audio every few seconds until it becomes <code>ok</code>.   <strong>Note:</strong> The sampling rate of an audio file must match the sampling rate of the base model for the custom model: for broadband models, at least 16 kHz; for narrowband models, at least 8 kHz. If the sampling rate of the audio is higher than the minimum required rate, the service down-samples the audio to the appropriate rate. If the sampling rate of the audio is lower than the minimum required rate, the service labels the audio file as <code>invalid</code>.</p>
+								<p>Adds an audio resource to a custom acoustic model. Add audio content that reflects the acoustic characteristics of the audio that you plan to transcribe. You must use credentials for the instance of the service that owns a model to add an audio resource to it. Adding audio data does not affect the custom acoustic model until you train the model for the new data by using the <strong>Train a custom acoustic model</strong> method.   You can add individual audio files or an archive file that contains multiple audio files. Adding multiple audio files via a single archive file is significantly more efficient than adding each file individually. You can add audio resources in any format that the service supports for speech recognition.   You can use this method to add any number of audio resources to a custom model by calling the method once for each audio or archive file. But the addition of one audio resource must be fully complete before you can add another. You must add a minimum of 10 minutes and a maximum of 50 hours of audio that includes speech, not just silence, to a custom acoustic model before you can train it. No audio resource, audio- or archive-type, can be larger than 100 MB. To add an audio resource that has the same name as an existing audio resource, set the <code>allow_overwrite</code> parameter to <code>true</code>; otherwise, the request fails.   The method is asynchronous. It can take several seconds to complete depending on the duration of the audio and, in the case of an archive file, the total number of audio files being processed. The service returns a 201 response code if the audio is valid. It then asynchronously analyzes the contents of the audio file or files and automatically extracts information about the audio such as its length, sampling rate, and encoding. You cannot submit requests to add additional audio resources to a custom acoustic model, or to train the model, until the service&#39;s analysis of all audio files for the current request completes.   To determine the status of the service&#39;s analysis of the audio, use the <strong>List an audio resource</strong> method to poll the status of the audio. The method accepts the GUID of the custom model and the name of the audio resource, and it returns the status of the resource. Use a loop to check the status of the audio every few seconds until it becomes <code>ok</code>.   ### Content types for audio-type resources   You can add an individual audio file in any format that the service supports for speech recognition. For an audio-type resource, use the <code>Content-Type</code> parameter to specify the audio format (MIME type) of the audio file: <em> <code>audio/basic</code> (Use only with narrowband models.) </em> <code>audio/flac</code> <em> <code>audio/l16</code> (Specify the sampling rate (<code>rate</code>) and optionally the number of channels (<code>channels</code>) and endianness (<code>endianness</code>) of the audio.) </em> <code>audio/mp3</code> <em> <code>audio/mpeg</code> </em> <code>audio/mulaw</code> (Specify the sampling rate (<code>rate</code>) of the audio.) <em> <code>audio/ogg</code> (The service automatically detects the codec of the input audio.) </em> <code>audio/ogg;codecs=opus</code> <em> <code>audio/ogg;codecs=vorbis</code> </em> <code>audio/wav</code> (Provide audio with a maximum of nine channels.) <em> <code>audio/webm</code> (The service automatically detects the codec of the input audio.) </em> <code>audio/webm;codecs=opus</code> <em> <code>audio/webm;codecs=vorbis</code>   For information about the supported audio formats, including specifying the sampling rate, channels, and endianness for the indicated formats, see <a href="https://console.bluemix.net/docs/services/speech-to-text/audio-formats.html">Audio formats</a>.   <strong>Note:</strong> The sampling rate of an audio file must match the sampling rate of the base model for the custom model: for broadband models, at least 16 kHz; for narrowband models, at least 8 kHz. If the sampling rate of the audio is higher than the minimum required rate, the service down-samples the audio to the appropriate rate. If the sampling rate of the audio is lower than the minimum required rate, the service labels the audio file as <code>invalid</code>.   ### Content types for archive-type resources   You can add an archive file (<strong>.zip</strong> or <strong>.tar.gz</strong> file) that contains audio files in any format that the service supports for speech recognition. For an archive-type resource, use the <code>Content-Type</code> parameter to specify the media type of the archive file: </em> <code>application/zip</code> for a <strong>.zip</strong> file * <code>application/gzip</code> for a <strong>.tar.gz</strong> file.   All audio files contained in the archive must have the same audio format. Use the <code>Contained-Content-Type</code> parameter to specify the format of the contained audio files. The parameter accepts all of the audio formats supported for use with speech recognition and with the <code>Content-Type</code> header, including the <code>rate</code>, <code>channels</code>, and <code>endianness</code> parameters that are used with some formats. The default contained audio format is <code>audio/wav</code>.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -480,14 +484,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L754">speech-to-text/v1-generated.ts:754</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L758">speech-to-text/v1-generated.ts:758</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Add a corpus.</p>
 								</div>
-								<p>Adds a single corpus text file of new training data to a custom language model. Use multiple requests to submit multiple corpus text files. You must use credentials for the instance of the service that owns a model to add a corpus to it. Note that adding a corpus does not affect the custom language model until you train the model for the new data by using the <strong>Train a custom language model</strong> method.   Submit a plain text file that contains sample sentences from the domain of interest to enable the service to extract words in context. The more sentences you add that represent the context in which speakers use words from the domain, the better the service&#39;s recognition accuracy. For guidelines about adding a corpus text file and for information about how the service parses a corpus file, see <a href="https://console.bluemix.net/docs/services/speech-to-text/language-resource.html#prepareCorpus">Preparing a corpus text file</a>.   The call returns an HTTP 201 response code if the corpus is valid. The service then asynchronously processes the contents of the corpus and automatically extracts new words that it finds. This can take on the order of a minute or two to complete depending on the total number of words and the number of new words in the corpus, as well as the current load on the service. You cannot submit requests to add additional corpora or words to the custom model, or to train the model, until the service&#39;s analysis of the corpus for the current request completes. Use the <strong>List a corpus</strong> method to check the status of the analysis.   The service auto-populates the model&#39;s words resource with any word that is not found in its base vocabulary; these are referred to as out-of-vocabulary (OOV) words. You can use the <strong>List custom words</strong> method to examine the words resource, using other words method to eliminate typos and modify how words are pronounced as needed.   To add a corpus file that has the same name as an existing corpus, set the <code>allow_overwrite</code> parameter to <code>true</code>; otherwise, the request fails. Overwriting an existing corpus causes the service to process the corpus text file and extract OOV words anew. Before doing so, it removes any OOV words associated with the existing corpus from the model&#39;s words resource unless they were also added by another corpus or they have been modified in some way with the <strong>Add custom words</strong> or <strong>Add a custom word</strong> method.   The service limits the overall amount of data that you can add to a custom model to a maximum of 10 million total words from all corpora combined. Also, you can add no more than 30 thousand new custom words to a model; this includes words that the service extracts from corpora and words that you add directly.</p>
+								<p>Adds a single corpus text file of new training data to a custom language model. Use multiple requests to submit multiple corpus text files. You must use credentials for the instance of the service that owns a model to add a corpus to it. Note that adding a corpus does not affect the custom language model until you train the model for the new data by using the <strong>Train a custom language model</strong> method.   Submit a plain text file that contains sample sentences from the domain of interest to enable the service to extract words in context. The more sentences you add that represent the context in which speakers use words from the domain, the better the service&#39;s recognition accuracy. For guidelines about adding a corpus text file and for information about how the service parses a corpus file, see <a href="https://console.bluemix.net/docs/services/speech-to-text/language-resource.html#prepareCorpus">Preparing a corpus text file</a>.   The call returns an HTTP 201 response code if the corpus is valid. The service then asynchronously processes the contents of the corpus and automatically extracts new words that it finds. This can take on the order of a minute or two to complete depending on the total number of words and the number of new words in the corpus, as well as the current load on the service. You cannot submit requests to add additional corpora or words to the custom model, or to train the model, until the service&#39;s analysis of the corpus for the current request completes. Use the <strong>List a corpus</strong> method to check the status of the analysis.   The service auto-populates the model&#39;s words resource with any word that is not found in its base vocabulary; these are referred to as out-of-vocabulary (OOV) words. You can use the <strong>List custom words</strong> method to examine the words resource, using other words method to eliminate typos and modify how words are pronounced as needed.   To add a corpus file that has the same name as an existing corpus, set the <code>allow_overwrite</code> parameter to <code>true</code>; otherwise, the request fails. Overwriting an existing corpus causes the service to process the corpus text file and extract OOV words anew. Before doing so, it removes any OOV words associated with the existing corpus from the model&#39;s words resource unless they were also added by another corpus or they have been modified in some way with the <strong>Add custom words</strong> or <strong>Add a custom word</strong> method.   The service limits the overall amount of data that you can add to a custom model to a maximum of 10 million total words from all corpora combined. Also, you can add no more than 30 thousand custom (OOV) words to a model; this includes words that the service extracts from corpora and words that you add directly.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -518,14 +522,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L930">speech-to-text/v1-generated.ts:930</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L934">speech-to-text/v1-generated.ts:934</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Add a custom word.</p>
 								</div>
-								<p>Adds a custom word to a custom language model. The service populates the words resource for a custom model with out-of-vocabulary (OOV) words found in each corpus added to the model. You can use this method to add additional words or to modify existing words in the words resource. You must use credentials for the instance of the service that owns a model to add or modify a custom word for the model. Adding or modifying a custom word does not affect the custom model until you train the model for the new data by using the <strong>Train a custom language model</strong> method.   Use the <code>word_name</code> parameter to specify the custom word that is to be added or modified. Use the <code>CustomWord</code> object to provide one or both of the optional <code>sounds_like</code> and <code>display_as</code> fields for the word. <em> The <code>sounds_like</code> field provides an array of one or more pronunciations for the word. Use the parameter to specify how the word can be pronounced by users. Use the parameter for words that are difficult to pronounce, foreign words, acronyms, and so on. For example, you might specify that the word <code>IEEE</code> can sound like <code>i triple e</code>. You can specify a maximum of five sounds-like pronunciations for a word. For information about pronunciation rules, see <a href="https://console.bluemix.net/docs/services/speech-to-text/language-resource.html#soundsLike">Using the sounds_like field</a>. </em> The <code>display_as</code> field provides a different way of spelling the word in a transcript. Use the parameter when you want the word to appear different from its usual representation or from its spelling in corpora training data. For example, you might indicate that the word <code>IBM(trademark)</code> is to be displayed as <code>IBM</code>. For more information, see <a href="https://console.bluemix.net/docs/services/speech-to-text/language-resource.html#displayAs">Using the display_as field</a>.    If you add a custom word that already exists in the words resource for the custom model, the new definition overwrites the existing data for the word. If the service encounters an error, it does not add the word to the words resource. Use the <strong>List a custom word</strong> method to review the word that you add.</p>
+								<p>Adds a custom word to a custom language model. The service populates the words resource for a custom model with out-of-vocabulary (OOV) words found in each corpus added to the model. You can use this method to add a word or to modify an existing word in the words resource. The words resource for a model can contain a maximum of 30 thousand custom (OOV) words, including words that the service extracts from corpora and words that you add directly.   You must use credentials for the instance of the service that owns a model to add or modify a custom word for the model. You must pass a value of <code>application/json</code> with the <code>Content-Type</code> header. Adding or modifying a custom word does not affect the custom model until you train the model for the new data by using the <strong>Train a custom language model</strong> method.   Use the <code>word_name</code> parameter to specify the custom word that is to be added or modified. Use the <code>CustomWord</code> object to provide one or both of the optional <code>sounds_like</code> and <code>display_as</code> fields for the word. <em> The <code>sounds_like</code> field provides an array of one or more pronunciations for the word. Use the parameter to specify how the word can be pronounced by users. Use the parameter for words that are difficult to pronounce, foreign words, acronyms, and so on. For example, you might specify that the word <code>IEEE</code> can sound like <code>i triple e</code>. You can specify a maximum of five sounds-like pronunciations for a word. For information about pronunciation rules, see <a href="https://console.bluemix.net/docs/services/speech-to-text/language-resource.html#soundsLike">Using the sounds_like field</a>. </em> The <code>display_as</code> field provides a different way of spelling the word in a transcript. Use the parameter when you want the word to appear different from its usual representation or from its spelling in corpora training data. For example, you might indicate that the word <code>IBM(trademark)</code> is to be displayed as <code>IBM</code>. For more information, see <a href="https://console.bluemix.net/docs/services/speech-to-text/language-resource.html#displayAs">Using the display_as field</a>.    If you add a custom word that already exists in the words resource for the custom model, the new definition overwrites the existing data for the word. If the service encounters an error, it does not add the word to the words resource. Use the <strong>List a custom word</strong> method to review the word that you add.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -556,14 +560,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L977">speech-to-text/v1-generated.ts:977</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L981">speech-to-text/v1-generated.ts:981</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Add custom words.</p>
 								</div>
-								<p>Adds one or more custom words to a custom language model. The service populates the words resource for a custom model with out-of-vocabulary (OOV) words found in each corpus added to the model. You can use this method to add additional words or to modify existing words in the words resource. You must use credentials for the instance of the service that owns a model to add or modify custom words for the model. Adding or modifying custom words does not affect the custom model until you train the model for the new data by using the <strong>Train a custom language model</strong> method.   You add custom words by providing a <code>Words</code> object, which is an array of <code>Word</code> objects, one per word. You must use the object&#39;s word parameter to identify the word that is to be added. You can also provide one or both of the optional <code>sounds_like</code> and <code>display_as</code> fields for each word. <em> The <code>sounds_like</code> field provides an array of one or more pronunciations for the word. Use the parameter to specify how the word can be pronounced by users. Use the parameter for words that are difficult to pronounce, foreign words, acronyms, and so on. For example, you might specify that the word <code>IEEE</code> can sound like <code>i triple e</code>. You can specify a maximum of five sounds-like pronunciations for a word. For information about pronunciation rules, see <a href="https://console.bluemix.net/docs/services/speech-to-text/language-resource.html#soundsLike">Using the sounds_like field</a>. </em> The <code>display_as</code> field provides a different way of spelling the word in a transcript. Use the parameter when you want the word to appear different from its usual representation or from its spelling in corpora training data. For example, you might indicate that the word <code>IBM(trademark)</code> is to be displayed as <code>IBM</code>. For more information, see <a href="https://console.bluemix.net/docs/services/speech-to-text/language-resource.html#displayAs">Using the display_as field</a>.    If you add a custom word that already exists in the words resource for the custom model, the new definition overwrites the existing data for the word. If the service encounters an error with the input data, it returns a failure code and does not add any of the words to the words resource.   The call returns an HTTP 201 response code if the input data is valid. It then asynchronously processes the words to add them to the model&#39;s words resource. The time that it takes for the analysis to complete depends on the number of new words that you add but is generally faster than adding a corpus or training a model.   You can monitor the status of the request by using the <strong>List a custom language model</strong> method to poll the model&#39;s status. Use a loop to check the status every 10 seconds. The method returns a <code>Customization</code> object that includes a <code>status</code> field. A status of <code>ready</code> means that the words have been added to the custom model. The service cannot accept requests to add new corpora or words or to train the model until the existing request completes.   You can use the <strong>List custom words</strong> or <strong>List a custom word</strong> method to review the words that you add. Words with an invalid <code>sounds_like</code> field include an <code>error</code> field that describes the problem. You can use other words methods to correct errors, eliminate typos, and modify how words are pronounced as needed.</p>
+								<p>Adds one or more custom words to a custom language model. The service populates the words resource for a custom model with out-of-vocabulary (OOV) words found in each corpus added to the model. You can use this method to add additional words or to modify existing words in the words resource. The words resource for a model can contain a maximum of 30 thousand custom (OOV) words, including words that the service extracts from corpora and words that you add directly.   You must use credentials for the instance of the service that owns a model to add or modify custom words for the model. You must pass a value of <code>application/json</code> with the <code>Content-Type</code> header. Adding or modifying custom words does not affect the custom model until you train the model for the new data by using the <strong>Train a custom language model</strong> method.   You add custom words by providing a <code>Words</code> object, which is an array of <code>Word</code> objects, one per word. You must use the object&#39;s word parameter to identify the word that is to be added. You can also provide one or both of the optional <code>sounds_like</code> and <code>display_as</code> fields for each word. <em> The <code>sounds_like</code> field provides an array of one or more pronunciations for the word. Use the parameter to specify how the word can be pronounced by users. Use the parameter for words that are difficult to pronounce, foreign words, acronyms, and so on. For example, you might specify that the word <code>IEEE</code> can sound like <code>i triple e</code>. You can specify a maximum of five sounds-like pronunciations for a word. For information about pronunciation rules, see <a href="https://console.bluemix.net/docs/services/speech-to-text/language-resource.html#soundsLike">Using the sounds_like field</a>. </em> The <code>display_as</code> field provides a different way of spelling the word in a transcript. Use the parameter when you want the word to appear different from its usual representation or from its spelling in corpora training data. For example, you might indicate that the word <code>IBM(trademark)</code> is to be displayed as <code>IBM</code>. For more information, see <a href="https://console.bluemix.net/docs/services/speech-to-text/language-resource.html#displayAs">Using the display_as field</a>.    If you add a custom word that already exists in the words resource for the custom model, the new definition overwrites the existing data for the word. If the service encounters an error with the input data, it returns a failure code and does not add any of the words to the words resource.   The call returns an HTTP 201 response code if the input data is valid. It then asynchronously processes the words to add them to the model&#39;s words resource. The time that it takes for the analysis to complete depends on the number of new words that you add but is generally faster than adding a corpus or training a model.   You can monitor the status of the request by using the <strong>List a custom language model</strong> method to poll the model&#39;s status. Use a loop to check the status every 10 seconds. The method returns a <code>Customization</code> object that includes a <code>status</code> field. A status of <code>ready</code> means that the words have been added to the custom model. The service cannot accept requests to add new corpora or words or to train the model until the existing request completes.   You can use the <strong>List custom words</strong> or <strong>List a custom word</strong> method to review the words that you add. Words with an invalid <code>sounds_like</code> field include an <code>error</code> field that describes the problem. You can use other words-related methods to correct errors, eliminate typos, and modify how words are pronounced as needed.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -594,7 +598,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L205">speech-to-text/v1-generated.ts:205</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L210">speech-to-text/v1-generated.ts:210</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -632,7 +636,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L242">speech-to-text/v1-generated.ts:242</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L247">speech-to-text/v1-generated.ts:247</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -667,14 +671,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L1151">speech-to-text/v1-generated.ts:1151</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L1155">speech-to-text/v1-generated.ts:1155</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Create a custom acoustic model.</p>
 								</div>
-								<p>Creates a new custom acoustic model for a specified base model. The custom acoustic model can be used only with the base model for which it is created. The model is owned by the instance of the service whose credentials are used to create it.</p>
+								<p>Creates a new custom acoustic model for a specified base model. The custom acoustic model can be used only with the base model for which it is created. The model is owned by the instance of the service whose credentials are used to create it. You must pass a value of <code>application/json</code> with the <code>Content-Type</code> header.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -705,14 +709,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L292">speech-to-text/v1-generated.ts:292</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L296">speech-to-text/v1-generated.ts:296</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Create a job.</p>
 								</div>
-								<p>Creates a job for a new asynchronous recognition request. The job is owned by the user whose service credentials are used to create it. How you learn the status and results of a job depends on the parameters you include with the job creation request: <em> By callback notification: Include the <code>callback_url</code> parameter to specify a URL to which the service is to send callback notifications when the status of the job changes. Optionally, you can also include the <code>events</code> and <code>user_token</code> parameters to subscribe to specific events and to specify a string that is to be included with each notification for the job. </em> By polling the service: Omit the <code>callback_url</code>, <code>events</code>, and <code>user_token</code> parameters. You must then use the <strong>Check jobs</strong> or <strong>Check a job</strong> methods to check the status of the job, using the latter to retrieve the results when the job is complete.  The two approaches are not mutually exclusive. You can poll the service for job status or obtain results from the service manually even if you include a callback URL. In both cases, you can include the <code>results_ttl</code> parameter to specify how long the results are to remain available after the job is complete. Note that using the HTTPS <strong>Check a job</strong> method to retrieve results is more secure than receiving them via callback notification over HTTP because it provides confidentiality in addition to authentication and data integrity.   The method supports the same basic parameters as other HTTP and WebSocket recognition requests. The service imposes a data size limit of 100 MB. It automatically detects the endianness of the incoming audio and, for audio that includes multiple channels, downmixes the audio to one-channel mono during transcoding. (For the <code>audio/l16</code> format, you can specify the endianness.).</p>
+								<p>Creates a job for a new asynchronous recognition request. The job is owned by the user whose service credentials are used to create it. How you learn the status and results of a job depends on the parameters you include with the job creation request: <em> By callback notification: Include the <code>callback_url</code> parameter to specify a URL to which the service is to send callback notifications when the status of the job changes. Optionally, you can also include the <code>events</code> and <code>user_token</code> parameters to subscribe to specific events and to specify a string that is to be included with each notification for the job. </em> By polling the service: Omit the <code>callback_url</code>, <code>events</code>, and <code>user_token</code> parameters. You must then use the <strong>Check jobs</strong> or <strong>Check a job</strong> methods to check the status of the job, using the latter to retrieve the results when the job is complete.  The two approaches are not mutually exclusive. You can poll the service for job status or obtain results from the service manually even if you include a callback URL. In both cases, you can include the <code>results_ttl</code> parameter to specify how long the results are to remain available after the job is complete. For detailed usage information about the two approaches, including callback notifications, see <a href="https://console.bluemix.net/docs/services/speech-to-text/async.html#create">Creating a job</a>. Note that using the HTTPS <strong>Check a job</strong> method to retrieve results is more secure than receiving them via callback notification over HTTP because it provides confidentiality in addition to authentication and data integrity.   The method supports the same basic parameters as other HTTP and WebSocket recognition requests. The service imposes a data size limit of 100 MB. It automatically detects the endianness of the incoming audio and, for audio that includes multiple channels, downmixes the audio to one-channel mono during transcoding. (For the <code>audio/l16</code> format, you can specify the endianness.)   ### Audio formats (content types)   Use the <code>Content-Type</code> parameter to specify the audio format (MIME type) of the audio: <em> <code>audio/basic</code> (Use only with narrowband models.) </em> <code>audio/flac</code> <em> <code>audio/l16</code> (Specify the sampling rate (<code>rate</code>) and optionally the number of channels (<code>channels</code>) and endianness (<code>endianness</code>) of the audio.) </em> <code>audio/mp3</code> <em> <code>audio/mpeg</code> </em> <code>audio/mulaw</code> (Specify the sampling rate (<code>rate</code>) of the audio.) <em> <code>audio/ogg</code> (The service automatically detects the codec of the input audio.) </em> <code>audio/ogg;codecs=opus</code> <em> <code>audio/ogg;codecs=vorbis</code> </em> <code>audio/wav</code> (Provide audio with a maximum of nine channels.) <em> <code>audio/webm</code> (The service automatically detects the codec of the input audio.) </em> <code>audio/webm;codecs=opus</code> * <code>audio/webm;codecs=vorbis</code>   For information about the supported audio formats, including specifying the sampling rate, channels, and endianness for the indicated formats, see <a href="https://console.bluemix.net/docs/services/speech-to-text/audio-formats.html">Audio formats</a>.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -743,14 +747,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L474">speech-to-text/v1-generated.ts:474</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L478">speech-to-text/v1-generated.ts:478</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Create a custom language model.</p>
 								</div>
-								<p>Creates a new custom language model for a specified base model. The custom language model can be used only with the base model for which it is created. The model is owned by the instance of the service whose credentials are used to create it.</p>
+								<p>Creates a new custom language model for a specified base model. The custom language model can be used only with the base model for which it is created. The model is owned by the instance of the service whose credentials are used to create it. You must pass a value of <code>application/json</code> with the <code>Content-Type</code> header.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -782,7 +786,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.createRequest</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/lib/base_service.ts#L198">lib/base_service.ts:198</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/lib/base_service.ts#L198">lib/base_service.ts:198</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -821,7 +825,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L1192">speech-to-text/v1-generated.ts:1192</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L1196">speech-to-text/v1-generated.ts:1196</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -859,7 +863,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L1482">speech-to-text/v1-generated.ts:1482</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L1486">speech-to-text/v1-generated.ts:1486</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -897,7 +901,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L805">speech-to-text/v1-generated.ts:805</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L809">speech-to-text/v1-generated.ts:809</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -935,7 +939,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L351">speech-to-text/v1-generated.ts:351</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L355">speech-to-text/v1-generated.ts:355</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -964,6 +968,44 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="deletelabeleddata" class="tsd-anchor"></a>
+					<h3>delete<wbr>Labeled<wbr>Data</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>Labeled<wbr>Data<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/speechtotextv1.deletelabeleddataparams.html" class="tsd-signature-type">DeleteLabeledDataParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="speechtotextv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/speechtotextv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L1607">speech-to-text/v1-generated.ts:1607</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Delete labeled data.</p>
+								</div>
+								<p>Deletes all data that is associated with a specified customer ID. The method deletes all data for the customer ID, regardless of the method by which the information was added. The method has no effect if no data is associated with the customer ID. You must issue the request with credentials for the same instance of the service that was used to associate the customer ID with the data.   You associate a customer ID with data by passing the <code>X-Watson-Metadata</code> header with a request that passes the data. For more information about customer IDs and about using this method, see <a href="https://console.bluemix.net/docs/services/speech-to-text/information-security.html">Information security</a>.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>params: <a href="../interfaces/speechtotextv1.deletelabeleddataparams.html" class="tsd-signature-type">DeleteLabeledDataParams</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The parameters to send to the service.</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="speechtotextv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/speechtotextv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ReadableStream</span>
+								<span class="tsd-signature-symbol"> | </span>
+								<span class="tsd-signature-type">void</span>
+							</h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="deletelanguagemodel" class="tsd-anchor"></a>
 					<h3>delete<wbr>Language<wbr>Model</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -973,7 +1015,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L516">speech-to-text/v1-generated.ts:516</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L520">speech-to-text/v1-generated.ts:520</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1011,7 +1053,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L1021">speech-to-text/v1-generated.ts:1021</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L1025">speech-to-text/v1-generated.ts:1025</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1049,7 +1091,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L1230">speech-to-text/v1-generated.ts:1230</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L1234">speech-to-text/v1-generated.ts:1234</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1087,7 +1129,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L1522">speech-to-text/v1-generated.ts:1522</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L1526">speech-to-text/v1-generated.ts:1526</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1125,7 +1167,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L845">speech-to-text/v1-generated.ts:845</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L849">speech-to-text/v1-generated.ts:849</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1164,7 +1206,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.getCredentials</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/lib/base_service.ts#L141">lib/base_service.ts:141</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/lib/base_service.ts#L141">lib/base_service.ts:141</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1187,7 +1229,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L554">speech-to-text/v1-generated.ts:554</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L558">speech-to-text/v1-generated.ts:558</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1225,7 +1267,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L65">speech-to-text/v1-generated.ts:65</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L65">speech-to-text/v1-generated.ts:65</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1263,7 +1305,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L1061">speech-to-text/v1-generated.ts:1061</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L1065">speech-to-text/v1-generated.ts:1065</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1301,7 +1343,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L1268">speech-to-text/v1-generated.ts:1268</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L1272">speech-to-text/v1-generated.ts:1272</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1336,7 +1378,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L1561">speech-to-text/v1-generated.ts:1561</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L1565">speech-to-text/v1-generated.ts:1565</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1374,7 +1416,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L884">speech-to-text/v1-generated.ts:884</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L888">speech-to-text/v1-generated.ts:888</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1412,7 +1454,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L592">speech-to-text/v1-generated.ts:592</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L596">speech-to-text/v1-generated.ts:596</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1447,7 +1489,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L102">speech-to-text/v1-generated.ts:102</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L102">speech-to-text/v1-generated.ts:102</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1482,7 +1524,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L1102">speech-to-text/v1-generated.ts:1102</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L1106">speech-to-text/v1-generated.ts:1106</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1514,25 +1556,28 @@
 					<a name="recognize" class="tsd-anchor"></a>
 					<h3>recognize</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">recognize<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/speechtotextv1.recognizeparams.html" class="tsd-signature-type">RecognizeParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="speechtotextv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/speechtotextv1.speechrecognitionresults.html" class="tsd-signature-type">SpeechRecognitionResults</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">recognize<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/speechtotextv1.recognizeparams.html" class="tsd-signature-type">RecognizeParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="speechtotextv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/speechtotextv1.speechrecognitionresults.html" class="tsd-signature-type">SpeechRecognitionResults</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L151">speech-to-text/v1-generated.ts:151</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L151">speech-to-text/v1-generated.ts:151</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Sends audio for speech recognition in sessionless mode.</p>
 								</div>
-								<p>Sends audio and returns transcription results for a sessionless recognition request. Returns only the final results; to enable interim results, use session-based requests or the WebSocket API. The service imposes a data size limit of 100 MB. It automatically detects the endianness of the incoming audio and, for audio that includes multiple channels, downmixes the audio to one-channel mono during transcoding. (For the <code>audio/l16</code> format, you can specify the endianness.)   ###Streaming mode   For requests to transcribe live audio as it becomes available or to transcribe multiple audio files with multipart requests, you must set the <code>Transfer-Encoding</code> header to <code>chunked</code> to use streaming mode. In streaming mode, the server closes the connection (status code 408) if the service receives no data chunk for 30 seconds and the service has no audio to transcribe for 30 seconds. The server also closes the connection (status code 400) if no speech is detected for <code>inactivity_timeout</code> seconds of audio (not processing time); use the <code>inactivity_timeout</code> parameter to change the default of 30 seconds.   ###Non-multipart requests   For non-multipart requests, you specify all parameters of the request as a collection of request headers and query parameters, and you provide the audio as the body of the request. This is the recommended means of submitting a recognition request. Use the following parameters: <em> <strong>Required:</strong> <code>Content-Type</code> and <code>audio</code> </em> <strong>Optional:</strong> <code>Transfer-Encoding</code>, <code>model</code>, <code>customization_id</code>, <code>acoustic_customization_id</code>, <code>customization_weight</code>, <code>base_model_version</code>, <code>inactivity_timeout</code>, <code>keywords</code>, <code>keywords_threshold</code>, <code>max_alternatives</code>, <code>word_alternatives_threshold</code>, <code>word_confidence</code>, <code>timestamps</code>, <code>profanity_filter</code>, <code>smart_formatting</code>, and <code>speaker_labels</code>     ###Multipart requests   For multipart requests, you specify a few parameters of the request as request headers and query parameters, but you specify most parameters as multipart form data in the form of JSON metadata, in which only <code>part_content_type</code> is required. You then specify the audio files for the request as subsequent parts of the form data. Use this approach with browsers that do not support JavaScript or when the parameters of the request are greater than the 8 KB limit imposed by most HTTP servers and proxies. Use the following parameters: <em> <strong>Required:</strong> <code>Content-Type</code>, <code>metadata</code>, and <code>upload</code> </em> <strong>Optional:</strong> <code>Transfer-Encoding</code>, <code>model</code>, <code>customization_id</code>, <code>acoustic_customization_id</code>, <code>customization_weight</code>, and <code>base_model_version</code>   An example of the multipart metadata for a pair of FLAC files follows. This first part of the request is sent as JSON; the remaining parts are the audio files for the request.  <code>metadata=\&quot;{\\\&quot;part_content_type\\\&quot;:\\\&quot;audio/flac\\\&quot;,\\\&quot;data_parts_count\\\&quot;:2,\\\&quot;inactivity_timeout\\\&quot;=-1}\&quot;</code>   <strong>Note about the Try It Out feature:</strong> The <code>Try it out!</code> button is <strong>not</strong> supported for use with the the <code>POST /v1/recognize</code> method. For examples of calls to the method, see the <a href="http://www.ibm.com/watson/developercloud/speech-to-text/api/v1/">Speech to Text API reference</a>.</p>
+								<p>Sends audio and returns transcription results for a sessionless recognition request. Returns only the final results; to enable interim results, use session-based requests or the WebSocket API. The service imposes a data size limit of 100 MB. It automatically detects the endianness of the incoming audio and, for audio that includes multiple channels, downmixes the audio to one-channel mono during transcoding. (For the <code>audio/l16</code> format, you can specify the endianness.)   ### Streaming mode   For requests to transcribe live audio as it becomes available, you must set the <code>Transfer-Encoding</code> header to <code>chunked</code> to use streaming mode. In streaming mode, the server closes the connection (status code 408) if the service receives no data chunk for 30 seconds and the service has no audio to transcribe for 30 seconds. The server also closes the connection (status code 400) if no speech is detected for <code>inactivity_timeout</code> seconds of audio (not processing time); use the <code>inactivity_timeout</code> parameter to change the default of 30 seconds.   ### Audio formats (content types)   Use the <code>Content-Type</code> header to specify the audio format (MIME type) of the audio. The service accepts the following formats: <em> <code>audio/basic</code> (Use only with narrowband models.) </em> <code>audio/flac</code> <em> <code>audio/l16</code> (Specify the sampling rate (<code>rate</code>) and optionally the number of channels (<code>channels</code>) and endianness (<code>endianness</code>) of the audio.) </em> <code>audio/mp3</code> <em> <code>audio/mpeg</code> </em> <code>audio/mulaw</code> (Specify the sampling rate (<code>rate</code>) of the audio.) <em> <code>audio/ogg</code> (The service automatically detects the codec of the input audio.) </em> <code>audio/ogg;codecs=opus</code> <em> <code>audio/ogg;codecs=vorbis</code> </em> <code>audio/wav</code> (Provide audio with a maximum of nine channels.) <em> <code>audio/webm</code> (The service automatically detects the codec of the input audio.) </em> <code>audio/webm;codecs=opus</code> * <code>audio/webm;codecs=vorbis</code>   For information about the supported audio formats, including specifying the sampling rate, channels, and endianness for the indicated formats, see <a href="https://console.bluemix.net/docs/services/speech-to-text/audio-formats.html">Audio formats</a>.   ### Multipart speech recognition   The method also supports multipart recognition requests. With multipart requests, you pass all audio data as multipart form data. You specify some parameters as request headers and query parameters, but you pass JSON metadata as form data to control most aspects of the transcription.   The multipart approach is intended for use with browsers for which JavaScript is disabled or when the parameters used with the request are greater than the 8 KB limit imposed by most HTTP servers and proxies. You can encounter this limit, for example, if you want to spot a very large number of keywords.   For information about submitting a multipart request, see <a href="https://console.bluemix.net/docs/services/speech-to-text/http.html#HTTP-multi">Submitting multipart requests as form data</a>.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> params: <a href="../interfaces/speechtotextv1.recognizeparams.html" class="tsd-signature-type">RecognizeParams</a></h5>
+									<h5>params: <a href="../interfaces/speechtotextv1.recognizeparams.html" class="tsd-signature-type">RecognizeParams</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The parameters to send to the service.</p>
+									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="speechtotextv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/speechtotextv1.speechrecognitionresults.html" class="tsd-signature-type">SpeechRecognitionResults</a><span class="tsd-signature-symbol">&gt;</span></h5>
@@ -1555,7 +1600,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L390">speech-to-text/v1-generated.ts:390</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L394">speech-to-text/v1-generated.ts:394</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1593,7 +1638,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L1301">speech-to-text/v1-generated.ts:1301</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L1305">speech-to-text/v1-generated.ts:1305</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1631,7 +1676,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L625">speech-to-text/v1-generated.ts:625</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L629">speech-to-text/v1-generated.ts:629</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1670,7 +1715,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.setAccessToken</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/lib/base_service.ts#L179">lib/base_service.ts:179</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/lib/base_service.ts#L179">lib/base_service.ts:179</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1706,7 +1751,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L1340">speech-to-text/v1-generated.ts:1340</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L1344">speech-to-text/v1-generated.ts:1344</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1744,7 +1789,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L665">speech-to-text/v1-generated.ts:665</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L669">speech-to-text/v1-generated.ts:669</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1782,7 +1827,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L429">speech-to-text/v1-generated.ts:429</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L433">speech-to-text/v1-generated.ts:433</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1820,7 +1865,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L1383">speech-to-text/v1-generated.ts:1383</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L1387">speech-to-text/v1-generated.ts:1387</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1858,7 +1903,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0ab65ab/speech-to-text/v1-generated.ts#L708">speech-to-text/v1-generated.ts:708</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/945cad0/speech-to-text/v1-generated.ts#L712">speech-to-text/v1-generated.ts:712</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1998,6 +2043,9 @@
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class">
 								<a href="../interfaces/speechtotextv1.deletejobparams.html" class="tsd-kind-icon">Delete<wbr>Job<wbr>Params</a>
+							</li>
+							<li class=" tsd-kind-interface tsd-parent-kind-class">
+								<a href="../interfaces/speechtotextv1.deletelabeleddataparams.html" class="tsd-kind-icon">Delete<wbr>Labeled<wbr>Data<wbr>Params</a>
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class">
 								<a href="../interfaces/speechtotextv1.deletelanguagemodelparams.html" class="tsd-kind-icon">Delete<wbr>Language<wbr>Model<wbr>Params</a>
@@ -2193,6 +2241,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="speechtotextv1.html#deletejob" class="tsd-kind-icon">delete<wbr>Job</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="speechtotextv1.html#deletelabeleddata" class="tsd-kind-icon">delete<wbr>Labeled<wbr>Data</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="speechtotextv1.html#deletelanguagemodel" class="tsd-kind-icon">delete<wbr>Language<wbr>Model</a>
