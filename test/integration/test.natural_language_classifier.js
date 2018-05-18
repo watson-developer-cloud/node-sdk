@@ -29,7 +29,7 @@ describe('natural_language_classifier_integration', function() {
 
   it('getClassifier', function(done) {
     const params = {
-      classifier_id: 'ab2aa6x341-nlc-1213',
+      classifier_id: auth.natural_language_classifier.classifier_id,
     };
     natural_language_classifier.getClassifier(params, function(err, result) {
       if (err) {
@@ -42,7 +42,7 @@ describe('natural_language_classifier_integration', function() {
 
   it('classifyCollection', function(done) {
     const params = {
-      classifier_id: 'ab2aa6x341-nlc-1213',
+      classifier_id: auth.natural_language_classifier.classifier_id,
       collection: [{ text: 'string' }],
     };
     natural_language_classifier.classifyCollection(params, function(err, result) {
