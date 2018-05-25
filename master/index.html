@@ -102,8 +102,14 @@
 				<pre><code class="lang-sh">npm install watson-developer-cloud
 </code></pre>
 				<h2 id="getting-the-service-credentials">Getting the service credentials</h2>
-				<h3 id="basic-auth-or-api-key-for-visual-recognition-">Basic Auth (or API key for Visual Recognition)</h3>
-				<p>You will need the <code>username</code>, <code>password</code>, and <code>url</code> (<code>api_key</code> for Visual Recognition) for each service. Service credentials are different from your IBM Cloud account username and password.</p>
+				<h2 id="visual-recognition">Visual Recognition</h2>
+				<p>The process for authenticating with Visual Recognition has changed:</p>
+				<ul>
+					<li>For new service instances, authenticate by using IAM. See <a href="#iam-authentication">IAM Authentication</a>. Also set the service URL by passing in <code>url</code> in the service constructor. </li>
+					<li>For service instances created before May 23, 2018, authenticate by providing the basic auth <code>api_key</code> for the service instance.</li>
+				</ul>
+				<h3 id="basic-auth">Basic Auth</h3>
+				<p>You will need the <code>username</code>, <code>password</code>, and <code>url</code> for each service. Visual Recognition instances created before May 23, 2018 use <code>api_key</code>. Service credentials are different from your IBM Cloud account username and password.</p>
 				<p>To get your service credentials, follow these steps:</p>
 				<ol>
 					<li>Log in to IBM Cloud at <a href="https://console.bluemix.net/catalog/?category=watson">https://console.bluemix.net/catalog/?category=watson</a>.</li>
@@ -509,8 +515,9 @@ toneAnalyzer.tone(
 <span class="hljs-keyword">var</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
 
 <span class="hljs-keyword">var</span> visualRecognition = <span class="hljs-keyword">new</span> VisualRecognitionV3({
-  <span class="hljs-attr">api_key</span>: <span class="hljs-string">'&lt;api_key&gt;'</span>,
-  <span class="hljs-attr">version</span>: <span class="hljs-string">'2016-05-20'</span>
+  <span class="hljs-attr">url</span>: <span class="hljs-string">'&lt;service_url&gt;'</span>,
+  <span class="hljs-attr">version</span>: <span class="hljs-string">'2018-03-19'</span>,
+  <span class="hljs-attr">iam_apikey</span>: <span class="hljs-string">'&lt;iam_api_key&gt;'</span>,
 });
 
 <span class="hljs-keyword">var</span> params = {
