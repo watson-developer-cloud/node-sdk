@@ -47,8 +47,16 @@ npm install watson-developer-cloud
 ```
 
 ## Getting the service credentials
-### Basic Auth (or API key for Visual Recognition)
-You will need the `username`, `password`, and `url` (`api_key` for Visual Recognition) for each service. Service credentials are different from your IBM Cloud account username and password.
+
+## Visual Recognition
+
+The process for authenticating with Visual Recognition has changed:
+
+- For new service instances, authenticate by using IAM. See [IAM Authentication](#iam-authentication). Also set the service URL by passing in `url` in the service constructor. 
+- For service instances created before May 23, 2018, authenticate by providing the basic auth `api_key` for the service instance.
+
+### Basic Auth
+You will need the `username`, `password`, and `url` for each service. Visual Recognition instances created before May 23, 2018 use `api_key`. Service credentials are different from your IBM Cloud account username and password.
 
 To get your service credentials, follow these steps:
 
@@ -546,8 +554,9 @@ var VisualRecognitionV3 = require('watson-developer-cloud/visual-recognition/v3'
 var fs = require('fs');
 
 var visualRecognition = new VisualRecognitionV3({
-  api_key: '<api_key>',
-  version: '2016-05-20'
+  url: '<service_url>',
+  version: '2018-03-19',
+  iam_apikey: '<iam_api_key>',
 });
 
 var params = {
