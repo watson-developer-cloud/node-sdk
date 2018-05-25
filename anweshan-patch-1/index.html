@@ -106,10 +106,10 @@
 				<p>The process for authenticating with Visual Recognition has changed:</p>
 				<ul>
 					<li>For new service instances, authenticate by using IAM. See <a href="#iam-authentication">IAM Authentication</a>. Also set the service URL by passing in <code>url</code> in the service constructor. </li>
-					<li>For service instances created before May 23, 2018, authenticate by providing the API Key for the service instance.</li>
+					<li>For service instances created before May 23, 2018, authenticate by providing the basic auth <code>api_key</code> for the service instance.</li>
 				</ul>
-				<h3 id="basic-auth-or-api-key-for-visual-recognition-">Basic Auth (or API key for Visual Recognition)</h3>
-				<p>You will need the <code>username</code>, <code>password</code>, and <code>url</code> (<code>api_key</code> for Visual Recognition) for each service. Service credentials are different from your IBM Cloud account username and password.</p>
+				<h3 id="basic-auth">Basic Auth</h3>
+				<p>You will need the <code>username</code>, <code>password</code>, and <code>url</code> for each service. Visual Recognition instances created before May 23, 2018 use <code>api_key</code>. Service credentials are different from your IBM Cloud account username and password.</p>
 				<p>To get your service credentials, follow these steps:</p>
 				<ol>
 					<li>Log in to IBM Cloud at <a href="https://console.bluemix.net/catalog/?category=watson">https://console.bluemix.net/catalog/?category=watson</a>.</li>
