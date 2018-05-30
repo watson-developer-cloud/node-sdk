@@ -17,10 +17,23 @@ describe('visual_recognition_integration', function() {
   this.retries(5);
 
   let visual_recognition;
+  let visual_recognition_rc;
+  let visual_recognition_url;
 
   before(function() {
     visual_recognition = new watson.VisualRecognitionV3(
       Object.assign({}, auth.visual_recognition.v3, {
+        version: watson.VisualRecognitionV3.VERSION_DATE_2016_05_20,
+      })
+    );
+    visual_recognition_url = new watson.VisualRecognitionV3(
+      Object.assign({}, auth.visual_recognition.v3, {
+        version: watson.VisualRecognitionV3.VERSION_DATE_2016_05_20,
+        url: 'hello.com',
+      })
+    );
+    visual_recognition_rc = new watson.VisualRecognitionV3(
+      Object.assign({}, auth.visual_recognition_rc.v3, {
         version: watson.VisualRecognitionV3.VERSION_DATE_2016_05_20,
       })
     );
@@ -29,6 +42,21 @@ describe('visual_recognition_integration', function() {
 
   after(function() {
     nock.disableNetConnect();
+  });
+
+  describe('authentication urls', function() {
+    it('should have the correct URL depending on rc/cf', function(done) {
+      assert.equal(
+        visual_recognition._options.url,
+        'https://gateway-a.watsonplatform.net/visual-recognition/api'
+      );
+      assert.equal(
+        visual_recognition_rc._options.url,
+        'https://gateway.watsonplatform.net/visual-recognition/api'
+      );
+      assert.equal(visual_recognition_url._options.url, 'hello.com');
+      done();
+    });
   });
 
   describe('classify()', function() {

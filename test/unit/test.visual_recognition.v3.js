@@ -523,6 +523,40 @@ describe('visual_recognition', function() {
     });
   });
 
+  describe('Credentials', function() {
+    it('should load its credentials from bluemix (VR)', function() {
+      process.env.VCAP_SERVICES = JSON.stringify({
+        watson_vision_combined: [
+          {
+            credentials: {
+              api_key: 'somekey',
+            },
+          },
+        ],
+      });
+      const visual_recognition_cf = new watson.VisualRecognitionV3({
+        version: '2018-03-19',
+      });
+      assert(visual_recognition_cf);
+      assert.equal(
+        visual_recognition_cf.getCredentials().url,
+        'https://gateway-a.watsonplatform.net/visual-recognition/api'
+      );
+    });
+
+    it('should load its credentials from environment (VR)', function() {
+      process.env.VISUAL_RECOGNITION_API_KEY = 'key';
+      const visual_recognition_cf = new watson.VisualRecognitionV3({
+        version: '2018-03-19',
+      });
+      assert(visual_recognition_cf);
+      assert.equal(
+        visual_recognition_cf.getCredentials().url,
+        'https://gateway-a.watsonplatform.net/visual-recognition/api'
+      );
+    });
+  });
+
   describe('getCoreMlModel()', function() {
     it('should check no parameters provided', function() {
       visual_recognition.getCoreMlModel({}, missingParameter);

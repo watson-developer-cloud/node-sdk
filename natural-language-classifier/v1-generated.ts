@@ -428,6 +428,12 @@ namespace NaturalLanguageClassifierV1 {
   }
 
   /** Request payload to classify. */
+  export interface ClassifyCollectionInput {
+    /** The submitted phrases. */
+    collection: ClassifyInput[];
+  }
+
+  /** Request payload to classify. */
   export interface ClassifyInput {
     /** The submitted phrase. */
     text: string;
@@ -441,6 +447,16 @@ namespace NaturalLanguageClassifierV1 {
     top_class?: string;
     /** An array of up to ten class-confidence pairs sorted in descending order of confidence. */
     classes?: ClassifiedClass[];
+  }
+
+  /** Response payload for HTTP errors. */
+  export interface ErrorResponse {
+    /** HTTP status code. */
+    code?: number;
+    /** Error name. */
+    error?: string;
+    /** Error description. */
+    description?: string;
   }
 
 }

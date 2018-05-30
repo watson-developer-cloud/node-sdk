@@ -110,6 +110,11 @@ export class BaseService {
     }
     const options = extend({}, userOptions);
     const _options = this.initCredentials(options);
+    // If url is not specified, visual recognition requires gateway-a for CF instances
+    // https://github.ibm.com/Watson/developer-experience/issues/4589
+    if (_options && this.name === 'watson_vision_combined' && !_options.url && _options.api_key){
+      _options.url = 'https://gateway-a.watsonplatform.net/visual-recognition/api';
+    }
     if (options.url) {
       _options.url = stripTrailingSlash(options.url);
     }

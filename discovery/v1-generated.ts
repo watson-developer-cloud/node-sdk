@@ -38,6 +38,9 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/discovery/api'). The base url may differ between Bluemix regions.
    * @param {string} [options.username] - The username used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
    * @param {string} [options.password] - The password used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
+   * @param {string} [options.iam_access_token] - An IAM access token fully managed by the application. Responsibility falls on the application to refresh the token, either before it expires or reactively upon receiving a 401 from the service, as any requests made with an expired token will fail.
+   * @param {string} [options.iam_apikey] - An API key that can be used to request IAM tokens. If this API key is provided, the SDK will manage the token and handle the refreshing.
+   * @param {string} [options.iam_url] - An optional URL for the IAM service API. Defaults to 'https://iam.bluemix.net/identity/token'.
    * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
    * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
@@ -2088,6 +2091,9 @@ namespace DiscoveryV1 {
   export type Options = {
     version: string;
     url?: string;
+    iam_access_token?: string;
+    iam_apikey?: string;
+    iam_url?: string;
     username?: string;
     password?: string;
     use_unauthenticated?: boolean;
@@ -2873,6 +2879,28 @@ namespace DiscoveryV1 {
     json_normalizations?: NormalizationOperation[];
   }
 
+  /** CreateCollectionRequest. */
+  export interface CreateCollectionRequest {
+    /** The name of the collection to be created. */
+    name: string;
+    /** A description of the collection. */
+    description?: string;
+    /** The ID of the configuration in which the collection is to be created. */
+    configuration_id?: string;
+    /** The language of the documents stored in the collection, in the form of an ISO 639-1 language code. */
+    language?: string;
+  }
+
+  /** CreateEnvironmentRequest. */
+  export interface CreateEnvironmentRequest {
+    /** Name that identifies the environment. */
+    name: string;
+    /** Description of the environment. */
+    description?: string;
+    /** **Deprecated**: Size of the environment. */
+    size?: number;
+  }
+
   /** DeleteCollectionResponse. */
   export interface DeleteCollectionResponse {
     /** The unique identifier of the collection that is being deleted. */
@@ -2973,6 +3001,12 @@ namespace DiscoveryV1 {
     notices: Notice[];
   }
 
+  /** An object representing the configuration options to use for the `elements` enrichment. */
+  export interface ElementsEnrichmentOptions {
+    /** *For use with `elements` enrichments only.* The element extraction model to use. Models available are: `contract`. */
+    model?: string;
+  }
+
   /** Enrichment. */
   export interface Enrichment {
     /** Describes what the enrichment step does. */
@@ -2997,6 +3031,10 @@ namespace DiscoveryV1 {
     features?: NluEnrichmentFeatures;
     /** *For use with `elements` enrichments only.* The element extraction model to use. Models available are: `contract`. */
     model?: string;
+  }
+
+  /** An array of document enrichment settings for the configuration. */
+  export interface Enrichments {
   }
 
   /** Details about an environment. */
@@ -3027,6 +3065,14 @@ namespace DiscoveryV1 {
     indexed?: number;
     /** Total number of documents allowed in the environment's capacity. */
     maximum_allowed?: number;
+  }
+
+  /** ErrorResponse. */
+  export interface ErrorResponse {
+    /** The HTTP error status code. */
+    code: number;
+    /** A message describing the error. */
+    error: string;
   }
 
   /** An expansion definition. Each object respresents one set of expandable strings. For example, you could have expansions for the word `hot` in one object, and expansions for the word `cold` in another. */
@@ -3061,6 +3107,10 @@ namespace DiscoveryV1 {
     name?: string;
   }
 
+  /** FontSettings. */
+  export interface FontSettings {
+  }
+
   /** A list of HTML conversion settings. */
   export interface HtmlSettings {
     exclude_tags_completely?: string[];
@@ -3081,6 +3131,20 @@ namespace DiscoveryV1 {
     collections?: CollectionUsage;
     /** **Deprecated**: Summary of the memory usage of the environment. */
     memory_usage?: MemoryUsage;
+  }
+
+  /** *Deprecated* Options specific to the `alchemy_language` enrichment. */
+  export interface LanguageEnrichmentOptions {
+    /** A comma-separated list of analyses that will be applied when using the `alchemy_language` enrichment. See the service documentation for details on each extract option.  Possible values include:    * entity   * keyword   * taxonomy   * concept   * relation   * doc-sentiment   * doc-emotion   * typed-rels. */
+    extract?: string[];
+    sentiment?: boolean;
+    quotations?: boolean;
+    show_source_text?: boolean;
+    hierarchical_typed_relations?: boolean;
+    /** Required when using the `typed-rel` extract option. Should be set to the ID of a previously published custom Watson Knowledge Studio model. */
+    model?: string;
+    /** If provided, then do not attempt to detect the language of the input document. Instead, assume the language is the one specified in this field.  You can set this property to work around `unsupported-text-language` errors.  Supported languages include English, German, French, Italian, Portuguese, Russian, Spanish and Swedish. Supported language codes are the ISO-639-1, ISO-639-2, ISO-639-3, and the plain english name of the language (for example "russian"). */
+    language?: string;
   }
 
   /** The list of fetched fields.  The fields are returned using a fully qualified name format, however, the format differs slightly from that used by the query operations.    * Fields which contain nested JSON objects are assigned a type of "nested".    * Fields which belong to a nested object are prefixed with `.properties` (for example, `warnings.properties.severity` means that the `warnings` object has a property called `severity`).    * Fields returned from the News collection are prefixed with `v{N}-fullnews-t3-{YEAR}.mappings` (for example, `v5-fullnews-t3-2016.mappings.text.properties.author`). */
@@ -3119,6 +3183,13 @@ namespace DiscoveryV1 {
     total?: string;
     /** **Deprecated**: Percentage of the environment's memory capacity that is being used. */
     percent_used?: number;
+  }
+
+  /** NewTrainingQuery. */
+  export interface NewTrainingQuery {
+    natural_language_query?: string;
+    filter?: string;
+    examples?: TrainingExample[];
   }
 
   /** An object that indicates the Categories enrichment will be applied to the specified field. */
@@ -3179,6 +3250,12 @@ namespace DiscoveryV1 {
     limit?: number;
   }
 
+  /** An object representing the configuration options to use for the `natural_language_understanding` enrichments. */
+  export interface NluEnrichmentOptions {
+    /** An object representing the enrichment features that will be applied to the specified field. */
+    features?: NluEnrichmentFeatures;
+  }
+
   /** An object specifying the relations enrichment and related parameters. */
   export interface NluEnrichmentRelations {
     /** *For use with `natural_language_understanding` enrichments only.* The enrichement model to use with relationship extraction. May be a custom model provided by Watson Knowledge Studio, the public model for use with Knowledge Graph `en-news`, the default is`en-news`. */
@@ -3211,6 +3288,10 @@ namespace DiscoveryV1 {
     source_field?: string;
     /** The destination field for the operation. */
     destination_field?: string;
+  }
+
+  /** Defines operations that can be used to transform the final output JSON into a normalized form. Operations are executed in the order that they appear in the array. */
+  export interface Normalizations {
   }
 
   /** A notice produced for the collection. */
@@ -3250,6 +3331,20 @@ namespace DiscoveryV1 {
     matching_results?: number;
     /** Aggregations returned by the Discovery service. */
     aggregations?: QueryAggregation[];
+  }
+
+  /** QueryEntities. */
+  export interface QueryEntities {
+    /** The entity query feature to perform. Supported features are `disambiguate` and `similar_entities`. */
+    feature?: string;
+    /** A text string that appears within the entity text field. */
+    entity?: QueryEntitiesEntity;
+    /** Entity text to provide context for the queried entity and rank based on that association. For example, if you wanted to query the city of London in England your query would look for `London` with the context of `England`. */
+    context?: QueryEntitiesContext;
+    /** The number of results to return. The default is `10`. The maximum is `1000`. */
+    count?: number;
+    /** The number of evidence items to return for each result. The default is `0`. The maximum number of evidence items per query is 10,000. */
+    evidence_count?: number;
   }
 
   /** Entity text to provide context for the queried entity and rank based on that association. For example, if you wanted to query the city of London in England your query would look for `London` with the context of `England`. */
@@ -3364,6 +3459,22 @@ namespace DiscoveryV1 {
     field?: string;
   }
 
+  /** A respresentation of a relationship query. */
+  export interface QueryRelations {
+    /** An array of entities to find relationships for. */
+    entities?: QueryRelationsEntity[];
+    /** Entity text to provide context for the queried entity and rank based on that association. For example, if you wanted to query the city of London in England your query would look for `London` with the context of `England`. */
+    context?: QueryEntitiesContext;
+    /** The sorting method for the relationships, can be `score` or `frequency`. `frequency` is the number of unique times each entity is identified. The default is `score`. */
+    sort?: string;
+    /** Filters to apply to the relationship query. */
+    filter?: QueryRelationsFilter;
+    /** The number of results to return. The default is `10`. The maximum is `1000`. */
+    count?: number;
+    /** The number of evidence items to return for each result. The default is `0`. The maximum number of evidence items per query is 10,000. */
+    evidence_count?: number;
+  }
+
   /** QueryRelationsArgument. */
   export interface QueryRelationsArgument {
     entities?: QueryEntitiesEntity[];
@@ -3459,6 +3570,14 @@ namespace DiscoveryV1 {
     notices?: Notice[];
   }
 
+  /** TopHitsResults. */
+  export interface TopHitsResults {
+    /** Number of matching results. */
+    matching_results?: number;
+    /** Top results returned by the aggregation. */
+    hits?: QueryResult[];
+  }
+
   /** TrainingDataSet. */
   export interface TrainingDataSet {
     environment_id?: string;
@@ -3476,6 +3595,12 @@ namespace DiscoveryV1 {
   /** TrainingExampleList. */
   export interface TrainingExampleList {
     examples?: TrainingExample[];
+  }
+
+  /** TrainingExamplePatch. */
+  export interface TrainingExamplePatch {
+    cross_reference?: string;
+    relevance?: number;
   }
 
   /** TrainingQuery. */
@@ -3499,6 +3624,24 @@ namespace DiscoveryV1 {
     data_updated?: string;
   }
 
+  /** UpdateCollectionRequest. */
+  export interface UpdateCollectionRequest {
+    /** The name of the collection. */
+    name: string;
+    /** A description of the collection. */
+    description?: string;
+    /** The ID of the configuration in which the collection is to be updated. */
+    configuration_id?: string;
+  }
+
+  /** UpdateEnvironmentRequest. */
+  export interface UpdateEnvironmentRequest {
+    /** Name that identifies the environment. */
+    name?: string;
+    /** Description of the environment. */
+    description?: string;
+  }
+
   /** WordHeadingDetection. */
   export interface WordHeadingDetection {
     fonts?: FontSetting[];
@@ -3516,9 +3659,65 @@ namespace DiscoveryV1 {
     names?: string[];
   }
 
+  /** WordStyles. */
+  export interface WordStyles {
+  }
+
   /** XPathPatterns. */
   export interface XPathPatterns {
     xpaths?: string[];
+  }
+
+  /** Calculation. */
+  export interface Calculation {
+    /** The field where the aggregation is located in the document. */
+    field?: string;
+    /** Value of the aggregation. */
+    value?: number;
+  }
+
+  /** Filter. */
+  export interface Filter {
+    /** The match the aggregated results queried for. */
+    match?: string;
+  }
+
+  /** Histogram. */
+  export interface Histogram {
+    /** The field where the aggregation is located in the document. */
+    field?: string;
+    /** Interval of the aggregation. (For 'histogram' type). */
+    interval?: number;
+  }
+
+  /** Nested. */
+  export interface Nested {
+    /** The area of the results the aggregation was restricted to. */
+    path?: string;
+  }
+
+  /** Term. */
+  export interface Term {
+    /** The field where the aggregation is located in the document. */
+    field?: string;
+    count?: number;
+  }
+
+  /** Timeslice. */
+  export interface Timeslice {
+    /** The field where the aggregation is located in the document. */
+    field?: string;
+    /** Interval of the aggregation. Valid date interval values are second/seconds minute/minutes, hour/hours, day/days, week/weeks, month/months, and year/years. */
+    interval?: string;
+    /** Used to inducate that anomaly detection should be performed. Anomaly detection is used to locate unusual datapoints within a time series. */
+    anomaly?: boolean;
+  }
+
+  /** TopHits. */
+  export interface TopHits {
+    /** Number of top hits returned by the aggregation. */
+    size?: number;
+    hits?: TopHitsResults;
   }
 
 }
