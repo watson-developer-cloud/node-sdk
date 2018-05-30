@@ -18,6 +18,7 @@ import * as extend from 'extend';
 import { RequestResponse } from 'request';
 import { BaseService } from '../lib/base_service';
 import { getMissingParams } from '../lib/helper';
+import { FileObject } from '../lib/helper';
 
 /**
  * The IBM Watson Personality Insights service enables applications to derive insights from social media, enterprise data, or other digital communications. The service uses linguistic analytics to infer individuals' intrinsic personality characteristics, including Big Five, Needs, and Values, from digital communications such as email, text messages, tweets, and forum posts.  The service can automatically infer, from potentially noisy social media, portraits of individuals that reflect their personality characteristics. The service can infer consumption preferences based on the results of its analysis and, for JSON content that is timestamped, can report temporal behavior. * For information about the meaning of the models that the service uses to describe personality characteristics, see [Personality models](https://console.bluemix.net/docs/services/personality-insights/models.html). * For information about the meaning of the consumption preferences, see [Consumption preferences](https://console.bluemix.net/docs/services/personality-insights/preferences.html).   **Note:** Request logging is disabled for the Personality Insights service. The service neither logs nor retains data from requests and responses, regardless of whether the `X-Watson-Learning-Opt-Out` request header is set.
@@ -37,6 +38,9 @@ class PersonalityInsightsV3 extends BaseService {
    * @param {string} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/personality-insights/api'). The base url may differ between Bluemix regions.
    * @param {string} [options.username] - The username used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
    * @param {string} [options.password] - The password used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
+   * @param {string} [options.iam_access_token] - An IAM access token fully managed by the application. Responsibility falls on the application to refresh the token, either before it expires or reactively upon receiving a 401 from the service, as any requests made with an expired token will fail.
+   * @param {string} [options.iam_apikey] - An API key that can be used to request IAM tokens. If this API key is provided, the SDK will manage the token and handle the refreshing.
+   * @param {string} [options.iam_url] - An optional URL for the IAM service API. Defaults to 'https://iam.bluemix.net/identity/token'.
    * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
    * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
@@ -125,7 +129,7 @@ class PersonalityInsightsV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public profileAsCsv(params: PersonalityInsightsV3.ProfileAsCsvParams, callback?: PersonalityInsightsV3.Callback<PersonalityInsightsV3.Profile>): NodeJS.ReadableStream | void {
+  public profileAsCsv(params: PersonalityInsightsV3.ProfileAsCsvParams, callback?: PersonalityInsightsV3.Callback<NodeJS.ReadableStream|FileObject|Buffer>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['content', 'content_type'];
@@ -174,6 +178,9 @@ namespace PersonalityInsightsV3 {
   export type Options = {
     version: string;
     url?: string;
+    iam_access_token?: string;
+    iam_apikey?: string;
+    iam_url?: string;
     username?: string;
     password?: string;
     use_unauthenticated?: boolean;
@@ -354,6 +361,18 @@ namespace PersonalityInsightsV3 {
     reply?: boolean;
     /** Indicates whether this content item is a forwarded/copied version of another content item. */
     forward?: boolean;
+  }
+
+  /** ErrorModel. */
+  export interface ErrorModel {
+    /** The HTTP status code. */
+    code: number;
+    /** A service-specific error code. */
+    sub_code?: string;
+    /** A description of the error. */
+    error: string;
+    /** A URL to documentation explaining the cause and possibly solutions for the error. */
+    help?: string;
   }
 
   /** Profile. */
