@@ -37,6 +37,9 @@ class ConversationV1 extends BaseService {
    * @param {string} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/conversation/api'). The base url may differ between Bluemix regions.
    * @param {string} [options.username] - The username used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
    * @param {string} [options.password] - The password used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
+   * @param {string} [options.iam_access_token] - An IAM access token fully managed by the application. Responsibility falls on the application to refresh the token, either before it expires or reactively upon receiving a 401 from the service, as any requests made with an expired token will fail.
+   * @param {string} [options.iam_apikey] - An API key that can be used to request IAM tokens. If this API key is provided, the SDK will manage the token and handle the refreshing.
+   * @param {string} [options.iam_url] - An optional URL for the IAM service API. Defaults to 'https://iam.ng.bluemix.net/identity/token'.
    * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
    * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
@@ -2252,6 +2255,9 @@ namespace ConversationV1 {
   export type Options = {
     version: string;
     url?: string;
+    iam_access_token?: string;
+    iam_apikey?: string;
+    iam_url?: string;
     username?: string;
     password?: string;
     use_unauthenticated?: boolean;
@@ -3070,6 +3076,114 @@ namespace ConversationV1 {
    * model interfaces
    ************************/
 
+  /** BaseCounterexample. */
+  export interface BaseCounterexample {
+    /** The text of a user input counterexample. */
+    text?: string;
+  }
+
+  /** BaseDialogNode. */
+  export interface BaseDialogNode {
+    /** The dialog node ID. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.  - It must be no longer than 1024 characters. */
+    dialog_node?: string;
+    /** The description of the dialog node. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
+    description?: string;
+    /** The condition that will trigger the dialog node. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 2048 characters. */
+    conditions?: string;
+    /** The ID of the parent dialog node. */
+    parent?: string;
+    /** The ID of the previous sibling dialog node. */
+    previous_sibling?: string;
+    /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex). */
+    output?: Object;
+    /** The context for the dialog node. */
+    context?: Object;
+    /** The metadata for the dialog node. */
+    metadata?: Object;
+    /** The next step to be executed in dialog processing. */
+    next_step?: DialogNodeNextStep;
+    /** The alias used to identify the dialog node. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.  - It must be no longer than 64 characters. */
+    title?: string;
+    /** How the dialog node is processed. */
+    node_type?: string;
+    /** How an `event_handler` node is processed. */
+    event_name?: string;
+    /** The location in the dialog context where output is stored. */
+    variable?: string;
+    /** An array of objects describing any actions to be invoked by the dialog node. */
+    actions?: DialogNodeAction[];
+    /** Whether this top-level dialog node can be digressed into. */
+    digress_in?: string;
+    /** Whether this dialog node can be returned to after a digression. */
+    digress_out?: string;
+    /** Whether the user can digress to top-level nodes while filling out slots. */
+    digress_out_slots?: string;
+  }
+
+  /** BaseEntity. */
+  export interface BaseEntity {
+    /** The name of the entity. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 64 characters. */
+    entity?: string;
+    /** The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
+    description?: string;
+    /** Any metadata related to the entity. */
+    metadata?: Object;
+    /** Whether to use fuzzy matching for the entity. */
+    fuzzy_match?: boolean;
+  }
+
+  /** BaseExample. */
+  export interface BaseExample {
+    /** The text of the user input example. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 1024 characters. */
+    text?: string;
+  }
+
+  /** BaseIntent. */
+  export interface BaseIntent {
+    /** The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 128 characters. */
+    intent?: string;
+    /** The description of the intent. */
+    description?: string;
+  }
+
+  /** BaseMessage. */
+  export interface BaseMessage {
+    /** The user input from the request. */
+    input?: MessageInput;
+    /** An array of intents recognized in the user input, sorted in descending order of confidence. */
+    intents: RuntimeIntent[];
+    /** An array of entities identified in the user input. */
+    entities: RuntimeEntity[];
+    /** Whether to return more than one intent. A value of `true` indicates that all matching intents are returned. */
+    alternate_intents?: boolean;
+  }
+
+  /** BaseSynonym. */
+  export interface BaseSynonym {
+    /** The text of the synonym. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
+    synonym?: string;
+  }
+
+  /** BaseValue. */
+  export interface BaseValue {
+    /** The text of the entity value. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
+    value?: string;
+    /** Any metadata related to the entity value. */
+    metadata?: Object;
+    /** Specifies the type of value. */
+    value_type?: string;
+  }
+
+  /** BaseWorkspace. */
+  export interface BaseWorkspace {
+    /** The name of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 64 characters. */
+    name?: string;
+    /** The description of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
+    description?: string;
+    /** The language of the workspace. */
+    language?: string;
+  }
+
   /** CaptureGroup. */
   export interface CaptureGroup {
     /** A recognized capture group for the entity. */
@@ -3102,6 +3216,12 @@ namespace ConversationV1 {
     counterexamples: Counterexample[];
     /** The pagination data for the returned objects. */
     pagination: Pagination;
+  }
+
+  /** CounterexampleRequest. */
+  export interface CounterexampleRequest {
+    /** The text of a user input counterexample. */
+    text?: string;
   }
 
   /** CreateCounterexample. */
@@ -3178,6 +3298,12 @@ namespace ConversationV1 {
     examples?: CreateExample[];
   }
 
+  /** CreateSynonym. */
+  export interface CreateSynonym {
+    /** The text of the synonym. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
+    synonym: string;
+  }
+
   /** CreateValue. */
   export interface CreateValue {
     /** The text of the entity value. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
@@ -3190,6 +3316,28 @@ namespace ConversationV1 {
     patterns?: string[];
     /** Specifies the type of value. */
     value_type?: string;
+  }
+
+  /** CreateWorkspace. */
+  export interface CreateWorkspace {
+    /** The name of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 64 characters. */
+    name?: string;
+    /** The description of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
+    description?: string;
+    /** The language of the workspace. */
+    language?: string;
+    /** An array of objects defining the intents for the workspace. */
+    intents?: CreateIntent[];
+    /** An array of objects defining the entities for the workspace. */
+    entities?: CreateEntity[];
+    /** An array of objects defining the nodes in the workspace dialog. */
+    dialog_nodes?: CreateDialogNode[];
+    /** An array of objects defining input examples that have been marked as irrelevant input. */
+    counterexamples?: CreateCounterexample[];
+    /** Any metadata related to the workspace. */
+    metadata?: Object;
+    /** Whether training data from the workspace can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used. */
+    learning_opt_out?: boolean;
   }
 
   /** DialogNode. */
@@ -3318,6 +3466,38 @@ namespace ConversationV1 {
     values?: ValueExport[];
   }
 
+  /** EntityRequest. */
+  export interface EntityRequest {
+    /** The name of the entity. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 64 characters. */
+    entity?: string;
+    /** The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
+    description?: string;
+    /** Any metadata related to the entity. */
+    metadata?: Object;
+    /** Whether to use fuzzy matching for the entity. */
+    fuzzy_match?: boolean;
+    /** An array of entity values. */
+    values?: CreateValue[];
+  }
+
+  /** ErrorDetail. */
+  export interface ErrorDetail {
+    /** Description of a specific constraint violation. */
+    message: string;
+    /** The location of the constraint violation. */
+    path?: string;
+  }
+
+  /** ErrorResponse. */
+  export interface ErrorResponse {
+    /** General description of an error. */
+    error: string;
+    /** Collection of specific constraint violations associated with the error. */
+    errors?: ErrorDetail[];
+    /** HTTP status code for the error response. */
+    code: number;
+  }
+
   /** Example. */
   export interface Example {
     /** The text of the user input example. */
@@ -3334,6 +3514,12 @@ namespace ConversationV1 {
     examples: Example[];
     /** The pagination data for the returned objects. */
     pagination: Pagination;
+  }
+
+  /** ExampleRequest. */
+  export interface ExampleRequest {
+    /** The text of the user input example. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 1024 characters. */
+    text?: string;
   }
 
   /** The user input. */
@@ -3374,6 +3560,34 @@ namespace ConversationV1 {
     description?: string;
     /** An array of objects describing the user input examples for the intent. */
     examples?: Example[];
+  }
+
+  /** IntentRequest. */
+  export interface IntentRequest {
+    /** The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 128 characters. */
+    intent?: string;
+    /** The description of the intent. */
+    description?: string;
+    /** An array of user input examples for the intent. */
+    examples?: CreateExample[];
+  }
+
+  /** Log. */
+  export interface Log {
+    /** A request received by the workspace, including the user input and context. */
+    request: MessageRequest;
+    /** The response sent by the workspace, including the output text, detected intents and entities, and context. */
+    response: MessageResponse;
+    /** A unique identifier for the logged event. */
+    log_id: string;
+    /** The timestamp for receipt of the message. */
+    request_timestamp: string;
+    /** The timestamp for the system response to the message. */
+    response_timestamp: string;
+    /** The unique identifier of the workspace where the request was made. */
+    workspace_id: string;
+    /** The language of the workspace where the message request was made. */
+    language: string;
   }
 
   /** LogCollection. */
@@ -3528,8 +3742,130 @@ namespace ConversationV1 {
     pagination: Pagination;
   }
 
+  /** SynonymRequest. */
+  export interface SynonymRequest {
+    /** The text of the synonym. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
+    synonym?: string;
+  }
+
   /** For internal use only. */
   export interface SystemResponse {
+  }
+
+  /** UpdateCounterexample. */
+  export interface UpdateCounterexample {
+    /** The text of a user input counterexample. */
+    text?: string;
+  }
+
+  /** UpdateDialogNode. */
+  export interface UpdateDialogNode {
+    /** The dialog node ID. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.  - It must be no longer than 1024 characters. */
+    dialog_node?: string;
+    /** The description of the dialog node. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
+    description?: string;
+    /** The condition that will trigger the dialog node. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 2048 characters. */
+    conditions?: string;
+    /** The ID of the parent dialog node. */
+    parent?: string;
+    /** The ID of the previous sibling dialog node. */
+    previous_sibling?: string;
+    /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex). */
+    output?: Object;
+    /** The context for the dialog node. */
+    context?: Object;
+    /** The metadata for the dialog node. */
+    metadata?: Object;
+    /** The next step to be executed in dialog processing. */
+    next_step?: DialogNodeNextStep;
+    /** The alias used to identify the dialog node. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.  - It must be no longer than 64 characters. */
+    title?: string;
+    /** How the dialog node is processed. */
+    node_type?: string;
+    /** How an `event_handler` node is processed. */
+    event_name?: string;
+    /** The location in the dialog context where output is stored. */
+    variable?: string;
+    /** An array of objects describing any actions to be invoked by the dialog node. */
+    actions?: DialogNodeAction[];
+    /** Whether this top-level dialog node can be digressed into. */
+    digress_in?: string;
+    /** Whether this dialog node can be returned to after a digression. */
+    digress_out?: string;
+    /** Whether the user can digress to top-level nodes while filling out slots. */
+    digress_out_slots?: string;
+  }
+
+  /** UpdateEntity. */
+  export interface UpdateEntity {
+    /** The name of the entity. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 64 characters. */
+    entity?: string;
+    /** The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
+    description?: string;
+    /** Any metadata related to the entity. */
+    metadata?: Object;
+    /** Whether to use fuzzy matching for the entity. */
+    fuzzy_match?: boolean;
+    /** An array of entity values. */
+    values?: CreateValue[];
+  }
+
+  /** UpdateExample. */
+  export interface UpdateExample {
+    /** The text of the user input example. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 1024 characters. */
+    text?: string;
+  }
+
+  /** UpdateIntent. */
+  export interface UpdateIntent {
+    /** The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 128 characters. */
+    intent?: string;
+    /** The description of the intent. */
+    description?: string;
+    /** An array of user input examples for the intent. */
+    examples?: CreateExample[];
+  }
+
+  /** UpdateSynonym. */
+  export interface UpdateSynonym {
+    /** The text of the synonym. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
+    synonym?: string;
+  }
+
+  /** UpdateValue. */
+  export interface UpdateValue {
+    /** The text of the entity value. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
+    value?: string;
+    /** Any metadata related to the entity value. */
+    metadata?: Object;
+    /** Specifies the type of value. */
+    value_type?: string;
+    /** An array of synonyms for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A synonym must conform to the following resrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
+    synonyms?: string[];
+    /** An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 128 characters. For more information about how to specify a pattern, see the [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities). */
+    patterns?: string[];
+  }
+
+  /** UpdateWorkspace. */
+  export interface UpdateWorkspace {
+    /** The name of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 64 characters. */
+    name?: string;
+    /** The description of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
+    description?: string;
+    /** The language of the workspace. */
+    language?: string;
+    /** An array of objects defining the intents for the workspace. */
+    intents?: CreateIntent[];
+    /** An array of objects defining the entities for the workspace. */
+    entities?: CreateEntity[];
+    /** An array of objects defining the nodes in the workspace dialog. */
+    dialog_nodes?: CreateDialogNode[];
+    /** An array of objects defining input examples that have been marked as irrelevant input. */
+    counterexamples?: CreateCounterexample[];
+    /** Any metadata related to the workspace. */
+    metadata?: Object;
+    /** Whether training data from the workspace can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used. */
+    learning_opt_out?: boolean;
   }
 
   /** Value. */
@@ -3574,6 +3910,20 @@ namespace ConversationV1 {
     patterns?: string[];
     /** Specifies the type of value. */
     value_type: string;
+  }
+
+  /** ValueRequest. */
+  export interface ValueRequest {
+    /** The text of the entity value. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
+    value?: string;
+    /** Any metadata related to the entity value. */
+    metadata?: Object;
+    /** Specifies the type of value. */
+    value_type?: string;
+    /** An array of synonyms for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A synonym must conform to the following resrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
+    synonyms?: string[];
+    /** An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 128 characters. For more information about how to specify a pattern, see the [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities). */
+    patterns?: string[];
   }
 
   /** Workspace. */
@@ -3632,6 +3982,50 @@ namespace ConversationV1 {
     counterexamples?: Counterexample[];
     /** An array of objects describing the dialog nodes in the workspace. */
     dialog_nodes?: DialogNode[];
+  }
+
+  /** WorkspaceRequest. */
+  export interface WorkspaceRequest {
+    /** The name of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 64 characters. */
+    name?: string;
+    /** The description of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
+    description?: string;
+    /** The language of the workspace. */
+    language?: string;
+    /** An array of objects defining the intents for the workspace. */
+    intents?: CreateIntent[];
+    /** An array of objects defining the entities for the workspace. */
+    entities?: CreateEntity[];
+    /** An array of objects defining the nodes in the workspace dialog. */
+    dialog_nodes?: CreateDialogNode[];
+    /** An array of objects defining input examples that have been marked as irrelevant input. */
+    counterexamples?: CreateCounterexample[];
+    /** Any metadata related to the workspace. */
+    metadata?: Object;
+    /** Whether training data from the workspace can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used. */
+    learning_opt_out?: boolean;
+  }
+
+  /** WorkspaceStatus. */
+  export interface WorkspaceStatus {
+    /** The name of the workspace. */
+    name: string;
+    /** The description of the workspace. */
+    description: string;
+    /** The language of the workspace. */
+    language: string;
+    /** Any metadata that is required by the workspace. */
+    metadata: Object;
+    /** The timestamp for creation of the workspace. */
+    created?: string;
+    /** The timestamp for the last update to the workspace. */
+    updated?: string;
+    /** The workspace ID. */
+    workspace_id: string;
+    /** The current status of the workspace. */
+    status: string;
+    /** Whether training data from the workspace can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used. */
+    learning_opt_out: boolean;
   }
 
 }

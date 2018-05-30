@@ -21,7 +21,7 @@ import { getMissingParams } from '../lib/helper';
 import { FileObject } from '../lib/helper';
 
 /**
- * ### Service Overview The IBM&reg; Text to Speech service provides an API that uses IBM's speech-synthesis capabilities to synthesize text into natural-sounding speech in a variety of languages, dialects, and voices. The service supports at least one male or female voice, sometimes both, for each language. The audio is streamed back to the client with minimal delay. For more information about the service, see the [IBM&reg; Cloud documentation](https://console.bluemix.net/docs/services/text-to-speech/getting-started.html). ### API Overview The Text to Speech service provides the following endpoints: * **Voices** provides information about the voices available for synthesized speech. * **Synthesis** synthesizes written text to audio speech. * **Pronunciation** returns the pronunciation for a specified word. Currently a beta feature. * **Custom models** and let users create custom voice models, which are dictionaries of words and their translations for use in speech synthesis. All custom model methods are currently beta features. * **Custom words** let users manage the words in a custom voice model. All custom word methods are currently beta features. ### API Usage The following information provides details about using the service to synthesize audio: * **Audio formats:** The service supports a number of audio formats (MIME types). For more information about audio formats and sampling rates, including links to a number of Internet sites that provide technical and usage details about the different formats, see [Specifying an audio format](https://console.bluemix.net/docs/services/text-to-speech/http.html#format). * **SSML:** Many methods refer to the Speech Synthesis Markup Language (SSML), an XML-based markup language that provides annotations of text for speech-synthesis applications; for example, many methods accept or produce translations that use an SSML-based phoneme format. See [Using SSML](https://console.bluemix.net/docs/services/text-to-speech/SSML.html) and [Using IBM SPR](https://console.bluemix.net/docs/services/text-to-speech/SPRs.html). * **Word translations:** Many customization methods accept or return sounds-like or phonetic translations for words. A phonetic translation is based on the SSML format for representing the phonetic string of a word. Phonetic translations can use standard International Phonetic Alphabet (IPA) representation:    &lt;phoneme alphabet=\"ipa\" ph=\"t&#601;m&#712;&#593;to\"&gt;&lt;/phoneme&gt;    or the proprietary IBM Symbolic Phonetic Representation (SPR):    &lt;phoneme alphabet=\"ibm\" ph=\"1gAstroEntxrYFXs\"&gt;&lt;/phoneme&gt;    For more information about customization and about sounds-like and phonetic translations, see [Understanding customization](https://console.bluemix.net/docs/services/text-to-speech/custom-intro.html). * **WebSocket interface:** The service also offers a WebSocket interface as an alternative to its HTTP REST interface for speech synthesis. The WebSocket interface supports both plain text and SSML input, including the SSML &lt;mark&gt; element and word timings. See [The WebSocket interface](https://console.bluemix.net/docs/services/text-to-speech/websockets.html). * **GUIDs:** The pronunciation and customization methods accept or return a Globally Unique Identifier (GUID). For example, customization IDs (specified with the `customization_id` parameter) and service credentials are GUIDs. GUIDs are hexadecimal strings that have the format `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`. * **Custom voice model ownership:** In all cases, you must use service credentials created for the instance of the service that owns a custom voice model to use the methods described in this documentation with that model. For more information, see [Ownership of custom voice models](https://console.bluemix.net/docs/services/text-to-speech/custom-models.html#customOwner). * **`X-Watson-Metadata`**: This header allows you to associate a customer ID with personal data that is passed with a request. For more information, see [Information security](https://console.bluemix.net/docs/services/text-to-speech/information-security.html).
+ * ### Service Overview The IBM&reg; Text to Speech service provides an API that uses IBM's speech-synthesis capabilities to synthesize text into natural-sounding speech in a variety of languages, dialects, and voices. The service supports at least one male or female voice, sometimes both, for each language. The audio is streamed back to the client with minimal delay. For more information about the service, see the [IBM&reg; Cloud documentation](https://console.bluemix.net/docs/services/text-to-speech/index.html).  ### API usage guidelines * **Audio formats:** The service can produce audio in many formats (MIME types). See [Specifying an audio format](https://console.bluemix.net/docs/services/text-to-speech/http.html#format). * **SSML:** Many methods refer to the Speech Synthesis Markup Language (SSML). SSML is an XML-based markup language that provides text annotation for speech-synthesis applications. See [Using SSML](https://console.bluemix.net/docs/services/text-to-speech/SSML.html) and [Using IBM SPR](https://console.bluemix.net/docs/services/text-to-speech/SPRs.html). * **Word translations:** Many customization methods accept sounds-like or phonetic translations for words. Phonetic translations are based on the SSML phoneme format for representing a word. You can specify them in standard International Phonetic Alphabet (IPA) representation    &lt;phoneme alphabet=\"ipa\" ph=\"t&#601;m&#712;&#593;to\"&gt;&lt;/phoneme&gt;    or in the proprietary IBM Symbolic Phonetic Representation (SPR)    &lt;phoneme alphabet=\"ibm\" ph=\"1gAstroEntxrYFXs\"&gt;&lt;/phoneme&gt;    See [Understanding customization](https://console.bluemix.net/docs/services/text-to-speech/custom-intro.html). * **WebSocket interface:** The service also offers a WebSocket interface for speech synthesis. The WebSocket interface supports both plain text and SSML input, including the SSML &lt;mark&gt; element and word timings. See [The WebSocket interface](https://console.bluemix.net/docs/services/text-to-speech/websockets.html). * **Customization IDs:** Many methods accept a customization ID, which is a Globally Unique Identifier (GUID). Customization IDs are hexadecimal strings that have the format `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`. * **`X-Watson-Learning-Opt-Out`:** By default, all Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. To prevent IBM from accessing your data for general service improvements, set the `X-Watson-Learning-Opt-Out` request header to `true` for all requests. You must set the header on each request that you do not want IBM to access for general service improvements.    Methods of the customization interface do not log words and translations that you use to build custom voice models. Your training data is never used to improve the service's base models. However, the service does log such data when a custom model is used with a synthesize request. You must set the `X-Watson-Learning-Opt-Out` request header to `true` to prevent IBM from accessing the data to improve the service. * **`X-Watson-Metadata`:** This header allows you to associate a customer ID with data that is passed with a request. If necessary, you can use the **Delete labeled data** method to delete the data for a customer ID. See [Information security](https://console.bluemix.net/docs/services/text-to-speech/information-security.html).
  */
 
 class TextToSpeechV1 extends BaseService {
@@ -37,6 +37,9 @@ class TextToSpeechV1 extends BaseService {
    * @param {string} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/text-to-speech/api'). The base url may differ between Bluemix regions.
    * @param {string} [options.username] - The username used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
    * @param {string} [options.password] - The password used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
+   * @param {string} [options.iam_access_token] - An IAM access token fully managed by the application. Responsibility falls on the application to refresh the token, either before it expires or reactively upon receiving a 401 from the service, as any requests made with an expired token will fail.
+   * @param {string} [options.iam_apikey] - An API key that can be used to request IAM tokens. If this API key is provided, the SDK will manage the token and handle the refreshing.
+   * @param {string} [options.iam_url] - An optional URL for the IAM service API. Defaults to 'https://iam.ng.bluemix.net/identity/token'.
    * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
    * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
@@ -411,6 +414,7 @@ class TextToSpeechV1 extends BaseService {
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, {
+          'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
       }),
@@ -476,7 +480,7 @@ class TextToSpeechV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom voice model. You must make the request with service credentials created for the instance of the service that owns the custom model.
-   * @param {Word[]} params.words - **When adding words to a custom voice model,** an array of `Word` objects that provides one or more words that are to be added or updated for the custom voice model and the translation for each specified word.   **When listing words from a custom voice model,** an array of `Word` objects that lists the words and their translations from the custom voice model. The words are listed in alphabetical order, with uppercase letters listed before lowercase letters. The array is empty if the custom model contains no words.
+   * @param {Word[]} params.words - The **Add custom words** method accepts an array of `Word` objects. Each object provides a word that is to be added or updated for the custom voice model and the word's translation.   The **List custom words** method returns an array of `Word` objects. Each object shows a word and its translation from the custom voice model. The words are listed in alphabetical order, with uppercase letters listed before lowercase letters. The array is empty if the custom model contains no words.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -505,6 +509,7 @@ class TextToSpeechV1 extends BaseService {
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, {
+          'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
       }),
@@ -641,7 +646,7 @@ class TextToSpeechV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteLabeledData(params: TextToSpeechV1.DeleteLabeledDataParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): NodeJS.ReadableStream | void {
+  public deleteUserData(params: TextToSpeechV1.DeleteUserDataParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['customer_id'];
@@ -680,6 +685,9 @@ namespace TextToSpeechV1 {
   /** Options for the `TextToSpeechV1` constructor. */
   export type Options = {
     url?: string;
+    iam_access_token?: string;
+    iam_apikey?: string;
+    iam_url?: string;
     username?: string;
     password?: string;
     use_unauthenticated?: boolean;
@@ -940,7 +948,7 @@ namespace TextToSpeechV1 {
   export interface AddWordsParams {
     /** The customization ID (GUID) of the custom voice model. You must make the request with service credentials created for the instance of the service that owns the custom model. */
     customization_id: string;
-    /** **When adding words to a custom voice model,** an array of `Word` objects that provides one or more words that are to be added or updated for the custom voice model and the translation for each specified word.   **When listing words from a custom voice model,** an array of `Word` objects that lists the words and their translations from the custom voice model. The words are listed in alphabetical order, with uppercase letters listed before lowercase letters. The array is empty if the custom model contains no words. */
+    /** The **Add custom words** method accepts an array of `Word` objects. Each object provides a word that is to be added or updated for the custom voice model and the word's translation.   The **List custom words** method returns an array of `Word` objects. Each object shows a word and its translation from the custom voice model. The words are listed in alphabetical order, with uppercase letters listed before lowercase letters. The array is empty if the custom model contains no words. */
     words: Word[];
     headers?: Object;
   }
@@ -970,8 +978,8 @@ namespace TextToSpeechV1 {
     headers?: Object;
   }
 
-  /** Parameters for the `deleteLabeledData` operation. */
-  export interface DeleteLabeledDataParams {
+  /** Parameters for the `deleteUserData` operation. */
+  export interface DeleteUserDataParams {
     /** The customer ID for which all data is to be deleted. */
     customer_id: string;
     headers?: Object;
@@ -980,6 +988,26 @@ namespace TextToSpeechV1 {
   /*************************
    * model interfaces
    ************************/
+
+  /** CreateVoiceModel. */
+  export interface CreateVoiceModel {
+    /** The name of the new custom voice model. */
+    name: string;
+    /** The language of the new custom voice model. Omit the parameter to use the the default language, `en-US`. */
+    language?: string;
+    /** A description of the new custom voice model. Specifying a description is recommended. */
+    description?: string;
+  }
+
+  /** ErrorModel. */
+  export interface ErrorModel {
+    /** Description of the problem. */
+    error: string;
+    /** HTTP response code. */
+    code: number;
+    /** Response message. */
+    code_description?: string;
+  }
 
   /** Pronunciation. */
   export interface Pronunciation {
@@ -995,12 +1023,28 @@ namespace TextToSpeechV1 {
     voice_transformation: boolean;
   }
 
+  /** Text. */
+  export interface Text {
+    /** The text to synthesize. */
+    text: string;
+  }
+
   /** Translation. */
   export interface Translation {
     /** The phonetic or sounds-like translation for the word. A phonetic translation is based on the SSML format for representing the phonetic string of a word either as an IPA translation or as an IBM SPR translation. A sounds-like is one or more words that, when combined, sound like the word. */
     translation: string;
     /** **Japanese only.** The part of speech for the word. The service uses the value to produce the correct intonation for the word. You can create only a single entry, with or without a single part of speech, for any word; you cannot create multiple entries with different parts of speech for the same word. For more information, see [Working with Japanese entries](https://console.bluemix.net/docs/services/text-to-speech/custom-rules.html#jaNotes). */
     part_of_speech?: string;
+  }
+
+  /** UpdateVoiceModel. */
+  export interface UpdateVoiceModel {
+    /** A new name for the custom voice model. */
+    name?: string;
+    /** A new description for the custom voice model. */
+    description?: string;
+    /** An array of `Word` objects that provides the words and their translations that are to be added or updated for the custom voice model. Pass an empty array to make no additions or updates. */
+    words?: Word[];
   }
 
   /** Voice. */
@@ -1019,13 +1063,13 @@ namespace TextToSpeechV1 {
     customizable: boolean;
     /** Describes the additional service features supported with the voice. */
     supported_features: SupportedFeatures;
-    /** Returns information about a specified custom voice model. **Note:** This field is returned only when you list information about a specific voice and specify the GUID of a custom voice model that is based on that voice. */
+    /** Returns information about a specified custom voice model. This field is returned only by the **Get a voice** method and only when you specify the customization ID of a custom voice model. */
     customization?: VoiceModel;
   }
 
   /** VoiceModel. */
   export interface VoiceModel {
-    /** The customization ID (GUID) of the custom voice model. **Note:** When you create a new custom voice model, the service returns only the GUID of the new custom model; it does not return the other fields of this object. */
+    /** The customization ID (GUID) of the custom voice model. The **Create a custom model** method returns only this field. It does not not return the other fields of this object. */
     customization_id: string;
     /** The name of the custom voice model. */
     name?: string;
@@ -1039,7 +1083,7 @@ namespace TextToSpeechV1 {
     last_modified?: string;
     /** The description of the custom voice model. */
     description?: string;
-    /** An array of `Word` objects that lists the words and their translations from the custom voice model. The words are listed in alphabetical order, with uppercase letters listed before lowercase letters. The array is empty if the custom model contains no words. **Note:** This field is returned only when you list information about a specific custom voice model. */
+    /** An array of `Word` objects that lists the words and their translations from the custom voice model. The words are listed in alphabetical order, with uppercase letters listed before lowercase letters. The array is empty if the custom model contains no words. This field is returned only by the **Get a voice** method and only when you specify the customization ID of a custom voice model. */
     words?: Word[];
   }
 
@@ -1067,7 +1111,7 @@ namespace TextToSpeechV1 {
 
   /** Words. */
   export interface Words {
-    /** **When adding words to a custom voice model,** an array of `Word` objects that provides one or more words that are to be added or updated for the custom voice model and the translation for each specified word.   **When listing words from a custom voice model,** an array of `Word` objects that lists the words and their translations from the custom voice model. The words are listed in alphabetical order, with uppercase letters listed before lowercase letters. The array is empty if the custom model contains no words. */
+    /** The **Add custom words** method accepts an array of `Word` objects. Each object provides a word that is to be added or updated for the custom voice model and the word's translation.   The **List custom words** method returns an array of `Word` objects. Each object shows a word and its translation from the custom voice model. The words are listed in alphabetical order, with uppercase letters listed before lowercase letters. The array is empty if the custom model contains no words. */
     words: Word[];
   }
 

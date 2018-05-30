@@ -37,6 +37,9 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {string} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/natural-language-understanding/api'). The base url may differ between Bluemix regions.
    * @param {string} [options.username] - The username used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
    * @param {string} [options.password] - The password used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
+   * @param {string} [options.iam_access_token] - An IAM access token fully managed by the application. Responsibility falls on the application to refresh the token, either before it expires or reactively upon receiving a 401 from the service, as any requests made with an expired token will fail.
+   * @param {string} [options.iam_apikey] - An API key that can be used to request IAM tokens. If this API key is provided, the SDK will manage the token and handle the refreshing.
+   * @param {string} [options.iam_url] - An optional URL for the IAM service API. Defaults to 'https://iam.ng.bluemix.net/identity/token'.
    * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
    * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
@@ -199,6 +202,9 @@ namespace NaturalLanguageUnderstandingV1 {
   export type Options = {
     version: string;
     url?: string;
+    iam_access_token?: string;
+    iam_apikey?: string;
+    iam_url?: string;
     username?: string;
     password?: string;
     use_unauthenticated?: boolean;
@@ -304,6 +310,10 @@ namespace NaturalLanguageUnderstandingV1 {
     score?: number;
   }
 
+  /** CategoriesResults. */
+  export interface CategoriesResults {
+  }
+
   /** Whether or not to analyze content for general concepts that are referenced or alluded to. */
   export interface ConceptsOptions {
     /** Maximum number of concepts to return. */
@@ -318,6 +328,14 @@ namespace NaturalLanguageUnderstandingV1 {
     relevance?: number;
     /** Link to the corresponding DBpedia resource. */
     dbpedia_resource?: string;
+  }
+
+  /** ConceptsResults. */
+  export interface ConceptsResults {
+  }
+
+  /** Link to the corresponding DBpedia resource. */
+  export interface DBpediaResource {
   }
 
   /** Disambiguation information for the entity. */
@@ -358,6 +376,10 @@ namespace NaturalLanguageUnderstandingV1 {
     document?: DocumentEmotionResults;
     /** The returned emotion results per specified target. */
     targets?: TargetedEmotionResults[];
+  }
+
+  /** EmotionResults. */
+  export interface EmotionResults {
   }
 
   /** EmotionScores. */
@@ -408,12 +430,24 @@ namespace NaturalLanguageUnderstandingV1 {
     disambiguation?: DisambiguationResult;
   }
 
+  /** EntitiesResults. */
+  export interface EntitiesResults {
+  }
+
   /** EntityMention. */
   export interface EntityMention {
     /** Entity mention text. */
     text?: string;
     /** Character offsets indicating the beginning and end of the mention in the analyzed text. */
     location?: number[];
+  }
+
+  /** ErrorResponse. */
+  export interface ErrorResponse {
+    /** The HTTP error status code. */
+    code: number;
+    /** A message describing the error. */
+    error: string;
   }
 
   /** FeatureSentimentResults. */
@@ -442,6 +476,28 @@ namespace NaturalLanguageUnderstandingV1 {
     sentiment?: SentimentOptions;
     /** Whether or not to return the high level category the content is categorized as (i.e. news, art). */
     categories?: CategoriesOptions;
+  }
+
+  /** Analysis results for each requested feature. */
+  export interface FeaturesResults {
+    /** The general concepts referenced or alluded to in the specified content. */
+    concepts?: ConceptsResult[];
+    /** The important entities in the specified content. */
+    entities?: EntitiesResult[];
+    /** The important keywords in content organized by relevance. */
+    keywords?: KeywordsResult[];
+    /** The hierarchical 5-level taxonomy the content is categorized into. */
+    categories?: CategoriesResult[];
+    /** The anger, disgust, fear, joy, or sadness conveyed by the content. */
+    emotion?: EmotionResult;
+    /** The metadata holds author information, publication date and the title of the text/HTML content. */
+    metadata?: MetadataResult;
+    /** The relationships between entities in the content. */
+    relations?: RelationsResult[];
+    /** The subjects of actions and the objects the actions act upon. */
+    semantic_roles?: SemanticRolesResult[];
+    /** The sentiment of the content. */
+    sentiment?: SentimentResult;
   }
 
   /** RSS or ATOM feed found on the webpage. */
@@ -478,6 +534,18 @@ namespace NaturalLanguageUnderstandingV1 {
     sentiment?: FeatureSentimentResults;
   }
 
+  /** KeywordsResults. */
+  export interface KeywordsResults {
+  }
+
+  /** LinkedDataResult. */
+  export interface LinkedDataResult {
+    /** Name of the Linked Data source. */
+    source?: string;
+    /** URL to the Linked Data page. */
+    link?: string;
+  }
+
   /** Models available for Relations and Entities features. */
   export interface ListModelsResults {
     models?: Model[];
@@ -501,6 +569,10 @@ namespace NaturalLanguageUnderstandingV1 {
     feeds?: Feed[];
   }
 
+  /** MetadataResults. */
+  export interface MetadataResults {
+  }
+
   /** Model. */
   export interface Model {
     /** Shows as available if the model is ready for use. */
@@ -511,6 +583,30 @@ namespace NaturalLanguageUnderstandingV1 {
     language?: string;
     /** Model description. */
     description?: string;
+  }
+
+  /** An object containing request parameters. */
+  export interface Parameters {
+    /** The plain text to analyze. */
+    text?: string;
+    /** The HTML file to analyze. */
+    html?: string;
+    /** The web page to analyze. */
+    url?: string;
+    /** Specific features to analyze the document for. */
+    features: Features;
+    /** Remove website elements, such as links, ads, etc. */
+    clean?: boolean;
+    /** XPath query for targeting nodes in HTML. */
+    xpath?: string;
+    /** Whether to use raw HTML content if text cleaning fails. */
+    fallback_to_raw?: boolean;
+    /** Whether or not to return the analyzed text. */
+    return_analyzed_text?: boolean;
+    /** ISO 639-1 code indicating the language to use in the analysis. */
+    language?: string;
+    /** Sets the maximum number of characters that are processed by the service. */
+    limit_text_characters?: number;
   }
 
   /** RelationArgument. */
@@ -546,6 +642,10 @@ namespace NaturalLanguageUnderstandingV1 {
     type?: string;
     /** The extracted relation objects from the text. */
     arguments?: RelationArgument[];
+  }
+
+  /** RelationsResults. */
+  export interface RelationsResults {
   }
 
   /** SemanticRolesAction. */
@@ -600,6 +700,10 @@ namespace NaturalLanguageUnderstandingV1 {
     object?: SemanticRolesObject;
   }
 
+  /** SemanticRolesResults. */
+  export interface SemanticRolesResults {
+  }
+
   /** SemanticRolesSubject. */
   export interface SemanticRolesSubject {
     /** Text that corresponds to the subject role. */
@@ -630,6 +734,10 @@ namespace NaturalLanguageUnderstandingV1 {
     document?: DocumentSentimentResults;
     /** The targeted sentiment to analyze. */
     targets?: TargetedSentimentResults[];
+  }
+
+  /** SentimentResults. */
+  export interface SentimentResults {
   }
 
   /** An object containing the emotion results for the target. */
