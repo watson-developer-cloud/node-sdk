@@ -54,7 +54,7 @@ export class IamTokenManagerV1 {
    * @constructor
    */
   constructor(options: Options) {
-    this.iamUrl = options.iamUrl || 'https://iam.ng.bluemix.net/identity/token';
+    this.iamUrl = options.iamUrl || 'https://iam.bluemix.net/identity/token';
     this.tokenInfo = {} as IamTokenData;
     if (options.iamApikey) {
       this.iamApikey = options.iamApikey;
