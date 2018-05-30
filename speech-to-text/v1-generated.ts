@@ -21,7 +21,7 @@ import { getMissingParams } from '../lib/helper';
 import { FileObject } from '../lib/helper';
 
 /**
- * The IBM&reg; Speech to Text service provides an API that enables you to add IBM's speech recognition capabilities to your applications. The service transcribes speech from various languages and audio formats to text with low latency. For most languages, the service supports two sampling rates, broadband and narrowband. The service returns all JSON response content in the UTF-8 character set. For more information about the service, see the [IBM&reg; Cloud documentation](https://console.bluemix.net/docs/services/speech-to-text/getting-started.html). ### API Overview The Speech to Text service provides the following endpoints: * **Models** includes methods that return information about the language models that are available for speech recognition. * **WebSockets** includes a single method that establishes a persistent connection with the service over the WebSocket protocol. * **Sessionless** includes a method that provides a simple means of transcribing audio without the overhead of establishing and maintaining a session. * **Sessions** provides methods that allow a client to maintain a long, multi-turn exchange, or session, with the service or to establish multiple parallel conversations with a particular instance of the service. * **Asynchronous** provides a non-blocking interface for transcribing audio. You can register a callback URL to be notified of job status and, optionally, results, or you can poll the service to learn job status and retrieve results manually. * **Custom language models** provides an interface for creating and managing custom language models. The interface lets you expand the vocabulary of a base model with domain-specific terminology. * **Custom corpora** provides an interface for managing the corpora associated with a custom language model. You add corpora to extract out-of-vocabulary (OOV) words from the corpora into the custom language model's vocabulary. You can add, list, and delete corpora from a custom language model. * **Custom words** provides an interface for managing individual words in a custom language model. You can add, modify, list, and delete words from a custom language model. * **Custom acoustic models** provides an interface for creating and managing custom acoustic models. The interface lets you adapt a base model for the audio characteristics of your environment and speakers. * **Custom audio resources** provides an interface for managing the audio resources associated with a custom acoustic model. You add audio resources that closely match the acoustic characteristics of the audio that you want to transcribe. You can add, list, and delete audio resources from a custom acoustic model.   The `X-Watson-Metadata` header allows you to associate a customer ID with personal data that is passed with a request. For more information, see [Information security](https://console.bluemix.net/docs/services/speech-to-text/information-security.html). ### Usage guidelines for customization The following information pertains to methods of the customization interface: * Language model customization is not available for all languages; it is generally available for production use for all languages for which it is available. Acoustic model customization is beta functionality that is available for all languages supported by the service. For a complete list of supported languages and the status of their availability, see [Language support for customization](https://console.bluemix.net/docs/services/speech-to-text/custom.html#languageSupport). * In all cases, you must use service credentials created for the instance of the service that owns a custom model to use the methods described in this documentation with that model. For more information, see [Ownership of custom language models](https://console.bluemix.net/docs/services/speech-to-text/custom.html#customOwner). * How the service handles request logging for the customization interface depends on the request. The service does not log data that are used to build custom models. But it does log data when a custom model is used with a recognition request. For more information, see [Request logging and data privacy](https://console.bluemix.net/docs/services/speech-to-text/custom.html#customLogging). * Each custom model is identified by a customization ID, which is a Globally Unique Identifier (GUID). A GUID is a hexadecimal string that has the same format as Watson service credentials: `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`. You specify a custom model's GUID with the appropriate customization parameter of methods that support customization.   For more information about using the service's customization interface, see [The customization interface](https://console.bluemix.net/docs/services/speech-to-text/custom.html).
+ * The IBM&reg; Speech to Text service provides an API that uses IBM's speech-recognition capabilities to produce transcripts of spoken audio. The service can transcribe speech from various languages and audio formats. It addition to basic transcription, the service can produce detailed information about many aspects of the audio. For most languages, the service supports two sampling rates, broadband and narrowband. It returns all JSON response content in the UTF-8 character set. For more information about the service, see the [IBM&reg; Cloud documentation](https://console.bluemix.net/docs/services/speech-to-text/index.html).  ### API usage guidelines * **Audio formats:** The service accepts audio in many formats (MIME types). See [Audio formats](https://console.bluemix.net/docs/services/speech-to-text/audio-formats.html). * **HTTP interfaces:** The service provides three HTTP interfaces for speech recognition. The sessionless interface includes a single synchronous method. The session-based interface includes multiple synchronous methods for maintaining a long, multi-turn exchange with the service. And the asynchronous interface provides multiple methods that use registered callbacks and polling for non-blocking recognition. See [The HTTP REST interface](https://console.bluemix.net/docs/services/speech-to-text/http.html) and [The asynchronous HTTP interface](https://console.bluemix.net/docs/services/speech-to-text/async.html). * **WebSocket interface:** The service also offers a WebSocket interface for speech recognition. The WebSocket interface provides a full-duplex, low-latency communication channel. Clients send requests and audio to the service and receive results over a single connection in an asynchronous fashion. See [The WebSocket interface](https://console.bluemix.net/docs/services/speech-to-text/websockets.html). * **Customization:** Use language model customization to expand the vocabulary of a base model with domain-specific terminology. Use acoustic model customization to adapt a base model for the acoustic characteristics of your audio. Language model customization is generally available for production use by most supported languages; acoustic model customization is beta functionality that is available for all supported languages. See [The customization interface](https://console.bluemix.net/docs/services/speech-to-text/custom.html). * **Customization IDs:** Many methods accept a customization ID to identify a custom language or custom acoustic model. Customization IDs are Globally Unique Identifiers (GUIDs). They are hexadecimal strings that have the format `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`. * **`X-Watson-Learning-Opt-Out`:** By default, all Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. To prevent IBM from accessing your data for general service improvements, set the `X-Watson-Learning-Opt-Out` request header to `true` for all requests. You must set the header on each request that you do not want IBM to access for general service improvements.    Methods of the customization interface do not log corpora, words, and audio resources that you use to build custom models. Your training data is never used to improve the service's base models. However, the service does log such data when a custom model is used with a recognition request. You must set the `X-Watson-Learning-Opt-Out` request header to `true` to prevent IBM from accessing the data to improve the service. * **`X-Watson-Metadata`**: This header allows you to associate a customer ID with data that is passed with a request. If necessary, you can use the **Delete labeled data** method to delete the data for a customer ID. See [Information security](https://console.bluemix.net/docs/services/speech-to-text/information-security.html).
  */
 
 class SpeechToTextV1 extends BaseService {
@@ -37,6 +37,9 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/speech-to-text/api'). The base url may differ between Bluemix regions.
    * @param {string} [options.username] - The username used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
    * @param {string} [options.password] - The password used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
+   * @param {string} [options.iam_access_token] - An IAM access token fully managed by the application. Responsibility falls on the application to refresh the token, either before it expires or reactively upon receiving a 401 from the service, as any requests made with an expired token will fail.
+   * @param {string} [options.iam_apikey] - An API key that can be used to request IAM tokens. If this API key is provided, the SDK will manage the token and handle the refreshing.
+   * @param {string} [options.iam_url] - An optional URL for the IAM service API. Defaults to 'https://iam.ng.bluemix.net/identity/token'.
    * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
    * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
@@ -265,7 +268,7 @@ class SpeechToTextV1 extends BaseService {
   /**
    * Create a job.
    *
-   * Creates a job for a new asynchronous recognition request. The job is owned by the user whose service credentials are used to create it. How you learn the status and results of a job depends on the parameters you include with the job creation request: * By callback notification: Include the `callback_url` parameter to specify a URL to which the service is to send callback notifications when the status of the job changes. Optionally, you can also include the `events` and `user_token` parameters to subscribe to specific events and to specify a string that is to be included with each notification for the job. * By polling the service: Omit the `callback_url`, `events`, and `user_token` parameters. You must then use the **Check jobs** or **Check a job** methods to check the status of the job, using the latter to retrieve the results when the job is complete.  The two approaches are not mutually exclusive. You can poll the service for job status or obtain results from the service manually even if you include a callback URL. In both cases, you can include the `results_ttl` parameter to specify how long the results are to remain available after the job is complete. For detailed usage information about the two approaches, including callback notifications, see [Creating a job](https://console.bluemix.net/docs/services/speech-to-text/async.html#create). Note that using the HTTPS **Check a job** method to retrieve results is more secure than receiving them via callback notification over HTTP because it provides confidentiality in addition to authentication and data integrity.   The method supports the same basic parameters as other HTTP and WebSocket recognition requests. The service imposes a data size limit of 100 MB. It automatically detects the endianness of the incoming audio and, for audio that includes multiple channels, downmixes the audio to one-channel mono during transcoding. (For the `audio/l16` format, you can specify the endianness.)   ### Audio formats (content types)   Use the `Content-Type` parameter to specify the audio format (MIME type) of the audio: * `audio/basic` (Use only with narrowband models.) * `audio/flac` * `audio/l16` (Specify the sampling rate (`rate`) and optionally the number of channels (`channels`) and endianness (`endianness`) of the audio.) * `audio/mp3` * `audio/mpeg` * `audio/mulaw` (Specify the sampling rate (`rate`) of the audio.) * `audio/ogg` (The service automatically detects the codec of the input audio.) * `audio/ogg;codecs=opus` * `audio/ogg;codecs=vorbis` * `audio/wav` (Provide audio with a maximum of nine channels.) * `audio/webm` (The service automatically detects the codec of the input audio.) * `audio/webm;codecs=opus` * `audio/webm;codecs=vorbis`   For information about the supported audio formats, including specifying the sampling rate, channels, and endianness for the indicated formats, see [Audio formats](https://console.bluemix.net/docs/services/speech-to-text/audio-formats.html).
+   * Creates a job for a new asynchronous recognition request. The job is owned by the user whose service credentials are used to create it. How you learn the status and results of a job depends on the parameters you include with the job creation request: * By callback notification: Include the `callback_url` parameter to specify a URL to which the service is to send callback notifications when the status of the job changes. Optionally, you can also include the `events` and `user_token` parameters to subscribe to specific events and to specify a string that is to be included with each notification for the job. * By polling the service: Omit the `callback_url`, `events`, and `user_token` parameters. You must then use the **Check jobs** or **Check a job** methods to check the status of the job, using the latter to retrieve the results when the job is complete.  The two approaches are not mutually exclusive. You can poll the service for job status or obtain results from the service manually even if you include a callback URL. In both cases, you can include the `results_ttl` parameter to specify how long the results are to remain available after the job is complete. For detailed usage information about the two approaches, including callback notifications, see [Creating a job](https://console.bluemix.net/docs/services/speech-to-text/async.html#create). Using the HTTPS **Check a job** method to retrieve results is more secure than receiving them via callback notification over HTTP because it provides confidentiality in addition to authentication and data integrity.   The method supports the same basic parameters as other HTTP and WebSocket recognition requests. The service imposes a data size limit of 100 MB. It automatically detects the endianness of the incoming audio and, for audio that includes multiple channels, downmixes the audio to one-channel mono during transcoding. (For the `audio/l16` format, you can specify the endianness.)   ### Audio formats (content types)   Use the `Content-Type` parameter to specify the audio format (MIME type) of the audio: * `audio/basic` (Use only with narrowband models.) * `audio/flac` * `audio/l16` (Specify the sampling rate (`rate`) and optionally the number of channels (`channels`) and endianness (`endianness`) of the audio.) * `audio/mp3` * `audio/mpeg` * `audio/mulaw` (Specify the sampling rate (`rate`) of the audio.) * `audio/ogg` (The service automatically detects the codec of the input audio.) * `audio/ogg;codecs=opus` * `audio/ogg;codecs=vorbis` * `audio/wav` (Provide audio with a maximum of nine channels.) * `audio/webm` (The service automatically detects the codec of the input audio.) * `audio/webm;codecs=opus` * `audio/webm;codecs=vorbis`   For information about the supported audio formats, including specifying the sampling rate, channels, and endianness for the indicated formats, see [Audio formats](https://console.bluemix.net/docs/services/speech-to-text/audio-formats.html).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {NodeJS.ReadableStream|FileObject|Buffer} params.audio - The audio to transcribe in the format specified by the `Content-Type` header.
@@ -743,7 +746,7 @@ class SpeechToTextV1 extends BaseService {
   /**
    * Add a corpus.
    *
-   * Adds a single corpus text file of new training data to a custom language model. Use multiple requests to submit multiple corpus text files. You must use credentials for the instance of the service that owns a model to add a corpus to it. Note that adding a corpus does not affect the custom language model until you train the model for the new data by using the **Train a custom language model** method.   Submit a plain text file that contains sample sentences from the domain of interest to enable the service to extract words in context. The more sentences you add that represent the context in which speakers use words from the domain, the better the service's recognition accuracy. For guidelines about adding a corpus text file and for information about how the service parses a corpus file, see [Preparing a corpus text file](https://console.bluemix.net/docs/services/speech-to-text/language-resource.html#prepareCorpus).   The call returns an HTTP 201 response code if the corpus is valid. The service then asynchronously processes the contents of the corpus and automatically extracts new words that it finds. This can take on the order of a minute or two to complete depending on the total number of words and the number of new words in the corpus, as well as the current load on the service. You cannot submit requests to add additional corpora or words to the custom model, or to train the model, until the service's analysis of the corpus for the current request completes. Use the **List a corpus** method to check the status of the analysis.   The service auto-populates the model's words resource with any word that is not found in its base vocabulary; these are referred to as out-of-vocabulary (OOV) words. You can use the **List custom words** method to examine the words resource, using other words method to eliminate typos and modify how words are pronounced as needed.   To add a corpus file that has the same name as an existing corpus, set the `allow_overwrite` parameter to `true`; otherwise, the request fails. Overwriting an existing corpus causes the service to process the corpus text file and extract OOV words anew. Before doing so, it removes any OOV words associated with the existing corpus from the model's words resource unless they were also added by another corpus or they have been modified in some way with the **Add custom words** or **Add a custom word** method.   The service limits the overall amount of data that you can add to a custom model to a maximum of 10 million total words from all corpora combined. Also, you can add no more than 30 thousand custom (OOV) words to a model; this includes words that the service extracts from corpora and words that you add directly.
+   * Adds a single corpus text file of new training data to a custom language model. Use multiple requests to submit multiple corpus text files. You must use credentials for the instance of the service that owns a model to add a corpus to it. Adding a corpus does not affect the custom language model until you train the model for the new data by using the **Train a custom language model** method.   Submit a plain text file that contains sample sentences from the domain of interest to enable the service to extract words in context. The more sentences you add that represent the context in which speakers use words from the domain, the better the service's recognition accuracy. For guidelines about adding a corpus text file and for information about how the service parses a corpus file, see [Preparing a corpus text file](https://console.bluemix.net/docs/services/speech-to-text/language-resource.html#prepareCorpus).   The call returns an HTTP 201 response code if the corpus is valid. The service then asynchronously processes the contents of the corpus and automatically extracts new words that it finds. This can take on the order of a minute or two to complete depending on the total number of words and the number of new words in the corpus, as well as the current load on the service. You cannot submit requests to add additional corpora or words to the custom model, or to train the model, until the service's analysis of the corpus for the current request completes. Use the **List a corpus** method to check the status of the analysis.   The service auto-populates the model's words resource with any word that is not found in its base vocabulary; these are referred to as out-of-vocabulary (OOV) words. You can use the **List custom words** method to examine the words resource, using other words method to eliminate typos and modify how words are pronounced as needed.   To add a corpus file that has the same name as an existing corpus, set the `allow_overwrite` parameter to `true`; otherwise, the request fails. Overwriting an existing corpus causes the service to process the corpus text file and extract OOV words anew. Before doing so, it removes any OOV words associated with the existing corpus from the model's words resource unless they were also added by another corpus or they have been modified in some way with the **Add custom words** or **Add a custom word** method.   The service limits the overall amount of data that you can add to a custom model to a maximum of 10 million total words from all corpora combined. Also, you can add no more than 30 thousand custom (OOV) words to a model; this includes words that the service extracts from corpora and words that you add directly.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom language model. You must make the request with service credentials created for the instance of the service that owns the custom model.
@@ -923,8 +926,8 @@ class SpeechToTextV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom language model. You must make the request with service credentials created for the instance of the service that owns the custom model.
-   * @param {string} params.word_name - The custom word for the custom language model. When adding or updating a custom word, do not include spaces in the word; use a `-` (dash) or `_` (underscore) to connect the tokens of compound words.
-   * @param {string} [params.word] - **When specifying an array of one or more words,** you must specify the custom word that is to be added to or updated in the custom model. Do not include spaces in the word. Use a - (dash) or _ (underscore) to connect the tokens of compound words. **When adding or updating a single word directly,** omit this field.
+   * @param {string} params.word_name - The custom word for the custom language model. When you add or update a custom word with the **Add a custom word** method, do not include spaces in the word. Use a `-` (dash) or `_` (underscore) to connect the tokens of compound words.
+   * @param {string} [params.word] - For the **Add custom words** method, you must specify the custom word that is to be added to or updated in the custom model. Do not include spaces in the word. Use a `-` (dash) or `_` (underscore) to connect the tokens of compound words.   Omit this field for the **Add a custom word** method.
    * @param {string[]} [params.sounds_like] - An array of sounds-like pronunciations for the custom word. Specify how words that are difficult to pronounce, foreign words, acronyms, and so on can be pronounced by users. For a word that is not in the service's base vocabulary, omit the parameter to have the service automatically generate a sounds-like pronunciation for the word. For a word that is in the service's base vocabulary, use the parameter to specify additional pronunciations for the word. You cannot override the default pronunciation of a word; pronunciations you add augment the pronunciation from the base vocabulary. A word can have at most five sounds-like pronunciations, and a pronunciation can include at most 40 characters not including spaces.
    * @param {string} [params.display_as] - An alternative spelling for the custom word when it appears in a transcript. Use the parameter when you want the word to have a spelling that is different from its usual representation or from its spelling in corpora training data.
    * @param {Object} [params.headers] - Custom request headers
@@ -1017,7 +1020,7 @@ class SpeechToTextV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom language model. You must make the request with service credentials created for the instance of the service that owns the custom model.
-   * @param {string} params.word_name - The custom word for the custom language model. When adding or updating a custom word, do not include spaces in the word; use a `-` (dash) or `_` (underscore) to connect the tokens of compound words.
+   * @param {string} params.word_name - The custom word for the custom language model. When you add or update a custom word with the **Add a custom word** method, do not include spaces in the word. Use a `-` (dash) or `_` (underscore) to connect the tokens of compound words.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -1057,7 +1060,7 @@ class SpeechToTextV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom language model. You must make the request with service credentials created for the instance of the service that owns the custom model.
-   * @param {string} params.word_name - The custom word for the custom language model. When adding or updating a custom word, do not include spaces in the word; use a `-` (dash) or `_` (underscore) to connect the tokens of compound words.
+   * @param {string} params.word_name - The custom word for the custom language model. When you add or update a custom word with the **Add a custom word** method, do not include spaces in the word. Use a `-` (dash) or `_` (underscore) to connect the tokens of compound words.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -1604,7 +1607,7 @@ class SpeechToTextV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteLabeledData(params: SpeechToTextV1.DeleteLabeledDataParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): NodeJS.ReadableStream | void {
+  public deleteUserData(params: SpeechToTextV1.DeleteUserDataParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['customer_id'];
@@ -1645,6 +1648,9 @@ namespace SpeechToTextV1 {
   /** Options for the `SpeechToTextV1` constructor. */
   export type Options = {
     url?: string;
+    iam_access_token?: string;
+    iam_apikey?: string;
+    iam_url?: string;
     username?: string;
     password?: string;
     use_unauthenticated?: boolean;
@@ -2032,9 +2038,9 @@ namespace SpeechToTextV1 {
   export interface AddWordParams {
     /** The customization ID (GUID) of the custom language model. You must make the request with service credentials created for the instance of the service that owns the custom model. */
     customization_id: string;
-    /** The custom word for the custom language model. When adding or updating a custom word, do not include spaces in the word; use a `-` (dash) or `_` (underscore) to connect the tokens of compound words. */
+    /** The custom word for the custom language model. When you add or update a custom word with the **Add a custom word** method, do not include spaces in the word. Use a `-` (dash) or `_` (underscore) to connect the tokens of compound words. */
     word_name: string;
-    /** **When specifying an array of one or more words,** you must specify the custom word that is to be added to or updated in the custom model. Do not include spaces in the word. Use a - (dash) or _ (underscore) to connect the tokens of compound words. **When adding or updating a single word directly,** omit this field. */
+    /** For the **Add custom words** method, you must specify the custom word that is to be added to or updated in the custom model. Do not include spaces in the word. Use a `-` (dash) or `_` (underscore) to connect the tokens of compound words.   Omit this field for the **Add a custom word** method. */
     word?: string;
     /** An array of sounds-like pronunciations for the custom word. Specify how words that are difficult to pronounce, foreign words, acronyms, and so on can be pronounced by users. For a word that is not in the service's base vocabulary, omit the parameter to have the service automatically generate a sounds-like pronunciation for the word. For a word that is in the service's base vocabulary, use the parameter to specify additional pronunciations for the word. You cannot override the default pronunciation of a word; pronunciations you add augment the pronunciation from the base vocabulary. A word can have at most five sounds-like pronunciations, and a pronunciation can include at most 40 characters not including spaces. */
     sounds_like?: string[];
@@ -2056,7 +2062,7 @@ namespace SpeechToTextV1 {
   export interface DeleteWordParams {
     /** The customization ID (GUID) of the custom language model. You must make the request with service credentials created for the instance of the service that owns the custom model. */
     customization_id: string;
-    /** The custom word for the custom language model. When adding or updating a custom word, do not include spaces in the word; use a `-` (dash) or `_` (underscore) to connect the tokens of compound words. */
+    /** The custom word for the custom language model. When you add or update a custom word with the **Add a custom word** method, do not include spaces in the word. Use a `-` (dash) or `_` (underscore) to connect the tokens of compound words. */
     word_name: string;
     headers?: Object;
   }
@@ -2065,7 +2071,7 @@ namespace SpeechToTextV1 {
   export interface GetWordParams {
     /** The customization ID (GUID) of the custom language model. You must make the request with service credentials created for the instance of the service that owns the custom model. */
     customization_id: string;
-    /** The custom word for the custom language model. When adding or updating a custom word, do not include spaces in the word; use a `-` (dash) or `_` (underscore) to connect the tokens of compound words. */
+    /** The custom word for the custom language model. When you add or update a custom word with the **Add a custom word** method, do not include spaces in the word. Use a `-` (dash) or `_` (underscore) to connect the tokens of compound words. */
     word_name: string;
     headers?: Object;
   }
@@ -2256,8 +2262,8 @@ namespace SpeechToTextV1 {
     headers?: Object;
   }
 
-  /** Parameters for the `deleteLabeledData` operation. */
-  export interface DeleteLabeledDataParams {
+  /** Parameters for the `deleteUserData` operation. */
+  export interface DeleteUserDataParams {
     /** The customer ID for which all data is to be deleted. */
     customer_id: string;
     headers?: Object;
@@ -2269,7 +2275,7 @@ namespace SpeechToTextV1 {
 
   /** AcousticModel. */
   export interface AcousticModel {
-    /** The customization ID (GUID) of the custom acoustic model. **Note:** When you create a new custom acoustic model, the service returns only the GUID of the new model; it does not return the other fields of this object. */
+    /** The customization ID (GUID) of the custom acoustic model. The **Create a custom acoustic model** method returns only this field of the object; it does not return the other fields. */
     customization_id: string;
     /** The date and time in Coordinated Universal Time (UTC) at which the custom acoustic model was created. The value is provided in full ISO 8601 format (`YYYY-MM-DDThh:mm:ss.sTZD`). */
     created?: string;
@@ -2287,7 +2293,7 @@ namespace SpeechToTextV1 {
     base_model_name?: string;
     /** The current status of the custom acoustic model: * `pending` indicates that the model was created but is waiting either for training data to be added or for the service to finish analyzing added data. * `ready` indicates that the model contains data and is ready to be trained. * `training` indicates that the model is currently being trained. * `available` indicates that the model is trained and ready to use. * `upgrading` indicates that the model is currently being upgraded. * `failed` indicates that training of the model failed. */
     status?: string;
-    /** A percentage that indicates the progress of the custom acoustic model's current training. A value of `100` means that the model is fully trained. **Note:** The `progress` field does not currently reflect the progress of the training; the field changes from `0` to `100` when training is complete. */
+    /** A percentage that indicates the progress of the custom acoustic model's current training. A value of `100` means that the model is fully trained. **Note:** The `progress` field does not currently reflect the progress of the training. The field changes from `0` to `100` when training is complete. */
     progress?: number;
     /** If the request included unknown parameters, the following message: `Unexpected query parameter(s) ['parameters'] detected`, where `parameters` is a list that includes a quoted string for each unknown parameter. */
     warnings?: string;
@@ -2367,14 +2373,66 @@ namespace SpeechToTextV1 {
     error?: string;
   }
 
+  /** CreateAcousticModel. */
+  export interface CreateAcousticModel {
+    /** A user-defined name for the new custom acoustic model. Use a name that is unique among all custom acoustic models that you own. Use a localized name that matches the language of the custom model. Use a name that describes the acoustic environment of the custom model, such as `Mobile custom model` or `Noisy car custom model`. */
+    name: string;
+    /** The name of the base language model that is to be customized by the new custom acoustic model. The new custom model can be used only with the base model that it customizes. To determine whether a base model supports acoustic model customization, refer to [Language support for customization](https://console.bluemix.net/docs/services/speech-to-text/custom.html#languageSupport). */
+    base_model_name: string;
+    /** A description of the new custom acoustic model. Use a localized description that matches the language of the custom model. */
+    description?: string;
+  }
+
+  /** CreateLanguageModel. */
+  export interface CreateLanguageModel {
+    /** A user-defined name for the new custom language model. Use a name that is unique among all custom language models that you own. Use a localized name that matches the language of the custom model. Use a name that describes the domain of the custom model, such as `Medical custom model` or `Legal custom model`. */
+    name: string;
+    /** The name of the base language model that is to be customized by the new custom language model. The new custom model can be used only with the base model that it customizes. To determine whether a base model supports language model customization, request information about the base model and check that the attribute `custom_language_model` is set to `true`, or refer to [Language support for customization](https://console.bluemix.net/docs/services/speech-to-text/custom.html#languageSupport). */
+    base_model_name: string;
+    /** The dialect of the specified language that is to be used with the custom language model. The parameter is meaningful only for Spanish models, for which the service creates a custom language model that is suited for speech in one of the following dialects: * `es-ES` for Castilian Spanish (the default) * `es-LA` for Latin American Spanish * `es-US` for North American (Mexican) Spanish   A specified dialect must be valid for the base model. By default, the dialect matches the language of the base model; for example, `en-US` for either of the US English language models. */
+    dialect?: string;
+    /** A description of the new custom language model. Use a localized description that matches the language of the custom model. */
+    description?: string;
+  }
+
   /** CustomWord. */
   export interface CustomWord {
-    /** **When specifying an array of one or more words,** you must specify the custom word that is to be added to or updated in the custom model. Do not include spaces in the word. Use a - (dash) or _ (underscore) to connect the tokens of compound words. **When adding or updating a single word directly,** omit this field. */
+    /** For the **Add custom words** method, you must specify the custom word that is to be added to or updated in the custom model. Do not include spaces in the word. Use a `-` (dash) or `_` (underscore) to connect the tokens of compound words.   Omit this field for the **Add a custom word** method. */
     word?: string;
     /** An array of sounds-like pronunciations for the custom word. Specify how words that are difficult to pronounce, foreign words, acronyms, and so on can be pronounced by users. For a word that is not in the service's base vocabulary, omit the parameter to have the service automatically generate a sounds-like pronunciation for the word. For a word that is in the service's base vocabulary, use the parameter to specify additional pronunciations for the word. You cannot override the default pronunciation of a word; pronunciations you add augment the pronunciation from the base vocabulary. A word can have at most five sounds-like pronunciations, and a pronunciation can include at most 40 characters not including spaces. */
     sounds_like?: string[];
     /** An alternative spelling for the custom word when it appears in a transcript. Use the parameter when you want the word to have a spelling that is different from its usual representation or from its spelling in corpora training data. */
     display_as?: string;
+  }
+
+  /** CustomWords. */
+  export interface CustomWords {
+    /** An array of objects that provides information about each custom word that is to be added to or updated in the custom language model. */
+    words: CustomWord[];
+  }
+
+  /** ErrorModel. */
+  export interface ErrorModel {
+    /** Description of the problem. */
+    error: string;
+    /** HTTP response code. */
+    code: number;
+    /** Response message. */
+    code_description: string;
+    /** Warnings associated with the error. */
+    warnings?: string[];
+  }
+
+  /** ErrorModelSession. */
+  export interface ErrorModelSession {
+    /** Description of the problem. */
+    error: string;
+    /** HTTP response code. */
+    code: number;
+    /** Response message. */
+    code_description: string;
+    /** Specifies `true` if the active session is closed as a result of the problem. */
+    session_closed: boolean;
   }
 
   /** KeywordResult. */
@@ -2391,7 +2449,7 @@ namespace SpeechToTextV1 {
 
   /** LanguageModel. */
   export interface LanguageModel {
-    /** The customization ID (GUID) of the custom language model. **Note:** When you create a new custom language model, the service returns only the GUID of the new model; it does not return the other fields of this object. */
+    /** The customization ID (GUID) of the custom language model. The **Create a custom language model** method returns only this field of the object; it does not return the other fields. */
     customization_id: string;
     /** The date and time in Coordinated Universal Time (UTC) at which the custom language model was created. The value is provided in full ISO 8601 format (`YYYY-MM-DDThh:mm:ss.sTZD`). */
     created?: string;
@@ -2411,7 +2469,7 @@ namespace SpeechToTextV1 {
     base_model_name?: string;
     /** The current status of the custom language model: * `pending` indicates that the model was created but is waiting either for training data to be added or for the service to finish analyzing added data. * `ready` indicates that the model contains data and is ready to be trained. * `training` indicates that the model is currently being trained. * `available` indicates that the model is trained and ready to use. * `upgrading` indicates that the model is currently being upgraded. * `failed` indicates that training of the model failed. */
     status?: string;
-    /** A percentage that indicates the progress of the custom language model's current training. A value of `100` means that the model is fully trained. **Note:** The `progress` field does not currently reflect the progress of the training; the field changes from `0` to `100` when training is complete. */
+    /** A percentage that indicates the progress of the custom language model's current training. A value of `100` means that the model is fully trained. **Note:** The `progress` field does not currently reflect the progress of the training. The field changes from `0` to `100` when training is complete. */
     progress?: number;
     /** If the request included unknown parameters, the following message: `Unexpected query parameter(s) ['parameters'] detected`, where `parameters` is a list that includes a quoted string for each unknown parameter. */
     warnings?: string;
@@ -2431,15 +2489,15 @@ namespace SpeechToTextV1 {
     status: string;
     /** The date and time in Coordinated Universal Time (UTC) at which the job was created. The value is provided in full ISO 8601 format (`YYYY-MM-DDThh:mm:ss.sTZD`). */
     created: string;
-    /** The date and time in Coordinated Universal Time (UTC) at which the job was last updated by the service. The value is provided in full ISO 8601 format (`YYYY-MM-DDThh:mm:ss.sTZD`). **Note:** This field is returned only when you list information about a specific or all existing jobs. */
+    /** The date and time in Coordinated Universal Time (UTC) at which the job was last updated by the service. The value is provided in full ISO 8601 format (`YYYY-MM-DDThh:mm:ss.sTZD`). This field is returned only by the **Check jobs** and **Check a job** methods. */
     updated?: string;
-    /** The URL to use to request information about the job with the **Check a job** method. **Note:** This field is returned only when you create a new job. */
+    /** The URL to use to request information about the job with the **Check a job** method. This field is returned only by the **Create a job** method. */
     url?: string;
-    /** The user token associated with a job that was created with a callback URL and a user token. **Note:** This field can be returned only when you list information about all existing jobs. */
+    /** The user token associated with a job that was created with a callback URL and a user token. This field can be returned only by the **Check jobs** method. */
     user_token?: string;
-    /** If the status is `completed`, the results of the recognition request as an array that includes a single instance of a `SpeechRecognitionResults` object. **Note:** This field can be returned only when you list information about a specific existing job. */
+    /** If the status is `completed`, the results of the recognition request as an array that includes a single instance of a `SpeechRecognitionResults` object. This field is returned only by the **Check a job** method. */
     results?: SpeechRecognitionResults[];
-    /** An array of warning messages about invalid parameters included with the request. Each warning includes a descriptive message and a list of invalid argument strings, for example, `"unexpected query parameter 'user_token', query parameter 'callback_url' was not specified"`. The request succeeds despite the warnings. **Note:** This field can be returned only when you create a new job. */
+    /** An array of warning messages about invalid parameters included with the request. Each warning includes a descriptive message and a list of invalid argument strings, for example, `"unexpected query parameter 'user_token', query parameter 'callback_url' was not specified"`. The request succeeds despite the warnings. This field can be returned only by the **Create a job** method. */
     warnings?: string[];
   }
 
@@ -2455,6 +2513,12 @@ namespace SpeechToTextV1 {
     status: string;
     /** The callback URL that is successfully registered. */
     url: string;
+  }
+
+  /** SessionStatus. */
+  export interface SessionStatus {
+    /** Information about the specified existing session. */
+    session: SpeechSession;
   }
 
   /** SpeakerLabelsResult. */
@@ -2485,7 +2549,7 @@ namespace SpeechToTextV1 {
     supported_features: SupportedFeatures;
     /** Brief description of the model. */
     description: string;
-    /** The URI for the model for use with the **Create a session** method. (Returned only for requests for a single model with the **Get a model** method.). */
+    /** The URI for the model for use with the **Create a session** method. This field is returned only by the **Get a model** method. */
     sessions?: string;
   }
 
@@ -2531,11 +2595,31 @@ namespace SpeechToTextV1 {
     warnings?: string[];
   }
 
+  /** SpeechSession. */
+  export interface SpeechSession {
+    /** URI for HTTP REST recognition requests. */
+    recognize: string;
+    /** URI for WebSocket recognition requests. **Note:** This field is needed only for working with the WebSocket interface. */
+    recognize_ws: string;
+    /** URI for HTTP REST results observers. */
+    observe_result: string;
+    /** Identifier for the new session. This field is returned only by the **Create a session** method. */
+    session_id?: string;
+    /** URI for the new session. This field is returned only by the **Create a session** method. */
+    new_session_uri?: string;
+    /** State of the session. The state must be `initialized` for the session to accept another recognition request. Other internal states are possible, but they have no meaning for the user. This field is returned only by the **Get session status** method. */
+    state?: string;
+    /** URI for information about the model that is used with the session. This field is returned only by the **Get session status** method. */
+    model?: string;
+    /** **Undocumented pre-release feature.** URI for HTTP REST grammar validation. */
+    validate_grammar: string;
+  }
+
   /** SupportedFeatures. */
   export interface SupportedFeatures {
     /** Indicates whether the customization interface can be used to create a custom language model based on the language model. */
     custom_language_model: boolean;
-    /** Indicates whether the **speaker_labels** parameter can be used with the language model. */
+    /** Indicates whether the `speaker_labels` parameter can be used with the language model. */
     speaker_labels: boolean;
   }
 

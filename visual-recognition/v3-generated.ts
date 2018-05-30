@@ -26,7 +26,7 @@ import { FileObject } from '../lib/helper';
 
 class VisualRecognitionV3 extends BaseService {
 
-  static URL: string = 'https://gateway-a.watsonplatform.net/visual-recognition/api';
+  static URL: string = 'https://gateway.watsonplatform.net/visual-recognition/api';
   name: string; // set by prototype to 'watson_vision_combined'
   serviceVersion: string; // set by prototype to 'v3'
 
@@ -37,6 +37,9 @@ class VisualRecognitionV3 extends BaseService {
    * @param {string} options.version - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses the API version for the date you specify, or the most recent version before that date. Note that you should not programmatically specify the current date at runtime, in case the API has been updated since your application's release. Instead, specify a version date that is compatible with your application, and don't change it until your application is ready for a later version.
    * @param {string} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/visual-recognition/api'). The base url may differ between Bluemix regions.
    * @param {string} [options.api_key] - The API key used to authenticate with the service. The API key credential is only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
+   * @param {string} [options.iam_access_token] - An IAM access token fully managed by the application. Responsibility falls on the application to refresh the token, either before it expires or reactively upon receiving a 401 from the service, as any requests made with an expired token will fail.
+   * @param {string} [options.iam_apikey] - An API key that can be used to request IAM tokens. If this API key is provided, the SDK will manage the token and handle the refreshing.
+   * @param {string} [options.iam_url] - An optional URL for the IAM service API. Defaults to 'https://iam.ng.bluemix.net/identity/token'.
    * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
    * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
@@ -186,12 +189,12 @@ class VisualRecognitionV3 extends BaseService {
         contentType: 'application/octet-stream'
       }
     };
-        positiveExampleClasses.forEach(positiveExampleClass => {
-            formData[positiveExampleClass] = {
-              data: _params[positiveExampleClass],
-              contentType: 'application/octet-stream',
-            };
-          });
+    positiveExampleClasses.forEach(positiveExampleClass => {
+      formData[positiveExampleClass] = {
+        data: _params[positiveExampleClass],
+        contentType: 'application/octet-stream',
+      };
+    });
     const parameters = {
       options: {
         url: '/v3/classifiers',
@@ -330,7 +333,7 @@ class VisualRecognitionV3 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const positiveExampleClasses = Object.keys(_params).filter(key => {
-         return key.match(/^.+positive_examples$/);
+      return key.match(/^.+positive_examples$/);
     });
     const requiredParams = ['classifier_id'];
     const missingParams = getMissingParams(_params, requiredParams);
@@ -415,6 +418,48 @@ class VisualRecognitionV3 extends BaseService {
     return this.createRequest(parameters, _callback);
   };
 
+  /*************************
+   * userData
+   ************************/
+
+  /**
+   * Delete labeled data.
+   *
+   * Deletes all data associated with a specified customer ID. The method has no effect if no data is associated with the customer ID.   You associate a customer ID with data by passing the `X-Watson-Metadata` header with a request that passes data. For more information about personal data and customer IDs, see [Information security](https://console.bluemix.net/docs/services/visual-recognition/information-security.html).
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.customer_id - The customer ID for which all data is to be deleted.
+   * @param {Object} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {NodeJS.ReadableStream|void}
+   */
+  public deleteUserData(params: VisualRecognitionV3.DeleteUserDataParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Empty>): NodeJS.ReadableStream | void {
+    const _params = extend({}, params);
+    const _callback = (callback) ? callback : () => { /* noop */ };
+    const requiredParams = ['customer_id'];
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+    const query = {
+      'customer_id': _params.customer_id
+    };
+    const parameters = {
+      options: {
+        url: '/v3/user_data',
+        method: 'DELETE',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+    return this.createRequest(parameters, _callback);
+  };
+
 }
 
 VisualRecognitionV3.prototype.name = 'watson_vision_combined';
@@ -431,6 +476,9 @@ namespace VisualRecognitionV3 {
     version: string;
     url?: string;
     api_key?: string;
+    iam_access_token?: string;
+    iam_apikey?: string;
+    iam_url?: string;
     username?: string;
     password?: string;
     use_unauthenticated?: boolean;
@@ -542,6 +590,13 @@ namespace VisualRecognitionV3 {
     headers?: Object;
   }
 
+  /** Parameters for the `deleteUserData` operation. */
+  export interface DeleteUserDataParams {
+    /** The customer ID for which all data is to be deleted. */
+    customer_id: string;
+    headers?: Object;
+  }
+
   /*************************
    * model interfaces
    ************************/
@@ -570,6 +625,7 @@ namespace VisualRecognitionV3 {
     resolved_url?: string;
     /** Relative path of the image file if uploaded directly. Not returned when the image is passed by URL. */
     image?: string;
+    /** Information about what might have caused a failure, such as an image that is too large. Not returned when there is no error. */
     error?: ErrorInfo;
     /** The classifiers. */
     classifiers: ClassifierResult[];
@@ -627,6 +683,14 @@ namespace VisualRecognitionV3 {
     classifiers: Classifier[];
   }
 
+  /** Confidence score for the property in the range of 0 to 1. A higher score indicates greater likelihood that the class is depicted in the image. The default threshold for returning scores from a classifier is 0.5. */
+  export interface ConfidenceScore {
+  }
+
+  /** Number of custom classes identified in the images. */
+  export interface CustomClassesProcessed {
+  }
+
   /** Results for all faces. */
   export interface DetectedFaces {
     /** Number of images processed for the API call. */
@@ -635,6 +699,20 @@ namespace VisualRecognitionV3 {
     images: ImageWithFaces[];
     /** Information about what might cause less than optimal output. For example, a request sent with a corrupt .zip file and a list of image URLs will still complete, but does not return the expected output. Not returned when there is no warning. */
     warnings?: WarningInfo[];
+  }
+
+  /** ErrorAuthentication. */
+  export interface ErrorAuthentication {
+    /** The status of error. */
+    status: string;
+    /** Information about the error. */
+    status_info: string;
+  }
+
+  /** ErrorHTML. */
+  export interface ErrorHTML {
+    /** HTML description of the error. */
+    error?: string;
   }
 
   /** Information about what might have caused a failure, such as an image that is too large. Not returned when there is no error. */
@@ -647,10 +725,21 @@ namespace VisualRecognitionV3 {
     error_id: string;
   }
 
+  /** ErrorResponse. */
+  export interface ErrorResponse {
+    /** HTTP error code. */
+    code: number;
+    /** Human-readable error string, like 'Invalid image file'. */
+    error: string;
+  }
+
   /** Information about the face. */
   export interface Face {
+    /** Age information about a face. */
     age?: FaceAge;
+    /** Information about the gender of the face. */
     gender?: FaceGender;
+    /** The location of the bounding box around the face. */
     face_location?: FaceLocation;
   }
 
@@ -662,6 +751,10 @@ namespace VisualRecognitionV3 {
     max?: number;
     /** Confidence score in the range of 0 to 1. A higher score indicates greater confidence in the estimated value for the property. */
     score?: number;
+  }
+
+  /** Confidence score in the range of 0 to 1. A higher score indicates greater confidence in the estimated value for the property. */
+  export interface FaceConfidenceScore {
   }
 
   /** Information about the gender of the face. */
@@ -684,6 +777,10 @@ namespace VisualRecognitionV3 {
     top: number;
   }
 
+  /** Relative path of the image file if uploaded directly. Not returned when the image is passed by URL. */
+  export interface ImageFile {
+  }
+
   /** Information about faces in the image. */
   export interface ImageWithFaces {
     /** Faces detected in the images. */
@@ -694,7 +791,24 @@ namespace VisualRecognitionV3 {
     source_url?: string;
     /** Fully resolved URL of the image after redirects are followed. Not returned when the image is uploaded. */
     resolved_url?: string;
+    /** Information about what might have caused a failure, such as an image that is too large. Not returned when there is no error. */
     error?: ErrorInfo;
+  }
+
+  /** Number of images processed for the API call. */
+  export interface ImagesProcessed {
+  }
+
+  /** Fully resolved URL of the image after redirects are followed. Not returned when the image is uploaded. */
+  export interface ResolvedURL {
+  }
+
+  /** Source of the image before any redirects. Not returned when the image is uploaded. */
+  export interface SourceURL {
+  }
+
+  /** Knowledge graph of the property. For example, `/fruit/pome/apple/eating apple/Granny Smith`. Included only if identified. */
+  export interface TypeHierarchy {
   }
 
   /** Information about something that went wrong. */
