@@ -110,6 +110,10 @@ export class BaseService {
     }
     const options = extend({}, userOptions);
     const _options = this.initCredentials(options);
+    // If url is not specified, url needs to be changed for CF instances for visrec
+    if (_options && this.name === 'watson_vision_combined' && !_options.url && _options.api_key){
+      _options.url = 'https://gateway-a.watsonplatform.net/visual-recognition/api';
+    }
     if (options.url) {
       _options.url = stripTrailingSlash(options.url);
     }
@@ -149,9 +153,9 @@ export class BaseService {
     if (this._options.api_key) {
       credentials.api_key = this._options.api_key;
       // If CF instance for visrec, change URL unless specified by user
-      if (this.name === 'watson_vision_combined' && !this._options.url){
-        credentials.url = 'https://gateway-a.watsonplatform.net/visual-recognition/api';
-      }
+  //    if (this.name === 'watson_vision_combined' && !this._options.url){
+   //     credentials.url = 'https://gateway-a.watsonplatform.net/visual-recognition/api';
+   //   }
     }
     if (this._options.url) {
       credentials.url = this._options.url;
@@ -286,13 +290,13 @@ export class BaseService {
     const username: string = process.env[`${_name}_USERNAME`] || process.env[`${nameWithUnderscore}_USERNAME`];
     const password: string = process.env[`${_name}_PASSWORD`] || process.env[`${nameWithUnderscore}_PASSWORD`];
     const apiKey: string = process.env[`${_name}_API_KEY`] || process.env[`${nameWithUnderscore}_API_KEY`];
-    let url: string = process.env[`${_name}_URL`] || process.env[`${nameWithUnderscore}_URL`];
+    const url: string = process.env[`${_name}_URL`] || process.env[`${nameWithUnderscore}_URL`];
     // If CF instance for visrec, change URL unless specified by user
-    if (!url && name === 'visual_recognition'){
-      if (apiKey) {
-        url = 'https://gateway-a.watsonplatform.net/visual-recognition/api';
-      }
-    }
+ //   if (!url && name === 'visual_recognition'){
+ //     if (apiKey) {
+  //      url = 'https://gateway-a.watsonplatform.net/visual-recognition/api';
+ //     }
+ //   }
     const iamAccessToken: string = process.env[`${_name}_IAM_ACCESS_TOKEN`] || process.env[`${nameWithUnderscore}_IAM_ACCESS_TOKEN`];
     const iamApiKey: string = process.env[`${_name}_IAM_APIKEY`] || process.env[`${nameWithUnderscore}_IAM_APIKEY`];
     const iamUrl: string = process.env[`${_name}_IAM_URL`] || process.env[`${nameWithUnderscore}_IAM_URL`];
