@@ -96,6 +96,7 @@
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/languagetranslatorv2.deletemodelparams.html" class="tsd-kind-icon">Delete<wbr>Model<wbr>Params</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/languagetranslatorv2.deletemodelresult.html" class="tsd-kind-icon">Delete<wbr>Model<wbr>Result</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/languagetranslatorv2.empty.html" class="tsd-kind-icon">Empty</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/languagetranslatorv2.errorresponse.html" class="tsd-kind-icon">Error<wbr>Response</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/languagetranslatorv2.getmodelparams.html" class="tsd-kind-icon">Get<wbr>Model<wbr>Params</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/languagetranslatorv2.identifiablelanguage.html" class="tsd-kind-icon">Identifiable<wbr>Language</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/languagetranslatorv2.identifiablelanguages.html" class="tsd-kind-icon">Identifiable<wbr>Languages</a></li>
@@ -105,6 +106,7 @@
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/languagetranslatorv2.listidentifiablelanguagesparams.html" class="tsd-kind-icon">List<wbr>Identifiable<wbr>Languages<wbr>Params</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/languagetranslatorv2.listmodelsparams.html" class="tsd-kind-icon">List<wbr>Models<wbr>Params</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/languagetranslatorv2.translateparams.html" class="tsd-kind-icon">Translate<wbr>Params</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/languagetranslatorv2.translaterequest.html" class="tsd-kind-icon">Translate<wbr>Request</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/languagetranslatorv2.translation.html" class="tsd-kind-icon">Translation</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/languagetranslatorv2.translationmodel.html" class="tsd-kind-icon">Translation<wbr>Model</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/languagetranslatorv2.translationmodels.html" class="tsd-kind-icon">Translation<wbr>Models</a></li>
@@ -161,7 +163,7 @@
 					<div class="tsd-signature tsd-kind-icon">Callback<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/b6514c5/language-translator/v2-generated.ts#L360">language-translator/v2-generated.ts:360</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/7305fea/language-translator/v2-generated.ts#L366">language-translator/v2-generated.ts:366</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -203,7 +205,7 @@
 					<div class="tsd-signature tsd-kind-icon">Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/b6514c5/language-translator/v2-generated.ts#L351">language-translator/v2-generated.ts:351</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/7305fea/language-translator/v2-generated.ts#L354">language-translator/v2-generated.ts:354</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -216,6 +218,15 @@
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter">
 								<h5><span class="tsd-flag ts-flagOptional">Optional</span> headers<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">object</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> iam_<wbr>access_<wbr>token<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> iam_<wbr>apikey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> iam_<wbr>url<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
 							</li>
 							<li class="tsd-parameter">
 								<h5><span class="tsd-flag ts-flagOptional">Optional</span> password<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
@@ -246,7 +257,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides BaseService.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/b6514c5/language-translator/v2-generated.ts#L31">language-translator/v2-generated.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/7305fea/language-translator/v2-generated.ts#L31">language-translator/v2-generated.ts:31</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -283,7 +294,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseService._options</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/b6514c5/lib/base_service.ts#L83">lib/base_service.ts:83</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/7305fea/lib/base_service.ts#L83">lib/base_service.ts:83</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -294,7 +305,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.name</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/b6514c5/language-translator/v2-generated.ts#L30">language-translator/v2-generated.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/7305fea/language-translator/v2-generated.ts#L30">language-translator/v2-generated.ts:30</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -305,7 +316,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseService.serviceDefaults</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/b6514c5/lib/base_service.ts#L84">lib/base_service.ts:84</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/7305fea/lib/base_service.ts#L84">lib/base_service.ts:84</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -316,7 +327,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.serviceVersion</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/b6514c5/language-translator/v2-generated.ts#L31">language-translator/v2-generated.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/7305fea/language-translator/v2-generated.ts#L31">language-translator/v2-generated.ts:31</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -327,7 +338,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseService.tokenManager</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/b6514c5/lib/base_service.ts#L85">lib/base_service.ts:85</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/7305fea/lib/base_service.ts#L85">lib/base_service.ts:85</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -338,7 +349,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.URL</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/b6514c5/language-translator/v2-generated.ts#L29">language-translator/v2-generated.ts:29</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/7305fea/language-translator/v2-generated.ts#L29">language-translator/v2-generated.ts:29</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -355,7 +366,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/b6514c5/language-translator/v2-generated.ts#L186">language-translator/v2-generated.ts:186</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/7305fea/language-translator/v2-generated.ts#L189">language-translator/v2-generated.ts:189</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -394,7 +405,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.createRequest</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/b6514c5/lib/base_service.ts#L198">lib/base_service.ts:198</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/7305fea/lib/base_service.ts#L203">lib/base_service.ts:203</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -433,7 +444,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/b6514c5/language-translator/v2-generated.ts#L240">language-translator/v2-generated.ts:240</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/7305fea/language-translator/v2-generated.ts#L243">language-translator/v2-generated.ts:243</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -472,7 +483,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.getCredentials</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/b6514c5/lib/base_service.ts#L141">lib/base_service.ts:141</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/7305fea/lib/base_service.ts#L146">lib/base_service.ts:146</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -495,7 +506,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/b6514c5/language-translator/v2-generated.ts#L277">language-translator/v2-generated.ts:277</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/7305fea/language-translator/v2-generated.ts#L280">language-translator/v2-generated.ts:280</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -533,7 +544,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/b6514c5/language-translator/v2-generated.ts#L114">language-translator/v2-generated.ts:114</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/7305fea/language-translator/v2-generated.ts#L117">language-translator/v2-generated.ts:117</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -571,7 +582,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/b6514c5/language-translator/v2-generated.ts#L150">language-translator/v2-generated.ts:150</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/7305fea/language-translator/v2-generated.ts#L153">language-translator/v2-generated.ts:153</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -606,7 +617,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/b6514c5/language-translator/v2-generated.ts#L316">language-translator/v2-generated.ts:316</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/7305fea/language-translator/v2-generated.ts#L319">language-translator/v2-generated.ts:319</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -642,7 +653,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.setAccessToken</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/b6514c5/lib/base_service.ts#L179">lib/base_service.ts:179</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/7305fea/lib/base_service.ts#L184">lib/base_service.ts:184</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -678,7 +689,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/b6514c5/language-translator/v2-generated.ts#L68">language-translator/v2-generated.ts:68</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/7305fea/language-translator/v2-generated.ts#L71">language-translator/v2-generated.ts:71</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -748,6 +759,9 @@
 								<a href="../interfaces/languagetranslatorv2.empty.html" class="tsd-kind-icon">Empty</a>
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class">
+								<a href="../interfaces/languagetranslatorv2.errorresponse.html" class="tsd-kind-icon">Error<wbr>Response</a>
+							</li>
+							<li class=" tsd-kind-interface tsd-parent-kind-class">
 								<a href="../interfaces/languagetranslatorv2.getmodelparams.html" class="tsd-kind-icon">Get<wbr>Model<wbr>Params</a>
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class">
@@ -773,6 +787,9 @@
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class">
 								<a href="../interfaces/languagetranslatorv2.translateparams.html" class="tsd-kind-icon">Translate<wbr>Params</a>
+							</li>
+							<li class=" tsd-kind-interface tsd-parent-kind-class">
+								<a href="../interfaces/languagetranslatorv2.translaterequest.html" class="tsd-kind-icon">Translate<wbr>Request</a>
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class">
 								<a href="../interfaces/languagetranslatorv2.translation.html" class="tsd-kind-icon">Translation</a>

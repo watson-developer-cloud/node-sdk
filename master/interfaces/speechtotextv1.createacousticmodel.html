@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>DeleteLabeledDataParams | watson-developer-cloud</title>
+	<title>CreateAcousticModel | watson-developer-cloud</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,13 +54,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../classes/texttospeechv1.html">TextToSpeechV1</a>
+					<a href="../classes/speechtotextv1.html">SpeechToTextV1</a>
 				</li>
 				<li>
-					<a href="texttospeechv1.deletelabeleddataparams.html">DeleteLabeledDataParams</a>
+					<a href="speechtotextv1.createacousticmodel.html">CreateAcousticModel</a>
 				</li>
 			</ul>
-			<h1>Interface DeleteLabeledDataParams</h1>
+			<h1>Interface CreateAcousticModel</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Parameters for the <code>deleteLabeledData</code> operation.</p>
+						<p>CreateAcousticModel.</p>
 					</div>
 				</div>
 			</section>
@@ -78,7 +78,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">DeleteLabeledDataParams</span>
+						<span class="target">CreateAcousticModel</span>
 					</li>
 				</ul>
 			</section>
@@ -89,8 +89,9 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="texttospeechv1.deletelabeleddataparams.html#customer_id" class="tsd-kind-icon">customer_<wbr>id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="texttospeechv1.deletelabeleddataparams.html#headers" class="tsd-kind-icon">headers</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.createacousticmodel.html#base_model_name" class="tsd-kind-icon">base_<wbr>model_<wbr>name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.createacousticmodel.html#description" class="tsd-kind-icon">description</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.createacousticmodel.html#name" class="tsd-kind-icon">name</a></li>
 							</ul>
 						</section>
 					</div>
@@ -99,29 +100,49 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="customer_id" class="tsd-anchor"></a>
-					<h3>customer_<wbr>id</h3>
-					<div class="tsd-signature tsd-kind-icon">customer_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="base_model_name" class="tsd-anchor"></a>
+					<h3>base_<wbr>model_<wbr>name</h3>
+					<div class="tsd-signature tsd-kind-icon">base_<wbr>model_<wbr>name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/b6514c5/text-to-speech/v1-generated.ts#L976">text-to-speech/v1-generated.ts:976</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/7305fea/speech-to-text/v1-generated.ts#L2381">speech-to-text/v1-generated.ts:2381</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The customer ID for which all data is to be deleted.</p>
+							<p>The name of the base language model that is to be customized by the new custom acoustic model. The new custom model can be used only with the base model that it customizes. To determine whether a base model supports acoustic model customization, refer to <a href="https://console.bluemix.net/docs/services/speech-to-text/custom.html#languageSupport">Language support for customization</a>.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="headers" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> headers</h3>
-					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Object</span></div>
+					<a name="description" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> description</h3>
+					<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/b6514c5/text-to-speech/v1-generated.ts#L977">text-to-speech/v1-generated.ts:977</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/7305fea/speech-to-text/v1-generated.ts#L2383">speech-to-text/v1-generated.ts:2383</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A description of the new custom acoustic model. Use a localized description that matches the language of the custom model.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="name" class="tsd-anchor"></a>
+					<h3>name</h3>
+					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/7305fea/speech-to-text/v1-generated.ts#L2379">speech-to-text/v1-generated.ts:2379</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A user-defined name for the new custom acoustic model. Use a name that is unique among all custom acoustic models that you own. Use a localized name that matches the language of the custom model. Use a name that describes the acoustic environment of the custom model, such as <code>Mobile custom model</code> or <code>Noisy car custom model</code>.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -165,22 +186,22 @@
 					<li class=" tsd-kind-class">
 						<a href="../classes/recognizestream.html" class="tsd-kind-icon">Recognize<wbr>Stream</a>
 					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/speechtotextv1.html" class="tsd-kind-icon">Speech<wbr>ToText<wbr>V1</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
-						<a href="../classes/texttospeechv1.html" class="tsd-kind-icon">Text<wbr>ToSpeech<wbr>V1</a>
+						<a href="../classes/speechtotextv1.html" class="tsd-kind-icon">Speech<wbr>ToText<wbr>V1</a>
 						<ul>
 							<li class="current tsd-kind-interface tsd-parent-kind-class">
-								<a href="texttospeechv1.deletelabeleddataparams.html" class="tsd-kind-icon">Delete<wbr>Labeled<wbr>Data<wbr>Params</a>
+								<a href="speechtotextv1.createacousticmodel.html" class="tsd-kind-icon">Create<wbr>Acoustic<wbr>Model</a>
 								<ul>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="texttospeechv1.deletelabeleddataparams.html#customer_id" class="tsd-kind-icon">customer_<wbr>id</a>
+										<a href="speechtotextv1.createacousticmodel.html#base_model_name" class="tsd-kind-icon">base_<wbr>model_<wbr>name</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="texttospeechv1.deletelabeleddataparams.html#headers" class="tsd-kind-icon">headers</a>
+										<a href="speechtotextv1.createacousticmodel.html#description" class="tsd-kind-icon">description</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="speechtotextv1.createacousticmodel.html#name" class="tsd-kind-icon">name</a>
 									</li>
 								</ul>
 							</li>
@@ -188,6 +209,9 @@
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-class">
+						<a href="../classes/texttospeechv1.html" class="tsd-kind-icon">Text<wbr>ToSpeech<wbr>V1</a>
+					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/toneanalyzerv3.html" class="tsd-kind-icon">Tone<wbr>Analyzer<wbr>V3</a>
 					</li>
