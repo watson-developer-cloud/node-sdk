@@ -523,8 +523,35 @@ describe('visual_recognition', function() {
     });
   });
 
-  describe('Credentials', function() {
-    it('should load its credentials from bluemix (VR)', function() {
+  describe('RC and CF urls', function() {
+    it('should have the correct URL depending on rc/cf', function(done) {
+      const visual_recognition_cf = new watson.VisualRecognitionV3({
+        api_key: 'apikey',
+        version: '2018-03-19',
+      });
+      const visual_recognition_rc = new watson.VisualRecognitionV3({
+        iam_apikey: 'iam_apikey',
+        version: '2018-03-19',
+      });
+      const visual_recognition_url = new watson.VisualRecognitionV3({
+        api_key: 'apikey',
+        url: 'hello.com',
+        version: '2018-03-19',
+      });
+
+      assert.equal(
+        visual_recognition_cf._options.url,
+        'https://gateway-a.watsonplatform.net/visual-recognition/api'
+      );
+      assert.equal(
+        visual_recognition_rc._options.url,
+        'https://gateway.watsonplatform.net/visual-recognition/api'
+      );
+      assert.equal(visual_recognition_url._options.url, 'hello.com');
+      done();
+    });
+
+    it('should load its credentials from bluemix (VR) with correct url', function() {
       process.env.VCAP_SERVICES = JSON.stringify({
         watson_vision_combined: [
           {
@@ -534,24 +561,24 @@ describe('visual_recognition', function() {
           },
         ],
       });
-      const visual_recognition_cf = new watson.VisualRecognitionV3({
+      const visual_recognition_bluemix = new watson.VisualRecognitionV3({
         version: '2018-03-19',
       });
-      assert(visual_recognition_cf);
+      assert(visual_recognition_bluemix);
       assert.equal(
-        visual_recognition_cf.getCredentials().url,
+        visual_recognition_bluemix.getCredentials().url,
         'https://gateway-a.watsonplatform.net/visual-recognition/api'
       );
     });
 
     it('should load its credentials from environment (VR)', function() {
       process.env.VISUAL_RECOGNITION_API_KEY = 'key';
-      const visual_recognition_cf = new watson.VisualRecognitionV3({
+      const visual_recognition_env = new watson.VisualRecognitionV3({
         version: '2018-03-19',
       });
-      assert(visual_recognition_cf);
+      assert(visual_recognition_env);
       assert.equal(
-        visual_recognition_cf.getCredentials().url,
+        visual_recognition_env.getCredentials().url,
         'https://gateway-a.watsonplatform.net/visual-recognition/api'
       );
     });
