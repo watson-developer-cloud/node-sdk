@@ -11,7 +11,7 @@ var discovery = new DiscoveryV1({
   // url: 'INSERT YOUR URL FOR THE SERVICE HERE'
   username: 'YOUR USERNAME',
   password: 'YOUR PASSWORD',
-  version: '2017_04_27',
+  version: '2018-03-05',
   url: 'https://gateway.watsonplatform.net/discovery/api/'
 });
 

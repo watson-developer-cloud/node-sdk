@@ -36,6 +36,7 @@ describe('visual_recognition_integration', function() {
       const params = {
         images_file: fs.createReadStream(__dirname + '/../resources/car.png'),
       };
+      console.log(visual_recognition.getCredentials().url);
       visual_recognition.classify(params, function(err, result) {
         if (err) {
           return done(err);
@@ -59,6 +60,7 @@ describe('visual_recognition_integration', function() {
       const params = {
         images_file: fs.readFileSync(__dirname + '/../resources/car.png'),
       };
+      console.log(visual_recognition.getCredentials().url);
       visual_recognition.classify(params, function(err, result) {
         if (err) {
           return done(err);
@@ -80,6 +82,7 @@ describe('visual_recognition_integration', function() {
       const params = {
         url: 'https://watson-test-resources.mybluemix.net/resources/car.png',
       };
+      console.log(visual_recognition.getCredentials().url);
       visual_recognition.classify(params, function(err, result) {
         if (err) {
           return done(err);
@@ -111,6 +114,7 @@ describe('visual_recognition_integration', function() {
       const params = {
         images_file: fs.createReadStream(__dirname + '/../resources/obama.jpg'),
       };
+      console.log(visual_recognition.getCredentials().url);
       visual_recognition.detectFaces(params, function(err, result) {
         if (err) {
           return done(err);
