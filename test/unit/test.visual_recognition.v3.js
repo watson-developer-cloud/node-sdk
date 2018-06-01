@@ -582,6 +582,38 @@ describe('visual_recognition', function() {
         'https://gateway-a.watsonplatform.net/visual-recognition/api'
       );
     });
+
+    it('should load its credentials from bluemix (VR) with correct url (RC)', function() {
+      process.env.VCAP_SERVICES = JSON.stringify({
+        watson_vision_combined: [
+          {
+            credentials: {
+              iam_apikey: 'somekey',
+            },
+          },
+        ],
+      });
+      const visual_recognition_bluemix = new watson.VisualRecognitionV3({
+        version: '2018-03-19',
+      });
+      assert(visual_recognition_bluemix);
+      assert.equal(
+        visual_recognition_bluemix.getCredentials().url,
+        'https://gateway.watsonplatform.net/visual-recognition/api'
+      );
+    });
+
+    it('should load its credentials from environment (VR) (RC)', function() {
+      process.env.VISUAL_RECOGNITION_IAM_APIKEY = 'key';
+      const visual_recognition_env = new watson.VisualRecognitionV3({
+        version: '2018-03-19',
+      });
+      assert(visual_recognition_env);
+      assert.equal(
+        visual_recognition_env.getCredentials().url,
+        'https://gateway.watsonplatform.net/visual-recognition/api'
+      );
+    });
   });
 
   describe('getCoreMlModel()', function() {
