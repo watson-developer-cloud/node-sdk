@@ -40,7 +40,6 @@ describe('visual_recognition_integration', function() {
         if (err) {
           return done(err);
         }
-        // console.log(JSON.stringify(result, null, 2));
         assert.equal(result.images_processed, 1);
         assert.equal(result.images[0].image, 'car.png');
         assert(result.images[0].classifiers.length);
@@ -63,7 +62,6 @@ describe('visual_recognition_integration', function() {
         if (err) {
           return done(err);
         }
-        // console.log(JSON.stringify(result, null, 2));
         assert.equal(result.images_processed, 1);
         assert(result.images[0].classifiers.length);
         assert(

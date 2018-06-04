@@ -96,11 +96,11 @@ describe('visual_recognition', function() {
 
   describe('credentials', function() {
     let env;
-    before(function() {
+    beforeEach(function() {
       env = process.env;
       process.env = {};
     });
-    after(function() {
+    afterEach(function() {
       process.env = env;
     });
 
@@ -148,10 +148,8 @@ describe('visual_recognition', function() {
     });
 
     it('should read VISUAL_RECOGNITION_USERNAME / PASSWORD from environment properties', function() {
-      process.env = {
-        VISUAL_RECOGNITION_USERNAME: 'foo',
-        VISUAL_RECOGNITION_PASSWORD: 'bar',
-      };
+      process.env.VISUAL_RECOGNITION_USERNAME = 'foo';
+      process.env.VISUAL_RECOGNITION_PASSWORD = 'bar';
       const instance = new watson.VisualRecognitionV3({
         version: '2016-05-20',
       });
@@ -161,48 +159,45 @@ describe('visual_recognition', function() {
     });
 
     it('should read api_key from cf/bluemix environment properties', function() {
-      process.env = {
-        VCAP_SERVICES: JSON.stringify({
-          watson_vision_combined: [
-            {
-              name: 'Visual Recognition-mj',
-              label: 'watson_vision_combined',
-              plan: 'free',
-              credentials: {
-                url: 'https://gateway-a.watsonplatform.net/visual-recognition/api',
-                note: 'It may take up to 5 minutes for this key to become active',
-                api_key: 'foo',
-              },
+      process.env.VCAP_SERVICES = JSON.stringify({
+        watson_vision_combined: [
+          {
+            name: 'Visual Recognition-mj',
+            label: 'watson_vision_combined',
+            plan: 'free',
+            credentials: {
+              url: 'https://gateway-a.watsonplatform.net/visual-recognition/api',
+              note: 'It may take up to 5 minutes for this key to become active',
+              api_key: 'foo',
             },
-          ],
-        }),
-      };
+          },
+        ],
+      });
       const instance = new watson.VisualRecognitionV3({
         version: '2016-05-20',
       });
+      console.log(instance._options);
       assert.equal(instance._options.api_key, 'foo');
       assert.equal(instance._options.username, undefined);
       assert.equal(instance._options.password, undefined);
     });
 
     it('should read username / password from cf/bluemix environment properties', function() {
-      process.env = {
-        VCAP_SERVICES: JSON.stringify({
-          watson_vision_combined: [
-            {
-              name: 'Visual Recognition-mj',
-              label: 'watson_vision_combined',
-              plan: 'free',
-              credentials: {
-                url: 'https://gateway-a.watsonplatform.net/visual-recognition/api',
-                note: 'It may take up to 5 minutes for this key to become active',
-                username: 'foo',
-                password: 'bar',
-              },
+      process.env.VCAP_SERVICES = JSON.stringify({
+        watson_vision_combined: [
+          {
+            name: 'Visual Recognition-mj',
+            label: 'watson_vision_combined',
+            plan: 'free',
+            credentials: {
+              url: 'https://gateway-a.watsonplatform.net/visual-recognition/api',
+              note: 'It may take up to 5 minutes for this key to become active',
+              username: 'foo',
+              password: 'bar',
             },
-          ],
-        }),
-      };
+          },
+        ],
+      });
       const instance = new watson.VisualRecognitionV3({
         version: '2016-05-20',
       });
@@ -524,6 +519,14 @@ describe('visual_recognition', function() {
   });
 
   describe('RC and CF urls', function() {
+    let env;
+    beforeEach(function() {
+      env = process.env;
+      process.env = {};
+    });
+    afterEach(function() {
+      process.env = env;
+    });
     it('should have the correct URL depending on rc/cf', function(done) {
       const visual_recognition_cf = new watson.VisualRecognitionV3({
         api_key: 'apikey',
