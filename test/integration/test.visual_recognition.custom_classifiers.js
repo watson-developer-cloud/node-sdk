@@ -27,7 +27,7 @@ describe.skip('visual_recognition_integration_custom_classifiers', function() {
 
   before(function(done) {
     visual_recognition = new watson.VisualRecognitionV3(
-      Object.assign({}, auth.visual_recognition_rc.v3, {
+      Object.assign({}, auth.visual_recognition.v3, {
         version: '2018-03-19',
       })
     );
@@ -129,7 +129,7 @@ describe.skip('visual_recognition_integration_custom_classifiers', function() {
     });
   }); // custom classifiers
 
-  describe.skip('pre-populated classifier @slow', function() {
+  describe('pre-populated classifier @slow', function() {
     let classifier_id;
 
     before(function() {
