@@ -112,6 +112,7 @@ describe('BaseService', function() {
       url: 'https://gateway.watsonplatform.net/test/api',
     };
     assert.deepEqual(actual, expected);
+    assert.notEqual(instance.tokenManager, null);
   });
 
   it('should prefer hard-coded credentials over environment properties', function() {
@@ -216,6 +217,18 @@ describe('BaseService', function() {
 
     assert.equal(instance.tokenManager, null);
     instance.setAccessToken('abcd-1234');
+    assert.notEqual(instance.tokenManager, null);
+  });
+
+  it('should create a token manager instance if env variables specify iam credentials', function() {
+    process.env.TEST_IAM_APIKEY = 'test1234';
+    const instance = new TestService();
+    const actual = instance.getCredentials();
+    const expected = {
+      iam_apikey: 'test1234',
+      url: 'https://gateway.watsonplatform.net/test/api',
+    };
+    assert.deepEqual(actual, expected);
     assert.notEqual(instance.tokenManager, null);
   });
 });
