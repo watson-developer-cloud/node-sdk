@@ -21,7 +21,7 @@ describe('visual_recognition_integration', function() {
   before(function() {
     visual_recognition = new watson.VisualRecognitionV3(
       Object.assign({}, auth.visual_recognition.v3, {
-        version: watson.VisualRecognitionV3.VERSION_DATE_2016_05_20,
+        version: '2018-03-19',
       })
     );
     nock.enableNetConnect();

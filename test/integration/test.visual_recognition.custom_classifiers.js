@@ -17,7 +17,7 @@ const logit = function(string) {
   return string;
 };
 
-describe('visual_recognition_integration_custom_classifiers', function() {
+describe.skip('visual_recognition_integration_custom_classifiers', function() {
   // ugh.
   this.timeout(THIRTY_SECONDS * 8);
   this.slow(TWO_SECONDS);
@@ -27,8 +27,8 @@ describe('visual_recognition_integration_custom_classifiers', function() {
 
   before(function(done) {
     visual_recognition = new watson.VisualRecognitionV3(
-      Object.assign({}, auth.visual_recognition.v3, {
-        version: watson.VisualRecognitionV3.VERSION_DATE_2016_05_20,
+      Object.assign({}, auth.visual_recognition_rc.v3, {
+        version: '2018-03-19',
       })
     );
     nock.enableNetConnect();
@@ -129,7 +129,7 @@ describe('visual_recognition_integration_custom_classifiers', function() {
     });
   }); // custom classifiers
 
-  describe('pre-populated classifier @slow', function() {
+  describe.skip('pre-populated classifier @slow', function() {
     let classifier_id;
 
     before(function() {
