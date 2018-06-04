@@ -31,7 +31,6 @@ describe('visual_recognition_integration_custom_classifiers', function() {
         version: watson.VisualRecognitionV3.VERSION_DATE_2016_05_20,
       })
     );
-    console.log(visual_recognition.getCredentials().url);
     nock.enableNetConnect();
 
     // clean up any leftover temp classifiers from previous test runs

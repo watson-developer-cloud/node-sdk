@@ -36,12 +36,10 @@ describe('visual_recognition_integration', function() {
       const params = {
         images_file: fs.createReadStream(__dirname + '/../resources/car.png'),
       };
-      console.log(visual_recognition.getCredentials().url);
       visual_recognition.classify(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        // console.log(JSON.stringify(result, null, 2));
         assert.equal(result.images_processed, 1);
         assert.equal(result.images[0].image, 'car.png');
         assert(result.images[0].classifiers.length);
@@ -60,12 +58,10 @@ describe('visual_recognition_integration', function() {
       const params = {
         images_file: fs.readFileSync(__dirname + '/../resources/car.png'),
       };
-      console.log(visual_recognition.getCredentials().url);
       visual_recognition.classify(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        // console.log(JSON.stringify(result, null, 2));
         assert.equal(result.images_processed, 1);
         assert(result.images[0].classifiers.length);
         assert(
@@ -82,7 +78,6 @@ describe('visual_recognition_integration', function() {
       const params = {
         url: 'https://watson-test-resources.mybluemix.net/resources/car.png',
       };
-      console.log(visual_recognition.getCredentials().url);
       visual_recognition.classify(params, function(err, result) {
         if (err) {
           return done(err);
@@ -114,7 +109,6 @@ describe('visual_recognition_integration', function() {
       const params = {
         images_file: fs.createReadStream(__dirname + '/../resources/obama.jpg'),
       };
-      console.log(visual_recognition.getCredentials().url);
       visual_recognition.detectFaces(params, function(err, result) {
         if (err) {
           return done(err);
