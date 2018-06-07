@@ -135,8 +135,8 @@ describe('visual_recognition_integration_custom_classifiers', function() {
             return;
           }
           if (response.status === 'failed') {
-            reject(new Error(response.explanation));
-            return;
+            logit(`Classifier ${classifier_id} failed training, ready for deletion.`);
+            resolve();
           }
           if (response.status !== 'ready') {
             logit(JSON.stringify(response));
