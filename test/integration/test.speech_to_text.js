@@ -28,8 +28,19 @@ describe('speech_to_text_integration', function() {
   });
 
   let speech_to_text;
+  let speech_to_text_rc;
+
   beforeEach(function() {
     speech_to_text = new watson.SpeechToTextV1(auth.speech_to_text);
+    speech_to_text_rc = new watson.SpeechToTextV1(auth.speech_to_text_rc);
+  });
+
+  it('recognize() (RC)', function(done) {
+    const params = {
+      audio: fs.createReadStream(path.join(__dirname, '../resources/weather.ogg')),
+      content_type: 'audio/ogg; codec=opus',
+    };
+    speech_to_text_rc.recognize(params, done);
   });
 
   it('recognize()', function(done) {
@@ -111,6 +122,91 @@ describe('speech_to_text_integration', function() {
 
   it('getModels()', function(done) {
     speech_to_text.getModels({}, done);
+  });
+
+  describe('createRecognizeStream() (RC) (credentials from environment/VCAP)', () => {
+    let env;
+    beforeEach(function() {
+      env = process.env;
+      process.env = {};
+    });
+    afterEach(function() {
+      process.env = env;
+    });
+
+    it('transcribes audio over a websocket, credentials from environment', function(done) {
+      process.env.SPEECH_TO_TEXT_IAM_APIKEY = auth.speech_to_text_rc.iam_apikey;
+      process.env.SPEECH_TO_TEXT_URL = auth.speech_to_text_rc.url;
+      const speech_to_text_env = new watson.SpeechToTextV1({});
+
+      const recognizeStream = speech_to_text_env.createRecognizeStream();
+      recognizeStream.setEncoding('utf8');
+      fs
+        .createReadStream(path.join(__dirname, '../resources/weather.flac'))
+        .pipe(recognizeStream)
+        .on('error', done)
+        .pipe(
+          concat(function(transcription) {
+            assert.equal(typeof transcription, 'string', 'should return a string transcription');
+            assert.equal(
+              transcription.trim(),
+              'thunderstorms could produce large hail isolated tornadoes and heavy rain'
+            );
+            done();
+          })
+        );
+    });
+
+    it('transcribes audio over a websocket, credentials from VCAP_SERVICES', function(done) {
+      process.env.VCAP_SERVICES = JSON.stringify({
+        speech_to_text: [
+          {
+            credentials: {
+              iam_apikey: auth.speech_to_text_rc.iam_apikey,
+              url: auth.speech_to_text_rc.url,
+            },
+          },
+        ],
+      });
+      const speech_to_text_vcap = new watson.SpeechToTextV1({});
+      const recognizeStream = speech_to_text_vcap.createRecognizeStream();
+      recognizeStream.setEncoding('utf8');
+      fs
+        .createReadStream(path.join(__dirname, '../resources/weather.flac'))
+        .pipe(recognizeStream)
+        .on('error', done)
+        .pipe(
+          concat(function(transcription) {
+            assert.equal(typeof transcription, 'string', 'should return a string transcription');
+            assert.equal(
+              transcription.trim(),
+              'thunderstorms could produce large hail isolated tornadoes and heavy rain'
+            );
+            done();
+          })
+        );
+    });
+  });
+
+  describe('createRecognizeStream() (RC)', () => {
+    it('transcribes audio over a websocket', function(done) {
+      const recognizeStream = speech_to_text_rc.createRecognizeStream();
+      recognizeStream.setEncoding('utf8');
+      fs
+        .createReadStream(path.join(__dirname, '../resources/weather.flac'))
+        .pipe(recognizeStream)
+        .on('error', done)
+        .pipe(
+          concat(function(transcription) {
+            assert.equal(typeof transcription, 'string', 'should return a string transcription');
+            assert.equal(
+              transcription.trim(),
+              'thunderstorms could produce large hail isolated tornadoes and heavy rain'
+            );
+            done();
+          })
+        );
+    });
   });
 
   describe('createRecognizeStream()', () => {
