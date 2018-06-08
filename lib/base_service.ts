@@ -125,12 +125,11 @@ export class BaseService {
       options,
       _options
     );
-
-    if (_options.iam_apikey || _options.iam_access_token) {
+     if (options.iam_apikey || options.iam_access_token) {
       this.tokenManager = new IamTokenManagerV1({
-        iamApikey: _options.iam_apikey,
-        iamAccessToken: _options.iam_access_token,
-        iamUrl: _options.iam_url
+        iamApikey: options.iam_apikey,
+        iamAccessToken: options.iam_access_token,
+        iamUrl: options.iam_url
       });
     } else {
       this.tokenManager = null;
@@ -193,17 +192,43 @@ export class BaseService {
   }
 
   /**
+   * Guarantee that the next request you make will be IAM authenticated. This
+   * performs any requests necessary to get a valid IAM token so that if your
+   * next request involves a streaming operation, it will not be interrupted.
+   * This is only applicable to services with streaming operations,
+   * like Speech to Text. Otherwise, this method is redundant.
+   *
+   * @param {Function} callback - callback function to pass response to. 
+   *                              (will return `true` if ready and `false` if not)
+   * @returns {void}
+   */
+  public preAuthenticate(callback): void {
+     if (Boolean(this.tokenManager)) {
+      return this.tokenManager.getToken((err, token) => {
+        if (err) {
+          callback(false);
+        }
+        const authHeader = { Authorization: 'Bearer ' + token };
+        this._options.headers = extend(authHeader, this._options.headers);
+        callback(true);
+      });
+    } else {
+      callback(true);
+    }
+  }
+
+  /**
    * Wrapper around `sendRequest` that determines whether or not IAM tokens
    * are being used to authenticate the request. If so, the token is 
    * retrieved by the token manager.
    *
    * @param {Object} parameters - service request options passed in by user
-   * @param {Function} callback - callback function to pass the reponse back to
+   * @param {Function} callback - callback function to pass the response back to
    * @returns {ReadableStream|undefined}
    */
   protected createRequest(parameters, callback) {
      if (Boolean(this.tokenManager)) {
-      this.tokenManager.getToken((err, accessToken) => {
+      return this.tokenManager.getToken((err, accessToken) => {
         if (err) {
           return callback(err);
         }
@@ -215,6 +240,7 @@ export class BaseService {
       return sendRequest(parameters, callback);
     }
   }
+
   /**
    * @private
    * @param {UserOptions} options
