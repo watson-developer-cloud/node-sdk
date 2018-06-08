@@ -125,11 +125,11 @@ export class BaseService {
       options,
       _options
     );
-     if (options.iam_apikey || options.iam_access_token) {
+    if (_options.iam_apikey || _options.iam_access_token) {
       this.tokenManager = new IamTokenManagerV1({
-        iamApikey: options.iam_apikey,
-        iamAccessToken: options.iam_access_token,
-        iamUrl: options.iam_url
+        iamApikey: _options.iam_apikey,
+        iamAccessToken: _options.iam_access_token,
+        iamUrl: _options.iam_url
       });
     } else {
       this.tokenManager = null;
