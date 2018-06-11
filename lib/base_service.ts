@@ -227,7 +227,7 @@ export class BaseService {
    * @returns {ReadableStream|undefined}
    */
   protected createRequest(parameters, callback) {
-     if (Boolean(this.tokenManager)) {
+    if (Boolean(this.tokenManager)) {
       return this.tokenManager.getToken((err, accessToken) => {
         if (err) {
           return callback(err);

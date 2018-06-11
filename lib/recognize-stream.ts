@@ -22,6 +22,9 @@ import websocket = require ('websocket');
 import contentType = require('./content-type');
 import qs = require('./querystring');
 
+// added
+import { IamTokenManagerV1 } from '../iam-token-manager/v1';
+
 const w3cWebSocket = websocket.w3cwebsocket;
 
 const OPENING_MESSAGE_PARAMS_ALLOWED = [
@@ -49,6 +52,21 @@ const QUERY_PARAMS_ALLOWED = [
 interface RecognizeStream extends Duplex {
   _writableState;
   readableObjectMode;
+}
+
+function preAuthenticate(options, callback) {
+  const apikey = 'WubCeHiJ3PaAu4cFL7lfx2LMPJDKEwHwOXh8hXV_x2yY';
+  const tokenManager = new IamTokenManagerV1({
+    iamApikey: apikey
+  });
+  tokenManager.getToken((err, token) => {
+    if (err) {
+      callback();
+    }
+    const authHeader = { authorization: 'Bearer ' + token };
+    options.headers = extend(authHeader, options.headers);
+    callback();
+  });
 }
 
 /**
@@ -398,6 +416,11 @@ class RecognizeStream extends Duplex {
       // can't send any more data after the stop message (although this shouldn't happen normally...)
       return;
     }
+
+    if (!this.options.headers.authorization) {
+      return preAuthenticate(this.options, callback);
+    }
+
     if (!this.initialized) {
       if (!this.options['content-type'] && !this.options.content_type) {
         const ct = RecognizeStream.getContentType(chunk);

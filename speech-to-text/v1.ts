@@ -445,6 +445,11 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
     params = params || {};
     params.url = this._options.url;
 
+    // ADDED
+    if (!this._options.headers) {
+      this._options.headers = {};
+    }
+
     params.headers = extend(
       {
         'user-agent': pkg.name + '-nodejs-' + pkg.version,
@@ -510,6 +515,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
       },
       defaultOptions: this._options
     };
+    // console.log(JSON.stringify(params));
     return params.audio
       .on('response', (response) => {
         // Replace content-type
