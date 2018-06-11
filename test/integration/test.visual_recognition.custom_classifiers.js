@@ -17,7 +17,7 @@ const logit = function(string) {
   return string;
 };
 
-describe.skip('visual_recognition_integration_custom_classifiers', function() {
+describe('visual_recognition_integration_custom_classifiers', function() {
   // ugh.
   this.timeout(THIRTY_SECONDS * 8);
   this.slow(TWO_SECONDS);
@@ -27,7 +27,7 @@ describe.skip('visual_recognition_integration_custom_classifiers', function() {
 
   before(function(done) {
     visual_recognition = new watson.VisualRecognitionV3(
-      Object.assign({}, auth.visual_recognition.v3, {
+      Object.assign({}, auth.visual_recognition_rc.v3, {
         version: '2018-03-19',
       })
     );
@@ -124,12 +124,42 @@ describe.skip('visual_recognition_integration_custom_classifiers', function() {
       });
     });
 
-    it('deleteClassifier()', function(done) {
-      visual_recognition.deleteClassifier({ classifier_id: classifier_id }, done);
+    describe('deletion', function() {
+      const test_training_status = function(resolve, reject) {
+        //  This evil recursive function will be used to verify that the classifier
+        //  has finished training. 'resolve' and 'reject' are functions from an
+        //  enclosing promise (or a follow-on callback for resolve if you prefer)
+        visual_recognition.getClassifier({ classifier_id: classifier_id }, function(err, response) {
+          if (err) {
+            reject(err);
+            return;
+          }
+          if (response.status === 'failed') {
+            logit(`Classifier ${classifier_id} failed training, ready for deletion.`);
+            resolve();
+          }
+          if (response.status !== 'ready') {
+            logit(JSON.stringify(response));
+            logit(`Classifier ${classifier_id} status is ${response.status}. Waiting 10 seconds.`);
+            setTimeout(test_training_status, 10 * 1000, resolve, reject); // wait 10 seconds and try again
+          } else {
+            logit(`Classifier ${classifier_id} is ready.`);
+            resolve();
+          }
+        });
+      };
+
+      beforeEach(function() {
+        return new Promise(test_training_status);
+      });
+
+      it('deleteClassifier()', function(done) {
+        visual_recognition.deleteClassifier({ classifier_id: classifier_id }, done);
+      });
     });
   }); // custom classifiers
 
-  describe('pre-populated classifier @slow', function() {
+  describe.skip('pre-populated classifier @slow', function() {
     let classifier_id;
 
     before(function() {
