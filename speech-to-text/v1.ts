@@ -515,7 +515,9 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
       },
       defaultOptions: this._options
     };
-    // console.log(JSON.stringify(params));
+
+
+
     return params.audio
       .on('response', (response) => {
         // Replace content-type

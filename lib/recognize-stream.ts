@@ -55,7 +55,7 @@ interface RecognizeStream extends Duplex {
 }
 
 function preAuthenticate(options, callback) {
-  const apikey = 'WubCeHiJ3PaAu4cFL7lfx2LMPJDKEwHwOXh8hXV_x2yY';
+  const apikey = 'hard-code token for now';
   const tokenManager = new IamTokenManagerV1({
     iamApikey: apikey
   });
