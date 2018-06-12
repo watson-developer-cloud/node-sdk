@@ -241,6 +241,7 @@ describe('speech_to_text_integration', function() {
           assert(!text, 'no text expected for an audio file with no words');
         })
         .on('end', done);
+      })
     });
   });
 
