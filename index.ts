@@ -30,6 +30,8 @@ export import DialogV1 = require('./dialog/v1');
 
 export import LanguageTranslatorV2 = require('./language-translator/v2');
 
+export import LanguageTranslatorV3 = require('./language-translator/v3');
+
 export import NaturalLanguageClassifierV1 = require('./natural-language-classifier/v1');
 
 export import NaturalLanguageUnderstandingV1 = require('./natural-language-understanding/v1');
