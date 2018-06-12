@@ -312,7 +312,8 @@ var LanguageTranslatorV3 = require('watson-developer-cloud/language-translator/v
 var languageTranslator = new LanguageTranslatorV3({
   username: '<username>',
   password: '<password>',
-  url: 'https://gateway.watsonplatform.net/language-translator/api/'
+  url: 'https://gateway.watsonplatform.net/language-translator/api/',
+  version: 'YYYY-MM-DD',
 });
 
 languageTranslator.translate(
