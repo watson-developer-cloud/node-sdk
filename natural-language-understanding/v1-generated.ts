@@ -39,7 +39,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {string} [options.password] - The password used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
    * @param {string} [options.iam_access_token] - An IAM access token fully managed by the application. Responsibility falls on the application to refresh the token, either before it expires or reactively upon receiving a 401 from the service, as any requests made with an expired token will fail.
    * @param {string} [options.iam_apikey] - An API key that can be used to request IAM tokens. If this API key is provided, the SDK will manage the token and handle the refreshing.
-   * @param {string} [options.iam_url] - An optional URL for the IAM service API. Defaults to 'https://iam.bluemix.net/identity/token'.
+   * @param {string} [options.iam_url] - An optional URL for the IAM service API. Defaults to 'https://iam.ng.bluemix.net/identity/token'.
    * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
    * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
@@ -63,7 +63,44 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
   /**
    * Analyze text, HTML, or a public webpage.
    *
-   * Analyzes text, HTML, or a public webpage with one or more text analysis features.  ### Concepts Identify general concepts that are referenced or alluded to in your content. Concepts that are detected typically have an associated link to a DBpedia resource.  ### Emotion Detect anger, disgust, fear, joy, or sadness that is conveyed by your content. Emotion information can be returned for detected entities, keywords, or user-specified target phrases found in the text.  ### Entities Detect important people, places, geopolitical entities and other types of entities in your content. Entity detection recognizes consecutive coreferences of each entity. For example, analysis of the following text would count \"Barack Obama\" and \"He\" as the same entity:  \"Barack Obama was the 44th President of the United States. He took office in January 2009.\"  ### Keywords Determine the most important keywords in your content. Keyword phrases are organized by relevance in the results.  ### Metadata Get author information, publication date, and the title of your text/HTML content.  ### Relations Recognize when two entities are related, and identify the type of relation.  For example, you can identify an \"awardedTo\" relation between an award and its recipient.  ### Semantic Roles Parse sentences into subject-action-object form, and identify entities and keywords that are subjects or objects of an action.  ### Sentiment Determine whether your content conveys postive or negative sentiment. Sentiment information can be returned for detected entities, keywords, or user-specified target phrases found in the text.   ### Categories Categorize your content into a hierarchical 5-level taxonomy. For example, \"Leonardo DiCaprio won an Oscar\" returns \"/art and entertainment/movies and tv/movies\" as the most confident classification.
+   * Analyzes text, HTML, or a public webpage with one or more text analysis features.
+   *
+   * ### Concepts
+   * Identify general concepts that are referenced or alluded to in your content. Concepts that are detected typically
+   * have an associated link to a DBpedia resource.
+   *
+   * ### Emotion
+   * Detect anger, disgust, fear, joy, or sadness that is conveyed by your content. Emotion information can be returned
+   * for detected entities, keywords, or user-specified target phrases found in the text.
+   *
+   * ### Entities
+   * Detect important people, places, geopolitical entities and other types of entities in your content. Entity
+   * detection recognizes consecutive coreferences of each entity. For example, analysis of the following text would
+   * count \"Barack Obama\" and \"He\" as the same entity:
+   *
+   * \"Barack Obama was the 44th President of the United States. He took office in January 2009.\"
+   *
+   * ### Keywords
+   * Determine the most important keywords in your content. Keyword phrases are organized by relevance in the results.
+   *
+   * ### Metadata
+   * Get author information, publication date, and the title of your text/HTML content.
+   *
+   * ### Relations
+   * Recognize when two entities are related, and identify the type of relation.  For example, you can identify an
+   * \"awardedTo\" relation between an award and its recipient.
+   *
+   * ### Semantic Roles
+   * Parse sentences into subject-action-object form, and identify entities and keywords that are subjects or objects of
+   * an action.
+   *
+   * ### Sentiment
+   * Determine whether your content conveys postive or negative sentiment. Sentiment information can be returned for
+   * detected entities, keywords, or user-specified target phrases found in the text.
+   *
+   * ### Categories
+   * Categorize your content into a hierarchical 5-level taxonomy. For example, \"Leonardo DiCaprio won an Oscar\"
+   * returns \"/art and entertainment/movies and tv/movies\" as the most confident classification.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {Features} params.features - Specific features to analyze the document for.
@@ -75,7 +112,8 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {boolean} [params.fallback_to_raw] - Whether to use raw HTML content if text cleaning fails.
    * @param {boolean} [params.return_analyzed_text] - Whether or not to return the analyzed text.
    * @param {string} [params.language] - ISO 639-1 code indicating the language to use in the analysis.
-   * @param {number} [params.limit_text_characters] - Sets the maximum number of characters that are processed by the service.
+   * @param {number} [params.limit_text_characters] - Sets the maximum number of characters that are processed by the
+   * service.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -162,7 +200,8 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
   /**
    * List models.
    *
-   * Lists available models for Relations and Entities features, including Watson Knowledge Studio custom models that you have created and linked to your Natural Language Understanding service.
+   * Lists available models for Relations and Entities features, including Watson Knowledge Studio custom models that
+   * you have created and linked to your Natural Language Understanding service.
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {Object} [params.headers] - Custom request headers
@@ -310,10 +349,6 @@ namespace NaturalLanguageUnderstandingV1 {
     score?: number;
   }
 
-  /** CategoriesResults. */
-  export interface CategoriesResults {
-  }
-
   /** Whether or not to analyze content for general concepts that are referenced or alluded to. */
   export interface ConceptsOptions {
     /** Maximum number of concepts to return. */
@@ -328,14 +363,6 @@ namespace NaturalLanguageUnderstandingV1 {
     relevance?: number;
     /** Link to the corresponding DBpedia resource. */
     dbpedia_resource?: string;
-  }
-
-  /** ConceptsResults. */
-  export interface ConceptsResults {
-  }
-
-  /** Link to the corresponding DBpedia resource. */
-  export interface DBpediaResource {
   }
 
   /** Disambiguation information for the entity. */
@@ -376,10 +403,6 @@ namespace NaturalLanguageUnderstandingV1 {
     document?: DocumentEmotionResults;
     /** The returned emotion results per specified target. */
     targets?: TargetedEmotionResults[];
-  }
-
-  /** EmotionResults. */
-  export interface EmotionResults {
   }
 
   /** EmotionScores. */
@@ -430,24 +453,12 @@ namespace NaturalLanguageUnderstandingV1 {
     disambiguation?: DisambiguationResult;
   }
 
-  /** EntitiesResults. */
-  export interface EntitiesResults {
-  }
-
   /** EntityMention. */
   export interface EntityMention {
     /** Entity mention text. */
     text?: string;
     /** Character offsets indicating the beginning and end of the mention in the analyzed text. */
     location?: number[];
-  }
-
-  /** ErrorResponse. */
-  export interface ErrorResponse {
-    /** The HTTP error status code. */
-    code: number;
-    /** A message describing the error. */
-    error: string;
   }
 
   /** FeatureSentimentResults. */
@@ -476,28 +487,6 @@ namespace NaturalLanguageUnderstandingV1 {
     sentiment?: SentimentOptions;
     /** Whether or not to return the high level category the content is categorized as (i.e. news, art). */
     categories?: CategoriesOptions;
-  }
-
-  /** Analysis results for each requested feature. */
-  export interface FeaturesResults {
-    /** The general concepts referenced or alluded to in the specified content. */
-    concepts?: ConceptsResult[];
-    /** The important entities in the specified content. */
-    entities?: EntitiesResult[];
-    /** The important keywords in content organized by relevance. */
-    keywords?: KeywordsResult[];
-    /** The hierarchical 5-level taxonomy the content is categorized into. */
-    categories?: CategoriesResult[];
-    /** The anger, disgust, fear, joy, or sadness conveyed by the content. */
-    emotion?: EmotionResult;
-    /** The metadata holds author information, publication date and the title of the text/HTML content. */
-    metadata?: MetadataResult;
-    /** The relationships between entities in the content. */
-    relations?: RelationsResult[];
-    /** The subjects of actions and the objects the actions act upon. */
-    semantic_roles?: SemanticRolesResult[];
-    /** The sentiment of the content. */
-    sentiment?: SentimentResult;
   }
 
   /** RSS or ATOM feed found on the webpage. */
@@ -534,18 +523,6 @@ namespace NaturalLanguageUnderstandingV1 {
     sentiment?: FeatureSentimentResults;
   }
 
-  /** KeywordsResults. */
-  export interface KeywordsResults {
-  }
-
-  /** LinkedDataResult. */
-  export interface LinkedDataResult {
-    /** Name of the Linked Data source. */
-    source?: string;
-    /** URL to the Linked Data page. */
-    link?: string;
-  }
-
   /** Models available for Relations and Entities features. */
   export interface ListModelsResults {
     models?: Model[];
@@ -569,10 +546,6 @@ namespace NaturalLanguageUnderstandingV1 {
     feeds?: Feed[];
   }
 
-  /** MetadataResults. */
-  export interface MetadataResults {
-  }
-
   /** Model. */
   export interface Model {
     /** Shows as available if the model is ready for use. */
@@ -583,30 +556,6 @@ namespace NaturalLanguageUnderstandingV1 {
     language?: string;
     /** Model description. */
     description?: string;
-  }
-
-  /** An object containing request parameters. */
-  export interface Parameters {
-    /** The plain text to analyze. */
-    text?: string;
-    /** The HTML file to analyze. */
-    html?: string;
-    /** The web page to analyze. */
-    url?: string;
-    /** Specific features to analyze the document for. */
-    features: Features;
-    /** Remove website elements, such as links, ads, etc. */
-    clean?: boolean;
-    /** XPath query for targeting nodes in HTML. */
-    xpath?: string;
-    /** Whether to use raw HTML content if text cleaning fails. */
-    fallback_to_raw?: boolean;
-    /** Whether or not to return the analyzed text. */
-    return_analyzed_text?: boolean;
-    /** ISO 639-1 code indicating the language to use in the analysis. */
-    language?: string;
-    /** Sets the maximum number of characters that are processed by the service. */
-    limit_text_characters?: number;
   }
 
   /** RelationArgument. */
@@ -642,10 +591,6 @@ namespace NaturalLanguageUnderstandingV1 {
     type?: string;
     /** The extracted relation objects from the text. */
     arguments?: RelationArgument[];
-  }
-
-  /** RelationsResults. */
-  export interface RelationsResults {
   }
 
   /** SemanticRolesAction. */
@@ -700,10 +645,6 @@ namespace NaturalLanguageUnderstandingV1 {
     object?: SemanticRolesObject;
   }
 
-  /** SemanticRolesResults. */
-  export interface SemanticRolesResults {
-  }
-
   /** SemanticRolesSubject. */
   export interface SemanticRolesSubject {
     /** Text that corresponds to the subject role. */
@@ -734,10 +675,6 @@ namespace NaturalLanguageUnderstandingV1 {
     document?: DocumentSentimentResults;
     /** The targeted sentiment to analyze. */
     targets?: TargetedSentimentResults[];
-  }
-
-  /** SentimentResults. */
-  export interface SentimentResults {
   }
 
   /** An object containing the emotion results for the target. */

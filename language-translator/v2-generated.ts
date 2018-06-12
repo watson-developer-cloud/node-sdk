@@ -21,7 +21,7 @@ import { getMissingParams } from '../lib/helper';
 import { FileObject } from '../lib/helper';
 
 /**
- * IBM Watson Language Translator translates text from one language to another. The service offers multiple domain-specific models that you can customize based on your unique terminology and language. Use Language Translator to take news from across the globe and present it in your language, communicate with your customers in their own language, and more.
+ * IBM Watson&trade; Language Translator translates text from one language to another. The service offers multiple domain-specific models that you can customize based on your unique terminology and language. Use Language Translator to take news from across the globe and present it in your language, communicate with your customers in their own language, and more.
  */
 
 class LanguageTranslatorV2 extends BaseService {
@@ -39,7 +39,7 @@ class LanguageTranslatorV2 extends BaseService {
    * @param {string} [options.password] - The password used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
    * @param {string} [options.iam_access_token] - An IAM access token fully managed by the application. Responsibility falls on the application to refresh the token, either before it expires or reactively upon receiving a 401 from the service, as any requests made with an expired token will fail.
    * @param {string} [options.iam_apikey] - An API key that can be used to request IAM tokens. If this API key is provided, the SDK will manage the token and handle the refreshing.
-   * @param {string} [options.iam_url] - An optional URL for the IAM service API. Defaults to 'https://iam.bluemix.net/identity/token'.
+   * @param {string} [options.iam_url] - An optional URL for the IAM service API. Defaults to 'https://iam.ng.bluemix.net/identity/token'.
    * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
    * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
@@ -60,10 +60,16 @@ class LanguageTranslatorV2 extends BaseService {
    * Translates the input text from the source language to the target language.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string[]} params.text - Input text in UTF-8 encoding. Multiple entries will result in multiple translations in the response.
-   * @param {string} [params.model_id] - Model ID of the translation model to use. If this is specified, the **source** and **target** parameters will be ignored. The method requires either a model ID or both the **source** and **target** parameters.
-   * @param {string} [params.source] - Language code of the source text language. Use with `target` as an alternative way to select a translation model. When `source` and `target` are set, and a model ID is not set, the system chooses a default model for the language pair (usually the model based on the news domain).
-   * @param {string} [params.target] - Language code of the translation target language. Use with source as an alternative way to select a translation model.
+   * @param {string[]} params.text - Input text in UTF-8 encoding. Multiple entries will result in multiple translations
+   * in the response.
+   * @param {string} [params.model_id] - Model ID of the translation model to use. If this is specified, the **source**
+   * and **target** parameters will be ignored. The method requires either a model ID or both the **source** and
+   * **target** parameters.
+   * @param {string} [params.source] - Language code of the source text language. Use with `target` as an alternative
+   * way to select a translation model. When `source` and `target` are set, and a model ID is not set, the system
+   * chooses a default model for the language pair (usually the model based on the news domain).
+   * @param {string} [params.target] - Language code of the translation target language. Use with source as an
+   * alternative way to select a translation model.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -143,7 +149,8 @@ class LanguageTranslatorV2 extends BaseService {
   /**
    * List identifiable languages.
    *
-   * Lists the languages that the service can identify. Returns the language code (for example, `en` for English or `es` for Spanish) and name of each language.
+   * Lists the languages that the service can identify. Returns the language code (for example, `en` for English or `es`
+   * for Spanish) and name of each language.
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {Object} [params.headers] - Custom request headers
@@ -174,14 +181,24 @@ class LanguageTranslatorV2 extends BaseService {
   /**
    * Create model.
    *
-   * Uploads a TMX glossary file on top of a domain to customize a translation model.  Depending on the size of the file, training can range from minutes for a glossary to several hours for a large parallel corpus. Glossary files must be less than 10 MB. The cumulative file size of all uploaded glossary and corpus files is limited to 250 MB.
+   * Uploads a TMX glossary file on top of a domain to customize a translation model.
+   *
+   * Depending on the size of the file, training can range from minutes for a glossary to several hours for a large
+   * parallel corpus. Glossary files must be less than 10 MB. The cumulative file size of all uploaded glossary and
+   * corpus files is limited to 250 MB.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.base_model_id - The model ID of the model to use as the base for customization. To see available models, use the `List models` method.
-   * @param {string} [params.name] - An optional model name that you can use to identify the model. Valid characters are letters, numbers, dashes, underscores, spaces and apostrophes. The maximum length is 32 characters.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.forced_glossary] - A TMX file with your customizations. The customizations in the file completely overwrite the domain translaton data, including high frequency or high confidence phrase translations. You can upload only one glossary with a file size less than 10 MB per call.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.parallel_corpus] - A TMX file that contains entries that are treated as a parallel corpus instead of a glossary.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.monolingual_corpus] - A UTF-8 encoded plain text file that is used to customize the target language model.
+   * @param {string} params.base_model_id - The model ID of the model to use as the base for customization. To see
+   * available models, use the `List models` method.
+   * @param {string} [params.name] - An optional model name that you can use to identify the model. Valid characters are
+   * letters, numbers, dashes, underscores, spaces and apostrophes. The maximum length is 32 characters.
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.forced_glossary] - A TMX file with your customizations.
+   * The customizations in the file completely overwrite the domain translaton data, including high frequency or high
+   * confidence phrase translations. You can upload only one glossary with a file size less than 10 MB per call.
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.parallel_corpus] - A TMX file that contains entries that
+   * are treated as a parallel corpus instead of a glossary.
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.monolingual_corpus] - A UTF-8 encoded plain text file that
+   * is used to customize the target language model.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -311,7 +328,9 @@ class LanguageTranslatorV2 extends BaseService {
    * @param {Object} [params] - The parameters to send to the service.
    * @param {string} [params.source] - Specify a language code to filter results by source language.
    * @param {string} [params.target] - Specify a language code to filter results by target language.
-   * @param {boolean} [params.default_models] - If the default parameter isn't specified, the service will return all models (default and non-default) for each language pair. To return only default models, set this to `true`. To return only non-default models, set this to `false`.
+   * @param {boolean} [params.default_models] - If the default parameter isn't specified, the service will return all
+   * models (default and non-default) for each language pair. To return only default models, set this to `true`. To
+   * return only non-default models, set this to `false`.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -447,14 +466,6 @@ namespace LanguageTranslatorV2 {
     status: string;
   }
 
-  /** ErrorResponse. */
-  export interface ErrorResponse {
-    /** A short identifier for the error. */
-    error_code: string;
-    /** A more detailed description of the error. */
-    error_message: string;
-  }
-
   /** IdentifiableLanguage. */
   export interface IdentifiableLanguage {
     /** The language code for an identifiable language. */
@@ -481,18 +492,6 @@ namespace LanguageTranslatorV2 {
   export interface IdentifiedLanguages {
     /** A ranking of identified languages with confidence scores. */
     languages: IdentifiedLanguage[];
-  }
-
-  /** TranslateRequest. */
-  export interface TranslateRequest {
-    /** Input text in UTF-8 encoding. Multiple entries will result in multiple translations in the response. */
-    text: string[];
-    /** Model ID of the translation model to use. If this is specified, the **source** and **target** parameters will be ignored. The method requires either a model ID or both the **source** and **target** parameters. */
-    model_id?: string;
-    /** Language code of the source text language. Use with `target` as an alternative way to select a translation model. When `source` and `target` are set, and a model ID is not set, the system chooses a default model for the language pair (usually the model based on the news domain). */
-    source?: string;
-    /** Language code of the translation target language. Use with source as an alternative way to select a translation model. */
-    target?: string;
   }
 
   /** Translation. */
