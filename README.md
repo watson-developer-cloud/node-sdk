@@ -24,7 +24,8 @@ Node.js client library to use the Watson APIs.
     * [Authorization](#authorization)
     * [Assistant](#assistant)
     * [Discovery](#discovery)
-    * [Language Translator](#language-translator)
+    * [Language Translator v3](#language-translator-v3)
+    * [Language Translator v2](#language-translator-v2)
     * [Natural Language Classifier](#natural-language-classifier)
     * [Natural Language Understanding](#natural-language-understanding)
     * [Personality Insights](#personality-insights)
@@ -299,10 +300,51 @@ discovery.query(
     }
   }
 );
+
+```
+### Language Translator v3
+
+Translate text from one language to another or idenfity a language using the [Language Translator][language_translator] service.
+
+```javascript
+var LanguageTranslatorV3 = require('watson-developer-cloud/language-translator/v3');
+
+var languageTranslator = new LanguageTranslatorV3({
+  username: '<username>',
+  password: '<password>',
+  url: 'https://gateway.watsonplatform.net/language-translator/api/'
+});
+
+languageTranslator.translate(
+  {
+    text: 'A sentence must have a verb',
+    source: 'en',
+    target: 'es'
+  },
+  function(err, translation) {
+    if (err)  {
+      console.log('error:', err);
+    } else  {
+      console.log(JSON.stringify(translation, null, 2));
+  }
+);
+
+languageTranslator.identify(
+  {
+    text:
+      'The language translator service takes text input and identifies the language used.'
+  },
+  function(err, language) {
+    if (err)  {
+      console.log('error:', err);
+    } else {
+      console.log(JSON.stringify(language, null, 2));
+    }
+  }
+);
 ```
 
-
-### Language Translator
+### Language Translator v2
 
 Translate text from one language to another or idenfity a language using the [Language Translator][language_translator] service.
 
