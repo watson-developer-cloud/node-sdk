@@ -259,7 +259,7 @@ describe('speech_to_text_integration', function() {
       );
     });
 
-    it(
+    it.skip(
       'addCorpus() - buffer',
       waitUntilReady(function(done) {
         // var customization_id='adfab4c0-9708-11e6-be92-bb627d4684b9';
