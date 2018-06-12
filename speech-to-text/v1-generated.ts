@@ -256,7 +256,7 @@ class SpeechToTextV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public recognizeSessionless(params: SpeechToTextV1.RecognizeSessionlessParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.SpeechRecognitionResults>): NodeJS.ReadableStream | void {
+  public recognize(params: SpeechToTextV1.RecognizeParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.SpeechRecognitionResults>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['audio', 'content_type'];
@@ -2394,14 +2394,14 @@ namespace SpeechToTextV1 {
     headers?: Object;
   }
 
-  /** Parameters for the `recognizeSessionless` operation. */
-  export interface RecognizeSessionlessParams {
+  /** Parameters for the `recognize` operation. */
+  export interface RecognizeParams {
     /** The audio to transcribe in the format specified by the `Content-Type` header. */
     audio: NodeJS.ReadableStream|FileObject|Buffer;
     /** The type of the input: audio/basic, audio/flac, audio/l16, audio/mp3, audio/mpeg, audio/mulaw, audio/ogg, audio/ogg;codecs=opus, audio/ogg;codecs=vorbis, audio/wav, audio/webm, audio/webm;codecs=opus, or audio/webm;codecs=vorbis. */
-    content_type: RecognizeSessionlessConstants.ContentType | string;
+    content_type: RecognizeConstants.ContentType | string;
     /** The identifier of the model that is to be used for the recognition request or, for the **Create a session** method, with the new session. */
-    model?: RecognizeSessionlessConstants.Model | string;
+    model?: RecognizeConstants.Model | string;
     /** The customization ID (GUID) of a custom language model that is to be used with the recognition request or, for the **Create a session** method, with the new session. The base model of the specified custom language model must match the model specified with the `model` parameter. You must make the request with service credentials created for the instance of the service that owns the custom model. By default, no custom language model is used. */
     customization_id?: string;
     /** The customization ID (GUID) of a custom acoustic model that is to be used with the recognition request or, for the **Create a session** method, with the new session. The base model of the specified custom acoustic model must match the model specified with the `model` parameter. You must make the request with service credentials created for the instance of the service that owns the custom model. By default, no custom acoustic model is used. */
@@ -2433,8 +2433,8 @@ namespace SpeechToTextV1 {
     headers?: Object;
   }
 
-  /** Constants for the `recognizeSessionless` operation. */
-  export namespace RecognizeSessionlessConstants {
+  /** Constants for the `recognize` operation. */
+  export namespace RecognizeConstants {
      /** The type of the input: audio/basic, audio/flac, audio/l16, audio/mp3, audio/mpeg, audio/mulaw, audio/ogg, audio/ogg;codecs=opus, audio/ogg;codecs=vorbis, audio/wav, audio/webm, audio/webm;codecs=opus, or audio/webm;codecs=vorbis. */
     export enum ContentType {
       BASIC = 'audio/basic',
