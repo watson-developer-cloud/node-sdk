@@ -445,9 +445,16 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
     params = params || {};
     params.url = this._options.url;
 
-    // ADDED
+    // if using iam, headers will not be a property on _options
+    // and the line `authorization: this._options.headers.Authorization`
+    // will crash the code
     if (!this._options.headers) {
       this._options.headers = {};
+    }
+
+    // if using iam, pass the token manager to the RecognizeStream object
+    if (this.tokenManager) {
+      params.token_manager = this.tokenManager;
     }
 
     params.headers = extend(
@@ -515,8 +522,6 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
       },
       defaultOptions: this._options
     };
-
-
 
     return params.audio
       .on('response', (response) => {

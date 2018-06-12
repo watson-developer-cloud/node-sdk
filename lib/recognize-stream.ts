@@ -22,9 +22,6 @@ import websocket = require ('websocket');
 import contentType = require('./content-type');
 import qs = require('./querystring');
 
-// added
-import { IamTokenManagerV1 } from '../iam-token-manager/v1';
-
 const w3cWebSocket = websocket.w3cwebsocket;
 
 const OPENING_MESSAGE_PARAMS_ALLOWED = [
@@ -54,21 +51,6 @@ interface RecognizeStream extends Duplex {
   readableObjectMode;
 }
 
-function preAuthenticate(options, callback) {
-  const apikey = 'hard-code token for now';
-  const tokenManager = new IamTokenManagerV1({
-    iamApikey: apikey
-  });
-  tokenManager.getToken((err, token) => {
-    if (err) {
-      callback();
-    }
-    const authHeader = { authorization: 'Bearer ' + token };
-    options.headers = extend(authHeader, options.headers);
-    callback();
-  });
-}
-
 /**
  * pipe()-able Node.js Readable/Writeable stream - accepts binary audio and emits text in it's `data` events.
  * Also emits `results` events with interim results and other data.
@@ -95,6 +77,7 @@ class RecognizeStream extends Duplex {
   private finished: boolean;
   private socket;
   private promise = require('./to-promise');
+  private authenticated: boolean;
 
 
 
@@ -128,6 +111,7 @@ class RecognizeStream extends Duplex {
    * @param {Number} [options.X-Watson-Learning-Opt-Out=false] - set to true to opt-out of allowing Watson to use this request to improve it's services
    * @param {Boolean} [options.smart_formatting=false] - formats numeric values such as dates, times, currency, etc.
    * @param {String} [options.customization_id] - Customization ID
+   * @param {IamTokenManagerV1} [options.token_manager] - Token manager for authenticating with IAM
    *
    * @constructor
    */
@@ -144,6 +128,8 @@ class RecognizeStream extends Duplex {
     this.listening = false;
     this.initialized = false;
     this.finished = false;
+    // is using iam, another authentication step is needed
+    this.authenticated = options.token_manager ? false : true;
     this.on('newListener', event => {
       if (!options.silent) {
         if (
@@ -417,14 +403,16 @@ class RecognizeStream extends Duplex {
       return;
     }
 
-    if (!this.options.headers.authorization) {
-      return preAuthenticate(this.options, callback);
+    // if using iam, we need to authenticate the first time `_write` is called
+    if (!this.authenticated) {
+      return this.preAuthenticate(callback);
     }
 
     if (!this.initialized) {
       if (!this.options['content-type'] && !this.options.content_type) {
         const ct = RecognizeStream.getContentType(chunk);
         if (ct) {
+
           this.options['content-type'] = ct;
         } else {
           const err = new Error(
@@ -491,6 +479,18 @@ class RecognizeStream extends Duplex {
         );
         this.on('error', reject);
       }
+    });
+  }
+
+  preAuthenticate(callback) {
+    this.options.token_manager.getToken((err, token) => {
+      if (err) {
+        callback();
+      }
+      const authHeader = { authorization: 'Bearer ' + token };
+      this.options.headers = extend(authHeader, this.options.headers);
+      this.authenticated = true;
+      callback();
     });
   }
 }
