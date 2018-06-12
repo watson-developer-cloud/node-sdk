@@ -523,12 +523,14 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
       defaultOptions: this._options
     };
 
-    return params.audio
-      .on('response', (response) => {
-        // Replace content-type
-        response.headers['content-type'] = params.content_type;
-      })
-      .pipe(this.createRequest(parameters, callback));
+    this.preAuthenticate(() => {
+      return params.audio
+        .on('response', (response) => {
+          // Replace content-type
+          response.headers['content-type'] = params.content_type;
+        })
+        .pipe(this.createRequest(parameters, callback));
+    });
   }
 
   deleteCustomization(params, callback) {

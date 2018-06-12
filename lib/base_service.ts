@@ -195,25 +195,23 @@ export class BaseService {
    * Guarantee that the next request you make will be IAM authenticated. This
    * performs any requests necessary to get a valid IAM token so that if your
    * next request involves a streaming operation, it will not be interrupted.
-   * This is only applicable to services with streaming operations,
-   * like Speech to Text. Otherwise, this method is redundant.
    *
-   * @param {Function} callback - callback function to pass response to. 
-   *                              (will return `true` if ready and `false` if not)
+   * @param {Function} callback - callback function to return flow of execution
+   *
    * @returns {void}
    */
-  public preAuthenticate(callback): void {
+  protected preAuthenticate(callback): void {
      if (Boolean(this.tokenManager)) {
       return this.tokenManager.getToken((err, token) => {
         if (err) {
-          callback(false);
+          callback();
         }
         const authHeader = { Authorization: 'Bearer ' + token };
         this._options.headers = extend(authHeader, this._options.headers);
-        callback(true);
+        callback();
       });
     } else {
-      callback(true);
+      callback();
     }
   }
 
