@@ -204,14 +204,12 @@ export class BaseService {
      if (Boolean(this.tokenManager)) {
       return this.tokenManager.getToken((err, token) => {
         if (err) {
-          callback();
+          callback(err);
         }
-        const authHeader = { Authorization: 'Bearer ' + token };
-        this._options.headers = extend(authHeader, this._options.headers);
-        callback();
+        callback(null);
       });
     } else {
-      callback();
+      callback(null);
     }
   }
 

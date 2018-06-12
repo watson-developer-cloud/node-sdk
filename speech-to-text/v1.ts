@@ -514,16 +514,20 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
       options: {
         method: 'POST',
         url: _url,
-        headers: {
-          'Content-Type': params.content_type
-        },
         json: true,
         qs: queryParams
       },
-      defaultOptions: this._options
+      defaultOptions: extend(true, {}, this._options, {
+        headers: {
+          'Content-Type': params.content_type
+        }
+      })
     };
 
-    this.preAuthenticate(() => {
+    this.preAuthenticate((err) => {
+      if (err) {
+        return err;
+      }
       return params.audio
         .on('response', (response) => {
           // Replace content-type
