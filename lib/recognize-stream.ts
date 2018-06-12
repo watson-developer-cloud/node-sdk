@@ -396,44 +396,48 @@ class RecognizeStream extends Duplex {
     // so, the best we can do here is a no-op
   }
 
+
   _write(chunk, encoding, callback): void {
-    const self = this;
-    if (self.finished) {
-      // can't send any more data after the stop message (although this shouldn't happen normally...)
-      return;
-    }
-
-    // if using iam, we need to authenticate the first time `_write` is called
-    if (!this.authenticated) {
-      return this.setAuthorizationHeaderToken(callback);
-    }
-
-    if (!this.initialized) {
-      if (!this.options['content-type'] && !this.options.content_type) {
-        const ct = RecognizeStream.getContentType(chunk);
-        if (ct) {
-          this.options['content-type'] = ct;
-        } else {
-          const err = new Error(
-            'Unable to determine content-type from file header, please specify manually.'
-          );
-          err.name = RecognizeStream.ERROR_UNRECOGNIZED_FORMAT;
-          this.emit('error', err);
-          this.push(null);
-          return;
-        }
+    this.setAuthorizationHeaderToken(err => {
+      if (err) {
+        this.emit('error', err);
+        this.push(null);
+        return;
       }
-      this.initialize();
+      const self = this;
+      if (self.finished) {
+        // can't send any more data after the stop message (although this shouldn't happen normally...)
+        return;
+      }
 
-      this.once('open', () => {
+      if (!this.initialized) {
+        if (!this.options['content-type'] && !this.options.content_type) {
+          const ct = RecognizeStream.getContentType(chunk);
+          if (ct) {
+            this.options['content-type'] = ct;
+          } else {
+            const error = new Error(
+              'Unable to determine content-type from file header, please specify manually.'
+            );
+            error.name = RecognizeStream.ERROR_UNRECOGNIZED_FORMAT;
+            this.emit('error', error);
+            this.push(null);
+            return;
+          }
+        }
+        this.initialize();
+
+        this.once('open', () => {
+          self.sendData(chunk);
+          self.afterSend(callback);
+        });
+      } else {
         self.sendData(chunk);
-        self.afterSend(callback);
-      });
-    } else {
-      self.sendData(chunk);
-      this.afterSend(callback);
-    }
+        this.afterSend(callback);
+      }
+    })
   }
+
 
   finish(): void {
     // this is called both when the source stream finishes, and when .stop() is fired, but we only want to send the stop message once.
@@ -491,15 +495,19 @@ class RecognizeStream extends Duplex {
    * @param {Function} callback
    */
   setAuthorizationHeaderToken(callback) {
-    this.options.token_manager.getToken((err, token) => {
-      if (err) {
-        callback();
-      }
-      const authHeader = { authorization: 'Bearer ' + token };
-      this.options.headers = extend(authHeader, this.options.headers);
-      this.authenticated = true;
-      callback();
-    });
+    if (!this.authenticated) {
+      this.options.token_manager.getToken((err, token) => {
+        if (err) {
+          callback(err);
+        }
+        const authHeader = { authorization: 'Bearer ' + token };
+        this.options.headers = extend(authHeader, this.options.headers);
+        this.authenticated = true;
+        callback(null);
+      });
+    } else {
+      callback(null);
+    }
   }
 }
 
