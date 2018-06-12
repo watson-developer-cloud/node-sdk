@@ -405,7 +405,7 @@ class RecognizeStream extends Duplex {
 
     // if using iam, we need to authenticate the first time `_write` is called
     if (!this.authenticated) {
-      return this.preAuthenticate(callback);
+      return this.setAuthorizationHeaderToken(callback);
     }
 
     if (!this.initialized) {
@@ -490,7 +490,7 @@ class RecognizeStream extends Duplex {
    * @private
    * @param {Function} callback
    */
-  preAuthenticate(callback) {
+  setAuthorizationHeaderToken(callback) {
     this.options.token_manager.getToken((err, token) => {
       if (err) {
         callback();
