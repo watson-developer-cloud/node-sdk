@@ -482,6 +482,15 @@ class RecognizeStream extends Duplex {
     });
   }
 
+  /**
+   * This function retrieves an IAM access token and stores it in the
+   * request header before calling the callback function, which will
+   * execute the next iteration of `_write()`
+   *
+   *
+   * @private
+   * @param {Function} callback
+   */
   preAuthenticate(callback) {
     this.options.token_manager.getToken((err, token) => {
       if (err) {
