@@ -20,7 +20,7 @@ import { BaseService } from '../lib/base_service';
 import { getMissingParams } from '../lib/helper';
 
 /**
- * The IBM Watson Assistant service combines machine learning, natural language understanding, and integrated dialog tools to create conversation flows between your apps and your users.
+ * The IBM Watson&trade; Assistant service combines machine learning, natural language understanding, and integrated dialog tools to create conversation flows between your apps and your users.
  */
 
 class AssistantV1 extends BaseService {
@@ -63,17 +63,25 @@ class AssistantV1 extends BaseService {
   /**
    * Get response to user input.
    *
-   * Get a response to a user's input.    There is no rate limit for this operation.
+   * Get a response to a user's input.
+   *
+   * There is no rate limit for this operation.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {InputData} [params.input] - An input object that includes the input text.
-   * @param {boolean} [params.alternate_intents] - Whether to return more than one intent. Set to `true` to return all matching intents.
-   * @param {Context} [params.context] - State information for the conversation. Continue a conversation by including the context object from the previous response.
-   * @param {RuntimeEntity[]} [params.entities] - Entities to use when evaluating the message. Include entities from the previous response to continue using those entities rather than detecting entities in the new input.
-   * @param {RuntimeIntent[]} [params.intents] - Intents to use when evaluating the user input. Include intents from the previous response to continue using those intents rather than trying to recognize intents in the new input.
-   * @param {OutputData} [params.output] - System output. Include the output from the previous response to maintain intermediate information over multiple requests.
-   * @param {boolean} [params.nodes_visited_details] - Whether to include additional diagnostic information about the dialog nodes that were visited during processing of the message.
+   * @param {boolean} [params.alternate_intents] - Whether to return more than one intent. Set to `true` to return all
+   * matching intents.
+   * @param {Context} [params.context] - State information for the conversation. Continue a conversation by including
+   * the context object from the previous response.
+   * @param {RuntimeEntity[]} [params.entities] - Entities to use when evaluating the message. Include entities from the
+   * previous response to continue using those entities rather than detecting entities in the new input.
+   * @param {RuntimeIntent[]} [params.intents] - Intents to use when evaluating the user input. Include intents from the
+   * previous response to continue using those intents rather than trying to recognize intents in the new input.
+   * @param {OutputData} [params.output] - System output. Include the output from the previous response to maintain
+   * intermediate information over multiple requests.
+   * @param {boolean} [params.nodes_visited_details] - Whether to include additional diagnostic information about the
+   * dialog nodes that were visited during processing of the message.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -126,18 +134,25 @@ class AssistantV1 extends BaseService {
   /**
    * Create workspace.
    *
-   * Create a workspace based on component objects. You must provide workspace components defining the content of the new workspace.    This operation is limited to 30 requests per 30 minutes. For more information, see **Rate limiting**.
+   * Create a workspace based on component objects. You must provide workspace components defining the content of the
+   * new workspace.
+   *
+   * This operation is limited to 30 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} [params] - The parameters to send to the service.
-   * @param {string} [params.name] - The name of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 64 characters.
-   * @param {string} [params.description] - The description of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters.
+   * @param {string} [params.name] - The name of the workspace. This string cannot contain carriage return, newline, or
+   * tab characters, and it must be no longer than 64 characters.
+   * @param {string} [params.description] - The description of the workspace. This string cannot contain carriage
+   * return, newline, or tab characters, and it must be no longer than 128 characters.
    * @param {string} [params.language] - The language of the workspace.
    * @param {CreateIntent[]} [params.intents] - An array of objects defining the intents for the workspace.
    * @param {CreateEntity[]} [params.entities] - An array of objects defining the entities for the workspace.
    * @param {CreateDialogNode[]} [params.dialog_nodes] - An array of objects defining the nodes in the workspace dialog.
-   * @param {CreateCounterexample[]} [params.counterexamples] - An array of objects defining input examples that have been marked as irrelevant input.
+   * @param {CreateCounterexample[]} [params.counterexamples] - An array of objects defining input examples that have
+   * been marked as irrelevant input.
    * @param {Object} [params.metadata] - Any metadata related to the workspace.
-   * @param {boolean} [params.learning_opt_out] - Whether training data from the workspace can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used.
+   * @param {boolean} [params.learning_opt_out] - Whether training data from the workspace can be used by IBM for
+   * general service improvements. `true` indicates that workspace training data is not to be used.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -176,7 +191,9 @@ class AssistantV1 extends BaseService {
   /**
    * Delete workspace.
    *
-   * Delete a workspace from the service instance.    This operation is limited to 30 requests per 30 minutes. For more information, see **Rate limiting**.
+   * Delete a workspace from the service instance.
+   *
+   * This operation is limited to 30 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
@@ -213,12 +230,18 @@ class AssistantV1 extends BaseService {
   /**
    * Get information about a workspace.
    *
-   * Get information about a workspace, optionally including all workspace content.    With **export**=`false`, this operation is limited to 6000 requests per 5 minutes. With **export**=`true`, the limit is 20 requests per 30 minutes. For more information, see **Rate limiting**.
+   * Get information about a workspace, optionally including all workspace content.
+   *
+   * With **export**=`false`, this operation is limited to 6000 requests per 5 minutes. With **export**=`true`, the
+   * limit is 20 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {boolean} [params.export] - Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {boolean} [params.export] - Whether to include all element content in the returned data. If
+   * **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all
+   * content, including subelements, is included.
+   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -257,14 +280,18 @@ class AssistantV1 extends BaseService {
   /**
    * List workspaces.
    *
-   * List the workspaces associated with a Watson Assistant service instance.    This operation is limited to 500 requests per 30 minutes. For more information, see **Rate limiting**.
+   * List the workspaces associated with a Watson Assistant service instance.
+   *
+   * This operation is limited to 500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
+   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order,
+   * prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -297,20 +324,33 @@ class AssistantV1 extends BaseService {
   /**
    * Update workspace.
    *
-   * Update an existing workspace with new or modified data. You must provide component objects defining the content of the updated workspace.    This operation is limited to 30 request per 30 minutes. For more information, see **Rate limiting**.
+   * Update an existing workspace with new or modified data. You must provide component objects defining the content of
+   * the updated workspace.
+   *
+   * This operation is limited to 30 request per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {string} [params.name] - The name of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 64 characters.
-   * @param {string} [params.description] - The description of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters.
+   * @param {string} [params.name] - The name of the workspace. This string cannot contain carriage return, newline, or
+   * tab characters, and it must be no longer than 64 characters.
+   * @param {string} [params.description] - The description of the workspace. This string cannot contain carriage
+   * return, newline, or tab characters, and it must be no longer than 128 characters.
    * @param {string} [params.language] - The language of the workspace.
    * @param {CreateIntent[]} [params.intents] - An array of objects defining the intents for the workspace.
    * @param {CreateEntity[]} [params.entities] - An array of objects defining the entities for the workspace.
    * @param {CreateDialogNode[]} [params.dialog_nodes] - An array of objects defining the nodes in the workspace dialog.
-   * @param {CreateCounterexample[]} [params.counterexamples] - An array of objects defining input examples that have been marked as irrelevant input.
+   * @param {CreateCounterexample[]} [params.counterexamples] - An array of objects defining input examples that have
+   * been marked as irrelevant input.
    * @param {Object} [params.metadata] - Any metadata related to the workspace.
-   * @param {boolean} [params.learning_opt_out] - Whether training data from the workspace can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used.
-   * @param {boolean} [params.append] - Whether the new data is to be appended to the existing data in the workspace. If **append**=`false`, elements included in the new data completely replace the corresponding existing elements, including all subelements. For example, if the new data includes **entities** and **append**=`false`, all existing entities in the workspace are discarded and replaced with the new entities.    If **append**=`true`, existing elements are preserved, and the new elements are added. If any elements in the new data collide with existing elements, the update request fails.
+   * @param {boolean} [params.learning_opt_out] - Whether training data from the workspace can be used by IBM for
+   * general service improvements. `true` indicates that workspace training data is not to be used.
+   * @param {boolean} [params.append] - Whether the new data is to be appended to the existing data in the workspace. If
+   * **append**=`false`, elements included in the new data completely replace the corresponding existing elements,
+   * including all subelements. For example, if the new data includes **entities** and **append**=`false`, all existing
+   * entities in the workspace are discarded and replaced with the new entities.
+   *
+   * If **append**=`true`, existing elements are preserved, and the new elements are added. If any elements in the new
+   * data collide with existing elements, the update request fails.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -366,12 +406,18 @@ class AssistantV1 extends BaseService {
   /**
    * Create intent.
    *
-   * Create a new intent.    This operation is limited to 2000 requests per 30 minutes. For more information, see **Rate limiting**.
+   * Create a new intent.
+   *
+   * This operation is limited to 2000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {string} params.intent - The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 128 characters.
-   * @param {string} [params.description] - The description of the intent. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters.
+   * @param {string} params.intent - The name of the intent. This string must conform to the following restrictions:
+   * - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.
+   * - It cannot begin with the reserved prefix `sys-`.
+   * - It must be no longer than 128 characters.
+   * @param {string} [params.description] - The description of the intent. This string cannot contain carriage return,
+   * newline, or tab characters, and it must be no longer than 128 characters.
    * @param {CreateExample[]} [params.examples] - An array of user input examples for the intent.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -414,7 +460,9 @@ class AssistantV1 extends BaseService {
   /**
    * Delete intent.
    *
-   * Delete an intent from a workspace.    This operation is limited to 2000 requests per 30 minutes. For more information, see **Rate limiting**.
+   * Delete an intent from a workspace.
+   *
+   * This operation is limited to 2000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
@@ -453,13 +501,19 @@ class AssistantV1 extends BaseService {
   /**
    * Get intent.
    *
-   * Get information about an intent, optionally including all intent content.    With **export**=`false`, this operation is limited to 6000 requests per 5 minutes. With **export**=`true`, the limit is 400 requests per 30 minutes. For more information, see **Rate limiting**.
+   * Get information about an intent, optionally including all intent content.
+   *
+   * With **export**=`false`, this operation is limited to 6000 requests per 5 minutes. With **export**=`true`, the
+   * limit is 400 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.intent - The intent name.
-   * @param {boolean} [params.export] - Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {boolean} [params.export] - Whether to include all element content in the returned data. If
+   * **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all
+   * content, including subelements, is included.
+   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -499,16 +553,23 @@ class AssistantV1 extends BaseService {
   /**
    * List intents.
    *
-   * List the intents for a workspace.    With **export**=`false`, this operation is limited to 2000 requests per 30 minutes. With **export**=`true`, the limit is 400 requests per 30 minutes. For more information, see **Rate limiting**.
+   * List the intents for a workspace.
+   *
+   * With **export**=`false`, this operation is limited to 2000 requests per 30 minutes. With **export**=`true`, the
+   * limit is 400 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {boolean} [params.export] - Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included.
+   * @param {boolean} [params.export] - Whether to include all element content in the returned data. If
+   * **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all
+   * content, including subelements, is included.
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
+   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order,
+   * prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -551,12 +612,19 @@ class AssistantV1 extends BaseService {
   /**
    * Update intent.
    *
-   * Update an existing intent with new or modified data. You must provide component objects defining the content of the updated intent.    This operation is limited to 2000 requests per 30 minutes. For more information, see **Rate limiting**.
+   * Update an existing intent with new or modified data. You must provide component objects defining the content of the
+   * updated intent.
+   *
+   * This operation is limited to 2000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.intent - The intent name.
-   * @param {string} [params.new_intent] - The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 128 characters.
+   * @param {string} [params.new_intent] - The name of the intent. This string must conform to the following
+   * restrictions:
+   * - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.
+   * - It cannot begin with the reserved prefix `sys-`.
+   * - It must be no longer than 128 characters.
    * @param {string} [params.new_description] - The description of the intent.
    * @param {CreateExample[]} [params.new_examples] - An array of user input examples for the intent.
    * @param {Object} [params.headers] - Custom request headers
@@ -605,12 +673,18 @@ class AssistantV1 extends BaseService {
   /**
    * Create user input example.
    *
-   * Add a new user input example to an intent.    This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
+   * Add a new user input example to an intent.
+   *
+   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.intent - The intent name.
-   * @param {string} params.text - The text of a user input example. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 1024 characters.
+   * @param {string} params.text - The text of a user input example. This string must conform to the following
+   * restrictions:
+   * - It cannot contain carriage return, newline, or tab characters.
+   * - It cannot consist of only whitespace characters.
+   * - It must be no longer than 1024 characters.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -651,7 +725,9 @@ class AssistantV1 extends BaseService {
   /**
    * Delete user input example.
    *
-   * Delete a user input example from an intent.    This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
+   * Delete a user input example from an intent.
+   *
+   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
@@ -692,13 +768,16 @@ class AssistantV1 extends BaseService {
   /**
    * Get user input example.
    *
-   * Get information about a user input example.    This operation is limited to 6000 requests per 5 minutes. For more information, see **Rate limiting**.
+   * Get information about a user input example.
+   *
+   * This operation is limited to 6000 requests per 5 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.intent - The intent name.
    * @param {string} params.text - The text of the user input example.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -738,16 +817,20 @@ class AssistantV1 extends BaseService {
   /**
    * List user input examples.
    *
-   * List the user input examples for an intent.    This operation is limited to 2500 requests per 30 minutes. For more information, see **Rate limiting**.
+   * List the user input examples for an intent.
+   *
+   * This operation is limited to 2500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.intent - The intent name.
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
+   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order,
+   * prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -790,13 +873,19 @@ class AssistantV1 extends BaseService {
   /**
    * Update user input example.
    *
-   * Update the text of a user input example.    This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
+   * Update the text of a user input example.
+   *
+   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.intent - The intent name.
    * @param {string} params.text - The text of the user input example.
-   * @param {string} [params.new_text] - The text of the user input example. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 1024 characters.
+   * @param {string} [params.new_text] - The text of the user input example. This string must conform to the following
+   * restrictions:
+   * - It cannot contain carriage return, newline, or tab characters.
+   * - It cannot consist of only whitespace characters.
+   * - It must be no longer than 1024 characters.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -842,11 +931,17 @@ class AssistantV1 extends BaseService {
   /**
    * Create counterexample.
    *
-   * Add a new counterexample to a workspace. Counterexamples are examples that have been marked as irrelevant input.    This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
+   * Add a new counterexample to a workspace. Counterexamples are examples that have been marked as irrelevant input.
+   *
+   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {string} params.text - The text of a user input marked as irrelevant input. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters  - It cannot consist of only whitespace characters  - It must be no longer than 1024 characters.
+   * @param {string} params.text - The text of a user input marked as irrelevant input. This string must conform to the
+   * following restrictions:
+   * - It cannot contain carriage return, newline, or tab characters
+   * - It cannot consist of only whitespace characters
+   * - It must be no longer than 1024 characters.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -886,7 +981,9 @@ class AssistantV1 extends BaseService {
   /**
    * Delete counterexample.
    *
-   * Delete a counterexample from a workspace. Counterexamples are examples that have been marked as irrelevant input.    This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
+   * Delete a counterexample from a workspace. Counterexamples are examples that have been marked as irrelevant input.
+   *
+   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
@@ -925,12 +1022,15 @@ class AssistantV1 extends BaseService {
   /**
    * Get counterexample.
    *
-   * Get information about a counterexample. Counterexamples are examples that have been marked as irrelevant input.    This operation is limited to 6000 requests per 5 minutes. For more information, see **Rate limiting**.
+   * Get information about a counterexample. Counterexamples are examples that have been marked as irrelevant input.
+   *
+   * This operation is limited to 6000 requests per 5 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.text - The text of a user input counterexample (for example, `What are you wearing?`).
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -969,15 +1069,19 @@ class AssistantV1 extends BaseService {
   /**
    * List counterexamples.
    *
-   * List the counterexamples for a workspace. Counterexamples are examples that have been marked as irrelevant input.    This operation is limited to 2500 requests per 30 minutes. For more information, see **Rate limiting**.
+   * List the counterexamples for a workspace. Counterexamples are examples that have been marked as irrelevant input.
+   *
+   * This operation is limited to 2500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
+   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order,
+   * prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -1019,7 +1123,9 @@ class AssistantV1 extends BaseService {
   /**
    * Update counterexample.
    *
-   * Update the text of a counterexample. Counterexamples are examples that have been marked as irrelevant input.    This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
+   * Update the text of a counterexample. Counterexamples are examples that have been marked as irrelevant input.
+   *
+   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
@@ -1069,12 +1175,18 @@ class AssistantV1 extends BaseService {
   /**
    * Create entity.
    *
-   * Create a new entity.    This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
+   * Create a new entity.
+   *
+   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {string} params.entity - The name of the entity. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 64 characters.
-   * @param {string} [params.description] - The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters.
+   * @param {string} params.entity - The name of the entity. This string must conform to the following restrictions:
+   * - It can contain only Unicode alphanumeric, underscore, and hyphen characters.
+   * - It cannot begin with the reserved prefix `sys-`.
+   * - It must be no longer than 64 characters.
+   * @param {string} [params.description] - The description of the entity. This string cannot contain carriage return,
+   * newline, or tab characters, and it must be no longer than 128 characters.
    * @param {Object} [params.metadata] - Any metadata related to the value.
    * @param {CreateValue[]} [params.values] - An array of objects describing the entity values.
    * @param {boolean} [params.fuzzy_match] - Whether to use fuzzy matching for the entity.
@@ -1121,7 +1233,9 @@ class AssistantV1 extends BaseService {
   /**
    * Delete entity.
    *
-   * Delete an entity from a workspace.    This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
+   * Delete an entity from a workspace.
+   *
+   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
@@ -1160,13 +1274,19 @@ class AssistantV1 extends BaseService {
   /**
    * Get entity.
    *
-   * Get information about an entity, optionally including all entity content.    With **export**=`false`, this operation is limited to 6000 requests per 5 minutes. With **export**=`true`, the limit is 200 requests per 30 minutes. For more information, see **Rate limiting**.
+   * Get information about an entity, optionally including all entity content.
+   *
+   * With **export**=`false`, this operation is limited to 6000 requests per 5 minutes. With **export**=`true`, the
+   * limit is 200 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
-   * @param {boolean} [params.export] - Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {boolean} [params.export] - Whether to include all element content in the returned data. If
+   * **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all
+   * content, including subelements, is included.
+   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -1206,16 +1326,23 @@ class AssistantV1 extends BaseService {
   /**
    * List entities.
    *
-   * List the entities for a workspace.    With **export**=`false`, this operation is limited to 1000 requests per 30 minutes. With **export**=`true`, the limit is 200 requests per 30 minutes. For more information, see **Rate limiting**.
+   * List the entities for a workspace.
+   *
+   * With **export**=`false`, this operation is limited to 1000 requests per 30 minutes. With **export**=`true`, the
+   * limit is 200 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {boolean} [params.export] - Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included.
+   * @param {boolean} [params.export] - Whether to include all element content in the returned data. If
+   * **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all
+   * content, including subelements, is included.
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
+   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order,
+   * prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -1258,13 +1385,21 @@ class AssistantV1 extends BaseService {
   /**
    * Update entity.
    *
-   * Update an existing entity with new or modified data. You must provide component objects defining the content of the updated entity.    This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
+   * Update an existing entity with new or modified data. You must provide component objects defining the content of the
+   * updated entity.
+   *
+   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
-   * @param {string} [params.new_entity] - The name of the entity. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 64 characters.
-   * @param {string} [params.new_description] - The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters.
+   * @param {string} [params.new_entity] - The name of the entity. This string must conform to the following
+   * restrictions:
+   * - It can contain only Unicode alphanumeric, underscore, and hyphen characters.
+   * - It cannot begin with the reserved prefix `sys-`.
+   * - It must be no longer than 64 characters.
+   * @param {string} [params.new_description] - The description of the entity. This string cannot contain carriage
+   * return, newline, or tab characters, and it must be no longer than 128 characters.
    * @param {Object} [params.new_metadata] - Any metadata related to the entity.
    * @param {boolean} [params.new_fuzzy_match] - Whether to use fuzzy matching for the entity.
    * @param {CreateValue[]} [params.new_values] - An array of entity values.
@@ -1316,15 +1451,29 @@ class AssistantV1 extends BaseService {
   /**
    * Add entity value.
    *
-   * Create a new value for an entity.    This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
+   * Create a new value for an entity.
+   *
+   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
-   * @param {string} params.value - The text of the entity value. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters.
+   * @param {string} params.value - The text of the entity value. This string must conform to the following
+   * restrictions:
+   * - It cannot contain carriage return, newline, or tab characters.
+   * - It cannot consist of only whitespace characters.
+   * - It must be no longer than 64 characters.
    * @param {Object} [params.metadata] - Any metadata related to the entity value.
-   * @param {string[]} [params.synonyms] - An array containing any synonyms for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A synonym must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters.
-   * @param {string[]} [params.patterns] - An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 128 characters. For more information about how to specify a pattern, see the [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities).
+   * @param {string[]} [params.synonyms] - An array containing any synonyms for the entity value. You can provide either
+   * synonyms or patterns (as indicated by **type**), but not both. A synonym must conform to the following
+   * restrictions:
+   * - It cannot contain carriage return, newline, or tab characters.
+   * - It cannot consist of only whitespace characters.
+   * - It must be no longer than 64 characters.
+   * @param {string[]} [params.patterns] - An array of patterns for the entity value. You can provide either synonyms or
+   * patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 128 characters.
+   * For more information about how to specify a pattern, see the
+   * [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities).
    * @param {string} [params.value_type] - Specifies the type of value.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -1370,7 +1519,9 @@ class AssistantV1 extends BaseService {
   /**
    * Delete entity value.
    *
-   * Delete a value from an entity.    This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
+   * Delete a value from an entity.
+   *
+   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
@@ -1411,14 +1562,19 @@ class AssistantV1 extends BaseService {
   /**
    * Get entity value.
    *
-   * Get information about an entity value.    This operation is limited to 6000 requests per 5 minutes. For more information, see **Rate limiting**.
+   * Get information about an entity value.
+   *
+   * This operation is limited to 6000 requests per 5 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
    * @param {string} params.value - The text of the entity value.
-   * @param {boolean} [params.export] - Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {boolean} [params.export] - Whether to include all element content in the returned data. If
+   * **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all
+   * content, including subelements, is included.
+   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -1459,17 +1615,23 @@ class AssistantV1 extends BaseService {
   /**
    * List entity values.
    *
-   * List the values for an entity.    This operation is limited to 2500 requests per 30 minutes. For more information, see **Rate limiting**.
+   * List the values for an entity.
+   *
+   * This operation is limited to 2500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
-   * @param {boolean} [params.export] - Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included.
+   * @param {boolean} [params.export] - Whether to include all element content in the returned data. If
+   * **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all
+   * content, including subelements, is included.
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
+   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order,
+   * prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -1513,17 +1675,32 @@ class AssistantV1 extends BaseService {
   /**
    * Update entity value.
    *
-   * Update an existing entity value with new or modified data. You must provide component objects defining the content of the updated entity value.    This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
+   * Update an existing entity value with new or modified data. You must provide component objects defining the content
+   * of the updated entity value.
+   *
+   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
    * @param {string} params.value - The text of the entity value.
-   * @param {string} [params.new_value] - The text of the entity value. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters.
+   * @param {string} [params.new_value] - The text of the entity value. This string must conform to the following
+   * restrictions:
+   * - It cannot contain carriage return, newline, or tab characters.
+   * - It cannot consist of only whitespace characters.
+   * - It must be no longer than 64 characters.
    * @param {Object} [params.new_metadata] - Any metadata related to the entity value.
    * @param {string} [params.new_type] - Specifies the type of value.
-   * @param {string[]} [params.new_synonyms] - An array of synonyms for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A synonym must conform to the following resrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters.
-   * @param {string[]} [params.new_patterns] - An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 128 characters. For more information about how to specify a pattern, see the [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities).
+   * @param {string[]} [params.new_synonyms] - An array of synonyms for the entity value. You can provide either
+   * synonyms or patterns (as indicated by **type**), but not both. A synonym must conform to the following resrictions:
+   *
+   * - It cannot contain carriage return, newline, or tab characters.
+   * - It cannot consist of only whitespace characters.
+   * - It must be no longer than 64 characters.
+   * @param {string[]} [params.new_patterns] - An array of patterns for the entity value. You can provide either
+   * synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 128
+   * characters. For more information about how to specify a pattern, see the
+   * [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities).
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -1573,13 +1750,18 @@ class AssistantV1 extends BaseService {
   /**
    * Add entity value synonym.
    *
-   * Add a new synonym to an entity value.    This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
+   * Add a new synonym to an entity value.
+   *
+   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
    * @param {string} params.value - The text of the entity value.
-   * @param {string} params.synonym - The text of the synonym. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters.
+   * @param {string} params.synonym - The text of the synonym. This string must conform to the following restrictions:
+   * - It cannot contain carriage return, newline, or tab characters.
+   * - It cannot consist of only whitespace characters.
+   * - It must be no longer than 64 characters.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -1621,7 +1803,9 @@ class AssistantV1 extends BaseService {
   /**
    * Delete entity value synonym.
    *
-   * Delete a synonym from an entity value.    This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
+   * Delete a synonym from an entity value.
+   *
+   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
@@ -1664,14 +1848,17 @@ class AssistantV1 extends BaseService {
   /**
    * Get entity value synonym.
    *
-   * Get information about a synonym of an entity value.    This operation is limited to 6000 requests per 5 minutes. For more information, see **Rate limiting**.
+   * Get information about a synonym of an entity value.
+   *
+   * This operation is limited to 6000 requests per 5 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
    * @param {string} params.value - The text of the entity value.
    * @param {string} params.synonym - The text of the synonym.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -1712,7 +1899,9 @@ class AssistantV1 extends BaseService {
   /**
    * List entity value synonyms.
    *
-   * List the synonyms for an entity value.    This operation is limited to 2500 requests per 30 minutes. For more information, see **Rate limiting**.
+   * List the synonyms for an entity value.
+   *
+   * This operation is limited to 2500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
@@ -1720,9 +1909,11 @@ class AssistantV1 extends BaseService {
    * @param {string} params.value - The text of the entity value.
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
+   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order,
+   * prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -1766,14 +1957,20 @@ class AssistantV1 extends BaseService {
   /**
    * Update entity value synonym.
    *
-   * Update an existing entity value synonym with new text.    This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
+   * Update an existing entity value synonym with new text.
+   *
+   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
    * @param {string} params.value - The text of the entity value.
    * @param {string} params.synonym - The text of the synonym.
-   * @param {string} [params.new_synonym] - The text of the synonym. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters.
+   * @param {string} [params.new_synonym] - The text of the synonym. This string must conform to the following
+   * restrictions:
+   * - It cannot contain carriage return, newline, or tab characters.
+   * - It cannot consist of only whitespace characters.
+   * - It must be no longer than 64 characters.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -1820,27 +2017,40 @@ class AssistantV1 extends BaseService {
   /**
    * Create dialog node.
    *
-   * Create a new dialog node.    This operation is limited to 500 requests per 30 minutes. For more information, see **Rate limiting**.
+   * Create a new dialog node.
+   *
+   * This operation is limited to 500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {string} params.dialog_node - The dialog node ID. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.  - It must be no longer than 1024 characters.
-   * @param {string} [params.description] - The description of the dialog node. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters.
-   * @param {string} [params.conditions] - The condition that will trigger the dialog node. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 2048 characters.
+   * @param {string} params.dialog_node - The dialog node ID. This string must conform to the following restrictions:
+   * - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
+   * - It must be no longer than 1024 characters.
+   * @param {string} [params.description] - The description of the dialog node. This string cannot contain carriage
+   * return, newline, or tab characters, and it must be no longer than 128 characters.
+   * @param {string} [params.conditions] - The condition that will trigger the dialog node. This string cannot contain
+   * carriage return, newline, or tab characters, and it must be no longer than 2048 characters.
    * @param {string} [params.parent] - The ID of the parent dialog node.
    * @param {string} [params.previous_sibling] - The ID of the previous dialog node.
-   * @param {Object} [params.output] - The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex).
+   * @param {Object} [params.output] - The output of the dialog node. For more information about how to specify dialog
+   * node output, see the
+   * [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex).
    * @param {Object} [params.context] - The context for the dialog node.
    * @param {Object} [params.metadata] - The metadata for the dialog node.
    * @param {DialogNodeNextStep} [params.next_step] - The next step to be executed in dialog processing.
-   * @param {DialogNodeAction[]} [params.actions] - An array of objects describing any actions to be invoked by the dialog node.
-   * @param {string} [params.title] - The alias used to identify the dialog node. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.  - It must be no longer than 64 characters.
+   * @param {DialogNodeAction[]} [params.actions] - An array of objects describing any actions to be invoked by the
+   * dialog node.
+   * @param {string} [params.title] - The alias used to identify the dialog node. This string must conform to the
+   * following restrictions:
+   * - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
+   * - It must be no longer than 64 characters.
    * @param {string} [params.node_type] - How the dialog node is processed.
    * @param {string} [params.event_name] - How an `event_handler` node is processed.
    * @param {string} [params.variable] - The location in the dialog context where output is stored.
    * @param {string} [params.digress_in] - Whether this top-level dialog node can be digressed into.
    * @param {string} [params.digress_out] - Whether this dialog node can be returned to after a digression.
-   * @param {string} [params.digress_out_slots] - Whether the user can digress to top-level nodes while filling out slots.
+   * @param {string} [params.digress_out_slots] - Whether the user can digress to top-level nodes while filling out
+   * slots.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -1896,7 +2106,9 @@ class AssistantV1 extends BaseService {
   /**
    * Delete dialog node.
    *
-   * Delete a dialog node from a workspace.    This operation is limited to 500 requests per 30 minutes. For more information, see **Rate limiting**.
+   * Delete a dialog node from a workspace.
+   *
+   * This operation is limited to 500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
@@ -1935,12 +2147,15 @@ class AssistantV1 extends BaseService {
   /**
    * Get dialog node.
    *
-   * Get information about a dialog node.    This operation is limited to 6000 requests per 5 minutes. For more information, see **Rate limiting**.
+   * Get information about a dialog node.
+   *
+   * This operation is limited to 6000 requests per 5 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.dialog_node - The dialog node ID (for example, `get_order`).
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -1979,15 +2194,19 @@ class AssistantV1 extends BaseService {
   /**
    * List dialog nodes.
    *
-   * List the dialog nodes for a workspace.    This operation is limited to 2500 requests per 30 minutes. For more information, see **Rate limiting**.
+   * List the dialog nodes for a workspace.
+   *
+   * This operation is limited to 2500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
+   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order,
+   * prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated` timestamps) in the response.
+   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -2029,28 +2248,42 @@ class AssistantV1 extends BaseService {
   /**
    * Update dialog node.
    *
-   * Update an existing dialog node with new or modified data.    This operation is limited to 500 requests per 30 minutes. For more information, see **Rate limiting**.
+   * Update an existing dialog node with new or modified data.
+   *
+   * This operation is limited to 500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.dialog_node - The dialog node ID (for example, `get_order`).
-   * @param {string} [params.new_dialog_node] - The dialog node ID. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.  - It must be no longer than 1024 characters.
-   * @param {string} [params.new_description] - The description of the dialog node. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters.
-   * @param {string} [params.new_conditions] - The condition that will trigger the dialog node. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 2048 characters.
+   * @param {string} [params.new_dialog_node] - The dialog node ID. This string must conform to the following
+   * restrictions:
+   * - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
+   * - It must be no longer than 1024 characters.
+   * @param {string} [params.new_description] - The description of the dialog node. This string cannot contain carriage
+   * return, newline, or tab characters, and it must be no longer than 128 characters.
+   * @param {string} [params.new_conditions] - The condition that will trigger the dialog node. This string cannot
+   * contain carriage return, newline, or tab characters, and it must be no longer than 2048 characters.
    * @param {string} [params.new_parent] - The ID of the parent dialog node.
    * @param {string} [params.new_previous_sibling] - The ID of the previous sibling dialog node.
-   * @param {Object} [params.new_output] - The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex).
+   * @param {Object} [params.new_output] - The output of the dialog node. For more information about how to specify
+   * dialog node output, see the
+   * [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex).
    * @param {Object} [params.new_context] - The context for the dialog node.
    * @param {Object} [params.new_metadata] - The metadata for the dialog node.
    * @param {DialogNodeNextStep} [params.new_next_step] - The next step to be executed in dialog processing.
-   * @param {string} [params.new_title] - The alias used to identify the dialog node. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.  - It must be no longer than 64 characters.
+   * @param {string} [params.new_title] - The alias used to identify the dialog node. This string must conform to the
+   * following restrictions:
+   * - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
+   * - It must be no longer than 64 characters.
    * @param {string} [params.new_type] - How the dialog node is processed.
    * @param {string} [params.new_event_name] - How an `event_handler` node is processed.
    * @param {string} [params.new_variable] - The location in the dialog context where output is stored.
-   * @param {DialogNodeAction[]} [params.new_actions] - An array of objects describing any actions to be invoked by the dialog node.
+   * @param {DialogNodeAction[]} [params.new_actions] - An array of objects describing any actions to be invoked by the
+   * dialog node.
    * @param {string} [params.new_digress_in] - Whether this top-level dialog node can be digressed into.
    * @param {string} [params.new_digress_out] - Whether this dialog node can be returned to after a digression.
-   * @param {string} [params.new_digress_out_slots] - Whether the user can digress to top-level nodes while filling out slots.
+   * @param {string} [params.new_digress_out_slots] - Whether the user can digress to top-level nodes while filling out
+   * slots.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -2111,11 +2344,18 @@ class AssistantV1 extends BaseService {
   /**
    * List log events in all workspaces.
    *
-   * List the events from the logs of all workspaces in the service instance.    If **cursor** is not specified, this operation is limited to 40 requests per 30 minutes. If **cursor** is specified, the limit is 120 requests per minute. For more information, see **Rate limiting**.
+   * List the events from the logs of all workspaces in the service instance.
+   *
+   * If **cursor** is not specified, this operation is limited to 40 requests per 30 minutes. If **cursor** is
+   * specified, the limit is 120 requests per minute. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.filter - A cacheable parameter that limits the results to those matching the specified filter. You must specify a filter query that includes a value for `language`, as well as a value for `workspace_id` or `request.context.metadata.deployment`. For more information, see the [documentation](https://console.bluemix.net/docs/services/conversation/filter-reference.html#filter-query-syntax).
-   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
+   * @param {string} params.filter - A cacheable parameter that limits the results to those matching the specified
+   * filter. You must specify a filter query that includes a value for `language`, as well as a value for `workspace_id`
+   * or `request.context.metadata.deployment`. For more information, see the
+   * [documentation](https://console.bluemix.net/docs/services/conversation/filter-reference.html#filter-query-syntax).
+   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order,
+   * prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {Object} [params.headers] - Custom request headers
@@ -2154,12 +2394,18 @@ class AssistantV1 extends BaseService {
   /**
    * List log events in a workspace.
    *
-   * List the events from the log of a specific workspace.    If **cursor** is not specified, this operation is limited to 40 requests per 30 minutes. If **cursor** is specified, the limit is 120 requests per minute. For more information, see **Rate limiting**.
+   * List the events from the log of a specific workspace.
+   *
+   * If **cursor** is not specified, this operation is limited to 40 requests per 30 minutes. If **cursor** is
+   * specified, the limit is 120 requests per minute. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
-   * @param {string} [params.filter] - A cacheable parameter that limits the results to those matching the specified filter. For more information, see the [documentation](https://console.bluemix.net/docs/services/conversation/filter-reference.html#filter-query-syntax).
+   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order,
+   * prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
+   * @param {string} [params.filter] - A cacheable parameter that limits the results to those matching the specified
+   * filter. For more information, see the
+   * [documentation](https://console.bluemix.net/docs/services/conversation/filter-reference.html#filter-query-syntax).
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {Object} [params.headers] - Custom request headers
@@ -2206,7 +2452,12 @@ class AssistantV1 extends BaseService {
   /**
    * Delete labeled data.
    *
-   * Deletes all data associated with a specified customer ID. The method has no effect if no data is associated with the customer ID.   You associate a customer ID with data by passing the `X-Watson-Metadata` header with a request that passes data. For more information about personal data and customer IDs, see [Information security](https://console.bluemix.net/docs/services/conversation/information-security.html).
+   * Deletes all data associated with a specified customer ID. The method has no effect if no data is associated with
+   * the customer ID.
+   *
+   * You associate a customer ID with data by passing the `X-Watson-Metadata` header with a request that passes data.
+   * For more information about personal data and customer IDs, see [Information
+   * security](https://console.bluemix.net/docs/services/conversation/information-security.html).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customer_id - The customer ID for which all data is to be deleted.
@@ -2373,7 +2624,7 @@ namespace AssistantV1 {
     metadata?: Object;
     /** Whether training data from the workspace can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used. */
     learning_opt_out?: boolean;
-    /** Whether the new data is to be appended to the existing data in the workspace. If **append**=`false`, elements included in the new data completely replace the corresponding existing elements, including all subelements. For example, if the new data includes **entities** and **append**=`false`, all existing entities in the workspace are discarded and replaced with the new entities.    If **append**=`true`, existing elements are preserved, and the new elements are added. If any elements in the new data collide with existing elements, the update request fails. */
+    /** Whether the new data is to be appended to the existing data in the workspace. If **append**=`false`, elements included in the new data completely replace the corresponding existing elements, including all subelements. For example, if the new data includes **entities** and **append**=`false`, all existing entities in the workspace are discarded and replaced with the new entities. If **append**=`true`, existing elements are preserved, and the new elements are added. If any elements in the new data collide with existing elements, the update request fails. */
     append?: boolean;
     headers?: Object;
   }
@@ -2382,7 +2633,7 @@ namespace AssistantV1 {
   export interface CreateIntentParams {
     /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 128 characters. */
+    /** The name of the intent. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters. - It cannot begin with the reserved prefix `sys-`. - It must be no longer than 128 characters. */
     intent: string;
     /** The description of the intent. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     description?: string;
@@ -2438,7 +2689,7 @@ namespace AssistantV1 {
     workspace_id: string;
     /** The intent name. */
     intent: string;
-    /** The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 128 characters. */
+    /** The name of the intent. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters. - It cannot begin with the reserved prefix `sys-`. - It must be no longer than 128 characters. */
     new_intent?: string;
     /** The description of the intent. */
     new_description?: string;
@@ -2453,7 +2704,7 @@ namespace AssistantV1 {
     workspace_id: string;
     /** The intent name. */
     intent: string;
-    /** The text of a user input example. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 1024 characters. */
+    /** The text of a user input example. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 1024 characters. */
     text: string;
     headers?: Object;
   }
@@ -2509,7 +2760,7 @@ namespace AssistantV1 {
     intent: string;
     /** The text of the user input example. */
     text: string;
-    /** The text of the user input example. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 1024 characters. */
+    /** The text of the user input example. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 1024 characters. */
     new_text?: string;
     headers?: Object;
   }
@@ -2518,7 +2769,7 @@ namespace AssistantV1 {
   export interface CreateCounterexampleParams {
     /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** The text of a user input marked as irrelevant input. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters  - It cannot consist of only whitespace characters  - It must be no longer than 1024 characters. */
+    /** The text of a user input marked as irrelevant input. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters - It cannot consist of only whitespace characters - It must be no longer than 1024 characters. */
     text: string;
     headers?: Object;
   }
@@ -2575,7 +2826,7 @@ namespace AssistantV1 {
   export interface CreateEntityParams {
     /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** The name of the entity. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 64 characters. */
+    /** The name of the entity. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, and hyphen characters. - It cannot begin with the reserved prefix `sys-`. - It must be no longer than 64 characters. */
     entity: string;
     /** The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     description?: string;
@@ -2635,7 +2886,7 @@ namespace AssistantV1 {
     workspace_id: string;
     /** The name of the entity. */
     entity: string;
-    /** The name of the entity. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 64 characters. */
+    /** The name of the entity. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, and hyphen characters. - It cannot begin with the reserved prefix `sys-`. - It must be no longer than 64 characters. */
     new_entity?: string;
     /** The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     new_description?: string;
@@ -2654,11 +2905,11 @@ namespace AssistantV1 {
     workspace_id: string;
     /** The name of the entity. */
     entity: string;
-    /** The text of the entity value. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
+    /** The text of the entity value. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
     value: string;
     /** Any metadata related to the entity value. */
     metadata?: Object;
-    /** An array containing any synonyms for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A synonym must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
+    /** An array containing any synonyms for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A synonym must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
     synonyms?: string[];
     /** An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 128 characters. For more information about how to specify a pattern, see the [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities). */
     patterns?: string[];
@@ -2669,7 +2920,7 @@ namespace AssistantV1 {
 
   /** Constants for the `createValue` operation. */
   export namespace CreateValueConstants {
-    /** Specifies the type of value. */
+     /** Specifies the type of value. */
     export enum ValueType {
       SYNONYMS = 'synonyms',
       PATTERNS = 'patterns',
@@ -2731,13 +2982,13 @@ namespace AssistantV1 {
     entity: string;
     /** The text of the entity value. */
     value: string;
-    /** The text of the entity value. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
+    /** The text of the entity value. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
     new_value?: string;
     /** Any metadata related to the entity value. */
     new_metadata?: Object;
     /** Specifies the type of value. */
     new_type?: UpdateValueConstants.ValueType | string;
-    /** An array of synonyms for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A synonym must conform to the following resrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
+    /** An array of synonyms for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A synonym must conform to the following resrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
     new_synonyms?: string[];
     /** An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 128 characters. For more information about how to specify a pattern, see the [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities). */
     new_patterns?: string[];
@@ -2746,7 +2997,7 @@ namespace AssistantV1 {
 
   /** Constants for the `updateValue` operation. */
   export namespace UpdateValueConstants {
-    /** Specifies the type of value. */
+     /** Specifies the type of value. */
     export enum ValueType {
       SYNONYMS = 'synonyms',
       PATTERNS = 'patterns',
@@ -2761,7 +3012,7 @@ namespace AssistantV1 {
     entity: string;
     /** The text of the entity value. */
     value: string;
-    /** The text of the synonym. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
+    /** The text of the synonym. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
     synonym: string;
     headers?: Object;
   }
@@ -2825,7 +3076,7 @@ namespace AssistantV1 {
     value: string;
     /** The text of the synonym. */
     synonym: string;
-    /** The text of the synonym. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
+    /** The text of the synonym. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
     new_synonym?: string;
     headers?: Object;
   }
@@ -2834,7 +3085,7 @@ namespace AssistantV1 {
   export interface CreateDialogNodeParams {
     /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** The dialog node ID. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.  - It must be no longer than 1024 characters. */
+    /** The dialog node ID. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters. - It must be no longer than 1024 characters. */
     dialog_node: string;
     /** The description of the dialog node. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     description?: string;
@@ -2854,7 +3105,7 @@ namespace AssistantV1 {
     next_step?: DialogNodeNextStep;
     /** An array of objects describing any actions to be invoked by the dialog node. */
     actions?: DialogNodeAction[];
-    /** The alias used to identify the dialog node. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.  - It must be no longer than 64 characters. */
+    /** The alias used to identify the dialog node. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters. - It must be no longer than 64 characters. */
     title?: string;
     /** How the dialog node is processed. */
     node_type?: CreateDialogNodeConstants.NodeType | string;
@@ -2873,7 +3124,7 @@ namespace AssistantV1 {
 
   /** Constants for the `createDialogNode` operation. */
   export namespace CreateDialogNodeConstants {
-    /** How the dialog node is processed. */
+     /** How the dialog node is processed. */
     export enum NodeType {
       STANDARD = 'standard',
       EVENT_HANDLER = 'event_handler',
@@ -2882,7 +3133,7 @@ namespace AssistantV1 {
       RESPONSE_CONDITION = 'response_condition',
       FOLDER = 'folder',
     }
-    /** How an `event_handler` node is processed. */
+     /** How an `event_handler` node is processed. */
     export enum EventName {
       FOCUS = 'focus',
       INPUT = 'input',
@@ -2894,19 +3145,19 @@ namespace AssistantV1 {
       NOMATCH_RESPONSES_DEPLETED = 'nomatch_responses_depleted',
       DIGRESSION_RETURN_PROMPT = 'digression_return_prompt',
     }
-    /** Whether this top-level dialog node can be digressed into. */
+     /** Whether this top-level dialog node can be digressed into. */
     export enum DigressIn {
       NOT_AVAILABLE = 'not_available',
       RETURNS = 'returns',
       DOES_NOT_RETURN = 'does_not_return',
     }
-    /** Whether this dialog node can be returned to after a digression. */
+     /** Whether this dialog node can be returned to after a digression. */
     export enum DigressOut {
       RETURNING = 'allow_returning',
       ALL = 'allow_all',
       ALL_NEVER_RETURN = 'allow_all_never_return',
     }
-    /** Whether the user can digress to top-level nodes while filling out slots. */
+     /** Whether the user can digress to top-level nodes while filling out slots. */
     export enum DigressOutSlots {
       NOT_ALLOWED = 'not_allowed',
       ALLOW_RETURNING = 'allow_returning',
@@ -2957,7 +3208,7 @@ namespace AssistantV1 {
     workspace_id: string;
     /** The dialog node ID (for example, `get_order`). */
     dialog_node: string;
-    /** The dialog node ID. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.  - It must be no longer than 1024 characters. */
+    /** The dialog node ID. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters. - It must be no longer than 1024 characters. */
     new_dialog_node?: string;
     /** The description of the dialog node. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     new_description?: string;
@@ -2975,7 +3226,7 @@ namespace AssistantV1 {
     new_metadata?: Object;
     /** The next step to be executed in dialog processing. */
     new_next_step?: DialogNodeNextStep;
-    /** The alias used to identify the dialog node. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.  - It must be no longer than 64 characters. */
+    /** The alias used to identify the dialog node. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters. - It must be no longer than 64 characters. */
     new_title?: string;
     /** How the dialog node is processed. */
     new_type?: UpdateDialogNodeConstants.NodeType | string;
@@ -2996,7 +3247,7 @@ namespace AssistantV1 {
 
   /** Constants for the `updateDialogNode` operation. */
   export namespace UpdateDialogNodeConstants {
-    /** How the dialog node is processed. */
+     /** How the dialog node is processed. */
     export enum NodeType {
       STANDARD = 'standard',
       EVENT_HANDLER = 'event_handler',
@@ -3005,7 +3256,7 @@ namespace AssistantV1 {
       RESPONSE_CONDITION = 'response_condition',
       FOLDER = 'folder',
     }
-    /** How an `event_handler` node is processed. */
+     /** How an `event_handler` node is processed. */
     export enum EventName {
       FOCUS = 'focus',
       INPUT = 'input',
@@ -3017,19 +3268,19 @@ namespace AssistantV1 {
       NOMATCH_RESPONSES_DEPLETED = 'nomatch_responses_depleted',
       DIGRESSION_RETURN_PROMPT = 'digression_return_prompt',
     }
-    /** Whether this top-level dialog node can be digressed into. */
+     /** Whether this top-level dialog node can be digressed into. */
     export enum DigressIn {
       NOT_AVAILABLE = 'not_available',
       RETURNS = 'returns',
       DOES_NOT_RETURN = 'does_not_return',
     }
-    /** Whether this dialog node can be returned to after a digression. */
+     /** Whether this dialog node can be returned to after a digression. */
     export enum DigressOut {
       RETURNING = 'allow_returning',
       ALL = 'allow_all',
       ALL_NEVER_RETURN = 'allow_all_never_return',
     }
-    /** Whether the user can digress to top-level nodes while filling out slots. */
+     /** Whether the user can digress to top-level nodes while filling out slots. */
     export enum DigressOutSlots {
       NOT_ALLOWED = 'not_allowed',
       ALLOW_RETURNING = 'allow_returning',
@@ -3076,114 +3327,6 @@ namespace AssistantV1 {
    * model interfaces
    ************************/
 
-  /** BaseCounterexample. */
-  export interface BaseCounterexample {
-    /** The text of a user input counterexample. */
-    text?: string;
-  }
-
-  /** BaseDialogNode. */
-  export interface BaseDialogNode {
-    /** The dialog node ID. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.  - It must be no longer than 1024 characters. */
-    dialog_node?: string;
-    /** The description of the dialog node. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
-    description?: string;
-    /** The condition that will trigger the dialog node. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 2048 characters. */
-    conditions?: string;
-    /** The ID of the parent dialog node. */
-    parent?: string;
-    /** The ID of the previous sibling dialog node. */
-    previous_sibling?: string;
-    /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex). */
-    output?: Object;
-    /** The context for the dialog node. */
-    context?: Object;
-    /** The metadata for the dialog node. */
-    metadata?: Object;
-    /** The next step to be executed in dialog processing. */
-    next_step?: DialogNodeNextStep;
-    /** The alias used to identify the dialog node. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.  - It must be no longer than 64 characters. */
-    title?: string;
-    /** How the dialog node is processed. */
-    node_type?: string;
-    /** How an `event_handler` node is processed. */
-    event_name?: string;
-    /** The location in the dialog context where output is stored. */
-    variable?: string;
-    /** An array of objects describing any actions to be invoked by the dialog node. */
-    actions?: DialogNodeAction[];
-    /** Whether this top-level dialog node can be digressed into. */
-    digress_in?: string;
-    /** Whether this dialog node can be returned to after a digression. */
-    digress_out?: string;
-    /** Whether the user can digress to top-level nodes while filling out slots. */
-    digress_out_slots?: string;
-  }
-
-  /** BaseEntity. */
-  export interface BaseEntity {
-    /** The name of the entity. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 64 characters. */
-    entity?: string;
-    /** The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
-    description?: string;
-    /** Any metadata related to the entity. */
-    metadata?: Object;
-    /** Whether to use fuzzy matching for the entity. */
-    fuzzy_match?: boolean;
-  }
-
-  /** BaseExample. */
-  export interface BaseExample {
-    /** The text of the user input example. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 1024 characters. */
-    text?: string;
-  }
-
-  /** BaseIntent. */
-  export interface BaseIntent {
-    /** The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 128 characters. */
-    intent?: string;
-    /** The description of the intent. */
-    description?: string;
-  }
-
-  /** BaseMessage. */
-  export interface BaseMessage {
-    /** The user input from the request. */
-    input?: MessageInput;
-    /** An array of intents recognized in the user input, sorted in descending order of confidence. */
-    intents: RuntimeIntent[];
-    /** An array of entities identified in the user input. */
-    entities: RuntimeEntity[];
-    /** Whether to return more than one intent. A value of `true` indicates that all matching intents are returned. */
-    alternate_intents?: boolean;
-  }
-
-  /** BaseSynonym. */
-  export interface BaseSynonym {
-    /** The text of the synonym. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
-    synonym?: string;
-  }
-
-  /** BaseValue. */
-  export interface BaseValue {
-    /** The text of the entity value. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
-    value?: string;
-    /** Any metadata related to the entity value. */
-    metadata?: Object;
-    /** Specifies the type of value. */
-    value_type?: string;
-  }
-
-  /** BaseWorkspace. */
-  export interface BaseWorkspace {
-    /** The name of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 64 characters. */
-    name?: string;
-    /** The description of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
-    description?: string;
-    /** The language of the workspace. */
-    language?: string;
-  }
-
   /** CaptureGroup. */
   export interface CaptureGroup {
     /** A recognized capture group for the entity. */
@@ -3218,21 +3361,15 @@ namespace AssistantV1 {
     pagination: Pagination;
   }
 
-  /** CounterexampleRequest. */
-  export interface CounterexampleRequest {
-    /** The text of a user input counterexample. */
-    text?: string;
-  }
-
   /** CreateCounterexample. */
   export interface CreateCounterexample {
-    /** The text of a user input marked as irrelevant input. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters  - It cannot consist of only whitespace characters  - It must be no longer than 1024 characters. */
+    /** The text of a user input marked as irrelevant input. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters - It cannot consist of only whitespace characters - It must be no longer than 1024 characters. */
     text: string;
   }
 
   /** CreateDialogNode. */
   export interface CreateDialogNode {
-    /** The dialog node ID. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.  - It must be no longer than 1024 characters. */
+    /** The dialog node ID. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters. - It must be no longer than 1024 characters. */
     dialog_node: string;
     /** The description of the dialog node. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     description?: string;
@@ -3252,7 +3389,7 @@ namespace AssistantV1 {
     next_step?: DialogNodeNextStep;
     /** An array of objects describing any actions to be invoked by the dialog node. */
     actions?: DialogNodeAction[];
-    /** The alias used to identify the dialog node. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.  - It must be no longer than 64 characters. */
+    /** The alias used to identify the dialog node. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters. - It must be no longer than 64 characters. */
     title?: string;
     /** How the dialog node is processed. */
     node_type?: string;
@@ -3270,7 +3407,7 @@ namespace AssistantV1 {
 
   /** CreateEntity. */
   export interface CreateEntity {
-    /** The name of the entity. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 64 characters. */
+    /** The name of the entity. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, and hyphen characters. - It cannot begin with the reserved prefix `sys-`. - It must be no longer than 64 characters. */
     entity: string;
     /** The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     description?: string;
@@ -3284,13 +3421,13 @@ namespace AssistantV1 {
 
   /** CreateExample. */
   export interface CreateExample {
-    /** The text of a user input example. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 1024 characters. */
+    /** The text of a user input example. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 1024 characters. */
     text: string;
   }
 
   /** CreateIntent. */
   export interface CreateIntent {
-    /** The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 128 characters. */
+    /** The name of the intent. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters. - It cannot begin with the reserved prefix `sys-`. - It must be no longer than 128 characters. */
     intent: string;
     /** The description of the intent. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     description?: string;
@@ -3298,46 +3435,18 @@ namespace AssistantV1 {
     examples?: CreateExample[];
   }
 
-  /** CreateSynonym. */
-  export interface CreateSynonym {
-    /** The text of the synonym. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
-    synonym: string;
-  }
-
   /** CreateValue. */
   export interface CreateValue {
-    /** The text of the entity value. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
+    /** The text of the entity value. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
     value: string;
     /** Any metadata related to the entity value. */
     metadata?: Object;
-    /** An array containing any synonyms for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A synonym must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
+    /** An array containing any synonyms for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A synonym must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
     synonyms?: string[];
     /** An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 128 characters. For more information about how to specify a pattern, see the [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities). */
     patterns?: string[];
     /** Specifies the type of value. */
     value_type?: string;
-  }
-
-  /** CreateWorkspace. */
-  export interface CreateWorkspace {
-    /** The name of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 64 characters. */
-    name?: string;
-    /** The description of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
-    description?: string;
-    /** The language of the workspace. */
-    language?: string;
-    /** An array of objects defining the intents for the workspace. */
-    intents?: CreateIntent[];
-    /** An array of objects defining the entities for the workspace. */
-    entities?: CreateEntity[];
-    /** An array of objects defining the nodes in the workspace dialog. */
-    dialog_nodes?: CreateDialogNode[];
-    /** An array of objects defining input examples that have been marked as irrelevant input. */
-    counterexamples?: CreateCounterexample[];
-    /** Any metadata related to the workspace. */
-    metadata?: Object;
-    /** Whether training data from the workspace can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used. */
-    learning_opt_out?: boolean;
   }
 
   /** DialogNode. */
@@ -3406,7 +3515,7 @@ namespace AssistantV1 {
 
   /** The next step to execute following this dialog node. */
   export interface DialogNodeNextStep {
-    /** What happens after the dialog node completes. The valid values depend on the node type:  - The following values are valid for any node:    - `get_user_input`    - `skip_user_input`    - `jump_to`  - If the node is of type `event_handler` and its parent node is of type `slot` or `frame`, additional values are also valid:    - if **event_name**=`filled` and the type of the parent node is `slot`:      - `reprompt`      - `skip_all_slots`  - if **event_name**=`nomatch` and the type of the parent node is `slot`:      - `reprompt`      - `skip_slot`      - `skip_all_slots`  - if **event_name**=`generic` and the type of the parent node is `frame`:      - `reprompt`      - `skip_slot`      - `skip_all_slots`        If you specify `jump_to`, then you must also specify a value for the `dialog_node` property. */
+    /** What happens after the dialog node completes. The valid values depend on the node type: - The following values are valid for any node: - `get_user_input` - `skip_user_input` - `jump_to` - If the node is of type `event_handler` and its parent node is of type `slot` or `frame`, additional values are also valid: - if **event_name**=`filled` and the type of the parent node is `slot`: - `reprompt` - `skip_all_slots` - if **event_name**=`nomatch` and the type of the parent node is `slot`: - `reprompt` - `skip_slot` - `skip_all_slots` - if **event_name**=`generic` and the type of the parent node is `frame`: - `reprompt` - `skip_slot` - `skip_all_slots` If you specify `jump_to`, then you must also specify a value for the `dialog_node` property. */
     behavior: string;
     /** The ID of the dialog node to process next. This parameter is required if **behavior**=`jump_to`. */
     dialog_node?: string;
@@ -3466,38 +3575,6 @@ namespace AssistantV1 {
     values?: ValueExport[];
   }
 
-  /** EntityRequest. */
-  export interface EntityRequest {
-    /** The name of the entity. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 64 characters. */
-    entity?: string;
-    /** The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
-    description?: string;
-    /** Any metadata related to the entity. */
-    metadata?: Object;
-    /** Whether to use fuzzy matching for the entity. */
-    fuzzy_match?: boolean;
-    /** An array of entity values. */
-    values?: CreateValue[];
-  }
-
-  /** ErrorDetail. */
-  export interface ErrorDetail {
-    /** Description of a specific constraint violation. */
-    message: string;
-    /** The location of the constraint violation. */
-    path?: string;
-  }
-
-  /** ErrorResponse. */
-  export interface ErrorResponse {
-    /** General description of an error. */
-    error: string;
-    /** Collection of specific constraint violations associated with the error. */
-    errors?: ErrorDetail[];
-    /** HTTP status code for the error response. */
-    code: number;
-  }
-
   /** Example. */
   export interface Example {
     /** The text of the user input example. */
@@ -3514,12 +3591,6 @@ namespace AssistantV1 {
     examples: Example[];
     /** The pagination data for the returned objects. */
     pagination: Pagination;
-  }
-
-  /** ExampleRequest. */
-  export interface ExampleRequest {
-    /** The text of the user input example. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 1024 characters. */
-    text?: string;
   }
 
   /** The user input. */
@@ -3560,34 +3631,6 @@ namespace AssistantV1 {
     description?: string;
     /** An array of objects describing the user input examples for the intent. */
     examples?: Example[];
-  }
-
-  /** IntentRequest. */
-  export interface IntentRequest {
-    /** The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 128 characters. */
-    intent?: string;
-    /** The description of the intent. */
-    description?: string;
-    /** An array of user input examples for the intent. */
-    examples?: CreateExample[];
-  }
-
-  /** Log. */
-  export interface Log {
-    /** A request received by the workspace, including the user input and context. */
-    request: MessageRequest;
-    /** The response sent by the workspace, including the output text, detected intents and entities, and context. */
-    response: MessageResponse;
-    /** A unique identifier for the logged event. */
-    log_id: string;
-    /** The timestamp for receipt of the message. */
-    request_timestamp: string;
-    /** The timestamp for the system response to the message. */
-    response_timestamp: string;
-    /** The unique identifier of the workspace where the request was made. */
-    workspace_id: string;
-    /** The language of the workspace where the message request was made. */
-    language: string;
   }
 
   /** LogCollection. */
@@ -3742,130 +3785,8 @@ namespace AssistantV1 {
     pagination: Pagination;
   }
 
-  /** SynonymRequest. */
-  export interface SynonymRequest {
-    /** The text of the synonym. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
-    synonym?: string;
-  }
-
   /** For internal use only. */
   export interface SystemResponse {
-  }
-
-  /** UpdateCounterexample. */
-  export interface UpdateCounterexample {
-    /** The text of a user input counterexample. */
-    text?: string;
-  }
-
-  /** UpdateDialogNode. */
-  export interface UpdateDialogNode {
-    /** The dialog node ID. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.  - It must be no longer than 1024 characters. */
-    dialog_node?: string;
-    /** The description of the dialog node. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
-    description?: string;
-    /** The condition that will trigger the dialog node. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 2048 characters. */
-    conditions?: string;
-    /** The ID of the parent dialog node. */
-    parent?: string;
-    /** The ID of the previous sibling dialog node. */
-    previous_sibling?: string;
-    /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex). */
-    output?: Object;
-    /** The context for the dialog node. */
-    context?: Object;
-    /** The metadata for the dialog node. */
-    metadata?: Object;
-    /** The next step to be executed in dialog processing. */
-    next_step?: DialogNodeNextStep;
-    /** The alias used to identify the dialog node. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.  - It must be no longer than 64 characters. */
-    title?: string;
-    /** How the dialog node is processed. */
-    node_type?: string;
-    /** How an `event_handler` node is processed. */
-    event_name?: string;
-    /** The location in the dialog context where output is stored. */
-    variable?: string;
-    /** An array of objects describing any actions to be invoked by the dialog node. */
-    actions?: DialogNodeAction[];
-    /** Whether this top-level dialog node can be digressed into. */
-    digress_in?: string;
-    /** Whether this dialog node can be returned to after a digression. */
-    digress_out?: string;
-    /** Whether the user can digress to top-level nodes while filling out slots. */
-    digress_out_slots?: string;
-  }
-
-  /** UpdateEntity. */
-  export interface UpdateEntity {
-    /** The name of the entity. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 64 characters. */
-    entity?: string;
-    /** The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
-    description?: string;
-    /** Any metadata related to the entity. */
-    metadata?: Object;
-    /** Whether to use fuzzy matching for the entity. */
-    fuzzy_match?: boolean;
-    /** An array of entity values. */
-    values?: CreateValue[];
-  }
-
-  /** UpdateExample. */
-  export interface UpdateExample {
-    /** The text of the user input example. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 1024 characters. */
-    text?: string;
-  }
-
-  /** UpdateIntent. */
-  export interface UpdateIntent {
-    /** The name of the intent. This string must conform to the following restrictions:  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.  - It cannot begin with the reserved prefix `sys-`.  - It must be no longer than 128 characters. */
-    intent?: string;
-    /** The description of the intent. */
-    description?: string;
-    /** An array of user input examples for the intent. */
-    examples?: CreateExample[];
-  }
-
-  /** UpdateSynonym. */
-  export interface UpdateSynonym {
-    /** The text of the synonym. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
-    synonym?: string;
-  }
-
-  /** UpdateValue. */
-  export interface UpdateValue {
-    /** The text of the entity value. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
-    value?: string;
-    /** Any metadata related to the entity value. */
-    metadata?: Object;
-    /** Specifies the type of value. */
-    value_type?: string;
-    /** An array of synonyms for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A synonym must conform to the following resrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
-    synonyms?: string[];
-    /** An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 128 characters. For more information about how to specify a pattern, see the [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities). */
-    patterns?: string[];
-  }
-
-  /** UpdateWorkspace. */
-  export interface UpdateWorkspace {
-    /** The name of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 64 characters. */
-    name?: string;
-    /** The description of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
-    description?: string;
-    /** The language of the workspace. */
-    language?: string;
-    /** An array of objects defining the intents for the workspace. */
-    intents?: CreateIntent[];
-    /** An array of objects defining the entities for the workspace. */
-    entities?: CreateEntity[];
-    /** An array of objects defining the nodes in the workspace dialog. */
-    dialog_nodes?: CreateDialogNode[];
-    /** An array of objects defining input examples that have been marked as irrelevant input. */
-    counterexamples?: CreateCounterexample[];
-    /** Any metadata related to the workspace. */
-    metadata?: Object;
-    /** Whether training data from the workspace can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used. */
-    learning_opt_out?: boolean;
   }
 
   /** Value. */
@@ -3910,20 +3831,6 @@ namespace AssistantV1 {
     patterns?: string[];
     /** Specifies the type of value. */
     value_type: string;
-  }
-
-  /** ValueRequest. */
-  export interface ValueRequest {
-    /** The text of the entity value. This string must conform to the following restrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
-    value?: string;
-    /** Any metadata related to the entity value. */
-    metadata?: Object;
-    /** Specifies the type of value. */
-    value_type?: string;
-    /** An array of synonyms for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A synonym must conform to the following resrictions:  - It cannot contain carriage return, newline, or tab characters.  - It cannot consist of only whitespace characters.  - It must be no longer than 64 characters. */
-    synonyms?: string[];
-    /** An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 128 characters. For more information about how to specify a pattern, see the [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities). */
-    patterns?: string[];
   }
 
   /** Workspace. */
@@ -3982,50 +3889,6 @@ namespace AssistantV1 {
     counterexamples?: Counterexample[];
     /** An array of objects describing the dialog nodes in the workspace. */
     dialog_nodes?: DialogNode[];
-  }
-
-  /** WorkspaceRequest. */
-  export interface WorkspaceRequest {
-    /** The name of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 64 characters. */
-    name?: string;
-    /** The description of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
-    description?: string;
-    /** The language of the workspace. */
-    language?: string;
-    /** An array of objects defining the intents for the workspace. */
-    intents?: CreateIntent[];
-    /** An array of objects defining the entities for the workspace. */
-    entities?: CreateEntity[];
-    /** An array of objects defining the nodes in the workspace dialog. */
-    dialog_nodes?: CreateDialogNode[];
-    /** An array of objects defining input examples that have been marked as irrelevant input. */
-    counterexamples?: CreateCounterexample[];
-    /** Any metadata related to the workspace. */
-    metadata?: Object;
-    /** Whether training data from the workspace can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used. */
-    learning_opt_out?: boolean;
-  }
-
-  /** WorkspaceStatus. */
-  export interface WorkspaceStatus {
-    /** The name of the workspace. */
-    name: string;
-    /** The description of the workspace. */
-    description: string;
-    /** The language of the workspace. */
-    language: string;
-    /** Any metadata that is required by the workspace. */
-    metadata: Object;
-    /** The timestamp for creation of the workspace. */
-    created?: string;
-    /** The timestamp for the last update to the workspace. */
-    updated?: string;
-    /** The workspace ID. */
-    workspace_id: string;
-    /** The current status of the workspace. */
-    status: string;
-    /** Whether training data from the workspace can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used. */
-    learning_opt_out: boolean;
   }
 
 }
