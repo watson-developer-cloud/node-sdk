@@ -11,7 +11,8 @@ before_install:
 - npm install -g typescript
 script:
 - tsc
-- npm run test-travis
+- '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && npm run test-travis
+- '[ "${TRAVIS_PULL_REQUEST}" = "true" ] && npm run test-unit
 - sh scripts/typedoc/generate_typedoc.sh
 after_success:
 - npm run report-coverage
