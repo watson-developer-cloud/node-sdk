@@ -21,7 +21,7 @@ import { getMissingParams } from '../lib/helper';
 import { FileObject } from '../lib/helper';
 
 /**
- * IBM Watson Natural Language Classifier uses machine learning algorithms to return the top matching predefined classes for short text input. You create and train a classifier to connect predefined classes to example texts so that the service can apply those classes to new inputs.
+ * IBM Watson&trade; Natural Language Classifier uses machine learning algorithms to return the top matching predefined classes for short text input. You create and train a classifier to connect predefined classes to example texts so that the service can apply those classes to new inputs.
  */
 
 class NaturalLanguageClassifierV1 extends BaseService {
@@ -54,7 +54,8 @@ class NaturalLanguageClassifierV1 extends BaseService {
   /**
    * Classify a phrase.
    *
-   * Returns label information for the input. The status must be `Available` before you can use the classifier to classify text.
+   * Returns label information for the input. The status must be `Available` before you can use the classifier to
+   * classify text.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.classifier_id - Classifier ID to use.
@@ -98,7 +99,10 @@ class NaturalLanguageClassifierV1 extends BaseService {
   /**
    * Classify multiple phrases.
    *
-   * Returns label information for multiple phrases. The status must be `Available` before you can use the classifier to classify text.  Note that classifying Japanese texts is a beta feature.
+   * Returns label information for multiple phrases. The status must be `Available` before you can use the classifier to
+   * classify text.
+   *
+   * Note that classifying Japanese texts is a beta feature.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.classifier_id - Classifier ID to use.
@@ -149,8 +153,15 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * Sends data to create and train a classifier and returns information about the new classifier.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} params.metadata - Metadata in JSON format. The metadata identifies the language of the data, and an optional name to identify the classifier. Specify the language with the 2-letter primary language code as assigned in ISO standard 639.  Supported languages are English (`en`), Arabic (`ar`), French (`fr`), German, (`de`), Italian (`it`), Japanese (`ja`), Korean (`ko`), Brazilian Portuguese (`pt`), and Spanish (`es`).
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} params.training_data - Training data in CSV format. Each text value must have at least one class. The data can include up to 20,000 records. For details, see [Data preparation](https://console.bluemix.net/docs/services/natural-language-classifier/using-your-data.html).
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} params.metadata - Metadata in JSON format. The metadata identifies
+   * the language of the data, and an optional name to identify the classifier. Specify the language with the 2-letter
+   * primary language code as assigned in ISO standard 639.
+   *
+   * Supported languages are English (`en`), Arabic (`ar`), French (`fr`), German, (`de`), Italian (`it`), Japanese
+   * (`ja`), Korean (`ko`), Brazilian Portuguese (`pt`), and Spanish (`es`).
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} params.training_data - Training data in CSV format. Each text
+   * value must have at least one class. The data can include up to 20,000 records. For details, see [Data
+   * preparation](https://console.bluemix.net/docs/services/natural-language-classifier/using-your-data.html).
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -341,7 +352,7 @@ namespace NaturalLanguageClassifierV1 {
 
   /** Parameters for the `createClassifier` operation. */
   export interface CreateClassifierParams {
-    /** Metadata in JSON format. The metadata identifies the language of the data, and an optional name to identify the classifier. Specify the language with the 2-letter primary language code as assigned in ISO standard 639.  Supported languages are English (`en`), Arabic (`ar`), French (`fr`), German, (`de`), Italian (`it`), Japanese (`ja`), Korean (`ko`), Brazilian Portuguese (`pt`), and Spanish (`es`). */
+    /** Metadata in JSON format. The metadata identifies the language of the data, and an optional name to identify the classifier. Specify the language with the 2-letter primary language code as assigned in ISO standard 639. Supported languages are English (`en`), Arabic (`ar`), French (`fr`), German, (`de`), Italian (`it`), Japanese (`ja`), Korean (`ko`), Brazilian Portuguese (`pt`), and Spanish (`es`). */
     metadata: NodeJS.ReadableStream|FileObject|Buffer;
     /** Training data in CSV format. Each text value must have at least one class. The data can include up to 20,000 records. For details, see [Data preparation](https://console.bluemix.net/docs/services/natural-language-classifier/using-your-data.html). */
     training_data: NodeJS.ReadableStream|FileObject|Buffer;
@@ -428,12 +439,6 @@ namespace NaturalLanguageClassifierV1 {
   }
 
   /** Request payload to classify. */
-  export interface ClassifyCollectionInput {
-    /** The submitted phrases. */
-    collection: ClassifyInput[];
-  }
-
-  /** Request payload to classify. */
   export interface ClassifyInput {
     /** The submitted phrase. */
     text: string;
@@ -447,16 +452,6 @@ namespace NaturalLanguageClassifierV1 {
     top_class?: string;
     /** An array of up to ten class-confidence pairs sorted in descending order of confidence. */
     classes?: ClassifiedClass[];
-  }
-
-  /** Response payload for HTTP errors. */
-  export interface ErrorResponse {
-    /** HTTP status code. */
-    code?: number;
-    /** Error name. */
-    error?: string;
-    /** Error description. */
-    description?: string;
   }
 
 }

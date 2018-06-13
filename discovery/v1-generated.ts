@@ -21,7 +21,7 @@ import { getMissingParams } from '../lib/helper';
 import { FileObject } from '../lib/helper';
 
 /**
- * The IBM Watson Discovery Service is a cognitive search and content analytics engine that you can add to applications to identify patterns, trends and actionable insights to drive better decision-making. Securely unify structured and unstructured data with pre-enriched content, and use a simplified query language to eliminate the need for manual filtering of results.
+ * The IBM Watson&trade; Discovery Service is a cognitive search and content analytics engine that you can add to applications to identify patterns, trends and actionable insights to drive better decision-making. Securely unify structured and unstructured data with pre-enriched content, and use a simplified query language to eliminate the need for manual filtering of results.
  */
 
 class DiscoveryV1 extends BaseService {
@@ -64,7 +64,10 @@ class DiscoveryV1 extends BaseService {
   /**
    * Create an environment.
    *
-   * Creates a new environment for private data. An environment must be created before collections can be created.   **Note**: You can create only one environment for private data per service instance. An attempt to create another environment results in an error.
+   * Creates a new environment for private data. An environment must be created before collections can be created.
+   *
+   * **Note**: You can create only one environment for private data per service instance. An attempt to create another
+   * environment results in an error.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.name - Name that identifies the environment.
@@ -255,7 +258,8 @@ class DiscoveryV1 extends BaseService {
   /**
    * Update an environment.
    *
-   * Updates an environment. The environment's `name` and  `description` parameters can be changed. You must specify a `name` for the environment.
+   * Updates an environment. The environment's `name` and  `description` parameters can be changed. You must specify a
+   * `name` for the environment.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
@@ -305,7 +309,15 @@ class DiscoveryV1 extends BaseService {
   /**
    * Add configuration.
    *
-   * Creates a new configuration.  If the input configuration contains the `configuration_id`, `created`, or `updated` properties, then they are ignored and overridden by the system, and an error is not returned so that the overridden fields do not need to be removed when copying a configuration.  The configuration can contain unrecognized JSON fields. Any such fields are ignored and do not generate an error. This makes it easier to use newer configuration files with older versions of the API and the service. It also makes it possible for the tooling to add additional metadata and information to the configuration.
+   * Creates a new configuration.
+   *
+   * If the input configuration contains the `configuration_id`, `created`, or `updated` properties, then they are
+   * ignored and overridden by the system, and an error is not returned so that the overridden fields do not need to be
+   * removed when copying a configuration.
+   *
+   * The configuration can contain unrecognized JSON fields. Any such fields are ignored and do not generate an error.
+   * This makes it easier to use newer configuration files with older versions of the API and the service. It also makes
+   * it possible for the tooling to add additional metadata and information to the configuration.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
@@ -313,7 +325,8 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.description] - The description of the configuration, if available.
    * @param {Conversions} [params.conversions] - The document conversion settings for the configuration.
    * @param {Enrichment[]} [params.enrichments] - An array of document enrichment settings for the configuration.
-   * @param {NormalizationOperation[]} [params.normalizations] - Defines operations that can be used to transform the final output JSON into a normalized form. Operations are executed in the order that they appear in the array.
+   * @param {NormalizationOperation[]} [params.normalizations] - Defines operations that can be used to transform the
+   * final output JSON into a normalized form. Operations are executed in the order that they appear in the array.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -357,7 +370,10 @@ class DiscoveryV1 extends BaseService {
   /**
    * Delete a configuration.
    *
-   * The deletion is performed unconditionally. A configuration deletion request succeeds even if the configuration is referenced by a collection or document ingestion. However, documents that have already been submitted for processing continue to use the deleted configuration. Documents are always processed with a snapshot of the configuration as it existed at the time the document was submitted.
+   * The deletion is performed unconditionally. A configuration deletion request succeeds even if the configuration is
+   * referenced by a collection or document ingestion. However, documents that have already been submitted for
+   * processing continue to use the deleted configuration. Documents are always processed with a snapshot of the
+   * configuration as it existed at the time the document was submitted.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
@@ -478,7 +494,13 @@ class DiscoveryV1 extends BaseService {
   /**
    * Update a configuration.
    *
-   * Replaces an existing configuration.   * Completely replaces the original configuration.   * The `configuration_id`, `updated`, and `created` fields are accepted in the request, but they are ignored, and an error is not generated. It is also acceptable for users to submit an updated configuration with none of the three properties.   * Documents are processed with a snapshot of the configuration as it was at the time the document was submitted to be ingested. This means that already submitted documents will not see any updates made to the configuration.
+   * Replaces an existing configuration.
+   *   * Completely replaces the original configuration.
+   *   * The `configuration_id`, `updated`, and `created` fields are accepted in the request, but they are ignored, and
+   * an error is not generated. It is also acceptable for users to submit an updated configuration with none of the
+   * three properties.
+   *   * Documents are processed with a snapshot of the configuration as it was at the time the document was submitted
+   * to be ingested. This means that already submitted documents will not see any updates made to the configuration.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
@@ -487,7 +509,8 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.description] - The description of the configuration, if available.
    * @param {Conversions} [params.conversions] - The document conversion settings for the configuration.
    * @param {Enrichment[]} [params.enrichments] - An array of document enrichment settings for the configuration.
-   * @param {NormalizationOperation[]} [params.normalizations] - Defines operations that can be used to transform the final output JSON into a normalized form. Operations are executed in the order that they appear in the array.
+   * @param {NormalizationOperation[]} [params.normalizations] - Defines operations that can be used to transform the
+   * final output JSON into a normalized form. Operations are executed in the order that they appear in the array.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -536,15 +559,29 @@ class DiscoveryV1 extends BaseService {
   /**
    * Test configuration.
    *
-   * Runs a sample document through the default or your configuration and returns diagnostic information designed to help you understand how the document was processed. The document is not added to the index.
+   * Runs a sample document through the default or your configuration and returns diagnostic information designed to
+   * help you understand how the document was processed. The document is not added to the index.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
-   * @param {string} [params.configuration] - The configuration to use to process the document. If this part is provided, then the provided configuration is used to process the document. If the `configuration_id` is also provided (both are present at the same time), then request is rejected. The maximum supported configuration size is 1 MB. Configuration parts larger than 1 MB are rejected. See the `GET /configurations/{configuration_id}` operation for an example configuration.
-   * @param {string} [params.step] - Specify to only run the input document through the given step instead of running the input document through the entire ingestion workflow. Valid values are `convert`, `enrich`, and `normalize`.
-   * @param {string} [params.configuration_id] - The ID of the configuration to use to process the document. If the `configuration` form part is also provided (both are present at the same time), then request will be rejected.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.file] - The content of the document to ingest. The maximum supported file size is 50 megabytes. Files larger than 50 megabytes is rejected.
-   * @param {string} [params.metadata] - If you're using the Data Crawler to upload your documents, you can test a document against the type of metadata that the Data Crawler might send. The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected. Example:  ``` {   "Creator": "Johnny Appleseed",   "Subject": "Apples" } ```.
+   * @param {string} [params.configuration] - The configuration to use to process the document. If this part is
+   * provided, then the provided configuration is used to process the document. If the `configuration_id` is also
+   * provided (both are present at the same time), then request is rejected. The maximum supported configuration size is
+   * 1 MB. Configuration parts larger than 1 MB are rejected.
+   * See the `GET /configurations/{configuration_id}` operation for an example configuration.
+   * @param {string} [params.step] - Specify to only run the input document through the given step instead of running
+   * the input document through the entire ingestion workflow. Valid values are `convert`, `enrich`, and `normalize`.
+   * @param {string} [params.configuration_id] - The ID of the configuration to use to process the document. If the
+   * `configuration` form part is also provided (both are present at the same time), then request will be rejected.
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.file] - The content of the document to ingest. The maximum
+   * supported file size is 50 megabytes. Files larger than 50 megabytes is rejected.
+   * @param {string} [params.metadata] - If you're using the Data Crawler to upload your documents, you can test a
+   * document against the type of metadata that the Data Crawler might send. The maximum supported metadata file size is
+   * 1 MB. Metadata parts larger than 1 MB are rejected.
+   * Example:  ``` {
+   *   "Creator": "Johnny Appleseed",
+   *   "Subject": "Apples"
+   * } ```.
    * @param {string} [params.file_content_type] - The content type of file.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -603,7 +640,8 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.name - The name of the collection to be created.
    * @param {string} [params.description] - A description of the collection.
    * @param {string} [params.configuration_id] - The ID of the configuration in which the collection is to be created.
-   * @param {string} [params.language] - The language of the documents stored in the collection, in the form of an ISO 639-1 language code.
+   * @param {string} [params.language] - The language of the documents stored in the collection, in the form of an ISO
+   * 639-1 language code.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -857,12 +895,25 @@ class DiscoveryV1 extends BaseService {
   /**
    * Create or update expansion list.
    *
-   * Create or replace the Expansion list for this collection. The maximum number of expanded terms per collection is `500`. The current expansion list is replaced with the uploaded content.
+   * Create or replace the Expansion list for this collection. The maximum number of expanded terms per collection is
+   * `500`.
+   * The current expansion list is replaced with the uploaded content.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
-   * @param {Expansion[]} params.expansions - An array of query expansion definitions.    Each object in the `expansions` array represents a term or set of terms that will be expanded into other terms. Each expansion object can be configured so that all terms are expanded to all other terms in the object - bi-directional, or a set list of terms can be expanded into a second list of terms - uni-directional.   To create a bi-directional expansion specify an `expanded_terms` array. When found in a query, all items in the `expanded_terms` array are then expanded to the other items in the same array.   To create a uni-directional expansion, specify both an array of `input_terms` and an array of `expanded_terms`. When items in the `input_terms` array are present in a query, they are expanded using the items listed in the `expanded_terms` array.
+   * @param {Expansion[]} params.expansions - An array of query expansion definitions.
+   *
+   *  Each object in the `expansions` array represents a term or set of terms that will be expanded into other terms.
+   * Each expansion object can be configured so that all terms are expanded to all other terms in the object -
+   * bi-directional, or a set list of terms can be expanded into a second list of terms - uni-directional.
+   *
+   *  To create a bi-directional expansion specify an `expanded_terms` array. When found in a query, all items in the
+   * `expanded_terms` array are then expanded to the other items in the same array.
+   *
+   *  To create a uni-directional expansion, specify both an array of `input_terms` and an array of `expanded_terms`.
+   * When items in the `input_terms` array are present in a query, they are expanded using the items listed in the
+   * `expanded_terms` array.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -903,7 +954,8 @@ class DiscoveryV1 extends BaseService {
   /**
    * Delete the expansion list.
    *
-   * Remove the expansion information for this collection. The expansion list must be deleted to disable query expansion for a collection.
+   * Remove the expansion information for this collection. The expansion list must be deleted to disable query expansion
+   * for a collection.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
@@ -943,7 +995,8 @@ class DiscoveryV1 extends BaseService {
   /**
    * Get the expansion list.
    *
-   * Returns the current expansion list for the specified collection. If an expansion list is not specified, an object with empty expansion arrays is returned.
+   * Returns the current expansion list for the specified collection. If an expansion list is not specified, an object
+   * with empty expansion arrays is returned.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
@@ -987,13 +1040,38 @@ class DiscoveryV1 extends BaseService {
   /**
    * Add a document.
    *
-   * Add a document to a collection with optional metadata.    * The `version` query parameter is still required.    * Returns immediately after the system has accepted the document for processing.    * The user must provide document content, metadata, or both. If the request is missing both document content and metadata, it is rejected.    * The user can set the `Content-Type` parameter on the `file` part to indicate the media type of the document. If the `Content-Type` parameter is missing or is one of the generic media types (for example, `application/octet-stream`), then the service attempts to automatically detect the document's media type.    * The following field names are reserved and will be filtered out if present after normalization: `id`, `score`, `highlight`, and any field with the prefix of: `_`, `+`, or `-`    * Fields with empty name values after normalization are filtered out before indexing.    * Fields containing the following characters after normalization are filtered out before indexing: `#` and `,`.
+   * Add a document to a collection with optional metadata.
+   *
+   *   * The `version` query parameter is still required.
+   *
+   *   * Returns immediately after the system has accepted the document for processing.
+   *
+   *   * The user must provide document content, metadata, or both. If the request is missing both document content and
+   * metadata, it is rejected.
+   *
+   *   * The user can set the `Content-Type` parameter on the `file` part to indicate the media type of the document. If
+   * the `Content-Type` parameter is missing or is one of the generic media types (for example,
+   * `application/octet-stream`), then the service attempts to automatically detect the document's media type.
+   *
+   *   * The following field names are reserved and will be filtered out if present after normalization: `id`, `score`,
+   * `highlight`, and any field with the prefix of: `_`, `+`, or `-`
+   *
+   *   * Fields with empty name values after normalization are filtered out before indexing.
+   *
+   *   * Fields containing the following characters after normalization are filtered out before indexing: `#` and `,`.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.file] - The content of the document to ingest. The maximum supported file size is 50 megabytes. Files larger than 50 megabytes is rejected.
-   * @param {string} [params.metadata] - If you're using the Data Crawler to upload your documents, you can test a document against the type of metadata that the Data Crawler might send. The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected. Example:  ``` {   "Creator": "Johnny Appleseed",   "Subject": "Apples" } ```.
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.file] - The content of the document to ingest. The maximum
+   * supported file size is 50 megabytes. Files larger than 50 megabytes is rejected.
+   * @param {string} [params.metadata] - If you're using the Data Crawler to upload your documents, you can test a
+   * document against the type of metadata that the Data Crawler might send. The maximum supported metadata file size is
+   * 1 MB. Metadata parts larger than 1 MB are rejected.
+   * Example:  ``` {
+   *   "Creator": "Johnny Appleseed",
+   *   "Subject": "Apples"
+   * } ```.
    * @param {string} [params.file_content_type] - The content type of file.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -1038,7 +1116,8 @@ class DiscoveryV1 extends BaseService {
   /**
    * Delete a document.
    *
-   * If the given document ID is invalid, or if the document is not found, then the a success response is returned (HTTP status code `200`) with the status set to 'deleted'.
+   * If the given document ID is invalid, or if the document is not found, then the a success response is returned (HTTP
+   * status code `200`) with the status set to 'deleted'.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
@@ -1080,7 +1159,9 @@ class DiscoveryV1 extends BaseService {
   /**
    * Get document details.
    *
-   * Fetch status details about a submitted document. **Note:** this operation does not return the document itself. Instead, it returns only the document's processing status and any notices (warnings or errors) that were generated when the document was ingested. Use the query API to retrieve the actual document content.
+   * Fetch status details about a submitted document. **Note:** this operation does not return the document itself.
+   * Instead, it returns only the document's processing status and any notices (warnings or errors) that were generated
+   * when the document was ingested. Use the query API to retrieve the actual document content.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
@@ -1128,8 +1209,15 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
    * @param {string} params.document_id - The ID of the document.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.file] - The content of the document to ingest. The maximum supported file size is 50 megabytes. Files larger than 50 megabytes is rejected.
-   * @param {string} [params.metadata] - If you're using the Data Crawler to upload your documents, you can test a document against the type of metadata that the Data Crawler might send. The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected. Example:  ``` {   "Creator": "Johnny Appleseed",   "Subject": "Apples" } ```.
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.file] - The content of the document to ingest. The maximum
+   * supported file size is 50 megabytes. Files larger than 50 megabytes is rejected.
+   * @param {string} [params.metadata] - If you're using the Data Crawler to upload your documents, you can test a
+   * document against the type of metadata that the Data Crawler might send. The maximum supported metadata file size is
+   * 1 MB. Metadata parts larger than 1 MB are rejected.
+   * Example:  ``` {
+   *   "Creator": "Johnny Appleseed",
+   *   "Subject": "Apples"
+   * } ```.
    * @param {string} [params.file_content_type] - The content type of file.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -1179,25 +1267,50 @@ class DiscoveryV1 extends BaseService {
   /**
    * Query documents in multiple collections.
    *
-   * See the [Discovery service documentation](https://console.bluemix.net/docs/services/discovery/using.html) for more details.
+   * See the [Discovery service documentation](https://console.bluemix.net/docs/services/discovery/using.html) for more
+   * details.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string[]} params.collection_ids - A comma-separated list of collection IDs to be queried against.
-   * @param {string} [params.filter] - A cacheable query that limits the documents returned to exclude any documents that don't mention the query content. Filter searches are better for metadata type searches and when you are trying to get a sense of concepts in the data set.
-   * @param {string} [params.query] - A query search returns all documents in your data set with full enrichments and full text, but with the most relevant documents listed first. Use a query search when you want to find the most relevant search results. You cannot use `natural_language_query` and `query` at the same time.
-   * @param {string} [params.natural_language_query] - A natural language query that returns relevant documents by utilizing training data and natural language understanding. You cannot use `natural_language_query` and `query` at the same time.
-   * @param {string} [params.aggregation] - An aggregation search uses combinations of filters and query search to return an exact answer. Aggregations are useful for building applications, because you can use them to build lists, tables, and time series. For a full list of possible aggregrations, see the Query reference.
+   * @param {string} [params.filter] - A cacheable query that limits the documents returned to exclude any documents
+   * that don't mention the query content. Filter searches are better for metadata type searches and when you are trying
+   * to get a sense of concepts in the data set.
+   * @param {string} [params.query] - A query search returns all documents in your data set with full enrichments and
+   * full text, but with the most relevant documents listed first. Use a query search when you want to find the most
+   * relevant search results. You cannot use `natural_language_query` and `query` at the same time.
+   * @param {string} [params.natural_language_query] - A natural language query that returns relevant documents by
+   * utilizing training data and natural language understanding. You cannot use `natural_language_query` and `query` at
+   * the same time.
+   * @param {string} [params.aggregation] - An aggregation search uses combinations of filters and query search to
+   * return an exact answer. Aggregations are useful for building applications, because you can use them to build lists,
+   * tables, and time series. For a full list of possible aggregrations, see the Query reference.
    * @param {number} [params.count] - Number of documents to return.
-   * @param {string[]} [params.return_fields] - A comma separated list of the portion of the document hierarchy to return.
-   * @param {number} [params.offset] - The number of query results to skip at the beginning. For example, if the total number of results that are returned is 10, and the offset is 8, it returns the last two results.
-   * @param {string[]} [params.sort] - A comma separated list of fields in the document to sort on. You can optionally specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the default sort direction if no prefix is specified.
-   * @param {boolean} [params.highlight] - When true a highlight field is returned for each result which contains the fields that match the query with `<em></em>` tags around the matching query terms. Defaults to false.
-   * @param {boolean} [params.deduplicate] - When `true` and used with a Watson Discovery News collection, duplicate results (based on the contents of the `title` field) are removed. Duplicate comparison is limited to the current query only, `offset` is not considered. Defaults to `false`. This parameter is currently Beta functionality.
-   * @param {string} [params.deduplicate_field] - When specified, duplicate results based on the field specified are removed from the returned results. Duplicate comparison is limited to the current query only, `offset` is not considered. This parameter is currently Beta functionality.
-   * @param {boolean} [params.similar] - When `true`, results are returned based on their similarity to the document IDs specified in the `similar.document_ids` parameter. The default is `false`.
-   * @param {string[]} [params.similar_document_ids] - A comma-separated list of document IDs that will be used to find similar documents.   **Note:** If the `natural_language_query` parameter is also specified, it will be used to expand the scope of the document similarity search to include the natural language query. Other query parameters, such as `filter` and `query` are subsequently applied and reduce the query scope.
-   * @param {string[]} [params.similar_fields] - A comma-separated list of field names that will be used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison.
+   * @param {string[]} [params.return_fields] - A comma separated list of the portion of the document hierarchy to
+   * return.
+   * @param {number} [params.offset] - The number of query results to skip at the beginning. For example, if the total
+   * number of results that are returned is 10, and the offset is 8, it returns the last two results.
+   * @param {string[]} [params.sort] - A comma separated list of fields in the document to sort on. You can optionally
+   * specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the
+   * default sort direction if no prefix is specified.
+   * @param {boolean} [params.highlight] - When true a highlight field is returned for each result which contains the
+   * fields that match the query with `<em></em>` tags around the matching query terms. Defaults to false.
+   * @param {boolean} [params.deduplicate] - When `true` and used with a Watson Discovery News collection, duplicate
+   * results (based on the contents of the `title` field) are removed. Duplicate comparison is limited to the current
+   * query only, `offset` is not considered. Defaults to `false`. This parameter is currently Beta functionality.
+   * @param {string} [params.deduplicate_field] - When specified, duplicate results based on the field specified are
+   * removed from the returned results. Duplicate comparison is limited to the current query only, `offset` is not
+   * considered. This parameter is currently Beta functionality.
+   * @param {boolean} [params.similar] - When `true`, results are returned based on their similarity to the document IDs
+   * specified in the `similar.document_ids` parameter. The default is `false`.
+   * @param {string[]} [params.similar_document_ids] - A comma-separated list of document IDs that will be used to find
+   * similar documents.
+   *
+   * **Note:** If the `natural_language_query` parameter is also specified, it will be used to expand the scope of the
+   * document similarity search to include the natural language query. Other query parameters, such as `filter` and
+   * `query` are subsequently applied and reduce the query scope.
+   * @param {string[]} [params.similar_fields] - A comma-separated list of field names that will be used as a basis for
+   * comparison to identify similar documents. If not specified, the entire document is used for comparison.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -1250,24 +1363,49 @@ class DiscoveryV1 extends BaseService {
   /**
    * Query multiple collection system notices.
    *
-   * Queries for notices (errors or warnings) that might have been generated by the system. Notices are generated when ingesting documents and performing relevance training. See the [Discovery service documentation](https://console.bluemix.net/docs/services/discovery/using.html) for more details on the query language.
+   * Queries for notices (errors or warnings) that might have been generated by the system. Notices are generated when
+   * ingesting documents and performing relevance training. See the [Discovery service
+   * documentation](https://console.bluemix.net/docs/services/discovery/using.html) for more details on the query
+   * language.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string[]} params.collection_ids - A comma-separated list of collection IDs to be queried against.
-   * @param {string} [params.filter] - A cacheable query that limits the documents returned to exclude any documents that don't mention the query content. Filter searches are better for metadata type searches and when you are trying to get a sense of concepts in the data set.
-   * @param {string} [params.query] - A query search returns all documents in your data set with full enrichments and full text, but with the most relevant documents listed first. Use a query search when you want to find the most relevant search results. You cannot use `natural_language_query` and `query` at the same time.
-   * @param {string} [params.natural_language_query] - A natural language query that returns relevant documents by utilizing training data and natural language understanding. You cannot use `natural_language_query` and `query` at the same time.
-   * @param {string} [params.aggregation] - An aggregation search uses combinations of filters and query search to return an exact answer. Aggregations are useful for building applications, because you can use them to build lists, tables, and time series. For a full list of possible aggregrations, see the Query reference.
+   * @param {string} [params.filter] - A cacheable query that limits the documents returned to exclude any documents
+   * that don't mention the query content. Filter searches are better for metadata type searches and when you are trying
+   * to get a sense of concepts in the data set.
+   * @param {string} [params.query] - A query search returns all documents in your data set with full enrichments and
+   * full text, but with the most relevant documents listed first. Use a query search when you want to find the most
+   * relevant search results. You cannot use `natural_language_query` and `query` at the same time.
+   * @param {string} [params.natural_language_query] - A natural language query that returns relevant documents by
+   * utilizing training data and natural language understanding. You cannot use `natural_language_query` and `query` at
+   * the same time.
+   * @param {string} [params.aggregation] - An aggregation search uses combinations of filters and query search to
+   * return an exact answer. Aggregations are useful for building applications, because you can use them to build lists,
+   * tables, and time series. For a full list of possible aggregrations, see the Query reference.
    * @param {number} [params.count] - Number of documents to return.
-   * @param {string[]} [params.return_fields] - A comma separated list of the portion of the document hierarchy to return.
-   * @param {number} [params.offset] - The number of query results to skip at the beginning. For example, if the total number of results that are returned is 10, and the offset is 8, it returns the last two results.
-   * @param {string[]} [params.sort] - A comma separated list of fields in the document to sort on. You can optionally specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the default sort direction if no prefix is specified.
-   * @param {boolean} [params.highlight] - When true a highlight field is returned for each result which contains the fields that match the query with `<em></em>` tags around the matching query terms. Defaults to false.
-   * @param {string} [params.deduplicate_field] - When specified, duplicate results based on the field specified are removed from the returned results. Duplicate comparison is limited to the current query only, `offset` is not considered. This parameter is currently Beta functionality.
-   * @param {boolean} [params.similar] - When `true`, results are returned based on their similarity to the document IDs specified in the `similar.document_ids` parameter. The default is `false`.
-   * @param {string[]} [params.similar_document_ids] - A comma-separated list of document IDs that will be used to find similar documents.   **Note:** If the `natural_language_query` parameter is also specified, it will be used to expand the scope of the document similarity search to include the natural language query. Other query parameters, such as `filter` and `query` are subsequently applied and reduce the query scope.
-   * @param {string[]} [params.similar_fields] - A comma-separated list of field names that will be used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison.
+   * @param {string[]} [params.return_fields] - A comma separated list of the portion of the document hierarchy to
+   * return.
+   * @param {number} [params.offset] - The number of query results to skip at the beginning. For example, if the total
+   * number of results that are returned is 10, and the offset is 8, it returns the last two results.
+   * @param {string[]} [params.sort] - A comma separated list of fields in the document to sort on. You can optionally
+   * specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the
+   * default sort direction if no prefix is specified.
+   * @param {boolean} [params.highlight] - When true a highlight field is returned for each result which contains the
+   * fields that match the query with `<em></em>` tags around the matching query terms. Defaults to false.
+   * @param {string} [params.deduplicate_field] - When specified, duplicate results based on the field specified are
+   * removed from the returned results. Duplicate comparison is limited to the current query only, `offset` is not
+   * considered. This parameter is currently Beta functionality.
+   * @param {boolean} [params.similar] - When `true`, results are returned based on their similarity to the document IDs
+   * specified in the `similar.document_ids` parameter. The default is `false`.
+   * @param {string[]} [params.similar_document_ids] - A comma-separated list of document IDs that will be used to find
+   * similar documents.
+   *
+   * **Note:** If the `natural_language_query` parameter is also specified, it will be used to expand the scope of the
+   * document similarity search to include the natural language query. Other query parameters, such as `filter` and
+   * `query` are subsequently applied and reduce the query scope.
+   * @param {string[]} [params.similar_fields] - A comma-separated list of field names that will be used as a basis for
+   * comparison to identify similar documents. If not specified, the entire document is used for comparison.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -1319,29 +1457,58 @@ class DiscoveryV1 extends BaseService {
   /**
    * Query your collection.
    *
-   * After your content is uploaded and enriched by the Discovery service, you can build queries to search your content. For details, see the [Discovery service documentation](https://console.bluemix.net/docs/services/discovery/using.html).
+   * After your content is uploaded and enriched by the Discovery service, you can build queries to search your content.
+   * For details, see the [Discovery service
+   * documentation](https://console.bluemix.net/docs/services/discovery/using.html).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
-   * @param {string} [params.filter] - A cacheable query that limits the documents returned to exclude any documents that don't mention the query content. Filter searches are better for metadata type searches and when you are trying to get a sense of concepts in the data set.
-   * @param {string} [params.query] - A query search returns all documents in your data set with full enrichments and full text, but with the most relevant documents listed first. Use a query search when you want to find the most relevant search results. You cannot use `natural_language_query` and `query` at the same time.
-   * @param {string} [params.natural_language_query] - A natural language query that returns relevant documents by utilizing training data and natural language understanding. You cannot use `natural_language_query` and `query` at the same time.
+   * @param {string} [params.filter] - A cacheable query that limits the documents returned to exclude any documents
+   * that don't mention the query content. Filter searches are better for metadata type searches and when you are trying
+   * to get a sense of concepts in the data set.
+   * @param {string} [params.query] - A query search returns all documents in your data set with full enrichments and
+   * full text, but with the most relevant documents listed first. Use a query search when you want to find the most
+   * relevant search results. You cannot use `natural_language_query` and `query` at the same time.
+   * @param {string} [params.natural_language_query] - A natural language query that returns relevant documents by
+   * utilizing training data and natural language understanding. You cannot use `natural_language_query` and `query` at
+   * the same time.
    * @param {boolean} [params.passages] - A passages query that returns the most relevant passages from the results.
-   * @param {string} [params.aggregation] - An aggregation search uses combinations of filters and query search to return an exact answer. Aggregations are useful for building applications, because you can use them to build lists, tables, and time series. For a full list of possible aggregrations, see the Query reference.
+   * @param {string} [params.aggregation] - An aggregation search uses combinations of filters and query search to
+   * return an exact answer. Aggregations are useful for building applications, because you can use them to build lists,
+   * tables, and time series. For a full list of possible aggregrations, see the Query reference.
    * @param {number} [params.count] - Number of documents to return.
-   * @param {string[]} [params.return_fields] - A comma separated list of the portion of the document hierarchy to return.
-   * @param {number} [params.offset] - The number of query results to skip at the beginning. For example, if the total number of results that are returned is 10, and the offset is 8, it returns the last two results.
-   * @param {string[]} [params.sort] - A comma separated list of fields in the document to sort on. You can optionally specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the default sort direction if no prefix is specified.
-   * @param {boolean} [params.highlight] - When true a highlight field is returned for each result which contains the fields that match the query with `<em></em>` tags around the matching query terms. Defaults to false.
-   * @param {string[]} [params.passages_fields] - A comma-separated list of fields that passages are drawn from. If this parameter not specified, then all top-level fields are included.
-   * @param {number} [params.passages_count] - The maximum number of passages to return. The search returns fewer passages if the requested total is not found. The default is `10`. The maximum is `100`.
-   * @param {number} [params.passages_characters] - The approximate number of characters that any one passage will have. The default is `400`. The minimum is `50`. The maximum is `2000`.
-   * @param {boolean} [params.deduplicate] - When `true` and used with a Watson Discovery News collection, duplicate results (based on the contents of the `title` field) are removed. Duplicate comparison is limited to the current query only, `offset` is not considered. Defaults to `false`. This parameter is currently Beta functionality.
-   * @param {string} [params.deduplicate_field] - When specified, duplicate results based on the field specified are removed from the returned results. Duplicate comparison is limited to the current query only, `offset` is not considered. This parameter is currently Beta functionality.
-   * @param {boolean} [params.similar] - When `true`, results are returned based on their similarity to the document IDs specified in the `similar.document_ids` parameter. The default is `false`.
-   * @param {string[]} [params.similar_document_ids] - A comma-separated list of document IDs that will be used to find similar documents.   **Note:** If the `natural_language_query` parameter is also specified, it will be used to expand the scope of the document similarity search to include the natural language query. Other query parameters, such as `filter` and `query` are subsequently applied and reduce the query scope.
-   * @param {string[]} [params.similar_fields] - A comma-separated list of field names that will be used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison.
+   * @param {string[]} [params.return_fields] - A comma separated list of the portion of the document hierarchy to
+   * return.
+   * @param {number} [params.offset] - The number of query results to skip at the beginning. For example, if the total
+   * number of results that are returned is 10, and the offset is 8, it returns the last two results.
+   * @param {string[]} [params.sort] - A comma separated list of fields in the document to sort on. You can optionally
+   * specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the
+   * default sort direction if no prefix is specified.
+   * @param {boolean} [params.highlight] - When true a highlight field is returned for each result which contains the
+   * fields that match the query with `<em></em>` tags around the matching query terms. Defaults to false.
+   * @param {string[]} [params.passages_fields] - A comma-separated list of fields that passages are drawn from. If this
+   * parameter not specified, then all top-level fields are included.
+   * @param {number} [params.passages_count] - The maximum number of passages to return. The search returns fewer
+   * passages if the requested total is not found. The default is `10`. The maximum is `100`.
+   * @param {number} [params.passages_characters] - The approximate number of characters that any one passage will have.
+   * The default is `400`. The minimum is `50`. The maximum is `2000`.
+   * @param {boolean} [params.deduplicate] - When `true` and used with a Watson Discovery News collection, duplicate
+   * results (based on the contents of the `title` field) are removed. Duplicate comparison is limited to the current
+   * query only, `offset` is not considered. Defaults to `false`. This parameter is currently Beta functionality.
+   * @param {string} [params.deduplicate_field] - When specified, duplicate results based on the field specified are
+   * removed from the returned results. Duplicate comparison is limited to the current query only, `offset` is not
+   * considered. This parameter is currently Beta functionality.
+   * @param {boolean} [params.similar] - When `true`, results are returned based on their similarity to the document IDs
+   * specified in the `similar.document_ids` parameter. The default is `false`.
+   * @param {string[]} [params.similar_document_ids] - A comma-separated list of document IDs that will be used to find
+   * similar documents.
+   *
+   * **Note:** If the `natural_language_query` parameter is also specified, it will be used to expand the scope of the
+   * document similarity search to include the natural language query. Other query parameters, such as `filter` and
+   * `query` are subsequently applied and reduce the query scope.
+   * @param {string[]} [params.similar_fields] - A comma-separated list of field names that will be used as a basis for
+   * comparison to identify similar documents. If not specified, the entire document is used for comparison.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -1398,16 +1565,21 @@ class DiscoveryV1 extends BaseService {
   /**
    * Knowledge Graph entity query.
    *
-   * See the [Knowledge Graph documentation](https://console.bluemix.net/docs/services/discovery/building-kg.html) for more details.
+   * See the [Knowledge Graph documentation](https://console.bluemix.net/docs/services/discovery/building-kg.html) for
+   * more details.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
-   * @param {string} [params.feature] - The entity query feature to perform. Supported features are `disambiguate` and `similar_entities`.
+   * @param {string} [params.feature] - The entity query feature to perform. Supported features are `disambiguate` and
+   * `similar_entities`.
    * @param {QueryEntitiesEntity} [params.entity] - A text string that appears within the entity text field.
-   * @param {QueryEntitiesContext} [params.context] - Entity text to provide context for the queried entity and rank based on that association. For example, if you wanted to query the city of London in England your query would look for `London` with the context of `England`.
+   * @param {QueryEntitiesContext} [params.context] - Entity text to provide context for the queried entity and rank
+   * based on that association. For example, if you wanted to query the city of London in England your query would look
+   * for `London` with the context of `England`.
    * @param {number} [params.count] - The number of results to return. The default is `10`. The maximum is `1000`.
-   * @param {number} [params.evidence_count] - The number of evidence items to return for each result. The default is `0`. The maximum number of evidence items per query is 10,000.
+   * @param {number} [params.evidence_count] - The number of evidence items to return for each result. The default is
+   * `0`. The maximum number of evidence items per query is 10,000.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -1452,28 +1624,56 @@ class DiscoveryV1 extends BaseService {
   /**
    * Query system notices.
    *
-   * Queries for notices (errors or warnings) that might have been generated by the system. Notices are generated when ingesting documents and performing relevance training. See the [Discovery service documentation](https://console.bluemix.net/docs/services/discovery/using.html) for more details on the query language.
+   * Queries for notices (errors or warnings) that might have been generated by the system. Notices are generated when
+   * ingesting documents and performing relevance training. See the [Discovery service
+   * documentation](https://console.bluemix.net/docs/services/discovery/using.html) for more details on the query
+   * language.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
-   * @param {string} [params.filter] - A cacheable query that limits the documents returned to exclude any documents that don't mention the query content. Filter searches are better for metadata type searches and when you are trying to get a sense of concepts in the data set.
-   * @param {string} [params.query] - A query search returns all documents in your data set with full enrichments and full text, but with the most relevant documents listed first. Use a query search when you want to find the most relevant search results. You cannot use `natural_language_query` and `query` at the same time.
-   * @param {string} [params.natural_language_query] - A natural language query that returns relevant documents by utilizing training data and natural language understanding. You cannot use `natural_language_query` and `query` at the same time.
+   * @param {string} [params.filter] - A cacheable query that limits the documents returned to exclude any documents
+   * that don't mention the query content. Filter searches are better for metadata type searches and when you are trying
+   * to get a sense of concepts in the data set.
+   * @param {string} [params.query] - A query search returns all documents in your data set with full enrichments and
+   * full text, but with the most relevant documents listed first. Use a query search when you want to find the most
+   * relevant search results. You cannot use `natural_language_query` and `query` at the same time.
+   * @param {string} [params.natural_language_query] - A natural language query that returns relevant documents by
+   * utilizing training data and natural language understanding. You cannot use `natural_language_query` and `query` at
+   * the same time.
    * @param {boolean} [params.passages] - A passages query that returns the most relevant passages from the results.
-   * @param {string} [params.aggregation] - An aggregation search uses combinations of filters and query search to return an exact answer. Aggregations are useful for building applications, because you can use them to build lists, tables, and time series. For a full list of possible aggregrations, see the Query reference.
+   * @param {string} [params.aggregation] - An aggregation search uses combinations of filters and query search to
+   * return an exact answer. Aggregations are useful for building applications, because you can use them to build lists,
+   * tables, and time series. For a full list of possible aggregrations, see the Query reference.
    * @param {number} [params.count] - Number of documents to return.
-   * @param {string[]} [params.return_fields] - A comma separated list of the portion of the document hierarchy to return.
-   * @param {number} [params.offset] - The number of query results to skip at the beginning. For example, if the total number of results that are returned is 10, and the offset is 8, it returns the last two results.
-   * @param {string[]} [params.sort] - A comma separated list of fields in the document to sort on. You can optionally specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the default sort direction if no prefix is specified.
-   * @param {boolean} [params.highlight] - When true a highlight field is returned for each result which contains the fields that match the query with `<em></em>` tags around the matching query terms. Defaults to false.
-   * @param {string[]} [params.passages_fields] - A comma-separated list of fields that passages are drawn from. If this parameter not specified, then all top-level fields are included.
-   * @param {number} [params.passages_count] - The maximum number of passages to return. The search returns fewer passages if the requested total is not found. The default is `10`. The maximum is `100`.
-   * @param {number} [params.passages_characters] - The approximate number of characters that any one passage will have. The default is `400`. The minimum is `50`. The maximum is `2000`.
-   * @param {string} [params.deduplicate_field] - When specified, duplicate results based on the field specified are removed from the returned results. Duplicate comparison is limited to the current query only, `offset` is not considered. This parameter is currently Beta functionality.
-   * @param {boolean} [params.similar] - When `true`, results are returned based on their similarity to the document IDs specified in the `similar.document_ids` parameter. The default is `false`.
-   * @param {string[]} [params.similar_document_ids] - A comma-separated list of document IDs that will be used to find similar documents.   **Note:** If the `natural_language_query` parameter is also specified, it will be used to expand the scope of the document similarity search to include the natural language query. Other query parameters, such as `filter` and `query` are subsequently applied and reduce the query scope.
-   * @param {string[]} [params.similar_fields] - A comma-separated list of field names that will be used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison.
+   * @param {string[]} [params.return_fields] - A comma separated list of the portion of the document hierarchy to
+   * return.
+   * @param {number} [params.offset] - The number of query results to skip at the beginning. For example, if the total
+   * number of results that are returned is 10, and the offset is 8, it returns the last two results.
+   * @param {string[]} [params.sort] - A comma separated list of fields in the document to sort on. You can optionally
+   * specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the
+   * default sort direction if no prefix is specified.
+   * @param {boolean} [params.highlight] - When true a highlight field is returned for each result which contains the
+   * fields that match the query with `<em></em>` tags around the matching query terms. Defaults to false.
+   * @param {string[]} [params.passages_fields] - A comma-separated list of fields that passages are drawn from. If this
+   * parameter not specified, then all top-level fields are included.
+   * @param {number} [params.passages_count] - The maximum number of passages to return. The search returns fewer
+   * passages if the requested total is not found. The default is `10`. The maximum is `100`.
+   * @param {number} [params.passages_characters] - The approximate number of characters that any one passage will have.
+   * The default is `400`. The minimum is `50`. The maximum is `2000`.
+   * @param {string} [params.deduplicate_field] - When specified, duplicate results based on the field specified are
+   * removed from the returned results. Duplicate comparison is limited to the current query only, `offset` is not
+   * considered. This parameter is currently Beta functionality.
+   * @param {boolean} [params.similar] - When `true`, results are returned based on their similarity to the document IDs
+   * specified in the `similar.document_ids` parameter. The default is `false`.
+   * @param {string[]} [params.similar_document_ids] - A comma-separated list of document IDs that will be used to find
+   * similar documents.
+   *
+   * **Note:** If the `natural_language_query` parameter is also specified, it will be used to expand the scope of the
+   * document similarity search to include the natural language query. Other query parameters, such as `filter` and
+   * `query` are subsequently applied and reduce the query scope.
+   * @param {string[]} [params.similar_fields] - A comma-separated list of field names that will be used as a basis for
+   * comparison to identify similar documents. If not specified, the entire document is used for comparison.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -1529,17 +1729,22 @@ class DiscoveryV1 extends BaseService {
   /**
    * Knowledge Graph relationship query.
    *
-   * See the [Knowledge Graph documentation](https://console.bluemix.net/docs/services/discovery/building-kg.html) for more details.
+   * See the [Knowledge Graph documentation](https://console.bluemix.net/docs/services/discovery/building-kg.html) for
+   * more details.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
    * @param {QueryRelationsEntity[]} [params.entities] - An array of entities to find relationships for.
-   * @param {QueryEntitiesContext} [params.context] - Entity text to provide context for the queried entity and rank based on that association. For example, if you wanted to query the city of London in England your query would look for `London` with the context of `England`.
-   * @param {string} [params.sort] - The sorting method for the relationships, can be `score` or `frequency`. `frequency` is the number of unique times each entity is identified. The default is `score`.
+   * @param {QueryEntitiesContext} [params.context] - Entity text to provide context for the queried entity and rank
+   * based on that association. For example, if you wanted to query the city of London in England your query would look
+   * for `London` with the context of `England`.
+   * @param {string} [params.sort] - The sorting method for the relationships, can be `score` or `frequency`.
+   * `frequency` is the number of unique times each entity is identified. The default is `score`.
    * @param {QueryRelationsFilter} [params.filter] - Filters to apply to the relationship query.
    * @param {number} [params.count] - The number of results to return. The default is `10`. The maximum is `1000`.
-   * @param {number} [params.evidence_count] - The number of evidence items to return for each result. The default is `0`. The maximum number of evidence items per query is 10,000.
+   * @param {number} [params.evidence_count] - The number of evidence items to return for each result. The default is
+   * `0`. The maximum number of evidence items per query is 10,000.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -1594,9 +1799,9 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
-   * @param {string} [params.natural_language_query] - 
-   * @param {string} [params.filter] - 
-   * @param {TrainingExample[]} [params.examples] - 
+   * @param {string} [params.natural_language_query] -
+   * @param {string} [params.filter] -
+   * @param {TrainingExample[]} [params.examples] -
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -1645,9 +1850,9 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
    * @param {string} params.query_id - The ID of the query used for training.
-   * @param {string} [params.document_id] - 
-   * @param {string} [params.cross_reference] - 
-   * @param {number} [params.relevance] - 
+   * @param {string} [params.document_id] -
+   * @param {string} [params.cross_reference] -
+   * @param {number} [params.relevance] -
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -1992,8 +2197,8 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.collection_id - The ID of the collection.
    * @param {string} params.query_id - The ID of the query used for training.
    * @param {string} params.example_id - The ID of the document as it is indexed.
-   * @param {string} [params.cross_reference] - 
-   * @param {number} [params.relevance] - 
+   * @param {string} [params.cross_reference] -
+   * @param {number} [params.relevance] -
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -2041,7 +2246,12 @@ class DiscoveryV1 extends BaseService {
   /**
    * Delete labeled data.
    *
-   * Deletes all data associated with a specified customer ID. The method has no effect if no data is associated with the customer ID.   You associate a customer ID with data by passing the **X-Watson-Metadata** header with a request that passes data. For more information about personal data and customer IDs, see [Information security](https://console.bluemix.net/docs/services/discovery/information-security.html).
+   * Deletes all data associated with a specified customer ID. The method has no effect if no data is associated with
+   * the customer ID.
+   *
+   * You associate a customer ID with data by passing the **X-Watson-Metadata** header with a request that passes data.
+   * For more information about personal data and customer IDs, see [Information
+   * security](https://console.bluemix.net/docs/services/discovery/information-security.html).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customer_id - The customer ID for which all data is to be deleted.
@@ -2237,7 +2447,7 @@ namespace DiscoveryV1 {
     configuration_id?: string;
     /** The content of the document to ingest. The maximum supported file size is 50 megabytes. Files larger than 50 megabytes is rejected. */
     file?: NodeJS.ReadableStream|FileObject|Buffer;
-    /** If you're using the Data Crawler to upload your documents, you can test a document against the type of metadata that the Data Crawler might send. The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected. Example:  ``` {   "Creator": "Johnny Appleseed",   "Subject": "Apples" } ```. */
+    /** If you're using the Data Crawler to upload your documents, you can test a document against the type of metadata that the Data Crawler might send. The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected. Example:  ``` { "Creator": "Johnny Appleseed", "Subject": "Apples" } ```. */
     metadata?: string;
     /** The content type of file. */
     file_content_type?: TestConfigurationInEnvironmentConstants.FileContentType | string;
@@ -2246,7 +2456,7 @@ namespace DiscoveryV1 {
 
   /** Constants for the `testConfigurationInEnvironment` operation. */
   export namespace TestConfigurationInEnvironmentConstants {
-    /** Specify to only run the input document through the given step instead of running the input document through the entire ingestion workflow. Valid values are `convert`, `enrich`, and `normalize`. */
+     /** Specify to only run the input document through the given step instead of running the input document through the entire ingestion workflow. Valid values are `convert`, `enrich`, and `normalize`. */
     export enum Step {
       HTML_INPUT = 'html_input',
       HTML_OUTPUT = 'html_output',
@@ -2255,7 +2465,7 @@ namespace DiscoveryV1 {
       ENRICHMENTS_OUTPUT = 'enrichments_output',
       NORMALIZATIONS_OUTPUT = 'normalizations_output',
     }
-    /** The content type of file. */
+     /** The content type of file. */
     export enum FileContentType {
       APPLICATION_JSON = 'application/json',
       APPLICATION_MSWORD = 'application/msword',
@@ -2283,7 +2493,7 @@ namespace DiscoveryV1 {
 
   /** Constants for the `createCollection` operation. */
   export namespace CreateCollectionConstants {
-    /** The language of the documents stored in the collection, in the form of an ISO 639-1 language code. */
+     /** The language of the documents stored in the collection, in the form of an ISO 639-1 language code. */
     export enum Language {
       EN = 'en',
       ES = 'es',
@@ -2354,7 +2564,7 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the collection. */
     collection_id: string;
-    /** An array of query expansion definitions.    Each object in the `expansions` array represents a term or set of terms that will be expanded into other terms. Each expansion object can be configured so that all terms are expanded to all other terms in the object - bi-directional, or a set list of terms can be expanded into a second list of terms - uni-directional.   To create a bi-directional expansion specify an `expanded_terms` array. When found in a query, all items in the `expanded_terms` array are then expanded to the other items in the same array.   To create a uni-directional expansion, specify both an array of `input_terms` and an array of `expanded_terms`. When items in the `input_terms` array are present in a query, they are expanded using the items listed in the `expanded_terms` array. */
+    /** An array of query expansion definitions. Each object in the `expansions` array represents a term or set of terms that will be expanded into other terms. Each expansion object can be configured so that all terms are expanded to all other terms in the object - bi-directional, or a set list of terms can be expanded into a second list of terms - uni-directional. To create a bi-directional expansion specify an `expanded_terms` array. When found in a query, all items in the `expanded_terms` array are then expanded to the other items in the same array. To create a uni-directional expansion, specify both an array of `input_terms` and an array of `expanded_terms`. When items in the `input_terms` array are present in a query, they are expanded using the items listed in the `expanded_terms` array. */
     expansions: Expansion[];
     headers?: Object;
   }
@@ -2385,7 +2595,7 @@ namespace DiscoveryV1 {
     collection_id: string;
     /** The content of the document to ingest. The maximum supported file size is 50 megabytes. Files larger than 50 megabytes is rejected. */
     file?: NodeJS.ReadableStream|FileObject|Buffer;
-    /** If you're using the Data Crawler to upload your documents, you can test a document against the type of metadata that the Data Crawler might send. The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected. Example:  ``` {   "Creator": "Johnny Appleseed",   "Subject": "Apples" } ```. */
+    /** If you're using the Data Crawler to upload your documents, you can test a document against the type of metadata that the Data Crawler might send. The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected. Example:  ``` { "Creator": "Johnny Appleseed", "Subject": "Apples" } ```. */
     metadata?: string;
     /** The content type of file. */
     file_content_type?: AddDocumentConstants.FileContentType | string;
@@ -2394,7 +2604,7 @@ namespace DiscoveryV1 {
 
   /** Constants for the `addDocument` operation. */
   export namespace AddDocumentConstants {
-    /** The content type of file. */
+     /** The content type of file. */
     export enum FileContentType {
       APPLICATION_JSON = 'application/json',
       APPLICATION_MSWORD = 'application/msword',
@@ -2437,7 +2647,7 @@ namespace DiscoveryV1 {
     document_id: string;
     /** The content of the document to ingest. The maximum supported file size is 50 megabytes. Files larger than 50 megabytes is rejected. */
     file?: NodeJS.ReadableStream|FileObject|Buffer;
-    /** If you're using the Data Crawler to upload your documents, you can test a document against the type of metadata that the Data Crawler might send. The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected. Example:  ``` {   "Creator": "Johnny Appleseed",   "Subject": "Apples" } ```. */
+    /** If you're using the Data Crawler to upload your documents, you can test a document against the type of metadata that the Data Crawler might send. The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected. Example:  ``` { "Creator": "Johnny Appleseed", "Subject": "Apples" } ```. */
     metadata?: string;
     /** The content type of file. */
     file_content_type?: UpdateDocumentConstants.FileContentType | string;
@@ -2446,7 +2656,7 @@ namespace DiscoveryV1 {
 
   /** Constants for the `updateDocument` operation. */
   export namespace UpdateDocumentConstants {
-    /** The content type of file. */
+     /** The content type of file. */
     export enum FileContentType {
       APPLICATION_JSON = 'application/json',
       APPLICATION_MSWORD = 'application/msword',
@@ -2487,7 +2697,7 @@ namespace DiscoveryV1 {
     deduplicate_field?: string;
     /** When `true`, results are returned based on their similarity to the document IDs specified in the `similar.document_ids` parameter. The default is `false`. */
     similar?: boolean;
-    /** A comma-separated list of document IDs that will be used to find similar documents.   **Note:** If the `natural_language_query` parameter is also specified, it will be used to expand the scope of the document similarity search to include the natural language query. Other query parameters, such as `filter` and `query` are subsequently applied and reduce the query scope. */
+    /** A comma-separated list of document IDs that will be used to find similar documents. **Note:** If the `natural_language_query` parameter is also specified, it will be used to expand the scope of the document similarity search to include the natural language query. Other query parameters, such as `filter` and `query` are subsequently applied and reduce the query scope. */
     similar_document_ids?: string[];
     /** A comma-separated list of field names that will be used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison. */
     similar_fields?: string[];
@@ -2522,7 +2732,7 @@ namespace DiscoveryV1 {
     deduplicate_field?: string;
     /** When `true`, results are returned based on their similarity to the document IDs specified in the `similar.document_ids` parameter. The default is `false`. */
     similar?: boolean;
-    /** A comma-separated list of document IDs that will be used to find similar documents.   **Note:** If the `natural_language_query` parameter is also specified, it will be used to expand the scope of the document similarity search to include the natural language query. Other query parameters, such as `filter` and `query` are subsequently applied and reduce the query scope. */
+    /** A comma-separated list of document IDs that will be used to find similar documents. **Note:** If the `natural_language_query` parameter is also specified, it will be used to expand the scope of the document similarity search to include the natural language query. Other query parameters, such as `filter` and `query` are subsequently applied and reduce the query scope. */
     similar_document_ids?: string[];
     /** A comma-separated list of field names that will be used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison. */
     similar_fields?: string[];
@@ -2567,7 +2777,7 @@ namespace DiscoveryV1 {
     deduplicate_field?: string;
     /** When `true`, results are returned based on their similarity to the document IDs specified in the `similar.document_ids` parameter. The default is `false`. */
     similar?: boolean;
-    /** A comma-separated list of document IDs that will be used to find similar documents.   **Note:** If the `natural_language_query` parameter is also specified, it will be used to expand the scope of the document similarity search to include the natural language query. Other query parameters, such as `filter` and `query` are subsequently applied and reduce the query scope. */
+    /** A comma-separated list of document IDs that will be used to find similar documents. **Note:** If the `natural_language_query` parameter is also specified, it will be used to expand the scope of the document similarity search to include the natural language query. Other query parameters, such as `filter` and `query` are subsequently applied and reduce the query scope. */
     similar_document_ids?: string[];
     /** A comma-separated list of field names that will be used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison. */
     similar_fields?: string[];
@@ -2629,7 +2839,7 @@ namespace DiscoveryV1 {
     deduplicate_field?: string;
     /** When `true`, results are returned based on their similarity to the document IDs specified in the `similar.document_ids` parameter. The default is `false`. */
     similar?: boolean;
-    /** A comma-separated list of document IDs that will be used to find similar documents.   **Note:** If the `natural_language_query` parameter is also specified, it will be used to expand the scope of the document similarity search to include the natural language query. Other query parameters, such as `filter` and `query` are subsequently applied and reduce the query scope. */
+    /** A comma-separated list of document IDs that will be used to find similar documents. **Note:** If the `natural_language_query` parameter is also specified, it will be used to expand the scope of the document similarity search to include the natural language query. Other query parameters, such as `filter` and `query` are subsequently applied and reduce the query scope. */
     similar_document_ids?: string[];
     /** A comma-separated list of field names that will be used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison. */
     similar_fields?: string[];
@@ -2659,7 +2869,7 @@ namespace DiscoveryV1 {
 
   /** Constants for the `queryRelations` operation. */
   export namespace QueryRelationsConstants {
-    /** The sorting method for the relationships, can be `score` or `frequency`. `frequency` is the number of unique times each entity is identified. The default is `score`. */
+     /** The sorting method for the relationships, can be `score` or `frequency`. `frequency` is the number of unique times each entity is identified. The default is `score`. */
     export enum Sort {
       SCORE = 'score',
       FREQUENCY = 'frequency',
@@ -2879,28 +3089,6 @@ namespace DiscoveryV1 {
     json_normalizations?: NormalizationOperation[];
   }
 
-  /** CreateCollectionRequest. */
-  export interface CreateCollectionRequest {
-    /** The name of the collection to be created. */
-    name: string;
-    /** A description of the collection. */
-    description?: string;
-    /** The ID of the configuration in which the collection is to be created. */
-    configuration_id?: string;
-    /** The language of the documents stored in the collection, in the form of an ISO 639-1 language code. */
-    language?: string;
-  }
-
-  /** CreateEnvironmentRequest. */
-  export interface CreateEnvironmentRequest {
-    /** Name that identifies the environment. */
-    name: string;
-    /** Description of the environment. */
-    description?: string;
-    /** **Deprecated**: Size of the environment. */
-    size?: number;
-  }
-
   /** DeleteCollectionResponse. */
   export interface DeleteCollectionResponse {
     /** The unique identifier of the collection that is being deleted. */
@@ -3001,12 +3189,6 @@ namespace DiscoveryV1 {
     notices: Notice[];
   }
 
-  /** An object representing the configuration options to use for the `elements` enrichment. */
-  export interface ElementsEnrichmentOptions {
-    /** *For use with `elements` enrichments only.* The element extraction model to use. Models available are: `contract`. */
-    model?: string;
-  }
-
   /** Enrichment. */
   export interface Enrichment {
     /** Describes what the enrichment step does. */
@@ -3017,7 +3199,7 @@ namespace DiscoveryV1 {
     source_field: string;
     /** Indicates that the enrichments will overwrite the destination_field field if it already exists. */
     overwrite?: boolean;
-    /** Name of the enrichment service to call. Current options are `natural_language_understanding` and `elements`.   When using `natual_language_understanding`, the `options` object must contain Natural Language Understanding Options.   When using `elements` the `options` object must contain Element Classification options. Additionally, when using the `elements` enrichment the configuration specified and files ingested must meet all the criteria specified in [the documentation](https://console.bluemix.net/docs/services/discovery/element-classification.html)     Previous API versions also supported `alchemy_language`. */
+    /** Name of the enrichment service to call. Current options are `natural_language_understanding` and `elements`. When using `natual_language_understanding`, the `options` object must contain Natural Language Understanding Options. When using `elements` the `options` object must contain Element Classification options. Additionally, when using the `elements` enrichment the configuration specified and files ingested must meet all the criteria specified in [the documentation](https://console.bluemix.net/docs/services/discovery/element-classification.html) Previous API versions also supported `alchemy_language`. */
     enrichment_name: string;
     /** If true, then most errors generated during the enrichment process will be treated as warnings and will not cause the document to fail processing. */
     ignore_downstream_errors?: boolean;
@@ -3031,10 +3213,6 @@ namespace DiscoveryV1 {
     features?: NluEnrichmentFeatures;
     /** *For use with `elements` enrichments only.* The element extraction model to use. Models available are: `contract`. */
     model?: string;
-  }
-
-  /** An array of document enrichment settings for the configuration. */
-  export interface Enrichments {
   }
 
   /** Details about an environment. */
@@ -3067,14 +3245,6 @@ namespace DiscoveryV1 {
     maximum_allowed?: number;
   }
 
-  /** ErrorResponse. */
-  export interface ErrorResponse {
-    /** The HTTP error status code. */
-    code: number;
-    /** A message describing the error. */
-    error: string;
-  }
-
   /** An expansion definition. Each object respresents one set of expandable strings. For example, you could have expansions for the word `hot` in one object, and expansions for the word `cold` in another. */
   export interface Expansion {
     /** A list of terms that will be expanded for this expansion. If specified, only the items in this list are expanded. */
@@ -3085,7 +3255,7 @@ namespace DiscoveryV1 {
 
   /** The query expansion definitions for the specified collection. */
   export interface Expansions {
-    /** An array of query expansion definitions.    Each object in the `expansions` array represents a term or set of terms that will be expanded into other terms. Each expansion object can be configured so that all terms are expanded to all other terms in the object - bi-directional, or a set list of terms can be expanded into a second list of terms - uni-directional.   To create a bi-directional expansion specify an `expanded_terms` array. When found in a query, all items in the `expanded_terms` array are then expanded to the other items in the same array.   To create a uni-directional expansion, specify both an array of `input_terms` and an array of `expanded_terms`. When items in the `input_terms` array are present in a query, they are expanded using the items listed in the `expanded_terms` array. */
+    /** An array of query expansion definitions. Each object in the `expansions` array represents a term or set of terms that will be expanded into other terms. Each expansion object can be configured so that all terms are expanded to all other terms in the object - bi-directional, or a set list of terms can be expanded into a second list of terms - uni-directional. To create a bi-directional expansion specify an `expanded_terms` array. When found in a query, all items in the `expanded_terms` array are then expanded to the other items in the same array. To create a uni-directional expansion, specify both an array of `input_terms` and an array of `expanded_terms`. When items in the `input_terms` array are present in a query, they are expanded using the items listed in the `expanded_terms` array. */
     expansions: Expansion[];
   }
 
@@ -3105,10 +3275,6 @@ namespace DiscoveryV1 {
     bold?: boolean;
     italic?: boolean;
     name?: string;
-  }
-
-  /** FontSettings. */
-  export interface FontSettings {
   }
 
   /** A list of HTML conversion settings. */
@@ -3133,21 +3299,7 @@ namespace DiscoveryV1 {
     memory_usage?: MemoryUsage;
   }
 
-  /** *Deprecated* Options specific to the `alchemy_language` enrichment. */
-  export interface LanguageEnrichmentOptions {
-    /** A comma-separated list of analyses that will be applied when using the `alchemy_language` enrichment. See the service documentation for details on each extract option.  Possible values include:    * entity   * keyword   * taxonomy   * concept   * relation   * doc-sentiment   * doc-emotion   * typed-rels. */
-    extract?: string[];
-    sentiment?: boolean;
-    quotations?: boolean;
-    show_source_text?: boolean;
-    hierarchical_typed_relations?: boolean;
-    /** Required when using the `typed-rel` extract option. Should be set to the ID of a previously published custom Watson Knowledge Studio model. */
-    model?: string;
-    /** If provided, then do not attempt to detect the language of the input document. Instead, assume the language is the one specified in this field.  You can set this property to work around `unsupported-text-language` errors.  Supported languages include English, German, French, Italian, Portuguese, Russian, Spanish and Swedish. Supported language codes are the ISO-639-1, ISO-639-2, ISO-639-3, and the plain english name of the language (for example "russian"). */
-    language?: string;
-  }
-
-  /** The list of fetched fields.  The fields are returned using a fully qualified name format, however, the format differs slightly from that used by the query operations.    * Fields which contain nested JSON objects are assigned a type of "nested".    * Fields which belong to a nested object are prefixed with `.properties` (for example, `warnings.properties.severity` means that the `warnings` object has a property called `severity`).    * Fields returned from the News collection are prefixed with `v{N}-fullnews-t3-{YEAR}.mappings` (for example, `v5-fullnews-t3-2016.mappings.text.properties.author`). */
+  /** The list of fetched fields. The fields are returned using a fully qualified name format, however, the format differs slightly from that used by the query operations. * Fields which contain nested JSON objects are assigned a type of "nested". * Fields which belong to a nested object are prefixed with `.properties` (for example, `warnings.properties.severity` means that the `warnings` object has a property called `severity`). * Fields returned from the News collection are prefixed with `v{N}-fullnews-t3-{YEAR}.mappings` (for example, `v5-fullnews-t3-2016.mappings.text.properties.author`). */
   export interface ListCollectionFieldsResponse {
     /** An array containing information about each field in the collections. */
     fields?: Field[];
@@ -3183,13 +3335,6 @@ namespace DiscoveryV1 {
     total?: string;
     /** **Deprecated**: Percentage of the environment's memory capacity that is being used. */
     percent_used?: number;
-  }
-
-  /** NewTrainingQuery. */
-  export interface NewTrainingQuery {
-    natural_language_query?: string;
-    filter?: string;
-    examples?: TrainingExample[];
   }
 
   /** An object that indicates the Categories enrichment will be applied to the specified field. */
@@ -3250,12 +3395,6 @@ namespace DiscoveryV1 {
     limit?: number;
   }
 
-  /** An object representing the configuration options to use for the `natural_language_understanding` enrichments. */
-  export interface NluEnrichmentOptions {
-    /** An object representing the enrichment features that will be applied to the specified field. */
-    features?: NluEnrichmentFeatures;
-  }
-
   /** An object specifying the relations enrichment and related parameters. */
   export interface NluEnrichmentRelations {
     /** *For use with `natural_language_understanding` enrichments only.* The enrichement model to use with relationship extraction. May be a custom model provided by Watson Knowledge Studio, the public model for use with Knowledge Graph `en-news`, the default is`en-news`. */
@@ -3282,16 +3421,12 @@ namespace DiscoveryV1 {
 
   /** NormalizationOperation. */
   export interface NormalizationOperation {
-    /** Identifies what type of operation to perform.   **copy** - Copies the value of the `source_field` to the `destination_field` field. If the `destination_field` already exists, then the value of the `source_field` overwrites the original value of the `destination_field`.   **move** - Renames (moves) the `source_field` to the `destination_field`. If the `destination_field` already exists, then the value of the `source_field` overwrites the original value of the `destination_field`. Rename is identical to copy, except that the `source_field` is removed after the value has been copied to the `destination_field` (it is the same as a _copy_ followed by a _remove_).   **merge** - Merges the value of the `source_field` with the value of the `destination_field`. The `destination_field` is converted into an array if it is not already an array, and the value of the `source_field` is appended to the array. This operation removes the `source_field` after the merge. If the `source_field` does not exist in the current document, then the `destination_field` is still converted into an array (if it is not an array already). This is ensures the type for `destination_field` is consistent across all documents.   **remove** - Deletes the `source_field` field. The `destination_field` is ignored for this operation.   **remove_nulls** - Removes all nested null (blank) leif values from the JSON tree. `source_field` and `destination_field` are ignored by this operation because _remove_nulls_ operates on the entire JSON tree. Typically, `remove_nulls` is invoked as the last normalization operation (if it is inoked at all, it can be time-expensive). */
+    /** Identifies what type of operation to perform. **copy** - Copies the value of the `source_field` to the `destination_field` field. If the `destination_field` already exists, then the value of the `source_field` overwrites the original value of the `destination_field`. **move** - Renames (moves) the `source_field` to the `destination_field`. If the `destination_field` already exists, then the value of the `source_field` overwrites the original value of the `destination_field`. Rename is identical to copy, except that the `source_field` is removed after the value has been copied to the `destination_field` (it is the same as a _copy_ followed by a _remove_). **merge** - Merges the value of the `source_field` with the value of the `destination_field`. The `destination_field` is converted into an array if it is not already an array, and the value of the `source_field` is appended to the array. This operation removes the `source_field` after the merge. If the `source_field` does not exist in the current document, then the `destination_field` is still converted into an array (if it is not an array already). This is ensures the type for `destination_field` is consistent across all documents. **remove** - Deletes the `source_field` field. The `destination_field` is ignored for this operation. **remove_nulls** - Removes all nested null (blank) leif values from the JSON tree. `source_field` and `destination_field` are ignored by this operation because _remove_nulls_ operates on the entire JSON tree. Typically, `remove_nulls` is invoked as the last normalization operation (if it is inoked at all, it can be time-expensive). */
     operation?: string;
     /** The source field for the operation. */
     source_field?: string;
     /** The destination field for the operation. */
     destination_field?: string;
-  }
-
-  /** Defines operations that can be used to transform the final output JSON into a normalized form. Operations are executed in the order that they appear in the array. */
-  export interface Normalizations {
   }
 
   /** A notice produced for the collection. */
@@ -3331,20 +3466,6 @@ namespace DiscoveryV1 {
     matching_results?: number;
     /** Aggregations returned by the Discovery service. */
     aggregations?: QueryAggregation[];
-  }
-
-  /** QueryEntities. */
-  export interface QueryEntities {
-    /** The entity query feature to perform. Supported features are `disambiguate` and `similar_entities`. */
-    feature?: string;
-    /** A text string that appears within the entity text field. */
-    entity?: QueryEntitiesEntity;
-    /** Entity text to provide context for the queried entity and rank based on that association. For example, if you wanted to query the city of London in England your query would look for `London` with the context of `England`. */
-    context?: QueryEntitiesContext;
-    /** The number of results to return. The default is `10`. The maximum is `1000`. */
-    count?: number;
-    /** The number of evidence items to return for each result. The default is `0`. The maximum number of evidence items per query is 10,000. */
-    evidence_count?: number;
   }
 
   /** Entity text to provide context for the queried entity and rank based on that association. For example, if you wanted to query the city of London in England your query would look for `London` with the context of `England`. */
@@ -3457,22 +3578,6 @@ namespace DiscoveryV1 {
     end_offset?: number;
     /** The label of the field from which the passage has been extracted. */
     field?: string;
-  }
-
-  /** A respresentation of a relationship query. */
-  export interface QueryRelations {
-    /** An array of entities to find relationships for. */
-    entities?: QueryRelationsEntity[];
-    /** Entity text to provide context for the queried entity and rank based on that association. For example, if you wanted to query the city of London in England your query would look for `London` with the context of `England`. */
-    context?: QueryEntitiesContext;
-    /** The sorting method for the relationships, can be `score` or `frequency`. `frequency` is the number of unique times each entity is identified. The default is `score`. */
-    sort?: string;
-    /** Filters to apply to the relationship query. */
-    filter?: QueryRelationsFilter;
-    /** The number of results to return. The default is `10`. The maximum is `1000`. */
-    count?: number;
-    /** The number of evidence items to return for each result. The default is `0`. The maximum number of evidence items per query is 10,000. */
-    evidence_count?: number;
   }
 
   /** QueryRelationsArgument. */
@@ -3597,12 +3702,6 @@ namespace DiscoveryV1 {
     examples?: TrainingExample[];
   }
 
-  /** TrainingExamplePatch. */
-  export interface TrainingExamplePatch {
-    cross_reference?: string;
-    relevance?: number;
-  }
-
   /** TrainingQuery. */
   export interface TrainingQuery {
     query_id?: string;
@@ -3624,24 +3723,6 @@ namespace DiscoveryV1 {
     data_updated?: string;
   }
 
-  /** UpdateCollectionRequest. */
-  export interface UpdateCollectionRequest {
-    /** The name of the collection. */
-    name: string;
-    /** A description of the collection. */
-    description?: string;
-    /** The ID of the configuration in which the collection is to be updated. */
-    configuration_id?: string;
-  }
-
-  /** UpdateEnvironmentRequest. */
-  export interface UpdateEnvironmentRequest {
-    /** Name that identifies the environment. */
-    name?: string;
-    /** Description of the environment. */
-    description?: string;
-  }
-
   /** WordHeadingDetection. */
   export interface WordHeadingDetection {
     fonts?: FontSetting[];
@@ -3657,10 +3738,6 @@ namespace DiscoveryV1 {
   export interface WordStyle {
     level?: number;
     names?: string[];
-  }
-
-  /** WordStyles. */
-  export interface WordStyles {
   }
 
   /** XPathPatterns. */

@@ -21,19 +21,20 @@ import { getMissingParams } from '../lib/helper';
 import { FileObject } from '../lib/helper';
 
 /**
- * IBM Watson&trade; Language Translator translates text from one language to another. The service offers multiple domain-specific models that you can customize based on your unique terminology and language. Use Language Translator to take news from across the globe and present it in your language, communicate with your customers in their own language, and more.
+ * IBM Watson&trade; Language Translator translates text from one language to another. The service offers multiple IBM provided translation models that you can customize based on your unique terminology and language. Use Language Translator to take news from across the globe and present it in your language, communicate with your customers in their own language, and more.
  */
 
-class LanguageTranslatorV2 extends BaseService {
+class LanguageTranslatorV3 extends BaseService {
 
   static URL: string = 'https://gateway.watsonplatform.net/language-translator/api';
   name: string; // set by prototype to 'language_translator'
-  serviceVersion: string; // set by prototype to 'v2'
+  serviceVersion: string; // set by prototype to 'v3'
 
   /**
-   * Construct a LanguageTranslatorV2 object.
+   * Construct a LanguageTranslatorV3 object.
    *
    * @param {Object} options - Options for the service.
+   * @param {string} options.version - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses the API version for the date you specify, or the most recent version before that date. Note that you should not programmatically specify the current date at runtime, in case the API has been updated since your application's release. Instead, specify a version date that is compatible with your application, and don't change it until your application is ready for a later version.
    * @param {string} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/language-translator/api'). The base url may differ between Bluemix regions.
    * @param {string} [options.username] - The username used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
    * @param {string} [options.password] - The password used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
@@ -44,10 +45,16 @@ class LanguageTranslatorV2 extends BaseService {
    * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
    * @constructor
-   * @returns {LanguageTranslatorV2}
+   * @returns {LanguageTranslatorV3}
+   * @throws {Error}
    */
-  constructor(options: LanguageTranslatorV2.Options) {
+  constructor(options: LanguageTranslatorV3.Options) {
     super(options);
+    // check if 'version' was provided
+    if (typeof this._options.version === 'undefined') {
+      throw new Error('Argument error: version was not specified');
+    }
+    this._options.qs.version = options.version;
   }
 
   /*************************
@@ -74,7 +81,7 @@ class LanguageTranslatorV2 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public translate(params: LanguageTranslatorV2.TranslateParams, callback?: LanguageTranslatorV2.Callback<LanguageTranslatorV2.TranslationResult>): NodeJS.ReadableStream | void {
+  public translate(params: LanguageTranslatorV3.TranslateParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationResult>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['text'];
@@ -90,7 +97,7 @@ class LanguageTranslatorV2 extends BaseService {
     };
     const parameters = {
       options: {
-        url: '/v2/translate',
+        url: '/v3/translate',
         method: 'POST',
         json: true,
         body,
@@ -120,7 +127,7 @@ class LanguageTranslatorV2 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public identify(params: LanguageTranslatorV2.IdentifyParams, callback?: LanguageTranslatorV2.Callback<LanguageTranslatorV2.IdentifiedLanguages>): NodeJS.ReadableStream | void {
+  public identify(params: LanguageTranslatorV3.IdentifyParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.IdentifiedLanguages>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['text'];
@@ -131,7 +138,7 @@ class LanguageTranslatorV2 extends BaseService {
     const body = _params.text;
     const parameters = {
       options: {
-        url: '/v2/identify',
+        url: '/v3/identify',
         method: 'POST',
         json: false,
         body,
@@ -157,12 +164,12 @@ class LanguageTranslatorV2 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listIdentifiableLanguages(params?: LanguageTranslatorV2.ListIdentifiableLanguagesParams, callback?: LanguageTranslatorV2.Callback<LanguageTranslatorV2.IdentifiableLanguages>): NodeJS.ReadableStream | void {
+  public listIdentifiableLanguages(params?: LanguageTranslatorV3.ListIdentifiableLanguagesParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.IdentifiableLanguages>): NodeJS.ReadableStream | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
     const parameters = {
       options: {
-        url: '/v2/identifiable_languages',
+        url: '/v3/identifiable_languages',
         method: 'GET',
       },
       defaultOptions: extend(true, {}, this._options, {
@@ -181,29 +188,39 @@ class LanguageTranslatorV2 extends BaseService {
   /**
    * Create model.
    *
-   * Uploads a TMX glossary file on top of a domain to customize a translation model.
+   * Uploads Translation Memory eXchange (TMX) files to customize a translation model.
    *
-   * Depending on the size of the file, training can range from minutes for a glossary to several hours for a large
-   * parallel corpus. Glossary files must be less than 10 MB. The cumulative file size of all uploaded glossary and
-   * corpus files is limited to 250 MB.
+   * You can either customize a model with a forced glossary or with a corpus that contains parallel sentences. To
+   * create a model that is customized with a parallel corpus <b>and</b> a forced glossary, proceed in two steps:
+   * customize with a parallel corpus first and then customize the resulting model with a glossary. Depending on the
+   * type of customization and the size of the uploaded corpora, training can range from minutes for a glossary to
+   * several hours for a large parallel corpus. You can upload a single forced glossary file and this file must be less
+   * than <b>10 MB</b>. You can upload multiple parallel corpora tmx files. The cumulative file size of all uploaded
+   * files is limited to <b>250 MB</b>. To successfully train with a parallel corpus you must have at least <b>5,000
+   * parallel sentences</b> in your corpus.
+   *
+   * You can have a <b>maxium of 10 custom models per language pair</b>.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.base_model_id - The model ID of the model to use as the base for customization. To see
-   * available models, use the `List models` method.
+   * available models, use the `List models` method. Usually all IBM provided models are customizable. In addition, all
+   * your models that have been created via parallel corpus customization, can be further customized with a forced
+   * glossary.
    * @param {string} [params.name] - An optional model name that you can use to identify the model. Valid characters are
    * letters, numbers, dashes, underscores, spaces and apostrophes. The maximum length is 32 characters.
    * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.forced_glossary] - A TMX file with your customizations.
    * The customizations in the file completely overwrite the domain translaton data, including high frequency or high
-   * confidence phrase translations. You can upload only one glossary with a file size less than 10 MB per call.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.parallel_corpus] - A TMX file that contains entries that
-   * are treated as a parallel corpus instead of a glossary.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.monolingual_corpus] - A UTF-8 encoded plain text file that
-   * is used to customize the target language model.
+   * confidence phrase translations. You can upload only one glossary with a file size less than 10 MB per call. A
+   * forced glossary should contain single words or short phrases.
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.parallel_corpus] - A TMX file with parallel sentences for
+   * source and target language. You can upload multiple parallel_corpus files in one request. All uploaded
+   * parallel_corpus files combined, your parallel corpus must contain at least 5,000 parallel sentences to train
+   * successfully.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public createModel(params: LanguageTranslatorV2.CreateModelParams, callback?: LanguageTranslatorV2.Callback<LanguageTranslatorV2.TranslationModel>): NodeJS.ReadableStream | void {
+  public createModel(params: LanguageTranslatorV3.CreateModelParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationModel>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['base_model_id'];
@@ -219,10 +236,6 @@ class LanguageTranslatorV2 extends BaseService {
       'parallel_corpus': {
         data: _params.parallel_corpus,
         contentType: 'application/octet-stream'
-      },
-      'monolingual_corpus': {
-        data: _params.monolingual_corpus,
-        contentType: 'text/plain'
       }
     };
     const query = {
@@ -231,7 +244,7 @@ class LanguageTranslatorV2 extends BaseService {
     };
     const parameters = {
       options: {
-        url: '/v2/models',
+        url: '/v3/models',
         method: 'POST',
         qs: query,
         formData
@@ -257,7 +270,7 @@ class LanguageTranslatorV2 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteModel(params: LanguageTranslatorV2.DeleteModelParams, callback?: LanguageTranslatorV2.Callback<LanguageTranslatorV2.DeleteModelResult>): NodeJS.ReadableStream | void {
+  public deleteModel(params: LanguageTranslatorV3.DeleteModelParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.DeleteModelResult>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['model_id'];
@@ -270,7 +283,7 @@ class LanguageTranslatorV2 extends BaseService {
     };
     const parameters = {
       options: {
-        url: '/v2/models/{model_id}',
+        url: '/v3/models/{model_id}',
         method: 'DELETE',
         path,
       },
@@ -286,7 +299,8 @@ class LanguageTranslatorV2 extends BaseService {
   /**
    * Get model details.
    *
-   * Gets information about a translation model, including training status for custom models.
+   * Gets information about a translation model, including training status for custom models. Use this API call to poll
+   * the status of your customization request. A successfully completed training will have a status of `available`.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.model_id - Model ID of the model to get.
@@ -294,7 +308,7 @@ class LanguageTranslatorV2 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getModel(params: LanguageTranslatorV2.GetModelParams, callback?: LanguageTranslatorV2.Callback<LanguageTranslatorV2.TranslationModel>): NodeJS.ReadableStream | void {
+  public getModel(params: LanguageTranslatorV3.GetModelParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationModel>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['model_id'];
@@ -307,7 +321,7 @@ class LanguageTranslatorV2 extends BaseService {
     };
     const parameters = {
       options: {
-        url: '/v2/models/{model_id}',
+        url: '/v3/models/{model_id}',
         method: 'GET',
         path,
       },
@@ -330,12 +344,13 @@ class LanguageTranslatorV2 extends BaseService {
    * @param {string} [params.target] - Specify a language code to filter results by target language.
    * @param {boolean} [params.default_models] - If the default parameter isn't specified, the service will return all
    * models (default and non-default) for each language pair. To return only default models, set this to `true`. To
-   * return only non-default models, set this to `false`.
+   * return only non-default models, set this to `false`. There is exactly one default model per language pair, the IBM
+   * provided base model.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listModels(params?: LanguageTranslatorV2.ListModelsParams, callback?: LanguageTranslatorV2.Callback<LanguageTranslatorV2.TranslationModels>): NodeJS.ReadableStream | void {
+  public listModels(params?: LanguageTranslatorV3.ListModelsParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationModels>): NodeJS.ReadableStream | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
     const query = {
@@ -345,7 +360,7 @@ class LanguageTranslatorV2 extends BaseService {
     };
     const parameters = {
       options: {
-        url: '/v2/models',
+        url: '/v3/models',
         method: 'GET',
         qs: query,
       },
@@ -360,17 +375,18 @@ class LanguageTranslatorV2 extends BaseService {
 
 }
 
-LanguageTranslatorV2.prototype.name = 'language_translator';
-LanguageTranslatorV2.prototype.serviceVersion = 'v2';
+LanguageTranslatorV3.prototype.name = 'language_translator';
+LanguageTranslatorV3.prototype.serviceVersion = 'v3';
 
 /*************************
  * interfaces
  ************************/
 
-namespace LanguageTranslatorV2 {
+namespace LanguageTranslatorV3 {
 
-  /** Options for the `LanguageTranslatorV2` constructor. */
+  /** Options for the `LanguageTranslatorV3` constructor. */
   export type Options = {
+    version: string;
     url?: string;
     iam_access_token?: string;
     iam_apikey?: string;
@@ -418,16 +434,14 @@ namespace LanguageTranslatorV2 {
 
   /** Parameters for the `createModel` operation. */
   export interface CreateModelParams {
-    /** The model ID of the model to use as the base for customization. To see available models, use the `List models` method. */
+    /** The model ID of the model to use as the base for customization. To see available models, use the `List models` method. Usually all IBM provided models are customizable. In addition, all your models that have been created via parallel corpus customization, can be further customized with a forced glossary. */
     base_model_id: string;
     /** An optional model name that you can use to identify the model. Valid characters are letters, numbers, dashes, underscores, spaces and apostrophes. The maximum length is 32 characters. */
     name?: string;
-    /** A TMX file with your customizations. The customizations in the file completely overwrite the domain translaton data, including high frequency or high confidence phrase translations. You can upload only one glossary with a file size less than 10 MB per call. */
+    /** A TMX file with your customizations. The customizations in the file completely overwrite the domain translaton data, including high frequency or high confidence phrase translations. You can upload only one glossary with a file size less than 10 MB per call. A forced glossary should contain single words or short phrases. */
     forced_glossary?: NodeJS.ReadableStream|FileObject|Buffer;
-    /** A TMX file that contains entries that are treated as a parallel corpus instead of a glossary. */
+    /** A TMX file with parallel sentences for source and target language. You can upload multiple parallel_corpus files in one request. All uploaded parallel_corpus files combined, your parallel corpus must contain at least 5,000 parallel sentences to train successfully. */
     parallel_corpus?: NodeJS.ReadableStream|FileObject|Buffer;
-    /** A UTF-8 encoded plain text file that is used to customize the target language model. */
-    monolingual_corpus?: NodeJS.ReadableStream|FileObject|Buffer;
     headers?: Object;
   }
 
@@ -451,7 +465,7 @@ namespace LanguageTranslatorV2 {
     source?: string;
     /** Specify a language code to filter results by target language. */
     target?: string;
-    /** If the default parameter isn't specified, the service will return all models (default and non-default) for each language pair. To return only default models, set this to `true`. To return only non-default models, set this to `false`. */
+    /** If the default parameter isn't specified, the service will return all models (default and non-default) for each language pair. To return only default models, set this to `true`. To return only non-default models, set this to `false`. There is exactly one default model per language pair, the IBM provided base model. */
     default_models?: boolean;
     headers?: Object;
   }
@@ -542,4 +556,4 @@ namespace LanguageTranslatorV2 {
 
 }
 
-export = LanguageTranslatorV2;
+export = LanguageTranslatorV3;
