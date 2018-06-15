@@ -12,15 +12,18 @@ Node.js client library to use the Watson APIs.
   <summary>Table of Contents</summary>
 
   * [Installation](#installation)
-  * [Getting the Service Credentials](#getting-the-service-credentials)
   * [Usage](#usage)
   * [Client-side usage](#client-side-usage)
-  * [Sending Request Headers](#sending-request-headers)
-  * [Parsing HTTP Response](#parsing-http-response)
+  * [Authentication](#authentication)
+    * [IAM](#iam)
+    * [Username and password](#username-and-password)
+    * [API key](#api-key)
+  * [Sending request headers](#sending-request-headers)
+  * [Parsing HTTP response](#parsing-http-response)
   * [Data collection opt-out](#data-collection-opt-out)
+  * [Documentation](#documentation)
   * [Questions](#questions)
-  * [Examples](#examples)
-  * [IBM Watson Services](#ibm-watson-services)
+  * [IBM Watson services](#ibm-watson-services)
     * [Authorization](#authorization)
     * [Assistant](#assistant)
     * [Discovery](#discovery)
@@ -47,35 +50,54 @@ Node.js client library to use the Watson APIs.
 npm install watson-developer-cloud
 ```
 
-## Getting the service credentials
+## Usage
 
-## Visual Recognition
+The [examples][examples] folder has basic and advanced examples. The examples within each service assume that you already have [service credentials](#getting-credentials). 
 
-The process for authenticating with Visual Recognition has changed:
+Credentials are checked for in the following order:
 
-- For new service instances, authenticate by using IAM. See [IAM Authentication](#iam-authentication). Also set the service URL by passing in `url` in the service constructor. 
-- For service instances created before May 23, 2018, authenticate by providing the basic auth `api_key` for the service instance.
+1. Hard-coded or programatic credentials passed to the service constructor
 
-### Basic Auth
-You will need the `username`, `password`, and `url` for each service. Visual Recognition instances created before May 23, 2018 use `api_key`. Service credentials are different from your IBM Cloud account username and password.
+2. Environment variables:
+- `SERVICE_NAME_USERNAME` and `SERVICE_NAME_PASSWORD` environment properties (or `SERVICE_NAME_API_KEY` when appropriate) and, optionally, `SERVICE_NAME_URL`
+- If using IAM: `SERVICE_NAME_IAM_APIKEY` and optionally `SERVICE_NAME_IAM_URL`, or `SERVICE_NAME_IAM_ACCESS_TOKEN`
 
-To get your service credentials, follow these steps:
+3. IBM-Cloud-supplied credentials (via the `VCAP_SERVICES` JSON-encoded environment property)
 
-1.  Log in to IBM Cloud at https://console.bluemix.net/catalog/?category=watson.
-1.  In the IBM Cloud **Catalog**, select the service you want to use.
-1.  Type a unique name for the service instance in the **Service name** field. For example, type `my-service-name`. Leave the default values for the other options.
-1.  Click **Create**.
-1.  From the service dashboard, click **Service credentials**.
-1.  Click **View credentials** under **Actions**.
-1.  Copy `username`, `password` (or `api_key` for Visual Recognition), and `url`.
+If you run your app in IBM Cloud, the SDK gets credentials from the [`VCAP_SERVICES`][vcap_services] environment variable. 
 
-### IAM Authentication
+### Client-side usage
 
-When authenticating with IAM, you have the option of passing in:
-- the IAM API key and, optionally, the IAM service URL
-- an IAM access token
+See the `examples/` folder for [Browserify](http://browserify.org/) and [Webpack](http://webpack.github.io/) client-side SDK examples (with server-side generation of auth tokens.)
 
-**Be aware that passing in an access token means that you're assuming responsibility for maintaining that token's lifecycle.** If you instead pass in an IAM API key, the SDK will manage it for you.
+Note: not all services currently support CORS, and therefore not all services can be used client-side.
+Of those that do, most require an auth token to be generated server-side via the [Authorization Service](#authorization).
+
+## Authentication
+Watson services are migrating to token-based Identity and Access Management (IAM) authentication.
+
+- With some service instances, you authenticate to the API by using **[IAM](#iam)**.
+- In other instances, you authenticate by providing the **[username and password](#username-and-password)** for the service instance.
+- Visual Recognition uses a form of [API key](#api-key) only with instances created before May 23, 2018. Newer instances of Visual Recognition use [IAM](#iam).
+
+### Getting credentials
+To find out which authentication to use, view the service credentials. You find the service credentials for authentication the same way for all Watson services:
+
+1.  Go to the IBM Cloud **[Dashboard][watson-dashboard]** page.
+1.  Either click an existing Watson service instance or click **Create**.
+1.  Click **Show** to view your service credentials.
+1.  Copy the `url` and either `apikey` or `username` and `password`.
+
+### IAM
+
+Some services use token-based Identity and Access Management (IAM) authentication. IAM authentication uses a service API key to get an access token that is passed with the call. Access tokens are valid for approximately one hour and must be regenerated.
+
+You supply either an IAM service **API key** or an **access token**:
+
+- Use the API key to have the SDK manage the lifecycle of the access token. The SDK requests an access token, ensures that the access token is valid, and refreshes it if necessary.
+- Use the access token if you want to manage the lifecycle yourself. Access tokens are valid. For details, see [Authenticating with IAM tokens](https://console.bluemix.net/docs/services/watson/getting-started-iam.html). If you want to switch to API key, override your stored IAM credentials with an IAM API key.
+
+#### Supplying the IAM API key
 
 ```js
 // in the constructor, letting the SDK manage the IAM token
@@ -86,6 +108,8 @@ const discovery = new DiscoveryV1({
   iam_url: '<iam_url>', // optional - the default value is https://iam.bluemix.net/identity/token
 });
 ```
+
+#### Supplying the access token
 
 ```js
 // in the constructor, assuming control of managing IAM token
@@ -106,32 +130,32 @@ const discovery = new DiscoveryV1({
 discovery.setAccessToken('<access-token>')
 ```
 
-## Usage
+### Username and password
 
-The examples below assume that you already have service credentials. If not,
-you will have to create a service in [IBM Cloud][ibm_cloud].
+```javascript
+var DiscoveryV1 = require('watson-developer-cloud/discovery/v1');
 
-If you are running your application in IBM Cloud, you don't need to specify the
-credentials; the library will get them for you by looking at the `VCAP_SERVICES` environment variable.
+var discovery = new DiscoveryV1({
+    version: '{version}',
+    username: '{username}',
+    password: '{password}'
+  });
+```
 
-Credentials are checked for in the following order:
+### API key
 
-1. Hard-coded or programatic credentials passed to the service constructor
+**Important**: This type of authentication works only with Visual Recognition instances created before May 23, 2018. Newer instances of Visual Recognition use [IAM](#iam).
 
-2. Environment variables:
-- `SERVICE_NAME_USERNAME` and `SERVICE_NAME_PASSWORD` environment properties (or `SERVICE_NAME_API_KEY` when appropriate) and, optionally, `SERVICE_NAME_URL`
-- If using IAM: `SERVICE_NAME_IAM_APIKEY` and optionally `SERVICE_NAME_IAM_URL`, or `SERVICE_NAME_IAM_ACCESS_TOKEN`
+```javascript
+var VisualRecognitionV3 = require('watson-developer-cloud/visual-recognition/v3');
 
-3. IBM-Cloud-supplied credentials (via the `VCAP_SERVICES` JSON-encoded environment property)
+var visualRecognition = new VisualRecognitionV3({
+    version: '{version}',
+    api_key: '{api_key}'
+  });
+```
 
-### Client-side usage
-
-See the `examples/` folder for [Browserify](http://browserify.org/) and [Webpack](http://webpack.github.io/) client-side SDK examples (with server-side generation of auth tokens.)
-
-Note: not all services currently support CORS, and therefore not all services can be used client-side.
-Of those that do, most require an auth token to be generated server-side via the [Authorization Service](#authorization).
-
-### Sending Request Headers
+### Sending request headers
 
 Custom headers can be passed with any request. Each method has an optional parameter `headers` which can be used to pass in these custom headers, which can override headers that we use as parameters.
 
@@ -159,7 +183,7 @@ assistant.message({
 
 ```
 
-### Parsing HTTP Response
+### Parsing HTTP response
 
 To retrieve the HTTP response, all methods can be called with a callback function with three parameters, with the third being the response. Users for example may retrieve the response headers with this usage pattern.
 
@@ -198,14 +222,11 @@ You can find links to the documentation at https://console.bluemix.net/developer
 
 There are also auto-generated JSDocs available at http://watson-developer-cloud.github.io/node-sdk/master/
 
-
 ## Questions
 
 If you are having difficulties using the APIs or have a question about the Watson services, please ask a question at [dW Answers](https://developer.ibm.com/answers/questions/ask/?topics=watson) or [Stack Overflow](http://stackoverflow.com/questions/ask?tags=ibm-watson-cognitive).
 
-## Examples
-
-The [examples][examples] folder has basic and advanced examples.
+## IBM Watson services
 
 ### Authorization
 
@@ -656,7 +677,7 @@ Running a specific test:
 $ mocha -g '<test name>'
 ```
 
-## Open Source @ IBM
+## Open source @ IBM
 [Find more open source projects on the IBM Github Page.](http://ibm.github.io/)
 
 ## License
@@ -677,14 +698,14 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/maste
 [text_to_speech]: https://www.ibm.com/watson/services/text-to-speech/
 [speech_to_text]: https://www.ibm.com/watson/services/speech-to-text/
 [language_translator]: https://www.ibm.com/watson/services/language-translator/
-
 [ibm_cloud]: https://console.bluemix.net
+[watson-dashboard]: https://console.bluemix.net/dashboard/apps?category=watson
 [npm_link]: https://www.npmjs.com/package/watson-developer-cloud
 [request_github]: https://github.com/request/request
 [dialog_migration]: https://console.bluemix.net/docs/services/conversation/index.html
-
 [examples]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples
 [document_conversion_integration_example]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/document_conversion_integration.v1.js
 [conversation_tone_analyzer_example]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/conversation_tone_analyzer_integration
-
 [license]: http://www.apache.org/licenses/LICENSE-2.0
+[vcap_services]: https://console.bluemix.net/docs/services/watson/getting-started-variables.html
+
