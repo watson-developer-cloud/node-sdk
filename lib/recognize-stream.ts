@@ -77,6 +77,7 @@ class RecognizeStream extends Duplex {
   private finished: boolean;
   private socket;
   private promise = require('./to-promise');
+  private authenticated: boolean;
 
 
 
@@ -110,6 +111,7 @@ class RecognizeStream extends Duplex {
    * @param {Number} [options.X-Watson-Learning-Opt-Out=false] - set to true to opt-out of allowing Watson to use this request to improve it's services
    * @param {Boolean} [options.smart_formatting=false] - formats numeric values such as dates, times, currency, etc.
    * @param {String} [options.customization_id] - Customization ID
+   * @param {IamTokenManagerV1} [options.token_manager] - Token manager for authenticating with IAM
    *
    * @constructor
    */
@@ -126,6 +128,8 @@ class RecognizeStream extends Duplex {
     this.listening = false;
     this.initialized = false;
     this.finished = false;
+    // is using iam, another authentication step is needed
+    this.authenticated = options.token_manager ? false : true;
     this.on('newListener', event => {
       if (!options.silent) {
         if (
@@ -392,38 +396,48 @@ class RecognizeStream extends Duplex {
     // so, the best we can do here is a no-op
   }
 
-  _write(chunk, encoding, callback): void {
-    const self = this;
-    if (self.finished) {
-      // can't send any more data after the stop message (although this shouldn't happen normally...)
-      return;
-    }
-    if (!this.initialized) {
-      if (!this.options['content-type'] && !this.options.content_type) {
-        const ct = RecognizeStream.getContentType(chunk);
-        if (ct) {
-          this.options['content-type'] = ct;
-        } else {
-          const err = new Error(
-            'Unable to determine content-type from file header, please specify manually.'
-          );
-          err.name = RecognizeStream.ERROR_UNRECOGNIZED_FORMAT;
-          this.emit('error', err);
-          this.push(null);
-          return;
-        }
-      }
-      this.initialize();
 
-      this.once('open', () => {
+  _write(chunk, encoding, callback): void {
+    this.setAuthorizationHeaderToken(err => {
+      if (err) {
+        this.emit('error', err);
+        this.push(null);
+        return;
+      }
+      const self = this;
+      if (self.finished) {
+        // can't send any more data after the stop message (although this shouldn't happen normally...)
+        return;
+      }
+
+      if (!this.initialized) {
+        if (!this.options['content-type'] && !this.options.content_type) {
+          const ct = RecognizeStream.getContentType(chunk);
+          if (ct) {
+            this.options['content-type'] = ct;
+          } else {
+            const error = new Error(
+              'Unable to determine content-type from file header, please specify manually.'
+            );
+            error.name = RecognizeStream.ERROR_UNRECOGNIZED_FORMAT;
+            this.emit('error', error);
+            this.push(null);
+            return;
+          }
+        }
+        this.initialize();
+
+        this.once('open', () => {
+          self.sendData(chunk);
+          self.afterSend(callback);
+        });
+      } else {
         self.sendData(chunk);
-        self.afterSend(callback);
-      });
-    } else {
-      self.sendData(chunk);
-      this.afterSend(callback);
-    }
+        this.afterSend(callback);
+      }
+    })
   }
+
 
   finish(): void {
     // this is called both when the source stream finishes, and when .stop() is fired, but we only want to send the stop message once.
@@ -469,6 +483,31 @@ class RecognizeStream extends Duplex {
         this.on('error', reject);
       }
     });
+  }
+
+  /**
+   * This function retrieves an IAM access token and stores it in the
+   * request header before calling the callback function, which will
+   * execute the next iteration of `_write()`
+   *
+   *
+   * @private
+   * @param {Function} callback
+   */
+  setAuthorizationHeaderToken(callback) {
+    if (!this.authenticated) {
+      this.options.token_manager.getToken((err, token) => {
+        if (err) {
+          callback(err);
+        }
+        const authHeader = { authorization: 'Bearer ' + token };
+        this.options.headers = extend(authHeader, this.options.headers);
+        this.authenticated = true;
+        callback(null);
+      });
+    } else {
+      callback(null);
+    }
   }
 }
 
