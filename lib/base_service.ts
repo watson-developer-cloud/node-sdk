@@ -125,7 +125,6 @@ export class BaseService {
       options,
       _options
     );
-
     if (_options.iam_apikey || _options.iam_access_token) {
       this.tokenManager = new IamTokenManagerV1({
         iamApikey: _options.iam_apikey,
@@ -193,17 +192,39 @@ export class BaseService {
   }
 
   /**
+   * Guarantee that the next request you make will be IAM authenticated. This
+   * performs any requests necessary to get a valid IAM token so that if your
+   * next request involves a streaming operation, it will not be interrupted.
+   *
+   * @param {Function} callback - callback function to return flow of execution
+   *
+   * @returns {void}
+   */
+  protected preAuthenticate(callback): void {
+     if (Boolean(this.tokenManager)) {
+      return this.tokenManager.getToken((err, token) => {
+        if (err) {
+          callback(err);
+        }
+        callback(null);
+      });
+    } else {
+      callback(null);
+    }
+  }
+
+  /**
    * Wrapper around `sendRequest` that determines whether or not IAM tokens
    * are being used to authenticate the request. If so, the token is 
    * retrieved by the token manager.
    *
    * @param {Object} parameters - service request options passed in by user
-   * @param {Function} callback - callback function to pass the reponse back to
+   * @param {Function} callback - callback function to pass the response back to
    * @returns {ReadableStream|undefined}
    */
   protected createRequest(parameters, callback) {
-     if (Boolean(this.tokenManager)) {
-      this.tokenManager.getToken((err, accessToken) => {
+    if (Boolean(this.tokenManager)) {
+      return this.tokenManager.getToken((err, accessToken) => {
         if (err) {
           return callback(err);
         }
@@ -215,6 +236,7 @@ export class BaseService {
       return sendRequest(parameters, callback);
     }
   }
+
   /**
    * @private
    * @param {UserOptions} options

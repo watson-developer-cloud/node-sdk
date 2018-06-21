@@ -445,6 +445,18 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
     params = params || {};
     params.url = this._options.url;
 
+    // if using iam, headers will not be a property on _options
+    // and the line `authorization: this._options.headers.Authorization`
+    // will crash the code
+    if (!this._options.headers) {
+      this._options.headers = {};
+    }
+
+    // if using iam, pass the token manager to the RecognizeStream object
+    if (this.tokenManager) {
+      params.token_manager = this.tokenManager;
+    }
+
     params.headers = extend(
       {
         'user-agent': pkg.name + '-nodejs-' + pkg.version,
@@ -502,20 +514,27 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
       options: {
         method: 'POST',
         url: _url,
-        headers: {
-          'Content-Type': params.content_type
-        },
         json: true,
         qs: queryParams
       },
-      defaultOptions: this._options
-    };
-    return params.audio
-      .on('response', (response) => {
-        // Replace content-type
-        response.headers['content-type'] = params.content_type;
+      defaultOptions: extend(true, {}, this._options, {
+        headers: {
+          'Content-Type': params.content_type
+        }
       })
-      .pipe(this.createRequest(parameters, callback));
+    };
+
+    this.preAuthenticate((err) => {
+      if (err) {
+        return err;
+      }
+      return params.audio
+        .on('response', (response) => {
+          // Replace content-type
+          response.headers['content-type'] = params.content_type;
+        })
+        .pipe(this.createRequest(parameters, callback));
+    });
   }
 
   deleteCustomization(params, callback) {
