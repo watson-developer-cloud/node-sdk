@@ -336,6 +336,8 @@ export class BaseService {
     let temp: any;
     if (this.name === 'visual_recognition') {
       temp = vcapServices.getCredentials('watson_vision_combined');
+    } if (this.name === 'assistant') {
+      temp = vcapServices.getCredentials('conversation');
     } else {
       temp = vcapServices.getCredentials(vcapServicesName);
     }
