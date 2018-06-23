@@ -301,7 +301,7 @@ export class BaseService {
       return this.getCredentialsFromEnvironment('visual_recognition');
     }
     // Case handling for assistant - should look for assistant env variables before conversation
-    if (name === 'conversation' && process.env[`ASSISTANT_USERNAME`]) {
+    if (name === 'conversation' && (process.env[`ASSISTANT_USERNAME`] ||  process.env[`ASSISTANT_IAM_APIKEY`])) {
        return this.getCredentialsFromEnvironment('assistant');
     }
     const _name: string = name.toUpperCase();
