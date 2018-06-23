@@ -16,15 +16,19 @@ const TWO_SECONDS = 2000;
 describe('discovery_integration', function() {
   this.timeout(THIRTY_SECONDS);
   this.slow(TWO_SECONDS); // this controls when the tests get a colored warning for taking too long
-  // this.retries(1);
 
   let discovery;
-  let environment_id = auth.discovery.environment_id;
-  let configuration_id = auth.discovery.configuration_id;
-  let collection_id = auth.discovery.collection_id;
-  const collection_id2 = auth.discovery.collection_id_2;
+  let environment_id;
+  let configuration_id;
+  let collection_id;
+  let collection_id2;
 
   before(function() {
+    environment_id = auth.discovery.environment_id;
+    configuration_id = auth.discovery.configuration_id;
+    collection_id = auth.discovery.collection_id;
+    collection_id2 = auth.discovery.collection_id_2;
+
     nock.enableNetConnect();
     discovery = new DiscoveryV1(
       Object.assign({}, auth.discovery, {

@@ -4,7 +4,6 @@ const assert = require('assert');
 const watson = require('../../index');
 const nock = require('nock');
 const fs = require('fs');
-const extend = require('extend');
 const isStream = require('isstream');
 
 describe('speech_to_text', function() {
@@ -136,13 +135,6 @@ describe('speech_to_text', function() {
   });
 
   describe('recognize()', function() {
-    const path = '/v1/recognize';
-    const session_path = '/v1/sessions/foo/recognize';
-    const payload = {
-      audio: fs.createReadStream(__dirname + '/../resources/weather.wav'),
-      content_type: 'audio/l16;rate=41100',
-    };
-
     it('should check no parameters provided', function() {
       speech_to_text.recognize({}, missingParameter);
       speech_to_text.recognize(null, missingParameter);
@@ -150,44 +142,9 @@ describe('speech_to_text', function() {
       speech_to_text.recognize({ content_type: 'bar' }, missingParameter);
       speech_to_text.recognize({ continuous: 'false' }, missingParameter);
     });
-
-    it('should generate a valid payload with session', function() {
-      const req = speech_to_text.recognize(extend({ session_id: 'foo' }, payload), noop);
-      assert.equal(req.uri.href, service.url + session_path);
-      assert.equal(req.method, 'POST');
-      assert.equal(req.headers['Content-Type'], payload.content_type);
-      assert.equal(req.src.path, payload.audio.path);
-    });
-
-    it('should generate a valid payload without session', function() {
-      const req = speech_to_text.recognize(payload, noop);
-      assert.equal(req.uri.href, service.url + path);
-      assert.equal(req.method, 'POST');
-      assert.equal(req.headers['Content-Type'], payload.content_type);
-      assert.equal(req.src.path, payload.audio.path);
-    });
-
-    it('should accept an array of keywords', function() {
-      const req = speech_to_text.recognize(extend({ keywords: ['a', 'b', 'c'] }, payload), noop);
-      assert.equal(req.uri.query, 'keywords=' + encodeURIComponent('a,b,c'));
-    });
   });
 
   describe('recognizeWebM()', function() {
-    it('should generate a valid payload with session', function() {
-      const webm_stream = fs.createReadStream(__dirname + '/../resources/sample1.webm');
-      const session_path = '/v1/sessions/foo/recognize';
-      const payload = {
-        audio: webm_stream,
-        content_type: 'audio/webm',
-      };
-      const req = speech_to_text.recognize(extend({ session_id: 'foo' }, payload), noop);
-      assert.equal(req.uri.href, service.url + session_path);
-      assert.equal(req.method, 'POST');
-      assert.equal(req.headers['Content-Type'], payload.content_type);
-      assert.equal(req.src.path, payload.audio.path);
-    });
-
     it('Sample webm should have expected header', function() {
       const RecognizeStream = require('../../lib/recognize-stream');
       const buffer = fs.readFileSync(__dirname + '/../resources/sample1.webm');
