@@ -82,7 +82,7 @@
     "buffer-from": "~1.1.0",
     "csv-stringify": "~1.0.2",
     "extend": "~3.0.1",
-    "file-type": "~8.0.0",
+    "file-type": "^7.7.1",
     "isstream": "~0.1.2",
     "mime-types": "~2.1.18",
     "object.omit": "~3.0.0",
