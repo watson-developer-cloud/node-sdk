@@ -1,5 +1,4 @@
 'use strict';
-
 var SpeechToTextV1 = require('watson-developer-cloud/speech-to-text/v1');
 var fs = require('fs');
 
@@ -9,8 +8,17 @@ var speechToText = new SpeechToTextV1({
   url: 'https://stream.watsonplatform.net/speech-to-text/api/'
 });
 
+/*
+    This code will print the entire response to the console when it
+    receives the 'data' event. Some applications will want to write
+    out only the transcribed text, to the console or to a file.
+    To this, remove `objectMode: true` from the `params` object.
+    Then, uncomment the block of code at Line 30.
+*/
+
 var params = {
-  content_type: 'audio/wav'
+  content_type: 'audio/wav',
+  objectMode: false
 };
 
 // create the stream
@@ -19,19 +27,20 @@ var recognizeStream = speechToText.createRecognizeStream(params);
 // pipe in some audio
 fs.createReadStream(__dirname + '/resources/speech.wav').pipe(recognizeStream);
 
-// and pipe out the transcription
+/*
+// pipe out the transcription to a file
 recognizeStream.pipe(fs.createWriteStream('transcription.txt'));
 
-// listen for 'data' events for just the final text
-// listen for 'results' events to get the raw JSON with interim results, timings, etc.
+// get strings instead of Buffers from `data` events
+// only do this when objectMode is `false`
+recognizeStream.setEncoding('utf8');
+*/
 
-recognizeStream.setEncoding('utf8'); // to get strings instead of Buffers from `data` events
+recognizeStream.on('data', function(event) { onEvent('Data:', event); });
+recognizeStream.on('error', function(event) { onEvent('Error:', event); });
+recognizeStream.on('close', function(event) { onEvent('Close:', event); });
 
-['data', 'results', 'speaker_labels', 'error', 'close'].forEach(function(
-  eventName
-) {
-  recognizeStream.on(
-    eventName,
-    console.log.bind(console, eventName + ' event: ')
-  );
-});
+// Displays events on the console.
+function onEvent(name, event) {
+  console.log(name, JSON.stringify(event, null, 2));
+};
