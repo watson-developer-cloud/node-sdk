@@ -18,7 +18,7 @@ var speechToText = new SpeechToTextV1({
 
 var params = {
   content_type: 'audio/wav',
-  objectMode: false
+  objectMode: true
 };
 
 // create the stream
