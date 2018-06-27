@@ -11,6 +11,7 @@ Node.js client library to use the Watson APIs.
 <details>
   <summary>Table of Contents</summary>
 
+  * [Before you begin](#before-you-begin)
   * [Installation](#installation)
   * [Usage](#usage)
   * [Client-side usage](#client-side-usage)
@@ -43,6 +44,9 @@ Node.js client library to use the Watson APIs.
   * [Contributing](#contributing)
 
 </details>
+
+## Before you begin
+* You need an [IBM Cloud][ibm-cloud-onboarding] account.
 
 ## Installation
 
@@ -708,4 +712,5 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/maste
 [conversation_tone_analyzer_example]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/conversation_tone_analyzer_integration
 [license]: http://www.apache.org/licenses/LICENSE-2.0
 [vcap_services]: https://console.bluemix.net/docs/services/watson/getting-started-variables.html
+[ibm-cloud-onboarding]: http://console.bluemix.net/registration?target=/developer/watson&cm_sp=WatsonPlatform-WatsonServices-_-OnPageNavLink-IBMWatson_SDKs-_-Node
 
