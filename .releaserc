@@ -1,0 +1,13 @@
+{
+  "branch": "master",
+  "publish": [
+    "@semantic-release/npm",
+    {
+      "path": "@semantic-release/github",
+      "assets": [
+        {"path": "dist/watson.js"},
+        {"path": "dist/watson.min.js"}
+      ]
+    }
+  ]
+}
