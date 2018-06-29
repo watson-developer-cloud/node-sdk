@@ -44,6 +44,8 @@
     "url": "https://github.com/watson-developer-cloud/node-sdk/issues"
   },
   "devDependencies": {
+    "@commitlint/cli": "^7.0.0",
+    "@commitlint/config-conventional": "^7.0.1",
     "browserify": "~16.2.2",
     "codecov": "~3.0.2",
     "concat-stream": "~1.6.2",
@@ -96,6 +98,7 @@
   },
   "scripts": {
     "precommit": "lint-staged",
+    "commitmsg": "commitlint -E GIT_PARAMS",
     "tslint:config": "tslint-config-prettier-check ./tslint.json",
     "tslint:fix": "tslint --fix -p . -c tslint.json",
     "tslint:check": "tslint -p . -c ./tslint.json",
