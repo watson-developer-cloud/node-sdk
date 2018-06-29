@@ -17,7 +17,7 @@ const logit = function(string) {
   return string;
 };
 
-describe('visual_recognition_integration_custom_classifiers', function() {
+describe.skip('visual_recognition_integration_custom_classifiers @slow', function() {
   // ugh.
   this.timeout(THIRTY_SECONDS * 8);
   this.slow(TWO_SECONDS);
