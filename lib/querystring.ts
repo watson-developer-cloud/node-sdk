@@ -14,7 +14,7 @@ const stringify = (queryParams: Object): string => {
       return (
         key +
         '=' +
-        (key === 'watson-token'
+        (key === 'watson-token' || key === 'access_token'
           ? queryParams[key]
           : encodeURIComponent(queryParams[key]))
       ); // the server chokes if the token is correctly url-encoded

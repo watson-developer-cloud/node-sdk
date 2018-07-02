@@ -43,6 +43,7 @@ const QUERY_PARAMS_ALLOWED = [
   'model',
   'X-Watson-Learning-Opt-Out',
   'watson-token',
+  'access_token',
   'customization_id'
 ];
 
@@ -128,8 +129,25 @@ class RecognizeStream extends Duplex {
     this.listening = false;
     this.initialized = false;
     this.finished = false;
-    // is using iam, another authentication step is needed
-    this.authenticated = options.token_manager ? false : true;
+    this.authenticated = true;
+
+    if (options.token_manager) {
+      if (options.token && !options.access_token) {
+        options.access_token = options.token;
+      }
+
+      // if using iam and if an access_token was not given,
+      // another authentication step is needed
+      if (!options.access_token) {
+        this.authenticated = false;
+      } else {
+        // if using access_token as a query param,
+        // no need to set the header. it will be
+        // undefined, so delete it to prevent an error
+        delete this.options.headers.authorization;
+      }
+    }
+
     this.on('newListener', event => {
       if (!options.silent) {
         if (
@@ -177,9 +195,12 @@ class RecognizeStream extends Duplex {
   initialize() {
     const options = this.options;
 
-    if (options.token && !options['watson-token']) {
+    if (!this.options.token_manager && options.token && !options['watson-token']) {
       options['watson-token'] = options.token;
+    } else if (this.options.token_manager && options['watson-token']) {
+      delete options['watson-token'];
     }
+
     if (options.content_type && !options['content-type']) {
       options['content-type'] = options.content_type;
     }
