@@ -4,6 +4,9 @@ const assert = require('assert');
 const watson = require('../../index');
 const nock = require('nock');
 
+const sinon = require('sinon');
+const IamTokenManagerV1 = require('../../iam-token-manager/v1').IamTokenManagerV1;
+
 describe('authorization', function() {
   // Test params
   const service_request = {
@@ -13,6 +16,11 @@ describe('authorization', function() {
     username: 'batman',
     password: 'bruce-wayne',
     url: service_request.url,
+    version: 'v1',
+  };
+
+  const rc_service = {
+    iam_apikey: 'abc123',
     version: 'v1',
   };
 
@@ -66,6 +74,22 @@ describe('authorization', function() {
 
     it('should default to url from credentials', function(done) {
       authorization.getToken(checkToken(done));
+    });
+
+    it('should return an iam access token if given iam_api_key', function(done) {
+      const rc_authorization = watson.authorization(rc_service);
+      assert.notEqual(rc_authorization.tokenManager, null);
+
+      // mock the token manager
+      const tokenManager = new IamTokenManagerV1({ iamApikey: rc_service.iam_apikey });
+      const requestStub = sinon.stub(tokenManager, 'requestToken');
+      requestStub.yields(null, { access_token: mock_token });
+
+      // use the mocked token manager - we have already asserted that the
+      // authorization object created a token manager for itself
+      rc_authorization.tokenManager = tokenManager;
+
+      rc_authorization.getToken(checkToken(done));
     });
   });
 });

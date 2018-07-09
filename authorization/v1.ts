@@ -44,22 +44,31 @@ class AuthorizationV1 extends BaseService {
   }
 
   /**
-   * Get a percent-encoded authorization token based on resource query string param
+   * If using an RC service, get an IAM access token. If using a CF service,
+   * get a percent-encoded authorization token based on resource query string param
    *
    * @param {Object} [options]
    * @param {String} [options.url] defaults to url supplied to constructor (if any)
-   * @param {Function(err, token)} callback - called with a %-encoded token
+   * @param {Function(err, token)} callback - called with a %-encoded token if CF
    */
   getToken(params, callback) {
     if (typeof params === 'function') {
       callback = params;
       params = { url: this['target_url'] };
     }
+
+    // if the service is an RC instance, return an IAM access token
+    if (this.tokenManager) {
+      // callback should expect (err, token) format,
+      // which is what the token manager will pass in
+      return this.tokenManager.getToken(callback);
+    }
+
+    // otherwise, return a CF Watson token
     if (!params.url) {
       callback(new Error('Missing required parameters: url'));
       return;
     }
-
     const parameters = {
       options: {
         method: 'GET',
