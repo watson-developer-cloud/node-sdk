@@ -16,7 +16,6 @@ const protocols = {
 };
 
 const PARAMS_ALLOWED = [
-  'continuous',
   'max_alternatives',
   'timestamps',
   'word_confidence',
@@ -32,7 +31,8 @@ const PARAMS_ALLOWED = [
   'customization_id',
   'speaker_labels',
   'customization_weight',
-  'acoustic_customization_id'
+  'acoustic_customization_id',
+  'base_model_version'
 ];
 
 /**
@@ -474,7 +474,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
    * @param {Object} params The parameters
    * @param {Stream} params.audio - Audio to be recognized
    * @param {String} params.content_type - Content-type
-   * @param {Boolean} [params.continuous]
+   * @param {String} [params.base_model_version]
    * @param {Number} [params.max_alternatives]
    * @param {Boolean} [params.timestamps]
    * @param {Boolean} [params.word_confidence]
