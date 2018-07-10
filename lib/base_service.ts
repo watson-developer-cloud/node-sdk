@@ -73,7 +73,7 @@ function hasCredentials(obj: any): boolean {
 }
 
 function hasBasicCredentials(obj: any): boolean {
-  return obj && obj.username && obj.password;
+  return obj && obj.username && obj.password && obj.username !== 'apikey';
 }
 
 export class BaseService {
@@ -129,6 +129,11 @@ export class BaseService {
       this.tokenManager = new IamTokenManagerV1({
         iamApikey: _options.iam_apikey,
         iamAccessToken: _options.iam_access_token,
+        iamUrl: _options.iam_url
+      });
+    } else if (_options.username === 'apikey') {
+      this.tokenManager = new IamTokenManagerV1({
+        iamApikey: _options.password,
         iamUrl: _options.iam_url
       });
     } else {
