@@ -39,7 +39,7 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} [options.password] - The password used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
    * @param {string} [options.iam_access_token] - An IAM access token fully managed by the application. Responsibility falls on the application to refresh the token, either before it expires or reactively upon receiving a 401 from the service, as any requests made with an expired token will fail.
    * @param {string} [options.iam_apikey] - An API key that can be used to request IAM tokens. If this API key is provided, the SDK will manage the token and handle the refreshing.
-   * @param {string} [options.iam_url] - An optional URL for the IAM service API. Defaults to 'https://iam.bluemix.net/identity/token'.
+   * @param {string} [options.iam_url] - An optional URL for the IAM service API. Defaults to 'https://iam.ng.bluemix.net/identity/token'.
    * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
    * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
@@ -57,8 +57,8 @@ class SpeechToTextV1 extends BaseService {
   /**
    * Get a model.
    *
-   * Retrieves information about a single specified language model that is available for use with the service. The
-   * information includes the name of the model and its minimum sampling rate in Hertz, among other things.
+   * Gets information for a single specified language model that is available for use with the service. The information
+   * includes the name of the model and its minimum sampling rate in Hertz, among other things.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.model_id - The identifier of the model in the form of its name from the output of the **Get
@@ -97,8 +97,8 @@ class SpeechToTextV1 extends BaseService {
   /**
    * List models.
    *
-   * Retrieves a list of all language models that are available for use with the service. The information includes the
-   * name of the model and its minimum sampling rate in Hertz, among other things.
+   * Lists all language models that are available for use with the service. The information includes the name of the
+   * model and its minimum sampling rate in Hertz, among other things.
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {Object} [params.headers] - Custom request headers
@@ -128,7 +128,7 @@ class SpeechToTextV1 extends BaseService {
    ************************/
 
   /**
-   * Recognize audio (sessionless).
+   * Recognize audio.
    *
    * Sends audio and returns transcription results for a sessionless recognition request. Returns only the final
    * results; to enable interim results, use session-based requests or the WebSocket API. The service imposes a data
@@ -183,9 +183,7 @@ class SpeechToTextV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {NodeJS.ReadableStream|FileObject|Buffer} params.audio - The audio to transcribe in the format specified by
    * the `Content-Type` header.
-   * @param {string} params.content_type - The type of the input: audio/basic, audio/flac, audio/l16, audio/mp3,
-   * audio/mpeg, audio/mulaw, audio/ogg, audio/ogg;codecs=opus, audio/ogg;codecs=vorbis, audio/wav, audio/webm,
-   * audio/webm;codecs=opus, or audio/webm;codecs=vorbis.
+   * @param {string} params.content_type - The type of the input.
    * @param {string} [params.model] - The identifier of the model that is to be used for the recognition request or, for
    * the **Create a session** method, with the new session.
    * @param {string} [params.customization_id] - The customization ID (GUID) of a custom language model that is to be
@@ -217,10 +215,10 @@ class SpeechToTextV1 extends BaseService {
    * OOV words from the custom model. Use caution when setting the weight: a higher value can improve the accuracy of
    * phrases from the custom model's domain, but it can negatively affect performance on non-domain phrases.
    * @param {number} [params.inactivity_timeout] - The time in seconds after which, if only silence (no speech) is
-   * detected in submitted audio, the connection is closed with a 400 error. Useful for stopping audio submission from a
-   * live microphone when a user simply walks away. Use `-1` for infinity.
+   * detected in submitted audio, the connection is closed with a 400 error. The parameter is useful for stopping audio
+   * submission from a live microphone when a user simply walks away. Use `-1` for infinity.
    * @param {string[]} [params.keywords] - An array of keyword strings to spot in the audio. Each keyword string can
-   * include one or more tokens. Keywords are spotted only in the final hypothesis, not in interim results. If you
+   * include one or more tokens. Keywords are spotted only in the final results, not in interim hypotheses. If you
    * specify any keywords, you must also specify a keywords threshold. You can spot a maximum of 1000 keywords. Omit the
    * parameter or specify an empty array if you do not need to spot keywords.
    * @param {number} [params.keywords_threshold] - A confidence value that is the lower bound for spotting a keyword. A
@@ -404,10 +402,16 @@ class SpeechToTextV1 extends BaseService {
    * method to retrieve results is more secure than receiving them via callback notification over HTTP because it
    * provides confidentiality in addition to authentication and data integrity.
    *
-   * The method supports the same basic parameters as other HTTP and WebSocket recognition requests. The service imposes
-   * a data size limit of 100 MB. It automatically detects the endianness of the incoming audio and, for audio that
-   * includes multiple channels, downmixes the audio to one-channel mono during transcoding. (For the `audio/l16`
-   * format, you can specify the endianness.)
+   * The method supports the same basic parameters as other HTTP and WebSocket recognition requests. It also supports
+   * the following parameters specific to the asynchronous interface:
+   * * `callback_url`
+   * * `events`
+   * * `user_token`
+   * * `results_ttl`
+   *
+   * The service imposes a data size limit of 100 MB. It automatically detects the endianness of the incoming audio and,
+   * for audio that includes multiple channels, downmixes the audio to one-channel mono during transcoding. (For the
+   * `audio/l16` format, you can specify the endianness.)
    *
    * ### Audio formats (content types)
    *
@@ -434,26 +438,29 @@ class SpeechToTextV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {NodeJS.ReadableStream|FileObject|Buffer} params.audio - The audio to transcribe in the format specified by
    * the `Content-Type` header.
-   * @param {string} params.content_type - The type of the input: audio/basic, audio/flac, audio/l16, audio/mp3,
-   * audio/mpeg, audio/mulaw, audio/ogg, audio/ogg;codecs=opus, audio/ogg;codecs=vorbis, audio/wav, audio/webm,
-   * audio/webm;codecs=opus, or audio/webm;codecs=vorbis.
+   * @param {string} params.content_type - The type of the input.
    * @param {string} [params.model] - The identifier of the model that is to be used for the recognition request or, for
    * the **Create a session** method, with the new session.
    * @param {string} [params.callback_url] - A URL to which callback notifications are to be sent. The URL must already
-   * be successfully white-listed by using the **Register a callback** method. Omit the parameter to poll the service
-   * for job completion and results. You can include the same callback URL with any number of job creation requests. Use
-   * the `user_token` parameter to specify a unique user-specified string with each job to differentiate the callback
-   * notifications for the jobs.
+   * be successfully white-listed by using the **Register a callback** method. You can include the same callback URL
+   * with any number of job creation requests. Omit the parameter to poll the service for job completion and results.
+   *
+   * Use the `user_token` parameter to specify a unique user-specified string with each job to differentiate the
+   * callback notifications for the jobs.
    * @param {string} [params.events] - If the job includes a callback URL, a comma-separated list of notification events
-   * to which to subscribe. Valid events are: `recognitions.started` generates a callback notification when the service
-   * begins to process the job. `recognitions.completed` generates a callback notification when the job is complete; you
-   * must use the **Check a job** method to retrieve the results before they time out or are deleted.
-   * `recognitions.completed_with_results` generates a callback notification when the job is complete; the notification
-   * includes the results of the request. `recognitions.failed` generates a callback notification if the service
-   * experiences an error while processing the job. Omit the parameter to subscribe to the default events:
-   * `recognitions.started`, `recognitions.completed`, and `recognitions.failed`. The `recognitions.completed` and
-   * `recognitions.completed_with_results` events are incompatible; you can specify only of the two events. If the job
-   * does not include a callback URL, omit the parameter.
+   * to which to subscribe. Valid events are
+   * * `recognitions.started` generates a callback notification when the service begins to process the job.
+   * * `recognitions.completed` generates a callback notification when the job is complete. You must use the **Check a
+   * job** method to retrieve the results before they time out or are deleted.
+   * * `recognitions.completed_with_results` generates a callback notification when the job is complete. The
+   * notification includes the results of the request.
+   * * `recognitions.failed` generates a callback notification if the service experiences an error while processing the
+   * job.
+   *
+   * Omit the parameter to subscribe to the default events: `recognitions.started`, `recognitions.completed`, and
+   * `recognitions.failed`. The `recognitions.completed` and `recognitions.completed_with_results` events are
+   * incompatible; you can specify only of the two events. If the job does not include a callback URL, omit the
+   * parameter.
    * @param {string} [params.user_token] - If the job includes a callback URL, a user-specified string that the service
    * is to include with each callback notification for the job; the token allows the user to maintain an internal
    * mapping between jobs and notification events. If the job does not include a callback URL, omit the parameter.
@@ -489,10 +496,10 @@ class SpeechToTextV1 extends BaseService {
    * OOV words from the custom model. Use caution when setting the weight: a higher value can improve the accuracy of
    * phrases from the custom model's domain, but it can negatively affect performance on non-domain phrases.
    * @param {number} [params.inactivity_timeout] - The time in seconds after which, if only silence (no speech) is
-   * detected in submitted audio, the connection is closed with a 400 error. Useful for stopping audio submission from a
-   * live microphone when a user simply walks away. Use `-1` for infinity.
+   * detected in submitted audio, the connection is closed with a 400 error. The parameter is useful for stopping audio
+   * submission from a live microphone when a user simply walks away. Use `-1` for infinity.
    * @param {string[]} [params.keywords] - An array of keyword strings to spot in the audio. Each keyword string can
-   * include one or more tokens. Keywords are spotted only in the final hypothesis, not in interim results. If you
+   * include one or more tokens. Keywords are spotted only in the final results, not in interim hypotheses. If you
    * specify any keywords, you must also specify a keywords threshold. You can spot a maximum of 1000 keywords. Omit the
    * parameter or specify an empty array if you do not need to spot keywords.
    * @param {number} [params.keywords_threshold] - A confidence value that is the lower bound for spotting a keyword. A
@@ -876,7 +883,7 @@ class SpeechToTextV1 extends BaseService {
    * List custom language models.
    *
    * Lists information about all custom language models that are owned by an instance of the service. Use the `language`
-   * parameter to see all custom language models for the specified language; omit the parameter to see all custom
+   * parameter to see all custom language models for the specified language. Omit the parameter to see all custom
    * language models for all languages. You must use credentials for the instance of the service that owns a model to
    * list information about it.
    *
@@ -965,8 +972,8 @@ class SpeechToTextV1 extends BaseService {
    * data on which the service is being trained and the current load on the service. The method returns an HTTP 200
    * response code to indicate that the training process has begun.
    *
-   * You can monitor the status of the training by using the **List a custom language model** method to poll the model's
-   * status. Use a loop to check the status every 10 seconds. The method returns a `Customization` object that includes
+   * You can monitor the status of the training by using the **Get a custom language model** method to poll the model's
+   * status. Use a loop to check the status every 10 seconds. The method returns a `LanguageModel` object that includes
    * `status` and `progress` fields. A status of `available` means that the custom model is trained and ready to use.
    * The service cannot accept subsequent training requests, or requests to add new corpora or words, until the existing
    * request completes.
@@ -1041,10 +1048,11 @@ class SpeechToTextV1 extends BaseService {
    * upgraded. You must use credentials for the instance of the service that owns a model to upgrade it.
    *
    * The method returns an HTTP 200 response code to indicate that the upgrade process has begun successfully. You can
-   * monitor the status of the upgrade by using the **List a custom language model** method to poll the model's status.
-   * Use a loop to check the status every 10 seconds. While it is being upgraded, the custom model has the status
-   * `upgrading`. When the upgrade is complete, the model resumes the status that it had prior to upgrade. The service
-   * cannot accept subsequent requests for the model until the upgrade completes.
+   * monitor the status of the upgrade by using the **Get a custom language model** method to poll the model's status.
+   * The method returns a `LanguageModel` object that includes `status` and `progress` fields. Use a loop to check the
+   * status every 10 seconds. While it is being upgraded, the custom model has the status `upgrading`. When the upgrade
+   * is complete, the model resumes the status that it had prior to upgrade. The service cannot accept subsequent
+   * requests for the model until the upgrade completes.
    *
    * For more information, see [Upgrading custom
    * models](https://console.bluemix.net/docs/services/speech-to-text/custom-upgrade.html).
@@ -1420,9 +1428,9 @@ class SpeechToTextV1 extends BaseService {
    * model. Adding or modifying custom words does not affect the custom model until you train the model for the new data
    * by using the **Train a custom language model** method.
    *
-   * You add custom words by providing a `Words` object, which is an array of `Word` objects, one per word. You must use
-   * the object's word parameter to identify the word that is to be added. You can also provide one or both of the
-   * optional `sounds_like` and `display_as` fields for each word.
+   * You add custom words by providing a `CustomWords` object, which is an array of `CustomWord` objects, one per word.
+   * You must use the object's `word` parameter to identify the word that is to be added. You can also provide one or
+   * both of the optional `sounds_like` and `display_as` fields for each word.
    * * The `sounds_like` field provides an array of one or more pronunciations for the word. Use the parameter to
    * specify how the word can be pronounced by users. Use the parameter for words that are difficult to pronounce,
    * foreign words, acronyms, and so on. For example, you might specify that the word `IEEE` can sound like `i triple
@@ -1784,7 +1792,7 @@ class SpeechToTextV1 extends BaseService {
    * List custom acoustic models.
    *
    * Lists information about all custom acoustic models that are owned by an instance of the service. Use the `language`
-   * parameter to see all custom acoustic models for the specified language; omit the parameter to see all custom
+   * parameter to see all custom acoustic models for the specified language. Omit the parameter to see all custom
    * acoustic models for all languages. You must use credentials for the instance of the service that owns a model to
    * list information about it.
    *
@@ -1874,8 +1882,8 @@ class SpeechToTextV1 extends BaseService {
    * range of time depends on the model being trained and the nature of the audio, such as whether the audio is clean or
    * noisy. The method returns an HTTP 200 response code to indicate that the training process has begun.
    *
-   * You can monitor the status of the training by using the **List a custom acoustic model** method to poll the model's
-   * status. Use a loop to check the status once a minute. The method returns an `Customization` object that includes
+   * You can monitor the status of the training by using the **Get a custom acoustic model** method to poll the model's
+   * status. Use a loop to check the status once a minute. The method returns an `AcousticModel` object that includes
    * `status` and `progress` fields. A status of `available` indicates that the custom model is trained and ready to
    * use. The service cannot accept subsequent training requests, or requests to add new audio resources, until the
    * existing request completes.
@@ -1945,10 +1953,11 @@ class SpeechToTextV1 extends BaseService {
    * upgraded. You must use credentials for the instance of the service that owns a model to upgrade it.
    *
    * The method returns an HTTP 200 response code to indicate that the upgrade process has begun successfully. You can
-   * monitor the status of the upgrade by using the **List a custom acoustic model** method to poll the model's status.
-   * Use a loop to check the status once a minute. While it is being upgraded, the custom model has the status
-   * `upgrading`. When the upgrade is complete, the model resumes the status that it had prior to upgrade. The service
-   * cannot accept subsequent requests for the model until the upgrade completes.
+   * monitor the status of the upgrade by using the **Get a custom acoustic model** method to poll the model's status.
+   * The method returns an `AcousticModel` object that includes `status` and `progress` fields. Use a loop to check the
+   * status once a minute. While it is being upgraded, the custom model has the status `upgrading`. When the upgrade is
+   * complete, the model resumes the status that it had prior to upgrade. The service cannot accept subsequent requests
+   * for the model until the upgrade completes.
    *
    * If the custom acoustic model was trained with a separately created custom language model, you must use the
    * `custom_language_model_id` parameter to specify the GUID of that custom language model. The custom language model
@@ -2029,10 +2038,10 @@ class SpeechToTextV1 extends BaseService {
    * submit requests to add additional audio resources to a custom acoustic model, or to train the model, until the
    * service's analysis of all audio files for the current request completes.
    *
-   * To determine the status of the service's analysis of the audio, use the **List an audio resource** method to poll
-   * the status of the audio. The method accepts the GUID of the custom model and the name of the audio resource, and it
-   * returns the status of the resource. Use a loop to check the status of the audio every few seconds until it becomes
-   * `ok`.
+   * To determine the status of the service's analysis of the audio, use the **Get an audio resource** method to poll
+   * the status of the audio. The method accepts the customization ID of the custom model and the name of the audio
+   * resource, and it returns the status of the resource. Use a loop to check the status of the audio every few seconds
+   * until it becomes `ok`.
    *
    * ### Content types for audio-type resources
    *
@@ -2083,9 +2092,7 @@ class SpeechToTextV1 extends BaseService {
    * model.
    * @param {NodeJS.ReadableStream|FileObject|Buffer} params.audio_resource - The audio resource that is to be added to
    * the custom acoustic model, an individual audio file or an archive file.
-   * @param {string} params.content_type - The type of the input: application/zip, application/gzip, audio/basic,
-   * audio/flac, audio/l16, audio/mp3, audio/mpeg, audio/mulaw, audio/ogg, audio/ogg;codecs=opus,
-   * audio/ogg;codecs=vorbis, audio/wav, audio/webm, audio/webm;codecs=opus, or audio/webm;codecs=vorbis.
+   * @param {string} params.content_type - The type of the input.
    * @param {string} [params.contained_content_type] - For an archive-type resource, specifies the format of the audio
    * files contained in the archive file. The parameter accepts all of the audio formats supported for use with speech
    * recognition, including the `rate`, `channels`, and `endianness` parameters that are used with some formats. For a
@@ -2184,17 +2191,21 @@ class SpeechToTextV1 extends BaseService {
   /**
    * Get an audio resource.
    *
-   * gets information about an audio resource from a custom acoustic model. The method returns an `AudioListing` object
-   * whose fields depend on the type of audio resource you specify with the method's `audio_name` parameter:
+   * Gets information about an audio resource from a custom acoustic model. The method returns an `AudioListing` object
+   * whose fields depend on the type of audio resource that you specify with the method's `audio_name` parameter:
    * * **For an audio-type resource,** the object's fields match those of an `AudioResource` object: `duration`, `name`,
    * `details`, and `status`.
    * * **For an archive-type resource,** the object includes a `container` field whose fields match those of an
    * `AudioResource` object. It also includes an `audio` field, which contains an array of `AudioResource` objects that
    * provides information about the audio files that are contained in the archive.
    *
-   * The information includes the status of the specified audio resource, which is important for checking the service's
-   * analysis of the resource in response to a request to add it to the custom model. You must use credentials for the
-   * instance of the service that owns a model to list its audio resources.
+   * The information includes the status of the specified audio resource. The status is important for checking the
+   * service's analysis of a resource that you add to the custom model.
+   * * For an audio-type resource, the `status` field is located in the `AudioListing` object.
+   * * For an archive-type resource, the `status` field is located in the `AudioResource` object that is returned in the
+   * `container` field.
+   *
+   * You must use credentials for the instance of the service that owns a model to list its audio resources.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom acoustic model. You must make
@@ -2398,7 +2409,7 @@ namespace SpeechToTextV1 {
   export interface RecognizeParams {
     /** The audio to transcribe in the format specified by the `Content-Type` header. */
     audio: NodeJS.ReadableStream|FileObject|Buffer;
-    /** The type of the input: audio/basic, audio/flac, audio/l16, audio/mp3, audio/mpeg, audio/mulaw, audio/ogg, audio/ogg;codecs=opus, audio/ogg;codecs=vorbis, audio/wav, audio/webm, audio/webm;codecs=opus, or audio/webm;codecs=vorbis. */
+    /** The type of the input. */
     content_type: RecognizeConstants.ContentType | string;
     /** The identifier of the model that is to be used for the recognition request or, for the **Create a session** method, with the new session. */
     model?: RecognizeConstants.Model | string;
@@ -2410,9 +2421,9 @@ namespace SpeechToTextV1 {
     base_model_version?: string;
     /** If you specify the customization ID (GUID) of a custom language model with the recognition request or, for sessions, with the **Create a session** method, the customization weight tells the service how much weight to give to words from the custom language model compared to those from the base model for the current request. Specify a value between 0.0 and 1.0. Unless a different customization weight was specified for the custom model when it was trained, the default value is 0.3. A customization weight that you specify overrides a weight that was specified when the custom model was trained. The default value yields the best performance in general. Assign a higher value if your audio makes frequent use of OOV words from the custom model. Use caution when setting the weight: a higher value can improve the accuracy of phrases from the custom model's domain, but it can negatively affect performance on non-domain phrases. */
     customization_weight?: number;
-    /** The time in seconds after which, if only silence (no speech) is detected in submitted audio, the connection is closed with a 400 error. Useful for stopping audio submission from a live microphone when a user simply walks away. Use `-1` for infinity. */
+    /** The time in seconds after which, if only silence (no speech) is detected in submitted audio, the connection is closed with a 400 error. The parameter is useful for stopping audio submission from a live microphone when a user simply walks away. Use `-1` for infinity. */
     inactivity_timeout?: number;
-    /** An array of keyword strings to spot in the audio. Each keyword string can include one or more tokens. Keywords are spotted only in the final hypothesis, not in interim results. If you specify any keywords, you must also specify a keywords threshold. You can spot a maximum of 1000 keywords. Omit the parameter or specify an empty array if you do not need to spot keywords. */
+    /** An array of keyword strings to spot in the audio. Each keyword string can include one or more tokens. Keywords are spotted only in the final results, not in interim hypotheses. If you specify any keywords, you must also specify a keywords threshold. You can spot a maximum of 1000 keywords. Omit the parameter or specify an empty array if you do not need to spot keywords. */
     keywords?: string[];
     /** A confidence value that is the lower bound for spotting a keyword. A word is considered to match a keyword if its confidence is greater than or equal to the threshold. Specify a probability between 0 and 1 inclusive. No keyword spotting is performed if you omit the parameter. If you specify a threshold, you must also specify one or more keywords. */
     keywords_threshold?: number;
@@ -2435,7 +2446,7 @@ namespace SpeechToTextV1 {
 
   /** Constants for the `recognize` operation. */
   export namespace RecognizeConstants {
-     /** The type of the input: audio/basic, audio/flac, audio/l16, audio/mp3, audio/mpeg, audio/mulaw, audio/ogg, audio/ogg;codecs=opus, audio/ogg;codecs=vorbis, audio/wav, audio/webm, audio/webm;codecs=opus, or audio/webm;codecs=vorbis. */
+     /** The type of the input. */
     export enum ContentType {
       BASIC = 'audio/basic',
       FLAC = 'audio/flac',
@@ -2488,13 +2499,13 @@ namespace SpeechToTextV1 {
   export interface CreateJobParams {
     /** The audio to transcribe in the format specified by the `Content-Type` header. */
     audio: NodeJS.ReadableStream|FileObject|Buffer;
-    /** The type of the input: audio/basic, audio/flac, audio/l16, audio/mp3, audio/mpeg, audio/mulaw, audio/ogg, audio/ogg;codecs=opus, audio/ogg;codecs=vorbis, audio/wav, audio/webm, audio/webm;codecs=opus, or audio/webm;codecs=vorbis. */
+    /** The type of the input. */
     content_type: CreateJobConstants.ContentType | string;
     /** The identifier of the model that is to be used for the recognition request or, for the **Create a session** method, with the new session. */
     model?: CreateJobConstants.Model | string;
-    /** A URL to which callback notifications are to be sent. The URL must already be successfully white-listed by using the **Register a callback** method. Omit the parameter to poll the service for job completion and results. You can include the same callback URL with any number of job creation requests. Use the `user_token` parameter to specify a unique user-specified string with each job to differentiate the callback notifications for the jobs. */
+    /** A URL to which callback notifications are to be sent. The URL must already be successfully white-listed by using the **Register a callback** method. You can include the same callback URL with any number of job creation requests. Omit the parameter to poll the service for job completion and results. Use the `user_token` parameter to specify a unique user-specified string with each job to differentiate the callback notifications for the jobs. */
     callback_url?: string;
-    /** If the job includes a callback URL, a comma-separated list of notification events to which to subscribe. Valid events are: `recognitions.started` generates a callback notification when the service begins to process the job. `recognitions.completed` generates a callback notification when the job is complete; you must use the **Check a job** method to retrieve the results before they time out or are deleted. `recognitions.completed_with_results` generates a callback notification when the job is complete; the notification includes the results of the request. `recognitions.failed` generates a callback notification if the service experiences an error while processing the job. Omit the parameter to subscribe to the default events: `recognitions.started`, `recognitions.completed`, and `recognitions.failed`. The `recognitions.completed` and `recognitions.completed_with_results` events are incompatible; you can specify only of the two events. If the job does not include a callback URL, omit the parameter. */
+    /** If the job includes a callback URL, a comma-separated list of notification events to which to subscribe. Valid events are * `recognitions.started` generates a callback notification when the service begins to process the job. * `recognitions.completed` generates a callback notification when the job is complete. You must use the **Check a job** method to retrieve the results before they time out or are deleted. * `recognitions.completed_with_results` generates a callback notification when the job is complete. The notification includes the results of the request. * `recognitions.failed` generates a callback notification if the service experiences an error while processing the job. Omit the parameter to subscribe to the default events: `recognitions.started`, `recognitions.completed`, and `recognitions.failed`. The `recognitions.completed` and `recognitions.completed_with_results` events are incompatible; you can specify only of the two events. If the job does not include a callback URL, omit the parameter. */
     events?: CreateJobConstants.Events | string;
     /** If the job includes a callback URL, a user-specified string that the service is to include with each callback notification for the job; the token allows the user to maintain an internal mapping between jobs and notification events. If the job does not include a callback URL, omit the parameter. */
     user_token?: string;
@@ -2508,9 +2519,9 @@ namespace SpeechToTextV1 {
     base_model_version?: string;
     /** If you specify the customization ID (GUID) of a custom language model with the recognition request or, for sessions, with the **Create a session** method, the customization weight tells the service how much weight to give to words from the custom language model compared to those from the base model for the current request. Specify a value between 0.0 and 1.0. Unless a different customization weight was specified for the custom model when it was trained, the default value is 0.3. A customization weight that you specify overrides a weight that was specified when the custom model was trained. The default value yields the best performance in general. Assign a higher value if your audio makes frequent use of OOV words from the custom model. Use caution when setting the weight: a higher value can improve the accuracy of phrases from the custom model's domain, but it can negatively affect performance on non-domain phrases. */
     customization_weight?: number;
-    /** The time in seconds after which, if only silence (no speech) is detected in submitted audio, the connection is closed with a 400 error. Useful for stopping audio submission from a live microphone when a user simply walks away. Use `-1` for infinity. */
+    /** The time in seconds after which, if only silence (no speech) is detected in submitted audio, the connection is closed with a 400 error. The parameter is useful for stopping audio submission from a live microphone when a user simply walks away. Use `-1` for infinity. */
     inactivity_timeout?: number;
-    /** An array of keyword strings to spot in the audio. Each keyword string can include one or more tokens. Keywords are spotted only in the final hypothesis, not in interim results. If you specify any keywords, you must also specify a keywords threshold. You can spot a maximum of 1000 keywords. Omit the parameter or specify an empty array if you do not need to spot keywords. */
+    /** An array of keyword strings to spot in the audio. Each keyword string can include one or more tokens. Keywords are spotted only in the final results, not in interim hypotheses. If you specify any keywords, you must also specify a keywords threshold. You can spot a maximum of 1000 keywords. Omit the parameter or specify an empty array if you do not need to spot keywords. */
     keywords?: string[];
     /** A confidence value that is the lower bound for spotting a keyword. A word is considered to match a keyword if its confidence is greater than or equal to the threshold. Specify a probability between 0 and 1 inclusive. No keyword spotting is performed if you omit the parameter. If you specify a threshold, you must also specify one or more keywords. */
     keywords_threshold?: number;
@@ -2533,7 +2544,7 @@ namespace SpeechToTextV1 {
 
   /** Constants for the `createJob` operation. */
   export namespace CreateJobConstants {
-     /** The type of the input: audio/basic, audio/flac, audio/l16, audio/mp3, audio/mpeg, audio/mulaw, audio/ogg, audio/ogg;codecs=opus, audio/ogg;codecs=vorbis, audio/wav, audio/webm, audio/webm;codecs=opus, or audio/webm;codecs=vorbis. */
+     /** The type of the input. */
     export enum ContentType {
       BASIC = 'audio/basic',
       FLAC = 'audio/flac',
@@ -2568,7 +2579,7 @@ namespace SpeechToTextV1 {
       ZH_CN_BROADBANDMODEL = 'zh-CN_BroadbandModel',
       ZH_CN_NARROWBANDMODEL = 'zh-CN_NarrowbandModel',
     }
-     /** If the job includes a callback URL, a comma-separated list of notification events to which to subscribe. Valid events are: `recognitions.started` generates a callback notification when the service begins to process the job. `recognitions.completed` generates a callback notification when the job is complete; you must use the **Check a job** method to retrieve the results before they time out or are deleted. `recognitions.completed_with_results` generates a callback notification when the job is complete; the notification includes the results of the request. `recognitions.failed` generates a callback notification if the service experiences an error while processing the job. Omit the parameter to subscribe to the default events: `recognitions.started`, `recognitions.completed`, and `recognitions.failed`. The `recognitions.completed` and `recognitions.completed_with_results` events are incompatible; you can specify only of the two events. If the job does not include a callback URL, omit the parameter. */
+     /** If the job includes a callback URL, a comma-separated list of notification events to which to subscribe. Valid events are * `recognitions.started` generates a callback notification when the service begins to process the job. * `recognitions.completed` generates a callback notification when the job is complete. You must use the **Check a job** method to retrieve the results before they time out or are deleted. * `recognitions.completed_with_results` generates a callback notification when the job is complete. The notification includes the results of the request. * `recognitions.failed` generates a callback notification if the service experiences an error while processing the job. Omit the parameter to subscribe to the default events: `recognitions.started`, `recognitions.completed`, and `recognitions.failed`. The `recognitions.completed` and `recognitions.completed_with_results` events are incompatible; you can specify only of the two events. If the job does not include a callback URL, omit the parameter. */
     export enum Events {
       STARTED = 'recognitions.started',
       COMPLETED = 'recognitions.completed',
@@ -2880,7 +2891,7 @@ namespace SpeechToTextV1 {
     audio_name: string;
     /** The audio resource that is to be added to the custom acoustic model, an individual audio file or an archive file. */
     audio_resource: NodeJS.ReadableStream|FileObject|Buffer;
-    /** The type of the input: application/zip, application/gzip, audio/basic, audio/flac, audio/l16, audio/mp3, audio/mpeg, audio/mulaw, audio/ogg, audio/ogg;codecs=opus, audio/ogg;codecs=vorbis, audio/wav, audio/webm, audio/webm;codecs=opus, or audio/webm;codecs=vorbis. */
+    /** The type of the input. */
     content_type: AddAudioConstants.ContentType | string;
     /** For an archive-type resource, specifies the format of the audio files contained in the archive file. The parameter accepts all of the audio formats supported for use with speech recognition, including the `rate`, `channels`, and `endianness` parameters that are used with some formats. For a complete list of supported audio formats, see [Audio formats](/docs/services/speech-to-text/input.html#formats). */
     contained_content_type?: AddAudioConstants.ContainedContentType | string;
@@ -2891,7 +2902,7 @@ namespace SpeechToTextV1 {
 
   /** Constants for the `addAudio` operation. */
   export namespace AddAudioConstants {
-     /** The type of the input: application/zip, application/gzip, audio/basic, audio/flac, audio/l16, audio/mp3, audio/mpeg, audio/mulaw, audio/ogg, audio/ogg;codecs=opus, audio/ogg;codecs=vorbis, audio/wav, audio/webm, audio/webm;codecs=opus, or audio/webm;codecs=vorbis. */
+     /** The type of the input. */
     export enum ContentType {
       APPLICATION_ZIP = 'application/zip',
       APPLICATION_GZIP = 'application/gzip',
@@ -3039,7 +3050,7 @@ namespace SpeechToTextV1 {
   export interface AudioResources {
     /** The total minutes of accumulated audio summed over all of the valid audio resources for the custom acoustic model. You can use this value to determine whether the custom model has too little or too much audio to begin training. */
     total_minutes_of_audio: number;
-    /** An array of `AudioResource` objects that provides information about the audio resources of the custom acoustic model. The array is empty if the custom model has no audio resources. */
+    /** An array of objects that provides information about the audio resources of the custom acoustic model. The array is empty if the custom model has no audio resources. */
     audio: AudioResource[];
   }
 

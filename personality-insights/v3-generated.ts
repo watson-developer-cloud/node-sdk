@@ -40,7 +40,7 @@ class PersonalityInsightsV3 extends BaseService {
    * @param {string} [options.password] - The password used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of Bluemix. When running on Bluemix, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
    * @param {string} [options.iam_access_token] - An IAM access token fully managed by the application. Responsibility falls on the application to refresh the token, either before it expires or reactively upon receiving a 401 from the service, as any requests made with an expired token will fail.
    * @param {string} [options.iam_apikey] - An API key that can be used to request IAM tokens. If this API key is provided, the SDK will manage the token and handle the refreshing.
-   * @param {string} [options.iam_url] - An optional URL for the IAM service API. Defaults to 'https://iam.bluemix.net/identity/token'.
+   * @param {string} [options.iam_url] - An optional URL for the IAM service API. Defaults to 'https://iam.ng.bluemix.net/identity/token'.
    * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
    * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
@@ -87,8 +87,8 @@ class PersonalityInsightsV3 extends BaseService {
    * less text; for more information, see [Providing sufficient
    * input](https://console.bluemix.net/docs/services/personality-insights/input.html#sufficient). For JSON input,
    * provide an object of type `Content`.
-   * @param {string} params.content_type - The type of the input: application/json, text/html, or text/plain. A
-   * character encoding can be specified by including a `charset` parameter. For example, 'text/html;charset=utf-8'.
+   * @param {string} params.content_type - The type of the input. A character encoding can be specified by including a
+   * `charset` parameter. For example, 'text/html;charset=utf-8'.
    * @param {string} [params.content_language] - The language of the input text for the request: Arabic, English,
    * Japanese, Korean, or Spanish. Regional variants are treated as their parent language; for example, `en-US` is
    * interpreted as `en`.
@@ -173,8 +173,8 @@ class PersonalityInsightsV3 extends BaseService {
    * less text; for more information, see [Providing sufficient
    * input](https://console.bluemix.net/docs/services/personality-insights/input.html#sufficient). For JSON input,
    * provide an object of type `Content`.
-   * @param {string} params.content_type - The type of the input: application/json, text/html, or text/plain. A
-   * character encoding can be specified by including a `charset` parameter. For example, 'text/html;charset=utf-8'.
+   * @param {string} params.content_type - The type of the input. A character encoding can be specified by including a
+   * `charset` parameter. For example, 'text/html;charset=utf-8'.
    * @param {string} [params.content_language] - The language of the input text for the request: Arabic, English,
    * Japanese, Korean, or Spanish. Regional variants are treated as their parent language; for example, `en-US` is
    * interpreted as `en`.
@@ -271,7 +271,7 @@ namespace PersonalityInsightsV3 {
   export interface ProfileParams {
     /** A maximum of 20 MB of content to analyze, though the service requires much less text; for more information, see [Providing sufficient input](https://console.bluemix.net/docs/services/personality-insights/input.html#sufficient). For JSON input, provide an object of type `Content`. */
     content: Content|string;
-    /** The type of the input: application/json, text/html, or text/plain. A character encoding can be specified by including a `charset` parameter. For example, 'text/html;charset=utf-8'. */
+    /** The type of the input. A character encoding can be specified by including a `charset` parameter. For example, 'text/html;charset=utf-8'. */
     content_type: ProfileConstants.ContentType | string;
     /** The language of the input text for the request: Arabic, English, Japanese, Korean, or Spanish. Regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. The effect of the **Content-Language** parameter depends on the **Content-Type** parameter. When **Content-Type** is `text/plain` or `text/html`, **Content-Language** is the only way to specify the language. When **Content-Type** is `application/json`, **Content-Language** overrides a language specified with the `language` parameter of a `ContentItem` object, and content items that specify a different language are ignored; omit this parameter to base the language on the specification of the content items. You can specify any combination of languages for **Content-Language** and **Accept-Language**. */
     content_language?: ProfileConstants.ContentLanguage | string;
@@ -288,7 +288,7 @@ namespace PersonalityInsightsV3 {
 
   /** Constants for the `profile` operation. */
   export namespace ProfileConstants {
-     /** The type of the input: application/json, text/html, or text/plain. A character encoding can be specified by including a `charset` parameter. For example, 'text/html;charset=utf-8'. */
+     /** The type of the input. A character encoding can be specified by including a `charset` parameter. For example, 'text/html;charset=utf-8'. */
     export enum ContentType {
       APPLICATION_JSON = 'application/json',
       TEXT_HTML = 'text/html',
@@ -322,7 +322,7 @@ namespace PersonalityInsightsV3 {
   export interface ProfileAsCsvParams {
     /** A maximum of 20 MB of content to analyze, though the service requires much less text; for more information, see [Providing sufficient input](https://console.bluemix.net/docs/services/personality-insights/input.html#sufficient). For JSON input, provide an object of type `Content`. */
     content: Content|string;
-    /** The type of the input: application/json, text/html, or text/plain. A character encoding can be specified by including a `charset` parameter. For example, 'text/html;charset=utf-8'. */
+    /** The type of the input. A character encoding can be specified by including a `charset` parameter. For example, 'text/html;charset=utf-8'. */
     content_type: ProfileAsCsvConstants.ContentType | string;
     /** The language of the input text for the request: Arabic, English, Japanese, Korean, or Spanish. Regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. The effect of the **Content-Language** parameter depends on the **Content-Type** parameter. When **Content-Type** is `text/plain` or `text/html`, **Content-Language** is the only way to specify the language. When **Content-Type** is `application/json`, **Content-Language** overrides a language specified with the `language` parameter of a `ContentItem` object, and content items that specify a different language are ignored; omit this parameter to base the language on the specification of the content items. You can specify any combination of languages for **Content-Language** and **Accept-Language**. */
     content_language?: ProfileAsCsvConstants.ContentLanguage | string;
@@ -339,7 +339,7 @@ namespace PersonalityInsightsV3 {
 
   /** Constants for the `profileAsCsv` operation. */
   export namespace ProfileAsCsvConstants {
-     /** The type of the input: application/json, text/html, or text/plain. A character encoding can be specified by including a `charset` parameter. For example, 'text/html;charset=utf-8'. */
+     /** The type of the input. A character encoding can be specified by including a `charset` parameter. For example, 'text/html;charset=utf-8'. */
     export enum ContentType {
       APPLICATION_JSON = 'application/json',
       TEXT_HTML = 'text/html',

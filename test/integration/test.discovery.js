@@ -228,4 +228,101 @@ describe('discovery_integration', function() {
       );
     });
   });
+
+  describe('credentials tests', function() {
+    let credentialId;
+    const sourceType = 'sharepoint';
+
+    it('should createCredentials', function(done) {
+      discovery.createCredentials(
+        {
+          environment_id,
+          source_type: sourceType,
+          credential_details: {
+            credential_type: 'saml',
+            username: 'myUserName',
+            password: 'pass1234',
+            organization_url: 'www.sharepoint-org.com/organization',
+          },
+        },
+        function(err, res) {
+          assert.ifError(err);
+          assert(Object.keys(res).length);
+          assert(res.credential_id);
+          assert.equal(res.source_type, sourceType);
+          // save the credential id for later tests
+          credentialId = res.credential_id;
+          done();
+        }
+      );
+    });
+
+    it('should listCredentials', function(done) {
+      discovery.listCredentials(
+        {
+          environment_id,
+        },
+        function(err, res) {
+          assert.ifError(err);
+          assert(Array.isArray(res.credentials));
+          assert(res.credentials.length);
+          done();
+        }
+      );
+    });
+
+    it('should updateCredentials', function(done) {
+      discovery.updateCredentials(
+        {
+          environment_id,
+          credential_id: credentialId,
+          source_type: sourceType,
+          credential_details: {
+            credential_type: 'saml',
+            username: 'myUserName',
+            password: 'new!longer!password!123',
+            organization_url: 'www.sharepoint-org.com/organization',
+          },
+        },
+        function(err, res) {
+          assert.ifError(err);
+          assert(Object.keys(res).length);
+          assert.equal(res.credential_id, credentialId);
+          assert.equal(res.source_type, sourceType);
+          done();
+        }
+      );
+    });
+
+    it('should getCredentials', function(done) {
+      discovery.getSourceCredentials(
+        {
+          environment_id,
+          credential_id: credentialId,
+        },
+        function(err, res) {
+          assert.ifError(err);
+          assert(Object.keys(res).length);
+          assert.equal(res.credential_id, credentialId);
+          assert.equal(res.source_type, sourceType);
+          done();
+        }
+      );
+    });
+
+    it('should deleteCredentials', function(done) {
+      discovery.deleteCredentials(
+        {
+          environment_id,
+          credential_id: credentialId,
+        },
+        function(err, res) {
+          assert.ifError(err);
+          assert.equal(res.credential_id, credentialId);
+          assert.equal(res.status, 'deleted');
+          done();
+        }
+      );
+    });
+  });
 });
