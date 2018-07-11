@@ -20,4 +20,6 @@ after_success:
 deploy:
 - provider: script
   skip_cleanup: true
-  script: npx travis-deploy-once "npx semantic-release"
+  script: npx semantic-release
+  on:
+    node: 8
