@@ -231,4 +231,15 @@ describe('BaseService', function() {
     assert.deepEqual(actual, expected);
     assert.notEqual(instance.tokenManager, null);
   });
+
+  it('should create a token manager instance if username is `apikey` and use the password as the API key', function() {
+    const apikey = 'abcd-1234';
+    const instance = new TestService({
+      username: 'apikey',
+      password: apikey,
+    });
+    assert.notEqual(instance.tokenManager, null);
+    assert.equal(instance.tokenManager.iamApikey, apikey);
+    assert.equal(instance._options.headers, undefined);
+  });
 });

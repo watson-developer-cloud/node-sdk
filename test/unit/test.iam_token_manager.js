@@ -20,7 +20,7 @@ describe('iam_token_manager_v1', function() {
   });
 
   it('should turn an iam apikey into an access token', function(done) {
-    const instance = new IamTokenManagerV1({ iam_api_key: 'abcd-1234' });
+    const instance = new IamTokenManagerV1({ iamApikey: 'abcd-1234' });
     const requestStub = sinon.stub(instance, 'requestToken');
     const refreshSpy = sinon.spy(instance, 'refreshToken');
 
@@ -43,7 +43,7 @@ describe('iam_token_manager_v1', function() {
   });
 
   it('should refresh an expired access token', function(done) {
-    const instance = new IamTokenManagerV1({ iam_api_key: 'abcd-1234' });
+    const instance = new IamTokenManagerV1({ iamApikey: 'abcd-1234' });
     const requestSpy = sinon.spy(instance, 'requestToken');
     const refreshStub = sinon.stub(instance, 'refreshToken');
 
@@ -76,7 +76,7 @@ describe('iam_token_manager_v1', function() {
   });
 
   it('should use a valid access token if one is stored', function(done) {
-    const instance = new IamTokenManagerV1({ iam_api_key: 'abcd-1234' });
+    const instance = new IamTokenManagerV1({ iamApikey: 'abcd-1234' });
     const requestSpy = sinon.spy(instance, 'requestToken');
     const refreshSpy = sinon.spy(instance, 'refreshToken');
 
@@ -100,7 +100,7 @@ describe('iam_token_manager_v1', function() {
   });
 
   it('should return a user-managed access token if one is set post-construction', function(done) {
-    const instance = new IamTokenManagerV1({ iam_api_key: 'abcd-1234' });
+    const instance = new IamTokenManagerV1({ iamApikey: 'abcd-1234' });
     const requestSpy = sinon.spy(instance, 'requestToken');
     const refreshSpy = sinon.spy(instance, 'refreshToken');
 
