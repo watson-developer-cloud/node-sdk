@@ -250,13 +250,29 @@ assistant.message(params,  <span class="hljs-function"><span class="hljs-keyword
 				<h2 id="ibm-watson-services">IBM Watson services</h2>
 				<h3 id="authorization">Authorization</h3>
 				<p>The Authorization service can generate auth tokens for situations where providing the service username/password is undesirable.</p>
-				<p>Tokens are valid for 1 hour and may be sent using the <code>X-Watson-Authorization-Token</code> header or the <code>watson-token</code> query param.</p>
+				<p>Tokens are valid for 1 hour and may be sent using the <code>X-Watson-Authorization-Token</code> header or the <code>watson-token</code> query param.
+				Note that the token is supplied URL-encoded, and will not be accepted if it is double-encoded in a querystring.</p>
 				<blockquote>
-					<p><em>NOTE</em>: Authenticating with the <code>X-Watson-Authorization-Token</code> header is now deprecated. The token continues to work with Cloud Foundry services, but is not supported for services that use Identity and Access Management (IAM) authentication. For details see <a href="https://console.bluemix.net/docs/services/watson/getting-started-iam.html#iam">Authenticating with IAM tokens</a> or the README in the IBM Watson SDK you use.</p>
+					<p><em>NOTE</em>: Authenticating with the <code>X-Watson-Authorization-Token</code> header or the <code>watson-token</code> query param is now deprecated. The token continues to work with Cloud Foundry services, but is not supported for services that use Identity and Access Management (IAM) authentication. For details see <a href="https://console.bluemix.net/docs/services/watson/getting-started-iam.html#iam">Authenticating with IAM tokens</a> or the README in the IBM Watson SDK you use.
+					The Authorization SDK now supports returning IAM Access Tokens when instantiated with an IAM API key.</p>
 				</blockquote>
-				<p>Note that the token is supplied URL-encoded, and will not be accepted if it is double-encoded in a querystring.</p>
 				<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> watson = <span class="hljs-built_in">require</span>(<span class="hljs-string">'watson-developer-cloud'</span>);
 
+<span class="hljs-comment">// to get an IAM Access Token</span>
+<span class="hljs-keyword">var</span> authorization = <span class="hljs-keyword">new</span> watson.AuthorizationV1({
+  <span class="hljs-attr">iam_apikey</span>: <span class="hljs-string">'&lt;Service API key&gt;'</span>,
+  <span class="hljs-attr">iam_url</span>: <span class="hljs-string">'&lt;IAM endpoint URL - OPTIONAL&gt;'</span>,
+});
+
+authorization.getToken(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err, token</span>) </span>{
+  <span class="hljs-keyword">if</span> (!token) {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'error:'</span>, err);
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-comment">// Use your token here</span>
+  }
+});
+
+<span class="hljs-comment">// to get a Watson Token - NOW DEPRECATED</span>
 <span class="hljs-keyword">var</span> authorization = <span class="hljs-keyword">new</span> watson.AuthorizationV1({
   <span class="hljs-attr">username</span>: <span class="hljs-string">'&lt;Text to Speech username&gt;'</span>,
   <span class="hljs-attr">password</span>: <span class="hljs-string">'&lt;Text to Speech password&gt;'</span>,
