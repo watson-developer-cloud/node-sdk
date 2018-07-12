@@ -103,12 +103,12 @@
 					<div class="tsd-signature tsd-kind-icon">expansions<span class="tsd-signature-symbol">:</span> <a href="discoveryv1.expansion.html" class="tsd-signature-type">Expansion</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a4c439e/discovery/v1-generated.ts#L3259">discovery/v1-generated.ts:3259</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/007a234/discovery/v1-generated.ts#L3649">discovery/v1-generated.ts:3649</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>An array of query expansion definitions. Each object in the <code>expansions</code> array represents a term or set of terms that will be expanded into other terms. Each expansion object can be configured so that all terms are expanded to all other terms in the object - bi-directional, or a set list of terms can be expanded into a second list of terms - uni-directional. To create a bi-directional expansion specify an <code>expanded_terms</code> array. When found in a query, all items in the <code>expanded_terms</code> array are then expanded to the other items in the same array. To create a uni-directional expansion, specify both an array of <code>input_terms</code> and an array of <code>expanded_terms</code>. When items in the <code>input_terms</code> array are present in a query, they are expanded using the items listed in the <code>expanded_terms</code> array.</p>
+							<p>An array of query expansion definitions. Each object in the <strong>expansions</strong> array represents a term or set of terms that will be expanded into other terms. Each expansion object can be configured as bidirectional or unidirectional. Bidirectional means that all terms are expanded to all other terms in the object. Unidirectional means that a set list of terms can be expanded into a second list of terms. To create a bi-directional expansion specify an <strong>expanded_terms</strong> array. When found in a query, all items in the <strong>expanded_terms</strong> array are then expanded to the other items in the same array. To create a uni-directional expansion, specify both an array of <strong>input_terms</strong> and an array of <strong>expanded_terms</strong>. When items in the <strong>input_terms</strong> array are present in a query, they are expanded using the items listed in the <strong>expanded_terms</strong> array.</p>
 						</div>
 					</div>
 				</section>
