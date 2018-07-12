@@ -239,6 +239,8 @@ The Authorization service can generate auth tokens for situations where providin
 
 Tokens are valid for 1 hour and may be sent using the `X-Watson-Authorization-Token` header or the `watson-token` query param.
 
+> _NOTE_: Authenticating with the `X-Watson-Authorization-Token` header is now deprecated. The token continues to work with Cloud Foundry services, but is not supported for services that use Identity and Access Management (IAM) authentication. For details see [Authenticating with IAM tokens](https://console.bluemix.net/docs/services/watson/getting-started-iam.html#iam) or the README in the IBM Watson SDK you use.
+
 Note that the token is supplied URL-encoded, and will not be accepted if it is double-encoded in a querystring.
 
 ```javascript
