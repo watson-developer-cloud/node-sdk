@@ -238,12 +238,29 @@ If you are having difficulties using the APIs or have a question about the Watso
 The Authorization service can generate auth tokens for situations where providing the service username/password is undesirable.
 
 Tokens are valid for 1 hour and may be sent using the `X-Watson-Authorization-Token` header or the `watson-token` query param.
-
 Note that the token is supplied URL-encoded, and will not be accepted if it is double-encoded in a querystring.
+
+> _NOTE_: Authenticating with the `X-Watson-Authorization-Token` header or the `watson-token` query param is now deprecated. The token continues to work with Cloud Foundry services, but is not supported for services that use Identity and Access Management (IAM) authentication. For details see [Authenticating with IAM tokens](https://console.bluemix.net/docs/services/watson/getting-started-iam.html#iam) or the README in the IBM Watson SDK you use.
+The Authorization SDK now supports returning IAM Access Tokens when instantiated with an IAM API key.
 
 ```javascript
 var watson = require('watson-developer-cloud');
 
+// to get an IAM Access Token
+var authorization = new watson.AuthorizationV1({
+  iam_apikey: '<Service API key>',
+  iam_url: '<IAM endpoint URL - OPTIONAL>',
+});
+
+authorization.getToken(function (err, token) {
+  if (!token) {
+    console.log('error:', err);
+  } else {
+    // Use your token here
+  }
+});
+
+// to get a Watson Token - NOW DEPRECATED
 var authorization = new watson.AuthorizationV1({
   username: '<Text to Speech username>',
   password: '<Text to Speech password>',
