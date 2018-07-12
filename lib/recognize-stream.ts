@@ -182,7 +182,7 @@ class RecognizeStream extends Duplex {
 
     if (options.token && !options['watson-token']) {
       console.warn(
-        'Authenticating with the X-Watson-Authorization-Token header is deprecated.' +
+        'Authenticating with the X-Watson-Authorization-Token header or the `watson-token` query param is deprecated.' +
         ' The token continues to work with Cloud Foundry services, but is not' +
         ' supported for services that use Identity and Access Management (IAM) authentication.' +
         ' For details see Authenticating with IAM tokens or the README in the IBM Watson SDK you use.'
