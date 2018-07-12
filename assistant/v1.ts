@@ -1471,7 +1471,7 @@ class AssistantV1 extends BaseService {
    * - It cannot consist of only whitespace characters.
    * - It must be no longer than 64 characters.
    * @param {string[]} [params.patterns] - An array of patterns for the entity value. You can provide either synonyms or
-   * patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 128 characters.
+   * patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 512 characters.
    * For more information about how to specify a pattern, see the
    * [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities).
    * @param {string} [params.value_type] - Specifies the type of value.
@@ -1698,7 +1698,7 @@ class AssistantV1 extends BaseService {
    * - It cannot consist of only whitespace characters.
    * - It must be no longer than 64 characters.
    * @param {string[]} [params.new_patterns] - An array of patterns for the entity value. You can provide either
-   * synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 128
+   * synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 512
    * characters. For more information about how to specify a pattern, see the
    * [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities).
    * @param {Object} [params.headers] - Custom request headers
@@ -2911,7 +2911,7 @@ namespace AssistantV1 {
     metadata?: Object;
     /** An array containing any synonyms for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A synonym must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
     synonyms?: string[];
-    /** An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 128 characters. For more information about how to specify a pattern, see the [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities). */
+    /** An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 512 characters. For more information about how to specify a pattern, see the [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities). */
     patterns?: string[];
     /** Specifies the type of value. */
     value_type?: CreateValueConstants.ValueType | string;
@@ -2990,7 +2990,7 @@ namespace AssistantV1 {
     new_type?: UpdateValueConstants.ValueType | string;
     /** An array of synonyms for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A synonym must conform to the following resrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
     new_synonyms?: string[];
-    /** An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 128 characters. For more information about how to specify a pattern, see the [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities). */
+    /** An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 512 characters. For more information about how to specify a pattern, see the [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities). */
     new_patterns?: string[];
     headers?: Object;
   }
@@ -3443,7 +3443,7 @@ namespace AssistantV1 {
     metadata?: Object;
     /** An array containing any synonyms for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A synonym must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
     synonyms?: string[];
-    /** An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 128 characters. For more information about how to specify a pattern, see the [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities). */
+    /** An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 512 characters. For more information about how to specify a pattern, see the [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities). */
     patterns?: string[];
     /** Specifies the type of value. */
     value_type?: string;

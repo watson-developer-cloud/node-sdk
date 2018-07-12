@@ -80,8 +80,8 @@ class ToneAnalyzerV3 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {ToneInput|string} params.tone_input - JSON, plain text, or HTML input that contains the content to be
    * analyzed. For JSON input, provide an object of type `ToneInput`.
-   * @param {string} params.content_type - The type of the input: application/json, text/plain, or text/html. A
-   * character encoding can be specified by including a `charset` parameter. For example, 'text/plain;charset=utf-8'.
+   * @param {string} params.content_type - The type of the input. A character encoding can be specified by including a
+   * `charset` parameter. For example, 'text/plain;charset=utf-8'.
    * @param {boolean} [params.sentences] - Indicates whether the service is to return an analysis of each individual
    * sentence in addition to its analysis of the full document. If `true` (the default), the service returns results for
    * each sentence.
@@ -235,7 +235,7 @@ namespace ToneAnalyzerV3 {
   export interface ToneParams {
     /** JSON, plain text, or HTML input that contains the content to be analyzed. For JSON input, provide an object of type `ToneInput`. */
     tone_input: ToneInput|string;
-    /** The type of the input: application/json, text/plain, or text/html. A character encoding can be specified by including a `charset` parameter. For example, 'text/plain;charset=utf-8'. */
+    /** The type of the input. A character encoding can be specified by including a `charset` parameter. For example, 'text/plain;charset=utf-8'. */
     content_type: ToneConstants.ContentType | string;
     /** Indicates whether the service is to return an analysis of each individual sentence in addition to its analysis of the full document. If `true` (the default), the service returns results for each sentence. */
     sentences?: boolean;
@@ -250,7 +250,7 @@ namespace ToneAnalyzerV3 {
 
   /** Constants for the `tone` operation. */
   export namespace ToneConstants {
-     /** The type of the input: application/json, text/plain, or text/html. A character encoding can be specified by including a `charset` parameter. For example, 'text/plain;charset=utf-8'. */
+     /** The type of the input. A character encoding can be specified by including a `charset` parameter. For example, 'text/plain;charset=utf-8'. */
     export enum ContentType {
       APPLICATION_JSON = 'application/json',
       TEXT_PLAIN = 'text/plain',

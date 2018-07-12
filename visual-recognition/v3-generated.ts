@@ -73,7 +73,8 @@ class VisualRecognitionV3 extends BaseService {
    *
    * You can also include an image with the **url** parameter.
    * @param {string} [params.accept_language] - The language of the output class names. The full set of languages is
-   * supported only for the built-in `default` classifier ID. The class names of custom classifiers are not translated.
+   * supported for the built-in classifier IDs: `default`, `food`, and `explicit`. The class names of custom classifiers
+   * are not translated.
    *
    * The response might not be in the specified language when the requested language is not supported or when there is
    * no translation for the class name.
@@ -593,7 +594,7 @@ namespace VisualRecognitionV3 {
   export interface ClassifyParams {
     /** An image file (.jpg, .png) or .zip file with images. Maximum image size is 10 MB. Include no more than 20 images and limit the .zip file to 100 MB. Encode the image and .zip file names in UTF-8 if they contain non-ASCII characters. The service assumes UTF-8 encoding if it encounters non-ASCII characters. You can also include an image with the **url** parameter. */
     images_file?: NodeJS.ReadableStream|FileObject|Buffer;
-    /** The language of the output class names. The full set of languages is supported only for the built-in `default` classifier ID. The class names of custom classifiers are not translated. The response might not be in the specified language when the requested language is not supported or when there is no translation for the class name. */
+    /** The language of the output class names. The full set of languages is supported for the built-in classifier IDs: `default`, `food`, and `explicit`. The class names of custom classifiers are not translated. The response might not be in the specified language when the requested language is not supported or when there is no translation for the class name. */
     accept_language?: ClassifyConstants.AcceptLanguage | string;
     /** The URL of an image to analyze. Must be in .jpg, or .png format. The minimum recommended pixel density is 32X32 pixels per inch, and the maximum image size is 10 MB. You can also include images with the **images_file** parameter. */
     url?: string;
@@ -610,7 +611,7 @@ namespace VisualRecognitionV3 {
 
   /** Constants for the `classify` operation. */
   export namespace ClassifyConstants {
-     /** The language of the output class names. The full set of languages is supported only for the built-in `default` classifier ID. The class names of custom classifiers are not translated. The response might not be in the specified language when the requested language is not supported or when there is no translation for the class name. */
+     /** The language of the output class names. The full set of languages is supported for the built-in classifier IDs: `default`, `food`, and `explicit`. The class names of custom classifiers are not translated. The response might not be in the specified language when the requested language is not supported or when there is no translation for the class name. */
     export enum AcceptLanguage {
       EN = 'en',
       AR = 'ar',
@@ -620,6 +621,9 @@ namespace VisualRecognitionV3 {
       IT = 'it',
       JA = 'ja',
       KO = 'ko',
+      PT_BR = 'pt-br',
+      ZH_CN = 'zh-cn',
+      ZH_TW = 'zh-tw',
     }
   }
 
@@ -748,7 +752,7 @@ namespace VisualRecognitionV3 {
     /** Training status of classifier. */
     status?: string;
     /** Whether the classifier can be downloaded as a Core ML model after the training status is `ready`. */
-    core_ml_enabled: boolean;
+    core_ml_enabled?: boolean;
     /** If classifier training has failed, this field may explain why. */
     explanation?: string;
     /** Date and time in Coordinated Universal Time (UTC) that the classifier was created. */

@@ -72,6 +72,7 @@ describe('discovery-v1', function() {
       '/v1/environments/env-guid/collections/col-guid/training_data/query-guid/examples/example-guid',
     queryRelations: '/v1/environments/env-guid/collections/col-guid/query_relations',
     queryEntities: '/v1/environments/env-guid/collections/col-guid/query_entities',
+    credentials: '/v1/environments/env-guid/credentials',
   };
 
   it('should generate version was not specified (negative test)', function() {
@@ -873,6 +874,66 @@ describe('discovery-v1', function() {
               req.uri.href,
               service.url + paths.queryEntities + '?version=' + service.version
             );
+          });
+        });
+        describe('credentials tests', function() {
+          it('should create credentials', function() {
+            const req = discovery.createCredentials(
+              { environment_id: 'env-guid', source_type: 'box' },
+              noop
+            );
+            assert.equal(
+              req.uri.href,
+              service.url + paths.credentials + '?version=' + service.version
+            );
+            assert.equal(req.method, 'POST');
+            assert.equal(JSON.parse(req.body).source_type, 'box');
+          });
+
+          it('should list credentials', function() {
+            const req = discovery.listCredentials({ environment_id: 'env-guid' }, noop);
+            assert.equal(
+              req.uri.href,
+              service.url + paths.credentials + '?version=' + service.version
+            );
+            assert.equal(req.method, 'GET');
+          });
+
+          it('should get credentials', function() {
+            const req = discovery.getSourceCredentials(
+              { environment_id: 'env-guid', credential_id: 'cred-guid' },
+              noop
+            );
+            assert.equal(
+              req.uri.href,
+              service.url + paths.credentials + '/cred-guid?version=' + service.version
+            );
+            assert.equal(req.method, 'GET');
+          });
+
+          it('should update credentials', function() {
+            const req = discovery.updateCredentials(
+              { environment_id: 'env-guid', credential_id: 'cred-guid', source_type: 'sharepoint' },
+              noop
+            );
+            assert.equal(
+              req.uri.href,
+              service.url + paths.credentials + '/cred-guid?version=' + service.version
+            );
+            assert.equal(req.method, 'PUT');
+            assert.equal(JSON.parse(req.body).source_type, 'sharepoint');
+          });
+
+          it('should delete credentials', function() {
+            const req = discovery.deleteCredentials(
+              { environment_id: 'env-guid', credential_id: 'cred-guid' },
+              noop
+            );
+            assert.equal(
+              req.uri.href,
+              service.url + paths.credentials + '/cred-guid?version=' + service.version
+            );
+            assert.equal(req.method, 'DELETE');
           });
         });
       });
