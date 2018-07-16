@@ -98,9 +98,9 @@ class RecognizeStream extends Duplex {
    * @param {Object} [options.headers] - Only works in Node.js, not in browsers. Allows for custom headers to be set, including an Authorization header (preventing the need for auth tokens)
    * @param {String} [options.content-type='audio/wav'] - content type of audio; can be automatically determined from file header in most cases. only wav, flac, ogg/opus, and webm are supported
    * @param {Boolean} [options.interim_results=true] - Send back non-final previews of each "sentence" as it is being processed. These results are ignored in text mode.
-   * @param {Boolean} [options.word_confidence=false] - include confidence scores with results. Defaults to true when in objectMode.
+   * @param {Boolean} [options.word_confidence=false] - include confidence scores with results.
    * @param {Boolean} [options.timestamps=false] - include timestamps with results.
-   * @param {Number} [options.max_alternatives=1] - maximum number of alternative transcriptions to include. Defaults to 3 when in objectMode.
+   * @param {Number} [options.max_alternatives=1] - maximum number of alternative transcriptions to include.
    * @param {Array<String>} [options.keywords] - a list of keywords to search for in the audio
    * @param {Number} [options.keywords_threshold] - Number between 0 and 1 representing the minimum confidence before including a keyword in the results. Required when options.keywords is set
    * @param {Number} [options.word_alternatives_threshold] - Number between 0 and 1 representing the minimum confidence before including an alternative word in the results. Must be set to enable word alternatives,
