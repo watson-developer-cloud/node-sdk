@@ -99,7 +99,7 @@ class RecognizeStream extends Duplex {
    * @param {String} [options.content-type='audio/wav'] - content type of audio; can be automatically determined from file header in most cases. only wav, flac, ogg/opus, and webm are supported
    * @param {Boolean} [options.interim_results=true] - Send back non-final previews of each "sentence" as it is being processed. These results are ignored in text mode.
    * @param {Boolean} [options.word_confidence=false] - include confidence scores with results. Defaults to true when in objectMode.
-   * @param {Boolean} [options.timestamps=false] - include timestamps with results. Defaults to true when in objectMode.
+   * @param {Boolean} [options.timestamps=false] - include timestamps with results.
    * @param {Number} [options.max_alternatives=1] - maximum number of alternative transcriptions to include. Defaults to 3 when in objectMode.
    * @param {Array<String>} [options.keywords] - a list of keywords to search for in the audio
    * @param {Number} [options.keywords_threshold] - Number between 0 and 1 representing the minimum confidence before including a keyword in the results. Required when options.keywords is set
