@@ -29,9 +29,9 @@ const PARAMS_ALLOWED = [
   'profanity_filter',
   'smart_formatting',
   'customization_id',
+  'acoustic_customization_id',
   'speaker_labels',
   'customization_weight',
-  'acoustic_customization_id',
   'base_model_version'
 ];
 
@@ -487,6 +487,8 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
    * @param {Boolean} [params.profanity_filter]
    * @param {Boolean} [params.smart_formatting]
    * @param {String} [params.customization_id]
+   * @param {String} [params.acoustic_customization_id]
+   * @param {Number} [params.customization_weight]
    * @param {Boolean} [params.speaker_labels]
    * @param {function} callback
    */
