@@ -20,7 +20,7 @@ import bufferFrom = require('buffer-from');
 import extend = require('extend');
 import request = require('request');
 import vcapServices = require('vcap_services');
-import { IamTokenManagerV1 } from '../iam-token-manager/v1';
+import IamTokenManagerV1 = require('../iam-token-manager/v1');
 import { stripTrailingSlash } from './helper';
 import { sendRequest } from './requestwrapper';
 

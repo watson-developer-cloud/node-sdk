@@ -5,7 +5,7 @@ const watson = require('../../index');
 const nock = require('nock');
 
 const sinon = require('sinon');
-const IamTokenManagerV1 = require('../../iam-token-manager/v1').IamTokenManagerV1;
+const IamTokenManagerV1 = require('../../iam-token-manager/v1');
 
 describe('authorization', function() {
   // Test params

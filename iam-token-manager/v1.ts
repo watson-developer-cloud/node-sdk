@@ -17,28 +17,11 @@
 import extend = require('extend');
 import { sendRequest } from '../lib/requestwrapper';
 
-export type Options = {
-  iamApikey?: string;
-  iamAccessToken?: string;
-  iamUrl?: string;
-}
-
-// this interface is a representation of the response
-// object from the IAM service, hence the snake_case 
-// parameter names
-export interface IamTokenData {
-  access_token: string;
-  refresh_token: string;
-  token_type: string;
-  expires_in: number;
-  expiration: number;
-}
-
-export class IamTokenManagerV1 {
+class IamTokenManagerV1 {
   name: string;
   serviceVersion: string;
   protected iamUrl: string;
-  protected tokenInfo: IamTokenData;
+  protected tokenInfo: IamTokenManagerV1.IamTokenData;
   private iamApikey: string;
   private userAccessToken: string;
 
@@ -53,9 +36,9 @@ export class IamTokenManagerV1 {
    * @param {String} options.iamUrl - url of the iam api to retrieve tokens from
    * @constructor
    */
-  constructor(options: Options) {
+  constructor(options: IamTokenManagerV1.Options) {
     this.iamUrl = options.iamUrl || 'https://iam.bluemix.net/identity/token';
-    this.tokenInfo = {} as IamTokenData;
+    this.tokenInfo = {} as IamTokenManagerV1.IamTokenData;
     if (options.iamApikey) {
       this.iamApikey = options.iamApikey;
     }
@@ -206,11 +189,37 @@ export class IamTokenManagerV1 {
   /**
    * Save the response from the IAM service request to the object's state.
    *
-   * @param {IamTokenData} tokenResponse - Response object from IAM service request
+   * @param {IamTokenManagerV1.IamTokenData} tokenResponse - Response object from IAM service request
    * @private
    * @returns {void}
    */
-  private saveTokenInfo(tokenResponse: IamTokenData): void {
+  private saveTokenInfo(tokenResponse: IamTokenManagerV1.IamTokenData): void {
     this.tokenInfo = extend({}, tokenResponse);
   }
 }
+
+/*************************
+ * interfaces
+ ************************/
+
+namespace IamTokenManagerV1 {
+
+  export type Options = {
+    iamApikey?: string;
+    iamAccessToken?: string;
+    iamUrl?: string;
+  }
+
+  // this interface is a representation of the response
+  // object from the IAM service, hence the snake_case 
+  // parameter names
+  export interface IamTokenData {
+    access_token: string;
+    refresh_token: string;
+    token_type: string;
+    expires_in: number;
+    expiration: number;
+  }
+}
+
+export = IamTokenManagerV1;

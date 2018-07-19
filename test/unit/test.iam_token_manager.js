@@ -2,7 +2,7 @@
 
 const assert = require('assert');
 const sinon = require('sinon');
-const IamTokenManagerV1 = require('../../iam-token-manager/v1').IamTokenManagerV1;
+const IamTokenManagerV1 = require('../../iam-token-manager/v1');
 
 describe('iam_token_manager_v1', function() {
   it('should return an access token given by the user', function(done) {
