@@ -43,7 +43,8 @@ const QUERY_PARAMS_ALLOWED = [
   'model',
   'X-Watson-Learning-Opt-Out',
   'watson-token',
-  'customization_id'
+  'customization_id',
+  'acoustic_customization_id'
 ];
 
 interface RecognizeStream extends Duplex {
@@ -111,6 +112,7 @@ class RecognizeStream extends Duplex {
    * @param {Number} [options.X-Watson-Learning-Opt-Out=false] - set to true to opt-out of allowing Watson to use this request to improve it's services
    * @param {Boolean} [options.smart_formatting=false] - formats numeric values such as dates, times, currency, etc.
    * @param {String} [options.customization_id] - Customization ID
+   * @param {String} [options.acoustic_customization_id] - Acoustic customization ID
    * @param {IamTokenManagerV1} [options.token_manager] - Token manager for authenticating with IAM
    * @param {string} [options.base_model_version] - The version of the specified base model that is to be used with recognition request or, for the **Create a session** method, with the new session.
    * Multiple versions of a base model can exist when a model is updated for internal improvements. The parameter is intended primarily for use with custom models that have been upgraded for a new base model.
