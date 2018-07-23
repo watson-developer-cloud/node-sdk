@@ -35,7 +35,7 @@ describe('speech_to_text_integration', function() {
     speech_to_text_rc = new watson.SpeechToTextV1(auth.speech_to_text_rc);
   });
 
-  it('recognize() (RC)', function(done) {
+  it('recognize() (RC) @slow', function(done) {
     const params = {
       audio: fs.createReadStream(path.join(__dirname, '../resources/weather.ogg')),
       content_type: 'audio/ogg; codec=opus',
@@ -188,7 +188,7 @@ describe('speech_to_text_integration', function() {
   });
 
   describe('createRecognizeStream() (RC)', () => {
-    it('transcribes audio over a websocket', function(done) {
+    it('transcribes audio over a websocket @slow', function(done) {
       const recognizeStream = speech_to_text_rc.createRecognizeStream();
       recognizeStream.setEncoding('utf8');
       fs
@@ -209,7 +209,7 @@ describe('speech_to_text_integration', function() {
   });
 
   describe('createRecognizeStream()', () => {
-    it('transcribes audio over a websocket', function(done) {
+    it('transcribes audio over a websocket @slow', function(done) {
       const recognizeStream = speech_to_text.createRecognizeStream();
       recognizeStream.setEncoding('utf8');
       fs
@@ -372,7 +372,7 @@ describe('speech_to_text_integration', function() {
     );
 
     it(
-      'addCorpus() - string, overwrite',
+      'addCorpus() - string, overwrite @slow',
       waitUntilReady(function(done) {
         speech_to_text.addCorpus(
           {
@@ -393,7 +393,7 @@ describe('speech_to_text_integration', function() {
     });
 
     it(
-      'addWords()',
+      'addWords() @slow',
       waitUntilReady(function(done) {
         speech_to_text.addWords(
           {
@@ -417,7 +417,7 @@ describe('speech_to_text_integration', function() {
     );
 
     it(
-      'addWord()',
+      'addWord() @slow',
       waitUntilReady(function(done) {
         speech_to_text.addWord(
           {
@@ -486,7 +486,7 @@ describe('speech_to_text_integration', function() {
     );
 
     it(
-      'deleteAudio()',
+      'deleteAudio() @slow',
       waitUntilReady(function(done) {
         speech_to_text.deleteAudio(
           {
@@ -516,7 +516,7 @@ describe('speech_to_text_integration', function() {
     );
 
     it(
-      'recognize() - with customization',
+      'recognize() - with customization @slow',
       waitUntilReady(function(done) {
         const params = {
           audio: fs.createReadStream(path.join(__dirname, '../resources/weather.ogg')),
@@ -587,7 +587,7 @@ describe('speech_to_text_integration', function() {
       });
     });
 
-    it('getRecognitionJobs()', function(done) {
+    it('getRecognitionJobs() @slow', function(done) {
       speech_to_text.getRecognitionJobs(done);
     });
 
