@@ -124,7 +124,7 @@ describe('speech_to_text_integration', function() {
     speech_to_text.getModels({}, done);
   });
 
-  describe('createRecognizeStream() (RC) (credentials from environment/VCAP)', () => {
+  describe('createRecognizeStream() (RC) (credentials from environment/VCAP) @slow', () => {
     let env;
     beforeEach(function() {
       env = process.env;
@@ -244,7 +244,7 @@ describe('speech_to_text_integration', function() {
     });
   });
 
-  describe('customization', function() {
+  describe('customization @slow', function() {
     let customization_id;
 
     // many API calls leave the customization in a pending state.
@@ -372,7 +372,7 @@ describe('speech_to_text_integration', function() {
     );
 
     it(
-      'addCorpus() - string, overwrite @slow',
+      'addCorpus() - string, overwrite',
       waitUntilReady(function(done) {
         speech_to_text.addCorpus(
           {
@@ -393,7 +393,7 @@ describe('speech_to_text_integration', function() {
     });
 
     it(
-      'addWords() @slow',
+      'addWords()',
       waitUntilReady(function(done) {
         speech_to_text.addWords(
           {
@@ -417,7 +417,7 @@ describe('speech_to_text_integration', function() {
     );
 
     it(
-      'addWord() @slow',
+      'addWord()',
       waitUntilReady(function(done) {
         speech_to_text.addWord(
           {
@@ -486,7 +486,7 @@ describe('speech_to_text_integration', function() {
     );
 
     it(
-      'deleteAudio() @slow',
+      'deleteAudio()',
       waitUntilReady(function(done) {
         speech_to_text.deleteAudio(
           {
@@ -516,7 +516,7 @@ describe('speech_to_text_integration', function() {
     );
 
     it(
-      'recognize() - with customization @slow',
+      'recognize() - with customization',
       waitUntilReady(function(done) {
         const params = {
           audio: fs.createReadStream(path.join(__dirname, '../resources/weather.ogg')),
