@@ -229,7 +229,7 @@ describe('discovery_integration', function() {
     });
   });
 
-  describe('credentials tests', function() {
+  describe('credentials tests @slow', function() {
     let credentialId;
     const sourceType = 'sharepoint';
 
