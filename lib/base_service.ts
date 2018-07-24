@@ -76,6 +76,10 @@ function hasBasicCredentials(obj: any): boolean {
   return obj && obj.username && obj.password && obj.username !== 'apikey';
 }
 
+function hasIamCredentials(obj: any): boolean {
+  return obj && (obj.iam_apikey || obj.iam_access_token);
+}
+
 export class BaseService {
   static URL: string;
   name: string;
@@ -125,7 +129,7 @@ export class BaseService {
       options,
       _options
     );
-    if (_options.iam_apikey || _options.iam_access_token) {
+    if (hasIamCredentials(_options)) {
       this.tokenManager = new IamTokenManagerV1({
         iamApikey: _options.iam_apikey,
         iamAccessToken: _options.iam_access_token,
@@ -276,15 +280,17 @@ export class BaseService {
           'api_key, and iam_access_token.';
         throw new Error(errorMessage);
       }
-      if (hasBasicCredentials(_options)) {
-        // Calculate and add Authorization header to base options
-        const encodedCredentials = bufferFrom(
-          `${_options.username}:${_options.password}`
-        ).toString('base64');
-        const authHeader = { Authorization: `Basic ${encodedCredentials}` };
-        _options.headers = extend(authHeader, _options.headers);
-      } else {
-        _options.qs = extend({ api_key: _options.api_key }, _options.qs);
+      if (!hasIamCredentials(_options) && _options.username !== 'apikey') {
+        if (hasBasicCredentials(_options)) {
+          // Calculate and add Authorization header to base options
+          const encodedCredentials = bufferFrom(
+            `${_options.username}:${_options.password}`
+          ).toString('base64');
+          const authHeader = { Authorization: `Basic ${encodedCredentials}` };
+          _options.headers = extend(authHeader, _options.headers);
+        } else {
+          _options.qs = extend({ api_key: _options.api_key }, _options.qs);
+        }
       }
     }
     return _options;
