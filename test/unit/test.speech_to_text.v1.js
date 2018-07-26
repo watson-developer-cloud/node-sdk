@@ -353,7 +353,7 @@ describe('speech_to_text', function() {
       assert.equal(req.method, 'POST');
     });
 
-    it.skip('should create new recognitions job', function() {
+    it('should create new recognitions job', function() {
       const path =
         '/v1/recognitions?callback_url=http%3A%2F%2Fwatson-test-resources.mybluemix.net%2Fresults&events=recognitions.completed&user_token=myArbitraryIdentifier1&results_ttl=60';
       const response = {
