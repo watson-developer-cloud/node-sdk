@@ -242,4 +242,16 @@ describe('BaseService', function() {
     assert.equal(instance.tokenManager.iamApikey, apikey);
     assert.equal(instance._options.headers, undefined);
   });
+
+  it('should not create a basic auth header if iam creds are given', function() {
+    const apikey = 'abcd-1234';
+    const instance = new TestService({
+      iam_apikey: apikey,
+      username: 'notarealuser',
+      password: 'badpassword1',
+    });
+    assert.notEqual(instance.tokenManager, null);
+    assert.equal(instance.tokenManager.iamApikey, apikey);
+    assert.equal(instance._options.headers, undefined);
+  });
 });
