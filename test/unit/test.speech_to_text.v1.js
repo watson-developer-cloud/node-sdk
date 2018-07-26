@@ -180,63 +180,6 @@ describe('speech_to_text', function() {
     });
   });
 
-  // this test is severely broken
-  /* describe.skip('recognizeStream()', function() {
-    const service_response = {
-      result: [
-        {
-          alternative: [
-            {
-              transcript: 'one two three',
-            },
-          ],
-          final: true,
-        },
-      ],
-      result_index: 0,
-    };
-
-    const options = {
-      content_type: 'audio/l16;rate=41100',
-      continuous: true,
-      timestamps: true,
-      inactivity_timeout: -1,
-      max_alternatives: 1,
-      interim_results: false,
-      keywords: ['one', 'Three'],
-      keywords_threshold: 0.9,
-      word_alternatives_threshold: 0.25,
-    };
-    const recognizeStream = speech_to_text.createRecognizeStream(options);
-    fs.createReadStream(__dirname + '/../resources/weather.wav').pipe(recognizeStream);
-    recognizeStream.setEncoding('utf8');
-
-    // note: none of these tests actually run(or even register with mocha), but the callbacks let the previous test pass :(
-    recognizeStream.on('open', function(socket) {
-      it('should have a socket connection with a correct config', function(done) {
-        assert.notStrictEqual(socket, socket.config, socket.config.fragmentOutgoingMessages);
-        assert.notStrictEqual(socket, socket.config, socket.config.fragmentOutgoingMessages);
-        done();
-      });
-    });
-
-    recognizeStream.on('error', function(err) {
-      it('should throw ECONNRESET with bad credentials', function(done) {
-        assert.equal(err.code, 'ECONNRESET');
-        assert.equal(err.errno, 'ECONNRESET');
-        done();
-      });
-    });
-
-    recognizeStream.on('data', function(obj) {
-      console.log(JSON.stringify(obj)); // eslint-disable-line no-console
-      it('should generate a valid response', function(done) {
-        assert.equal(obj, service_response);
-        done();
-      });
-    });
-  });*/
-
   describe('recognizeLive()', function() {
     const path = '/v1/sessions/foo/recognize';
     const payload = {
