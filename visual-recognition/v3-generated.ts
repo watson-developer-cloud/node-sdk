@@ -235,10 +235,7 @@ class VisualRecognitionV3 extends BaseService {
   public createClassifier(params: VisualRecognitionV3.CreateClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
-    const positiveExampleClasses = Object.keys(_params).filter(key => {
-      return key.match(/^.+positive_examples$/);
-    }) || ['<classname>_positive_examples'];
-    const requiredParams = ['name', ...positiveExampleClasses];
+    const requiredParams = ['name', 'classname_positive_examples'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
@@ -254,12 +251,6 @@ class VisualRecognitionV3 extends BaseService {
         contentType: 'application/octet-stream'
       }
     };
-    positiveExampleClasses.forEach(positiveExampleClass => {
-      formData[positiveExampleClass] = {
-        data: _params[positiveExampleClass],
-        contentType: 'application/octet-stream',
-      };
-    });
     const parameters = {
       options: {
         url: '/v3/classifiers',
@@ -421,9 +412,6 @@ class VisualRecognitionV3 extends BaseService {
   public updateClassifier(params: VisualRecognitionV3.UpdateClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
-    const positiveExampleClasses = Object.keys(_params).filter(key => {
-      return key.match(/^.+positive_examples$/);
-    });
     const requiredParams = ['classifier_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -442,12 +430,6 @@ class VisualRecognitionV3 extends BaseService {
     const path = {
       'classifier_id': _params.classifier_id
     };
-    positiveExampleClasses.forEach(positiveExampleClass => {
-      formData[positiveExampleClass] = {
-         data: _params[positiveExampleClass],
-         contentType: 'application/octet-stream',
-      };
-    });
     const parameters = {
       options: {
         url: '/v3/classifiers/{classifier_id}',
