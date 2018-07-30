@@ -916,4 +916,37 @@ describe('conversation-v1', function() {
       assert.equal(req.method, 'POST');
     });
   });
+
+  describe('listEntityMentions()', function() {
+    it('should check no parameters provided (negative test)', function() {
+      conversation.listEntityMentions({}, missingParameter);
+      conversation.listEntityMentions(null, missingParameter);
+      conversation.listEntityMentions(undefined, missingParameter);
+      conversation.listEntityMentions({ workspace_id: '123' }, missingParameter);
+    });
+
+    it('should generate a valid payload', function() {
+      const params = {
+        workspace_id: 'id123',
+        entity: 'ent123',
+        export: true,
+        include_audit: true,
+      };
+      const path =
+        service.url +
+        '/v1/workspaces/' +
+        params.workspace_id +
+        '/entities/' +
+        params.entity +
+        '/mentions?version=' +
+        service.version +
+        '&export=' +
+        params.export +
+        '&include_audit=' +
+        params.include_audit;
+      const req = conversation.listEntityMentions(params, noop);
+      assert.equal(req.uri.href, path);
+      assert.equal(req.method, 'GET');
+    });
+  });
 });

@@ -958,6 +958,23 @@ describe('assistant_integration', function() {
     });
   });
 
+  describe('listEntityMentions()', function() {
+    it('should return an EntityMentionCollection', function(done) {
+      const params = {
+        workspace_id: workspace1.workspace_id,
+        entity: test_entities_update.entity,
+      };
+      assistant.listEntityMentions(params, function(err, result) {
+        if (err) {
+          return done(err);
+        }
+        assert(Array.isArray(result.examples));
+        assert(result.pagination);
+        done();
+      });
+    });
+  });
+
   describe('deleteEntity()', function() {
     it('should delete an entity of the workspace', function(done) {
       const params = {
