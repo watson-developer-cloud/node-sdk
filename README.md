@@ -560,7 +560,7 @@ speechToText.recognize(params, function(err, res) {
 
 // or streaming
 fs.createReadStream('./resources/speech.wav')
-  .pipe(speechToText.createRecognizeStream({ content_type: 'audio/l16; rate=44100' }))
+  .pipe(speechToText.recognizeUsingWebSocket({ content_type: 'audio/l16; rate=44100' }))
   .pipe(fs.createWriteStream('./transcription.txt'));
 ```
 
