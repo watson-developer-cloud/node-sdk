@@ -1343,7 +1343,7 @@ class DiscoveryV1 extends BaseService {
       'natural_language_query': _params.natural_language_query,
       'aggregation': _params.aggregation,
       'count': _params.count,
-      'return_fields': _params.return_fields,
+      'return': _params.return_fields,
       'offset': _params.offset,
       'sort': _params.sort,
       'highlight': _params.highlight,
@@ -1442,7 +1442,7 @@ class DiscoveryV1 extends BaseService {
       'natural_language_query': _params.natural_language_query,
       'aggregation': _params.aggregation,
       'count': _params.count,
-      'return_fields': _params.return_fields,
+      'return': _params.return_fields,
       'offset': _params.offset,
       'sort': _params.sort,
       'highlight': _params.highlight,
@@ -1526,6 +1526,7 @@ class DiscoveryV1 extends BaseService {
    * **query** are subsequently applied and reduce the query scope.
    * @param {string[]} [params.similar_fields] - A comma-separated list of field names that will be used as a basis for
    * comparison to identify similar documents. If not specified, the entire document is used for comparison.
+   * @param {boolean} [params.logging_opt_out] - If `true`, queries are not stored in the Discovery **Logs** endpoint.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -1573,6 +1574,7 @@ class DiscoveryV1 extends BaseService {
         headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
+          'X-Watson-Logging-Opt-Out': _params.logging_opt_out
         }, _params.headers),
       }),
     };
@@ -1710,7 +1712,7 @@ class DiscoveryV1 extends BaseService {
       'passages': _params.passages,
       'aggregation': _params.aggregation,
       'count': _params.count,
-      'return_fields': _params.return_fields,
+      'return': _params.return_fields,
       'offset': _params.offset,
       'sort': _params.sort,
       'highlight': _params.highlight,
@@ -2416,7 +2418,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getSourceCredentials(params: DiscoveryV1.GetCredentialsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Credentials>): NodeJS.ReadableStream | void {
+  public getSourceCredentials(params: DiscoveryV1.GetSourceCredentialsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Credentials>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'credential_id'];
@@ -2761,6 +2763,7 @@ namespace DiscoveryV1 {
       JA = 'ja',
       KO = 'ko',
       PT = 'pt',
+      NL = 'nl',
     }
   }
 
@@ -3046,6 +3049,8 @@ namespace DiscoveryV1 {
     similar_document_ids?: string[];
     /** A comma-separated list of field names that will be used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison. */
     similar_fields?: string[];
+    /** If `true`, queries are not stored in the Discovery **Logs** endpoint. */
+    logging_opt_out?: boolean;
     headers?: Object;
   }
 
@@ -3296,8 +3301,8 @@ namespace DiscoveryV1 {
     headers?: Object;
   }
 
-  /** Parameters for the `getCredentials` operation. */
-  export interface GetCredentialsParams {
+  /** Parameters for the `getSourceCredentials` operation. */
+  export interface GetSourceCredentialsParams {
     /** The ID of the environment. */
     environment_id: string;
     /** The unique identifier for a set of source credentials. */
@@ -3601,6 +3606,8 @@ namespace DiscoveryV1 {
   export interface EnrichmentOptions {
     /** An object representing the enrichment features that will be applied to the specified field. */
     features?: NluEnrichmentFeatures;
+    /** ISO 639-1 code indicating the language to use for the analysis. This code overrides the automatic language detection performed by the service. Valid codes are `ar` (Arabic), `en` (English), `fr` (French), `de` (German), `it` (Italian), `pt` (Portuguese), `ru` (Russian), `es` (Spanish), and `sv` (Swedish). **Note:** Not all features support all languages, automatic detection is recommended. */
+    language?: string;
     /** *For use with `elements` enrichments only.* The element extraction model to use. Models available are: `contract`. */
     model?: string;
   }
@@ -4019,7 +4026,7 @@ namespace DiscoveryV1 {
     aggregations?: QueryAggregation[];
     passages?: QueryPassages[];
     duplicates_removed?: number;
-    /** The session token for this query. The session token can be used to add events associated with this query to the query and event log. */
+    /** The session token for this query. The session token can be used to add events associated with this query to the query and event log. **Important:** Session tokens are case sensitive. */
     session_token?: string;
   }
 
@@ -4039,9 +4046,9 @@ namespace DiscoveryV1 {
 
   /** Metadata of a query result. */
   export interface QueryResultResultMetadata {
-    /** The raw score of the result. A higher score indicates a greater match to the query parameters. */
+    /** An unbounded measure of the relevance of a particular result, dependent on the query and matching document. A higher score indicates a greater match to the query parameters. */
     score?: number;
-    /** The confidence score of the result's analysis. A higher score indicates greater confidence. */
+    /** The confidence score for the given result. Calculated based on how relevant the result is estimated to be, compared to a trained relevancy model. confidence can range from `0.0` to `1.0`. The higher the number, the more relevant the document. */
     confidence?: number;
   }
 
@@ -4246,7 +4253,7 @@ namespace DiscoveryV1 {
     field?: string;
     /** Interval of the aggregation. Valid date interval values are second/seconds minute/minutes, hour/hours, day/days, week/weeks, month/months, and year/years. */
     interval?: string;
-    /** Used to inducate that anomaly detection should be performed. Anomaly detection is used to locate unusual datapoints within a time series. */
+    /** Used to indicate that anomaly detection should be performed. Anomaly detection is used to locate unusual datapoints within a time series. */
     anomaly?: boolean;
   }
 
