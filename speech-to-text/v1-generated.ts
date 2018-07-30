@@ -218,31 +218,30 @@ class SpeechToTextV1 extends BaseService {
    * detected in submitted audio, the connection is closed with a 400 error. The parameter is useful for stopping audio
    * submission from a live microphone when a user simply walks away. Use `-1` for infinity.
    * @param {string[]} [params.keywords] - An array of keyword strings to spot in the audio. Each keyword string can
-   * include one or more string tokens. Keywords are spotted only in the final results, not in interim hypotheses. If
-   * you specify any keywords, you must also specify a keywords threshold. You can spot a maximum of 1000 keywords. Omit
-   * the parameter or specify an empty array if you do not need to spot keywords.
+   * include one or more tokens. Keywords are spotted only in the final results, not in interim hypotheses. If you
+   * specify any keywords, you must also specify a keywords threshold. You can spot a maximum of 1000 keywords. Omit the
+   * parameter or specify an empty array if you do not need to spot keywords.
    * @param {number} [params.keywords_threshold] - A confidence value that is the lower bound for spotting a keyword. A
    * word is considered to match a keyword if its confidence is greater than or equal to the threshold. Specify a
-   * probability between 0.0 and 1.0. No keyword spotting is performed if you omit the parameter. If you specify a
+   * probability between 0 and 1 inclusive. No keyword spotting is performed if you omit the parameter. If you specify a
    * threshold, you must also specify one or more keywords.
-   * @param {number} [params.max_alternatives] - The maximum number of alternative transcripts that the service is to
-   * return. By default, a single transcription is returned.
+   * @param {number} [params.max_alternatives] - The maximum number of alternative transcripts to be returned. By
+   * default, a single transcription is returned.
    * @param {number} [params.word_alternatives_threshold] - A confidence value that is the lower bound for identifying a
    * hypothesis as a possible word alternative (also known as "Confusion Networks"). An alternative word is considered
-   * if its confidence is greater than or equal to the threshold. Specify a probability between 0.0 and 1.0. No
+   * if its confidence is greater than or equal to the threshold. Specify a probability between 0 and 1 inclusive. No
    * alternative words are computed if you omit the parameter.
-   * @param {boolean} [params.word_confidence] - If `true`, the service returns a confidence measure in the range of 0.0
-   * to 1.0 for each word. By default, no word confidence measures are returned.
-   * @param {boolean} [params.timestamps] - If `true`, the service returns time alignment for each word. By default, no
+   * @param {boolean} [params.word_confidence] - If `true`, a confidence measure in the range of 0 to 1 is returned for
+   * each word. By default, no word confidence measures are returned.
+   * @param {boolean} [params.timestamps] - If `true`, time alignment is returned for each word. By default, no
    * timestamps are returned.
-   * @param {boolean} [params.profanity_filter] - If `true`, the service filters profanity from all output except for
+   * @param {boolean} [params.profanity_filter] - If `true` (the default), filters profanity from all output except for
    * keyword results by replacing inappropriate words with a series of asterisks. Set the parameter to `false` to return
    * results with no censoring. Applies to US English transcription only.
-   * @param {boolean} [params.smart_formatting] - If `true`, the service converts dates, times, series of digits and
-   * numbers, phone numbers, currency values, and internet addresses into more readable, conventional representations in
-   * the final transcript of a recognition request. For US English, the service also converts certain keyword strings to
-   * punctuation symbols. By default, no smart formatting is performed. Applies to US English and Spanish transcription
-   * only.
+   * @param {boolean} [params.smart_formatting] - If `true`, converts dates, times, series of digits and numbers, phone
+   * numbers, currency values, and internet addresses into more readable, conventional representations in the final
+   * transcript of a recognition request. For US English, also converts certain keyword strings to punctuation symbols.
+   * By default, no smart formatting is performed. Applies to US English and Spanish transcription only.
    * @param {boolean} [params.speaker_labels] - If `true`, the response includes labels that identify which words were
    * spoken by which participants in a multi-person exchange. By default, no speaker labels are returned. Setting
    * `speaker_labels` to `true` forces the `timestamps` parameter to be `true`, regardless of whether you specify
@@ -500,31 +499,30 @@ class SpeechToTextV1 extends BaseService {
    * detected in submitted audio, the connection is closed with a 400 error. The parameter is useful for stopping audio
    * submission from a live microphone when a user simply walks away. Use `-1` for infinity.
    * @param {string[]} [params.keywords] - An array of keyword strings to spot in the audio. Each keyword string can
-   * include one or more string tokens. Keywords are spotted only in the final results, not in interim hypotheses. If
-   * you specify any keywords, you must also specify a keywords threshold. You can spot a maximum of 1000 keywords. Omit
-   * the parameter or specify an empty array if you do not need to spot keywords.
+   * include one or more tokens. Keywords are spotted only in the final results, not in interim hypotheses. If you
+   * specify any keywords, you must also specify a keywords threshold. You can spot a maximum of 1000 keywords. Omit the
+   * parameter or specify an empty array if you do not need to spot keywords.
    * @param {number} [params.keywords_threshold] - A confidence value that is the lower bound for spotting a keyword. A
    * word is considered to match a keyword if its confidence is greater than or equal to the threshold. Specify a
-   * probability between 0.0 and 1.0. No keyword spotting is performed if you omit the parameter. If you specify a
+   * probability between 0 and 1 inclusive. No keyword spotting is performed if you omit the parameter. If you specify a
    * threshold, you must also specify one or more keywords.
-   * @param {number} [params.max_alternatives] - The maximum number of alternative transcripts that the service is to
-   * return. By default, a single transcription is returned.
+   * @param {number} [params.max_alternatives] - The maximum number of alternative transcripts to be returned. By
+   * default, a single transcription is returned.
    * @param {number} [params.word_alternatives_threshold] - A confidence value that is the lower bound for identifying a
    * hypothesis as a possible word alternative (also known as "Confusion Networks"). An alternative word is considered
-   * if its confidence is greater than or equal to the threshold. Specify a probability between 0.0 and 1.0. No
+   * if its confidence is greater than or equal to the threshold. Specify a probability between 0 and 1 inclusive. No
    * alternative words are computed if you omit the parameter.
-   * @param {boolean} [params.word_confidence] - If `true`, the service returns a confidence measure in the range of 0.0
-   * to 1.0 for each word. By default, no word confidence measures are returned.
-   * @param {boolean} [params.timestamps] - If `true`, the service returns time alignment for each word. By default, no
+   * @param {boolean} [params.word_confidence] - If `true`, a confidence measure in the range of 0 to 1 is returned for
+   * each word. By default, no word confidence measures are returned.
+   * @param {boolean} [params.timestamps] - If `true`, time alignment is returned for each word. By default, no
    * timestamps are returned.
-   * @param {boolean} [params.profanity_filter] - If `true`, the service filters profanity from all output except for
+   * @param {boolean} [params.profanity_filter] - If `true` (the default), filters profanity from all output except for
    * keyword results by replacing inappropriate words with a series of asterisks. Set the parameter to `false` to return
    * results with no censoring. Applies to US English transcription only.
-   * @param {boolean} [params.smart_formatting] - If `true`, the service converts dates, times, series of digits and
-   * numbers, phone numbers, currency values, and internet addresses into more readable, conventional representations in
-   * the final transcript of a recognition request. For US English, the service also converts certain keyword strings to
-   * punctuation symbols. By default, no smart formatting is performed. Applies to US English and Spanish transcription
-   * only.
+   * @param {boolean} [params.smart_formatting] - If `true`, converts dates, times, series of digits and numbers, phone
+   * numbers, currency values, and internet addresses into more readable, conventional representations in the final
+   * transcript of a recognition request. For US English, also converts certain keyword strings to punctuation symbols.
+   * By default, no smart formatting is performed. Applies to US English and Spanish transcription only.
    * @param {boolean} [params.speaker_labels] - If `true`, the response includes labels that identify which words were
    * spoken by which participants in a multi-person exchange. By default, no speaker labels are returned. Setting
    * `speaker_labels` to `true` forces the `timestamps` parameter to be `true`, regardless of whether you specify
@@ -1143,9 +1141,9 @@ class SpeechToTextV1 extends BaseService {
    * encoding if it encounters non-ASCII characters. With cURL, use the `--data-binary` option to upload the file for
    * the request.
    * @param {boolean} [params.allow_overwrite] - If `true`, the specified corpus or audio resource overwrites an
-   * existing corpus or audio resource with the same name. If `false`, the request fails if a corpus or audio resource
-   * with the same name already exists. The parameter has no effect if a corpus or audio resource with the same name
-   * does not already exist.
+   * existing corpus or audio resource with the same name. If `false` (the default), the request fails if a corpus or
+   * audio resource with the same name already exists. The parameter has no effect if a corpus or audio resource with
+   * the same name does not already exist.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -2100,9 +2098,9 @@ class SpeechToTextV1 extends BaseService {
    * recognition, including the `rate`, `channels`, and `endianness` parameters that are used with some formats. For a
    * complete list of supported audio formats, see [Audio formats](/docs/services/speech-to-text/input.html#formats).
    * @param {boolean} [params.allow_overwrite] - If `true`, the specified corpus or audio resource overwrites an
-   * existing corpus or audio resource with the same name. If `false`, the request fails if a corpus or audio resource
-   * with the same name already exists. The parameter has no effect if a corpus or audio resource with the same name
-   * does not already exist.
+   * existing corpus or audio resource with the same name. If `false` (the default), the request fails if a corpus or
+   * audio resource with the same name already exists. The parameter has no effect if a corpus or audio resource with
+   * the same name does not already exist.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -2425,21 +2423,21 @@ namespace SpeechToTextV1 {
     customization_weight?: number;
     /** The time in seconds after which, if only silence (no speech) is detected in submitted audio, the connection is closed with a 400 error. The parameter is useful for stopping audio submission from a live microphone when a user simply walks away. Use `-1` for infinity. */
     inactivity_timeout?: number;
-    /** An array of keyword strings to spot in the audio. Each keyword string can include one or more string tokens. Keywords are spotted only in the final results, not in interim hypotheses. If you specify any keywords, you must also specify a keywords threshold. You can spot a maximum of 1000 keywords. Omit the parameter or specify an empty array if you do not need to spot keywords. */
+    /** An array of keyword strings to spot in the audio. Each keyword string can include one or more tokens. Keywords are spotted only in the final results, not in interim hypotheses. If you specify any keywords, you must also specify a keywords threshold. You can spot a maximum of 1000 keywords. Omit the parameter or specify an empty array if you do not need to spot keywords. */
     keywords?: string[];
-    /** A confidence value that is the lower bound for spotting a keyword. A word is considered to match a keyword if its confidence is greater than or equal to the threshold. Specify a probability between 0.0 and 1.0. No keyword spotting is performed if you omit the parameter. If you specify a threshold, you must also specify one or more keywords. */
+    /** A confidence value that is the lower bound for spotting a keyword. A word is considered to match a keyword if its confidence is greater than or equal to the threshold. Specify a probability between 0 and 1 inclusive. No keyword spotting is performed if you omit the parameter. If you specify a threshold, you must also specify one or more keywords. */
     keywords_threshold?: number;
-    /** The maximum number of alternative transcripts that the service is to return. By default, a single transcription is returned. */
+    /** The maximum number of alternative transcripts to be returned. By default, a single transcription is returned. */
     max_alternatives?: number;
-    /** A confidence value that is the lower bound for identifying a hypothesis as a possible word alternative (also known as "Confusion Networks"). An alternative word is considered if its confidence is greater than or equal to the threshold. Specify a probability between 0.0 and 1.0. No alternative words are computed if you omit the parameter. */
+    /** A confidence value that is the lower bound for identifying a hypothesis as a possible word alternative (also known as "Confusion Networks"). An alternative word is considered if its confidence is greater than or equal to the threshold. Specify a probability between 0 and 1 inclusive. No alternative words are computed if you omit the parameter. */
     word_alternatives_threshold?: number;
-    /** If `true`, the service returns a confidence measure in the range of 0.0 to 1.0 for each word. By default, no word confidence measures are returned. */
+    /** If `true`, a confidence measure in the range of 0 to 1 is returned for each word. By default, no word confidence measures are returned. */
     word_confidence?: boolean;
-    /** If `true`, the service returns time alignment for each word. By default, no timestamps are returned. */
+    /** If `true`, time alignment is returned for each word. By default, no timestamps are returned. */
     timestamps?: boolean;
-    /** If `true`, the service filters profanity from all output except for keyword results by replacing inappropriate words with a series of asterisks. Set the parameter to `false` to return results with no censoring. Applies to US English transcription only. */
+    /** If `true` (the default), filters profanity from all output except for keyword results by replacing inappropriate words with a series of asterisks. Set the parameter to `false` to return results with no censoring. Applies to US English transcription only. */
     profanity_filter?: boolean;
-    /** If `true`, the service converts dates, times, series of digits and numbers, phone numbers, currency values, and internet addresses into more readable, conventional representations in the final transcript of a recognition request. For US English, the service also converts certain keyword strings to punctuation symbols. By default, no smart formatting is performed. Applies to US English and Spanish transcription only. */
+    /** If `true`, converts dates, times, series of digits and numbers, phone numbers, currency values, and internet addresses into more readable, conventional representations in the final transcript of a recognition request. For US English, also converts certain keyword strings to punctuation symbols. By default, no smart formatting is performed. Applies to US English and Spanish transcription only. */
     smart_formatting?: boolean;
     /** If `true`, the response includes labels that identify which words were spoken by which participants in a multi-person exchange. By default, no speaker labels are returned. Setting `speaker_labels` to `true` forces the `timestamps` parameter to be `true`, regardless of whether you specify `false` for the parameter. To determine whether a language model supports speaker labels, use the **Get models** method and check that the attribute `speaker_labels` is set to `true`. You can also refer to [Speaker labels](https://console.bluemix.net/docs/services/speech-to-text/output.html#speaker_labels). */
     speaker_labels?: boolean;
@@ -2523,21 +2521,21 @@ namespace SpeechToTextV1 {
     customization_weight?: number;
     /** The time in seconds after which, if only silence (no speech) is detected in submitted audio, the connection is closed with a 400 error. The parameter is useful for stopping audio submission from a live microphone when a user simply walks away. Use `-1` for infinity. */
     inactivity_timeout?: number;
-    /** An array of keyword strings to spot in the audio. Each keyword string can include one or more string tokens. Keywords are spotted only in the final results, not in interim hypotheses. If you specify any keywords, you must also specify a keywords threshold. You can spot a maximum of 1000 keywords. Omit the parameter or specify an empty array if you do not need to spot keywords. */
+    /** An array of keyword strings to spot in the audio. Each keyword string can include one or more tokens. Keywords are spotted only in the final results, not in interim hypotheses. If you specify any keywords, you must also specify a keywords threshold. You can spot a maximum of 1000 keywords. Omit the parameter or specify an empty array if you do not need to spot keywords. */
     keywords?: string[];
-    /** A confidence value that is the lower bound for spotting a keyword. A word is considered to match a keyword if its confidence is greater than or equal to the threshold. Specify a probability between 0.0 and 1.0. No keyword spotting is performed if you omit the parameter. If you specify a threshold, you must also specify one or more keywords. */
+    /** A confidence value that is the lower bound for spotting a keyword. A word is considered to match a keyword if its confidence is greater than or equal to the threshold. Specify a probability between 0 and 1 inclusive. No keyword spotting is performed if you omit the parameter. If you specify a threshold, you must also specify one or more keywords. */
     keywords_threshold?: number;
-    /** The maximum number of alternative transcripts that the service is to return. By default, a single transcription is returned. */
+    /** The maximum number of alternative transcripts to be returned. By default, a single transcription is returned. */
     max_alternatives?: number;
-    /** A confidence value that is the lower bound for identifying a hypothesis as a possible word alternative (also known as "Confusion Networks"). An alternative word is considered if its confidence is greater than or equal to the threshold. Specify a probability between 0.0 and 1.0. No alternative words are computed if you omit the parameter. */
+    /** A confidence value that is the lower bound for identifying a hypothesis as a possible word alternative (also known as "Confusion Networks"). An alternative word is considered if its confidence is greater than or equal to the threshold. Specify a probability between 0 and 1 inclusive. No alternative words are computed if you omit the parameter. */
     word_alternatives_threshold?: number;
-    /** If `true`, the service returns a confidence measure in the range of 0.0 to 1.0 for each word. By default, no word confidence measures are returned. */
+    /** If `true`, a confidence measure in the range of 0 to 1 is returned for each word. By default, no word confidence measures are returned. */
     word_confidence?: boolean;
-    /** If `true`, the service returns time alignment for each word. By default, no timestamps are returned. */
+    /** If `true`, time alignment is returned for each word. By default, no timestamps are returned. */
     timestamps?: boolean;
-    /** If `true`, the service filters profanity from all output except for keyword results by replacing inappropriate words with a series of asterisks. Set the parameter to `false` to return results with no censoring. Applies to US English transcription only. */
+    /** If `true` (the default), filters profanity from all output except for keyword results by replacing inappropriate words with a series of asterisks. Set the parameter to `false` to return results with no censoring. Applies to US English transcription only. */
     profanity_filter?: boolean;
-    /** If `true`, the service converts dates, times, series of digits and numbers, phone numbers, currency values, and internet addresses into more readable, conventional representations in the final transcript of a recognition request. For US English, the service also converts certain keyword strings to punctuation symbols. By default, no smart formatting is performed. Applies to US English and Spanish transcription only. */
+    /** If `true`, converts dates, times, series of digits and numbers, phone numbers, currency values, and internet addresses into more readable, conventional representations in the final transcript of a recognition request. For US English, also converts certain keyword strings to punctuation symbols. By default, no smart formatting is performed. Applies to US English and Spanish transcription only. */
     smart_formatting?: boolean;
     /** If `true`, the response includes labels that identify which words were spoken by which participants in a multi-person exchange. By default, no speaker labels are returned. Setting `speaker_labels` to `true` forces the `timestamps` parameter to be `true`, regardless of whether you specify `false` for the parameter. To determine whether a language model supports speaker labels, use the **Get models** method and check that the attribute `speaker_labels` is set to `true`. You can also refer to [Speaker labels](https://console.bluemix.net/docs/services/speech-to-text/output.html#speaker_labels). */
     speaker_labels?: boolean;
@@ -2707,7 +2705,7 @@ namespace SpeechToTextV1 {
     corpus_name: string;
     /** A plain text file that contains the training data for the corpus. Encode the file in UTF-8 if it contains non-ASCII characters; the service assumes UTF-8 encoding if it encounters non-ASCII characters. With cURL, use the `--data-binary` option to upload the file for the request. */
     corpus_file: NodeJS.ReadableStream|FileObject|Buffer;
-    /** If `true`, the specified corpus or audio resource overwrites an existing corpus or audio resource with the same name. If `false`, the request fails if a corpus or audio resource with the same name already exists. The parameter has no effect if a corpus or audio resource with the same name does not already exist. */
+    /** If `true`, the specified corpus or audio resource overwrites an existing corpus or audio resource with the same name. If `false` (the default), the request fails if a corpus or audio resource with the same name already exists. The parameter has no effect if a corpus or audio resource with the same name does not already exist. */
     allow_overwrite?: boolean;
     headers?: Object;
   }
@@ -2897,7 +2895,7 @@ namespace SpeechToTextV1 {
     content_type: AddAudioConstants.ContentType | string;
     /** For an archive-type resource, specifies the format of the audio files contained in the archive file. The parameter accepts all of the audio formats supported for use with speech recognition, including the `rate`, `channels`, and `endianness` parameters that are used with some formats. For a complete list of supported audio formats, see [Audio formats](/docs/services/speech-to-text/input.html#formats). */
     contained_content_type?: AddAudioConstants.ContainedContentType | string;
-    /** If `true`, the specified corpus or audio resource overwrites an existing corpus or audio resource with the same name. If `false`, the request fails if a corpus or audio resource with the same name already exists. The parameter has no effect if a corpus or audio resource with the same name does not already exist. */
+    /** If `true`, the specified corpus or audio resource overwrites an existing corpus or audio resource with the same name. If `false` (the default), the request fails if a corpus or audio resource with the same name already exists. The parameter has no effect if a corpus or audio resource with the same name does not already exist. */
     allow_overwrite?: boolean;
     headers?: Object;
   }
@@ -3094,7 +3092,7 @@ namespace SpeechToTextV1 {
     start_time: number;
     /** The end time in seconds of the keyword match. */
     end_time: number;
-    /** A confidence score for the keyword match in the range of 0.0 to 1.0. */
+    /** A confidence score for the keyword match in the range of 0 to 1. */
     confidence: number;
   }
 
@@ -3174,7 +3172,7 @@ namespace SpeechToTextV1 {
     to: number;
     /** The numeric identifier that the service assigns to a speaker from the audio. Speaker IDs begin at `0` initially but can evolve and change across interim results (if supported by the method) and between interim and final results as the service processes the audio. They are not guaranteed to be sequential, contiguous, or ordered. */
     speaker: number;
-    /** A score that indicates the service's confidence in its identification of the speaker in the range of 0.0 to 1.0. */
+    /** A score that indicates the service's confidence in its identification of the speaker in the range of 0 to 1. */
     confidence: number;
     /** An indication of whether the service might further change word and speaker-label results. A value of `true` means that the service guarantees not to send any further updates for the current or any preceding results; `false` means that the service might send further updates to the results. */
     final_results: boolean;
@@ -3194,6 +3192,8 @@ namespace SpeechToTextV1 {
     supported_features: SupportedFeatures;
     /** Brief description of the model. */
     description: string;
+    /** The URI for the model for use with the **Create a session** method. This field is returned only by the **Get a model** method. */
+    sessions?: string;
   }
 
   /** SpeechModels. */
@@ -3206,11 +3206,11 @@ namespace SpeechToTextV1 {
   export interface SpeechRecognitionAlternative {
     /** A transcription of the audio. */
     transcript: string;
-    /** A score that indicates the service's confidence in the transcript in the range of 0.0 to 1.0. Returned only for the best alternative and only with results marked as final. */
+    /** A score that indicates the service's confidence in the transcript in the range of 0 to 1. Returned only for the best alternative and only with results marked as final. */
     confidence?: number;
-    /** Time alignments for each word from the transcript as a list of lists. Each inner list consists of three elements: the word followed by its start and end time in seconds, for example: `[["hello",0.0,1.2],["world",1.2,2.5]]`. Returned only for the best alternative. */
+    /** Time alignments for each word from the transcript as a list of lists. Each inner list consists of three elements: the word followed by its start and end time in seconds. Example: `[["hello",0.0,1.2],["world",1.2,2.5]]`. Returned only for the best alternative. */
     timestamps?: string[];
-    /** A confidence score for each word of the transcript as a list of lists. Each inner list consists of two elements: the word and its confidence score in the range of 0.0 to 1.0, for example: `[["hello",0.95],["world",0.866]]`. Returned only for the best alternative and only with results marked as final. */
+    /** A confidence score for each word of the transcript as a list of lists. Each inner list consists of two elements: the word and its confidence score in the range of 0 to 1. Example: `[["hello",0.95],["world",0.866]]`. Returned only for the best alternative and only with results marked as final. */
     word_confidence?: string[];
   }
 
@@ -3264,7 +3264,7 @@ namespace SpeechToTextV1 {
 
   /** WordAlternativeResult. */
   export interface WordAlternativeResult {
-    /** A confidence score for the word alternative hypothesis in the range of 0.0 to 1.0. */
+    /** A confidence score for the word alternative hypothesis in the range of 0 to 1. */
     confidence: number;
     /** An alternative hypothesis for a word from the input audio. */
     word: string;

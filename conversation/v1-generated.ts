@@ -153,7 +153,6 @@ class ConversationV1 extends BaseService {
    * @param {Object} [params.metadata] - Any metadata related to the workspace.
    * @param {boolean} [params.learning_opt_out] - Whether training data from the workspace can be used by IBM for
    * general service improvements. `true` indicates that workspace training data is not to be used.
-   * @param {WorkspaceSystemSettings} [params.system_settings] - Global settings for the workspace.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -170,8 +169,7 @@ class ConversationV1 extends BaseService {
       'dialog_nodes': _params.dialog_nodes,
       'counterexamples': _params.counterexamples,
       'metadata': _params.metadata,
-      'learning_opt_out': _params.learning_opt_out,
-      'system_settings': _params.system_settings
+      'learning_opt_out': _params.learning_opt_out
     };
     const parameters = {
       options: {
@@ -346,7 +344,6 @@ class ConversationV1 extends BaseService {
    * @param {Object} [params.metadata] - Any metadata related to the workspace.
    * @param {boolean} [params.learning_opt_out] - Whether training data from the workspace can be used by IBM for
    * general service improvements. `true` indicates that workspace training data is not to be used.
-   * @param {WorkspaceSystemSettings} [params.system_settings] - Global settings for the workspace.
    * @param {boolean} [params.append] - Whether the new data is to be appended to the existing data in the workspace. If
    * **append**=`false`, elements included in the new data completely replace the corresponding existing elements,
    * including all subelements. For example, if the new data includes **entities** and **append**=`false`, all existing
@@ -375,8 +372,7 @@ class ConversationV1 extends BaseService {
       'dialog_nodes': _params.dialog_nodes,
       'counterexamples': _params.counterexamples,
       'metadata': _params.metadata,
-      'learning_opt_out': _params.learning_opt_out,
-      'system_settings': _params.system_settings
+      'learning_opt_out': _params.learning_opt_out
     };
     const query = {
       'append': _params.append
@@ -689,7 +685,6 @@ class ConversationV1 extends BaseService {
    * - It cannot contain carriage return, newline, or tab characters.
    * - It cannot consist of only whitespace characters.
    * - It must be no longer than 1024 characters.
-   * @param {Mentions[]} [params.mentions] - An array of contextual entity mentions.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -703,8 +698,7 @@ class ConversationV1 extends BaseService {
       return _callback(missingParams);
     }
     const body = {
-      'text': _params.text,
-      'mentions': _params.mentions
+      'text': _params.text
     };
     const path = {
       'workspace_id': _params.workspace_id,
@@ -823,7 +817,7 @@ class ConversationV1 extends BaseService {
   /**
    * List user input examples.
    *
-   * List the user input examples for an intent, optionally including contextual entity mentions.
+   * List the user input examples for an intent.
    *
    * This operation is limited to 2500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
@@ -892,7 +886,6 @@ class ConversationV1 extends BaseService {
    * - It cannot contain carriage return, newline, or tab characters.
    * - It cannot consist of only whitespace characters.
    * - It must be no longer than 1024 characters.
-   * @param {Mentions[]} [params.new_mentions] - An array of contextual entity mentions.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -906,8 +899,7 @@ class ConversationV1 extends BaseService {
       return _callback(missingParams);
     }
     const body = {
-      'text': _params.new_text,
-      'mentions': _params.new_mentions
+      'text': _params.new_text
     };
     const path = {
       'workspace_id': _params.workspace_id,
@@ -1446,62 +1438,6 @@ class ConversationV1 extends BaseService {
         headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
-    return this.createRequest(parameters, _callback);
-  };
-
-  /*************************
-   * mentions
-   ************************/
-
-  /**
-   * List entity mentions.
-   *
-   * List mentions for a contextual entity. An entity mention is an occurrence of a contextual entity in the context of
-   * an intent user input example.
-   *
-   * This operation is limited to 200 requests per 30 minutes. For more information, see **Rate limiting**.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {string} params.entity - The name of the entity.
-   * @param {boolean} [params.export] - Whether to include all element content in the returned data. If
-   * **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all
-   * content, including subelements, is included.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
-   * timestamps) in the response.
-   * @param {Object} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
-   */
-  public listEntityMentions(params: ConversationV1.ListEntityMentionsParams, callback?: ConversationV1.Callback<ConversationV1.EntityMentionCollection>): NodeJS.ReadableStream | void {
-    const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
-    const requiredParams = ['workspace_id', 'entity'];
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-    const query = {
-      'export': _params.export,
-      'include_audit': _params.include_audit
-    };
-    const path = {
-      'workspace_id': _params.workspace_id,
-      'entity': _params.entity
-    };
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/entities/{entity}/mentions',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
-          'Accept': 'application/json',
         }, _params.headers),
       }),
     };
@@ -2096,8 +2032,8 @@ class ConversationV1 extends BaseService {
    * carriage return, newline, or tab characters, and it must be no longer than 2048 characters.
    * @param {string} [params.parent] - The ID of the parent dialog node.
    * @param {string} [params.previous_sibling] - The ID of the previous dialog node.
-   * @param {DialogNodeOutput} [params.output] - The output of the dialog node. For more information about how to
-   * specify dialog node output, see the
+   * @param {Object} [params.output] - The output of the dialog node. For more information about how to specify dialog
+   * node output, see the
    * [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex).
    * @param {Object} [params.context] - The context for the dialog node.
    * @param {Object} [params.metadata] - The metadata for the dialog node.
@@ -2115,8 +2051,6 @@ class ConversationV1 extends BaseService {
    * @param {string} [params.digress_out] - Whether this dialog node can be returned to after a digression.
    * @param {string} [params.digress_out_slots] - Whether the user can digress to top-level nodes while filling out
    * slots.
-   * @param {string} [params.user_label] - A label that can be displayed externally to describe the purpose of the node
-   * to users.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -2146,8 +2080,7 @@ class ConversationV1 extends BaseService {
       'variable': _params.variable,
       'digress_in': _params.digress_in,
       'digress_out': _params.digress_out,
-      'digress_out_slots': _params.digress_out_slots,
-      'user_label': _params.user_label
+      'digress_out_slots': _params.digress_out_slots
     };
     const path = {
       'workspace_id': _params.workspace_id
@@ -2332,8 +2265,8 @@ class ConversationV1 extends BaseService {
    * contain carriage return, newline, or tab characters, and it must be no longer than 2048 characters.
    * @param {string} [params.new_parent] - The ID of the parent dialog node.
    * @param {string} [params.new_previous_sibling] - The ID of the previous sibling dialog node.
-   * @param {DialogNodeOutput} [params.new_output] - The output of the dialog node. For more information about how to
-   * specify dialog node output, see the
+   * @param {Object} [params.new_output] - The output of the dialog node. For more information about how to specify
+   * dialog node output, see the
    * [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex).
    * @param {Object} [params.new_context] - The context for the dialog node.
    * @param {Object} [params.new_metadata] - The metadata for the dialog node.
@@ -2351,8 +2284,6 @@ class ConversationV1 extends BaseService {
    * @param {string} [params.new_digress_out] - Whether this dialog node can be returned to after a digression.
    * @param {string} [params.new_digress_out_slots] - Whether the user can digress to top-level nodes while filling out
    * slots.
-   * @param {string} [params.new_user_label] - A label that can be displayed externally to describe the purpose of the
-   * node to users.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -2382,8 +2313,7 @@ class ConversationV1 extends BaseService {
       'actions': _params.new_actions,
       'digress_in': _params.new_digress_in,
       'digress_out': _params.new_digress_out,
-      'digress_out_slots': _params.new_digress_out_slots,
-      'user_label': _params.new_user_label
+      'digress_out_slots': _params.new_digress_out_slots
     };
     const path = {
       'workspace_id': _params.workspace_id,
@@ -2636,8 +2566,6 @@ namespace ConversationV1 {
     metadata?: Object;
     /** Whether training data from the workspace can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used. */
     learning_opt_out?: boolean;
-    /** Global settings for the workspace. */
-    system_settings?: WorkspaceSystemSettings;
     headers?: Object;
   }
 
@@ -2696,8 +2624,6 @@ namespace ConversationV1 {
     metadata?: Object;
     /** Whether training data from the workspace can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used. */
     learning_opt_out?: boolean;
-    /** Global settings for the workspace. */
-    system_settings?: WorkspaceSystemSettings;
     /** Whether the new data is to be appended to the existing data in the workspace. If **append**=`false`, elements included in the new data completely replace the corresponding existing elements, including all subelements. For example, if the new data includes **entities** and **append**=`false`, all existing entities in the workspace are discarded and replaced with the new entities. If **append**=`true`, existing elements are preserved, and the new elements are added. If any elements in the new data collide with existing elements, the update request fails. */
     append?: boolean;
     headers?: Object;
@@ -2780,8 +2706,6 @@ namespace ConversationV1 {
     intent: string;
     /** The text of a user input example. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 1024 characters. */
     text: string;
-    /** An array of contextual entity mentions. */
-    mentions?: Mentions[];
     headers?: Object;
   }
 
@@ -2838,8 +2762,6 @@ namespace ConversationV1 {
     text: string;
     /** The text of the user input example. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 1024 characters. */
     new_text?: string;
-    /** An array of contextual entity mentions. */
-    new_mentions?: Mentions[];
     headers?: Object;
   }
 
@@ -2974,19 +2896,6 @@ namespace ConversationV1 {
     new_fuzzy_match?: boolean;
     /** An array of entity values. */
     new_values?: CreateValue[];
-    headers?: Object;
-  }
-
-  /** Parameters for the `listEntityMentions` operation. */
-  export interface ListEntityMentionsParams {
-    /** Unique identifier of the workspace. */
-    workspace_id: string;
-    /** The name of the entity. */
-    entity: string;
-    /** Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included. */
-    export?: boolean;
-    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
-    include_audit?: boolean;
     headers?: Object;
   }
 
@@ -3187,7 +3096,7 @@ namespace ConversationV1 {
     /** The ID of the previous dialog node. */
     previous_sibling?: string;
     /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex). */
-    output?: DialogNodeOutput;
+    output?: Object;
     /** The context for the dialog node. */
     context?: Object;
     /** The metadata for the dialog node. */
@@ -3210,8 +3119,6 @@ namespace ConversationV1 {
     digress_out?: CreateDialogNodeConstants.DigressOut | string;
     /** Whether the user can digress to top-level nodes while filling out slots. */
     digress_out_slots?: CreateDialogNodeConstants.DigressOutSlots | string;
-    /** A label that can be displayed externally to describe the purpose of the node to users. */
-    user_label?: string;
     headers?: Object;
   }
 
@@ -3312,7 +3219,7 @@ namespace ConversationV1 {
     /** The ID of the previous sibling dialog node. */
     new_previous_sibling?: string;
     /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex). */
-    new_output?: DialogNodeOutput;
+    new_output?: Object;
     /** The context for the dialog node. */
     new_context?: Object;
     /** The metadata for the dialog node. */
@@ -3335,8 +3242,6 @@ namespace ConversationV1 {
     new_digress_out?: UpdateDialogNodeConstants.DigressOut | string;
     /** Whether the user can digress to top-level nodes while filling out slots. */
     new_digress_out_slots?: UpdateDialogNodeConstants.DigressOutSlots | string;
-    /** A label that can be displayed externally to describe the purpose of the node to users. */
-    new_user_label?: string;
     headers?: Object;
   }
 
@@ -3475,7 +3380,7 @@ namespace ConversationV1 {
     /** The ID of the previous dialog node. */
     previous_sibling?: string;
     /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex). */
-    output?: DialogNodeOutput;
+    output?: Object;
     /** The context for the dialog node. */
     context?: Object;
     /** The metadata for the dialog node. */
@@ -3498,8 +3403,6 @@ namespace ConversationV1 {
     digress_out?: string;
     /** Whether the user can digress to top-level nodes while filling out slots. */
     digress_out_slots?: string;
-    /** A label that can be displayed externally to describe the purpose of the node to users. */
-    user_label?: string;
   }
 
   /** CreateEntity. */
@@ -3520,8 +3423,6 @@ namespace ConversationV1 {
   export interface CreateExample {
     /** The text of a user input example. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 1024 characters. */
     text: string;
-    /** An array of contextual entity mentions. */
-    mentions?: Mentions[];
   }
 
   /** CreateIntent. */
@@ -3560,8 +3461,8 @@ namespace ConversationV1 {
     parent?: string;
     /** The ID of the previous sibling dialog node. This property is not returned if the dialog node has no previous sibling. */
     previous_sibling?: string;
-    /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex). */
-    output?: DialogNodeOutput;
+    /** The output of the dialog node. */
+    output?: Object;
     /** The context (if defined) for the dialog node. */
     context?: Object;
     /** Any metadata for the dialog node. */
@@ -3588,8 +3489,6 @@ namespace ConversationV1 {
     digress_out?: string;
     /** Whether the user can digress to top-level nodes while filling out slots. */
     digress_out_slots?: string;
-    /** A label that can be displayed externally to describe the purpose of the node to users. */
-    user_label?: string;
   }
 
   /** DialogNodeAction. */
@@ -3624,70 +3523,6 @@ namespace ConversationV1 {
     selector?: string;
   }
 
-  /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex). */
-  export interface DialogNodeOutput {
-    /** An array of objects describing the output defined for the dialog node. */
-    generic?: DialogNodeOutputGeneric[];
-    /** Options that modify how specified output is handled. */
-    modifiers?: DialogNodeOutputModifiers;
-    /** An object defining text responses in dialog nodes that do not use the `output.generic` object to define responses. New dialog nodes should use `output.generic`. For more information about how to specify dialog node output, see the [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex). */
-    text?: Object;
-  }
-
-  /** DialogNodeOutputGeneric. */
-  export interface DialogNodeOutputGeneric {
-    /** The type of response returned by the dialog node. The specified response type must be supported by the client application or channel. */
-    response_type: string;
-    /** A list of one or more objects defining text responses. Required when **response_type**=`text`. */
-    values?: DialogNodeOutputTextValuesElement[];
-    /** How a response is selected from the list, if more than one response is specified. Valid only when **response_type**=`text`. */
-    selection_policy?: string;
-    /** The delimiter to use as a separator between responses when `selection_policy`=`multiline`. */
-    delimiter?: string;
-    /** How long to pause, in milliseconds. The valid values are from 0 to 10000. Valid only when **response_type**=`pause`. */
-    time?: number;
-    /** Whether to send a "user is typing" event during the pause. Ignored if the channel does not support this event. Valid only when **response_type**=`pause`. */
-    typing?: boolean;
-    /** The URL of the image. Required when **response_type**=`image`. */
-    source?: string;
-    /** An optional title to show before the response. Valid only when **response_type**=`image` or `option`. */
-    title?: string;
-    /** An optional description to show with the response. Valid only when **response_type**=`image` or `option`. */
-    description?: string;
-    /** The preferred type of control to display, if supported by the channel. Valid only when **response_type**=`option`. */
-    preference?: string;
-    /** An array of objects describing the options from which the user can choose. Required when **response_type**=`option`. */
-    options?: DialogNodeOutputOptionsElement[];
-    /** An optional message to be sent to the human agent who will be taking over the conversation. Valid only when **reponse_type**=`connect_to_agent`. */
-    message_to_human_agent?: string;
-  }
-
-  /** Options that modify how specified output is handled. */
-  export interface DialogNodeOutputModifiers {
-    /** Whether values in the output will overwrite output values in an array specified by previously executed dialog nodes. If this option is set to **false**, new values will be appended to previously specified values. */
-    overwrite?: boolean;
-  }
-
-  /** DialogNodeOutputOptionsElement. */
-  export interface DialogNodeOutputOptionsElement {
-    /** The user-facing label for the option. */
-    label: string;
-    /** An object defining the message input to be sent to the Conversation service if the user selects the corresponding option. */
-    value: DialogNodeOutputOptionsElementValue;
-  }
-
-  /** An object defining the message input to be sent to the Conversation service if the user selects the corresponding option. */
-  export interface DialogNodeOutputOptionsElementValue {
-    /** The user input. */
-    input?: InputData;
-  }
-
-  /** DialogNodeOutputTextValuesElement. */
-  export interface DialogNodeOutputTextValuesElement {
-    /** The text of a response. This can include newline characters (` `), Markdown tagging, or other special characters, if supported by the channel. */
-    text?: string;
-  }
-
   /** DialogNodeVisitedDetails. */
   export interface DialogNodeVisitedDetails {
     /** A dialog node that was triggered during processing of the input message. */
@@ -3696,54 +3531,6 @@ namespace ConversationV1 {
     title?: string;
     /** The conditions that trigger the dialog node. */
     conditions?: string;
-  }
-
-  /** DialogRuntimeResponseGeneric. */
-  export interface DialogRuntimeResponseGeneric {
-    /** The type of response returned by the dialog node. The specified response type must be supported by the client application or channel. **Note:** The **suggestion** response type is part of the disambiguation feature, which is only available for Premium users. */
-    response_type: string;
-    /** The text of the response. */
-    text?: string;
-    /** How long to pause, in milliseconds. */
-    time?: number;
-    /** Whether to send a "user is typing" event during the pause. */
-    typing?: boolean;
-    /** The URL of the image. */
-    source?: string;
-    /** The title to show before the response. */
-    title?: string;
-    /** The description to show with the the response. */
-    description?: string;
-    /** The preferred type of control to display. */
-    preference?: string;
-    /** An array of objects describing the options from which the user can choose. */
-    options?: DialogNodeOutputOptionsElement[];
-    /** A message to be sent to the human agent who will be taking over the conversation. */
-    message_to_human_agent?: string;
-    /** A label identifying the topic of the conversation, derived from the **user_label** property of the relevant node. */
-    topic?: string;
-    /** An array of objects describing the possible matching dialog nodes from which the user can choose. **Note:** The **suggestions** property is part of the disambiguation feature, which is only available for Premium users. */
-    suggestions?: DialogSuggestion[];
-  }
-
-  /** DialogSuggestion. */
-  export interface DialogSuggestion {
-    /** The user-facing label for the disambiguation option. This label is taken from the **user_label** property of the corresponding dialog node. */
-    label: string;
-    /** An object defining the message input, intents, and entities to be sent to the Conversation service if the user selects the corresponding disambiguation option. */
-    value: DialogSuggestionValue;
-    /** The dialog output that will be returned from the Conversation service if the user selects the corresponding option. */
-    output?: Object;
-  }
-
-  /** An object defining the message input, intents, and entities to be sent to the Conversation service if the user selects the corresponding disambiguation option. */
-  export interface DialogSuggestionValue {
-    /** The user input. */
-    input?: InputData;
-    /** An array of intents to be sent along with the user input. */
-    intents?: RuntimeIntent[];
-    /** An array of entities to be sent along with the user input. */
-    entities?: RuntimeEntity[];
   }
 
   /** Entity. */
@@ -3788,24 +3575,6 @@ namespace ConversationV1 {
     values?: ValueExport[];
   }
 
-  /** An object describing a contextual entity mention. */
-  export interface EntityMention {
-    /** The text of the user input example. */
-    example_text: string;
-    /** The name of the intent. */
-    intent_name: string;
-    /** An array of zero-based character offsets that indicate where the entity mentions begin and end in the input text. */
-    location: number[];
-  }
-
-  /** EntityMentionCollection. */
-  export interface EntityMentionCollection {
-    /** An array of objects describing the entity mentions defined for an entity. */
-    examples: EntityMention[];
-    /** The pagination data for the returned objects. */
-    pagination: Pagination;
-  }
-
   /** Example. */
   export interface Example {
     /** The text of the user input example. */
@@ -3814,8 +3583,6 @@ namespace ConversationV1 {
     created?: string;
     /** The timestamp for the last update to the example. */
     updated?: string;
-    /** An array of contextual entity mentions. */
-    mentions?: Mentions[];
   }
 
   /** ExampleCollection. */
@@ -3910,21 +3677,13 @@ namespace ConversationV1 {
     next_cursor?: string;
   }
 
-  /** A mention of a contextual entity. */
-  export interface Mentions {
-    /** The name of the entity. */
-    entity: string;
-    /** An array of zero-based character offsets that indicate where the entity mentions begin and end in the input text. */
-    location: number[];
-  }
-
   /** The text of the user input. */
   export interface MessageInput {
     /** The user's input. */
     text?: string;
   }
 
-  /** A message request formatted for the Conversation service. */
+  /** A request formatted for the Conversation service. */
   export interface MessageRequest {
     /** An input object that includes the input text. */
     input?: InputData;
@@ -3956,14 +3715,12 @@ namespace ConversationV1 {
     output: OutputData;
   }
 
-  /** An output object that includes the response to the user, the dialog nodes that were triggered, and messages from the log. */
+  /** An output object that includes the response to the user, the nodes that were hit, and messages from the log. */
   export interface OutputData {
     /** An array of up to 50 messages logged with the request. */
     log_messages: LogMessage[];
     /** An array of responses to the user. */
     text: string[];
-    /** Output intended for any channel. It is the responsibility of the client application to implement the supported response types. */
-    generic?: DialogRuntimeResponseGeneric[];
     /** An array of the nodes that were triggered to create the response, in the order in which they were visited. This information is useful for debugging and for tracing the path taken through the node tree. */
     nodes_visited?: string[];
     /** An array of objects containing detailed diagnostic information about the nodes that were triggered during processing of the input message. Included only if **nodes_visited_details** is set to `true` in the message request. */
@@ -4094,8 +3851,6 @@ namespace ConversationV1 {
     metadata?: Object;
     /** Whether training data from the workspace (including artifacts such as intents and entities) can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used. */
     learning_opt_out?: boolean;
-    /** Global settings for the workspace. */
-    system_settings?: WorkspaceSystemSettings;
   }
 
   /** WorkspaceCollection. */
@@ -4126,8 +3881,6 @@ namespace ConversationV1 {
     status: string;
     /** Whether training data from the workspace can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used. */
     learning_opt_out: boolean;
-    /** Global settings for the workspace. */
-    system_settings?: WorkspaceSystemSettings;
     /** An array of intents. */
     intents?: IntentExport[];
     /** An array of entities. */
@@ -4136,34 +3889,6 @@ namespace ConversationV1 {
     counterexamples?: Counterexample[];
     /** An array of objects describing the dialog nodes in the workspace. */
     dialog_nodes?: DialogNode[];
-  }
-
-  /** WorkspaceSystemSettings. */
-  export interface WorkspaceSystemSettings {
-    /** Workspace settings related to the Conversation tool. */
-    tooling?: WorkspaceSystemSettingsTooling;
-    /** Workspace settings related to the disambiguation feature. **Note:** This feature is available only to Premium users. */
-    disambiguation?: WorkspaceSystemSettingsDisambiguation;
-    /** For internal use only. */
-    human_agent_assist?: Object;
-  }
-
-  /** WorkspaceSystemSettingsDisambiguation. */
-  export interface WorkspaceSystemSettingsDisambiguation {
-    /** The text of the introductory prompt that accompanies disambiguation options presented to the user. */
-    prompt?: string;
-    /** The user-facing label for the option users can select if none of the suggested options is correct. If no value is specified for this property, this option does not appear. */
-    none_of_the_above_prompt?: string;
-    /** Whether the disambiguation feature is enabled for the workspace. */
-    enabled?: boolean;
-    /** The sensitivity of the disambiguation feature to intent detection conflicts. Set to **high** if you want the disambiguation feature to be triggered more often. This can be useful for testing or demonstration purposes. */
-    sensitivity?: string;
-  }
-
-  /** WorkspaceSystemSettingsTooling. */
-  export interface WorkspaceSystemSettingsTooling {
-    /** Whether the dialog JSON editor displays text responses within the `output.generic` object. */
-    store_generic_responses?: boolean;
   }
 
 }

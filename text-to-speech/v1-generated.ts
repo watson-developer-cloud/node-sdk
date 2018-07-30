@@ -185,6 +185,7 @@ class TextToSpeechV1 extends BaseService {
         json: true,
         body,
         qs: query,
+        encoding: null,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, {

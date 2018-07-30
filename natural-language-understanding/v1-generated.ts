@@ -365,12 +365,6 @@ namespace NaturalLanguageUnderstandingV1 {
     dbpedia_resource?: string;
   }
 
-  /** Delete model results. */
-  export interface InlineResponse200 {
-    /** model_id of the deleted model. */
-    deleted?: string;
-  }
-
   /** Disambiguation information for the entity. */
   export interface DisambiguationResult {
     /** Common entity name. */
@@ -499,6 +493,12 @@ namespace NaturalLanguageUnderstandingV1 {
   export interface Feed {
     /** URL of the RSS or ATOM feed. */
     link?: string;
+  }
+
+  /** InlineResponse200. */
+  export interface InlineResponse200 {
+    /** model_id of the deleted model. */
+    deleted?: string;
   }
 
   /** An option indicating whether or not important keywords from the analyzed content should be returned. */
