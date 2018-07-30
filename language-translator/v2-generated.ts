@@ -21,7 +21,7 @@ import { getMissingParams } from '../lib/helper';
 import { FileObject } from '../lib/helper';
 
 /**
- * ---  Language Translator v3 is [available](https://www.ibm.com/watson/developercloud/language-translator/api/v3/). See the [migration guide](https://console.bluemix.net/docs/services/language-translator/migrating.html).  ---  IBM Watson&trade; Language Translator translates text from one language to another. The service offers multiple domain-specific models that you can customize based on your unique terminology and language. Use Language Translator to take news from across the globe and present it in your language, communicate with your customers in their own language, and more.
+ * @deprecated Language Translator v3 is [available](https://www.ibm.com/watson/developercloud/language-translator/api/v3/). See the [migration guide](https://console.bluemix.net/docs/services/language-translator/migrating.html).  ---  IBM Watson&trade; Language Translator translates text from one language to another. The service offers multiple domain-specific models that you can customize based on your unique terminology and language. Use Language Translator to take news from across the globe and present it in your language, communicate with your customers in their own language, and more.
  */
 
 class LanguageTranslatorV2 extends BaseService {
