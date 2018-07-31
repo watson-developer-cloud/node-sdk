@@ -917,12 +917,12 @@ describe('conversation-v1', function() {
     });
   });
 
-  describe('listEntityMentions()', function() {
+  describe('listMentions()', function() {
     it('should check no parameters provided (negative test)', function() {
-      conversation.listEntityMentions({}, missingParameter);
-      conversation.listEntityMentions(null, missingParameter);
-      conversation.listEntityMentions(undefined, missingParameter);
-      conversation.listEntityMentions({ workspace_id: '123' }, missingParameter);
+      conversation.listMentions({}, missingParameter);
+      conversation.listMentions(null, missingParameter);
+      conversation.listMentions(undefined, missingParameter);
+      conversation.listMentions({ workspace_id: '123' }, missingParameter);
     });
 
     it('should generate a valid payload', function() {
@@ -944,7 +944,7 @@ describe('conversation-v1', function() {
         params.export +
         '&include_audit=' +
         params.include_audit;
-      const req = conversation.listEntityMentions(params, noop);
+      const req = conversation.listMentions(params, noop);
       assert.equal(req.uri.href, path);
       assert.equal(req.method, 'GET');
     });

@@ -958,13 +958,13 @@ describe('assistant_integration', function() {
     });
   });
 
-  describe('listEntityMentions()', function() {
+  describe('listMentions()', function() {
     it('should return an EntityMentionCollection', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
         entity: test_entities_update.entity,
       };
-      assistant.listEntityMentions(params, function(err, result) {
+      assistant.listMentions(params, function(err, result) {
         if (err) {
           return done(err);
         }
