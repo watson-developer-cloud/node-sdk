@@ -1476,7 +1476,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listEntityMentions(params: AssistantV1.ListEntityMentionsParams, callback?: AssistantV1.Callback<AssistantV1.EntityMentionCollection>): NodeJS.ReadableStream | void {
+  public listMentions(params: AssistantV1.ListMentionsParams, callback?: AssistantV1.Callback<AssistantV1.EntityMentionCollection>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'entity'];
@@ -2977,8 +2977,8 @@ namespace AssistantV1 {
     headers?: Object;
   }
 
-  /** Parameters for the `listEntityMentions` operation. */
-  export interface ListEntityMentionsParams {
+  /** Parameters for the `listMentions` operation. */
+  export interface ListMentionsParams {
     /** Unique identifier of the workspace. */
     workspace_id: string;
     /** The name of the entity. */
@@ -3630,8 +3630,6 @@ namespace AssistantV1 {
     generic?: DialogNodeOutputGeneric[];
     /** Options that modify how specified output is handled. */
     modifiers?: DialogNodeOutputModifiers;
-    /** An object defining text responses in dialog nodes that do not use the `output.generic` object to define responses. New dialog nodes should use `output.generic`. For more information about how to specify dialog node output, see the [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex). */
-    text?: Object;
   }
 
   /** DialogNodeOutputGeneric. */
