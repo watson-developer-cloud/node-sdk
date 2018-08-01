@@ -531,7 +531,7 @@ speechToText.recognize(params, <span class="hljs-function"><span class="hljs-key
 
 <span class="hljs-comment">// or streaming</span>
 fs.createReadStream(<span class="hljs-string">'./resources/speech.wav'</span>)
-  .pipe(speechToText.createRecognizeStream({ <span class="hljs-attr">content_type</span>: <span class="hljs-string">'audio/l16; rate=44100'</span> }))
+  .pipe(speechToText.recognizeUsingWebSocket({ <span class="hljs-attr">content_type</span>: <span class="hljs-string">'audio/l16; rate=44100'</span> }))
   .pipe(fs.createWriteStream(<span class="hljs-string">'./transcription.txt'</span>));
 </code></pre>
 				<h3 id="text-to-speech">Text to Speech</h3>
