@@ -301,7 +301,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
    * Sets 'Transfer-Encoding': 'chunked' and prepare the connection to send
    * chunk data.
    *
-   * @deprecated use createRecognizeStream instead
+   * @deprecated use recognizeUsingWebSocket instead
    *
    * @param {Object} params The parameters
    * @param {String} [params.content_type] - The Content-type e.g. audio/l16; rate=48000
@@ -373,7 +373,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
    * This request has to be started before POST on recognize finishes,
    * otherwise it waits for the next recognition.
    *
-   * @deprecated use createRecognizeStream instead
+   * @deprecated use recognizeUsingWebSocket instead
    *
    * @param {Object} params The parameters
    * @param {String} [params.session_id] - Session used in the recognition
@@ -440,8 +440,20 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
    *
    * @param {Object} params The parameters
    * @return {RecognizeStream}
+   * @deprecated
    */
   createRecognizeStream(params) {
+    console.warn("WARNING: createRecognizeStream() was renamed to recognizeUsingWebSocket(). Support for createRecognizeStream() will be removed in the next major release");
+    return this.recognizeUsingWebSocket(params);
+  }
+
+  /**
+   * Use the recognize function with a single 2-way stream over websockets
+   *
+   * @param {Object} params The parameters
+   * @return {RecognizeStream}
+   */
+  recognizeUsingWebSocket(params) {
     params = params || {};
     params.url = this._options.url;
 

@@ -56,7 +56,7 @@ interface RecognizeStream extends Duplex {
  * pipe()-able Node.js Readable/Writeable stream - accepts binary audio and emits text in it's `data` events.
  * Also emits `results` events with interim results and other data.
  *
- * Cannot be instantiated directly, instead reated by calling #createRecognizeStream()
+ * Cannot be instantiated directly, instead created by calling #recognizeUsingWebSocket()
  *
  * Uses WebSockets under the hood. For audio with no recognizable speech, no `data` events are emitted.
  * @param {Object} options

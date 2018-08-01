@@ -22,7 +22,7 @@ var params = {
 };
 
 // create the stream
-var recognizeStream = speechToText.createRecognizeStream(params);
+var recognizeStream = speechToText.recognizeUsingWebSocket(params);
 
 // pipe in some audio
 fs.createReadStream(__dirname + '/resources/speech.wav').pipe(recognizeStream);

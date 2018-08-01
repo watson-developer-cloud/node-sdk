@@ -245,13 +245,13 @@ describe('speech_to_text', function() {
     });
   });
 
-  describe('createRecognizeStream()', function() {
+  describe('recognizeUsingWebSocket()', function() {
     it('should return a stream', function() {
-      assert(isStream(speech_to_text.createRecognizeStream()));
+      assert(isStream(speech_to_text.recognizeUsingWebSocket()));
     });
 
     it('should pass the correct parameters into RecognizeStream', function() {
-      const stream = speech_to_text.createRecognizeStream();
+      const stream = speech_to_text.recognizeUsingWebSocket();
       assert.equal(stream.options.url, service.url);
       assert(stream.options.headers.authorization);
       assert(stream.authenticated);
@@ -259,11 +259,15 @@ describe('speech_to_text', function() {
     });
 
     it('should create a token manager in RecognizeStream if using IAM', function() {
-      const stream = rc_speech_to_text.createRecognizeStream();
+      const stream = rc_speech_to_text.recognizeUsingWebSocket();
       assert.equal(stream.options.url, service.url);
       assert.equal(stream.options.headers.authorization, undefined);
       assert.equal(stream.authenticated, false);
       assert(stream.options.token_manager);
+    });
+
+    it('createRecognizeStream should return a stream - compatibility', function() {
+      assert(isStream(speech_to_text.createRecognizeStream()));
     });
   });
 
