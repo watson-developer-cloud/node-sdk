@@ -47,6 +47,7 @@
     "@commitlint/cli": "^7.0.0",
     "@commitlint/config-conventional": "^7.0.1",
     "@semantic-release/changelog": "^3.0.0",
+    "@semantic-release/git": "^7.0.1",
     "browserify": "~16.2.2",
     "codecov": "~3.0.2",
     "concat-stream": "~1.6.2",
