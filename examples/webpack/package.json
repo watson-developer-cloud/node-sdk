@@ -12,7 +12,7 @@
     "dotenv": "^2.0.0",
     "express": "^4.14.0",
     "shebang-loader": "0.0.1",
-    "watson-developer-cloud": "^2.7.1",
+    "watson-developer-cloud": "*",
     "webpack": "^2.2.1",
     "webpack-dev-middleware": "^1.10.0"
   },

@@ -20,6 +20,7 @@ var wavStream = new wav.Writer({
 
 var recognizeStream = speechToText.recognizeUsingWebSocket({
   content_type: 'audio/wav',
+  interim_results: true,
 });
 
 lineIn.pipe(wavStream);
