@@ -124,7 +124,7 @@ describe('speech_to_text_integration', function() {
     speech_to_text.getModels({}, done);
   });
 
-  describe('createRecognizeStream() (RC) (credentials from environment/VCAP) @slow', () => {
+  describe('recognizeUsingWebSocket() (RC) (credentials from environment/VCAP) @slow', () => {
     let env;
     beforeEach(function() {
       env = process.env;
@@ -138,7 +138,7 @@ describe('speech_to_text_integration', function() {
       process.env.SPEECH_TO_TEXT_IAM_APIKEY = auth.speech_to_text_rc.iam_apikey;
       process.env.SPEECH_TO_TEXT_URL = auth.speech_to_text_rc.url;
       const speech_to_text_env = new watson.SpeechToTextV1({});
-      const recognizeStream = speech_to_text_env.createRecognizeStream();
+      const recognizeStream = speech_to_text_env.recognizeUsingWebSocket();
       recognizeStream.setEncoding('utf8');
       fs
         .createReadStream(path.join(__dirname, '../resources/weather.flac'))
@@ -168,7 +168,7 @@ describe('speech_to_text_integration', function() {
         ],
       });
       const speech_to_text_vcap = new watson.SpeechToTextV1({});
-      const recognizeStream = speech_to_text_vcap.createRecognizeStream();
+      const recognizeStream = speech_to_text_vcap.recognizeUsingWebSocket();
       recognizeStream.setEncoding('utf8');
       fs
         .createReadStream(path.join(__dirname, '../resources/weather.flac'))
@@ -187,9 +187,9 @@ describe('speech_to_text_integration', function() {
     });
   });
 
-  describe('createRecognizeStream() (RC)', () => {
+  describe('recognizeUsingWebSocket() (RC)', () => {
     it('transcribes audio over a websocket @slow', function(done) {
-      const recognizeStream = speech_to_text_rc.createRecognizeStream();
+      const recognizeStream = speech_to_text_rc.recognizeUsingWebSocket();
       recognizeStream.setEncoding('utf8');
       fs
         .createReadStream(path.join(__dirname, '../resources/weather.flac'))
@@ -208,9 +208,9 @@ describe('speech_to_text_integration', function() {
     });
   });
 
-  describe('createRecognizeStream()', () => {
+  describe('recognizeUsingWebSocket()', () => {
     it('transcribes audio over a websocket @slow', function(done) {
-      const recognizeStream = speech_to_text.createRecognizeStream();
+      const recognizeStream = speech_to_text.recognizeUsingWebSocket();
       recognizeStream.setEncoding('utf8');
       fs
         .createReadStream(path.join(__dirname, '../resources/weather.flac'))
@@ -229,7 +229,7 @@ describe('speech_to_text_integration', function() {
     });
 
     it('works when stream has no words', function(done) {
-      const recognizeStream = speech_to_text.createRecognizeStream({
+      const recognizeStream = speech_to_text.recognizeUsingWebSocket({
         content_type: 'audio/l16; rate=44100',
       });
       recognizeStream.setEncoding('utf8');

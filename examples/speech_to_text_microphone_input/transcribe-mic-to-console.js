@@ -18,7 +18,7 @@ var wavStream = new wav.Writer({
   channels: 2,
 });
 
-var recognizeStream = speechToText.createRecognizeStream({
+var recognizeStream = speechToText.recognizeUsingWebSocket({
   content_type: 'audio/wav',
 });
 
