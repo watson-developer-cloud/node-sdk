@@ -1,3 +1,10 @@
+# [3.8.0](https://github.com/watson-developer-cloud/node-sdk/compare/v3.7.1...v3.8.0) (2018-08-07)
+
+
+### Features
+
+* regenerate service sdks 7/30/18 ([0f95a92](https://github.com/watson-developer-cloud/node-sdk/commit/0f95a92))
+
 ## Version 3.7.0
 7/12/18
 * Operations added for `Credentials` resource (Discovery)
