@@ -70,7 +70,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>An output object that includes the response to the user, the nodes that were hit, and messages from the log.</p>
+						<p>An output object that includes the response to the user, the dialog nodes that were triggered, and messages from the log.</p>
 					</div>
 				</div>
 			</section>
@@ -89,6 +89,7 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="conversationv1.outputdata.html#generic" class="tsd-kind-icon">generic</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="conversationv1.outputdata.html#log_messages" class="tsd-kind-icon">log_<wbr>messages</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="conversationv1.outputdata.html#nodes_visited" class="tsd-kind-icon">nodes_<wbr>visited</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="conversationv1.outputdata.html#nodes_visited_details" class="tsd-kind-icon">nodes_<wbr>visited_<wbr>details</a></li>
@@ -101,12 +102,27 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="generic" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> generic</h3>
+					<div class="tsd-signature tsd-kind-icon">generic<span class="tsd-signature-symbol">:</span> <a href="conversationv1.dialogruntimeresponsegeneric.html" class="tsd-signature-type">DialogRuntimeResponseGeneric</a><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16db391/conversation/v1-generated.ts#L3964">conversation/v1-generated.ts:3964</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Output intended for any channel. It is the responsibility of the client application to implement the supported response types.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="log_messages" class="tsd-anchor"></a>
 					<h3>log_<wbr>messages</h3>
 					<div class="tsd-signature tsd-kind-icon">log_<wbr>messages<span class="tsd-signature-symbol">:</span> <a href="conversationv1.logmessage.html" class="tsd-signature-type">LogMessage</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e67e254/conversation/v1-generated.ts#L3721">conversation/v1-generated.ts:3721</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16db391/conversation/v1-generated.ts#L3960">conversation/v1-generated.ts:3960</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -121,7 +137,7 @@
 					<div class="tsd-signature tsd-kind-icon">nodes_<wbr>visited<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e67e254/conversation/v1-generated.ts#L3725">conversation/v1-generated.ts:3725</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16db391/conversation/v1-generated.ts#L3966">conversation/v1-generated.ts:3966</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -136,7 +152,7 @@
 					<div class="tsd-signature tsd-kind-icon">nodes_<wbr>visited_<wbr>details<span class="tsd-signature-symbol">:</span> <a href="conversationv1.dialognodevisiteddetails.html" class="tsd-signature-type">DialogNodeVisitedDetails</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e67e254/conversation/v1-generated.ts#L3727">conversation/v1-generated.ts:3727</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16db391/conversation/v1-generated.ts#L3968">conversation/v1-generated.ts:3968</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -151,7 +167,7 @@
 					<div class="tsd-signature tsd-kind-icon">text<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e67e254/conversation/v1-generated.ts#L3723">conversation/v1-generated.ts:3723</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16db391/conversation/v1-generated.ts#L3962">conversation/v1-generated.ts:3962</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -183,6 +199,9 @@
 							<li class="current tsd-kind-interface tsd-parent-kind-class">
 								<a href="conversationv1.outputdata.html" class="tsd-kind-icon">Output<wbr>Data</a>
 								<ul>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="conversationv1.outputdata.html#generic" class="tsd-kind-icon">generic</a>
+									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="conversationv1.outputdata.html#log_messages" class="tsd-kind-icon">log_<wbr>messages</a>
 									</li>

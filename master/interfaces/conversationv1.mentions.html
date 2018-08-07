@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>GetCredentialsParams | watson-developer-cloud</title>
+	<title>Mentions | watson-developer-cloud</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,13 +54,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../classes/discoveryv1.html">DiscoveryV1</a>
+					<a href="../classes/conversationv1.html">ConversationV1</a>
 				</li>
 				<li>
-					<a href="discoveryv1.getcredentialsparams.html">GetCredentialsParams</a>
+					<a href="conversationv1.mentions.html">Mentions</a>
 				</li>
 			</ul>
-			<h1>Interface GetCredentialsParams</h1>
+			<h1>Interface Mentions</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Parameters for the <code>getCredentials</code> operation.</p>
+						<p>A mention of a contextual entity.</p>
 					</div>
 				</div>
 			</section>
@@ -78,7 +78,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">GetCredentialsParams</span>
+						<span class="target">Mentions</span>
 					</li>
 				</ul>
 			</section>
@@ -89,9 +89,8 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.getcredentialsparams.html#credential_id" class="tsd-kind-icon">credential_<wbr>id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.getcredentialsparams.html#environment_id" class="tsd-kind-icon">environment_<wbr>id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.getcredentialsparams.html#headers" class="tsd-kind-icon">headers</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="conversationv1.mentions.html#entity" class="tsd-kind-icon">entity</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="conversationv1.mentions.html#location" class="tsd-kind-icon">location</a></li>
 							</ul>
 						</section>
 					</div>
@@ -100,44 +99,34 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="credential_id" class="tsd-anchor"></a>
-					<h3>credential_<wbr>id</h3>
-					<div class="tsd-signature tsd-kind-icon">credential_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="entity" class="tsd-anchor"></a>
+					<h3>entity</h3>
+					<div class="tsd-signature tsd-kind-icon">entity<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e67e254/discovery/v1-generated.ts#L3304">discovery/v1-generated.ts:3304</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16db391/conversation/v1-generated.ts#L3914">conversation/v1-generated.ts:3914</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The unique identifier for a set of source credentials.</p>
+							<p>The name of the entity.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="environment_id" class="tsd-anchor"></a>
-					<h3>environment_<wbr>id</h3>
-					<div class="tsd-signature tsd-kind-icon">environment_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="location" class="tsd-anchor"></a>
+					<h3>location</h3>
+					<div class="tsd-signature tsd-kind-icon">location<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e67e254/discovery/v1-generated.ts#L3302">discovery/v1-generated.ts:3302</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16db391/conversation/v1-generated.ts#L3916">conversation/v1-generated.ts:3916</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The ID of the environment.</p>
+							<p>An array of zero-based character offsets that indicate where the entity mentions begin and end in the input text.</p>
 						</div>
 					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="headers" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> headers</h3>
-					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Object</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e67e254/discovery/v1-generated.ts#L3305">discovery/v1-generated.ts:3305</a></li>
-						</ul>
-					</aside>
 				</section>
 			</section>
 		</div>
@@ -154,28 +143,19 @@
 					<li class=" tsd-kind-class">
 						<a href="../classes/authorizationv1.html" class="tsd-kind-icon">Authorization<wbr>V1</a>
 					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/conversationv1.html" class="tsd-kind-icon">Conversation<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/dialogv1.html" class="tsd-kind-icon">Dialog<wbr>V1</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
-						<a href="../classes/discoveryv1.html" class="tsd-kind-icon">Discovery<wbr>V1</a>
+						<a href="../classes/conversationv1.html" class="tsd-kind-icon">Conversation<wbr>V1</a>
 						<ul>
 							<li class="current tsd-kind-interface tsd-parent-kind-class">
-								<a href="discoveryv1.getcredentialsparams.html" class="tsd-kind-icon">Get<wbr>Credentials<wbr>Params</a>
+								<a href="conversationv1.mentions.html" class="tsd-kind-icon">Mentions</a>
 								<ul>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="discoveryv1.getcredentialsparams.html#credential_id" class="tsd-kind-icon">credential_<wbr>id</a>
+										<a href="conversationv1.mentions.html#entity" class="tsd-kind-icon">entity</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="discoveryv1.getcredentialsparams.html#environment_id" class="tsd-kind-icon">environment_<wbr>id</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="discoveryv1.getcredentialsparams.html#headers" class="tsd-kind-icon">headers</a>
+										<a href="conversationv1.mentions.html#location" class="tsd-kind-icon">location</a>
 									</li>
 								</ul>
 							</li>
@@ -183,6 +163,12 @@
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-class">
+						<a href="../classes/dialogv1.html" class="tsd-kind-icon">Dialog<wbr>V1</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/discoveryv1.html" class="tsd-kind-icon">Discovery<wbr>V1</a>
+					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/languagetranslatorv2.html" class="tsd-kind-icon">Language<wbr>Translator<wbr>V2</a>
 					</li>
