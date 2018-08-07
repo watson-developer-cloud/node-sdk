@@ -919,6 +919,39 @@ describe('assistant-v1', function() {
     });
   });
 
+  describe('listMentions()', function() {
+    it('should check no parameters provided (negative test)', function() {
+      assistant.listMentions({}, missingParameter);
+      assistant.listMentions(null, missingParameter);
+      assistant.listMentions(undefined, missingParameter);
+      assistant.listMentions({ workspace_id: '123' }, missingParameter);
+    });
+
+    it('should generate a valid payload', function() {
+      const params = {
+        workspace_id: 'id123',
+        entity: 'ent123',
+        export: true,
+        include_audit: true,
+      };
+      const path =
+        service.url +
+        '/v1/workspaces/' +
+        params.workspace_id +
+        '/entities/' +
+        params.entity +
+        '/mentions?version=' +
+        service.version +
+        '&export=' +
+        params.export +
+        '&include_audit=' +
+        params.include_audit;
+      const req = assistant.listMentions(params, noop);
+      assert.equal(req.uri.href, path);
+      assert.equal(req.method, 'GET');
+    });
+  });
+
   describe('credentials()', function() {
     it('should load its credentials from bluemix (conversation)', function() {
       process.env.VCAP_SERVICES = JSON.stringify({
