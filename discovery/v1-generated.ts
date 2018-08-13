@@ -72,7 +72,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.name - Name that identifies the environment.
    * @param {string} [params.description] - Description of the environment.
-   * @param {number} [params.size] - **Deprecated**: Size of the environment.
+   * @param {string} [params.size] - Size of the environment.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -1291,7 +1291,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.aggregation] - An aggregation search uses combinations of filters and query search to
    * return an exact answer. Aggregations are useful for building applications, because you can use them to build lists,
    * tables, and time series. For a full list of possible aggregrations, see the Query reference.
-   * @param {number} [params.count] - Number of documents to return.
+   * @param {number} [params.count] - Number of results to return.
    * @param {string[]} [params.return_fields] - A comma separated list of the portion of the document hierarchy to
    * return.
    * @param {number} [params.offset] - The number of query results to skip at the beginning. For example, if the total
@@ -1400,7 +1400,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.aggregation] - An aggregation search uses combinations of filters and query search to
    * return an exact answer. Aggregations are useful for building applications, because you can use them to build lists,
    * tables, and time series. For a full list of possible aggregrations, see the Query reference.
-   * @param {number} [params.count] - Number of documents to return.
+   * @param {number} [params.count] - Number of results to return.
    * @param {string[]} [params.return_fields] - A comma separated list of the portion of the document hierarchy to
    * return.
    * @param {number} [params.offset] - The number of query results to skip at the beginning. For example, if the total
@@ -1494,7 +1494,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.aggregation] - An aggregation search uses combinations of filters and query search to
    * return an exact answer. Aggregations are useful for building applications, because you can use them to build lists,
    * tables, and time series. For a full list of possible aggregrations, see the Query reference.
-   * @param {number} [params.count] - Number of documents to return.
+   * @param {number} [params.count] - Number of results to return.
    * @param {string[]} [params.return_fields] - A comma separated list of the portion of the document hierarchy to
    * return.
    * @param {number} [params.offset] - The number of query results to skip at the beginning. For example, if the total
@@ -1664,7 +1664,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.aggregation] - An aggregation search uses combinations of filters and query search to
    * return an exact answer. Aggregations are useful for building applications, because you can use them to build lists,
    * tables, and time series. For a full list of possible aggregrations, see the Query reference.
-   * @param {number} [params.count] - Number of documents to return.
+   * @param {number} [params.count] - Number of results to return.
    * @param {string[]} [params.return_fields] - A comma separated list of the portion of the document hierarchy to
    * return.
    * @param {number} [params.offset] - The number of query results to skip at the beginning. For example, if the total
@@ -2306,6 +2306,297 @@ class DiscoveryV1 extends BaseService {
   };
 
   /*************************
+   * eventsAndFeedback
+   ************************/
+
+  /**
+   * Create event.
+   *
+   * The **Events** API can be used to create log entries that are associated with specific queries. For example, you
+   * can record which documents in the results set were \"clicked\" by a user and when that click occured.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.type - The event type to be created.
+   * @param {EventData} params.data - Data object used to create a query event.
+   * @param {Object} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {NodeJS.ReadableStream|void}
+   */
+  public createEvent(params: DiscoveryV1.CreateEventParams, callback?: DiscoveryV1.Callback<DiscoveryV1.CreateEventResponse>): NodeJS.ReadableStream | void {
+    const _params = extend({}, params);
+    const _callback = (callback) ? callback : () => { /* noop */ };
+    const requiredParams = ['type', 'data'];
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+    const body = {
+      'type': _params.type,
+      'data': _params.data
+    };
+    const parameters = {
+      options: {
+        url: '/v1/events',
+        method: 'POST',
+        json: true,
+        body,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+    return this.createRequest(parameters, _callback);
+  };
+
+  /**
+   * Percentage of queries with an associated event.
+   *
+   * The percentage of queries using the **natural_language_query** parameter that have a corresponding \"click\" event
+   * over a specified time window.  This metric requires having integrated event tracking in your application using the
+   * **Events** API.
+   *
+   * @param {Object} [params] - The parameters to send to the service.
+   * @param {string} [params.start_time] - Metric is computed from data recorded after this timestamp; must be in
+   * `YYYY-MM-DDThh:mm:ssZ` format.
+   * @param {string} [params.end_time] - Metric is computed from data recorded before this timestamp; must be in
+   * `YYYY-MM-DDThh:mm:ssZ` format.
+   * @param {string} [params.result_type] - The type of result to consider when calculating the metric.
+   * @param {Object} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {NodeJS.ReadableStream|void}
+   */
+  public getMetricsEventRate(params?: DiscoveryV1.GetMetricsEventRateParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricResponse>): NodeJS.ReadableStream | void {
+    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
+    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const query = {
+      'start_time': _params.start_time,
+      'end_time': _params.end_time,
+      'result_type': _params.result_type
+    };
+    const parameters = {
+      options: {
+        url: '/v1/metrics/event_rate',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+    return this.createRequest(parameters, _callback);
+  };
+
+  /**
+   * Number of queries over time.
+   *
+   * Total number of queries using the **natural_language_query** parameter over a specific time window.
+   *
+   * @param {Object} [params] - The parameters to send to the service.
+   * @param {string} [params.start_time] - Metric is computed from data recorded after this timestamp; must be in
+   * `YYYY-MM-DDThh:mm:ssZ` format.
+   * @param {string} [params.end_time] - Metric is computed from data recorded before this timestamp; must be in
+   * `YYYY-MM-DDThh:mm:ssZ` format.
+   * @param {string} [params.result_type] - The type of result to consider when calculating the metric.
+   * @param {Object} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {NodeJS.ReadableStream|void}
+   */
+  public getMetricsQuery(params?: DiscoveryV1.GetMetricsQueryParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricResponse>): NodeJS.ReadableStream | void {
+    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
+    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const query = {
+      'start_time': _params.start_time,
+      'end_time': _params.end_time,
+      'result_type': _params.result_type
+    };
+    const parameters = {
+      options: {
+        url: '/v1/metrics/number_of_queries',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+    return this.createRequest(parameters, _callback);
+  };
+
+  /**
+   * Number of queries with an event over time.
+   *
+   * Total number of queries using the **natural_language_query** parameter that have a corresponding \"click\" event
+   * over a specified time window. This metric requires having integrated event tracking in your application using the
+   * **Events** API.
+   *
+   * @param {Object} [params] - The parameters to send to the service.
+   * @param {string} [params.start_time] - Metric is computed from data recorded after this timestamp; must be in
+   * `YYYY-MM-DDThh:mm:ssZ` format.
+   * @param {string} [params.end_time] - Metric is computed from data recorded before this timestamp; must be in
+   * `YYYY-MM-DDThh:mm:ssZ` format.
+   * @param {string} [params.result_type] - The type of result to consider when calculating the metric.
+   * @param {Object} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {NodeJS.ReadableStream|void}
+   */
+  public getMetricsQueryEvent(params?: DiscoveryV1.GetMetricsQueryEventParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricResponse>): NodeJS.ReadableStream | void {
+    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
+    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const query = {
+      'start_time': _params.start_time,
+      'end_time': _params.end_time,
+      'result_type': _params.result_type
+    };
+    const parameters = {
+      options: {
+        url: '/v1/metrics/number_of_queries_with_event',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+    return this.createRequest(parameters, _callback);
+  };
+
+  /**
+   * Number of queries with no search results over time.
+   *
+   * Total number of queries using the **natural_language_query** parameter that have no results returned over a
+   * specified time window.
+   *
+   * @param {Object} [params] - The parameters to send to the service.
+   * @param {string} [params.start_time] - Metric is computed from data recorded after this timestamp; must be in
+   * `YYYY-MM-DDThh:mm:ssZ` format.
+   * @param {string} [params.end_time] - Metric is computed from data recorded before this timestamp; must be in
+   * `YYYY-MM-DDThh:mm:ssZ` format.
+   * @param {string} [params.result_type] - The type of result to consider when calculating the metric.
+   * @param {Object} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {NodeJS.ReadableStream|void}
+   */
+  public getMetricsQueryNoResults(params?: DiscoveryV1.GetMetricsQueryNoResultsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricResponse>): NodeJS.ReadableStream | void {
+    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
+    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const query = {
+      'start_time': _params.start_time,
+      'end_time': _params.end_time,
+      'result_type': _params.result_type
+    };
+    const parameters = {
+      options: {
+        url: '/v1/metrics/number_of_queries_with_no_search_results',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+    return this.createRequest(parameters, _callback);
+  };
+
+  /**
+   * Most frequent query tokens with an event.
+   *
+   * The most frequent query tokens parsed from the **natural_language_query** parameter and their corresponding
+   * \"click\" event rate within the recording period (queries and events are stored for 30 days). A query token is an
+   * individual word or unigram within the query string.
+   *
+   * @param {Object} [params] - The parameters to send to the service.
+   * @param {number} [params.count] - Number of results to return.
+   * @param {Object} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {NodeJS.ReadableStream|void}
+   */
+  public getMetricsQueryTokenEvent(params?: DiscoveryV1.GetMetricsQueryTokenEventParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricTokenResponse>): NodeJS.ReadableStream | void {
+    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
+    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const query = {
+      'count': _params.count
+    };
+    const parameters = {
+      options: {
+        url: '/v1/metrics/top_query_tokens_with_event_rate',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+    return this.createRequest(parameters, _callback);
+  };
+
+  /**
+   * Search the query and event log.
+   *
+   * Searches the query and event log to find query sessions that match the specified criteria. Searching the **logs**
+   * endpoint uses the standard Discovery query syntax for the parameters that are supported.
+   *
+   * @param {Object} [params] - The parameters to send to the service.
+   * @param {string} [params.filter] - A cacheable query that limits the documents returned to exclude any documents
+   * that don't mention the query content. Filter searches are better for metadata type searches and when you are trying
+   * to get a sense of concepts in the data set.
+   * @param {string} [params.query] - A query search returns all documents in your data set with full enrichments and
+   * full text, but with the most relevant documents listed first. Use a query search when you want to find the most
+   * relevant search results. You cannot use **natural_language_query** and **query** at the same time.
+   * @param {number} [params.count] - Number of results to return.
+   * @param {number} [params.offset] - The number of query results to skip at the beginning. For example, if the total
+   * number of results that are returned is 10, and the offset is 8, it returns the last two results.
+   * @param {string[]} [params.sort] - A comma separated list of fields in the document to sort on. You can optionally
+   * specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the
+   * default sort direction if no prefix is specified.
+   * @param {Object} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {NodeJS.ReadableStream|void}
+   */
+  public queryLog(params?: DiscoveryV1.QueryLogParams, callback?: DiscoveryV1.Callback<DiscoveryV1.LogQueryResponse>): NodeJS.ReadableStream | void {
+    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
+    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const query = {
+      'filter': _params.filter,
+      'query': _params.query,
+      'count': _params.count,
+      'offset': _params.offset,
+      'sort': _params.sort
+    };
+    const parameters = {
+      options: {
+        url: '/v1/logs',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+    return this.createRequest(parameters, _callback);
+  };
+
+  /*************************
    * credentials
    ************************/
 
@@ -2581,9 +2872,25 @@ namespace DiscoveryV1 {
     name: string;
     /** Description of the environment. */
     description?: string;
-    /** **Deprecated**: Size of the environment. */
-    size?: number;
+    /** Size of the environment. */
+    size?: CreateEnvironmentConstants.Size | string;
     headers?: Object;
+  }
+
+  /** Constants for the `createEnvironment` operation. */
+  export namespace CreateEnvironmentConstants {
+     /** Size of the environment. */
+    export enum Size {
+      XS = 'XS',
+      S = 'S',
+      MS = 'MS',
+      M = 'M',
+      ML = 'ML',
+      L = 'L',
+      XL = 'XL',
+      XXL = 'XXL',
+      XXXL = 'XXXL',
+    }
   }
 
   /** Parameters for the `deleteEnvironment` operation. */
@@ -2941,7 +3248,7 @@ namespace DiscoveryV1 {
     natural_language_query?: string;
     /** An aggregation search uses combinations of filters and query search to return an exact answer. Aggregations are useful for building applications, because you can use them to build lists, tables, and time series. For a full list of possible aggregrations, see the Query reference. */
     aggregation?: string;
-    /** Number of documents to return. */
+    /** Number of results to return. */
     count?: number;
     /** A comma separated list of the portion of the document hierarchy to return. */
     return_fields?: string[];
@@ -2986,7 +3293,7 @@ namespace DiscoveryV1 {
     natural_language_query?: string;
     /** An aggregation search uses combinations of filters and query search to return an exact answer. Aggregations are useful for building applications, because you can use them to build lists, tables, and time series. For a full list of possible aggregrations, see the Query reference. */
     aggregation?: string;
-    /** Number of documents to return. */
+    /** Number of results to return. */
     count?: number;
     /** A comma separated list of the portion of the document hierarchy to return. */
     return_fields?: string[];
@@ -3023,7 +3330,7 @@ namespace DiscoveryV1 {
     passages?: boolean;
     /** An aggregation search uses combinations of filters and query search to return an exact answer. Aggregations are useful for building applications, because you can use them to build lists, tables, and time series. For a full list of possible aggregrations, see the Query reference. */
     aggregation?: string;
-    /** Number of documents to return. */
+    /** Number of results to return. */
     count?: number;
     /** A comma separated list of the portion of the document hierarchy to return. */
     return_fields?: string[];
@@ -3089,7 +3396,7 @@ namespace DiscoveryV1 {
     passages?: boolean;
     /** An aggregation search uses combinations of filters and query search to return an exact answer. Aggregations are useful for building applications, because you can use them to build lists, tables, and time series. For a full list of possible aggregrations, see the Query reference. */
     aggregation?: string;
-    /** Number of documents to return. */
+    /** Number of results to return. */
     count?: number;
     /** A comma separated list of the portion of the document hierarchy to return. */
     return_fields?: string[];
@@ -3271,6 +3578,121 @@ namespace DiscoveryV1 {
     headers?: Object;
   }
 
+  /** Parameters for the `createEvent` operation. */
+  export interface CreateEventParams {
+    /** The event type to be created. */
+    type: CreateEventConstants.Type | string;
+    /** Data object used to create a query event. */
+    data: EventData;
+    headers?: Object;
+  }
+
+  /** Constants for the `createEvent` operation. */
+  export namespace CreateEventConstants {
+     /** The event type to be created. */
+    export enum Type {
+      CLICK = 'click',
+    }
+  }
+
+  /** Parameters for the `getMetricsEventRate` operation. */
+  export interface GetMetricsEventRateParams {
+    /** Metric is computed from data recorded after this timestamp; must be in `YYYY-MM-DDThh:mm:ssZ` format. */
+    start_time?: string;
+    /** Metric is computed from data recorded before this timestamp; must be in `YYYY-MM-DDThh:mm:ssZ` format. */
+    end_time?: string;
+    /** The type of result to consider when calculating the metric. */
+    result_type?: GetMetricsEventRateConstants.ResultType | string;
+    headers?: Object;
+  }
+
+  /** Constants for the `getMetricsEventRate` operation. */
+  export namespace GetMetricsEventRateConstants {
+     /** The type of result to consider when calculating the metric. */
+    export enum ResultType {
+      DOCUMENT = 'document',
+    }
+  }
+
+  /** Parameters for the `getMetricsQuery` operation. */
+  export interface GetMetricsQueryParams {
+    /** Metric is computed from data recorded after this timestamp; must be in `YYYY-MM-DDThh:mm:ssZ` format. */
+    start_time?: string;
+    /** Metric is computed from data recorded before this timestamp; must be in `YYYY-MM-DDThh:mm:ssZ` format. */
+    end_time?: string;
+    /** The type of result to consider when calculating the metric. */
+    result_type?: GetMetricsQueryConstants.ResultType | string;
+    headers?: Object;
+  }
+
+  /** Constants for the `getMetricsQuery` operation. */
+  export namespace GetMetricsQueryConstants {
+     /** The type of result to consider when calculating the metric. */
+    export enum ResultType {
+      DOCUMENT = 'document',
+    }
+  }
+
+  /** Parameters for the `getMetricsQueryEvent` operation. */
+  export interface GetMetricsQueryEventParams {
+    /** Metric is computed from data recorded after this timestamp; must be in `YYYY-MM-DDThh:mm:ssZ` format. */
+    start_time?: string;
+    /** Metric is computed from data recorded before this timestamp; must be in `YYYY-MM-DDThh:mm:ssZ` format. */
+    end_time?: string;
+    /** The type of result to consider when calculating the metric. */
+    result_type?: GetMetricsQueryEventConstants.ResultType | string;
+    headers?: Object;
+  }
+
+  /** Constants for the `getMetricsQueryEvent` operation. */
+  export namespace GetMetricsQueryEventConstants {
+     /** The type of result to consider when calculating the metric. */
+    export enum ResultType {
+      DOCUMENT = 'document',
+    }
+  }
+
+  /** Parameters for the `getMetricsQueryNoResults` operation. */
+  export interface GetMetricsQueryNoResultsParams {
+    /** Metric is computed from data recorded after this timestamp; must be in `YYYY-MM-DDThh:mm:ssZ` format. */
+    start_time?: string;
+    /** Metric is computed from data recorded before this timestamp; must be in `YYYY-MM-DDThh:mm:ssZ` format. */
+    end_time?: string;
+    /** The type of result to consider when calculating the metric. */
+    result_type?: GetMetricsQueryNoResultsConstants.ResultType | string;
+    headers?: Object;
+  }
+
+  /** Constants for the `getMetricsQueryNoResults` operation. */
+  export namespace GetMetricsQueryNoResultsConstants {
+     /** The type of result to consider when calculating the metric. */
+    export enum ResultType {
+      DOCUMENT = 'document',
+    }
+  }
+
+  /** Parameters for the `getMetricsQueryTokenEvent` operation. */
+  export interface GetMetricsQueryTokenEventParams {
+    /** Number of results to return. */
+    count?: number;
+    headers?: Object;
+  }
+
+  /** Parameters for the `queryLog` operation. */
+  export interface QueryLogParams {
+    /** A cacheable query that limits the documents returned to exclude any documents that don't mention the query content. Filter searches are better for metadata type searches and when you are trying to get a sense of concepts in the data set. */
+    filter?: string;
+    /** A query search returns all documents in your data set with full enrichments and full text, but with the most relevant documents listed first. Use a query search when you want to find the most relevant search results. You cannot use **natural_language_query** and **query** at the same time. */
+    query?: string;
+    /** Number of results to return. */
+    count?: number;
+    /** The number of query results to skip at the beginning. For example, if the total number of results that are returned is 10, and the offset is 8, it returns the last two results. */
+    offset?: number;
+    /** A comma separated list of fields in the document to sort on. You can optionally specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the default sort direction if no prefix is specified. */
+    sort?: string[];
+    headers?: Object;
+  }
+
   /** Parameters for the `createCredentials` operation. */
   export interface CreateCredentialsParams {
     /** The ID of the environment. */
@@ -3430,6 +3852,14 @@ namespace DiscoveryV1 {
     segment?: SegmentSettings;
     /** Defines operations that can be used to transform the final output JSON into a normalized form. Operations are executed in the order that they appear in the array. */
     json_normalizations?: NormalizationOperation[];
+  }
+
+  /** An object defining the event being created. */
+  export interface CreateEventResponse {
+    /** The event type that was created. */
+    type?: string;
+    /** Query event data object. */
+    data?: EventData;
   }
 
   /** Object containing details of the stored credentials. Obtain credentials for your source from the administrator of the source. */
@@ -3628,8 +4058,8 @@ namespace DiscoveryV1 {
     status?: string;
     /** If `true`, the environment contains read-only collections that are maintained by IBM. */
     read_only?: boolean;
-    /** **Deprecated**: Size of the environment. */
-    size?: number;
+    /** Size of the environment. */
+    size?: string;
     /** Details about the resource usage and capacity of the environment. */
     index_capacity?: IndexCapacity;
   }
@@ -3640,6 +4070,24 @@ namespace DiscoveryV1 {
     indexed?: number;
     /** Total number of documents allowed in the environment's capacity. */
     maximum_allowed?: number;
+  }
+
+  /** Query event data object. */
+  export interface EventData {
+    /** The **environment_id** associated with the query that the event is associated with. */
+    environment_id: string;
+    /** The session token that was returned as part of the query results that this event is associated with. */
+    session_token: string;
+    /** The optional timestamp for the event that was created. If not provided, the time that the event was created in the log was used. */
+    client_timestamp?: string;
+    /** The rank of the result item which the event is associated with. */
+    display_rank?: number;
+    /** The **collection_id** of the document that this event is associated with. */
+    collection_id: string;
+    /** The **document_id** of the document that this event is associated with. */
+    document_id: string;
+    /** The query identifier stored in the log. The query and any events associated with that query are stored with the same **query_id**. */
+    query_id?: string;
   }
 
   /** An expansion definition. Each object respresents one set of expandable strings. For example, you could have expansions for the word `hot` in one object, and expansions for the word `cold` in another. */
@@ -3720,6 +4168,66 @@ namespace DiscoveryV1 {
     environments?: Environment[];
   }
 
+  /** Object containing results that match the requested **logs** query. */
+  export interface LogQueryResponse {
+    /** Number of matching results. */
+    matching_results?: number;
+    results?: LogQueryResponseResult[];
+  }
+
+  /** Individual result object for a **logs** query. Each object represents either a query to a Discovery collection or an event that is associated with a query. */
+  export interface LogQueryResponseResult {
+    /** The environment ID that is associated with this log entry. */
+    environment_id?: string;
+    /** The **customer_id** label that was specified in the header of the query or event API call that corresponds to this log entry. */
+    customer_id?: string;
+    /** The type of log entry returned. **query** indicates that the log represents the results of a call to the single collection **query** method. **event** indicates that the log represents  a call to the **events** API. */
+    document_type?: string;
+    /** The value of the **natural_language_query** query parameter that was used to create these results. Only returned with logs of type **query**. **Note:** Other query parameters (such as **filter** or **deduplicate**) might  have been used with this query, but are not recorded. */
+    natural_language_query?: string;
+    /** Object containing result information that was returned by the query used to create this log entry. Only returned with logs of type `query`. */
+    document_results?: LogQueryResponseResultDocuments;
+    /** Date that the log result was created. Returned in `YYYY-MM-DDThh:mm:ssZ` format. */
+    created_timestamp?: string;
+    /** Date specified by the user when recording an event. Returned in `YYYY-MM-DDThh:mm:ssZ` format. Only returned with logs of type **event**. */
+    client_timestamp?: string;
+    /** Identifier that corresponds to the **natural_language_query** string used in the original or associated query. All **event** and **query** log entries that have the same original **natural_language_query** string also have them same **query_id**. This field can be used to recall all **event** and **query** log results that have the same original query (**event** logs do not contain the original **natural_language_query** field). */
+    query_id?: string;
+    /** Unique identifier (within a 24-hour period) that identifies a single `query` log and any `event` logs that were created for it. **Note:** If the exact same query is run at the exact same time on different days, the **session_token** for those queries might be identical. However, the **created_timestamp** differs. **Note:** Session tokens are case sensitive. To avoid matching on session tokens that are identical except for case, use the exact match operator (`::`) when you query for a specific session token. */
+    session_token?: string;
+    /** The collection ID of the document associated with this event. Only returned with logs of type `event`. */
+    collection_id?: string;
+    /** The original display rank of the document associated with this event. Only returned with logs of type `event`. */
+    display_rank?: number;
+    /** The document ID of the document associated with this event. Only returned with logs of type `event`. */
+    document_id?: string;
+    /** The type of event that this object respresents. Possible values are -  `query` the log of a query to a collection -  `click` the result of a call to the **events** endpoint. */
+    event_type?: string;
+    /** The type of result that this **event** is associated with. Only returned with logs of type `event`. */
+    result_type?: string;
+  }
+
+  /** Object containing result information that was returned by the query used to create this log entry. Only returned with logs of type `query`. */
+  export interface LogQueryResponseResultDocuments {
+    results?: LogQueryResponseResultDocumentsResult[];
+    /** The number of results returned in the query associate with this log. */
+    count?: number;
+  }
+
+  /** Each object in the **results** array corresponds to an individual document returned by the original query. */
+  export interface LogQueryResponseResultDocumentsResult {
+    /** The result rank of this document. A position of `1` indicates that it was the first returned result. */
+    position?: number;
+    /** The **document_id** of the document that this result represents. */
+    document_id?: string;
+    /** The raw score of this result. A higher score indicates a greater match to the query parameters. */
+    score?: number;
+    /** The confidence score of the result's analysis. A higher score indicating greater confidence. */
+    confidence?: number;
+    /** The **collection_id** of the document represented by this result. */
+    collection_id?: string;
+  }
+
   /** **Deprecated**: Summary of the memory usage statistics for this environment. */
   export interface MemoryUsage {
     /** **Deprecated**: Number of bytes used in the environment's memory capacity. */
@@ -3732,6 +4240,54 @@ namespace DiscoveryV1 {
     total?: string;
     /** **Deprecated**: Percentage of the environment's memory capacity that is being used. */
     percent_used?: number;
+  }
+
+  /** An aggregation analyzing log information for queries and events. */
+  export interface MetricAggregation {
+    /** The measurement interval for this metric. Metric intervals are always 1 day (`1d`). */
+    interval?: string;
+    /** The event type associated with this metric result. This field, when present, will always be `click`. */
+    event_type?: string;
+    results?: MetricAggregationResult[];
+  }
+
+  /** Aggregation result data for the requested metric. */
+  export interface MetricAggregationResult {
+    /** Date in string form representing the start of this interval. */
+    key_as_string?: string;
+    /** Unix epoch time equivalent of the **key_as_string**, that represents the start of this interval. */
+    key?: number;
+    /** Number of matching results. */
+    matching_results?: number;
+    /** The number of queries with associated events divided by the total number of queries for the interval. Only returned with **event_rate** metrics. */
+    event_rate?: number;
+  }
+
+  /** The response generated from a call to a **metrics** method. */
+  export interface MetricResponse {
+    aggregations?: MetricAggregation[];
+  }
+
+  /** An aggregation analyzing log information for queries and events. */
+  export interface MetricTokenAggregation {
+    /** The event type associated with this metric result. This field, when present, will always be `click`. */
+    event_type?: string;
+    results?: MetricTokenAggregationResult[];
+  }
+
+  /** Aggregation result data for the requested metric. */
+  export interface MetricTokenAggregationResult {
+    /** The content of the **natural_language_query** parameter used in the query that this result represents. */
+    key?: string;
+    /** Number of matching results. */
+    matching_results?: number;
+    /** The number of queries with associated events divided by the total number of queries currently stored (queries and events are stored in the log for 30 days). */
+    event_rate?: number;
+  }
+
+  /** The response generated from a call to a **metrics** method that evaluates tokens. */
+  export interface MetricTokenResponse {
+    aggregations?: MetricTokenAggregation[];
   }
 
   /** An object that indicates the Categories enrichment will be applied to the specified field. */

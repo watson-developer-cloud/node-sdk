@@ -2096,7 +2096,7 @@ class ConversationV1 extends BaseService {
    * carriage return, newline, or tab characters, and it must be no longer than 2048 characters.
    * @param {string} [params.parent] - The ID of the parent dialog node.
    * @param {string} [params.previous_sibling] - The ID of the previous dialog node.
-   * @param {Object} [params.output] - The output of the dialog node. For more information about how to
+   * @param {DialogNodeOutput} [params.output] - The output of the dialog node. For more information about how to
    * specify dialog node output, see the
    * [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex).
    * @param {Object} [params.context] - The context for the dialog node.
@@ -2332,7 +2332,7 @@ class ConversationV1 extends BaseService {
    * contain carriage return, newline, or tab characters, and it must be no longer than 2048 characters.
    * @param {string} [params.new_parent] - The ID of the parent dialog node.
    * @param {string} [params.new_previous_sibling] - The ID of the previous sibling dialog node.
-   * @param {Object} [params.new_output] - The output of the dialog node. For more information about how to
+   * @param {DialogNodeOutput} [params.new_output] - The output of the dialog node. For more information about how to
    * specify dialog node output, see the
    * [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex).
    * @param {Object} [params.new_context] - The context for the dialog node.
@@ -3187,7 +3187,7 @@ namespace ConversationV1 {
     /** The ID of the previous dialog node. */
     previous_sibling?: string;
     /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex). */
-    output?: Object;
+    output?: DialogNodeOutput;
     /** The context for the dialog node. */
     context?: Object;
     /** The metadata for the dialog node. */
@@ -3312,7 +3312,7 @@ namespace ConversationV1 {
     /** The ID of the previous sibling dialog node. */
     new_previous_sibling?: string;
     /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex). */
-    new_output?: Object;
+    new_output?: DialogNodeOutput;
     /** The context for the dialog node. */
     new_context?: Object;
     /** The metadata for the dialog node. */
@@ -3475,7 +3475,7 @@ namespace ConversationV1 {
     /** The ID of the previous dialog node. */
     previous_sibling?: string;
     /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex). */
-    output?: Object;
+    output?: DialogNodeOutput;
     /** The context for the dialog node. */
     context?: Object;
     /** The metadata for the dialog node. */
@@ -3561,7 +3561,7 @@ namespace ConversationV1 {
     /** The ID of the previous sibling dialog node. This property is not returned if the dialog node has no previous sibling. */
     previous_sibling?: string;
     /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex). */
-    output?: Object;
+    output?: DialogNodeOutput;
     /** The context (if defined) for the dialog node. */
     context?: Object;
     /** Any metadata for the dialog node. */

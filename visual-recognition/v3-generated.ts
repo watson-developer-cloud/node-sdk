@@ -97,8 +97,8 @@ class VisualRecognitionV3 extends BaseService {
    *
    * The following built-in classifier IDs require no training:
    * - `default`: Returns classes from thousands of general tags.
-   * - `food`: (Beta) Enhances specificity and accuracy for images of food items.
-   * - `explicit`: (Beta) Evaluates whether the image might be pornographic.
+   * - `food`: Enhances specificity and accuracy for images of food items.
+   * - `explicit`: Evaluates whether the image might be pornographic.
    * @param {string} [params.images_file_content_type] - The content type of images_file.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -235,10 +235,7 @@ class VisualRecognitionV3 extends BaseService {
   public createClassifier(params: VisualRecognitionV3.CreateClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
-    const positiveExampleClasses = Object.keys(_params).filter(key => {
-      return key.match(/^.+positive_examples$/);
-    }) || ['<classname>_positive_examples'];
-    const requiredParams = ['name', ...positiveExampleClasses];
+    const requiredParams = ['name', 'classname_positive_examples'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
@@ -254,12 +251,6 @@ class VisualRecognitionV3 extends BaseService {
         contentType: 'application/octet-stream'
       }
     };
-    positiveExampleClasses.forEach(positiveExampleClass => {
-      formData[positiveExampleClass] = {
-        data: _params[positiveExampleClass],
-        contentType: 'application/octet-stream',
-      };
-    });
     const parameters = {
       options: {
         url: '/v3/classifiers',
@@ -421,9 +412,6 @@ class VisualRecognitionV3 extends BaseService {
   public updateClassifier(params: VisualRecognitionV3.UpdateClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
-    const positiveExampleClasses = Object.keys(_params).filter(key => {
-      return key.match(/^.+positive_examples$/);
-    });
     const requiredParams = ['classifier_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -442,12 +430,6 @@ class VisualRecognitionV3 extends BaseService {
     const path = {
       'classifier_id': _params.classifier_id
     };
-    positiveExampleClasses.forEach(positiveExampleClass => {
-      formData[positiveExampleClass] = {
-         data: _params[positiveExampleClass],
-         contentType: 'application/octet-stream',
-      };
-    });
     const parameters = {
       options: {
         url: '/v3/classifiers/{classifier_id}',
@@ -602,7 +584,7 @@ namespace VisualRecognitionV3 {
     threshold?: number;
     /** The categories of classifiers to apply. Use `IBM` to classify against the `default` general classifier, and use `me` to classify against your custom classifiers. To analyze the image against both classifier categories, set the value to both `IBM` and `me`. The built-in `default` classifier is used if both **classifier_ids** and **owners** parameters are empty. The **classifier_ids** parameter overrides **owners**, so make sure that **classifier_ids** is empty. */
     owners?: string[];
-    /** Which classifiers to apply. Overrides the **owners** parameter. You can specify both custom and built-in classifier IDs. The built-in `default` classifier is used if both **classifier_ids** and **owners** parameters are empty. The following built-in classifier IDs require no training: - `default`: Returns classes from thousands of general tags. - `food`: (Beta) Enhances specificity and accuracy for images of food items. - `explicit`: (Beta) Evaluates whether the image might be pornographic. */
+    /** Which classifiers to apply. Overrides the **owners** parameter. You can specify both custom and built-in classifier IDs. The built-in `default` classifier is used if both **classifier_ids** and **owners** parameters are empty. The following built-in classifier IDs require no training: - `default`: Returns classes from thousands of general tags. - `food`: Enhances specificity and accuracy for images of food items. - `explicit`: Evaluates whether the image might be pornographic. */
     classifier_ids?: string[];
     /** The content type of images_file. */
     images_file_content_type?: string;
