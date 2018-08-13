@@ -72,7 +72,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.name - Name that identifies the environment.
    * @param {string} [params.description] - Description of the environment.
-   * @param {string} [params.size] - Size of the environment.
+   * @param {string} [params.size_string] - Size of the environment.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -88,7 +88,7 @@ class DiscoveryV1 extends BaseService {
     const body = {
       'name': _params.name,
       'description': _params.description,
-      'size': _params.size
+      'size': _params.size_string
     };
     const parameters = {
       options: {
@@ -2873,7 +2873,9 @@ namespace DiscoveryV1 {
     /** Description of the environment. */
     description?: string;
     /** Size of the environment. */
-    size?: CreateEnvironmentConstants.Size | string;
+    size_string?: CreateEnvironmentConstants.Size | string;
+    /** **Deprecated**: Size of the environment (number). */
+    size?: number;
     headers?: Object;
   }
 
@@ -4059,7 +4061,9 @@ namespace DiscoveryV1 {
     /** If `true`, the environment contains read-only collections that are maintained by IBM. */
     read_only?: boolean;
     /** Size of the environment. */
-    size?: string;
+    size_string?: string;
+    /** **Deprecated**: Size of the environment (number). */
+    size?: number;
     /** Details about the resource usage and capacity of the environment. */
     index_capacity?: IndexCapacity;
   }
