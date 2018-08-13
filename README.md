@@ -283,7 +283,7 @@ function (err, token) {
 
 Use the [Assistant][conversation] service to determine the intent of a message.
 
-Note: you must first create a workspace via Bluemix. See [the documentation](https://console.bluemix.net/docs/services/conversation/index.html#about) for details.
+Note: You must first create a workspace via IBM Cloud. See [the documentation](https://console.bluemix.net/docs/services/conversation/index.html#about) for details.
 
 ```js
 var AssistantV1 = require('watson-developer-cloud/assistant/v1');
