@@ -88,7 +88,7 @@ class DiscoveryV1 extends BaseService {
     const body = {
       'name': _params.name,
       'description': _params.description,
-      'size': _params.size_string
+      'size': _params.size_string || _params.size
     };
     const parameters = {
       options: {
