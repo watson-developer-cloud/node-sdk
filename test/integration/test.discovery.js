@@ -22,7 +22,6 @@ describe('discovery_integration', function() {
   let configuration_id;
   let collection_id;
   let collection_id2;
-  let document_id;
 
   before(function() {
     environment_id = auth.discovery.environment_id;
@@ -159,7 +158,6 @@ describe('discovery_integration', function() {
       discovery.addDocument(document_obj, function(err, response) {
         assert.ifError(err);
         assert(response.document_id);
-        document_id = response.document_id;
         done(err);
       });
     });
