@@ -140,8 +140,8 @@
 				<h3 id="getting-credentials">Getting credentials</h3>
 				<p>To find out which authentication to use, view the service credentials. You find the service credentials for authentication the same way for all Watson services:</p>
 				<ol>
-					<li>Go to the IBM Cloud <strong><a href="https://console.bluemix.net/dashboard/apps?category=watson">Dashboard</a></strong> page.</li>
-					<li>Either click an existing Watson service instance or click <strong>Create</strong>.</li>
+					<li>Go to the IBM Cloud <a href="https://console.bluemix.net/dashboard/apps?category=ai">Dashboard</a> page.</li>
+					<li>Either click an existing Watson service instance or click <a href="https://console.bluemix.net/catalog/?category=ai"><strong>Create resource &gt; AI</strong></a> and create a service instance.</li>
 					<li>Click <strong>Show</strong> to view your service credentials.</li>
 					<li>Copy the <code>url</code> and either <code>apikey</code> or <code>username</code> and <code>password</code>.</li>
 				</ol>
@@ -292,7 +292,7 @@ authorization.getToken({
 </code></pre>
 				<h3 id="assistant">Assistant</h3>
 				<p>Use the <a href="https://www.ibm.com/watson/services/conversation/">Assistant</a> service to determine the intent of a message.</p>
-				<p>Note: you must first create a workspace via Bluemix. See <a href="https://console.bluemix.net/docs/services/conversation/index.html#about">the documentation</a> for details.</p>
+				<p>Note: You must first create a workspace via IBM Cloud. See <a href="https://console.bluemix.net/docs/services/conversation/index.html#about">the documentation</a> for details.</p>
 				<pre><code class="lang-js"><span class="hljs-keyword">var</span> AssistantV1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'watson-developer-cloud/assistant/v1'</span>);
 
 <span class="hljs-keyword">var</span> assistant = <span class="hljs-keyword">new</span> AssistantV1({
