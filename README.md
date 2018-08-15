@@ -88,10 +88,10 @@ Watson services are migrating to token-based Identity and Access Management (IAM
 ### Getting credentials
 To find out which authentication to use, view the service credentials. You find the service credentials for authentication the same way for all Watson services:
 
-1.  Go to the IBM Cloud **[Dashboard][watson-dashboard]** page.
-1.  Either click an existing Watson service instance or click **Create**.
-1.  Click **Show** to view your service credentials.
-1.  Copy the `url` and either `apikey` or `username` and `password`.
+1. Go to the IBM Cloud [Dashboard](https://console.bluemix.net/dashboard/apps?category=ai) page.
+1. Either click an existing Watson service instance or click [**Create resource > AI**](https://console.bluemix.net/catalog/?category=ai) and create a service instance.
+1. Click **Show** to view your service credentials.
+1. Copy the `url` and either `apikey` or `username` and `password`.
 
 ### IAM
 
@@ -283,7 +283,7 @@ function (err, token) {
 
 Use the [Assistant][conversation] service to determine the intent of a message.
 
-Note: you must first create a workspace via Bluemix. See [the documentation](https://console.bluemix.net/docs/services/conversation/index.html#about) for details.
+Note: You must first create a workspace via IBM Cloud. See [the documentation](https://console.bluemix.net/docs/services/conversation/index.html#about) for details.
 
 ```js
 var AssistantV1 = require('watson-developer-cloud/assistant/v1');

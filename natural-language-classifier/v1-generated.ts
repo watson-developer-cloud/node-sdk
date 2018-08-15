@@ -62,7 +62,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.classifier_id - Classifier ID to use.
-   * @param {string} params.text - The submitted phrase.
+   * @param {string} params.text - The submitted phrase. The maximum length is 2048 characters.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -342,7 +342,7 @@ namespace NaturalLanguageClassifierV1 {
   export interface ClassifyParams {
     /** Classifier ID to use. */
     classifier_id: string;
-    /** The submitted phrase. */
+    /** The submitted phrase. The maximum length is 2048 characters. */
     text: string;
     headers?: Object;
   }
@@ -446,13 +446,13 @@ namespace NaturalLanguageClassifierV1 {
 
   /** Request payload to classify. */
   export interface ClassifyInput {
-    /** The submitted phrase. */
+    /** The submitted phrase. The maximum length is 2048 characters. */
     text: string;
   }
 
   /** Response from the classifier for a phrase in a collection. */
   export interface CollectionItem {
-    /** The submitted phrase. */
+    /** The submitted phrase. The maximum length is 2048 characters. */
     text?: string;
     /** The class with the highest confidence. */
     top_class?: string;
