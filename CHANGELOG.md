@@ -1,3 +1,10 @@
+# [3.9.0](https://github.com/watson-developer-cloud/node-sdk/compare/v3.8.0...v3.9.0) (2018-08-15)
+
+
+### Features
+
+* **regenerate:** add methods for new discovery metrics endpoints ([f396eca](https://github.com/watson-developer-cloud/node-sdk/commit/f396eca))
+
 # [3.8.0](https://github.com/watson-developer-cloud/node-sdk/compare/v3.7.1...v3.8.0) (2018-08-07)
 
 
