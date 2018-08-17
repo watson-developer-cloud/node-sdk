@@ -12,7 +12,7 @@
     "dotenv": "^2.0.0",
     "express": "^4.14.0",
     "express-browserify": "^1.0.2",
-    "watson-developer-cloud": "*"
+    "watson-developer-cloud": "latest"
   },
   "devDependencies": {},
   "engines": {
