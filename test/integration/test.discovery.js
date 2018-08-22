@@ -325,4 +325,172 @@ describe('discovery_integration', function() {
       );
     });
   });
+
+  describe('events tests', function() {
+    let document_id;
+    let session_token;
+
+    before(function(done) {
+      const addDocParams = {
+        environment_id,
+        collection_id,
+        file: fs.createReadStream('./test/resources/sampleWord.docx'),
+      };
+
+      discovery.addDocument(addDocParams, function(error, response) {
+        document_id = response.document_id;
+
+        const queryParams = {
+          environment_id,
+          collection_id,
+          natural_language_query: 'jeopardy',
+        };
+
+        discovery.query(queryParams, function(err, res) {
+          session_token = res.session_token;
+          done();
+        });
+      });
+    });
+
+    it('should create event', function(done) {
+      const type = 'click';
+      const createEventParams = {
+        type,
+        data: {
+          environment_id,
+          session_token,
+          collection_id,
+          document_id,
+        },
+      };
+      discovery.createEvent(createEventParams, function(err, res) {
+        assert.ifError(err);
+        assert.equal(res.type, type);
+        assert.equal(res.data.environment_id, environment_id);
+        assert.equal(res.data.collection_id, collection_id);
+        assert.equal(res.data.document_id, document_id);
+        assert.equal(res.data.session_token, session_token);
+        assert(res.data.result_type);
+        assert(res.data.query_id);
+        done();
+      });
+    });
+
+    after(function(done) {
+      const params = {
+        environment_id,
+        collection_id,
+        document_id,
+      };
+      discovery.deleteDocument(params, function(err, res) {
+        done();
+      });
+    });
+  });
+
+  describe('metrics tests', function() {
+    const start_time = '2018-08-07T00:00:00Z';
+    const end_time = '2018-08-08T00:00:00Z';
+
+    it('should get metrics event rate', function(done) {
+      const params = {
+        start_time,
+        end_time,
+        // result_type can only be either document or passage.
+        // but i get no results with either
+      };
+      discovery.getMetricsEventRate(params, function(err, res) {
+        assert.ifError(err);
+        assert(res.aggregations);
+        assert(Array.isArray(res.aggregations));
+        assert(res.aggregations.length);
+        assert(res.aggregations[0].results);
+        assert(Array.isArray(res.aggregations[0].results));
+        assert(res.aggregations[0].results.length);
+        assert.notEqual(res.aggregations[0].results[0].event_rate, undefined);
+        done();
+      });
+    });
+    it('should get metrics query', function(done) {
+      const params = {
+        start_time,
+        end_time,
+      };
+      discovery.getMetricsQuery(params, function(err, res) {
+        assert.ifError(err);
+        assert(res.aggregations);
+        assert(Array.isArray(res.aggregations));
+        assert(res.aggregations.length);
+        assert(res.aggregations[0].results);
+        assert(Array.isArray(res.aggregations[0].results));
+        assert(res.aggregations[0].results.length);
+        assert.notEqual(res.aggregations[0].results[0].matching_results, undefined);
+        done();
+      });
+    });
+    it('should get metrics query event', function(done) {
+      discovery.getMetricsQueryEvent(function(err, res) {
+        assert.ifError(err);
+        assert(res.aggregations);
+        assert(Array.isArray(res.aggregations));
+        assert(res.aggregations.length);
+        assert(res.aggregations[0].results);
+        assert(Array.isArray(res.aggregations[0].results));
+        assert(res.aggregations[0].results.length);
+        assert.notEqual(res.aggregations[0].results[0].matching_results, undefined);
+        done();
+      });
+    });
+    it('should get metrics query no results', function(done) {
+      discovery.getMetricsQueryNoResults(function(err, res) {
+        assert.ifError(err);
+        assert(res.aggregations);
+        assert(Array.isArray(res.aggregations));
+        assert(res.aggregations.length);
+        assert(res.aggregations[0].results);
+        assert(Array.isArray(res.aggregations[0].results));
+        assert(res.aggregations[0].results.length);
+        assert.notEqual(res.aggregations[0].results[0].matching_results, undefined);
+        done();
+      });
+    });
+    it('should get metrics query token event', function(done) {
+      const count = 2;
+      const params = { count };
+      discovery.getMetricsQueryTokenEvent(params, function(err, res) {
+        assert.ifError(err);
+        assert(res.aggregations);
+        assert(Array.isArray(res.aggregations));
+        assert(res.aggregations.length);
+        assert(res.aggregations[0].results);
+        assert(Array.isArray(res.aggregations[0].results));
+        assert.equal(res.aggregations[0].results.length, count);
+        assert.notEqual(res.aggregations[0].results[0].event_rate, undefined);
+        done();
+      });
+    });
+  });
+
+  describe('logs tests', function() {
+    it('should query log', function(done) {
+      const count = 2;
+      const filter = 'stuff';
+      const params = {
+        count,
+        offset: 1,
+        filter,
+        sort: ['created_timestamp'],
+      };
+      discovery.queryLog(params, function(err, res) {
+        assert.ifError(err);
+        assert(res.matching_results);
+        assert(res.results);
+        assert(Array.isArray(res.results));
+        assert.equal(res.results.length, count);
+        assert.notEqual(res.results[0].natural_language_query.indexOf(filter), -1);
+        done();
+      });
+    });
+  });
 });

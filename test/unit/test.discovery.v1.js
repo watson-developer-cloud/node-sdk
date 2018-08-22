@@ -73,6 +73,9 @@ describe('discovery-v1', function() {
     queryRelations: '/v1/environments/env-guid/collections/col-guid/query_relations',
     queryEntities: '/v1/environments/env-guid/collections/col-guid/query_entities',
     credentials: '/v1/environments/env-guid/credentials',
+    events: '/v1/events',
+    metrics: '/v1/metrics',
+    logs: '/v1/logs',
   };
 
   it('should generate version was not specified (negative test)', function() {
@@ -934,6 +937,86 @@ describe('discovery-v1', function() {
               service.url + paths.credentials + '/cred-guid?version=' + service.version
             );
             assert.equal(req.method, 'DELETE');
+          });
+        });
+        describe('events tests', function() {
+          it('should check no parameters are provided', function() {
+            discovery.queryEntities(null, missingParams);
+            discovery.queryEntities(undefined, missingParams);
+            discovery.queryEntities({}, missingParams);
+            discovery.queryEntities({ type: 'some-type' }, missingParams);
+            discovery.queryEntities({ data: {} }, missingParams);
+          });
+
+          it('should create events', function() {
+            const req = discovery.createEvent({ type: 'some-type', data: {} }, noop);
+            assert.equal(req.uri.href, service.url + paths.events + '?version=' + service.version);
+            assert.equal(req.method, 'POST');
+          });
+        });
+        describe('metrics tests', function() {
+          it('should get metrics event rate', function() {
+            const req = discovery.getMetricsEventRate(noop);
+            assert.equal(
+              req.uri.href,
+              service.url + paths.metrics + '/event_rate' + '?version=' + service.version
+            );
+            assert.equal(req.method, 'GET');
+          });
+
+          it('should get metrics query', function() {
+            const req = discovery.getMetricsQuery(noop);
+            assert.equal(
+              req.uri.href,
+              service.url + paths.metrics + '/number_of_queries' + '?version=' + service.version
+            );
+            assert.equal(req.method, 'GET');
+          });
+
+          it('should get metrics query event', function() {
+            const req = discovery.getMetricsQueryEvent(noop);
+            assert.equal(
+              req.uri.href,
+              service.url +
+                paths.metrics +
+                '/number_of_queries_with_event' +
+                '?version=' +
+                service.version
+            );
+            assert.equal(req.method, 'GET');
+          });
+
+          it('should get metrics query no results', function() {
+            const req = discovery.getMetricsQueryNoResults(noop);
+            assert.equal(
+              req.uri.href,
+              service.url +
+                paths.metrics +
+                '/number_of_queries_with_no_search_results' +
+                '?version=' +
+                service.version
+            );
+            assert.equal(req.method, 'GET');
+          });
+
+          it('should get metrics query token event', function() {
+            const req = discovery.getMetricsQueryTokenEvent(noop);
+            assert.equal(
+              req.uri.href,
+              service.url +
+                paths.metrics +
+                '/top_query_tokens_with_event_rate' +
+                '?version=' +
+                service.version
+            );
+            assert.equal(req.method, 'GET');
+          });
+        });
+        describe('logs tests', function() {
+          it('should query logs', function() {
+            const req = discovery.queryLog(noop);
+            assert.equal(req.uri.href, service.url + paths.logs + '?version=' + service.version);
+            assert.equal(req.method, 'GET');
           });
         });
       });
