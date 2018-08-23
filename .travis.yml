@@ -10,8 +10,7 @@ before_install:
   true'
 - npm install -g typescript
 install:
-- echo $TRAVIS_NODE_VERSION
-- 'if [ "${TRAVIS_NODE_VERSION}" = "4.9.1" ]; then npm install --no-optional; else npm install; fi;'
+- 'if [ "${TRAVIS_NODE_VERSION}" = "4" ]; then npm install --no-optional; else npm install; fi;'
 script:
 - tsc
 - 'if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then npm run test-travis; fi'
