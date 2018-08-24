@@ -350,11 +350,10 @@ discovery.query(
 Translate text from one language to another or idenfity a language using the [Language Translator][language_translator] service.
 
 ```javascript
-var LanguageTranslatorV3 = require('watson-developer-cloud/language-translator/v3');
+const LanguageTranslatorV3 = require('watson-developer-cloud/language-translator/v3');
 
-var languageTranslator = new LanguageTranslatorV3({
-  username: '<username>',
-  password: '<password>',
+const languageTranslator = new LanguageTranslatorV3({
+  iam_apikey: '<apikey>',
   url: 'https://gateway.watsonplatform.net/language-translator/api/',
   version: 'YYYY-MM-DD',
 });
