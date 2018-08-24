@@ -9,6 +9,8 @@ before_install:
   -iv $encrypted_320e4a7e27b3_iv -in auth.js.enc -out test/resources/auth.js -d ||
   true'
 - npm install -g typescript
+install:
+- 'if [ "${TRAVIS_NODE_VERSION}" = "4" ]; then npm install --no-optional; else npm install; fi;'
 script:
 - tsc
 - 'if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then npm run test-travis; fi'
