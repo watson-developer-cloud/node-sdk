@@ -347,11 +347,10 @@ discovery.query(
 </code></pre>
 				<h3 id="language-translator-v3">Language Translator v3</h3>
 				<p>Translate text from one language to another or idenfity a language using the <a href="https://www.ibm.com/watson/services/language-translator/">Language Translator</a> service.</p>
-				<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> LanguageTranslatorV3 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'watson-developer-cloud/language-translator/v3'</span>);
+				<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> LanguageTranslatorV3 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'watson-developer-cloud/language-translator/v3'</span>);
 
-<span class="hljs-keyword">var</span> languageTranslator = <span class="hljs-keyword">new</span> LanguageTranslatorV3({
-  <span class="hljs-attr">username</span>: <span class="hljs-string">'&lt;username&gt;'</span>,
-  <span class="hljs-attr">password</span>: <span class="hljs-string">'&lt;password&gt;'</span>,
+<span class="hljs-keyword">const</span> languageTranslator = <span class="hljs-keyword">new</span> LanguageTranslatorV3({
+  <span class="hljs-attr">iam_apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span>,
   <span class="hljs-attr">url</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/language-translator/api/'</span>,
   <span class="hljs-attr">version</span>: <span class="hljs-string">'YYYY-MM-DD'</span>,
 });
