@@ -35,6 +35,7 @@ export interface FileOptions {
 export interface FileParamAttributes {
   data: NodeJS.ReadableStream | Buffer | FileObject;
   contentType: string;
+  filename: string;
 }
 
 export interface FileStream extends NodeJS.ReadableStream {
@@ -166,7 +167,10 @@ export function buildRequestFileObject(
 ): FileObject {
   // build filename
   let filename: string | Buffer;
-  if (
+  if (fileParams.filename) {
+    // prioritize user-given filenames
+    filename = fileParams.filename;
+  } else if (
     isFileObject(fileParams.data) &&
     fileParams.data.options &&
     fileParams.data.value
