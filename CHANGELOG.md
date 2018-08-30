@@ -1,3 +1,10 @@
+## [3.9.1](https://github.com/watson-developer-cloud/node-sdk/compare/v3.9.0...v3.9.1) (2018-08-30)
+
+
+### Bug Fixes
+
+* add an optional filename parameter for methods accepting a file ([9a6cb59](https://github.com/watson-developer-cloud/node-sdk/commit/9a6cb59))
+
 # [3.9.0](https://github.com/watson-developer-cloud/node-sdk/compare/v3.8.0...v3.9.0) (2018-08-15)
 
 
