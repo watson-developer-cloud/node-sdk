@@ -588,6 +588,7 @@ class DiscoveryV1 extends BaseService {
    *   "Subject": "Apples"
    * } ```.
    * @param {string} [params.file_content_type] - The content type of file.
+   * @param {string} [params.filename] - The filename for file.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -600,10 +601,18 @@ class DiscoveryV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
+
+    if (_params.file && !_params.filename) {
+      console.warn(
+        'WARNING: `filename` should be provided if `file` is not null. This will be REQUIRED in the next major release.'
+      );
+    }
+
     const formData = {
       'configuration': _params.configuration,
       'file': {
         data: _params.file,
+        filename: _params.filename,
         contentType: _params.file_content_type
       },
       'metadata': _params.metadata
@@ -1079,6 +1088,7 @@ class DiscoveryV1 extends BaseService {
    *   "Subject": "Apples"
    * } ```.
    * @param {string} [params.file_content_type] - The content type of file.
+   * @param {string} [params.filename] - The filename for file.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -1091,9 +1101,17 @@ class DiscoveryV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
+
+    if (_params.file && !_params.filename) {
+      console.warn(
+        'WARNING: `filename` should be provided if `file` is not null. This will be REQUIRED in the next major release.'
+      );
+    }
+
     const formData = {
       'file': {
         data: _params.file,
+        filename: _params.filename,
         contentType: _params.file_content_type
       },
       'metadata': _params.metadata
@@ -1225,6 +1243,7 @@ class DiscoveryV1 extends BaseService {
    *   "Subject": "Apples"
    * } ```.
    * @param {string} [params.file_content_type] - The content type of file.
+   * @param {string} [params.filename] - The filename for file.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -1237,9 +1256,17 @@ class DiscoveryV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
+
+    if (_params.file && !_params.filename) {
+      console.warn(
+        'WARNING: `filename` should be provided if `file` is not null. This will be REQUIRED in the next major release.'
+      );
+    }
+
     const formData = {
       'file': {
         data: _params.file,
+        filename: _params.filename,
         contentType: _params.file_content_type
       },
       'metadata': _params.metadata
@@ -3017,6 +3044,8 @@ namespace DiscoveryV1 {
     metadata?: string;
     /** The content type of file. */
     file_content_type?: TestConfigurationInEnvironmentConstants.FileContentType | string;
+    /** The filename for file. */
+    filename?: string;
     headers?: Object;
   }
 
@@ -3166,6 +3195,8 @@ namespace DiscoveryV1 {
     metadata?: string;
     /** The content type of file. */
     file_content_type?: AddDocumentConstants.FileContentType | string;
+    /** The filename for file. */
+    filename?: string;
     headers?: Object;
   }
 
@@ -3218,6 +3249,8 @@ namespace DiscoveryV1 {
     metadata?: string;
     /** The content type of file. */
     file_content_type?: UpdateDocumentConstants.FileContentType | string;
+    /** The filename for file. */
+    filename?: string;
     headers?: Object;
   }
 

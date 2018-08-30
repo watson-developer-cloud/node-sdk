@@ -153,6 +153,7 @@ describe('discovery_integration', function() {
         environment_id: environment_id,
         collection_id: collection_id,
         file: fs.createReadStream(path.join(__dirname, '../resources/sampleWord.docx')),
+        filename: 'sampleWord.docx',
       };
 
       discovery.addDocument(document_obj, function(err, response) {
