@@ -12,15 +12,15 @@ before_install:
 - npm install -g typescript
 install:
 - npm install
-- cd appscan; make asoc-tool; cd ../
+- 'if [ "${TRAVIS_TAG}" = "${TRAVIS_BRANCH}" ]; then cd appscan; make asoc-tool; cd ../; fi'
 before_script:
-- chmod a+x ./appscan/ASOC.sh
+- 'if [ "${TRAVIS_TAG}" = "${TRAVIS_BRANCH}" ]; then chmod a+x ./appscan/ASOC.sh; fi'
 script:
 - tsc
 - 'if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then npm run test-travis; fi'
 - 'if [ "${TRAVIS_PULL_REQUEST}" = "true" ]; then npm run test-unit; fi'
 - sh scripts/typedoc/generate_typedoc.sh
-- ./appscan/ASOC.sh
+- 'if [ "${TRAVIS_TAG}" = "${TRAVIS_BRANCH}" ]; then ./appscan/ASOC.sh; fi'
 after_success:
 - npm run report-coverage
 - scripts/jsdoc/publish.sh
