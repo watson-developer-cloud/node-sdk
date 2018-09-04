@@ -1,5 +1,6 @@
 language: node_js
 sudo: required
+dist: trusty
 node_js:
 - 4
 - 6
@@ -10,6 +11,7 @@ before_install:
   true'
 - npm install -g typescript
 install:
+- npm install
 - make asoc-tool
 before_script:
 - chmod a+x ./ASOC.sh
