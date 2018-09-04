@@ -2,9 +2,9 @@ include Configfile
 
 # This will configure a 32-bit architecture on top of a 64-bit linux machine
 config-arch:
-	# sudo dpkg --add-architecture i386
-	# sudo apt-get update
-	# sudo apt-get install libc6:i386 libncurses5:i386 libstdc++6:i386
+	sudo dpkg --add-architecture i386
+	sudo apt-get update
+	sudo apt-get install libc6:i386 libncurses5:i386 libstdc++6:i386
 
 # Gets the ASoC Client Tool and configures it
 asoc-tool: config-arch
