@@ -52,7 +52,7 @@ run-scan:
 	$(eval FILE_ID := "$(shell python getJson.py $(HOME)/file.json "FileId")")
 	$(eval APP_ID := "$(shell python getJson.py app.json "Id")")
 
-	curl -X POST $(CONTENT_HEADER_JSON) $(ACCEPT_HEADER_JSON) $(AUTH) -d '{"ARSAFileId": $(FILE_ID), "ApplicationFileId": $(FILE_ID), "ScanName": "$(TRAVIS_TAG):$(TRAVIS_COMMIT)", "EnableMailNotification": false, "Locale": "en-US", "AppId": $(APP_ID), "Execute": true, "Personal": false}' $(STATIC_SCAN_URL)
+	curl -X POST $(CONTENT_HEADER_JSON) $(ACCEPT_HEADER_JSON) $(AUTH) -d '{"ARSAFileId": $(FILE_ID), "ApplicationFileId": $(FILE_ID), "ScanName": "$(TRAVIS_TAG):$(TRAVIS_JOB_NUMBER):$(TRAVIS_COMMIT)", "EnableMailNotification": false, "Locale": "en-US", "AppId": $(APP_ID), "Execute": true, "Personal": false}' $(STATIC_SCAN_URL)
 
 get-asset-group:
 	$(eval TOKE := $(shell python getJson.py $(HOME)/token.json "Token"))
