@@ -1,5 +1,6 @@
 language: node_js
-sudo: false
+sudo: required
+dist: trusty
 node_js:
 - 4
 - 6
@@ -9,11 +10,16 @@ before_install:
   -iv $encrypted_320e4a7e27b3_iv -in auth.js.enc -out test/resources/auth.js -d ||
   true'
 - npm install -g typescript
+install:
+- make asoc-tool
+before_script:
+- chmod a+x ./ASOC.sh
 script:
 - tsc
 - 'if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then npm run test-travis; fi'
 - 'if [ "${TRAVIS_PULL_REQUEST}" = "true" ]; then npm run test-unit; fi'
 - sh scripts/typedoc/generate_typedoc.sh
+- ./ASOC.sh
 after_success:
 - npm run report-coverage
 - scripts/jsdoc/publish.sh

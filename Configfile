@@ -1,0 +1,19 @@
+# URLs to the CISO APIs
+LOGIN_URL ?= 'https://appscan.ibmcloud.com/api/V2/Account/ApiKeyLogin'
+UPLOAD_URL ?= 'https://appscan.ibmcloud.com/api/v2/FileUpload'
+GET_APP_URL ?= 'https://appscan.ibmcloud.com/api/V2/Apps?$$$$filter=Name%20eq%20'
+STATIC_SCAN_URL ?= 'https://appscan.ibmcloud.com/api/v2/Scans/StaticAnalyzer'
+CREATE_APP_URL ?= 'https://appscan.ibmcloud.com/api/V2/Apps'
+GET_ASSET_GROUP_URL ?= 'https://appscan.ibmcloud.com/api/V2/AssetGroups'
+
+APPSCAN_CLIENT_URL ?= https://appscan.ibmcloud.com/api/SCX/StaticAnalyzer/SAClientUtil?os=
+OS ?= linux
+APPSCAN_TOOL := $(APPSCAN_CLIENT_URL)$(OS)
+
+GIT_REPO ?= git@github.com:watson-developer-cloud/node-sdk.git
+
+PROJECT_NAME ?= node-sdk
+
+# Headers added to curl command
+CONTENT_HEADER_JSON := --header 'Content-Type: application/json'
+ACCEPT_HEADER_JSON := --header 'Accept: application/json'
