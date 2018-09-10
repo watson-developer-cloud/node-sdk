@@ -176,7 +176,6 @@ describe('visual_recognition', function() {
       const instance = new watson.VisualRecognitionV3({
         version: '2016-05-20',
       });
-      console.log(instance._options);
       assert.equal(instance._options.api_key, 'foo');
       assert.equal(instance._options.username, undefined);
       assert.equal(instance._options.password, undefined);
