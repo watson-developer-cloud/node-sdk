@@ -391,17 +391,8 @@ describe('discovery_integration', function() {
   });
 
   describe('metrics tests', function() {
-    const start_time = '2018-08-07T00:00:00Z';
-    const end_time = '2018-08-08T00:00:00Z';
-
     it('should get metrics event rate', function(done) {
-      const params = {
-        start_time,
-        end_time,
-        // result_type can only be either document or passage.
-        // but i get no results with either
-      };
-      discovery.getMetricsEventRate(params, function(err, res) {
+      discovery.getMetricsEventRate(function(err, res) {
         assert.ifError(err);
         assert(res.aggregations);
         assert(Array.isArray(res.aggregations));
@@ -414,11 +405,7 @@ describe('discovery_integration', function() {
       });
     });
     it('should get metrics query', function(done) {
-      const params = {
-        start_time,
-        end_time,
-      };
-      discovery.getMetricsQuery(params, function(err, res) {
+      discovery.getMetricsQuery(function(err, res) {
         assert.ifError(err);
         assert(res.aggregations);
         assert(Array.isArray(res.aggregations));
