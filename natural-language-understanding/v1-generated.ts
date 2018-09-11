@@ -104,14 +104,21 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {Features} params.features - Specific features to analyze the document for.
-   * @param {string} [params.text] - The plain text to analyze.
-   * @param {string} [params.html] - The HTML file to analyze.
-   * @param {string} [params.url] - The web page to analyze.
+   * @param {string} [params.text] - The plain text to analyze. One of the `text`, `html`, or `url` parameters is
+   * required.
+   * @param {string} [params.html] - The HTML file to analyze. One of the `text`, `html`, or `url` parameters is
+   * required.
+   * @param {string} [params.url] - The web page to analyze. One of the `text`, `html`, or `url` parameters is required.
    * @param {boolean} [params.clean] - Remove website elements, such as links, ads, etc.
-   * @param {string} [params.xpath] - XPath query for targeting nodes in HTML.
+   * @param {string} [params.xpath] - An [XPath query](https://www.w3.org/TR/xpath/) to perform on `html` or `url`
+   * input. Results of the query will be appended to the cleaned webpage text before it is analyzed. To analyze only the
+   * results of the XPath query, set the `clean` parameter to `false`.
    * @param {boolean} [params.fallback_to_raw] - Whether to use raw HTML content if text cleaning fails.
    * @param {boolean} [params.return_analyzed_text] - Whether or not to return the analyzed text.
-   * @param {string} [params.language] - ISO 639-1 code indicating the language to use in the analysis.
+   * @param {string} [params.language] - ISO 639-1 code that specifies the language of your text. This overrides
+   * automatic language detection. Language support differs depending on the features you include in your analysis. See
+   * [Language support](https://www.bluemix.net/docs/services/natural-language-understanding/language-support.html) for
+   * more information.
    * @param {number} [params.limit_text_characters] - Sets the maximum number of characters that are processed by the
    * service.
    * @param {Object} [params.headers] - Custom request headers
@@ -264,21 +271,21 @@ namespace NaturalLanguageUnderstandingV1 {
   export interface AnalyzeParams {
     /** Specific features to analyze the document for. */
     features: Features;
-    /** The plain text to analyze. */
+    /** The plain text to analyze. One of the `text`, `html`, or `url` parameters is required. */
     text?: string;
-    /** The HTML file to analyze. */
+    /** The HTML file to analyze. One of the `text`, `html`, or `url` parameters is required. */
     html?: string;
-    /** The web page to analyze. */
+    /** The web page to analyze. One of the `text`, `html`, or `url` parameters is required. */
     url?: string;
     /** Remove website elements, such as links, ads, etc. */
     clean?: boolean;
-    /** XPath query for targeting nodes in HTML. */
+    /** An [XPath query](https://www.w3.org/TR/xpath/) to perform on `html` or `url` input. Results of the query will be appended to the cleaned webpage text before it is analyzed. To analyze only the results of the XPath query, set the `clean` parameter to `false`. */
     xpath?: string;
     /** Whether to use raw HTML content if text cleaning fails. */
     fallback_to_raw?: boolean;
     /** Whether or not to return the analyzed text. */
     return_analyzed_text?: boolean;
-    /** ISO 639-1 code indicating the language to use in the analysis. */
+    /** ISO 639-1 code that specifies the language of your text. This overrides automatic language detection. Language support differs depending on the features you include in your analysis. See [Language support](https://www.bluemix.net/docs/services/natural-language-understanding/language-support.html) for more information. */
     language?: string;
     /** Sets the maximum number of characters that are processed by the service. */
     limit_text_characters?: number;
@@ -339,6 +346,8 @@ namespace NaturalLanguageUnderstandingV1 {
 
   /** The hierarchical 5-level taxonomy the content is categorized into. */
   export interface CategoriesOptions {
+    /** CategoriesOptions accepts additional properties. */
+    [propName: string]: any;
   }
 
   /** The hierarchical 5-level taxonomy the content is categorized into. */
@@ -397,7 +406,7 @@ namespace NaturalLanguageUnderstandingV1 {
 
   /** Whether or not to return emotion analysis of the content. */
   export interface EmotionOptions {
-    /** Set this to false to hide document-level emotion results. */
+    /** Set this to `false` to hide document-level emotion results. */
     document?: boolean;
     /** Emotion results will be returned for each target string that is found in the document. */
     targets?: string[];
@@ -429,13 +438,13 @@ namespace NaturalLanguageUnderstandingV1 {
   export interface EntitiesOptions {
     /** Maximum number of entities to return. */
     limit?: number;
-    /** Set this to true to return locations of entity mentions. */
+    /** Set this to `true` to return locations of entity mentions. */
     mentions?: boolean;
-    /** Enter a custom model ID to override the standard entity detection model. */
+    /** Enter a [custom model](https://www.bluemix.net/docs/services/natural-language-understanding/customizing.html) ID to override the standard entity detection model. */
     model?: string;
-    /** Set this to true to return sentiment information for detected entities. */
+    /** Set this to `true` to return sentiment information for detected entities. */
     sentiment?: boolean;
-    /** Set this to true to analyze emotion for detected keywords. */
+    /** Set this to `true` to analyze emotion for detected keywords. */
     emotion?: boolean;
   }
 
@@ -505,9 +514,9 @@ namespace NaturalLanguageUnderstandingV1 {
   export interface KeywordsOptions {
     /** Maximum number of keywords to return. */
     limit?: number;
-    /** Set this to true to return sentiment information for detected keywords. */
+    /** Set this to `true` to return sentiment information for detected keywords. */
     sentiment?: boolean;
-    /** Set this to true to analyze emotion for detected keywords. */
+    /** Set this to `true` to analyze emotion for detected keywords. */
     emotion?: boolean;
   }
 
@@ -530,6 +539,8 @@ namespace NaturalLanguageUnderstandingV1 {
 
   /** The Authors, Publication Date, and Title of the document. Supports URL and HTML input types. */
   export interface MetadataOptions {
+    /** MetadataOptions accepts additional properties. */
+    [propName: string]: any;
   }
 
   /** The Authors, Publication Date, and Title of the document. Supports URL and HTML input types. */
@@ -577,7 +588,7 @@ namespace NaturalLanguageUnderstandingV1 {
 
   /** An option specifying if the relationships found between entities in the analyzed content should be returned. */
   export interface RelationsOptions {
-    /** Enter a custom model ID to override the default model. */
+    /** Enter a [custom model](https://www.bluemix.net/docs/services/natural-language-understanding/customizing.html) ID to override the default model. */
     model?: string;
   }
 
@@ -627,9 +638,9 @@ namespace NaturalLanguageUnderstandingV1 {
   export interface SemanticRolesOptions {
     /** Maximum number of semantic_roles results to return. */
     limit?: number;
-    /** Set this to true to return keyword information for subjects and objects. */
+    /** Set this to `true` to return keyword information for subjects and objects. */
     keywords?: boolean;
-    /** Set this to true to return entity information for subjects and objects. */
+    /** Set this to `true` to return entity information for subjects and objects. */
     entities?: boolean;
   }
 
@@ -663,7 +674,7 @@ namespace NaturalLanguageUnderstandingV1 {
 
   /** An option specifying if sentiment of detected entities, keywords, or phrases should be returned. */
   export interface SentimentOptions {
-    /** Set this to false to hide document-level sentiment results. */
+    /** Set this to `false` to hide document-level sentiment results. */
     document?: boolean;
     /** Sentiment results will be returned for each target string that is found in the document. */
     targets?: string[];

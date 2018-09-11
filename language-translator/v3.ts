@@ -216,6 +216,8 @@ class LanguageTranslatorV3 extends BaseService {
    * source and target language. You can upload multiple parallel_corpus files in one request. All uploaded
    * parallel_corpus files combined, your parallel corpus must contain at least 5,000 parallel sentences to train
    * successfully.
+   * @param {string} [params.forced_glossary_filename] - The filename for forced_glossary.
+   * @param {string} [params.parallel_corpus_filename] - The filename for parallel_corpus.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -231,10 +233,12 @@ class LanguageTranslatorV3 extends BaseService {
     const formData = {
       'forced_glossary': {
         data: _params.forced_glossary,
+        filename: _params.forced_glossary_filename,
         contentType: 'application/octet-stream'
       },
       'parallel_corpus': {
         data: _params.parallel_corpus,
+        filename: _params.parallel_corpus_filename,
         contentType: 'application/octet-stream'
       }
     };
@@ -442,6 +446,10 @@ namespace LanguageTranslatorV3 {
     forced_glossary?: NodeJS.ReadableStream|FileObject|Buffer;
     /** A TMX file with parallel sentences for source and target language. You can upload multiple parallel_corpus files in one request. All uploaded parallel_corpus files combined, your parallel corpus must contain at least 5,000 parallel sentences to train successfully. */
     parallel_corpus?: NodeJS.ReadableStream|FileObject|Buffer;
+    /** The filename for forced_glossary. */
+    forced_glossary_filename?: string;
+    /** The filename for parallel_corpus. */
+    parallel_corpus_filename?: string;
     headers?: Object;
   }
 

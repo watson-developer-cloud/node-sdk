@@ -601,13 +601,11 @@ class DiscoveryV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
-
     if (_params.file && !_params.filename) {
       console.warn(
         'WARNING: `filename` should be provided if `file` is not null. This will be REQUIRED in the next major release.'
       );
     }
-
     const formData = {
       'configuration': _params.configuration,
       'file': {
@@ -1101,13 +1099,11 @@ class DiscoveryV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
-
     if (_params.file && !_params.filename) {
       console.warn(
         'WARNING: `filename` should be provided if `file` is not null. This will be REQUIRED in the next major release.'
       );
     }
-
     const formData = {
       'file': {
         data: _params.file,
@@ -1256,13 +1252,11 @@ class DiscoveryV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
-
     if (_params.file && !_params.filename) {
       console.warn(
         'WARNING: `filename` should be provided if `file` is not null. This will be REQUIRED in the next major release.'
       );
     }
-
     const formData = {
       'file': {
         data: _params.file,
@@ -4325,6 +4319,8 @@ namespace DiscoveryV1 {
 
   /** An object that indicates the Categories enrichment will be applied to the specified field. */
   export interface NluEnrichmentCategories {
+    /** NluEnrichmentCategories accepts additional properties. */
+    [propName: string]: any;
   }
 
   /** An object specifying the emotion detection enrichment and related parameters. */
@@ -4548,6 +4544,8 @@ namespace DiscoveryV1 {
     sha1?: string;
     /** Array of notices for the document. */
     notices?: Notice[];
+    /** QueryNoticesResult accepts additional properties. */
+    [propName: string]: any;
   }
 
   /** QueryPassages. */
@@ -4631,6 +4629,8 @@ namespace DiscoveryV1 {
     collection_id?: string;
     /** Metadata of the query result. */
     result_metadata?: QueryResultResultMetadata;
+    /** QueryResult accepts additional properties. */
+    [propName: string]: any;
   }
 
   /** Metadata of a query result. */
