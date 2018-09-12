@@ -254,4 +254,14 @@ describe('BaseService', function() {
     assert.equal(instance.tokenManager.iamApikey, apikey);
     assert.equal(instance._options.headers, undefined);
   });
+
+  it('should create a basic auth header if username is `apikey` and password starts with `icp-`', function() {
+    const instance = new TestService({
+      username: 'apikey',
+      password: 'icp-1234',
+    });
+    const authHeader = instance._options.headers.Authorization;
+    assert.equal(instance.tokenManager, null);
+    assert(authHeader.startsWith('Basic'));
+  });
 });
