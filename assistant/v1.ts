@@ -290,7 +290,7 @@ class AssistantV1 extends BaseService {
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
    * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order,
-   * prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
+   * prefix the value with a minus sign (`-`).
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
@@ -570,7 +570,7 @@ class AssistantV1 extends BaseService {
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
    * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order,
-   * prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
+   * prefix the value with a minus sign (`-`).
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
@@ -833,7 +833,7 @@ class AssistantV1 extends BaseService {
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
    * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order,
-   * prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
+   * prefix the value with a minus sign (`-`).
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
@@ -1086,7 +1086,7 @@ class AssistantV1 extends BaseService {
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
    * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order,
-   * prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
+   * prefix the value with a minus sign (`-`).
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
@@ -1347,7 +1347,7 @@ class AssistantV1 extends BaseService {
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
    * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order,
-   * prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
+   * prefix the value with a minus sign (`-`).
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
@@ -1692,7 +1692,7 @@ class AssistantV1 extends BaseService {
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
    * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order,
-   * prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
+   * prefix the value with a minus sign (`-`).
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
@@ -1974,7 +1974,7 @@ class AssistantV1 extends BaseService {
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
    * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order,
-   * prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
+   * prefix the value with a minus sign (`-`).
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
@@ -2096,7 +2096,7 @@ class AssistantV1 extends BaseService {
    * carriage return, newline, or tab characters, and it must be no longer than 2048 characters.
    * @param {string} [params.parent] - The ID of the parent dialog node.
    * @param {string} [params.previous_sibling] - The ID of the previous dialog node.
-   * @param {Object} [params.output] - The output of the dialog node. For more information about how to
+   * @param {DialogNodeOutput} [params.output] - The output of the dialog node. For more information about how to
    * specify dialog node output, see the
    * [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex).
    * @param {Object} [params.context] - The context for the dialog node.
@@ -2116,7 +2116,7 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.digress_out_slots] - Whether the user can digress to top-level nodes while filling out
    * slots.
    * @param {string} [params.user_label] - A label that can be displayed externally to describe the purpose of the node
-   * to users.
+   * to users. This string must be no longer than 512 characters.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -2270,7 +2270,7 @@ class AssistantV1 extends BaseService {
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
    * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order,
-   * prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
+   * prefix the value with a minus sign (`-`).
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
@@ -2332,7 +2332,7 @@ class AssistantV1 extends BaseService {
    * contain carriage return, newline, or tab characters, and it must be no longer than 2048 characters.
    * @param {string} [params.new_parent] - The ID of the parent dialog node.
    * @param {string} [params.new_previous_sibling] - The ID of the previous sibling dialog node.
-   * @param {Object} [params.new_output] - The output of the dialog node. For more information about how to
+   * @param {DialogNodeOutput} [params.new_output] - The output of the dialog node. For more information about how to
    * specify dialog node output, see the
    * [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex).
    * @param {Object} [params.new_context] - The context for the dialog node.
@@ -2352,7 +2352,7 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.new_digress_out_slots] - Whether the user can digress to top-level nodes while filling out
    * slots.
    * @param {string} [params.new_user_label] - A label that can be displayed externally to describe the purpose of the
-   * node to users.
+   * node to users. This string must be no longer than 512 characters.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -2424,8 +2424,8 @@ class AssistantV1 extends BaseService {
    * filter. You must specify a filter query that includes a value for `language`, as well as a value for `workspace_id`
    * or `request.context.metadata.deployment`. For more information, see the
    * [documentation](https://console.bluemix.net/docs/services/conversation/filter-reference.html#filter-query-syntax).
-   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order,
-   * prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
+   * @param {string} [params.sort] - How to sort the returned log events. You can sort by **request_timestamp**. To
+   * reverse the sort order, prefix the parameter value with a minus sign (`-`).
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {Object} [params.headers] - Custom request headers
@@ -2471,8 +2471,8 @@ class AssistantV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order,
-   * prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`.
+   * @param {string} [params.sort] - How to sort the returned log events. You can sort by **request_timestamp**. To
+   * reverse the sort order, prefix the parameter value with a minus sign (`-`).
    * @param {string} [params.filter] - A cacheable parameter that limits the results to those matching the specified
    * filter. For more information, see the
    * [documentation](https://console.bluemix.net/docs/services/conversation/filter-reference.html#filter-query-syntax).
@@ -2665,7 +2665,7 @@ namespace AssistantV1 {
     page_limit?: number;
     /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
+    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
     sort?: string;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
@@ -2748,7 +2748,7 @@ namespace AssistantV1 {
     page_limit?: number;
     /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
+    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
     sort?: string;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
@@ -2819,7 +2819,7 @@ namespace AssistantV1 {
     page_limit?: number;
     /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
+    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
     sort?: string;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
@@ -2880,7 +2880,7 @@ namespace AssistantV1 {
     page_limit?: number;
     /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
+    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
     sort?: string;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
@@ -2949,7 +2949,7 @@ namespace AssistantV1 {
     page_limit?: number;
     /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
+    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
     sort?: string;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
@@ -3056,7 +3056,7 @@ namespace AssistantV1 {
     page_limit?: number;
     /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
+    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
     sort?: string;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
@@ -3148,7 +3148,7 @@ namespace AssistantV1 {
     page_limit?: number;
     /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
+    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
     sort?: string;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
@@ -3187,7 +3187,7 @@ namespace AssistantV1 {
     /** The ID of the previous dialog node. */
     previous_sibling?: string;
     /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex). */
-    output?: Object;
+    output?: DialogNodeOutput;
     /** The context for the dialog node. */
     context?: Object;
     /** The metadata for the dialog node. */
@@ -3210,7 +3210,7 @@ namespace AssistantV1 {
     digress_out?: CreateDialogNodeConstants.DigressOut | string;
     /** Whether the user can digress to top-level nodes while filling out slots. */
     digress_out_slots?: CreateDialogNodeConstants.DigressOutSlots | string;
-    /** A label that can be displayed externally to describe the purpose of the node to users. */
+    /** A label that can be displayed externally to describe the purpose of the node to users. This string must be no longer than 512 characters. */
     user_label?: string;
     headers?: Object;
   }
@@ -3286,7 +3286,7 @@ namespace AssistantV1 {
     page_limit?: number;
     /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
+    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
     sort?: string;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
@@ -3312,7 +3312,7 @@ namespace AssistantV1 {
     /** The ID of the previous sibling dialog node. */
     new_previous_sibling?: string;
     /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex). */
-    new_output?: Object;
+    new_output?: DialogNodeOutput;
     /** The context for the dialog node. */
     new_context?: Object;
     /** The metadata for the dialog node. */
@@ -3335,7 +3335,7 @@ namespace AssistantV1 {
     new_digress_out?: UpdateDialogNodeConstants.DigressOut | string;
     /** Whether the user can digress to top-level nodes while filling out slots. */
     new_digress_out_slots?: UpdateDialogNodeConstants.DigressOutSlots | string;
-    /** A label that can be displayed externally to describe the purpose of the node to users. */
+    /** A label that can be displayed externally to describe the purpose of the node to users. This string must be no longer than 512 characters. */
     new_user_label?: string;
     headers?: Object;
   }
@@ -3387,7 +3387,7 @@ namespace AssistantV1 {
   export interface ListAllLogsParams {
     /** A cacheable parameter that limits the results to those matching the specified filter. You must specify a filter query that includes a value for `language`, as well as a value for `workspace_id` or `request.context.metadata.deployment`. For more information, see the [documentation](https://console.bluemix.net/docs/services/conversation/filter-reference.html#filter-query-syntax). */
     filter: string;
-    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
+    /** How to sort the returned log events. You can sort by **request_timestamp**. To reverse the sort order, prefix the parameter value with a minus sign (`-`). */
     sort?: string;
     /** The number of records to return in each page of results. */
     page_limit?: number;
@@ -3400,7 +3400,7 @@ namespace AssistantV1 {
   export interface ListLogsParams {
     /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). Supported values are `name`, `updated`, and `workspace_id`. */
+    /** How to sort the returned log events. You can sort by **request_timestamp**. To reverse the sort order, prefix the parameter value with a minus sign (`-`). */
     sort?: string;
     /** A cacheable parameter that limits the results to those matching the specified filter. For more information, see the [documentation](https://console.bluemix.net/docs/services/conversation/filter-reference.html#filter-query-syntax). */
     filter?: string;
@@ -3436,6 +3436,8 @@ namespace AssistantV1 {
     conversation_id?: string;
     /** For internal use only. */
     system?: SystemResponse;
+    /** Context accepts additional properties. */
+    [propName: string]: any;
   }
 
   /** Counterexample. */
@@ -3475,7 +3477,7 @@ namespace AssistantV1 {
     /** The ID of the previous dialog node. */
     previous_sibling?: string;
     /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex). */
-    output?: Object;
+    output?: DialogNodeOutput;
     /** The context for the dialog node. */
     context?: Object;
     /** The metadata for the dialog node. */
@@ -3498,7 +3500,7 @@ namespace AssistantV1 {
     digress_out?: string;
     /** Whether the user can digress to top-level nodes while filling out slots. */
     digress_out_slots?: string;
-    /** A label that can be displayed externally to describe the purpose of the node to users. */
+    /** A label that can be displayed externally to describe the purpose of the node to users. This string must be no longer than 512 characters. */
     user_label?: string;
   }
 
@@ -3561,7 +3563,7 @@ namespace AssistantV1 {
     /** The ID of the previous sibling dialog node. This property is not returned if the dialog node has no previous sibling. */
     previous_sibling?: string;
     /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex). */
-    output?: Object;
+    output?: DialogNodeOutput;
     /** The context (if defined) for the dialog node. */
     context?: Object;
     /** Any metadata for the dialog node. */
@@ -3588,7 +3590,7 @@ namespace AssistantV1 {
     digress_out?: string;
     /** Whether the user can digress to top-level nodes while filling out slots. */
     digress_out_slots?: string;
-    /** A label that can be displayed externally to describe the purpose of the node to users. */
+    /** A label that can be displayed externally to describe the purpose of the node to users. This string must be no longer than 512 characters. */
     user_label?: string;
   }
 
@@ -3630,6 +3632,8 @@ namespace AssistantV1 {
     generic?: DialogNodeOutputGeneric[];
     /** Options that modify how specified output is handled. */
     modifiers?: DialogNodeOutputModifiers;
+    /** DialogNodeOutput accepts additional properties. */
+    [propName: string]: any;
   }
 
   /** DialogNodeOutputGeneric. */
@@ -3648,15 +3652,15 @@ namespace AssistantV1 {
     typing?: boolean;
     /** The URL of the image. Required when **response_type**=`image`. */
     source?: string;
-    /** An optional title to show before the response. Valid only when **response_type**=`image` or `option`. */
+    /** An optional title to show before the response. Valid only when **response_type**=`image` or `option`. This string must be no longer than 512 characters. */
     title?: string;
-    /** An optional description to show with the response. Valid only when **response_type**=`image` or `option`. */
+    /** An optional description to show with the response. Valid only when **response_type**=`image` or `option`. This string must be no longer than 256 characters. */
     description?: string;
     /** The preferred type of control to display, if supported by the channel. Valid only when **response_type**=`option`. */
     preference?: string;
-    /** An array of objects describing the options from which the user can choose. Required when **response_type**=`option`. */
+    /** An array of objects describing the options from which the user can choose. You can include up to 20 options. Required when **response_type**=`option`. */
     options?: DialogNodeOutputOptionsElement[];
-    /** An optional message to be sent to the human agent who will be taking over the conversation. Valid only when **reponse_type**=`connect_to_agent`. */
+    /** An optional message to be sent to the human agent who will be taking over the conversation. Valid only when **reponse_type**=`connect_to_agent`. This string must be no longer than 256 characters. */
     message_to_human_agent?: string;
   }
 
@@ -3682,7 +3686,7 @@ namespace AssistantV1 {
 
   /** DialogNodeOutputTextValuesElement. */
   export interface DialogNodeOutputTextValuesElement {
-    /** The text of a response. This can include newline characters (` `), Markdown tagging, or other special characters, if supported by the channel. */
+    /** The text of a response. This string can include newline characters (` `), Markdown tagging, or other special characters, if supported by the channel. It must be no longer than 4096 characters. */
     text?: string;
   }
 
@@ -3708,7 +3712,7 @@ namespace AssistantV1 {
     typing?: boolean;
     /** The URL of the image. */
     source?: string;
-    /** The title to show before the response. */
+    /** The title or introductory text to show before the response. */
     title?: string;
     /** The description to show with the the response. */
     description?: string;
@@ -3896,6 +3900,8 @@ namespace AssistantV1 {
     level: string;
     /** The text of the log message. */
     msg: string;
+    /** LogMessage accepts additional properties. */
+    [propName: string]: any;
   }
 
   /** The pagination data for the returned objects. */
@@ -3952,6 +3958,10 @@ namespace AssistantV1 {
     context: Context;
     /** Output from the dialog, including the response to the user, the nodes that were triggered, and log messages. */
     output: OutputData;
+    /** An array of objects describing any actions requested by the dialog node. */
+    actions?: DialogNodeAction[];
+    /** MessageResponse accepts additional properties. */
+    [propName: string]: any;
   }
 
   /** An output object that includes the response to the user, the dialog nodes that were triggered, and messages from the log. */
@@ -3966,6 +3976,10 @@ namespace AssistantV1 {
     nodes_visited?: string[];
     /** An array of objects containing detailed diagnostic information about the nodes that were triggered during processing of the input message. Included only if **nodes_visited_details** is set to `true` in the message request. */
     nodes_visited_details?: DialogNodeVisitedDetails[];
+    /** An array of objects describing any actions requested by the dialog node. */
+    actions?: DialogNodeAction[];
+    /** OutputData accepts additional properties. */
+    [propName: string]: any;
   }
 
   /** The pagination data for the returned objects. */
@@ -3998,6 +4012,8 @@ namespace AssistantV1 {
     metadata?: Object;
     /** The recognized capture groups for the entity, as defined by the entity pattern. */
     groups?: CaptureGroup[];
+    /** RuntimeEntity accepts additional properties. */
+    [propName: string]: any;
   }
 
   /** An intent identified in the user input. */
@@ -4006,6 +4022,8 @@ namespace AssistantV1 {
     intent: string;
     /** A decimal percentage that represents Watson's confidence in the intent. */
     confidence: number;
+    /** RuntimeIntent accepts additional properties. */
+    [propName: string]: any;
   }
 
   /** Synonym. */
@@ -4028,6 +4046,8 @@ namespace AssistantV1 {
 
   /** For internal use only. */
   export interface SystemResponse {
+    /** SystemResponse accepts additional properties. */
+    [propName: string]: any;
   }
 
   /** Value. */

@@ -199,6 +199,9 @@ class LanguageTranslatorV2 extends BaseService {
    * are treated as a parallel corpus instead of a glossary.
    * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.monolingual_corpus] - A UTF-8 encoded plain text file that
    * is used to customize the target language model.
+   * @param {string} [params.forced_glossary_filename] - The filename for forced_glossary.
+   * @param {string} [params.parallel_corpus_filename] - The filename for parallel_corpus.
+   * @param {string} [params.monolingual_corpus_filename] - The filename for monolingual_corpus.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -214,14 +217,17 @@ class LanguageTranslatorV2 extends BaseService {
     const formData = {
       'forced_glossary': {
         data: _params.forced_glossary,
+        filename: _params.forced_glossary_filename,
         contentType: 'application/octet-stream'
       },
       'parallel_corpus': {
         data: _params.parallel_corpus,
+        filename: _params.parallel_corpus_filename,
         contentType: 'application/octet-stream'
       },
       'monolingual_corpus': {
         data: _params.monolingual_corpus,
+        filename: _params.monolingual_corpus_filename,
         contentType: 'text/plain'
       }
     };
@@ -428,6 +434,12 @@ namespace LanguageTranslatorV2 {
     parallel_corpus?: NodeJS.ReadableStream|FileObject|Buffer;
     /** A UTF-8 encoded plain text file that is used to customize the target language model. */
     monolingual_corpus?: NodeJS.ReadableStream|FileObject|Buffer;
+    /** The filename for forced_glossary. */
+    forced_glossary_filename?: string;
+    /** The filename for parallel_corpus. */
+    parallel_corpus_filename?: string;
+    /** The filename for monolingual_corpus. */
+    monolingual_corpus_filename?: string;
     headers?: Object;
   }
 

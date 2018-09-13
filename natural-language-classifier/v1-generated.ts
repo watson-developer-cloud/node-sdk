@@ -165,6 +165,8 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * @param {NodeJS.ReadableStream|FileObject|Buffer} params.training_data - Training data in CSV format. Each text
    * value must have at least one class. The data can include up to 20,000 records. For details, see [Data
    * preparation](https://console.bluemix.net/docs/services/natural-language-classifier/using-your-data.html).
+   * @param {string} [params.metadata_filename] - The filename for training_metadata.
+   * @param {string} [params.training_data_filename] - The filename for training_data.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -180,10 +182,12 @@ class NaturalLanguageClassifierV1 extends BaseService {
     const formData = {
       'training_metadata': {
         data: _params.metadata,
+        filename: _params.metadata_filename,
         contentType: 'application/json'
       },
       'training_data': {
         data: _params.training_data,
+        filename: _params.training_data_filename,
         contentType: 'text/csv'
       }
     };
@@ -362,6 +366,10 @@ namespace NaturalLanguageClassifierV1 {
     metadata: NodeJS.ReadableStream|FileObject|Buffer;
     /** Training data in CSV format. Each text value must have at least one class. The data can include up to 20,000 records. For details, see [Data preparation](https://console.bluemix.net/docs/services/natural-language-classifier/using-your-data.html). */
     training_data: NodeJS.ReadableStream|FileObject|Buffer;
+    /** The filename for training_metadata. */
+    metadata_filename?: string;
+    /** The filename for training_data. */
+    training_data_filename?: string;
     headers?: Object;
   }
 

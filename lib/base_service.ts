@@ -73,11 +73,17 @@ function hasCredentials(obj: any): boolean {
 }
 
 function hasBasicCredentials(obj: any): boolean {
-  return obj && obj.username && obj.password && obj.username !== 'apikey';
+  return obj && obj.username && obj.password && !usesBasicForIam(obj);
 }
 
 function hasIamCredentials(obj: any): boolean {
   return obj && (obj.iam_apikey || obj.iam_access_token);
+}
+
+// returns true if the user provides basic auth creds with the intention
+// of using IAM auth
+function usesBasicForIam(obj: any): boolean {
+  return obj.username === 'apikey' && !obj.password.startsWith('icp-');
 }
 
 export class BaseService {
@@ -135,7 +141,7 @@ export class BaseService {
         iamAccessToken: _options.iam_access_token,
         iamUrl: _options.iam_url
       });
-    } else if (_options.username === 'apikey') {
+    } else if (usesBasicForIam(_options)) {
       this.tokenManager = new IamTokenManagerV1({
         iamApikey: _options.password,
         iamUrl: _options.iam_url
@@ -280,7 +286,7 @@ export class BaseService {
           'api_key, and iam_access_token.';
         throw new Error(errorMessage);
       }
-      if (!hasIamCredentials(_options) && _options.username !== 'apikey') {
+      if (!hasIamCredentials(_options) && !usesBasicForIam(_options)) {
         if (hasBasicCredentials(_options)) {
           // Calculate and add Authorization header to base options
           const encodedCredentials = bufferFrom(
