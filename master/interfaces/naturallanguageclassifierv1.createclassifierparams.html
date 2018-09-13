@@ -91,7 +91,9 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="naturallanguageclassifierv1.createclassifierparams.html#headers" class="tsd-kind-icon">headers</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="naturallanguageclassifierv1.createclassifierparams.html#metadata" class="tsd-kind-icon">metadata</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="naturallanguageclassifierv1.createclassifierparams.html#metadata_filename" class="tsd-kind-icon">metadata_<wbr>filename</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="naturallanguageclassifierv1.createclassifierparams.html#training_data" class="tsd-kind-icon">training_<wbr>data</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="naturallanguageclassifierv1.createclassifierparams.html#training_data_filename" class="tsd-kind-icon">training_<wbr>data_<wbr>filename</a></li>
 							</ul>
 						</section>
 					</div>
@@ -105,7 +107,7 @@
 					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/aa78432/natural-language-classifier/v1-generated.ts#L365">natural-language-classifier/v1-generated.ts:365</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e662162/natural-language-classifier/v1-generated.ts#L373">natural-language-classifier/v1-generated.ts:373</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -115,7 +117,7 @@
 					<div class="tsd-signature tsd-kind-icon">metadata<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">FileObject</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/aa78432/natural-language-classifier/v1-generated.ts#L362">natural-language-classifier/v1-generated.ts:362</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e662162/natural-language-classifier/v1-generated.ts#L366">natural-language-classifier/v1-generated.ts:366</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -125,17 +127,47 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="metadata_filename" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> metadata_<wbr>filename</h3>
+					<div class="tsd-signature tsd-kind-icon">metadata_<wbr>filename<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e662162/natural-language-classifier/v1-generated.ts#L370">natural-language-classifier/v1-generated.ts:370</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The filename for training_metadata.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="training_data" class="tsd-anchor"></a>
 					<h3>training_<wbr>data</h3>
 					<div class="tsd-signature tsd-kind-icon">training_<wbr>data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">FileObject</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/aa78432/natural-language-classifier/v1-generated.ts#L364">natural-language-classifier/v1-generated.ts:364</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e662162/natural-language-classifier/v1-generated.ts#L368">natural-language-classifier/v1-generated.ts:368</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>Training data in CSV format. Each text value must have at least one class. The data can include up to 20,000 records. For details, see <a href="https://console.bluemix.net/docs/services/natural-language-classifier/using-your-data.html">Data preparation</a>.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="training_data_filename" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> training_<wbr>data_<wbr>filename</h3>
+					<div class="tsd-signature tsd-kind-icon">training_<wbr>data_<wbr>filename<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e662162/natural-language-classifier/v1-generated.ts#L372">natural-language-classifier/v1-generated.ts:372</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The filename for training_data.</p>
 						</div>
 					</div>
 				</section>
@@ -208,7 +240,13 @@
 										<a href="naturallanguageclassifierv1.createclassifierparams.html#metadata" class="tsd-kind-icon">metadata</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="naturallanguageclassifierv1.createclassifierparams.html#metadata_filename" class="tsd-kind-icon">metadata_<wbr>filename</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="naturallanguageclassifierv1.createclassifierparams.html#training_data" class="tsd-kind-icon">training_<wbr>data</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="naturallanguageclassifierv1.createclassifierparams.html#training_data_filename" class="tsd-kind-icon">training_<wbr>data_<wbr>filename</a>
 									</li>
 								</ul>
 							</li>
