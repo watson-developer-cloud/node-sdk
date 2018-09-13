@@ -1,3 +1,11 @@
+# [3.10.0](https://github.com/watson-developer-cloud/node-sdk/compare/v3.9.1...v3.10.0) (2018-09-13)
+
+
+### Features
+
+* new languages models supported for speech to text ([a2669dd](https://github.com/watson-developer-cloud/node-sdk/commit/a2669dd))
+* support authenticating with ibm cloud private ([0d1774c](https://github.com/watson-developer-cloud/node-sdk/commit/0d1774c))
+
 ## [3.9.1](https://github.com/watson-developer-cloud/node-sdk/compare/v3.9.0...v3.9.1) (2018-08-30)
 
 
