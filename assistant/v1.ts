@@ -3976,8 +3976,6 @@ namespace AssistantV1 {
     nodes_visited?: string[];
     /** An array of objects containing detailed diagnostic information about the nodes that were triggered during processing of the input message. Included only if **nodes_visited_details** is set to `true` in the message request. */
     nodes_visited_details?: DialogNodeVisitedDetails[];
-    /** An array of objects describing any actions requested by the dialog node. */
-    actions?: DialogNodeAction[];
     /** OutputData accepts additional properties. */
     [propName: string]: any;
   }

@@ -233,10 +233,6 @@ class VisualRecognitionV3 extends BaseService {
    *
    * Encode special characters in the file name in UTF-8.
    * @param {string} [params.classname_positive_examples_filename] - The filename for classname_positive_examples.
-   *
-   * Specify the filename by appending `_positive_examples_filename` to the class name. For example,
-   * the filename parameter for `goldenretriever_positive_examples` would be `goldenretriever_positive_examples_filename`
-   *
    * @param {string} [params.negative_examples_filename] - The filename for negative_examples.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -245,13 +241,15 @@ class VisualRecognitionV3 extends BaseService {
   public createClassifier(params: VisualRecognitionV3.CreateClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
-    const positiveExampleClasses = Object.keys(_params).filter(key => {
-      return key.match(/^.+positive_examples$/);
-    }) || ['<classname>_positive_examples'];
-    const requiredParams = ['name', ...positiveExampleClasses];
+    const requiredParams = ['name', 'classname_positive_examples'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
+    }
+    if (_params.classname_positive_examples && !_params.classname_positive_examples_filename) {
+      console.warn(
+        'WARNING: `classname_positive_examples_filename` should be provided if `classname_positive_examples` is not null. This will be REQUIRED in the next major release.'
+      );
     }
     if (_params.negative_examples && !_params.negative_examples_filename) {
       console.warn(
@@ -271,18 +269,6 @@ class VisualRecognitionV3 extends BaseService {
         contentType: 'application/octet-stream'
       }
     };
-    positiveExampleClasses.forEach(positiveExampleClass => {
-      if (!_params[`${positiveExampleClass}_filename`]) {
-        console.warn(
-          `WARNING: \`${positiveExampleClass}_filename\` should be provided if \`${positiveExampleClass}\` is not null. This will be REQUIRED in the next major release.` 
-        );
-      }
-      formData[positiveExampleClass] = {
-        data: _params[positiveExampleClass],
-        filename: _params[`${positiveExampleClass}_filename`],
-        contentType: 'application/octet-stream',
-      };
-    });
     const parameters = {
       options: {
         url: '/v3/classifiers',
@@ -438,9 +424,6 @@ class VisualRecognitionV3 extends BaseService {
    *
    * Encode special characters in the file name in UTF-8.
    * @param {string} [params.classname_positive_examples_filename] - The filename for classname_positive_examples.
-   *
-   * Specify the filename by appending `_positive_examples_filename` to the class name. For example,
-   * the filename parameter for `goldenretriever_positive_examples` would be `goldenretriever_positive_examples_filename`
    * @param {string} [params.negative_examples_filename] - The filename for negative_examples.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -449,13 +432,15 @@ class VisualRecognitionV3 extends BaseService {
   public updateClassifier(params: VisualRecognitionV3.UpdateClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
-    const positiveExampleClasses = Object.keys(_params).filter(key => {
-      return key.match(/^.+positive_examples$/);
-    });
     const requiredParams = ['classifier_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
+    }
+    if (_params.classname_positive_examples && !_params.classname_positive_examples_filename) {
+      console.warn(
+        'WARNING: `classname_positive_examples_filename` should be provided if `classname_positive_examples` is not null. This will be REQUIRED in the next major release.'
+      );
     }
     if (_params.negative_examples && !_params.negative_examples_filename) {
       console.warn(
@@ -477,18 +462,6 @@ class VisualRecognitionV3 extends BaseService {
     const path = {
       'classifier_id': _params.classifier_id
     };
-    positiveExampleClasses.forEach(positiveExampleClass => {
-      if (!_params[`${positiveExampleClass}_filename`]) {
-        console.warn(
-          `WARNING: \`${positiveExampleClass}_filename\` should be provided if \`${positiveExampleClass}\` is not null. This will be REQUIRED in the next major release.` 
-        );
-      }
-      formData[positiveExampleClass] = {
-         data: _params[positiveExampleClass],
-         filename: _params[`${positiveExampleClass}_filename`],
-         contentType: 'application/octet-stream',
-      };
-    });
     const parameters = {
       options: {
         url: '/v3/classifiers/{classifier_id}',
