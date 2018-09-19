@@ -5,5 +5,5 @@
     ./personality-insights/v3-generated.ts ./personality-insights/v2.ts \
     ./speech-to-text/v1-generated.ts ./text-to-speech/v1-generated.ts \
     ./tone-analyzer/v3-generated.ts ./visual-recognition/v3-generated.ts \
-    ./lib/recognize-stream.ts --target "ES5"
+    ./lib/recognize-stream.ts ./assistant/v1.ts ./assistant/v2.ts --target "ES5"
     
