@@ -27,7 +27,8 @@ Node.js client library to use the Watson APIs.
   * [Questions](#questions)
   * [IBM Watson services](#ibm-watson-services)
     * [Authorization](#authorization)
-    * [Assistant](#assistant)
+    * [Assistant v2](#assistant-v2)
+    * [Assistant v1](#assistant-v1)
     * [Discovery](#discovery)
     * [Language Translator v3](#language-translator-v3)
     * [Language Translator v2](#language-translator-v2)
@@ -279,7 +280,39 @@ function (err, token) {
 });
 ```
 
-### Assistant
+### Assistant v2
+
+Use the [Assistant][conversation] service to determine the intent of a message.
+
+Note: You must first create a workspace via IBM Cloud. See [the documentation](https://console.bluemix.net/docs/services/conversation/index.html#about) for details.
+
+```js
+var AssistantV1 = require('watson-developer-cloud/assistant/v1');
+
+var assistant = new AssistantV2({
+  username: '<username>',
+  password: '<password>',
+  url: 'https://gateway.watsonplatform.net/assistant/api/',
+  version: '2018-09-19'
+});
+
+assistant.message(
+  {
+    input: { text: "What's the weather?" },
+    assistant_id: '<assistant id>',
+    session_id: '<session id>',
+  },
+  function(err, response) {
+    if (err) {
+      console.error(err);
+    } else {
+      console.log(JSON.stringify(response, null, 2));
+    }
+  }
+);
+```
+
+### Assistant v1
 
 Use the [Assistant][conversation] service to determine the intent of a message.
 
