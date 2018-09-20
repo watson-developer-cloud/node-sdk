@@ -43,6 +43,7 @@ export interface UserOptions {
   iam_access_token?: string;
   iam_apikey?: string;
   iam_url?: string;
+  allow_unauthorized?: boolean;
 }
 
 export interface BaseServiceOptions extends UserOptions {
@@ -50,6 +51,7 @@ export interface BaseServiceOptions extends UserOptions {
   url: string;
   jar?: request.CookieJar;
   qs: any;
+  rejectUnauthorized?: boolean;
 }
 
 export interface Credentials {
@@ -149,6 +151,9 @@ export class BaseService {
     } else {
       this.tokenManager = null;
     }
+    // rejectUnauthorized should only be false if allow_unauthorized is true
+    // used to disable ssl checking for icp
+    this._options.rejectUnauthorized = !options.allow_unauthorized;
   }
 
   /**

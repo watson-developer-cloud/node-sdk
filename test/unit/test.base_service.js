@@ -264,4 +264,30 @@ describe('BaseService', function() {
     assert.equal(instance.tokenManager, null);
     assert(authHeader.startsWith('Basic'));
   });
+
+  it('should set rejectUnauthorized to `false` if allow_unauthorized is `true`', function() {
+    const instance = new TestService({
+      username: 'apikey',
+      password: 'icp-1234',
+      allow_unauthorized: true,
+    });
+    assert.equal(instance._options.rejectUnauthorized, false);
+  });
+
+  it('should set rejectUnauthorized to `true` if allow_unauthorized is `false`', function() {
+    const instance = new TestService({
+      username: 'apikey',
+      password: 'icp-1234',
+      allow_unauthorized: false,
+    });
+    assert(instance._options.rejectUnauthorized);
+  });
+
+  it('should set rejectUnauthorized to `true` if allow_unauthorized is not set', function() {
+    const instance = new TestService({
+      username: 'apikey',
+      password: 'icp-1234',
+    });
+    assert(instance._options.rejectUnauthorized);
+  });
 });
