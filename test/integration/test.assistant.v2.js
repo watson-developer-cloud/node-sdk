@@ -1,5 +1,6 @@
 'use strict';
 
+const nock = require('nock');
 const watson = require('../../index');
 const assert = require('assert');
 const authHelper = require('./auth_helper.js');
@@ -11,6 +12,14 @@ describe('assistant v2 integration', function() {
   const assistant = new watson.AssistantV2(auth);
   const assistant_id = auth.assistant_id;
   let session_id;
+
+  before(function() {
+    nock.enableNetConnect();
+  });
+
+  after(function() {
+    nock.disableNetConnect();
+  });
 
   it('should createSession', function(done) {
     const params = {
