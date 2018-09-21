@@ -222,6 +222,21 @@ var myInstance = new watson.WhateverServiceV1({
 });
 ```
 
+### Configuring the HTTP client
+
+The HTTP client can be configured to disable SSL verification. Note that this has serious security implications - only do this if you really mean to! ⚠️
+
+To do this, set `disable_ssl` to `true` in the service constructor, like below:
+
+```
+const discovery = new DiscoveryV1({
+  url: '<service_url>',
+  version: '<version-date>',
+  iam_apikey: '<iam_api_key>',
+  disable_ssl: true, // this will disable SSL verification for any request made with this object
+});
+```
+
 ## Documentation
 
 You can find links to the documentation at https://console.bluemix.net/developer/watson/documentation. Find the service that you're interested in, click **API reference**, and then select the **Node** tab.
