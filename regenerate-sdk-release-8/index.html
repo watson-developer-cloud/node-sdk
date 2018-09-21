@@ -243,7 +243,16 @@ assistant.message(params,  <span class="hljs-function"><span class="hljs-keyword
   }
 });
 </code></pre>
-				<h2 id="documentation">Documentation</h2>
+				<h3 id="configuring-the-http-client">Configuring the HTTP client</h3>
+				<p>The HTTP client can be configured to disable SSL verification. Note that this has serious security implications - only do this if you really mean to! ⚠️</p>
+				<p>To do this, set <code>disable_ssl</code> to <code>true</code> in the service constructor, like below:</p>
+				<pre><code><span class="hljs-keyword">const</span> discovery = <span class="hljs-keyword">new</span> DiscoveryV1({
+  url: <span class="hljs-string">'&lt;service_url&gt;'</span>,
+  version: <span class="hljs-string">'&lt;version-date&gt;'</span>,
+  iam_apikey: <span class="hljs-string">'&lt;iam_api_key&gt;'</span>,
+  disable_ssl: <span class="hljs-literal">true</span>, <span class="hljs-comment">// this will disable SSL verification for any request made with this object</span>
+});
+</code></pre><h2 id="documentation">Documentation</h2>
 				<p>You can find links to the documentation at <a href="https://console.bluemix.net/developer/watson/documentation">https://console.bluemix.net/developer/watson/documentation</a>. Find the service that you&#39;re interested in, click <strong>API reference</strong>, and then select the <strong>Node</strong> tab.</p>
 				<p>There are also auto-generated JSDocs available at <a href="http://watson-developer-cloud.github.io/node-sdk/master/">http://watson-developer-cloud.github.io/node-sdk/master/</a></p>
 				<h2 id="questions">Questions</h2>
