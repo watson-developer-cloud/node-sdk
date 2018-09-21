@@ -69,8 +69,6 @@ describe('assistant v2 integration', function() {
       assert(res.output.generic[0].text);
       assert(Array.isArray(res.output.intents));
       assert(Array.isArray(res.output.entities));
-      assert.equal(res.output.intents[0].intent, 'Joke');
-      assert.equal(res.output.entities.length, 0);
       done();
     });
   });
