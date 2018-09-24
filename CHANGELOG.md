@@ -1,3 +1,10 @@
+# [3.11.0](https://github.com/watson-developer-cloud/node-sdk/compare/v3.10.0...v3.11.0) (2018-09-24)
+
+
+### Features
+
+* add support for assistant v2 ([8a99676](https://github.com/watson-developer-cloud/node-sdk/commit/8a99676))
+
 # [3.10.0](https://github.com/watson-developer-cloud/node-sdk/compare/v3.9.1...v3.10.0) (2018-09-13)
 
 
