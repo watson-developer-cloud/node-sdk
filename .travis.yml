@@ -5,14 +5,14 @@ node_js:
 - 6
 - 8
 before_install:
-- '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && openssl aes-256-cbc -K $encrypted_320e4a7e27b3_key
-  -iv $encrypted_320e4a7e27b3_iv -in auth.js.enc -out test/resources/auth.js -d ||
+- '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && openssl aes-256-cbc -K $encrypted_ac3aacad7ba8_key
+  -iv $encrypted_ac3aacad7ba8_iv -in auth.js.enc -out test/resources/auth.js -d ||
   true'
 - npm install -g typescript
 script:
 - tsc
-- 'if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then npm run test-travis; fi'
-- 'if [ "${TRAVIS_PULL_REQUEST}" = "true" ]; then npm run test-unit; fi'
+- if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then npm run test-travis; fi
+- if [ "${TRAVIS_PULL_REQUEST}" = "true" ]; then npm run test-unit; fi
 - sh scripts/typedoc/generate_typedoc.sh
 after_success:
 - npm run report-coverage

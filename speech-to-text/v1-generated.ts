@@ -1126,9 +1126,13 @@ class SpeechToTextV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom language model. You must make
    * the request with service credentials created for the instance of the service that owns the custom model.
-   * @param {string} params.corpus_name - The name of the corpus for the custom language model. When adding a corpus, do
-   * not include spaces in the name; use a localized name that matches the language of the custom model; and do not use
-   * the name `user`, which is reserved by the service to denote custom words added or modified by the user.
+   * @param {string} params.corpus_name - The name of the new corpus for the custom language model. Use a localized name
+   * that matches the language of the custom model and reflects the contents of the corpus.
+   * * Include a maximum of 128 characters in the name.
+   * * Do not include spaces, slashes, or backslashes in the name.
+   * * Do not use the name of a corpus that has already been added to the custom model.
+   * * Do not use the name `user`, which is reserved by the service to denote custom words that are added or modified by
+   * the user.
    * @param {NodeJS.ReadableStream|FileObject|Buffer} params.corpus_file - A plain text file that contains the training
    * data for the corpus. Encode the file in UTF-8 if it contains non-ASCII characters; the service assumes UTF-8
    * encoding if it encounters non-ASCII characters. With cURL, use the `--data-binary` option to upload the file for
@@ -1194,9 +1198,7 @@ class SpeechToTextV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom language model. You must make
    * the request with service credentials created for the instance of the service that owns the custom model.
-   * @param {string} params.corpus_name - The name of the corpus for the custom language model. When adding a corpus, do
-   * not include spaces in the name; use a localized name that matches the language of the custom model; and do not use
-   * the name `user`, which is reserved by the service to denote custom words added or modified by the user.
+   * @param {string} params.corpus_name - The name of the corpus for the custom language model.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -1239,9 +1241,7 @@ class SpeechToTextV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom language model. You must make
    * the request with service credentials created for the instance of the service that owns the custom model.
-   * @param {string} params.corpus_name - The name of the corpus for the custom language model. When adding a corpus, do
-   * not include spaces in the name; use a localized name that matches the language of the custom model; and do not use
-   * the name `user`, which is reserved by the service to denote custom words added or modified by the user.
+   * @param {string} params.corpus_name - The name of the corpus for the custom language model.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -2082,12 +2082,22 @@ class SpeechToTextV1 extends BaseService {
    * supported for use with speech recognition and with the `Content-Type` header, including the `rate`, `channels`, and
    * `endianness` parameters that are used with some formats. The default contained audio format is `audio/wav`.
    *
+   * ### Naming restrictions for embedded audio files
+   *
+   *  The name of an audio file that is embedded within an archive-type resource must meet the following restrictions:
+   * * Include a maximum of 128 characters in the file name; this includes the file extension.
+   * * Do not include spaces, slashes, or backslashes in the file name.
+   * * Do not use the name of an audio file that has already been added to the custom model as part of an archive-type
+   * resource.
+   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom acoustic model. You must make
    * the request with service credentials created for the instance of the service that owns the custom model.
-   * @param {string} params.audio_name - The name of the audio resource for the custom acoustic model. When adding an
-   * audio resource, do not include spaces in the name; use a localized name that matches the language of the custom
-   * model.
+   * @param {string} params.audio_name - The name of the new audio resource for the custom acoustic model. Use a
+   * localized name that matches the language of the custom model and reflects the contents of the resource.
+   * * Include a maximum of 128 characters in the name.
+   * * Do not include spaces, slashes, or backslashes in the name.
+   * * Do not use the name of an audio resource that has already been added to the custom model.
    * @param {NodeJS.ReadableStream|FileObject|Buffer} params.audio_resource - The audio resource that is to be added to
    * the custom acoustic model, an individual audio file or an archive file.
    * @param {string} params.content_type - The type of the input.
@@ -2151,9 +2161,7 @@ class SpeechToTextV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom acoustic model. You must make
    * the request with service credentials created for the instance of the service that owns the custom model.
-   * @param {string} params.audio_name - The name of the audio resource for the custom acoustic model. When adding an
-   * audio resource, do not include spaces in the name; use a localized name that matches the language of the custom
-   * model.
+   * @param {string} params.audio_name - The name of the audio resource for the custom acoustic model.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -2208,9 +2216,7 @@ class SpeechToTextV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom acoustic model. You must make
    * the request with service credentials created for the instance of the service that owns the custom model.
-   * @param {string} params.audio_name - The name of the audio resource for the custom acoustic model. When adding an
-   * audio resource, do not include spaces in the name; use a localized name that matches the language of the custom
-   * model.
+   * @param {string} params.audio_name - The name of the audio resource for the custom acoustic model.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -2705,7 +2711,7 @@ namespace SpeechToTextV1 {
   export interface AddCorpusParams {
     /** The customization ID (GUID) of the custom language model. You must make the request with service credentials created for the instance of the service that owns the custom model. */
     customization_id: string;
-    /** The name of the corpus for the custom language model. When adding a corpus, do not include spaces in the name; use a localized name that matches the language of the custom model; and do not use the name `user`, which is reserved by the service to denote custom words added or modified by the user. */
+    /** The name of the new corpus for the custom language model. Use a localized name that matches the language of the custom model and reflects the contents of the corpus. * Include a maximum of 128 characters in the name. * Do not include spaces, slashes, or backslashes in the name. * Do not use the name of a corpus that has already been added to the custom model. * Do not use the name `user`, which is reserved by the service to denote custom words that are added or modified by the user. */
     corpus_name: string;
     /** A plain text file that contains the training data for the corpus. Encode the file in UTF-8 if it contains non-ASCII characters; the service assumes UTF-8 encoding if it encounters non-ASCII characters. With cURL, use the `--data-binary` option to upload the file for the request. */
     corpus_file: NodeJS.ReadableStream|FileObject|Buffer;
@@ -2720,7 +2726,7 @@ namespace SpeechToTextV1 {
   export interface DeleteCorpusParams {
     /** The customization ID (GUID) of the custom language model. You must make the request with service credentials created for the instance of the service that owns the custom model. */
     customization_id: string;
-    /** The name of the corpus for the custom language model. When adding a corpus, do not include spaces in the name; use a localized name that matches the language of the custom model; and do not use the name `user`, which is reserved by the service to denote custom words added or modified by the user. */
+    /** The name of the corpus for the custom language model. */
     corpus_name: string;
     headers?: Object;
   }
@@ -2729,7 +2735,7 @@ namespace SpeechToTextV1 {
   export interface GetCorpusParams {
     /** The customization ID (GUID) of the custom language model. You must make the request with service credentials created for the instance of the service that owns the custom model. */
     customization_id: string;
-    /** The name of the corpus for the custom language model. When adding a corpus, do not include spaces in the name; use a localized name that matches the language of the custom model; and do not use the name `user`, which is reserved by the service to denote custom words added or modified by the user. */
+    /** The name of the corpus for the custom language model. */
     corpus_name: string;
     headers?: Object;
   }
@@ -2894,7 +2900,7 @@ namespace SpeechToTextV1 {
   export interface AddAudioParams {
     /** The customization ID (GUID) of the custom acoustic model. You must make the request with service credentials created for the instance of the service that owns the custom model. */
     customization_id: string;
-    /** The name of the audio resource for the custom acoustic model. When adding an audio resource, do not include spaces in the name; use a localized name that matches the language of the custom model. */
+    /** The name of the new audio resource for the custom acoustic model. Use a localized name that matches the language of the custom model and reflects the contents of the resource. * Include a maximum of 128 characters in the name. * Do not include spaces, slashes, or backslashes in the name. * Do not use the name of an audio resource that has already been added to the custom model. */
     audio_name: string;
     /** The audio resource that is to be added to the custom acoustic model, an individual audio file or an archive file. */
     audio_resource: NodeJS.ReadableStream|FileObject|Buffer;
@@ -2949,7 +2955,7 @@ namespace SpeechToTextV1 {
   export interface DeleteAudioParams {
     /** The customization ID (GUID) of the custom acoustic model. You must make the request with service credentials created for the instance of the service that owns the custom model. */
     customization_id: string;
-    /** The name of the audio resource for the custom acoustic model. When adding an audio resource, do not include spaces in the name; use a localized name that matches the language of the custom model. */
+    /** The name of the audio resource for the custom acoustic model. */
     audio_name: string;
     headers?: Object;
   }
@@ -2958,7 +2964,7 @@ namespace SpeechToTextV1 {
   export interface GetAudioParams {
     /** The customization ID (GUID) of the custom acoustic model. You must make the request with service credentials created for the instance of the service that owns the custom model. */
     customization_id: string;
-    /** The name of the audio resource for the custom acoustic model. When adding an audio resource, do not include spaces in the name; use a localized name that matches the language of the custom model. */
+    /** The name of the audio resource for the custom acoustic model. */
     audio_name: string;
     headers?: Object;
   }
