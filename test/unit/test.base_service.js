@@ -265,25 +265,25 @@ describe('BaseService', function() {
     assert(authHeader.startsWith('Basic'));
   });
 
-  it('should set rejectUnauthorized to `false` if `disable_ssl` is `true`', function() {
+  it('should set rejectUnauthorized to `false` if `disable_ssl_verification` is `true`', function() {
     const instance = new TestService({
       username: 'apikey',
       password: 'icp-1234',
-      disable_ssl: true,
+      disable_ssl_verification: true,
     });
     assert.equal(instance._options.rejectUnauthorized, false);
   });
 
-  it('should set rejectUnauthorized to `true` if `disable_ssl` is `false`', function() {
+  it('should set rejectUnauthorized to `true` if `disable_ssl_verification` is `false`', function() {
     const instance = new TestService({
       username: 'apikey',
       password: 'icp-1234',
-      disable_ssl: false,
+      disable_ssl_verification: false,
     });
     assert(instance._options.rejectUnauthorized);
   });
 
-  it('should set rejectUnauthorized to `true` if `disable_ssl` is not set', function() {
+  it('should set rejectUnauthorized to `true` if `disable_ssl_verification` is not set', function() {
     const instance = new TestService({
       username: 'apikey',
       password: 'icp-1234',
