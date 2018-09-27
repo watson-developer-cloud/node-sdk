@@ -217,14 +217,19 @@ class RecognizeStream extends Duplex {
 
     const self = this;
 
-    // node params: requestUrl, protocols, origin, headers, extraRequestOptions
+    // node params: requestUrl, protocols, origin, headers, extraRequestOptions, clientConfig options
     // browser params: requestUrl, protocols (all others ignored)
     const socket = (this.socket = new w3cWebSocket(
       url,
       null,
       null,
       options.headers,
-      null
+      null,
+      {
+        tlsOptions: {
+          rejectUnauthorized: false,
+        }
+      },
     ));
 
     // when the input stops, let the service know that we're done
