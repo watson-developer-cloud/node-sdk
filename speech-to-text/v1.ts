@@ -477,6 +477,9 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
       params.headers
     );
 
+    // allow user to disable ssl verification when using websockets
+    params.rejectUnauthorized = this._options.rejectUnauthorized;
+
     return new RecognizeStream(params);
   }
 
