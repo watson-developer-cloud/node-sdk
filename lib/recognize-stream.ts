@@ -226,17 +226,13 @@ class RecognizeStream extends Duplex {
     // for the last argument, `tlsOptions` gets passed to Node's `http` library,
     // which allows us to pass a rejectUnauthorized option
     // for disabling SSL verification (for ICP)
-    const clientConfig = options.rejectUnauthorized
-      ? { tlsOptions: { rejectUnauthorized: false }}
-      : null;
-
     const socket = (this.socket = new w3cWebSocket(
       url,
       null,
       null,
       options.headers,
       null,
-      clientConfig      
+      { tlsOptions: { rejectUnauthorized: options.rejectUnauthorized }}
     ));
 
     // when the input stops, let the service know that we're done

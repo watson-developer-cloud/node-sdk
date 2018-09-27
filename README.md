@@ -226,14 +226,14 @@ var myInstance = new watson.WhateverServiceV1({
 
 The HTTP client can be configured to disable SSL verification. Note that this has serious security implications - only do this if you really mean to! ⚠️
 
-To do this, set `disable_ssl` to `true` in the service constructor, like below:
+To do this, set `disable_ssl_verification` to `true` in the service constructor, like below:
 
 ```
 const discovery = new DiscoveryV1({
   url: '<service_url>',
   version: '<version-date>',
   iam_apikey: '<iam_api_key>',
-  disable_ssl: true, // this will disable SSL verification for any request made with this object
+  disable_ssl_verification: true, // this will disable SSL verification for any request made with this object
 });
 ```
 
