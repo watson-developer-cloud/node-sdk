@@ -289,7 +289,8 @@ describe('message', () => {
       // parameters
       const assistant_id = 'fake_assistant_id';
       const session_id = 'fake_session_id';
-      // so for objects.. we can either generate a fully done mockup...
+      // so for objects parameters, we have two options.
+      // we can either generate a fully done mockup...
       const input = {
         message_type: 'fake_message_type',
         text: 'fake_text',
@@ -315,7 +316,7 @@ describe('message', () => {
             groups: [
               {
                 group: 'fake_group',
-                location: ['1'],
+                location: [1],
               },
             ],
           },
@@ -324,7 +325,7 @@ describe('message', () => {
       };
       // ... or just make it a string. the test will still pass and i'm not sure what could really
       // go wrong by not testing the object
-      const context = 'fake_context'; // has a type of MessageContext
+      const context = 'fake_context'; // should have a type of MessageContext
       const params = {
         assistant_id,
         session_id,
