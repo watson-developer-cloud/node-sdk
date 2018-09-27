@@ -138,11 +138,6 @@ class RecognizeStream extends Duplex {
     // is using iam, another authentication step is needed
     this.authenticated = options.token_manager ? false : true;
 
-    // build the last argument for the websocket constructor (clientConfig name comes from `websocket` docs)
-    // `tlsOptions` gets passed to Node's `http` library, which allows us to pass a rejectUnauthorized option
-    // for disabling SSL verification (for ICP)
-    const clientConfig = this.rejectUnauthorized ? { tlsOptions: { rejectUnauthorized: false }} : null;
-
     this.on('newListener', event => {
       if (!options.silent) {
         if (
@@ -227,13 +222,17 @@ class RecognizeStream extends Duplex {
 
     // node params: requestUrl, protocols, origin, headers, extraRequestOptions, clientConfig options
     // browser params: requestUrl, protocols (all others ignored)
+
+    // for the last argument, `tlsOptions` gets passed to Node's `http` library,
+    // which allows us to pass a rejectUnauthorized option
+    // for disabling SSL verification (for ICP)
     const socket = (this.socket = new w3cWebSocket(
       url,
       null,
       null,
       options.headers,
       null,
-      clientConfig
+      options.rejectUnauthorized ? { tlsOptions: { rejectUnauthorized: false }} : null
     ));
 
     // when the input stops, let the service know that we're done
