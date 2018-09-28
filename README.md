@@ -302,7 +302,7 @@ Use the [Assistant][conversation] service to determine the intent of a message.
 Note: You must first create a workspace via IBM Cloud. See [the documentation](https://console.bluemix.net/docs/services/conversation/index.html#about) for details.
 
 ```js
-var AssistantV1 = require('watson-developer-cloud/assistant/v1');
+var AssistantV2 = require('watson-developer-cloud/assistant/v2');
 
 var assistant = new AssistantV2({
   username: '<username>',
