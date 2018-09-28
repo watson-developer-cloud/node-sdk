@@ -1,3 +1,10 @@
+## [3.11.1](https://github.com/watson-developer-cloud/node-sdk/compare/v3.11.0...v3.11.1) (2018-09-28)
+
+
+### Bug Fixes
+
+* **icp:** disabling ssl verification now works for websocket connection ([f8466c8](https://github.com/watson-developer-cloud/node-sdk/commit/f8466c8))
+
 # [3.11.0](https://github.com/watson-developer-cloud/node-sdk/compare/v3.10.0...v3.11.0) (2018-09-24)
 
 
