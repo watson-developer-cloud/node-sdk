@@ -97,7 +97,7 @@
     "websocket": "~1.0.26"
   },
   "engines": {
-    "node": ">=4"
+    "node": ">=6"
   },
   "scripts": {
     "precommit": "lint-staged",
