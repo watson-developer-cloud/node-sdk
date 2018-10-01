@@ -226,14 +226,14 @@ var myInstance = new watson.WhateverServiceV1({
 
 The HTTP client can be configured to disable SSL verification. Note that this has serious security implications - only do this if you really mean to! ⚠️
 
-To do this, set `disable_ssl` to `true` in the service constructor, like below:
+To do this, set `disable_ssl_verification` to `true` in the service constructor, like below:
 
 ```
 const discovery = new DiscoveryV1({
   url: '<service_url>',
   version: '<version-date>',
   iam_apikey: '<iam_api_key>',
-  disable_ssl: true, // this will disable SSL verification for any request made with this object
+  disable_ssl_verification: true, // this will disable SSL verification for any request made with this object
 });
 ```
 
@@ -302,7 +302,7 @@ Use the [Assistant][conversation] service to determine the intent of a message.
 Note: You must first create a workspace via IBM Cloud. See [the documentation](https://console.bluemix.net/docs/services/conversation/index.html#about) for details.
 
 ```js
-var AssistantV1 = require('watson-developer-cloud/assistant/v1');
+var AssistantV2 = require('watson-developer-cloud/assistant/v2');
 
 var assistant = new AssistantV2({
   username: '<username>',
