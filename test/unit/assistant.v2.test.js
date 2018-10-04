@@ -1,6 +1,61 @@
 const AssistantV2 = require('../../assistant/v2');
 const helper = require('../../lib/helper');
 
+/* *** TEST FUNCTIONS - WILL BE MOVED TO A DIFFERENT FILE *** */
+function checkUrlAndMethod(options, url, method) {
+  expect(options.url).toEqual(url);
+  expect(options.method).toEqual(method);
+}
+
+function checkCallback(createRequestMock) {
+  const callback = createRequestMock.mock.calls[0][1];
+  expect(callback).toBeInstanceOf(Function);
+}
+
+function checkHeaders(createRequestMock, accept = '', contentType = '') {
+  const headers = createRequestMock.mock.calls[0][0].defaultOptions.headers;
+  if (accept) {
+    expect(headers.Accept).toEqual(accept);
+  }
+  if (contentType) {
+    expect(headers['Content-Type']).toEqual(contentType);
+  }
+}
+
+function checkForEmptyObject(missingParamsMock) {
+  // get arg to getMissingParams
+  const userParams = missingParamsMock.mock.calls[0][0];
+
+  // assert userParams is an object and is not null
+  const emptyObject = {};
+  expect(userParams).not.toBeNull();
+  expect(userParams).toEqual(emptyObject);
+}
+
+function checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock) {
+  // empty object should always be used as params
+  const params = {};
+
+  // assert getMissingParams was called and extract called arguments
+  expect(missingParamsMock).toHaveBeenCalledTimes(1);
+  const userParams = missingParamsMock.mock.calls[0][0];
+  const validatorParams = missingParamsMock.mock.calls[0][1];
+
+  // assert getMissingParams is called with correct args
+  expect(userParams).toEqual(params);
+  expect(validatorParams).toEqual(requiredParams);
+
+  // assert callback is called with missingParamsError
+  expect(err).toEqual(missingParamsError);
+
+  // assert createRequest is never called
+  expect(createRequestMock).toHaveBeenCalledTimes(0);
+}
+
+function getOptions(createRequestMock) {
+  return createRequestMock.mock.calls[0][0].options;
+}
+
 const service = {
   username: 'batman',
   password: 'bruce-wayne',
@@ -8,15 +63,25 @@ const service = {
   version: '2018-09-19',
 };
 
-describe.skip('createSession', () => {
+const assistant = new AssistantV2(service);
+const createRequestMock = jest.spyOn(assistant, 'createRequest');
+
+const missingParamsMock = jest.spyOn(helper, 'getMissingParams');
+const missingParamsError = 1;
+const missingParamsSuccess = 0;
+
+afterEach(() => {
+  createRequestMock.mockReset();
+  missingParamsMock.mockClear();
+});
+
+describe('createSession', () => {
   describe('positive tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsSuccess);
+    });
+
     test('should pass the right params to createRequest', () => {
-      // create the service instance
-      const assistant = new AssistantV2(service);
-
-      // mock createRequest
-      const createRequestMock = (assistant.createRequest = jest.fn());
-
       // parameters
       const assistant_id = 'fake_assistant_id';
       const params = {
@@ -26,130 +91,70 @@ describe.skip('createSession', () => {
       // invoke method
       assistant.createSession(params);
 
-      // assert that create request was called and extract called arguments
+      // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
-      const args = createRequestMock.mock.calls[0]; // only called once, so get args from first call
-      const { options, defaultOptions } = args[0]; // the first arg is the parameters passed to create request
 
       // check `options` object
-      expect(options.url).toEqual('/v2/assistants/{assistant_id}/sessions');
-      expect(options.method).toEqual('POST');
+      const options = getOptions(createRequestMock);
+
+      checkUrlAndMethod(options, '/v2/assistants/{assistant_id}/sessions', 'POST');
+      checkHeaders(createRequestMock, 'application/json', 'application/json');
+      checkCallback(createRequestMock);
+
+      // all parameters
       expect(options.path.assistant_id).toEqual(assistant_id);
-
-      // check `headers` in the `defaultOptions` object
-      const { headers } = defaultOptions;
-      expect(headers.Accept).toEqual('application/json');
-      expect(headers['Content-Type']).toEqual('application/json');
-
-      // check callback, should be a function
-      const callback = args[1];
-      expect(callback).toBeInstanceOf(Function);
     });
 
     test('should prioritize user-given headers', () => {
-      // create the service instance
-      const assistant = new AssistantV2(service);
-
-      // mock createRequest
-      const createRequestMock = (assistant.createRequest = jest.fn());
-
       // parameters
       const assistant_id = 'fake_assistant_id';
-      const Accept = 'fake/header';
+      const accept = 'fake/header';
       const params = {
         assistant_id,
         headers: {
-          Accept,
+          Accept: accept,
         },
       };
 
       // invoke the method
       assistant.createSession(params);
-
-      // assert that create request was called and extract called arguments
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-      const { defaultOptions } = createRequestMock.mock.calls[0][0];
-
-      // check `headers` in the `defaultOptions` object
-      const { headers } = defaultOptions;
-      expect(headers.Accept).toEqual(Accept);
-      expect(headers['Content-Type']).toEqual('application/json');
+      checkHeaders(createRequestMock, accept);
     });
   });
 
   describe('negative tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsError);
+    });
+
     test('should convert a `null` value for `params` to an empty object', done => {
-      // create the service instance
-      const assistant = new AssistantV2(service);
-
-      // mock getMissingParams
-      const missingParamsMock = (helper.getMissingParams = jest.fn());
-
-      // parameters
-      const params = null;
-
       // invoke the method
-      assistant.createSession(params, () => {
-        // get arg to getMissingParams
-        const userParams = missingParamsMock.mock.calls[0][0];
-
-        // assert userParams is an object and is not null
-        const emptyObject = {};
-        expect(userParams).not.toBeNull();
-        expect(userParams).toEqual(emptyObject);
+      assistant.createSession(null, () => {
+        checkForEmptyObject(missingParamsMock);
         done();
       });
     });
 
     test('should enforce required parameters', done => {
-      // create the service instance
-      const assistant = new AssistantV2(service);
-
-      // mock createRequest
-      const createRequestMock = (assistant.createRequest = jest.fn());
-
-      // mock getMissingParams, set to return a fake "error"
-      const missingParamsMock = (helper.getMissingParams = jest.fn());
-      const missingParamsError = 1; // fake error
-      missingParamsMock.mockReturnValue(missingParamsError);
-
-      // parameters
-      const params = {};
+      // required parameters for this method
+      const requiredParams = ['assistant_id'];
 
       // invoke the method
-      assistant.createSession(params, err => {
-        // required parameters for this method
-        const requiredParams = ['assistant_id'];
-
-        // assert getMissingParams was called and extract called arguments
-        expect(missingParamsMock).toHaveBeenCalledTimes(1);
-        const userParams = missingParamsMock.mock.calls[0][0];
-        const validatorParams = missingParamsMock.mock.calls[0][1];
-
-        // assert getMissingParams is called with correct args
-        expect(userParams).toEqual(params);
-        expect(validatorParams).toEqual(requiredParams);
-
-        // assert callback is called with missingParamsError
-        expect(err).toEqual(missingParamsError);
-
-        // assert createRequest is never called
-        expect(createRequestMock).toHaveBeenCalledTimes(0);
+      assistant.createSession({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
 
-describe.skip('deleteSession', () => {
+describe('deleteSession', () => {
   describe('positive tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsSuccess);
+    });
+
     test('should pass the right params to createRequest', () => {
-      // create the service instance
-      const assistant = new AssistantV2(service);
-
-      // mock createRequest
-      const createRequestMock = (assistant.createRequest = jest.fn());
-
       // parameters
       const assistant_id = 'fake_assistant_id';
       const session_id = 'fake_session_id';
@@ -161,116 +166,59 @@ describe.skip('deleteSession', () => {
       // invoke method
       assistant.deleteSession(params);
 
-      // assert that create request was called and extract called arguments
+      // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
-      const args = createRequestMock.mock.calls[0]; // only called once, so get args from first call
-      const { options, defaultOptions } = args[0]; // the first arg is the parameters passed to create request
 
       // check `options` object
-      expect(options.url).toEqual('/v2/assistants/{assistant_id}/sessions/{session_id}');
-      expect(options.method).toEqual('DELETE');
+      const options = getOptions(createRequestMock);
+
+      checkUrlAndMethod(options, '/v2/assistants/{assistant_id}/sessions/{session_id}', 'DELETE');
+      checkHeaders(createRequestMock, 'application/json');
+      checkCallback(createRequestMock);
+
+      // parameters
       expect(options.path.assistant_id).toEqual(assistant_id);
       expect(options.path.session_id).toEqual(session_id);
-
-      // check `headers` in the `defaultOptions` object
-      const { headers } = defaultOptions;
-      expect(headers.Accept).toEqual('application/json');
-
-      // check callback, should be a function
-      const callback = args[1];
-      expect(callback).toBeInstanceOf(Function);
     });
 
     test('should prioritize user-given headers', () => {
-      // create the service instance
-      const assistant = new AssistantV2(service);
-
-      // mock createRequest
-      const createRequestMock = (assistant.createRequest = jest.fn());
-
       // parameters
       const assistant_id = 'fake_assistant_id';
       const session_id = 'fake_session_id';
-      const Accept = 'fake/header';
+      const accept = 'fake/header';
       const params = {
         assistant_id,
         session_id,
         headers: {
-          Accept,
+          Accept: accept,
         },
       };
 
       // invoke the method
       assistant.deleteSession(params);
-
-      // assert that create request was called and extract called arguments
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-      const { defaultOptions } = createRequestMock.mock.calls[0][0];
-
-      // check `headers` in the `defaultOptions` object
-      const { headers } = defaultOptions;
-      expect(headers.Accept).toEqual(Accept);
+      checkHeaders(createRequestMock, accept);
     });
   });
 
   describe('negative tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsError);
+    });
+
     test('should convert a `null` value for `params` to an empty object', done => {
-      // create the service instance
-      const assistant = new AssistantV2(service);
-
-      // mock getMissingParams
-      const missingParamsMock = (helper.getMissingParams = jest.fn());
-
-      // parameters
-      const params = null;
-
-      // invoke the method
-      assistant.deleteSession(params, () => {
-        // get arg to getMissingParams
-        const userParams = missingParamsMock.mock.calls[0][0];
-
-        // assert userParams is an object and is not null
-        const emptyObject = {};
-        expect(userParams).not.toBeNull();
-        expect(userParams).toEqual(emptyObject);
+      assistant.deleteSession(null, () => {
+        checkForEmptyObject(missingParamsMock);
         done();
       });
     });
 
     test('should enforce required parameter', done => {
-      // create the service instance
-      const assistant = new AssistantV2(service);
-
-      // mock createRequest
-      const createRequestMock = (assistant.createRequest = jest.fn());
-
-      // mock getMissingParams, set to return a fake "error"
-      const missingParamsMock = (helper.getMissingParams = jest.fn());
-      const missingParamsError = 1; // fake error
-      missingParamsMock.mockReturnValue(missingParamsError);
-
-      // parameters
-      const params = {};
+      // required parameters for this method
+      const requiredParams = ['assistant_id', 'session_id'];
 
       // invoke the method
-      assistant.deleteSession(params, err => {
-        // required parameters for this method
-        const requiredParams = ['assistant_id', 'session_id'];
-
-        // assert getMissingParams was called and extract called arguments
-        expect(missingParamsMock).toHaveBeenCalledTimes(1);
-        const userParams = missingParamsMock.mock.calls[0][0];
-        const validatorParams = missingParamsMock.mock.calls[0][1];
-
-        // assert getMissingParams is called with correct args
-        expect(userParams).toEqual(params);
-        expect(validatorParams).toEqual(requiredParams);
-
-        // assert callback is called with missingParamsError
-        expect(err).toEqual(missingParamsError);
-
-        // assert createRequest is never called
-        expect(createRequestMock).toHaveBeenCalledTimes(0);
+      assistant.deleteSession({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
@@ -279,53 +227,16 @@ describe.skip('deleteSession', () => {
 
 describe('message', () => {
   describe('positive tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsSuccess);
+    });
+
     test('should pass the right params to createRequest', () => {
-      // create the service instance
-      const assistant = new AssistantV2(service);
-
-      // mock createRequest
-      const createRequestMock = (assistant.createRequest = jest.fn());
-
       // parameters
       const assistant_id = 'fake_assistant_id';
       const session_id = 'fake_session_id';
-      // so for objects parameters, we have two options.
-      // we can either generate a fully done mockup...
-      const input = {
-        message_type: 'fake_message_type',
-        text: 'fake_text',
-        options: {
-          debug: true,
-          restart: true,
-          alternate_intents: true,
-          return_context: true,
-        },
-        intents: [
-          {
-            intent: 'fake_intent',
-            confidence: 'fake_confidence',
-          },
-        ],
-        entities: [
-          {
-            entity: 'fake_entity',
-            location: [1],
-            value: 'fake_value',
-            confidence: 1,
-            metadata: {},
-            groups: [
-              {
-                group: 'fake_group',
-                location: [1],
-              },
-            ],
-          },
-        ],
-        suggestion_id: 'fake_suggestion_id',
-      };
-      // ... or just make it a string. the test will still pass and i'm not sure what could really
-      // go wrong by not testing the object
-      const context = 'fake_context'; // should have a type of MessageContext
+      const input = 'fake_input';
+      const context = 'fake_context';
       const params = {
         assistant_id,
         session_id,
@@ -336,120 +247,65 @@ describe('message', () => {
       // invoke method
       assistant.message(params);
 
-      // assert that create request was called and extract called arguments
+      // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
-      const args = createRequestMock.mock.calls[0]; // only called once, so get args from first call
-      const { options, defaultOptions } = args[0]; // the first arg is the parameters passed to create request
 
-      // check `options` object
-      expect(options.url).toEqual('/v2/assistants/{assistant_id}/sessions/{session_id}/message');
-      expect(options.method).toEqual('POST');
+      const options = getOptions(createRequestMock);
+
+      checkUrlAndMethod(
+        options,
+        '/v2/assistants/{assistant_id}/sessions/{session_id}/message',
+        'POST'
+      );
+      checkHeaders(createRequestMock, 'application/json', 'application/json');
+      checkCallback(createRequestMock);
+
+      // parameters
       expect(options.path.assistant_id).toEqual(assistant_id);
       expect(options.path.session_id).toEqual(session_id);
       expect(options.body.input).toEqual(input);
       expect(options.body.context).toEqual(context);
-      expect(options.json).toEqual(true); // not sure how we're going to know about this but i'm sure we will
-
-      // check `headers` in the `defaultOptions` object
-      const { headers } = defaultOptions;
-      expect(headers.Accept).toEqual('application/json');
-      expect(headers.Accept).toEqual('application/json');
-
-      // check callback, should be a function
-      const callback = args[1];
-      expect(callback).toBeInstanceOf(Function);
+      expect(options.json).toEqual(true);
     });
 
     test('should prioritize user-given headers', () => {
-      // create the service instance
-      const assistant = new AssistantV2(service);
-
-      // mock createRequest
-      const createRequestMock = (assistant.createRequest = jest.fn());
-
       // parameters
       const assistant_id = 'fake_assistant_id';
       const session_id = 'fake_session_id';
-      const Accept = 'fake/header';
+      const accept = 'fake/header';
       const params = {
         assistant_id,
         session_id,
         headers: {
-          Accept,
+          Accept: accept,
         },
       };
 
       // invoke the method
       assistant.message(params);
-
-      // assert that create request was called and extract called arguments
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-      const { defaultOptions } = createRequestMock.mock.calls[0][0];
-
-      // check `headers` in the `defaultOptions` object
-      const { headers } = defaultOptions;
-      expect(headers.Accept).toEqual(Accept);
+      checkHeaders(createRequestMock, accept);
     });
   });
 
   describe('negative tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsError);
+    });
+
     test('should convert a `null` value for `params` to an empty object', done => {
-      // create the service instance
-      const assistant = new AssistantV2(service);
-
-      // mock getMissingParams
-      const missingParamsMock = (helper.getMissingParams = jest.fn());
-
-      // parameters
-      const params = null;
-
-      // invoke the method
-      assistant.message(params, () => {
-        // get arg to getMissingParams
-        const userParams = missingParamsMock.mock.calls[0][0];
-
-        // assert userParams is an object and is not null
-        const emptyObject = {};
-        expect(userParams).not.toBeNull();
-        expect(userParams).toEqual(emptyObject);
+      assistant.deleteSession(null, () => {
+        checkForEmptyObject(missingParamsMock);
         done();
       });
     });
 
     test('should enforce required parameter', done => {
-      // create the service instance
-      const assistant = new AssistantV2(service);
-
-      // mock createRequest
-      const createRequestMock = (assistant.createRequest = jest.fn());
-
-      // mock getMissingParams, set to return a fake "error"
-      const missingParamsMock = (helper.getMissingParams = jest.fn());
-      const missingParamsError = 1; // fake error
-      missingParamsMock.mockReturnValue(missingParamsError);
-
-      // parameters
-      const params = {};
+      // required parameters for this method
+      const requiredParams = ['assistant_id', 'session_id'];
 
       // invoke the method
-      assistant.message(params, err => {
-        // required parameters for this method
-        const requiredParams = ['assistant_id', 'session_id'];
-
-        // assert getMissingParams was called and extract called arguments
-        expect(missingParamsMock).toHaveBeenCalledTimes(1);
-        const userParams = missingParamsMock.mock.calls[0][0];
-        const validatorParams = missingParamsMock.mock.calls[0][1];
-
-        // assert getMissingParams is called with correct args
-        expect(userParams).toEqual(params);
-        expect(validatorParams).toEqual(requiredParams);
-
-        // assert callback is called with missingParamsError
-        expect(err).toEqual(missingParamsError);
-
-        // assert createRequest is never called
-        expect(createRequestMock).toHaveBeenCalledTimes(0);
+      assistant.deleteSession({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
