@@ -53,7 +53,7 @@ Node.js client library to use the Watson APIs.
 ## Installation
 
 ```sh
-npm install watson-developer-cloud
+npm install watson-developer-cloud.
 ```
 
 ## Usage
