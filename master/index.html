@@ -136,7 +136,6 @@
 				<ul>
 					<li>With some service instances, you authenticate to the API by using <strong><a href="#iam">IAM</a></strong>.</li>
 					<li>In other instances, you authenticate by providing the <strong><a href="#username-and-password">username and password</a></strong> for the service instance.</li>
-					<li>Visual Recognition uses a form of <a href="#api-key">API key</a> only with instances created before May 23, 2018. Newer instances of Visual Recognition use <a href="#iam">IAM</a>.</li>
 				</ul>
 				<h3 id="getting-credentials">Getting credentials</h3>
 				<p>To find out which authentication to use, view the service credentials. You find the service credentials for authentication the same way for all Watson services:</p>
@@ -185,15 +184,6 @@ discovery.setAccessToken(<span class="hljs-string">'&lt;access-token&gt;'</span>
     <span class="hljs-attr">version</span>: <span class="hljs-string">'{version}'</span>,
     <span class="hljs-attr">username</span>: <span class="hljs-string">'{username}'</span>,
     <span class="hljs-attr">password</span>: <span class="hljs-string">'{password}'</span>
-  });
-</code></pre>
-				<h3 id="api-key">API key</h3>
-				<p><strong>Important</strong>: This type of authentication works only with Visual Recognition instances created before May 23, 2018. Newer instances of Visual Recognition use <a href="#iam">IAM</a>.</p>
-				<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> VisualRecognitionV3 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'watson-developer-cloud/visual-recognition/v3'</span>);
-
-<span class="hljs-keyword">var</span> visualRecognition = <span class="hljs-keyword">new</span> VisualRecognitionV3({
-    <span class="hljs-attr">version</span>: <span class="hljs-string">'{version}'</span>,
-    <span class="hljs-attr">api_key</span>: <span class="hljs-string">'{api_key}'</span>
   });
 </code></pre>
 				<h3 id="sending-request-headers">Sending request headers</h3>
