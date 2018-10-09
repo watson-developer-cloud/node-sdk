@@ -1366,6 +1366,13 @@ class DiscoveryV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
+    // these params were arrays but now need to be strings, the following code is for compatibility
+    const nonArrayParams = ['return_fields', 'sort', 'passages_fields', 'collection_ids', 'similar_document_ids', 'similar_fields'];
+    nonArrayParams.forEach(paramName => {
+      if (Array.isArray(_params[paramName])) {
+        _params[paramName] = _params[paramName].join(',');
+      }
+    });
     const body = {
       'filter': _params.filter,
       'query': _params.query,
@@ -1574,6 +1581,13 @@ class DiscoveryV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
+    // these params were arrays but now need to be strings, the following code is for compatibility
+    const nonArrayParams = ['return_fields', 'sort', 'passages_fields', 'collection_ids', 'similar_document_ids'];
+    nonArrayParams.forEach(paramName => {
+      if (Array.isArray(_params[paramName])) {
+        _params[paramName] = _params[paramName].join(',');
+      }
+    });
     const body = {
       'filter': _params.filter,
       'query': _params.query,
