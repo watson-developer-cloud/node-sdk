@@ -14,14 +14,15 @@ module.exports.checkCallback = function(createRequestMock) {
   expect(callback).toBeInstanceOf(Function);
 };
 
-module.exports.checkHeaders = function(createRequestMock, accept = '', contentType = '') {
+module.exports.checkMediaHeaders = function(createRequestMock, accept, contentType) {
   const headers = createRequestMock.mock.calls[0][0].defaultOptions.headers;
-  if (accept) {
-    expect(headers.Accept).toEqual(accept);
-  }
-  if (contentType) {
-    expect(headers['Content-Type']).toEqual(contentType);
-  }
+  expect(headers.Accept).toEqual(accept);
+  expect(headers['Content-Type']).toEqual(contentType);
+};
+
+module.exports.checkUserHeader = function(createRequestMock, baseName, param) {
+  const headers = createRequestMock.mock.calls[0][0].defaultOptions.headers;
+  expect(headers[baseName]).toEqual(param);
 };
 
 module.exports.checkForEmptyObject = function(missingParamsMock) {

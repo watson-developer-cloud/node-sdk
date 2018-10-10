@@ -7,7 +7,7 @@ const {
   missingParamsSuccess,
   checkUrlAndMethod,
   checkCallback,
-  checkHeaders,
+  checkMediaHeaders,
   checkForEmptyObject,
   checkRequiredParamsHandling,
   getOptions,
@@ -20,8 +20,8 @@ const service = {
   version: '2018-09-19',
 };
 
-const assistant = new AssistantV2(service);
-const createRequestMock = jest.spyOn(assistant, 'createRequest');
+const conversation = new AssistantV2(service);
+const createRequestMock = jest.spyOn(conversation, 'createRequest');
 const missingParamsMock = jest.spyOn(helper, 'getMissingParams');
 
 afterEach(() => {
@@ -34,7 +34,6 @@ describe('createSession', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsSuccess);
     });
-
     test('should pass the right params to createRequest', () => {
       // parameters
       const assistant_id = 'fake_assistant_id';
@@ -43,36 +42,37 @@ describe('createSession', () => {
       };
 
       // invoke method
-      assistant.createSession(params);
+      conversation.createSession(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-      // check `options` object
       const options = getOptions(createRequestMock);
 
       checkUrlAndMethod(options, '/v2/assistants/{assistant_id}/sessions', 'POST');
-      checkHeaders(createRequestMock, 'application/json', 'application/json');
       checkCallback(createRequestMock);
-
-      // all parameters
-      expect(options.path.assistant_id).toEqual(assistant_id);
+      const expectedAccept = 'application/json';
+      const expectedContentType = 'application/json';
+      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+      expect(options.path['assistant_id']).toEqual(assistant_id);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
       const assistant_id = 'fake_assistant_id';
       const accept = 'fake/header';
+      const contentType = 'fake/header';
       const params = {
         assistant_id,
         headers: {
           Accept: accept,
+          'Content-Type': contentType,
         },
       };
 
       // invoke the method
-      assistant.createSession(params);
-      checkHeaders(createRequestMock, accept);
+      conversation.createSession(params);
+      checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
 
@@ -83,7 +83,7 @@ describe('createSession', () => {
 
     test('should convert a `null` value for `params` to an empty object', done => {
       // invoke the method
-      assistant.createSession(null, () => {
+      conversation.createSession(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -94,20 +94,18 @@ describe('createSession', () => {
       const requiredParams = ['assistant_id'];
 
       // invoke the method
-      assistant.createSession({}, err => {
+      conversation.createSession({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
-
 describe('deleteSession', () => {
   describe('positive tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsSuccess);
     });
-
     test('should pass the right params to createRequest', () => {
       // parameters
       const assistant_id = 'fake_assistant_id';
@@ -118,21 +116,20 @@ describe('deleteSession', () => {
       };
 
       // invoke method
-      assistant.deleteSession(params);
+      conversation.deleteSession(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-      // check `options` object
       const options = getOptions(createRequestMock);
 
       checkUrlAndMethod(options, '/v2/assistants/{assistant_id}/sessions/{session_id}', 'DELETE');
-      checkHeaders(createRequestMock, 'application/json');
       checkCallback(createRequestMock);
-
-      // parameters
-      expect(options.path.assistant_id).toEqual(assistant_id);
-      expect(options.path.session_id).toEqual(session_id);
+      const expectedAccept = 'application/json';
+      const expectedContentType = undefined;
+      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+      expect(options.path['assistant_id']).toEqual(assistant_id);
+      expect(options.path['session_id']).toEqual(session_id);
     });
 
     test('should prioritize user-given headers', () => {
@@ -140,17 +137,19 @@ describe('deleteSession', () => {
       const assistant_id = 'fake_assistant_id';
       const session_id = 'fake_session_id';
       const accept = 'fake/header';
+      const contentType = 'fake/header';
       const params = {
         assistant_id,
         session_id,
         headers: {
           Accept: accept,
+          'Content-Type': contentType,
         },
       };
 
       // invoke the method
-      assistant.deleteSession(params);
-      checkHeaders(createRequestMock, accept);
+      conversation.deleteSession(params);
+      checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
 
@@ -160,31 +159,30 @@ describe('deleteSession', () => {
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      assistant.deleteSession(null, () => {
+      // invoke the method
+      conversation.deleteSession(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
     });
 
-    test('should enforce required parameter', done => {
+    test('should enforce required parameters', done => {
       // required parameters for this method
       const requiredParams = ['assistant_id', 'session_id'];
 
       // invoke the method
-      assistant.deleteSession({}, err => {
+      conversation.deleteSession({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
-
 describe('message', () => {
   describe('positive tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsSuccess);
     });
-
     test('should pass the right params to createRequest', () => {
       // parameters
       const assistant_id = 'fake_assistant_id';
@@ -199,27 +197,23 @@ describe('message', () => {
       };
 
       // invoke method
-      assistant.message(params);
+      conversation.message(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(
-        options,
-        '/v2/assistants/{assistant_id}/sessions/{session_id}/message',
-        'POST'
-      );
-      checkHeaders(createRequestMock, 'application/json', 'application/json');
+      checkUrlAndMethod(options, '/v2/assistants/{assistant_id}/sessions/{session_id}/message', 'POST');
       checkCallback(createRequestMock);
-
-      // parameters
-      expect(options.path.assistant_id).toEqual(assistant_id);
-      expect(options.path.session_id).toEqual(session_id);
-      expect(options.body.input).toEqual(input);
-      expect(options.body.context).toEqual(context);
+      const expectedAccept = 'application/json';
+      const expectedContentType = 'application/json';
+      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+      expect(options.body['input']).toEqual(input);
+      expect(options.body['context']).toEqual(context);
       expect(options.json).toEqual(true);
+      expect(options.path['assistant_id']).toEqual(assistant_id);
+      expect(options.path['session_id']).toEqual(session_id);
     });
 
     test('should prioritize user-given headers', () => {
@@ -227,17 +221,19 @@ describe('message', () => {
       const assistant_id = 'fake_assistant_id';
       const session_id = 'fake_session_id';
       const accept = 'fake/header';
+      const contentType = 'fake/header';
       const params = {
         assistant_id,
         session_id,
         headers: {
           Accept: accept,
+          'Content-Type': contentType,
         },
       };
 
       // invoke the method
-      assistant.message(params);
-      checkHeaders(createRequestMock, accept);
+      conversation.message(params);
+      checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
 
@@ -247,18 +243,19 @@ describe('message', () => {
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      assistant.deleteSession(null, () => {
+      // invoke the method
+      conversation.message(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
     });
 
-    test('should enforce required parameter', done => {
+    test('should enforce required parameters', done => {
       // required parameters for this method
       const requiredParams = ['assistant_id', 'session_id'];
 
       // invoke the method
-      assistant.deleteSession({}, err => {
+      conversation.message({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
