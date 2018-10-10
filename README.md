@@ -84,7 +84,6 @@ Watson services are migrating to token-based Identity and Access Management (IAM
 
 - With some service instances, you authenticate to the API by using **[IAM](#iam)**.
 - In other instances, you authenticate by providing the **[username and password](#username-and-password)** for the service instance.
-- Visual Recognition uses a form of [API key](#api-key) only with instances created before May 23, 2018. Newer instances of Visual Recognition use [IAM](#iam).
 
 ### Getting credentials
 To find out which authentication to use, view the service credentials. You find the service credentials for authentication the same way for all Watson services:
@@ -145,19 +144,6 @@ var discovery = new DiscoveryV1({
     version: '{version}',
     username: '{username}',
     password: '{password}'
-  });
-```
-
-### API key
-
-**Important**: This type of authentication works only with Visual Recognition instances created before May 23, 2018. Newer instances of Visual Recognition use [IAM](#iam).
-
-```javascript
-var VisualRecognitionV3 = require('watson-developer-cloud/visual-recognition/v3');
-
-var visualRecognition = new VisualRecognitionV3({
-    version: '{version}',
-    api_key: '{api_key}'
   });
 ```
 
@@ -226,14 +212,14 @@ var myInstance = new watson.WhateverServiceV1({
 
 The HTTP client can be configured to disable SSL verification. Note that this has serious security implications - only do this if you really mean to! ⚠️
 
-To do this, set `disable_ssl` to `true` in the service constructor, like below:
+To do this, set `disable_ssl_verification` to `true` in the service constructor, like below:
 
 ```
 const discovery = new DiscoveryV1({
   url: '<service_url>',
   version: '<version-date>',
   iam_apikey: '<iam_api_key>',
-  disable_ssl: true, // this will disable SSL verification for any request made with this object
+  disable_ssl_verification: true, // this will disable SSL verification for any request made with this object
 });
 ```
 
@@ -302,7 +288,7 @@ Use the [Assistant][conversation] service to determine the intent of a message.
 Note: You must first create a workspace via IBM Cloud. See [the documentation](https://console.bluemix.net/docs/services/conversation/index.html#about) for details.
 
 ```js
-var AssistantV1 = require('watson-developer-cloud/assistant/v1');
+var AssistantV2 = require('watson-developer-cloud/assistant/v2');
 
 var assistant = new AssistantV2({
   username: '<username>',

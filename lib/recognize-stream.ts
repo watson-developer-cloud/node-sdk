@@ -117,6 +117,7 @@ class RecognizeStream extends Duplex {
    * @param {string} [options.base_model_version] - The version of the specified base model that is to be used with recognition request or, for the **Create a session** method, with the new session.
    * Multiple versions of a base model can exist when a model is updated for internal improvements. The parameter is intended primarily for use with custom models that have been upgraded for a new base model.
    * The default value depends on whether the parameter is used with or without a custom model. For more information, see [Base model version](https://console.bluemix.net/docs/services/speech-to-text/input.html#version).
+   * @param {Boolean} [options.rejectUnauthorized] - If true, disable SSL verification for the WebSocket connection
    *
    * @constructor
    */
@@ -133,8 +134,10 @@ class RecognizeStream extends Duplex {
     this.listening = false;
     this.initialized = false;
     this.finished = false;
+
     // is using iam, another authentication step is needed
     this.authenticated = options.token_manager ? false : true;
+
     this.on('newListener', event => {
       if (!options.silent) {
         if (
@@ -219,17 +222,17 @@ class RecognizeStream extends Duplex {
 
     // node params: requestUrl, protocols, origin, headers, extraRequestOptions, clientConfig options
     // browser params: requestUrl, protocols (all others ignored)
+
+    // for the last argument, `tlsOptions` gets passed to Node's `http` library,
+    // which allows us to pass a rejectUnauthorized option
+    // for disabling SSL verification (for ICP)
     const socket = (this.socket = new w3cWebSocket(
       url,
       null,
       null,
       options.headers,
       null,
-      {
-        tlsOptions: {
-          rejectUnauthorized: false,
-        }
-      },
+      { tlsOptions: { rejectUnauthorized: options.rejectUnauthorized }}
     ));
 
     // when the input stops, let the service know that we're done

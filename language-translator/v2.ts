@@ -21,6 +21,13 @@ import GeneratedLanguageTranslatorV2 = require('./v2-generated');
 class LanguageTranslatorV2 extends GeneratedLanguageTranslatorV2 {
   constructor(options) {
     super(options);
+    if (!options['silent']) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        'WARNING: Language Translator V2 is deprecated and will be removed in the next major release of the SDK. Use Language Translator V3.' +
+          ' Set {silent: true} to disable this message.'
+      );
+    }
   }
 
   getModels(params, callback) {

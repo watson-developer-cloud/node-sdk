@@ -15,6 +15,9 @@ class VisualRecognitionV3 extends GeneratedVisualRecognitionV3 {
     const _options = extend({}, options);
     _options.version = _options.version_date || _options.version;
     super(_options);
+    if (_options.api_key) {
+      console.warn('WARNING: Visual Recognition instances are no longer accepting `api_key` for authentication. Use `iam_apikey`.');
+    }
   }
   classify(params, callback) {
     if (params && params.image_file) {
