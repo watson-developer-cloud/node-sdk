@@ -60,6 +60,8 @@ class SpeechToTextV1 extends BaseService {
    * Gets information for a single specified language model that is available for use with the service. The information
    * includes the name of the model and its minimum sampling rate in Hertz, among other things.
    *
+   * **See also:** [Languages and models](https://console.bluemix.net/docs/services/speech-to-text/input.html#models).
+   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.model_id - The identifier of the model in the form of its name from the output of the **Get
    * models** method.
@@ -100,6 +102,8 @@ class SpeechToTextV1 extends BaseService {
    * Lists all language models that are available for use with the service. The information includes the name of the
    * model and its minimum sampling rate in Hertz, among other things.
    *
+   * **See also:** [Languages and models](https://console.bluemix.net/docs/services/speech-to-text/input.html#models).
+   *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -135,6 +139,9 @@ class SpeechToTextV1 extends BaseService {
    * the endianness of the incoming audio and, for audio that includes multiple channels, downmixes the audio to
    * one-channel mono during transcoding. (For the `audio/l16` format, you can specify the endianness.)
    *
+   * **See also:** [Making a basic HTTP
+   * request](https://console.bluemix.net/docs/services/speech-to-text/http.html#HTTP-basic).
+   *
    * ### Streaming mode
    *
    *  For requests to transcribe live audio as it becomes available, you must set the `Transfer-Encoding` header to
@@ -143,10 +150,14 @@ class SpeechToTextV1 extends BaseService {
    * closes the connection (status code 400) if no speech is detected for `inactivity_timeout` seconds of audio (not
    * processing time); use the `inactivity_timeout` parameter to change the default of 30 seconds.
    *
+   * **See also:**
+   * * [Audio transmission](https://console.bluemix.net/docs/services/speech-to-text/input.html#transmission)
+   * * [Timeouts](https://console.bluemix.net/docs/services/speech-to-text/input.html#timeouts)
+   *
    * ### Audio formats (content types)
    *
    *  Use the `Content-Type` header to specify the audio format (MIME type) of the audio. The service accepts the
-   * following formats:
+   * following formats, including specifying the sampling rate, channels, and endianness where indicated.
    * * `audio/basic` (Use only with narrowband models.)
    * * `audio/flac`
    * * `audio/l16` (Specify the sampling rate (`rate`) and optionally the number of channels (`channels`) and endianness
@@ -162,9 +173,7 @@ class SpeechToTextV1 extends BaseService {
    * * `audio/webm;codecs=opus`
    * * `audio/webm;codecs=vorbis`
    *
-   * For information about the supported audio formats, including specifying the sampling rate, channels, and endianness
-   * for the indicated formats, see [Audio
-   * formats](https://console.bluemix.net/docs/services/speech-to-text/audio-formats.html).
+   * **See also:** [Audio formats](https://console.bluemix.net/docs/services/speech-to-text/audio-formats.html).
    *
    * ### Multipart speech recognition
    *
@@ -176,7 +185,7 @@ class SpeechToTextV1 extends BaseService {
    * used with the request are greater than the 8 KB limit imposed by most HTTP servers and proxies. You can encounter
    * this limit, for example, if you want to spot a very large number of keywords.
    *
-   * For information about submitting a multipart request, see [Making a multipart HTTP
+   * **See also:** [Making a multipart HTTP
    * request](https://console.bluemix.net/docs/services/speech-to-text/http.html#HTTP-multi).
    *
    * @param {Object} params - The parameters to send to the service.
@@ -309,6 +318,9 @@ class SpeechToTextV1 extends BaseService {
    * long as they remain available. Use the **Check jobs** method to request information about the most recent jobs
    * associated with the calling user.
    *
+   * **See also:** [Checking the status and retrieving the results of a
+   * job](https://console.bluemix.net/docs/services/speech-to-text/async.html#job).
+   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.id - The ID of the asynchronous job.
    * @param {Object} [params.headers] - Custom request headers
@@ -352,6 +364,9 @@ class SpeechToTextV1 extends BaseService {
    * remain available until you delete them with the **Delete a job** method or until the job's time to live expires,
    * whichever comes first.
    *
+   * **See also:** [Checking the status of the latest
+   * jobs](https://console.bluemix.net/docs/services/speech-to-text/async.html#jobs).
+   *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -391,9 +406,7 @@ class SpeechToTextV1 extends BaseService {
    *
    * The two approaches are not mutually exclusive. You can poll the service for job status or obtain results from the
    * service manually even if you include a callback URL. In both cases, you can include the `results_ttl` parameter to
-   * specify how long the results are to remain available after the job is complete. For detailed usage information
-   * about the two approaches, including callback notifications, see [Creating a
-   * job](https://console.bluemix.net/docs/services/speech-to-text/async.html#create). Using the HTTPS **Check a job**
+   * specify how long the results are to remain available after the job is complete. Using the HTTPS **Check a job**
    * method to retrieve results is more secure than receiving them via callback notification over HTTP because it
    * provides confidentiality in addition to authentication and data integrity.
    *
@@ -405,12 +418,14 @@ class SpeechToTextV1 extends BaseService {
    * * `results_ttl`
    *
    * The service imposes a data size limit of 100 MB. It automatically detects the endianness of the incoming audio and,
-   * for audio that includes multiple channels, downmixes the audio to one-channel mono during transcoding. (For the
-   * `audio/l16` format, you can specify the endianness.)
+   * for audio that includes multiple channels, downmixes the audio to one-channel mono during transcoding.
+   *
+   * **See also:** [Creating a job](https://console.bluemix.net/docs/services/speech-to-text/async.html#create).
    *
    * ### Audio formats (content types)
    *
-   *  Use the `Content-Type` parameter to specify the audio format (MIME type) of the audio:
+   *  Use the `Content-Type` header to specify the audio format (MIME type) of the audio. The service accepts the
+   * following formats, including specifying the sampling rate, channels, and endianness where indicated.
    * * `audio/basic` (Use only with narrowband models.)
    * * `audio/flac`
    * * `audio/l16` (Specify the sampling rate (`rate`) and optionally the number of channels (`channels`) and endianness
@@ -426,9 +441,7 @@ class SpeechToTextV1 extends BaseService {
    * * `audio/webm;codecs=opus`
    * * `audio/webm;codecs=vorbis`
    *
-   * For information about the supported audio formats, including specifying the sampling rate, channels, and endianness
-   * for the indicated formats, see [Audio
-   * formats](https://console.bluemix.net/docs/services/speech-to-text/audio-formats.html).
+   * **See also:** [Audio formats](https://console.bluemix.net/docs/services/speech-to-text/audio-formats.html).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {NodeJS.ReadableStream|FileObject|Buffer} params.audio - The audio to transcribe in the format specified by
@@ -583,6 +596,8 @@ class SpeechToTextV1 extends BaseService {
    * its results are no longer available. The service automatically deletes a job and its results when the time to live
    * for the results expires. You must submit the request with the service credentials of the user who created the job.
    *
+   * **See also:** [Deleting a job](https://console.bluemix.net/docs/services/speech-to-text/async.html#delete).
+   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.id - The ID of the asynchronous job.
    * @param {Object} [params.headers] - Custom request headers
@@ -642,8 +657,10 @@ class SpeechToTextV1 extends BaseService {
    * integrity for HTTP communications.
    *
    * After you successfully register a callback URL, you can use it with an indefinite number of recognition requests.
-   * You can register a maximum of 20 callback URLS in a one-hour span of time. For more information, see [Registering a
-   * callback URL](https://console.bluemix.net/docs/services/speech-to-text/async.html#register).
+   * You can register a maximum of 20 callback URLS in a one-hour span of time.
+   *
+   * **See also:** [Registering a callback
+   * URL](https://console.bluemix.net/docs/services/speech-to-text/async.html#register).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.callback_url - An HTTP or HTTPS URL to which callback notifications are to be sent. To be
@@ -692,6 +709,9 @@ class SpeechToTextV1 extends BaseService {
    * Unregisters a callback URL that was previously white-listed with a **Register a callback** request for use with the
    * asynchronous interface. Once unregistered, the URL can no longer be used with asynchronous recognition requests.
    *
+   * **See also:** [Unregistering a callback
+   * URL](https://console.bluemix.net/docs/services/speech-to-text/async.html#unregister).
+   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.callback_url - The callback URL that is to be unregistered.
    * @param {Object} [params.headers] - Custom request headers
@@ -735,6 +755,9 @@ class SpeechToTextV1 extends BaseService {
    * Creates a new custom language model for a specified base model. The custom language model can be used only with the
    * base model for which it is created. The model is owned by the instance of the service whose credentials are used to
    * create it.
+   *
+   * **See also:** [Create a custom language
+   * model](https://console.bluemix.net/docs/services/speech-to-text/language-create.html#createModel).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.name - A user-defined name for the new custom language model. Use a name that is unique
@@ -798,6 +821,9 @@ class SpeechToTextV1 extends BaseService {
    * corpus to the model, is currently being processed. You must use credentials for the instance of the service that
    * owns a model to delete it.
    *
+   * **See also:** [Deleting a custom language
+   * model](https://console.bluemix.net/docs/services/speech-to-text/language-models.html#deleteModel).
+   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom language model. You must make
    * the request with service credentials created for the instance of the service that owns the custom model.
@@ -837,6 +863,9 @@ class SpeechToTextV1 extends BaseService {
    *
    * Gets information about a specified custom language model. You must use credentials for the instance of the service
    * that owns a model to list information about it.
+   *
+   * **See also:** [Listing custom language
+   * models](https://console.bluemix.net/docs/services/speech-to-text/language-models.html#listModels).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom language model. You must make
@@ -880,6 +909,9 @@ class SpeechToTextV1 extends BaseService {
    * language models for all languages. You must use credentials for the instance of the service that owns a model to
    * list information about it.
    *
+   * **See also:** [Listing custom language
+   * models](https://console.bluemix.net/docs/services/speech-to-text/language-models.html#listModels).
+   *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {string} [params.language] - The identifier of the language for which custom language or custom acoustic
    * models are to be returned (for example, `en-US`). Omit the parameter to see all custom language or custom acoustic
@@ -917,6 +949,9 @@ class SpeechToTextV1 extends BaseService {
    * initializes the model to its state when it was first created. Metadata such as the name and language of the model
    * are preserved, but the model's words resource is removed and must be re-created. You must use credentials for the
    * instance of the service that owns a model to reset it.
+   *
+   * **See also:** [Resetting a custom language
+   * model](https://console.bluemix.net/docs/services/speech-to-text/language-models.html#resetModel).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom language model. You must make
@@ -976,6 +1011,9 @@ class SpeechToTextV1 extends BaseService {
    * request to add a corpus or words to the model.
    * * No training data (corpora or words) have been added to the custom model.
    * * One or more words that were added to the custom model have invalid sounds-like pronunciations that you must fix.
+   *
+   * **See also:** [Train the custom language
+   * model](https://console.bluemix.net/docs/services/speech-to-text/language-create.html#trainModel).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom language model. You must make
@@ -1047,8 +1085,8 @@ class SpeechToTextV1 extends BaseService {
    * is complete, the model resumes the status that it had prior to upgrade. The service cannot accept subsequent
    * requests for the model until the upgrade completes.
    *
-   * For more information, see [Upgrading custom
-   * models](https://console.bluemix.net/docs/services/speech-to-text/custom-upgrade.html).
+   * **See also:** [Upgrading a custom language
+   * model](https://console.bluemix.net/docs/services/speech-to-text/custom-upgrade.html#upgradeLanguage).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom language model. You must make
@@ -1098,9 +1136,7 @@ class SpeechToTextV1 extends BaseService {
    *
    * Submit a plain text file that contains sample sentences from the domain of interest to enable the service to
    * extract words in context. The more sentences you add that represent the context in which speakers use words from
-   * the domain, the better the service's recognition accuracy. For guidelines about adding a corpus text file and for
-   * information about how the service parses a corpus file, see [Preparing a corpus text
-   * file](https://console.bluemix.net/docs/services/speech-to-text/language-resource.html#prepareCorpus).
+   * the domain, the better the service's recognition accuracy.
    *
    * The call returns an HTTP 201 response code if the corpus is valid. The service then asynchronously processes the
    * contents of the corpus and automatically extracts new words that it finds. This can take on the order of a minute
@@ -1122,6 +1158,12 @@ class SpeechToTextV1 extends BaseService {
    * The service limits the overall amount of data that you can add to a custom model to a maximum of 10 million total
    * words from all corpora combined. Also, you can add no more than 30 thousand custom (OOV) words to a model; this
    * includes words that the service extracts from corpora and words that you add directly.
+   *
+   * **See also:**
+   * * [Working with
+   * corpora](https://console.bluemix.net/docs/services/speech-to-text/language-resource.html#workingCorpora)
+   * * [Add corpora to the custom language
+   * model](https://console.bluemix.net/docs/services/speech-to-text/language-create.html#addCorpora).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom language model. You must make
@@ -1195,6 +1237,9 @@ class SpeechToTextV1 extends BaseService {
    * corpus does not affect the custom model until you train the model with the **Train a custom language model**
    * method. You must use credentials for the instance of the service that owns a model to delete its corpora.
    *
+   * **See also:** [Deleting a corpus from a custom language
+   * model](https://console.bluemix.net/docs/services/speech-to-text/language-corpora.html#deleteCorpus).
+   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom language model. You must make
    * the request with service credentials created for the instance of the service that owns the custom model.
@@ -1238,6 +1283,9 @@ class SpeechToTextV1 extends BaseService {
    * and out-of-vocabulary (OOV) words, name, and status of the corpus. You must use credentials for the instance of the
    * service that owns a model to list its corpora.
    *
+   * **See also:** [Listing corpora for a custom language
+   * model](https://console.bluemix.net/docs/services/speech-to-text/language-corpora.html#listCorpora).
+   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom language model. You must make
    * the request with service credentials created for the instance of the service that owns the custom model.
@@ -1280,6 +1328,9 @@ class SpeechToTextV1 extends BaseService {
    * Lists information about all corpora from a custom language model. The information includes the total number of
    * words and out-of-vocabulary (OOV) words, name, and status of each corpus. You must use credentials for the instance
    * of the service that owns a model to list its corpora.
+   *
+   * **See also:** [Listing corpora for a custom language
+   * model](https://console.bluemix.net/docs/services/speech-to-text/language-corpora.html#listCorpora).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom language model. You must make
@@ -1336,19 +1387,21 @@ class SpeechToTextV1 extends BaseService {
    * * The `sounds_like` field provides an array of one or more pronunciations for the word. Use the parameter to
    * specify how the word can be pronounced by users. Use the parameter for words that are difficult to pronounce,
    * foreign words, acronyms, and so on. For example, you might specify that the word `IEEE` can sound like `i triple
-   * e`. You can specify a maximum of five sounds-like pronunciations for a word. For information about pronunciation
-   * rules, see [Using the sounds_like
-   * field](https://console.bluemix.net/docs/services/speech-to-text/language-resource.html#soundsLike).
+   * e`. You can specify a maximum of five sounds-like pronunciations for a word.
    * * The `display_as` field provides a different way of spelling the word in a transcript. Use the parameter when you
    * want the word to appear different from its usual representation or from its spelling in corpora training data. For
-   * example, you might indicate that the word `IBM(trademark)` is to be displayed as `IBM&trade;`. For more
-   * information, see [Using the display_as
-   * field](https://console.bluemix.net/docs/services/speech-to-text/language-resource.html#displayAs).
+   * example, you might indicate that the word `IBM(trademark)` is to be displayed as `IBM&trade;`.
    *
    *
    * If you add a custom word that already exists in the words resource for the custom model, the new definition
    * overwrites the existing data for the word. If the service encounters an error, it does not add the word to the
    * words resource. Use the **List a custom word** method to review the word that you add.
+   *
+   * **See also:**
+   * * [Working with custom
+   * words](https://console.bluemix.net/docs/services/speech-to-text/language-resource.html#workingWords)
+   * * [Add words to the custom language
+   * model](https://console.bluemix.net/docs/services/speech-to-text/language-create.html#addWords).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom language model. You must make
@@ -1432,14 +1485,10 @@ class SpeechToTextV1 extends BaseService {
    * * The `sounds_like` field provides an array of one or more pronunciations for the word. Use the parameter to
    * specify how the word can be pronounced by users. Use the parameter for words that are difficult to pronounce,
    * foreign words, acronyms, and so on. For example, you might specify that the word `IEEE` can sound like `i triple
-   * e`. You can specify a maximum of five sounds-like pronunciations for a word. For information about pronunciation
-   * rules, see [Using the sounds_like
-   * field](https://console.bluemix.net/docs/services/speech-to-text/language-resource.html#soundsLike).
+   * e`. You can specify a maximum of five sounds-like pronunciations for a word.
    * * The `display_as` field provides a different way of spelling the word in a transcript. Use the parameter when you
    * want the word to appear different from its usual representation or from its spelling in corpora training data. For
-   * example, you might indicate that the word `IBM(trademark)` is to be displayed as `IBM&trade;`. For more
-   * information, see [Using the display_as
-   * field](https://console.bluemix.net/docs/services/speech-to-text/language-resource.html#displayAs).
+   * example, you might indicate that the word `IBM(trademark)` is to be displayed as `IBM&trade;`.
    *
    *
    * If you add a custom word that already exists in the words resource for the custom model, the new definition
@@ -1458,6 +1507,12 @@ class SpeechToTextV1 extends BaseService {
    * You can use the **List custom words** or **List a custom word** method to review the words that you add. Words with
    * an invalid `sounds_like` field include an `error` field that describes the problem. You can use other words-related
    * methods to correct errors, eliminate typos, and modify how words are pronounced as needed.
+   *
+   * **See also:**
+   * * [Working with custom
+   * words](https://console.bluemix.net/docs/services/speech-to-text/language-resource.html#workingWords)
+   * * [Add words to the custom language
+   * model](https://console.bluemix.net/docs/services/speech-to-text/language-create.html#addWords).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom language model. You must make
@@ -1509,6 +1564,9 @@ class SpeechToTextV1 extends BaseService {
    * does not affect the custom model until you train the model with the **Train a custom language model** method. You
    * must use credentials for the instance of the service that owns a model to delete its words.
    *
+   * **See also:** [Deleting a word from a custom language
+   * model](https://console.bluemix.net/docs/services/speech-to-text/language-words.html#deleteWord).
+   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom language model. You must make
    * the request with service credentials created for the instance of the service that owns the custom model.
@@ -1552,6 +1610,9 @@ class SpeechToTextV1 extends BaseService {
    *
    * Gets information about a custom word from a custom language model. You must use credentials for the instance of the
    * service that owns a model to query information about its words.
+   *
+   * **See also:** [Listing words from a custom language
+   * model](https://console.bluemix.net/docs/services/speech-to-text/language-words.html#listWords).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom language model. You must make
@@ -1599,6 +1660,9 @@ class SpeechToTextV1 extends BaseService {
    * that were extracted from corpora. You can also indicate the order in which the service is to return words; by
    * default, words are listed in ascending alphabetical order. You must use credentials for the instance of the service
    * that owns a model to query information about its words.
+   *
+   * **See also:** [Listing words from a custom language
+   * model](https://console.bluemix.net/docs/services/speech-to-text/language-words.html#listWords).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom language model. You must make
@@ -1660,6 +1724,9 @@ class SpeechToTextV1 extends BaseService {
    * base model for which it is created. The model is owned by the instance of the service whose credentials are used to
    * create it.
    *
+   * **See also:** [Create a custom acoustic
+   * model](https://console.bluemix.net/docs/services/speech-to-text/acoustic-create.html#createModel).
+   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.name - A user-defined name for the new custom acoustic model. Use a name that is unique
    * among all custom acoustic models that you own. Use a localized name that matches the language of the custom model.
@@ -1712,6 +1779,9 @@ class SpeechToTextV1 extends BaseService {
    * audio resource to the model, is currently being processed. You must use credentials for the instance of the service
    * that owns a model to delete it.
    *
+   * **See also:** [Deleting a custom acoustic
+   * model](https://console.bluemix.net/docs/services/speech-to-text/acoustic-models.html#deleteModel).
+   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom acoustic model. You must make
    * the request with service credentials created for the instance of the service that owns the custom model.
@@ -1751,6 +1821,9 @@ class SpeechToTextV1 extends BaseService {
    *
    * Gets information about a specified custom acoustic model. You must use credentials for the instance of the service
    * that owns a model to list information about it.
+   *
+   * **See also:** [Listing custom acoustic
+   * models](https://console.bluemix.net/docs/services/speech-to-text/acoustic-models.html#listModels).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom acoustic model. You must make
@@ -1794,6 +1867,9 @@ class SpeechToTextV1 extends BaseService {
    * acoustic models for all languages. You must use credentials for the instance of the service that owns a model to
    * list information about it.
    *
+   * **See also:** [Listing custom acoustic
+   * models](https://console.bluemix.net/docs/services/speech-to-text/acoustic-models.html#listModels).
+   *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {string} [params.language] - The identifier of the language for which custom language or custom acoustic
    * models are to be returned (for example, `en-US`). Omit the parameter to see all custom language or custom acoustic
@@ -1831,6 +1907,9 @@ class SpeechToTextV1 extends BaseService {
    * initializes the model to its state when it was first created. Metadata such as the name and language of the model
    * are preserved, but the model's audio resources are removed and must be re-created. You must use credentials for the
    * instance of the service that owns a model to reset it.
+   *
+   * **See also:** [Resetting a custom acoustic
+   * model](https://console.bluemix.net/docs/services/speech-to-text/acoustic-models.html#resetModel).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom acoustic model. You must make
@@ -1889,15 +1968,17 @@ class SpeechToTextV1 extends BaseService {
    * You can use the optional `custom_language_model_id` parameter to specify the GUID of a separately created custom
    * language model that is to be used during training. Specify a custom language model if you have verbatim
    * transcriptions of the audio files that you have added to the custom model or you have either corpora (text files)
-   * or a list of words that are relevant to the contents of the audio files. For information about creating a separate
-   * custom language model, see [Creating a custom language
-   * model](https://console.bluemix.net/docs/services/speech-to-text/language-create.html).
+   * or a list of words that are relevant to the contents of the audio files. For more information, see the **Create a
+   * custom language model** method.
    *
    * Training can fail to start for the following reasons:
    * * The service is currently handling another request for the custom model, such as another training request or a
    * request to add audio resources to the model.
    * * The custom model contains less than 10 minutes or more than 50 hours of audio data.
    * * One or more of the custom model's audio resources is invalid.
+   *
+   * **See also:** [Train the custom acoustic
+   * model](https://console.bluemix.net/docs/services/speech-to-text/acoustic-create.html#trainModel).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom acoustic model. You must make
@@ -1962,8 +2043,8 @@ class SpeechToTextV1 extends BaseService {
    * must be upgraded before the custom acoustic model can be upgraded. Omit the parameter if the custom acoustic model
    * was not trained with a custom language model.
    *
-   * For more information, see [Upgrading custom
-   * models](https://console.bluemix.net/docs/services/speech-to-text/custom-upgrade.html).
+   * **See also:** [Upgrading a custom acoustic
+   * model](https://console.bluemix.net/docs/services/speech-to-text/custom-upgrade.html#upgradeAcoustic).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom acoustic model. You must make
@@ -2041,10 +2122,14 @@ class SpeechToTextV1 extends BaseService {
    * resource, and it returns the status of the resource. Use a loop to check the status of the audio every few seconds
    * until it becomes `ok`.
    *
+   * **See also:** [Add audio to the custom acoustic
+   * model](https://console.bluemix.net/docs/services/speech-to-text/acoustic-create.html#addAudio).
+   *
    * ### Content types for audio-type resources
    *
    *  You can add an individual audio file in any format that the service supports for speech recognition. For an
-   * audio-type resource, use the `Content-Type` parameter to specify the audio format (MIME type) of the audio file:
+   * audio-type resource, use the `Content-Type` parameter to specify the audio format (MIME type) of the audio file,
+   * including specifying the sampling rate, channels, and endianness where indicated.
    * * `audio/basic` (Use only with narrowband models.)
    * * `audio/flac`
    * * `audio/l16` (Specify the sampling rate (`rate`) and optionally the number of channels (`channels`) and endianness
@@ -2060,9 +2145,7 @@ class SpeechToTextV1 extends BaseService {
    * * `audio/webm;codecs=opus`
    * * `audio/webm;codecs=vorbis`
    *
-   * For information about the supported audio formats, including specifying the sampling rate, channels, and endianness
-   * for the indicated formats, see [Audio
-   * formats](https://console.bluemix.net/docs/services/speech-to-text/audio-formats.html).
+   * **See also:** [Audio formats](https://console.bluemix.net/docs/services/speech-to-text/audio-formats.html).
    *
    * **Note:** The sampling rate of an audio file must match the sampling rate of the base model for the custom model:
    * for broadband models, at least 16 kHz; for narrowband models, at least 8 kHz. If the sampling rate of the audio is
@@ -2158,6 +2241,9 @@ class SpeechToTextV1 extends BaseService {
    * by using the **Train a custom acoustic model** method. You must use credentials for the instance of the service
    * that owns a model to delete its audio resources.
    *
+   * **See also:** [Deleting an audio resource from a custom acoustic
+   * model](https://console.bluemix.net/docs/services/speech-to-text/acoustic-audio.html#deleteAudio).
+   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom acoustic model. You must make
    * the request with service credentials created for the instance of the service that owns the custom model.
@@ -2213,6 +2299,9 @@ class SpeechToTextV1 extends BaseService {
    *
    * You must use credentials for the instance of the service that owns a model to list its audio resources.
    *
+   * **See also:** [Listing audio resources for a custom acoustic
+   * model](https://console.bluemix.net/docs/services/speech-to-text/acoustic-audio.html#listAudio).
+   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom acoustic model. You must make
    * the request with service credentials created for the instance of the service that owns the custom model.
@@ -2257,6 +2346,9 @@ class SpeechToTextV1 extends BaseService {
    * resource, which is important for checking the service's analysis of the resource in response to a request to add it
    * to the custom acoustic model. You must use credentials for the instance of the service that owns a model to list
    * its audio resources.
+   *
+   * **See also:** [Listing audio resources for a custom acoustic
+   * model](https://console.bluemix.net/docs/services/speech-to-text/acoustic-audio.html#listAudio).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom acoustic model. You must make
@@ -2305,7 +2397,9 @@ class SpeechToTextV1 extends BaseService {
    * associate the customer ID with the data.
    *
    * You associate a customer ID with data by passing the `X-Watson-Metadata` header with a request that passes the
-   * data. For more information about customer IDs and about using this method, see [Information
+   * data.
+   *
+   * **See also:** [Information
    * security](https://console.bluemix.net/docs/services/speech-to-text/information-security.html).
    *
    * @param {Object} params - The parameters to send to the service.

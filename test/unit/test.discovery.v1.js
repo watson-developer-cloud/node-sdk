@@ -503,15 +503,8 @@ describe('discovery-v1', function() {
             },
             noop
           );
-          assert.equal(
-            req.uri.href,
-            service.url +
-            paths.query +
-            '?version=' +
-            service.version + // query string params order changed, shouldn't be a problem for the service...
-              '&filter=yesplease&natural_language_query=a%20question%20about%20stuff%20and%20things&passages=true&count=10&sort=%2Bfield_1%2C-field_2'
-          );
-          assert.equal(req.method, 'GET');
+          assert.equal(req.uri.href, service.url + paths.query + '?version=' + service.version);
+          assert.equal(req.method, 'POST');
         });
 
         it('should perform a query for notices', function() {
@@ -552,13 +545,9 @@ describe('discovery-v1', function() {
           );
           assert.equal(
             req.uri.href,
-            service.url +
-            paths.federatedquery +
-            '?version=' +
-            service.version + // query string params order changed, shouldn't be a problem for the service...
-              '&collection_ids=col1-guid%2Ccol2-guid&filter=yesplease&natural_language_query=a%20question%20about%20stuff%20and%20things&count=10&sort=%2Bfield_1%2C-field_2'
+            service.url + paths.federatedquery + '?version=' + service.version
           );
-          assert.equal(req.method, 'GET');
+          assert.equal(req.method, 'POST');
         });
 
         it('should perform a federated query for notices', function() {
