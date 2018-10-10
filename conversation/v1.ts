@@ -38,6 +38,13 @@ class ConversationV1 extends GeneratedConversationV1 {
     const _options = extend({}, options);
     _options.version = _options.version_date || _options.version;
     super(_options);
+    if (!options['silent']) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        'WARNING: Conversation V1 is deprecated and will be removed in the next major release of the SDK. Use Assistant V1 or Assistant V2.' +
+          ' Set {silent: true} to disable this message.'
+      );
+    }
   }
 
   workspaceStatus(params, callback) {

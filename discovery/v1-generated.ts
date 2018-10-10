@@ -72,7 +72,8 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.name - Name that identifies the environment.
    * @param {string} [params.description] - Description of the environment.
-   * @param {string} [params.size] - Size of the environment.
+   * @param {string} [params.size] - Size of the environment. In the Lite plan the default and only accepted value is
+   * `LT`, in all other plans the default is `S`.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -265,6 +266,8 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} [params.name] - Name that identifies the environment.
    * @param {string} [params.description] - Description of the environment.
+   * @param {string} [params.size] - Size that the environment should be increased to. Environment size cannot be
+   * modified when using a Lite plan. Environment size can only increased and not decreased.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -279,7 +282,8 @@ class DiscoveryV1 extends BaseService {
     }
     const body = {
       'name': _params.name,
-      'description': _params.description
+      'description': _params.description,
+      'size': _params.size
     };
     const path = {
       'environment_id': _params.environment_id
@@ -1292,59 +1296,64 @@ class DiscoveryV1 extends BaseService {
    ************************/
 
   /**
-   * Query documents in multiple collections.
+   * Long environment queries.
    *
-   * See the [Discovery service documentation](https://console.bluemix.net/docs/services/discovery/using.html) for more
-   * details.
+   * Complex queries might be too long for a standard method query. By using this method, you can construct longer
+   * queries. However, these queries may take longer to complete than the standard method. For details, see the
+   * [Discovery service documentation](https://console.bluemix.net/docs/services/discovery/using.html).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
-   * @param {string[]} params.collection_ids - A comma-separated list of collection IDs to be queried against.
-   * @param {string} [params.filter] - A cacheable query that limits the documents returned to exclude any documents
-   * that don't mention the query content. Filter searches are better for metadata type searches and when you are trying
-   * to get a sense of concepts in the data set.
+   * @param {string} [params.filter] - A cacheable query that excludes documents that don't mention the query content.
+   * Filter searches are better for metadata-type searches and for assessing the concepts in the data set.
    * @param {string} [params.query] - A query search returns all documents in your data set with full enrichments and
    * full text, but with the most relevant documents listed first. Use a query search when you want to find the most
    * relevant search results. You cannot use **natural_language_query** and **query** at the same time.
    * @param {string} [params.natural_language_query] - A natural language query that returns relevant documents by
    * utilizing training data and natural language understanding. You cannot use **natural_language_query** and **query**
    * at the same time.
-   * @param {string} [params.aggregation] - An aggregation search uses combinations of filters and query search to
-   * return an exact answer. Aggregations are useful for building applications, because you can use them to build lists,
-   * tables, and time series. For a full list of possible aggregrations, see the Query reference.
+   * @param {boolean} [params.passages] - A passages query that returns the most relevant passages from the results.
+   * @param {string} [params.aggregation] - An aggregation search that returns an exact answer by combining query search
+   * with filters. Useful for applications to build lists, tables, and time series. For a full list of possible
+   * aggregations, see the Query reference.
    * @param {number} [params.count] - Number of results to return.
-   * @param {string[]} [params.return_fields] - A comma separated list of the portion of the document hierarchy to
+   * @param {string[]} [params.return_fields] - A comma-separated list of the portion of the document hierarchy to
    * return.
    * @param {number} [params.offset] - The number of query results to skip at the beginning. For example, if the total
-   * number of results that are returned is 10, and the offset is 8, it returns the last two results.
-   * @param {string[]} [params.sort] - A comma separated list of fields in the document to sort on. You can optionally
+   * number of results that are returned is 10 and the offset is 8, it returns the last two results.
+   * @param {string[]} [params.sort] - A comma-separated list of fields in the document to sort on. You can optionally
    * specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the
-   * default sort direction if no prefix is specified.
-   * @param {boolean} [params.highlight] - When true a highlight field is returned for each result which contains the
-   * fields that match the query with `<em></em>` tags around the matching query terms. Defaults to false.
+   * default sort direction if no prefix is specified. This parameter cannot be used in the same query as the **bias**
+   * parameter.
+   * @param {boolean} [params.highlight] - When true, a highlight field is returned for each result which contains the
+   * fields which match the query with `<em></em>` tags around the matching query terms.
+   * @param {string[]} [params.passages_fields] - A comma-separated list of fields that passages are drawn from. If this
+   * parameter not specified, then all top-level fields are included.
+   * @param {number} [params.passages_count] - The maximum number of passages to return. The search returns fewer
+   * passages if the requested total is not found. The default is `10`. The maximum is `100`.
+   * @param {number} [params.passages_characters] - The approximate number of characters that any one passage will have.
    * @param {boolean} [params.deduplicate] - When `true` and used with a Watson Discovery News collection, duplicate
    * results (based on the contents of the **title** field) are removed. Duplicate comparison is limited to the current
    * query only; **offset** is not considered. This parameter is currently Beta functionality.
    * @param {string} [params.deduplicate_field] - When specified, duplicate results based on the field specified are
    * removed from the returned results. Duplicate comparison is limited to the current query only, **offset** is not
    * considered. This parameter is currently Beta functionality.
+   * @param {string[]} [params.collection_ids] - A comma-separated list of collection IDs to be queried against.
+   * Required when querying multiple collections, invalid when performing a single collection query.
    * @param {boolean} [params.similar] - When `true`, results are returned based on their similarity to the document IDs
    * specified in the **similar.document_ids** parameter.
-   * @param {string[]} [params.similar_document_ids] - A comma-separated list of document IDs that will be used to find
-   * similar documents.
+   * @param {string[]} [params.similar_document_ids] - A comma-separated list of document IDs to find similar documents.
    *
-   * **Note:** If the **natural_language_query** parameter is also specified, it will be used to expand the scope of the
-   * document similarity search to include the natural language query. Other query parameters, such as **filter** and
-   * **query** are subsequently applied and reduce the query scope.
-   * @param {string[]} [params.similar_fields] - A comma-separated list of field names that will be used as a basis for
+   * **Tip:** Include the **natural_language_query** parameter to expand the scope of the document similarity search
+   * with the natural language query. Other query parameters, such as **filter** and **query**, are subsequently applied
+   * and reduce the scope.
+   * @param {string[]} [params.similar_fields] - A comma-separated list of field names that are used as a basis for
    * comparison to identify similar documents. If not specified, the entire document is used for comparison.
-   * @param {boolean} [params.passages] - A passages query that returns the most relevant passages from the results.
-   * @param {string[]} [params.passages_fields] - A comma-separated list of fields that passages are drawn from. If this
-   * parameter not specified, then all top-level fields are included.
-   * @param {number} [params.passages_count] - The maximum number of passages to return. The search returns fewer
-   * passages if the requested total is not found. The default is `10`. The maximum is `100`.
-   * @param {number} [params.passages_characters] - The approximate number of characters that any one passage will have.
-   * The default is `400`. The minimum is `50`. The maximum is `2000`.
+   * @param {string} [params.bias] - Field which the returned results will be biased against. The specified field must
+   * be either a **date** or **number** format. When a **date** type field is specified returned results are biased
+   * towards field values closer to the current date. When a **number** type field is specified, returned results are
+   * biased towards higher field values. This parameter cannot be used in the same query as the **sort** parameter.
+   * @param {boolean} [params.logging_opt_out] - If `true`, queries are not stored in the Discovery **Logs** endpoint.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -1352,31 +1361,39 @@ class DiscoveryV1 extends BaseService {
   public federatedQuery(params: DiscoveryV1.FederatedQueryParams, callback?: DiscoveryV1.Callback<DiscoveryV1.QueryResponse>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
-    const requiredParams = ['environment_id', 'collection_ids'];
+    const requiredParams = ['environment_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    const query = {
-      'collection_ids': _params.collection_ids,
+    // these params were arrays but now need to be strings, the following code is for compatibility
+    const nonArrayParams = ['return_fields', 'sort', 'passages_fields', 'collection_ids', 'similar_document_ids', 'similar_fields'];
+    nonArrayParams.forEach(paramName => {
+      if (Array.isArray(_params[paramName])) {
+        _params[paramName] = _params[paramName].join(',');
+      }
+    });
+    const body = {
       'filter': _params.filter,
       'query': _params.query,
       'natural_language_query': _params.natural_language_query,
+      'passages': _params.passages,
       'aggregation': _params.aggregation,
       'count': _params.count,
       'return': _params.return_fields,
       'offset': _params.offset,
       'sort': _params.sort,
       'highlight': _params.highlight,
+      'passages.fields': _params.passages_fields,
+      'passages.count': _params.passages_count,
+      'passages.characters': _params.passages_characters,
       'deduplicate': _params.deduplicate,
       'deduplicate.field': _params.deduplicate_field,
+      'collection_ids': _params.collection_ids,
       'similar': _params.similar,
       'similar.document_ids': _params.similar_document_ids,
       'similar.fields': _params.similar_fields,
-      'passages': _params.passages,
-      'passages.fields': _params.passages_fields,
-      'passages.count': _params.passages_count,
-      'passages.characters': _params.passages_characters
+      'bias': _params.bias
     };
     const path = {
       'environment_id': _params.environment_id
@@ -1384,14 +1401,16 @@ class DiscoveryV1 extends BaseService {
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/query',
-        method: 'GET',
-        qs: query,
+        method: 'POST',
+        json: true,
+        body,
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
+          'X-Watson-Logging-Opt-Out': _params.logging_opt_out
         }, _params.headers),
       }),
     };
@@ -1409,40 +1428,38 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string[]} params.collection_ids - A comma-separated list of collection IDs to be queried against.
-   * @param {string} [params.filter] - A cacheable query that limits the documents returned to exclude any documents
-   * that don't mention the query content. Filter searches are better for metadata type searches and when you are trying
-   * to get a sense of concepts in the data set.
+   * @param {string} [params.filter] - A cacheable query that excludes documents that don't mention the query content.
+   * Filter searches are better for metadata-type searches and for assessing the concepts in the data set.
    * @param {string} [params.query] - A query search returns all documents in your data set with full enrichments and
    * full text, but with the most relevant documents listed first. Use a query search when you want to find the most
    * relevant search results. You cannot use **natural_language_query** and **query** at the same time.
    * @param {string} [params.natural_language_query] - A natural language query that returns relevant documents by
    * utilizing training data and natural language understanding. You cannot use **natural_language_query** and **query**
    * at the same time.
-   * @param {string} [params.aggregation] - An aggregation search uses combinations of filters and query search to
-   * return an exact answer. Aggregations are useful for building applications, because you can use them to build lists,
-   * tables, and time series. For a full list of possible aggregrations, see the Query reference.
+   * @param {string} [params.aggregation] - An aggregation search that returns an exact answer by combining query search
+   * with filters. Useful for applications to build lists, tables, and time series. For a full list of possible
+   * aggregations, see the Query reference.
    * @param {number} [params.count] - Number of results to return.
-   * @param {string[]} [params.return_fields] - A comma separated list of the portion of the document hierarchy to
+   * @param {string[]} [params.return_fields] - A comma-separated list of the portion of the document hierarchy to
    * return.
    * @param {number} [params.offset] - The number of query results to skip at the beginning. For example, if the total
-   * number of results that are returned is 10, and the offset is 8, it returns the last two results.
-   * @param {string[]} [params.sort] - A comma separated list of fields in the document to sort on. You can optionally
+   * number of results that are returned is 10 and the offset is 8, it returns the last two results.
+   * @param {string[]} [params.sort] - A comma-separated list of fields in the document to sort on. You can optionally
    * specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the
    * default sort direction if no prefix is specified.
-   * @param {boolean} [params.highlight] - When true a highlight field is returned for each result which contains the
-   * fields that match the query with `<em></em>` tags around the matching query terms. Defaults to false.
+   * @param {boolean} [params.highlight] - When true, a highlight field is returned for each result which contains the
+   * fields which match the query with `<em></em>` tags around the matching query terms.
    * @param {string} [params.deduplicate_field] - When specified, duplicate results based on the field specified are
    * removed from the returned results. Duplicate comparison is limited to the current query only, **offset** is not
    * considered. This parameter is currently Beta functionality.
    * @param {boolean} [params.similar] - When `true`, results are returned based on their similarity to the document IDs
    * specified in the **similar.document_ids** parameter.
-   * @param {string[]} [params.similar_document_ids] - A comma-separated list of document IDs that will be used to find
-   * similar documents.
+   * @param {string[]} [params.similar_document_ids] - A comma-separated list of document IDs to find similar documents.
    *
-   * **Note:** If the **natural_language_query** parameter is also specified, it will be used to expand the scope of the
-   * document similarity search to include the natural language query. Other query parameters, such as **filter** and
-   * **query** are subsequently applied and reduce the query scope.
-   * @param {string[]} [params.similar_fields] - A comma-separated list of field names that will be used as a basis for
+   * **Tip:** Include the **natural_language_query** parameter to expand the scope of the document similarity search
+   * with the natural language query. Other query parameters, such as **filter** and **query**, are subsequently applied
+   * and reduce the scope.
+   * @param {string[]} [params.similar_fields] - A comma-separated list of field names that are used as a basis for
    * comparison to identify similar documents. If not specified, the entire document is used for comparison.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -1493,18 +1510,17 @@ class DiscoveryV1 extends BaseService {
   };
 
   /**
-   * Query your collection.
+   * Long collection queries.
    *
-   * After your content is uploaded and enriched by the Discovery service, you can build queries to search your content.
-   * For details, see the [Discovery service
-   * documentation](https://console.bluemix.net/docs/services/discovery/using.html).
+   * Complex queries might be too long for a standard method query. By using this method, you can construct longer
+   * queries. However, these queries may take longer to complete than the standard method. For details, see the
+   * [Discovery service documentation](https://console.bluemix.net/docs/services/discovery/using.html).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
-   * @param {string} [params.filter] - A cacheable query that limits the documents returned to exclude any documents
-   * that don't mention the query content. Filter searches are better for metadata type searches and when you are trying
-   * to get a sense of concepts in the data set.
+   * @param {string} [params.filter] - A cacheable query that excludes documents that don't mention the query content.
+   * Filter searches are better for metadata-type searches and for assessing the concepts in the data set.
    * @param {string} [params.query] - A query search returns all documents in your data set with full enrichments and
    * full text, but with the most relevant documents listed first. Use a query search when you want to find the most
    * relevant search results. You cannot use **natural_language_query** and **query** at the same time.
@@ -1512,41 +1528,46 @@ class DiscoveryV1 extends BaseService {
    * utilizing training data and natural language understanding. You cannot use **natural_language_query** and **query**
    * at the same time.
    * @param {boolean} [params.passages] - A passages query that returns the most relevant passages from the results.
-   * @param {string} [params.aggregation] - An aggregation search uses combinations of filters and query search to
-   * return an exact answer. Aggregations are useful for building applications, because you can use them to build lists,
-   * tables, and time series. For a full list of possible aggregrations, see the Query reference.
+   * @param {string} [params.aggregation] - An aggregation search that returns an exact answer by combining query search
+   * with filters. Useful for applications to build lists, tables, and time series. For a full list of possible
+   * aggregations, see the Query reference.
    * @param {number} [params.count] - Number of results to return.
-   * @param {string[]} [params.return_fields] - A comma separated list of the portion of the document hierarchy to
+   * @param {string[]} [params.return_fields] - A comma-separated list of the portion of the document hierarchy to
    * return.
    * @param {number} [params.offset] - The number of query results to skip at the beginning. For example, if the total
-   * number of results that are returned is 10, and the offset is 8, it returns the last two results.
-   * @param {string[]} [params.sort] - A comma separated list of fields in the document to sort on. You can optionally
+   * number of results that are returned is 10 and the offset is 8, it returns the last two results.
+   * @param {string[]} [params.sort] - A comma-separated list of fields in the document to sort on. You can optionally
    * specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the
-   * default sort direction if no prefix is specified.
-   * @param {boolean} [params.highlight] - When true a highlight field is returned for each result which contains the
-   * fields that match the query with `<em></em>` tags around the matching query terms. Defaults to false.
+   * default sort direction if no prefix is specified. This parameter cannot be used in the same query as the **bias**
+   * parameter.
+   * @param {boolean} [params.highlight] - When true, a highlight field is returned for each result which contains the
+   * fields which match the query with `<em></em>` tags around the matching query terms.
    * @param {string[]} [params.passages_fields] - A comma-separated list of fields that passages are drawn from. If this
    * parameter not specified, then all top-level fields are included.
    * @param {number} [params.passages_count] - The maximum number of passages to return. The search returns fewer
    * passages if the requested total is not found. The default is `10`. The maximum is `100`.
    * @param {number} [params.passages_characters] - The approximate number of characters that any one passage will have.
-   * The default is `400`. The minimum is `50`. The maximum is `2000`.
    * @param {boolean} [params.deduplicate] - When `true` and used with a Watson Discovery News collection, duplicate
    * results (based on the contents of the **title** field) are removed. Duplicate comparison is limited to the current
    * query only; **offset** is not considered. This parameter is currently Beta functionality.
    * @param {string} [params.deduplicate_field] - When specified, duplicate results based on the field specified are
    * removed from the returned results. Duplicate comparison is limited to the current query only, **offset** is not
    * considered. This parameter is currently Beta functionality.
+   * @param {string[]} [params.collection_ids] - A comma-separated list of collection IDs to be queried against.
+   * Required when querying multiple collections, invalid when performing a single collection query.
    * @param {boolean} [params.similar] - When `true`, results are returned based on their similarity to the document IDs
    * specified in the **similar.document_ids** parameter.
-   * @param {string[]} [params.similar_document_ids] - A comma-separated list of document IDs that will be used to find
-   * similar documents.
+   * @param {string[]} [params.similar_document_ids] - A comma-separated list of document IDs to find similar documents.
    *
-   * **Note:** If the **natural_language_query** parameter is also specified, it will be used to expand the scope of the
-   * document similarity search to include the natural language query. Other query parameters, such as **filter** and
-   * **query** are subsequently applied and reduce the query scope.
-   * @param {string[]} [params.similar_fields] - A comma-separated list of field names that will be used as a basis for
+   * **Tip:** Include the **natural_language_query** parameter to expand the scope of the document similarity search
+   * with the natural language query. Other query parameters, such as **filter** and **query**, are subsequently applied
+   * and reduce the scope.
+   * @param {string[]} [params.similar_fields] - A comma-separated list of field names that are used as a basis for
    * comparison to identify similar documents. If not specified, the entire document is used for comparison.
+   * @param {string} [params.bias] - Field which the returned results will be biased against. The specified field must
+   * be either a **date** or **number** format. When a **date** type field is specified returned results are biased
+   * towards field values closer to the current date. When a **number** type field is specified, returned results are
+   * biased towards higher field values. This parameter cannot be used in the same query as the **sort** parameter.
    * @param {boolean} [params.logging_opt_out] - If `true`, queries are not stored in the Discovery **Logs** endpoint.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -1560,7 +1581,14 @@ class DiscoveryV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
-    const query = {
+    // these params were arrays but now need to be strings, the following code is for compatibility
+    const nonArrayParams = ['return_fields', 'sort', 'passages_fields', 'collection_ids', 'similar_document_ids'];
+    nonArrayParams.forEach(paramName => {
+      if (Array.isArray(_params[paramName])) {
+        _params[paramName] = _params[paramName].join(',');
+      }
+    });
+    const body = {
       'filter': _params.filter,
       'query': _params.query,
       'natural_language_query': _params.natural_language_query,
@@ -1576,9 +1604,11 @@ class DiscoveryV1 extends BaseService {
       'passages.characters': _params.passages_characters,
       'deduplicate': _params.deduplicate,
       'deduplicate.field': _params.deduplicate_field,
+      'collection_ids': _params.collection_ids,
       'similar': _params.similar,
       'similar.document_ids': _params.similar_document_ids,
-      'similar.fields': _params.similar_fields
+      'similar.fields': _params.similar_fields,
+      'bias': _params.bias
     };
     const path = {
       'environment_id': _params.environment_id,
@@ -1587,8 +1617,9 @@ class DiscoveryV1 extends BaseService {
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/query',
-        method: 'GET',
-        qs: query,
+        method: 'POST',
+        json: true,
+        body,
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
@@ -1672,9 +1703,8 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
-   * @param {string} [params.filter] - A cacheable query that limits the documents returned to exclude any documents
-   * that don't mention the query content. Filter searches are better for metadata type searches and when you are trying
-   * to get a sense of concepts in the data set.
+   * @param {string} [params.filter] - A cacheable query that excludes documents that don't mention the query content.
+   * Filter searches are better for metadata-type searches and for assessing the concepts in the data set.
    * @param {string} [params.query] - A query search returns all documents in your data set with full enrichments and
    * full text, but with the most relevant documents listed first. Use a query search when you want to find the most
    * relevant search results. You cannot use **natural_language_query** and **query** at the same time.
@@ -1682,37 +1712,35 @@ class DiscoveryV1 extends BaseService {
    * utilizing training data and natural language understanding. You cannot use **natural_language_query** and **query**
    * at the same time.
    * @param {boolean} [params.passages] - A passages query that returns the most relevant passages from the results.
-   * @param {string} [params.aggregation] - An aggregation search uses combinations of filters and query search to
-   * return an exact answer. Aggregations are useful for building applications, because you can use them to build lists,
-   * tables, and time series. For a full list of possible aggregrations, see the Query reference.
+   * @param {string} [params.aggregation] - An aggregation search that returns an exact answer by combining query search
+   * with filters. Useful for applications to build lists, tables, and time series. For a full list of possible
+   * aggregations, see the Query reference.
    * @param {number} [params.count] - Number of results to return.
-   * @param {string[]} [params.return_fields] - A comma separated list of the portion of the document hierarchy to
+   * @param {string[]} [params.return_fields] - A comma-separated list of the portion of the document hierarchy to
    * return.
    * @param {number} [params.offset] - The number of query results to skip at the beginning. For example, if the total
-   * number of results that are returned is 10, and the offset is 8, it returns the last two results.
-   * @param {string[]} [params.sort] - A comma separated list of fields in the document to sort on. You can optionally
+   * number of results that are returned is 10 and the offset is 8, it returns the last two results.
+   * @param {string[]} [params.sort] - A comma-separated list of fields in the document to sort on. You can optionally
    * specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the
    * default sort direction if no prefix is specified.
-   * @param {boolean} [params.highlight] - When true a highlight field is returned for each result which contains the
-   * fields that match the query with `<em></em>` tags around the matching query terms. Defaults to false.
+   * @param {boolean} [params.highlight] - When true, a highlight field is returned for each result which contains the
+   * fields which match the query with `<em></em>` tags around the matching query terms.
    * @param {string[]} [params.passages_fields] - A comma-separated list of fields that passages are drawn from. If this
    * parameter not specified, then all top-level fields are included.
    * @param {number} [params.passages_count] - The maximum number of passages to return. The search returns fewer
-   * passages if the requested total is not found. The default is `10`. The maximum is `100`.
+   * passages if the requested total is not found.
    * @param {number} [params.passages_characters] - The approximate number of characters that any one passage will have.
-   * The default is `400`. The minimum is `50`. The maximum is `2000`.
    * @param {string} [params.deduplicate_field] - When specified, duplicate results based on the field specified are
    * removed from the returned results. Duplicate comparison is limited to the current query only, **offset** is not
    * considered. This parameter is currently Beta functionality.
    * @param {boolean} [params.similar] - When `true`, results are returned based on their similarity to the document IDs
    * specified in the **similar.document_ids** parameter.
-   * @param {string[]} [params.similar_document_ids] - A comma-separated list of document IDs that will be used to find
-   * similar documents.
+   * @param {string[]} [params.similar_document_ids] - A comma-separated list of document IDs to find similar documents.
    *
-   * **Note:** If the **natural_language_query** parameter is also specified, it will be used to expand the scope of the
-   * document similarity search to include the natural language query. Other query parameters, such as **filter** and
-   * **query** are subsequently applied and reduce the query scope.
-   * @param {string[]} [params.similar_fields] - A comma-separated list of field names that will be used as a basis for
+   * **Tip:** Include the **natural_language_query** parameter to expand the scope of the document similarity search
+   * with the natural language query. Other query parameters, such as **filter** and **query**, are subsequently applied
+   * and reduce the scope.
+   * @param {string[]} [params.similar_fields] - A comma-separated list of field names that are used as a basis for
    * comparison to identify similar documents. If not specified, the entire document is used for comparison.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -1780,7 +1808,8 @@ class DiscoveryV1 extends BaseService {
    * based on that association. For example, if you wanted to query the city of London in England your query would look
    * for `London` with the context of `England`.
    * @param {string} [params.sort] - The sorting method for the relationships, can be `score` or `frequency`.
-   * `frequency` is the number of unique times each entity is identified. The default is `score`.
+   * `frequency` is the number of unique times each entity is identified. The default is `score`. This parameter cannot
+   * be used in the same query as the **bias** parameter.
    * @param {QueryRelationsFilter} [params.filter] - Filters to apply to the relationship query.
    * @param {number} [params.count] - The number of results to return. The default is `10`. The maximum is `1000`.
    * @param {number} [params.evidence_count] - The number of evidence items to return for each result. The default is
@@ -2575,16 +2604,15 @@ class DiscoveryV1 extends BaseService {
    * endpoint uses the standard Discovery query syntax for the parameters that are supported.
    *
    * @param {Object} [params] - The parameters to send to the service.
-   * @param {string} [params.filter] - A cacheable query that limits the documents returned to exclude any documents
-   * that don't mention the query content. Filter searches are better for metadata type searches and when you are trying
-   * to get a sense of concepts in the data set.
+   * @param {string} [params.filter] - A cacheable query that excludes documents that don't mention the query content.
+   * Filter searches are better for metadata-type searches and for assessing the concepts in the data set.
    * @param {string} [params.query] - A query search returns all documents in your data set with full enrichments and
    * full text, but with the most relevant documents listed first. Use a query search when you want to find the most
    * relevant search results. You cannot use **natural_language_query** and **query** at the same time.
    * @param {number} [params.count] - Number of results to return.
    * @param {number} [params.offset] - The number of query results to skip at the beginning. For example, if the total
-   * number of results that are returned is 10, and the offset is 8, it returns the last two results.
-   * @param {string[]} [params.sort] - A comma separated list of fields in the document to sort on. You can optionally
+   * number of results that are returned is 10 and the offset is 8, it returns the last two results.
+   * @param {string[]} [params.sort] - A comma-separated list of fields in the document to sort on. You can optionally
    * specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the
    * default sort direction if no prefix is specified.
    * @param {Object} [params.headers] - Custom request headers
@@ -2893,15 +2921,16 @@ namespace DiscoveryV1 {
     name: string;
     /** Description of the environment. */
     description?: string;
-    /** Size of the environment. */
+    /** Size of the environment. In the Lite plan the default and only accepted value is `LT`, in all other plans the default is `S`. */
     size?: CreateEnvironmentConstants.Size | string;
     headers?: Object;
   }
 
   /** Constants for the `createEnvironment` operation. */
   export namespace CreateEnvironmentConstants {
-     /** Size of the environment. */
+     /** Size of the environment. In the Lite plan the default and only accepted value is `LT`, in all other plans the default is `S`. */
     export enum Size {
+      LT = 'LT',
       XS = 'XS',
       S = 'S',
       MS = 'MS',
@@ -2952,7 +2981,24 @@ namespace DiscoveryV1 {
     name?: string;
     /** Description of the environment. */
     description?: string;
+    /** Size that the environment should be increased to. Environment size cannot be modified when using a Lite plan. Environment size can only increased and not decreased. */
+    size?: UpdateEnvironmentConstants.Size | string;
     headers?: Object;
+  }
+
+  /** Constants for the `updateEnvironment` operation. */
+  export namespace UpdateEnvironmentConstants {
+     /** Size that the environment should be increased to. Environment size cannot be modified when using a Lite plan. Environment size can only increased and not decreased. */
+    export enum Size {
+      S = 'S',
+      MS = 'MS',
+      M = 'M',
+      ML = 'ML',
+      L = 'L',
+      XL = 'XL',
+      XXL = 'XXL',
+      XXXL = 'XXXL',
+    }
   }
 
   /** Parameters for the `createConfiguration` operation. */
@@ -3265,44 +3311,48 @@ namespace DiscoveryV1 {
   export interface FederatedQueryParams {
     /** The ID of the environment. */
     environment_id: string;
-    /** A comma-separated list of collection IDs to be queried against. */
-    collection_ids: string[];
-    /** A cacheable query that limits the documents returned to exclude any documents that don't mention the query content. Filter searches are better for metadata type searches and when you are trying to get a sense of concepts in the data set. */
+    /** A cacheable query that excludes documents that don't mention the query content. Filter searches are better for metadata-type searches and for assessing the concepts in the data set. */
     filter?: string;
     /** A query search returns all documents in your data set with full enrichments and full text, but with the most relevant documents listed first. Use a query search when you want to find the most relevant search results. You cannot use **natural_language_query** and **query** at the same time. */
     query?: string;
     /** A natural language query that returns relevant documents by utilizing training data and natural language understanding. You cannot use **natural_language_query** and **query** at the same time. */
     natural_language_query?: string;
-    /** An aggregation search uses combinations of filters and query search to return an exact answer. Aggregations are useful for building applications, because you can use them to build lists, tables, and time series. For a full list of possible aggregrations, see the Query reference. */
+    /** A passages query that returns the most relevant passages from the results. */
+    passages?: boolean;
+    /** An aggregation search that returns an exact answer by combining query search with filters. Useful for applications to build lists, tables, and time series. For a full list of possible aggregations, see the Query reference. */
     aggregation?: string;
     /** Number of results to return. */
     count?: number;
-    /** A comma separated list of the portion of the document hierarchy to return. */
+    /** A comma-separated list of the portion of the document hierarchy to return. */
     return_fields?: string[];
-    /** The number of query results to skip at the beginning. For example, if the total number of results that are returned is 10, and the offset is 8, it returns the last two results. */
+    /** The number of query results to skip at the beginning. For example, if the total number of results that are returned is 10 and the offset is 8, it returns the last two results. */
     offset?: number;
-    /** A comma separated list of fields in the document to sort on. You can optionally specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the default sort direction if no prefix is specified. */
+    /** A comma-separated list of fields in the document to sort on. You can optionally specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the default sort direction if no prefix is specified. This parameter cannot be used in the same query as the **bias** parameter. */
     sort?: string[];
-    /** When true a highlight field is returned for each result which contains the fields that match the query with `<em></em>` tags around the matching query terms. Defaults to false. */
+    /** When true, a highlight field is returned for each result which contains the fields which match the query with `<em></em>` tags around the matching query terms. */
     highlight?: boolean;
-    /** When `true` and used with a Watson Discovery News collection, duplicate results (based on the contents of the **title** field) are removed. Duplicate comparison is limited to the current query only; **offset** is not considered. This parameter is currently Beta functionality. */
-    deduplicate?: boolean;
-    /** When specified, duplicate results based on the field specified are removed from the returned results. Duplicate comparison is limited to the current query only, **offset** is not considered. This parameter is currently Beta functionality. */
-    deduplicate_field?: string;
-    /** When `true`, results are returned based on their similarity to the document IDs specified in the **similar.document_ids** parameter. */
-    similar?: boolean;
-    /** A comma-separated list of document IDs that will be used to find similar documents. **Note:** If the **natural_language_query** parameter is also specified, it will be used to expand the scope of the document similarity search to include the natural language query. Other query parameters, such as **filter** and **query** are subsequently applied and reduce the query scope. */
-    similar_document_ids?: string[];
-    /** A comma-separated list of field names that will be used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison. */
-    similar_fields?: string[];
-    /** A passages query that returns the most relevant passages from the results. */
-    passages?: boolean;
     /** A comma-separated list of fields that passages are drawn from. If this parameter not specified, then all top-level fields are included. */
     passages_fields?: string[];
     /** The maximum number of passages to return. The search returns fewer passages if the requested total is not found. The default is `10`. The maximum is `100`. */
     passages_count?: number;
-    /** The approximate number of characters that any one passage will have. The default is `400`. The minimum is `50`. The maximum is `2000`. */
+    /** The approximate number of characters that any one passage will have. */
     passages_characters?: number;
+    /** When `true` and used with a Watson Discovery News collection, duplicate results (based on the contents of the **title** field) are removed. Duplicate comparison is limited to the current query only; **offset** is not considered. This parameter is currently Beta functionality. */
+    deduplicate?: boolean;
+    /** When specified, duplicate results based on the field specified are removed from the returned results. Duplicate comparison is limited to the current query only, **offset** is not considered. This parameter is currently Beta functionality. */
+    deduplicate_field?: string;
+    /** A comma-separated list of collection IDs to be queried against. Required when querying multiple collections, invalid when performing a single collection query. */
+    collection_ids?: string[];
+    /** When `true`, results are returned based on their similarity to the document IDs specified in the **similar.document_ids** parameter. */
+    similar?: boolean;
+    /** A comma-separated list of document IDs to find similar documents. **Tip:** Include the **natural_language_query** parameter to expand the scope of the document similarity search with the natural language query. Other query parameters, such as **filter** and **query**, are subsequently applied and reduce the scope. */
+    similar_document_ids?: string[];
+    /** A comma-separated list of field names that are used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison. */
+    similar_fields?: string[];
+    /** Field which the returned results will be biased against. The specified field must be either a **date** or **number** format. When a **date** type field is specified returned results are biased towards field values closer to the current date. When a **number** type field is specified, returned results are biased towards higher field values. This parameter cannot be used in the same query as the **sort** parameter. */
+    bias?: string;
+    /** If `true`, queries are not stored in the Discovery **Logs** endpoint. */
+    logging_opt_out?: boolean;
     headers?: Object;
   }
 
@@ -3312,31 +3362,31 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** A comma-separated list of collection IDs to be queried against. */
     collection_ids: string[];
-    /** A cacheable query that limits the documents returned to exclude any documents that don't mention the query content. Filter searches are better for metadata type searches and when you are trying to get a sense of concepts in the data set. */
+    /** A cacheable query that excludes documents that don't mention the query content. Filter searches are better for metadata-type searches and for assessing the concepts in the data set. */
     filter?: string;
     /** A query search returns all documents in your data set with full enrichments and full text, but with the most relevant documents listed first. Use a query search when you want to find the most relevant search results. You cannot use **natural_language_query** and **query** at the same time. */
     query?: string;
     /** A natural language query that returns relevant documents by utilizing training data and natural language understanding. You cannot use **natural_language_query** and **query** at the same time. */
     natural_language_query?: string;
-    /** An aggregation search uses combinations of filters and query search to return an exact answer. Aggregations are useful for building applications, because you can use them to build lists, tables, and time series. For a full list of possible aggregrations, see the Query reference. */
+    /** An aggregation search that returns an exact answer by combining query search with filters. Useful for applications to build lists, tables, and time series. For a full list of possible aggregations, see the Query reference. */
     aggregation?: string;
     /** Number of results to return. */
     count?: number;
-    /** A comma separated list of the portion of the document hierarchy to return. */
+    /** A comma-separated list of the portion of the document hierarchy to return. */
     return_fields?: string[];
-    /** The number of query results to skip at the beginning. For example, if the total number of results that are returned is 10, and the offset is 8, it returns the last two results. */
+    /** The number of query results to skip at the beginning. For example, if the total number of results that are returned is 10 and the offset is 8, it returns the last two results. */
     offset?: number;
-    /** A comma separated list of fields in the document to sort on. You can optionally specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the default sort direction if no prefix is specified. */
+    /** A comma-separated list of fields in the document to sort on. You can optionally specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the default sort direction if no prefix is specified. */
     sort?: string[];
-    /** When true a highlight field is returned for each result which contains the fields that match the query with `<em></em>` tags around the matching query terms. Defaults to false. */
+    /** When true, a highlight field is returned for each result which contains the fields which match the query with `<em></em>` tags around the matching query terms. */
     highlight?: boolean;
     /** When specified, duplicate results based on the field specified are removed from the returned results. Duplicate comparison is limited to the current query only, **offset** is not considered. This parameter is currently Beta functionality. */
     deduplicate_field?: string;
     /** When `true`, results are returned based on their similarity to the document IDs specified in the **similar.document_ids** parameter. */
     similar?: boolean;
-    /** A comma-separated list of document IDs that will be used to find similar documents. **Note:** If the **natural_language_query** parameter is also specified, it will be used to expand the scope of the document similarity search to include the natural language query. Other query parameters, such as **filter** and **query** are subsequently applied and reduce the query scope. */
+    /** A comma-separated list of document IDs to find similar documents. **Tip:** Include the **natural_language_query** parameter to expand the scope of the document similarity search with the natural language query. Other query parameters, such as **filter** and **query**, are subsequently applied and reduce the scope. */
     similar_document_ids?: string[];
-    /** A comma-separated list of field names that will be used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison. */
+    /** A comma-separated list of field names that are used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison. */
     similar_fields?: string[];
     headers?: Object;
   }
@@ -3347,7 +3397,7 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the collection. */
     collection_id: string;
-    /** A cacheable query that limits the documents returned to exclude any documents that don't mention the query content. Filter searches are better for metadata type searches and when you are trying to get a sense of concepts in the data set. */
+    /** A cacheable query that excludes documents that don't mention the query content. Filter searches are better for metadata-type searches and for assessing the concepts in the data set. */
     filter?: string;
     /** A query search returns all documents in your data set with full enrichments and full text, but with the most relevant documents listed first. Use a query search when you want to find the most relevant search results. You cannot use **natural_language_query** and **query** at the same time. */
     query?: string;
@@ -3355,34 +3405,38 @@ namespace DiscoveryV1 {
     natural_language_query?: string;
     /** A passages query that returns the most relevant passages from the results. */
     passages?: boolean;
-    /** An aggregation search uses combinations of filters and query search to return an exact answer. Aggregations are useful for building applications, because you can use them to build lists, tables, and time series. For a full list of possible aggregrations, see the Query reference. */
+    /** An aggregation search that returns an exact answer by combining query search with filters. Useful for applications to build lists, tables, and time series. For a full list of possible aggregations, see the Query reference. */
     aggregation?: string;
     /** Number of results to return. */
     count?: number;
-    /** A comma separated list of the portion of the document hierarchy to return. */
+    /** A comma-separated list of the portion of the document hierarchy to return. */
     return_fields?: string[];
-    /** The number of query results to skip at the beginning. For example, if the total number of results that are returned is 10, and the offset is 8, it returns the last two results. */
+    /** The number of query results to skip at the beginning. For example, if the total number of results that are returned is 10 and the offset is 8, it returns the last two results. */
     offset?: number;
-    /** A comma separated list of fields in the document to sort on. You can optionally specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the default sort direction if no prefix is specified. */
+    /** A comma-separated list of fields in the document to sort on. You can optionally specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the default sort direction if no prefix is specified. This parameter cannot be used in the same query as the **bias** parameter. */
     sort?: string[];
-    /** When true a highlight field is returned for each result which contains the fields that match the query with `<em></em>` tags around the matching query terms. Defaults to false. */
+    /** When true, a highlight field is returned for each result which contains the fields which match the query with `<em></em>` tags around the matching query terms. */
     highlight?: boolean;
     /** A comma-separated list of fields that passages are drawn from. If this parameter not specified, then all top-level fields are included. */
     passages_fields?: string[];
     /** The maximum number of passages to return. The search returns fewer passages if the requested total is not found. The default is `10`. The maximum is `100`. */
     passages_count?: number;
-    /** The approximate number of characters that any one passage will have. The default is `400`. The minimum is `50`. The maximum is `2000`. */
+    /** The approximate number of characters that any one passage will have. */
     passages_characters?: number;
     /** When `true` and used with a Watson Discovery News collection, duplicate results (based on the contents of the **title** field) are removed. Duplicate comparison is limited to the current query only; **offset** is not considered. This parameter is currently Beta functionality. */
     deduplicate?: boolean;
     /** When specified, duplicate results based on the field specified are removed from the returned results. Duplicate comparison is limited to the current query only, **offset** is not considered. This parameter is currently Beta functionality. */
     deduplicate_field?: string;
+    /** A comma-separated list of collection IDs to be queried against. Required when querying multiple collections, invalid when performing a single collection query. */
+    collection_ids?: string[];
     /** When `true`, results are returned based on their similarity to the document IDs specified in the **similar.document_ids** parameter. */
     similar?: boolean;
-    /** A comma-separated list of document IDs that will be used to find similar documents. **Note:** If the **natural_language_query** parameter is also specified, it will be used to expand the scope of the document similarity search to include the natural language query. Other query parameters, such as **filter** and **query** are subsequently applied and reduce the query scope. */
+    /** A comma-separated list of document IDs to find similar documents. **Tip:** Include the **natural_language_query** parameter to expand the scope of the document similarity search with the natural language query. Other query parameters, such as **filter** and **query**, are subsequently applied and reduce the scope. */
     similar_document_ids?: string[];
-    /** A comma-separated list of field names that will be used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison. */
+    /** A comma-separated list of field names that are used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison. */
     similar_fields?: string[];
+    /** Field which the returned results will be biased against. The specified field must be either a **date** or **number** format. When a **date** type field is specified returned results are biased towards field values closer to the current date. When a **number** type field is specified, returned results are biased towards higher field values. This parameter cannot be used in the same query as the **sort** parameter. */
+    bias?: string;
     /** If `true`, queries are not stored in the Discovery **Logs** endpoint. */
     logging_opt_out?: boolean;
     headers?: Object;
@@ -3413,7 +3467,7 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the collection. */
     collection_id: string;
-    /** A cacheable query that limits the documents returned to exclude any documents that don't mention the query content. Filter searches are better for metadata type searches and when you are trying to get a sense of concepts in the data set. */
+    /** A cacheable query that excludes documents that don't mention the query content. Filter searches are better for metadata-type searches and for assessing the concepts in the data set. */
     filter?: string;
     /** A query search returns all documents in your data set with full enrichments and full text, but with the most relevant documents listed first. Use a query search when you want to find the most relevant search results. You cannot use **natural_language_query** and **query** at the same time. */
     query?: string;
@@ -3421,31 +3475,31 @@ namespace DiscoveryV1 {
     natural_language_query?: string;
     /** A passages query that returns the most relevant passages from the results. */
     passages?: boolean;
-    /** An aggregation search uses combinations of filters and query search to return an exact answer. Aggregations are useful for building applications, because you can use them to build lists, tables, and time series. For a full list of possible aggregrations, see the Query reference. */
+    /** An aggregation search that returns an exact answer by combining query search with filters. Useful for applications to build lists, tables, and time series. For a full list of possible aggregations, see the Query reference. */
     aggregation?: string;
     /** Number of results to return. */
     count?: number;
-    /** A comma separated list of the portion of the document hierarchy to return. */
+    /** A comma-separated list of the portion of the document hierarchy to return. */
     return_fields?: string[];
-    /** The number of query results to skip at the beginning. For example, if the total number of results that are returned is 10, and the offset is 8, it returns the last two results. */
+    /** The number of query results to skip at the beginning. For example, if the total number of results that are returned is 10 and the offset is 8, it returns the last two results. */
     offset?: number;
-    /** A comma separated list of fields in the document to sort on. You can optionally specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the default sort direction if no prefix is specified. */
+    /** A comma-separated list of fields in the document to sort on. You can optionally specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the default sort direction if no prefix is specified. */
     sort?: string[];
-    /** When true a highlight field is returned for each result which contains the fields that match the query with `<em></em>` tags around the matching query terms. Defaults to false. */
+    /** When true, a highlight field is returned for each result which contains the fields which match the query with `<em></em>` tags around the matching query terms. */
     highlight?: boolean;
     /** A comma-separated list of fields that passages are drawn from. If this parameter not specified, then all top-level fields are included. */
     passages_fields?: string[];
-    /** The maximum number of passages to return. The search returns fewer passages if the requested total is not found. The default is `10`. The maximum is `100`. */
+    /** The maximum number of passages to return. The search returns fewer passages if the requested total is not found. */
     passages_count?: number;
-    /** The approximate number of characters that any one passage will have. The default is `400`. The minimum is `50`. The maximum is `2000`. */
+    /** The approximate number of characters that any one passage will have. */
     passages_characters?: number;
     /** When specified, duplicate results based on the field specified are removed from the returned results. Duplicate comparison is limited to the current query only, **offset** is not considered. This parameter is currently Beta functionality. */
     deduplicate_field?: string;
     /** When `true`, results are returned based on their similarity to the document IDs specified in the **similar.document_ids** parameter. */
     similar?: boolean;
-    /** A comma-separated list of document IDs that will be used to find similar documents. **Note:** If the **natural_language_query** parameter is also specified, it will be used to expand the scope of the document similarity search to include the natural language query. Other query parameters, such as **filter** and **query** are subsequently applied and reduce the query scope. */
+    /** A comma-separated list of document IDs to find similar documents. **Tip:** Include the **natural_language_query** parameter to expand the scope of the document similarity search with the natural language query. Other query parameters, such as **filter** and **query**, are subsequently applied and reduce the scope. */
     similar_document_ids?: string[];
-    /** A comma-separated list of field names that will be used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison. */
+    /** A comma-separated list of field names that are used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison. */
     similar_fields?: string[];
     headers?: Object;
   }
@@ -3460,7 +3514,7 @@ namespace DiscoveryV1 {
     entities?: QueryRelationsEntity[];
     /** Entity text to provide context for the queried entity and rank based on that association. For example, if you wanted to query the city of London in England your query would look for `London` with the context of `England`. */
     context?: QueryEntitiesContext;
-    /** The sorting method for the relationships, can be `score` or `frequency`. `frequency` is the number of unique times each entity is identified. The default is `score`. */
+    /** The sorting method for the relationships, can be `score` or `frequency`. `frequency` is the number of unique times each entity is identified. The default is `score`. This parameter cannot be used in the same query as the **bias** parameter. */
     sort?: QueryRelationsConstants.Sort | string;
     /** Filters to apply to the relationship query. */
     filter?: QueryRelationsFilter;
@@ -3473,7 +3527,7 @@ namespace DiscoveryV1 {
 
   /** Constants for the `queryRelations` operation. */
   export namespace QueryRelationsConstants {
-     /** The sorting method for the relationships, can be `score` or `frequency`. `frequency` is the number of unique times each entity is identified. The default is `score`. */
+     /** The sorting method for the relationships, can be `score` or `frequency`. `frequency` is the number of unique times each entity is identified. The default is `score`. This parameter cannot be used in the same query as the **bias** parameter. */
     export enum Sort {
       SCORE = 'score',
       FREQUENCY = 'frequency',
@@ -3707,15 +3761,15 @@ namespace DiscoveryV1 {
 
   /** Parameters for the `queryLog` operation. */
   export interface QueryLogParams {
-    /** A cacheable query that limits the documents returned to exclude any documents that don't mention the query content. Filter searches are better for metadata type searches and when you are trying to get a sense of concepts in the data set. */
+    /** A cacheable query that excludes documents that don't mention the query content. Filter searches are better for metadata-type searches and for assessing the concepts in the data set. */
     filter?: string;
     /** A query search returns all documents in your data set with full enrichments and full text, but with the most relevant documents listed first. Use a query search when you want to find the most relevant search results. You cannot use **natural_language_query** and **query** at the same time. */
     query?: string;
     /** Number of results to return. */
     count?: number;
-    /** The number of query results to skip at the beginning. For example, if the total number of results that are returned is 10, and the offset is 8, it returns the last two results. */
+    /** The number of query results to skip at the beginning. For example, if the total number of results that are returned is 10 and the offset is 8, it returns the last two results. */
     offset?: number;
-    /** A comma separated list of fields in the document to sort on. You can optionally specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the default sort direction if no prefix is specified. */
+    /** A comma-separated list of fields in the document to sort on. You can optionally specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the default sort direction if no prefix is specified. */
     sort?: string[];
     headers?: Object;
   }
@@ -4081,14 +4135,18 @@ namespace DiscoveryV1 {
     created?: string;
     /** Date of most recent environment update, in the format `yyyy-MM-dd'T'HH:mm:ss.SSS'Z'`. */
     updated?: string;
-    /** Status of the environment. */
+    /** Current status of the environment. `resizing` is displayed when a request to increase the environment size has been made, but is still in the process of being completed. */
     status?: string;
     /** If `true`, the environment contains read-only collections that are maintained by IBM. */
     read_only?: boolean;
-    /** Size of the environment. */
+    /** Current size of the environment. */
     size?: string;
+    /** The new size requested for this environment. Only returned when the environment *status* is `resizing`. *Note:* Querying and indexing can still be performed during an environment upsize. */
+    requested_size?: string;
     /** Details about the resource usage and capacity of the environment. */
     index_capacity?: IndexCapacity;
+    /** Information about Continuous Relevancy Training for this environment. */
+    search_status?: SearchStatus;
   }
 
   /** Summary of the document usage statistics for the environment. */
@@ -4639,6 +4697,18 @@ namespace DiscoveryV1 {
     score?: number;
     /** The confidence score for the given result. Calculated based on how relevant the result is estimated to be, compared to a trained relevancy model. confidence can range from `0.0` to `1.0`. The higher the number, the more relevant the document. */
     confidence?: number;
+  }
+
+  /** Information about the Continuous Relevancy Training for this environment. */
+  export interface SearchStatus {
+    /** Current scope of the training. Always returned as `environment`. */
+    scope?: string;
+    /** The current status of Continuous Relevancy Training for this environment. */
+    status?: string;
+    /** Long description of the current Continuous Relevancy Training status. */
+    status_description?: string;
+    /** The date stamp of the most recent completed training for this environment. */
+    last_trained?: string;
   }
 
   /** A list of Document Segmentation settings. */
