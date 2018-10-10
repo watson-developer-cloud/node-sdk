@@ -90,7 +90,9 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.queryparams.html#aggregation" class="tsd-kind-icon">aggregation</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.queryparams.html#bias" class="tsd-kind-icon">bias</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.queryparams.html#collection_id" class="tsd-kind-icon">collection_<wbr>id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.queryparams.html#collection_ids" class="tsd-kind-icon">collection_<wbr>ids</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.queryparams.html#count" class="tsd-kind-icon">count</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.queryparams.html#deduplicate" class="tsd-kind-icon">deduplicate</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.queryparams.html#deduplicate_field" class="tsd-kind-icon">deduplicate_<wbr>field</a></li>
@@ -124,12 +126,27 @@
 					<div class="tsd-signature tsd-kind-icon">aggregation<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/discovery/v1-generated.ts#L3359">discovery/v1-generated.ts:3359</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/discovery/v1-generated.ts#L3409">discovery/v1-generated.ts:3409</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>An aggregation search uses combinations of filters and query search to return an exact answer. Aggregations are useful for building applications, because you can use them to build lists, tables, and time series. For a full list of possible aggregrations, see the Query reference.</p>
+							<p>An aggregation search that returns an exact answer by combining query search with filters. Useful for applications to build lists, tables, and time series. For a full list of possible aggregations, see the Query reference.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="bias" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> bias</h3>
+					<div class="tsd-signature tsd-kind-icon">bias<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/discovery/v1-generated.ts#L3439">discovery/v1-generated.ts:3439</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Field which the returned results will be biased against. The specified field must be either a <strong>date</strong> or <strong>number</strong> format. When a <strong>date</strong> type field is specified returned results are biased towards field values closer to the current date. When a <strong>number</strong> type field is specified, returned results are biased towards higher field values. This parameter cannot be used in the same query as the <strong>sort</strong> parameter.</p>
 						</div>
 					</div>
 				</section>
@@ -139,7 +156,7 @@
 					<div class="tsd-signature tsd-kind-icon">collection_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/discovery/v1-generated.ts#L3349">discovery/v1-generated.ts:3349</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/discovery/v1-generated.ts#L3399">discovery/v1-generated.ts:3399</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -149,12 +166,27 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="collection_ids" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> collection_<wbr>ids</h3>
+					<div class="tsd-signature tsd-kind-icon">collection_<wbr>ids<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/discovery/v1-generated.ts#L3431">discovery/v1-generated.ts:3431</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A comma-separated list of collection IDs to be queried against. Required when querying multiple collections, invalid when performing a single collection query.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="count" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> count</h3>
 					<div class="tsd-signature tsd-kind-icon">count<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/discovery/v1-generated.ts#L3361">discovery/v1-generated.ts:3361</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/discovery/v1-generated.ts#L3411">discovery/v1-generated.ts:3411</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -169,7 +201,7 @@
 					<div class="tsd-signature tsd-kind-icon">deduplicate<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/discovery/v1-generated.ts#L3377">discovery/v1-generated.ts:3377</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/discovery/v1-generated.ts#L3427">discovery/v1-generated.ts:3427</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -184,7 +216,7 @@
 					<div class="tsd-signature tsd-kind-icon">deduplicate_<wbr>field<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/discovery/v1-generated.ts#L3379">discovery/v1-generated.ts:3379</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/discovery/v1-generated.ts#L3429">discovery/v1-generated.ts:3429</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -199,7 +231,7 @@
 					<div class="tsd-signature tsd-kind-icon">environment_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/discovery/v1-generated.ts#L3347">discovery/v1-generated.ts:3347</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/discovery/v1-generated.ts#L3397">discovery/v1-generated.ts:3397</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -214,12 +246,12 @@
 					<div class="tsd-signature tsd-kind-icon">filter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/discovery/v1-generated.ts#L3351">discovery/v1-generated.ts:3351</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/discovery/v1-generated.ts#L3401">discovery/v1-generated.ts:3401</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>A cacheable query that limits the documents returned to exclude any documents that don&#39;t mention the query content. Filter searches are better for metadata type searches and when you are trying to get a sense of concepts in the data set.</p>
+							<p>A cacheable query that excludes documents that don&#39;t mention the query content. Filter searches are better for metadata-type searches and for assessing the concepts in the data set.</p>
 						</div>
 					</div>
 				</section>
@@ -229,7 +261,7 @@
 					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/discovery/v1-generated.ts#L3388">discovery/v1-generated.ts:3388</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/discovery/v1-generated.ts#L3442">discovery/v1-generated.ts:3442</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -239,12 +271,12 @@
 					<div class="tsd-signature tsd-kind-icon">highlight<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/discovery/v1-generated.ts#L3369">discovery/v1-generated.ts:3369</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/discovery/v1-generated.ts#L3419">discovery/v1-generated.ts:3419</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>When true a highlight field is returned for each result which contains the fields that match the query with <code>&lt;em&gt;&lt;/em&gt;</code> tags around the matching query terms. Defaults to false.</p>
+							<p>When true, a highlight field is returned for each result which contains the fields which match the query with <code>&lt;em&gt;&lt;/em&gt;</code> tags around the matching query terms.</p>
 						</div>
 					</div>
 				</section>
@@ -254,7 +286,7 @@
 					<div class="tsd-signature tsd-kind-icon">logging_<wbr>opt_<wbr>out<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/discovery/v1-generated.ts#L3387">discovery/v1-generated.ts:3387</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/discovery/v1-generated.ts#L3441">discovery/v1-generated.ts:3441</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -269,7 +301,7 @@
 					<div class="tsd-signature tsd-kind-icon">natural_<wbr>language_<wbr>query<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/discovery/v1-generated.ts#L3355">discovery/v1-generated.ts:3355</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/discovery/v1-generated.ts#L3405">discovery/v1-generated.ts:3405</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -284,12 +316,12 @@
 					<div class="tsd-signature tsd-kind-icon">offset<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/discovery/v1-generated.ts#L3365">discovery/v1-generated.ts:3365</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/discovery/v1-generated.ts#L3415">discovery/v1-generated.ts:3415</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The number of query results to skip at the beginning. For example, if the total number of results that are returned is 10, and the offset is 8, it returns the last two results.</p>
+							<p>The number of query results to skip at the beginning. For example, if the total number of results that are returned is 10 and the offset is 8, it returns the last two results.</p>
 						</div>
 					</div>
 				</section>
@@ -299,7 +331,7 @@
 					<div class="tsd-signature tsd-kind-icon">passages<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/discovery/v1-generated.ts#L3357">discovery/v1-generated.ts:3357</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/discovery/v1-generated.ts#L3407">discovery/v1-generated.ts:3407</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -314,12 +346,12 @@
 					<div class="tsd-signature tsd-kind-icon">passages_<wbr>characters<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/discovery/v1-generated.ts#L3375">discovery/v1-generated.ts:3375</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/discovery/v1-generated.ts#L3425">discovery/v1-generated.ts:3425</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The approximate number of characters that any one passage will have. The default is <code>400</code>. The minimum is <code>50</code>. The maximum is <code>2000</code>.</p>
+							<p>The approximate number of characters that any one passage will have.</p>
 						</div>
 					</div>
 				</section>
@@ -329,7 +361,7 @@
 					<div class="tsd-signature tsd-kind-icon">passages_<wbr>count<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/discovery/v1-generated.ts#L3373">discovery/v1-generated.ts:3373</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/discovery/v1-generated.ts#L3423">discovery/v1-generated.ts:3423</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -344,7 +376,7 @@
 					<div class="tsd-signature tsd-kind-icon">passages_<wbr>fields<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/discovery/v1-generated.ts#L3371">discovery/v1-generated.ts:3371</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/discovery/v1-generated.ts#L3421">discovery/v1-generated.ts:3421</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -359,7 +391,7 @@
 					<div class="tsd-signature tsd-kind-icon">query<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/discovery/v1-generated.ts#L3353">discovery/v1-generated.ts:3353</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/discovery/v1-generated.ts#L3403">discovery/v1-generated.ts:3403</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -374,12 +406,12 @@
 					<div class="tsd-signature tsd-kind-icon">return_<wbr>fields<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/discovery/v1-generated.ts#L3363">discovery/v1-generated.ts:3363</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/discovery/v1-generated.ts#L3413">discovery/v1-generated.ts:3413</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>A comma separated list of the portion of the document hierarchy to return.</p>
+							<p>A comma-separated list of the portion of the document hierarchy to return.</p>
 						</div>
 					</div>
 				</section>
@@ -389,7 +421,7 @@
 					<div class="tsd-signature tsd-kind-icon">similar<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/discovery/v1-generated.ts#L3381">discovery/v1-generated.ts:3381</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/discovery/v1-generated.ts#L3433">discovery/v1-generated.ts:3433</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -404,12 +436,12 @@
 					<div class="tsd-signature tsd-kind-icon">similar_<wbr>document_<wbr>ids<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/discovery/v1-generated.ts#L3383">discovery/v1-generated.ts:3383</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/discovery/v1-generated.ts#L3435">discovery/v1-generated.ts:3435</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>A comma-separated list of document IDs that will be used to find similar documents. <strong>Note:</strong> If the <strong>natural_language_query</strong> parameter is also specified, it will be used to expand the scope of the document similarity search to include the natural language query. Other query parameters, such as <strong>filter</strong> and <strong>query</strong> are subsequently applied and reduce the query scope.</p>
+							<p>A comma-separated list of document IDs to find similar documents. <strong>Tip:</strong> Include the <strong>natural_language_query</strong> parameter to expand the scope of the document similarity search with the natural language query. Other query parameters, such as <strong>filter</strong> and <strong>query</strong>, are subsequently applied and reduce the scope.</p>
 						</div>
 					</div>
 				</section>
@@ -419,12 +451,12 @@
 					<div class="tsd-signature tsd-kind-icon">similar_<wbr>fields<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/discovery/v1-generated.ts#L3385">discovery/v1-generated.ts:3385</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/discovery/v1-generated.ts#L3437">discovery/v1-generated.ts:3437</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>A comma-separated list of field names that will be used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison.</p>
+							<p>A comma-separated list of field names that are used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison.</p>
 						</div>
 					</div>
 				</section>
@@ -434,12 +466,12 @@
 					<div class="tsd-signature tsd-kind-icon">sort<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/discovery/v1-generated.ts#L3367">discovery/v1-generated.ts:3367</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/discovery/v1-generated.ts#L3417">discovery/v1-generated.ts:3417</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>A comma separated list of fields in the document to sort on. You can optionally specify a sort direction by prefixing the field with <code>-</code> for descending or <code>+</code> for ascending. Ascending is the default sort direction if no prefix is specified.</p>
+							<p>A comma-separated list of fields in the document to sort on. You can optionally specify a sort direction by prefixing the field with <code>-</code> for descending or <code>+</code> for ascending. Ascending is the default sort direction if no prefix is specified. This parameter cannot be used in the same query as the <strong>bias</strong> parameter.</p>
 						</div>
 					</div>
 				</section>
@@ -482,7 +514,13 @@
 										<a href="discoveryv1.queryparams.html#aggregation" class="tsd-kind-icon">aggregation</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="discoveryv1.queryparams.html#bias" class="tsd-kind-icon">bias</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="discoveryv1.queryparams.html#collection_id" class="tsd-kind-icon">collection_<wbr>id</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="discoveryv1.queryparams.html#collection_ids" class="tsd-kind-icon">collection_<wbr>ids</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="discoveryv1.queryparams.html#count" class="tsd-kind-icon">count</a>

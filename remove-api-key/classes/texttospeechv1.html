@@ -67,7 +67,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<h3 id="service-overview-the-ibm-text-to-speech-service-provides-an-api-that-uses-ibm-s-speech-synthesis-capabilities-to-synthesize-text-into-natural-sounding-speech-in-a-variety-of-languages-dialects-and-voices-the-service-supports-at-least-one-male-or-female-voice-sometimes-both-for-each-language-the-audio-is-streamed-back-to-the-client-with-minimal-delay-for-more-information-about-the-service-see-the-ibm-cloud-documentation-api-usage-guidelines-audio-formats-the-service-can-produce-audio-in-many-formats-mime-types-see-specifying-an-audio-format-ssml-many-methods-refer-to-the-speech-synthesis-markup-language-ssml-ssml-is-an-xml-based-markup-language-that-provides-text-annotation-for-speech-synthesis-applications-see-using-ssml-and-using-ibm-spr-word-translations-many-customization-methods-accept-sounds-like-or-phonetic-translations-for-words-phonetic-translations-are-based-on-the-ssml-phoneme-format-for-representing-a-word-you-can-specify-them-in-standard-international-phonetic-alphabet-ipa-representation-phoneme-alphabet-ipa-ph-t-m-to-phoneme-or-in-the-proprietary-ibm-symbolic-phonetic-representation-spr-phoneme-alphabet-ibm-ph-1gastroentxryfxs-phoneme-see-understanding-customization-websocket-interface-the-service-also-offers-a-websocket-interface-for-speech-synthesis-the-websocket-interface-supports-both-plain-text-and-ssml-input-including-the-ssml-mark-element-and-word-timings-see-the-websocket-interface-customization-ids-many-methods-accept-a-customization-id-which-is-a-globally-unique-identifier-guid-customization-ids-are-hexadecimal-strings-that-have-the-format-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx-x-watson-learning-opt-out-by-default-all-watson-services-log-requests-and-their-results-logging-is-done-only-to-improve-the-services-for-future-users-the-logged-data-is-not-shared-or-made-public-to-prevent-ibm-from-accessing-your-data-for-general-service-improvements-set-the-x-watson-learning-opt-out-request-header-to-true-for-all-requests-you-must-set-the-header-on-each-request-that-you-do-not-want-ibm-to-access-for-general-service-improvements-methods-of-the-customization-interface-do-not-log-words-and-translations-that-you-use-to-build-custom-voice-models-your-training-data-is-never-used-to-improve-the-service-s-base-models-however-the-service-does-log-such-data-when-a-custom-model-is-used-with-a-synthesize-request-you-must-set-the-x-watson-learning-opt-out-request-header-to-true-to-prevent-ibm-from-accessing-the-data-to-improve-the-service-x-watson-metadata-this-header-allows-you-to-associate-a-customer-id-with-data-that-is-passed-with-a-request-if-necessary-you-can-use-the-delete-labeled-data-method-to-delete-the-data-for-a-customer-id-see-information-security-">Service Overview The IBM&reg; Text to Speech service provides an API that uses IBM&#39;s speech-synthesis capabilities to synthesize text into natural-sounding speech in a variety of languages, dialects, and voices. The service supports at least one male or female voice, sometimes both, for each language. The audio is streamed back to the client with minimal delay. For more information about the service, see the <a href="https://console.bluemix.net/docs/services/text-to-speech/index.html">IBM&reg; Cloud documentation</a>.  ### API usage guidelines <em> <strong>Audio formats:</strong> The service can produce audio in many formats (MIME types). See <a href="https://console.bluemix.net/docs/services/text-to-speech/http.html#format">Specifying an audio format</a>. </em> <strong>SSML:</strong> Many methods refer to the Speech Synthesis Markup Language (SSML). SSML is an XML-based markup language that provides text annotation for speech-synthesis applications. See <a href="https://console.bluemix.net/docs/services/text-to-speech/SSML.html">Using SSML</a> and <a href="https://console.bluemix.net/docs/services/text-to-speech/SPRs.html">Using IBM SPR</a>. <em> <strong>Word translations:</strong> Many customization methods accept sounds-like or phonetic translations for words. Phonetic translations are based on the SSML phoneme format for representing a word. You can specify them in standard International Phonetic Alphabet (IPA) representation    &lt;phoneme alphabet=\&quot;ipa\&quot; ph=\&quot;t&#601;m&#712;&#593;to\&quot;&gt;&lt;/phoneme&gt;    or in the proprietary IBM Symbolic Phonetic Representation (SPR)    &lt;phoneme alphabet=\&quot;ibm\&quot; ph=\&quot;1gAstroEntxrYFXs\&quot;&gt;&lt;/phoneme&gt;    See <a href="https://console.bluemix.net/docs/services/text-to-speech/custom-intro.html">Understanding customization</a>. </em> <strong>WebSocket interface:</strong> The service also offers a WebSocket interface for speech synthesis. The WebSocket interface supports both plain text and SSML input, including the SSML &lt;mark&gt; element and word timings. See <a href="https://console.bluemix.net/docs/services/text-to-speech/websockets.html">The WebSocket interface</a>. <em> <strong>Customization IDs:</strong> Many methods accept a customization ID, which is a Globally Unique Identifier (GUID). Customization IDs are hexadecimal strings that have the format <code>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</code>. </em> <strong><code>X-Watson-Learning-Opt-Out</code>:</strong> By default, all Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. To prevent IBM from accessing your data for general service improvements, set the <code>X-Watson-Learning-Opt-Out</code> request header to <code>true</code> for all requests. You must set the header on each request that you do not want IBM to access for general service improvements.    Methods of the customization interface do not log words and translations that you use to build custom voice models. Your training data is never used to improve the service&#39;s base models. However, the service does log such data when a custom model is used with a synthesize request. You must set the <code>X-Watson-Learning-Opt-Out</code> request header to <code>true</code> to prevent IBM from accessing the data to improve the service. * <strong><code>X-Watson-Metadata</code>:</strong> This header allows you to associate a customer ID with data that is passed with a request. If necessary, you can use the <strong>Delete labeled data</strong> method to delete the data for a customer ID. See <a href="https://console.bluemix.net/docs/services/text-to-speech/information-security.html">Information security</a>.</h3>
+						<h3 id="service-overview-the-ibm-text-to-speech-service-provides-an-api-that-uses-ibm-s-speech-synthesis-capabilities-to-synthesize-text-into-natural-sounding-speech-in-a-variety-of-languages-dialects-and-voices-the-service-supports-at-least-one-male-or-female-voice-sometimes-both-for-each-language-the-audio-is-streamed-back-to-the-client-with-minimal-delay-for-more-information-about-the-service-see-the-ibm-cloud-documentation-api-usage-guidelines-audio-formats-the-service-can-produce-audio-in-many-formats-mime-types-see-specifying-an-audio-format-ssml-many-methods-refer-to-the-speech-synthesis-markup-language-ssml-ssml-is-an-xml-based-markup-language-that-provides-text-annotation-for-speech-synthesis-applications-see-using-ssml-and-using-ibm-spr-word-translations-many-customization-methods-accept-sounds-like-or-phonetic-translations-for-words-phonetic-translations-are-based-on-the-ssml-phoneme-format-for-representing-a-word-you-can-specify-them-in-standard-international-phonetic-alphabet-ipa-representation-code-phoneme-alphabet-ipa-ph-t-m-to-phoneme-code-or-in-the-proprietary-ibm-symbolic-phonetic-representation-spr-code-phoneme-alphabet-ibm-ph-1gastroentxryfxs-phoneme-code-see-understanding-customization-websocket-interface-the-service-also-offers-a-websocket-interface-for-speech-synthesis-the-websocket-interface-supports-both-plain-text-and-ssml-input-including-the-ssml-mark-element-and-word-timings-see-the-websocket-interface-customization-ids-many-methods-accept-a-customization-id-which-is-a-globally-unique-identifier-guid-customization-ids-are-hexadecimal-strings-that-have-the-format-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx-x-watson-learning-opt-out-by-default-all-watson-services-log-requests-and-their-results-logging-is-done-only-to-improve-the-services-for-future-users-the-logged-data-is-not-shared-or-made-public-to-prevent-ibm-from-accessing-your-data-for-general-service-improvements-set-the-x-watson-learning-opt-out-request-header-to-true-for-all-requests-you-must-set-the-header-on-each-request-that-you-do-not-want-ibm-to-access-for-general-service-improvements-methods-of-the-customization-interface-do-not-log-words-and-translations-that-you-use-to-build-custom-voice-models-your-training-data-is-never-used-to-improve-the-service-s-base-models-however-the-service-does-log-such-data-when-a-custom-model-is-used-with-a-synthesize-request-you-must-set-the-x-watson-learning-opt-out-request-header-to-true-to-prevent-ibm-from-accessing-the-data-to-improve-the-service-x-watson-metadata-this-header-allows-you-to-associate-a-customer-id-with-data-that-is-passed-with-a-request-if-necessary-you-can-use-the-delete-labeled-data-method-to-delete-the-data-for-a-customer-id-see-information-security-">Service Overview The IBM&reg; Text to Speech service provides an API that uses IBM&#39;s speech-synthesis capabilities to synthesize text into natural-sounding speech in a variety of languages, dialects, and voices. The service supports at least one male or female voice, sometimes both, for each language. The audio is streamed back to the client with minimal delay. For more information about the service, see the <a href="https://console.bluemix.net/docs/services/text-to-speech/index.html">IBM&reg; Cloud documentation</a>.  ### API usage guidelines <em> <strong>Audio formats:</strong> The service can produce audio in many formats (MIME types). See <a href="https://console.bluemix.net/docs/services/text-to-speech/http.html#format">Specifying an audio format</a>. </em> <strong>SSML:</strong> Many methods refer to the Speech Synthesis Markup Language (SSML). SSML is an XML-based markup language that provides text annotation for speech-synthesis applications. See <a href="https://console.bluemix.net/docs/services/text-to-speech/SSML.html">Using SSML</a> and <a href="https://console.bluemix.net/docs/services/text-to-speech/SPRs.html">Using IBM SPR</a>. <em> <strong>Word translations:</strong> Many customization methods accept sounds-like or phonetic translations for words. Phonetic translations are based on the SSML phoneme format for representing a word. You can specify them in standard International Phonetic Alphabet (IPA) representation    <code>&lt;phoneme alphabet=\&quot;ipa\&quot; ph=\&quot;t&#601;m&#712;&#593;to\&quot;&gt;&lt;/phoneme&gt;</code>    or in the proprietary IBM Symbolic Phonetic Representation (SPR)    <code>&lt;phoneme alphabet=\&quot;ibm\&quot; ph=\&quot;1gAstroEntxrYFXs\&quot;&gt;&lt;/phoneme&gt;</code>    See <a href="https://console.bluemix.net/docs/services/text-to-speech/custom-intro.html">Understanding customization</a>. </em> <strong>WebSocket interface:</strong> The service also offers a WebSocket interface for speech synthesis. The WebSocket interface supports both plain text and SSML input, including the SSML &lt;mark&gt; element and word timings. See <a href="https://console.bluemix.net/docs/services/text-to-speech/websockets.html">The WebSocket interface</a>. <em> <strong>Customization IDs:</strong> Many methods accept a customization ID, which is a Globally Unique Identifier (GUID). Customization IDs are hexadecimal strings that have the format <code>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</code>. </em> <strong><code>X-Watson-Learning-Opt-Out</code>:</strong> By default, all Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. To prevent IBM from accessing your data for general service improvements, set the <code>X-Watson-Learning-Opt-Out</code> request header to <code>true</code> for all requests. You must set the header on each request that you do not want IBM to access for general service improvements.    Methods of the customization interface do not log words and translations that you use to build custom voice models. Your training data is never used to improve the service&#39;s base models. However, the service does log such data when a custom model is used with a synthesize request. You must set the <code>X-Watson-Learning-Opt-Out</code> request header to <code>true</code> to prevent IBM from accessing the data to improve the service. * <strong><code>X-Watson-Metadata</code>:</strong> This header allows you to associate a customer ID with data that is passed with a request. If necessary, you can use the <strong>Delete labeled data</strong> method to delete the data for a customer ID. See <a href="https://console.bluemix.net/docs/services/text-to-speech/information-security.html">Information security</a>.</h3>
 						<p>interfaces</p>
 					</div>
 				</div>
@@ -189,7 +189,7 @@
 					<div class="tsd-signature tsd-kind-icon">Callback<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/text-to-speech/v1-generated.ts#L805">text-to-speech/v1-generated.ts:805</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/text-to-speech/v1-generated.ts#L851">text-to-speech/v1-generated.ts:851</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -231,7 +231,7 @@
 					<div class="tsd-signature tsd-kind-icon">Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/text-to-speech/v1-generated.ts#L793">text-to-speech/v1-generated.ts:793</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/text-to-speech/v1-generated.ts#L839">text-to-speech/v1-generated.ts:839</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -283,7 +283,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides BaseService.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/text-to-speech/v1-generated.ts#L31">text-to-speech/v1-generated.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/text-to-speech/v1-generated.ts#L31">text-to-speech/v1-generated.ts:31</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -320,7 +320,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseService._options</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/lib/base_service.ts#L92">lib/base_service.ts:92</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/lib/base_service.ts#L92">lib/base_service.ts:92</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -331,7 +331,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.name</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/text-to-speech/v1-generated.ts#L30">text-to-speech/v1-generated.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/text-to-speech/v1-generated.ts#L30">text-to-speech/v1-generated.ts:30</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -342,7 +342,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseService.serviceDefaults</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/lib/base_service.ts#L93">lib/base_service.ts:93</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/lib/base_service.ts#L93">lib/base_service.ts:93</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -353,7 +353,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.serviceVersion</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/text-to-speech/v1-generated.ts#L31">text-to-speech/v1-generated.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/text-to-speech/v1-generated.ts#L31">text-to-speech/v1-generated.ts:31</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -364,7 +364,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseService.tokenManager</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/lib/base_service.ts#L94">lib/base_service.ts:94</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/lib/base_service.ts#L94">lib/base_service.ts:94</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -375,7 +375,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.URL</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/text-to-speech/v1-generated.ts#L29">text-to-speech/v1-generated.ts:29</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/text-to-speech/v1-generated.ts#L29">text-to-speech/v1-generated.ts:29</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -392,7 +392,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/text-to-speech/v1-generated.ts#L518">text-to-speech/v1-generated.ts:518</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/text-to-speech/v1-generated.ts#L547">text-to-speech/v1-generated.ts:547</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -404,6 +404,13 @@
 									more than 20,000 entries. You must use credentials for the instance of the service that owns a model to add a word
 								to it.</p>
 								<p><strong>Note:</strong> This method is currently a beta release.</p>
+								<p><strong>See also:</strong></p>
+								<ul>
+									<li><a href="https://console.bluemix.net/docs/services/text-to-speech/custom-entries.html#cuWordAdd">Adding a single word to a custom
+									model</a></li>
+									<li><a href="https://console.bluemix.net/docs/services/text-to-speech/custom-entries.html#cuJapaneseAdd">Adding words to a Japanese custom
+									model</a>.</li>
+								</ul>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -434,7 +441,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/text-to-speech/v1-generated.ts#L574">text-to-speech/v1-generated.ts:574</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/text-to-speech/v1-generated.ts#L609">text-to-speech/v1-generated.ts:609</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -446,6 +453,13 @@
 									no more than 20,000 entries. You must use credentials for the instance of the service that owns a model to add
 								words to it.</p>
 								<p><strong>Note:</strong> This method is currently a beta release.</p>
+								<p><strong>See also:</strong></p>
+								<ul>
+									<li><a href="https://console.bluemix.net/docs/services/text-to-speech/custom-entries.html#cuWordsAdd">Adding multiple words to a custom
+									model</a></li>
+									<li><a href="https://console.bluemix.net/docs/services/text-to-speech/custom-entries.html#cuJapaneseAdd">Adding words to a Japanese custom
+									model</a>.</li>
+								</ul>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -477,7 +491,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.createRequest</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/lib/base_service.ts#L234">lib/base_service.ts:234</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/lib/base_service.ts#L234">lib/base_service.ts:234</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -516,7 +530,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/text-to-speech/v1-generated.ts#L281">text-to-speech/v1-generated.ts:281</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/text-to-speech/v1-generated.ts#L292">text-to-speech/v1-generated.ts:292</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -527,6 +541,8 @@
 									specify the language and a description for the new model. The model is owned by the instance of the service whose
 								credentials are used to create it.</p>
 								<p><strong>Note:</strong> This method is currently a beta release.</p>
+								<p><strong>See also:</strong> <a href="https://console.bluemix.net/docs/services/text-to-speech/custom-models.html#cuModelsCreate">Creating a custom
+								model</a>.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -557,7 +573,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/text-to-speech/v1-generated.ts#L756">text-to-speech/v1-generated.ts:756</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/text-to-speech/v1-generated.ts#L802">text-to-speech/v1-generated.ts:802</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -569,7 +585,8 @@
 									the customer ID. You must issue the request with credentials for the same instance of the service that was used to
 								associate the customer ID with the data.</p>
 								<p>You associate a customer ID with data by passing the <code>X-Watson-Metadata</code> header with a request that passes the
-									data. For more information about customer IDs and about using this method, see <a href="https://console.bluemix.net/docs/services/text-to-speech/information-security.html">Information
+								data.</p>
+								<p><strong>See also:</strong> <a href="https://console.bluemix.net/docs/services/text-to-speech/information-security.html">Information
 								security</a>.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -601,7 +618,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/text-to-speech/v1-generated.ts#L326">text-to-speech/v1-generated.ts:326</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/text-to-speech/v1-generated.ts#L340">text-to-speech/v1-generated.ts:340</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -611,6 +628,8 @@
 								<p>Deletes the specified custom voice model. You must use credentials for the instance of the service that owns a
 								model to delete it.</p>
 								<p><strong>Note:</strong> This method is currently a beta release.</p>
+								<p><strong>See also:</strong> <a href="https://console.bluemix.net/docs/services/text-to-speech/custom-models.html#cuModelsDelete">Deleting a custom
+								model</a>.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -641,7 +660,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/text-to-speech/v1-generated.ts#L622">text-to-speech/v1-generated.ts:622</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/text-to-speech/v1-generated.ts#L660">text-to-speech/v1-generated.ts:660</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -651,6 +670,8 @@
 								<p>Deletes a single word from the specified custom voice model. You must use credentials for the instance of the
 								service that owns a model to delete its words.</p>
 								<p><strong>Note:</strong> This method is currently a beta release.</p>
+								<p><strong>See also:</strong> <a href="https://console.bluemix.net/docs/services/text-to-speech/custom-entries.html#cuWordDelete">Deleting a word from a custom
+								model</a>.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -682,7 +703,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.getCredentials</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/lib/base_service.ts#L158">lib/base_service.ts:158</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/lib/base_service.ts#L158">lib/base_service.ts:158</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -705,7 +726,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/text-to-speech/v1-generated.ts#L229">text-to-speech/v1-generated.ts:229</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/text-to-speech/v1-generated.ts#L237">text-to-speech/v1-generated.ts:237</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -716,6 +737,8 @@
 									You can also request the pronunciation for a specific voice to see the default translation for the language of that
 								voice or for a specific custom voice model to see the translation for that voice model.</p>
 								<p><strong>Note:</strong> This method is currently a beta release.</p>
+								<p><strong>See also:</strong> <a href="https://console.bluemix.net/docs/services/text-to-speech/custom-entries.html#cuWordsQueryLanguage">Querying a word from a
+								language</a>.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -746,7 +769,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/text-to-speech/v1-generated.ts#L74">text-to-speech/v1-generated.ts:74</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/text-to-speech/v1-generated.ts#L76">text-to-speech/v1-generated.ts:76</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -756,6 +779,7 @@
 								<p>Gets information about the specified voice. The information includes the name, language, gender, and other details
 									about the voice. Specify a customization ID to obtain information for that custom voice model of the specified
 								voice. To list information about all available voices, use the <strong>List voices</strong> method.</p>
+								<p><strong>See also:</strong> <a href="https://console.bluemix.net/docs/services/text-to-speech/http.html#voices">Specifying a voice</a>.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -786,7 +810,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/text-to-speech/v1-generated.ts#L367">text-to-speech/v1-generated.ts:367</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/text-to-speech/v1-generated.ts#L384">text-to-speech/v1-generated.ts:384</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -797,6 +821,8 @@
 									of the voice model, the output includes the words and their translations as defined in the model. To see just the
 								metadata for a voice model, use the <strong>List custom models</strong> method.</p>
 								<p><strong>Note:</strong> This method is currently a beta release.</p>
+								<p><strong>See also:</strong> <a href="https://console.bluemix.net/docs/services/text-to-speech/custom-models.html#cuModelsQuery">Querying a custom
+								model</a>.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -827,7 +853,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/text-to-speech/v1-generated.ts#L665">text-to-speech/v1-generated.ts:665</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/text-to-speech/v1-generated.ts#L706">text-to-speech/v1-generated.ts:706</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -837,6 +863,8 @@
 								<p>Gets the translation for a single word from the specified custom model. The output shows the translation as it is
 								defined in the model. You must use credentials for the instance of the service that owns a model to list its words.</p>
 								<p><strong>Note:</strong> This method is currently a beta release.</p>
+								<p><strong>See also:</strong> <a href="https://console.bluemix.net/docs/services/text-to-speech/custom-entries.html#cuWordQueryModel">Querying a single word from a custom
+								model</a>.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -867,7 +895,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/text-to-speech/v1-generated.ts#L411">text-to-speech/v1-generated.ts:411</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/text-to-speech/v1-generated.ts#L431">text-to-speech/v1-generated.ts:431</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -879,6 +907,8 @@
 									metadata for a specific voice model, use the <strong>List a custom model</strong> method. You must use credentials for the
 								instance of the service that owns a model to list information about it.</p>
 								<p><strong>Note:</strong> This method is currently a beta release.</p>
+								<p><strong>See also:</strong> <a href="https://console.bluemix.net/docs/services/text-to-speech/custom-models.html#cuModelsQueryAll">Querying all custom
+								models</a>.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -906,7 +936,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/text-to-speech/v1-generated.ts#L115">text-to-speech/v1-generated.ts:115</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/text-to-speech/v1-generated.ts#L119">text-to-speech/v1-generated.ts:119</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -915,6 +945,7 @@
 								</div>
 								<p>Lists all voices available for use with the service. The information includes the name, language, gender, and other
 								details about the voice. To see information about a specific voice, use the <strong>Get a voice</strong> method.</p>
+								<p><strong>See also:</strong> <a href="https://console.bluemix.net/docs/services/text-to-speech/http.html#voices">Specifying a voice</a>.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -942,7 +973,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/text-to-speech/v1-generated.ts#L708">text-to-speech/v1-generated.ts:708</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/text-to-speech/v1-generated.ts#L752">text-to-speech/v1-generated.ts:752</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -953,6 +984,8 @@
 									translations as they are defined in the model. You must use credentials for the instance of the service that owns a
 								model to list its words.</p>
 								<p><strong>Note:</strong> This method is currently a beta release.</p>
+								<p><strong>See also:</strong> <a href="https://console.bluemix.net/docs/services/text-to-speech/custom-entries.html#cuWordsQueryModel">Querying all words from a custom
+								model</a>.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -984,7 +1017,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.preAuthenticate</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/lib/base_service.ts#L212">lib/base_service.ts:212</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/lib/base_service.ts#L212">lib/base_service.ts:212</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1018,7 +1051,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.setAccessToken</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/lib/base_service.ts#L193">lib/base_service.ts:193</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/lib/base_service.ts#L193">lib/base_service.ts:193</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1054,7 +1087,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/text-to-speech/v1-generated.ts#L166">text-to-speech/v1-generated.ts:166</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/text-to-speech/v1-generated.ts#L171">text-to-speech/v1-generated.ts:171</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1063,13 +1096,13 @@
 								</div>
 								<p>Synthesizes text to spoken audio, returning the synthesized audio stream as an array of bytes. You can pass a
 									maximum of 5 KB of text.  Use the <code>Accept</code> header or the <code>accept</code> query parameter to specify the requested format
-									(MIME type) of the response audio. By default, the service uses <code>audio/ogg;codecs=opus</code>. For detailed information
-									about the supported audio formats and sampling rates, see <a href="https://console.bluemix.net/docs/services/text-to-speech/http.html#format">Specifying an audio
-								format</a>.</p>
+								(MIME type) of the response audio. By default, the service uses <code>audio/ogg;codecs=opus</code>.</p>
 								<p>If a request includes invalid query parameters, the service returns a <code>Warnings</code> response header that provides
 									messages about the invalid parameters. The warning includes a descriptive message and a list of invalid argument
 									strings. For example, a message such as <code>\&quot;Unknown arguments:\&quot;</code> or <code>\&quot;Unknown url query arguments:\&quot;</code> followed by
 								a list of the form <code>\&quot;invalid_arg_1, invalid_arg_2.\&quot;</code> The request succeeds despite the warnings.</p>
+								<p><strong>See also:</strong> <a href="https://console.bluemix.net/docs/services/text-to-speech/http.html#synthesize">Synthesizing text to
+								audio</a>.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -1100,7 +1133,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/f18cbfb/text-to-speech/v1-generated.ts#L454">text-to-speech/v1-generated.ts:454</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d1b1200/text-to-speech/v1-generated.ts#L477">text-to-speech/v1-generated.ts:477</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1113,6 +1146,8 @@
 									no more than 20,000 entries. You must use credentials for the instance of the service that owns a model to update
 								it.</p>
 								<p><strong>Note:</strong> This method is currently a beta release.</p>
+								<p><strong>See also:</strong> <a href="https://console.bluemix.net/docs/services/text-to-speech/custom-models.html#cuModelsUpdate">Updating a custom
+								model</a>.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
