@@ -56,7 +56,7 @@ Ideally, only the specific services used shoud be included, for example:
 
 ```js
 var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
-var ConversationV1 = require('watson-developer-cloud/conversation/v1');
+var AssistantV1 = require('watson-developer-cloud/assistant/v1');
 ```
 
 **Not Recommended**: It's possible to load the entire library, but it is not recommended due to the added file size:
@@ -66,7 +66,7 @@ var watson = require('watson-developer-cloud');
 ```
 or
 ```
-const { ConversationV1, ToneAnalyzerV3 } = require('watson-developer-cloud');
+const { AssistantV1, ToneAnalyzerV3 } = require('watson-developer-cloud');
 ```
 
 Additionally, when importing the entire library, the `shebang-loader` package is need and must be configured

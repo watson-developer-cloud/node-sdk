@@ -18,7 +18,6 @@
 //   'alchemy_language',
 //   'alchemy_vision',
 //   'alchemy_data_news',
-//   'conversation'
 // ];
 //
 // function isService(fileInfo) {

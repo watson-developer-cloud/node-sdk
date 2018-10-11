@@ -282,7 +282,7 @@ function (err, token) {
 
 ### Assistant v2
 
-Use the [Assistant][conversation] service to determine the intent of a message.
+Use the [Assistant][assistant] service to determine the intent of a message.
 
 Note: You must first create a workspace via IBM Cloud. See [the documentation](https://console.bluemix.net/docs/services/conversation/index.html#about) for details.
 
@@ -314,7 +314,7 @@ assistant.message(
 
 ### Assistant v1
 
-Use the [Assistant][conversation] service to determine the intent of a message.
+Use the [Assistant][assistant] service to determine the intent of a message.
 
 Note: You must first create a workspace via IBM Cloud. See [the documentation](https://console.bluemix.net/docs/services/conversation/index.html#about) for details.
 
@@ -342,11 +342,6 @@ assistant.message(
   }
 );
 ```
-
-
-### Conversation
-
-This service has been renamed to Assistant.
 
 ### Discovery
 
@@ -701,7 +696,6 @@ This library is licensed under Apache 2.0. Full license text is available in
 See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/master/.github/CONTRIBUTING.md).
 
 [assistant]: https://www.ibm.com/watson/services/conversation/
-[conversation]: https://www.ibm.com/watson/services/conversation/
 [discovery]: https://www.ibm.com/watson/services/discovery/
 [personality_insights]: https://www.ibm.com/watson/services/personality-insights/
 [visual_recognition]: https://www.ibm.com/watson/services/visual-recognition/

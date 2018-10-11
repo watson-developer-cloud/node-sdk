@@ -98,9 +98,9 @@ export function formatErrorIfExists(cb: Function): request.RequestCallback {
         });
         body.error = errObj.description;
       } else if (typeof body.error === 'object' && typeof body.error.error === 'object') {
-        // this can happen with, for example, the conversation createSynonym() API
+        // this can happen with, for example, the assistant createSynonym() API
         body.rawError = body.error;
-        body.error = JSON.stringify(body.error.error); //
+        body.error = JSON.stringify(body.error.error);
       }
       // language translaton returns json with error_code and error_message
       error = new Error(body.error || body.error_message || 'Error Code: ' + body.error_code);
