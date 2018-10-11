@@ -12,7 +12,6 @@
 //   'authorization',
 //   'language_translator',
 //   'tone_analyzer',
-//   'dialog',
 //   'retrieve_and_rank',
 //   'document_conversion',
 //   'search',
