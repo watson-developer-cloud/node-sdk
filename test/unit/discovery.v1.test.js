@@ -1,4 +1,4 @@
-const DiscoveryV1 = require('../../discovery/v1');
+const DiscoveryV1 = require('../../discovery/v1-generated');
 const helper = require('../../lib/helper');
 const utils = require('../resources/unitTestUtils');
 
@@ -8,6 +8,7 @@ const {
   checkUrlAndMethod,
   checkCallback,
   checkMediaHeaders,
+  checkUserHeader,
   checkForEmptyObject,
   checkRequiredParamsHandling,
   getOptions,
