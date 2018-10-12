@@ -31,7 +31,6 @@ Node.js client library to use the Watson APIs.
     * [Assistant v1](#assistant-v1)
     * [Discovery](#discovery)
     * [Language Translator v3](#language-translator-v3)
-    * [Language Translator v2](#language-translator-v2)
     * [Natural Language Classifier](#natural-language-classifier)
     * [Natural Language Understanding](#natural-language-understanding)
     * [Personality Insights](#personality-insights)
@@ -283,7 +282,7 @@ function (err, token) {
 
 ### Assistant v2
 
-Use the [Assistant][conversation] service to determine the intent of a message.
+Use the [Assistant][assistant] service to determine the intent of a message.
 
 Note: You must first create a workspace via IBM Cloud. See [the documentation](https://console.bluemix.net/docs/services/conversation/index.html#about) for details.
 
@@ -315,7 +314,7 @@ assistant.message(
 
 ### Assistant v1
 
-Use the [Assistant][conversation] service to determine the intent of a message.
+Use the [Assistant][assistant] service to determine the intent of a message.
 
 Note: You must first create a workspace via IBM Cloud. See [the documentation](https://console.bluemix.net/docs/services/conversation/index.html#about) for details.
 
@@ -343,11 +342,6 @@ assistant.message(
   }
 );
 ```
-
-
-### Conversation
-
-This service has been renamed to Assistant.
 
 ### Discovery
 
@@ -420,51 +414,6 @@ languageTranslator.identify(
   }
 );
 ```
-
-### Language Translator v2
-
-**Note:** Language Translator v3 is now available. The v2 Language Translator API will no longer be available after July 31, 2018. To take advantage of the latest service enhancements, migrate to the v3 API. View the [Migrating to Language Translator v3](https://console.bluemix.net/docs/services/language-translator/migrating.html) page for more information.
-
-Translate text from one language to another or idenfity a language using the [Language Translator][language_translator] service.
-
-```javascript
-var LanguageTranslatorV2 = require('watson-developer-cloud/language-translator/v2');
-
-var languageTranslator = new LanguageTranslatorV2({
-  username: '<username>',
-  password: '<password>',
-  url: 'https://gateway.watsonplatform.net/language-translator/api/'
-});
-
-languageTranslator.translate(
-  {
-    text: 'A sentence must have a verb',
-    source: 'en',
-    target: 'es'
-  },
-  function(err, translation) {
-    if (err)  {
-      console.log('error:', err);
-    } else  {
-      console.log(JSON.stringify(translation, null, 2));
-  }
-);
-
-languageTranslator.identify(
-  {
-    text:
-      'The language translator service takes text input and identifies the language used.'
-  },
-  function(err, language) {
-    if (err)  {
-      console.log('error:', err);
-    } else {
-      console.log(JSON.stringify(language, null, 2));
-    }
-  }
-);
-```
-
 
 ### Natural Language Classifier
 
@@ -747,7 +696,6 @@ This library is licensed under Apache 2.0. Full license text is available in
 See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/master/.github/CONTRIBUTING.md).
 
 [assistant]: https://www.ibm.com/watson/services/conversation/
-[conversation]: https://www.ibm.com/watson/services/conversation/
 [discovery]: https://www.ibm.com/watson/services/discovery/
 [personality_insights]: https://www.ibm.com/watson/services/personality-insights/
 [visual_recognition]: https://www.ibm.com/watson/services/visual-recognition/
@@ -759,7 +707,6 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/maste
 [watson-dashboard]: https://console.bluemix.net/dashboard/apps?category=watson
 [npm_link]: https://www.npmjs.com/package/watson-developer-cloud
 [request_github]: https://github.com/request/request
-[dialog_migration]: https://console.bluemix.net/docs/services/conversation/index.html
 [examples]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples
 [document_conversion_integration_example]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/document_conversion_integration.v1.js
 [conversation_tone_analyzer_example]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/conversation_tone_analyzer_integration

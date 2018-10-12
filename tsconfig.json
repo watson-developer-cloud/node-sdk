@@ -57,7 +57,6 @@
   },
   "include": [
     "./lib/*.ts",
-    "./conversation/*.ts",
     "./assistant/*.ts",
     "./natural-language-classifier/*.ts",
     "./language-translator/*.ts",
@@ -70,7 +69,6 @@
     "./speech-to-text/*.ts",
     "./authorization/*.ts",
     "./iam-token-manager/*.ts",
-    "./dialog/*.ts",
     "index.ts"
   ]
 }
