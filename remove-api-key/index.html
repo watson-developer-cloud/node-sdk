@@ -91,19 +91,18 @@
 					<em> <a href="#assistant-v1">Assistant v1</a>
 					</em> <a href="#discovery">Discovery</a>
 					<em> <a href="#language-translator-v3">Language Translator v3</a>
-					</em> <a href="#language-translator-v2">Language Translator v2</a>
-					<em> <a href="#natural-language-classifier">Natural Language Classifier</a>
-					</em> <a href="#natural-language-understanding">Natural Language Understanding</a>
-					<em> <a href="#personality-insights">Personality Insights</a>
-					</em> <a href="#speech-to-text">Speech to Text</a>
-					<em> <a href="#text-to-speech">Text to Speech</a>
-					</em> <a href="#tone-analyzer">Tone Analyzer</a>
-					<em> <a href="#visual-recognition">Visual Recognition</a>
-					</em> <a href="#composing-services">Composing Services</a>
-					<em> <a href="#debug">Debug</a>
-					</em> <a href="#tests">Tests</a>
-					<em> <a href="#license">License</a>
-					</em> <a href="#contributing">Contributing</a>
+					</em> <a href="#natural-language-classifier">Natural Language Classifier</a>
+					<em> <a href="#natural-language-understanding">Natural Language Understanding</a>
+					</em> <a href="#personality-insights">Personality Insights</a>
+					<em> <a href="#speech-to-text">Speech to Text</a>
+					</em> <a href="#text-to-speech">Text to Speech</a>
+					<em> <a href="#tone-analyzer">Tone Analyzer</a>
+					</em> <a href="#visual-recognition">Visual Recognition</a>
+					<em> <a href="#composing-services">Composing Services</a>
+					</em> <a href="#debug">Debug</a>
+					<em> <a href="#tests">Tests</a>
+					</em> <a href="#license">License</a>
+					* <a href="#contributing">Contributing</a>
 				</details>
 				<h2 id="before-you-begin">Before you begin</h2>
 				<ul>
@@ -343,8 +342,6 @@ assistant.message(
   }
 );
 </code></pre>
-				<h3 id="conversation">Conversation</h3>
-				<p>This service has been renamed to Assistant.</p>
 				<h3 id="discovery">Discovery</h3>
 				<p>Use the <a href="https://www.ibm.com/watson/services/discovery/">Discovery Service</a> to search and analyze structured and unstructured data.</p>
 				<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> DiscoveryV1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'watson-developer-cloud/discovery/v1'</span>);
@@ -380,45 +377,6 @@ discovery.query(
   <span class="hljs-attr">iam_apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span>,
   <span class="hljs-attr">url</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/language-translator/api/'</span>,
   <span class="hljs-attr">version</span>: <span class="hljs-string">'YYYY-MM-DD'</span>,
-});
-
-languageTranslator.translate(
-  {
-    <span class="hljs-attr">text</span>: <span class="hljs-string">'A sentence must have a verb'</span>,
-    <span class="hljs-attr">source</span>: <span class="hljs-string">'en'</span>,
-    <span class="hljs-attr">target</span>: <span class="hljs-string">'es'</span>
-  },
-  <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, translation</span>) </span>{
-    <span class="hljs-keyword">if</span> (err)  {
-      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'error:'</span>, err);
-    } <span class="hljs-keyword">else</span>  {
-      <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">JSON</span>.stringify(translation, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>));
-  }
-);
-
-languageTranslator.identify(
-  {
-    <span class="hljs-attr">text</span>:
-      <span class="hljs-string">'The language translator service takes text input and identifies the language used.'</span>
-  },
-  <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, language</span>) </span>{
-    <span class="hljs-keyword">if</span> (err)  {
-      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'error:'</span>, err);
-    } <span class="hljs-keyword">else</span> {
-      <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">JSON</span>.stringify(language, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>));
-    }
-  }
-);
-</code></pre>
-				<h3 id="language-translator-v2">Language Translator v2</h3>
-				<p><strong>Note:</strong> Language Translator v3 is now available. The v2 Language Translator API will no longer be available after July 31, 2018. To take advantage of the latest service enhancements, migrate to the v3 API. View the <a href="https://console.bluemix.net/docs/services/language-translator/migrating.html">Migrating to Language Translator v3</a> page for more information.</p>
-				<p>Translate text from one language to another or idenfity a language using the <a href="https://www.ibm.com/watson/services/language-translator/">Language Translator</a> service.</p>
-				<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> LanguageTranslatorV2 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'watson-developer-cloud/language-translator/v2'</span>);
-
-<span class="hljs-keyword">var</span> languageTranslator = <span class="hljs-keyword">new</span> LanguageTranslatorV2({
-  <span class="hljs-attr">username</span>: <span class="hljs-string">'&lt;username&gt;'</span>,
-  <span class="hljs-attr">password</span>: <span class="hljs-string">'&lt;password&gt;'</span>,
-  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/language-translator/api/'</span>
 });
 
 languageTranslator.translate(
@@ -696,16 +654,10 @@ visualRecognition.classify(params, <span class="hljs-function"><span class="hljs
 						<a href="classes/authorizationv1.html" class="tsd-kind-icon">Authorization<wbr>V1</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="classes/conversationv1.html" class="tsd-kind-icon">Conversation<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/dialogv1.html" class="tsd-kind-icon">Dialog<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
 						<a href="classes/discoveryv1.html" class="tsd-kind-icon">Discovery<wbr>V1</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="classes/languagetranslatorv2.html" class="tsd-kind-icon">Language<wbr>Translator<wbr>V2</a>
+						<a href="classes/languagetranslatorv3.html" class="tsd-kind-icon">Language<wbr>Translator<wbr>V3</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/naturallanguageclassifierv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Classifier<wbr>V1</a>
