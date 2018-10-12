@@ -110,8 +110,8 @@ describe('assistant_integration', function() {
   let assistant;
 
   before(function() {
-    auth.conversation.version = '2018-02-16';
-    assistant = new watson.AssistantV1(auth.conversation);
+    auth.assistant.version = '2018-02-16';
+    assistant = new watson.AssistantV1(auth.assistant);
     nock.enableNetConnect();
   });
 
@@ -126,7 +126,7 @@ describe('assistant_integration', function() {
           text: 'Turn on the lights',
         },
         alternate_intents: true,
-        workspace_id: auth.conversation.workspace_id,
+        workspace_id: auth.assistant.workspace_id,
         headers: {
           customheader: 'custom',
         },
@@ -144,7 +144,7 @@ describe('assistant_integration', function() {
     });
 
     it('dialog_stack with 2017-02-03 version', function(done) {
-      const constructorParams = assign({}, auth.conversation, {
+      const constructorParams = assign({}, auth.assistant, {
         version: '2017-02-03',
       });
       const assistant = new watson.AssistantV1(constructorParams);
@@ -153,20 +153,22 @@ describe('assistant_integration', function() {
         input: {
           text: 'Turn on the lights',
         },
-        workspace_id: auth.conversation.workspace_id,
+        workspace_id: auth.assistant.workspace_id,
       };
 
       assistant.message(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.deepEqual(result.context.system.dialog_stack, [{ dialog_node: 'root' }]);
+        assert.deepEqual(result.context.system.dialog_stack, [
+          { dialog_node: 'node_22_1467833484410' },
+        ]);
         done();
       });
     });
 
     it('dialog_stack with 2016-09-20 version', function(done) {
-      const constructorParams = assign({}, auth.conversation, {
+      const constructorParams = assign({}, auth.assistant, {
         version: '2016-09-20',
       });
       const assistant = new watson.AssistantV1(constructorParams);
@@ -175,20 +177,22 @@ describe('assistant_integration', function() {
         input: {
           text: 'Turn on the lights',
         },
-        workspace_id: auth.conversation.workspace_id,
+        workspace_id: auth.assistant.workspace_id,
       };
 
       assistant.message(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.deepEqual(result.context.system.dialog_stack, [{ dialog_node: 'root' }]);
+        assert.deepEqual(result.context.system.dialog_stack, [
+          { dialog_node: 'node_22_1467833484410' },
+        ]);
         done();
       });
     });
 
     it('dialog_stack with 2016-07-11 version', function(done) {
-      const constructorParams = assign({}, auth.conversation, {
+      const constructorParams = assign({}, auth.assistant, {
         version: '2016-07-11',
       });
       const assistant = new watson.AssistantV1(constructorParams);
@@ -197,14 +201,14 @@ describe('assistant_integration', function() {
         input: {
           text: 'Turn on the lights',
         },
-        workspace_id: auth.conversation.workspace_id,
+        workspace_id: auth.assistant.workspace_id,
       };
 
       assistant.message(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.deepEqual(result.context.system.dialog_stack, ['root']);
+        assert.deepEqual(result.context.system.dialog_stack, ['node_22_1467833484410']);
         done();
       });
     });

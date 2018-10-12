@@ -28,14 +28,14 @@ module.exports = {
 
 /**
  * invokeToneAsync is an asynchronous function that calls the Tone Analyzer service and returns a Promise
- * @param conversationPayload json object returned by the Watson Conversation Service
+ * @param assistantPayload json object returned by the Watson Assistant Service
  * @param toneAnalyzer an instance of the Watson Tone Analyzer service
- * @return a Promise for the result of calling the toneAnalyzer with the conversationPayload
+ * @return a Promise for the result of calling the toneAnalyzer with the assistantPayload
  * (which contains the user's input text)
  */
-function invokeToneAsync(conversationPayload, toneAnalyzer) {
+function invokeToneAsync(assistantPayload, toneAnalyzer) {
   return new Promise(function(resolve, reject) {
-    toneAnalyzer.tone({ text: conversationPayload.input.text }, function(error, data) {
+    toneAnalyzer.tone({ text: assistantPayload.input.text }, function(error, data) {
       if (error) {
         reject(error);
       } else {
@@ -47,38 +47,38 @@ function invokeToneAsync(conversationPayload, toneAnalyzer) {
 
 /**
  * updateUserTone processes the Tone Analyzer payload to identify the most significant tone
- * (i.e., the tone with the largest score). The conversationPayload json object is updated
+ * (i.e., the tone with the largest score). The assistantPayload json object is updated
  * to include these tones.
- * @param conversationPayload json object returned by the Watson Conversation Service
+ * @param assistantPayload json object returned by the Watson assistant Service
  * @param toneAnalyzerPayload json object returned by the Watson Tone Analyzer Service
- * @return conversationPayload where the user object has been updated with tone information from the toneAnalyzerPayload
+ * @return assistantPayload where the user object has been updated with tone information from the toneAnalyzerPayload
  */
-function updateUserTone(conversationPayload, toneAnalyzerPayload, maintainHistory) {
-  if (typeof conversationPayload.context === 'undefined') {
-    conversationPayload.context = {};
+function updateUserTone(assistantPayload, toneAnalyzerPayload, maintainHistory) {
+  if (typeof assistantPayload.context === 'undefined') {
+    assistantPayload.context = {};
   }
 
-  if (typeof conversationPayload.context.user === 'undefined') {
-    conversationPayload.context = initUser();
+  if (typeof assistantPayload.context.user === 'undefined') {
+    assistantPayload.context = initUser();
   }
 
   // For convenience sake, define a variable for the user object
-  var user = conversationPayload.context.user;
+  var user = assistantPayload.context.user;
 
   // Extract the document-level tones
   if (toneAnalyzerPayload && toneAnalyzerPayload.document_tone) {
     updateTone(user, toneAnalyzerPayload.document_tone.tones, maintainHistory);
   }
 
-  conversationPayload.context.user = user;
+  assistantPayload.context.user = user;
 
-  return conversationPayload;
+  return assistantPayload;
 }
 
 /**
  * initToneContext initializes a user object containing tone data (from the Watson Tone Analyzer)
- * @return user json object. The current tone identifies the tone for a specific conversation turn,
- * and the history provides the conversation for all tones up to the current tone for a conversation
+ * @return user json object. The current tone identifies the tone for a specific assistant turn,
+ * and the history provides the assistant for all tones up to the current tone for a assistant
  * instance with a user.
  */
 function initUser() {
@@ -93,7 +93,7 @@ function initUser() {
 
 /**
  * updateTone updates the user tone with the primary tone - the tone with the largest score
- * @param user a json object representing user information (tone) to be used in conversing with the Conversation Service
+ * @param user a json object representing user information (tone) to be used in conversing with the assistant Service
  * @param tones an array containing the document-level tones in the payload returned by the Tone Analyzer
  */
 function updateTone(user, tones, maintainHistory) {

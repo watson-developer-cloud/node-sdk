@@ -37,13 +37,14 @@ describe('requestwrapper', () => {
         'User-Agent': 'openwhisk',
       },
     };
-    const conversation = new watson.ConversationV1(service);
-    const conversation_ow = new watson.ConversationV1(service2);
+    const assistant = new watson.AssistantV1(service);
+    const assistant_ow = new watson.AssistantV1(service2);
     const payload = {
       workspace_id: 'workspace1',
+      intent: 'intent1',
     };
-    const req = conversation.getIntents(payload, noop);
-    const req2 = conversation_ow.getIntents(payload, noop);
+    const req = assistant.getIntent(payload, noop);
+    const req2 = assistant_ow.getIntent(payload, noop);
     assert.equal(req.headers['User-Agent'], 'watson-developer-cloud-nodejs-' + pjson.version + ';');
     assert.equal(
       req2.headers['User-Agent'],

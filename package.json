@@ -8,8 +8,7 @@
     "url": "https://github.com/watson-developer-cloud/node-sdk.git"
   },
   "keywords": [
-    "conversation",
-    "dialog",
+    "assistant",
     "discovery",
     "ibm",
     "natural language classifier",
