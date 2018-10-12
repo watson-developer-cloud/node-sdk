@@ -186,6 +186,10 @@ describe('discovery_integration', function() {
         {
           environment_id: environment_id,
           collection_id: collection_id,
+          collection_ids: [
+            '1cf80217-b189-4043-a9f2-5fc3eda7190f',
+            'a76f081a-148f-44ff-a283-6ea77819ff29',
+          ],
           query: '',
         },
         function(err, res) {
