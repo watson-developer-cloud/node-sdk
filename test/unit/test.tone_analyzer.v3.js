@@ -180,13 +180,13 @@ describe('tone_analyzer.v3', function() {
     });
   });
 
-  it('tone-chat API should add optional language parameters', function() {
+  it('toneChat API should add optional language parameters', function() {
     const options = {
       utterances: [{ text: 'My charger isn’t working.', user: 'customer' }],
       content_language: 'en',
       accept_language: 'en',
     };
-    const req = tone_analyzer.tone_chat(options, noop);
+    const req = tone_analyzer.toneChat(options, noop);
     assert.equal(req.uri.href, service.url + tone_chat_path + '?version=2017-09-21');
     assert.equal(req.method, 'POST');
     assert.equal(req.headers['Content-Type'], 'application/json');
