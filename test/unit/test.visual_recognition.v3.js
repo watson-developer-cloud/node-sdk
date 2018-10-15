@@ -13,12 +13,12 @@ describe('visual_recognition', function() {
 
   // Test params
   const service = {
-    api_key: 'batman',
+    username: 'batman',
+    password: 'robin',
     url: 'http://ibm.com:80/visual-recognition/api',
     version: '2016-05-20',
   };
 
-  const api_key_qs = 'api_key=' + service.api_key;
   const version_qs = 'version=' + service.version;
   const fake_file = fs.createReadStream(__dirname + '/../resources/car.png');
   const fake_buffer = fs.readFileSync(__dirname + '/../resources/car.png');
@@ -29,10 +29,10 @@ describe('visual_recognition', function() {
     },
   };
 
-  const classify_path = '/v3/classify?' + api_key_qs + '&' + version_qs;
-  const detect_faces_path = '/v3/detect_faces?' + api_key_qs + '&' + version_qs;
-  const classifiers_path = '/v3/classifiers?' + api_key_qs + '&' + version_qs;
-  const foo_classifiers_path = '/v3/classifiers/foo?' + api_key_qs + '&' + version_qs;
+  const classify_path = '/v3/classify?' + version_qs;
+  const detect_faces_path = '/v3/detect_faces?' + version_qs;
+  const classifiers_path = '/v3/classifiers?' + version_qs;
+  const foo_classifiers_path = '/v3/classifiers/foo?' + version_qs;
   const mock_classify = {
     images: [
       {
@@ -117,12 +117,6 @@ describe('visual_recognition', function() {
       );
     });
 
-    it('should accept an API key for regular usage', () =>
-      new watson.VisualRecognitionV3({
-        api_key: 'foo',
-        version: '2016-05-20',
-      }));
-
     it('should accept username/password for regular usage', () =>
       new watson.VisualRecognitionV3({
         username: 'foo',
@@ -130,55 +124,15 @@ describe('visual_recognition', function() {
         version: '2016-05-20',
       }));
 
-    it('should accept VISUAL_RECOGNITION_API_KEY env property', () => {
-      process.env.VISUAL_RECOGNITION_API_KEY = 'foo';
-      return new watson.VisualRecognitionV3({ version: '2016-05-20' });
-    });
-
-    it('should read VISUAL_RECOGNITION_API_KEY environment property', function() {
-      process.env = {
-        VISUAL_RECOGNITION_API_KEY: 'foo',
-      };
-      const instance = new watson.VisualRecognitionV3({
-        version: '2016-05-20',
-      });
-      assert.equal(instance._options.api_key, 'foo');
-      assert.equal(instance._options.username, undefined);
-      assert.equal(instance._options.password, undefined);
-    });
-
     it('should read VISUAL_RECOGNITION_USERNAME / PASSWORD from environment properties', function() {
       process.env.VISUAL_RECOGNITION_USERNAME = 'foo';
       process.env.VISUAL_RECOGNITION_PASSWORD = 'bar';
       const instance = new watson.VisualRecognitionV3({
         version: '2016-05-20',
       });
-      assert.equal(instance._options.api_key, undefined);
+
       assert.equal(instance._options.username, 'foo');
       assert.equal(instance._options.password, 'bar');
-    });
-
-    it('should read api_key from cf/bluemix environment properties', function() {
-      process.env.VCAP_SERVICES = JSON.stringify({
-        watson_vision_combined: [
-          {
-            name: 'Visual Recognition-mj',
-            label: 'watson_vision_combined',
-            plan: 'free',
-            credentials: {
-              url: 'https://gateway-a.watsonplatform.net/visual-recognition/api',
-              note: 'It may take up to 5 minutes for this key to become active',
-              api_key: 'foo',
-            },
-          },
-        ],
-      });
-      const instance = new watson.VisualRecognitionV3({
-        version: '2016-05-20',
-      });
-      assert.equal(instance._options.api_key, 'foo');
-      assert.equal(instance._options.username, undefined);
-      assert.equal(instance._options.password, undefined);
     });
 
     it('should read username / password from cf/bluemix environment properties', function() {
@@ -200,7 +154,7 @@ describe('visual_recognition', function() {
       const instance = new watson.VisualRecognitionV3({
         version: '2016-05-20',
       });
-      assert.equal(instance._options.api_key, undefined);
+
       assert.equal(instance._options.username, 'foo');
       assert.equal(instance._options.password, 'bar');
     });
@@ -454,7 +408,7 @@ describe('visual_recognition', function() {
     it('should make a DELETE request and return the result', function(done) {
       const scope = nock('http://ibm.com:80', { encodedQueryParams: true })
         .delete('/visual-recognition/api/v3/classifiers/foo_123')
-        .query({ api_key: 'batman', version: '2016-05-20' })
+        .query({ version: '2016-05-20' })
         .reply(200, {});
 
       visual_recognition.deleteClassifier(
@@ -498,7 +452,7 @@ describe('visual_recognition', function() {
       };
       const scope = nock('http://ibm.com:80', { encodedQueryParams: true })
         .get('/visual-recognition/api/v3/classifiers/fruit_679357912')
-        .query({ api_key: 'batman', version: '2016-05-20' })
+        .query({ version: '2016-05-20' })
         .reply(200, expected);
 
       visual_recognition.getClassifier(
@@ -525,64 +479,6 @@ describe('visual_recognition', function() {
     });
     afterEach(function() {
       process.env = env;
-    });
-    it('should have the correct URL depending on rc/cf', function(done) {
-      const visual_recognition_cf = new watson.VisualRecognitionV3({
-        api_key: 'apikey',
-        version: '2018-03-19',
-      });
-      const visual_recognition_rc = new watson.VisualRecognitionV3({
-        iam_apikey: 'iam_apikey',
-        version: '2018-03-19',
-      });
-      const visual_recognition_url = new watson.VisualRecognitionV3({
-        api_key: 'apikey',
-        url: 'hello.com',
-        version: '2018-03-19',
-      });
-
-      assert.equal(
-        visual_recognition_cf._options.url,
-        'https://gateway-a.watsonplatform.net/visual-recognition/api'
-      );
-      assert.equal(
-        visual_recognition_rc._options.url,
-        'https://gateway.watsonplatform.net/visual-recognition/api'
-      );
-      assert.equal(visual_recognition_url._options.url, 'hello.com');
-      done();
-    });
-
-    it('should load its credentials from bluemix (VR) with correct url', function() {
-      process.env.VCAP_SERVICES = JSON.stringify({
-        watson_vision_combined: [
-          {
-            credentials: {
-              api_key: 'somekey',
-            },
-          },
-        ],
-      });
-      const visual_recognition_bluemix = new watson.VisualRecognitionV3({
-        version: '2018-03-19',
-      });
-      assert(visual_recognition_bluemix);
-      assert.equal(
-        visual_recognition_bluemix.getCredentials().url,
-        'https://gateway-a.watsonplatform.net/visual-recognition/api'
-      );
-    });
-
-    it('should load its credentials from environment (VR)', function() {
-      process.env.VISUAL_RECOGNITION_API_KEY = 'key';
-      const visual_recognition_env = new watson.VisualRecognitionV3({
-        version: '2018-03-19',
-      });
-      assert(visual_recognition_env);
-      assert.equal(
-        visual_recognition_env.getCredentials().url,
-        'https://gateway-a.watsonplatform.net/visual-recognition/api'
-      );
     });
 
     it('should load its credentials from bluemix (VR) with correct url (RC)', function() {
@@ -629,10 +525,7 @@ describe('visual_recognition', function() {
       const params = { classifier_id: 'foo' };
 
       const req = visual_recognition.getCoreMlModel(params, noop);
-      assert.equal(
-        req.uri.href,
-        service.url + '/v3/classifiers/foo/core_ml_model?' + api_key_qs + '&' + version_qs
-      );
+      assert.equal(req.uri.href, service.url + '/v3/classifiers/foo/core_ml_model?' + version_qs);
       assert.equal(req.method, 'GET');
     });
   });
