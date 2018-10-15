@@ -181,7 +181,7 @@ describe('visual_recognition', function() {
     });
 
     it('should generate a valid payload with streams', function() {
-      const params = { image_file: fake_file };
+      const params = { images_file: fake_file };
       const req = visual_recognition.classify(params, noop);
       assert.equal(req.uri.href, service.url + classify_path);
       assert.equal(req.method, 'POST');
@@ -193,7 +193,7 @@ describe('visual_recognition', function() {
     it('should generate a valid paylod with buffers', function() {
       const params = {
         images_file: fake_buffer,
-        parameters: { owners: ['me', 'IBM'] },
+        owners: ['me', 'IBM'],
       };
       const req = visual_recognition.classify(params, noop);
       assert.equal(req.uri.href, service.url + classify_path);
@@ -244,7 +244,7 @@ describe('visual_recognition', function() {
     });
 
     it('should generate a valid payload with streams', function() {
-      const params = { image_file: fake_file };
+      const params = { images_file: fake_file };
       const req = visual_recognition.detectFaces(params, noop);
       assert.equal(req.uri.href, service.url + detect_faces_path);
       assert.equal(req.method, 'POST');
@@ -341,11 +341,6 @@ describe('visual_recognition', function() {
       assert.ok(req.formData.negative_examples);
       assert.equal(req.formData.name, params.name);
       done();
-    });
-  });
-  describe('retrainClassifier()', function() {
-    it('should call updateClassifier()', function() {
-      visual_recognition.retrainClassifier({}, missingParameter);
     });
   });
 
@@ -527,41 +522,6 @@ describe('visual_recognition', function() {
       const req = visual_recognition.getCoreMlModel(params, noop);
       assert.equal(req.uri.href, service.url + '/v3/classifiers/foo/core_ml_model?' + version_qs);
       assert.equal(req.method, 'GET');
-    });
-  });
-
-  describe('Print a warning for deprecated methods()', function() {
-    let spy;
-    beforeEach(function() {
-      spy = sinon.stub(console, 'warn');
-    });
-    afterEach(function() {
-      spy.restore();
-    });
-    after(function() {
-      spy.restore();
-    });
-
-    const deprecatedMethods = [
-      'recognizeText',
-      'createCollection',
-      'getCollection',
-      'listCollections',
-      'deleteCollection',
-      'addImage',
-      'listImages',
-      'getImage',
-      'deleteImage',
-      'setImageData',
-      'getImageData',
-      'deleteImageData',
-      'findSimilar',
-    ];
-    deprecatedMethods.forEach(function(method) {
-      it(`${method} should print a warning message`, function() {
-        visual_recognition[method]({}, noop);
-        assert(spy.calledOnce);
-      });
     });
   });
 });
