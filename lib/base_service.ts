@@ -273,8 +273,8 @@ export class BaseService {
       if (!hasCredentials(_options)) {
         const errorMessage = 'Insufficient credentials provided in ' +
           'constructor argument. Refer to the documentation for the ' +
-          'required parameters. Common examples are username/password, ' +
-          'api_key, and iam_access_token.';
+          'required parameters. Common examples are username/password and ' +
+          'iam_access_token.';
         throw new Error(errorMessage);
       }
       if (!hasIamCredentials(_options) && !usesBasicForIam(_options)) {
