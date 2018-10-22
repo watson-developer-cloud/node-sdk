@@ -43,12 +43,12 @@ describe('speech_to_text', function() {
   };
 
   // tests `listModels` in the generated code
-  describe('getModels()', function() {
+  describe('listModels()', function() {
     const path = '/v1/models';
     const models = { models: [{ foo: 'foo' }, { bar: 'bar' }] };
 
     it('should generate a valid payload', function() {
-      const req = speech_to_text.getModels({}, noop);
+      const req = speech_to_text.listModels({}, noop);
       assert.equal(req.uri.href, service.url + path);
       assert.equal(req.method, 'GET');
     });
@@ -62,9 +62,9 @@ describe('speech_to_text', function() {
       const checkModels = function(err, res) {
         assert.equal(JSON.stringify(res), JSON.stringify(models));
       };
-      speech_to_text.getModels({}, checkModels);
-      speech_to_text.getModels(null, checkModels);
-      speech_to_text.getModels(undefined, checkModels);
+      speech_to_text.listModels({}, checkModels);
+      speech_to_text.listModels(null, checkModels);
+      speech_to_text.listModels(undefined, checkModels);
     });
   });
 
@@ -265,10 +265,6 @@ describe('speech_to_text', function() {
       assert.equal(stream.authenticated, false);
       assert(stream.options.token_manager);
     });
-
-    it('createRecognizeStream should return a stream - compatibility', function() {
-      assert(isStream(speech_to_text.createRecognizeStream()));
-    });
   });
 
   describe('asynchronous callback api', function() {
@@ -329,7 +325,7 @@ describe('speech_to_text', function() {
         events: 'recognitions.completed',
         results_ttl: 60,
       };
-      const req = speech_to_text.createRecognitionJob(params, checkRes);
+      const req = speech_to_text.createJob(params, checkRes);
 
       assert.equal(req.path, path);
       assert.equal(req.method, 'POST');
@@ -368,7 +364,7 @@ describe('speech_to_text', function() {
         ],
         results_ttl: 60,
       };
-      const req = speech_to_text.createRecognitionJob(params, checkRes);
+      const req = speech_to_text.createJob(params, checkRes);
 
       assert.equal(req.path, path);
       assert.equal(req.method, 'POST');
@@ -411,7 +407,7 @@ describe('speech_to_text', function() {
         assert.equal(JSON.stringify(res), JSON.stringify(response));
         done();
       };
-      const req = speech_to_text.getRecognitionJobs(checkRes);
+      const req = speech_to_text.checkJobs(checkRes);
 
       assert.equal(req.path, path);
       assert.equal(req.method, 'GET');
@@ -453,10 +449,7 @@ describe('speech_to_text', function() {
         assert.equal(JSON.stringify(err), JSON.stringify(null));
         assert.deepEqual(res, response);
       };
-      const req = speech_to_text.getRecognitionJob(
-        { id: '4bd734c0-e575-21f3-de03-f932aa0468a0' },
-        checkRes
-      );
+      const req = speech_to_text.checkJob({ id: '4bd734c0-e575-21f3-de03-f932aa0468a0' }, checkRes);
 
       assert.equal(req.path, path);
       assert.equal(req.method, 'GET');
@@ -473,7 +466,7 @@ describe('speech_to_text', function() {
       const checkRes = function(err, res) {
         assert.ifError(err);
       };
-      const req = speech_to_text.deleteRecognitionJob(
+      const req = speech_to_text.deleteJob(
         { id: '4bd734c0-e575-21f3-de03-f932aa0468a0' },
         checkRes
       );
@@ -484,45 +477,42 @@ describe('speech_to_text', function() {
   });
 
   // tests `listCustomizations` in the generated code
-  describe('getCustomizations()', function() {
+  describe('listLanguageModels()', function() {
     const path = '/v1/customizations';
 
     it('should generate a valid payload', function() {
-      const req = speech_to_text.getCustomizations({}, noop);
+      const req = speech_to_text.listLanguageModels({}, noop);
       assert.equal(req.uri.href, service.url + path);
       assert.equal(req.method, 'GET');
     });
   });
 
-  describe('getCustomization()', function() {
+  describe('getLanguageModel()', function() {
     const path = '/v1/customizations/foo';
 
     it('should check no parameters provided', function() {
-      speech_to_text.getCustomization({}, missingParameter);
-      speech_to_text.getCustomization(null, missingParameter);
+      speech_to_text.getLanguageModel({}, missingParameter);
+      speech_to_text.getLanguageModel(null, missingParameter);
     });
 
     it('should generate a valid payload', function() {
-      const req = speech_to_text.getCustomization({ customization_id: 'foo' }, noop);
+      const req = speech_to_text.getLanguageModel({ customization_id: 'foo' }, noop);
       assert.equal(req.uri.href, service.url + path);
       assert.equal(req.method, 'GET');
     });
   });
 
-  describe('createCustomization()', function() {
+  describe('createLanguageModel()', function() {
     const path = '/v1/customizations';
 
     it('should check no parameters provided', function() {
-      speech_to_text.createCustomization({}, missingParameter);
-      speech_to_text.createCustomization(null, missingParameter);
-      speech_to_text.createLanguageModel(
-        { name: 'name', base_model_name: 'base_name' },
-        missingParameter
-      );
+      speech_to_text.createLanguageModel({}, missingParameter);
+      speech_to_text.createLanguageModel(null, missingParameter);
+      speech_to_text.createLanguageModel({ name: 'name' }, missingParameter);
     });
 
     it('should generate a valid payload', function() {
-      const req = speech_to_text.createCustomization(
+      const req = speech_to_text.createLanguageModel(
         { name: 'name', base_model_name: 'base_name' },
         noop
       );
@@ -554,18 +544,6 @@ describe('speech_to_text', function() {
       );
       assert.equal(req.uri.href, service.url + path);
       assert.equal(req.method, 'POST');
-
-      // test `name` param for backwards compatibility
-      const req2 = speech_to_text.addCorpus(
-        {
-          customization_id: 'customer_id_1',
-          name: 'corpus_name_1',
-          corpus: 'file_1',
-        },
-        noop
-      );
-      assert.equal(req2.uri.href, service.url + path);
-      assert.equal(req2.method, 'POST');
     });
   });
 
@@ -585,14 +563,6 @@ describe('speech_to_text', function() {
       );
       assert.equal(req.uri.href, service.url + path);
       assert.equal(req.method, 'GET');
-
-      // test `name` param for backwards compatibility
-      const req2 = speech_to_text.getCorpus(
-        { customization_id: 'customer_id_1', name: 'corpus_name_1' },
-        noop
-      );
-      assert.equal(req2.uri.href, service.url + path);
-      assert.equal(req2.method, 'GET');
     });
   });
 
@@ -612,28 +582,20 @@ describe('speech_to_text', function() {
       );
       assert.equal(req.uri.href, service.url + path);
       assert.equal(req.method, 'DELETE');
-
-      // test `name` param for backwards compatibility
-      const req2 = speech_to_text.deleteCorpus(
-        { customization_id: 'customer_id_1', name: 'corpus_name_1' },
-        noop
-      );
-      assert.equal(req2.uri.href, service.url + path);
-      assert.equal(req2.method, 'DELETE');
     });
   });
 
   // tests `listCorpora` in generated code
-  describe('getCorpora()', function() {
+  describe('listCorpora()', function() {
     const path = '/v1/customizations/customer_id_1/corpora';
 
     it('should check no parameters provided', function() {
-      speech_to_text.getCorpora({}, missingParameter);
-      speech_to_text.getCorpora(null, missingParameter);
+      speech_to_text.listCorpora({}, missingParameter);
+      speech_to_text.listCorpora(null, missingParameter);
     });
 
     it('should generate a valid payload', function() {
-      const req = speech_to_text.getCorpora({ customization_id: 'customer_id_1' }, noop);
+      const req = speech_to_text.listCorpora({ customization_id: 'customer_id_1' }, noop);
       assert.equal(req.uri.href, service.url + path);
       assert.equal(req.method, 'GET');
     });
@@ -667,7 +629,7 @@ describe('speech_to_text', function() {
 
     it('should generate a valid payload', function() {
       const req = speech_to_text.addWord(
-        { customization_id: 'customer_id_1', word: 'word1' },
+        { customization_id: 'customer_id_1', word_name: 'word1' },
         noop
       );
       assert.equal(req.uri.href, service.url + path);
@@ -676,16 +638,16 @@ describe('speech_to_text', function() {
   });
 
   // tests `listWords` in the generated code
-  describe('getWords()', function() {
+  describe('listWords()', function() {
     const path = '/v1/customizations/customer_id_1/words';
 
     it('should check no parameters provided', function() {
-      speech_to_text.getWords({}, missingParameter);
-      speech_to_text.getWords(null, missingParameter);
+      speech_to_text.listWords({}, missingParameter);
+      speech_to_text.listWords(null, missingParameter);
     });
 
     it('should generate a valid payload', function() {
-      const req = speech_to_text.getWords({ customization_id: 'customer_id_1' }, noop);
+      const req = speech_to_text.listWords({ customization_id: 'customer_id_1' }, noop);
       assert.equal(req.uri.href, service.url + path);
       assert.equal(req.method, 'GET');
     });
@@ -701,7 +663,7 @@ describe('speech_to_text', function() {
 
     it('should generate a valid payload', function() {
       const req = speech_to_text.getWord(
-        { customization_id: 'customer_id_1', word: 'word1' },
+        { customization_id: 'customer_id_1', word_name: 'word1' },
         noop
       );
       assert.equal(req.uri.href, service.url + path);
@@ -719,7 +681,7 @@ describe('speech_to_text', function() {
 
     it('should generate a valid payload', function() {
       const req = speech_to_text.deleteWord(
-        { customization_id: 'customer_id_1', word: 'word1' },
+        { customization_id: 'customer_id_1', word_name: 'word1' },
         noop
       );
       assert.equal(req.uri.href, service.url + path);
@@ -727,46 +689,46 @@ describe('speech_to_text', function() {
     });
   });
 
-  describe('trainCustomization()', function() {
+  describe('trainLanguageModel()', function() {
     const path = '/v1/customizations/customer_id_1/train';
 
     it('should check no parameters provided', function() {
-      speech_to_text.trainCustomization({}, missingParameter);
-      speech_to_text.trainCustomization(null, missingParameter);
+      speech_to_text.trainLanguageModel({}, missingParameter);
+      speech_to_text.trainLanguageModel(null, missingParameter);
     });
 
     it('should generate a valid payload', function() {
-      const req = speech_to_text.trainCustomization({ customization_id: 'customer_id_1' }, noop);
+      const req = speech_to_text.trainLanguageModel({ customization_id: 'customer_id_1' }, noop);
       assert.equal(req.uri.href, service.url + path);
       assert.equal(req.method, 'POST');
     });
   });
 
-  describe('resetCustomization()', function() {
+  describe('resetLanguageModel()', function() {
     const path = '/v1/customizations/customer_id_1/reset';
 
     it('should check no parameters provided', function() {
-      speech_to_text.resetCustomization({}, missingParameter);
-      speech_to_text.resetCustomization(null, missingParameter);
+      speech_to_text.resetLanguageModel({}, missingParameter);
+      speech_to_text.resetLanguageModel(null, missingParameter);
     });
 
     it('should generate a valid payload', function() {
-      const req = speech_to_text.resetCustomization({ customization_id: 'customer_id_1' }, noop);
+      const req = speech_to_text.resetLanguageModel({ customization_id: 'customer_id_1' }, noop);
       assert.equal(req.uri.href, service.url + path);
       assert.equal(req.method, 'POST');
     });
   });
 
-  describe('deleteCustomization()', function() {
+  describe('deleteLanguageModel()', function() {
     const path = '/v1/customizations/customer_id_1';
 
     it('should check no parameters provided', function() {
-      speech_to_text.deleteCustomization({}, missingParameter);
-      speech_to_text.deleteCustomization(null, missingParameter);
+      speech_to_text.deleteLanguageModel({}, missingParameter);
+      speech_to_text.deleteLanguageModel(null, missingParameter);
     });
 
     it('should generate a valid payload', function() {
-      const req = speech_to_text.deleteCustomization({ customization_id: 'customer_id_1' }, noop);
+      const req = speech_to_text.deleteLanguageModel({ customization_id: 'customer_id_1' }, noop);
       assert.equal(req.uri.href, service.url + path);
       assert.equal(req.method, 'DELETE');
     });

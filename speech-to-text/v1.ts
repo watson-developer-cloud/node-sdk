@@ -92,129 +92,6 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
     super(options);
   }
 
-
-
-  getModels(params, callback) {
-    console.warn("WARNING: getModels() was renamed to listModels(). Support for getModels() will be removed in the next major release");
-    return super.listModels(params, callback);
-  }
-
-  getCustomization(params, callback) {
-    console.warn("WARNING: getCustomization() was renamed to getLanguageModel(). Support for getCustomization() will be removed in the next major release");
-    return super.getLanguageModel(params, callback);
-  }
-
-  getRecognitionJob(params, callback) {
-    console.warn("WARNING: getRecognitionJob() was renamed to checkJob(). Support for getRecognitionJob() will be removed in the next major release");
-    return super.checkJob(params, callback);
-  }
-
-  createCustomization(params, callback) {
-    console.warn("WARNING: createCustomization() was renamed to createLanguageModel(). Support for createCustomization() will be removed in the next major release");
-    if (params && !params.content_type) {
-      params.content_type = 'application/json';
-    }
-    return super.createLanguageModel(params, callback);
-  }
-
-  getRecognitionJobs(params, callback) {
-    console.warn("WARNING: getRecognitionJobs() was renamed to checkJobs(). Support for getRecognitionJobs() will be removed in the next major release");
-    return super.checkJobs(params, callback);
-  }
-
-  deleteRecognitionJob(params, callback) {
-    console.warn("WARNING: deleteRecognitionJob() was renamed to deleteJob(). Support for deleteRecognitionJob() will be removed in the next major release");
-    return super.deleteJob(params, callback);
-  }
-
-  getCustomizations(params, callback) {
-    console.warn("WARNING: getCustomizations() was renamed to listLanguageModels(). Support for getCustomizations() will be removed in the next major release");
-    return super.listLanguageModels(params, callback);
-  }
-
-  createRecognitionJob(params, callback) {
-    console.warn("WARNING: createRecognitionJob() was renamed to createJob(). Support for createRecognitionJob() will be removed in the next major release");
-    if (params && Array.isArray(params.events)) {
-      params.events = params.events.join(',');
-    }
-    return super.createJob(params, callback);
-  }
-
-  addCorpus(params, callback) {
-    if (params && params.name) {
-      params.corpus_name = params.name;
-    }
-    if (params && params.corpus) {
-      params.corpus_file = params.corpus;
-    }
-    return super.addCorpus(params, callback);
-  }
-
-  getCorpus(params, callback) {
-    if (params && params.name) {
-      params.corpus_name = params.name;
-    }
-    return super.getCorpus(params, callback);
-  }
-
-  deleteCorpus(params, callback) {
-    if (params && params.name) {
-      params.corpus_name = params.name;
-    }
-    return super.deleteCorpus(params, callback);
-  }
-
-  getCorpora(params, callback) {
-    console.warn("WARNING: getCorpora() was renamed to listCorpora(). Support for getCorpora() will be removed in the next major release");
-    return super.listCorpora(params, callback);
-  }
-
-  addWords(params, callback) {
-    if (params && !params.content_type) {
-      params.content_type = 'application/json';
-    }
-    return super.addWords(params, callback);
-  }
-
-  addWord(params, callback) {
-    if (params && params.word) {
-      params.word_name = params.word;
-    }
-    if (params && !params.content_type) {
-      params.content_type = 'application/json';
-    }
-    return super.addWord(params, callback);
-  }
-
-  getWords(params, callback) {
-    console.warn("WARNING: getWords() was renamed to listWords(). Support for getWords() will be removed in the next major release");
-    return super.listWords(params, callback);
-  }
-
-  getWord(params, callback) {
-    if (params && params.word) {
-      params.word_name = params.word;
-    }
-    return super.getWord(params, callback);
-  }
-
-  deleteWord(params, callback) {
-    if (params && params.word) {
-      params.word_name = params.word;
-    }
-    return super.deleteWord(params, callback);
-  }
-
-  trainCustomization(params, callback) {
-    console.warn("WARNING: trainCustomization() was renamed to trainLanguageModel(). Support for trainCustomization() will be removed in the next major release");
-    return super.trainLanguageModel(params, callback);
-  }
-
-  resetCustomization(params, callback) {
-    console.warn("WARNING: resetCustomization() was renamed to resetLanguageModel(). Support for resetCustomization() will be removed in the next major release");
-    return super.resetLanguageModel(params, callback);
-  }
-
   /**
    * Waits while corpora analysis status is 'being_processes', fires callback once the status is 'analyzed'
    *
@@ -234,7 +111,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
       [
         // validate that it has at least one corpus
         (next) => {
-          self.getCorpora(params, (err, res) => {
+          self.listCorpora(params, (err, res) => {
             if (err) {
               return next(err);
             }
@@ -258,7 +135,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
             params
           );
           options.errorFilter = (err) => {
-            // if it's a timeout error, then getCorpora is called again after params.interval
+            // if it's a timeout error, then listCorpora is called again after params.interval
             // otherwise the error is passed back to the user
             // if the params.times limit is reached, the error will be passed to the user regardless
             return err.code === SpeechToTextV1.ERR_TIMEOUT;
@@ -266,7 +143,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
           async.retry(
             options,
             (done) => {
-              self.getCorpora(params, (err, corpora) => {
+              self.listCorpora(params, (err, corpora) => {
                 if (err) {
                   done(err);
                 } else if (isProcessing(corpora)) {
@@ -294,157 +171,6 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
         callback(null, res[1]); // callback with the final customization object
       }
     );
-  }
-
-  /**
-   * Creates a HTTP/HTTPS request to /recognize and keep the connection open.
-   * Sets 'Transfer-Encoding': 'chunked' and prepare the connection to send
-   * chunk data.
-   *
-   * @deprecated use recognizeUsingWebSocket instead
-   *
-   * @param {Object} params The parameters
-   * @param {String} [params.content_type] - The Content-type e.g. audio/l16; rate=48000
-   * @param {String} [params.session_id] - The session id
-   * @param {function} callback
-   */
-  recognizeLive(params, callback) {
-    const missingParams = getMissingParams(params, [
-      'session_id',
-      'content_type',
-      'cookie_session'
-    ]);
-
-    if (missingParams) {
-      callback(missingParams);
-      return;
-    }
-
-    const serviceUrl = [
-      this._options.url,
-      '/v1/sessions/',
-      params.session_id,
-      '/recognize'
-    ].join('');
-    const parts = parse(serviceUrl);
-    const options = {
-      agent: false,
-      host: parts.hostname,
-      port: parts.port,
-      path: parts.pathname + (params.continuous ? '?continuous=true' : ''),
-      method: 'POST',
-      headers: extend(
-        {
-          'Transfer-Encoding': 'chunked',
-          cookie: 'SESSIONID=' + params.cookie_session,
-          'Content-type': params.content_type
-        },
-        this._options.headers
-      )
-    };
-    const protocol = protocols[parts.protocol.match(/https?/)[0]];
-    const recognizeReq = protocol.request(options, (result) => {
-      result.setEncoding('utf-8');
-      let transcript = '';
-
-      result.on('data', (chunk) => {
-        transcript += chunk;
-      });
-
-      result.on('end', () => {
-        try {
-          transcript = formatChunk(transcript);
-        } catch (e) {
-          callback(transcript);
-          return;
-        }
-        callback(null, transcript);
-      });
-    });
-
-    recognizeReq.on('error', (error) => {
-      callback(error);
-    });
-    return recognizeReq;
-  }
-
-  /**
-   * Result observer for upcoming or ongoing recognition task in the session.
-   * This request has to be started before POST on recognize finishes,
-   * otherwise it waits for the next recognition.
-   *
-   * @deprecated use recognizeUsingWebSocket instead
-   *
-   * @param {Object} params The parameters
-   * @param {String} [params.session_id] - Session used in the recognition
-   * @param {boolean} [params.interim_results] - If true, interim results will be returned. Default: false
-   * @param {Function} callback
-   */
-  observeResult(params, callback) {
-    const missingParams = getMissingParams(params, [
-      'session_id',
-      'cookie_session'
-    ]);
-    if (missingParams) {
-      callback(missingParams);
-      return;
-    }
-    const serviceUrl = [
-      this._options.url,
-      '/v1/sessions/',
-      params.session_id,
-      '/observe_result'
-    ].join('');
-    const parts = parse(serviceUrl);
-    const options = {
-      agent: false,
-      host: parts.hostname,
-      port: parts.port,
-      path:
-        parts.pathname +
-        (params.interim_results ? '?interim_results=true' : ''),
-      method: 'GET',
-      headers: extend(
-        {
-          cookie: 'SESSIONID=' + params.cookie_session,
-          Accept: 'application/json'
-        },
-        this._options.headers
-      )
-    };
-    const protocol = protocols[parts.protocol.match(/https?/)[0]];
-    const req = protocol.request(options, (result) => {
-      result.setEncoding('utf-8');
-      result.on('data', (chunk) => {
-        try {
-          chunk = formatChunk(chunk);
-        } catch (e) {
-          callback(chunk);
-          return;
-        }
-        callback(null, chunk);
-      });
-    });
-
-    req.on('error', (error) => {
-      callback(error);
-    });
-
-    req.end();
-
-    return req;
-  }
-
-  /**
-   * Replaces recognizeLive & friends with a single 2-way stream over websockets
-   *
-   * @param {Object} params The parameters
-   * @return {RecognizeStream}
-   * @deprecated
-   */
-  createRecognizeStream(params) {
-    console.warn("WARNING: createRecognizeStream() was renamed to recognizeUsingWebSocket(). Support for createRecognizeStream() will be removed in the next major release");
-    return this.recognizeUsingWebSocket(params);
   }
 
   /**
@@ -554,11 +280,6 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
     });
   }
 
-  deleteCustomization(params, callback) {
-    console.warn("WARNING: deleteCustomization() was renamed to deleteLanguageModel(). Support for deleteCustomization() will be removed in the next major release");
-    return super.deleteLanguageModel(params, callback);
-  }
-
   /**
    * Waits while a customization status is 'pending' or 'training', fires callback once the status is 'ready' or 'available'.
    *
@@ -585,7 +306,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
       params
     );
     options.errorFilter = (err) => {
-      // if it's a timeout error, then getCustomization is called again after params.interval
+      // if it's a timeout error, then getLanguageModel is called again after params.interval
       // otherwise the error is passed back to the user
       // if the params.times limit is reached, the error will be passed to the user regardless
       return err.code === SpeechToTextV1.ERR_TIMEOUT;
@@ -593,7 +314,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
     async.retry(
       options,
       (next) => {
-        self.getCustomization(params, (err, customization) => {
+        self.getLanguageModel(params, (err, customization) => {
           if (err) {
             next(err);
           } else if (
