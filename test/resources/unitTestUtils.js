@@ -25,6 +25,13 @@ module.exports.checkUserHeader = function(createRequestMock, baseName, param) {
   expect(headers[baseName]).toEqual(param);
 };
 
+module.exports.checkDefaultSuccessArgs = function(createRequestMock) {
+  // get arg to getMissingParams
+  const userParams = createRequestMock.mock.calls[0];
+  expect(typeof userParams[0]).toEqual('object');
+  expect(typeof userParams[1]).toEqual('function');
+};
+
 module.exports.checkForEmptyObject = function(missingParamsMock) {
   // get arg to getMissingParams
   const userParams = missingParamsMock.mock.calls[0][0];
