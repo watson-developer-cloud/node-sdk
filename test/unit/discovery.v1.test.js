@@ -9,6 +9,7 @@ const {
   checkCallback,
   checkMediaHeaders,
   checkUserHeader,
+  checkDefaultSuccessArgs,
   checkForEmptyObject,
   checkRequiredParamsHandling,
   getOptions,
@@ -18,12 +19,13 @@ const service = {
   username: 'batman',
   password: 'bruce-wayne',
   url: 'https://gateway.watsonplatform.net/discovery/api',
-  version: '2018-09-19',
+  version: '2018-10-18',
 };
 
 const discovery = new DiscoveryV1(service);
 const createRequestMock = jest.spyOn(discovery, 'createRequest');
 const missingParamsMock = jest.spyOn(helper, 'getMissingParams');
+const noop = () => {};
 
 afterEach(() => {
   createRequestMock.mockReset();
@@ -78,19 +80,16 @@ describe('createEnvironment', () => {
         },
       };
 
-      // invoke the method
       discovery.createEnvironment(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.createEnvironment(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -101,12 +100,12 @@ describe('createEnvironment', () => {
       // required parameters for this method
       const requiredParams = ['name'];
 
-      // invoke the method
       discovery.createEnvironment({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('deleteEnvironment', () => {
@@ -150,19 +149,16 @@ describe('deleteEnvironment', () => {
         },
       };
 
-      // invoke the method
       discovery.deleteEnvironment(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.deleteEnvironment(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -173,12 +169,12 @@ describe('deleteEnvironment', () => {
       // required parameters for this method
       const requiredParams = ['environment_id'];
 
-      // invoke the method
       discovery.deleteEnvironment({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('getEnvironment', () => {
@@ -222,19 +218,16 @@ describe('getEnvironment', () => {
         },
       };
 
-      // invoke the method
       discovery.getEnvironment(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.getEnvironment(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -245,12 +238,12 @@ describe('getEnvironment', () => {
       // required parameters for this method
       const requiredParams = ['environment_id'];
 
-      // invoke the method
       discovery.getEnvironment({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('listEnvironments', () => {
@@ -292,25 +285,20 @@ describe('listEnvironments', () => {
         },
       };
 
-      // invoke the method
       discovery.listEnvironments(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-  });
-
-  describe('negative tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsError);
-    });
-
-    test('should convert a `null` value for `params` to an empty object', done => {
+    test('should not have any problems when no parameters are passed in', () => {
       // invoke the method
-      discovery.listEnvironments(null, () => {
-        checkForEmptyObject(missingParamsMock);
-        done();
-      });
+      discovery.listEnvironments();
+      checkDefaultSuccessArgs(createRequestMock);
     });
 
+    test('should use argument as callback function if only one is passed in', () => {
+      // invoke the method
+      discovery.listEnvironments(noop);
+      checkDefaultSuccessArgs(createRequestMock);
+    });
   });
 });
 describe('listFields', () => {
@@ -359,19 +347,16 @@ describe('listFields', () => {
         },
       };
 
-      // invoke the method
       discovery.listFields(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.listFields(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -382,12 +367,12 @@ describe('listFields', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'collection_ids'];
 
-      // invoke the method
       discovery.listFields({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('updateEnvironment', () => {
@@ -441,19 +426,16 @@ describe('updateEnvironment', () => {
         },
       };
 
-      // invoke the method
       discovery.updateEnvironment(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.updateEnvironment(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -464,12 +446,12 @@ describe('updateEnvironment', () => {
       // required parameters for this method
       const requiredParams = ['environment_id'];
 
-      // invoke the method
       discovery.updateEnvironment({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('createConfiguration', () => {
@@ -534,19 +516,16 @@ describe('createConfiguration', () => {
         },
       };
 
-      // invoke the method
       discovery.createConfiguration(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.createConfiguration(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -557,12 +536,12 @@ describe('createConfiguration', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'name'];
 
-      // invoke the method
       discovery.createConfiguration({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('deleteConfiguration', () => {
@@ -611,19 +590,16 @@ describe('deleteConfiguration', () => {
         },
       };
 
-      // invoke the method
       discovery.deleteConfiguration(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.deleteConfiguration(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -634,12 +610,12 @@ describe('deleteConfiguration', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'configuration_id'];
 
-      // invoke the method
       discovery.deleteConfiguration({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('getConfiguration', () => {
@@ -688,19 +664,16 @@ describe('getConfiguration', () => {
         },
       };
 
-      // invoke the method
       discovery.getConfiguration(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.getConfiguration(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -711,12 +684,12 @@ describe('getConfiguration', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'configuration_id'];
 
-      // invoke the method
       discovery.getConfiguration({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('listConfigurations', () => {
@@ -763,19 +736,16 @@ describe('listConfigurations', () => {
         },
       };
 
-      // invoke the method
       discovery.listConfigurations(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.listConfigurations(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -786,12 +756,12 @@ describe('listConfigurations', () => {
       // required parameters for this method
       const requiredParams = ['environment_id'];
 
-      // invoke the method
       discovery.listConfigurations({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('updateConfiguration', () => {
@@ -861,19 +831,16 @@ describe('updateConfiguration', () => {
         },
       };
 
-      // invoke the method
       discovery.updateConfiguration(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.updateConfiguration(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -884,12 +851,12 @@ describe('updateConfiguration', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'configuration_id', 'name'];
 
-      // invoke the method
       discovery.updateConfiguration({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('testConfigurationInEnvironment', () => {
@@ -954,19 +921,16 @@ describe('testConfigurationInEnvironment', () => {
         },
       };
 
-      // invoke the method
       discovery.testConfigurationInEnvironment(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.testConfigurationInEnvironment(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -977,12 +941,12 @@ describe('testConfigurationInEnvironment', () => {
       // required parameters for this method
       const requiredParams = ['environment_id'];
 
-      // invoke the method
       discovery.testConfigurationInEnvironment({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('createCollection', () => {
@@ -1041,19 +1005,16 @@ describe('createCollection', () => {
         },
       };
 
-      // invoke the method
       discovery.createCollection(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.createCollection(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -1064,12 +1025,12 @@ describe('createCollection', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'name'];
 
-      // invoke the method
       discovery.createCollection({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('deleteCollection', () => {
@@ -1118,19 +1079,16 @@ describe('deleteCollection', () => {
         },
       };
 
-      // invoke the method
       discovery.deleteCollection(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.deleteCollection(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -1141,12 +1099,12 @@ describe('deleteCollection', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'collection_id'];
 
-      // invoke the method
       discovery.deleteCollection({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('getCollection', () => {
@@ -1195,19 +1153,16 @@ describe('getCollection', () => {
         },
       };
 
-      // invoke the method
       discovery.getCollection(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.getCollection(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -1218,12 +1173,12 @@ describe('getCollection', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'collection_id'];
 
-      // invoke the method
       discovery.getCollection({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('listCollectionFields', () => {
@@ -1272,19 +1227,16 @@ describe('listCollectionFields', () => {
         },
       };
 
-      // invoke the method
       discovery.listCollectionFields(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.listCollectionFields(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -1295,12 +1247,12 @@ describe('listCollectionFields', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'collection_id'];
 
-      // invoke the method
       discovery.listCollectionFields({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('listCollections', () => {
@@ -1347,19 +1299,16 @@ describe('listCollections', () => {
         },
       };
 
-      // invoke the method
       discovery.listCollections(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.listCollections(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -1370,12 +1319,12 @@ describe('listCollections', () => {
       // required parameters for this method
       const requiredParams = ['environment_id'];
 
-      // invoke the method
       discovery.listCollections({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('updateCollection', () => {
@@ -1434,19 +1383,16 @@ describe('updateCollection', () => {
         },
       };
 
-      // invoke the method
       discovery.updateCollection(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.updateCollection(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -1457,12 +1403,12 @@ describe('updateCollection', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'collection_id'];
 
-      // invoke the method
       discovery.updateCollection({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('createExpansions', () => {
@@ -1517,19 +1463,16 @@ describe('createExpansions', () => {
         },
       };
 
-      // invoke the method
       discovery.createExpansions(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.createExpansions(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -1540,12 +1483,12 @@ describe('createExpansions', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'collection_id', 'expansions'];
 
-      // invoke the method
       discovery.createExpansions({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('deleteExpansions', () => {
@@ -1594,19 +1537,16 @@ describe('deleteExpansions', () => {
         },
       };
 
-      // invoke the method
       discovery.deleteExpansions(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.deleteExpansions(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -1617,12 +1557,12 @@ describe('deleteExpansions', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'collection_id'];
 
-      // invoke the method
       discovery.deleteExpansions({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('listExpansions', () => {
@@ -1671,19 +1611,16 @@ describe('listExpansions', () => {
         },
       };
 
-      // invoke the method
       discovery.listExpansions(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.listExpansions(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -1694,12 +1631,12 @@ describe('listExpansions', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'collection_id'];
 
-      // invoke the method
       discovery.listExpansions({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('addDocument', () => {
@@ -1760,19 +1697,16 @@ describe('addDocument', () => {
         },
       };
 
-      // invoke the method
       discovery.addDocument(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.addDocument(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -1783,12 +1717,12 @@ describe('addDocument', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'collection_id'];
 
-      // invoke the method
       discovery.addDocument({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('deleteDocument', () => {
@@ -1842,19 +1776,16 @@ describe('deleteDocument', () => {
         },
       };
 
-      // invoke the method
       discovery.deleteDocument(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.deleteDocument(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -1865,12 +1796,12 @@ describe('deleteDocument', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'collection_id', 'document_id'];
 
-      // invoke the method
       discovery.deleteDocument({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('getDocumentStatus', () => {
@@ -1924,19 +1855,16 @@ describe('getDocumentStatus', () => {
         },
       };
 
-      // invoke the method
       discovery.getDocumentStatus(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.getDocumentStatus(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -1947,12 +1875,12 @@ describe('getDocumentStatus', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'collection_id', 'document_id'];
 
-      // invoke the method
       discovery.getDocumentStatus({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('updateDocument', () => {
@@ -2018,19 +1946,16 @@ describe('updateDocument', () => {
         },
       };
 
-      // invoke the method
       discovery.updateDocument(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.updateDocument(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -2041,12 +1966,12 @@ describe('updateDocument', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'collection_id', 'document_id'];
 
-      // invoke the method
       discovery.updateDocument({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('federatedQuery', () => {
@@ -2154,19 +2079,16 @@ describe('federatedQuery', () => {
         },
       };
 
-      // invoke the method
       discovery.federatedQuery(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.federatedQuery(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -2177,12 +2099,12 @@ describe('federatedQuery', () => {
       // required parameters for this method
       const requiredParams = ['environment_id'];
 
-      // invoke the method
       discovery.federatedQuery({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('federatedQueryNotices', () => {
@@ -2270,19 +2192,16 @@ describe('federatedQueryNotices', () => {
         },
       };
 
-      // invoke the method
       discovery.federatedQueryNotices(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.federatedQueryNotices(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -2293,12 +2212,12 @@ describe('federatedQueryNotices', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'collection_ids'];
 
-      // invoke the method
       discovery.federatedQueryNotices({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('query', () => {
@@ -2411,19 +2330,16 @@ describe('query', () => {
         },
       };
 
-      // invoke the method
       discovery.query(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.query(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -2434,12 +2350,12 @@ describe('query', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'collection_id'];
 
-      // invoke the method
       discovery.query({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('queryEntities', () => {
@@ -2504,19 +2420,16 @@ describe('queryEntities', () => {
         },
       };
 
-      // invoke the method
       discovery.queryEntities(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.queryEntities(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -2527,12 +2440,12 @@ describe('queryEntities', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'collection_id'];
 
-      // invoke the method
       discovery.queryEntities({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('queryNotices', () => {
@@ -2632,19 +2545,16 @@ describe('queryNotices', () => {
         },
       };
 
-      // invoke the method
       discovery.queryNotices(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.queryNotices(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -2655,12 +2565,12 @@ describe('queryNotices', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'collection_id'];
 
-      // invoke the method
       discovery.queryNotices({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('queryRelations', () => {
@@ -2728,19 +2638,16 @@ describe('queryRelations', () => {
         },
       };
 
-      // invoke the method
       discovery.queryRelations(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.queryRelations(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -2751,12 +2658,12 @@ describe('queryRelations', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'collection_id'];
 
-      // invoke the method
       discovery.queryRelations({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('addTrainingData', () => {
@@ -2815,19 +2722,16 @@ describe('addTrainingData', () => {
         },
       };
 
-      // invoke the method
       discovery.addTrainingData(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.addTrainingData(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -2838,12 +2742,12 @@ describe('addTrainingData', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'collection_id'];
 
-      // invoke the method
       discovery.addTrainingData({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('createTrainingExample', () => {
@@ -2907,19 +2811,16 @@ describe('createTrainingExample', () => {
         },
       };
 
-      // invoke the method
       discovery.createTrainingExample(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.createTrainingExample(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -2930,12 +2831,12 @@ describe('createTrainingExample', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'collection_id', 'query_id'];
 
-      // invoke the method
       discovery.createTrainingExample({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('deleteAllTrainingData', () => {
@@ -2984,19 +2885,16 @@ describe('deleteAllTrainingData', () => {
         },
       };
 
-      // invoke the method
       discovery.deleteAllTrainingData(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.deleteAllTrainingData(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -3007,12 +2905,12 @@ describe('deleteAllTrainingData', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'collection_id'];
 
-      // invoke the method
       discovery.deleteAllTrainingData({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('deleteTrainingData', () => {
@@ -3066,19 +2964,16 @@ describe('deleteTrainingData', () => {
         },
       };
 
-      // invoke the method
       discovery.deleteTrainingData(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.deleteTrainingData(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -3089,12 +2984,12 @@ describe('deleteTrainingData', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'collection_id', 'query_id'];
 
-      // invoke the method
       discovery.deleteTrainingData({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('deleteTrainingExample', () => {
@@ -3153,19 +3048,16 @@ describe('deleteTrainingExample', () => {
         },
       };
 
-      // invoke the method
       discovery.deleteTrainingExample(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.deleteTrainingExample(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -3176,12 +3068,12 @@ describe('deleteTrainingExample', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'collection_id', 'query_id', 'example_id'];
 
-      // invoke the method
       discovery.deleteTrainingExample({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('getTrainingData', () => {
@@ -3235,19 +3127,16 @@ describe('getTrainingData', () => {
         },
       };
 
-      // invoke the method
       discovery.getTrainingData(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.getTrainingData(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -3258,12 +3147,12 @@ describe('getTrainingData', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'collection_id', 'query_id'];
 
-      // invoke the method
       discovery.getTrainingData({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('getTrainingExample', () => {
@@ -3322,19 +3211,16 @@ describe('getTrainingExample', () => {
         },
       };
 
-      // invoke the method
       discovery.getTrainingExample(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.getTrainingExample(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -3345,12 +3231,12 @@ describe('getTrainingExample', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'collection_id', 'query_id', 'example_id'];
 
-      // invoke the method
       discovery.getTrainingExample({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('listTrainingData', () => {
@@ -3399,19 +3285,16 @@ describe('listTrainingData', () => {
         },
       };
 
-      // invoke the method
       discovery.listTrainingData(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.listTrainingData(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -3422,12 +3305,12 @@ describe('listTrainingData', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'collection_id'];
 
-      // invoke the method
       discovery.listTrainingData({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('listTrainingExamples', () => {
@@ -3481,19 +3364,16 @@ describe('listTrainingExamples', () => {
         },
       };
 
-      // invoke the method
       discovery.listTrainingExamples(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.listTrainingExamples(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -3504,12 +3384,12 @@ describe('listTrainingExamples', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'collection_id', 'query_id'];
 
-      // invoke the method
       discovery.listTrainingExamples({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('updateTrainingExample', () => {
@@ -3575,19 +3455,16 @@ describe('updateTrainingExample', () => {
         },
       };
 
-      // invoke the method
       discovery.updateTrainingExample(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.updateTrainingExample(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -3598,12 +3475,12 @@ describe('updateTrainingExample', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'collection_id', 'query_id', 'example_id'];
 
-      // invoke the method
       discovery.updateTrainingExample({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('deleteUserData', () => {
@@ -3647,19 +3524,16 @@ describe('deleteUserData', () => {
         },
       };
 
-      // invoke the method
       discovery.deleteUserData(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.deleteUserData(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -3670,12 +3544,12 @@ describe('deleteUserData', () => {
       // required parameters for this method
       const requiredParams = ['customer_id'];
 
-      // invoke the method
       discovery.deleteUserData({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('createEvent', () => {
@@ -3725,19 +3599,16 @@ describe('createEvent', () => {
         },
       };
 
-      // invoke the method
       discovery.createEvent(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.createEvent(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -3748,12 +3619,12 @@ describe('createEvent', () => {
       // required parameters for this method
       const requiredParams = ['type', 'data'];
 
-      // invoke the method
       discovery.createEvent({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('getMetricsEventRate', () => {
@@ -3801,25 +3672,20 @@ describe('getMetricsEventRate', () => {
         },
       };
 
-      // invoke the method
       discovery.getMetricsEventRate(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-  });
-
-  describe('negative tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsError);
-    });
-
-    test('should convert a `null` value for `params` to an empty object', done => {
+    test('should not have any problems when no parameters are passed in', () => {
       // invoke the method
-      discovery.getMetricsEventRate(null, () => {
-        checkForEmptyObject(missingParamsMock);
-        done();
-      });
+      discovery.getMetricsEventRate();
+      checkDefaultSuccessArgs(createRequestMock);
     });
 
+    test('should use argument as callback function if only one is passed in', () => {
+      // invoke the method
+      discovery.getMetricsEventRate(noop);
+      checkDefaultSuccessArgs(createRequestMock);
+    });
   });
 });
 describe('getMetricsQuery', () => {
@@ -3867,25 +3733,20 @@ describe('getMetricsQuery', () => {
         },
       };
 
-      // invoke the method
       discovery.getMetricsQuery(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-  });
-
-  describe('negative tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsError);
-    });
-
-    test('should convert a `null` value for `params` to an empty object', done => {
+    test('should not have any problems when no parameters are passed in', () => {
       // invoke the method
-      discovery.getMetricsQuery(null, () => {
-        checkForEmptyObject(missingParamsMock);
-        done();
-      });
+      discovery.getMetricsQuery();
+      checkDefaultSuccessArgs(createRequestMock);
     });
 
+    test('should use argument as callback function if only one is passed in', () => {
+      // invoke the method
+      discovery.getMetricsQuery(noop);
+      checkDefaultSuccessArgs(createRequestMock);
+    });
   });
 });
 describe('getMetricsQueryEvent', () => {
@@ -3933,25 +3794,20 @@ describe('getMetricsQueryEvent', () => {
         },
       };
 
-      // invoke the method
       discovery.getMetricsQueryEvent(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-  });
-
-  describe('negative tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsError);
-    });
-
-    test('should convert a `null` value for `params` to an empty object', done => {
+    test('should not have any problems when no parameters are passed in', () => {
       // invoke the method
-      discovery.getMetricsQueryEvent(null, () => {
-        checkForEmptyObject(missingParamsMock);
-        done();
-      });
+      discovery.getMetricsQueryEvent();
+      checkDefaultSuccessArgs(createRequestMock);
     });
 
+    test('should use argument as callback function if only one is passed in', () => {
+      // invoke the method
+      discovery.getMetricsQueryEvent(noop);
+      checkDefaultSuccessArgs(createRequestMock);
+    });
   });
 });
 describe('getMetricsQueryNoResults', () => {
@@ -3999,25 +3855,20 @@ describe('getMetricsQueryNoResults', () => {
         },
       };
 
-      // invoke the method
       discovery.getMetricsQueryNoResults(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-  });
-
-  describe('negative tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsError);
-    });
-
-    test('should convert a `null` value for `params` to an empty object', done => {
+    test('should not have any problems when no parameters are passed in', () => {
       // invoke the method
-      discovery.getMetricsQueryNoResults(null, () => {
-        checkForEmptyObject(missingParamsMock);
-        done();
-      });
+      discovery.getMetricsQueryNoResults();
+      checkDefaultSuccessArgs(createRequestMock);
     });
 
+    test('should use argument as callback function if only one is passed in', () => {
+      // invoke the method
+      discovery.getMetricsQueryNoResults(noop);
+      checkDefaultSuccessArgs(createRequestMock);
+    });
   });
 });
 describe('getMetricsQueryTokenEvent', () => {
@@ -4059,25 +3910,20 @@ describe('getMetricsQueryTokenEvent', () => {
         },
       };
 
-      // invoke the method
       discovery.getMetricsQueryTokenEvent(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-  });
-
-  describe('negative tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsError);
-    });
-
-    test('should convert a `null` value for `params` to an empty object', done => {
+    test('should not have any problems when no parameters are passed in', () => {
       // invoke the method
-      discovery.getMetricsQueryTokenEvent(null, () => {
-        checkForEmptyObject(missingParamsMock);
-        done();
-      });
+      discovery.getMetricsQueryTokenEvent();
+      checkDefaultSuccessArgs(createRequestMock);
     });
 
+    test('should use argument as callback function if only one is passed in', () => {
+      // invoke the method
+      discovery.getMetricsQueryTokenEvent(noop);
+      checkDefaultSuccessArgs(createRequestMock);
+    });
   });
 });
 describe('queryLog', () => {
@@ -4131,23 +3977,19 @@ describe('queryLog', () => {
         },
       };
 
-      // invoke the method
       discovery.queryLog(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-  });
-
-  describe('negative tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsError);
+    test('should not have any problems when no parameters are passed in', () => {
+      // invoke the method
+      discovery.queryLog();
+      checkDefaultSuccessArgs(createRequestMock);
     });
 
-    test('should convert a `null` value for `params` to an empty object', done => {
+    test('should use argument as callback function if only one is passed in', () => {
       // invoke the method
-      discovery.queryLog(null, () => {
-        checkForEmptyObject(missingParamsMock);
-        done();
-      });
+      discovery.queryLog(noop);
+      checkDefaultSuccessArgs(createRequestMock);
     });
   });
 });
@@ -4199,19 +4041,16 @@ describe('createCredentials', () => {
         },
       };
 
-      // invoke the method
       discovery.createCredentials(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.createCredentials(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -4222,12 +4061,12 @@ describe('createCredentials', () => {
       // required parameters for this method
       const requiredParams = ['environment_id'];
 
-      // invoke the method
       discovery.createCredentials({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('deleteCredentials', () => {
@@ -4276,19 +4115,16 @@ describe('deleteCredentials', () => {
         },
       };
 
-      // invoke the method
       discovery.deleteCredentials(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.deleteCredentials(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -4299,12 +4135,12 @@ describe('deleteCredentials', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'credential_id'];
 
-      // invoke the method
       discovery.deleteCredentials({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('getSourceCredentials', () => {
@@ -4353,19 +4189,16 @@ describe('getSourceCredentials', () => {
         },
       };
 
-      // invoke the method
       discovery.getSourceCredentials(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.getSourceCredentials(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -4376,12 +4209,12 @@ describe('getSourceCredentials', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'credential_id'];
 
-      // invoke the method
       discovery.getSourceCredentials({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('listCredentials', () => {
@@ -4425,19 +4258,16 @@ describe('listCredentials', () => {
         },
       };
 
-      // invoke the method
       discovery.listCredentials(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.listCredentials(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -4448,12 +4278,12 @@ describe('listCredentials', () => {
       // required parameters for this method
       const requiredParams = ['environment_id'];
 
-      // invoke the method
       discovery.listCredentials({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
 describe('updateCredentials', () => {
@@ -4509,19 +4339,16 @@ describe('updateCredentials', () => {
         },
       };
 
-      // invoke the method
       discovery.updateCredentials(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
-
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      // invoke the method
       discovery.updateCredentials(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
@@ -4532,11 +4359,11 @@ describe('updateCredentials', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'credential_id'];
 
-      // invoke the method
       discovery.updateCredentials({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
+    
   });
 });
