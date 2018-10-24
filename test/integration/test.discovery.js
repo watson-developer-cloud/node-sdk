@@ -50,7 +50,7 @@ describe('discovery_integration', function() {
       assert(Array.isArray(res.environments));
       assert(res.environments.length);
       const environment_ids = res.environments.map(e => e.environment_id);
-      assert(environment_ids.includes(environment_id));
+      assert(environment_ids.indexOf(environment_id) > -1);
       done();
     });
   });
