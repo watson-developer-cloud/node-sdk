@@ -29,7 +29,8 @@ describe('language_translator_integration', function() {
     language_translator.getModels(null, done);
   });
 
-  it('translate()', function(done) {
+  // NO LONGER AVAILABLE IN THE SERVICE
+  it.skip('translate()', function(done) {
     const params = {
       text: 'this is a test',
       source: 'en',
