@@ -49,8 +49,8 @@ describe('discovery_integration', function() {
       assert.ifError(err);
       assert(Array.isArray(res.environments));
       assert(res.environments.length);
-      assert(res.environments[0]);
-      assert.equal(res.environments[0].environment_id, environment_id);
+      const environment_ids = res.environments.map(e => e.environment_id);
+      assert(environment_ids.includes(environment_id));
       done();
     });
   });
