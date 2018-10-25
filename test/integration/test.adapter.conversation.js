@@ -158,7 +158,9 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.deepEqual(result.context.system.dialog_stack, [{ dialog_node: 'root' }]);
+        assert.deepEqual(result.context.system.dialog_stack, [
+          { dialog_node: 'node_22_1467833484410' },
+        ]);
         done();
       });
     });
@@ -181,7 +183,9 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.deepEqual(result.context.system.dialog_stack, [{ dialog_node: 'root' }]);
+        assert.deepEqual(result.context.system.dialog_stack, [
+          { dialog_node: 'node_22_1467833484410' },
+        ]);
         done();
       });
     });
@@ -204,7 +208,7 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.deepEqual(result.context.system.dialog_stack, ['root']);
+        assert.deepEqual(result.context.system.dialog_stack, ['node_22_1467833484410']);
         done();
       });
     });
