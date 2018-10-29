@@ -25,8 +25,8 @@ describe('text_to_speech_integration', function() {
     nock.disableNetConnect();
   });
 
-  it('voices()', function(done) {
-    text_to_speech.voices(null, done);
+  it('listVoices()', function(done) {
+    text_to_speech.listVoices(null, done);
   });
 
   it('synthesize()', function(done) {
@@ -42,7 +42,7 @@ describe('text_to_speech_integration', function() {
       .on('format', done.bind(null, null));
   });
 
-  it('pronunciation()', function(done) {
+  it('getPronunciation()', function(done) {
     const checkPronunciation = function(err, res) {
       assert.ifError(err);
       assert.equal(
@@ -54,7 +54,7 @@ describe('text_to_speech_integration', function() {
       done();
     };
 
-    text_to_speech.pronunciation({ text: 'IEEE' }, checkPronunciation);
+    text_to_speech.getPronunciation({ text: 'IEEE' }, checkPronunciation);
   });
 
   describe('customization', function() {
@@ -62,8 +62,8 @@ describe('text_to_speech_integration', function() {
 
     // todo: before task that cleans up any leftover customizations from previous runs
 
-    it('createCustomization()', function(done) {
-      text_to_speech.createCustomization(
+    it('createVoiceModel()', function(done) {
+      text_to_speech.createVoiceModel(
         {
           name: 'temporary-node-sdk-test',
           language: 'en-US',
@@ -84,8 +84,8 @@ describe('text_to_speech_integration', function() {
       );
     });
 
-    it('getCustomizations()', function(done) {
-      text_to_speech.getCustomizations({}, function(err, response) {
+    it('listVoiceModels()', function(done) {
+      text_to_speech.listVoiceModels({}, function(err, response) {
         // console.log(JSON.stringify(err || response, null, 2));
         if (err) {
           return done(err);
@@ -95,8 +95,8 @@ describe('text_to_speech_integration', function() {
       });
     });
 
-    it('getCustomizations() with language', function(done) {
-      text_to_speech.getCustomizations({ language: 'en-GB' }, function(err, response) {
+    it('listVoiceModels() with language', function(done) {
+      text_to_speech.listVoiceModels({ language: 'en-GB' }, function(err, response) {
         // console.log(JSON.stringify(err || response, null, 2));
         if (err) {
           return done(err);
@@ -114,8 +114,8 @@ describe('text_to_speech_integration', function() {
       });
     });
 
-    it('updateCustomization()', function(done) {
-      text_to_speech.updateCustomization(
+    it('updateVoiceModel()', function(done) {
+      text_to_speech.updateVoiceModel(
         {
           customization_id: customization_id,
           description: 'Updated. Should be automatically deleted within 10 minutes.',
@@ -125,17 +125,14 @@ describe('text_to_speech_integration', function() {
       );
     });
 
-    it('getCustomization()', function(done) {
-      text_to_speech.getCustomization({ customization_id: customization_id }, function(
-        err,
-        response
-      ) {
-        // console.log(JSON.stringify(err || response, null, 2));
+    it('getVoiceModel()', function(done) {
+      text_to_speech.getVoiceModel({ customization_id: customization_id }, function(err, res) {
+        // console.log(JSON.stringify(err || res, null, 2));
         if (err) {
           return done(err);
         }
-        assert.equal(response.customization_id, customization_id);
-        assert(response.words.length);
+        assert.equal(res.customization_id, customization_id);
+        assert(res.words.length);
         done();
       });
     });
@@ -161,8 +158,8 @@ describe('text_to_speech_integration', function() {
       );
     });
 
-    it('getWords()', function(done) {
-      text_to_speech.getWords({ customization_id: customization_id }, function(err, response) {
+    it('listWords()', function(done) {
+      text_to_speech.listWords({ customization_id: customization_id }, function(err, response) {
         if (err) {
           return done(err);
         }
@@ -196,8 +193,8 @@ describe('text_to_speech_integration', function() {
       );
     });
 
-    it('deleteCustomization()', function(done) {
-      text_to_speech.deleteCustomization({ customization_id: customization_id }, done);
+    it('deleteVoiceModel()', function(done) {
+      text_to_speech.deleteVoiceModel({ customization_id: customization_id }, done);
     });
   });
 });

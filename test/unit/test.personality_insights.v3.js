@@ -119,7 +119,7 @@ describe('personality_insights_v3', function() {
 
   it('should generate a valid csv request', function() {
     const params = { content: content_items, content_type: 'application/json' };
-    const req = personality_insights.profile_csv(params, noop);
+    const req = personality_insights.profileAsCsv(params, noop);
     const body = Buffer.from(req.body).toString('ascii');
     assert.equal(req.uri.href, service.url + service_path + '?version=2016-10-19');
     assert.equal(body, JSON.stringify(params.content));
@@ -132,7 +132,7 @@ describe('personality_insights_v3', function() {
       content_type: 'application/json',
       csv_headers: true,
     };
-    const req = personality_insights.profile_csv(params, noop);
+    const req = personality_insights.profileAsCsv(params, noop);
     const body = Buffer.from(req.body).toString('ascii');
     assert.equal(req.uri.href, service.url + service_path + '?version=2016-10-19&csv_headers=true');
     assert.equal(body, JSON.stringify(params.content));

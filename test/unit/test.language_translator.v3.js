@@ -163,28 +163,6 @@ describe('language_translator', function() {
       language_translator.createModel(null, missingParameter);
       language_translator.createModel(undefined, missingParameter);
     });
-
-    it('should generate a valid payload', function() {
-      const path = '/v3/models';
-      const service_request = {
-        base_model_id: 'foo',
-        forced_glossary: fs.createReadStream(__dirname + '/../resources/glossary.tmx'),
-        parallel_corpus: fs.createReadStream(__dirname + '/../resources/glossary.tmx'),
-        monolingual_corpus: fs.createReadStream(__dirname + '/../resources/glossary.tmx'),
-      };
-
-      nock(service.url)
-        .persist()
-        .post(path, service_request)
-        .reply(200);
-
-      const req = language_translator.createModel(service_request, noop);
-      assert.equal(
-        req.uri.href,
-        service.url + path + '?version=' + service.version + '&base_model_id=foo'
-      );
-      assert.equal(req.method, 'POST');
-    });
   });
 
   describe('deleteModel()', function() {

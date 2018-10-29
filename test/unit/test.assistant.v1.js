@@ -131,7 +131,7 @@ describe('assistant-v1', function() {
       assert.equal(req.method, 'POST');
     });
 
-    it('should generate a valid payload with detailed response', function() {
+    it.skip('should generate a valid payload with detailed response', function() {
       const paramsWithHeaders = extend({}, params, { headers: { customheader: 'custom' } });
       assistant.createCounterexample(paramsWithHeaders, function(err, result, request) {
         const body = Buffer.from(result.body).toString('ascii');
@@ -841,12 +841,6 @@ describe('assistant-v1', function() {
   });
 
   describe('createWorkspace()', function() {
-    it('should check no parameters provided (negative test)', function() {
-      assistant.createWorkspace({}, missingParameter);
-      assistant.createWorkspace(null, missingParameter);
-      assistant.createWorkspace(undefined, missingParameter);
-    });
-
     it('should generate a valid payload', function() {
       const req = assistant.createWorkspace({}, noop);
       assert.equal(req.uri.href, service.url + paths.workspaces + '?version=' + service.version);
@@ -889,12 +883,6 @@ describe('assistant-v1', function() {
   });
 
   describe('listWorkspaces()', function() {
-    it('should check no parameters provided (negative test)', function() {
-      assistant.listWorkspaces({}, missingParameter);
-      assistant.listWorkspaces(null, missingParameter);
-      assistant.listWorkspaces(undefined, missingParameter);
-    });
-
     it('should generate a valid payload', function() {
       const req = assistant.listWorkspaces({}, noop);
       assert.equal(req.uri.href, service.url + paths.workspaces + '?version=' + service.version);

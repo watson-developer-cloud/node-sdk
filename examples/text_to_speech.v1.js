@@ -43,7 +43,7 @@ textToSpeech
   .pipe(fs.createWriteStream('output.wav'));
 
 // Retrieve details of all available voices
-textToSpeech.voices({}, function(err, res) {
+textToSpeech.listVoices({}, function(err, res) {
   if (err) {
     return console.log(err);
   }
@@ -51,7 +51,7 @@ textToSpeech.voices({}, function(err, res) {
 });
 
 // Retrieve details of a specific voice
-textToSpeech.voice(
+textToSpeech.getVoice(
   {
     voice: 'en-GB_KateVoice'
   },
@@ -64,7 +64,7 @@ textToSpeech.voice(
 );
 
 // Pronunciation details for a word
-textToSpeech.pronunciation(
+textToSpeech.getPronunciation(
   {
     text: 'iPhone',
     format: 'spr', // 'ipa' (default) is only for english voices
@@ -78,8 +78,8 @@ textToSpeech.pronunciation(
   }
 );
 
-// create a customization model to change pronunciation of words
-textToSpeech.createCustomization(
+// create a voice model to change pronunciation of words
+textToSpeech.createVoiceModel(
   {
     name: 'my custom alt language pronunciation model',
     language: 'en-US', // currently, only en-US is accepted
@@ -98,8 +98,8 @@ textToSpeech.createCustomization(
   }
 );
 
-// update a customization model
-textToSpeech.updateCustomization(
+// update a voice model
+textToSpeech.updateVoiceModel(
   {
     customization_id: '6666451d-a23e-485c-9bc5-c7ce722550d6',
     name: 'new name', // optional
@@ -118,7 +118,7 @@ textToSpeech.updateCustomization(
 );
 
 // get a list of custom voice models
-textToSpeech.getCustomizations(
+textToSpeech.listVoiceModels(
   {
     language: 'en-US' // optional filter (currently only accepts en-US)
   },
@@ -156,7 +156,7 @@ textToSpeech.getCustomizations(
 );
 
 // get details of a custom voice model
-textToSpeech.getCustomization(
+textToSpeech.getVoiceModel(
   {
     customization_id: '6666451d-a23e-485c-9bc5-c7ce722550d6'
   },
@@ -190,7 +190,7 @@ textToSpeech.getCustomization(
 );
 
 // delete a custom voice model
-textToSpeech.deleteCustomization(
+textToSpeech.deleteVoiceModel(
   {
     customization_id: '9d153f61-a9c4-4b73-8eaf-63951c6dd77d'
   },
@@ -220,7 +220,7 @@ textToSpeech.addWords(
 );
 
 // add a single word to an existing model
-textToSpeech.updateCustomization(
+textToSpeech.updateVoiceModel(
   {
     customization_id: '7c7f8ba7-2f83-48f2-ae52-3a70825f9899',
     word: 'NCAA',
@@ -235,7 +235,7 @@ textToSpeech.updateCustomization(
 );
 
 // get all words in a customization
-textToSpeech.getWords(
+textToSpeech.listWords(
   {
     customization_id: '7c7f8ba7-2f83-48f2-ae52-3a70825f9899'
   },
