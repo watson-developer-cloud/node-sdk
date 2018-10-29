@@ -281,6 +281,7 @@ function (err, token) {
 ```
 
 ### Assistant v2
+> Watson Assistant v2 API is released in beta. For details, see the ["Introducing Watson Assistant"](https://www.ibm.com/blogs/watson/2018/03/the-future-of-watson-conversation-watson-assistant/) blog post.
 
 Use the [Assistant][assistant] service to determine the intent of a message.
 
