@@ -90,10 +90,12 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const body = {
       'input': _params.input,
       'alternate_intents': _params.alternate_intents,
@@ -102,12 +104,15 @@ class AssistantV1 extends BaseService {
       'intents': _params.intents,
       'output': _params.output
     };
+ 
     const query = {
       'nodes_visited_details': _params.nodes_visited_details
     };
+
     const path = {
       'workspace_id': _params.workspace_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/message',
@@ -124,6 +129,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -161,6 +167,7 @@ class AssistantV1 extends BaseService {
   public createWorkspace(params?: AssistantV1.CreateWorkspaceParams, callback?: AssistantV1.Callback<AssistantV1.Workspace>): NodeJS.ReadableStream | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+
     const body = {
       'name': _params.name,
       'description': _params.description,
@@ -173,6 +180,7 @@ class AssistantV1 extends BaseService {
       'learning_opt_out': _params.learning_opt_out,
       'system_settings': _params.system_settings
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces',
@@ -187,6 +195,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -207,13 +216,16 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'workspace_id': _params.workspace_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}',
@@ -226,6 +238,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -252,17 +265,21 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+ 
     const query = {
       'export': _params.export,
       'include_audit': _params.include_audit
     };
+
     const path = {
       'workspace_id': _params.workspace_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}',
@@ -276,6 +293,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -301,6 +319,7 @@ class AssistantV1 extends BaseService {
   public listWorkspaces(params?: AssistantV1.ListWorkspacesParams, callback?: AssistantV1.Callback<AssistantV1.WorkspaceCollection>): NodeJS.ReadableStream | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+ 
     const query = {
       'page_limit': _params.page_limit,
       'include_count': _params.include_count,
@@ -308,6 +327,7 @@ class AssistantV1 extends BaseService {
       'cursor': _params.cursor,
       'include_audit': _params.include_audit
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces',
@@ -320,6 +340,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -362,10 +383,12 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const body = {
       'name': _params.name,
       'description': _params.description,
@@ -378,12 +401,15 @@ class AssistantV1 extends BaseService {
       'learning_opt_out': _params.learning_opt_out,
       'system_settings': _params.system_settings
     };
+ 
     const query = {
       'append': _params.append
     };
+
     const path = {
       'workspace_id': _params.workspace_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}',
@@ -400,6 +426,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -431,18 +458,22 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'intent'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const body = {
       'intent': _params.intent,
       'description': _params.description,
       'examples': _params.examples
     };
+
     const path = {
       'workspace_id': _params.workspace_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/intents',
@@ -458,6 +489,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -479,14 +511,17 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'intent'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'workspace_id': _params.workspace_id,
       'intent': _params.intent
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/intents/{intent}',
@@ -499,6 +534,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -526,18 +562,22 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'intent'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+ 
     const query = {
       'export': _params.export,
       'include_audit': _params.include_audit
     };
+
     const path = {
       'workspace_id': _params.workspace_id,
       'intent': _params.intent
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/intents/{intent}',
@@ -551,6 +591,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -582,10 +623,12 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+ 
     const query = {
       'export': _params.export,
       'page_limit': _params.page_limit,
@@ -594,9 +637,11 @@ class AssistantV1 extends BaseService {
       'cursor': _params.cursor,
       'include_audit': _params.include_audit
     };
+
     const path = {
       'workspace_id': _params.workspace_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/intents',
@@ -610,6 +655,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -639,19 +685,23 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'intent'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const body = {
       'intent': _params.new_intent,
       'description': _params.new_description,
       'examples': _params.new_examples
     };
+
     const path = {
       'workspace_id': _params.workspace_id,
       'intent': _params.intent
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/intents/{intent}',
@@ -667,6 +717,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -698,18 +749,22 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'intent', 'text'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const body = {
       'text': _params.text,
       'mentions': _params.mentions
     };
+
     const path = {
       'workspace_id': _params.workspace_id,
       'intent': _params.intent
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples',
@@ -725,6 +780,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -747,15 +803,18 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'intent', 'text'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'workspace_id': _params.workspace_id,
       'intent': _params.intent,
       'text': _params.text
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
@@ -768,6 +827,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -792,18 +852,22 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'intent', 'text'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+ 
     const query = {
       'include_audit': _params.include_audit
     };
+
     const path = {
       'workspace_id': _params.workspace_id,
       'intent': _params.intent,
       'text': _params.text
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
@@ -817,6 +881,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -845,10 +910,12 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'intent'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+ 
     const query = {
       'page_limit': _params.page_limit,
       'include_count': _params.include_count,
@@ -856,10 +923,12 @@ class AssistantV1 extends BaseService {
       'cursor': _params.cursor,
       'include_audit': _params.include_audit
     };
+
     const path = {
       'workspace_id': _params.workspace_id,
       'intent': _params.intent
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples',
@@ -873,6 +942,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -901,19 +971,23 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'intent', 'text'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const body = {
       'text': _params.new_text,
       'mentions': _params.new_mentions
     };
+
     const path = {
       'workspace_id': _params.workspace_id,
       'intent': _params.intent,
       'text': _params.text
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
@@ -929,6 +1003,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -958,16 +1033,20 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'text'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const body = {
       'text': _params.text
     };
+
     const path = {
       'workspace_id': _params.workspace_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/counterexamples',
@@ -983,6 +1062,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -1004,14 +1084,17 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'text'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'workspace_id': _params.workspace_id,
       'text': _params.text
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/counterexamples/{text}',
@@ -1024,6 +1107,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -1047,17 +1131,21 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'text'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+ 
     const query = {
       'include_audit': _params.include_audit
     };
+
     const path = {
       'workspace_id': _params.workspace_id,
       'text': _params.text
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/counterexamples/{text}',
@@ -1071,6 +1159,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -1098,10 +1187,12 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+ 
     const query = {
       'page_limit': _params.page_limit,
       'include_count': _params.include_count,
@@ -1109,9 +1200,11 @@ class AssistantV1 extends BaseService {
       'cursor': _params.cursor,
       'include_audit': _params.include_audit
     };
+
     const path = {
       'workspace_id': _params.workspace_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/counterexamples',
@@ -1125,6 +1218,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -1147,17 +1241,21 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'text'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const body = {
       'text': _params.new_text
     };
+
     const path = {
       'workspace_id': _params.workspace_id,
       'text': _params.text
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/counterexamples/{text}',
@@ -1173,6 +1271,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -1206,10 +1305,12 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'entity'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const body = {
       'entity': _params.entity,
       'description': _params.description,
@@ -1217,9 +1318,11 @@ class AssistantV1 extends BaseService {
       'values': _params.values,
       'fuzzy_match': _params.fuzzy_match
     };
+
     const path = {
       'workspace_id': _params.workspace_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities',
@@ -1235,6 +1338,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -1256,14 +1360,17 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'entity'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'workspace_id': _params.workspace_id,
       'entity': _params.entity
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities/{entity}',
@@ -1276,6 +1383,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -1303,18 +1411,22 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'entity'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+ 
     const query = {
       'export': _params.export,
       'include_audit': _params.include_audit
     };
+
     const path = {
       'workspace_id': _params.workspace_id,
       'entity': _params.entity
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities/{entity}',
@@ -1328,6 +1440,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -1359,10 +1472,12 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+ 
     const query = {
       'export': _params.export,
       'page_limit': _params.page_limit,
@@ -1371,9 +1486,11 @@ class AssistantV1 extends BaseService {
       'cursor': _params.cursor,
       'include_audit': _params.include_audit
     };
+
     const path = {
       'workspace_id': _params.workspace_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities',
@@ -1387,6 +1504,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -1419,10 +1537,12 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'entity'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const body = {
       'entity': _params.new_entity,
       'description': _params.new_description,
@@ -1430,10 +1550,12 @@ class AssistantV1 extends BaseService {
       'fuzzy_match': _params.new_fuzzy_match,
       'values': _params.new_values
     };
+
     const path = {
       'workspace_id': _params.workspace_id,
       'entity': _params.entity
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities/{entity}',
@@ -1449,6 +1571,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -1480,18 +1603,22 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'entity'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+ 
     const query = {
       'export': _params.export,
       'include_audit': _params.include_audit
     };
+
     const path = {
       'workspace_id': _params.workspace_id,
       'entity': _params.entity
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities/{entity}/mentions',
@@ -1505,6 +1632,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -1547,10 +1675,12 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'entity', 'value'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const body = {
       'value': _params.value,
       'metadata': _params.metadata,
@@ -1558,10 +1688,12 @@ class AssistantV1 extends BaseService {
       'patterns': _params.patterns,
       'type': _params.value_type
     };
+
     const path = {
       'workspace_id': _params.workspace_id,
       'entity': _params.entity
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities/{entity}/values',
@@ -1577,6 +1709,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -1599,15 +1732,18 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'entity', 'value'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'workspace_id': _params.workspace_id,
       'entity': _params.entity,
       'value': _params.value
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}',
@@ -1620,6 +1756,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -1647,19 +1784,23 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'entity', 'value'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+ 
     const query = {
       'export': _params.export,
       'include_audit': _params.include_audit
     };
+
     const path = {
       'workspace_id': _params.workspace_id,
       'entity': _params.entity,
       'value': _params.value
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}',
@@ -1673,6 +1814,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -1704,10 +1846,12 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'entity'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+ 
     const query = {
       'export': _params.export,
       'page_limit': _params.page_limit,
@@ -1716,10 +1860,12 @@ class AssistantV1 extends BaseService {
       'cursor': _params.cursor,
       'include_audit': _params.include_audit
     };
+
     const path = {
       'workspace_id': _params.workspace_id,
       'entity': _params.entity
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities/{entity}/values',
@@ -1733,6 +1879,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -1773,10 +1920,12 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'entity', 'value'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const body = {
       'value': _params.new_value,
       'metadata': _params.new_metadata,
@@ -1784,11 +1933,13 @@ class AssistantV1 extends BaseService {
       'synonyms': _params.new_synonyms,
       'patterns': _params.new_patterns
     };
+
     const path = {
       'workspace_id': _params.workspace_id,
       'entity': _params.entity,
       'value': _params.value
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}',
@@ -1804,6 +1955,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -1834,18 +1986,22 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const body = {
       'synonym': _params.synonym
     };
+
     const path = {
       'workspace_id': _params.workspace_id,
       'entity': _params.entity,
       'value': _params.value
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms',
@@ -1861,6 +2017,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -1884,16 +2041,19 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'workspace_id': _params.workspace_id,
       'entity': _params.entity,
       'value': _params.value,
       'synonym': _params.synonym
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}',
@@ -1906,6 +2066,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -1931,19 +2092,23 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+ 
     const query = {
       'include_audit': _params.include_audit
     };
+
     const path = {
       'workspace_id': _params.workspace_id,
       'entity': _params.entity,
       'value': _params.value,
       'synonym': _params.synonym
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}',
@@ -1957,6 +2122,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -1986,10 +2152,12 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'entity', 'value'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+ 
     const query = {
       'page_limit': _params.page_limit,
       'include_count': _params.include_count,
@@ -1997,11 +2165,13 @@ class AssistantV1 extends BaseService {
       'cursor': _params.cursor,
       'include_audit': _params.include_audit
     };
+
     const path = {
       'workspace_id': _params.workspace_id,
       'entity': _params.entity,
       'value': _params.value
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms',
@@ -2015,6 +2185,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -2043,19 +2214,23 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const body = {
       'synonym': _params.new_synonym
     };
+
     const path = {
       'workspace_id': _params.workspace_id,
       'entity': _params.entity,
       'value': _params.value,
       'synonym': _params.synonym
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}',
@@ -2071,6 +2246,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -2125,10 +2301,12 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'dialog_node'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const body = {
       'dialog_node': _params.dialog_node,
       'description': _params.description,
@@ -2149,9 +2327,11 @@ class AssistantV1 extends BaseService {
       'digress_out_slots': _params.digress_out_slots,
       'user_label': _params.user_label
     };
+
     const path = {
       'workspace_id': _params.workspace_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/dialog_nodes',
@@ -2167,6 +2347,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -2188,14 +2369,17 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'dialog_node'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'workspace_id': _params.workspace_id,
       'dialog_node': _params.dialog_node
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/dialog_nodes/{dialog_node}',
@@ -2208,6 +2392,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -2231,17 +2416,21 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'dialog_node'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+ 
     const query = {
       'include_audit': _params.include_audit
     };
+
     const path = {
       'workspace_id': _params.workspace_id,
       'dialog_node': _params.dialog_node
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/dialog_nodes/{dialog_node}',
@@ -2255,6 +2444,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -2282,10 +2472,12 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+ 
     const query = {
       'page_limit': _params.page_limit,
       'include_count': _params.include_count,
@@ -2293,9 +2485,11 @@ class AssistantV1 extends BaseService {
       'cursor': _params.cursor,
       'include_audit': _params.include_audit
     };
+
     const path = {
       'workspace_id': _params.workspace_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/dialog_nodes',
@@ -2309,6 +2503,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -2361,10 +2556,12 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id', 'dialog_node'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const body = {
       'dialog_node': _params.new_dialog_node,
       'description': _params.new_description,
@@ -2385,10 +2582,12 @@ class AssistantV1 extends BaseService {
       'digress_out_slots': _params.new_digress_out_slots,
       'user_label': _params.new_user_label
     };
+
     const path = {
       'workspace_id': _params.workspace_id,
       'dialog_node': _params.dialog_node
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/dialog_nodes/{dialog_node}',
@@ -2404,6 +2603,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -2436,16 +2636,19 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['filter'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+ 
     const query = {
       'filter': _params.filter,
       'sort': _params.sort,
       'page_limit': _params.page_limit,
       'cursor': _params.cursor
     };
+ 
     const parameters = {
       options: {
         url: '/v1/logs',
@@ -2458,6 +2661,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -2486,19 +2690,23 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['workspace_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+ 
     const query = {
       'sort': _params.sort,
       'filter': _params.filter,
       'page_limit': _params.page_limit,
       'cursor': _params.cursor
     };
+
     const path = {
       'workspace_id': _params.workspace_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/logs',
@@ -2512,6 +2720,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -2539,13 +2748,16 @@ class AssistantV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['customer_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+ 
     const query = {
       'customer_id': _params.customer_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/user_data',
@@ -2558,6 +2770,7 @@ class AssistantV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 

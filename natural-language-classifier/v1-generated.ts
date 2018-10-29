@@ -71,16 +71,20 @@ class NaturalLanguageClassifierV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['classifier_id', 'text'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const body = {
       'text': _params.text
     };
+
     const path = {
       'classifier_id': _params.classifier_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/classifiers/{classifier_id}/classify',
@@ -96,6 +100,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -118,16 +123,20 @@ class NaturalLanguageClassifierV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['classifier_id', 'collection'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const body = {
       'collection': _params.collection
     };
+
     const path = {
       'classifier_id': _params.classifier_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/classifiers/{classifier_id}/classify_collection',
@@ -143,6 +152,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -175,10 +185,12 @@ class NaturalLanguageClassifierV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['metadata', 'training_data'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const formData = {
       'training_metadata': {
         data: _params.metadata,
@@ -191,6 +203,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
         contentType: 'text/csv'
       }
     };
+ 
     const parameters = {
       options: {
         url: '/v1/classifiers',
@@ -204,6 +217,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -220,13 +234,16 @@ class NaturalLanguageClassifierV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['classifier_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'classifier_id': _params.classifier_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/classifiers/{classifier_id}',
@@ -240,6 +257,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -258,13 +276,16 @@ class NaturalLanguageClassifierV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['classifier_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'classifier_id': _params.classifier_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/classifiers/{classifier_id}',
@@ -278,6 +299,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -294,6 +316,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
   public listClassifiers(params?: NaturalLanguageClassifierV1.ListClassifiersParams, callback?: NaturalLanguageClassifierV1.Callback<NaturalLanguageClassifierV1.ClassifierList>): NodeJS.ReadableStream | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+ 
     const parameters = {
       options: {
         url: '/v1/classifiers',
@@ -306,6 +329,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
