@@ -95,56 +95,6 @@ describe('speech_to_text', function() {
     });
   });
 
-  describe('observeResult()', function() {
-    it('should check no parameters provided', function() {
-      speech_to_text.observeResult({}, missingParameter);
-      speech_to_text.observeResult(null, missingParameter);
-    });
-
-    it('should generate a valid payload', function(done) {
-      const expectation = nock('http://ibm.com:80', {
-        encodedQueryParams: true,
-      })
-        .matchHeader('Cookie', /SESSIONID=bar/)
-        .get('/v1/sessions/foo/observe_result')
-        .reply(200, {});
-
-      speech_to_text.observeResult(
-        {
-          session_id: 'foo',
-          cookie_session: 'bar',
-        },
-        err => {
-          assert.ifError(err);
-          assert(expectation.isDone());
-          done();
-        }
-      );
-    });
-
-    it('should generate a valid payload with interim_results enabled', function(done) {
-      const expectation = nock('http://ibm.com:80', {
-        encodedQueryParams: true,
-      })
-        .matchHeader('Cookie', /SESSIONID=bar/)
-        .get('/v1/sessions/foo/observe_result?interim_results=true')
-        .reply(200, {});
-
-      speech_to_text.observeResult(
-        {
-          session_id: 'foo',
-          cookie_session: 'bar',
-          interim_results: true,
-        },
-        err => {
-          assert.ifError(err);
-          assert(expectation.isDone());
-          done();
-        }
-      );
-    });
-  });
-
   describe('recognize()', function() {
     it('should check no parameters provided', function() {
       speech_to_text.recognize({}, missingParameter);
@@ -177,71 +127,6 @@ describe('speech_to_text', function() {
       const RecognizeStream = require('../../lib/recognize-stream');
       const buffer = fs.readFileSync(__dirname + '/../resources/sample1.webm');
       assert.equal(RecognizeStream.getContentType(buffer), 'audio/webm');
-    });
-  });
-
-  describe('recognizeLive()', function() {
-    const path = '/v1/sessions/foo/recognize';
-    const payload = {
-      session_id: 'foo',
-      cookie_session: 'foobar',
-      content_type: 'audio/l16; rate=41100',
-    };
-    const service_response = {
-      result: [
-        {
-          alternative: [
-            {
-              transcript: 'one two three',
-            },
-          ],
-          final: true,
-        },
-      ],
-      result_index: 0,
-    };
-
-    it('should check no parameters provided', function() {
-      speech_to_text.recognizeLive({}, missingParameter);
-      speech_to_text.recognizeLive(null, missingParameter);
-      speech_to_text.recognizeLive({ cookie_session: 'foo' }, missingParameter);
-      speech_to_text.recognizeLive({ content_type: 'bar' }, missingParameter);
-      speech_to_text.recognizeLive({ continuous: 'false' }, missingParameter);
-    });
-
-    it('should generate a valid payload', function(done) {
-      nock(service.url)
-        .post(path)
-        .delay(300)
-        .reply(200, service_response);
-
-      const req = speech_to_text.recognizeLive(payload, function(err, res) {
-        assert.equal(JSON.stringify(service_response), JSON.stringify(res));
-        done();
-      });
-      assert.equal(req.path, path);
-      assert.equal(req._headers['content-type'], payload.content_type);
-      assert.equal(req._headers['transfer-encoding'], 'chunked');
-      assert.ok(req._headers['cookie'].indexOf('SESSIONID=' + payload.cookie_session) !== -1);
-
-      req.end();
-    });
-
-    it('should generate a valid response', function(done) {
-      nock(service.url)
-        .post(path)
-        .delay(300)
-        .reply(200, service_response);
-
-      const req = speech_to_text.recognizeLive(payload, function(err, res) {
-        assert.equal(JSON.stringify(service_response), JSON.stringify(res));
-        done();
-      });
-      req.write(Buffer.from('one', 'utf-8'));
-      req.write(Buffer.from('two', 'utf-8'));
-      req.write(Buffer.from('three', 'utf-8'));
-      assert.equal(req.path, path);
-      req.end();
     });
   });
 

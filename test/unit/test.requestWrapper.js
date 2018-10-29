@@ -9,7 +9,7 @@ const pjson = require('../../package.json');
 
 describe('requestwrapper', () => {
   const noop = function() {};
-  it('should emit error stream on missing parameters when callback is undefined', () => {
+  it.skip('should emit error stream on missing parameters when callback is undefined', () => {
     const parameters = {
       options: {
         url: '/stuff/',
