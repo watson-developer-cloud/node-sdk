@@ -17,8 +17,8 @@ describe('language_translator_integration', function() {
   let language_translator;
 
   before(function() {
-    auth.language_translator.version = '2018-05-01';
-    language_translator = new watson.LanguageTranslatorV3(auth.language_translator);
+    auth.language_translator.v3.version = '2018-05-01';
+    language_translator = new watson.LanguageTranslatorV3(auth.language_translator.v3);
     nock.enableNetConnect();
   });
 
