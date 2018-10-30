@@ -20,7 +20,7 @@ import { BaseService } from '../lib/base_service';
 import { getMissingParams } from '../lib/helper';
 
 /**
- * Analyze various features of text content at scale. Provide text, raw HTML, or a public URL, and IBM Watson Natural Language Understanding will give you results for the features you request. The service cleans HTML content before analysis by default, so the results can ignore most advertisements and other unwanted content.  You can create <a target=\"_blank\" href=\"https://www.ibm.com/watson/developercloud/doc/natural-language-understanding/customizing.html\">custom models</a> with Watson Knowledge Studio that can be used to detect custom entities and relations in Natural Language Understanding.
+ * Analyze various features of text content at scale. Provide text, raw HTML, or a public URL and IBM Watson Natural Language Understanding will give you results for the features you request. The service cleans HTML content before analysis by default, so the results can ignore most advertisements and other unwanted content.  You can create [custom models](/docs/services/natural-language-understanding/customizing.html) with Watson Knowledge Studio to detect custom entities and relations in Natural Language Understanding.
  */
 
 class NaturalLanguageUnderstandingV1 extends BaseService {
@@ -63,44 +63,8 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
   /**
    * Analyze text, HTML, or a public webpage.
    *
-   * Analyzes text, HTML, or a public webpage with one or more text analysis features.
-   *
-   * ### Concepts
-   * Identify general concepts that are referenced or alluded to in your content. Concepts that are detected typically
-   * have an associated link to a DBpedia resource.
-   *
-   * ### Emotion
-   * Detect anger, disgust, fear, joy, or sadness that is conveyed by your content. Emotion information can be returned
-   * for detected entities, keywords, or user-specified target phrases found in the text.
-   *
-   * ### Entities
-   * Detect important people, places, geopolitical entities and other types of entities in your content. Entity
-   * detection recognizes consecutive coreferences of each entity. For example, analysis of the following text would
-   * count \"Barack Obama\" and \"He\" as the same entity:
-   *
-   * \"Barack Obama was the 44th President of the United States. He took office in January 2009.\"
-   *
-   * ### Keywords
-   * Determine the most important keywords in your content. Keyword phrases are organized by relevance in the results.
-   *
-   * ### Metadata
-   * Get author information, publication date, and the title of your text/HTML content.
-   *
-   * ### Relations
-   * Recognize when two entities are related, and identify the type of relation.  For example, you can identify an
-   * \"awardedTo\" relation between an award and its recipient.
-   *
-   * ### Semantic Roles
-   * Parse sentences into subject-action-object form, and identify entities and keywords that are subjects or objects of
-   * an action.
-   *
-   * ### Sentiment
-   * Determine whether your content conveys postive or negative sentiment. Sentiment information can be returned for
-   * detected entities, keywords, or user-specified target phrases found in the text.
-   *
-   * ### Categories
-   * Categorize your content into a hierarchical 5-level taxonomy. For example, \"Leonardo DiCaprio won an Oscar\"
-   * returns \"/art and entertainment/movies and tv/movies\" as the most confident classification.
+   * Analyzes text, HTML, or a public webpage with one or more text analysis features, including categories, concepts,
+   * emotion, entities, keywords, metadata, relations, semantic roles, and sentiment.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {Features} params.features - Specific features to analyze the document for.
@@ -129,10 +93,12 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['features'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const body = {
       'features': _params.features,
       'text': _params.text,
@@ -145,6 +111,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
       'language': _params.language,
       'limit_text_characters': _params.limit_text_characters
     };
+ 
     const parameters = {
       options: {
         url: '/v1/analyze',
@@ -159,6 +126,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -181,13 +149,16 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['model_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'model_id': _params.model_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/models/{model_id}',
@@ -201,6 +172,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -218,6 +190,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
   public listModels(params?: NaturalLanguageUnderstandingV1.ListModelsParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.ListModelsResults>): NodeJS.ReadableStream | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+ 
     const parameters = {
       options: {
         url: '/v1/models',
@@ -230,6 +203,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -344,7 +318,7 @@ namespace NaturalLanguageUnderstandingV1 {
     name?: string;
   }
 
-  /** The hierarchical 5-level taxonomy the content is categorized into. */
+  /** Returns a five-level taxonomy of the content. The top three categories are returned. Supported languages: Arabic, English, French, German, Italian, Japanese, Korean, Portuguese, Spanish. */
   export interface CategoriesOptions {
     /** CategoriesOptions accepts additional properties. */
     [propName: string]: any;
@@ -358,7 +332,7 @@ namespace NaturalLanguageUnderstandingV1 {
     score?: number;
   }
 
-  /** Whether or not to analyze content for general concepts that are referenced or alluded to. */
+  /** Returns high-level concepts in the content. For example, a research paper about deep learning might return the concept, "Artificial Intelligence" although the term is not mentioned. Supported languages: English, French, German, Japanese, Korean, Portuguese, Spanish. */
   export interface ConceptsOptions {
     /** Maximum number of concepts to return. */
     limit?: number;
@@ -404,7 +378,7 @@ namespace NaturalLanguageUnderstandingV1 {
     score?: number;
   }
 
-  /** Whether or not to return emotion analysis of the content. */
+  /** Detects anger, disgust, fear, joy, or sadness that is conveyed in the content or by the context around target phrases specified in the targets parameter. You can analyze emotion for detected entities with `entities.emotion` and for keywords with `keywords.emotion`. Supported languages: English. */
   export interface EmotionOptions {
     /** Set this to `false` to hide document-level emotion results. */
     document?: boolean;
@@ -434,7 +408,7 @@ namespace NaturalLanguageUnderstandingV1 {
     sadness?: number;
   }
 
-  /** Whether or not to return important people, places, geopolitical, and other entities detected in the analyzed content. */
+  /** Identifies people, cities, organizations, and other entities in the content. See [Entity types and subtypes](/docs/services/natural-language-understanding/entity-types.html). Supported languages: English, French, German, Italian, Japanese, Korean, Portuguese, Russian, Spanish, Swedish. Arabic, Chinese, and Dutch custom models are also supported. */
   export interface EntitiesOptions {
     /** Maximum number of entities to return. */
     limit?: number;
@@ -484,23 +458,23 @@ namespace NaturalLanguageUnderstandingV1 {
 
   /** Analysis features and options. */
   export interface Features {
-    /** Whether or not to return the concepts that are mentioned in the analyzed text. */
+    /** Returns high-level concepts in the content. For example, a research paper about deep learning might return the concept, "Artificial Intelligence" although the term is not mentioned. Supported languages: English, French, German, Japanese, Korean, Portuguese, Spanish. */
     concepts?: ConceptsOptions;
-    /** Whether or not to extract the emotions implied in the analyzed text. */
+    /** Detects anger, disgust, fear, joy, or sadness that is conveyed in the content or by the context around target phrases specified in the targets parameter. You can analyze emotion for detected entities with `entities.emotion` and for keywords with `keywords.emotion`. Supported languages: English */
     emotion?: EmotionOptions;
-    /** Whether or not to extract detected entity objects from the analyzed text. */
+    /** Identifies people, cities, organizations, and other entities in the content. See [Entity types and subtypes](/docs/services/natural-language-understanding/entity-types.html). Supported languages: English, French, German, Italian, Japanese, Korean, Portuguese, Russian, Spanish, Swedish. Arabic, Chinese, and Dutch custom models are also supported. */
     entities?: EntitiesOptions;
-    /** Whether or not to return the keywords in the analyzed text. */
+    /** Returns important keywords in the content. Supported languages: English, French, German, Italian, Japanese, Korean, Portuguese, Russian, Spanish, Swedish. */
     keywords?: KeywordsOptions;
-    /** Whether or not the author, publication date, and title of the analyzed text should be returned. This parameter is only available for URL and HTML input. */
+    /** Returns information from the document, including author name, title, RSS/ATOM feeds, prominent page image, and publication date. Supports URL and HTML input types only. */
     metadata?: MetadataOptions;
-    /** Whether or not to return the relationships between detected entities in the analyzed text. */
+    /** Recognizes when two entities are related and identifies the type of relation. For example, an `awardedTo` relation might connect the entities "Nobel Prize" and "Albert Einstein". See [Relation types](/docs/services/natural-language-understanding/relations.html). Supported languages: Arabic, English, German, Japanese, Korean, Spanish. Chinese, Dutch, French, Italian, and Portuguese custom models are also supported. */
     relations?: RelationsOptions;
-    /** Whether or not to return the subject-action-object relations from the analyzed text. */
+    /** Parses sentences into subject, action, and object form. Supported languages: English, German, Japanese, Korean, Spanish. */
     semantic_roles?: SemanticRolesOptions;
-    /** Whether or not to return the overall sentiment of the analyzed text. */
+    /** Analyzes the general sentiment of your content or the sentiment toward specific target phrases. You can analyze sentiment for detected entities with `entities.sentiment` and for keywords with `keywords.sentiment`. Supported languages: Arabic, English, French, German, Italian, Japanese, Korean, Portuguese, Russian, Spanish */
     sentiment?: SentimentOptions;
-    /** Whether or not to return the high level category the content is categorized as (i.e. news, art). */
+    /** Returns a five-level taxonomy of the content. The top three categories are returned. Supported languages: Arabic, English, French, German, Italian, Japanese, Korean, Portuguese, Spanish. */
     categories?: CategoriesOptions;
   }
 
@@ -510,7 +484,7 @@ namespace NaturalLanguageUnderstandingV1 {
     link?: string;
   }
 
-  /** An option indicating whether or not important keywords from the analyzed content should be returned. */
+  /** Returns important keywords in the content. Supported languages: English, French, German, Italian, Japanese, Korean, Portuguese, Russian, Spanish, Swedish. */
   export interface KeywordsOptions {
     /** Maximum number of keywords to return. */
     limit?: number;
@@ -534,10 +508,11 @@ namespace NaturalLanguageUnderstandingV1 {
 
   /** Models available for Relations and Entities features. */
   export interface ListModelsResults {
+    /** An array of available models. */
     models?: Model[];
   }
 
-  /** The Authors, Publication Date, and Title of the document. Supports URL and HTML input types. */
+  /** Returns information from the document, including author name, title, RSS/ATOM feeds, prominent page image, and publication date. Supports URL and HTML input types only. */
   export interface MetadataOptions {
     /** MetadataOptions accepts additional properties. */
     [propName: string]: any;
@@ -571,6 +546,7 @@ namespace NaturalLanguageUnderstandingV1 {
 
   /** RelationArgument. */
   export interface RelationArgument {
+    /** An array of extracted entities. */
     entities?: RelationEntity[];
     /** Character offsets indicating the beginning and end of the mention in the analyzed text. */
     location?: number[];
@@ -586,9 +562,9 @@ namespace NaturalLanguageUnderstandingV1 {
     type?: string;
   }
 
-  /** An option specifying if the relationships found between entities in the analyzed content should be returned. */
+  /** Recognizes when two entities are related and identifies the type of relation. For example, an `awardedTo` relation might connect the entities "Nobel Prize" and "Albert Einstein". See [Relation types](/docs/services/natural-language-understanding/relations.html). Supported languages: Arabic, English, German, Japanese, Korean, Spanish. Chinese, Dutch, French, Italian, and Portuguese custom models are also supported. */
   export interface RelationsOptions {
-    /** Enter a [custom model](https://www.bluemix.net/docs/services/natural-language-understanding/customizing.html) ID to override the default model. */
+    /** Enter a [custom model](/docs/services/natural-language-understanding/customizing.html) ID to override the default model. */
     model?: string;
   }
 
@@ -631,10 +607,11 @@ namespace NaturalLanguageUnderstandingV1 {
   export interface SemanticRolesObject {
     /** Object text. */
     text?: string;
+    /** An array of extracted keywords. */
     keywords?: SemanticRolesKeyword[];
   }
 
-  /** An option specifying whether or not to identify the subjects, actions, and verbs in the analyzed content. */
+  /** Parses sentences into subject, action, and object form. Supported languages: English, German, Japanese, Korean, Spanish. */
   export interface SemanticRolesOptions {
     /** Maximum number of semantic_roles results to return. */
     limit?: number;
@@ -660,7 +637,9 @@ namespace NaturalLanguageUnderstandingV1 {
   export interface SemanticRolesSubject {
     /** Text that corresponds to the subject role. */
     text?: string;
+    /** An array of extracted entities. */
     entities?: SemanticRolesEntity[];
+    /** An array of extracted keywords. */
     keywords?: SemanticRolesKeyword[];
   }
 
@@ -672,7 +651,7 @@ namespace NaturalLanguageUnderstandingV1 {
     tense?: string;
   }
 
-  /** An option specifying if sentiment of detected entities, keywords, or phrases should be returned. */
+  /** Analyzes the general sentiment of your content or the sentiment toward specific target phrases. You can analyze sentiment for detected entities with `entities.sentiment` and for keywords with `keywords.sentiment`. Supported languages: Arabic, English, French, German, Italian, Japanese, Korean, Portuguese, Russian, Spanish. */
   export interface SentimentOptions {
     /** Set this to `false` to hide document-level sentiment results. */
     document?: boolean;

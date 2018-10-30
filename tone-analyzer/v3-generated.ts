@@ -111,15 +111,18 @@ class ToneAnalyzerV3 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['tone_input', 'content_type'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const body = _params.tone_input;
+ 
     const query = {
       'sentences': _params.sentences,
       'tones': _params.tones
     };
+ 
     const parameters = {
       options: {
         url: '/v3/tone',
@@ -137,6 +140,7 @@ class ToneAnalyzerV3 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -176,13 +180,16 @@ class ToneAnalyzerV3 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['utterances'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const body = {
       'utterances': _params.utterances
     };
+ 
     const parameters = {
       options: {
         url: '/v3/tone_chat',
@@ -199,6 +206,7 @@ class ToneAnalyzerV3 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -368,7 +376,7 @@ namespace ToneAnalyzerV3 {
   export interface ToneChatScore {
     /** The score for the tone in the range of 0.5 to 1. A score greater than 0.75 indicates a high likelihood that the tone is perceived in the utterance. */
     score: number;
-    /** The unique, non-localized identifier of the tone for the results. The service can return results for the following tone IDs: `sad`, `frustrated`, `satisfied`, `excited`, `polite`, `impolite`, and `sympathetic`. The service returns results only for tones whose scores meet a minimum threshold of 0.5. */
+    /** The unique, non-localized identifier of the tone for the results. The service returns results only for tones whose scores meet a minimum threshold of 0.5. */
     tone_id: string;
     /** The user-visible, localized name of the tone. */
     tone_name: string;
