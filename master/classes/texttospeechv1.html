@@ -67,7 +67,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<h3 id="service-overview-the-ibm-text-to-speech-service-provides-an-api-that-uses-ibm-s-speech-synthesis-capabilities-to-synthesize-text-into-natural-sounding-speech-in-a-variety-of-languages-dialects-and-voices-the-service-supports-at-least-one-male-or-female-voice-sometimes-both-for-each-language-the-audio-is-streamed-back-to-the-client-with-minimal-delay-for-more-information-about-the-service-see-the-ibm-cloud-documentation-api-usage-guidelines-audio-formats-the-service-can-produce-audio-in-many-formats-mime-types-see-specifying-an-audio-format-ssml-many-methods-refer-to-the-speech-synthesis-markup-language-ssml-ssml-is-an-xml-based-markup-language-that-provides-text-annotation-for-speech-synthesis-applications-see-using-ssml-and-using-ibm-spr-word-translations-many-customization-methods-accept-sounds-like-or-phonetic-translations-for-words-phonetic-translations-are-based-on-the-ssml-phoneme-format-for-representing-a-word-you-can-specify-them-in-standard-international-phonetic-alphabet-ipa-representation-code-phoneme-alphabet-ipa-ph-t-m-to-phoneme-code-or-in-the-proprietary-ibm-symbolic-phonetic-representation-spr-code-phoneme-alphabet-ibm-ph-1gastroentxryfxs-phoneme-code-see-understanding-customization-websocket-interface-the-service-also-offers-a-websocket-interface-for-speech-synthesis-the-websocket-interface-supports-both-plain-text-and-ssml-input-including-the-ssml-mark-element-and-word-timings-see-the-websocket-interface-customization-ids-many-methods-accept-a-customization-id-which-is-a-globally-unique-identifier-guid-customization-ids-are-hexadecimal-strings-that-have-the-format-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx-x-watson-learning-opt-out-by-default-all-watson-services-log-requests-and-their-results-logging-is-done-only-to-improve-the-services-for-future-users-the-logged-data-is-not-shared-or-made-public-to-prevent-ibm-from-accessing-your-data-for-general-service-improvements-set-the-x-watson-learning-opt-out-request-header-to-true-for-all-requests-you-must-set-the-header-on-each-request-that-you-do-not-want-ibm-to-access-for-general-service-improvements-methods-of-the-customization-interface-do-not-log-words-and-translations-that-you-use-to-build-custom-voice-models-your-training-data-is-never-used-to-improve-the-service-s-base-models-however-the-service-does-log-such-data-when-a-custom-model-is-used-with-a-synthesize-request-you-must-set-the-x-watson-learning-opt-out-request-header-to-true-to-prevent-ibm-from-accessing-the-data-to-improve-the-service-x-watson-metadata-this-header-allows-you-to-associate-a-customer-id-with-data-that-is-passed-with-a-request-if-necessary-you-can-use-the-delete-labeled-data-method-to-delete-the-data-for-a-customer-id-see-information-security-">Service Overview The IBM&reg; Text to Speech service provides an API that uses IBM&#39;s speech-synthesis capabilities to synthesize text into natural-sounding speech in a variety of languages, dialects, and voices. The service supports at least one male or female voice, sometimes both, for each language. The audio is streamed back to the client with minimal delay. For more information about the service, see the <a href="https://console.bluemix.net/docs/services/text-to-speech/index.html">IBM&reg; Cloud documentation</a>.  ### API usage guidelines <em> <strong>Audio formats:</strong> The service can produce audio in many formats (MIME types). See <a href="https://console.bluemix.net/docs/services/text-to-speech/http.html#format">Specifying an audio format</a>. </em> <strong>SSML:</strong> Many methods refer to the Speech Synthesis Markup Language (SSML). SSML is an XML-based markup language that provides text annotation for speech-synthesis applications. See <a href="https://console.bluemix.net/docs/services/text-to-speech/SSML.html">Using SSML</a> and <a href="https://console.bluemix.net/docs/services/text-to-speech/SPRs.html">Using IBM SPR</a>. <em> <strong>Word translations:</strong> Many customization methods accept sounds-like or phonetic translations for words. Phonetic translations are based on the SSML phoneme format for representing a word. You can specify them in standard International Phonetic Alphabet (IPA) representation    <code>&lt;phoneme alphabet=\&quot;ipa\&quot; ph=\&quot;t&#601;m&#712;&#593;to\&quot;&gt;&lt;/phoneme&gt;</code>    or in the proprietary IBM Symbolic Phonetic Representation (SPR)    <code>&lt;phoneme alphabet=\&quot;ibm\&quot; ph=\&quot;1gAstroEntxrYFXs\&quot;&gt;&lt;/phoneme&gt;</code>    See <a href="https://console.bluemix.net/docs/services/text-to-speech/custom-intro.html">Understanding customization</a>. </em> <strong>WebSocket interface:</strong> The service also offers a WebSocket interface for speech synthesis. The WebSocket interface supports both plain text and SSML input, including the SSML &lt;mark&gt; element and word timings. See <a href="https://console.bluemix.net/docs/services/text-to-speech/websockets.html">The WebSocket interface</a>. <em> <strong>Customization IDs:</strong> Many methods accept a customization ID, which is a Globally Unique Identifier (GUID). Customization IDs are hexadecimal strings that have the format <code>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</code>. </em> <strong><code>X-Watson-Learning-Opt-Out</code>:</strong> By default, all Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. To prevent IBM from accessing your data for general service improvements, set the <code>X-Watson-Learning-Opt-Out</code> request header to <code>true</code> for all requests. You must set the header on each request that you do not want IBM to access for general service improvements.    Methods of the customization interface do not log words and translations that you use to build custom voice models. Your training data is never used to improve the service&#39;s base models. However, the service does log such data when a custom model is used with a synthesize request. You must set the <code>X-Watson-Learning-Opt-Out</code> request header to <code>true</code> to prevent IBM from accessing the data to improve the service. * <strong><code>X-Watson-Metadata</code>:</strong> This header allows you to associate a customer ID with data that is passed with a request. If necessary, you can use the <strong>Delete labeled data</strong> method to delete the data for a customer ID. See <a href="https://console.bluemix.net/docs/services/text-to-speech/information-security.html">Information security</a>.</h3>
+						<h3 id="service-overview-the-ibm-text-to-speech-service-provides-apis-that-use-ibm-s-speech-synthesis-capabilities-to-synthesize-text-into-natural-sounding-speech-in-a-variety-of-languages-dialects-and-voices-the-service-supports-at-least-one-male-or-female-voice-sometimes-both-for-each-language-the-audio-is-streamed-back-to-the-client-with-minimal-delay-for-speech-synthesis-the-service-supports-a-synchronous-http-representational-state-transfer-rest-interface-it-also-supports-a-websocket-interface-that-provides-both-plain-text-and-ssml-input-including-the-ssml-mark-element-and-word-timings-ssml-is-an-xml-based-markup-language-that-provides-text-annotation-for-speech-synthesis-applications-the-service-also-offers-a-customization-interface-you-can-use-the-interface-to-define-sounds-like-or-phonetic-translations-for-words-a-sounds-like-translation-consists-of-one-or-more-words-that-when-combined-sound-like-the-word-a-phonetic-translation-is-based-on-the-ssml-phoneme-format-for-representing-a-word-you-can-specify-a-phonetic-translation-in-standard-international-phonetic-alphabet-ipa-representation-or-in-the-proprietary-ibm-symbolic-phonetic-representation-spr-">Service Overview The IBM&reg; Text to Speech service provides APIs that use IBM&#39;s speech-synthesis capabilities to synthesize text into natural-sounding speech in a variety of languages, dialects, and voices. The service supports at least one male or female voice, sometimes both, for each language. The audio is streamed back to the client with minimal delay.   For speech synthesis, the service supports a synchronous HTTP Representational State Transfer (REST) interface. It also supports a WebSocket interface that provides both plain text and SSML input, including the SSML &lt;mark&gt; element and word timings. SSML is an XML-based markup language that provides text annotation for speech-synthesis applications.   The service also offers a customization interface. You can use the interface to define sounds-like or phonetic translations for words. A sounds-like translation consists of one or more words that, when combined, sound like the word. A phonetic translation is based on the SSML phoneme format for representing a word. You can specify a phonetic translation in standard International Phonetic Alphabet (IPA) representation or in the proprietary IBM Symbolic Phonetic Representation (SPR).</h3>
 						<p>interfaces</p>
 					</div>
 				</div>
@@ -189,7 +189,7 @@
 					<div class="tsd-signature tsd-kind-icon">Callback<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0d93955/text-to-speech/v1-generated.ts#L851">text-to-speech/v1-generated.ts:851</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a5047f5/text-to-speech/v1-generated.ts#L949">text-to-speech/v1-generated.ts:949</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -231,7 +231,7 @@
 					<div class="tsd-signature tsd-kind-icon">Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0d93955/text-to-speech/v1-generated.ts#L839">text-to-speech/v1-generated.ts:839</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a5047f5/text-to-speech/v1-generated.ts#L937">text-to-speech/v1-generated.ts:937</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -283,7 +283,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides BaseService.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0d93955/text-to-speech/v1-generated.ts#L31">text-to-speech/v1-generated.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a5047f5/text-to-speech/v1-generated.ts#L31">text-to-speech/v1-generated.ts:31</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -320,7 +320,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseService._options</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0d93955/lib/base_service.ts#L95">lib/base_service.ts:95</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a5047f5/lib/base_service.ts#L95">lib/base_service.ts:95</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -331,7 +331,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.name</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0d93955/text-to-speech/v1-generated.ts#L30">text-to-speech/v1-generated.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a5047f5/text-to-speech/v1-generated.ts#L30">text-to-speech/v1-generated.ts:30</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -342,7 +342,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseService.serviceDefaults</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0d93955/lib/base_service.ts#L96">lib/base_service.ts:96</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a5047f5/lib/base_service.ts#L96">lib/base_service.ts:96</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -353,7 +353,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.serviceVersion</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0d93955/text-to-speech/v1-generated.ts#L31">text-to-speech/v1-generated.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a5047f5/text-to-speech/v1-generated.ts#L31">text-to-speech/v1-generated.ts:31</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -364,7 +364,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseService.tokenManager</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0d93955/lib/base_service.ts#L97">lib/base_service.ts:97</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a5047f5/lib/base_service.ts#L97">lib/base_service.ts:97</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -375,7 +375,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.URL</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0d93955/text-to-speech/v1-generated.ts#L29">text-to-speech/v1-generated.ts:29</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a5047f5/text-to-speech/v1-generated.ts#L29">text-to-speech/v1-generated.ts:29</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -392,7 +392,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0d93955/text-to-speech/v1-generated.ts#L547">text-to-speech/v1-generated.ts:547</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a5047f5/text-to-speech/v1-generated.ts#L608">text-to-speech/v1-generated.ts:608</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -403,13 +403,20 @@
 									that already exists in a custom model overwrites the word&#39;s existing translation. A custom model can contain no
 									more than 20,000 entries. You must use credentials for the instance of the service that owns a model to add a word
 								to it.</p>
+								<p>You can define sounds-like or phonetic translations for words. A sounds-like translation consists of one or more
+									words that, when combined, sound like the word. Phonetic translations are based on the SSML phoneme format for
+								representing a word. You can specify them in standard International Phonetic Alphabet (IPA) representation</p>
+								<p>  <code>&lt;phoneme alphabet=\&quot;ipa\&quot; ph=\&quot;t&#601;m&#712;&#593;to\&quot;&gt;&lt;/phoneme&gt;</code></p>
+								<p>  or in the proprietary IBM Symbolic Phonetic Representation (SPR)</p>
+								<p>  <code>&lt;phoneme alphabet=\&quot;ibm\&quot; ph=\&quot;1gAstroEntxrYFXs\&quot;&gt;&lt;/phoneme&gt;</code></p>
 								<p><strong>Note:</strong> This method is currently a beta release.</p>
 								<p><strong>See also:</strong></p>
 								<ul>
 									<li><a href="https://console.bluemix.net/docs/services/text-to-speech/custom-entries.html#cuWordAdd">Adding a single word to a custom
 									model</a></li>
 									<li><a href="https://console.bluemix.net/docs/services/text-to-speech/custom-entries.html#cuJapaneseAdd">Adding words to a Japanese custom
-									model</a>.</li>
+									model</a></li>
+									<li><a href="https://console.bluemix.net/docs/services/text-to-speech/custom-intro.html">Understanding customization</a>.</li>
 								</ul>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -441,7 +448,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0d93955/text-to-speech/v1-generated.ts#L609">text-to-speech/v1-generated.ts:609</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a5047f5/text-to-speech/v1-generated.ts#L686">text-to-speech/v1-generated.ts:686</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -452,13 +459,20 @@
 									word that already exists in a custom model overwrites the word&#39;s existing translation. A custom model can contain
 									no more than 20,000 entries. You must use credentials for the instance of the service that owns a model to add
 								words to it.</p>
+								<p>You can define sounds-like or phonetic translations for words. A sounds-like translation consists of one or more
+									words that, when combined, sound like the word. Phonetic translations are based on the SSML phoneme format for
+								representing a word. You can specify them in standard International Phonetic Alphabet (IPA) representation</p>
+								<p>  <code>&lt;phoneme alphabet=\&quot;ipa\&quot; ph=\&quot;t&#601;m&#712;&#593;to\&quot;&gt;&lt;/phoneme&gt;</code></p>
+								<p>  or in the proprietary IBM Symbolic Phonetic Representation (SPR)</p>
+								<p>  <code>&lt;phoneme alphabet=\&quot;ibm\&quot; ph=\&quot;1gAstroEntxrYFXs\&quot;&gt;&lt;/phoneme&gt;</code></p>
 								<p><strong>Note:</strong> This method is currently a beta release.</p>
 								<p><strong>See also:</strong></p>
 								<ul>
 									<li><a href="https://console.bluemix.net/docs/services/text-to-speech/custom-entries.html#cuWordsAdd">Adding multiple words to a custom
 									model</a></li>
 									<li><a href="https://console.bluemix.net/docs/services/text-to-speech/custom-entries.html#cuJapaneseAdd">Adding words to a Japanese custom
-									model</a>.</li>
+									model</a></li>
+									<li><a href="https://console.bluemix.net/docs/services/text-to-speech/custom-intro.html">Understanding customization</a>.</li>
 								</ul>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -491,7 +505,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.createRequest</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0d93955/lib/base_service.ts#L245">lib/base_service.ts:245</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a5047f5/lib/base_service.ts#L245">lib/base_service.ts:245</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -530,7 +544,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0d93955/text-to-speech/v1-generated.ts#L292">text-to-speech/v1-generated.ts:292</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a5047f5/text-to-speech/v1-generated.ts#L308">text-to-speech/v1-generated.ts:308</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -573,7 +587,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0d93955/text-to-speech/v1-generated.ts#L802">text-to-speech/v1-generated.ts:802</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a5047f5/text-to-speech/v1-generated.ts#L896">text-to-speech/v1-generated.ts:896</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -618,7 +632,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0d93955/text-to-speech/v1-generated.ts#L340">text-to-speech/v1-generated.ts:340</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a5047f5/text-to-speech/v1-generated.ts#L360">text-to-speech/v1-generated.ts:360</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -660,7 +674,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0d93955/text-to-speech/v1-generated.ts#L660">text-to-speech/v1-generated.ts:660</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a5047f5/text-to-speech/v1-generated.ts#L742">text-to-speech/v1-generated.ts:742</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -703,7 +717,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.getCredentials</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0d93955/lib/base_service.ts#L166">lib/base_service.ts:166</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a5047f5/lib/base_service.ts#L166">lib/base_service.ts:166</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -726,7 +740,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0d93955/text-to-speech/v1-generated.ts#L237">text-to-speech/v1-generated.ts:237</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a5047f5/text-to-speech/v1-generated.ts#L249">text-to-speech/v1-generated.ts:249</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -769,7 +783,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0d93955/text-to-speech/v1-generated.ts#L76">text-to-speech/v1-generated.ts:76</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a5047f5/text-to-speech/v1-generated.ts#L76">text-to-speech/v1-generated.ts:76</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -810,7 +824,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0d93955/text-to-speech/v1-generated.ts#L384">text-to-speech/v1-generated.ts:384</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a5047f5/text-to-speech/v1-generated.ts#L408">text-to-speech/v1-generated.ts:408</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -853,7 +867,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0d93955/text-to-speech/v1-generated.ts#L706">text-to-speech/v1-generated.ts:706</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a5047f5/text-to-speech/v1-generated.ts#L792">text-to-speech/v1-generated.ts:792</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -895,7 +909,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0d93955/text-to-speech/v1-generated.ts#L431">text-to-speech/v1-generated.ts:431</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a5047f5/text-to-speech/v1-generated.ts#L459">text-to-speech/v1-generated.ts:459</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -936,7 +950,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0d93955/text-to-speech/v1-generated.ts#L119">text-to-speech/v1-generated.ts:119</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a5047f5/text-to-speech/v1-generated.ts#L124">text-to-speech/v1-generated.ts:124</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -973,7 +987,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0d93955/text-to-speech/v1-generated.ts#L752">text-to-speech/v1-generated.ts:752</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a5047f5/text-to-speech/v1-generated.ts#L842">text-to-speech/v1-generated.ts:842</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1017,7 +1031,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.preAuthenticate</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0d93955/lib/base_service.ts#L223">lib/base_service.ts:223</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a5047f5/lib/base_service.ts#L223">lib/base_service.ts:223</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1051,7 +1065,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.setAccessToken</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0d93955/lib/base_service.ts#L204">lib/base_service.ts:204</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a5047f5/lib/base_service.ts#L204">lib/base_service.ts:204</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1087,7 +1101,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0d93955/text-to-speech/v1-generated.ts#L171">text-to-speech/v1-generated.ts:171</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a5047f5/text-to-speech/v1-generated.ts#L178">text-to-speech/v1-generated.ts:178</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1133,7 +1147,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/0d93955/text-to-speech/v1-generated.ts#L477">text-to-speech/v1-generated.ts:477</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a5047f5/text-to-speech/v1-generated.ts#L522">text-to-speech/v1-generated.ts:522</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1145,9 +1159,21 @@
 									a word that already exists in a custom model overwrites the word&#39;s existing translation. A custom model can contain
 									no more than 20,000 entries. You must use credentials for the instance of the service that owns a model to update
 								it.</p>
+								<p>You can define sounds-like or phonetic translations for words. A sounds-like translation consists of one or more
+									words that, when combined, sound like the word. Phonetic translations are based on the SSML phoneme format for
+								representing a word. You can specify them in standard International Phonetic Alphabet (IPA) representation</p>
+								<p>  <code>&lt;phoneme alphabet=\&quot;ipa\&quot; ph=\&quot;t&#601;m&#712;&#593;to\&quot;&gt;&lt;/phoneme&gt;</code></p>
+								<p>  or in the proprietary IBM Symbolic Phonetic Representation (SPR)</p>
+								<p>  <code>&lt;phoneme alphabet=\&quot;ibm\&quot; ph=\&quot;1gAstroEntxrYFXs\&quot;&gt;&lt;/phoneme&gt;</code></p>
 								<p><strong>Note:</strong> This method is currently a beta release.</p>
-								<p><strong>See also:</strong> <a href="https://console.bluemix.net/docs/services/text-to-speech/custom-models.html#cuModelsUpdate">Updating a custom
-								model</a>.</p>
+								<p><strong>See also:</strong></p>
+								<ul>
+									<li><a href="https://console.bluemix.net/docs/services/text-to-speech/custom-models.html#cuModelsUpdate">Updating a custom
+									model</a></li>
+									<li><a href="https://console.bluemix.net/docs/services/text-to-speech/custom-entries.html#cuJapaneseAdd">Adding words to a Japanese custom
+									model</a></li>
+									<li><a href="https://console.bluemix.net/docs/services/text-to-speech/custom-intro.html">Understanding customization</a>.</li>
+								</ul>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
