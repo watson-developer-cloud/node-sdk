@@ -4591,7 +4591,7 @@ namespace DiscoveryV1 {
     /** The collection ID of the collection containing the document for this result. */
     collection_id?: string;
     /** Metadata of the query result. */
-    result_metadata?: QueryResultResultMetadata;
+    result_metadata?: QueryResultMetadata;
     /** The internal status code returned by the ingestion subsystem indicating the overall result of ingesting the source document. */
     code?: number;
     /** Name of the original source file (if available). */
@@ -4686,13 +4686,13 @@ namespace DiscoveryV1 {
     /** The collection ID of the collection containing the document for this result. */
     collection_id?: string;
     /** Metadata of the query result. */
-    result_metadata?: QueryResultResultMetadata;
+    result_metadata?: QueryResultMetadata;
     /** QueryResult accepts additional properties. */
     [propName: string]: any;
   }
 
   /** Metadata of a query result. */
-  export interface QueryResultResultMetadata {
+  export interface QueryResultMetadata {
     /** An unbounded measure of the relevance of a particular result, dependent on the query and matching document. A higher score indicates a greater match to the query parameters. */
     score?: number;
     /** The confidence score for the given result. Calculated based on how relevant the result is estimated to be, compared to a trained relevancy model. confidence can range from `0.0` to `1.0`. The higher the number, the more relevant the document. */
