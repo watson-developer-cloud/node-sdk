@@ -67,7 +67,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>The IBM&reg; Speech to Text service provides an API that uses IBM&#39;s speech-recognition capabilities to produce transcripts of spoken audio. The service can transcribe speech from various languages and audio formats. It addition to basic transcription, the service can produce detailed information about many different aspects of the audio. For most languages, the service supports two sampling rates, broadband and narrowband. It returns all JSON response content in the UTF-8 character set.   For more information about the service, see the <a href="https://console.bluemix.net/docs/services/speech-to-text/index.html">IBM&reg; Cloud documentation</a>.  ### API usage guidelines <em> <strong>Audio formats:</strong> The service accepts audio in many formats (MIME types). See <a href="https://console.bluemix.net/docs/services/speech-to-text/audio-formats.html">Audio formats</a>. </em> <strong>HTTP interfaces:</strong> The service provides two HTTP Representational State Transfer (REST) interfaces for speech recognition. The basic interface includes a single synchronous method. The asynchronous interface provides multiple methods that use registered callbacks and polling for non-blocking recognition. See <a href="https://console.bluemix.net/docs/services/speech-to-text/http.html">The HTTP interface</a> and <a href="https://console.bluemix.net/docs/services/speech-to-text/async.html">The asynchronous HTTP interface</a>. <em> <strong>WebSocket interface:</strong> The service also offers a WebSocket interface for speech recognition. The WebSocket interface provides a full-duplex, low-latency communication channel. Clients send requests and audio to the service and receive results over a single connection in an asynchronous fashion. See <a href="https://console.bluemix.net/docs/services/speech-to-text/websockets.html">The WebSocket interface</a>. </em> <strong>Customization:</strong> The service offers two customization interfaces. Use language model customization to expand the vocabulary of a base model with domain-specific terminology. Use acoustic model customization to adapt a base model for the acoustic characteristics of your audio. Language model customization is generally available for production use by most supported languages; acoustic model customization is beta functionality that is available for all supported languages. See <a href="https://console.bluemix.net/docs/services/speech-to-text/custom.html">The customization interface</a>. <em> <strong>Customization IDs:</strong> Many methods accept a customization ID to identify a custom language or custom acoustic model. Customization IDs are Globally Unique Identifiers (GUIDs). They are hexadecimal strings that have the format <code>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</code>. </em> <strong><code>X-Watson-Learning-Opt-Out</code>:</strong> By default, all Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. To prevent IBM from accessing your data for general service improvements, set the <code>X-Watson-Learning-Opt-Out</code> request header to <code>true</code> for all requests. You must set the header on each request that you do not want IBM to access for general service improvements.    Methods of the customization interface do not log corpora, words, and audio resources that you use to build custom models. Your training data is never used to improve the service&#39;s base models. However, the service does log such data when a custom model is used with a recognition request. You must set the <code>X-Watson-Learning-Opt-Out</code> request header to <code>true</code> to prevent IBM from accessing the data to improve the service. * <strong><code>X-Watson-Metadata</code></strong>: This header allows you to associate a customer ID with data that is passed with a request. If necessary, you can use the <strong>Delete labeled data</strong> method to delete the data for a customer ID. See <a href="https://console.bluemix.net/docs/services/speech-to-text/information-security.html">Information security</a>.
+						<p>The IBM&reg; Speech to Text service provides APIs that use IBM&#39;s speech-recognition capabilities to produce transcripts of spoken audio. The service can transcribe speech from various languages and audio formats. It addition to basic transcription, the service can produce detailed information about many different aspects of the audio. For most languages, the service supports two sampling rates, broadband and narrowband. It returns all JSON response content in the UTF-8 character set.   For speech recognition, the service supports synchronous and asynchronous HTTP Representational State Transfer (REST) interfaces. It also supports a WebSocket interface that provides a full-duplex, low-latency communication channel: Clients send requests and audio to the service and receive results over a single connection asynchronously.   The service also offers two customization interfaces. Use language model customization to expand the vocabulary of a base model with domain-specific terminology. Use acoustic model customization to adapt a base model for the acoustic characteristics of your audio. Language model customization is generally available for production use with most supported languages; acoustic model customization is beta functionality that is available for all supported languages.
 						interfaces</p>
 					</div>
 				</div>
@@ -253,7 +253,7 @@
 					<div class="tsd-signature tsd-kind-icon">Callback<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L2462">speech-to-text/v1-generated.ts:2462</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L2701">speech-to-text/v1-generated.ts:2701</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -295,7 +295,7 @@
 					<div class="tsd-signature tsd-kind-icon">Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L2450">speech-to-text/v1-generated.ts:2450</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L2689">speech-to-text/v1-generated.ts:2689</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -347,7 +347,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides BaseService.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L31">speech-to-text/v1-generated.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L31">speech-to-text/v1-generated.ts:31</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -384,7 +384,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseService._options</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/lib/base_service.ts#L95">lib/base_service.ts:95</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/lib/base_service.ts#L95">lib/base_service.ts:95</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -395,7 +395,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.name</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L30">speech-to-text/v1-generated.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L30">speech-to-text/v1-generated.ts:30</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -406,7 +406,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseService.serviceDefaults</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/lib/base_service.ts#L96">lib/base_service.ts:96</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/lib/base_service.ts#L96">lib/base_service.ts:96</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -417,7 +417,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.serviceVersion</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L31">speech-to-text/v1-generated.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L31">speech-to-text/v1-generated.ts:31</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -428,7 +428,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseService.tokenManager</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/lib/base_service.ts#L97">lib/base_service.ts:97</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/lib/base_service.ts#L97">lib/base_service.ts:97</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -439,7 +439,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.URL</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L29">speech-to-text/v1-generated.ts:29</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L29">speech-to-text/v1-generated.ts:29</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -456,7 +456,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L2199">speech-to-text/v1-generated.ts:2199</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L2414">speech-to-text/v1-generated.ts:2414</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -563,7 +563,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L1191">speech-to-text/v1-generated.ts:1191</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L1321">speech-to-text/v1-generated.ts:1321</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -631,7 +631,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L1434">speech-to-text/v1-generated.ts:1434</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L1586">speech-to-text/v1-generated.ts:1586</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -696,7 +696,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L1526">speech-to-text/v1-generated.ts:1526</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L1684">speech-to-text/v1-generated.ts:1684</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -773,7 +773,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L330">speech-to-text/v1-generated.ts:330</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L366">speech-to-text/v1-generated.ts:366</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -786,7 +786,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 								<p>You can use the method to retrieve the results of any job, regardless of whether it was submitted with a callback
 									URL and the <code>recognitions.completed_with_results</code> event, and you can retrieve the results multiple times for as
 									long as they remain available. Use the <strong>Check jobs</strong> method to request information about the most recent jobs
-								associated with the calling user.</p>
+								associated with the caller.</p>
 								<p><strong>See also:</strong> <a href="https://console.bluemix.net/docs/services/speech-to-text/async.html#job">Checking the status and retrieving the results of a
 								job</a>.</p>
 							</div>
@@ -819,7 +819,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L375">speech-to-text/v1-generated.ts:375</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L415">speech-to-text/v1-generated.ts:415</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -861,7 +861,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L1745">speech-to-text/v1-generated.ts:1745</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L1925">speech-to-text/v1-generated.ts:1925</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -903,7 +903,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L544">speech-to-text/v1-generated.ts:544</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L623">speech-to-text/v1-generated.ts:623</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -938,17 +938,36 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 								<p>The service imposes a data size limit of 100 MB. It automatically detects the endianness of the incoming audio and,
 								for audio that includes multiple channels, downmixes the audio to one-channel mono during transcoding.</p>
 								<p><strong>See also:</strong> <a href="https://console.bluemix.net/docs/services/speech-to-text/async.html#create">Creating a job</a>.</p>
-								<h3 id="audio-formats-content-types-">Audio formats (content types)</h3>
-								<p> Use the <code>Content-Type</code> header to specify the audio format (MIME type) of the audio. The service accepts the
-								following formats, including specifying the sampling rate, channels, and endianness where indicated.</p>
+								<h3 id="streaming-mode">Streaming mode</h3>
+								<p> For requests to transcribe live audio as it becomes available, you must set the <code>Transfer-Encoding</code> header to
+									<code>chunked</code> to use streaming mode. In streaming mode, the server closes the connection (status code 408) if the
+									service receives no data chunk for 30 seconds and it has no audio to transcribe for 30 seconds. The server also
+									closes the connection (status code 400) if no speech is detected for <code>inactivity_timeout</code> seconds of audio (not
+								processing time); use the <code>inactivity_timeout</code> parameter to change the default of 30 seconds.</p>
+								<p><strong>See also:</strong></p>
 								<ul>
-									<li><code>audio/basic</code> (Use only with narrowband models.)</li>
+									<li><a href="https://console.bluemix.net/docs/services/speech-to-text/input.html#transmission">Audio transmission</a></li>
+									<li><a href="https://console.bluemix.net/docs/services/speech-to-text/input.html#timeouts">Timeouts</a></li>
+								</ul>
+								<h3 id="audio-formats-content-types-">Audio formats (content types)</h3>
+								<p> The service accepts audio in the following formats (MIME types).</p>
+								<ul>
+									<li>For formats that are labeled <strong>Required</strong>, you must use the <code>Content-Type</code> header with the request to specify the
+									format of the audio.</li>
+									<li>For all other formats, you can omit the <code>Content-Type</code> header or specify <code>application/octet-stream</code> with the
+										header to have the service automatically detect the format of the audio. (With the <code>curl</code> command, you can specify
+									either <code>\&quot;Content-Type:\&quot;</code> or <code>\&quot;Content-Type: application/octet-stream\&quot;</code>.)</li>
+								</ul>
+								<p>Where indicated, the format that you specify must include the sampling rate and can optionally include the number
+								of channels and the endianness of the audio.</p>
+								<ul>
+									<li><code>audio/basic</code> (<strong>Required.</strong> Use only with narrowband models.)</li>
 									<li><code>audio/flac</code></li>
-									<li><code>audio/l16</code> (Specify the sampling rate (<code>rate</code>) and optionally the number of channels (<code>channels</code>) and endianness
-									(<code>endianness</code>) of the audio.)</li>
+									<li><code>audio/l16</code> (<strong>Required.</strong> Specify the sampling rate (<code>rate</code>) and optionally the number of channels (<code>channels</code>)
+									and endianness (<code>endianness</code>) of the audio.)</li>
 									<li><code>audio/mp3</code></li>
 									<li><code>audio/mpeg</code></li>
-									<li><code>audio/mulaw</code> (Specify the sampling rate (<code>rate</code>) of the audio.)</li>
+									<li><code>audio/mulaw</code> (<strong>Required.</strong> Specify the sampling rate (<code>rate</code>) of the audio.)</li>
 									<li><code>audio/ogg</code> (The service automatically detects the codec of the input audio.)</li>
 									<li><code>audio/ogg;codecs=opus</code></li>
 									<li><code>audio/ogg;codecs=vorbis</code></li>
@@ -958,6 +977,8 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 									<li><code>audio/webm;codecs=vorbis</code></li>
 								</ul>
 								<p><strong>See also:</strong> <a href="https://console.bluemix.net/docs/services/speech-to-text/audio-formats.html">Audio formats</a>.</p>
+								<p><strong>Note:</strong> You must pass a content type when using any of the Watson SDKs. The SDKs require the content-type
+								parameter for all audio formats.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -988,7 +1009,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L786">speech-to-text/v1-generated.ts:786</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L882">speech-to-text/v1-generated.ts:882</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1031,7 +1052,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.createRequest</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/lib/base_service.ts#L245">lib/base_service.ts:245</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/lib/base_service.ts#L245">lib/base_service.ts:245</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1070,7 +1091,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L1792">speech-to-text/v1-generated.ts:1792</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L1977">speech-to-text/v1-generated.ts:1977</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1112,7 +1133,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L2255">speech-to-text/v1-generated.ts:2255</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L2476">speech-to-text/v1-generated.ts:2476</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1156,7 +1177,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L1251">speech-to-text/v1-generated.ts:1251</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L1388">speech-to-text/v1-generated.ts:1388</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1200,7 +1221,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L607">speech-to-text/v1-generated.ts:607</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L691">speech-to-text/v1-generated.ts:691</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1241,7 +1262,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L834">speech-to-text/v1-generated.ts:834</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L935">speech-to-text/v1-generated.ts:935</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1283,7 +1304,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L2411">speech-to-text/v1-generated.ts:2411</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L2646">speech-to-text/v1-generated.ts:2646</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1328,7 +1349,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L1580">speech-to-text/v1-generated.ts:1580</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L1744">speech-to-text/v1-generated.ts:1744</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1372,7 +1393,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L1835">speech-to-text/v1-generated.ts:1835</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L2025">speech-to-text/v1-generated.ts:2025</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1413,7 +1434,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L2313">speech-to-text/v1-generated.ts:2313</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L2539">speech-to-text/v1-generated.ts:2539</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1469,7 +1490,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L1297">speech-to-text/v1-generated.ts:1297</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L1439">speech-to-text/v1-generated.ts:1439</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1512,7 +1533,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.getCredentials</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/lib/base_service.ts#L166">lib/base_service.ts:166</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/lib/base_service.ts#L166">lib/base_service.ts:166</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1535,7 +1556,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L877">speech-to-text/v1-generated.ts:877</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L983">speech-to-text/v1-generated.ts:983</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1576,7 +1597,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L72">speech-to-text/v1-generated.ts:72</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L72">speech-to-text/v1-generated.ts:72</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1616,7 +1637,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L1627">speech-to-text/v1-generated.ts:1627</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L1796">speech-to-text/v1-generated.ts:1796</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1657,7 +1678,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L1881">speech-to-text/v1-generated.ts:1881</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L2075">speech-to-text/v1-generated.ts:2075</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1697,7 +1718,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L2360">speech-to-text/v1-generated.ts:2360</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L2591">speech-to-text/v1-generated.ts:2591</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1741,7 +1762,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L1342">speech-to-text/v1-generated.ts:1342</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L1489">speech-to-text/v1-generated.ts:1489</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1783,7 +1804,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L923">speech-to-text/v1-generated.ts:923</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L1033">speech-to-text/v1-generated.ts:1033</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1823,7 +1844,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L112">speech-to-text/v1-generated.ts:112</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L116">speech-to-text/v1-generated.ts:116</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1860,7 +1881,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L1684">speech-to-text/v1-generated.ts:1684</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L1859">speech-to-text/v1-generated.ts:1859</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1905,7 +1926,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.preAuthenticate</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/lib/base_service.ts#L223">lib/base_service.ts:223</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/lib/base_service.ts#L223">lib/base_service.ts:223</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1938,7 +1959,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L261">speech-to-text/v1-generated.ts:261</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L292">speech-to-text/v1-generated.ts:292</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1948,7 +1969,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 								<p>Sends audio and returns transcription results for a recognition request. Returns only the final results; to enable
 									interim results, use the WebSocket API. The service imposes a data size limit of 100 MB. It automatically detects
 									the endianness of the incoming audio and, for audio that includes multiple channels, downmixes the audio to
-								one-channel mono during transcoding. (For the <code>audio/l16</code> format, you can specify the endianness.)</p>
+								one-channel mono during transcoding.</p>
 								<p><strong>See also:</strong> <a href="https://console.bluemix.net/docs/services/speech-to-text/http.html#HTTP-basic">Making a basic HTTP
 								request</a>.</p>
 								<h3 id="streaming-mode">Streaming mode</h3>
@@ -1960,19 +1981,27 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 								<p><strong>See also:</strong></p>
 								<ul>
 									<li><a href="https://console.bluemix.net/docs/services/speech-to-text/input.html#transmission">Audio transmission</a></li>
-									<li><a href="https://console.bluemix.net/docs/services/speech-to-text/input.html#timeouts">Timeouts</a></li>
+									<li><a href="https://console.bluemix.net/docs/services/speech-to-text/input.html#timeouts">Timeouts</a>.</li>
 								</ul>
 								<h3 id="audio-formats-content-types-">Audio formats (content types)</h3>
-								<p> Use the <code>Content-Type</code> header to specify the audio format (MIME type) of the audio. The service accepts the
-								following formats, including specifying the sampling rate, channels, and endianness where indicated.</p>
+								<p> The service accepts audio in the following formats (MIME types).</p>
 								<ul>
-									<li><code>audio/basic</code> (Use only with narrowband models.)</li>
+									<li>For formats that are labeled <strong>Required</strong>, you must use the <code>Content-Type</code> header with the request to specify the
+									format of the audio.</li>
+									<li>For all other formats, you can omit the <code>Content-Type</code> header or specify <code>application/octet-stream</code> with the
+										header to have the service automatically detect the format of the audio. (With the <code>curl</code> command, you can specify
+									either <code>\&quot;Content-Type:\&quot;</code> or <code>\&quot;Content-Type: application/octet-stream\&quot;</code>.)</li>
+								</ul>
+								<p>Where indicated, the format that you specify must include the sampling rate and can optionally include the number
+								of channels and the endianness of the audio.</p>
+								<ul>
+									<li><code>audio/basic</code> (<strong>Required.</strong> Use only with narrowband models.)</li>
 									<li><code>audio/flac</code></li>
-									<li><code>audio/l16</code> (Specify the sampling rate (<code>rate</code>) and optionally the number of channels (<code>channels</code>) and endianness
-									(<code>endianness</code>) of the audio.)</li>
+									<li><code>audio/l16</code> (<strong>Required.</strong> Specify the sampling rate (<code>rate</code>) and optionally the number of channels (<code>channels</code>)
+									and endianness (<code>endianness</code>) of the audio.)</li>
 									<li><code>audio/mp3</code></li>
 									<li><code>audio/mpeg</code></li>
-									<li><code>audio/mulaw</code> (Specify the sampling rate (<code>rate</code>) of the audio.)</li>
+									<li><code>audio/mulaw</code> (<strong>Required.</strong> Specify the sampling rate (<code>rate</code>) of the audio.)</li>
 									<li><code>audio/ogg</code> (The service automatically detects the codec of the input audio.)</li>
 									<li><code>audio/ogg;codecs=opus</code></li>
 									<li><code>audio/ogg;codecs=vorbis</code></li>
@@ -1982,6 +2011,8 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 									<li><code>audio/webm;codecs=vorbis</code></li>
 								</ul>
 								<p><strong>See also:</strong> <a href="https://console.bluemix.net/docs/services/speech-to-text/audio-formats.html">Audio formats</a>.</p>
+								<p><strong>Note:</strong> You must pass a content type when using any of the Watson SDKs. The SDKs require the content-type
+								parameter for all audio formats.</p>
 								<h3 id="multipart-speech-recognition">Multipart speech recognition</h3>
 								<p> The method also supports multipart recognition requests. With multipart requests, you pass all audio data as
 									multipart form data. You specify some parameters as request headers and query parameters, but you pass JSON
@@ -2021,7 +2052,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L678">speech-to-text/v1-generated.ts:678</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L766">speech-to-text/v1-generated.ts:766</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2080,7 +2111,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L1921">speech-to-text/v1-generated.ts:1921</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L2119">speech-to-text/v1-generated.ts:2119</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2123,7 +2154,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L963">speech-to-text/v1-generated.ts:963</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L1077">speech-to-text/v1-generated.ts:1077</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2167,7 +2198,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.setAccessToken</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/lib/base_service.ts#L204">lib/base_service.ts:204</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/lib/base_service.ts#L204">lib/base_service.ts:204</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2203,7 +2234,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L1994">speech-to-text/v1-generated.ts:1994</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L2197">speech-to-text/v1-generated.ts:2197</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2268,7 +2299,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L1041">speech-to-text/v1-generated.ts:1041</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L1160">speech-to-text/v1-generated.ts:1160</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2327,7 +2358,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L721">speech-to-text/v1-generated.ts:721</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L813">speech-to-text/v1-generated.ts:813</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2368,7 +2399,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L2059">speech-to-text/v1-generated.ts:2059</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L2268">speech-to-text/v1-generated.ts:2268</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2422,7 +2453,7 @@ e</code>. You can specify a maximum of five sounds-like pronunciations for a wor
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/speech-to-text/v1-generated.ts#L1098">speech-to-text/v1-generated.ts:1098</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L1223">speech-to-text/v1-generated.ts:1223</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">

@@ -105,7 +105,7 @@
 					<div class="tsd-signature tsd-kind-icon">timezone<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/assistant/v2.ts#L389">assistant/v2.ts:389</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/assistant/v2.ts#L402">assistant/v2.ts:402</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -120,12 +120,12 @@
 					<div class="tsd-signature tsd-kind-icon">turn_<wbr>count<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/assistant/v2.ts#L393">assistant/v2.ts:393</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/assistant/v2.ts#L406">assistant/v2.ts:406</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>This property is normally set by the Assistant which sets this to 1 during the first conversation turn and then increments it by 1 with every subsequent turn. A turn count equal to 0 (or &gt; 0) informs the Assistant that this is (or is not) the first turn in a conversation which influences the behavior of some skills. The Conversation skill uses this to evaluate its <code>welcome</code> and <code>conversation_start</code> conditions.</p>
+							<p>A counter that is automatically incremented with each turn of the conversation. A value of 1 indicates that this is the the first turn of a new conversation, which can affect the behavior of some skills.</p>
 						</div>
 					</div>
 				</section>
@@ -135,12 +135,12 @@
 					<div class="tsd-signature tsd-kind-icon">user_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ead267e/assistant/v2.ts#L391">assistant/v2.ts:391</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/assistant/v2.ts#L404">assistant/v2.ts:404</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>String value provided by the API client that should be unique per each distinct end user of the service powered by Assistant.</p>
+							<p>A string value that identifies the user who is interacting with the assistant. The client must provide a unique identifier for each individual end user who accesses the application. This user ID may be used for billing and other purposes.</p>
 						</div>
 					</div>
 				</section>
