@@ -1,6 +1,5 @@
 'use strict';
 
-const assert = require('assert');
 const watson = require('../../index');
 const nock = require('nock');
 const extend = require('extend');
@@ -31,7 +30,7 @@ describe('tone_analyzer.v3', function() {
     },
   });
 
-  before(function() {
+  beforeAll(function() {
     nock.disableNetConnect();
     nock(service.url)
       .persist()
@@ -39,7 +38,7 @@ describe('tone_analyzer.v3', function() {
       .reply(200, tone_response);
   });
 
-  after(function() {
+  afterAll(function() {
     nock.cleanAll();
   });
 
@@ -47,7 +46,8 @@ describe('tone_analyzer.v3', function() {
   const tone_analyzer_es = watson.tone_analyzer(service_es);
 
   const missingParameter = function(err) {
-    assert.ok(err instanceof Error && /required parameters/.test(err));
+    expect(err).toBeInstanceOf(Error);
+    expect(/required parameters/.test(err)).toBe(true);
   };
 
   // Tone API
@@ -60,11 +60,11 @@ describe('tone_analyzer.v3', function() {
   it('tone API should generate a valid payload with text', function() {
     const req = tone_analyzer.tone(tone_request, noop);
     const body = Buffer.from(req.body).toString('ascii');
-    assert.equal(req.uri.href, service.url + tone_path + '?version=2016-05-19');
-    assert.equal(body, tone_request.text);
-    assert.equal(req.method, 'POST');
-    assert.equal(req.headers['Content-Type'], 'text/plain');
-    assert.equal(req.headers['Accept'], 'application/json');
+    expect(req.uri.href).toBe(service.url + tone_path + '?version=2016-05-19');
+    expect(body).toBe(tone_request.text);
+    expect(req.method).toBe('POST');
+    expect(req.headers['Content-Type']).toBe('text/plain');
+    expect(req.headers['Accept']).toBe('application/json');
   });
 
   it('tone API should add optional query parameters', function() {
@@ -75,14 +75,13 @@ describe('tone_analyzer.v3', function() {
     };
     const req = tone_analyzer.tone(options, noop);
     const body = Buffer.from(req.body).toString('ascii');
-    assert.equal(
-      req.uri.href,
+    expect(req.uri.href).toBe(
       service.url + tone_path + '?version=2016-05-19&sentences=true&tones=emotion'
     );
-    assert.equal(body, tone_request.text);
-    assert.equal(req.method, 'POST');
-    assert.equal(req.headers['Content-Type'], 'text/plain');
-    assert.equal(req.headers['Accept'], 'application/json');
+    expect(body).toBe(tone_request.text);
+    expect(req.method).toBe('POST');
+    expect(req.headers['Content-Type']).toBe('text/plain');
+    expect(req.headers['Accept']).toBe('application/json');
   });
 
   it('tone API should add optional language parameter', function() {
@@ -94,26 +93,25 @@ describe('tone_analyzer.v3', function() {
     };
     const req = tone_analyzer.tone(options, noop);
     const body = Buffer.from(req.body).toString('ascii');
-    assert.equal(
-      req.uri.href,
+    expect(req.uri.href).toBe(
       service.url + tone_path + '?version=2016-05-19&sentences=true&tones=emotion'
     );
-    assert.equal(body, tone_request.text);
-    assert.equal(req.method, 'POST');
-    assert.equal(req.headers['Content-Type'], 'text/plain');
-    assert.equal(req.headers['Accept'], 'application/json');
-    assert.equal(req.headers['Content-Language'], 'en');
+    expect(body).toBe(tone_request.text);
+    expect(req.method).toBe('POST');
+    expect(req.headers['Content-Type']).toBe('text/plain');
+    expect(req.headers['Accept']).toBe('application/json');
+    expect(req.headers['Content-Language']).toBe('en');
   });
 
   it('tone API should set HTML content-type', function() {
     const options = { text: tone_request.text, isHTML: true };
     const req = tone_analyzer.tone(options, noop);
     const body = Buffer.from(req.body).toString('ascii');
-    assert.equal(req.uri.href, service.url + tone_path + '?version=2016-05-19');
-    assert.equal(body, tone_request.text);
-    assert.equal(req.method, 'POST');
-    assert.equal(req.headers['Content-Type'], 'text/html');
-    assert.equal(req.headers['Accept'], 'application/json');
+    expect(req.uri.href).toBe(service.url + tone_path + '?version=2016-05-19');
+    expect(body).toBe(tone_request.text);
+    expect(req.method).toBe('POST');
+    expect(req.headers['Content-Type']).toBe('text/html');
+    expect(req.headers['Accept']).toBe('application/json');
   });
 
   it('tone API should format the response', function(done) {
@@ -121,7 +119,7 @@ describe('tone_analyzer.v3', function() {
       if (err) {
         done(err);
       } else {
-        assert.equal(JSON.stringify(response), JSON.stringify(tone_response));
+        expect(JSON.stringify(response)).toBe(JSON.stringify(tone_response));
         done();
       }
     });
@@ -131,13 +129,13 @@ describe('tone_analyzer.v3', function() {
     const options = { text: tone_request.text, isHTML: true };
     const req = tone_analyzer_es.tone(options, noop);
     const body = Buffer.from(req.body).toString('ascii');
-    assert.equal(req.uri.href, service.url + tone_path + '?version=2016-05-19');
-    assert.equal(body, tone_request.text);
-    assert.equal(req.method, 'POST');
-    assert.equal(req.headers['Content-Type'], 'text/html');
-    assert.equal(req.headers['Accept'], 'application/json');
-    assert.equal(req.headers['x-custom-header'], 'foo');
-    assert.equal(req.headers['Accept-Language'], 'es');
+    expect(req.uri.href).toBe(service.url + tone_path + '?version=2016-05-19');
+    expect(body).toBe(tone_request.text);
+    expect(req.method).toBe('POST');
+    expect(req.headers['Content-Type']).toBe('text/html');
+    expect(req.headers['Accept']).toBe('application/json');
+    expect(req.headers['x-custom-header']).toBe('foo');
+    expect(req.headers['Accept-Language']).toBe('es');
   });
 
   // Tone Chat Endpoint API - test for valid payload
@@ -171,15 +169,15 @@ describe('tone_analyzer.v3', function() {
 
     // run tests
     const req = tone_analyzer.tone_chat(tone_chat_request, function(err, res) {
-      assert(req);
+      expect(req).toBeTruthy();
       const url = service.url + tone_chat_path;
-      assert.equal(req.uri.href.slice(0, url.length), url);
-      assert.equal(req.uri.href, service.url + tone_chat_path + '?version=2016-05-19');
-      assert.equal(req.method, 'POST');
-      assert.equal(req.headers['Content-Type'], 'application/json');
-      assert.equal(req.headers['Accept'], 'application/json');
-      assert.ifError(err);
-      assert(expectation.isDone());
+      expect(req.uri.href.slice(0, url.length)).toBe(url);
+      expect(req.uri.href).toBe(service.url + tone_chat_path + '?version=2016-05-19');
+      expect(req.method).toBe('POST');
+      expect(req.headers['Content-Type']).toBe('application/json');
+      expect(req.headers['Accept']).toBe('application/json');
+      expect(err).toBeNull();
+      expect(expectation.isDone()).toBe(true);
       done();
     });
   });

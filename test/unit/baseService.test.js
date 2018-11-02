@@ -3,9 +3,7 @@
 // many/most of those tests should be moved here
 const BaseService = require('../../lib/base_service').BaseService;
 const requestwrapper = require('../../lib/requestwrapper');
-const assert = require('assert');
 const util = require('util');
-const sinon = require('sinon');
 
 function TestService(options) {
   BaseService.call(this, options);
@@ -14,6 +12,16 @@ util.inherits(TestService, BaseService);
 TestService.prototype.name = 'test';
 TestService.prototype.version = 'v1';
 TestService.URL = 'https://gateway.watsonplatform.net/test/api';
+
+// set up mock for sendRequest
+const sendRequestMock = jest.spyOn(requestwrapper, 'sendRequest');
+const responseMessage = 'response';
+sendRequestMock.mockImplementation((params, cb) => {
+  cb(null, responseMessage);
+});
+afterEach(() => {
+  sendRequestMock.mockClear();
+});
 
 describe('BaseService', function() {
   let env;
@@ -25,9 +33,51 @@ describe('BaseService', function() {
     process.env = env;
   });
 
+  it('should not fail without credentials if use_unauthenticated is true', function() {
+    expect(function() {
+      new TestService({
+        use_unauthenticated: true,
+        version: 'v1',
+      });
+    }).not.toThrow();
+  });
+
+  it('should fail without credentials if use_unauthenticated is false', function() {
+    expect(function() {
+      new TestService({
+        use_unauthenticated: false,
+        version: 'v1',
+      });
+    }).toThrow(/Insufficient credentials/);
+  });
+
+  it('should check for missing authentication', function() {
+    expect(function() {
+      new TestService({
+        version: 'v1',
+        username: 'user',
+      });
+    }).toThrow(/password/);
+
+    expect(function() {
+      new TestService({
+        version: 'v1',
+        password: 'pass',
+      });
+    }).toThrow(/username/);
+
+    expect(function() {
+      new TestService({
+        password: 'pass',
+        username: 'user',
+        version: 'v1',
+      });
+    }).not.toThrow();
+  });
+
   it('should support token auth', function() {
     const instance = new BaseService({ token: 'foo' });
-    assert.equal(instance._options.headers['X-Watson-Authorization-Token'], 'foo');
+    expect(instance._options.headers['X-Watson-Authorization-Token']).toBe('foo');
   });
 
   it('should return hard-coded credentials', function() {
@@ -38,7 +88,7 @@ describe('BaseService', function() {
       password: 'pass',
       url: 'https://gateway.watsonplatform.net/test/api',
     };
-    assert.deepEqual(actual, expected);
+    expect(actual).toEqual(expected);
   });
 
   it('should return credentials and url from the environment', function() {
@@ -52,7 +102,7 @@ describe('BaseService', function() {
       password: 'env_pass',
       url: 'http://foo',
     };
-    assert.deepEqual(actual, expected);
+    expect(actual).toEqual(expected);
   });
 
   it('should allow mixing credentials from the environment and the default url', function() {
@@ -65,7 +115,7 @@ describe('BaseService', function() {
       password: 'env_pass',
       url: 'https://gateway.watsonplatform.net/test/api',
     };
-    assert.deepEqual(actual, expected);
+    expect(actual).toEqual(expected);
   });
 
   it('should return credentials from VCAP_SERVICES', function() {
@@ -87,7 +137,7 @@ describe('BaseService', function() {
       password: 'vcap_pass',
       url: 'https://gateway.watsonplatform.net/test/api',
     };
-    assert.deepEqual(actual, expected);
+    expect(actual).toEqual(expected);
   });
 
   it('should handle iam apikey credential from VCAP_SERVICES', function() {
@@ -111,8 +161,9 @@ describe('BaseService', function() {
       iam_apikey: '123456789',
       url: 'https://gateway.watsonplatform.net/test/api',
     };
-    assert.deepEqual(actual, expected);
-    assert.notEqual(instance.tokenManager, null);
+    expect(actual).toEqual(expected);
+    expect(instance.tokenManager).toBeDefined();
+    expect(instance.tokenManager).not.toBeNull();
   });
 
   it('should prefer hard-coded credentials over environment properties', function() {
@@ -125,7 +176,7 @@ describe('BaseService', function() {
       password: 'pass',
       url: 'https://gateway.watsonplatform.net/test/api',
     };
-    assert.deepEqual(actual, expected);
+    expect(actual).toEqual(expected);
   });
 
   it('should prefer environment properties over vcap_services', function() {
@@ -149,75 +200,66 @@ describe('BaseService', function() {
       password: 'env_pass',
       url: 'https://gateway.watsonplatform.net/test/api',
     };
-    assert.deepEqual(actual, expected);
+    expect(actual).toEqual(expected);
   });
 
   it('should set authorization header after getting a token from the token manager', function(done) {
     const instance = new TestService({ iam_apikey: 'abcd-1234' });
-    const sendRequestStub = sinon.stub(requestwrapper, 'sendRequest');
-    const getTokenStub = sinon.stub(instance.tokenManager, 'getToken');
     const accessToken = '567890';
-    const responseMessage = 'response';
     const parameters = {
       defaultOptions: {
         headers: {},
       },
     };
 
-    sendRequestStub.yields(null, responseMessage);
-    getTokenStub.yields(null, accessToken);
+    const getTokenMock = jest.spyOn(instance.tokenManager, 'getToken');
+    getTokenMock.mockImplementation(cb => {
+      cb(null, accessToken);
+    });
 
     instance.createRequest(parameters, function(err, res) {
-      const authHeader = sendRequestStub.args[0][0].defaultOptions.headers.Authorization;
-      assert.equal(`Bearer ${accessToken}`, authHeader);
-      assert.equal(responseMessage, res);
+      const authHeader = sendRequestMock.mock.calls[0][0].defaultOptions.headers.Authorization;
+      expect(`Bearer ${accessToken}`).toBe(authHeader);
+      expect(res).toBe(responseMessage);
 
-      sendRequestStub.restore();
-      getTokenStub.restore();
+      getTokenMock.mockReset();
       done();
     });
   });
 
   it('should send an error back to the user if the token request went bad', function(done) {
     const instance = new TestService({ iam_apikey: 'abcd-1234' });
-    const sendRequestSpy = sinon.spy(requestwrapper, 'sendRequest');
-    const getTokenStub = sinon.stub(instance.tokenManager, 'getToken');
     const errorMessage = 'Error in the token request.';
 
-    getTokenStub.yields(errorMessage);
+    const getTokenMock = jest.spyOn(instance.tokenManager, 'getToken');
+    getTokenMock.mockImplementation(cb => {
+      cb(errorMessage);
+    });
 
     instance.createRequest({}, function(err, res) {
-      assert.equal(err, errorMessage);
-      assert.equal(sendRequestSpy.notCalled, true);
-
-      sendRequestSpy.restore();
-      getTokenStub.restore();
+      expect(err).toBe(errorMessage);
+      expect(sendRequestMock).not.toHaveBeenCalled();
+      getTokenMock.mockReset();
       done();
     });
   });
 
   it('should call sendRequest right away if token manager is null', function(done) {
     const instance = new TestService({ username: 'user', password: 'pass' });
-    const sendRequestStub = sinon.stub(requestwrapper, 'sendRequest');
-    const responseMessage = 'response';
-
-    sendRequestStub.yields(null, responseMessage);
-
     instance.createRequest({}, function(err, res) {
-      assert.equal(res, responseMessage);
-      assert.equal(instance.tokenManager, null);
-
-      sendRequestStub.restore();
+      expect(res).toBe(responseMessage);
+      expect(instance.tokenManager).toBeNull();
       done();
     });
   });
 
   it('should not fail if setAccessToken is called and token manager is null', function() {
     const instance = new TestService({ username: 'user', password: 'pass' });
+    expect(instance.tokenManager).toBeNull();
 
-    assert.equal(instance.tokenManager, null);
     instance.setAccessToken('abcd-1234');
-    assert.notEqual(instance.tokenManager, null);
+    expect(instance.tokenManager).toBeDefined();
+    expect(instance.tokenManager).not.toBeNull();
   });
 
   it('should create a token manager instance if env variables specify iam credentials', function() {
@@ -228,8 +270,9 @@ describe('BaseService', function() {
       iam_apikey: 'test1234',
       url: 'https://gateway.watsonplatform.net/test/api',
     };
-    assert.deepEqual(actual, expected);
-    assert.notEqual(instance.tokenManager, null);
+    expect(actual).toEqual(expected);
+    expect(instance.tokenManager).toBeDefined();
+    expect(instance.tokenManager).not.toBeNull();
   });
 
   it('should create a token manager instance if username is `apikey` and use the password as the API key', function() {
@@ -238,9 +281,10 @@ describe('BaseService', function() {
       username: 'apikey',
       password: apikey,
     });
-    assert.notEqual(instance.tokenManager, null);
-    assert.equal(instance.tokenManager.iamApikey, apikey);
-    assert.equal(instance._options.headers, undefined);
+    expect(instance.tokenManager).toBeDefined();
+    expect(instance.tokenManager).not.toBeNull();
+    expect(instance.tokenManager.iamApikey).toBe(apikey);
+    expect(instance._options.headers).toBeUndefined();
   });
 
   it('should not create a basic auth header if iam creds are given', function() {
@@ -250,9 +294,10 @@ describe('BaseService', function() {
       username: 'notarealuser',
       password: 'badpassword1',
     });
-    assert.notEqual(instance.tokenManager, null);
-    assert.equal(instance.tokenManager.iamApikey, apikey);
-    assert.equal(instance._options.headers, undefined);
+    expect(instance.tokenManager).toBeDefined();
+    expect(instance.tokenManager).not.toBeNull();
+    expect(instance.tokenManager.iamApikey).toBe(apikey);
+    expect(instance._options.headers).toBeUndefined();
   });
 
   it('should create a basic auth header if username is `apikey` and password starts with `icp-`', function() {
@@ -261,8 +306,8 @@ describe('BaseService', function() {
       password: 'icp-1234',
     });
     const authHeader = instance._options.headers.Authorization;
-    assert.equal(instance.tokenManager, null);
-    assert(authHeader.startsWith('Basic'));
+    expect(instance.tokenManager).toBeNull();
+    expect(authHeader.startsWith('Basic')).toBe(true);
   });
 
   it('should set rejectUnauthorized to `false` if `disable_ssl_verification` is `true`', function() {
@@ -271,7 +316,7 @@ describe('BaseService', function() {
       password: 'icp-1234',
       disable_ssl_verification: true,
     });
-    assert.equal(instance._options.rejectUnauthorized, false);
+    expect(instance._options.rejectUnauthorized).toBe(false);
   });
 
   it('should set rejectUnauthorized to `true` if `disable_ssl_verification` is `false`', function() {
@@ -280,7 +325,7 @@ describe('BaseService', function() {
       password: 'icp-1234',
       disable_ssl_verification: false,
     });
-    assert(instance._options.rejectUnauthorized);
+    expect(instance._options.rejectUnauthorized).toBe(true);
   });
 
   it('should set rejectUnauthorized to `true` if `disable_ssl_verification` is not set', function() {
@@ -288,6 +333,6 @@ describe('BaseService', function() {
       username: 'apikey',
       password: 'icp-1234',
     });
-    assert(instance._options.rejectUnauthorized);
+    expect(instance._options.rejectUnauthorized).toBe(true);
   });
 });

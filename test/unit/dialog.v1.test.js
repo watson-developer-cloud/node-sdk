@@ -1,6 +1,5 @@
 'use strict';
 
-const assert = require('assert');
 const extend = require('extend');
 const pick = require('object.pick');
 const omit = require('object.omit');
@@ -32,7 +31,7 @@ describe('dialog', function() {
     dialog: '/v1/dialogs/' + payload.dialog_id,
   };
 
-  before(function() {
+  beforeAll(function() {
     nock.disableNetConnect();
     nock(service.url)
       .persist()
@@ -42,14 +41,15 @@ describe('dialog', function() {
       .reply(200, {});
   });
 
-  after(function() {
+  afterAll(function() {
     nock.cleanAll();
   });
 
   const dialog = watson.dialog(service);
 
   const missingParameter = function(err) {
-    assert.ok(err instanceof Error && /required parameters/.test(err));
+    expect(err).toBeInstanceOf(Error);
+    expect(/required parameters/.test(err)).toBe(true);
   };
 
   describe('getProfile()', function() {
@@ -64,8 +64,8 @@ describe('dialog', function() {
     it('should generate a valid payload', function() {
       const clientQuery = qs.stringify(pick(payload, ['client_id']));
       const req = dialog.getProfile(payload, noop);
-      assert.equal(req.uri.href, service.url + paths.profile + '?' + clientQuery);
-      assert.equal(req.method, 'GET');
+      expect(req.uri.href).toBe(service.url + paths.profile + '?' + clientQuery);
+      expect(req.method).toBe('GET');
     });
   });
 
@@ -83,8 +83,8 @@ describe('dialog', function() {
 
     it('should generate a valid payload', function() {
       const req = dialog.updateProfile(params, noop);
-      assert.equal(req.uri.href, service.url + paths.profile);
-      assert.equal(req.method, 'PUT');
+      expect(req.uri.href).toBe(service.url + paths.profile);
+      expect(req.method).toBe('PUT');
     });
   });
 
@@ -102,8 +102,8 @@ describe('dialog', function() {
     it('should generate a valid payload', function() {
       const conversationPath = paths.conversation + '?' + qs.stringify(omit(params, ['dialog_id']));
       const req = dialog.getConversation(params, noop);
-      assert.equal(req.uri.href, service.url + conversationPath);
-      assert.equal(req.method, 'GET');
+      expect(req.uri.href).toBe(service.url + conversationPath);
+      expect(req.method).toBe('GET');
     });
   });
 
@@ -114,7 +114,6 @@ describe('dialog', function() {
       dialog.conversation({}, missingParameter);
       dialog.conversation(null, missingParameter);
       dialog.conversation(undefined, missingParameter);
-      dialog.conversation(pick(params, ['dialog_id']), missingParameter);
       dialog.conversation(omit(params, ['dialog_id']), missingParameter);
     });
 
@@ -122,9 +121,9 @@ describe('dialog', function() {
       const req = dialog.conversation(params, noop);
       const body = Buffer.from(req.body).toString('ascii');
 
-      assert.equal(req.uri.href, service.url + paths.conversation);
-      assert.equal(req.method, 'POST');
-      assert.equal(body, qs.stringify(omit(params, 'dialog_id')));
+      expect(req.uri.href).toBe(service.url + paths.conversation);
+      expect(req.method).toBe('POST');
+      expect(body).toBe(qs.stringify(omit(params, 'dialog_id')));
     });
   });
 
@@ -139,9 +138,9 @@ describe('dialog', function() {
 
     it('should generate a valid payload', function() {
       const req = dialog.updateContent(params, noop);
-      assert.equal(req.uri.href, service.url + paths.content);
-      assert.equal(req.method, 'PUT');
-      assert.equal(req.headers['Content-Type'], 'bar');
+      expect(req.uri.href).toBe(service.url + paths.content);
+      expect(req.method).toBe('PUT');
+      expect(req.headers['Content-Type']).toBe('bar');
     });
   });
 
@@ -154,8 +153,8 @@ describe('dialog', function() {
 
     it('should generate a valid payload', function() {
       const req = dialog.getContent(payload, noop);
-      assert.equal(req.uri.href, service.url + paths.content);
-      assert.equal(req.method, 'GET');
+      expect(req.uri.href).toBe(service.url + paths.content);
+      expect(req.method).toBe('GET');
     });
   });
 
@@ -170,23 +169,22 @@ describe('dialog', function() {
       dialog.createDialog(null, missingParameter);
       dialog.createDialog(undefined, missingParameter);
       dialog.createDialog(pick(params, ['file']), missingParameter);
-      dialog.createDialog(pick(params, ['name']), missingParameter);
     });
 
     it('should generate a valid payload', function() {
       const req = dialog.createDialog(params, noop);
-      assert.equal(req.uri.href, service.url + '/v1/dialogs');
-      assert.equal(req.method, 'POST');
-      assert.equal(req.formData.name, params.name);
-      assert.equal(req.formData.file, params.file);
+      expect(req.uri.href).toBe(service.url + '/v1/dialogs');
+      expect(req.method).toBe('POST');
+      expect(req.formData.name).toBe(params.name);
+      expect(req.formData.file).toBe(params.file);
     });
   });
 
   describe('getDialogs()', function() {
     it('should generate a valid payload', function() {
       const req = dialog.getDialogs({}, noop);
-      assert.equal(req.uri.href, service.url + '/v1/dialogs');
-      assert.equal(req.method, 'GET');
+      expect(req.uri.href).toBe(service.url + '/v1/dialogs');
+      expect(req.method).toBe('GET');
     });
   });
 
@@ -199,8 +197,8 @@ describe('dialog', function() {
 
     it('should generate a valid payload', function() {
       const req = dialog.deleteDialog(pick(payload, ['dialog_id']), noop);
-      assert.equal(req.uri.href, service.url + paths.dialog);
-      assert.equal(req.method, 'DELETE');
+      expect(req.uri.href).toBe(service.url + paths.dialog);
+      expect(req.method).toBe('DELETE');
     });
   });
 
@@ -220,9 +218,9 @@ describe('dialog', function() {
 
     it('should generate a valid payload', function() {
       const req = dialog.updateDialog(params, noop);
-      assert.equal(req.uri.href, service.url + paths.dialog);
-      assert.equal(req.method, 'PUT');
-      assert.equal(req.formData.file, params.file);
+      expect(req.uri.href).toBe(service.url + paths.dialog);
+      expect(req.method).toBe('PUT');
+      expect(req.formData.file).toBe(params.file);
     });
   });
 });

@@ -116,7 +116,7 @@
     "minify": "uglifyjs --compress --mangle --output dist/watson.min.js --preamble \"// Watson Developer Cloud\n// JavaScript SDK$npm_package_version\n// Generated at `date`\n// Copyright IBM ($npm_package_license)\n// $npm_package_homepage\" -- dist/watson.js",
     "prepublishOnly": "npm run build",
     "test-integration": "mocha test/integration",
-    "test-unit": "mocha test/unit/",
+    "test-unit": "jest test/unit/",
     "test": "nyc mocha test/unit/ test/integration/ && nyc report --reporter=html",
     "test-travis": "nyc mocha test/unit/ test/integration/ --grep @slow --invert && nyc report --reporter=html",
     "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov && ./node_modules/.bin/codecov",
