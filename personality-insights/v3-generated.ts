@@ -117,16 +117,19 @@ class PersonalityInsightsV3 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['content', 'content_type'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const body = _params.content;
+ 
     const query = {
       'raw_scores': _params.raw_scores,
       'csv_headers': _params.csv_headers,
       'consumption_preferences': _params.consumption_preferences
     };
+ 
     const parameters = {
       options: {
         url: '/v3/profile',
@@ -144,6 +147,7 @@ class PersonalityInsightsV3 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -203,16 +207,19 @@ class PersonalityInsightsV3 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['content', 'content_type'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const body = _params.content;
+ 
     const query = {
       'raw_scores': _params.raw_scores,
       'csv_headers': _params.csv_headers,
       'consumption_preferences': _params.consumption_preferences
     };
+ 
     const parameters = {
       options: {
         url: '/v3/profile',
@@ -230,6 +237,7 @@ class PersonalityInsightsV3 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 

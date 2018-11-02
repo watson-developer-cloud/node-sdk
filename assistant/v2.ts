@@ -80,13 +80,16 @@ class AssistantV2 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['assistant_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'assistant_id': _params.assistant_id
     };
+ 
     const parameters = {
       options: {
         url: '/v2/assistants/{assistant_id}/sessions',
@@ -100,6 +103,7 @@ class AssistantV2 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -123,14 +127,17 @@ class AssistantV2 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['assistant_id', 'session_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'assistant_id': _params.assistant_id,
       'session_id': _params.session_id
     };
+ 
     const parameters = {
       options: {
         url: '/v2/assistants/{assistant_id}/sessions/{session_id}',
@@ -143,6 +150,7 @@ class AssistantV2 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -174,18 +182,22 @@ class AssistantV2 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['assistant_id', 'session_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const body = {
       'input': _params.input,
       'context': _params.context
     };
+
     const path = {
       'assistant_id': _params.assistant_id,
       'session_id': _params.session_id
     };
+ 
     const parameters = {
       options: {
         url: '/v2/assistants/{assistant_id}/sessions/{session_id}/message',
@@ -201,6 +213,7 @@ class AssistantV2 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -387,9 +400,9 @@ namespace AssistantV2 {
   export interface MessageContextGlobalSystem {
     /** The user time zone. The assistant uses the time zone to correctly resolve relative time references. */
     timezone?: string;
-    /** String value provided by the API client that should be unique per each distinct end user of the service powered by Assistant. */
+    /** A string value that identifies the user who is interacting with the assistant. The client must provide a unique identifier for each individual end user who accesses the application. This user ID may be used for billing and other purposes. */
     user_id?: string;
-    /** This property is normally set by the Assistant which sets this to 1 during the first conversation turn and then increments it by 1 with every subsequent turn. A turn count equal to 0 (or > 0) informs the Assistant that this is (or is not) the first turn in a conversation which influences the behavior of some skills. The Conversation skill uses this to evaluate its `welcome` and `conversation_start` conditions. */
+    /** A counter that is automatically incremented with each turn of the conversation. A value of 1 indicates that this is the the first turn of a new conversation, which can affect the behavior of some skills. */
     turn_count?: number;
   }
 
