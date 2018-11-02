@@ -1491,6 +1491,84 @@ describe('createExpansions', () => {
     
   });
 });
+describe('createTokenizationDictionary', () => {
+  describe('positive tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsSuccess);
+    });
+    test('should pass the right params to createRequest', () => {
+      // parameters
+      const environment_id = 'fake_environment_id';
+      const collection_id = 'fake_collection_id';
+      const tokenization_rules = 'fake_tokenization_rules';
+      const params = {
+        environment_id,
+        collection_id,
+        tokenization_rules,
+      };
+
+      // invoke method
+      discovery.createTokenizationDictionary(params);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+      const options = getOptions(createRequestMock);
+
+      checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/tokenization_dictionary', 'POST');
+      checkCallback(createRequestMock);
+      const expectedAccept = 'application/json';
+      const expectedContentType = 'application/json';
+      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+      expect(options.body['tokenization_rules']).toEqual(tokenization_rules);
+      expect(options.json).toEqual(true);
+      expect(options.path['environment_id']).toEqual(environment_id);
+      expect(options.path['collection_id']).toEqual(collection_id);
+    });
+
+    test('should prioritize user-given headers', () => {
+      // parameters
+      const environment_id = 'fake_environment_id';
+      const collection_id = 'fake_collection_id';
+      const accept = 'fake/header';
+      const contentType = 'fake/header';
+      const params = {
+        environment_id,
+        collection_id,
+        headers: {
+          Accept: accept,
+          'Content-Type': contentType,
+        },
+      };
+
+      discovery.createTokenizationDictionary(params);
+      checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+  });
+  describe('negative tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsError);
+    });
+
+    test('should convert a `null` value for `params` to an empty object', done => {
+      discovery.createTokenizationDictionary(null, () => {
+        checkForEmptyObject(missingParamsMock);
+        done();
+      });
+    });
+
+    test('should enforce required parameters', done => {
+      // required parameters for this method
+      const requiredParams = ['environment_id', 'collection_id'];
+
+      discovery.createTokenizationDictionary({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+    
+  });
+});
 describe('deleteExpansions', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -1558,6 +1636,154 @@ describe('deleteExpansions', () => {
       const requiredParams = ['environment_id', 'collection_id'];
 
       discovery.deleteExpansions({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+    
+  });
+});
+describe('deleteTokenizationDictionary', () => {
+  describe('positive tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsSuccess);
+    });
+    test('should pass the right params to createRequest', () => {
+      // parameters
+      const environment_id = 'fake_environment_id';
+      const collection_id = 'fake_collection_id';
+      const params = {
+        environment_id,
+        collection_id,
+      };
+
+      // invoke method
+      discovery.deleteTokenizationDictionary(params);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+      const options = getOptions(createRequestMock);
+
+      checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/tokenization_dictionary', 'DELETE');
+      checkCallback(createRequestMock);
+      const expectedAccept = 'application/json';
+      const expectedContentType = 'application/json';
+      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+      expect(options.path['environment_id']).toEqual(environment_id);
+      expect(options.path['collection_id']).toEqual(collection_id);
+    });
+
+    test('should prioritize user-given headers', () => {
+      // parameters
+      const environment_id = 'fake_environment_id';
+      const collection_id = 'fake_collection_id';
+      const accept = 'fake/header';
+      const contentType = 'fake/header';
+      const params = {
+        environment_id,
+        collection_id,
+        headers: {
+          Accept: accept,
+          'Content-Type': contentType,
+        },
+      };
+
+      discovery.deleteTokenizationDictionary(params);
+      checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+  });
+  describe('negative tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsError);
+    });
+
+    test('should convert a `null` value for `params` to an empty object', done => {
+      discovery.deleteTokenizationDictionary(null, () => {
+        checkForEmptyObject(missingParamsMock);
+        done();
+      });
+    });
+
+    test('should enforce required parameters', done => {
+      // required parameters for this method
+      const requiredParams = ['environment_id', 'collection_id'];
+
+      discovery.deleteTokenizationDictionary({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+    
+  });
+});
+describe('getTokenizationDictionaryStatus', () => {
+  describe('positive tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsSuccess);
+    });
+    test('should pass the right params to createRequest', () => {
+      // parameters
+      const environment_id = 'fake_environment_id';
+      const collection_id = 'fake_collection_id';
+      const params = {
+        environment_id,
+        collection_id,
+      };
+
+      // invoke method
+      discovery.getTokenizationDictionaryStatus(params);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+      const options = getOptions(createRequestMock);
+
+      checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/tokenization_dictionary', 'GET');
+      checkCallback(createRequestMock);
+      const expectedAccept = 'application/json';
+      const expectedContentType = 'application/json';
+      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+      expect(options.path['environment_id']).toEqual(environment_id);
+      expect(options.path['collection_id']).toEqual(collection_id);
+    });
+
+    test('should prioritize user-given headers', () => {
+      // parameters
+      const environment_id = 'fake_environment_id';
+      const collection_id = 'fake_collection_id';
+      const accept = 'fake/header';
+      const contentType = 'fake/header';
+      const params = {
+        environment_id,
+        collection_id,
+        headers: {
+          Accept: accept,
+          'Content-Type': contentType,
+        },
+      };
+
+      discovery.getTokenizationDictionaryStatus(params);
+      checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+  });
+  describe('negative tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsError);
+    });
+
+    test('should convert a `null` value for `params` to an empty object', done => {
+      discovery.getTokenizationDictionaryStatus(null, () => {
+        checkForEmptyObject(missingParamsMock);
+        done();
+      });
+    });
+
+    test('should enforce required parameters', done => {
+      // required parameters for this method
+      const requiredParams = ['environment_id', 'collection_id'];
+
+      discovery.getTokenizationDictionaryStatus({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
