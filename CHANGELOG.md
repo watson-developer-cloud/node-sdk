@@ -1,3 +1,10 @@
+# [3.13.0](https://github.com/watson-developer-cloud/node-sdk/compare/v3.12.0...v3.13.0) (2018-10-30)
+
+
+### Features
+
+* **discovery:** add new methods: `createTokenizationDictionary`, `deleteTokenizationDictionary`, and `getTokenizationDictionaryStatus` ([d5ba660](https://github.com/watson-developer-cloud/node-sdk/commit/d5ba660))
+
 # [3.12.0](https://github.com/watson-developer-cloud/node-sdk/compare/v3.11.1...v3.12.0) (2018-10-10)
 
 

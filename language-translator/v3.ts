@@ -85,16 +85,19 @@ class LanguageTranslatorV3 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['text'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const body = {
       'text': _params.text,
       'model_id': _params.model_id,
       'source': _params.source,
       'target': _params.target
     };
+ 
     const parameters = {
       options: {
         url: '/v3/translate',
@@ -109,6 +112,7 @@ class LanguageTranslatorV3 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -131,11 +135,13 @@ class LanguageTranslatorV3 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['text'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
     const body = _params.text;
+ 
     const parameters = {
       options: {
         url: '/v3/identify',
@@ -150,6 +156,7 @@ class LanguageTranslatorV3 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -167,6 +174,7 @@ class LanguageTranslatorV3 extends BaseService {
   public listIdentifiableLanguages(params?: LanguageTranslatorV3.ListIdentifiableLanguagesParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.IdentifiableLanguages>): NodeJS.ReadableStream | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+ 
     const parameters = {
       options: {
         url: '/v3/identifiable_languages',
@@ -178,6 +186,7 @@ class LanguageTranslatorV3 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -226,10 +235,12 @@ class LanguageTranslatorV3 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['base_model_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const formData = {
       'forced_glossary': {
         data: _params.forced_glossary,
@@ -242,10 +253,12 @@ class LanguageTranslatorV3 extends BaseService {
         contentType: 'application/octet-stream'
       }
     };
+ 
     const query = {
       'base_model_id': _params.base_model_id,
       'name': _params.name
     };
+ 
     const parameters = {
       options: {
         url: '/v3/models',
@@ -260,6 +273,7 @@ class LanguageTranslatorV3 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -278,13 +292,16 @@ class LanguageTranslatorV3 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['model_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'model_id': _params.model_id
     };
+ 
     const parameters = {
       options: {
         url: '/v3/models/{model_id}',
@@ -297,6 +314,7 @@ class LanguageTranslatorV3 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -316,13 +334,16 @@ class LanguageTranslatorV3 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['model_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'model_id': _params.model_id
     };
+ 
     const parameters = {
       options: {
         url: '/v3/models/{model_id}',
@@ -335,6 +356,7 @@ class LanguageTranslatorV3 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -357,11 +379,13 @@ class LanguageTranslatorV3 extends BaseService {
   public listModels(params?: LanguageTranslatorV3.ListModelsParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationModels>): NodeJS.ReadableStream | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+ 
     const query = {
       'source': _params.source,
       'target': _params.target,
       'default': _params.default_models
     };
+ 
     const parameters = {
       options: {
         url: '/v3/models',
@@ -374,6 +398,7 @@ class LanguageTranslatorV3 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 

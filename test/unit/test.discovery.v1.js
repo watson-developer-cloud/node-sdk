@@ -62,6 +62,8 @@ describe('discovery-v1', function() {
     events: '/v1/events',
     metrics: '/v1/metrics',
     logs: '/v1/logs',
+    tokenization_dictionaries:
+      '/v1/environments/env-guid/collections/col-guid/word_lists/tokenization_dictionary',
   };
 
   it('should generate version was not specified (negative test)', function() {
@@ -889,6 +891,35 @@ describe('discovery-v1', function() {
           const req = discovery.queryLog(noop);
           assert.equal(req.uri.href, service.url + paths.logs + '?version=' + service.version);
           assert.equal(req.method, 'GET');
+        });
+
+        describe('tokenization dictionary tests', function() {
+          it('createTokenizationDictionary', function() {
+            const req = discovery.createTokenizationDictionary(queryPayload, noop);
+            assert.equal(
+              req.uri.href,
+              service.url + paths.tokenization_dictionaries + '?version=' + service.version
+            );
+            assert.equal(req.method, 'POST');
+          });
+
+          it('deleteTokenizationDictionary', function() {
+            const req = discovery.deleteTokenizationDictionary(queryPayload, noop);
+            assert.equal(
+              req.uri.href,
+              service.url + paths.tokenization_dictionaries + '?version=' + service.version
+            );
+            assert.equal(req.method, 'DELETE');
+          });
+
+          it('getTokenizationDictionaryStatus', function() {
+            const req = discovery.getTokenizationDictionaryStatus(queryPayload, noop);
+            assert.equal(
+              req.uri.href,
+              service.url + paths.tokenization_dictionaries + '?version=' + service.version
+            );
+            assert.equal(req.method, 'GET');
+          });
         });
       });
     });

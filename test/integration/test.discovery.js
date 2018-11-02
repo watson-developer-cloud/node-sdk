@@ -22,12 +22,14 @@ describe('discovery_integration', function() {
   let configuration_id;
   let collection_id;
   let collection_id2;
+  let japanese_collection_id;
 
   before(function() {
     environment_id = auth.discovery.environment_id;
     configuration_id = auth.discovery.configuration_id;
     collection_id = auth.discovery.collection_id;
     collection_id2 = auth.discovery.collection_id_2;
+    japanese_collection_id = auth.discovery.japanese_collection_id;
 
     nock.enableNetConnect();
     discovery = new DiscoveryV1(
@@ -484,6 +486,57 @@ describe('discovery_integration', function() {
         assert(Array.isArray(res.results));
         assert.equal(res.results.length, count);
         assert.notEqual(res.results[0].natural_language_query.indexOf(filter), -1);
+        done();
+      });
+    });
+  });
+
+  describe('tokenization dictionary tests @slow', function() {
+    it('should createTokenizationDictionary', function(done) {
+      const params = {
+        environment_id,
+        collection_id: japanese_collection_id,
+        tokenization_rules: [
+          {
+            text: 'すしネコ',
+            tokens: ['すし', 'ネコ'],
+            readings: ['寿司', 'ネコ'],
+            part_of_speech: 'カスタム名詞',
+          },
+        ],
+      };
+
+      discovery.createTokenizationDictionary(params, (err, res) => {
+        assert.ifError(err);
+        assert(res.status);
+        assert(res.type);
+        done();
+      });
+    });
+
+    it('should getTokenizationDictionaryStatus', function(done) {
+      const params = {
+        environment_id,
+        collection_id: japanese_collection_id,
+      };
+
+      discovery.getTokenizationDictionaryStatus(params, (err, res) => {
+        assert.ifError(err);
+        assert(res.status);
+        assert(res.type);
+        done();
+      });
+    });
+
+    it('should deleteTokenizationDictionary', function(done) {
+      const params = {
+        environment_id,
+        collection_id: japanese_collection_id,
+      };
+
+      discovery.deleteTokenizationDictionary(params, (err, res) => {
+        assert.ifError(err);
+        assert.equal(res, '');
         done();
       });
     });
