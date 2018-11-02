@@ -1,6 +1,5 @@
 'use strict';
 
-const assert = require('assert');
 const watson = require('../../index');
 const nock = require('nock');
 const fs = require('fs');
@@ -14,31 +13,34 @@ const service = {
   version: 'v1',
 };
 
-before(function() {
+beforeAll(function() {
   nock.disableNetConnect();
 });
 
-after(function() {
+afterAll(function() {
   nock.cleanAll();
 });
 
 const natural_language_classifier = watson.natural_language_classifier(service);
 
 const missingParameter = function(err) {
-  assert.ok(err instanceof Error && /Missing required/.test(err.message));
+  expect(err).toBeInstanceOf(Error);
+  expect(/Missing required/.test(err.message)).toBe(true);
 };
 
 const goodRequest = function(err) {
   const check = err.message.indexOf('Missing required') > -1;
-  assert.strictEqual(false, check);
+  expect(check).toStrictEqual(false);
 };
 
 const invalidFormatParameter = function(err) {
-  assert.ok(err instanceof Error && /Invalid training_data format/.test(err.message));
+  expect(err).toBeInstanceOf(Error);
+  expect(/Invalid training_data format/.test(err.message)).toBe(true);
 };
 
 const invalidParameter = function(err) {
-  assert.ok(err instanceof Error && /training_data needs to be/.test(err.message));
+  expect(err).toBeInstanceOf(Error);
+  expect(/training_data needs to be/.test(err.message)).toBe(true);
 };
 
 const emptyData = { text: '' };
@@ -179,8 +181,8 @@ describe('natural_language_classifer', function() {
     };
     const req = natural_language_classifier.classifyCollection(params, goodRequest);
     const body = Buffer.from(req.body).toString('ascii');
-    assert.deepEqual(JSON.parse(body), pick(params, ['collection']));
-    assert.equal(req.method, 'POST');
-    assert.equal(req.uri.href, 'http://ibm.com:80/v1/classifiers/good/classify_collection');
+    expect(JSON.parse(body)).toEqual(pick(params, ['collection']));
+    expect(req.method).toBe('POST');
+    expect(req.uri.href).toBe('http://ibm.com:80/v1/classifiers/good/classify_collection');
   });
 });

@@ -1,15 +1,22 @@
+/**
+ * @jest-environment node
+ */
+
+// the above comment instructs jest to use a node, rather than browser, environment
+// the sendRequest method uses the environment to determine if running in the browser
+// and uses special handling if it is. the tests will fail without the above comment
+
 'use strict';
 
 const sendRequest = require('../../lib/requestwrapper').sendRequest;
 const formatError = require('../../lib/requestwrapper').formatErrorIfExists;
-const assert = require('assert');
 const isStream = require('isstream');
 const watson = require('../../index');
 const pjson = require('../../package.json');
 
 describe('requestwrapper', () => {
   const noop = function() {};
-  it('should emit error stream on missing parameters when callback is undefined', () => {
+  it('should emit error stream on missing parameters when callback is undefined', done => {
     const parameters = {
       options: {
         url: '/stuff/',
@@ -18,7 +25,12 @@ describe('requestwrapper', () => {
       requiredParams: ['fake_param'],
       defaultOptions: { url: 'more' },
     };
-    assert(isStream(sendRequest(parameters, '')));
+    const stream = sendRequest(parameters);
+    stream.on('error', err => {
+      expect(isStream(stream)).toBe(true);
+      expect(err.toString().includes('Missing required parameters: fake_param')).toBe(true);
+      done();
+    });
   });
 
   it('header should be accurate', () => {
@@ -37,16 +49,15 @@ describe('requestwrapper', () => {
         'User-Agent': 'openwhisk',
       },
     };
-    const conversation = new watson.ConversationV1(service);
-    const conversation_ow = new watson.ConversationV1(service2);
+    const assistant = new watson.AssistantV1(service);
+    const assistant_ow = new watson.AssistantV1(service2);
     const payload = {
       workspace_id: 'workspace1',
     };
-    const req = conversation.getIntents(payload, noop);
-    const req2 = conversation_ow.getIntents(payload, noop);
-    assert.equal(req.headers['User-Agent'], 'watson-developer-cloud-nodejs-' + pjson.version + ';');
-    assert.equal(
-      req2.headers['User-Agent'],
+    const req = assistant.listIntents(payload, noop);
+    const req2 = assistant_ow.listIntents(payload, noop);
+    expect(req.headers['User-Agent']).toBe('watson-developer-cloud-nodejs-' + pjson.version + ';');
+    expect(req2.headers['User-Agent']).toBe(
       'watson-developer-cloud-nodejs-' + pjson.version + ';' + 'openwhisk'
     );
   });
@@ -58,9 +69,9 @@ describe('formatError', () => {
     const _response = { statusCode: 401 };
     const _body = 'fake body';
     const cb = (err, body, res) => {
-      assert.equal(body, null);
-      assert(err instanceof Error);
-      assert.equal(err.message, 'Unauthorized: Access is denied due to invalid credentials.');
+      expect(body).toBeNull();
+      expect(err).toBeInstanceOf(Error);
+      expect(err.message).toBe('Unauthorized: Access is denied due to invalid credentials.');
     };
     const formatted = formatError(cb);
     formatted(_error, _response, _body);
@@ -69,12 +80,12 @@ describe('formatError', () => {
   it('should check for error in body with error_code', () => {
     const _error = undefined;
     const _response = {};
-    const _body = { error_code: '666', fake_key: 'fake_value' };
+    const _body = { error_code: '555', fake_key: 'fake_value' };
     const cb = (err, body, res) => {
-      assert.equal(body, null);
-      assert(err instanceof Error);
-      assert.equal(err.code, _body.error_code);
-      assert.equal(err.fake_key, _body.fake_key);
+      expect(body).toBeNull();
+      expect(err).toBeInstanceOf(Error);
+      expect(err.code).toBe(_body.error_code);
+      expect(err.fake_key).toBe(_body.fake_key);
     };
     const formatted = formatError(cb);
     formatted(_error, _response, _body);
@@ -88,10 +99,10 @@ describe('formatError', () => {
       fake_key: 'fake_value',
     };
     const cb = (err, body, res) => {
-      assert.equal(body, null);
-      assert(err instanceof Error);
-      assert.equal(err.description, 'fake description');
-      assert.equal(err.fake_key, 'fake_value');
+      expect(body).toBeNull();
+      expect(err).toBeInstanceOf(Error);
+      expect(err.description).toBe('fake description');
+      expect(err.fake_key).toBe('fake_value');
     };
     const formatted = formatError(cb);
     formatted(_error, _response, _body);
@@ -105,10 +116,10 @@ describe('formatError', () => {
       fake_key: 'fake_value',
     };
     const cb = (err, body, res) => {
-      assert.equal(body, null);
-      assert(err instanceof Error);
-      assert.equal(err.error, JSON.stringify({ error: 'fake description' }));
-      assert.equal(err.fake_key, 'fake_value');
+      expect(body).toBeNull();
+      expect(err).toBeInstanceOf(Error);
+      expect(err.error).toBe(JSON.stringify({ error: 'fake description' }));
+      expect(err.fake_key).toBe('fake_value');
     };
     const formatted = formatError(cb);
     formatted(_error, _response, _body);
@@ -119,8 +130,8 @@ describe('formatError', () => {
     const _response = {};
     const _body = {};
     const cb = (err, body, res) => {
-      assert(err instanceof Error);
-      assert.equal(err.message, _error.message);
+      expect(err).toBeInstanceOf(Error);
+      expect(err.message).toBe(_error.message);
     };
     const formatted = formatError(cb);
     formatted(_error, _response, _body);
@@ -131,8 +142,8 @@ describe('formatError', () => {
     const _response = { statusMessage: 'invalid-api-key' };
     const _body = {};
     const cb = (err, body, res) => {
-      assert.equal(err.error, _response.statusMessage);
-      assert.equal(err.code, 401);
+      expect(err.error).toBe(_response.statusMessage);
+      expect(err.code).toBe(401);
     };
     const formatted = formatError(cb);
     formatted(_error, _response, _body);
