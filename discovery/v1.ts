@@ -82,15 +82,18 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['name'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const body = {
       'name': _params.name,
       'description': _params.description,
       'size': _params.size
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments',
@@ -105,6 +108,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -121,13 +125,16 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'environment_id': _params.environment_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}',
@@ -141,6 +148,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -157,13 +165,16 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'environment_id': _params.environment_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}',
@@ -177,6 +188,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -194,9 +206,11 @@ class DiscoveryV1 extends BaseService {
   public listEnvironments(params?: DiscoveryV1.ListEnvironmentsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.ListEnvironmentsResponse>): NodeJS.ReadableStream | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+ 
     const query = {
       'name': _params.name
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments',
@@ -210,6 +224,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -229,16 +244,20 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'collection_ids'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+ 
     const query = {
       'collection_ids': _params.collection_ids
     };
+
     const path = {
       'environment_id': _params.environment_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/fields',
@@ -253,6 +272,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -276,18 +296,22 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const body = {
       'name': _params.name,
       'description': _params.description,
       'size': _params.size
     };
+
     const path = {
       'environment_id': _params.environment_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}',
@@ -303,6 +327,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -340,10 +365,12 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'name'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const body = {
       'name': _params.name,
       'description': _params.description,
@@ -352,9 +379,11 @@ class DiscoveryV1 extends BaseService {
       'normalizations': _params.normalizations,
       'source': _params.source
     };
+
     const path = {
       'environment_id': _params.environment_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/configurations',
@@ -370,6 +399,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -392,14 +422,17 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'configuration_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'environment_id': _params.environment_id,
       'configuration_id': _params.configuration_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/configurations/{configuration_id}',
@@ -413,6 +446,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -430,14 +464,17 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'configuration_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'environment_id': _params.environment_id,
       'configuration_id': _params.configuration_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/configurations/{configuration_id}',
@@ -451,6 +488,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -470,16 +508,20 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+ 
     const query = {
       'name': _params.name
     };
+
     const path = {
       'environment_id': _params.environment_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/configurations',
@@ -494,6 +536,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -526,10 +569,12 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'configuration_id', 'name'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const body = {
       'name': _params.name,
       'description': _params.description,
@@ -538,10 +583,12 @@ class DiscoveryV1 extends BaseService {
       'normalizations': _params.normalizations,
       'source': _params.source
     };
+
     const path = {
       'environment_id': _params.environment_id,
       'configuration_id': _params.configuration_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/configurations/{configuration_id}',
@@ -557,6 +604,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -601,6 +649,7 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
@@ -610,6 +659,7 @@ class DiscoveryV1 extends BaseService {
         'WARNING: `filename` should be provided if `file` is not null. This will be REQUIRED in the next major release.'
       );
     }
+
     const formData = {
       'configuration': _params.configuration,
       'file': {
@@ -619,13 +669,16 @@ class DiscoveryV1 extends BaseService {
       },
       'metadata': _params.metadata
     };
+ 
     const query = {
       'step': _params.step,
       'configuration_id': _params.configuration_id
     };
+
     const path = {
       'environment_id': _params.environment_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/preview',
@@ -641,6 +694,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -666,19 +720,23 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'name'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const body = {
       'name': _params.name,
       'description': _params.description,
       'configuration_id': _params.configuration_id,
       'language': _params.language
     };
+
     const path = {
       'environment_id': _params.environment_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections',
@@ -694,6 +752,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -711,14 +770,17 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'collection_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}',
@@ -732,6 +794,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -749,14 +812,17 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'collection_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}',
@@ -770,6 +836,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -789,14 +856,17 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'collection_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/fields',
@@ -810,6 +880,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -829,16 +900,20 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+ 
     const query = {
       'name': _params.name
     };
+
     const path = {
       'environment_id': _params.environment_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections',
@@ -853,6 +928,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -873,19 +949,23 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'collection_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const body = {
       'name': _params.name,
       'description': _params.description,
       'configuration_id': _params.configuration_id
     };
+
     const path = {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}',
@@ -901,6 +981,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -939,17 +1020,21 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'collection_id', 'expansions'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const body = {
       'expansions': _params.expansions
     };
+
     const path = {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/expansions',
@@ -965,6 +1050,60 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
+    return this.createRequest(parameters, _callback);
+  };
+
+  /**
+   * Create tokenization dictionary.
+   *
+   * Upload a custom tokenization dictionary to use with the specified collection.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.environment_id - The ID of the environment.
+   * @param {string} params.collection_id - The ID of the collection.
+   * @param {TokenDictRule[]} [params.tokenization_rules] - An array of tokenization rules. Each rule contains, the
+   * original `text` string, component `tokens`, any alternate character set `readings`, and which `part_of_speech` the
+   * text is from.
+   * @param {Object} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {NodeJS.ReadableStream|void}
+   */
+  public createTokenizationDictionary(params: DiscoveryV1.CreateTokenizationDictionaryParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TokenDictStatusResponse>): NodeJS.ReadableStream | void {
+    const _params = extend({}, params);
+    const _callback = (callback) ? callback : () => { /* noop */ };
+    const requiredParams = ['environment_id', 'collection_id'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const body = {
+      'tokenization_rules': _params.tokenization_rules
+    };
+
+    const path = {
+      'environment_id': _params.environment_id,
+      'collection_id': _params.collection_id
+    };
+ 
+    const parameters = {
+      options: {
+        url: '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/tokenization_dictionary',
+        method: 'POST',
+        json: true,
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -985,14 +1124,17 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'collection_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/expansions',
@@ -1006,6 +1148,95 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
+    return this.createRequest(parameters, _callback);
+  };
+
+  /**
+   * Delete tokenization dictionary.
+   *
+   * Delete the tokenization dictionary from the collection.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.environment_id - The ID of the environment.
+   * @param {string} params.collection_id - The ID of the collection.
+   * @param {Object} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {NodeJS.ReadableStream|void}
+   */
+  public deleteTokenizationDictionary(params: DiscoveryV1.DeleteTokenizationDictionaryParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): NodeJS.ReadableStream | void {
+    const _params = extend({}, params);
+    const _callback = (callback) ? callback : () => { /* noop */ };
+    const requiredParams = ['environment_id', 'collection_id'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const path = {
+      'environment_id': _params.environment_id,
+      'collection_id': _params.collection_id
+    };
+ 
+    const parameters = {
+      options: {
+        url: '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/tokenization_dictionary',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
+
+  /**
+   * Get tokenization dictionary status.
+   *
+   * Returns the current status of the tokenization dictionary for the specified collection.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.environment_id - The ID of the environment.
+   * @param {string} params.collection_id - The ID of the collection.
+   * @param {Object} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {NodeJS.ReadableStream|void}
+   */
+  public getTokenizationDictionaryStatus(params: DiscoveryV1.GetTokenizationDictionaryStatusParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TokenDictStatusResponse>): NodeJS.ReadableStream | void {
+    const _params = extend({}, params);
+    const _callback = (callback) ? callback : () => { /* noop */ };
+    const requiredParams = ['environment_id', 'collection_id'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const path = {
+      'environment_id': _params.environment_id,
+      'collection_id': _params.collection_id
+    };
+ 
+    const parameters = {
+      options: {
+        url: '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/tokenization_dictionary',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -1026,14 +1257,17 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'collection_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/expansions',
@@ -1047,6 +1281,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -1099,6 +1334,7 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'collection_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
@@ -1108,6 +1344,7 @@ class DiscoveryV1 extends BaseService {
         'WARNING: `filename` should be provided if `file` is not null. This will be REQUIRED in the next major release.'
       );
     }
+
     const formData = {
       'file': {
         data: _params.file,
@@ -1116,10 +1353,12 @@ class DiscoveryV1 extends BaseService {
       },
       'metadata': _params.metadata
     };
+
     const path = {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/documents',
@@ -1134,6 +1373,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -1155,15 +1395,18 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'collection_id', 'document_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id,
       'document_id': _params.document_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/documents/{document_id}',
@@ -1177,6 +1420,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -1199,15 +1443,18 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'collection_id', 'document_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id,
       'document_id': _params.document_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/documents/{document_id}',
@@ -1221,6 +1468,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -1252,6 +1500,7 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'collection_id', 'document_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
@@ -1261,6 +1510,7 @@ class DiscoveryV1 extends BaseService {
         'WARNING: `filename` should be provided if `file` is not null. This will be REQUIRED in the next major release.'
       );
     }
+
     const formData = {
       'file': {
         data: _params.file,
@@ -1269,11 +1519,13 @@ class DiscoveryV1 extends BaseService {
       },
       'metadata': _params.metadata
     };
+
     const path = {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id,
       'document_id': _params.document_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/documents/{document_id}',
@@ -1288,6 +1540,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -1317,8 +1570,7 @@ class DiscoveryV1 extends BaseService {
    * with filters. Useful for applications to build lists, tables, and time series. For a full list of possible
    * aggregations, see the Query reference.
    * @param {number} [params.count] - Number of results to return.
-   * @param {string[]} [params.return_fields] - A comma-separated list of the portion of the document hierarchy to
-   * return.
+   * @param {string[]} [params.return_fields] - A comma-separated list of the portion of the document hierarchy to return.
    * @param {number} [params.offset] - The number of query results to skip at the beginning. For example, if the total
    * number of results that are returned is 10 and the offset is 8, it returns the last two results.
    * @param {string[]} [params.sort] - A comma-separated list of fields in the document to sort on. You can optionally
@@ -1338,8 +1590,8 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.deduplicate_field] - When specified, duplicate results based on the field specified are
    * removed from the returned results. Duplicate comparison is limited to the current query only, **offset** is not
    * considered. This parameter is currently Beta functionality.
-   * @param {string[]} [params.collection_ids] - A comma-separated list of collection IDs to be queried against.
-   * Required when querying multiple collections, invalid when performing a single collection query.
+   * @param {string[]} [params.collection_ids] - A comma-separated list of collection IDs to be queried against. Required
+   * when querying multiple collections, invalid when performing a single collection query.
    * @param {boolean} [params.similar] - When `true`, results are returned based on their similarity to the document IDs
    * specified in the **similar.document_ids** parameter.
    * @param {string[]} [params.similar_document_ids] - A comma-separated list of document IDs to find similar documents.
@@ -1362,10 +1614,12 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     // these params were arrays but now need to be strings, the following code is for compatibility
     const nonArrayParams = ['return_fields', 'sort', 'passages_fields', 'collection_ids', 'similar_document_ids', 'similar_fields'];
     nonArrayParams.forEach(paramName => {
@@ -1373,6 +1627,7 @@ class DiscoveryV1 extends BaseService {
         _params[paramName] = _params[paramName].join(',');
       }
     });
+
     const body = {
       'filter': _params.filter,
       'query': _params.query,
@@ -1395,9 +1650,11 @@ class DiscoveryV1 extends BaseService {
       'similar.fields': _params.similar_fields,
       'bias': _params.bias
     };
+
     const path = {
       'environment_id': _params.environment_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/query',
@@ -1414,6 +1671,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -1469,10 +1727,12 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'collection_ids'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+ 
     const query = {
       'collection_ids': _params.collection_ids,
       'filter': _params.filter,
@@ -1489,9 +1749,11 @@ class DiscoveryV1 extends BaseService {
       'similar.document_ids': _params.similar_document_ids,
       'similar.fields': _params.similar_fields
     };
+
     const path = {
       'environment_id': _params.environment_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/notices',
@@ -1506,6 +1768,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -1532,8 +1795,7 @@ class DiscoveryV1 extends BaseService {
    * with filters. Useful for applications to build lists, tables, and time series. For a full list of possible
    * aggregations, see the Query reference.
    * @param {number} [params.count] - Number of results to return.
-   * @param {string[]} [params.return_fields] - A comma-separated list of the portion of the document hierarchy to
-   * return.
+   * @param {string[]} [params.return_fields] - A comma-separated list of the portion of the document hierarchy to return.
    * @param {number} [params.offset] - The number of query results to skip at the beginning. For example, if the total
    * number of results that are returned is 10 and the offset is 8, it returns the last two results.
    * @param {string[]} [params.sort] - A comma-separated list of fields in the document to sort on. You can optionally
@@ -1553,8 +1815,8 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.deduplicate_field] - When specified, duplicate results based on the field specified are
    * removed from the returned results. Duplicate comparison is limited to the current query only, **offset** is not
    * considered. This parameter is currently Beta functionality.
-   * @param {string[]} [params.collection_ids] - A comma-separated list of collection IDs to be queried against.
-   * Required when querying multiple collections, invalid when performing a single collection query.
+   * @param {string[]} [params.collection_ids] - A comma-separated list of collection IDs to be queried against. Required
+   * when querying multiple collections, invalid when performing a single collection query.
    * @param {boolean} [params.similar] - When `true`, results are returned based on their similarity to the document IDs
    * specified in the **similar.document_ids** parameter.
    * @param {string[]} [params.similar_document_ids] - A comma-separated list of document IDs to find similar documents.
@@ -1577,10 +1839,12 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'collection_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     // these params were arrays but now need to be strings, the following code is for compatibility
     const nonArrayParams = ['return_fields', 'sort', 'passages_fields', 'collection_ids', 'similar_document_ids'];
     nonArrayParams.forEach(paramName => {
@@ -1588,6 +1852,7 @@ class DiscoveryV1 extends BaseService {
         _params[paramName] = _params[paramName].join(',');
       }
     });
+
     const body = {
       'filter': _params.filter,
       'query': _params.query,
@@ -1610,10 +1875,12 @@ class DiscoveryV1 extends BaseService {
       'similar.fields': _params.similar_fields,
       'bias': _params.bias
     };
+
     const path = {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/query',
@@ -1630,6 +1897,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -1659,10 +1927,12 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'collection_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const body = {
       'feature': _params.feature,
       'entity': _params.entity,
@@ -1670,10 +1940,12 @@ class DiscoveryV1 extends BaseService {
       'count': _params.count,
       'evidence_count': _params.evidence_count
     };
+
     const path = {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/query_entities',
@@ -1689,6 +1961,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -1750,10 +2023,12 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'collection_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+ 
     const query = {
       'filter': _params.filter,
       'query': _params.query,
@@ -1773,10 +2048,12 @@ class DiscoveryV1 extends BaseService {
       'similar.document_ids': _params.similar_document_ids,
       'similar.fields': _params.similar_fields
     };
+
     const path = {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/notices',
@@ -1791,6 +2068,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -1822,10 +2100,12 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'collection_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const body = {
       'entities': _params.entities,
       'context': _params.context,
@@ -1834,10 +2114,12 @@ class DiscoveryV1 extends BaseService {
       'count': _params.count,
       'evidence_count': _params.evidence_count
     };
+
     const path = {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/query_relations',
@@ -1853,6 +2135,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -1879,19 +2162,23 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'collection_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const body = {
       'natural_language_query': _params.natural_language_query,
       'filter': _params.filter,
       'examples': _params.examples
     };
+
     const path = {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data',
@@ -1907,6 +2194,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -1930,20 +2218,24 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'collection_id', 'query_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const body = {
       'document_id': _params.document_id,
       'cross_reference': _params.cross_reference,
       'relevance': _params.relevance
     };
+
     const path = {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id,
       'query_id': _params.query_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples',
@@ -1959,6 +2251,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -1978,14 +2271,17 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'collection_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data',
@@ -1999,6 +2295,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -2019,15 +2316,18 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'collection_id', 'query_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id,
       'query_id': _params.query_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}',
@@ -2041,6 +2341,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -2062,16 +2363,19 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'collection_id', 'query_id', 'example_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id,
       'query_id': _params.query_id,
       'example_id': _params.example_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples/{example_id}',
@@ -2085,6 +2389,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -2105,15 +2410,18 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'collection_id', 'query_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id,
       'query_id': _params.query_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}',
@@ -2127,6 +2435,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -2148,16 +2457,19 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'collection_id', 'query_id', 'example_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id,
       'query_id': _params.query_id,
       'example_id': _params.example_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples/{example_id}',
@@ -2171,6 +2483,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -2190,14 +2503,17 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'collection_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data',
@@ -2211,6 +2527,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -2231,15 +2548,18 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'collection_id', 'query_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id,
       'query_id': _params.query_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples',
@@ -2253,6 +2573,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -2276,20 +2597,24 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'collection_id', 'query_id', 'example_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const body = {
       'cross_reference': _params.cross_reference,
       'relevance': _params.relevance
     };
+
     const path = {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id,
       'query_id': _params.query_id,
       'example_id': _params.example_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples/{example_id}',
@@ -2305,6 +2630,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -2332,13 +2658,16 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['customer_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+ 
     const query = {
       'customer_id': _params.customer_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/user_data',
@@ -2352,6 +2681,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -2376,14 +2706,17 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['type', 'data'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const body = {
       'type': _params.type,
       'data': _params.data
     };
+ 
     const parameters = {
       options: {
         url: '/v1/events',
@@ -2398,6 +2731,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -2421,11 +2755,13 @@ class DiscoveryV1 extends BaseService {
   public getMetricsEventRate(params?: DiscoveryV1.GetMetricsEventRateParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricResponse>): NodeJS.ReadableStream | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+ 
     const query = {
       'start_time': _params.start_time,
       'end_time': _params.end_time,
       'result_type': _params.result_type
     };
+ 
     const parameters = {
       options: {
         url: '/v1/metrics/event_rate',
@@ -2439,6 +2775,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -2460,11 +2797,13 @@ class DiscoveryV1 extends BaseService {
   public getMetricsQuery(params?: DiscoveryV1.GetMetricsQueryParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricResponse>): NodeJS.ReadableStream | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+ 
     const query = {
       'start_time': _params.start_time,
       'end_time': _params.end_time,
       'result_type': _params.result_type
     };
+ 
     const parameters = {
       options: {
         url: '/v1/metrics/number_of_queries',
@@ -2478,6 +2817,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -2501,11 +2841,13 @@ class DiscoveryV1 extends BaseService {
   public getMetricsQueryEvent(params?: DiscoveryV1.GetMetricsQueryEventParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricResponse>): NodeJS.ReadableStream | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+ 
     const query = {
       'start_time': _params.start_time,
       'end_time': _params.end_time,
       'result_type': _params.result_type
     };
+ 
     const parameters = {
       options: {
         url: '/v1/metrics/number_of_queries_with_event',
@@ -2519,6 +2861,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -2541,11 +2884,13 @@ class DiscoveryV1 extends BaseService {
   public getMetricsQueryNoResults(params?: DiscoveryV1.GetMetricsQueryNoResultsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricResponse>): NodeJS.ReadableStream | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+ 
     const query = {
       'start_time': _params.start_time,
       'end_time': _params.end_time,
       'result_type': _params.result_type
     };
+ 
     const parameters = {
       options: {
         url: '/v1/metrics/number_of_queries_with_no_search_results',
@@ -2559,6 +2904,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -2578,9 +2924,11 @@ class DiscoveryV1 extends BaseService {
   public getMetricsQueryTokenEvent(params?: DiscoveryV1.GetMetricsQueryTokenEventParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricTokenResponse>): NodeJS.ReadableStream | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+ 
     const query = {
       'count': _params.count
     };
+ 
     const parameters = {
       options: {
         url: '/v1/metrics/top_query_tokens_with_event_rate',
@@ -2594,6 +2942,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -2622,6 +2971,7 @@ class DiscoveryV1 extends BaseService {
   public queryLog(params?: DiscoveryV1.QueryLogParams, callback?: DiscoveryV1.Callback<DiscoveryV1.LogQueryResponse>): NodeJS.ReadableStream | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+ 
     const query = {
       'filter': _params.filter,
       'query': _params.query,
@@ -2629,6 +2979,7 @@ class DiscoveryV1 extends BaseService {
       'offset': _params.offset,
       'sort': _params.sort
     };
+ 
     const parameters = {
       options: {
         url: '/v1/logs',
@@ -2642,6 +2993,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -2674,17 +3026,21 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const body = {
       'source_type': _params.source_type,
       'credential_details': _params.credential_details
     };
+
     const path = {
       'environment_id': _params.environment_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/credentials',
@@ -2700,6 +3056,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -2719,14 +3076,17 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'credential_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'environment_id': _params.environment_id,
       'credential_id': _params.credential_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/credentials/{credential_id}',
@@ -2740,6 +3100,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -2762,14 +3123,17 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'credential_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'environment_id': _params.environment_id,
       'credential_id': _params.credential_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/credentials/{credential_id}',
@@ -2783,6 +3147,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -2803,13 +3168,16 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'environment_id': _params.environment_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/credentials',
@@ -2823,6 +3191,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -2851,18 +3220,22 @@ class DiscoveryV1 extends BaseService {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'credential_id'];
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const body = {
       'source_type': _params.source_type,
       'credential_details': _params.credential_details
     };
+
     const path = {
       'environment_id': _params.environment_id,
       'credential_id': _params.credential_id
     };
+ 
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/credentials/{credential_id}',
@@ -2878,6 +3251,7 @@ class DiscoveryV1 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -3205,8 +3579,37 @@ namespace DiscoveryV1 {
     headers?: Object;
   }
 
+  /** Parameters for the `createTokenizationDictionary` operation. */
+  export interface CreateTokenizationDictionaryParams {
+    /** The ID of the environment. */
+    environment_id: string;
+    /** The ID of the collection. */
+    collection_id: string;
+    /** An array of tokenization rules. Each rule contains, the original `text` string, component `tokens`, any alternate character set `readings`, and which `part_of_speech` the text is from. */
+    tokenization_rules?: TokenDictRule[];
+    headers?: Object;
+  }
+
   /** Parameters for the `deleteExpansions` operation. */
   export interface DeleteExpansionsParams {
+    /** The ID of the environment. */
+    environment_id: string;
+    /** The ID of the collection. */
+    collection_id: string;
+    headers?: Object;
+  }
+
+  /** Parameters for the `deleteTokenizationDictionary` operation. */
+  export interface DeleteTokenizationDictionaryParams {
+    /** The ID of the environment. */
+    environment_id: string;
+    /** The ID of the collection. */
+    collection_id: string;
+    headers?: Object;
+  }
+
+  /** Parameters for the `getTokenizationDictionaryStatus` operation. */
+  export interface GetTokenizationDictionaryStatusParams {
     /** The ID of the environment. */
     environment_id: string;
     /** The ID of the collection. */
@@ -4799,6 +5202,26 @@ namespace DiscoveryV1 {
     snapshots?: DocumentSnapshot[];
     /** An array of notice messages about the preview operation. */
     notices?: Notice[];
+  }
+
+  /** An object defining a single tokenizaion rule. */
+  export interface TokenDictRule {
+    /** The string to tokenize. */
+    text?: string;
+    /** Array of tokens that the `text` field is split into when found. */
+    tokens?: string[];
+    /** Array of tokens that represent the content of the `text` field in an alternate character set. */
+    readings?: string[];
+    /** The part of speech that the `text` string belongs to. For example `noun`. Custom parts of speech can be specified. */
+    part_of_speech?: string;
+  }
+
+  /** Object describing the current status of the tokenization dictionary. */
+  export interface TokenDictStatusResponse {
+    /** Current tokenization dictionary status for the specified collection. */
+    status?: string;
+    /** The type for this dictionary. Always returns `tokenization_dictionary`. */
+    type?: string;
   }
 
   /** TopHitsResults. */
