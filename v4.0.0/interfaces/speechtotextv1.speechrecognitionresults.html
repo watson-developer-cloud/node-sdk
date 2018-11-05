@@ -106,7 +106,7 @@
 					<div class="tsd-signature tsd-kind-icon">result_<wbr>index<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/26cd5c2/speech-to-text/v1-generated.ts#L3339">speech-to-text/v1-generated.ts:3339</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4567f81/speech-to-text/v1-generated.ts#L3584">speech-to-text/v1-generated.ts:3584</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -121,12 +121,12 @@
 					<div class="tsd-signature tsd-kind-icon">results<span class="tsd-signature-symbol">:</span> <a href="speechtotextv1.speechrecognitionresult.html" class="tsd-signature-type">SpeechRecognitionResult</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/26cd5c2/speech-to-text/v1-generated.ts#L3337">speech-to-text/v1-generated.ts:3337</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4567f81/speech-to-text/v1-generated.ts#L3582">speech-to-text/v1-generated.ts:3582</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>An array that can include interim and final results (interim results are returned only if supported by the method). Final results are guaranteed not to change; interim results might be replaced by further interim results and final results. The service periodically sends updates to the results list; the <code>result_index</code> is set to the lowest index in the array that has changed; it is incremented for new results.</p>
+							<p>An array of <code>SpeechRecognitionResult</code> objects that can include interim and final results (interim results are returned only if supported by the method). Final results are guaranteed not to change; interim results might be replaced by further interim results and final results. The service periodically sends updates to the results list; the <code>result_index</code> is set to the lowest index in the array that has changed; it is incremented for new results.</p>
 						</div>
 					</div>
 				</section>
@@ -136,12 +136,12 @@
 					<div class="tsd-signature tsd-kind-icon">speaker_<wbr>labels<span class="tsd-signature-symbol">:</span> <a href="speechtotextv1.speakerlabelsresult.html" class="tsd-signature-type">SpeakerLabelsResult</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/26cd5c2/speech-to-text/v1-generated.ts#L3341">speech-to-text/v1-generated.ts:3341</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4567f81/speech-to-text/v1-generated.ts#L3586">speech-to-text/v1-generated.ts:3586</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>An array that identifies which words were spoken by which speakers in a multi-person exchange. Returned in the response only if <code>speaker_labels</code> is <code>true</code>. When interim results are also requested for methods that support them, it is possible for a <code>SpeechRecognitionResults</code> object to include only the <code>speaker_labels</code> field.</p>
+							<p>An array of <code>SpeakerLabelsResult</code> objects that identifies which words were spoken by which speakers in a multi-person exchange. The array is returned only if the <code>speaker_labels</code> parameter is <code>true</code>. When interim results are also requested for methods that support them, it is possible for a <code>SpeechRecognitionResults</code> object to include only the <code>speaker_labels</code> field.</p>
 						</div>
 					</div>
 				</section>
@@ -151,7 +151,7 @@
 					<div class="tsd-signature tsd-kind-icon">warnings<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/26cd5c2/speech-to-text/v1-generated.ts#L3343">speech-to-text/v1-generated.ts:3343</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4567f81/speech-to-text/v1-generated.ts#L3588">speech-to-text/v1-generated.ts:3588</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
