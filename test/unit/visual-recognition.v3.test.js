@@ -1,19 +1,19 @@
+'use strict';
+
 const VisualRecognitionV3 = require('../../visual-recognition/v3-generated');
 const helper = require('../../lib/helper');
 const utils = require('../resources/unitTestUtils');
 
-const {
-  missingParamsError,
-  missingParamsSuccess,
-  checkUrlAndMethod,
-  checkCallback,
-  checkMediaHeaders,
-  checkUserHeader,
-  checkDefaultSuccessArgs,
-  checkForEmptyObject,
-  checkRequiredParamsHandling,
-  getOptions,
-} = utils;
+const missingParamsError = utils.missingParamsError;
+const missingParamsSuccess = utils.missingParamsSuccess;
+const checkUrlAndMethod = utils.checkUrlAndMethod;
+const checkCallback = utils.checkCallback;
+const checkMediaHeaders = utils.checkMediaHeaders;
+const checkUserHeader = utils.checkUserHeader;
+const checkDefaultSuccessArgs = utils.checkDefaultSuccessArgs;
+const checkForEmptyObject = utils.checkForEmptyObject;
+const checkRequiredParamsHandling = utils.checkRequiredParamsHandling;
+const getOptions = utils.getOptions;
 
 const service = {
   username: 'batman',
@@ -206,9 +206,15 @@ describe('createClassifier', () => {
       const expectedContentType = 'multipart/form-data';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.formData['name']).toEqual(name);
-      expect(options.formData['classname_positive_examples'].data).toEqual(classname_positive_examples);
-      expect(options.formData['classname_positive_examples'].filename).toEqual(classname_positive_examples_filename);
-      expect(options.formData['classname_positive_examples'].contentType).toEqual('application/octet-stream');
+      expect(options.formData['classname_positive_examples'].data).toEqual(
+        classname_positive_examples
+      );
+      expect(options.formData['classname_positive_examples'].filename).toEqual(
+        classname_positive_examples_filename
+      );
+      expect(options.formData['classname_positive_examples'].contentType).toEqual(
+        'application/octet-stream'
+      );
       expect(options.formData['negative_examples'].data).toEqual(negative_examples);
       expect(options.formData['negative_examples'].filename).toEqual(negative_examples_filename);
       expect(options.formData['negative_examples'].contentType).toEqual('application/octet-stream');
@@ -480,9 +486,15 @@ describe('updateClassifier', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = 'multipart/form-data';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.formData['classname_positive_examples'].data).toEqual(classname_positive_examples);
-      expect(options.formData['classname_positive_examples'].filename).toEqual(classname_positive_examples_filename);
-      expect(options.formData['classname_positive_examples'].contentType).toEqual('application/octet-stream');
+      expect(options.formData['classname_positive_examples'].data).toEqual(
+        classname_positive_examples
+      );
+      expect(options.formData['classname_positive_examples'].filename).toEqual(
+        classname_positive_examples_filename
+      );
+      expect(options.formData['classname_positive_examples'].contentType).toEqual(
+        'application/octet-stream'
+      );
       expect(options.formData['negative_examples'].data).toEqual(negative_examples);
       expect(options.formData['negative_examples'].filename).toEqual(negative_examples_filename);
       expect(options.formData['negative_examples'].contentType).toEqual('application/octet-stream');

@@ -1,19 +1,19 @@
+'use strict';
+
 const TextToSpeechV1 = require('../../text-to-speech/v1-generated');
 const helper = require('../../lib/helper');
 const utils = require('../resources/unitTestUtils');
 
-const {
-  missingParamsError,
-  missingParamsSuccess,
-  checkUrlAndMethod,
-  checkCallback,
-  checkMediaHeaders,
-  checkUserHeader,
-  checkDefaultSuccessArgs,
-  checkForEmptyObject,
-  checkRequiredParamsHandling,
-  getOptions,
-} = utils;
+const missingParamsError = utils.missingParamsError;
+const missingParamsSuccess = utils.missingParamsSuccess;
+const checkUrlAndMethod = utils.checkUrlAndMethod;
+const checkCallback = utils.checkCallback;
+const checkMediaHeaders = utils.checkMediaHeaders;
+const checkUserHeader = utils.checkUserHeader;
+const checkDefaultSuccessArgs = utils.checkDefaultSuccessArgs;
+const checkForEmptyObject = utils.checkForEmptyObject;
+const checkRequiredParamsHandling = utils.checkRequiredParamsHandling;
+const getOptions = utils.getOptions;
 
 const service = {
   username: 'batman',
@@ -101,7 +101,6 @@ describe('getVoice', () => {
         done();
       });
     });
-    
   });
 });
 describe('listVoices', () => {
@@ -111,8 +110,7 @@ describe('listVoices', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const params = {
-      };
+      const params = {};
 
       // invoke method
       text_to_speech.listVoices(params);
@@ -233,7 +231,6 @@ describe('synthesize', () => {
         done();
       });
     });
-    
   });
 });
 describe('getPronunciation', () => {
@@ -311,7 +308,6 @@ describe('getPronunciation', () => {
         done();
       });
     });
-    
   });
 });
 describe('createVoiceModel', () => {
@@ -387,7 +383,6 @@ describe('createVoiceModel', () => {
         done();
       });
     });
-    
   });
 });
 describe('deleteVoiceModel', () => {
@@ -456,7 +451,6 @@ describe('deleteVoiceModel', () => {
         done();
       });
     });
-    
   });
 });
 describe('getVoiceModel', () => {
@@ -525,7 +519,6 @@ describe('getVoiceModel', () => {
         done();
       });
     });
-    
   });
 });
 describe('listVoiceModels', () => {
@@ -659,7 +652,6 @@ describe('updateVoiceModel', () => {
         done();
       });
     });
-    
   });
 });
 describe('addWord', () => {
@@ -742,7 +734,6 @@ describe('addWord', () => {
         done();
       });
     });
-    
   });
 });
 describe('addWords', () => {
@@ -817,7 +808,6 @@ describe('addWords', () => {
         done();
       });
     });
-    
   });
 });
 describe('deleteWord', () => {
@@ -891,7 +881,6 @@ describe('deleteWord', () => {
         done();
       });
     });
-    
   });
 });
 describe('getWord', () => {
@@ -965,7 +954,6 @@ describe('getWord', () => {
         done();
       });
     });
-    
   });
 });
 describe('listWords', () => {
@@ -1034,7 +1022,6 @@ describe('listWords', () => {
         done();
       });
     });
-    
   });
 });
 describe('deleteUserData', () => {
@@ -1103,6 +1090,5 @@ describe('deleteUserData', () => {
         done();
       });
     });
-    
   });
 });
