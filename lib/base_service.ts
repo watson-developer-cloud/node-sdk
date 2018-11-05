@@ -19,6 +19,7 @@
 import bufferFrom = require('buffer-from');
 import extend = require('extend');
 import request = require('request');
+import semver = require('semver');
 import vcapServices = require('vcap_services');
 import { IamTokenManagerV1 } from '../iam-token-manager/v1';
 import { stripTrailingSlash } from './helper';
@@ -119,6 +120,10 @@ export class BaseService {
       throw new Error(
         'the "new" keyword is required to create Watson service instances'
       );
+    }
+    const isNodeFour = semver.satisfies(process.version, '4.x')
+    if (isNodeFour) {
+      console.warn('WARNING: Support for Node v4.x is deprecated and will no longer be tested. Support will be officially dropped in the next major version.');
     }
     const options = extend({}, userOptions);
     const _options = this.initCredentials(options);
