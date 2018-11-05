@@ -69,6 +69,8 @@ The following services have been deprecated for an extended period of time and w
 - Parameter name changed: `passages.count` -> `passages_count`
 - Parameter name changed: `passages.characters` -> `passages_characters`
 
+#### model QueryResultResultMetadata
+- Model name changed: `QueryResultResultMetadata` -> `QueryResultMetadata`
 
 ### Natural Language Classifier Compatibility
 #### create
