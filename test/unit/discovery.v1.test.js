@@ -1,19 +1,19 @@
+'use strict';
+
 const DiscoveryV1 = require('../../discovery/v1-generated');
 const helper = require('../../lib/helper');
 const utils = require('../resources/unitTestUtils');
 
-const {
-  missingParamsError,
-  missingParamsSuccess,
-  checkUrlAndMethod,
-  checkCallback,
-  checkMediaHeaders,
-  checkUserHeader,
-  checkDefaultSuccessArgs,
-  checkForEmptyObject,
-  checkRequiredParamsHandling,
-  getOptions,
-} = utils;
+const missingParamsError = utils.missingParamsError;
+const missingParamsSuccess = utils.missingParamsSuccess;
+const checkUrlAndMethod = utils.checkUrlAndMethod;
+const checkCallback = utils.checkCallback;
+const checkMediaHeaders = utils.checkMediaHeaders;
+const checkUserHeader = utils.checkUserHeader;
+const checkDefaultSuccessArgs = utils.checkDefaultSuccessArgs;
+const checkForEmptyObject = utils.checkForEmptyObject;
+const checkRequiredParamsHandling = utils.checkRequiredParamsHandling;
+const getOptions = utils.getOptions;
 
 const service = {
   username: 'batman',
@@ -105,7 +105,6 @@ describe('createEnvironment', () => {
         done();
       });
     });
-    
   });
 });
 describe('deleteEnvironment', () => {
@@ -174,7 +173,6 @@ describe('deleteEnvironment', () => {
         done();
       });
     });
-    
   });
 });
 describe('getEnvironment', () => {
@@ -243,7 +241,6 @@ describe('getEnvironment', () => {
         done();
       });
     });
-    
   });
 });
 describe('listEnvironments', () => {
@@ -372,7 +369,6 @@ describe('listFields', () => {
         done();
       });
     });
-    
   });
 });
 describe('updateEnvironment', () => {
@@ -451,7 +447,6 @@ describe('updateEnvironment', () => {
         done();
       });
     });
-    
   });
 });
 describe('createConfiguration', () => {
@@ -541,7 +536,6 @@ describe('createConfiguration', () => {
         done();
       });
     });
-    
   });
 });
 describe('deleteConfiguration', () => {
@@ -566,7 +560,11 @@ describe('deleteConfiguration', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/environments/{environment_id}/configurations/{configuration_id}', 'DELETE');
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/configurations/{configuration_id}',
+        'DELETE'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -615,7 +613,6 @@ describe('deleteConfiguration', () => {
         done();
       });
     });
-    
   });
 });
 describe('getConfiguration', () => {
@@ -640,7 +637,11 @@ describe('getConfiguration', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/environments/{environment_id}/configurations/{configuration_id}', 'GET');
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/configurations/{configuration_id}',
+        'GET'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -689,7 +690,6 @@ describe('getConfiguration', () => {
         done();
       });
     });
-    
   });
 });
 describe('listConfigurations', () => {
@@ -761,7 +761,6 @@ describe('listConfigurations', () => {
         done();
       });
     });
-    
   });
 });
 describe('updateConfiguration', () => {
@@ -798,7 +797,11 @@ describe('updateConfiguration', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/environments/{environment_id}/configurations/{configuration_id}', 'PUT');
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/configurations/{configuration_id}',
+        'PUT'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -856,7 +859,6 @@ describe('updateConfiguration', () => {
         done();
       });
     });
-    
   });
 });
 describe('testConfigurationInEnvironment', () => {
@@ -946,7 +948,6 @@ describe('testConfigurationInEnvironment', () => {
         done();
       });
     });
-    
   });
 });
 describe('createCollection', () => {
@@ -1030,7 +1031,6 @@ describe('createCollection', () => {
         done();
       });
     });
-    
   });
 });
 describe('deleteCollection', () => {
@@ -1055,7 +1055,11 @@ describe('deleteCollection', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}', 'DELETE');
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/collections/{collection_id}',
+        'DELETE'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -1104,7 +1108,6 @@ describe('deleteCollection', () => {
         done();
       });
     });
-    
   });
 });
 describe('getCollection', () => {
@@ -1129,7 +1132,11 @@ describe('getCollection', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}', 'GET');
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/collections/{collection_id}',
+        'GET'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -1178,7 +1185,6 @@ describe('getCollection', () => {
         done();
       });
     });
-    
   });
 });
 describe('listCollectionFields', () => {
@@ -1203,7 +1209,11 @@ describe('listCollectionFields', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/fields', 'GET');
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/collections/{collection_id}/fields',
+        'GET'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -1252,7 +1262,6 @@ describe('listCollectionFields', () => {
         done();
       });
     });
-    
   });
 });
 describe('listCollections', () => {
@@ -1324,7 +1333,6 @@ describe('listCollections', () => {
         done();
       });
     });
-    
   });
 });
 describe('updateCollection', () => {
@@ -1355,7 +1363,11 @@ describe('updateCollection', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}', 'PUT');
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/collections/{collection_id}',
+        'PUT'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -1408,7 +1420,6 @@ describe('updateCollection', () => {
         done();
       });
     });
-    
   });
 });
 describe('createExpansions', () => {
@@ -1435,7 +1446,11 @@ describe('createExpansions', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/expansions', 'POST');
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/collections/{collection_id}/expansions',
+        'POST'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -1488,7 +1503,6 @@ describe('createExpansions', () => {
         done();
       });
     });
-    
   });
 });
 describe('createTokenizationDictionary', () => {
@@ -1515,7 +1529,11 @@ describe('createTokenizationDictionary', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/tokenization_dictionary', 'POST');
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/tokenization_dictionary',
+        'POST'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -1566,7 +1584,6 @@ describe('createTokenizationDictionary', () => {
         done();
       });
     });
-    
   });
 });
 describe('deleteExpansions', () => {
@@ -1591,7 +1608,11 @@ describe('deleteExpansions', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/expansions', 'DELETE');
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/collections/{collection_id}/expansions',
+        'DELETE'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -1640,7 +1661,6 @@ describe('deleteExpansions', () => {
         done();
       });
     });
-    
   });
 });
 describe('deleteTokenizationDictionary', () => {
@@ -1665,7 +1685,11 @@ describe('deleteTokenizationDictionary', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/tokenization_dictionary', 'DELETE');
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/tokenization_dictionary',
+        'DELETE'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -1714,7 +1738,6 @@ describe('deleteTokenizationDictionary', () => {
         done();
       });
     });
-    
   });
 });
 describe('getTokenizationDictionaryStatus', () => {
@@ -1739,7 +1762,11 @@ describe('getTokenizationDictionaryStatus', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/tokenization_dictionary', 'GET');
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/tokenization_dictionary',
+        'GET'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -1788,7 +1815,6 @@ describe('getTokenizationDictionaryStatus', () => {
         done();
       });
     });
-    
   });
 });
 describe('listExpansions', () => {
@@ -1813,7 +1839,11 @@ describe('listExpansions', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/expansions', 'GET');
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/collections/{collection_id}/expansions',
+        'GET'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -1862,7 +1892,6 @@ describe('listExpansions', () => {
         done();
       });
     });
-    
   });
 });
 describe('addDocument', () => {
@@ -1895,7 +1924,11 @@ describe('addDocument', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/documents', 'POST');
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/collections/{collection_id}/documents',
+        'POST'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'multipart/form-data';
@@ -1948,7 +1981,6 @@ describe('addDocument', () => {
         done();
       });
     });
-    
   });
 });
 describe('deleteDocument', () => {
@@ -1975,7 +2007,11 @@ describe('deleteDocument', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/documents/{document_id}', 'DELETE');
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/collections/{collection_id}/documents/{document_id}',
+        'DELETE'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -2027,7 +2063,6 @@ describe('deleteDocument', () => {
         done();
       });
     });
-    
   });
 });
 describe('getDocumentStatus', () => {
@@ -2054,7 +2089,11 @@ describe('getDocumentStatus', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/documents/{document_id}', 'GET');
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/collections/{collection_id}/documents/{document_id}',
+        'GET'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -2106,7 +2145,6 @@ describe('getDocumentStatus', () => {
         done();
       });
     });
-    
   });
 });
 describe('updateDocument', () => {
@@ -2141,7 +2179,11 @@ describe('updateDocument', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/documents/{document_id}', 'POST');
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/collections/{collection_id}/documents/{document_id}',
+        'POST'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'multipart/form-data';
@@ -2197,7 +2239,6 @@ describe('updateDocument', () => {
         done();
       });
     });
-    
   });
 });
 describe('federatedQuery', () => {
@@ -2330,7 +2371,6 @@ describe('federatedQuery', () => {
         done();
       });
     });
-    
   });
 });
 describe('federatedQueryNotices', () => {
@@ -2443,7 +2483,6 @@ describe('federatedQueryNotices', () => {
         done();
       });
     });
-    
   });
 });
 describe('query', () => {
@@ -2510,7 +2549,11 @@ describe('query', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/query', 'POST');
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/collections/{collection_id}/query',
+        'POST'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -2581,7 +2624,6 @@ describe('query', () => {
         done();
       });
     });
-    
   });
 });
 describe('queryEntities', () => {
@@ -2616,7 +2658,11 @@ describe('queryEntities', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/query_entities', 'POST');
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/collections/{collection_id}/query_entities',
+        'POST'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -2671,7 +2717,6 @@ describe('queryEntities', () => {
         done();
       });
     });
-    
   });
 });
 describe('queryNotices', () => {
@@ -2730,7 +2775,11 @@ describe('queryNotices', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/notices', 'GET');
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/collections/{collection_id}/notices',
+        'GET'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -2796,7 +2845,6 @@ describe('queryNotices', () => {
         done();
       });
     });
-    
   });
 });
 describe('queryRelations', () => {
@@ -2833,7 +2881,11 @@ describe('queryRelations', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/query_relations', 'POST');
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/collections/{collection_id}/query_relations',
+        'POST'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -2889,7 +2941,6 @@ describe('queryRelations', () => {
         done();
       });
     });
-    
   });
 });
 describe('addTrainingData', () => {
@@ -2920,7 +2971,11 @@ describe('addTrainingData', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/training_data', 'POST');
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/collections/{collection_id}/training_data',
+        'POST'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -2973,7 +3028,6 @@ describe('addTrainingData', () => {
         done();
       });
     });
-    
   });
 });
 describe('createTrainingExample', () => {
@@ -3006,7 +3060,11 @@ describe('createTrainingExample', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples', 'POST');
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples',
+        'POST'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -3062,7 +3120,6 @@ describe('createTrainingExample', () => {
         done();
       });
     });
-    
   });
 });
 describe('deleteAllTrainingData', () => {
@@ -3087,7 +3144,11 @@ describe('deleteAllTrainingData', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/training_data', 'DELETE');
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/collections/{collection_id}/training_data',
+        'DELETE'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -3136,7 +3197,6 @@ describe('deleteAllTrainingData', () => {
         done();
       });
     });
-    
   });
 });
 describe('deleteTrainingData', () => {
@@ -3163,7 +3223,11 @@ describe('deleteTrainingData', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}', 'DELETE');
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}',
+        'DELETE'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -3215,7 +3279,6 @@ describe('deleteTrainingData', () => {
         done();
       });
     });
-    
   });
 });
 describe('deleteTrainingExample', () => {
@@ -3244,7 +3307,11 @@ describe('deleteTrainingExample', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples/{example_id}', 'DELETE');
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples/{example_id}',
+        'DELETE'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -3299,7 +3366,6 @@ describe('deleteTrainingExample', () => {
         done();
       });
     });
-    
   });
 });
 describe('getTrainingData', () => {
@@ -3326,7 +3392,11 @@ describe('getTrainingData', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}', 'GET');
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}',
+        'GET'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -3378,7 +3448,6 @@ describe('getTrainingData', () => {
         done();
       });
     });
-    
   });
 });
 describe('getTrainingExample', () => {
@@ -3407,7 +3476,11 @@ describe('getTrainingExample', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples/{example_id}', 'GET');
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples/{example_id}',
+        'GET'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -3462,7 +3535,6 @@ describe('getTrainingExample', () => {
         done();
       });
     });
-    
   });
 });
 describe('listTrainingData', () => {
@@ -3487,7 +3559,11 @@ describe('listTrainingData', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/training_data', 'GET');
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/collections/{collection_id}/training_data',
+        'GET'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -3536,7 +3612,6 @@ describe('listTrainingData', () => {
         done();
       });
     });
-    
   });
 });
 describe('listTrainingExamples', () => {
@@ -3563,7 +3638,11 @@ describe('listTrainingExamples', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples', 'GET');
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples',
+        'GET'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -3615,7 +3694,6 @@ describe('listTrainingExamples', () => {
         done();
       });
     });
-    
   });
 });
 describe('updateTrainingExample', () => {
@@ -3648,7 +3726,11 @@ describe('updateTrainingExample', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples/{example_id}', 'PUT');
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples/{example_id}',
+        'PUT'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -3706,7 +3788,6 @@ describe('updateTrainingExample', () => {
         done();
       });
     });
-    
   });
 });
 describe('deleteUserData', () => {
@@ -3775,7 +3856,6 @@ describe('deleteUserData', () => {
         done();
       });
     });
-    
   });
 });
 describe('createEvent', () => {
@@ -3850,7 +3930,6 @@ describe('createEvent', () => {
         done();
       });
     });
-    
   });
 });
 describe('getMetricsEventRate', () => {
@@ -4292,7 +4371,6 @@ describe('createCredentials', () => {
         done();
       });
     });
-    
   });
 });
 describe('deleteCredentials', () => {
@@ -4317,7 +4395,11 @@ describe('deleteCredentials', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/environments/{environment_id}/credentials/{credential_id}', 'DELETE');
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/credentials/{credential_id}',
+        'DELETE'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -4366,7 +4448,6 @@ describe('deleteCredentials', () => {
         done();
       });
     });
-    
   });
 });
 describe('getSourceCredentials', () => {
@@ -4391,7 +4472,11 @@ describe('getSourceCredentials', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/environments/{environment_id}/credentials/{credential_id}', 'GET');
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/credentials/{credential_id}',
+        'GET'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -4440,7 +4525,6 @@ describe('getSourceCredentials', () => {
         done();
       });
     });
-    
   });
 });
 describe('listCredentials', () => {
@@ -4509,7 +4593,6 @@ describe('listCredentials', () => {
         done();
       });
     });
-    
   });
 });
 describe('updateCredentials', () => {
@@ -4538,7 +4621,11 @@ describe('updateCredentials', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/environments/{environment_id}/credentials/{credential_id}', 'PUT');
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/credentials/{credential_id}',
+        'PUT'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -4590,6 +4677,5 @@ describe('updateCredentials', () => {
         done();
       });
     });
-    
   });
 });

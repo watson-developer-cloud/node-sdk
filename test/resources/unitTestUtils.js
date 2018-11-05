@@ -1,3 +1,5 @@
+'use strict';
+
 const missingParamsError = 1;
 const missingParamsSuccess = 0;
 

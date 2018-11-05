@@ -1,18 +1,18 @@
+'use strict';
+
 const NaturalLanguageUnderstandingV1 = require('../../natural-language-understanding/v1-generated');
 const helper = require('../../lib/helper');
 const utils = require('../resources/unitTestUtils');
 
-const {
-  missingParamsError,
-  missingParamsSuccess,
-  checkUrlAndMethod,
-  checkCallback,
-  checkMediaHeaders,
-  checkDefaultSuccessArgs,
-  checkForEmptyObject,
-  checkRequiredParamsHandling,
-  getOptions,
-} = utils;
+const missingParamsError = utils.missingParamsError;
+const missingParamsSuccess = utils.missingParamsSuccess;
+const checkUrlAndMethod = utils.checkUrlAndMethod;
+const checkCallback = utils.checkCallback;
+const checkMediaHeaders = utils.checkMediaHeaders;
+const checkDefaultSuccessArgs = utils.checkDefaultSuccessArgs;
+const checkForEmptyObject = utils.checkForEmptyObject;
+const checkRequiredParamsHandling = utils.checkRequiredParamsHandling;
+const getOptions = utils.getOptions;
 
 const service = {
   username: 'batman',
@@ -125,7 +125,6 @@ describe('analyze', () => {
         done();
       });
     });
-    
   });
 });
 describe('deleteModel', () => {
@@ -194,7 +193,6 @@ describe('deleteModel', () => {
         done();
       });
     });
-    
   });
 });
 describe('listModels', () => {
@@ -204,8 +202,7 @@ describe('listModels', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const params = {
-      };
+      const params = {};
 
       // invoke method
       natural_language_understanding.listModels(params);

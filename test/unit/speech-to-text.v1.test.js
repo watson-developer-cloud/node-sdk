@@ -1,19 +1,19 @@
+'use strict';
+
 const SpeechToTextV1 = require('../../speech-to-text/v1-generated');
 const helper = require('../../lib/helper');
 const utils = require('../resources/unitTestUtils');
 
-const {
-  missingParamsError,
-  missingParamsSuccess,
-  checkUrlAndMethod,
-  checkCallback,
-  checkMediaHeaders,
-  checkUserHeader,
-  checkDefaultSuccessArgs,
-  checkForEmptyObject,
-  checkRequiredParamsHandling,
-  getOptions,
-} = utils;
+const missingParamsError = utils.missingParamsError;
+const missingParamsSuccess = utils.missingParamsSuccess;
+const checkUrlAndMethod = utils.checkUrlAndMethod;
+const checkCallback = utils.checkCallback;
+const checkMediaHeaders = utils.checkMediaHeaders;
+const checkUserHeader = utils.checkUserHeader;
+const checkDefaultSuccessArgs = utils.checkDefaultSuccessArgs;
+const checkForEmptyObject = utils.checkForEmptyObject;
+const checkRequiredParamsHandling = utils.checkRequiredParamsHandling;
+const getOptions = utils.getOptions;
 
 const service = {
   username: 'batman',
@@ -98,7 +98,6 @@ describe('getModel', () => {
         done();
       });
     });
-    
   });
 });
 describe('listModels', () => {
@@ -108,8 +107,7 @@ describe('listModels', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const params = {
-      };
+      const params = {};
 
       // invoke method
       speech_to_text.listModels(params);
@@ -270,7 +268,6 @@ describe('recognize', () => {
         done();
       });
     });
-    
   });
 });
 describe('checkJob', () => {
@@ -339,7 +336,6 @@ describe('checkJob', () => {
         done();
       });
     });
-    
   });
 });
 describe('checkJobs', () => {
@@ -349,8 +345,7 @@ describe('checkJobs', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const params = {
-      };
+      const params = {};
 
       // invoke method
       speech_to_text.checkJobs(params);
@@ -523,7 +518,6 @@ describe('createJob', () => {
         done();
       });
     });
-    
   });
 });
 describe('deleteJob', () => {
@@ -592,7 +586,6 @@ describe('deleteJob', () => {
         done();
       });
     });
-    
   });
 });
 describe('registerCallback', () => {
@@ -664,7 +657,6 @@ describe('registerCallback', () => {
         done();
       });
     });
-    
   });
 });
 describe('unregisterCallback', () => {
@@ -733,7 +725,6 @@ describe('unregisterCallback', () => {
         done();
       });
     });
-    
   });
 });
 describe('createLanguageModel', () => {
@@ -814,7 +805,6 @@ describe('createLanguageModel', () => {
         done();
       });
     });
-    
   });
 });
 describe('deleteLanguageModel', () => {
@@ -883,7 +873,6 @@ describe('deleteLanguageModel', () => {
         done();
       });
     });
-    
   });
 });
 describe('getLanguageModel', () => {
@@ -952,7 +941,6 @@ describe('getLanguageModel', () => {
         done();
       });
     });
-    
   });
 });
 describe('listLanguageModels', () => {
@@ -1076,7 +1064,6 @@ describe('resetLanguageModel', () => {
         done();
       });
     });
-    
   });
 });
 describe('trainLanguageModel', () => {
@@ -1151,7 +1138,6 @@ describe('trainLanguageModel', () => {
         done();
       });
     });
-    
   });
 });
 describe('upgradeLanguageModel', () => {
@@ -1220,7 +1206,6 @@ describe('upgradeLanguageModel', () => {
         done();
       });
     });
-    
   });
 });
 describe('addCorpus', () => {
@@ -1251,7 +1236,11 @@ describe('addCorpus', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/customizations/{customization_id}/corpora/{corpus_name}', 'POST');
+      checkUrlAndMethod(
+        options,
+        '/v1/customizations/{customization_id}/corpora/{corpus_name}',
+        'POST'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'multipart/form-data';
@@ -1306,7 +1295,6 @@ describe('addCorpus', () => {
         done();
       });
     });
-    
   });
 });
 describe('deleteCorpus', () => {
@@ -1331,7 +1319,11 @@ describe('deleteCorpus', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/customizations/{customization_id}/corpora/{corpus_name}', 'DELETE');
+      checkUrlAndMethod(
+        options,
+        '/v1/customizations/{customization_id}/corpora/{corpus_name}',
+        'DELETE'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -1380,7 +1372,6 @@ describe('deleteCorpus', () => {
         done();
       });
     });
-    
   });
 });
 describe('getCorpus', () => {
@@ -1405,7 +1396,11 @@ describe('getCorpus', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/customizations/{customization_id}/corpora/{corpus_name}', 'GET');
+      checkUrlAndMethod(
+        options,
+        '/v1/customizations/{customization_id}/corpora/{corpus_name}',
+        'GET'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -1454,7 +1449,6 @@ describe('getCorpus', () => {
         done();
       });
     });
-    
   });
 });
 describe('listCorpora', () => {
@@ -1523,7 +1517,6 @@ describe('listCorpora', () => {
         done();
       });
     });
-    
   });
 });
 describe('addWord', () => {
@@ -1607,7 +1600,6 @@ describe('addWord', () => {
         done();
       });
     });
-    
   });
 });
 describe('addWords', () => {
@@ -1682,7 +1674,6 @@ describe('addWords', () => {
         done();
       });
     });
-    
   });
 });
 describe('deleteWord', () => {
@@ -1707,7 +1698,11 @@ describe('deleteWord', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/customizations/{customization_id}/words/{word_name}', 'DELETE');
+      checkUrlAndMethod(
+        options,
+        '/v1/customizations/{customization_id}/words/{word_name}',
+        'DELETE'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -1756,7 +1751,6 @@ describe('deleteWord', () => {
         done();
       });
     });
-    
   });
 });
 describe('getWord', () => {
@@ -1830,7 +1824,6 @@ describe('getWord', () => {
         done();
       });
     });
-    
   });
 });
 describe('listWords', () => {
@@ -1905,7 +1898,6 @@ describe('listWords', () => {
         done();
       });
     });
-    
   });
 });
 describe('createAcousticModel', () => {
@@ -1983,7 +1975,6 @@ describe('createAcousticModel', () => {
         done();
       });
     });
-    
   });
 });
 describe('deleteAcousticModel', () => {
@@ -2052,7 +2043,6 @@ describe('deleteAcousticModel', () => {
         done();
       });
     });
-    
   });
 });
 describe('getAcousticModel', () => {
@@ -2121,7 +2111,6 @@ describe('getAcousticModel', () => {
         done();
       });
     });
-    
   });
 });
 describe('listAcousticModels', () => {
@@ -2245,7 +2234,6 @@ describe('resetAcousticModel', () => {
         done();
       });
     });
-    
   });
 });
 describe('trainAcousticModel', () => {
@@ -2317,7 +2305,6 @@ describe('trainAcousticModel', () => {
         done();
       });
     });
-    
   });
 });
 describe('upgradeAcousticModel', () => {
@@ -2342,7 +2329,11 @@ describe('upgradeAcousticModel', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/acoustic_customizations/{customization_id}/upgrade_model', 'POST');
+      checkUrlAndMethod(
+        options,
+        '/v1/acoustic_customizations/{customization_id}/upgrade_model',
+        'POST'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -2389,7 +2380,6 @@ describe('upgradeAcousticModel', () => {
         done();
       });
     });
-    
   });
 });
 describe('addAudio', () => {
@@ -2422,7 +2412,11 @@ describe('addAudio', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/acoustic_customizations/{customization_id}/audio/{audio_name}', 'POST');
+      checkUrlAndMethod(
+        options,
+        '/v1/acoustic_customizations/{customization_id}/audio/{audio_name}',
+        'POST'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = content_type;
@@ -2480,7 +2474,6 @@ describe('addAudio', () => {
         done();
       });
     });
-    
   });
 });
 describe('deleteAudio', () => {
@@ -2505,7 +2498,11 @@ describe('deleteAudio', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/acoustic_customizations/{customization_id}/audio/{audio_name}', 'DELETE');
+      checkUrlAndMethod(
+        options,
+        '/v1/acoustic_customizations/{customization_id}/audio/{audio_name}',
+        'DELETE'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -2554,7 +2551,6 @@ describe('deleteAudio', () => {
         done();
       });
     });
-    
   });
 });
 describe('getAudio', () => {
@@ -2579,7 +2575,11 @@ describe('getAudio', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/acoustic_customizations/{customization_id}/audio/{audio_name}', 'GET');
+      checkUrlAndMethod(
+        options,
+        '/v1/acoustic_customizations/{customization_id}/audio/{audio_name}',
+        'GET'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -2628,7 +2628,6 @@ describe('getAudio', () => {
         done();
       });
     });
-    
   });
 });
 describe('listAudio', () => {
@@ -2697,7 +2696,6 @@ describe('listAudio', () => {
         done();
       });
     });
-    
   });
 });
 describe('deleteUserData', () => {
@@ -2766,6 +2764,5 @@ describe('deleteUserData', () => {
         done();
       });
     });
-    
   });
 });

@@ -1,18 +1,18 @@
+'use strict';
+
 const ToneAnalyzerV3 = require('../../tone-analyzer/v3-generated');
 const helper = require('../../lib/helper');
 const utils = require('../resources/unitTestUtils');
 
-const {
-  missingParamsError,
-  missingParamsSuccess,
-  checkUrlAndMethod,
-  checkCallback,
-  checkMediaHeaders,
-  checkUserHeader,
-  checkForEmptyObject,
-  checkRequiredParamsHandling,
-  getOptions,
-} = utils;
+const missingParamsError = utils.missingParamsError;
+const missingParamsSuccess = utils.missingParamsSuccess;
+const checkUrlAndMethod = utils.checkUrlAndMethod;
+const checkCallback = utils.checkCallback;
+const checkMediaHeaders = utils.checkMediaHeaders;
+const checkUserHeader = utils.checkUserHeader;
+const checkForEmptyObject = utils.checkForEmptyObject;
+const checkRequiredParamsHandling = utils.checkRequiredParamsHandling;
+const getOptions = utils.getOptions;
 
 const service = {
   username: 'batman',

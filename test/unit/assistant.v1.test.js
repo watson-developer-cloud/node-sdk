@@ -1,18 +1,18 @@
+'use strict';
+
 const AssistantV1 = require('../../assistant/v1');
 const helper = require('../../lib/helper');
 const utils = require('../resources/unitTestUtils');
 
-const {
-  missingParamsError,
-  missingParamsSuccess,
-  checkUrlAndMethod,
-  checkCallback,
-  checkMediaHeaders,
-  checkDefaultSuccessArgs,
-  checkForEmptyObject,
-  checkRequiredParamsHandling,
-  getOptions,
-} = utils;
+const missingParamsError = utils.missingParamsError;
+const missingParamsSuccess = utils.missingParamsSuccess;
+const checkUrlAndMethod = utils.checkUrlAndMethod;
+const checkCallback = utils.checkCallback;
+const checkMediaHeaders = utils.checkMediaHeaders;
+const checkDefaultSuccessArgs = utils.checkDefaultSuccessArgs;
+const checkForEmptyObject = utils.checkForEmptyObject;
+const checkRequiredParamsHandling = utils.checkRequiredParamsHandling;
+const getOptions = utils.getOptions;
 
 const service = {
   username: 'batman',
@@ -119,7 +119,6 @@ describe('message', () => {
         done();
       });
     });
-    
   });
 });
 describe('createWorkspace', () => {
@@ -345,7 +344,6 @@ describe('getWorkspace', () => {
         done();
       });
     });
-    
   });
 });
 describe('listWorkspaces', () => {
@@ -515,7 +513,6 @@ describe('updateWorkspace', () => {
         done();
       });
     });
-    
   });
 });
 describe('createIntent', () => {
@@ -596,7 +593,6 @@ describe('createIntent', () => {
         done();
       });
     });
-    
   });
 });
 describe('deleteIntent', () => {
@@ -670,7 +666,6 @@ describe('deleteIntent', () => {
         done();
       });
     });
-    
   });
 });
 describe('getIntent', () => {
@@ -750,7 +745,6 @@ describe('getIntent', () => {
         done();
       });
     });
-    
   });
 });
 describe('listIntents', () => {
@@ -837,7 +831,6 @@ describe('listIntents', () => {
         done();
       });
     });
-    
   });
 });
 describe('updateIntent', () => {
@@ -921,7 +914,6 @@ describe('updateIntent', () => {
         done();
       });
     });
-    
   });
 });
 describe('createExample', () => {
@@ -1004,7 +996,6 @@ describe('createExample', () => {
         done();
       });
     });
-    
   });
 });
 describe('deleteExample', () => {
@@ -1031,7 +1022,11 @@ describe('deleteExample', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}', 'DELETE');
+      checkUrlAndMethod(
+        options,
+        '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
+        'DELETE'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
@@ -1083,7 +1078,6 @@ describe('deleteExample', () => {
         done();
       });
     });
-    
   });
 });
 describe('getExample', () => {
@@ -1112,7 +1106,11 @@ describe('getExample', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}', 'GET');
+      checkUrlAndMethod(
+        options,
+        '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
+        'GET'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
@@ -1165,7 +1163,6 @@ describe('getExample', () => {
         done();
       });
     });
-    
   });
 });
 describe('listExamples', () => {
@@ -1254,7 +1251,6 @@ describe('listExamples', () => {
         done();
       });
     });
-    
   });
 });
 describe('updateExample', () => {
@@ -1285,7 +1281,11 @@ describe('updateExample', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}', 'POST');
+      checkUrlAndMethod(
+        options,
+        '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
+        'POST'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -1340,7 +1340,6 @@ describe('updateExample', () => {
         done();
       });
     });
-    
   });
 });
 describe('createCounterexample', () => {
@@ -1415,7 +1414,6 @@ describe('createCounterexample', () => {
         done();
       });
     });
-    
   });
 });
 describe('deleteCounterexample', () => {
@@ -1489,7 +1487,6 @@ describe('deleteCounterexample', () => {
         done();
       });
     });
-    
   });
 });
 describe('getCounterexample', () => {
@@ -1566,7 +1563,6 @@ describe('getCounterexample', () => {
         done();
       });
     });
-    
   });
 });
 describe('listCounterexamples', () => {
@@ -1650,7 +1646,6 @@ describe('listCounterexamples', () => {
         done();
       });
     });
-    
   });
 });
 describe('updateCounterexample', () => {
@@ -1728,7 +1723,6 @@ describe('updateCounterexample', () => {
         done();
       });
     });
-    
   });
 });
 describe('createEntity', () => {
@@ -1815,7 +1809,6 @@ describe('createEntity', () => {
         done();
       });
     });
-    
   });
 });
 describe('deleteEntity', () => {
@@ -1889,7 +1882,6 @@ describe('deleteEntity', () => {
         done();
       });
     });
-    
   });
 });
 describe('getEntity', () => {
@@ -1969,7 +1961,6 @@ describe('getEntity', () => {
         done();
       });
     });
-    
   });
 });
 describe('listEntities', () => {
@@ -2056,7 +2047,6 @@ describe('listEntities', () => {
         done();
       });
     });
-    
   });
 });
 describe('updateEntity', () => {
@@ -2146,7 +2136,6 @@ describe('updateEntity', () => {
         done();
       });
     });
-    
   });
 });
 describe('listMentions', () => {
@@ -2226,7 +2215,6 @@ describe('listMentions', () => {
         done();
       });
     });
-    
   });
 });
 describe('createValue', () => {
@@ -2318,7 +2306,6 @@ describe('createValue', () => {
         done();
       });
     });
-    
   });
 });
 describe('deleteValue', () => {
@@ -2345,7 +2332,11 @@ describe('deleteValue', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}', 'DELETE');
+      checkUrlAndMethod(
+        options,
+        '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}',
+        'DELETE'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
@@ -2397,7 +2388,6 @@ describe('deleteValue', () => {
         done();
       });
     });
-    
   });
 });
 describe('getValue', () => {
@@ -2428,7 +2418,11 @@ describe('getValue', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}', 'GET');
+      checkUrlAndMethod(
+        options,
+        '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}',
+        'GET'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
@@ -2482,7 +2476,6 @@ describe('getValue', () => {
         done();
       });
     });
-    
   });
 });
 describe('listValues', () => {
@@ -2574,7 +2567,6 @@ describe('listValues', () => {
         done();
       });
     });
-    
   });
 });
 describe('updateValue', () => {
@@ -2611,7 +2603,11 @@ describe('updateValue', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}', 'POST');
+      checkUrlAndMethod(
+        options,
+        '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}',
+        'POST'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -2669,7 +2665,6 @@ describe('updateValue', () => {
         done();
       });
     });
-    
   });
 });
 describe('createSynonym', () => {
@@ -2698,7 +2693,11 @@ describe('createSynonym', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms', 'POST');
+      checkUrlAndMethod(
+        options,
+        '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms',
+        'POST'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -2754,7 +2753,6 @@ describe('createSynonym', () => {
         done();
       });
     });
-    
   });
 });
 describe('deleteSynonym', () => {
@@ -2783,7 +2781,11 @@ describe('deleteSynonym', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}', 'DELETE');
+      checkUrlAndMethod(
+        options,
+        '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}',
+        'DELETE'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
@@ -2838,7 +2840,6 @@ describe('deleteSynonym', () => {
         done();
       });
     });
-    
   });
 });
 describe('getSynonym', () => {
@@ -2869,7 +2870,11 @@ describe('getSynonym', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}', 'GET');
+      checkUrlAndMethod(
+        options,
+        '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}',
+        'GET'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
@@ -2925,7 +2930,6 @@ describe('getSynonym', () => {
         done();
       });
     });
-    
   });
 });
 describe('listSynonyms', () => {
@@ -2962,7 +2966,11 @@ describe('listSynonyms', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms', 'GET');
+      checkUrlAndMethod(
+        options,
+        '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms',
+        'GET'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
@@ -3019,7 +3027,6 @@ describe('listSynonyms', () => {
         done();
       });
     });
-    
   });
 });
 describe('updateSynonym', () => {
@@ -3050,7 +3057,11 @@ describe('updateSynonym', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}', 'POST');
+      checkUrlAndMethod(
+        options,
+        '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}',
+        'POST'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -3107,7 +3118,6 @@ describe('updateSynonym', () => {
         done();
       });
     });
-    
   });
 });
 describe('createDialogNode', () => {
@@ -3233,7 +3243,6 @@ describe('createDialogNode', () => {
         done();
       });
     });
-    
   });
 });
 describe('deleteDialogNode', () => {
@@ -3258,7 +3267,11 @@ describe('deleteDialogNode', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/workspaces/{workspace_id}/dialog_nodes/{dialog_node}', 'DELETE');
+      checkUrlAndMethod(
+        options,
+        '/v1/workspaces/{workspace_id}/dialog_nodes/{dialog_node}',
+        'DELETE'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
@@ -3307,7 +3320,6 @@ describe('deleteDialogNode', () => {
         done();
       });
     });
-    
   });
 });
 describe('getDialogNode', () => {
@@ -3384,7 +3396,6 @@ describe('getDialogNode', () => {
         done();
       });
     });
-    
   });
 });
 describe('listDialogNodes', () => {
@@ -3468,7 +3479,6 @@ describe('listDialogNodes', () => {
         done();
       });
     });
-    
   });
 });
 describe('updateDialogNode', () => {
@@ -3529,7 +3539,11 @@ describe('updateDialogNode', () => {
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/workspaces/{workspace_id}/dialog_nodes/{dialog_node}', 'POST');
+      checkUrlAndMethod(
+        options,
+        '/v1/workspaces/{workspace_id}/dialog_nodes/{dialog_node}',
+        'POST'
+      );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -3597,7 +3611,6 @@ describe('updateDialogNode', () => {
         done();
       });
     });
-    
   });
 });
 describe('listAllLogs', () => {
@@ -3675,7 +3688,6 @@ describe('listAllLogs', () => {
         done();
       });
     });
-    
   });
 });
 describe('listLogs', () => {
@@ -3756,7 +3768,6 @@ describe('listLogs', () => {
         done();
       });
     });
-    
   });
 });
 describe('deleteUserData', () => {
@@ -3825,6 +3836,5 @@ describe('deleteUserData', () => {
         done();
       });
     });
-    
   });
 });

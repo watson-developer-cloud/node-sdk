@@ -1,18 +1,18 @@
+'use strict';
+
 const NaturalLanguageClassifierV1 = require('../../natural-language-classifier/v1-generated');
 const helper = require('../../lib/helper');
 const utils = require('../resources/unitTestUtils');
 
-const {
-  missingParamsError,
-  missingParamsSuccess,
-  checkUrlAndMethod,
-  checkCallback,
-  checkMediaHeaders,
-  checkDefaultSuccessArgs,
-  checkForEmptyObject,
-  checkRequiredParamsHandling,
-  getOptions,
-} = utils;
+const missingParamsError = utils.missingParamsError;
+const missingParamsSuccess = utils.missingParamsSuccess;
+const checkUrlAndMethod = utils.checkUrlAndMethod;
+const checkCallback = utils.checkCallback;
+const checkMediaHeaders = utils.checkMediaHeaders;
+const checkDefaultSuccessArgs = utils.checkDefaultSuccessArgs;
+const checkForEmptyObject = utils.checkForEmptyObject;
+const checkRequiredParamsHandling = utils.checkRequiredParamsHandling;
+const getOptions = utils.getOptions;
 
 const service = {
   username: 'batman',
@@ -103,7 +103,6 @@ describe('classify', () => {
         done();
       });
     });
-    
   });
 });
 describe('classifyCollection', () => {
@@ -178,7 +177,6 @@ describe('classifyCollection', () => {
         done();
       });
     });
-    
   });
 });
 describe('createClassifier', () => {
@@ -260,7 +258,6 @@ describe('createClassifier', () => {
         done();
       });
     });
-    
   });
 });
 describe('deleteClassifier', () => {
@@ -329,7 +326,6 @@ describe('deleteClassifier', () => {
         done();
       });
     });
-    
   });
 });
 describe('getClassifier', () => {
@@ -398,7 +394,6 @@ describe('getClassifier', () => {
         done();
       });
     });
-    
   });
 });
 describe('listClassifiers', () => {
@@ -408,8 +403,7 @@ describe('listClassifiers', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const params = {
-      };
+      const params = {};
 
       // invoke method
       natural_language_classifier.listClassifiers(params);
