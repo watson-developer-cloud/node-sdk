@@ -1,11 +1,3 @@
-/**
- * @jest-environment node
- */
-
-// the above comment instructs jest to use a node, rather than browser, environment
-// the sendRequest method uses the environment to determine if running in the browser
-// and uses special handling if it is. the tests will fail without the above comment
-
 'use strict';
 
 const sendRequest = require('../../lib/requestwrapper').sendRequest;
