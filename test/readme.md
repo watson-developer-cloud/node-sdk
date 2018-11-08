@@ -38,7 +38,5 @@ $ jest test/unit/baseService.test.js
 ```sh
 $ npm test
     # or
-$ jest test/unit/ && jest test/integration/
+$ jest test/
 ```
-
-_Note:_ Right now, the unit tests and integration tests need to run in separate processes, one after another, to avoid collisions with `nock`. This is actively being worked on.
