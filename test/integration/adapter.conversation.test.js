@@ -1,9 +1,7 @@
 'use strict';
 
-const nock = require('nock');
 const watson = require('../../index');
-const assert = require('assert');
-const authHelper = require('./auth_helper.js');
+const authHelper = require('../resources/auth_helper.js');
 const auth = authHelper.auth;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const assign = require('object.assign'); // for node v0.12 compatibility
@@ -11,7 +9,6 @@ const assign = require('object.assign'); // for node v0.12 compatibility
 const extend = require('extend');
 
 const TEN_SECONDS = 10000;
-const TWO_SECONDS = 2000;
 
 const workspace = {
   name: 'integration test',
@@ -102,24 +99,13 @@ const test_dialog_node_update = 'updated_node';
 const workspace1 = extend(true, {}, workspace, intents, { language: workspace.language });
 
 describe('conversation_adapter_integration', function() {
-  this.timeout(TEN_SECONDS);
-  this.slow(TWO_SECONDS); // this controls when the tests get a colored warning for taking too long
-  // this.retries(1);
+  jest.setTimeout(TEN_SECONDS);
 
-  let conversation;
-
-  before(function() {
-    const constructorParams = assign({}, auth.conversation, {
-      version: 'v1',
-      version_date: '2018-02-16',
-    });
-    conversation = watson.conversation(constructorParams);
-    nock.enableNetConnect();
+  const constructorParams = assign({}, auth.conversation, {
+    version: 'v1',
+    version_date: '2018-02-16',
   });
-
-  after(function() {
-    nock.disableNetConnect();
-  });
+  const conversation = watson.conversation(constructorParams);
 
   describe('message()', function() {
     it('alternate_intents', function(done) {
@@ -135,7 +121,7 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert(result.intents.length > 1);
+        expect(result.intents.length > 1).toBe(true);
         done();
       });
     });
@@ -158,7 +144,7 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.deepEqual(result.context.system.dialog_stack, [
+        expect(result.context.system.dialog_stack).toEqual([
           { dialog_node: 'node_22_1467833484410' },
         ]);
         done();
@@ -183,7 +169,7 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.deepEqual(result.context.system.dialog_stack, [
+        expect(result.context.system.dialog_stack).toEqual([
           { dialog_node: 'node_22_1467833484410' },
         ]);
         done();
@@ -208,7 +194,7 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.deepEqual(result.context.system.dialog_stack, ['node_22_1467833484410']);
+        expect(result.context.system.dialog_stack).toEqual(['node_22_1467833484410']);
         done();
       });
     });
@@ -220,7 +206,7 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.hasOwnProperty('workspaces'), true);
+        expect(result.hasOwnProperty('workspaces')).toBe(true);
         done();
       });
     });
@@ -230,7 +216,7 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(Object.prototype.toString.call(result.workspaces), '[object Array]');
+        expect(Object.prototype.toString.call(result.workspaces)).toBe('[object Array]');
         done();
       });
     });
@@ -245,7 +231,7 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.hasOwnProperty('pagination'), true);
+        expect(result.hasOwnProperty('pagination')).toBe(true);
         done();
       });
     });
@@ -260,10 +246,10 @@ describe('conversation_adapter_integration', function() {
           return done(err);
         }
         workspace1.workspace_id = result.workspace_id;
-        assert.equal(result.name, params.name);
-        assert.equal(result.language, 'fr');
-        assert.equal(result.metadata, params.metadata);
-        assert.equal(result.description, params.description);
+        expect(result.name).toBe(params.name);
+        expect(result.language).toBe('fr');
+        expect(result.metadata).toBe(params.metadata);
+        expect(result.description).toBe(params.description);
         done();
       });
     });
@@ -277,10 +263,10 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.name, params.name);
-        assert.equal(result.language, 'fr');
-        assert.equal(result.metadata, params.metadata);
-        assert.equal(result.description, params.description);
+        expect(result.name).toBe(params.name);
+        expect(result.language).toBe('fr');
+        expect(result.metadata).toBe(params.metadata);
+        expect(result.description).toBe(params.description);
         done();
       });
     });
@@ -297,7 +283,7 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.intents[0].intent, 'test');
+        expect(result.intents[0].intent).toBe('test');
         done();
       });
     });
@@ -315,8 +301,8 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.intent, test_intents[0].intent);
-        assert.equal(result.description, null);
+        expect(result.intent).toBe(test_intents[0].intent);
+        expect(result.description).toBeUndefined();
         done();
       });
     });
@@ -333,8 +319,8 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.intents[0].intent, test_intents[0].intent);
-        assert.equal(result.intents[0].examples[0].text, test_intents[0].examples[0].text);
+        expect(result.intents[0].intent).toBe(test_intents[0].intent);
+        expect(result.intents[0].examples[0].text).toBe(test_intents[0].examples[0].text);
         done();
       });
     });
@@ -352,7 +338,7 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.hasOwnProperty('pagination'), true);
+        expect(result.hasOwnProperty('pagination')).toBe(true);
         done();
       });
     });
@@ -369,8 +355,8 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.intent, test_intents[0].intent);
-        assert.equal(result.description, null);
+        expect(result.intent).toBe(test_intents[0].intent);
+        expect(result.description).toBeUndefined();
         done();
       });
     });
@@ -390,7 +376,7 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.intent, test_intents_update.intent);
+        expect(result.intent).toBe(test_intents_update.intent);
         done();
       });
     });
@@ -407,7 +393,7 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.examples[0].text, test_intents_update.examples[0].text);
+        expect(result.examples[0].text).toBe(test_intents_update.examples[0].text);
         done();
       });
     });
@@ -425,7 +411,7 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.hasOwnProperty('pagination'), true);
+        expect(result.hasOwnProperty('pagination')).toBe(true);
         done();
       });
     });
@@ -443,7 +429,7 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.text, 'new_example');
+        expect(result.text).toBe('new_example');
         done();
       });
     });
@@ -461,7 +447,7 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.text, test_intents_update.examples[0].text);
+        expect(result.text).toBe(test_intents_update.examples[0].text);
         done();
       });
     });
@@ -480,7 +466,7 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.text, test_examples_new);
+        expect(result.text).toBe(test_examples_new);
         done();
       });
     });
@@ -530,7 +516,7 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.text, counterExampleText);
+        expect(result.text).toBe(counterExampleText);
         done();
       });
     });
@@ -547,7 +533,7 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.text, counterExampleText);
+        expect(result.text).toBe(counterExampleText);
         done();
       });
     });
@@ -563,7 +549,7 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.counterexamples[0].text, counterExampleText);
+        expect(result.counterexamples[0].text).toBe(counterExampleText);
         done();
       });
     });
@@ -579,8 +565,8 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.counterexamples[0].text, counterExampleText);
-        assert.equal(result.hasOwnProperty('pagination'), true);
+        expect(result.counterexamples[0].text).toBe(counterExampleText);
+        expect(result.hasOwnProperty('pagination')).toBe(true);
         done();
       });
     });
@@ -598,7 +584,7 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.text, counterExampleText_new);
+        expect(result.text).toBe(counterExampleText_new);
         done();
       });
     });
@@ -633,8 +619,8 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.entity, test_entities[0].entity);
-        assert.equal(result.description, null);
+        expect(result.entity).toBe(test_entities[0].entity);
+        expect(result.description).toBeUndefined();
         done();
       });
     });
@@ -651,8 +637,8 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.entities[0].entity, test_entities[0].entity);
-        assert.equal(result.entities[0].values[0].value, test_entities[0].values[0].value);
+        expect(result.entities[0].entity).toBe(test_entities[0].entity);
+        expect(result.entities[0].values[0].value).toBe(test_entities[0].values[0].value);
         done();
       });
     });
@@ -670,7 +656,7 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.hasOwnProperty('pagination'), true);
+        expect(result.hasOwnProperty('pagination')).toBe(true);
         done();
       });
     });
@@ -687,9 +673,9 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.entity, test_entities[0].entity);
-        assert.equal(result.description, null);
-        assert.equal(result.fuzzy_match, true);
+        expect(result.entity).toBe(test_entities[0].entity);
+        expect(result.description).toBeUndefined();
+        expect(result.fuzzy_match).toBe(true);
         done();
       });
     });
@@ -709,7 +695,7 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.entity, test_entities_update.entity);
+        expect(result.entity).toBe(test_entities_update.entity);
         done();
       });
     });
@@ -728,8 +714,8 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.value, test_value.value);
-        assert.equal(result.description, null);
+        expect(result.value).toBe(test_value.value);
+        expect(result.description).toBeUndefined();
         done();
       });
     });
@@ -747,8 +733,8 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.values[1].value, test_value.value);
-        assert.equal(result.values[1].synonyms[0], test_value.synonyms[0]);
+        expect(result.values[1].value).toBe(test_value.value);
+        expect(result.values[1].synonyms[0]).toBe(test_value.synonyms[0]);
         done();
       });
     });
@@ -767,7 +753,7 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.hasOwnProperty('pagination'), true);
+        expect(result.hasOwnProperty('pagination')).toBe(true);
         done();
       });
     });
@@ -785,8 +771,8 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.value, test_value.value);
-        assert.equal(result.description, null);
+        expect(result.value).toBe(test_value.value);
+        expect(result.description).toBeUndefined();
         done();
       });
     });
@@ -806,7 +792,7 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.value, test_value_update.value);
+        expect(result.value).toBe(test_value_update.value);
         done();
       });
     });
@@ -825,7 +811,7 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.synonym, test_synonym);
+        expect(result.synonym).toBe(test_synonym);
         done();
       });
     });
@@ -844,7 +830,7 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.synonyms[1].synonym, test_synonym);
+        expect(result.synonyms[1].synonym).toBe(test_synonym);
         done();
       });
     });
@@ -863,7 +849,7 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.hasOwnProperty('pagination'), true);
+        expect(result.hasOwnProperty('pagination')).toBe(true);
         done();
       });
     });
@@ -882,7 +868,7 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.synonym, test_synonym);
+        expect(result.synonym).toBe(test_synonym);
         done();
       });
     });
@@ -902,7 +888,7 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.synonym, test_synonym_update);
+        expect(result.synonym).toBe(test_synonym_update);
         done();
       });
     });
@@ -920,7 +906,7 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.hasOwnProperty('logs'), true);
+        expect(result.hasOwnProperty('logs')).toBe(true);
         done();
       });
     });
@@ -989,13 +975,9 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(
-          result.dialog_node,
-          test_dialog_node,
-          'dialog_node field has unexpected value'
-        );
-        assert.equal(result.conditions, 'true', 'conditions field has unexpected value');
-        assert.equal(result.description, null, 'description field is not null');
+        expect(result.dialog_node).toBe(test_dialog_node);
+        expect(result.conditions).toBe('true');
+        expect(result.description).toBeUndefined();
         done();
       });
     });
@@ -1011,7 +993,7 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.dialog_nodes[0].dialog_node, test_dialog_node);
+        expect(result.dialog_nodes[0].dialog_node).toBe(test_dialog_node);
         done();
       });
     });
@@ -1028,7 +1010,7 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.hasOwnProperty('pagination'), true);
+        expect(result.hasOwnProperty('pagination')).toBe(true);
         done();
       });
     });
@@ -1045,8 +1027,8 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.dialog_node, test_dialog_node);
-        assert.equal(result.description, null);
+        expect(result.dialog_node).toBe(test_dialog_node);
+        expect(result.description).toBeUndefined();
         done();
       });
     });
@@ -1065,8 +1047,8 @@ describe('conversation_adapter_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.dialog_node, test_dialog_node_update);
-        assert.equal(result.conditions, 'false');
+        expect(result.dialog_node).toBe(test_dialog_node_update);
+        expect(result.conditions).toBe('false');
         done();
       });
     });

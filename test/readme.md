@@ -1,58 +1,44 @@
 # Test cases
 [![Build Status](https://secure.travis-ci.org/watson-developer-cloud/node-sdk.png)](http://travis-ci.org/watson-developer-cloud/node-sdk)
-[![Dependency Status](https://gemnasium.com/watson-developer-cloud/node-sdk.png)](https://gemnasium.com/watson-developer-cloud/node-sdk)
-[![Coverage Status](https://img.shields.io/coveralls/watson-developer-cloud/node-sdk.svg)](https://coveralls.io/r/watson-developer-cloud/node-sdk)
+[![Coverage Status](https://codecov.io/gh/watson-developer-cloud/node-sdk/branch/master/graph/badge.svg)](https://codecov.io/gh/watson-developer-cloud/node-sdk)
 
-## Run all the tests
+This SDK uses [jest](https://jestjs.io/) for its testing suite. The tests are split up into unit tests, which verify the internal workings of the code and do not rely on a network connection, and integration tests, which verify the SDK against live instances of Watson services.
+
+This repository includes scripts for running the tests. These scripts use the `--silent` and `--verbose` options.
+
+To run a single test on its own or to run the tests with [custom options](https://jestjs.io/docs/en/cli), install `jest` globally.
+```sh
+$ npm install -g jest
+```
+
+## Unit tests
 
 ```sh
-$ npm test
+$ npm run test-unit
+    # or
+$ jest test/unit/
+```
+
+## Integration tests
+
+```sh
+$ npm run test-integration
+    # or
+$ jest test/integration/
 ```
 
 ## Run a single test
 
 ```sh
-$ mocha -g 'regexp'
+# can be a path to any file or multiple files using globs and/or regular expressions
+$ jest test/unit/baseService.test.js
 ```
 
-## Debug the http requests
-see [request](https://github.com/request/request) for more information
-
+## Run all tests
 ```sh
-$ NODE_DEBUG=request mocha -g 'regexp'
+$ npm test
+    # or
+$ jest test/unit/ && jest test/integration/
 ```
 
-## Generate code coverage reports
-
-1. Install mocha and instanbul globally
-
-    ```sh
-    $ npm install mocha -g
-    $ npm install istanbul -g
-    ```
-
-1. Run `istanbul`
-
-    ```sh
-    $ istanbul cover _mocha -- -R spec
-    ```
-
-1. Open the coverage results using your browser
-
-    ```sh
-    $ ./coverage/lcov-report/index.html
-    ```
-
-## Thing we try to test
-  Here is the list of things we try to test for each service.
-
-    1. parameters not specified
-    1. parameters mis-named
-    1. parameters with empty string values
-    1. parameters specified twice
-    1. parameters with misformatted values
-    1. headers not specified
-    1. authentication missing
-    1. authentication invalid
-    1. input too large
-    1. input too small
+_Note:_ Right now, the unit tests and integration tests need to run in separate processes, one after another, to avoid collisions with `nock`. This is actively being worked on.

@@ -1,17 +1,15 @@
 'use strict';
 
-const nock = require('nock');
 const watson = require('../../index');
-const assert = require('assert');
-const authHelper = require('./auth_helper.js');
+const authHelper = require('../resources/auth_helper.js');
 const auth = authHelper.auth;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const assign = require('object.assign'); // for node v0.12 compatibility
+const ConversationV1 = require('../../conversation/v1');
 
 const extend = require('extend');
 
 const TEN_SECONDS = 10000;
-const TWO_SECONDS = 2000;
 
 const workspace = {
   name: 'integration test',
@@ -102,52 +100,36 @@ const test_dialog_node_update = 'updated_node';
 // changing language is forbidden starting with VERSION_DATE_2017_05_26
 const workspace1 = extend(true, {}, workspace, intents, { language: workspace.language });
 
-describe('assistant_integration', function() {
-  this.timeout(TEN_SECONDS);
-  this.slow(TWO_SECONDS); // this controls when the tests get a colored warning for taking too long
-  // this.retries(1);
+describe('conversation_integration', function() {
+  jest.setTimeout(TEN_SECONDS);
 
-  let assistant;
-
-  before(function() {
-    auth.conversation.version = '2018-02-16';
-    assistant = new watson.AssistantV1(auth.conversation);
-    nock.enableNetConnect();
-  });
-
-  after(function() {
-    nock.disableNetConnect();
-  });
+  auth.conversation.version = '2018-02-16';
+  const conversation = new watson.ConversationV1(auth.conversation);
 
   describe('message()', function() {
-    it('alternate_intents with custom headers', function(done) {
+    it('alternate_intents', function(done) {
       const params = {
         input: {
           text: 'Turn on the lights',
         },
         alternate_intents: true,
         workspace_id: auth.conversation.workspace_id,
-        headers: {
-          customheader: 'custom',
-        },
       };
 
-      assistant.message(params, function(err, result, response) {
+      conversation.message(params, function(err, result) {
         if (err) {
           return done(err);
         }
-
-        assert(response.headers && response.headers != {});
-        assert(result.intents.length > 1);
+        expect(result.intents.length > 1).toBe(true);
         done();
       });
     });
 
     it('dialog_stack with 2017-02-03 version', function(done) {
       const constructorParams = assign({}, auth.conversation, {
-        version: '2017-02-03',
+        version: ConversationV1.VERSION_DATE_2017_02_03,
       });
-      const assistant = new watson.AssistantV1(constructorParams);
+      const conversation = new watson.ConversationV1(constructorParams);
 
       const params = {
         input: {
@@ -156,11 +138,11 @@ describe('assistant_integration', function() {
         workspace_id: auth.conversation.workspace_id,
       };
 
-      assistant.message(params, function(err, result) {
+      conversation.message(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.deepEqual(result.context.system.dialog_stack, [
+        expect(result.context.system.dialog_stack).toEqual([
           { dialog_node: 'node_22_1467833484410' },
         ]);
         done();
@@ -169,9 +151,9 @@ describe('assistant_integration', function() {
 
     it('dialog_stack with 2016-09-20 version', function(done) {
       const constructorParams = assign({}, auth.conversation, {
-        version: '2016-09-20',
+        version: ConversationV1.VERSION_DATE_2016_09_20,
       });
-      const assistant = new watson.AssistantV1(constructorParams);
+      const conversation = new watson.ConversationV1(constructorParams);
 
       const params = {
         input: {
@@ -180,11 +162,11 @@ describe('assistant_integration', function() {
         workspace_id: auth.conversation.workspace_id,
       };
 
-      assistant.message(params, function(err, result) {
+      conversation.message(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.deepEqual(result.context.system.dialog_stack, [
+        expect(result.context.system.dialog_stack).toEqual([
           { dialog_node: 'node_22_1467833484410' },
         ]);
         done();
@@ -193,9 +175,9 @@ describe('assistant_integration', function() {
 
     it('dialog_stack with 2016-07-11 version', function(done) {
       const constructorParams = assign({}, auth.conversation, {
-        version: '2016-07-11',
+        version: ConversationV1.VERSION_DATE_2016_07_11,
       });
-      const assistant = new watson.AssistantV1(constructorParams);
+      const conversation = new watson.ConversationV1(constructorParams);
 
       const params = {
         input: {
@@ -204,11 +186,11 @@ describe('assistant_integration', function() {
         workspace_id: auth.conversation.workspace_id,
       };
 
-      assistant.message(params, function(err, result) {
+      conversation.message(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.deepEqual(result.context.system.dialog_stack, ['node_22_1467833484410']);
+        expect(result.context.system.dialog_stack).toEqual(['node_22_1467833484410']);
         done();
       });
     });
@@ -216,21 +198,21 @@ describe('assistant_integration', function() {
 
   describe('listWorkspaces()', function() {
     it('result should contain workspaces key', function(done) {
-      assistant.listWorkspaces(function(err, result) {
+      conversation.listWorkspaces(function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.hasOwnProperty('workspaces'), true);
+        expect(result.hasOwnProperty('workspaces')).toBe(true);
         done();
       });
     });
 
     it('result should contain an array of workspaces', function(done) {
-      assistant.listWorkspaces(function(err, result) {
+      conversation.listWorkspaces(function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(Object.prototype.toString.call(result.workspaces), '[object Array]');
+        expect(Object.prototype.toString.call(result.workspaces)).toBe('[object Array]');
         done();
       });
     });
@@ -241,11 +223,11 @@ describe('assistant_integration', function() {
         include_count: true,
         sort: '-name',
       };
-      assistant.listWorkspaces(params, function(err, result) {
+      conversation.listWorkspaces(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.hasOwnProperty('pagination'), true);
+        expect(result.hasOwnProperty('pagination')).toBe(true);
         done();
       });
     });
@@ -255,15 +237,15 @@ describe('assistant_integration', function() {
     it('should create a new workspace', function(done) {
       const params = workspace;
 
-      assistant.createWorkspace(params, function(err, result) {
+      conversation.createWorkspace(params, function(err, result) {
         if (err) {
           return done(err);
         }
         workspace1.workspace_id = result.workspace_id;
-        assert.equal(result.name, params.name);
-        assert.equal(result.language, 'fr');
-        assert.equal(result.metadata, params.metadata);
-        assert.equal(result.description, params.description);
+        expect(result.name).toBe(params.name);
+        expect(result.language).toBe('fr');
+        expect(result.metadata).toBe(params.metadata);
+        expect(result.description).toBe(params.description);
         done();
       });
     });
@@ -273,14 +255,14 @@ describe('assistant_integration', function() {
     it('should update the workspace with intents', function(done) {
       const params = workspace1;
 
-      assistant.updateWorkspace(params, function(err, result) {
+      conversation.updateWorkspace(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.name, params.name);
-        assert.equal(result.language, 'fr');
-        assert.equal(result.metadata, params.metadata);
-        assert.equal(result.description, params.description);
+        expect(result.name).toBe(params.name);
+        expect(result.language).toBe('fr');
+        expect(result.metadata).toBe(params.metadata);
+        expect(result.description).toBe(params.description);
         done();
       });
     });
@@ -293,11 +275,11 @@ describe('assistant_integration', function() {
         workspace_id: workspace1.workspace_id,
       };
 
-      assistant.getWorkspace(params, function(err, result) {
+      conversation.getWorkspace(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.intents[0].intent, 'test');
+        expect(result.intents[0].intent).toBe('test');
         done();
       });
     });
@@ -312,12 +294,12 @@ describe('assistant_integration', function() {
         examples: test_intents[0].examples,
       };
 
-      assistant.createIntent(params, function(err, result) {
+      conversation.createIntent(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.intent, test_intents[0].intent);
-        assert.equal(result.description, test_intents[0].description);
+        expect(result.intent).toBe(test_intents[0].intent);
+        expect(result.description).toBe(test_intents[0].description);
         done();
       });
     });
@@ -330,12 +312,12 @@ describe('assistant_integration', function() {
         export: true,
       };
 
-      assistant.listIntents(params, function(err, result) {
+      conversation.listIntents(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.intents[0].intent, test_intents[0].intent);
-        assert.equal(result.intents[0].examples[0].text, test_intents[0].examples[0].text);
+        expect(result.intents[0].intent).toBe(test_intents[0].intent);
+        expect(result.intents[0].examples[0].text).toBe(test_intents[0].examples[0].text);
         done();
       });
     });
@@ -349,11 +331,11 @@ describe('assistant_integration', function() {
         sort: 'intent',
       };
 
-      assistant.listIntents(params, function(err, result) {
+      conversation.listIntents(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.hasOwnProperty('pagination'), true);
+        expect(result.hasOwnProperty('pagination')).toBe(true);
         done();
       });
     });
@@ -366,12 +348,12 @@ describe('assistant_integration', function() {
         intent: test_intents[0].intent,
       };
 
-      assistant.getIntent(params, function(err, result) {
+      conversation.getIntent(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.intent, test_intents[0].intent);
-        assert.equal(result.description, test_intents[0].description);
+        expect(result.intent).toBe(test_intents[0].intent);
+        expect(result.description).toBe(test_intents[0].description);
         done();
       });
     });
@@ -387,11 +369,11 @@ describe('assistant_integration', function() {
         new_examples: test_intents_update.examples,
       };
 
-      assistant.updateIntent(params, function(err, result) {
+      conversation.updateIntent(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.intent, test_intents_update.intent);
+        expect(result.intent).toBe(test_intents_update.intent);
         done();
       });
     });
@@ -404,11 +386,11 @@ describe('assistant_integration', function() {
         intent: test_intents_update.intent,
       };
 
-      assistant.listExamples(params, function(err, result) {
+      conversation.listExamples(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.examples[0].text, test_intents_update.examples[0].text);
+        expect(result.examples[0].text).toBe(test_intents_update.examples[0].text);
         done();
       });
     });
@@ -422,11 +404,11 @@ describe('assistant_integration', function() {
         sort: '-text',
       };
 
-      assistant.listExamples(params, function(err, result) {
+      conversation.listExamples(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.hasOwnProperty('pagination'), true);
+        expect(result.hasOwnProperty('pagination')).toBe(true);
         done();
       });
     });
@@ -440,11 +422,11 @@ describe('assistant_integration', function() {
         text: 'new_example',
       };
 
-      assistant.createExample(params, function(err, result) {
+      conversation.createExample(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.text, 'new_example');
+        expect(result.text).toBe('new_example');
         done();
       });
     });
@@ -458,11 +440,11 @@ describe('assistant_integration', function() {
         text: test_intents_update.examples[0].text,
       };
 
-      assistant.getExample(params, function(err, result) {
+      conversation.getExample(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.text, test_intents_update.examples[0].text);
+        expect(result.text).toBe(test_intents_update.examples[0].text);
         done();
       });
     });
@@ -477,11 +459,11 @@ describe('assistant_integration', function() {
         new_text: test_examples_new,
       };
 
-      assistant.updateExample(params, function(err, result) {
+      conversation.updateExample(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.text, test_examples_new);
+        expect(result.text).toBe(test_examples_new);
         done();
       });
     });
@@ -495,7 +477,7 @@ describe('assistant_integration', function() {
         text: test_examples_new,
       };
 
-      assistant.deleteExample(params, function(err, result) {
+      conversation.deleteExample(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -511,7 +493,7 @@ describe('assistant_integration', function() {
         intent: test_intents_update.intent,
       };
 
-      assistant.deleteIntent(params, function(err, result) {
+      conversation.deleteIntent(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -527,11 +509,11 @@ describe('assistant_integration', function() {
         text: counterexampleText,
       };
 
-      assistant.createCounterexample(params, function(err, result) {
+      conversation.createCounterexample(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.text, counterexampleText);
+        expect(result.text).toBe(counterexampleText);
         done();
       });
     });
@@ -544,11 +526,11 @@ describe('assistant_integration', function() {
         text: counterexampleText,
       };
 
-      assistant.getCounterexample(params, function(err, result) {
+      conversation.getCounterexample(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.text, counterexampleText);
+        expect(result.text).toBe(counterexampleText);
         done();
       });
     });
@@ -560,11 +542,11 @@ describe('assistant_integration', function() {
         workspace_id: workspace1.workspace_id,
       };
 
-      assistant.listCounterexamples(params, function(err, result) {
+      conversation.listCounterexamples(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.counterexamples[0].text, counterexampleText);
+        expect(result.counterexamples[0].text).toBe(counterexampleText);
         done();
       });
     });
@@ -576,12 +558,12 @@ describe('assistant_integration', function() {
         sort: 'text',
       };
 
-      assistant.listCounterexamples(params, function(err, result) {
+      conversation.listCounterexamples(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.counterexamples[0].text, counterexampleText);
-        assert.equal(result.hasOwnProperty('pagination'), true);
+        expect(result.counterexamples[0].text).toBe(counterexampleText);
+        expect(result.hasOwnProperty('pagination')).toBe(true);
         done();
       });
     });
@@ -595,11 +577,11 @@ describe('assistant_integration', function() {
         new_text: counterexampleText_new,
       };
 
-      assistant.updateCounterexample(params, function(err, result) {
+      conversation.updateCounterexample(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.text, counterexampleText_new);
+        expect(result.text).toBe(counterexampleText_new);
         done();
       });
     });
@@ -612,7 +594,7 @@ describe('assistant_integration', function() {
         text: counterexampleText_new,
       };
 
-      assistant.deleteCounterexample(params, function(err, result) {
+      conversation.deleteCounterexample(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -630,12 +612,12 @@ describe('assistant_integration', function() {
         fuzzy_match: true,
       };
 
-      assistant.createEntity(params, function(err, result) {
+      conversation.createEntity(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.entity, test_entities[0].entity);
-        assert.equal(result.description, null);
+        expect(result.entity).toBe(test_entities[0].entity);
+        expect(result.description).toBeUndefined();
         done();
       });
     });
@@ -648,12 +630,12 @@ describe('assistant_integration', function() {
         export: true,
       };
 
-      assistant.listEntities(params, function(err, result) {
+      conversation.listEntities(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.entities[0].entity, test_entities[0].entity);
-        assert.equal(result.entities[0].values[0].value, test_entities[0].values[0].value);
+        expect(result.entities[0].entity).toBe(test_entities[0].entity);
+        expect(result.entities[0].values[0].value).toBe(test_entities[0].values[0].value);
         done();
       });
     });
@@ -667,11 +649,11 @@ describe('assistant_integration', function() {
         sort: 'entity',
       };
 
-      assistant.listEntities(params, function(err, result) {
+      conversation.listEntities(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.hasOwnProperty('pagination'), true);
+        expect(result.hasOwnProperty('pagination')).toBe(true);
         done();
       });
     });
@@ -684,13 +666,13 @@ describe('assistant_integration', function() {
         entity: test_entities[0].entity,
       };
 
-      assistant.getEntity(params, function(err, result) {
+      conversation.getEntity(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.entity, test_entities[0].entity);
-        assert.equal(result.description, null);
-        assert.equal(result.fuzzy_match, true);
+        expect(result.entity).toBe(test_entities[0].entity);
+        expect(result.description).toBeUndefined();
+        expect(result.fuzzy_match).toBe(true);
         done();
       });
     });
@@ -706,11 +688,11 @@ describe('assistant_integration', function() {
         fuzzy_match: false,
       };
 
-      assistant.updateEntity(params, function(err, result) {
+      conversation.updateEntity(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.entity, test_entities_update.entity);
+        expect(result.entity).toBe(test_entities_update.entity);
         done();
       });
     });
@@ -725,12 +707,12 @@ describe('assistant_integration', function() {
         synonyms: test_value.synonyms,
       };
 
-      assistant.createValue(params, function(err, result) {
+      conversation.createValue(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.value, test_value.value);
-        assert.equal(result.description, null);
+        expect(result.value).toBe(test_value.value);
+        expect(result.description).toBeUndefined();
         done();
       });
     });
@@ -744,12 +726,12 @@ describe('assistant_integration', function() {
         export: true,
       };
 
-      assistant.listValues(params, function(err, result) {
+      conversation.listValues(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.values[1].value, test_value.value);
-        assert.equal(result.values[1].synonyms[0], test_value.synonyms[0]);
+        expect(result.values[1].value).toBe(test_value.value);
+        expect(result.values[1].synonyms[0]).toBe(test_value.synonyms[0]);
         done();
       });
     });
@@ -764,11 +746,11 @@ describe('assistant_integration', function() {
         sort: 'value',
       };
 
-      assistant.listValues(params, function(err, result) {
+      conversation.listValues(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.hasOwnProperty('pagination'), true);
+        expect(result.hasOwnProperty('pagination')).toBe(true);
         done();
       });
     });
@@ -782,12 +764,12 @@ describe('assistant_integration', function() {
         value: test_value.value,
       };
 
-      assistant.getValue(params, function(err, result) {
+      conversation.getValue(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.value, test_value.value);
-        assert.equal(result.description, null);
+        expect(result.value).toBe(test_value.value);
+        expect(result.description).toBeUndefined();
         done();
       });
     });
@@ -803,11 +785,11 @@ describe('assistant_integration', function() {
         new_synonyms: test_value_update.synonyms,
       };
 
-      assistant.updateValue(params, function(err, result) {
+      conversation.updateValue(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.value, test_value_update.value);
+        expect(result.value).toBe(test_value_update.value);
         done();
       });
     });
@@ -822,11 +804,11 @@ describe('assistant_integration', function() {
         synonym: test_synonym,
       };
 
-      assistant.createSynonym(params, function(err, result) {
+      conversation.createSynonym(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.synonym, test_synonym);
+        expect(result.synonym).toBe(test_synonym);
         done();
       });
     });
@@ -841,11 +823,11 @@ describe('assistant_integration', function() {
         export: true,
       };
 
-      assistant.listSynonyms(params, function(err, result) {
+      conversation.listSynonyms(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.synonyms[1].synonym, test_synonym);
+        expect(result.synonyms[1].synonym).toBe(test_synonym);
         done();
       });
     });
@@ -860,11 +842,11 @@ describe('assistant_integration', function() {
         include_count: true,
       };
 
-      assistant.listSynonyms(params, function(err, result) {
+      conversation.listSynonyms(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.hasOwnProperty('pagination'), true);
+        expect(result.hasOwnProperty('pagination')).toBe(true);
         done();
       });
     });
@@ -879,11 +861,11 @@ describe('assistant_integration', function() {
         synonym: test_synonym,
       };
 
-      assistant.getSynonym(params, function(err, result) {
+      conversation.getSynonym(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.synonym, test_synonym);
+        expect(result.synonym).toBe(test_synonym);
         done();
       });
     });
@@ -899,11 +881,11 @@ describe('assistant_integration', function() {
         new_synonym: test_synonym_update,
       };
 
-      assistant.updateSynonym(params, function(err, result) {
+      conversation.updateSynonym(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.synonym, test_synonym_update);
+        expect(result.synonym).toBe(test_synonym_update);
         done();
       });
     });
@@ -917,11 +899,11 @@ describe('assistant_integration', function() {
         page_limit: 1,
       };
 
-      assistant.listLogs(params, function(err, result) {
+      conversation.listLogs(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.hasOwnProperty('logs'), true);
+        expect(result.hasOwnProperty('logs')).toBe(true);
         done();
       });
     });
@@ -936,7 +918,7 @@ describe('assistant_integration', function() {
         synonym: test_synonym_update,
       };
 
-      assistant.deleteSynonym(params, function(err, result) {
+      conversation.deleteSynonym(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -953,7 +935,7 @@ describe('assistant_integration', function() {
         value: test_value_update.value,
       };
 
-      assistant.deleteValue(params, function(err, result) {
+      conversation.deleteValue(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -968,12 +950,12 @@ describe('assistant_integration', function() {
         workspace_id: workspace1.workspace_id,
         entity: test_entities_update.entity,
       };
-      assistant.listMentions(params, function(err, result) {
+      conversation.listMentions(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert(Array.isArray(result.examples));
-        assert(result.pagination);
+        expect(Array.isArray(result.examples)).toBe(true);
+        expect(result.pagination).toBeDefined();
         done();
       });
     });
@@ -986,7 +968,7 @@ describe('assistant_integration', function() {
         entity: test_entities_update.entity,
       };
 
-      assistant.deleteEntity(params, function(err, result) {
+      conversation.deleteEntity(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -1003,17 +985,13 @@ describe('assistant_integration', function() {
         conditions: 'true',
       };
 
-      assistant.createDialogNode(params, function(err, result) {
+      conversation.createDialogNode(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(
-          result.dialog_node,
-          test_dialog_node,
-          'dialog_node field has unexpected value'
-        );
-        assert.equal(result.conditions, 'true', 'conditions field has unexpected value');
-        assert.equal(result.description, null, 'description field is not null');
+        expect(result.dialog_node).toBe(test_dialog_node);
+        expect(result.conditions).toBe('true');
+        expect(result.description).toBeUndefined();
         done();
       });
     });
@@ -1025,11 +1003,11 @@ describe('assistant_integration', function() {
         workspace_id: workspace1.workspace_id,
       };
 
-      assistant.listDialogNodes(params, function(err, result) {
+      conversation.listDialogNodes(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.dialog_nodes[0].dialog_node, test_dialog_node);
+        expect(result.dialog_nodes[0].dialog_node).toBe(test_dialog_node);
         done();
       });
     });
@@ -1042,11 +1020,11 @@ describe('assistant_integration', function() {
         sort: 'dialog_node',
       };
 
-      assistant.listDialogNodes(params, function(err, result) {
+      conversation.listDialogNodes(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.hasOwnProperty('pagination'), true);
+        expect(result.hasOwnProperty('pagination')).toBe(true);
         done();
       });
     });
@@ -1059,12 +1037,12 @@ describe('assistant_integration', function() {
         dialog_node: test_dialog_node,
       };
 
-      assistant.getDialogNode(params, function(err, result) {
+      conversation.getDialogNode(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.dialog_node, test_dialog_node);
-        assert.equal(result.description, null);
+        expect(result.dialog_node).toBe(test_dialog_node);
+        expect(result.description).toBeUndefined();
         done();
       });
     });
@@ -1079,12 +1057,12 @@ describe('assistant_integration', function() {
         new_conditions: 'false',
       };
 
-      assistant.updateDialogNode(params, function(err, result) {
+      conversation.updateDialogNode(params, function(err, result) {
         if (err) {
           return done(err);
         }
-        assert.equal(result.dialog_node, test_dialog_node_update);
-        assert.equal(result.conditions, 'false');
+        expect(result.dialog_node).toBe(test_dialog_node_update);
+        expect(result.conditions).toBe('false');
         done();
       });
     });
@@ -1097,7 +1075,7 @@ describe('assistant_integration', function() {
         dialog_node: test_dialog_node_update,
       };
 
-      assistant.deleteDialogNode(params, function(err, result) {
+      conversation.deleteDialogNode(params, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -1112,7 +1090,7 @@ describe('assistant_integration', function() {
         workspace_id: workspace1.workspace_id,
       };
 
-      assistant.deleteWorkspace(params, function(err, result) {
+      conversation.deleteWorkspace(params, function(err, result) {
         if (err) {
           return done(err);
         }

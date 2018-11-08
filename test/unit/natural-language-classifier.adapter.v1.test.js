@@ -1,188 +1,294 @@
 'use strict';
 
-const watson = require('../../index');
-const nock = require('nock');
-const fs = require('fs');
-const extend = require('extend');
-const pick = require('object.pick');
+const NaturalLanguageClassifierV1 = require('../../natural-language-classifier/v1');
+const helper = require('../../lib/helper');
+const utils = require('../resources/unitTestUtils');
+
+const missingParamsError = utils.missingParamsError;
+const missingParamsSuccess = utils.missingParamsSuccess;
+const checkUrlAndMethod = utils.checkUrlAndMethod;
+const checkCallback = utils.checkCallback;
+const checkMediaHeaders = utils.checkMediaHeaders;
+const checkDefaultSuccessArgs = utils.checkDefaultSuccessArgs;
+const checkForEmptyObject = utils.checkForEmptyObject;
+const checkRequiredParamsHandling = utils.checkRequiredParamsHandling;
+const getOptions = utils.getOptions;
 
 const service = {
-  username: 'foo',
-  password: 'bar',
-  url: 'http://ibm.com:80',
-  version: 'v1',
+  username: 'batman',
+  password: 'bruce-wayne',
+  url: 'https://gateway.watsonplatform.net/natural-language-classifier/api',
+  version: '2018-10-18',
 };
 
-beforeAll(function() {
-  nock.disableNetConnect();
+const natural_language_classifier = new NaturalLanguageClassifierV1(service);
+const createRequestMock = jest.spyOn(natural_language_classifier, 'createRequest');
+const missingParamsMock = jest.spyOn(helper, 'getMissingParams');
+const noop = () => {};
+
+afterEach(() => {
+  createRequestMock.mockReset();
+  missingParamsMock.mockClear();
 });
 
-afterAll(function() {
-  nock.cleanAll();
+describe('classify', () => {
+  describe('positive tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsSuccess);
+    });
+    test('should pass the right params to createRequest', () => {
+      // parameters
+      const classifier = 'fake_classifier';
+      const text = 'fake_text';
+      const params = {
+        classifier,
+        text,
+      };
+
+      // invoke method
+      natural_language_classifier.classify(params);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+      const options = getOptions(createRequestMock);
+
+      checkUrlAndMethod(options, '/v1/classifiers/{classifier_id}/classify', 'POST');
+      checkCallback(createRequestMock);
+      const expectedAccept = 'application/json';
+      const expectedContentType = 'application/json';
+      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+      expect(options.body['text']).toEqual(text);
+      expect(options.json).toEqual(true);
+      expect(options.path['classifier_id']).toEqual(classifier);
+    });
+
+    test('should prioritize user-given headers', () => {
+      // parameters
+      const classifier = 'fake_classifier';
+      const text = 'fake_text';
+      const accept = 'fake/header';
+      const contentType = 'fake/header';
+      const params = {
+        classifier,
+        text,
+        headers: {
+          Accept: accept,
+          'Content-Type': contentType,
+        },
+      };
+
+      natural_language_classifier.classify(params);
+      checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+  });
+  describe('negative tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsError);
+    });
+
+    test('should convert a `null` value for `params` to an empty object', done => {
+      natural_language_classifier.classify(null, () => {
+        checkForEmptyObject(missingParamsMock);
+        done();
+      });
+    });
+
+    test('should enforce required parameters', done => {
+      // required parameters for this method
+      const requiredParams = ['classifier_id', 'text'];
+
+      natural_language_classifier.classify({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+  });
 });
+describe('remove', () => {
+  describe('positive tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsSuccess);
+    });
+    test('should pass the right params to createRequest', () => {
+      // parameters
+      const classifier = 'fake_classifier';
+      const params = {
+        classifier,
+      };
 
-const natural_language_classifier = watson.natural_language_classifier(service);
+      // invoke method
+      natural_language_classifier.remove(params);
 
-const missingParameter = function(err) {
-  expect(err).toBeInstanceOf(Error);
-  expect(/Missing required/.test(err.message)).toBe(true);
-};
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-const goodRequest = function(err) {
-  const check = err.message.indexOf('Missing required') > -1;
-  expect(check).toStrictEqual(false);
-};
+      const options = getOptions(createRequestMock);
 
-const invalidFormatParameter = function(err) {
-  expect(err).toBeInstanceOf(Error);
-  expect(/Invalid training_data format/.test(err.message)).toBe(true);
-};
+      checkUrlAndMethod(options, '/v1/classifiers/{classifier_id}', 'DELETE');
+      checkCallback(createRequestMock);
+      const expectedAccept = 'application/json';
+      const expectedContentType = 'application/json';
+      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+      expect(options.path['classifier_id']).toEqual(classifier);
+    });
 
-const invalidParameter = function(err) {
-  expect(err).toBeInstanceOf(Error);
-  expect(/training_data needs to be/.test(err.message)).toBe(true);
-};
+    test('should prioritize user-given headers', () => {
+      // parameters
+      const classifier = 'fake_classifier';
+      const accept = 'fake/header';
+      const contentType = 'fake/header';
+      const params = {
+        classifier,
+        headers: {
+          Accept: accept,
+          'Content-Type': contentType,
+        },
+      };
 
-const emptyData = { text: '' };
-const nullData = { text: null };
-const emptyClassifier = { classifier: '' };
-const nullClassifier = { classifier: null };
-const undefinedClassifier = { classifier: undefined };
-const emptyDataClassifier = { text: '', classifer: '' };
-const nullDataClassifier = { text: null, classifer: null };
-const goodData = { text: 'good', classifier: 'good' };
-const goodDataWithClassifierId = { text: 'good', classifier_id: 'good' };
-const noTrainingData = { language: 'en', name: 'foo' };
-
-// training requests
-// training with a string variable (CSV)
-const createWithString = extend({ training_data: 'foo' }, noTrainingData);
-
-// training with a stream variable (CSV)
-const createWithStream = extend(
-  {
-    training_data: fs.createReadStream(__dirname + '/../resources/weather_data_train.csv'),
-  },
-  noTrainingData
-);
-
-// training with an object variable (JSON)
-const createWithJson = extend(
-  {
-    training_data: [{ text: 'text', classes: ['class1'] }, { text: 'text2', classes: ['class2'] }],
-  },
-  noTrainingData
-);
-
-describe('natural_language_classifer', function() {
-  it('should fail if no parameters are provided for create, classify, classifyCollection, status and delete requests', function() {
-    natural_language_classifier.classify({}, missingParameter);
-    natural_language_classifier.classify(null, missingParameter);
-    natural_language_classifier.classify(undefined, missingParameter);
-
-    natural_language_classifier.create({}, missingParameter);
-    natural_language_classifier.create(null, missingParameter);
-    natural_language_classifier.create(undefined, missingParameter);
-
-    natural_language_classifier.status({}, missingParameter);
-    natural_language_classifier.status(null, missingParameter);
-    natural_language_classifier.status(undefined, missingParameter);
-
-    natural_language_classifier.remove({}, missingParameter);
-    natural_language_classifier.remove(null, missingParameter);
-    natural_language_classifier.remove(undefined, missingParameter);
-
-    natural_language_classifier.classifyCollection({}, missingParameter);
-    natural_language_classifier.classifyCollection(null, missingParameter);
-    natural_language_classifier.classifyCollection(undefined, missingParameter);
+      natural_language_classifier.remove(params);
+      checkMediaHeaders(createRequestMock, accept, contentType);
+    });
   });
+  describe('negative tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsError);
+    });
 
-  it('should fail if no classifier is provided for classify, status, classifyCollection, and delete requests', function() {
-    natural_language_classifier.classify(emptyData, missingParameter);
-    natural_language_classifier.classify(emptyClassifier, missingParameter);
-    natural_language_classifier.classify(nullClassifier, missingParameter);
-    natural_language_classifier.classify(undefinedClassifier, missingParameter);
-    natural_language_classifier.classify(emptyDataClassifier, missingParameter);
-    natural_language_classifier.classify(nullDataClassifier, missingParameter);
+    test('should convert a `null` value for `params` to an empty object', done => {
+      natural_language_classifier.remove(null, () => {
+        checkForEmptyObject(missingParamsMock);
+        done();
+      });
+    });
 
-    natural_language_classifier.status(emptyClassifier, missingParameter);
-    natural_language_classifier.status(nullClassifier, missingParameter);
-    natural_language_classifier.status(undefinedClassifier, missingParameter);
-    natural_language_classifier.status(emptyDataClassifier, missingParameter);
-    natural_language_classifier.status(nullDataClassifier, missingParameter);
+    test('should enforce required parameters', done => {
+      // required parameters for this method
+      const requiredParams = ['classifier_id'];
 
-    natural_language_classifier.remove(emptyData, missingParameter);
-    natural_language_classifier.remove(emptyClassifier, missingParameter);
-    natural_language_classifier.remove(nullClassifier, missingParameter);
-    natural_language_classifier.remove(undefinedClassifier, missingParameter);
-    natural_language_classifier.remove(emptyDataClassifier, missingParameter);
-    natural_language_classifier.remove(nullDataClassifier, missingParameter);
-
-    natural_language_classifier.classifyCollection(emptyData, missingParameter);
-    natural_language_classifier.classifyCollection(emptyClassifier, missingParameter);
-    natural_language_classifier.classifyCollection(nullClassifier, missingParameter);
-    natural_language_classifier.classifyCollection(undefinedClassifier, missingParameter);
-    natural_language_classifier.classifyCollection(emptyDataClassifier, missingParameter);
-    natural_language_classifier.classifyCollection(nullDataClassifier, missingParameter);
+      natural_language_classifier.remove({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
   });
+});
+describe('status', () => {
+  describe('positive tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsSuccess);
+    });
+    test('should pass the right params to createRequest', () => {
+      // parameters
+      const classifier = 'fake_classifer';
+      const params = {
+        classifier,
+      };
 
-  it('should fail if no data provided create and classify requests', function() {
-    natural_language_classifier.create(noTrainingData, missingParameter);
-    natural_language_classifier.create(emptyClassifier, missingParameter);
-    natural_language_classifier.create(nullData, missingParameter);
-    natural_language_classifier.create(emptyData, missingParameter);
+      // invoke method
+      natural_language_classifier.status(params);
 
-    natural_language_classifier.classify(emptyClassifier, missingParameter);
-    natural_language_classifier.classify(nullData, missingParameter);
-    natural_language_classifier.classify(emptyData, missingParameter);
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+      const options = getOptions(createRequestMock);
+
+      checkUrlAndMethod(options, '/v1/classifiers/{classifier_id}', 'GET');
+      checkCallback(createRequestMock);
+      const expectedAccept = 'application/json';
+      const expectedContentType = 'application/json';
+      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+      expect(options.path['classifier_id']).toEqual(classifier);
+    });
+
+    test('should prioritize user-given headers', () => {
+      // parameters
+      const classifier = 'fake_classifer';
+      const accept = 'fake/header';
+      const contentType = 'fake/header';
+      const params = {
+        classifier,
+        headers: {
+          Accept: accept,
+          'Content-Type': contentType,
+        },
+      };
+
+      natural_language_classifier.status(params);
+      checkMediaHeaders(createRequestMock, accept, contentType);
+    });
   });
+  describe('negative tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsError);
+    });
 
-  it('all other good requests should pass', function() {
-    natural_language_classifier.status(goodData, goodRequest);
-    natural_language_classifier.remove(goodData, goodRequest);
+    test('should convert a `null` value for `params` to an empty object', done => {
+      natural_language_classifier.status(null, () => {
+        checkForEmptyObject(missingParamsMock);
+        done();
+      });
+    });
 
-    natural_language_classifier.status(goodDataWithClassifierId, goodRequest);
-    natural_language_classifier.remove(goodDataWithClassifierId, goodRequest);
-    // list doesn't need params
-    natural_language_classifier.list({}, goodRequest);
-    natural_language_classifier.list(null, goodRequest);
-    natural_language_classifier.list(undefined, goodRequest);
+    test('should enforce required parameters', done => {
+      // required parameters for this method
+      const requiredParams = ['classifier_id'];
 
-    // create classifier with string
-    natural_language_classifier.create(createWithString, goodRequest);
-    natural_language_classifier.create(createWithStream, goodRequest);
-    natural_language_classifier.create(createWithJson, goodRequest);
+      natural_language_classifier.status({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
   });
+});
+describe('list', () => {
+  describe('positive tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsSuccess);
+    });
+    test('should pass the right params to createRequest', () => {
+      // parameters
+      const params = {};
 
-  it('should fail if training_data is not json, string or stream', function() {
-    const params = extend({}, noTrainingData);
+      // invoke method
+      natural_language_classifier.list(params);
 
-    params.training_data = null;
-    natural_language_classifier.create(params, missingParameter);
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-    params.training_data = 0;
-    natural_language_classifier.create(params, missingParameter);
+      const options = getOptions(createRequestMock);
 
-    params.training_data = {};
-    natural_language_classifier.create(params, invalidParameter);
-  });
+      checkUrlAndMethod(options, '/v1/classifiers', 'GET');
+      checkCallback(createRequestMock);
+      const expectedAccept = 'application/json';
+      const expectedContentType = 'application/json';
+      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+    });
 
-  it('should fail if training_data is not a valid json format', function() {
-    const params = extend({}, noTrainingData);
+    test('should prioritize user-given headers', () => {
+      // parameters
+      const accept = 'fake/header';
+      const contentType = 'fake/header';
+      const params = {
+        headers: {
+          Accept: accept,
+          'Content-Type': contentType,
+        },
+      };
 
-    params.training_data = [{ json: 'bad' }];
-    natural_language_classifier.create(params, invalidFormatParameter);
-  });
+      natural_language_classifier.list(params);
+      checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+    test('should not have any problems when no parameters are passed in', () => {
+      // invoke the method
+      natural_language_classifier.list();
+      checkDefaultSuccessArgs(createRequestMock);
+    });
 
-  it('should classify collection', function() {
-    const params = {
-      classifier_id: 'good',
-      collection: { text: 'text' },
-    };
-    const req = natural_language_classifier.classifyCollection(params, goodRequest);
-    const body = Buffer.from(req.body).toString('ascii');
-    expect(JSON.parse(body)).toEqual(pick(params, ['collection']));
-    expect(req.method).toBe('POST');
-    expect(req.uri.href).toBe('http://ibm.com:80/v1/classifiers/good/classify_collection');
+    test('should use argument as callback function if only one is passed in', () => {
+      // invoke the method
+      natural_language_classifier.list(noop);
+      checkDefaultSuccessArgs(createRequestMock);
+    });
   });
 });
