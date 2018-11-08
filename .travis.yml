@@ -16,15 +16,12 @@ script:
     npm run test-unit-travis;
   fi
 - sh scripts/typedoc/generate_typedoc.sh
-cache:
-  directories:
-  - node_modules
 after_success:
 - npm run report-coverage
-- scripts/jsdoc/publish.sh
-deploy:
-- provider: script
-  skip_cleanup: true
-  script: npx semantic-release
-  on:
-    node: 8
+# - scripts/jsdoc/publish.sh
+# deploy:
+# - provider: script
+#   skip_cleanup: true
+#   script: npx semantic-release
+#   on:
+#     node: 8
