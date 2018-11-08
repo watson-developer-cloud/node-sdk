@@ -16,6 +16,9 @@ script:
     npm run test-unit-travis;
   fi
 - sh scripts/typedoc/generate_typedoc.sh
+cache:
+  directories:
+  - node_modules
 after_success:
 - npm run report-coverage
 - scripts/jsdoc/publish.sh
