@@ -115,6 +115,7 @@
     "test-integration": "jest --silent --verbose test/integration",
     "test-unit": "jest --silent --verbose test/unit/",
     "test": "jest --silent --verbose test/",
+    "test-unit-travis": "jest --silent --runInBand test/unit/",
     "test-travis": "jest --silent --runInBand --testNamePattern='^((?!@slow).)*$' test/",
     "report-coverage": "codecov",
     "watch-doc": "nodemon --watch ./ --ext js,tmpl,json --ignore dist/ --ignore doc/ --ignore test/ --ignore examples/ --exec npm run doc",
