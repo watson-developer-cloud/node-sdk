@@ -1,9 +1,7 @@
 'use strict';
 
-const nock = require('nock');
 const watson = require('../../index');
-const assert = require('assert');
-const authHelper = require('./auth_helper.js');
+const authHelper = require('../resources/auth_helper.js');
 
 const auth = authHelper.auth.assistant;
 auth.version = '2018-09-19';
@@ -13,21 +11,13 @@ describe('assistant v2 integration', function() {
   const assistant_id = auth.assistant_id;
   let session_id;
 
-  before(function() {
-    nock.enableNetConnect();
-  });
-
-  after(function() {
-    nock.disableNetConnect();
-  });
-
   it('should createSession', function(done) {
     const params = {
       assistant_id,
     };
     assistant.createSession(params, function(err, res) {
-      assert.ifError(err);
-      assert(res.session_id);
+      expect(err).toBeNull();
+      expect(res.session_id).toBeDefined();
       session_id = res.session_id;
       done();
     });
@@ -39,15 +29,15 @@ describe('assistant v2 integration', function() {
       session_id,
     };
     assistant.message(params, function(err, res) {
-      assert.ifError(err);
-      assert(res.output);
-      assert(Array.isArray(res.output.generic));
-      assert.equal(res.output.generic[0].response_type, 'text');
-      assert(res.output.generic[0].text);
-      assert(Array.isArray(res.output.intents));
-      assert(Array.isArray(res.output.entities));
-      assert.equal(res.output.intents.length, 0);
-      assert.equal(res.output.entities.length, 0);
+      expect(err).toBeNull();
+      expect(res.output).toBeDefined();
+      expect(Array.isArray(res.output.generic)).toBe(true);
+      expect(res.output.generic[0].response_type).toBe('text');
+      expect(res.output.generic[0].text).toBeDefined();
+      expect(Array.isArray(res.output.intents)).toBe(true);
+      expect(Array.isArray(res.output.entities)).toBe(true);
+      expect(res.output.intents.length).toBe(0);
+      expect(res.output.entities.length).toBe(0);
       done();
     });
   });
@@ -62,13 +52,13 @@ describe('assistant v2 integration', function() {
       input,
     };
     assistant.message(params, function(err, res) {
-      assert.ifError(err);
-      assert(res.output);
-      assert(Array.isArray(res.output.generic));
-      assert.equal(res.output.generic[0].response_type, 'text');
-      assert(res.output.generic[0].text);
-      assert(Array.isArray(res.output.intents));
-      assert(Array.isArray(res.output.entities));
+      expect(err).toBeNull();
+      expect(res.output).toBeDefined();
+      expect(Array.isArray(res.output.generic)).toBe(true);
+      expect(res.output.generic[0].response_type).toBe('text');
+      expect(res.output.generic[0].text).toBeDefined();
+      expect(Array.isArray(res.output.intents)).toBe(true);
+      expect(Array.isArray(res.output.entities)).toBe(true);
       done();
     });
   });
@@ -79,7 +69,7 @@ describe('assistant v2 integration', function() {
       session_id,
     };
     assistant.deleteSession(params, function(err, res) {
-      assert.ifError(err);
+      expect(err).toBeNull();
       done();
     });
   });

@@ -1,16 +1,13 @@
 'use strict';
 const fs = require('fs');
-const nock = require('nock');
 const watson = require('../../index');
-const assert = require('assert');
 const path = require('path');
-const authHelper = require('./auth_helper.js');
+const authHelper = require('../resources/auth_helper.js');
 const auth = authHelper.auth;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const async = require('async');
 
 const THIRTY_SECONDS = 30000;
-const TWO_SECONDS = 2000;
 
 const logit = function(string) {
   console.log('==> ' + string); // eslint-disable-line
@@ -19,20 +16,15 @@ const logit = function(string) {
 
 describe.skip('visual_recognition_integration_custom_classifiers @slow', function() {
   // ugh.
-  this.timeout(THIRTY_SECONDS * 8);
-  this.slow(TWO_SECONDS);
-  this.retries(5);
+  jest.setTimeout(THIRTY_SECONDS * 8);
 
-  let visual_recognition;
+  const visual_recognition = new watson.VisualRecognitionV3(
+    Object.assign({}, auth.visual_recognition_rc.v3, {
+      version: '2018-03-19',
+    })
+  );
 
-  before(function(done) {
-    visual_recognition = new watson.VisualRecognitionV3(
-      Object.assign({}, auth.visual_recognition_rc.v3, {
-        version: '2018-03-19',
-      })
-    );
-    nock.enableNetConnect();
-
+  beforeAll(function(done) {
     // clean up any leftover temp classifiers from previous test runs
     visual_recognition.listClassifiers({}, function(err, result) {
       if (err) {
@@ -64,14 +56,9 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', functio
     });
   });
 
-  after(function() {
-    nock.disableNetConnect();
-  });
-
   // todo: add more tests, consider splitting things between a permanent and a temporary classifier
   describe('create, list, get, delete', function() {
     let classifier_id;
-    this.retries(0);
 
     it('createClassifier()', function(done) {
       visual_recognition.createClassifier(
@@ -88,8 +75,8 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', functio
           if (err) {
             return done(err);
           }
-          assert(response);
-          assert(response.classifier_id);
+          expect(response).toBeDefined();
+          expect(response.classifier_id).toBeDefined();
           classifier_id = response.classifier_id;
           done();
         }
@@ -101,8 +88,8 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', functio
         if (err) {
           return done(err);
         }
-        assert(result.classifiers);
-        assert(result.classifiers.length);
+        expect(result.classifiers).toBeDefined();
+        expect(result.classifiers.length).toBeDefined();
         done();
       });
     });
@@ -112,14 +99,14 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', functio
         if (err) {
           return done(err);
         }
-        assert.equal(classifier.classifier_id, classifier_id);
-        assert.equal(classifier.name, 'light_dark_test_temporary');
+        expect(classifier.classifier_id).toBe(classifier_id);
+        expect(classifier.name).toBe('light_dark_test_temporary');
         const classes = [];
         classifier.classes.forEach(function(element) {
           classes.push(element.class);
         });
         classes.sort();
-        assert.deepEqual(classes, ['dark', 'light']);
+        expect(classes).toEqual(['dark', 'light']);
         done();
       });
     });
@@ -162,7 +149,7 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', functio
   describe.skip('pre-populated classifier @slow', function() {
     let classifier_id;
 
-    before(function() {
+    beforeAll(function() {
       return new Promise(function(resolve, reject) {
         visual_recognition.listClassifiers({}, (err, result) => {
           if (err) {
@@ -248,14 +235,13 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', functio
             return;
           }
           logit(JSON.stringify(result, null, 2));
-          assert.equal(result.images_processed, 1);
-          assert.equal(
-            result.images[0].image,
+          expect(result.images_processed).toBe(1);
+          expect(result.images[0].image).toBe(
             '183px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg'
           );
-          assert.equal(result.images[0].classifiers.length, 1);
-          assert.equal(result.images[0].classifiers[0].classifier_id, classifier_id);
-          assert(
+          expect(result.images[0].classifiers.length).toBe(1);
+          expect(result.images[0].classifiers[0].classifier_id).toBe(classifier_id);
+          expect(
             result.images[0].classifiers[0].classes.every(function(cl) {
               if (['beach', 'water', 'still', 'forest'].indexOf(cl.class) !== -1) {
                 return true;
@@ -264,7 +250,7 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', functio
                 return false;
               }
             })
-          );
+          ).toBe(true);
           resolve();
         });
       });
@@ -284,10 +270,10 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', functio
             return;
           }
           logit(JSON.stringify(result, null, 2));
-          assert.equal(result.images_processed, 1);
-          assert.equal(result.images[0].image, 'potato.jpeg');
-          assert.equal(result.images[0].classifiers[0].classes.length, 0);
-          assert(result.custom_classes > 0);
+          expect(result.images_processed).toBe(1);
+          expect(result.images[0].image).toBe('potato.jpeg');
+          expect(result.images[0].classifiers[0].classes.length).toBe(0);
+          expect(result.custom_classes > 0).toBe(true);
           resolve();
         });
       });

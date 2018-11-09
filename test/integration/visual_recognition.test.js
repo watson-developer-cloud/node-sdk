@@ -1,35 +1,21 @@
 'use strict';
 const fs = require('fs');
-const nock = require('nock');
 const watson = require('../../index');
-const assert = require('assert');
-const authHelper = require('./auth_helper.js');
+const authHelper = require('../resources/auth_helper.js');
 const auth = authHelper.auth;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 
 const THIRTY_SECONDS = 30000;
-const TWO_SECONDS = 2000;
 
 describe('visual_recognition_integration', function() {
   // ugh.
-  this.timeout(THIRTY_SECONDS * 4);
-  this.slow(TWO_SECONDS);
-  this.retries(5);
+  jest.setTimeout(THIRTY_SECONDS * 4);
 
-  let visual_recognition;
-
-  before(function() {
-    visual_recognition = new watson.VisualRecognitionV3(
-      Object.assign({}, auth.visual_recognition_rc.v3, {
-        version: '2018-10-01',
-      })
-    );
-    nock.enableNetConnect();
-  });
-
-  after(function() {
-    nock.disableNetConnect();
-  });
+  const visual_recognition = new watson.VisualRecognitionV3(
+    Object.assign({}, auth.visual_recognition_rc.v3, {
+      version: '2018-10-01',
+    })
+  );
 
   describe('classify()', function() {
     it('should classify an uploaded image', function(done) {
@@ -40,21 +26,20 @@ describe('visual_recognition_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.images_processed, 1);
-        assert.equal(result.images[0].image, 'car.png');
-        assert(result.images[0].classifiers.length);
-        assert(
+        expect(result.images_processed).toBe(1);
+        expect(result.images[0].image).toBe('car.png');
+        expect(result.images[0].classifiers.length).toBeTruthy();
+        expect(
           result.images[0].classifiers[0].classes.some(function(c) {
             return c.class === 'car';
           })
-        );
+        ).toBe(true);
 
         done();
       });
     });
 
     it('should classify from a buffer', function(done) {
-      this.retries(0);
       const params = {
         images_file: fs.readFileSync(__dirname + '/../resources/car.png'),
       };
@@ -62,13 +47,13 @@ describe('visual_recognition_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(result.images_processed, 1);
-        assert(result.images[0].classifiers.length);
-        assert(
+        expect(result.images_processed).toBe(1);
+        expect(result.images[0].classifiers.length).toBeTruthy();
+        expect(
           result.images[0].classifiers[0].classes.some(function(c) {
             return c.class === 'car';
           })
-        );
+        ).toBe(true);
 
         done();
       });
@@ -83,21 +68,19 @@ describe('visual_recognition_integration', function() {
           return done(err);
         }
         // console.log(JSON.stringify(result, null, 2));
-        assert.equal(result.images_processed, 1);
-        assert.equal(
-          result.images[0].resolved_url,
+        expect(result.images_processed).toBe(1);
+        expect(result.images[0].resolved_url).toBe(
           'https://watson-test-resources.mybluemix.net/resources/car.png'
         );
-        assert.equal(
-          result.images[0].source_url,
+        expect(result.images[0].source_url).toBe(
           'https://watson-test-resources.mybluemix.net/resources/car.png'
         );
-        assert(result.images[0].classifiers.length);
-        assert(
+        expect(result.images[0].classifiers.length).toBeTruthy();
+        expect(
           result.images[0].classifiers[0].classes.some(function(c) {
             return c.class === 'car';
           })
-        );
+        ).toBe(true);
 
         done();
       });
@@ -113,12 +96,11 @@ describe('visual_recognition_integration', function() {
         if (err) {
           return done(err);
         }
-        // console.log(JSON.stringify(result, null, 2));
-        assert.equal(result.images_processed, 1);
-        assert.equal(result.images[0].image, 'obama.jpg');
-        assert.equal(result.images[0].faces.length, 1, 'There should be exactly one face detected'); // note: the api was sometimes failing to detect any faces right after the release
+        expect(result.images_processed).toBe(1);
+        expect(result.images[0].image).toBe('obama.jpg');
+        expect(result.images[0].faces.length).toBe(1, 'There should be exactly one face detected'); // note: the api was sometimes failing to detect any faces right after the release
         const face = result.images[0].faces[0];
-        assert.equal(face.gender.gender, 'MALE');
+        expect(face.gender.gender).toBe('MALE');
         done();
       });
     });
@@ -132,18 +114,16 @@ describe('visual_recognition_integration', function() {
           return done(err);
         }
         // console.log(JSON.stringify(result, null, 2));
-        assert.equal(result.images_processed, 1);
-        assert.equal(
-          result.images[0].resolved_url,
+        expect(result.images_processed).toBe(1);
+        expect(result.images[0].resolved_url).toBe(
           'https://watson-test-resources.mybluemix.net/resources/obama.jpg'
         );
-        assert.equal(
-          result.images[0].source_url,
+        expect(result.images[0].source_url).toBe(
           'https://watson-test-resources.mybluemix.net/resources/obama.jpg'
         );
-        assert.equal(result.images[0].faces.length, 1, 'There should be exactly one face detected'); // note: the api was sometimes failing to detect any faces right after the release
+        expect(result.images[0].faces.length).toBe(1); // note: the api was sometimes failing to detect any faces right after the release
         const face = result.images[0].faces[0];
-        assert.equal(face.gender.gender, 'MALE');
+        expect(face.gender.gender).toBe('MALE');
         done();
       });
     });

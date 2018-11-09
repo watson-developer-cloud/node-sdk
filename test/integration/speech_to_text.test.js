@@ -1,39 +1,22 @@
 'use strict';
 
-const authHelper = require('./auth_helper.js');
+const authHelper = require('../resources/auth_helper.js');
 const auth = authHelper.auth;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const watson = require('../../index');
 const fs = require('fs');
 const concat = require('concat-stream');
-const assert = require('assert');
 const path = require('path');
-const nock = require('nock');
 const async = require('async');
 
 const TWENTY_SECONDS = 20000;
-const FIVE_SECONDS = 5000;
 const TWO_MINUTES = 2 * 60 * 1000;
 
 describe('speech_to_text_integration', function() {
-  this.timeout(TWENTY_SECONDS);
-  this.slow(FIVE_SECONDS);
+  jest.setTimeout(TWENTY_SECONDS);
 
-  before(function() {
-    nock.enableNetConnect();
-  });
-
-  after(function() {
-    nock.disableNetConnect();
-  });
-
-  let speech_to_text;
-  let speech_to_text_rc;
-
-  beforeEach(function() {
-    speech_to_text = new watson.SpeechToTextV1(auth.speech_to_text);
-    speech_to_text_rc = new watson.SpeechToTextV1(auth.speech_to_text_rc);
-  });
+  const speech_to_text = new watson.SpeechToTextV1(auth.speech_to_text);
+  const speech_to_text_rc = new watson.SpeechToTextV1(auth.speech_to_text_rc);
 
   it('recognize() (RC) @slow', function(done) {
     const params = {
@@ -108,13 +91,13 @@ describe('speech_to_text_integration', function() {
       }
       */
 
-      assert(res.results);
-      assert(res.results[0]);
-      assert(res.results[0].keywords_result);
+      expect(res.results).toBeDefined();
+      expect(res.results[0]).toBeDefined();
+      expect(res.results[0].keywords_result).toBeDefined();
       const keywords_result = res.results[0].keywords_result;
-      assert(keywords_result.tornadoes);
-      assert(keywords_result.hail);
-      assert(keywords_result.rain);
+      expect(keywords_result.tornadoes).toBeDefined();
+      expect(keywords_result.hail).toBeDefined();
+      expect(keywords_result.rain).toBeDefined();
 
       done();
     });
@@ -145,9 +128,8 @@ describe('speech_to_text_integration', function() {
         .on('error', done)
         .pipe(
           concat(function(transcription) {
-            assert.equal(typeof transcription, 'string', 'should return a string transcription');
-            assert.equal(
-              transcription.trim(),
+            expect(typeof transcription).toBe('string');
+            expect(transcription.trim()).toBe(
               'thunderstorms could produce large hail isolated tornadoes and heavy rain'
             );
             done();
@@ -174,9 +156,8 @@ describe('speech_to_text_integration', function() {
         .on('error', done)
         .pipe(
           concat(function(transcription) {
-            assert.equal(typeof transcription, 'string', 'should return a string transcription');
-            assert.equal(
-              transcription.trim(),
+            expect(typeof transcription).toBe('string');
+            expect(transcription.trim()).toBe(
               'thunderstorms could produce large hail isolated tornadoes and heavy rain'
             );
             done();
@@ -194,9 +175,8 @@ describe('speech_to_text_integration', function() {
         .on('error', done)
         .pipe(
           concat(function(transcription) {
-            assert.equal(typeof transcription, 'string', 'should return a string transcription');
-            assert.equal(
-              transcription.trim(),
+            expect(typeof transcription).toBe('string');
+            expect(transcription.trim()).toBe(
               'thunderstorms could produce large hail isolated tornadoes and heavy rain'
             );
             done();
@@ -214,9 +194,8 @@ describe('speech_to_text_integration', function() {
         .on('error', done)
         .pipe(
           concat(function(transcription) {
-            assert.equal(typeof transcription, 'string', 'should return a string transcription');
-            assert.equal(
-              transcription.trim(),
+            expect(typeof transcription).toBe('string');
+            expect(transcription.trim()).toBe(
               'thunderstorms could produce large hail isolated tornadoes and heavy rain'
             );
             done();
@@ -233,7 +212,7 @@ describe('speech_to_text_integration', function() {
         .pipe(recognizeStream)
         .on('error', done)
         .on('data', function(text) {
-          assert(!text, 'no text expected for an audio file with no words');
+          expect(text).toBeFalsy();
         })
         .on('end', done);
     });
@@ -246,7 +225,7 @@ describe('speech_to_text_integration', function() {
     // this prevents tests from starting until the API is ready again
     function waitUntilReady(test) {
       return function(done) {
-        this.timeout(TWO_MINUTES);
+        jest.setTimeout(TWO_MINUTES);
         speech_to_text.whenCustomizationReady(
           { customization_id: customization_id, interval: 250, times: 400 },
           function(err) {
@@ -259,7 +238,7 @@ describe('speech_to_text_integration', function() {
       };
     }
 
-    before(function(done) {
+    beforeAll(function(done) {
       const speech_to_text = new watson.SpeechToTextV1(auth.speech_to_text);
       speech_to_text.getCustomizations({}, function(err, result) {
         if (err) {
@@ -302,7 +281,7 @@ describe('speech_to_text_integration', function() {
           if (err) {
             return done(err);
           }
-          assert(result.customization_id, 'customization_id');
+          expect(result.customization_id).toBeDefined();
           customization_id = result.customization_id;
           done();
         }
@@ -314,8 +293,7 @@ describe('speech_to_text_integration', function() {
         if (err) {
           return done(err);
         }
-        // console.log(result);
-        assert(result.customizations.length, 'there should be at least one customization');
+        expect(result.customizations.length).toBeDefined();
         done();
       });
     });
@@ -329,8 +307,8 @@ describe('speech_to_text_integration', function() {
           return done(err);
         }
         // console.log(result);
-        assert(result);
-        assert.equal(result.name, 'js-sdk-test-temporary');
+        expect(result).toBeDefined();
+        expect(result.name).toBe('js-sdk-test-temporary');
         done();
       });
     });
@@ -576,7 +554,7 @@ describe('speech_to_text_integration', function() {
         results_ttl: 1,
       };
       speech_to_text.createRecognitionJob(params, function(err, res) {
-        assert.ifError(err);
+        expect(err).toBeNull();
         jobId = res.id;
         done();
       });

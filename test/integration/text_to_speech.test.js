@@ -1,29 +1,16 @@
 'use strict';
 
-const nock = require('nock');
 const watson = require('../../index');
 const wav = require('wav');
-const assert = require('assert');
-const authHelper = require('./auth_helper.js');
+const authHelper = require('../resources/auth_helper.js');
 const auth = authHelper.auth;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const TWENTY_SECONDS = 20000;
-const FIVE_SECONDS = 5000;
 
 describe('text_to_speech_integration', function() {
-  this.timeout(TWENTY_SECONDS);
-  this.slow(FIVE_SECONDS);
+  jest.setTimeout(TWENTY_SECONDS);
 
-  let text_to_speech;
-
-  before(function() {
-    text_to_speech = new watson.TextToSpeechV1(auth.text_to_speech);
-    nock.enableNetConnect();
-  });
-
-  after(function() {
-    nock.disableNetConnect();
-  });
+  const text_to_speech = new watson.TextToSpeechV1(auth.text_to_speech);
 
   it('voices()', function(done) {
     text_to_speech.voices(null, done);
@@ -44,9 +31,8 @@ describe('text_to_speech_integration', function() {
 
   it('pronunciation()', function(done) {
     const checkPronunciation = function(err, res) {
-      assert.ifError(err);
-      assert.equal(
-        JSON.stringify(res),
+      expect(err).toBeNull();
+      expect(JSON.stringify(res)).toBe(
         JSON.stringify({
           pronunciation: '.ˈaɪ .ˈi .ˈi .ˈi',
         })
@@ -77,7 +63,7 @@ describe('text_to_speech_integration', function() {
           if (err) {
             return done(err);
           }
-          assert(response.customization_id);
+          expect(response.customization_id).toBeDefined();
           customization_id = response.customization_id;
           done();
         }
@@ -90,7 +76,7 @@ describe('text_to_speech_integration', function() {
         if (err) {
           return done(err);
         }
-        assert(Array.isArray(response.customizations));
+        expect(Array.isArray(response.customizations)).toBe(true);
         done();
       });
     });
@@ -101,15 +87,11 @@ describe('text_to_speech_integration', function() {
         if (err) {
           return done(err);
         }
-        assert(Array.isArray(response.customizations));
+        expect(Array.isArray(response.customizations)).toBe(true);
         const hasOtherLanguages = response.customizations.some(function(c) {
           return c.language !== 'en-GB';
         });
-        assert.equal(
-          hasOtherLanguages,
-          false,
-          'Expecting no customizations with a different language than the requested one (en-GB)'
-        );
+        expect(hasOtherLanguages).toBe(false);
         done();
       });
     });
@@ -134,8 +116,8 @@ describe('text_to_speech_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(response.customization_id, customization_id);
-        assert(response.words.length);
+        expect(response.customization_id).toBe(customization_id);
+        expect(response.words.length).toBeTruthy();
         done();
       });
     });
@@ -166,9 +148,9 @@ describe('text_to_speech_integration', function() {
         if (err) {
           return done(err);
         }
-        assert(response);
-        assert(response.words);
-        assert.equal(response.words.length, 3); // NCAA, iPhone, IEEE
+        expect(response).toBeDefined();
+        expect(response.words).toBeDefined();
+        expect(response.words.length).toBe(3); // NCAA, iPhone, IEEE
         done();
       });
     });
@@ -181,7 +163,7 @@ describe('text_to_speech_integration', function() {
         if (err) {
           return done(err);
         }
-        assert.equal(response.translation, 'N C double A');
+        expect(response.translation).toBe('N C double A');
         done();
       });
     });
