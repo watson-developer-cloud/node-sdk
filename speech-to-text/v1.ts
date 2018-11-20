@@ -501,6 +501,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
    * @param {Number} [params.word_alternatives_threshold]
    * @param {Boolean} [params.profanity_filter]
    * @param {Boolean} [params.smart_formatting]
+   * @param {String} [params.language_customization_id]
    * @param {String} [params.customization_id]
    * @param {String} [params.acoustic_customization_id]
    * @param {Number} [params.customization_weight]
