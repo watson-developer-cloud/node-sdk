@@ -34,7 +34,6 @@ describe('speech_to_text', function() {
     it('should check no parameters provided', function() {
       speech_to_text.recognize({}, missingParameter);
       speech_to_text.recognize(null, missingParameter);
-      speech_to_text.recognize({ audio: 'foo' }, missingParameter);
       speech_to_text.recognize({ content_type: 'bar' }, missingParameter);
       speech_to_text.recognize({ continuous: 'false' }, missingParameter);
     });

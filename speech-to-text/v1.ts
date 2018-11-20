@@ -488,7 +488,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
    *
    * @param {Object} params The parameters
    * @param {Stream} params.audio - Audio to be recognized
-   * @param {String} params.content_type - Content-type
+   * @param {String} [params.content_type] - Content-type
    * @param {String} [params.base_model_version]
    * @param {Number} [params.max_alternatives]
    * @param {Boolean} [params.timestamps]
@@ -508,7 +508,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
    * @param {function} callback
    */
   recognize(params, callback) {
-    const missingParams = getMissingParams(params, ['audio', 'content_type']);
+    const missingParams = getMissingParams(params, ['audio']);
     if (missingParams) {
       callback(missingParams);
       return;
