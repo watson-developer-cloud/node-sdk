@@ -261,7 +261,7 @@ describe('recognize', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['audio', 'content_type'];
+      const requiredParams = ['audio'];
 
       speech_to_text.recognize({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -511,7 +511,7 @@ describe('createJob', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['audio', 'content_type'];
+      const requiredParams = ['audio'];
 
       speech_to_text.createJob({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);

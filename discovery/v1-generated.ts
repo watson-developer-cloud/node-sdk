@@ -4784,6 +4784,12 @@ namespace DiscoveryV1 {
     [propName: string]: any;
   }
 
+  /** An object specifiying the concepts enrichment and related parameters. */
+  export interface NluEnrichmentConcepts {
+    /** The maximum number of concepts enrichments to extact from each instance of the specified field. */
+    limit?: number;
+  }
+
   /** An object specifying the emotion detection enrichment and related parameters. */
   export interface NluEnrichmentEmotion {
     /** When `true`, emotion detection is performed on the entire field. */
@@ -4805,7 +4811,7 @@ namespace DiscoveryV1 {
     /** When `true`, the types of mentions for each idetifieid entity is recorded. The default is `false`. */
     mention_types?: boolean;
     /** When `true`, a list of sentence locations for each instance of each identified entity is recorded. The default is `false`. */
-    sentence_location?: boolean;
+    sentence_locations?: boolean;
     /** The enrichement model to use with entity extraction. May be a custom model provided by Watson Knowledge Studio, the public model for use with Knowledge Graph `en-news`, or the default public model `alchemy`. */
     model?: string;
   }
@@ -4826,6 +4832,8 @@ namespace DiscoveryV1 {
     semantic_roles?: NluEnrichmentSemanticRoles;
     /** An object specifying the relations enrichment and related parameters. */
     relations?: NluEnrichmentRelations;
+    /** An object specifiying the concepts enrichment and related parameters. */
+    concepts?: NluEnrichmentConcepts;
   }
 
   /** An object specifying the Keyword enrichment and related parameters. */
@@ -5207,13 +5215,13 @@ namespace DiscoveryV1 {
   /** An object defining a single tokenizaion rule. */
   export interface TokenDictRule {
     /** The string to tokenize. */
-    text?: string;
+    text: string;
     /** Array of tokens that the `text` field is split into when found. */
-    tokens?: string[];
+    tokens: string[];
     /** Array of tokens that represent the content of the `text` field in an alternate character set. */
     readings?: string[];
     /** The part of speech that the `text` string belongs to. For example `noun`. Custom parts of speech can be specified. */
-    part_of_speech?: string;
+    part_of_speech: string;
   }
 
   /** Object describing the current status of the tokenization dictionary. */

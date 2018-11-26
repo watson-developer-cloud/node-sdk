@@ -206,7 +206,7 @@ class SpeechToTextV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {NodeJS.ReadableStream|FileObject|Buffer} params.audio - The audio to transcribe.
-   * @param {string} params.content_type - The type of the input.
+   * @param {string} [params.content_type] - The type of the input.
    * @param {string} [params.model] - The identifier of the model that is to be used for the recognition request.
    * @param {string} [params.language_customization_id] - The customization ID (GUID) of a custom language model that is
    * to be used with the recognition request. The base model of the specified custom language model must match the model
@@ -292,7 +292,7 @@ class SpeechToTextV1 extends BaseService {
   public recognize(params: SpeechToTextV1.RecognizeParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.SpeechRecognitionResults>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
-    const requiredParams = ['audio', 'content_type'];
+    const requiredParams = ['audio'];
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -509,7 +509,7 @@ class SpeechToTextV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {NodeJS.ReadableStream|FileObject|Buffer} params.audio - The audio to transcribe.
-   * @param {string} params.content_type - The type of the input.
+   * @param {string} [params.content_type] - The type of the input.
    * @param {string} [params.model] - The identifier of the model that is to be used for the recognition request.
    * @param {string} [params.callback_url] - A URL to which callback notifications are to be sent. The URL must already
    * be successfully white-listed by using the **Register a callback** method. You can include the same callback URL
@@ -623,7 +623,7 @@ class SpeechToTextV1 extends BaseService {
   public createJob(params: SpeechToTextV1.CreateJobParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.RecognitionJob>): NodeJS.ReadableStream | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
-    const requiredParams = ['audio', 'content_type'];
+    const requiredParams = ['audio'];
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2748,7 +2748,7 @@ namespace SpeechToTextV1 {
     /** The audio to transcribe. */
     audio: NodeJS.ReadableStream|FileObject|Buffer;
     /** The type of the input. */
-    content_type: RecognizeConstants.ContentType | string;
+    content_type?: RecognizeConstants.ContentType | string;
     /** The identifier of the model that is to be used for the recognition request. */
     model?: RecognizeConstants.Model | string;
     /** The customization ID (GUID) of a custom language model that is to be used with the recognition request. The base model of the specified custom language model must match the model specified with the `model` parameter. You must make the request with service credentials created for the instance of the service that owns the custom model. By default, no custom language model is used. See [Custom models](https://console.bluemix.net/docs/services/speech-to-text/input.html#custom). **Note:** Use this parameter instead of the deprecated `customization_id` parameter. */
@@ -2842,7 +2842,7 @@ namespace SpeechToTextV1 {
     /** The audio to transcribe. */
     audio: NodeJS.ReadableStream|FileObject|Buffer;
     /** The type of the input. */
-    content_type: CreateJobConstants.ContentType | string;
+    content_type?: CreateJobConstants.ContentType | string;
     /** The identifier of the model that is to be used for the recognition request. */
     model?: CreateJobConstants.Model | string;
     /** A URL to which callback notifications are to be sent. The URL must already be successfully white-listed by using the **Register a callback** method. You can include the same callback URL with any number of job creation requests. Omit the parameter to poll the service for job completion and results. Use the `user_token` parameter to specify a unique user-specified string with each job to differentiate the callback notifications for the jobs. */
