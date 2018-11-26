@@ -1,3 +1,12 @@
+## [3.13.1](https://github.com/watson-developer-cloud/node-sdk/compare/v3.13.0...v3.13.1) (2018-11-26)
+
+
+### Bug Fixes
+
+* **discovery:** update mis-defined parameters to match the service ([d1fb9a9](https://github.com/watson-developer-cloud/node-sdk/commit/d1fb9a9))
+* **speech-to-text:** `content_type` is no longer a required parameter for `recognize()` or `createJob()` (it is now optional) ([d64c06a](https://github.com/watson-developer-cloud/node-sdk/commit/d64c06a))
+* **speech-to-text:** add support for `language_customization_id` parameter to the WebSockets method, deprecate `customization_id` ([bf2cd68](https://github.com/watson-developer-cloud/node-sdk/commit/bf2cd68))
+
 # [3.13.0](https://github.com/watson-developer-cloud/node-sdk/compare/v3.12.0...v3.13.0) (2018-10-30)
 
 
