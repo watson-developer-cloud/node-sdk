@@ -602,7 +602,7 @@ fs.createReadStream('./resources/speech.wav')
 
 ### Text to Speech
 
-Use the [Text to Speech][text_to_speech] service to synthesize text into a .wav file.
+Use the [Text to Speech][text_to_speech] service to synthesize text into an audio file.
 
 ```js
 var TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
@@ -632,7 +632,15 @@ textToSpeech
     fs.writeFileSync('audio.wav', audio);
     console.log('audio.wav written with a corrected wav header');
 });
+
+
+// or, using WebSockets
+textToSpeech.synthesizeUsingWebSocket(params);
+synthStream.pipe(fs.createWriteStream('./audio.ogg'));
+// see more information in examples/text_to_speech_websocket.js
 ```
+
+
 
 ### Tone Analyzer
 

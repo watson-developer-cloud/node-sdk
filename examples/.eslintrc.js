@@ -1,5 +1,5 @@
 module.exports = {
-  "parserOptions": { "ecmaVersion": 5 },
+  "parserOptions": { "ecmaVersion": 6 },
   "rules": {
     "no-console": "off",
     "node/no-missing-require": "off",
