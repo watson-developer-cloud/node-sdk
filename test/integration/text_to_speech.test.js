@@ -16,17 +16,39 @@ describe('text_to_speech_integration', function() {
     text_to_speech.voices(null, done);
   });
 
-  it('synthesize()', function(done) {
+  describe('synthesize', function() {
     const params = {
       text: 'test',
       accept: 'audio/wav',
     };
-    // wav.Reader parses the wav header and will throw if it isn't valid
-    const reader = new wav.Reader();
-    text_to_speech
-      .synthesize(params)
-      .pipe(reader)
-      .on('format', done.bind(null, null));
+
+    it('synthesize using http', function(done) {
+      // wav.Reader parses the wav header and will throw if it isn't valid
+      const reader = new wav.Reader();
+      text_to_speech
+        .synthesize(params)
+        .pipe(reader)
+        .on('format', done.bind(null, null));
+    });
+
+    it('synthesize using websocket', function(done) {
+      const synthStream = text_to_speech.synthesizeUsingWebSocket(params);
+      synthStream.resume();
+
+      synthStream.on('message', function(message, data) {
+        expect(data).not.toBeNull();
+      });
+
+      synthStream.on('error', function(err) {
+        // fail assertation
+        throw err;
+      });
+
+      synthStream.on('close', function(code, reason) {
+        expect(code).toBe(1000);
+        done();
+      });
+    });
   });
 
   it('pronunciation()', function(done) {
