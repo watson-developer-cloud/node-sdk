@@ -1,3 +1,10 @@
+# [3.14.0](https://github.com/watson-developer-cloud/node-sdk/compare/v3.13.1...v3.14.0) (2018-12-06)
+
+
+### Features
+
+* **text-to-speech:** add support for using `synthesize` over a websocket connection ([94ba896](https://github.com/watson-developer-cloud/node-sdk/commit/94ba896))
+
 ## [3.13.1](https://github.com/watson-developer-cloud/node-sdk/compare/v3.13.0...v3.13.1) (2018-11-26)
 
 
