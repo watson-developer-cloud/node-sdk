@@ -352,7 +352,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.name - The name of the configuration.
    * @param {string} [params.description] - The description of the configuration, if available.
-   * @param {Conversions} [params.conversions] - The document conversion settings for the configuration.
+   * @param {Conversions} [params.conversions] - Document conversion settings.
    * @param {Enrichment[]} [params.enrichments] - An array of document enrichment settings for the configuration.
    * @param {NormalizationOperation[]} [params.normalizations] - Defines operations that can be used to transform the
    * final output JSON into a normalized form. Operations are executed in the order that they appear in the array.
@@ -556,7 +556,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.configuration_id - The ID of the configuration.
    * @param {string} params.name - The name of the configuration.
    * @param {string} [params.description] - The description of the configuration, if available.
-   * @param {Conversions} [params.conversions] - The document conversion settings for the configuration.
+   * @param {Conversions} [params.conversions] - Document conversion settings.
    * @param {Enrichment[]} [params.enrichments] - An array of document enrichment settings for the configuration.
    * @param {NormalizationOperation[]} [params.normalizations] - Defines operations that can be used to transform the
    * final output JSON into a normalized form. Operations are executed in the order that they appear in the array.
@@ -2697,7 +2697,7 @@ class DiscoveryV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.type - The event type to be created.
-   * @param {EventData} params.data - Data object used to create a query event.
+   * @param {EventData} params.data - Query event data object.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -3302,7 +3302,7 @@ namespace DiscoveryV1 {
 
   /** Constants for the `createEnvironment` operation. */
   export namespace CreateEnvironmentConstants {
-     /** Size of the environment. In the Lite plan the default and only accepted value is `LT`, in all other plans the default is `S`. */
+    /** Size of the environment. In the Lite plan the default and only accepted value is `LT`, in all other plans the default is `S`. */
     export enum Size {
       LT = 'LT',
       XS = 'XS',
@@ -3362,7 +3362,7 @@ namespace DiscoveryV1 {
 
   /** Constants for the `updateEnvironment` operation. */
   export namespace UpdateEnvironmentConstants {
-     /** Size that the environment should be increased to. Environment size cannot be modified when using a Lite plan. Environment size can only increased and not decreased. */
+    /** Size that the environment should be increased to. Environment size cannot be modified when using a Lite plan. Environment size can only increased and not decreased. */
     export enum Size {
       S = 'S',
       MS = 'MS',
@@ -3383,7 +3383,7 @@ namespace DiscoveryV1 {
     name: string;
     /** The description of the configuration, if available. */
     description?: string;
-    /** The document conversion settings for the configuration. */
+    /** Document conversion settings. */
     conversions?: Conversions;
     /** An array of document enrichment settings for the configuration. */
     enrichments?: Enrichment[];
@@ -3431,7 +3431,7 @@ namespace DiscoveryV1 {
     name: string;
     /** The description of the configuration, if available. */
     description?: string;
-    /** The document conversion settings for the configuration. */
+    /** Document conversion settings. */
     conversions?: Conversions;
     /** An array of document enrichment settings for the configuration. */
     enrichments?: Enrichment[];
@@ -3465,7 +3465,7 @@ namespace DiscoveryV1 {
 
   /** Constants for the `testConfigurationInEnvironment` operation. */
   export namespace TestConfigurationInEnvironmentConstants {
-     /** Specify to only run the input document through the given step instead of running the input document through the entire ingestion workflow. Valid values are `convert`, `enrich`, and `normalize`. */
+    /** Specify to only run the input document through the given step instead of running the input document through the entire ingestion workflow. Valid values are `convert`, `enrich`, and `normalize`. */
     export enum Step {
       HTML_INPUT = 'html_input',
       HTML_OUTPUT = 'html_output',
@@ -3474,7 +3474,7 @@ namespace DiscoveryV1 {
       ENRICHMENTS_OUTPUT = 'enrichments_output',
       NORMALIZATIONS_OUTPUT = 'normalizations_output',
     }
-     /** The content type of file. */
+    /** The content type of file. */
     export enum FileContentType {
       APPLICATION_JSON = 'application/json',
       APPLICATION_MSWORD = 'application/msword',
@@ -3502,7 +3502,7 @@ namespace DiscoveryV1 {
 
   /** Constants for the `createCollection` operation. */
   export namespace CreateCollectionConstants {
-     /** The language of the documents stored in the collection, in the form of an ISO 639-1 language code. */
+    /** The language of the documents stored in the collection, in the form of an ISO 639-1 language code. */
     export enum Language {
       EN = 'en',
       ES = 'es',
@@ -3645,7 +3645,7 @@ namespace DiscoveryV1 {
 
   /** Constants for the `addDocument` operation. */
   export namespace AddDocumentConstants {
-     /** The content type of file. */
+    /** The content type of file. */
     export enum FileContentType {
       APPLICATION_JSON = 'application/json',
       APPLICATION_MSWORD = 'application/msword',
@@ -3699,7 +3699,7 @@ namespace DiscoveryV1 {
 
   /** Constants for the `updateDocument` operation. */
   export namespace UpdateDocumentConstants {
-     /** The content type of file. */
+    /** The content type of file. */
     export enum FileContentType {
       APPLICATION_JSON = 'application/json',
       APPLICATION_MSWORD = 'application/msword',
@@ -3930,7 +3930,7 @@ namespace DiscoveryV1 {
 
   /** Constants for the `queryRelations` operation. */
   export namespace QueryRelationsConstants {
-     /** The sorting method for the relationships, can be `score` or `frequency`. `frequency` is the number of unique times each entity is identified. The default is `score`. This parameter cannot be used in the same query as the **bias** parameter. */
+    /** The sorting method for the relationships, can be `score` or `frequency`. `frequency` is the number of unique times each entity is identified. The default is `score`. This parameter cannot be used in the same query as the **bias** parameter. */
     export enum Sort {
       SCORE = 'score',
       FREQUENCY = 'frequency',
@@ -4066,14 +4066,14 @@ namespace DiscoveryV1 {
   export interface CreateEventParams {
     /** The event type to be created. */
     type: CreateEventConstants.Type | string;
-    /** Data object used to create a query event. */
+    /** Query event data object. */
     data: EventData;
     headers?: Object;
   }
 
   /** Constants for the `createEvent` operation. */
   export namespace CreateEventConstants {
-     /** The event type to be created. */
+    /** The event type to be created. */
     export enum Type {
       CLICK = 'click',
     }
@@ -4092,7 +4092,7 @@ namespace DiscoveryV1 {
 
   /** Constants for the `getMetricsEventRate` operation. */
   export namespace GetMetricsEventRateConstants {
-     /** The type of result to consider when calculating the metric. */
+    /** The type of result to consider when calculating the metric. */
     export enum ResultType {
       DOCUMENT = 'document',
     }
@@ -4111,7 +4111,7 @@ namespace DiscoveryV1 {
 
   /** Constants for the `getMetricsQuery` operation. */
   export namespace GetMetricsQueryConstants {
-     /** The type of result to consider when calculating the metric. */
+    /** The type of result to consider when calculating the metric. */
     export enum ResultType {
       DOCUMENT = 'document',
     }
@@ -4130,7 +4130,7 @@ namespace DiscoveryV1 {
 
   /** Constants for the `getMetricsQueryEvent` operation. */
   export namespace GetMetricsQueryEventConstants {
-     /** The type of result to consider when calculating the metric. */
+    /** The type of result to consider when calculating the metric. */
     export enum ResultType {
       DOCUMENT = 'document',
     }
@@ -4149,7 +4149,7 @@ namespace DiscoveryV1 {
 
   /** Constants for the `getMetricsQueryNoResults` operation. */
   export namespace GetMetricsQueryNoResultsConstants {
-     /** The type of result to consider when calculating the metric. */
+    /** The type of result to consider when calculating the metric. */
     export enum ResultType {
       DOCUMENT = 'document',
     }
@@ -4190,7 +4190,7 @@ namespace DiscoveryV1 {
 
   /** Constants for the `createCredentials` operation. */
   export namespace CreateCredentialsConstants {
-     /** The source that this credentials object connects to. -  `box` indicates the credentials are used to connect an instance of Enterprise Box. -  `salesforce` indicates the credentials are used to connect to Salesforce. -  `sharepoint` indicates the credentials are used to connect to Microsoft SharePoint Online. */
+    /** The source that this credentials object connects to. -  `box` indicates the credentials are used to connect an instance of Enterprise Box. -  `salesforce` indicates the credentials are used to connect to Salesforce. -  `sharepoint` indicates the credentials are used to connect to Microsoft SharePoint Online. */
     export enum SourceType {
       BOX = 'box',
       SALESFORCE = 'salesforce',
@@ -4238,7 +4238,7 @@ namespace DiscoveryV1 {
 
   /** Constants for the `updateCredentials` operation. */
   export namespace UpdateCredentialsConstants {
-     /** The source that this credentials object connects to. -  `box` indicates the credentials are used to connect an instance of Enterprise Box. -  `salesforce` indicates the credentials are used to connect to Salesforce. -  `sharepoint` indicates the credentials are used to connect to Microsoft SharePoint Online. */
+    /** The source that this credentials object connects to. -  `box` indicates the credentials are used to connect an instance of Enterprise Box. -  `salesforce` indicates the credentials are used to connect to Salesforce. -  `sharepoint` indicates the credentials are used to connect to Microsoft SharePoint Online. */
     export enum SourceType {
       BOX = 'box',
       SALESFORCE = 'salesforce',
@@ -4280,7 +4280,7 @@ namespace DiscoveryV1 {
     language?: string;
     /** The object providing information about the documents in the collection. Present only when retrieving details of a collection. */
     document_counts?: DocumentCounts;
-    /** The object providing information about the disk usage of the collection. Present only when retrieving details of a collection. */
+    /** Summary of the disk usage statistics for this collection. */
     disk_usage?: CollectionDiskUsage;
     /** Provides information about the status of relevance training for collection. */
     training_status?: TrainingStatus;
@@ -4314,7 +4314,7 @@ namespace DiscoveryV1 {
     updated?: string;
     /** The description of the configuration, if available. */
     description?: string;
-    /** The document conversion settings for the configuration. */
+    /** Document conversion settings. */
     conversions?: Conversions;
     /** An array of document enrichment settings for the configuration. */
     enrichments?: Enrichment[];
@@ -4512,7 +4512,7 @@ namespace DiscoveryV1 {
     enrichment_name: string;
     /** If true, then most errors generated during the enrichment process will be treated as warnings and will not cause the document to fail processing. */
     ignore_downstream_errors?: boolean;
-    /** A list of options specific to the enrichment. */
+    /** Options which are specific to a particular enrichment. */
     options?: EnrichmentOptions;
   }
 
@@ -4548,7 +4548,7 @@ namespace DiscoveryV1 {
     requested_size?: string;
     /** Details about the resource usage and capacity of the environment. */
     index_capacity?: IndexCapacity;
-    /** Information about Continuous Relevancy Training for this environment. */
+    /** Information about the Continuous Relevancy Training for this environment. */
     search_status?: SearchStatus;
   }
 
@@ -4624,11 +4624,11 @@ namespace DiscoveryV1 {
   export interface IndexCapacity {
     /** Summary of the document usage statistics for the environment. */
     documents?: EnvironmentDocuments;
-    /** Summary of the disk usage of the environment. */
+    /** Summary of the disk usage statistics for the environment. */
     disk_usage?: DiskUsage;
     /** Summary of the collection usage in the environment. */
     collections?: CollectionUsage;
-    /** **Deprecated**: Summary of the memory usage of the environment. */
+    /** **Deprecated**: Summary of the memory usage statistics for this environment. */
     memory_usage?: MemoryUsage;
   }
 
@@ -4826,7 +4826,7 @@ namespace DiscoveryV1 {
     sentiment?: NluEnrichmentSentiment;
     /** An object specifying the emotion detection enrichment and related parameters. */
     emotion?: NluEnrichmentEmotion;
-    /** An object specifying the categories enrichment and related parameters. */
+    /** An object that indicates the Categories enrichment will be applied to the specified field. */
     categories?: NluEnrichmentCategories;
     /** An object specifiying the semantic roles enrichment and related parameters. */
     semantic_roles?: NluEnrichmentSemanticRoles;
@@ -5001,7 +5001,7 @@ namespace DiscoveryV1 {
     metadata?: Object;
     /** The collection ID of the collection containing the document for this result. */
     collection_id?: string;
-    /** Metadata of the query result. */
+    /** Metadata of a query result. */
     result_metadata?: QueryResultResultMetadata;
     /** The internal status code returned by the ingestion subsystem indicating the overall result of ingesting the source document. */
     code?: number;
@@ -5084,6 +5084,8 @@ namespace DiscoveryV1 {
     duplicates_removed?: number;
     /** The session token for this query. The session token can be used to add events associated with this query to the query and event log. **Important:** Session tokens are case sensitive. */
     session_token?: string;
+    /** An object contain retrieval type information. */
+    retrieval_details?: RetrievalDetails;
   }
 
   /** QueryResult. */
@@ -5096,7 +5098,7 @@ namespace DiscoveryV1 {
     metadata?: Object;
     /** The collection ID of the collection containing the document for this result. */
     collection_id?: string;
-    /** Metadata of the query result. */
+    /** Metadata of a query result. */
     result_metadata?: QueryResultResultMetadata;
     /** QueryResult accepts additional properties. */
     [propName: string]: any;
@@ -5105,9 +5107,15 @@ namespace DiscoveryV1 {
   /** Metadata of a query result. */
   export interface QueryResultResultMetadata {
     /** An unbounded measure of the relevance of a particular result, dependent on the query and matching document. A higher score indicates a greater match to the query parameters. */
-    score?: number;
-    /** The confidence score for the given result. Calculated based on how relevant the result is estimated to be, compared to a trained relevancy model. confidence can range from `0.0` to `1.0`. The higher the number, the more relevant the document. */
-    confidence?: number;
+    score: number;
+    /** The confidence score for the given result. Calculated based on how relevant the result is estimated to be. confidence can range from `0.0` to `1.0`. The higher the number, the more relevant the document. The `confidence` value for a result was calculated using the model specified in the `document_retrieval_strategy` field of the result set. */
+    confidence: number;
+  }
+
+  /** An object contain retrieval type information. */
+  export interface RetrievalDetails {
+    /** Indentifies the document retrieval strategy used for this query. `relevancy_training` indicates that the results were returned using a relevancy trained model. `continuous_relevancy_training` indicates that the results were returned using the continuous relevancy training model created by result feedback analysis. `untrained` means the results were returned using the standard untrained model. **Note**: In the event of trained collections being queried, but the trained model is not used to return results, the **document_retrieval_strategy** will be listed as `untrained`. */
+    document_retrieval_strategy?: string;
   }
 
   /** Information about the Continuous Relevancy Training for this environment. */
