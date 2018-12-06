@@ -346,6 +346,39 @@ assistant.message(
 );
 ```
 
+### Compare Comply
+
+Use the Compare Comply service to compare and classify documents.
+
+```javascript
+const fs = require('fs');
+const CompareComplyV1 = require('watson-developer-cloud/compare-comply/v1');
+
+const compareComply = new CompareComplyV1({
+  iam_apikey: '<iam_apikey>',
+  url: 'https://gateway.watsonplatform.net/compare-comply/api',
+  version: '2018-12-06'
+});
+
+compareComply.compareDocuments(
+  {
+      file_1: fs.createReadStream('<path-to-file-1>'),
+      file_1_filename: '<filename-1>',
+      file_1_label: 'file-1',
+      file_2: fs.createReadStream('<path-to-file-2>'),
+      file_2_filename: '<filename-2>',
+      file_2_label: 'file-2',
+  },
+  function(err, response) {
+    if (err) {
+      console.error(err);
+    } else {
+      console.log(JSON.stringify(response, null, 2));
+    }
+  }
+);
+
+```
 
 ### Conversation
 
@@ -381,6 +414,7 @@ discovery.query(
 );
 
 ```
+
 ### Language Translator v3
 
 Translate text from one language to another or idenfity a language using the [Language Translator][language_translator] service.
