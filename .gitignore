@@ -7,8 +7,9 @@ test/resources/auth.js
 test/resources/-auth.js # to make sure tests run without the auth file
 test/resources/tts-output.ogg
 test/resources/visual_recognition.prepop/images
-test/resources/cc_bucket_input_auth_file.json
-test/resources/cc_bucket_output_auth_file.json
+test/resources/cc_input_auth_file.json
+test/resources/cc_output_auth_file.json
+test/resources/secrets.tar
 .idea
 doc/
 .vscode/

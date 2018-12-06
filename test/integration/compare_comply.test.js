@@ -225,12 +225,12 @@ describe('batches', () => {
     const params = {
       _function: 'html_conversion',
       input_credentials_file: fs.createReadStream(
-        __dirname + '/../resources/cc_bucket_input_auth_file.json'
+        __dirname + '/../resources/cc_input_auth_file.json'
       ),
       input_bucket_location: 'us-south',
       input_bucket_name: 'compare-comply-integration-test-bucket-input',
       output_credentials_file: fs.createReadStream(
-        __dirname + '/../resources/cc_bucket_output_auth_file.json'
+        __dirname + '/../resources/cc_output_auth_file.json'
       ),
       output_bucket_location: 'us-south',
       output_bucket_name: 'compare-comply-integration-test-bucket-output',
