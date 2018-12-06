@@ -45,7 +45,6 @@ describe('text_to_speech_integration', function() {
       });
 
       synthStream.on('close', function(code, reason) {
-        expect(code).toBe(1000);
         done();
       });
     });
