@@ -564,7 +564,7 @@ fs.createReadStream(<span class="hljs-string">'./resources/speech.wav'</span>)
   .pipe(fs.createWriteStream(<span class="hljs-string">'./transcription.txt'</span>));
 </code></pre>
 				<h3 id="text-to-speech">Text to Speech</h3>
-				<p>Use the <a href="https://www.ibm.com/watson/services/text-to-speech/">Text to Speech</a> service to synthesize text into a .wav file.</p>
+				<p>Use the <a href="https://www.ibm.com/watson/services/text-to-speech/">Text to Speech</a> service to synthesize text into an audio file.</p>
 				<pre><code class="lang-js"><span class="hljs-keyword">var</span> TextToSpeechV1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'watson-developer-cloud/text-to-speech/v1'</span>);
 <span class="hljs-keyword">var</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
 
@@ -592,6 +592,12 @@ textToSpeech
     fs.writeFileSync(<span class="hljs-string">'audio.wav'</span>, audio);
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'audio.wav written with a corrected wav header'</span>);
 });
+
+
+<span class="hljs-comment">// or, using WebSockets</span>
+textToSpeech.synthesizeUsingWebSocket(params);
+synthStream.pipe(fs.createWriteStream(<span class="hljs-string">'./audio.ogg'</span>));
+<span class="hljs-comment">// see more information in examples/text_to_speech_websocket.js</span>
 </code></pre>
 				<h3 id="tone-analyzer">Tone Analyzer</h3>
 				<p>Use the <a href="https://www.ibm.com/watson/services/tone-analyzer/">Tone Analyzer</a> service to analyze the
