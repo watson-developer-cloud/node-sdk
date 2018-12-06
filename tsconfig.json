@@ -71,6 +71,7 @@
     "./authorization/*.ts",
     "./iam-token-manager/*.ts",
     "./dialog/*.ts",
+    "./compare-comply/*.ts",
     "index.ts"
   ]
 }
