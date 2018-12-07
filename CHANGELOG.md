@@ -1,3 +1,12 @@
+# [3.15.0](https://github.com/watson-developer-cloud/node-sdk/compare/v3.14.0...v3.15.0) (2018-12-07)
+
+
+### Features
+
+* add support for Compare and Comply service ([fa22ae5](https://github.com/watson-developer-cloud/node-sdk/commit/fa22ae5))
+* **discovery:** adds new model, RetrievalDetails ([1821719](https://github.com/watson-developer-cloud/node-sdk/commit/1821719))
+* **natural-language-understanding:** new properties added to models to match the service ([3bf1e5e](https://github.com/watson-developer-cloud/node-sdk/commit/3bf1e5e))
+
 # [3.14.0](https://github.com/watson-developer-cloud/node-sdk/compare/v3.13.1...v3.14.0) (2018-12-06)
 
 
