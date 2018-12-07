@@ -24,13 +24,13 @@ export import AssistantV1 = require('./assistant/v1');
 
 export import AssistantV2 = require('./assistant/v2');
 
+export import CompareComplyV1 = require('./compare-comply/v1');
+
 export import ConversationV1 = require('./conversation/v1');
 
 export import DiscoveryV1 = require('./discovery/v1');
 
 export import DialogV1 = require('./dialog/v1');
-
-export import LanguageTranslatorV2 = require('./language-translator/v2');
 
 export import LanguageTranslatorV3 = require('./language-translator/v3');
 
