@@ -83,7 +83,7 @@
     "async": "~2.6.1",
     "buffer-from": "~1.1.0",
     "csv-stringify": "~1.0.2",
-    "extend": "~3.0.1",
+    "extend": "~3.0.2",
     "file-type": "^7.7.1",
     "isstream": "~0.1.2",
     "mime-types": "~2.1.18",
