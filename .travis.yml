@@ -6,7 +6,7 @@ node_js:
 before_install:
 - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && openssl aes-256-cbc -K $encrypted_ac3aacad7ba8_key -iv $encrypted_ac3aacad7ba8_iv
   -in secrets.tar.enc -out test/resources/secrets.tar -d || true'
-- cd test/resources/ && tar xvf secrets.tar && cd ../..
+- '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && cd test/resources/ && tar xvf secrets.tar && cd ../.. || true'
 - npm install -g typescript
 script:
 - tsc
