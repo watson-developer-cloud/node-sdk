@@ -1,3 +1,28 @@
+# [3.15.0](https://github.com/watson-developer-cloud/node-sdk/compare/v3.14.0...v3.15.0) (2018-12-07)
+
+
+### Features
+
+* add support for Compare and Comply service ([fa22ae5](https://github.com/watson-developer-cloud/node-sdk/commit/fa22ae5))
+* **discovery:** adds new model, RetrievalDetails ([1821719](https://github.com/watson-developer-cloud/node-sdk/commit/1821719))
+* **natural-language-understanding:** new properties added to models to match the service ([3bf1e5e](https://github.com/watson-developer-cloud/node-sdk/commit/3bf1e5e))
+
+# [3.14.0](https://github.com/watson-developer-cloud/node-sdk/compare/v3.13.1...v3.14.0) (2018-12-06)
+
+
+### Features
+
+* **text-to-speech:** add support for using `synthesize` over a websocket connection ([94ba896](https://github.com/watson-developer-cloud/node-sdk/commit/94ba896))
+
+## [3.13.1](https://github.com/watson-developer-cloud/node-sdk/compare/v3.13.0...v3.13.1) (2018-11-26)
+
+
+### Bug Fixes
+
+* **discovery:** update mis-defined parameters to match the service ([d1fb9a9](https://github.com/watson-developer-cloud/node-sdk/commit/d1fb9a9))
+* **speech-to-text:** `content_type` is no longer a required parameter for `recognize()` or `createJob()` (it is now optional) ([d64c06a](https://github.com/watson-developer-cloud/node-sdk/commit/d64c06a))
+* **speech-to-text:** add support for `language_customization_id` parameter to the WebSockets method, deprecate `customization_id` ([bf2cd68](https://github.com/watson-developer-cloud/node-sdk/commit/bf2cd68))
+
 # [3.13.0](https://github.com/watson-developer-cloud/node-sdk/compare/v3.12.0...v3.13.0) (2018-10-30)
 
 

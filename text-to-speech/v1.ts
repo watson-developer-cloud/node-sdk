@@ -1,4 +1,8 @@
+import extend = require('extend');
+import SynthesizeStream = require('../lib/synthesize-stream');
 import GeneratedTextToSpeechV1 = require('./v1-generated');
+// tslint:disable-next-line:no-var-requires
+const pkg = require('../package.json');
 
 class TextToSpeechV1 extends GeneratedTextToSpeechV1 {
   constructor(options) {
@@ -60,6 +64,43 @@ class TextToSpeechV1 extends GeneratedTextToSpeechV1 {
 
     return wavFileData;
   };
+
+  /**
+   * Use the synthesize function with a readable stream over websockets
+   *
+   * @param {Object} params The parameters
+   * @return {SynthesizeStream}
+   */
+  synthesizeUsingWebSocket(params) {
+    params = params || {};
+    params.url = this._options.url;
+
+    // if using iam, headers will not be a property on _options
+    // and the line `authorization: this._options.headers.Authorization`
+    // will crash the code
+    if (!this._options.headers) {
+      this._options.headers = {};
+    }
+
+    // if using iam, pass the token manager to the SynthesizeStream object
+    if (this.tokenManager) {
+      params.token_manager = this.tokenManager;
+    }
+
+    params.headers = extend(
+      {
+        'user-agent': pkg.name + '-nodejs-' + pkg.version,
+        authorization: this._options.headers.Authorization
+      },
+      params.headers
+    );
+
+    // allow user to disable ssl verification when using websockets
+    params.rejectUnauthorized = this._options.rejectUnauthorized;
+
+    // SynthesizeStream.main(params);
+    return new SynthesizeStream(params);
+  }
 }
 
 export = TextToSpeechV1;

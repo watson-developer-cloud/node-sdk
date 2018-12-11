@@ -69,6 +69,7 @@
     "./speech-to-text/*.ts",
     "./authorization/*.ts",
     "./iam-token-manager/*.ts",
+    "./compare-comply/*.ts",
     "index.ts"
   ]
 }
