@@ -77,9 +77,5 @@ describe('speech_to_text', function() {
       expect(stream.authenticated).toBe(false);
       expect(stream.options.token_manager).toBeDefined();
     });
-
-    it('createRecognizeStream should return a stream - compatibility', function() {
-      expect(isStream(speech_to_text.createRecognizeStream())).toBe(true);
-    });
   });
 });

@@ -553,7 +553,7 @@ describe('speech_to_text_integration', function() {
         events: 'recognitions.completed',
         results_ttl: 1,
       };
-      speech_to_text.createRecognitionJob(params, function(err, res) {
+      speech_to_text.createJob(params, function(err, res) {
         expect(err).toBeNull();
         jobId = res.id;
         done();

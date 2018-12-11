@@ -134,8 +134,8 @@ describe('text_to_speech_integration', function() {
         if (err) {
           return done(err);
         }
-        expect(response.customization_id).toBe(customization_id);
-        expect(response.words.length).toBeTruthy();
+        expect(res.customization_id).toBe(customization_id);
+        expect(res.words.length).toBeTruthy();
         done();
       });
     });
