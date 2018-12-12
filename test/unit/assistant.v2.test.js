@@ -23,6 +23,7 @@ const service = {
 const conversation = new AssistantV2(service);
 const createRequestMock = jest.spyOn(conversation, 'createRequest');
 const missingParamsMock = jest.spyOn(helper, 'getMissingParams');
+const noop = () => {};
 
 afterEach(() => {
   createRequestMock.mockReset();
@@ -42,7 +43,7 @@ describe('createSession', () => {
       };
 
       // invoke method
-      conversation.createSession(params);
+      conversation.createSession(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -70,7 +71,7 @@ describe('createSession', () => {
         },
       };
 
-      conversation.createSession(params);
+      conversation.createSession(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
@@ -112,7 +113,7 @@ describe('deleteSession', () => {
       };
 
       // invoke method
-      conversation.deleteSession(params);
+      conversation.deleteSession(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -143,7 +144,7 @@ describe('deleteSession', () => {
         },
       };
 
-      conversation.deleteSession(params);
+      conversation.deleteSession(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
@@ -189,7 +190,7 @@ describe('message', () => {
       };
 
       // invoke method
-      conversation.message(params);
+      conversation.message(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -227,7 +228,7 @@ describe('message', () => {
         },
       };
 
-      conversation.message(params);
+      conversation.message(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
