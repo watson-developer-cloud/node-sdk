@@ -12,6 +12,7 @@ const checkMediaHeaders = utils.checkMediaHeaders;
 const checkForEmptyObject = utils.checkForEmptyObject;
 const checkRequiredParamsHandling = utils.checkRequiredParamsHandling;
 const getOptions = utils.getOptions;
+const expectToBePromise = utils.expectToBePromise;
 
 const service = {
   username: 'batman',
@@ -58,6 +59,21 @@ describe('createSession', () => {
       expect(options.path['assistant_id']).toEqual(assistant_id);
     });
 
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const assistant_id = 'fake_assistant_id';
+      const params = {
+        assistant_id,
+      };
+
+      // invoke method
+      const createSessionPromise = conversation.createSession(params);
+      expectToBePromise(createSessionPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
+    });
+
     test('should prioritize user-given headers', () => {
       // parameters
       const assistant_id = 'fake_assistant_id';
@@ -92,6 +108,19 @@ describe('createSession', () => {
       const requiredParams = ['assistant_id'];
 
       conversation.createSession({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['assistant_id'];
+
+      const createSessionPromise = conversation.createSession();
+      expectToBePromise(createSessionPromise);
+
+      createSessionPromise.catch(err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
