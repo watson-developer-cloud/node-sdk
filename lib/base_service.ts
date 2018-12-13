@@ -89,6 +89,30 @@ function usesBasicForIam(obj: any): boolean {
   return obj.username === 'apikey' && !obj.password.startsWith('icp-');
 }
 
+// returns true if the string has a { or " as the first character
+// these are common user-issues that we should handle before they get a network error
+function badFirstChar(value: string): boolean {
+  return value.startsWith('{') || value.startsWith('"');
+}
+
+// checks credentials for common user mistakes of copying { or " characters from the documentation
+function checkCredentials(obj: any) {
+  let errorMessage = '';
+  const credsToCheck = ['url', 'username', 'password', 'iam_apikey'];
+  credsToCheck.forEach(cred => {
+    if (obj[cred] && badFirstChar(obj[cred])) {
+      errorMessage += `${cred} starts with a bad character. `;
+    }
+  });
+
+  if (errorMessage.length) {
+    errorMessage += 'Revise these credentials - they should not start with a { or "';
+    return errorMessage;
+  } else {
+    return null;
+  }
+}
+
 export class BaseService {
   static URL: string;
   name: string;
@@ -308,6 +332,11 @@ export class BaseService {
           _options.qs = extend({ api_key: _options.api_key }, _options.qs);
         }
       }
+    }
+    // check credentials for common user errors
+    const credentialProblems = checkCredentials(_options);
+    if (credentialProblems) {
+      throw new Error(credentialProblems);
     }
     return _options;
   }
