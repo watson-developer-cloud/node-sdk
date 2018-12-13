@@ -78,20 +78,20 @@ class AssistantV2 extends BaseService {
    */
   public createSession(params: AssistantV2.CreateSessionParams, callback?: AssistantV2.Callback<AssistantV2.SessionResponse>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : undefined;
-    const requiredParams = ['assistant_id'];
+    const _callback = callback;
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-
-    if (_callback === undefined) {
+    if (!_callback) {
       return new Promise((resolve, reject) => {
         this.createSession(params, (err, bod, res) => {
           err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
         });
       });
+    }
+
+    const requiredParams = ['assistant_id'];
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
     }
 
     const path = {
@@ -133,13 +133,7 @@ class AssistantV2 extends BaseService {
    */
   public deleteSession(params: AssistantV2.DeleteSessionParams, callback?: AssistantV2.Callback<AssistantV2.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : undefined;
-    const requiredParams = ['assistant_id', 'session_id'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+    const _callback = callback;
 
     if (_callback === undefined) {
       return new Promise((resolve, reject) => {
@@ -147,6 +141,12 @@ class AssistantV2 extends BaseService {
           err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
         });
       });
+    }
+
+    const requiredParams = ['assistant_id', 'session_id'];
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
     }
 
     const path = {
@@ -196,13 +196,8 @@ class AssistantV2 extends BaseService {
    */
   public message(params: AssistantV2.MessageParams, callback?: AssistantV2.Callback<AssistantV2.MessageResponse>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : undefined;
+    const _callback = callback;
     const requiredParams = ['assistant_id', 'session_id'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
 
     if (_callback === undefined) {
       return new Promise((resolve, reject) => {
@@ -210,6 +205,11 @@ class AssistantV2 extends BaseService {
           err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
         });
       });
+    }
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
     }
 
     const body = {
