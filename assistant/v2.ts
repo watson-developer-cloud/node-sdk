@@ -79,6 +79,7 @@ class AssistantV2 extends BaseService {
   public createSession(params: AssistantV2.CreateSessionParams, callback?: AssistantV2.Callback<AssistantV2.SessionResponse>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
+    const requiredParams = ['assistant_id'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
@@ -88,7 +89,6 @@ class AssistantV2 extends BaseService {
       });
     }
 
-    const requiredParams = ['assistant_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
@@ -134,8 +134,9 @@ class AssistantV2 extends BaseService {
   public deleteSession(params: AssistantV2.DeleteSessionParams, callback?: AssistantV2.Callback<AssistantV2.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
+    const requiredParams = ['assistant_id', 'session_id'];
 
-    if (_callback === undefined) {
+    if (!_callback) {
       return new Promise((resolve, reject) => {
         this.deleteSession(params, (err, bod, res) => {
           err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
@@ -143,7 +144,6 @@ class AssistantV2 extends BaseService {
       });
     }
 
-    const requiredParams = ['assistant_id', 'session_id'];
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
@@ -188,7 +188,7 @@ class AssistantV2 extends BaseService {
    *
    * **Note:** Currently, the v2 API does not support creating assistants.
    * @param {string} params.session_id - Unique identifier of the session.
-   * @param {MessageInput} [params.input] - An input object that includes the input text.
+   * @param {MessageInput} [params.input] - The user input.
    * @param {MessageContext} [params.context] - State information for the conversation.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -199,7 +199,7 @@ class AssistantV2 extends BaseService {
     const _callback = callback;
     const requiredParams = ['assistant_id', 'session_id'];
 
-    if (_callback === undefined) {
+    if (!_callback) {
       return new Promise((resolve, reject) => {
         this.message(params, (err, bod, res) => {
           err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
@@ -299,7 +299,7 @@ namespace AssistantV2 {
     assistant_id: string;
     /** Unique identifier of the session. */
     session_id: string;
-    /** An input object that includes the input text. */
+    /** The user input. */
     input?: MessageInput;
     /** State information for the conversation. */
     context?: MessageContext;
@@ -419,7 +419,7 @@ namespace AssistantV2 {
 
   /** Contains information that can be shared by all skills within the Assistant. */
   export interface MessageContextGlobal {
-    /** Properties interpreted by the Assistant that are shared across all skills within the Assistant. */
+    /** Properties that are shared by all skills used by the assistant. */
     system?: MessageContextGlobalSystem;
   }
 
@@ -427,10 +427,16 @@ namespace AssistantV2 {
   export interface MessageContextGlobalSystem {
     /** The user time zone. The assistant uses the time zone to correctly resolve relative time references. */
     timezone?: string;
-    /** A string value that identifies the user who is interacting with the assistant. The client must provide a unique identifier for each individual end user who accesses the application. This user ID may be used for billing and other purposes. */
+    /** A string value that identifies the user who is interacting with the assistant. The client must provide a unique identifier for each individual end user who accesses the application. For Plus and Premium plans, this user ID is used to identify unique users for billing purposes. This string cannot contain carriage return, newline, or tab characters. */
     user_id?: string;
     /** A counter that is automatically incremented with each turn of the conversation. A value of 1 indicates that this is the the first turn of a new conversation, which can affect the behavior of some skills. */
     turn_count?: number;
+  }
+
+  /** Contains information specific to a particular skill within the Assistant. */
+  export interface MessageContextSkill {
+    /** Arbitrary variables that can be read and written to by a particular skill within the Assistant. */
+    user_defined?: string;
   }
 
   /** Contains information specific to particular skills within the Assistant. */
@@ -445,7 +451,7 @@ namespace AssistantV2 {
     message_type?: string;
     /** The text of the user input. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 2048 characters. */
     text?: string;
-    /** Properties that control how the assistant responds. */
+    /** Optional properties that control how the assistant responds. */
     options?: MessageInputOptions;
     /** Intents to use when evaluating the user input. Include intents from the previous response to continue using those intents rather than trying to recognize intents in the new input. */
     intents?: RuntimeIntent[];
@@ -497,7 +503,7 @@ namespace AssistantV2 {
   export interface MessageResponse {
     /** Assistant output to be rendered or processed by the client. */
     output: MessageOutput;
-    /** The current session context. Included in the response if the `return_context` property of the message input was set to `true`. */
+    /** State information for the conversation. */
     context?: MessageContext;
   }
 

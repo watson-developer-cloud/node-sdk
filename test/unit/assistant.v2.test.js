@@ -176,6 +176,21 @@ describe('deleteSession', () => {
       conversation.deleteSession(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const assistant_id = 'fake_assistant_id';
+      const params = {
+        assistant_id,
+      };
+
+      // invoke method
+      const deleteSessionPromise = conversation.createSession(params);
+      expectToBePromise(deleteSessionPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
+    });
   });
   describe('negative tests', () => {
     beforeAll(() => {
@@ -194,6 +209,19 @@ describe('deleteSession', () => {
       const requiredParams = ['assistant_id', 'session_id'];
 
       conversation.deleteSession({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['assistant_id'];
+
+      const deleteSessionPromise = conversation.createSession();
+      expectToBePromise(deleteSessionPromise);
+
+      deleteSessionPromise.catch(err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
@@ -260,6 +288,21 @@ describe('message', () => {
       conversation.message(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const assistant_id = 'fake_assistant_id';
+      const params = {
+        assistant_id,
+      };
+
+      // invoke method
+      const messagePromise = conversation.createSession(params);
+      expectToBePromise(messagePromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
+    });
   });
   describe('negative tests', () => {
     beforeAll(() => {
@@ -278,6 +321,19 @@ describe('message', () => {
       const requiredParams = ['assistant_id', 'session_id'];
 
       conversation.message({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['assistant_id'];
+
+      const messagePromise = conversation.createSession();
+      expectToBePromise(messagePromise);
+
+      messagePromise.catch(err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
