@@ -11,9 +11,9 @@ const TWENTY_SECONDS = 20000;
 describe('personality_insights_v3_adapter_integration', function() {
   jest.setTimeout(TWENTY_SECONDS);
   const mobydick = fs.readFileSync(path.join(__dirname, '../resources/mobydick.txt'), 'utf8');
-  auth.personality_insights.v3.version = 'v3';
-  auth.personality_insights.v3.version_date = '2016-10-19';
-  const personality_insights = watson.personality_insights(auth.personality_insights.v3);
+  auth.personality_insights.version = 'v3';
+  auth.personality_insights.version_date = '2016-10-19';
+  const personality_insights = watson.personality_insights(auth.personality_insights);
 
   it('profile()', function(done) {
     const params = {
