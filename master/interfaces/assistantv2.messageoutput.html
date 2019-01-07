@@ -94,6 +94,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.messageoutput.html#entities" class="tsd-kind-icon">entities</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.messageoutput.html#generic" class="tsd-kind-icon">generic</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.messageoutput.html#intents" class="tsd-kind-icon">intents</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.messageoutput.html#user_defined" class="tsd-kind-icon">user_<wbr>defined</a></li>
 							</ul>
 						</section>
 					</div>
@@ -107,7 +108,7 @@
 					<div class="tsd-signature tsd-kind-icon">actions<span class="tsd-signature-symbol">:</span> <a href="assistantv2.dialognodeaction.html" class="tsd-signature-type">DialogNodeAction</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ffd5/assistant/v2.ts#L452">assistant/v2.ts:452</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/7f315ef/assistant/v2.ts#L452">assistant/v2.ts:452</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -122,7 +123,7 @@
 					<div class="tsd-signature tsd-kind-icon">debug<span class="tsd-signature-symbol">:</span> <a href="assistantv2.messageoutputdebug.html" class="tsd-signature-type">MessageOutputDebug</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ffd5/assistant/v2.ts#L454">assistant/v2.ts:454</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/7f315ef/assistant/v2.ts#L454">assistant/v2.ts:454</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -137,7 +138,7 @@
 					<div class="tsd-signature tsd-kind-icon">entities<span class="tsd-signature-symbol">:</span> <a href="assistantv2.runtimeentity.html" class="tsd-signature-type">RuntimeEntity</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ffd5/assistant/v2.ts#L450">assistant/v2.ts:450</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/7f315ef/assistant/v2.ts#L450">assistant/v2.ts:450</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -152,7 +153,7 @@
 					<div class="tsd-signature tsd-kind-icon">generic<span class="tsd-signature-symbol">:</span> <a href="assistantv2.dialogruntimeresponsegeneric.html" class="tsd-signature-type">DialogRuntimeResponseGeneric</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ffd5/assistant/v2.ts#L446">assistant/v2.ts:446</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/7f315ef/assistant/v2.ts#L446">assistant/v2.ts:446</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -167,12 +168,27 @@
 					<div class="tsd-signature tsd-kind-icon">intents<span class="tsd-signature-symbol">:</span> <a href="assistantv2.runtimeintent.html" class="tsd-signature-type">RuntimeIntent</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ffd5/assistant/v2.ts#L448">assistant/v2.ts:448</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/7f315ef/assistant/v2.ts#L448">assistant/v2.ts:448</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>An array of intents recognized in the user input, sorted in descending order of confidence.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="user_defined" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> user_<wbr>defined</h3>
+					<div class="tsd-signature tsd-kind-icon">user_<wbr>defined<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/7f315ef/assistant/v2.ts#L456">assistant/v2.ts:456</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An object containing any custom properties included in the response. This object includes any arbitrary properties defined in the dialog JSON editor as part of the dialog node output.</p>
 						</div>
 					</div>
 				</section>
@@ -213,6 +229,9 @@
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="assistantv2.messageoutput.html#intents" class="tsd-kind-icon">intents</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv2.messageoutput.html#user_defined" class="tsd-kind-icon">user_<wbr>defined</a>
 									</li>
 								</ul>
 							</li>
