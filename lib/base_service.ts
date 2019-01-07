@@ -92,7 +92,7 @@ function usesBasicForIam(obj: any): boolean {
 // returns true if the string has a curly bracket or quote as the first or last character
 // these are common user-issues that we should handle before they get a network error
 function badCharAtAnEnd(value: string): boolean {
-  return value.startsWith('{') || value.startsWith('"') || value.endsWith('{') || value.endsWith('"');
+  return value.startsWith('{') || value.startsWith('"') || value.endsWith('}') || value.endsWith('"');
 }
 
 // checks credentials for common user mistakes of copying {, }, or " characters from the documentation

@@ -340,7 +340,9 @@ describe('BaseService', function() {
     function assertConstructorThrows(params) {
       expect(() => {
         new TestService(params);
-      }).toThrowError('Revise these credentials - they should not start with a { or "');
+      }).toThrowError(
+        'Revise these credentials - they should not start or end with curly brackets or quotes.'
+      );
     }
 
     it('should throw when username starts with {', function() {
@@ -388,6 +390,14 @@ describe('BaseService', function() {
         username: 'batman',
         password: 'goodpass',
         url: '{watson-url}/some-api/v1/endpoint',
+      });
+    });
+
+    it('should throw when url ends with }', function() {
+      assertConstructorThrows({
+        username: 'batman',
+        password: 'goodpass',
+        url: 'watson-url.com/some-api/v1/endpoint}',
       });
     });
 
