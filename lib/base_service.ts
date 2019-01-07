@@ -89,24 +89,24 @@ function usesBasicForIam(obj: any): boolean {
   return obj.username === 'apikey' && !obj.password.startsWith('icp-');
 }
 
-// returns true if the string has a { or " as the first character
+// returns true if the string has a curly bracket or quote as the first or last character
 // these are common user-issues that we should handle before they get a network error
-function badFirstChar(value: string): boolean {
-  return value.startsWith('{') || value.startsWith('"');
+function badCharAtAnEnd(value: string): boolean {
+  return value.startsWith('{') || value.startsWith('"') || value.endsWith('{') || value.endsWith('"');
 }
 
-// checks credentials for common user mistakes of copying { or " characters from the documentation
+// checks credentials for common user mistakes of copying {, }, or " characters from the documentation
 function checkCredentials(obj: any) {
   let errorMessage = '';
   const credsToCheck = ['url', 'username', 'password', 'iam_apikey'];
   credsToCheck.forEach(cred => {
-    if (obj[cred] && badFirstChar(obj[cred])) {
-      errorMessage += `${cred} starts with a bad character. `;
+    if (obj[cred] && badCharAtAnEnd(obj[cred])) {
+      errorMessage += `The ${cred} shouldn't start or end with curly brackets or quotes. Be sure to remove any {, }, or "`;
     }
   });
 
   if (errorMessage.length) {
-    errorMessage += 'Revise these credentials - they should not start with a { or "';
+    errorMessage += 'Revise these credentials - they should not start or end with curly brackets or quotes.';
     return errorMessage;
   } else {
     return null;
