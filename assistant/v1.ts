@@ -63,33 +63,41 @@ class AssistantV1 extends BaseService {
   /**
    * Get response to user input.
    *
-   * Get a response to a user's input.
+   * Send user input to a workspace and receive a response.
    *
    * There is no rate limit for this operation.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {InputData} [params.input] - An input object that includes the input text.
+   * @param {InputData} [params.input] - The user input.
    * @param {boolean} [params.alternate_intents] - Whether to return more than one intent. Set to `true` to return all
    * matching intents.
-   * @param {Context} [params.context] - State information for the conversation. Continue a conversation by including
-   * the context object from the previous response.
+   * @param {Context} [params.context] - State information for the conversation. To maintain state, include the context
+   * from the previous response.
    * @param {RuntimeEntity[]} [params.entities] - Entities to use when evaluating the message. Include entities from the
    * previous response to continue using those entities rather than detecting entities in the new input.
    * @param {RuntimeIntent[]} [params.intents] - Intents to use when evaluating the user input. Include intents from the
    * previous response to continue using those intents rather than trying to recognize intents in the new input.
-   * @param {OutputData} [params.output] - System output. Include the output from the previous response to maintain
-   * intermediate information over multiple requests.
+   * @param {OutputData} [params.output] - An output object that includes the response to the user, the dialog nodes
+   * that were triggered, and messages from the log.
    * @param {boolean} [params.nodes_visited_details] - Whether to include additional diagnostic information about the
    * dialog nodes that were visited during processing of the message.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public message(params: AssistantV1.MessageParams, callback?: AssistantV1.Callback<AssistantV1.MessageResponse>): NodeJS.ReadableStream | void {
+  public message(params: AssistantV1.MessageParams, callback?: AssistantV1.Callback<AssistantV1.MessageResponse>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.message(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -153,7 +161,7 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.language] - The language of the workspace.
    * @param {CreateIntent[]} [params.intents] - An array of objects defining the intents for the workspace.
    * @param {CreateEntity[]} [params.entities] - An array of objects defining the entities for the workspace.
-   * @param {CreateDialogNode[]} [params.dialog_nodes] - An array of objects defining the nodes in the workspace dialog.
+   * @param {CreateDialogNode[]} [params.dialog_nodes] - An array of objects defining the nodes in the dialog.
    * @param {CreateCounterexample[]} [params.counterexamples] - An array of objects defining input examples that have
    * been marked as irrelevant input.
    * @param {Object} [params.metadata] - Any metadata related to the workspace.
@@ -164,9 +172,17 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public createWorkspace(params?: AssistantV1.CreateWorkspaceParams, callback?: AssistantV1.Callback<AssistantV1.Workspace>): NodeJS.ReadableStream | void {
+  public createWorkspace(params?: AssistantV1.CreateWorkspaceParams, callback?: AssistantV1.Callback<AssistantV1.Workspace>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createWorkspace(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const body = {
       'name': _params.name,
@@ -212,10 +228,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteWorkspace(params: AssistantV1.DeleteWorkspaceParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): NodeJS.ReadableStream | void {
+  public deleteWorkspace(params: AssistantV1.DeleteWorkspaceParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteWorkspace(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -257,14 +281,25 @@ class AssistantV1 extends BaseService {
    * content, including subelements, is included.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
+   * @param {string} [params.sort] - Indicates how the returned workspace data will be sorted. This parameter is valid
+   * only if **export**=`true`. Specify `sort=stable` to sort all workspace objects by unique identifier, in ascending
+   * alphabetical order.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getWorkspace(params: AssistantV1.GetWorkspaceParams, callback?: AssistantV1.Callback<AssistantV1.WorkspaceExport>): NodeJS.ReadableStream | void {
+  public getWorkspace(params: AssistantV1.GetWorkspaceParams, callback?: AssistantV1.Callback<AssistantV1.WorkspaceExport>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getWorkspace(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -273,7 +308,8 @@ class AssistantV1 extends BaseService {
  
     const query = {
       'export': _params.export,
-      'include_audit': _params.include_audit
+      'include_audit': _params.include_audit,
+      'sort': _params.sort
     };
 
     const path = {
@@ -307,8 +343,8 @@ class AssistantV1 extends BaseService {
    * @param {Object} [params] - The parameters to send to the service.
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order,
-   * prefix the value with a minus sign (`-`).
+   * @param {string} [params.sort] - The attribute by which returned workspaces will be sorted. To reverse the sort
+   * order, prefix the value with a minus sign (`-`).
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
@@ -316,9 +352,17 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listWorkspaces(params?: AssistantV1.ListWorkspacesParams, callback?: AssistantV1.Callback<AssistantV1.WorkspaceCollection>): NodeJS.ReadableStream | void {
+  public listWorkspaces(params?: AssistantV1.ListWorkspacesParams, callback?: AssistantV1.Callback<AssistantV1.WorkspaceCollection>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listWorkspaces(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
  
     const query = {
       'page_limit': _params.page_limit,
@@ -361,7 +405,7 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.language] - The language of the workspace.
    * @param {CreateIntent[]} [params.intents] - An array of objects defining the intents for the workspace.
    * @param {CreateEntity[]} [params.entities] - An array of objects defining the entities for the workspace.
-   * @param {CreateDialogNode[]} [params.dialog_nodes] - An array of objects defining the nodes in the workspace dialog.
+   * @param {CreateDialogNode[]} [params.dialog_nodes] - An array of objects defining the nodes in the dialog.
    * @param {CreateCounterexample[]} [params.counterexamples] - An array of objects defining input examples that have
    * been marked as irrelevant input.
    * @param {Object} [params.metadata] - Any metadata related to the workspace.
@@ -379,10 +423,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public updateWorkspace(params: AssistantV1.UpdateWorkspaceParams, callback?: AssistantV1.Callback<AssistantV1.Workspace>): NodeJS.ReadableStream | void {
+  public updateWorkspace(params: AssistantV1.UpdateWorkspaceParams, callback?: AssistantV1.Callback<AssistantV1.Workspace>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.updateWorkspace(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -454,10 +506,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public createIntent(params: AssistantV1.CreateIntentParams, callback?: AssistantV1.Callback<AssistantV1.Intent>): NodeJS.ReadableStream | void {
+  public createIntent(params: AssistantV1.CreateIntentParams, callback?: AssistantV1.Callback<AssistantV1.Intent>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id', 'intent'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createIntent(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -507,10 +567,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteIntent(params: AssistantV1.DeleteIntentParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): NodeJS.ReadableStream | void {
+  public deleteIntent(params: AssistantV1.DeleteIntentParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id', 'intent'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteIntent(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -558,10 +626,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getIntent(params: AssistantV1.GetIntentParams, callback?: AssistantV1.Callback<AssistantV1.IntentExport>): NodeJS.ReadableStream | void {
+  public getIntent(params: AssistantV1.GetIntentParams, callback?: AssistantV1.Callback<AssistantV1.IntentExport>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id', 'intent'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getIntent(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -610,7 +686,7 @@ class AssistantV1 extends BaseService {
    * content, including subelements, is included.
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order,
+   * @param {string} [params.sort] - The attribute by which returned intents will be sorted. To reverse the sort order,
    * prefix the value with a minus sign (`-`).
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
@@ -619,10 +695,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listIntents(params: AssistantV1.ListIntentsParams, callback?: AssistantV1.Callback<AssistantV1.IntentCollection>): NodeJS.ReadableStream | void {
+  public listIntents(params: AssistantV1.ListIntentsParams, callback?: AssistantV1.Callback<AssistantV1.IntentCollection>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listIntents(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -681,10 +765,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public updateIntent(params: AssistantV1.UpdateIntentParams, callback?: AssistantV1.Callback<AssistantV1.Intent>): NodeJS.ReadableStream | void {
+  public updateIntent(params: AssistantV1.UpdateIntentParams, callback?: AssistantV1.Callback<AssistantV1.Intent>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id', 'intent'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.updateIntent(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -745,10 +837,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public createExample(params: AssistantV1.CreateExampleParams, callback?: AssistantV1.Callback<AssistantV1.Example>): NodeJS.ReadableStream | void {
+  public createExample(params: AssistantV1.CreateExampleParams, callback?: AssistantV1.Callback<AssistantV1.Example>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id', 'intent', 'text'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createExample(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -799,10 +899,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteExample(params: AssistantV1.DeleteExampleParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): NodeJS.ReadableStream | void {
+  public deleteExample(params: AssistantV1.DeleteExampleParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id', 'intent', 'text'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteExample(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -848,10 +956,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getExample(params: AssistantV1.GetExampleParams, callback?: AssistantV1.Callback<AssistantV1.Example>): NodeJS.ReadableStream | void {
+  public getExample(params: AssistantV1.GetExampleParams, callback?: AssistantV1.Callback<AssistantV1.Example>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id', 'intent', 'text'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getExample(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -897,7 +1013,7 @@ class AssistantV1 extends BaseService {
    * @param {string} params.intent - The intent name.
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order,
+   * @param {string} [params.sort] - The attribute by which returned examples will be sorted. To reverse the sort order,
    * prefix the value with a minus sign (`-`).
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
@@ -906,10 +1022,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listExamples(params: AssistantV1.ListExamplesParams, callback?: AssistantV1.Callback<AssistantV1.ExampleCollection>): NodeJS.ReadableStream | void {
+  public listExamples(params: AssistantV1.ListExamplesParams, callback?: AssistantV1.Callback<AssistantV1.ExampleCollection>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id', 'intent'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listExamples(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -967,10 +1091,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public updateExample(params: AssistantV1.UpdateExampleParams, callback?: AssistantV1.Callback<AssistantV1.Example>): NodeJS.ReadableStream | void {
+  public updateExample(params: AssistantV1.UpdateExampleParams, callback?: AssistantV1.Callback<AssistantV1.Example>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id', 'intent', 'text'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.updateExample(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1029,10 +1161,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public createCounterexample(params: AssistantV1.CreateCounterexampleParams, callback?: AssistantV1.Callback<AssistantV1.Counterexample>): NodeJS.ReadableStream | void {
+  public createCounterexample(params: AssistantV1.CreateCounterexampleParams, callback?: AssistantV1.Callback<AssistantV1.Counterexample>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id', 'text'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createCounterexample(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1080,10 +1220,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteCounterexample(params: AssistantV1.DeleteCounterexampleParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): NodeJS.ReadableStream | void {
+  public deleteCounterexample(params: AssistantV1.DeleteCounterexampleParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id', 'text'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteCounterexample(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1127,10 +1275,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getCounterexample(params: AssistantV1.GetCounterexampleParams, callback?: AssistantV1.Callback<AssistantV1.Counterexample>): NodeJS.ReadableStream | void {
+  public getCounterexample(params: AssistantV1.GetCounterexampleParams, callback?: AssistantV1.Callback<AssistantV1.Counterexample>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id', 'text'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getCounterexample(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1174,8 +1330,8 @@ class AssistantV1 extends BaseService {
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order,
-   * prefix the value with a minus sign (`-`).
+   * @param {string} [params.sort] - The attribute by which returned counterexamples will be sorted. To reverse the sort
+   * order, prefix the value with a minus sign (`-`).
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
@@ -1183,10 +1339,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listCounterexamples(params: AssistantV1.ListCounterexamplesParams, callback?: AssistantV1.Callback<AssistantV1.CounterexampleCollection>): NodeJS.ReadableStream | void {
+  public listCounterexamples(params: AssistantV1.ListCounterexamplesParams, callback?: AssistantV1.Callback<AssistantV1.CounterexampleCollection>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listCounterexamples(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1237,10 +1401,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public updateCounterexample(params: AssistantV1.UpdateCounterexampleParams, callback?: AssistantV1.Callback<AssistantV1.Counterexample>): NodeJS.ReadableStream | void {
+  public updateCounterexample(params: AssistantV1.UpdateCounterexampleParams, callback?: AssistantV1.Callback<AssistantV1.Counterexample>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id', 'text'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.updateCounterexample(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1282,7 +1454,7 @@ class AssistantV1 extends BaseService {
   /**
    * Create entity.
    *
-   * Create a new entity.
+   * Create a new entity, or enable a system entity.
    *
    * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
@@ -1290,8 +1462,10 @@ class AssistantV1 extends BaseService {
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity. This string must conform to the following restrictions:
    * - It can contain only Unicode alphanumeric, underscore, and hyphen characters.
-   * - It cannot begin with the reserved prefix `sys-`.
    * - It must be no longer than 64 characters.
+   *
+   * If you specify an entity name beginning with the reserved prefix `sys-`, it must be the name of a system entity
+   * that you want to enable. (Any entity content specified with the request is ignored.).
    * @param {string} [params.description] - The description of the entity. This string cannot contain carriage return,
    * newline, or tab characters, and it must be no longer than 128 characters.
    * @param {Object} [params.metadata] - Any metadata related to the value.
@@ -1301,10 +1475,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public createEntity(params: AssistantV1.CreateEntityParams, callback?: AssistantV1.Callback<AssistantV1.Entity>): NodeJS.ReadableStream | void {
+  public createEntity(params: AssistantV1.CreateEntityParams, callback?: AssistantV1.Callback<AssistantV1.Entity>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id', 'entity'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createEntity(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1345,7 +1527,7 @@ class AssistantV1 extends BaseService {
   /**
    * Delete entity.
    *
-   * Delete an entity from a workspace.
+   * Delete an entity from a workspace, or disable a system entity.
    *
    * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
@@ -1356,10 +1538,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteEntity(params: AssistantV1.DeleteEntityParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): NodeJS.ReadableStream | void {
+  public deleteEntity(params: AssistantV1.DeleteEntityParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id', 'entity'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteEntity(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1407,10 +1597,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getEntity(params: AssistantV1.GetEntityParams, callback?: AssistantV1.Callback<AssistantV1.EntityExport>): NodeJS.ReadableStream | void {
+  public getEntity(params: AssistantV1.GetEntityParams, callback?: AssistantV1.Callback<AssistantV1.EntityExport>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id', 'entity'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getEntity(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1459,7 +1657,7 @@ class AssistantV1 extends BaseService {
    * content, including subelements, is included.
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order,
+   * @param {string} [params.sort] - The attribute by which returned entities will be sorted. To reverse the sort order,
    * prefix the value with a minus sign (`-`).
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
@@ -1468,10 +1666,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listEntities(params: AssistantV1.ListEntitiesParams, callback?: AssistantV1.Callback<AssistantV1.EntityCollection>): NodeJS.ReadableStream | void {
+  public listEntities(params: AssistantV1.ListEntitiesParams, callback?: AssistantV1.Callback<AssistantV1.EntityCollection>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listEntities(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1533,10 +1739,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public updateEntity(params: AssistantV1.UpdateEntityParams, callback?: AssistantV1.Callback<AssistantV1.Entity>): NodeJS.ReadableStream | void {
+  public updateEntity(params: AssistantV1.UpdateEntityParams, callback?: AssistantV1.Callback<AssistantV1.Entity>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id', 'entity'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.updateEntity(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1599,10 +1813,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listMentions(params: AssistantV1.ListMentionsParams, callback?: AssistantV1.Callback<AssistantV1.EntityMentionCollection>): NodeJS.ReadableStream | void {
+  public listMentions(params: AssistantV1.ListMentionsParams, callback?: AssistantV1.Callback<AssistantV1.EntityMentionCollection>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id', 'entity'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listMentions(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1671,10 +1893,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public createValue(params: AssistantV1.CreateValueParams, callback?: AssistantV1.Callback<AssistantV1.Value>): NodeJS.ReadableStream | void {
+  public createValue(params: AssistantV1.CreateValueParams, callback?: AssistantV1.Callback<AssistantV1.Value>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id', 'entity', 'value'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createValue(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1728,10 +1958,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteValue(params: AssistantV1.DeleteValueParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): NodeJS.ReadableStream | void {
+  public deleteValue(params: AssistantV1.DeleteValueParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id', 'entity', 'value'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteValue(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1780,10 +2018,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getValue(params: AssistantV1.GetValueParams, callback?: AssistantV1.Callback<AssistantV1.ValueExport>): NodeJS.ReadableStream | void {
+  public getValue(params: AssistantV1.GetValueParams, callback?: AssistantV1.Callback<AssistantV1.ValueExport>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id', 'entity', 'value'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getValue(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1833,8 +2079,8 @@ class AssistantV1 extends BaseService {
    * content, including subelements, is included.
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order,
-   * prefix the value with a minus sign (`-`).
+   * @param {string} [params.sort] - The attribute by which returned entity values will be sorted. To reverse the sort
+   * order, prefix the value with a minus sign (`-`).
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
@@ -1842,10 +2088,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listValues(params: AssistantV1.ListValuesParams, callback?: AssistantV1.Callback<AssistantV1.ValueCollection>): NodeJS.ReadableStream | void {
+  public listValues(params: AssistantV1.ListValuesParams, callback?: AssistantV1.Callback<AssistantV1.ValueCollection>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id', 'entity'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listValues(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1916,10 +2170,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public updateValue(params: AssistantV1.UpdateValueParams, callback?: AssistantV1.Callback<AssistantV1.Value>): NodeJS.ReadableStream | void {
+  public updateValue(params: AssistantV1.UpdateValueParams, callback?: AssistantV1.Callback<AssistantV1.Value>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id', 'entity', 'value'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.updateValue(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1982,10 +2244,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public createSynonym(params: AssistantV1.CreateSynonymParams, callback?: AssistantV1.Callback<AssistantV1.Synonym>): NodeJS.ReadableStream | void {
+  public createSynonym(params: AssistantV1.CreateSynonymParams, callback?: AssistantV1.Callback<AssistantV1.Synonym>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createSynonym(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2037,10 +2307,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteSynonym(params: AssistantV1.DeleteSynonymParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): NodeJS.ReadableStream | void {
+  public deleteSynonym(params: AssistantV1.DeleteSynonymParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteSynonym(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2088,10 +2366,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getSynonym(params: AssistantV1.GetSynonymParams, callback?: AssistantV1.Callback<AssistantV1.Synonym>): NodeJS.ReadableStream | void {
+  public getSynonym(params: AssistantV1.GetSynonymParams, callback?: AssistantV1.Callback<AssistantV1.Synonym>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getSynonym(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2139,8 +2425,8 @@ class AssistantV1 extends BaseService {
    * @param {string} params.value - The text of the entity value.
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order,
-   * prefix the value with a minus sign (`-`).
+   * @param {string} [params.sort] - The attribute by which returned entity value synonyms will be sorted. To reverse
+   * the sort order, prefix the value with a minus sign (`-`).
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
@@ -2148,10 +2434,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listSynonyms(params: AssistantV1.ListSynonymsParams, callback?: AssistantV1.Callback<AssistantV1.SynonymCollection>): NodeJS.ReadableStream | void {
+  public listSynonyms(params: AssistantV1.ListSynonymsParams, callback?: AssistantV1.Callback<AssistantV1.SynonymCollection>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id', 'entity', 'value'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listSynonyms(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2210,10 +2504,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public updateSynonym(params: AssistantV1.UpdateSynonymParams, callback?: AssistantV1.Callback<AssistantV1.Synonym>): NodeJS.ReadableStream | void {
+  public updateSynonym(params: AssistantV1.UpdateSynonymParams, callback?: AssistantV1.Callback<AssistantV1.Synonym>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.updateSynonym(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2277,7 +2579,7 @@ class AssistantV1 extends BaseService {
    * [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex).
    * @param {Object} [params.context] - The context for the dialog node.
    * @param {Object} [params.metadata] - The metadata for the dialog node.
-   * @param {DialogNodeNextStep} [params.next_step] - The next step to be executed in dialog processing.
+   * @param {DialogNodeNextStep} [params.next_step] - The next step to execute following this dialog node.
    * @param {DialogNodeAction[]} [params.actions] - An array of objects describing any actions to be invoked by the
    * dialog node.
    * @param {string} [params.title] - The alias used to identify the dialog node. This string must conform to the
@@ -2297,10 +2599,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public createDialogNode(params: AssistantV1.CreateDialogNodeParams, callback?: AssistantV1.Callback<AssistantV1.DialogNode>): NodeJS.ReadableStream | void {
+  public createDialogNode(params: AssistantV1.CreateDialogNodeParams, callback?: AssistantV1.Callback<AssistantV1.DialogNode>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id', 'dialog_node'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createDialogNode(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2365,10 +2675,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteDialogNode(params: AssistantV1.DeleteDialogNodeParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): NodeJS.ReadableStream | void {
+  public deleteDialogNode(params: AssistantV1.DeleteDialogNodeParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id', 'dialog_node'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteDialogNode(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2412,10 +2730,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getDialogNode(params: AssistantV1.GetDialogNodeParams, callback?: AssistantV1.Callback<AssistantV1.DialogNode>): NodeJS.ReadableStream | void {
+  public getDialogNode(params: AssistantV1.GetDialogNodeParams, callback?: AssistantV1.Callback<AssistantV1.DialogNode>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id', 'dialog_node'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getDialogNode(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2459,8 +2785,8 @@ class AssistantV1 extends BaseService {
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order,
-   * prefix the value with a minus sign (`-`).
+   * @param {string} [params.sort] - The attribute by which returned dialog nodes will be sorted. To reverse the sort
+   * order, prefix the value with a minus sign (`-`).
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
@@ -2468,10 +2794,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listDialogNodes(params: AssistantV1.ListDialogNodesParams, callback?: AssistantV1.Callback<AssistantV1.DialogNodeCollection>): NodeJS.ReadableStream | void {
+  public listDialogNodes(params: AssistantV1.ListDialogNodesParams, callback?: AssistantV1.Callback<AssistantV1.DialogNodeCollection>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listDialogNodes(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2532,7 +2866,7 @@ class AssistantV1 extends BaseService {
    * [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex).
    * @param {Object} [params.new_context] - The context for the dialog node.
    * @param {Object} [params.new_metadata] - The metadata for the dialog node.
-   * @param {DialogNodeNextStep} [params.new_next_step] - The next step to be executed in dialog processing.
+   * @param {DialogNodeNextStep} [params.new_next_step] - The next step to execute following this dialog node.
    * @param {string} [params.new_title] - The alias used to identify the dialog node. This string must conform to the
    * following restrictions:
    * - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
@@ -2552,10 +2886,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public updateDialogNode(params: AssistantV1.UpdateDialogNodeParams, callback?: AssistantV1.Callback<AssistantV1.DialogNode>): NodeJS.ReadableStream | void {
+  public updateDialogNode(params: AssistantV1.UpdateDialogNodeParams, callback?: AssistantV1.Callback<AssistantV1.DialogNode>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id', 'dialog_node'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.updateDialogNode(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2632,10 +2974,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listAllLogs(params: AssistantV1.ListAllLogsParams, callback?: AssistantV1.Callback<AssistantV1.LogCollection>): NodeJS.ReadableStream | void {
+  public listAllLogs(params: AssistantV1.ListAllLogsParams, callback?: AssistantV1.Callback<AssistantV1.LogCollection>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['filter'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listAllLogs(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2686,10 +3036,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listLogs(params: AssistantV1.ListLogsParams, callback?: AssistantV1.Callback<AssistantV1.LogCollection>): NodeJS.ReadableStream | void {
+  public listLogs(params: AssistantV1.ListLogsParams, callback?: AssistantV1.Callback<AssistantV1.LogCollection>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['workspace_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listLogs(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2744,10 +3102,18 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteUserData(params: AssistantV1.DeleteUserDataParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): NodeJS.ReadableStream | void {
+  public deleteUserData(params: AssistantV1.DeleteUserDataParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['customer_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteUserData(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2812,21 +3178,22 @@ namespace AssistantV1 {
   export interface MessageParams {
     /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** An input object that includes the input text. */
+    /** The user input. */
     input?: InputData;
     /** Whether to return more than one intent. Set to `true` to return all matching intents. */
     alternate_intents?: boolean;
-    /** State information for the conversation. Continue a conversation by including the context object from the previous response. */
+    /** State information for the conversation. To maintain state, include the context from the previous response. */
     context?: Context;
     /** Entities to use when evaluating the message. Include entities from the previous response to continue using those entities rather than detecting entities in the new input. */
     entities?: RuntimeEntity[];
     /** Intents to use when evaluating the user input. Include intents from the previous response to continue using those intents rather than trying to recognize intents in the new input. */
     intents?: RuntimeIntent[];
-    /** System output. Include the output from the previous response to maintain intermediate information over multiple requests. */
+    /** An output object that includes the response to the user, the dialog nodes that were triggered, and messages from the log. */
     output?: OutputData;
     /** Whether to include additional diagnostic information about the dialog nodes that were visited during processing of the message. */
     nodes_visited_details?: boolean;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `createWorkspace` operation. */
@@ -2841,7 +3208,7 @@ namespace AssistantV1 {
     intents?: CreateIntent[];
     /** An array of objects defining the entities for the workspace. */
     entities?: CreateEntity[];
-    /** An array of objects defining the nodes in the workspace dialog. */
+    /** An array of objects defining the nodes in the dialog. */
     dialog_nodes?: CreateDialogNode[];
     /** An array of objects defining input examples that have been marked as irrelevant input. */
     counterexamples?: CreateCounterexample[];
@@ -2852,6 +3219,7 @@ namespace AssistantV1 {
     /** Global settings for the workspace. */
     system_settings?: WorkspaceSystemSettings;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteWorkspace` operation. */
@@ -2859,6 +3227,7 @@ namespace AssistantV1 {
     /** Unique identifier of the workspace. */
     workspace_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getWorkspace` operation. */
@@ -2869,7 +3238,18 @@ namespace AssistantV1 {
     export?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
+    /** Indicates how the returned workspace data will be sorted. This parameter is valid only if **export**=`true`. Specify `sort=stable` to sort all workspace objects by unique identifier, in ascending alphabetical order. */
+    sort?: GetWorkspaceConstants.Sort | string;
     headers?: Object;
+    return_response?: boolean;
+  }
+
+  /** Constants for the `getWorkspace` operation. */
+  export namespace GetWorkspaceConstants {
+    /** Indicates how the returned workspace data will be sorted. This parameter is valid only if **export**=`true`. Specify `sort=stable` to sort all workspace objects by unique identifier, in ascending alphabetical order. */
+    export enum Sort {
+      STABLE = 'stable',
+    }
   }
 
   /** Parameters for the `listWorkspaces` operation. */
@@ -2878,13 +3258,23 @@ namespace AssistantV1 {
     page_limit?: number;
     /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
-    sort?: string;
+    /** The attribute by which returned workspaces will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    sort?: ListWorkspacesConstants.Sort | string;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
     headers?: Object;
+    return_response?: boolean;
+  }
+
+  /** Constants for the `listWorkspaces` operation. */
+  export namespace ListWorkspacesConstants {
+    /** The attribute by which returned workspaces will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    export enum Sort {
+      NAME = 'name',
+      UPDATED = 'updated',
+    }
   }
 
   /** Parameters for the `updateWorkspace` operation. */
@@ -2901,7 +3291,7 @@ namespace AssistantV1 {
     intents?: CreateIntent[];
     /** An array of objects defining the entities for the workspace. */
     entities?: CreateEntity[];
-    /** An array of objects defining the nodes in the workspace dialog. */
+    /** An array of objects defining the nodes in the dialog. */
     dialog_nodes?: CreateDialogNode[];
     /** An array of objects defining input examples that have been marked as irrelevant input. */
     counterexamples?: CreateCounterexample[];
@@ -2914,6 +3304,7 @@ namespace AssistantV1 {
     /** Whether the new data is to be appended to the existing data in the workspace. If **append**=`false`, elements included in the new data completely replace the corresponding existing elements, including all subelements. For example, if the new data includes **entities** and **append**=`false`, all existing entities in the workspace are discarded and replaced with the new entities. If **append**=`true`, existing elements are preserved, and the new elements are added. If any elements in the new data collide with existing elements, the update request fails. */
     append?: boolean;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `createIntent` operation. */
@@ -2927,6 +3318,7 @@ namespace AssistantV1 {
     /** An array of user input examples for the intent. */
     examples?: CreateExample[];
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteIntent` operation. */
@@ -2936,6 +3328,7 @@ namespace AssistantV1 {
     /** The intent name. */
     intent: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getIntent` operation. */
@@ -2949,6 +3342,7 @@ namespace AssistantV1 {
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listIntents` operation. */
@@ -2961,13 +3355,23 @@ namespace AssistantV1 {
     page_limit?: number;
     /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
-    sort?: string;
+    /** The attribute by which returned intents will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    sort?: ListIntentsConstants.Sort | string;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
     headers?: Object;
+    return_response?: boolean;
+  }
+
+  /** Constants for the `listIntents` operation. */
+  export namespace ListIntentsConstants {
+    /** The attribute by which returned intents will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    export enum Sort {
+      INTENT = 'intent',
+      UPDATED = 'updated',
+    }
   }
 
   /** Parameters for the `updateIntent` operation. */
@@ -2983,6 +3387,7 @@ namespace AssistantV1 {
     /** An array of user input examples for the intent. */
     new_examples?: CreateExample[];
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `createExample` operation. */
@@ -2996,6 +3401,7 @@ namespace AssistantV1 {
     /** An array of contextual entity mentions. */
     mentions?: Mentions[];
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteExample` operation. */
@@ -3007,6 +3413,7 @@ namespace AssistantV1 {
     /** The text of the user input example. */
     text: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getExample` operation. */
@@ -3020,6 +3427,7 @@ namespace AssistantV1 {
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listExamples` operation. */
@@ -3032,13 +3440,23 @@ namespace AssistantV1 {
     page_limit?: number;
     /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
-    sort?: string;
+    /** The attribute by which returned examples will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    sort?: ListExamplesConstants.Sort | string;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
     headers?: Object;
+    return_response?: boolean;
+  }
+
+  /** Constants for the `listExamples` operation. */
+  export namespace ListExamplesConstants {
+    /** The attribute by which returned examples will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    export enum Sort {
+      TEXT = 'text',
+      UPDATED = 'updated',
+    }
   }
 
   /** Parameters for the `updateExample` operation. */
@@ -3054,6 +3472,7 @@ namespace AssistantV1 {
     /** An array of contextual entity mentions. */
     new_mentions?: Mentions[];
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `createCounterexample` operation. */
@@ -3063,6 +3482,7 @@ namespace AssistantV1 {
     /** The text of a user input marked as irrelevant input. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters - It cannot consist of only whitespace characters - It must be no longer than 1024 characters. */
     text: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteCounterexample` operation. */
@@ -3072,6 +3492,7 @@ namespace AssistantV1 {
     /** The text of a user input counterexample (for example, `What are you wearing?`). */
     text: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getCounterexample` operation. */
@@ -3083,6 +3504,7 @@ namespace AssistantV1 {
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listCounterexamples` operation. */
@@ -3093,13 +3515,23 @@ namespace AssistantV1 {
     page_limit?: number;
     /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
-    sort?: string;
+    /** The attribute by which returned counterexamples will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    sort?: ListCounterexamplesConstants.Sort | string;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
     headers?: Object;
+    return_response?: boolean;
+  }
+
+  /** Constants for the `listCounterexamples` operation. */
+  export namespace ListCounterexamplesConstants {
+    /** The attribute by which returned counterexamples will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    export enum Sort {
+      TEXT = 'text',
+      UPDATED = 'updated',
+    }
   }
 
   /** Parameters for the `updateCounterexample` operation. */
@@ -3111,13 +3543,14 @@ namespace AssistantV1 {
     /** The text of a user input counterexample. */
     new_text?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `createEntity` operation. */
   export interface CreateEntityParams {
     /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** The name of the entity. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, and hyphen characters. - It cannot begin with the reserved prefix `sys-`. - It must be no longer than 64 characters. */
+    /** The name of the entity. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, and hyphen characters. - It must be no longer than 64 characters. If you specify an entity name beginning with the reserved prefix `sys-`, it must be the name of a system entity that you want to enable. (Any entity content specified with the request is ignored.). */
     entity: string;
     /** The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     description?: string;
@@ -3128,6 +3561,7 @@ namespace AssistantV1 {
     /** Whether to use fuzzy matching for the entity. */
     fuzzy_match?: boolean;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteEntity` operation. */
@@ -3137,6 +3571,7 @@ namespace AssistantV1 {
     /** The name of the entity. */
     entity: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getEntity` operation. */
@@ -3150,6 +3585,7 @@ namespace AssistantV1 {
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listEntities` operation. */
@@ -3162,13 +3598,23 @@ namespace AssistantV1 {
     page_limit?: number;
     /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
-    sort?: string;
+    /** The attribute by which returned entities will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    sort?: ListEntitiesConstants.Sort | string;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
     headers?: Object;
+    return_response?: boolean;
+  }
+
+  /** Constants for the `listEntities` operation. */
+  export namespace ListEntitiesConstants {
+    /** The attribute by which returned entities will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    export enum Sort {
+      ENTITY = 'entity',
+      UPDATED = 'updated',
+    }
   }
 
   /** Parameters for the `updateEntity` operation. */
@@ -3188,6 +3634,7 @@ namespace AssistantV1 {
     /** An array of entity values. */
     new_values?: CreateValue[];
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listMentions` operation. */
@@ -3201,6 +3648,7 @@ namespace AssistantV1 {
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `createValue` operation. */
@@ -3220,11 +3668,12 @@ namespace AssistantV1 {
     /** Specifies the type of value. */
     value_type?: CreateValueConstants.ValueType | string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `createValue` operation. */
   export namespace CreateValueConstants {
-     /** Specifies the type of value. */
+    /** Specifies the type of value. */
     export enum ValueType {
       SYNONYMS = 'synonyms',
       PATTERNS = 'patterns',
@@ -3240,6 +3689,7 @@ namespace AssistantV1 {
     /** The text of the entity value. */
     value: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getValue` operation. */
@@ -3255,6 +3705,7 @@ namespace AssistantV1 {
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listValues` operation. */
@@ -3269,13 +3720,23 @@ namespace AssistantV1 {
     page_limit?: number;
     /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
-    sort?: string;
+    /** The attribute by which returned entity values will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    sort?: ListValuesConstants.Sort | string;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
     headers?: Object;
+    return_response?: boolean;
+  }
+
+  /** Constants for the `listValues` operation. */
+  export namespace ListValuesConstants {
+    /** The attribute by which returned entity values will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    export enum Sort {
+      VALUE = 'value',
+      UPDATED = 'updated',
+    }
   }
 
   /** Parameters for the `updateValue` operation. */
@@ -3297,11 +3758,12 @@ namespace AssistantV1 {
     /** An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 512 characters. For more information about how to specify a pattern, see the [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities). */
     new_patterns?: string[];
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `updateValue` operation. */
   export namespace UpdateValueConstants {
-     /** Specifies the type of value. */
+    /** Specifies the type of value. */
     export enum ValueType {
       SYNONYMS = 'synonyms',
       PATTERNS = 'patterns',
@@ -3319,6 +3781,7 @@ namespace AssistantV1 {
     /** The text of the synonym. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
     synonym: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteSynonym` operation. */
@@ -3332,6 +3795,7 @@ namespace AssistantV1 {
     /** The text of the synonym. */
     synonym: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getSynonym` operation. */
@@ -3347,6 +3811,7 @@ namespace AssistantV1 {
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listSynonyms` operation. */
@@ -3361,13 +3826,23 @@ namespace AssistantV1 {
     page_limit?: number;
     /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
-    sort?: string;
+    /** The attribute by which returned entity value synonyms will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    sort?: ListSynonymsConstants.Sort | string;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
     headers?: Object;
+    return_response?: boolean;
+  }
+
+  /** Constants for the `listSynonyms` operation. */
+  export namespace ListSynonymsConstants {
+    /** The attribute by which returned entity value synonyms will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    export enum Sort {
+      SYNONYM = 'synonym',
+      UPDATED = 'updated',
+    }
   }
 
   /** Parameters for the `updateSynonym` operation. */
@@ -3383,6 +3858,7 @@ namespace AssistantV1 {
     /** The text of the synonym. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
     new_synonym?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `createDialogNode` operation. */
@@ -3405,7 +3881,7 @@ namespace AssistantV1 {
     context?: Object;
     /** The metadata for the dialog node. */
     metadata?: Object;
-    /** The next step to be executed in dialog processing. */
+    /** The next step to execute following this dialog node. */
     next_step?: DialogNodeNextStep;
     /** An array of objects describing any actions to be invoked by the dialog node. */
     actions?: DialogNodeAction[];
@@ -3426,11 +3902,12 @@ namespace AssistantV1 {
     /** A label that can be displayed externally to describe the purpose of the node to users. This string must be no longer than 512 characters. */
     user_label?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `createDialogNode` operation. */
   export namespace CreateDialogNodeConstants {
-     /** How the dialog node is processed. */
+    /** How the dialog node is processed. */
     export enum NodeType {
       STANDARD = 'standard',
       EVENT_HANDLER = 'event_handler',
@@ -3439,7 +3916,7 @@ namespace AssistantV1 {
       RESPONSE_CONDITION = 'response_condition',
       FOLDER = 'folder',
     }
-     /** How an `event_handler` node is processed. */
+    /** How an `event_handler` node is processed. */
     export enum EventName {
       FOCUS = 'focus',
       INPUT = 'input',
@@ -3451,19 +3928,19 @@ namespace AssistantV1 {
       NOMATCH_RESPONSES_DEPLETED = 'nomatch_responses_depleted',
       DIGRESSION_RETURN_PROMPT = 'digression_return_prompt',
     }
-     /** Whether this top-level dialog node can be digressed into. */
+    /** Whether this top-level dialog node can be digressed into. */
     export enum DigressIn {
       NOT_AVAILABLE = 'not_available',
       RETURNS = 'returns',
       DOES_NOT_RETURN = 'does_not_return',
     }
-     /** Whether this dialog node can be returned to after a digression. */
+    /** Whether this dialog node can be returned to after a digression. */
     export enum DigressOut {
       RETURNING = 'allow_returning',
       ALL = 'allow_all',
       ALL_NEVER_RETURN = 'allow_all_never_return',
     }
-     /** Whether the user can digress to top-level nodes while filling out slots. */
+    /** Whether the user can digress to top-level nodes while filling out slots. */
     export enum DigressOutSlots {
       NOT_ALLOWED = 'not_allowed',
       ALLOW_RETURNING = 'allow_returning',
@@ -3478,6 +3955,7 @@ namespace AssistantV1 {
     /** The dialog node ID (for example, `get_order`). */
     dialog_node: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getDialogNode` operation. */
@@ -3489,6 +3967,7 @@ namespace AssistantV1 {
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listDialogNodes` operation. */
@@ -3499,13 +3978,23 @@ namespace AssistantV1 {
     page_limit?: number;
     /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
-    sort?: string;
+    /** The attribute by which returned dialog nodes will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    sort?: ListDialogNodesConstants.Sort | string;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
     headers?: Object;
+    return_response?: boolean;
+  }
+
+  /** Constants for the `listDialogNodes` operation. */
+  export namespace ListDialogNodesConstants {
+    /** The attribute by which returned dialog nodes will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    export enum Sort {
+      DIALOG_NODE = 'dialog_node',
+      UPDATED = 'updated',
+    }
   }
 
   /** Parameters for the `updateDialogNode` operation. */
@@ -3530,7 +4019,7 @@ namespace AssistantV1 {
     new_context?: Object;
     /** The metadata for the dialog node. */
     new_metadata?: Object;
-    /** The next step to be executed in dialog processing. */
+    /** The next step to execute following this dialog node. */
     new_next_step?: DialogNodeNextStep;
     /** The alias used to identify the dialog node. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters. - It must be no longer than 64 characters. */
     new_title?: string;
@@ -3551,11 +4040,12 @@ namespace AssistantV1 {
     /** A label that can be displayed externally to describe the purpose of the node to users. This string must be no longer than 512 characters. */
     new_user_label?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `updateDialogNode` operation. */
   export namespace UpdateDialogNodeConstants {
-     /** How the dialog node is processed. */
+    /** How the dialog node is processed. */
     export enum NodeType {
       STANDARD = 'standard',
       EVENT_HANDLER = 'event_handler',
@@ -3564,7 +4054,7 @@ namespace AssistantV1 {
       RESPONSE_CONDITION = 'response_condition',
       FOLDER = 'folder',
     }
-     /** How an `event_handler` node is processed. */
+    /** How an `event_handler` node is processed. */
     export enum EventName {
       FOCUS = 'focus',
       INPUT = 'input',
@@ -3576,19 +4066,19 @@ namespace AssistantV1 {
       NOMATCH_RESPONSES_DEPLETED = 'nomatch_responses_depleted',
       DIGRESSION_RETURN_PROMPT = 'digression_return_prompt',
     }
-     /** Whether this top-level dialog node can be digressed into. */
+    /** Whether this top-level dialog node can be digressed into. */
     export enum DigressIn {
       NOT_AVAILABLE = 'not_available',
       RETURNS = 'returns',
       DOES_NOT_RETURN = 'does_not_return',
     }
-     /** Whether this dialog node can be returned to after a digression. */
+    /** Whether this dialog node can be returned to after a digression. */
     export enum DigressOut {
       RETURNING = 'allow_returning',
       ALL = 'allow_all',
       ALL_NEVER_RETURN = 'allow_all_never_return',
     }
-     /** Whether the user can digress to top-level nodes while filling out slots. */
+    /** Whether the user can digress to top-level nodes while filling out slots. */
     export enum DigressOutSlots {
       NOT_ALLOWED = 'not_allowed',
       ALLOW_RETURNING = 'allow_returning',
@@ -3607,6 +4097,7 @@ namespace AssistantV1 {
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listLogs` operation. */
@@ -3622,6 +4113,7 @@ namespace AssistantV1 {
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteUserData` operation. */
@@ -3629,6 +4121,7 @@ namespace AssistantV1 {
     /** The customer ID for which all data is to be deleted. */
     customer_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /*************************
@@ -3649,6 +4142,8 @@ namespace AssistantV1 {
     conversation_id?: string;
     /** For internal use only. */
     system?: SystemResponse;
+    /** Metadata related to the message. */
+    metadata?: MessageContextMetadata;
     /** Context accepts additional properties. */
     [propName: string]: any;
   }
@@ -3695,7 +4190,7 @@ namespace AssistantV1 {
     context?: Object;
     /** The metadata for the dialog node. */
     metadata?: Object;
-    /** The next step to be executed in dialog processing. */
+    /** The next step to execute following this dialog node. */
     next_step?: DialogNodeNextStep;
     /** An array of objects describing any actions to be invoked by the dialog node. */
     actions?: DialogNodeAction[];
@@ -3719,7 +4214,7 @@ namespace AssistantV1 {
 
   /** CreateEntity. */
   export interface CreateEntity {
-    /** The name of the entity. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, and hyphen characters. - It cannot begin with the reserved prefix `sys-`. - It must be no longer than 64 characters. */
+    /** The name of the entity. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, and hyphen characters. - It must be no longer than 64 characters. If you specify an entity name beginning with the reserved prefix `sys-`, it must be the name of a system entity that you want to enable. (Any entity content specified with the request is ignored.). */
     entity: string;
     /** The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     description?: string;
@@ -4091,9 +4586,9 @@ namespace AssistantV1 {
 
   /** LogExport. */
   export interface LogExport {
-    /** A request received by the workspace, including the user input and context. */
+    /** A message request formatted for the Watson Assistant service. */
     request: MessageRequest;
-    /** The response sent by the workspace, including the output text, detected intents and entities, and context. */
+    /** A response from the Watson Assistant service. */
     response: MessageResponse;
     /** A unique identifier for the logged event. */
     log_id: string;
@@ -4135,6 +4630,14 @@ namespace AssistantV1 {
     location: number[];
   }
 
+  /** Metadata related to the message. */
+  export interface MessageContextMetadata {
+    /** A label identifying the deployment environment, used for filtering log data. This string cannot contain carriage return, newline, or tab characters. */
+    deployment?: string;
+    /** A string value that identifies the user who is interacting with the workspace. The client must provide a unique identifier for each individual end user who accesses the application. For Plus and Premium plans, this user ID is used to identify unique users for billing purposes. This string cannot contain carriage return, newline, or tab characters. */
+    user_id?: string;
+  }
+
   /** The text of the user input. */
   export interface MessageInput {
     /** The user's input. */
@@ -4143,23 +4646,23 @@ namespace AssistantV1 {
 
   /** A message request formatted for the Watson Assistant service. */
   export interface MessageRequest {
-    /** An input object that includes the input text. */
+    /** The user input. */
     input?: InputData;
     /** Whether to return more than one intent. Set to `true` to return all matching intents. */
     alternate_intents?: boolean;
-    /** State information for the conversation. Continue a conversation by including the context object from the previous response. */
+    /** State information for the conversation. To maintain state, include the context from the previous response. */
     context?: Context;
     /** Entities to use when evaluating the message. Include entities from the previous response to continue using those entities rather than detecting entities in the new input. */
     entities?: RuntimeEntity[];
     /** Intents to use when evaluating the user input. Include intents from the previous response to continue using those intents rather than trying to recognize intents in the new input. */
     intents?: RuntimeIntent[];
-    /** System output. Include the output from the previous response to maintain intermediate information over multiple requests. */
+    /** An output object that includes the response to the user, the dialog nodes that were triggered, and messages from the log. */
     output?: OutputData;
   }
 
   /** A response from the Watson Assistant service. */
   export interface MessageResponse {
-    /** The user input from the request. */
+    /** The text of the user input. */
     input?: MessageInput;
     /** An array of intents recognized in the user input, sorted in descending order of confidence. */
     intents: RuntimeIntent[];
@@ -4167,9 +4670,9 @@ namespace AssistantV1 {
     entities: RuntimeEntity[];
     /** Whether to return more than one intent. A value of `true` indicates that all matching intents are returned. */
     alternate_intents?: boolean;
-    /** State information for the conversation. */
+    /** State information for the conversation. To maintain state, include the context from the previous response. */
     context: Context;
-    /** Output from the dialog, including the response to the user, the nodes that were triggered, and log messages. */
+    /** An output object that includes the response to the user, the dialog nodes that were triggered, and messages from the log. */
     output: OutputData;
     /** An array of objects describing any actions requested by the dialog node. */
     actions?: DialogNodeAction[];
@@ -4283,7 +4786,7 @@ namespace AssistantV1 {
   export interface ValueCollection {
     /** An array of entity values. */
     values: ValueExport[];
-    /** An object defining the pagination data for the returned objects. */
+    /** The pagination data for the returned objects. */
     pagination: Pagination;
   }
 
@@ -4315,7 +4818,7 @@ namespace AssistantV1 {
     created?: string;
     /** The timestamp for the last update to the workspace. */
     updated?: string;
-    /** The workspace ID. */
+    /** The workspace ID of the workspace. */
     workspace_id: string;
     /** The description of the workspace. */
     description?: string;
@@ -4331,7 +4834,7 @@ namespace AssistantV1 {
   export interface WorkspaceCollection {
     /** An array of objects describing the workspaces associated with the service instance. */
     workspaces: Workspace[];
-    /** An object defining the pagination data for the returned objects. */
+    /** The pagination data for the returned objects. */
     pagination: Pagination;
   }
 
@@ -4349,7 +4852,7 @@ namespace AssistantV1 {
     created?: string;
     /** The timestamp for the last update to the workspace. */
     updated?: string;
-    /** The workspace ID. */
+    /** The workspace ID of the workspace. */
     workspace_id: string;
     /** The current status of the workspace. */
     status: string;
