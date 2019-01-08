@@ -21,7 +21,7 @@ import { getMissingParams } from '../lib/helper';
 import { FileObject } from '../lib/helper';
 
 /**
- * The IBM Watson&trade; Personality Insights service enables applications to derive insights from social media, enterprise data, or other digital communications. The service uses linguistic analytics to infer individuals' intrinsic personality characteristics, including Big Five, Needs, and Values, from digital communications such as email, text messages, tweets, and forum posts.  The service can automatically infer, from potentially noisy social media, portraits of individuals that reflect their personality characteristics. The service can infer consumption preferences based on the results of its analysis and, for JSON content that is timestamped, can report temporal behavior. * For information about the meaning of the models that the service uses to describe personality characteristics, see [Personality models](https://console.bluemix.net/docs/services/personality-insights/models.html). * For information about the meaning of the consumption preferences, see [Consumption preferences](https://console.bluemix.net/docs/services/personality-insights/preferences.html).   **Note:** Request logging is disabled for the Personality Insights service. The service neither logs nor retains data from requests and responses, regardless of whether the `X-Watson-Learning-Opt-Out` request header is set.
+ * The IBM Watson&trade; Personality Insights service enables applications to derive insights from social media, enterprise data, or other digital communications. The service uses linguistic analytics to infer individuals' intrinsic personality characteristics, including Big Five, Needs, and Values, from digital communications such as email, text messages, tweets, and forum posts.  The service can automatically infer, from potentially noisy social media, portraits of individuals that reflect their personality characteristics. The service can infer consumption preferences based on the results of its analysis and, for JSON content that is timestamped, can report temporal behavior. * For information about the meaning of the models that the service uses to describe personality characteristics, see [Personality models](/docs/services/personality-insights/models.html). * For information about the meaning of the consumption preferences, see [Consumption preferences](/docs/services/personality-insights/preferences.html).   **Note:** Request logging is disabled for the Personality Insights service. Regardless of whether you set the `X-Watson-Learning-Opt-Out` request header, the service does not log or retain data from requests and responses.
  */
 
 class PersonalityInsightsV3 extends BaseService {
@@ -65,30 +65,45 @@ class PersonalityInsightsV3 extends BaseService {
    * Get profile.
    *
    * Generates a personality profile for the author of the input text. The service accepts a maximum of 20 MB of input
-   * content, but it requires much less text to produce an accurate profile; for more information, see [Providing
-   * sufficient input](https://console.bluemix.net/docs/services/personality-insights/input.html#sufficient). The
-   * service analyzes text in Arabic, English, Japanese, Korean, or Spanish and returns its results in a variety of
-   * languages. You can provide plain text, HTML, or JSON input by specifying the **Content-Type** parameter; the
-   * default is `text/plain`. Request a JSON or comma-separated values (CSV) response by specifying the **Accept**
-   * parameter; CSV output includes a fixed number of columns and optional headers.
-   *
-   * Per the JSON specification, the default character encoding for JSON content is effectively always UTF-8; per the
-   * HTTP specification, the default encoding for plain text and HTML is ISO-8859-1 (effectively, the ASCII character
-   * set). When specifying a content type of plain text or HTML, include the `charset` parameter to indicate the
-   * character encoding of the input text; for example: `Content-Type: text/plain;charset=utf-8`.
+   * content, but it requires much less text to produce an accurate profile. The service can analyze text in Arabic,
+   * English, Japanese, Korean, or Spanish. It can return its results in a variety of languages.
    *
    * **See also:**
-   * * [Requesting a profile](https://console.bluemix.net/docs/services/personality-insights/input.html)
-   * * [Understanding a JSON profile](https://console.bluemix.net/docs/services/personality-insights/output.html)
-   * * [Understanding a CSV profile](https://console.bluemix.net/docs/services/personality-insights/output-csv.html).
+   * * [Requesting a profile](/docs/services/personality-insights/input.html)
+   * * [Providing sufficient input](/docs/services/personality-insights/input.html#sufficient)
+   *
+   * ### Content types
+   *
+   *  You can provide input content as plain text (`text/plain`), HTML (`text/html`), or JSON (`application/json`) by
+   * specifying the **Content-Type** parameter. The default is `text/plain`.
+   * * Per the JSON specification, the default character encoding for JSON content is effectively always UTF-8.
+   * * Per the HTTP specification, the default encoding for plain text and HTML is ISO-8859-1 (effectively, the ASCII
+   * character set).
+   *
+   * When specifying a content type of plain text or HTML, include the `charset` parameter to indicate the character
+   * encoding of the input text; for example, `Content-Type: text/plain;charset=utf-8`.
+   *
+   * **See also:** [Specifying request and response formats](/docs/services/personality-insights/input.html#formats)
+   *
+   * ### Accept types
+   *
+   *  You must request a response as JSON (`application/json`) or comma-separated values (`text/csv`) by specifying the
+   * **Accept** parameter. CSV output includes a fixed number of columns. Set the **csv_headers** parameter to `true` to
+   * request optional column headers for CSV output.
+   *
+   * **See also:**
+   * * [Understanding a JSON profile](/docs/services/personality-insights/output.html)
+   * * [Understanding a CSV profile](/docs/services/personality-insights/output-csv.html).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {Content|string} params.content - A maximum of 20 MB of content to analyze, though the service requires much
    * less text; for more information, see [Providing sufficient
-   * input](https://console.bluemix.net/docs/services/personality-insights/input.html#sufficient). For JSON input,
-   * provide an object of type `Content`.
-   * @param {string} params.content_type - The type of the input. A character encoding can be specified by including a
-   * `charset` parameter. For example, 'text/html;charset=utf-8'.
+   * input](/docs/services/personality-insights/input.html#sufficient). For JSON input, provide an object of type
+   * `Content`.
+   * @param {string} [params.content_type] - The type of the input. For more information, see **Content types** in the
+   * method description.
+   *
+   * Default: `text/plain`.
    * @param {string} [params.content_language] - The language of the input text for the request: Arabic, English,
    * Japanese, Korean, or Spanish. Regional variants are treated as their parent language; for example, `en-US` is
    * interpreted as `en`.
@@ -106,17 +121,25 @@ class PersonalityInsightsV3 extends BaseService {
    * returned for each characteristic; raw scores are not compared with a sample population. By default, only normalized
    * percentiles are returned.
    * @param {boolean} [params.csv_headers] - Indicates whether column labels are returned with a CSV response. By
-   * default, no column labels are returned. Applies only when the **Accept** parameter is set to `text/csv`.
+   * default, no column labels are returned. Applies only when the response type is CSV (`text/csv`).
    * @param {boolean} [params.consumption_preferences] - Indicates whether consumption preferences are returned with the
    * results. By default, no consumption preferences are returned.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public profile(params: PersonalityInsightsV3.ProfileParams, callback?: PersonalityInsightsV3.Callback<PersonalityInsightsV3.Profile>): NodeJS.ReadableStream | void {
+  public profile(params: PersonalityInsightsV3.ProfileParams, callback?: PersonalityInsightsV3.Callback<PersonalityInsightsV3.Profile>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
-    const requiredParams = ['content', 'content_type'];
+    const _callback = callback;
+    const requiredParams = ['content'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.profile(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -155,30 +178,45 @@ class PersonalityInsightsV3 extends BaseService {
    * Get profile as csv.
    *
    * Generates a personality profile for the author of the input text. The service accepts a maximum of 20 MB of input
-   * content, but it requires much less text to produce an accurate profile; for more information, see [Providing
-   * sufficient input](https://console.bluemix.net/docs/services/personality-insights/input.html#sufficient). The
-   * service analyzes text in Arabic, English, Japanese, Korean, or Spanish and returns its results in a variety of
-   * languages. You can provide plain text, HTML, or JSON input by specifying the **Content-Type** parameter; the
-   * default is `text/plain`. Request a JSON or comma-separated values (CSV) response by specifying the **Accept**
-   * parameter; CSV output includes a fixed number of columns and optional headers.
-   *
-   * Per the JSON specification, the default character encoding for JSON content is effectively always UTF-8; per the
-   * HTTP specification, the default encoding for plain text and HTML is ISO-8859-1 (effectively, the ASCII character
-   * set). When specifying a content type of plain text or HTML, include the `charset` parameter to indicate the
-   * character encoding of the input text; for example: `Content-Type: text/plain;charset=utf-8`.
+   * content, but it requires much less text to produce an accurate profile. The service can analyze text in Arabic,
+   * English, Japanese, Korean, or Spanish. It can return its results in a variety of languages.
    *
    * **See also:**
-   * * [Requesting a profile](https://console.bluemix.net/docs/services/personality-insights/input.html)
-   * * [Understanding a JSON profile](https://console.bluemix.net/docs/services/personality-insights/output.html)
-   * * [Understanding a CSV profile](https://console.bluemix.net/docs/services/personality-insights/output-csv.html).
+   * * [Requesting a profile](/docs/services/personality-insights/input.html)
+   * * [Providing sufficient input](/docs/services/personality-insights/input.html#sufficient)
+   *
+   * ### Content types
+   *
+   *  You can provide input content as plain text (`text/plain`), HTML (`text/html`), or JSON (`application/json`) by
+   * specifying the **Content-Type** parameter. The default is `text/plain`.
+   * * Per the JSON specification, the default character encoding for JSON content is effectively always UTF-8.
+   * * Per the HTTP specification, the default encoding for plain text and HTML is ISO-8859-1 (effectively, the ASCII
+   * character set).
+   *
+   * When specifying a content type of plain text or HTML, include the `charset` parameter to indicate the character
+   * encoding of the input text; for example, `Content-Type: text/plain;charset=utf-8`.
+   *
+   * **See also:** [Specifying request and response formats](/docs/services/personality-insights/input.html#formats)
+   *
+   * ### Accept types
+   *
+   *  You must request a response as JSON (`application/json`) or comma-separated values (`text/csv`) by specifying the
+   * **Accept** parameter. CSV output includes a fixed number of columns. Set the **csv_headers** parameter to `true` to
+   * request optional column headers for CSV output.
+   *
+   * **See also:**
+   * * [Understanding a JSON profile](/docs/services/personality-insights/output.html)
+   * * [Understanding a CSV profile](/docs/services/personality-insights/output-csv.html).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {Content|string} params.content - A maximum of 20 MB of content to analyze, though the service requires much
    * less text; for more information, see [Providing sufficient
-   * input](https://console.bluemix.net/docs/services/personality-insights/input.html#sufficient). For JSON input,
-   * provide an object of type `Content`.
-   * @param {string} params.content_type - The type of the input. A character encoding can be specified by including a
-   * `charset` parameter. For example, 'text/html;charset=utf-8'.
+   * input](/docs/services/personality-insights/input.html#sufficient). For JSON input, provide an object of type
+   * `Content`.
+   * @param {string} [params.content_type] - The type of the input. For more information, see **Content types** in the
+   * method description.
+   *
+   * Default: `text/plain`.
    * @param {string} [params.content_language] - The language of the input text for the request: Arabic, English,
    * Japanese, Korean, or Spanish. Regional variants are treated as their parent language; for example, `en-US` is
    * interpreted as `en`.
@@ -196,17 +234,25 @@ class PersonalityInsightsV3 extends BaseService {
    * returned for each characteristic; raw scores are not compared with a sample population. By default, only normalized
    * percentiles are returned.
    * @param {boolean} [params.csv_headers] - Indicates whether column labels are returned with a CSV response. By
-   * default, no column labels are returned. Applies only when the **Accept** parameter is set to `text/csv`.
+   * default, no column labels are returned. Applies only when the response type is CSV (`text/csv`).
    * @param {boolean} [params.consumption_preferences] - Indicates whether consumption preferences are returned with the
    * results. By default, no consumption preferences are returned.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public profileAsCsv(params: PersonalityInsightsV3.ProfileAsCsvParams, callback?: PersonalityInsightsV3.Callback<NodeJS.ReadableStream|FileObject|Buffer>): NodeJS.ReadableStream | void {
+  public profileAsCsv(params: PersonalityInsightsV3.ProfileAsCsvParams, callback?: PersonalityInsightsV3.Callback<NodeJS.ReadableStream|FileObject|Buffer>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
-    const requiredParams = ['content', 'content_type'];
+    const _callback = callback;
+    const requiredParams = ['content'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.profileAsCsv(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -277,32 +323,33 @@ namespace PersonalityInsightsV3 {
 
   /** Parameters for the `profile` operation. */
   export interface ProfileParams {
-    /** A maximum of 20 MB of content to analyze, though the service requires much less text; for more information, see [Providing sufficient input](https://console.bluemix.net/docs/services/personality-insights/input.html#sufficient). For JSON input, provide an object of type `Content`. */
+    /** A maximum of 20 MB of content to analyze, though the service requires much less text; for more information, see [Providing sufficient input](/docs/services/personality-insights/input.html#sufficient). For JSON input, provide an object of type `Content`. */
     content: Content|string;
-    /** The type of the input. A character encoding can be specified by including a `charset` parameter. For example, 'text/html;charset=utf-8'. */
-    content_type: ProfileConstants.ContentType | string;
+    /** The type of the input. For more information, see **Content types** in the method description. Default: `text/plain`. */
+    content_type?: ProfileConstants.ContentType | string;
     /** The language of the input text for the request: Arabic, English, Japanese, Korean, or Spanish. Regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. The effect of the **Content-Language** parameter depends on the **Content-Type** parameter. When **Content-Type** is `text/plain` or `text/html`, **Content-Language** is the only way to specify the language. When **Content-Type** is `application/json`, **Content-Language** overrides a language specified with the `language` parameter of a `ContentItem` object, and content items that specify a different language are ignored; omit this parameter to base the language on the specification of the content items. You can specify any combination of languages for **Content-Language** and **Accept-Language**. */
     content_language?: ProfileConstants.ContentLanguage | string;
     /** The desired language of the response. For two-character arguments, regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. You can specify any combination of languages for the input and response content. */
     accept_language?: ProfileConstants.AcceptLanguage | string;
     /** Indicates whether a raw score in addition to a normalized percentile is returned for each characteristic; raw scores are not compared with a sample population. By default, only normalized percentiles are returned. */
     raw_scores?: boolean;
-    /** Indicates whether column labels are returned with a CSV response. By default, no column labels are returned. Applies only when the **Accept** parameter is set to `text/csv`. */
+    /** Indicates whether column labels are returned with a CSV response. By default, no column labels are returned. Applies only when the response type is CSV (`text/csv`). */
     csv_headers?: boolean;
     /** Indicates whether consumption preferences are returned with the results. By default, no consumption preferences are returned. */
     consumption_preferences?: boolean;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `profile` operation. */
   export namespace ProfileConstants {
-     /** The type of the input. A character encoding can be specified by including a `charset` parameter. For example, 'text/html;charset=utf-8'. */
+    /** The type of the input. For more information, see **Content types** in the method description. Default: `text/plain`. */
     export enum ContentType {
       APPLICATION_JSON = 'application/json',
       TEXT_HTML = 'text/html',
       TEXT_PLAIN = 'text/plain',
     }
-     /** The language of the input text for the request: Arabic, English, Japanese, Korean, or Spanish. Regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. The effect of the **Content-Language** parameter depends on the **Content-Type** parameter. When **Content-Type** is `text/plain` or `text/html`, **Content-Language** is the only way to specify the language. When **Content-Type** is `application/json`, **Content-Language** overrides a language specified with the `language` parameter of a `ContentItem` object, and content items that specify a different language are ignored; omit this parameter to base the language on the specification of the content items. You can specify any combination of languages for **Content-Language** and **Accept-Language**. */
+    /** The language of the input text for the request: Arabic, English, Japanese, Korean, or Spanish. Regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. The effect of the **Content-Language** parameter depends on the **Content-Type** parameter. When **Content-Type** is `text/plain` or `text/html`, **Content-Language** is the only way to specify the language. When **Content-Type** is `application/json`, **Content-Language** overrides a language specified with the `language` parameter of a `ContentItem` object, and content items that specify a different language are ignored; omit this parameter to base the language on the specification of the content items. You can specify any combination of languages for **Content-Language** and **Accept-Language**. */
     export enum ContentLanguage {
       AR = 'ar',
       EN = 'en',
@@ -310,7 +357,7 @@ namespace PersonalityInsightsV3 {
       JA = 'ja',
       KO = 'ko',
     }
-     /** The desired language of the response. For two-character arguments, regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. You can specify any combination of languages for the input and response content. */
+    /** The desired language of the response. For two-character arguments, regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. You can specify any combination of languages for the input and response content. */
     export enum AcceptLanguage {
       AR = 'ar',
       DE = 'de',
@@ -328,32 +375,33 @@ namespace PersonalityInsightsV3 {
 
   /** Parameters for the `profileAsCsv` operation. */
   export interface ProfileAsCsvParams {
-    /** A maximum of 20 MB of content to analyze, though the service requires much less text; for more information, see [Providing sufficient input](https://console.bluemix.net/docs/services/personality-insights/input.html#sufficient). For JSON input, provide an object of type `Content`. */
+    /** A maximum of 20 MB of content to analyze, though the service requires much less text; for more information, see [Providing sufficient input](/docs/services/personality-insights/input.html#sufficient). For JSON input, provide an object of type `Content`. */
     content: Content|string;
-    /** The type of the input. A character encoding can be specified by including a `charset` parameter. For example, 'text/html;charset=utf-8'. */
-    content_type: ProfileAsCsvConstants.ContentType | string;
+    /** The type of the input. For more information, see **Content types** in the method description. Default: `text/plain`. */
+    content_type?: ProfileAsCsvConstants.ContentType | string;
     /** The language of the input text for the request: Arabic, English, Japanese, Korean, or Spanish. Regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. The effect of the **Content-Language** parameter depends on the **Content-Type** parameter. When **Content-Type** is `text/plain` or `text/html`, **Content-Language** is the only way to specify the language. When **Content-Type** is `application/json`, **Content-Language** overrides a language specified with the `language` parameter of a `ContentItem` object, and content items that specify a different language are ignored; omit this parameter to base the language on the specification of the content items. You can specify any combination of languages for **Content-Language** and **Accept-Language**. */
     content_language?: ProfileAsCsvConstants.ContentLanguage | string;
     /** The desired language of the response. For two-character arguments, regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. You can specify any combination of languages for the input and response content. */
     accept_language?: ProfileAsCsvConstants.AcceptLanguage | string;
     /** Indicates whether a raw score in addition to a normalized percentile is returned for each characteristic; raw scores are not compared with a sample population. By default, only normalized percentiles are returned. */
     raw_scores?: boolean;
-    /** Indicates whether column labels are returned with a CSV response. By default, no column labels are returned. Applies only when the **Accept** parameter is set to `text/csv`. */
+    /** Indicates whether column labels are returned with a CSV response. By default, no column labels are returned. Applies only when the response type is CSV (`text/csv`). */
     csv_headers?: boolean;
     /** Indicates whether consumption preferences are returned with the results. By default, no consumption preferences are returned. */
     consumption_preferences?: boolean;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `profileAsCsv` operation. */
   export namespace ProfileAsCsvConstants {
-     /** The type of the input. A character encoding can be specified by including a `charset` parameter. For example, 'text/html;charset=utf-8'. */
+    /** The type of the input. For more information, see **Content types** in the method description. Default: `text/plain`. */
     export enum ContentType {
       APPLICATION_JSON = 'application/json',
       TEXT_HTML = 'text/html',
       TEXT_PLAIN = 'text/plain',
     }
-     /** The language of the input text for the request: Arabic, English, Japanese, Korean, or Spanish. Regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. The effect of the **Content-Language** parameter depends on the **Content-Type** parameter. When **Content-Type** is `text/plain` or `text/html`, **Content-Language** is the only way to specify the language. When **Content-Type** is `application/json`, **Content-Language** overrides a language specified with the `language` parameter of a `ContentItem` object, and content items that specify a different language are ignored; omit this parameter to base the language on the specification of the content items. You can specify any combination of languages for **Content-Language** and **Accept-Language**. */
+    /** The language of the input text for the request: Arabic, English, Japanese, Korean, or Spanish. Regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. The effect of the **Content-Language** parameter depends on the **Content-Type** parameter. When **Content-Type** is `text/plain` or `text/html`, **Content-Language** is the only way to specify the language. When **Content-Type** is `application/json`, **Content-Language** overrides a language specified with the `language` parameter of a `ContentItem` object, and content items that specify a different language are ignored; omit this parameter to base the language on the specification of the content items. You can specify any combination of languages for **Content-Language** and **Accept-Language**. */
     export enum ContentLanguage {
       AR = 'ar',
       EN = 'en',
@@ -361,7 +409,7 @@ namespace PersonalityInsightsV3 {
       JA = 'ja',
       KO = 'ko',
     }
-     /** The desired language of the response. For two-character arguments, regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. You can specify any combination of languages for the input and response content. */
+    /** The desired language of the response. For two-character arguments, regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. You can specify any combination of languages for the input and response content. */
     export enum AcceptLanguage {
       AR = 'ar',
       DE = 'de',

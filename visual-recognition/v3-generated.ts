@@ -104,9 +104,18 @@ class VisualRecognitionV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public classify(params?: VisualRecognitionV3.ClassifyParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.ClassifiedImages>): NodeJS.ReadableStream | void {
+  public classify(params?: VisualRecognitionV3.ClassifyParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.ClassifiedImages>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.classify(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
     const formData = {
       'images_file': {
         data: _params.images_file,
@@ -118,6 +127,7 @@ class VisualRecognitionV3 extends BaseService {
       'owners': _params.owners,
       'classifier_ids': _params.classifier_ids
     };
+ 
     const parameters = {
       options: {
         url: '/v3/classify',
@@ -132,6 +142,7 @@ class VisualRecognitionV3 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -173,9 +184,18 @@ class VisualRecognitionV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public detectFaces(params?: VisualRecognitionV3.DetectFacesParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.DetectedFaces>): NodeJS.ReadableStream | void {
+  public detectFaces(params?: VisualRecognitionV3.DetectFacesParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.DetectedFaces>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.detectFaces(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
     const formData = {
       'images_file': {
         data: _params.images_file,
@@ -184,6 +204,7 @@ class VisualRecognitionV3 extends BaseService {
       },
       'url': _params.url
     };
+ 
     const parameters = {
       options: {
         url: '/v3/detect_faces',
@@ -197,6 +218,7 @@ class VisualRecognitionV3 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -216,9 +238,8 @@ class VisualRecognitionV3 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.name - The name of the new classifier. Encode special characters in UTF-8.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} params.classname_positive_examples - A .zip file of images that
-   * depict the visual subject of a class in the new classifier. You can include more than one positive example file in
-   * a call.
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} params.positive_examples - A .zip file of images that depict the
+   * visual subject of a class in the new classifier. You can include more than one positive example file in a call.
    *
    * Specify the parameter name by appending `_positive_examples` to the class name. For example,
    * `goldenretriever_positive_examples` creates the class **goldenretriever**.
@@ -231,23 +252,32 @@ class VisualRecognitionV3 extends BaseService {
    * depict the visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images.
    *
    * Encode special characters in the file name in UTF-8.
-   * @param {string} [params.classname_positive_examples_filename] - The filename for classname_positive_examples.
-   *
-   * Specify the filename by appending `_positive_examples_filename` to the class name. For example,
-   * the filename parameter for `goldenretriever_positive_examples` would be `goldenretriever_positive_examples_filename`
-   *
+   * @param {string} [params.positive_examples_filename] - The filename for positive_examples.
    * @param {string} [params.negative_examples_filename] - The filename for negative_examples.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public createClassifier(params: VisualRecognitionV3.CreateClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>): NodeJS.ReadableStream | void {
+  public createClassifier(params: VisualRecognitionV3.CreateClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
-    const positiveExampleClasses = Object.keys(_params).filter(key => {
-      return key.match(/^.+positive_examples$/);
-    }) || ['<classname>_positive_examples'];
-    const requiredParams = ['name', ...positiveExampleClasses];
+    const _callback = callback;
+    const requiredParams = ['name'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createClassifier(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const positiveExamplesKeys = Object.keys(_params).filter(key => {
+      return key.match(/^.+_positive_examples$/);
+    });
+    if (positiveExamplesKeys.length === 0) {
+        requiredParams.push('<classname>_positive_examples');
+    }
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
@@ -257,31 +287,29 @@ class VisualRecognitionV3 extends BaseService {
         'WARNING: `negative_examples_filename` should be provided if `negative_examples` is not null. This will be REQUIRED in the next major release.'
       );
     }
+
     const formData = {
       'name': _params.name,
-      'classname_positive_examples': {
-        data: _params.classname_positive_examples,
-        filename: _params.classname_positive_examples_filename,
-        contentType: 'application/octet-stream'
-      },
       'negative_examples': {
         data: _params.negative_examples,
         filename: _params.negative_examples_filename,
         contentType: 'application/octet-stream'
       }
     };
-    positiveExampleClasses.forEach(positiveExampleClass => {
-      if (!_params[`${positiveExampleClass}_filename`]) {
+
+    positiveExamplesKeys.forEach(key => {
+      if (!_params[`${key}_filename`]) {
         console.warn(
-          `WARNING: \`${positiveExampleClass}_filename\` should be provided if \`${positiveExampleClass}\` is not null. This will be REQUIRED in the next major release.` 
+          `WARNING: \`${key}_filename\` should be provided if \`${key}\` is not null. This will be REQUIRED in the next major release.` 
         );
       }
-      formData[positiveExampleClass] = {
-        data: _params[positiveExampleClass],
-        filename: _params[`${positiveExampleClass}_filename`],
+      formData[key] = {
+        data: _params[key],
+        filename: _params[`${key}_filename`],
         contentType: 'application/octet-stream',
       };
     });
+ 
     const parameters = {
       options: {
         url: '/v3/classifiers',
@@ -295,6 +323,7 @@ class VisualRecognitionV3 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -307,17 +336,28 @@ class VisualRecognitionV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteClassifier(params: VisualRecognitionV3.DeleteClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Empty>): NodeJS.ReadableStream | void {
+  public deleteClassifier(params: VisualRecognitionV3.DeleteClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['classifier_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteClassifier(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'classifier_id': _params.classifier_id
     };
+ 
     const parameters = {
       options: {
         url: '/v3/classifiers/{classifier_id}',
@@ -331,6 +371,7 @@ class VisualRecognitionV3 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -345,17 +386,28 @@ class VisualRecognitionV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getClassifier(params: VisualRecognitionV3.GetClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>): NodeJS.ReadableStream | void {
+  public getClassifier(params: VisualRecognitionV3.GetClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['classifier_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getClassifier(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'classifier_id': _params.classifier_id
     };
+ 
     const parameters = {
       options: {
         url: '/v3/classifiers/{classifier_id}',
@@ -369,6 +421,7 @@ class VisualRecognitionV3 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -382,12 +435,22 @@ class VisualRecognitionV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listClassifiers(params?: VisualRecognitionV3.ListClassifiersParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifiers>): NodeJS.ReadableStream | void {
+  public listClassifiers(params?: VisualRecognitionV3.ListClassifiersParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifiers>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listClassifiers(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+ 
     const query = {
       'verbose': _params.verbose
     };
+ 
     const parameters = {
       options: {
         url: '/v3/classifiers',
@@ -401,6 +464,7 @@ class VisualRecognitionV3 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -421,9 +485,9 @@ class VisualRecognitionV3 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.classifier_id - The ID of the classifier.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.classname_positive_examples] - A .zip file of images that
-   * depict the visual subject of a class in the classifier. The positive examples create or update classes in the
-   * classifier. You can include more than one positive example file in a call.
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.positive_examples] - A .zip file of images that depict the
+   * visual subject of a class in the classifier. The positive examples create or update classes in the classifier. You
+   * can include more than one positive example file in a call.
    *
    * Specify the parameter name by appending `_positive_examples` to the class name. For example,
    * `goldenretriever_positive_examples` creates the class `goldenretriever`.
@@ -436,22 +500,29 @@ class VisualRecognitionV3 extends BaseService {
    * depict the visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images.
    *
    * Encode special characters in the file name in UTF-8.
-   * @param {string} [params.classname_positive_examples_filename] - The filename for classname_positive_examples.
-   *
-   * Specify the filename by appending `_positive_examples_filename` to the class name. For example,
-   * the filename parameter for `goldenretriever_positive_examples` would be `goldenretriever_positive_examples_filename`
+   * @param {string} [params.positive_examples_filename] - The filename for positive_examples.
    * @param {string} [params.negative_examples_filename] - The filename for negative_examples.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public updateClassifier(params: VisualRecognitionV3.UpdateClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>): NodeJS.ReadableStream | void {
+  public updateClassifier(params: VisualRecognitionV3.UpdateClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
-    const positiveExampleClasses = Object.keys(_params).filter(key => {
-      return key.match(/^.+positive_examples$/);
-    });
+    const _callback = callback;
     const requiredParams = ['classifier_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.updateClassifier(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const positiveExamplesKeys = Object.keys(_params).filter(key => {
+      return key.match(/^.+_positive_examples$/);
+    });
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
@@ -461,33 +532,32 @@ class VisualRecognitionV3 extends BaseService {
         'WARNING: `negative_examples_filename` should be provided if `negative_examples` is not null. This will be REQUIRED in the next major release.'
       );
     }
+
     const formData = {
-      'classname_positive_examples': {
-        data: _params.classname_positive_examples,
-        filename: _params.classname_positive_examples_filename,
-        contentType: 'application/octet-stream'
-      },
       'negative_examples': {
         data: _params.negative_examples,
         filename: _params.negative_examples_filename,
         contentType: 'application/octet-stream'
       }
     };
+
+    positiveExamplesKeys.forEach(key => {
+      if (!_params[`${key}_filename`]) {
+        console.warn(
+          `WARNING: \`${key}_filename\` should be provided if \`${key}\` is not null. This will be REQUIRED in the next major release.` 
+        );
+      }
+      formData[key] = {
+        data: _params[key],
+        filename: _params[`${key}_filename`],
+        contentType: 'application/octet-stream',
+      };
+    });
+
     const path = {
       'classifier_id': _params.classifier_id
     };
-    positiveExampleClasses.forEach(positiveExampleClass => {
-      if (!_params[`${positiveExampleClass}_filename`]) {
-        console.warn(
-          `WARNING: \`${positiveExampleClass}_filename\` should be provided if \`${positiveExampleClass}\` is not null. This will be REQUIRED in the next major release.` 
-        );
-      }
-      formData[positiveExampleClass] = {
-         data: _params[positiveExampleClass],
-         filename: _params[`${positiveExampleClass}_filename`],
-         contentType: 'application/octet-stream',
-      };
-    });
+ 
     const parameters = {
       options: {
         url: '/v3/classifiers/{classifier_id}',
@@ -502,6 +572,7 @@ class VisualRecognitionV3 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -521,22 +592,34 @@ class VisualRecognitionV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getCoreMlModel(params: VisualRecognitionV3.GetCoreMlModelParams, callback?: VisualRecognitionV3.Callback<NodeJS.ReadableStream|FileObject|Buffer>): NodeJS.ReadableStream | void {
+  public getCoreMlModel(params: VisualRecognitionV3.GetCoreMlModelParams, callback?: VisualRecognitionV3.Callback<NodeJS.ReadableStream|FileObject|Buffer>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['classifier_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getCoreMlModel(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+
     const path = {
       'classifier_id': _params.classifier_id
     };
+ 
     const parameters = {
       options: {
         url: '/v3/classifiers/{classifier_id}/core_ml_model',
         method: 'GET',
         path,
+        encoding: null,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, {
@@ -545,6 +628,7 @@ class VisualRecognitionV3 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -568,17 +652,28 @@ class VisualRecognitionV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteUserData(params: VisualRecognitionV3.DeleteUserDataParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Empty>): NodeJS.ReadableStream | void {
+  public deleteUserData(params: VisualRecognitionV3.DeleteUserDataParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['customer_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteUserData(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
+ 
     const query = {
       'customer_id': _params.customer_id
     };
+ 
     const parameters = {
       options: {
         url: '/v3/user_data',
@@ -592,6 +687,7 @@ class VisualRecognitionV3 extends BaseService {
         }, _params.headers),
       }),
     };
+
     return this.createRequest(parameters, _callback);
   };
 
@@ -648,11 +744,12 @@ namespace VisualRecognitionV3 {
     /** The filename for images_file. */
     images_filename?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `classify` operation. */
   export namespace ClassifyConstants {
-     /** The language of the output class names. The full set of languages is supported for the built-in classifier IDs: `default`, `food`, and `explicit`. The class names of custom classifiers are not translated. The response might not be in the specified language when the requested language is not supported or when there is no translation for the class name. */
+    /** The language of the output class names. The full set of languages is supported for the built-in classifier IDs: `default`, `food`, and `explicit`. The class names of custom classifiers are not translated. The response might not be in the specified language when the requested language is not supported or when there is no translation for the class name. */
     export enum AcceptLanguage {
       EN = 'en',
       AR = 'ar',
@@ -679,6 +776,7 @@ namespace VisualRecognitionV3 {
     /** The filename for images_file. */
     images_filename?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `createClassifier` operation. */
@@ -686,14 +784,15 @@ namespace VisualRecognitionV3 {
     /** The name of the new classifier. Encode special characters in UTF-8. */
     name: string;
     /** A .zip file of images that depict the visual subject of a class in the new classifier. You can include more than one positive example file in a call. Specify the parameter name by appending `_positive_examples` to the class name. For example, `goldenretriever_positive_examples` creates the class **goldenretriever**. Include at least 10 images in .jpg or .png format. The minimum recommended image resolution is 32X32 pixels. The maximum number of images is 10,000 images or 100 MB per .zip file. Encode special characters in the file name in UTF-8. */
-    classname_positive_examples: NodeJS.ReadableStream|FileObject|Buffer;
+    positive_examples: NodeJS.ReadableStream|FileObject|Buffer;
     /** A .zip file of images that do not depict the visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images. Encode special characters in the file name in UTF-8. */
     negative_examples?: NodeJS.ReadableStream|FileObject|Buffer;
-    /** The filename for classname_positive_examples. */
-    classname_positive_examples_filename?: string;
+    /** The filename for positive_examples. */
+    positive_examples_filename?: string;
     /** The filename for negative_examples. */
     negative_examples_filename?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteClassifier` operation. */
@@ -701,6 +800,7 @@ namespace VisualRecognitionV3 {
     /** The ID of the classifier. */
     classifier_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getClassifier` operation. */
@@ -708,6 +808,7 @@ namespace VisualRecognitionV3 {
     /** The ID of the classifier. */
     classifier_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listClassifiers` operation. */
@@ -715,6 +816,7 @@ namespace VisualRecognitionV3 {
     /** Specify `true` to return details about the classifiers. Omit this parameter to return a brief list of classifiers. */
     verbose?: boolean;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `updateClassifier` operation. */
@@ -722,14 +824,15 @@ namespace VisualRecognitionV3 {
     /** The ID of the classifier. */
     classifier_id: string;
     /** A .zip file of images that depict the visual subject of a class in the classifier. The positive examples create or update classes in the classifier. You can include more than one positive example file in a call. Specify the parameter name by appending `_positive_examples` to the class name. For example, `goldenretriever_positive_examples` creates the class `goldenretriever`. Include at least 10 images in .jpg or .png format. The minimum recommended image resolution is 32X32 pixels. The maximum number of images is 10,000 images or 100 MB per .zip file. Encode special characters in the file name in UTF-8. */
-    classname_positive_examples?: NodeJS.ReadableStream|FileObject|Buffer;
+    positive_examples?: NodeJS.ReadableStream|FileObject|Buffer;
     /** A .zip file of images that do not depict the visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images. Encode special characters in the file name in UTF-8. */
     negative_examples?: NodeJS.ReadableStream|FileObject|Buffer;
-    /** The filename for classname_positive_examples. */
-    classname_positive_examples_filename?: string;
+    /** The filename for positive_examples. */
+    positive_examples_filename?: string;
     /** The filename for negative_examples. */
     negative_examples_filename?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getCoreMlModel` operation. */
@@ -737,6 +840,7 @@ namespace VisualRecognitionV3 {
     /** The ID of the classifier. */
     classifier_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteUserData` operation. */
@@ -744,6 +848,7 @@ namespace VisualRecognitionV3 {
     /** The customer ID for which all data is to be deleted. */
     customer_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /*************************
@@ -761,9 +866,9 @@ namespace VisualRecognitionV3 {
     /** Name of the class. */
     class_name: string;
     /** Confidence score for the property in the range of 0 to 1. A higher score indicates greater likelihood that the class is depicted in the image. The default threshold for returning scores from a classifier is 0.5. */
-    score?: number;
+    score: number;
     /** Knowledge graph of the property. For example, `/fruit/pome/apple/eating apple/Granny Smith`. Included only if identified. */
-    type_hierarchy?: string;
+    type_hierarchy: string;
   }
 
   /** Results for one image. */
@@ -783,9 +888,9 @@ namespace VisualRecognitionV3 {
   /** Results for all images. */
   export interface ClassifiedImages {
     /** Number of custom classes identified in the images. */
-    custom_classes?: number;
+    custom_classes: number;
     /** Number of images processed for the API call. */
-    images_processed?: number;
+    images_processed: number;
     /** Classified images. */
     images: ClassifiedImage[];
     /** Information about what might cause less than optimal output. For example, a request sent with a corrupt .zip file and a list of image URLs will still complete, but does not return the expected output. Not returned when there is no warning. */
@@ -835,7 +940,7 @@ namespace VisualRecognitionV3 {
   /** Results for all faces. */
   export interface DetectedFaces {
     /** Number of images processed for the API call. */
-    images_processed?: number;
+    images_processed: number;
     /** The images. */
     images: ImageWithFaces[];
     /** Information about what might cause less than optimal output. For example, a request sent with a corrupt .zip file and a list of image URLs will still complete, but does not return the expected output. Not returned when there is no warning. */
@@ -869,7 +974,7 @@ namespace VisualRecognitionV3 {
     /** Estimated maximum age. */
     max?: number;
     /** Confidence score in the range of 0 to 1. A higher score indicates greater confidence in the estimated value for the property. */
-    score?: number;
+    score: number;
   }
 
   /** Information about the gender of the face. */
@@ -877,7 +982,7 @@ namespace VisualRecognitionV3 {
     /** Gender identified by the face. For example, `MALE` or `FEMALE`. */
     gender: string;
     /** Confidence score in the range of 0 to 1. A higher score indicates greater confidence in the estimated value for the property. */
-    score?: number;
+    score: number;
   }
 
   /** The location of the bounding box around the face. */

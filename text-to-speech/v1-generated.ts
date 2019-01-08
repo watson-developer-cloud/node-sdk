@@ -61,7 +61,7 @@ class TextToSpeechV1 extends BaseService {
    * about the voice. Specify a customization ID to obtain information for that custom voice model of the specified
    * voice. To list information about all available voices, use the **List voices** method.
    *
-   * **See also:** [Specifying a voice](https://console.bluemix.net/docs/services/text-to-speech/http.html#voices).
+   * **See also:** [Specifying a voice](/docs/services/text-to-speech/http.html#voices).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.voice - The voice for which information is to be returned.
@@ -73,10 +73,18 @@ class TextToSpeechV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getVoice(params: TextToSpeechV1.GetVoiceParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Voice>): NodeJS.ReadableStream | void {
+  public getVoice(params: TextToSpeechV1.GetVoiceParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Voice>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['voice'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getVoice(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -114,16 +122,24 @@ class TextToSpeechV1 extends BaseService {
    * Lists all voices available for use with the service. The information includes the name, language, gender, and other
    * details about the voice. To see information about a specific voice, use the **Get a voice** method.
    *
-   * **See also:** [Specifying a voice](https://console.bluemix.net/docs/services/text-to-speech/http.html#voices).
+   * **See also:** [Specifying a voice](/docs/services/text-to-speech/http.html#voices).
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listVoices(params?: TextToSpeechV1.ListVoicesParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Voices>): NodeJS.ReadableStream | void {
+  public listVoices(params?: TextToSpeechV1.ListVoicesParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Voices>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listVoices(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
  
     const parameters = {
       options: {
@@ -147,25 +163,85 @@ class TextToSpeechV1 extends BaseService {
   /**
    * Synthesize audio.
    *
-   * Synthesizes text to spoken audio, returning the synthesized audio stream as an array of bytes. You can pass a
-   * maximum of 5 KB of text.  Use the `Accept` header or the `accept` query parameter to specify the requested format
-   * (MIME type) of the response audio. By default, the service uses `audio/ogg;codecs=opus`.
+   * Synthesizes text to audio that is spoken in the specified voice. The service bases its understanding of the
+   * language for the input text on the specified voice. Use a voice that matches the language of the input text.
    *
-   * If a request includes invalid query parameters, the service returns a `Warnings` response header that provides
+   * The service returns the synthesized audio stream as an array of bytes. You can pass a maximum of 5 KB of text to
+   * the service.
+   *
+   * **See also:** [Synthesizing text to audio](/docs/services/text-to-speech/http.html#synthesize).
+   *
+   * ### Audio formats (accept types)
+   *
+   *  The service can return audio in the following formats (MIME types).
+   * * Where indicated, you can optionally specify the sampling rate (`rate`) of the audio. You must specify a sampling
+   * rate for the `audio/l16` and `audio/mulaw` formats. A specified sampling rate must lie in the range of 8 kHz to 192
+   * kHz.
+   * * For the `audio/l16` format, you can optionally specify the endianness (`endianness`) of the audio:
+   * `endianness=big-endian` or `endianness=little-endian`.
+   *
+   * Use the `Accept` header or the `accept` parameter to specify the requested format of the response audio. If you
+   * omit an audio format altogether, the service returns the audio in Ogg format with the Opus codec
+   * (`audio/ogg;codecs=opus`). The service always returns single-channel audio.
+   * * `audio/basic`
+   *
+   *   The service returns audio with a sampling rate of 8000 Hz.
+   * * `audio/flac`
+   *
+   *   You can optionally specify the `rate` of the audio. The default sampling rate is 22,050 Hz.
+   * * `audio/l16`
+   *
+   *   You must specify the `rate` of the audio. You can optionally specify the `endianness` of the audio. The default
+   * endianness is `little-endian`.
+   * * `audio/mp3`
+   *
+   *   You can optionally specify the `rate` of the audio. The default sampling rate is 22,050 Hz.
+   * * `audio/mpeg`
+   *
+   *   You can optionally specify the `rate` of the audio. The default sampling rate is 22,050 Hz.
+   * * `audio/mulaw`
+   *
+   *   You must specify the `rate` of the audio.
+   * * `audio/ogg`
+   *
+   *   The service returns the audio in the `vorbis` codec. You can optionally specify the `rate` of the audio. The
+   * default sampling rate is 22,050 Hz.
+   * * `audio/ogg;codecs=opus`
+   *
+   *   You can optionally specify the `rate` of the audio. The default sampling rate is 22,050 Hz.
+   * * `audio/ogg;codecs=vorbis`
+   *
+   *   You can optionally specify the `rate` of the audio. The default sampling rate is 22,050 Hz.
+   * * `audio/wav`
+   *
+   *   You can optionally specify the `rate` of the audio. The default sampling rate is 22,050 Hz.
+   * * `audio/webm`
+   *
+   *   The service returns the audio in the `opus` codec. The service returns audio with a sampling rate of 48,000 Hz.
+   * * `audio/webm;codecs=opus`
+   *
+   *   The service returns audio with a sampling rate of 48,000 Hz.
+   * * `audio/webm;codecs=vorbis`
+   *
+   *   You can optionally specify the `rate` of the audio. The default sampling rate is 22,050 Hz.
+   *
+   * For more information about specifying an audio format, including additional details about some of the formats, see
+   * [Specifying an audio format](/docs/services/text-to-speech/http.html#format).
+   *
+   * ### Warning messages
+   *
+   *  If a request includes invalid query parameters, the service returns a `Warnings` response header that provides
    * messages about the invalid parameters. The warning includes a descriptive message and a list of invalid argument
    * strings. For example, a message such as `\"Unknown arguments:\"` or `\"Unknown url query arguments:\"` followed by
-   * a list of the form `\"invalid_arg_1, invalid_arg_2.\"` The request succeeds despite the warnings.
-   *
-   * **See also:** [Synthesizing text to
-   * audio](https://console.bluemix.net/docs/services/text-to-speech/http.html#synthesize).
+   * a list of the form `\"{invalid_arg_1}, {invalid_arg_2}.\"` The request succeeds despite the warnings.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.text - The text to synthesize.
-   * @param {string} [params.accept] - The requested audio format (MIME type) of the audio. You can use the `Accept`
-   * header or the `accept` query parameter to specify the audio format. (For the `audio/l16` format, you can optionally
-   * specify `endianness=big-endian` or `endianness=little-endian`; the default is little endian.) For detailed
-   * information about the supported audio formats and sampling rates, see [Specifying an audio
-   * format](https://console.bluemix.net/docs/services/text-to-speech/http.html#format).
+   * @param {string} [params.accept] - The requested format (MIME type) of the audio. You can use the `Accept` header or
+   * the `accept` parameter to specify the audio format. For more information about specifying an audio format, see
+   * **Audio formats (accept types)** in the method description.
+   *
+   * Default: `audio/ogg;codecs=opus`.
    * @param {string} [params.voice] - The voice to use for synthesis.
    * @param {string} [params.customization_id] - The customization ID (GUID) of a custom voice model to use for the
    * synthesis. If a custom voice model is specified, it is guaranteed to work only if it matches the language of the
@@ -175,10 +251,18 @@ class TextToSpeechV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public synthesize(params: TextToSpeechV1.SynthesizeParams, callback?: TextToSpeechV1.Callback<NodeJS.ReadableStream|FileObject|Buffer>): NodeJS.ReadableStream | void {
+  public synthesize(params: TextToSpeechV1.SynthesizeParams, callback?: TextToSpeechV1.Callback<NodeJS.ReadableStream|FileObject|Buffer>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['text'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.synthesize(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -228,7 +312,7 @@ class TextToSpeechV1 extends BaseService {
    * **Note:** This method is currently a beta release.
    *
    * **See also:** [Querying a word from a
-   * language](https://console.bluemix.net/docs/services/text-to-speech/custom-entries.html#cuWordsQueryLanguage).
+   * language](/docs/services/text-to-speech/custom-entries.html#cuWordsQueryLanguage).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.text - The word for which the pronunciation is requested.
@@ -246,10 +330,18 @@ class TextToSpeechV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getPronunciation(params: TextToSpeechV1.GetPronunciationParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Pronunciation>): NodeJS.ReadableStream | void {
+  public getPronunciation(params: TextToSpeechV1.GetPronunciationParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Pronunciation>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['text'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getPronunciation(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -292,8 +384,7 @@ class TextToSpeechV1 extends BaseService {
    *
    * **Note:** This method is currently a beta release.
    *
-   * **See also:** [Creating a custom
-   * model](https://console.bluemix.net/docs/services/text-to-speech/custom-models.html#cuModelsCreate).
+   * **See also:** [Creating a custom model](/docs/services/text-to-speech/custom-models.html#cuModelsCreate).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.name - The name of the new custom voice model.
@@ -305,10 +396,18 @@ class TextToSpeechV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public createVoiceModel(params: TextToSpeechV1.CreateVoiceModelParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.VoiceModel>): NodeJS.ReadableStream | void {
+  public createVoiceModel(params: TextToSpeechV1.CreateVoiceModelParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.VoiceModel>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['name'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createVoiceModel(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -347,8 +446,7 @@ class TextToSpeechV1 extends BaseService {
    *
    * **Note:** This method is currently a beta release.
    *
-   * **See also:** [Deleting a custom
-   * model](https://console.bluemix.net/docs/services/text-to-speech/custom-models.html#cuModelsDelete).
+   * **See also:** [Deleting a custom model](/docs/services/text-to-speech/custom-models.html#cuModelsDelete).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom voice model. You must make the
@@ -357,10 +455,18 @@ class TextToSpeechV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteVoiceModel(params: TextToSpeechV1.DeleteVoiceModelParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): NodeJS.ReadableStream | void {
+  public deleteVoiceModel(params: TextToSpeechV1.DeleteVoiceModelParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['customization_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteVoiceModel(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -395,8 +501,7 @@ class TextToSpeechV1 extends BaseService {
    *
    * **Note:** This method is currently a beta release.
    *
-   * **See also:** [Querying a custom
-   * model](https://console.bluemix.net/docs/services/text-to-speech/custom-models.html#cuModelsQuery).
+   * **See also:** [Querying a custom model](/docs/services/text-to-speech/custom-models.html#cuModelsQuery).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom voice model. You must make the
@@ -405,10 +510,18 @@ class TextToSpeechV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getVoiceModel(params: TextToSpeechV1.GetVoiceModelParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.VoiceModel>): NodeJS.ReadableStream | void {
+  public getVoiceModel(params: TextToSpeechV1.GetVoiceModelParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.VoiceModel>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['customization_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getVoiceModel(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -445,8 +558,7 @@ class TextToSpeechV1 extends BaseService {
    *
    * **Note:** This method is currently a beta release.
    *
-   * **See also:** [Querying all custom
-   * models](https://console.bluemix.net/docs/services/text-to-speech/custom-models.html#cuModelsQueryAll).
+   * **See also:** [Querying all custom models](/docs/services/text-to-speech/custom-models.html#cuModelsQueryAll).
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {string} [params.language] - The language for which custom voice models that are owned by the requesting
@@ -456,9 +568,17 @@ class TextToSpeechV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listVoiceModels(params?: TextToSpeechV1.ListVoiceModelsParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.VoiceModels>): NodeJS.ReadableStream | void {
+  public listVoiceModels(params?: TextToSpeechV1.ListVoiceModelsParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.VoiceModels>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listVoiceModels(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
  
     const query = {
       'language': _params.language
@@ -502,11 +622,9 @@ class TextToSpeechV1 extends BaseService {
    * **Note:** This method is currently a beta release.
    *
    * **See also:**
-   * * [Updating a custom
-   * model](https://console.bluemix.net/docs/services/text-to-speech/custom-models.html#cuModelsUpdate)
-   * * [Adding words to a Japanese custom
-   * model](https://console.bluemix.net/docs/services/text-to-speech/custom-entries.html#cuJapaneseAdd)
-   * * [Understanding customization](https://console.bluemix.net/docs/services/text-to-speech/custom-intro.html).
+   * * [Updating a custom model](/docs/services/text-to-speech/custom-models.html#cuModelsUpdate)
+   * * [Adding words to a Japanese custom model](/docs/services/text-to-speech/custom-entries.html#cuJapaneseAdd)
+   * * [Understanding customization](/docs/services/text-to-speech/custom-intro.html).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom voice model. You must make the
@@ -519,10 +637,18 @@ class TextToSpeechV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public updateVoiceModel(params: TextToSpeechV1.UpdateVoiceModelParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): NodeJS.ReadableStream | void {
+  public updateVoiceModel(params: TextToSpeechV1.UpdateVoiceModelParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['customization_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.updateVoiceModel(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -583,11 +709,9 @@ class TextToSpeechV1 extends BaseService {
    * **Note:** This method is currently a beta release.
    *
    * **See also:**
-   * * [Adding a single word to a custom
-   * model](https://console.bluemix.net/docs/services/text-to-speech/custom-entries.html#cuWordAdd)
-   * * [Adding words to a Japanese custom
-   * model](https://console.bluemix.net/docs/services/text-to-speech/custom-entries.html#cuJapaneseAdd)
-   * * [Understanding customization](https://console.bluemix.net/docs/services/text-to-speech/custom-intro.html).
+   * * [Adding a single word to a custom model](/docs/services/text-to-speech/custom-entries.html#cuWordAdd)
+   * * [Adding words to a Japanese custom model](/docs/services/text-to-speech/custom-entries.html#cuJapaneseAdd)
+   * * [Understanding customization](/docs/services/text-to-speech/custom-intro.html).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom voice model. You must make the
@@ -599,16 +723,23 @@ class TextToSpeechV1 extends BaseService {
    * @param {string} [params.part_of_speech] - **Japanese only.** The part of speech for the word. The service uses the
    * value to produce the correct intonation for the word. You can create only a single entry, with or without a single
    * part of speech, for any word; you cannot create multiple entries with different parts of speech for the same word.
-   * For more information, see [Working with Japanese
-   * entries](https://console.bluemix.net/docs/services/text-to-speech/custom-rules.html#jaNotes).
+   * For more information, see [Working with Japanese entries](/docs/services/text-to-speech/custom-rules.html#jaNotes).
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public addWord(params: TextToSpeechV1.AddWordParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): NodeJS.ReadableStream | void {
+  public addWord(params: TextToSpeechV1.AddWordParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['customization_id', 'word', 'translation'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.addWord(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -664,11 +795,9 @@ class TextToSpeechV1 extends BaseService {
    * **Note:** This method is currently a beta release.
    *
    * **See also:**
-   * * [Adding multiple words to a custom
-   * model](https://console.bluemix.net/docs/services/text-to-speech/custom-entries.html#cuWordsAdd)
-   * * [Adding words to a Japanese custom
-   * model](https://console.bluemix.net/docs/services/text-to-speech/custom-entries.html#cuJapaneseAdd)
-   * * [Understanding customization](https://console.bluemix.net/docs/services/text-to-speech/custom-intro.html).
+   * * [Adding multiple words to a custom model](/docs/services/text-to-speech/custom-entries.html#cuWordsAdd)
+   * * [Adding words to a Japanese custom model](/docs/services/text-to-speech/custom-entries.html#cuJapaneseAdd)
+   * * [Understanding customization](/docs/services/text-to-speech/custom-intro.html).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom voice model. You must make the
@@ -683,10 +812,18 @@ class TextToSpeechV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public addWords(params: TextToSpeechV1.AddWordsParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): NodeJS.ReadableStream | void {
+  public addWords(params: TextToSpeechV1.AddWordsParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['customization_id', 'words'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.addWords(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -729,7 +866,7 @@ class TextToSpeechV1 extends BaseService {
    * **Note:** This method is currently a beta release.
    *
    * **See also:** [Deleting a word from a custom
-   * model](https://console.bluemix.net/docs/services/text-to-speech/custom-entries.html#cuWordDelete).
+   * model](/docs/services/text-to-speech/custom-entries.html#cuWordDelete).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom voice model. You must make the
@@ -739,10 +876,18 @@ class TextToSpeechV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteWord(params: TextToSpeechV1.DeleteWordParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): NodeJS.ReadableStream | void {
+  public deleteWord(params: TextToSpeechV1.DeleteWordParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['customization_id', 'word'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteWord(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -779,7 +924,7 @@ class TextToSpeechV1 extends BaseService {
    * **Note:** This method is currently a beta release.
    *
    * **See also:** [Querying a single word from a custom
-   * model](https://console.bluemix.net/docs/services/text-to-speech/custom-entries.html#cuWordQueryModel).
+   * model](/docs/services/text-to-speech/custom-entries.html#cuWordQueryModel).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom voice model. You must make the
@@ -789,10 +934,18 @@ class TextToSpeechV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getWord(params: TextToSpeechV1.GetWordParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Translation>): NodeJS.ReadableStream | void {
+  public getWord(params: TextToSpeechV1.GetWordParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Translation>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['customization_id', 'word'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getWord(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -830,7 +983,7 @@ class TextToSpeechV1 extends BaseService {
    * **Note:** This method is currently a beta release.
    *
    * **See also:** [Querying all words from a custom
-   * model](https://console.bluemix.net/docs/services/text-to-speech/custom-entries.html#cuWordsQueryModel).
+   * model](/docs/services/text-to-speech/custom-entries.html#cuWordsQueryModel).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom voice model. You must make the
@@ -839,10 +992,18 @@ class TextToSpeechV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listWords(params: TextToSpeechV1.ListWordsParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Words>): NodeJS.ReadableStream | void {
+  public listWords(params: TextToSpeechV1.ListWordsParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Words>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['customization_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listWords(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -884,8 +1045,7 @@ class TextToSpeechV1 extends BaseService {
    * You associate a customer ID with data by passing the `X-Watson-Metadata` header with a request that passes the
    * data.
    *
-   * **See also:** [Information
-   * security](https://console.bluemix.net/docs/services/text-to-speech/information-security.html).
+   * **See also:** [Information security](/docs/services/text-to-speech/information-security.html).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customer_id - The customer ID for which all data is to be deleted.
@@ -893,10 +1053,18 @@ class TextToSpeechV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteUserData(params: TextToSpeechV1.DeleteUserDataParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): NodeJS.ReadableStream | void {
+  public deleteUserData(params: TextToSpeechV1.DeleteUserDataParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['customer_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteUserData(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -962,11 +1130,12 @@ namespace TextToSpeechV1 {
     /** The customization ID (GUID) of a custom voice model for which information is to be returned. You must make the request with service credentials created for the instance of the service that owns the custom model. Omit the parameter to see information about the specified voice with no customization. */
     customization_id?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `getVoice` operation. */
   export namespace GetVoiceConstants {
-     /** The voice for which information is to be returned. */
+    /** The voice for which information is to be returned. */
     export enum Voice {
       EN_US_ALLISONVOICE = 'en-US_AllisonVoice',
       EN_US_LISAVOICE = 'en-US_LisaVoice',
@@ -988,40 +1157,42 @@ namespace TextToSpeechV1 {
   /** Parameters for the `listVoices` operation. */
   export interface ListVoicesParams {
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `synthesize` operation. */
   export interface SynthesizeParams {
     /** The text to synthesize. */
     text: string;
-    /** The requested audio format (MIME type) of the audio. You can use the `Accept` header or the `accept` query parameter to specify the audio format. (For the `audio/l16` format, you can optionally specify `endianness=big-endian` or `endianness=little-endian`; the default is little endian.) For detailed information about the supported audio formats and sampling rates, see [Specifying an audio format](https://console.bluemix.net/docs/services/text-to-speech/http.html#format). */
+    /** The requested format (MIME type) of the audio. You can use the `Accept` header or the `accept` parameter to specify the audio format. For more information about specifying an audio format, see **Audio formats (accept types)** in the method description. Default: `audio/ogg;codecs=opus`. */
     accept?: SynthesizeConstants.Accept | string;
     /** The voice to use for synthesis. */
     voice?: SynthesizeConstants.Voice | string;
     /** The customization ID (GUID) of a custom voice model to use for the synthesis. If a custom voice model is specified, it is guaranteed to work only if it matches the language of the indicated voice. You must make the request with service credentials created for the instance of the service that owns the custom model. Omit the parameter to use the specified voice with no customization. */
     customization_id?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `synthesize` operation. */
   export namespace SynthesizeConstants {
-     /** The requested audio format (MIME type) of the audio. You can use the `Accept` header or the `accept` query parameter to specify the audio format. (For the `audio/l16` format, you can optionally specify `endianness=big-endian` or `endianness=little-endian`; the default is little endian.) For detailed information about the supported audio formats and sampling rates, see [Specifying an audio format](https://console.bluemix.net/docs/services/text-to-speech/http.html#format). */
+    /** The requested format (MIME type) of the audio. You can use the `Accept` header or the `accept` parameter to specify the audio format. For more information about specifying an audio format, see **Audio formats (accept types)** in the method description. Default: `audio/ogg;codecs=opus`. */
     export enum Accept {
       BASIC = 'audio/basic',
       FLAC = 'audio/flac',
-      L16_RATE_NNNN = 'audio/l16;rate=nnnn',
+      L16 = 'audio/l16',
       OGG = 'audio/ogg',
       OGG_CODECS_OPUS = 'audio/ogg;codecs=opus',
       OGG_CODECS_VORBIS = 'audio/ogg;codecs=vorbis',
       MP3 = 'audio/mp3',
       MPEG = 'audio/mpeg',
-      MULAW_RATE_NNNN = 'audio/mulaw;rate=nnnn',
+      MULAW = 'audio/mulaw',
       WAV = 'audio/wav',
       WEBM = 'audio/webm',
       WEBM_CODECS_OPUS = 'audio/webm;codecs=opus',
       WEBM_CODECS_VORBIS = 'audio/webm;codecs=vorbis',
     }
-     /** The voice to use for synthesis. */
+    /** The voice to use for synthesis. */
     export enum Voice {
       EN_US_ALLISONVOICE = 'en-US_AllisonVoice',
       EN_US_LISAVOICE = 'en-US_LisaVoice',
@@ -1051,11 +1222,12 @@ namespace TextToSpeechV1 {
     /** The customization ID (GUID) of a custom voice model for which the pronunciation is to be returned. The language of a specified custom model must match the language of the specified voice. If the word is not defined in the specified custom model, the service returns the default translation for the custom model's language. You must make the request with service credentials created for the instance of the service that owns the custom model. Omit the parameter to see the translation for the specified voice with no customization. */
     customization_id?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `getPronunciation` operation. */
   export namespace GetPronunciationConstants {
-     /** A voice that specifies the language in which the pronunciation is to be returned. All voices for the same language (for example, `en-US`) return the same translation. */
+    /** A voice that specifies the language in which the pronunciation is to be returned. All voices for the same language (for example, `en-US`) return the same translation. */
     export enum Voice {
       EN_US_ALLISONVOICE = 'en-US_AllisonVoice',
       EN_US_LISAVOICE = 'en-US_LisaVoice',
@@ -1072,7 +1244,7 @@ namespace TextToSpeechV1 {
       JA_JP_EMIVOICE = 'ja-JP_EmiVoice',
       PT_BR_ISABELAVOICE = 'pt-BR_IsabelaVoice',
     }
-     /** The phoneme format in which to return the pronunciation. Omit the parameter to obtain the pronunciation in the default format. */
+    /** The phoneme format in which to return the pronunciation. Omit the parameter to obtain the pronunciation in the default format. */
     export enum Format {
       IPA = 'ipa',
       IBM = 'ibm',
@@ -1088,11 +1260,12 @@ namespace TextToSpeechV1 {
     /** A description of the new custom voice model. Specifying a description is recommended. */
     description?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `createVoiceModel` operation. */
   export namespace CreateVoiceModelConstants {
-     /** The language of the new custom voice model. Omit the parameter to use the the default language, `en-US`. */
+    /** The language of the new custom voice model. Omit the parameter to use the the default language, `en-US`. */
     export enum Language {
       DE_DE = 'de-DE',
       EN_US = 'en-US',
@@ -1112,6 +1285,7 @@ namespace TextToSpeechV1 {
     /** The customization ID (GUID) of the custom voice model. You must make the request with service credentials created for the instance of the service that owns the custom model. */
     customization_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getVoiceModel` operation. */
@@ -1119,6 +1293,7 @@ namespace TextToSpeechV1 {
     /** The customization ID (GUID) of the custom voice model. You must make the request with service credentials created for the instance of the service that owns the custom model. */
     customization_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listVoiceModels` operation. */
@@ -1126,11 +1301,12 @@ namespace TextToSpeechV1 {
     /** The language for which custom voice models that are owned by the requesting service credentials are to be returned. Omit the parameter to see all custom voice models that are owned by the requester. */
     language?: ListVoiceModelsConstants.Language | string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `listVoiceModels` operation. */
   export namespace ListVoiceModelsConstants {
-     /** The language for which custom voice models that are owned by the requesting service credentials are to be returned. Omit the parameter to see all custom voice models that are owned by the requester. */
+    /** The language for which custom voice models that are owned by the requesting service credentials are to be returned. Omit the parameter to see all custom voice models that are owned by the requester. */
     export enum Language {
       DE_DE = 'de-DE',
       EN_US = 'en-US',
@@ -1156,6 +1332,7 @@ namespace TextToSpeechV1 {
     /** An array of `Word` objects that provides the words and their translations that are to be added or updated for the custom voice model. Pass an empty array to make no additions or updates. */
     words?: Word[];
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `addWord` operation. */
@@ -1166,14 +1343,15 @@ namespace TextToSpeechV1 {
     word: string;
     /** The phonetic or sounds-like translation for the word. A phonetic translation is based on the SSML format for representing the phonetic string of a word either as an IPA translation or as an IBM SPR translation. A sounds-like is one or more words that, when combined, sound like the word. */
     translation: string;
-    /** **Japanese only.** The part of speech for the word. The service uses the value to produce the correct intonation for the word. You can create only a single entry, with or without a single part of speech, for any word; you cannot create multiple entries with different parts of speech for the same word. For more information, see [Working with Japanese entries](https://console.bluemix.net/docs/services/text-to-speech/custom-rules.html#jaNotes). */
+    /** **Japanese only.** The part of speech for the word. The service uses the value to produce the correct intonation for the word. You can create only a single entry, with or without a single part of speech, for any word; you cannot create multiple entries with different parts of speech for the same word. For more information, see [Working with Japanese entries](/docs/services/text-to-speech/custom-rules.html#jaNotes). */
     part_of_speech?: AddWordConstants.PartOfSpeech | string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `addWord` operation. */
   export namespace AddWordConstants {
-     /** **Japanese only.** The part of speech for the word. The service uses the value to produce the correct intonation for the word. You can create only a single entry, with or without a single part of speech, for any word; you cannot create multiple entries with different parts of speech for the same word. For more information, see [Working with Japanese entries](https://console.bluemix.net/docs/services/text-to-speech/custom-rules.html#jaNotes). */
+    /** **Japanese only.** The part of speech for the word. The service uses the value to produce the correct intonation for the word. You can create only a single entry, with or without a single part of speech, for any word; you cannot create multiple entries with different parts of speech for the same word. For more information, see [Working with Japanese entries](/docs/services/text-to-speech/custom-rules.html#jaNotes). */
     export enum PartOfSpeech {
       JOSI = 'Josi',
       MESI = 'Mesi',
@@ -1202,6 +1380,7 @@ namespace TextToSpeechV1 {
     /** The **Add custom words** method accepts an array of `Word` objects. Each object provides a word that is to be added or updated for the custom voice model and the word's translation. The **List custom words** method returns an array of `Word` objects. Each object shows a word and its translation from the custom voice model. The words are listed in alphabetical order, with uppercase letters listed before lowercase letters. The array is empty if the custom model contains no words. */
     words: Word[];
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteWord` operation. */
@@ -1211,6 +1390,7 @@ namespace TextToSpeechV1 {
     /** The word that is to be deleted from the custom voice model. */
     word: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getWord` operation. */
@@ -1220,6 +1400,7 @@ namespace TextToSpeechV1 {
     /** The word that is to be queried from the custom voice model. */
     word: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listWords` operation. */
@@ -1227,6 +1408,7 @@ namespace TextToSpeechV1 {
     /** The customization ID (GUID) of the custom voice model. You must make the request with service credentials created for the instance of the service that owns the custom model. */
     customization_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteUserData` operation. */
@@ -1234,6 +1416,7 @@ namespace TextToSpeechV1 {
     /** The customer ID for which all data is to be deleted. */
     customer_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /*************************
@@ -1246,7 +1429,7 @@ namespace TextToSpeechV1 {
     pronunciation: string;
   }
 
-  /** SupportedFeatures. */
+  /** Describes the additional service features that are supported with the voice. */
   export interface SupportedFeatures {
     /** If `true`, the voice can be customized; if `false`, the voice cannot be customized. (Same as `customizable`.). */
     custom_pronunciation: boolean;
@@ -1258,7 +1441,7 @@ namespace TextToSpeechV1 {
   export interface Translation {
     /** The phonetic or sounds-like translation for the word. A phonetic translation is based on the SSML format for representing the phonetic string of a word either as an IPA translation or as an IBM SPR translation. A sounds-like is one or more words that, when combined, sound like the word. */
     translation: string;
-    /** **Japanese only.** The part of speech for the word. The service uses the value to produce the correct intonation for the word. You can create only a single entry, with or without a single part of speech, for any word; you cannot create multiple entries with different parts of speech for the same word. For more information, see [Working with Japanese entries](https://console.bluemix.net/docs/services/text-to-speech/custom-rules.html#jaNotes). */
+    /** **Japanese only.** The part of speech for the word. The service uses the value to produce the correct intonation for the word. You can create only a single entry, with or without a single part of speech, for any word; you cannot create multiple entries with different parts of speech for the same word. For more information, see [Working with Japanese entries](/docs/services/text-to-speech/custom-rules.html#jaNotes). */
     part_of_speech?: string;
   }
 
@@ -1276,7 +1459,7 @@ namespace TextToSpeechV1 {
     description: string;
     /** If `true`, the voice can be customized; if `false`, the voice cannot be customized. (Same as `custom_pronunciation`; maintained for backward compatibility.). */
     customizable: boolean;
-    /** Describes the additional service features supported with the voice. */
+    /** Describes the additional service features that are supported with the voice. */
     supported_features: SupportedFeatures;
     /** Returns information about a specified custom voice model. This field is returned only by the **Get a voice** method and only when you specify the customization ID of a custom voice model. */
     customization?: VoiceModel;
@@ -1320,7 +1503,7 @@ namespace TextToSpeechV1 {
     word: string;
     /** The phonetic or sounds-like translation for the word. A phonetic translation is based on the SSML format for representing the phonetic string of a word either as an IPA or IBM SPR translation. A sounds-like translation consists of one or more words that, when combined, sound like the word. */
     translation: string;
-    /** **Japanese only.** The part of speech for the word. The service uses the value to produce the correct intonation for the word. You can create only a single entry, with or without a single part of speech, for any word; you cannot create multiple entries with different parts of speech for the same word. For more information, see [Working with Japanese entries](https://console.bluemix.net/docs/services/text-to-speech/custom-rules.html#jaNotes). */
+    /** **Japanese only.** The part of speech for the word. The service uses the value to produce the correct intonation for the word. You can create only a single entry, with or without a single part of speech, for any word; you cannot create multiple entries with different parts of speech for the same word. For more information, see [Working with Japanese entries](/docs/services/text-to-speech/custom-rules.html#jaNotes). */
     part_of_speech?: string;
   }
 

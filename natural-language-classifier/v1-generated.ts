@@ -67,10 +67,18 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public classify(params: NaturalLanguageClassifierV1.ClassifyParams, callback?: NaturalLanguageClassifierV1.Callback<NaturalLanguageClassifierV1.Classification>): NodeJS.ReadableStream | void {
+  public classify(params: NaturalLanguageClassifierV1.ClassifyParams, callback?: NaturalLanguageClassifierV1.Callback<NaturalLanguageClassifierV1.Classification>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['classifier_id', 'text'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.classify(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -119,10 +127,18 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public classifyCollection(params: NaturalLanguageClassifierV1.ClassifyCollectionParams, callback?: NaturalLanguageClassifierV1.Callback<NaturalLanguageClassifierV1.ClassificationCollection>): NodeJS.ReadableStream | void {
+  public classifyCollection(params: NaturalLanguageClassifierV1.ClassifyCollectionParams, callback?: NaturalLanguageClassifierV1.Callback<NaturalLanguageClassifierV1.ClassificationCollection>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['classifier_id', 'collection'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.classifyCollection(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -173,18 +189,26 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * Supported languages are English (`en`), Arabic (`ar`), French (`fr`), German, (`de`), Italian (`it`), Japanese
    * (`ja`), Korean (`ko`), Brazilian Portuguese (`pt`), and Spanish (`es`).
    * @param {NodeJS.ReadableStream|FileObject|Buffer} params.training_data - Training data in CSV format. Each text
-   * value must have at least one class. The data can include up to 20,000 records. For details, see [Data
-   * preparation](https://console.bluemix.net/docs/services/natural-language-classifier/using-your-data.html).
+   * value must have at least one class. The data can include up to 3,000 classes and 20,000 records. For details, see
+   * [Data preparation](https://console.bluemix.net/docs/services/natural-language-classifier/using-your-data.html).
    * @param {string} [params.metadata_filename] - The filename for training_metadata.
    * @param {string} [params.training_data_filename] - The filename for training_data.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public createClassifier(params: NaturalLanguageClassifierV1.CreateClassifierParams, callback?: NaturalLanguageClassifierV1.Callback<NaturalLanguageClassifierV1.Classifier>): NodeJS.ReadableStream | void {
+  public createClassifier(params: NaturalLanguageClassifierV1.CreateClassifierParams, callback?: NaturalLanguageClassifierV1.Callback<NaturalLanguageClassifierV1.Classifier>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['metadata', 'training_data'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createClassifier(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -230,10 +254,18 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteClassifier(params: NaturalLanguageClassifierV1.DeleteClassifierParams, callback?: NaturalLanguageClassifierV1.Callback<NaturalLanguageClassifierV1.Empty>): NodeJS.ReadableStream | void {
+  public deleteClassifier(params: NaturalLanguageClassifierV1.DeleteClassifierParams, callback?: NaturalLanguageClassifierV1.Callback<NaturalLanguageClassifierV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['classifier_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteClassifier(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -272,10 +304,18 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getClassifier(params: NaturalLanguageClassifierV1.GetClassifierParams, callback?: NaturalLanguageClassifierV1.Callback<NaturalLanguageClassifierV1.Classifier>): NodeJS.ReadableStream | void {
+  public getClassifier(params: NaturalLanguageClassifierV1.GetClassifierParams, callback?: NaturalLanguageClassifierV1.Callback<NaturalLanguageClassifierV1.Classifier>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['classifier_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getClassifier(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -313,9 +353,17 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listClassifiers(params?: NaturalLanguageClassifierV1.ListClassifiersParams, callback?: NaturalLanguageClassifierV1.Callback<NaturalLanguageClassifierV1.ClassifierList>): NodeJS.ReadableStream | void {
+  public listClassifiers(params?: NaturalLanguageClassifierV1.ListClassifiersParams, callback?: NaturalLanguageClassifierV1.Callback<NaturalLanguageClassifierV1.ClassifierList>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listClassifiers(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
  
     const parameters = {
       options: {
@@ -373,6 +421,7 @@ namespace NaturalLanguageClassifierV1 {
     /** The submitted phrase. The maximum length is 2048 characters. */
     text: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `classifyCollection` operation. */
@@ -382,19 +431,21 @@ namespace NaturalLanguageClassifierV1 {
     /** The submitted phrases. */
     collection: ClassifyInput[];
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `createClassifier` operation. */
   export interface CreateClassifierParams {
     /** Metadata in JSON format. The metadata identifies the language of the data, and an optional name to identify the classifier. Specify the language with the 2-letter primary language code as assigned in ISO standard 639. Supported languages are English (`en`), Arabic (`ar`), French (`fr`), German, (`de`), Italian (`it`), Japanese (`ja`), Korean (`ko`), Brazilian Portuguese (`pt`), and Spanish (`es`). */
     metadata: NodeJS.ReadableStream|FileObject|Buffer;
-    /** Training data in CSV format. Each text value must have at least one class. The data can include up to 20,000 records. For details, see [Data preparation](https://console.bluemix.net/docs/services/natural-language-classifier/using-your-data.html). */
+    /** Training data in CSV format. Each text value must have at least one class. The data can include up to 3,000 classes and 20,000 records. For details, see [Data preparation](https://console.bluemix.net/docs/services/natural-language-classifier/using-your-data.html). */
     training_data: NodeJS.ReadableStream|FileObject|Buffer;
     /** The filename for training_metadata. */
     metadata_filename?: string;
     /** The filename for training_data. */
     training_data_filename?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteClassifier` operation. */
@@ -402,6 +453,7 @@ namespace NaturalLanguageClassifierV1 {
     /** Classifier ID to delete. */
     classifier_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getClassifier` operation. */
@@ -409,11 +461,13 @@ namespace NaturalLanguageClassifierV1 {
     /** Classifier ID to query. */
     classifier_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listClassifiers` operation. */
   export interface ListClassifiersParams {
     headers?: Object;
+    return_response?: boolean;
   }
 
   /*************************

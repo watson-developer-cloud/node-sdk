@@ -78,10 +78,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public createEnvironment(params: DiscoveryV1.CreateEnvironmentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Environment>): NodeJS.ReadableStream | void {
+  public createEnvironment(params: DiscoveryV1.CreateEnvironmentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Environment>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['name'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createEnvironment(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -121,10 +129,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteEnvironment(params: DiscoveryV1.DeleteEnvironmentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteEnvironmentResponse>): NodeJS.ReadableStream | void {
+  public deleteEnvironment(params: DiscoveryV1.DeleteEnvironmentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteEnvironmentResponse>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteEnvironment(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -161,10 +177,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getEnvironment(params: DiscoveryV1.GetEnvironmentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Environment>): NodeJS.ReadableStream | void {
+  public getEnvironment(params: DiscoveryV1.GetEnvironmentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Environment>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getEnvironment(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -203,9 +227,17 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listEnvironments(params?: DiscoveryV1.ListEnvironmentsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.ListEnvironmentsResponse>): NodeJS.ReadableStream | void {
+  public listEnvironments(params?: DiscoveryV1.ListEnvironmentsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.ListEnvironmentsResponse>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listEnvironments(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
  
     const query = {
       'name': _params.name
@@ -240,10 +272,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listFields(params: DiscoveryV1.ListFieldsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.ListCollectionFieldsResponse>): NodeJS.ReadableStream | void {
+  public listFields(params: DiscoveryV1.ListFieldsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.ListCollectionFieldsResponse>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_ids'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listFields(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -292,10 +332,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public updateEnvironment(params: DiscoveryV1.UpdateEnvironmentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Environment>): NodeJS.ReadableStream | void {
+  public updateEnvironment(params: DiscoveryV1.UpdateEnvironmentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Environment>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.updateEnvironment(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -361,10 +409,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public createConfiguration(params: DiscoveryV1.CreateConfigurationParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Configuration>): NodeJS.ReadableStream | void {
+  public createConfiguration(params: DiscoveryV1.CreateConfigurationParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Configuration>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'name'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createConfiguration(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -418,10 +474,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteConfiguration(params: DiscoveryV1.DeleteConfigurationParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteConfigurationResponse>): NodeJS.ReadableStream | void {
+  public deleteConfiguration(params: DiscoveryV1.DeleteConfigurationParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteConfigurationResponse>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'configuration_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteConfiguration(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -460,10 +524,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getConfiguration(params: DiscoveryV1.GetConfigurationParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Configuration>): NodeJS.ReadableStream | void {
+  public getConfiguration(params: DiscoveryV1.GetConfigurationParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Configuration>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'configuration_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getConfiguration(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -504,10 +576,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listConfigurations(params: DiscoveryV1.ListConfigurationsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.ListConfigurationsResponse>): NodeJS.ReadableStream | void {
+  public listConfigurations(params: DiscoveryV1.ListConfigurationsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.ListConfigurationsResponse>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listConfigurations(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -565,10 +645,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public updateConfiguration(params: DiscoveryV1.UpdateConfigurationParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Configuration>): NodeJS.ReadableStream | void {
+  public updateConfiguration(params: DiscoveryV1.UpdateConfigurationParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Configuration>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'configuration_id', 'name'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.updateConfiguration(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -645,10 +733,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public testConfigurationInEnvironment(params: DiscoveryV1.TestConfigurationInEnvironmentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TestDocument>): NodeJS.ReadableStream | void {
+  public testConfigurationInEnvironment(params: DiscoveryV1.TestConfigurationInEnvironmentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TestDocument>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.testConfigurationInEnvironment(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -716,10 +812,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public createCollection(params: DiscoveryV1.CreateCollectionParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Collection>): NodeJS.ReadableStream | void {
+  public createCollection(params: DiscoveryV1.CreateCollectionParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Collection>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'name'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createCollection(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -766,10 +870,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteCollection(params: DiscoveryV1.DeleteCollectionParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteCollectionResponse>): NodeJS.ReadableStream | void {
+  public deleteCollection(params: DiscoveryV1.DeleteCollectionParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteCollectionResponse>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteCollection(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -808,10 +920,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getCollection(params: DiscoveryV1.GetCollectionParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Collection>): NodeJS.ReadableStream | void {
+  public getCollection(params: DiscoveryV1.GetCollectionParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Collection>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getCollection(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -852,10 +972,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listCollectionFields(params: DiscoveryV1.ListCollectionFieldsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.ListCollectionFieldsResponse>): NodeJS.ReadableStream | void {
+  public listCollectionFields(params: DiscoveryV1.ListCollectionFieldsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.ListCollectionFieldsResponse>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listCollectionFields(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -896,10 +1024,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listCollections(params: DiscoveryV1.ListCollectionsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.ListCollectionsResponse>): NodeJS.ReadableStream | void {
+  public listCollections(params: DiscoveryV1.ListCollectionsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.ListCollectionsResponse>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listCollections(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -945,10 +1081,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public updateCollection(params: DiscoveryV1.UpdateCollectionParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Collection>): NodeJS.ReadableStream | void {
+  public updateCollection(params: DiscoveryV1.UpdateCollectionParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Collection>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.updateCollection(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1016,10 +1160,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public createExpansions(params: DiscoveryV1.CreateExpansionsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Expansions>): NodeJS.ReadableStream | void {
+  public createExpansions(params: DiscoveryV1.CreateExpansionsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Expansions>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id', 'expansions'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createExpansions(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1069,10 +1221,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public createTokenizationDictionary(params: DiscoveryV1.CreateTokenizationDictionaryParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TokenDictStatusResponse>): NodeJS.ReadableStream | void {
+  public createTokenizationDictionary(params: DiscoveryV1.CreateTokenizationDictionaryParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TokenDictStatusResponse>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createTokenizationDictionary(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1120,10 +1280,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteExpansions(params: DiscoveryV1.DeleteExpansionsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): NodeJS.ReadableStream | void {
+  public deleteExpansions(params: DiscoveryV1.DeleteExpansionsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteExpansions(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1164,10 +1332,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteTokenizationDictionary(params: DiscoveryV1.DeleteTokenizationDictionaryParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): NodeJS.ReadableStream | void {
+  public deleteTokenizationDictionary(params: DiscoveryV1.DeleteTokenizationDictionaryParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteTokenizationDictionary(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1208,10 +1384,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getTokenizationDictionaryStatus(params: DiscoveryV1.GetTokenizationDictionaryStatusParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TokenDictStatusResponse>): NodeJS.ReadableStream | void {
+  public getTokenizationDictionaryStatus(params: DiscoveryV1.GetTokenizationDictionaryStatusParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TokenDictStatusResponse>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getTokenizationDictionaryStatus(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1253,10 +1437,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listExpansions(params: DiscoveryV1.ListExpansionsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Expansions>): NodeJS.ReadableStream | void {
+  public listExpansions(params: DiscoveryV1.ListExpansionsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Expansions>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listExpansions(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1330,10 +1522,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public addDocument(params: DiscoveryV1.AddDocumentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DocumentAccepted>): NodeJS.ReadableStream | void {
+  public addDocument(params: DiscoveryV1.AddDocumentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DocumentAccepted>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.addDocument(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1391,10 +1591,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteDocument(params: DiscoveryV1.DeleteDocumentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteDocumentResponse>): NodeJS.ReadableStream | void {
+  public deleteDocument(params: DiscoveryV1.DeleteDocumentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteDocumentResponse>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id', 'document_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteDocument(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1439,10 +1647,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getDocumentStatus(params: DiscoveryV1.GetDocumentStatusParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DocumentStatus>): NodeJS.ReadableStream | void {
+  public getDocumentStatus(params: DiscoveryV1.GetDocumentStatusParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DocumentStatus>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id', 'document_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getDocumentStatus(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1496,10 +1712,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public updateDocument(params: DiscoveryV1.UpdateDocumentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DocumentAccepted>): NodeJS.ReadableStream | void {
+  public updateDocument(params: DiscoveryV1.UpdateDocumentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DocumentAccepted>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id', 'document_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.updateDocument(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1610,10 +1834,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public federatedQuery(params: DiscoveryV1.FederatedQueryParams, callback?: DiscoveryV1.Callback<DiscoveryV1.QueryResponse>): NodeJS.ReadableStream | void {
+  public federatedQuery(params: DiscoveryV1.FederatedQueryParams, callback?: DiscoveryV1.Callback<DiscoveryV1.QueryResponse>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.federatedQuery(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1723,10 +1955,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public federatedQueryNotices(params: DiscoveryV1.FederatedQueryNoticesParams, callback?: DiscoveryV1.Callback<DiscoveryV1.QueryNoticesResponse>): NodeJS.ReadableStream | void {
+  public federatedQueryNotices(params: DiscoveryV1.FederatedQueryNoticesParams, callback?: DiscoveryV1.Callback<DiscoveryV1.QueryNoticesResponse>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_ids'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.federatedQueryNotices(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1835,10 +2075,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public query(params: DiscoveryV1.QueryParams, callback?: DiscoveryV1.Callback<DiscoveryV1.QueryResponse>): NodeJS.ReadableStream | void {
+  public query(params: DiscoveryV1.QueryParams, callback?: DiscoveryV1.Callback<DiscoveryV1.QueryResponse>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.query(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1923,10 +2171,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public queryEntities(params: DiscoveryV1.QueryEntitiesParams, callback?: DiscoveryV1.Callback<DiscoveryV1.QueryEntitiesResponse>): NodeJS.ReadableStream | void {
+  public queryEntities(params: DiscoveryV1.QueryEntitiesParams, callback?: DiscoveryV1.Callback<DiscoveryV1.QueryEntitiesResponse>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.queryEntities(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2019,10 +2275,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public queryNotices(params: DiscoveryV1.QueryNoticesParams, callback?: DiscoveryV1.Callback<DiscoveryV1.QueryNoticesResponse>): NodeJS.ReadableStream | void {
+  public queryNotices(params: DiscoveryV1.QueryNoticesParams, callback?: DiscoveryV1.Callback<DiscoveryV1.QueryNoticesResponse>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.queryNotices(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2096,10 +2360,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public queryRelations(params: DiscoveryV1.QueryRelationsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.QueryRelationsResponse>): NodeJS.ReadableStream | void {
+  public queryRelations(params: DiscoveryV1.QueryRelationsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.QueryRelationsResponse>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.queryRelations(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2158,10 +2430,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public addTrainingData(params: DiscoveryV1.AddTrainingDataParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingQuery>): NodeJS.ReadableStream | void {
+  public addTrainingData(params: DiscoveryV1.AddTrainingDataParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingQuery>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.addTrainingData(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2214,10 +2494,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public createTrainingExample(params: DiscoveryV1.CreateTrainingExampleParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingExample>): NodeJS.ReadableStream | void {
+  public createTrainingExample(params: DiscoveryV1.CreateTrainingExampleParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingExample>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id', 'query_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createTrainingExample(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2267,10 +2555,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteAllTrainingData(params: DiscoveryV1.DeleteAllTrainingDataParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): NodeJS.ReadableStream | void {
+  public deleteAllTrainingData(params: DiscoveryV1.DeleteAllTrainingDataParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteAllTrainingData(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2312,10 +2608,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteTrainingData(params: DiscoveryV1.DeleteTrainingDataParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): NodeJS.ReadableStream | void {
+  public deleteTrainingData(params: DiscoveryV1.DeleteTrainingDataParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id', 'query_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteTrainingData(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2359,10 +2663,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteTrainingExample(params: DiscoveryV1.DeleteTrainingExampleParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): NodeJS.ReadableStream | void {
+  public deleteTrainingExample(params: DiscoveryV1.DeleteTrainingExampleParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id', 'query_id', 'example_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteTrainingExample(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2406,10 +2718,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getTrainingData(params: DiscoveryV1.GetTrainingDataParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingQuery>): NodeJS.ReadableStream | void {
+  public getTrainingData(params: DiscoveryV1.GetTrainingDataParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingQuery>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id', 'query_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getTrainingData(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2453,10 +2773,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getTrainingExample(params: DiscoveryV1.GetTrainingExampleParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingExample>): NodeJS.ReadableStream | void {
+  public getTrainingExample(params: DiscoveryV1.GetTrainingExampleParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingExample>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id', 'query_id', 'example_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getTrainingExample(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2499,10 +2827,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listTrainingData(params: DiscoveryV1.ListTrainingDataParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingDataSet>): NodeJS.ReadableStream | void {
+  public listTrainingData(params: DiscoveryV1.ListTrainingDataParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingDataSet>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listTrainingData(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2544,10 +2880,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listTrainingExamples(params: DiscoveryV1.ListTrainingExamplesParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingExampleList>): NodeJS.ReadableStream | void {
+  public listTrainingExamples(params: DiscoveryV1.ListTrainingExamplesParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingExampleList>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id', 'query_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listTrainingExamples(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2593,10 +2937,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public updateTrainingExample(params: DiscoveryV1.UpdateTrainingExampleParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingExample>): NodeJS.ReadableStream | void {
+  public updateTrainingExample(params: DiscoveryV1.UpdateTrainingExampleParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingExample>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id', 'query_id', 'example_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.updateTrainingExample(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2654,10 +3006,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteUserData(params: DiscoveryV1.DeleteUserDataParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): NodeJS.ReadableStream | void {
+  public deleteUserData(params: DiscoveryV1.DeleteUserDataParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['customer_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteUserData(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2702,10 +3062,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public createEvent(params: DiscoveryV1.CreateEventParams, callback?: DiscoveryV1.Callback<DiscoveryV1.CreateEventResponse>): NodeJS.ReadableStream | void {
+  public createEvent(params: DiscoveryV1.CreateEventParams, callback?: DiscoveryV1.Callback<DiscoveryV1.CreateEventResponse>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['type', 'data'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createEvent(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2752,9 +3120,17 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getMetricsEventRate(params?: DiscoveryV1.GetMetricsEventRateParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricResponse>): NodeJS.ReadableStream | void {
+  public getMetricsEventRate(params?: DiscoveryV1.GetMetricsEventRateParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricResponse>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getMetricsEventRate(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
  
     const query = {
       'start_time': _params.start_time,
@@ -2794,9 +3170,17 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getMetricsQuery(params?: DiscoveryV1.GetMetricsQueryParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricResponse>): NodeJS.ReadableStream | void {
+  public getMetricsQuery(params?: DiscoveryV1.GetMetricsQueryParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricResponse>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getMetricsQuery(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
  
     const query = {
       'start_time': _params.start_time,
@@ -2838,9 +3222,17 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getMetricsQueryEvent(params?: DiscoveryV1.GetMetricsQueryEventParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricResponse>): NodeJS.ReadableStream | void {
+  public getMetricsQueryEvent(params?: DiscoveryV1.GetMetricsQueryEventParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricResponse>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getMetricsQueryEvent(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
  
     const query = {
       'start_time': _params.start_time,
@@ -2881,9 +3273,17 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getMetricsQueryNoResults(params?: DiscoveryV1.GetMetricsQueryNoResultsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricResponse>): NodeJS.ReadableStream | void {
+  public getMetricsQueryNoResults(params?: DiscoveryV1.GetMetricsQueryNoResultsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricResponse>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getMetricsQueryNoResults(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
  
     const query = {
       'start_time': _params.start_time,
@@ -2921,9 +3321,17 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getMetricsQueryTokenEvent(params?: DiscoveryV1.GetMetricsQueryTokenEventParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricTokenResponse>): NodeJS.ReadableStream | void {
+  public getMetricsQueryTokenEvent(params?: DiscoveryV1.GetMetricsQueryTokenEventParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricTokenResponse>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getMetricsQueryTokenEvent(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
  
     const query = {
       'count': _params.count
@@ -2968,9 +3376,17 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public queryLog(params?: DiscoveryV1.QueryLogParams, callback?: DiscoveryV1.Callback<DiscoveryV1.LogQueryResponse>): NodeJS.ReadableStream | void {
+  public queryLog(params?: DiscoveryV1.QueryLogParams, callback?: DiscoveryV1.Callback<DiscoveryV1.LogQueryResponse>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.queryLog(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
  
     const query = {
       'filter': _params.filter,
@@ -3022,10 +3438,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public createCredentials(params: DiscoveryV1.CreateCredentialsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Credentials>): NodeJS.ReadableStream | void {
+  public createCredentials(params: DiscoveryV1.CreateCredentialsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Credentials>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createCredentials(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -3072,10 +3496,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteCredentials(params: DiscoveryV1.DeleteCredentialsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteCredentials>): NodeJS.ReadableStream | void {
+  public deleteCredentials(params: DiscoveryV1.DeleteCredentialsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteCredentials>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'credential_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteCredentials(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -3119,10 +3551,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getSourceCredentials(params: DiscoveryV1.GetSourceCredentialsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Credentials>): NodeJS.ReadableStream | void {
+  public getSourceCredentials(params: DiscoveryV1.GetSourceCredentialsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Credentials>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'credential_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getSourceCredentials(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -3164,10 +3604,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listCredentials(params: DiscoveryV1.ListCredentialsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.CredentialsList>): NodeJS.ReadableStream | void {
+  public listCredentials(params: DiscoveryV1.ListCredentialsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.CredentialsList>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listCredentials(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -3216,10 +3664,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public updateCredentials(params: DiscoveryV1.UpdateCredentialsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Credentials>): NodeJS.ReadableStream | void {
+  public updateCredentials(params: DiscoveryV1.UpdateCredentialsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Credentials>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'credential_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.updateCredentials(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -3298,6 +3754,7 @@ namespace DiscoveryV1 {
     /** Size of the environment. In the Lite plan the default and only accepted value is `LT`, in all other plans the default is `S`. */
     size?: CreateEnvironmentConstants.Size | string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `createEnvironment` operation. */
@@ -3322,6 +3779,7 @@ namespace DiscoveryV1 {
     /** The ID of the environment. */
     environment_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getEnvironment` operation. */
@@ -3329,6 +3787,7 @@ namespace DiscoveryV1 {
     /** The ID of the environment. */
     environment_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listEnvironments` operation. */
@@ -3336,6 +3795,7 @@ namespace DiscoveryV1 {
     /** Show only the environment with the given name. */
     name?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listFields` operation. */
@@ -3345,6 +3805,7 @@ namespace DiscoveryV1 {
     /** A comma-separated list of collection IDs to be queried against. */
     collection_ids: string[];
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `updateEnvironment` operation. */
@@ -3358,6 +3819,7 @@ namespace DiscoveryV1 {
     /** Size that the environment should be increased to. Environment size cannot be modified when using a Lite plan. Environment size can only increased and not decreased. */
     size?: UpdateEnvironmentConstants.Size | string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `updateEnvironment` operation. */
@@ -3392,6 +3854,7 @@ namespace DiscoveryV1 {
     /** Object containing source parameters for the configuration. */
     source?: Source;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteConfiguration` operation. */
@@ -3401,6 +3864,7 @@ namespace DiscoveryV1 {
     /** The ID of the configuration. */
     configuration_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getConfiguration` operation. */
@@ -3410,6 +3874,7 @@ namespace DiscoveryV1 {
     /** The ID of the configuration. */
     configuration_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listConfigurations` operation. */
@@ -3419,6 +3884,7 @@ namespace DiscoveryV1 {
     /** Find configurations with the given name. */
     name?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `updateConfiguration` operation. */
@@ -3440,6 +3906,7 @@ namespace DiscoveryV1 {
     /** Object containing source parameters for the configuration. */
     source?: Source;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `testConfigurationInEnvironment` operation. */
@@ -3461,6 +3928,7 @@ namespace DiscoveryV1 {
     /** The filename for file. */
     filename?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `testConfigurationInEnvironment` operation. */
@@ -3498,6 +3966,7 @@ namespace DiscoveryV1 {
     /** The language of the documents stored in the collection, in the form of an ISO 639-1 language code. */
     language?: CreateCollectionConstants.Language | string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `createCollection` operation. */
@@ -3524,6 +3993,7 @@ namespace DiscoveryV1 {
     /** The ID of the collection. */
     collection_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getCollection` operation. */
@@ -3533,6 +4003,7 @@ namespace DiscoveryV1 {
     /** The ID of the collection. */
     collection_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listCollectionFields` operation. */
@@ -3542,6 +4013,7 @@ namespace DiscoveryV1 {
     /** The ID of the collection. */
     collection_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listCollections` operation. */
@@ -3551,6 +4023,7 @@ namespace DiscoveryV1 {
     /** Find collections with the given name. */
     name?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `updateCollection` operation. */
@@ -3566,6 +4039,7 @@ namespace DiscoveryV1 {
     /** The ID of the configuration in which the collection is to be updated. */
     configuration_id?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `createExpansions` operation. */
@@ -3577,6 +4051,7 @@ namespace DiscoveryV1 {
     /** An array of query expansion definitions. Each object in the **expansions** array represents a term or set of terms that will be expanded into other terms. Each expansion object can be configured as bidirectional or unidirectional. Bidirectional means that all terms are expanded to all other terms in the object. Unidirectional means that a set list of terms can be expanded into a second list of terms. To create a bi-directional expansion specify an **expanded_terms** array. When found in a query, all items in the **expanded_terms** array are then expanded to the other items in the same array. To create a uni-directional expansion, specify both an array of **input_terms** and an array of **expanded_terms**. When items in the **input_terms** array are present in a query, they are expanded using the items listed in the **expanded_terms** array. */
     expansions: Expansion[];
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `createTokenizationDictionary` operation. */
@@ -3588,6 +4063,7 @@ namespace DiscoveryV1 {
     /** An array of tokenization rules. Each rule contains, the original `text` string, component `tokens`, any alternate character set `readings`, and which `part_of_speech` the text is from. */
     tokenization_rules?: TokenDictRule[];
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteExpansions` operation. */
@@ -3597,6 +4073,7 @@ namespace DiscoveryV1 {
     /** The ID of the collection. */
     collection_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteTokenizationDictionary` operation. */
@@ -3606,6 +4083,7 @@ namespace DiscoveryV1 {
     /** The ID of the collection. */
     collection_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getTokenizationDictionaryStatus` operation. */
@@ -3615,6 +4093,7 @@ namespace DiscoveryV1 {
     /** The ID of the collection. */
     collection_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listExpansions` operation. */
@@ -3624,6 +4103,7 @@ namespace DiscoveryV1 {
     /** The ID of the collection. */
     collection_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `addDocument` operation. */
@@ -3641,6 +4121,7 @@ namespace DiscoveryV1 {
     /** The filename for file. */
     filename?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `addDocument` operation. */
@@ -3665,6 +4146,7 @@ namespace DiscoveryV1 {
     /** The ID of the document. */
     document_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getDocumentStatus` operation. */
@@ -3676,6 +4158,7 @@ namespace DiscoveryV1 {
     /** The ID of the document. */
     document_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `updateDocument` operation. */
@@ -3695,6 +4178,7 @@ namespace DiscoveryV1 {
     /** The filename for file. */
     filename?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `updateDocument` operation. */
@@ -3792,6 +4276,7 @@ namespace DiscoveryV1 {
     /** A comma-separated list of field names that are used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison. */
     similar_fields?: string[];
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `query` operation. */
@@ -3843,6 +4328,7 @@ namespace DiscoveryV1 {
     /** If `true`, queries are not stored in the Discovery **Logs** endpoint. */
     logging_opt_out?: boolean;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `queryEntities` operation. */
@@ -3862,6 +4348,7 @@ namespace DiscoveryV1 {
     /** The number of evidence items to return for each result. The default is `0`. The maximum number of evidence items per query is 10,000. */
     evidence_count?: number;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `queryNotices` operation. */
@@ -3905,6 +4392,7 @@ namespace DiscoveryV1 {
     /** A comma-separated list of field names that are used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison. */
     similar_fields?: string[];
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `queryRelations` operation. */
@@ -3926,6 +4414,7 @@ namespace DiscoveryV1 {
     /** The number of evidence items to return for each result. The default is `0`. The maximum number of evidence items per query is 10,000. */
     evidence_count?: number;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `queryRelations` operation. */
@@ -3947,6 +4436,7 @@ namespace DiscoveryV1 {
     filter?: string;
     examples?: TrainingExample[];
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `createTrainingExample` operation. */
@@ -3961,6 +4451,7 @@ namespace DiscoveryV1 {
     cross_reference?: string;
     relevance?: number;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteAllTrainingData` operation. */
@@ -3970,6 +4461,7 @@ namespace DiscoveryV1 {
     /** The ID of the collection. */
     collection_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteTrainingData` operation. */
@@ -3981,6 +4473,7 @@ namespace DiscoveryV1 {
     /** The ID of the query used for training. */
     query_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteTrainingExample` operation. */
@@ -3994,6 +4487,7 @@ namespace DiscoveryV1 {
     /** The ID of the document as it is indexed. */
     example_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getTrainingData` operation. */
@@ -4005,6 +4499,7 @@ namespace DiscoveryV1 {
     /** The ID of the query used for training. */
     query_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getTrainingExample` operation. */
@@ -4018,6 +4513,7 @@ namespace DiscoveryV1 {
     /** The ID of the document as it is indexed. */
     example_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listTrainingData` operation. */
@@ -4027,6 +4523,7 @@ namespace DiscoveryV1 {
     /** The ID of the collection. */
     collection_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listTrainingExamples` operation. */
@@ -4038,6 +4535,7 @@ namespace DiscoveryV1 {
     /** The ID of the query used for training. */
     query_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `updateTrainingExample` operation. */
@@ -4053,6 +4551,7 @@ namespace DiscoveryV1 {
     cross_reference?: string;
     relevance?: number;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteUserData` operation. */
@@ -4060,6 +4559,7 @@ namespace DiscoveryV1 {
     /** The customer ID for which all data is to be deleted. */
     customer_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `createEvent` operation. */
@@ -4069,6 +4569,7 @@ namespace DiscoveryV1 {
     /** Query event data object. */
     data: EventData;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `createEvent` operation. */
@@ -4088,6 +4589,7 @@ namespace DiscoveryV1 {
     /** The type of result to consider when calculating the metric. */
     result_type?: GetMetricsEventRateConstants.ResultType | string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `getMetricsEventRate` operation. */
@@ -4107,6 +4609,7 @@ namespace DiscoveryV1 {
     /** The type of result to consider when calculating the metric. */
     result_type?: GetMetricsQueryConstants.ResultType | string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `getMetricsQuery` operation. */
@@ -4126,6 +4629,7 @@ namespace DiscoveryV1 {
     /** The type of result to consider when calculating the metric. */
     result_type?: GetMetricsQueryEventConstants.ResultType | string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `getMetricsQueryEvent` operation. */
@@ -4145,6 +4649,7 @@ namespace DiscoveryV1 {
     /** The type of result to consider when calculating the metric. */
     result_type?: GetMetricsQueryNoResultsConstants.ResultType | string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `getMetricsQueryNoResults` operation. */
@@ -4160,6 +4665,7 @@ namespace DiscoveryV1 {
     /** Number of results to return. */
     count?: number;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `queryLog` operation. */
@@ -4175,6 +4681,7 @@ namespace DiscoveryV1 {
     /** A comma-separated list of fields in the document to sort on. You can optionally specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the default sort direction if no prefix is specified. */
     sort?: string[];
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `createCredentials` operation. */
@@ -4186,6 +4693,7 @@ namespace DiscoveryV1 {
     /** Object containing details of the stored credentials. Obtain credentials for your source from the administrator of the source. */
     credential_details?: CredentialDetails;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `createCredentials` operation. */
@@ -4205,6 +4713,7 @@ namespace DiscoveryV1 {
     /** The unique identifier for a set of source credentials. */
     credential_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getSourceCredentials` operation. */
@@ -4214,6 +4723,7 @@ namespace DiscoveryV1 {
     /** The unique identifier for a set of source credentials. */
     credential_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listCredentials` operation. */
@@ -4221,6 +4731,7 @@ namespace DiscoveryV1 {
     /** The ID of the environment. */
     environment_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `updateCredentials` operation. */
@@ -4234,6 +4745,7 @@ namespace DiscoveryV1 {
     /** Object containing details of the stored credentials. Obtain credentials for your source from the administrator of the source. */
     credential_details?: CredentialDetails;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `updateCredentials` operation. */
