@@ -485,6 +485,8 @@ namespace AssistantV2 {
     actions?: DialogNodeAction[];
     /** Additional detailed information about a message response and how it was generated. */
     debug?: MessageOutputDebug;
+    /** An object containing any custom properties included in the response. This object includes any arbitrary properties defined in the dialog JSON editor as part of the dialog node output. */
+    user_defined?: Object;
   }
 
   /** Additional detailed information about a message response and how it was generated. */
