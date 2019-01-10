@@ -4241,6 +4241,7 @@ namespace DiscoveryV1 {
     /** If `true`, queries are not stored in the Discovery **Logs** endpoint. */
     logging_opt_out?: boolean;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `federatedQueryNotices` operation. */

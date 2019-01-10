@@ -13,16 +13,17 @@ const checkDefaultSuccessArgs = utils.checkDefaultSuccessArgs;
 const checkForEmptyObject = utils.checkForEmptyObject;
 const checkRequiredParamsHandling = utils.checkRequiredParamsHandling;
 const getOptions = utils.getOptions;
+const expectToBePromise = utils.expectToBePromise;
 
 const service = {
   username: 'batman',
   password: 'bruce-wayne',
-  url: 'https://gateway.watsonplatform.net/natural-language-understanding/api',
+  url: 'https://gateway.watsonplatform.net/naturalLanguageUnderstanding/api',
   version: '2018-10-18',
 };
 
-const natural_language_understanding = new NaturalLanguageUnderstandingV1(service);
-const createRequestMock = jest.spyOn(natural_language_understanding, 'createRequest');
+const naturalLanguageUnderstanding = new NaturalLanguageUnderstandingV1(service);
+const createRequestMock = jest.spyOn(naturalLanguageUnderstanding, 'createRequest');
 const missingParamsMock = jest.spyOn(helper, 'getMissingParams');
 const noop = () => {};
 
@@ -62,7 +63,7 @@ describe('analyze', () => {
       };
 
       // invoke method
-      natural_language_understanding.analyze(params);
+      naturalLanguageUnderstanding.analyze(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -100,8 +101,23 @@ describe('analyze', () => {
         },
       };
 
-      natural_language_understanding.analyze(params);
+      naturalLanguageUnderstanding.analyze(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const features = 'fake_features';
+      const params = {
+        features,
+      };
+
+      // invoke method
+      const analyzePromise = naturalLanguageUnderstanding.analyze(params);
+      expectToBePromise(analyzePromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
   describe('negative tests', () => {
@@ -110,7 +126,7 @@ describe('analyze', () => {
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      natural_language_understanding.analyze(null, () => {
+      naturalLanguageUnderstanding.analyze(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -120,7 +136,20 @@ describe('analyze', () => {
       // required parameters for this method
       const requiredParams = ['features'];
 
-      natural_language_understanding.analyze({}, err => {
+      naturalLanguageUnderstanding.analyze({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['features'];
+
+      const analyzePromise = naturalLanguageUnderstanding.analyze();
+      expectToBePromise(analyzePromise);
+
+      analyzePromise.catch(err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
@@ -140,7 +169,7 @@ describe('deleteModel', () => {
       };
 
       // invoke method
-      natural_language_understanding.deleteModel(params);
+      naturalLanguageUnderstanding.deleteModel(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -168,8 +197,23 @@ describe('deleteModel', () => {
         },
       };
 
-      natural_language_understanding.deleteModel(params);
+      naturalLanguageUnderstanding.deleteModel(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const model_id = 'fake_model_id';
+      const params = {
+        model_id,
+      };
+
+      // invoke method
+      const deleteModelPromise = naturalLanguageUnderstanding.deleteModel(params);
+      expectToBePromise(deleteModelPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
   describe('negative tests', () => {
@@ -178,7 +222,7 @@ describe('deleteModel', () => {
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      natural_language_understanding.deleteModel(null, () => {
+      naturalLanguageUnderstanding.deleteModel(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -188,7 +232,20 @@ describe('deleteModel', () => {
       // required parameters for this method
       const requiredParams = ['model_id'];
 
-      natural_language_understanding.deleteModel({}, err => {
+      naturalLanguageUnderstanding.deleteModel({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['model_id'];
+
+      const deleteModelPromise = naturalLanguageUnderstanding.deleteModel();
+      expectToBePromise(deleteModelPromise);
+
+      deleteModelPromise.catch(err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
@@ -205,7 +262,7 @@ describe('listModels', () => {
       const params = {};
 
       // invoke method
-      natural_language_understanding.listModels(params);
+      naturalLanguageUnderstanding.listModels(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -230,18 +287,30 @@ describe('listModels', () => {
         },
       };
 
-      natural_language_understanding.listModels(params);
+      naturalLanguageUnderstanding.listModels(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const params = {};
+
+      // invoke method
+      const listModelsPromise = naturalLanguageUnderstanding.listModels(params);
+      expectToBePromise(listModelsPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
     test('should not have any problems when no parameters are passed in', () => {
       // invoke the method
-      natural_language_understanding.listModels();
+      naturalLanguageUnderstanding.listModels({}, noop);
       checkDefaultSuccessArgs(createRequestMock);
     });
 
     test('should use argument as callback function if only one is passed in', () => {
       // invoke the method
-      natural_language_understanding.listModels(noop);
+      naturalLanguageUnderstanding.listModels(noop);
       checkDefaultSuccessArgs(createRequestMock);
     });
   });

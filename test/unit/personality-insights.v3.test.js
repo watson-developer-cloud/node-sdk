@@ -13,6 +13,7 @@ const checkUserHeader = utils.checkUserHeader;
 const checkForEmptyObject = utils.checkForEmptyObject;
 const checkRequiredParamsHandling = utils.checkRequiredParamsHandling;
 const getOptions = utils.getOptions;
+const expectToBePromise = utils.expectToBePromise;
 
 const service = {
   username: 'batman',
@@ -24,6 +25,7 @@ const service = {
 const personality_insights = new PersonalityInsightsV3(service);
 const createRequestMock = jest.spyOn(personality_insights, 'createRequest');
 const missingParamsMock = jest.spyOn(helper, 'getMissingParams');
+const noop = () => {};
 
 afterEach(() => {
   createRequestMock.mockReset();
@@ -55,7 +57,7 @@ describe('profile', () => {
       };
 
       // invoke method
-      personality_insights.profile(params);
+      personality_insights.profile(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -80,20 +82,33 @@ describe('profile', () => {
     test('should prioritize user-given headers', () => {
       // parameters
       const content = 'fake_content';
-      const content_type = 'fake_content_type';
       const accept = 'fake/header';
       const contentType = 'fake/header';
       const params = {
         content,
-        content_type,
         headers: {
           Accept: accept,
           'Content-Type': contentType,
         },
       };
 
-      personality_insights.profile(params);
+      personality_insights.profile(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const content = 'fake_content';
+      const params = {
+        content,
+      };
+
+      // invoke method
+      const profilePromise = personality_insights.profile(params);
+      expectToBePromise(profilePromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
   describe('negative tests', () => {
@@ -110,9 +125,22 @@ describe('profile', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['content', 'content_type'];
+      const requiredParams = ['content'];
 
       personality_insights.profile({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['content'];
+
+      const profilePromise = personality_insights.profile();
+      expectToBePromise(profilePromise);
+
+      profilePromise.catch(err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
@@ -144,7 +172,7 @@ describe('profileAsCsv', () => {
       };
 
       // invoke method
-      personality_insights.profileAsCsv(params);
+      personality_insights.profileAsCsv(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -169,20 +197,33 @@ describe('profileAsCsv', () => {
     test('should prioritize user-given headers', () => {
       // parameters
       const content = 'fake_content';
-      const content_type = 'fake_content_type';
       const accept = 'fake/header';
       const contentType = 'fake/header';
       const params = {
         content,
-        content_type,
         headers: {
           Accept: accept,
           'Content-Type': contentType,
         },
       };
 
-      personality_insights.profileAsCsv(params);
+      personality_insights.profileAsCsv(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const content = 'fake_content';
+      const params = {
+        content,
+      };
+
+      // invoke method
+      const profileAsCsvPromise = personality_insights.profileAsCsv(params);
+      expectToBePromise(profileAsCsvPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
   describe('negative tests', () => {
@@ -199,9 +240,22 @@ describe('profileAsCsv', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['content', 'content_type'];
+      const requiredParams = ['content'];
 
       personality_insights.profileAsCsv({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['content'];
+
+      const profileAsCsvPromise = personality_insights.profileAsCsv();
+      expectToBePromise(profileAsCsvPromise);
+
+      profileAsCsvPromise.catch(err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
