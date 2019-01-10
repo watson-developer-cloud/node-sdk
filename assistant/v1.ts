@@ -3715,8 +3715,6 @@ namespace AssistantV1 {
     digress_out_slots?: string;
     /** A label that can be displayed externally to describe the purpose of the node to users. This string must be no longer than 512 characters. */
     user_label?: string;
-    /** Whether to consider the dialog node during runtime evaluation.  Set to `true` to ignore the dialog node. */
-    disabled?: boolean;
   }
 
   /** CreateEntity. */
@@ -3807,6 +3805,8 @@ namespace AssistantV1 {
     digress_out_slots?: string;
     /** A label that can be displayed externally to describe the purpose of the node to users. This string must be no longer than 512 characters. */
     user_label?: string;
+    /** For internal use only. */
+    disabled?: boolean;
   }
 
   /** DialogNodeAction. */
