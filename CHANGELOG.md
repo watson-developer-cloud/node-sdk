@@ -1,3 +1,11 @@
+## [3.15.2](https://github.com/watson-developer-cloud/node-sdk/compare/v3.15.1...v3.15.2) (2019-01-14)
+
+
+### Bug Fixes
+
+* query parameters no longer cause text-to-speech over websockets to crash ([775e6d2](https://github.com/watson-developer-cloud/node-sdk/commit/775e6d2))
+* Remove the `disabled` property from `CreateDialogNode`. It is for internal use only. ([4b72d0e](https://github.com/watson-developer-cloud/node-sdk/commit/4b72d0e))
+
 ## [3.15.1](https://github.com/watson-developer-cloud/node-sdk/compare/v3.15.0...v3.15.1) (2019-01-07)
 
 
