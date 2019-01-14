@@ -484,7 +484,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
   }
 
   recognize(params, callback) {
-    if (isStream(params.audio) && !params.content_type) {
+    if (params && params.audio && isStream(params.audio) && !params.content_type) {
       callback(new Error('If providing `audio` as a Stream, `content_type` is required.'));
       return;
     }
