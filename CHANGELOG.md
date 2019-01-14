@@ -1,3 +1,11 @@
+## [3.15.1](https://github.com/watson-developer-cloud/node-sdk/compare/v3.15.0...v3.15.1) (2019-01-07)
+
+
+### Bug Fixes
+
+* add `disabled` property to CreateDialogNode ([41cd8dc](https://github.com/watson-developer-cloud/node-sdk/commit/41cd8dc))
+* add `user_defined` property to MessageOutput model ([ea28bf3](https://github.com/watson-developer-cloud/node-sdk/commit/ea28bf3))
+
 # [3.15.0](https://github.com/watson-developer-cloud/node-sdk/compare/v3.14.0...v3.15.0) (2018-12-07)
 
 
