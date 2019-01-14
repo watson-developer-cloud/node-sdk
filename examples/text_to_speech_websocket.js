@@ -22,8 +22,9 @@ const synthesizeStream = textToSpeech.synthesizeUsingWebSocket(params);
 // the output of the stream can be piped to any writable stream, like an audio file
 synthesizeStream.pipe(fs.createWriteStream('./speech.ogg'));
 
+// !!!!! IMPORTANT !!!!!
 // if the stream is not being piped anywhere and is only being listened to, the stream needs
-//   to be explicitly set to flowing mode:
+//   to be explicitly set to flowing mode by uncommenting the following line:
 
 // synthesizeStream.resume();
 
