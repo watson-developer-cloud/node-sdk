@@ -1,3 +1,10 @@
+## [3.15.4](https://github.com/watson-developer-cloud/node-sdk/compare/v3.15.3...v3.15.4) (2019-01-15)
+
+
+### Bug Fixes
+
+* fix bug that prevents `audio` from being sent as a buffer for `recognize` ([3f97b80](https://github.com/watson-developer-cloud/node-sdk/commit/3f97b80))
+
 ## [3.15.3](https://github.com/watson-developer-cloud/node-sdk/compare/v3.15.2...v3.15.3) (2019-01-15)
 
 
