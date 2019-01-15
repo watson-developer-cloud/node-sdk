@@ -82,12 +82,13 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * required.
    * @param {string} [params.url] - The webpage to analyze. One of the `text`, `html`, or `url` parameters is required.
    * @param {boolean} [params.clean] - Set this to `false` to disable webpage cleaning. To learn more about webpage
-   * cleaning, see the [Analyzing webpages](https://cloud.ibm.com/docs/services/natural-language-understanding/analyzing-webpages.html)
+   * cleaning, see the [Analyzing
+   * webpages](https://cloud.ibm.com/docs/services/natural-language-understanding/analyzing-webpages.html)
    * documentation.
    * @param {string} [params.xpath] - An [XPath
-   * query](https://cloud.ibm.com/docs/services/natural-language-understanding/analyzing-webpages.html#xpath) to perform on `html` or `url`
-   * input. Results of the query will be appended to the cleaned webpage text before it is analyzed. To analyze only the
-   * results of the XPath query, set the `clean` parameter to `false`.
+   * query](https://cloud.ibm.com/docs/services/natural-language-understanding/analyzing-webpages.html#xpath) to perform
+   * on `html` or `url` input. Results of the query will be appended to the cleaned webpage text before it is analyzed.
+   * To analyze only the results of the XPath query, set the `clean` parameter to `false`.
    * @param {boolean} [params.fallback_to_raw] - Whether to use raw HTML content if text cleaning fails.
    * @param {boolean} [params.return_analyzed_text] - Whether or not to return the analyzed text.
    * @param {string} [params.language] - ISO 639-1 code that specifies the language of your text. This overrides
@@ -151,7 +152,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * Deletes a custom model.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.model_id - model_id of the model to delete.
+   * @param {string} params.model_id - Model ID of the model to delete.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -190,8 +191,9 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
   /**
    * List models.
    *
-   * Lists Watson Knowledge Studio [custom models](https://cloud.ibm.com/docs/services/natural-language-understanding/customizing.html) that
-   * are deployed to your Natural Language Understanding service.
+   * Lists Watson Knowledge Studio [custom
+   * models](https://cloud.ibm.com/docs/services/natural-language-understanding/customizing.html) that are deployed to
+   * your Natural Language Understanding service.
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {Object} [params.headers] - Custom request headers
@@ -279,7 +281,7 @@ namespace NaturalLanguageUnderstandingV1 {
 
   /** Parameters for the `deleteModel` operation. */
   export interface DeleteModelParams {
-    /** model_id of the model to delete. */
+    /** Model ID of the model to delete. */
     model_id: string;
     headers?: Object;
   }
@@ -331,7 +333,7 @@ namespace NaturalLanguageUnderstandingV1 {
 
   /** Returns a five-level taxonomy of the content. The top three categories are returned. Supported languages: Arabic, English, French, German, Italian, Japanese, Korean, Portuguese, Spanish. */
   export interface CategoriesOptions {
-    /** Maximum number of categories to return. Maximum value: **10**. */
+    /** Maximum number of categories to return. */
     limit?: number;
   }
 
@@ -343,7 +345,7 @@ namespace NaturalLanguageUnderstandingV1 {
     score?: number;
   }
 
-  /** Returns high-level concepts in the content. For example, a research paper about deep learning might return the concept, "Artificial Intelligence" although the term is not mentioned. Supported languages: English, French, German, Japanese, Korean, Portuguese, Spanish. */
+  /** Returns high-level concepts in the content. For example, a research paper about deep learning might return the concept, "Artificial Intelligence" although the term is not mentioned. Supported languages: English, French, German, Italian, Japanese, Korean, Portuguese, Spanish. */
   export interface ConceptsOptions {
     /** Maximum number of concepts to return. */
     limit?: number;
@@ -419,13 +421,13 @@ namespace NaturalLanguageUnderstandingV1 {
     sadness?: number;
   }
 
-  /** Identifies people, cities, organizations, and other entities in the content. See [Entity types and subtypes](https://cloud.ibm.com/docs/services/natural-language-understanding/entity-types.html). Supported languages: English, French, German, Italian, Japanese, Korean, Portuguese, Russian, Spanish, Swedish. Arabic, Chinese, and Dutch custom models are also supported. */
+  /** Identifies people, cities, organizations, and other entities in the content. See [Entity types and subtypes](https://cloud.ibm.com/docs/services/natural-language-understanding/entity-types.html). Supported languages: English, French, German, Italian, Japanese, Korean, Portuguese, Russian, Spanish, Swedish. Arabic, Chinese, and Dutch are supported only through custom models. */
   export interface EntitiesOptions {
     /** Maximum number of entities to return. */
     limit?: number;
     /** Set this to `true` to return locations of entity mentions. */
     mentions?: boolean;
-    /** Enter a [custom model](https://www.bluemix.net/docs/services/natural-language-understanding/customizing.html) ID to override the standard entity detection model. */
+    /** Enter a [custom model](https://cloud.ibm.com/docs/services/natural-language-understanding/customizing.html) ID to override the standard entity detection model. */
     model?: string;
     /** Set this to `true` to return sentiment information for detected entities. */
     sentiment?: boolean;
@@ -469,11 +471,11 @@ namespace NaturalLanguageUnderstandingV1 {
 
   /** Analysis features and options. */
   export interface Features {
-    /** Returns high-level concepts in the content. For example, a research paper about deep learning might return the concept, "Artificial Intelligence" although the term is not mentioned. Supported languages: English, French, German, Japanese, Korean, Portuguese, Spanish. */
+    /** Returns high-level concepts in the content. For example, a research paper about deep learning might return the concept, "Artificial Intelligence" although the term is not mentioned. Supported languages: English, French, German, Italian, Japanese, Korean, Portuguese, Spanish. */
     concepts?: ConceptsOptions;
     /** Detects anger, disgust, fear, joy, or sadness that is conveyed in the content or by the context around target phrases specified in the targets parameter. You can analyze emotion for detected entities with `entities.emotion` and for keywords with `keywords.emotion`. Supported languages: English. */
     emotion?: EmotionOptions;
-    /** Identifies people, cities, organizations, and other entities in the content. See [Entity types and subtypes](https://cloud.ibm.com/docs/services/natural-language-understanding/entity-types.html). Supported languages: English, French, German, Italian, Japanese, Korean, Portuguese, Russian, Spanish, Swedish. Arabic, Chinese, and Dutch custom models are also supported. */
+    /** Identifies people, cities, organizations, and other entities in the content. See [Entity types and subtypes](https://cloud.ibm.com/docs/services/natural-language-understanding/entity-types.html). Supported languages: English, French, German, Italian, Japanese, Korean, Portuguese, Russian, Spanish, Swedish. Arabic, Chinese, and Dutch are supported only through custom models. */
     entities?: EntitiesOptions;
     /** Returns important keywords in the content. Supported languages: English, French, German, Italian, Japanese, Korean, Portuguese, Russian, Spanish, Swedish. */
     keywords?: KeywordsOptions;
@@ -519,7 +521,7 @@ namespace NaturalLanguageUnderstandingV1 {
     sentiment?: FeatureSentimentResults;
   }
 
-  /** Models available for Relations and Entities features. */
+  /** Custom models that are available for entities and relations. */
   export interface ListModelsResults {
     /** An array of available models. */
     models?: Model[];

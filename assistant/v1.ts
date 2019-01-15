@@ -63,7 +63,7 @@ class AssistantV1 extends BaseService {
   /**
    * Get response to user input.
    *
-   * Get a response to a user's input.
+   * Send user input to a workspace and receive a response.
    *
    * There is no rate limit for this operation.
    *
@@ -72,14 +72,14 @@ class AssistantV1 extends BaseService {
    * @param {InputData} [params.input] - An input object that includes the input text.
    * @param {boolean} [params.alternate_intents] - Whether to return more than one intent. Set to `true` to return all
    * matching intents.
-   * @param {Context} [params.context] - State information for the conversation. Continue a conversation by including
-   * the context object from the previous response.
+   * @param {Context} [params.context] - State information for the conversation. To maintain state, include the context
+   * from the previous response.
    * @param {RuntimeEntity[]} [params.entities] - Entities to use when evaluating the message. Include entities from the
    * previous response to continue using those entities rather than detecting entities in the new input.
    * @param {RuntimeIntent[]} [params.intents] - Intents to use when evaluating the user input. Include intents from the
    * previous response to continue using those intents rather than trying to recognize intents in the new input.
-   * @param {OutputData} [params.output] - System output. Include the output from the previous response to maintain
-   * intermediate information over multiple requests.
+   * @param {OutputData} [params.output] - An output object that includes the response to the user, the dialog nodes
+   * that were triggered, and messages from the log.
    * @param {boolean} [params.nodes_visited_details] - Whether to include additional diagnostic information about the
    * dialog nodes that were visited during processing of the message.
    * @param {Object} [params.headers] - Custom request headers
@@ -153,7 +153,7 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.language] - The language of the workspace.
    * @param {CreateIntent[]} [params.intents] - An array of objects defining the intents for the workspace.
    * @param {CreateEntity[]} [params.entities] - An array of objects defining the entities for the workspace.
-   * @param {CreateDialogNode[]} [params.dialog_nodes] - An array of objects defining the nodes in the workspace dialog.
+   * @param {CreateDialogNode[]} [params.dialog_nodes] - An array of objects defining the nodes in the dialog.
    * @param {CreateCounterexample[]} [params.counterexamples] - An array of objects defining input examples that have
    * been marked as irrelevant input.
    * @param {Object} [params.metadata] - Any metadata related to the workspace.
@@ -257,6 +257,9 @@ class AssistantV1 extends BaseService {
    * content, including subelements, is included.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
+   * @param {string} [params.sort] - Indicates how the returned workspace data will be sorted. This parameter is valid
+   * only if **export**=`true`. Specify `sort=stable` to sort all workspace objects by unique identifier, in ascending
+   * alphabetical order.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -273,7 +276,8 @@ class AssistantV1 extends BaseService {
  
     const query = {
       'export': _params.export,
-      'include_audit': _params.include_audit
+      'include_audit': _params.include_audit,
+      'sort': _params.sort
     };
 
     const path = {
@@ -307,8 +311,8 @@ class AssistantV1 extends BaseService {
    * @param {Object} [params] - The parameters to send to the service.
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order,
-   * prefix the value with a minus sign (`-`).
+   * @param {string} [params.sort] - The attribute by which returned workspaces will be sorted. To reverse the sort
+   * order, prefix the value with a minus sign (`-`).
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
@@ -361,7 +365,7 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.language] - The language of the workspace.
    * @param {CreateIntent[]} [params.intents] - An array of objects defining the intents for the workspace.
    * @param {CreateEntity[]} [params.entities] - An array of objects defining the entities for the workspace.
-   * @param {CreateDialogNode[]} [params.dialog_nodes] - An array of objects defining the nodes in the workspace dialog.
+   * @param {CreateDialogNode[]} [params.dialog_nodes] - An array of objects defining the nodes in the dialog.
    * @param {CreateCounterexample[]} [params.counterexamples] - An array of objects defining input examples that have
    * been marked as irrelevant input.
    * @param {Object} [params.metadata] - Any metadata related to the workspace.
@@ -610,7 +614,7 @@ class AssistantV1 extends BaseService {
    * content, including subelements, is included.
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order,
+   * @param {string} [params.sort] - The attribute by which returned intents will be sorted. To reverse the sort order,
    * prefix the value with a minus sign (`-`).
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
@@ -897,7 +901,7 @@ class AssistantV1 extends BaseService {
    * @param {string} params.intent - The intent name.
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order,
+   * @param {string} [params.sort] - The attribute by which returned examples will be sorted. To reverse the sort order,
    * prefix the value with a minus sign (`-`).
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
@@ -1174,8 +1178,8 @@ class AssistantV1 extends BaseService {
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order,
-   * prefix the value with a minus sign (`-`).
+   * @param {string} [params.sort] - The attribute by which returned counterexamples will be sorted. To reverse the sort
+   * order, prefix the value with a minus sign (`-`).
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
@@ -1282,7 +1286,7 @@ class AssistantV1 extends BaseService {
   /**
    * Create entity.
    *
-   * Create a new entity.
+   * Create a new entity, or enable a system entity.
    *
    * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
@@ -1290,8 +1294,10 @@ class AssistantV1 extends BaseService {
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity. This string must conform to the following restrictions:
    * - It can contain only Unicode alphanumeric, underscore, and hyphen characters.
-   * - It cannot begin with the reserved prefix `sys-`.
    * - It must be no longer than 64 characters.
+   *
+   * If you specify an entity name beginning with the reserved prefix `sys-`, it must be the name of a system entity
+   * that you want to enable. (Any entity content specified with the request is ignored.).
    * @param {string} [params.description] - The description of the entity. This string cannot contain carriage return,
    * newline, or tab characters, and it must be no longer than 128 characters.
    * @param {Object} [params.metadata] - Any metadata related to the value.
@@ -1345,7 +1351,7 @@ class AssistantV1 extends BaseService {
   /**
    * Delete entity.
    *
-   * Delete an entity from a workspace.
+   * Delete an entity from a workspace, or disable a system entity.
    *
    * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
@@ -1459,7 +1465,7 @@ class AssistantV1 extends BaseService {
    * content, including subelements, is included.
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order,
+   * @param {string} [params.sort] - The attribute by which returned entities will be sorted. To reverse the sort order,
    * prefix the value with a minus sign (`-`).
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
@@ -1665,7 +1671,7 @@ class AssistantV1 extends BaseService {
    * @param {string[]} [params.patterns] - An array of patterns for the entity value. You can provide either synonyms or
    * patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 512 characters.
    * For more information about how to specify a pattern, see the
-   * [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities).
+   * [documentation](https://cloud.ibm.com/docs/services/assistant/entities.html#creating-entities).
    * @param {string} [params.value_type] - Specifies the type of value.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -1833,8 +1839,8 @@ class AssistantV1 extends BaseService {
    * content, including subelements, is included.
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order,
-   * prefix the value with a minus sign (`-`).
+   * @param {string} [params.sort] - The attribute by which returned entity values will be sorted. To reverse the sort
+   * order, prefix the value with a minus sign (`-`).
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
@@ -1911,7 +1917,7 @@ class AssistantV1 extends BaseService {
    * @param {string[]} [params.new_patterns] - An array of patterns for the entity value. You can provide either
    * synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 512
    * characters. For more information about how to specify a pattern, see the
-   * [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities).
+   * [documentation](https://cloud.ibm.com/docs/services/assistant/entities.html#creating-entities).
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -2139,8 +2145,8 @@ class AssistantV1 extends BaseService {
    * @param {string} params.value - The text of the entity value.
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order,
-   * prefix the value with a minus sign (`-`).
+   * @param {string} [params.sort] - The attribute by which returned entity value synonyms will be sorted. To reverse
+   * the sort order, prefix the value with a minus sign (`-`).
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
@@ -2274,10 +2280,10 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.previous_sibling] - The ID of the previous dialog node.
    * @param {DialogNodeOutput} [params.output] - The output of the dialog node. For more information about how to
    * specify dialog node output, see the
-   * [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex).
+   * [documentation](https://cloud.ibm.com/docs/services/assistant/dialog-overview.html#complex).
    * @param {Object} [params.context] - The context for the dialog node.
    * @param {Object} [params.metadata] - The metadata for the dialog node.
-   * @param {DialogNodeNextStep} [params.next_step] - The next step to be executed in dialog processing.
+   * @param {DialogNodeNextStep} [params.next_step] - The next step to execute following this dialog node.
    * @param {DialogNodeAction[]} [params.actions] - An array of objects describing any actions to be invoked by the
    * dialog node.
    * @param {string} [params.title] - The alias used to identify the dialog node. This string must conform to the
@@ -2459,8 +2465,8 @@ class AssistantV1 extends BaseService {
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - The attribute by which returned results will be sorted. To reverse the sort order,
-   * prefix the value with a minus sign (`-`).
+   * @param {string} [params.sort] - The attribute by which returned dialog nodes will be sorted. To reverse the sort
+   * order, prefix the value with a minus sign (`-`).
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
@@ -2529,10 +2535,10 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.new_previous_sibling] - The ID of the previous sibling dialog node.
    * @param {DialogNodeOutput} [params.new_output] - The output of the dialog node. For more information about how to
    * specify dialog node output, see the
-   * [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex).
+   * [documentation](https://cloud.ibm.com/docs/services/assistant/dialog-overview.html#complex).
    * @param {Object} [params.new_context] - The context for the dialog node.
    * @param {Object} [params.new_metadata] - The metadata for the dialog node.
-   * @param {DialogNodeNextStep} [params.new_next_step] - The next step to be executed in dialog processing.
+   * @param {DialogNodeNextStep} [params.new_next_step] - The next step to execute following this dialog node.
    * @param {string} [params.new_title] - The alias used to identify the dialog node. This string must conform to the
    * following restrictions:
    * - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
@@ -2623,7 +2629,7 @@ class AssistantV1 extends BaseService {
    * @param {string} params.filter - A cacheable parameter that limits the results to those matching the specified
    * filter. You must specify a filter query that includes a value for `language`, as well as a value for `workspace_id`
    * or `request.context.metadata.deployment`. For more information, see the
-   * [documentation](https://console.bluemix.net/docs/services/conversation/filter-reference.html#filter-query-syntax).
+   * [documentation](https://cloud.ibm.com/docs/services/assistant/filter-reference.html#filter-query-syntax).
    * @param {string} [params.sort] - How to sort the returned log events. You can sort by **request_timestamp**. To
    * reverse the sort order, prefix the parameter value with a minus sign (`-`).
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
@@ -2679,7 +2685,7 @@ class AssistantV1 extends BaseService {
    * reverse the sort order, prefix the parameter value with a minus sign (`-`).
    * @param {string} [params.filter] - A cacheable parameter that limits the results to those matching the specified
    * filter. For more information, see the
-   * [documentation](https://console.bluemix.net/docs/services/conversation/filter-reference.html#filter-query-syntax).
+   * [documentation](https://cloud.ibm.com/docs/services/assistant/filter-reference.html#filter-query-syntax).
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {Object} [params.headers] - Custom request headers
@@ -2736,7 +2742,7 @@ class AssistantV1 extends BaseService {
    *
    * You associate a customer ID with data by passing the `X-Watson-Metadata` header with a request that passes data.
    * For more information about personal data and customer IDs, see [Information
-   * security](https://console.bluemix.net/docs/services/conversation/information-security.html).
+   * security](https://cloud.ibm.com/docs/services/assistant/information-security.html).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customer_id - The customer ID for which all data is to be deleted.
@@ -2816,13 +2822,13 @@ namespace AssistantV1 {
     input?: InputData;
     /** Whether to return more than one intent. Set to `true` to return all matching intents. */
     alternate_intents?: boolean;
-    /** State information for the conversation. Continue a conversation by including the context object from the previous response. */
+    /** State information for the conversation. To maintain state, include the context from the previous response. */
     context?: Context;
     /** Entities to use when evaluating the message. Include entities from the previous response to continue using those entities rather than detecting entities in the new input. */
     entities?: RuntimeEntity[];
     /** Intents to use when evaluating the user input. Include intents from the previous response to continue using those intents rather than trying to recognize intents in the new input. */
     intents?: RuntimeIntent[];
-    /** System output. Include the output from the previous response to maintain intermediate information over multiple requests. */
+    /** An output object that includes the response to the user, the dialog nodes that were triggered, and messages from the log. */
     output?: OutputData;
     /** Whether to include additional diagnostic information about the dialog nodes that were visited during processing of the message. */
     nodes_visited_details?: boolean;
@@ -2841,7 +2847,7 @@ namespace AssistantV1 {
     intents?: CreateIntent[];
     /** An array of objects defining the entities for the workspace. */
     entities?: CreateEntity[];
-    /** An array of objects defining the nodes in the workspace dialog. */
+    /** An array of objects defining the nodes in the dialog. */
     dialog_nodes?: CreateDialogNode[];
     /** An array of objects defining input examples that have been marked as irrelevant input. */
     counterexamples?: CreateCounterexample[];
@@ -2869,7 +2875,17 @@ namespace AssistantV1 {
     export?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
+    /** Indicates how the returned workspace data will be sorted. This parameter is valid only if **export**=`true`. Specify `sort=stable` to sort all workspace objects by unique identifier, in ascending alphabetical order. */
+    sort?: GetWorkspaceConstants.Sort | string;
     headers?: Object;
+  }
+
+  /** Constants for the `getWorkspace` operation. */
+  export namespace GetWorkspaceConstants {
+    /** Indicates how the returned workspace data will be sorted. This parameter is valid only if **export**=`true`. Specify `sort=stable` to sort all workspace objects by unique identifier, in ascending alphabetical order. */
+    export enum Sort {
+      STABLE = 'stable',
+    }
   }
 
   /** Parameters for the `listWorkspaces` operation. */
@@ -2878,13 +2894,22 @@ namespace AssistantV1 {
     page_limit?: number;
     /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
-    sort?: string;
+    /** The attribute by which returned workspaces will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    sort?: ListWorkspacesConstants.Sort | string;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
     headers?: Object;
+  }
+
+  /** Constants for the `listWorkspaces` operation. */
+  export namespace ListWorkspacesConstants {
+    /** The attribute by which returned workspaces will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    export enum Sort {
+      NAME = 'name',
+      UPDATED = 'updated',
+    }
   }
 
   /** Parameters for the `updateWorkspace` operation. */
@@ -2901,7 +2926,7 @@ namespace AssistantV1 {
     intents?: CreateIntent[];
     /** An array of objects defining the entities for the workspace. */
     entities?: CreateEntity[];
-    /** An array of objects defining the nodes in the workspace dialog. */
+    /** An array of objects defining the nodes in the dialog. */
     dialog_nodes?: CreateDialogNode[];
     /** An array of objects defining input examples that have been marked as irrelevant input. */
     counterexamples?: CreateCounterexample[];
@@ -2961,13 +2986,22 @@ namespace AssistantV1 {
     page_limit?: number;
     /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
-    sort?: string;
+    /** The attribute by which returned intents will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    sort?: ListIntentsConstants.Sort | string;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
     headers?: Object;
+  }
+
+  /** Constants for the `listIntents` operation. */
+  export namespace ListIntentsConstants {
+    /** The attribute by which returned intents will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    export enum Sort {
+      INTENT = 'intent',
+      UPDATED = 'updated',
+    }
   }
 
   /** Parameters for the `updateIntent` operation. */
@@ -3032,13 +3066,22 @@ namespace AssistantV1 {
     page_limit?: number;
     /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
-    sort?: string;
+    /** The attribute by which returned examples will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    sort?: ListExamplesConstants.Sort | string;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
     headers?: Object;
+  }
+
+  /** Constants for the `listExamples` operation. */
+  export namespace ListExamplesConstants {
+    /** The attribute by which returned examples will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    export enum Sort {
+      TEXT = 'text',
+      UPDATED = 'updated',
+    }
   }
 
   /** Parameters for the `updateExample` operation. */
@@ -3093,13 +3136,22 @@ namespace AssistantV1 {
     page_limit?: number;
     /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
-    sort?: string;
+    /** The attribute by which returned counterexamples will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    sort?: ListCounterexamplesConstants.Sort | string;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
     headers?: Object;
+  }
+
+  /** Constants for the `listCounterexamples` operation. */
+  export namespace ListCounterexamplesConstants {
+    /** The attribute by which returned counterexamples will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    export enum Sort {
+      TEXT = 'text',
+      UPDATED = 'updated',
+    }
   }
 
   /** Parameters for the `updateCounterexample` operation. */
@@ -3117,7 +3169,7 @@ namespace AssistantV1 {
   export interface CreateEntityParams {
     /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** The name of the entity. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, and hyphen characters. - It cannot begin with the reserved prefix `sys-`. - It must be no longer than 64 characters. */
+    /** The name of the entity. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, and hyphen characters. - It must be no longer than 64 characters. If you specify an entity name beginning with the reserved prefix `sys-`, it must be the name of a system entity that you want to enable. (Any entity content specified with the request is ignored.). */
     entity: string;
     /** The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     description?: string;
@@ -3162,13 +3214,22 @@ namespace AssistantV1 {
     page_limit?: number;
     /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
-    sort?: string;
+    /** The attribute by which returned entities will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    sort?: ListEntitiesConstants.Sort | string;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
     headers?: Object;
+  }
+
+  /** Constants for the `listEntities` operation. */
+  export namespace ListEntitiesConstants {
+    /** The attribute by which returned entities will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    export enum Sort {
+      ENTITY = 'entity',
+      UPDATED = 'updated',
+    }
   }
 
   /** Parameters for the `updateEntity` operation. */
@@ -3215,7 +3276,7 @@ namespace AssistantV1 {
     metadata?: Object;
     /** An array containing any synonyms for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A synonym must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
     synonyms?: string[];
-    /** An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 512 characters. For more information about how to specify a pattern, see the [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities). */
+    /** An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 512 characters. For more information about how to specify a pattern, see the [documentation](https://cloud.ibm.com/docs/services/assistant/entities.html#creating-entities). */
     patterns?: string[];
     /** Specifies the type of value. */
     value_type?: CreateValueConstants.ValueType | string;
@@ -3224,7 +3285,7 @@ namespace AssistantV1 {
 
   /** Constants for the `createValue` operation. */
   export namespace CreateValueConstants {
-     /** Specifies the type of value. */
+    /** Specifies the type of value. */
     export enum ValueType {
       SYNONYMS = 'synonyms',
       PATTERNS = 'patterns',
@@ -3269,13 +3330,22 @@ namespace AssistantV1 {
     page_limit?: number;
     /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
-    sort?: string;
+    /** The attribute by which returned entity values will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    sort?: ListValuesConstants.Sort | string;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
     headers?: Object;
+  }
+
+  /** Constants for the `listValues` operation. */
+  export namespace ListValuesConstants {
+    /** The attribute by which returned entity values will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    export enum Sort {
+      VALUE = 'value',
+      UPDATED = 'updated',
+    }
   }
 
   /** Parameters for the `updateValue` operation. */
@@ -3294,14 +3364,14 @@ namespace AssistantV1 {
     new_type?: UpdateValueConstants.ValueType | string;
     /** An array of synonyms for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A synonym must conform to the following resrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
     new_synonyms?: string[];
-    /** An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 512 characters. For more information about how to specify a pattern, see the [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities). */
+    /** An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 512 characters. For more information about how to specify a pattern, see the [documentation](https://cloud.ibm.com/docs/services/assistant/entities.html#creating-entities). */
     new_patterns?: string[];
     headers?: Object;
   }
 
   /** Constants for the `updateValue` operation. */
   export namespace UpdateValueConstants {
-     /** Specifies the type of value. */
+    /** Specifies the type of value. */
     export enum ValueType {
       SYNONYMS = 'synonyms',
       PATTERNS = 'patterns',
@@ -3361,13 +3431,22 @@ namespace AssistantV1 {
     page_limit?: number;
     /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
-    sort?: string;
+    /** The attribute by which returned entity value synonyms will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    sort?: ListSynonymsConstants.Sort | string;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
     headers?: Object;
+  }
+
+  /** Constants for the `listSynonyms` operation. */
+  export namespace ListSynonymsConstants {
+    /** The attribute by which returned entity value synonyms will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    export enum Sort {
+      SYNONYM = 'synonym',
+      UPDATED = 'updated',
+    }
   }
 
   /** Parameters for the `updateSynonym` operation. */
@@ -3399,13 +3478,13 @@ namespace AssistantV1 {
     parent?: string;
     /** The ID of the previous dialog node. */
     previous_sibling?: string;
-    /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex). */
+    /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://cloud.ibm.com/docs/services/assistant/dialog-overview.html#complex). */
     output?: DialogNodeOutput;
     /** The context for the dialog node. */
     context?: Object;
     /** The metadata for the dialog node. */
     metadata?: Object;
-    /** The next step to be executed in dialog processing. */
+    /** The next step to execute following this dialog node. */
     next_step?: DialogNodeNextStep;
     /** An array of objects describing any actions to be invoked by the dialog node. */
     actions?: DialogNodeAction[];
@@ -3430,7 +3509,7 @@ namespace AssistantV1 {
 
   /** Constants for the `createDialogNode` operation. */
   export namespace CreateDialogNodeConstants {
-     /** How the dialog node is processed. */
+    /** How the dialog node is processed. */
     export enum NodeType {
       STANDARD = 'standard',
       EVENT_HANDLER = 'event_handler',
@@ -3439,7 +3518,7 @@ namespace AssistantV1 {
       RESPONSE_CONDITION = 'response_condition',
       FOLDER = 'folder',
     }
-     /** How an `event_handler` node is processed. */
+    /** How an `event_handler` node is processed. */
     export enum EventName {
       FOCUS = 'focus',
       INPUT = 'input',
@@ -3451,19 +3530,19 @@ namespace AssistantV1 {
       NOMATCH_RESPONSES_DEPLETED = 'nomatch_responses_depleted',
       DIGRESSION_RETURN_PROMPT = 'digression_return_prompt',
     }
-     /** Whether this top-level dialog node can be digressed into. */
+    /** Whether this top-level dialog node can be digressed into. */
     export enum DigressIn {
       NOT_AVAILABLE = 'not_available',
       RETURNS = 'returns',
       DOES_NOT_RETURN = 'does_not_return',
     }
-     /** Whether this dialog node can be returned to after a digression. */
+    /** Whether this dialog node can be returned to after a digression. */
     export enum DigressOut {
       RETURNING = 'allow_returning',
       ALL = 'allow_all',
       ALL_NEVER_RETURN = 'allow_all_never_return',
     }
-     /** Whether the user can digress to top-level nodes while filling out slots. */
+    /** Whether the user can digress to top-level nodes while filling out slots. */
     export enum DigressOutSlots {
       NOT_ALLOWED = 'not_allowed',
       ALLOW_RETURNING = 'allow_returning',
@@ -3499,13 +3578,22 @@ namespace AssistantV1 {
     page_limit?: number;
     /** Whether to include information about the number of records returned. */
     include_count?: boolean;
-    /** The attribute by which returned results will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
-    sort?: string;
+    /** The attribute by which returned dialog nodes will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    sort?: ListDialogNodesConstants.Sort | string;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
     headers?: Object;
+  }
+
+  /** Constants for the `listDialogNodes` operation. */
+  export namespace ListDialogNodesConstants {
+    /** The attribute by which returned dialog nodes will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    export enum Sort {
+      DIALOG_NODE = 'dialog_node',
+      UPDATED = 'updated',
+    }
   }
 
   /** Parameters for the `updateDialogNode` operation. */
@@ -3524,13 +3612,13 @@ namespace AssistantV1 {
     new_parent?: string;
     /** The ID of the previous sibling dialog node. */
     new_previous_sibling?: string;
-    /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex). */
+    /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://cloud.ibm.com/docs/services/assistant/dialog-overview.html#complex). */
     new_output?: DialogNodeOutput;
     /** The context for the dialog node. */
     new_context?: Object;
     /** The metadata for the dialog node. */
     new_metadata?: Object;
-    /** The next step to be executed in dialog processing. */
+    /** The next step to execute following this dialog node. */
     new_next_step?: DialogNodeNextStep;
     /** The alias used to identify the dialog node. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters. - It must be no longer than 64 characters. */
     new_title?: string;
@@ -3555,7 +3643,7 @@ namespace AssistantV1 {
 
   /** Constants for the `updateDialogNode` operation. */
   export namespace UpdateDialogNodeConstants {
-     /** How the dialog node is processed. */
+    /** How the dialog node is processed. */
     export enum NodeType {
       STANDARD = 'standard',
       EVENT_HANDLER = 'event_handler',
@@ -3564,7 +3652,7 @@ namespace AssistantV1 {
       RESPONSE_CONDITION = 'response_condition',
       FOLDER = 'folder',
     }
-     /** How an `event_handler` node is processed. */
+    /** How an `event_handler` node is processed. */
     export enum EventName {
       FOCUS = 'focus',
       INPUT = 'input',
@@ -3576,19 +3664,19 @@ namespace AssistantV1 {
       NOMATCH_RESPONSES_DEPLETED = 'nomatch_responses_depleted',
       DIGRESSION_RETURN_PROMPT = 'digression_return_prompt',
     }
-     /** Whether this top-level dialog node can be digressed into. */
+    /** Whether this top-level dialog node can be digressed into. */
     export enum DigressIn {
       NOT_AVAILABLE = 'not_available',
       RETURNS = 'returns',
       DOES_NOT_RETURN = 'does_not_return',
     }
-     /** Whether this dialog node can be returned to after a digression. */
+    /** Whether this dialog node can be returned to after a digression. */
     export enum DigressOut {
       RETURNING = 'allow_returning',
       ALL = 'allow_all',
       ALL_NEVER_RETURN = 'allow_all_never_return',
     }
-     /** Whether the user can digress to top-level nodes while filling out slots. */
+    /** Whether the user can digress to top-level nodes while filling out slots. */
     export enum DigressOutSlots {
       NOT_ALLOWED = 'not_allowed',
       ALLOW_RETURNING = 'allow_returning',
@@ -3598,7 +3686,7 @@ namespace AssistantV1 {
 
   /** Parameters for the `listAllLogs` operation. */
   export interface ListAllLogsParams {
-    /** A cacheable parameter that limits the results to those matching the specified filter. You must specify a filter query that includes a value for `language`, as well as a value for `workspace_id` or `request.context.metadata.deployment`. For more information, see the [documentation](https://console.bluemix.net/docs/services/conversation/filter-reference.html#filter-query-syntax). */
+    /** A cacheable parameter that limits the results to those matching the specified filter. You must specify a filter query that includes a value for `language`, as well as a value for `workspace_id` or `request.context.metadata.deployment`. For more information, see the [documentation](https://cloud.ibm.com/docs/services/assistant/filter-reference.html#filter-query-syntax). */
     filter: string;
     /** How to sort the returned log events. You can sort by **request_timestamp**. To reverse the sort order, prefix the parameter value with a minus sign (`-`). */
     sort?: string;
@@ -3615,7 +3703,7 @@ namespace AssistantV1 {
     workspace_id: string;
     /** How to sort the returned log events. You can sort by **request_timestamp**. To reverse the sort order, prefix the parameter value with a minus sign (`-`). */
     sort?: string;
-    /** A cacheable parameter that limits the results to those matching the specified filter. For more information, see the [documentation](https://console.bluemix.net/docs/services/conversation/filter-reference.html#filter-query-syntax). */
+    /** A cacheable parameter that limits the results to those matching the specified filter. For more information, see the [documentation](https://cloud.ibm.com/docs/services/assistant/filter-reference.html#filter-query-syntax). */
     filter?: string;
     /** The number of records to return in each page of results. */
     page_limit?: number;
@@ -3649,6 +3737,8 @@ namespace AssistantV1 {
     conversation_id?: string;
     /** For internal use only. */
     system?: SystemResponse;
+    /** Metadata related to the message. */
+    metadata?: MessageContextMetadata;
     /** Context accepts additional properties. */
     [propName: string]: any;
   }
@@ -3689,13 +3779,13 @@ namespace AssistantV1 {
     parent?: string;
     /** The ID of the previous dialog node. */
     previous_sibling?: string;
-    /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex). */
+    /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://cloud.ibm.com/docs/services/assistant/dialog-overview.html#complex). */
     output?: DialogNodeOutput;
     /** The context for the dialog node. */
     context?: Object;
     /** The metadata for the dialog node. */
     metadata?: Object;
-    /** The next step to be executed in dialog processing. */
+    /** The next step to execute following this dialog node. */
     next_step?: DialogNodeNextStep;
     /** An array of objects describing any actions to be invoked by the dialog node. */
     actions?: DialogNodeAction[];
@@ -3719,7 +3809,7 @@ namespace AssistantV1 {
 
   /** CreateEntity. */
   export interface CreateEntity {
-    /** The name of the entity. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, and hyphen characters. - It cannot begin with the reserved prefix `sys-`. - It must be no longer than 64 characters. */
+    /** The name of the entity. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, and hyphen characters. - It must be no longer than 64 characters. If you specify an entity name beginning with the reserved prefix `sys-`, it must be the name of a system entity that you want to enable. (Any entity content specified with the request is ignored.). */
     entity: string;
     /** The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     description?: string;
@@ -3757,7 +3847,7 @@ namespace AssistantV1 {
     metadata?: Object;
     /** An array containing any synonyms for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A synonym must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
     synonyms?: string[];
-    /** An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 512 characters. For more information about how to specify a pattern, see the [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities). */
+    /** An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 512 characters. For more information about how to specify a pattern, see the [documentation](https://cloud.ibm.com/docs/services/assistant/entities.html#creating-entities). */
     patterns?: string[];
     /** Specifies the type of value. */
     value_type?: string;
@@ -3775,7 +3865,7 @@ namespace AssistantV1 {
     parent?: string;
     /** The ID of the previous sibling dialog node. This property is not returned if the dialog node has no previous sibling. */
     previous_sibling?: string;
-    /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex). */
+    /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://cloud.ibm.com/docs/services/assistant/dialog-overview.html#complex). */
     output?: DialogNodeOutput;
     /** The context (if defined) for the dialog node. */
     context?: Object;
@@ -3791,6 +3881,8 @@ namespace AssistantV1 {
     actions?: DialogNodeAction[];
     /** The alias used to identify the dialog node. */
     title?: string;
+    /** For internal use only. */
+    disabled?: boolean;
     /** How the dialog node is processed. */
     node_type?: string;
     /** How an `event_handler` node is processed. */
@@ -3805,8 +3897,6 @@ namespace AssistantV1 {
     digress_out_slots?: string;
     /** A label that can be displayed externally to describe the purpose of the node to users. This string must be no longer than 512 characters. */
     user_label?: string;
-    /** For internal use only. */
-    disabled?: boolean;
   }
 
   /** DialogNodeAction. */
@@ -3841,7 +3931,7 @@ namespace AssistantV1 {
     selector?: string;
   }
 
-  /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex). */
+  /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://cloud.ibm.com/docs/services/assistant/dialog-overview.html#complex). */
   export interface DialogNodeOutput {
     /** An array of objects describing the output defined for the dialog node. */
     generic?: DialogNodeOutputGeneric[];
@@ -3895,7 +3985,7 @@ namespace AssistantV1 {
 
   /** An object defining the message input to be sent to the Watson Assistant service if the user selects the corresponding option. */
   export interface DialogNodeOutputOptionsElementValue {
-    /** The user input. */
+    /** An input object that includes the input text. */
     input?: InputData;
   }
 
@@ -3955,7 +4045,7 @@ namespace AssistantV1 {
 
   /** An object defining the message input, intents, and entities to be sent to the Watson Assistant service if the user selects the corresponding disambiguation option. */
   export interface DialogSuggestionValue {
-    /** The user input. */
+    /** An input object that includes the input text. */
     input?: InputData;
     /** An array of intents to be sent along with the user input. */
     intents?: RuntimeIntent[];
@@ -4043,7 +4133,7 @@ namespace AssistantV1 {
     pagination: Pagination;
   }
 
-  /** The user input. */
+  /** An input object that includes the input text. */
   export interface InputData {
     /** The text of the user input. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 2048 characters. */
     text: string;
@@ -4093,7 +4183,7 @@ namespace AssistantV1 {
 
   /** LogExport. */
   export interface LogExport {
-    /** A request received by the workspace, including the user input and context. */
+    /** A request sent to the workspace, including the user input and context. */
     request: MessageRequest;
     /** The response sent by the workspace, including the output text, detected intents and entities, and context. */
     response: MessageResponse;
@@ -4137,31 +4227,39 @@ namespace AssistantV1 {
     location: number[];
   }
 
+  /** Metadata related to the message. */
+  export interface MessageContextMetadata {
+    /** A label identifying the deployment environment, used for filtering log data. This string cannot contain carriage return, newline, or tab characters. */
+    deployment?: string;
+    /** A string value that identifies the user who is interacting with the workspace. The client must provide a unique identifier for each individual end user who accesses the application. For Plus and Premium plans, this user ID is used to identify unique users for billing purposes. This string cannot contain carriage return, newline, or tab characters. */
+    user_id?: string;
+  }
+
   /** The text of the user input. */
   export interface MessageInput {
     /** The user's input. */
     text?: string;
   }
 
-  /** A message request formatted for the Watson Assistant service. */
+  /** A request sent to the workspace, including the user input and context. */
   export interface MessageRequest {
     /** An input object that includes the input text. */
     input?: InputData;
     /** Whether to return more than one intent. Set to `true` to return all matching intents. */
     alternate_intents?: boolean;
-    /** State information for the conversation. Continue a conversation by including the context object from the previous response. */
+    /** State information for the conversation. To maintain state, include the context from the previous response. */
     context?: Context;
     /** Entities to use when evaluating the message. Include entities from the previous response to continue using those entities rather than detecting entities in the new input. */
     entities?: RuntimeEntity[];
     /** Intents to use when evaluating the user input. Include intents from the previous response to continue using those intents rather than trying to recognize intents in the new input. */
     intents?: RuntimeIntent[];
-    /** System output. Include the output from the previous response to maintain intermediate information over multiple requests. */
+    /** An output object that includes the response to the user, the dialog nodes that were triggered, and messages from the log. */
     output?: OutputData;
   }
 
-  /** A response from the Watson Assistant service. */
+  /** The response sent by the workspace, including the output text, detected intents and entities, and context. */
   export interface MessageResponse {
-    /** The user input from the request. */
+    /** The text of the user input. */
     input?: MessageInput;
     /** An array of intents recognized in the user input, sorted in descending order of confidence. */
     intents: RuntimeIntent[];
@@ -4169,9 +4267,9 @@ namespace AssistantV1 {
     entities: RuntimeEntity[];
     /** Whether to return more than one intent. A value of `true` indicates that all matching intents are returned. */
     alternate_intents?: boolean;
-    /** State information for the conversation. */
+    /** State information for the conversation. To maintain state, include the context from the previous response. */
     context: Context;
-    /** Output from the dialog, including the response to the user, the nodes that were triggered, and log messages. */
+    /** An output object that includes the response to the user, the dialog nodes that were triggered, and messages from the log. */
     output: OutputData;
     /** An array of objects describing any actions requested by the dialog node. */
     actions?: DialogNodeAction[];
@@ -4285,7 +4383,7 @@ namespace AssistantV1 {
   export interface ValueCollection {
     /** An array of entity values. */
     values: ValueExport[];
-    /** An object defining the pagination data for the returned objects. */
+    /** The pagination data for the returned objects. */
     pagination: Pagination;
   }
 
@@ -4317,7 +4415,7 @@ namespace AssistantV1 {
     created?: string;
     /** The timestamp for the last update to the workspace. */
     updated?: string;
-    /** The workspace ID. */
+    /** The workspace ID of the workspace. */
     workspace_id: string;
     /** The description of the workspace. */
     description?: string;
@@ -4333,7 +4431,7 @@ namespace AssistantV1 {
   export interface WorkspaceCollection {
     /** An array of objects describing the workspaces associated with the service instance. */
     workspaces: Workspace[];
-    /** An object defining the pagination data for the returned objects. */
+    /** The pagination data for the returned objects. */
     pagination: Pagination;
   }
 
@@ -4351,7 +4449,7 @@ namespace AssistantV1 {
     created?: string;
     /** The timestamp for the last update to the workspace. */
     updated?: string;
-    /** The workspace ID. */
+    /** The workspace ID of the workspace. */
     workspace_id: string;
     /** The current status of the workspace. */
     status: string;
@@ -4369,7 +4467,7 @@ namespace AssistantV1 {
     dialog_nodes?: DialogNode[];
   }
 
-  /** WorkspaceSystemSettings. */
+  /** Global settings for the workspace. */
   export interface WorkspaceSystemSettings {
     /** Workspace settings related to the Watson Assistant tool. */
     tooling?: WorkspaceSystemSettingsTooling;
@@ -4379,7 +4477,7 @@ namespace AssistantV1 {
     human_agent_assist?: Object;
   }
 
-  /** WorkspaceSystemSettingsDisambiguation. */
+  /** Workspace settings related to the disambiguation feature. **Note:** This feature is available only to Premium users. */
   export interface WorkspaceSystemSettingsDisambiguation {
     /** The text of the introductory prompt that accompanies disambiguation options presented to the user. */
     prompt?: string;
@@ -4391,7 +4489,7 @@ namespace AssistantV1 {
     sensitivity?: string;
   }
 
-  /** WorkspaceSystemSettingsTooling. */
+  /** Workspace settings related to the Watson Assistant tool. */
   export interface WorkspaceSystemSettingsTooling {
     /** Whether the dialog JSON editor displays text responses within the `output.generic` object. */
     store_generic_responses?: boolean;

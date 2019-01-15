@@ -324,7 +324,7 @@ namespace AssistantV2 {
 
   /** An object defining the message input to be sent to the assistant if the user selects the corresponding option. */
   export interface DialogNodeOutputOptionsElementValue {
-    /** The user input. */
+    /** An input object that includes the input text. */
     input?: MessageInput;
   }
 
@@ -378,7 +378,7 @@ namespace AssistantV2 {
 
   /** An object defining the message input to be sent to the assistant if the user selects the corresponding disambiguation option. */
   export interface DialogSuggestionValue {
-    /** The user input. */
+    /** An input object that includes the input text. */
     input?: MessageInput;
   }
 
@@ -392,7 +392,7 @@ namespace AssistantV2 {
 
   /** Contains information that can be shared by all skills within the Assistant. */
   export interface MessageContextGlobal {
-    /** Properties interpreted by the Assistant that are shared across all skills within the Assistant. */
+    /** Properties that are shared by all skills used by the assistant. */
     system?: MessageContextGlobalSystem;
   }
 
@@ -400,10 +400,16 @@ namespace AssistantV2 {
   export interface MessageContextGlobalSystem {
     /** The user time zone. The assistant uses the time zone to correctly resolve relative time references. */
     timezone?: string;
-    /** A string value that identifies the user who is interacting with the assistant. The client must provide a unique identifier for each individual end user who accesses the application. This user ID may be used for billing and other purposes. */
+    /** A string value that identifies the user who is interacting with the assistant. The client must provide a unique identifier for each individual end user who accesses the application. For Plus and Premium plans, this user ID is used to identify unique users for billing purposes. This string cannot contain carriage return, newline, or tab characters. */
     user_id?: string;
     /** A counter that is automatically incremented with each turn of the conversation. A value of 1 indicates that this is the the first turn of a new conversation, which can affect the behavior of some skills. */
     turn_count?: number;
+  }
+
+  /** Contains information specific to a particular skill within the Assistant. */
+  export interface MessageContextSkill {
+    /** Arbitrary variables that can be read and written to by a particular skill within the Assistant. */
+    user_defined?: string;
   }
 
   /** Contains information specific to particular skills within the Assistant. */
@@ -412,13 +418,13 @@ namespace AssistantV2 {
     [propName: string]: any;
   }
 
-  /** The user input. */
+  /** An input object that includes the input text. */
   export interface MessageInput {
     /** The type of user input. Currently, only text input is supported. */
     message_type?: string;
     /** The text of the user input. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 2048 characters. */
     text?: string;
-    /** Properties that control how the assistant responds. */
+    /** Optional properties that control how the assistant responds. */
     options?: MessageInputOptions;
     /** Intents to use when evaluating the user input. Include intents from the previous response to continue using those intents rather than trying to recognize intents in the new input. */
     intents?: RuntimeIntent[];
@@ -432,7 +438,7 @@ namespace AssistantV2 {
   export interface MessageInputOptions {
     /** Whether to return additional diagnostic information. Set to `true` to return additional information under the `output.debug` key. */
     debug?: boolean;
-    /** Whether to start a new conversation with this user input. Specify `true` to clear the state information stored by the session. */
+    /** Whether to restart dialog processing at the root of the dialog, regardless of any previously visited nodes. **Note:** This does not affect `turn_count` or any other context variables. */
     restart?: boolean;
     /** Whether to return more than one intent. Set to `true` to return all matching intents. */
     alternate_intents?: boolean;
@@ -472,7 +478,7 @@ namespace AssistantV2 {
   export interface MessageResponse {
     /** Assistant output to be rendered or processed by the client. */
     output: MessageOutput;
-    /** The current session context. Included in the response if the `return_context` property of the message input was set to `true`. */
+    /** State information for the conversation. */
     context?: MessageContext;
   }
 
