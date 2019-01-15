@@ -1,3 +1,10 @@
+## [3.15.3](https://github.com/watson-developer-cloud/node-sdk/compare/v3.15.2...v3.15.3) (2019-01-15)
+
+
+### Bug Fixes
+
+* package.json to reduce vulnerabilities ([e61d1de](https://github.com/watson-developer-cloud/node-sdk/commit/e61d1de))
+
 ## [3.15.2](https://github.com/watson-developer-cloud/node-sdk/compare/v3.15.1...v3.15.2) (2019-01-14)
 
 
