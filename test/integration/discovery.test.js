@@ -1,6 +1,6 @@
 'use strict';
 
-const DiscoveryV1 = require('../../discovery/v1');
+const DiscoveryV1 = require('../../discovery/v1-generated');
 const authHelper = require('../resources/auth_helper.js');
 const auth = authHelper.auth;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
