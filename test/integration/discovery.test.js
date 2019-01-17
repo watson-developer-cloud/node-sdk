@@ -501,4 +501,91 @@ describe('discovery_integration', function() {
       });
     });
   });
+  describe('stopwords tests @slow', function() {
+    it('should createStopwordList', function(done) {
+      const params = {
+        environment_id,
+        collection_id,
+        stopword_file: fs.createReadStream(path.join(__dirname, '../resources/stopwords.txt')),
+        stopword_filename: 'stopwords.txt',
+      };
+      discovery.createStopwordList(params, (err, res) => {
+        expect(err).toBeNull();
+        expect(res.type).toBeDefined();
+        expect(res.status).toBeDefined();
+        done();
+      });
+    });
+    it('should deleteStopwordList', function(done) {
+      const params = {
+        environment_id,
+        collection_id,
+      };
+      discovery.deleteStopwordList(params, (err, res) => {
+        expect(err).toBeNull();
+        expect(res).toBe('');
+        done();
+      });
+    });
+  });
+  describe('gateways tests', function() {
+    let gateway_id;
+    it('should createGateway', function(done) {
+      const params = {
+        environment_id,
+        name: 'node-sdk-test',
+      };
+      discovery.createGateway(params, (err, res) => {
+        expect(err).toBeNull();
+        expect(res.name).toBeDefined();
+        expect(res.status).toBeDefined();
+        expect(res.token_id).toBeDefined();
+        expect(res.token).toBeDefined();
+        expect(res.gateway_id).toBeDefined();
+
+        gateway_id = res.gateway_id;
+
+        done();
+      });
+    });
+    it('should getGateway', function(done) {
+      const params = {
+        environment_id,
+        gateway_id,
+      };
+      discovery.getGateway(params, (err, res) => {
+        expect(err).toBeNull();
+        expect(res.name).toBeDefined();
+        expect(res.status).toBeDefined();
+        expect(res.token_id).toBeDefined();
+        expect(res.token).toBeDefined();
+        expect(res.gateway_id).toBeDefined();
+        done();
+      });
+    });
+    it('should listGateways', function(done) {
+      const params = {
+        environment_id,
+      };
+      discovery.listGateways(params, (err, res) => {
+        expect(err).toBeNull();
+        expect(res.gateways).toBeDefined();
+        expect(res.gateways.length).toBeTruthy();
+        done();
+      });
+    });
+    it('should deleteGateway', function(done) {
+      const params = {
+        environment_id,
+        gateway_id,
+      };
+      discovery.deleteGateway(params, (err, res) => {
+        expect(err).toBeNull();
+        expect(res.gateway_id).toBeDefined();
+        expect(res.status).toBeDefined();
+        expect(res.status).toBe('deleted');
+        done();
+      });
+    });
+  });
 });
