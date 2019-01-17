@@ -69,14 +69,10 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string[]} params.text - Input text in UTF-8 encoding. Multiple entries will result in multiple translations
    * in the response.
-   * @param {string} [params.model_id] - Model ID of the translation model to use. If this is specified, the **source**
-   * and **target** parameters will be ignored. The method requires either a model ID or both the **source** and
-   * **target** parameters.
-   * @param {string} [params.source] - Language code of the source text language. Use with `target` as an alternative
-   * way to select a translation model. When `source` and `target` are set, and a model ID is not set, the system
-   * chooses a default model for the language pair (usually the model based on the news domain).
-   * @param {string} [params.target] - Language code of the translation target language. Use with source as an
-   * alternative way to select a translation model.
+   * @param {string} [params.model_id] - A globally unique string that identifies the underlying model that is used for
+   * translation.
+   * @param {string} [params.source] - Translation source language code.
+   * @param {string} [params.target] - Translation target language code.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -440,11 +436,11 @@ namespace LanguageTranslatorV3 {
   export interface TranslateParams {
     /** Input text in UTF-8 encoding. Multiple entries will result in multiple translations in the response. */
     text: string[];
-    /** Model ID of the translation model to use. If this is specified, the **source** and **target** parameters will be ignored. The method requires either a model ID or both the **source** and **target** parameters. */
+    /** A globally unique string that identifies the underlying model that is used for translation. */
     model_id?: string;
-    /** Language code of the source text language. Use with `target` as an alternative way to select a translation model. When `source` and `target` are set, and a model ID is not set, the system chooses a default model for the language pair (usually the model based on the news domain). */
+    /** Translation source language code. */
     source?: string;
-    /** Language code of the translation target language. Use with source as an alternative way to select a translation model. */
+    /** Translation target language code. */
     target?: string;
     headers?: Object;
   }

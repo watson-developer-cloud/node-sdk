@@ -500,6 +500,71 @@ describe('speech_to_text_integration', function() {
       })
     );
 
+    describe('grammar tests', function() {
+      const grammar_name = 'node-sdk-test-grammar';
+
+      it(
+        'should addGrammar',
+        waitUntilReady(function(done) {
+          const params = {
+            customization_id,
+            grammar_name,
+            grammar_file: path.join(__dirname, '../resources/confirm.abnf'),
+            content_type: 'application/srgs',
+            allow_overwrite: true,
+          };
+          speech_to_text.addGrammar(params, (err, res) => {
+            expect(err).toBeNull();
+            expect(res).toEqual({});
+            done();
+          });
+        })
+      );
+      it(
+        'should getGrammar',
+        waitUntilReady(function(done) {
+          const params = {
+            customization_id,
+            grammar_name,
+          };
+          speech_to_text.getGrammar(params, (err, res) => {
+            expect(err).toBeNull();
+            expect(res.out_of_vocabulary_words).toBeDefined();
+            expect(res.name).toBeDefined();
+            expect(res.status).toBeDefined();
+            done();
+          });
+        })
+      );
+      it(
+        'should listGrammars',
+        waitUntilReady(function(done) {
+          const params = {
+            customization_id,
+          };
+          speech_to_text.listGrammars(params, (err, res) => {
+            expect(err).toBeNull();
+            expect(res.grammars).toBeDefined();
+            expect(res.grammars.length).toBeTruthy();
+            done();
+          });
+        })
+      );
+      it(
+        'should deleteGrammar',
+        waitUntilReady(function(done) {
+          const params = {
+            customization_id,
+            grammar_name,
+          };
+          speech_to_text.deleteGrammar(params, (err, res) => {
+            expect(err).toBeNull();
+            expect(res).toEqual({});
+            done();
+          });
+        })
+      );
+    });
     it(
       'resetLanguageModel()',
       waitUntilReady(function(done) {

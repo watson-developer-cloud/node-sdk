@@ -1505,6 +1505,92 @@ describe('createExpansions', () => {
     });
   });
 });
+describe('createStopwordList', () => {
+  describe('positive tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsSuccess);
+    });
+    test('should pass the right params to createRequest', () => {
+      // parameters
+      const environment_id = 'fake_environment_id';
+      const collection_id = 'fake_collection_id';
+      const stopword_file = 'fake_stopword_file';
+      const stopword_filename = 'fake_stopword_filename';
+      const params = {
+        environment_id,
+        collection_id,
+        stopword_file,
+        stopword_filename,
+      };
+
+      // invoke method
+      discovery.createStopwordList(params);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+      const options = getOptions(createRequestMock);
+
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/stopwords',
+        'POST'
+      );
+      checkCallback(createRequestMock);
+      const expectedAccept = 'application/json';
+      const expectedContentType = 'multipart/form-data';
+      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+      expect(options.formData['stopword_file'].data).toEqual(stopword_file);
+      expect(options.formData['stopword_file'].filename).toEqual(stopword_filename);
+      expect(options.formData['stopword_file'].contentType).toEqual('application/octet-stream');
+      expect(options.path['environment_id']).toEqual(environment_id);
+      expect(options.path['collection_id']).toEqual(collection_id);
+    });
+
+    test('should prioritize user-given headers', () => {
+      // parameters
+      const environment_id = 'fake_environment_id';
+      const collection_id = 'fake_collection_id';
+      const stopword_file = 'fake_stopword_file';
+      const accept = 'fake/header';
+      const contentType = 'fake/header';
+      const params = {
+        environment_id,
+        collection_id,
+        stopword_file,
+        headers: {
+          Accept: accept,
+          'Content-Type': contentType,
+        },
+      };
+
+      discovery.createStopwordList(params);
+      checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+  });
+  describe('negative tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsError);
+    });
+
+    test('should convert a `null` value for `params` to an empty object', done => {
+      discovery.createStopwordList(null, () => {
+        checkForEmptyObject(missingParamsMock);
+        done();
+      });
+    });
+
+    test('should enforce required parameters', done => {
+      // required parameters for this method
+      const requiredParams = ['environment_id', 'collection_id', 'stopword_file'];
+
+      discovery.createStopwordList({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+  });
+});
 describe('createTokenizationDictionary', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -1657,6 +1743,83 @@ describe('deleteExpansions', () => {
       const requiredParams = ['environment_id', 'collection_id'];
 
       discovery.deleteExpansions({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+  });
+});
+describe('deleteStopwordList', () => {
+  describe('positive tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsSuccess);
+    });
+    test('should pass the right params to createRequest', () => {
+      // parameters
+      const environment_id = 'fake_environment_id';
+      const collection_id = 'fake_collection_id';
+      const params = {
+        environment_id,
+        collection_id,
+      };
+
+      // invoke method
+      discovery.deleteStopwordList(params);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+      const options = getOptions(createRequestMock);
+
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/stopwords',
+        'DELETE'
+      );
+      checkCallback(createRequestMock);
+      const expectedAccept = 'application/json';
+      const expectedContentType = 'application/json';
+      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+      expect(options.path['environment_id']).toEqual(environment_id);
+      expect(options.path['collection_id']).toEqual(collection_id);
+    });
+
+    test('should prioritize user-given headers', () => {
+      // parameters
+      const environment_id = 'fake_environment_id';
+      const collection_id = 'fake_collection_id';
+      const accept = 'fake/header';
+      const contentType = 'fake/header';
+      const params = {
+        environment_id,
+        collection_id,
+        headers: {
+          Accept: accept,
+          'Content-Type': contentType,
+        },
+      };
+
+      discovery.deleteStopwordList(params);
+      checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+  });
+  describe('negative tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsError);
+    });
+
+    test('should convert a `null` value for `params` to an empty object', done => {
+      discovery.deleteStopwordList(null, () => {
+        checkForEmptyObject(missingParamsMock);
+        done();
+      });
+    });
+
+    test('should enforce required parameters', done => {
+      // required parameters for this method
+      const requiredParams = ['environment_id', 'collection_id'];
+
+      discovery.deleteStopwordList({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
@@ -4673,6 +4836,296 @@ describe('updateCredentials', () => {
       const requiredParams = ['environment_id', 'credential_id'];
 
       discovery.updateCredentials({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+  });
+});
+describe('createGateway', () => {
+  describe('positive tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsSuccess);
+    });
+    test('should pass the right params to createRequest', () => {
+      // parameters
+      const environment_id = 'fake_environment_id';
+      const name = 'fake_name';
+      const params = {
+        environment_id,
+        name,
+      };
+
+      // invoke method
+      discovery.createGateway(params);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+      const options = getOptions(createRequestMock);
+
+      checkUrlAndMethod(options, '/v1/environments/{environment_id}/gateways', 'POST');
+      checkCallback(createRequestMock);
+      const expectedAccept = 'application/json';
+      const expectedContentType = 'application/json';
+      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+      expect(options.body['name']).toEqual(name);
+      expect(options.json).toEqual(true);
+      expect(options.path['environment_id']).toEqual(environment_id);
+    });
+
+    test('should prioritize user-given headers', () => {
+      // parameters
+      const environment_id = 'fake_environment_id';
+      const accept = 'fake/header';
+      const contentType = 'fake/header';
+      const params = {
+        environment_id,
+        headers: {
+          Accept: accept,
+          'Content-Type': contentType,
+        },
+      };
+
+      discovery.createGateway(params);
+      checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+  });
+  describe('negative tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsError);
+    });
+
+    test('should convert a `null` value for `params` to an empty object', done => {
+      discovery.createGateway(null, () => {
+        checkForEmptyObject(missingParamsMock);
+        done();
+      });
+    });
+
+    test('should enforce required parameters', done => {
+      // required parameters for this method
+      const requiredParams = ['environment_id'];
+
+      discovery.createGateway({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+  });
+});
+describe('deleteGateway', () => {
+  describe('positive tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsSuccess);
+    });
+    test('should pass the right params to createRequest', () => {
+      // parameters
+      const environment_id = 'fake_environment_id';
+      const gateway_id = 'fake_gateway_id';
+      const params = {
+        environment_id,
+        gateway_id,
+      };
+
+      // invoke method
+      discovery.deleteGateway(params);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+      const options = getOptions(createRequestMock);
+
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/gateways/{gateway_id}',
+        'DELETE'
+      );
+      checkCallback(createRequestMock);
+      const expectedAccept = 'application/json';
+      const expectedContentType = 'application/json';
+      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+      expect(options.path['environment_id']).toEqual(environment_id);
+      expect(options.path['gateway_id']).toEqual(gateway_id);
+    });
+
+    test('should prioritize user-given headers', () => {
+      // parameters
+      const environment_id = 'fake_environment_id';
+      const gateway_id = 'fake_gateway_id';
+      const accept = 'fake/header';
+      const contentType = 'fake/header';
+      const params = {
+        environment_id,
+        gateway_id,
+        headers: {
+          Accept: accept,
+          'Content-Type': contentType,
+        },
+      };
+
+      discovery.deleteGateway(params);
+      checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+  });
+  describe('negative tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsError);
+    });
+
+    test('should convert a `null` value for `params` to an empty object', done => {
+      discovery.deleteGateway(null, () => {
+        checkForEmptyObject(missingParamsMock);
+        done();
+      });
+    });
+
+    test('should enforce required parameters', done => {
+      // required parameters for this method
+      const requiredParams = ['environment_id', 'gateway_id'];
+
+      discovery.deleteGateway({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+  });
+});
+describe('getGateway', () => {
+  describe('positive tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsSuccess);
+    });
+    test('should pass the right params to createRequest', () => {
+      // parameters
+      const environment_id = 'fake_environment_id';
+      const gateway_id = 'fake_gateway_id';
+      const params = {
+        environment_id,
+        gateway_id,
+      };
+
+      // invoke method
+      discovery.getGateway(params);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+      const options = getOptions(createRequestMock);
+
+      checkUrlAndMethod(options, '/v1/environments/{environment_id}/gateways/{gateway_id}', 'GET');
+      checkCallback(createRequestMock);
+      const expectedAccept = 'application/json';
+      const expectedContentType = 'application/json';
+      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+      expect(options.path['environment_id']).toEqual(environment_id);
+      expect(options.path['gateway_id']).toEqual(gateway_id);
+    });
+
+    test('should prioritize user-given headers', () => {
+      // parameters
+      const environment_id = 'fake_environment_id';
+      const gateway_id = 'fake_gateway_id';
+      const accept = 'fake/header';
+      const contentType = 'fake/header';
+      const params = {
+        environment_id,
+        gateway_id,
+        headers: {
+          Accept: accept,
+          'Content-Type': contentType,
+        },
+      };
+
+      discovery.getGateway(params);
+      checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+  });
+  describe('negative tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsError);
+    });
+
+    test('should convert a `null` value for `params` to an empty object', done => {
+      discovery.getGateway(null, () => {
+        checkForEmptyObject(missingParamsMock);
+        done();
+      });
+    });
+
+    test('should enforce required parameters', done => {
+      // required parameters for this method
+      const requiredParams = ['environment_id', 'gateway_id'];
+
+      discovery.getGateway({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+  });
+});
+describe('listGateways', () => {
+  describe('positive tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsSuccess);
+    });
+    test('should pass the right params to createRequest', () => {
+      // parameters
+      const environment_id = 'fake_environment_id';
+      const params = {
+        environment_id,
+      };
+
+      // invoke method
+      discovery.listGateways(params);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+      const options = getOptions(createRequestMock);
+
+      checkUrlAndMethod(options, '/v1/environments/{environment_id}/gateways', 'GET');
+      checkCallback(createRequestMock);
+      const expectedAccept = 'application/json';
+      const expectedContentType = 'application/json';
+      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+      expect(options.path['environment_id']).toEqual(environment_id);
+    });
+
+    test('should prioritize user-given headers', () => {
+      // parameters
+      const environment_id = 'fake_environment_id';
+      const accept = 'fake/header';
+      const contentType = 'fake/header';
+      const params = {
+        environment_id,
+        headers: {
+          Accept: accept,
+          'Content-Type': contentType,
+        },
+      };
+
+      discovery.listGateways(params);
+      checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+  });
+  describe('negative tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsError);
+    });
+
+    test('should convert a `null` value for `params` to an empty object', done => {
+      discovery.listGateways(null, () => {
+        checkForEmptyObject(missingParamsMock);
+        done();
+      });
+    });
+
+    test('should enforce required parameters', done => {
+      // required parameters for this method
+      const requiredParams = ['environment_id'];
+
+      discovery.listGateways({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });

@@ -107,7 +107,7 @@ describe('tone', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['tone_input', 'content_type'];
+      const requiredParams = ['tone_input'];
 
       tone_analyzer.tone({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);

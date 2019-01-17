@@ -209,76 +209,13 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
     return new RecognizeStream(params);
   }
 
-  /**
-   * Speech recognition for given audio using default model.
-   *
-   * @param {Object} params The parameters
-   * @param {Stream} params.audio - Audio to be recognized
-   * @param {String} [params.content_type] - Content-type
-   * @param {String} [params.base_model_version]
-   * @param {Number} [params.max_alternatives]
-   * @param {Boolean} [params.timestamps]
-   * @param {Boolean} [params.word_confidence]
-   * @param {Number} [params.inactivity_timeout]
-   * @param {String} [params.model]
-   * @param {Boolean} [params.interim_results]
-   * @param {Boolean} [params.keywords]
-   * @param {Number} [params.keywords_threshold]
-   * @param {Number} [params.word_alternatives_threshold]
-   * @param {Boolean} [params.profanity_filter]
-   * @param {Boolean} [params.smart_formatting]
-   * @param {String} [params.language_customization_id]
-   * @param {String} [params.customization_id]
-   * @param {String} [params.acoustic_customization_id]
-   * @param {Number} [params.customization_weight]
-   * @param {Boolean} [params.speaker_labels]
-   * @param {function} callback
-   */
   recognize(params, callback) {
-    const missingParams = getMissingParams(params, ['audio']);
-    if (missingParams) {
-      callback(missingParams);
-      return;
-    }
-    if (!isStream(params.audio)) {
-      callback(new Error('audio is not a standard Node.js Stream'));
+    if (params && params.audio && isStream(params.audio) && !params.content_type) {
+      callback(new Error('If providing `audio` as a Stream, `content_type` is required.'));
       return;
     }
 
-    const queryParams = pick(params, PARAMS_ALLOWED);
-    if (Array.isArray(queryParams.keywords)) {
-      queryParams.keywords = queryParams.keywords.join(',');
-    }
-
-    let _url = '/v1';
-    _url += params.session_id ? '/sessions/' + params.session_id : '';
-    _url += '/recognize';
-
-    const parameters = {
-      options: {
-        method: 'POST',
-        url: _url,
-        json: true,
-        qs: queryParams
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: {
-          'Content-Type': params.content_type
-        }
-      })
-    };
-
-    this.preAuthenticate((err) => {
-      if (err) {
-        return err;
-      }
-      return params.audio
-        .on('response', (response) => {
-          // Replace content-type
-          response.headers['content-type'] = params.content_type;
-        })
-        .pipe(this.createRequest(parameters, callback));
-    });
+    return super.recognize(params, callback);
   }
 
   /**

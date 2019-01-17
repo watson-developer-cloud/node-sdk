@@ -20,6 +20,7 @@ describe('text_to_speech_integration', function() {
     const params = {
       text: 'test',
       accept: 'audio/wav',
+      voice: 'en-US_LisaVoice',
     };
 
     it('synthesize using http', function(done) {

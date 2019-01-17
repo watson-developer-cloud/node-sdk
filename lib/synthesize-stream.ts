@@ -99,7 +99,7 @@ class SynthesizeStream extends Readable {
     const url =
       (options.url || 'wss://stream.watsonplatform.net/text-to-speech/api')
         .replace(/^http/, 'ws') + 
-        '/v1/synthesize' +
+        '/v1/synthesize?' +
         queryString;
 
     const socket = (this.socket = new w3cWebSocket(
