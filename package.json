@@ -126,13 +126,11 @@
     "**/*.ts": [
       "tsc",
       "tslint --fix -p . -c tslint.json",
-      "npm run test-unit",
       "git add"
     ],
     "test/**/*.js": [
       "eslint --fix",
       "prettier --write",
-      "npm run test-unit",
       "git add"
     ],
     "examples/*.js": [
