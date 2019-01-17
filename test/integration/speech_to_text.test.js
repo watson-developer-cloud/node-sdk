@@ -283,7 +283,6 @@ describe('speech_to_text_integration', function() {
           }
           expect(result.customization_id).toBeDefined();
           customization_id = result.customization_id;
-          console.log(customization_id);
           done();
         }
       );
