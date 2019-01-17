@@ -1,0 +1,7 @@
+#ABNF 1.0 ISO-8859-1;
+language en-US;
+mode voice;
+root $yesno;
+
+$yesno = affirmative | nah | no | nope | yeah | yep | yes | yup | fine
+| negative | OK | sure ;
