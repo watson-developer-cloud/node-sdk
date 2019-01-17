@@ -106,12 +106,12 @@
 					<div class="tsd-signature tsd-kind-icon">customization_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ff48c45/speech-to-text/v1-generated.ts#L3025">speech-to-text/v1-generated.ts:3025</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/2ac2c08/speech-to-text/v1-generated.ts#L3378">speech-to-text/v1-generated.ts:3378</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The customization ID (GUID) of the custom language model that is to be used for the request. You must make the request with service credentials created for the instance of the service that owns the custom model.</p>
+							<p>The customization ID (GUID) of the custom language model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model.</p>
 						</div>
 					</div>
 				</section>
@@ -121,7 +121,7 @@
 					<div class="tsd-signature tsd-kind-icon">customization_<wbr>weight<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ff48c45/speech-to-text/v1-generated.ts#L3029">speech-to-text/v1-generated.ts:3029</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/2ac2c08/speech-to-text/v1-generated.ts#L3382">speech-to-text/v1-generated.ts:3382</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -136,7 +136,7 @@
 					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ff48c45/speech-to-text/v1-generated.ts#L3030">speech-to-text/v1-generated.ts:3030</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/2ac2c08/speech-to-text/v1-generated.ts#L3383">speech-to-text/v1-generated.ts:3383</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -146,12 +146,12 @@
 					<div class="tsd-signature tsd-kind-icon">word_<wbr>type_<wbr>to_<wbr>add<span class="tsd-signature-symbol">:</span> <a href="../enums/speechtotextv1.trainlanguagemodelconstants.wordtypetoadd.html" class="tsd-signature-type">WordTypeToAdd</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ff48c45/speech-to-text/v1-generated.ts#L3027">speech-to-text/v1-generated.ts:3027</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/2ac2c08/speech-to-text/v1-generated.ts#L3380">speech-to-text/v1-generated.ts:3380</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The type of words from the custom language model&#39;s words resource on which to train the model: <em> <code>all</code> (the default) trains the model on all new words, regardless of whether they were extracted from corpora or were added or modified by the user. </em> <code>user</code> trains the model only on new words that were added or modified by the user; the model is not trained on new words extracted from corpora.</p>
+							<p>The type of words from the custom language model&#39;s words resource on which to train the model: <em> <code>all</code> (the default) trains the model on all new words, regardless of whether they were extracted from corpora or grammars or were added or modified by the user. </em> <code>user</code> trains the model only on new words that were added or modified by the user directly. The model is not trained on new words extracted from corpora or grammars.</p>
 						</div>
 					</div>
 				</section>

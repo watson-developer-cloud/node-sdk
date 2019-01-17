@@ -108,12 +108,12 @@
 					<div class="tsd-signature tsd-kind-icon">allow_<wbr>overwrite<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ff48c45/speech-to-text/v1-generated.ts#L3058">speech-to-text/v1-generated.ts:3058</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/2ac2c08/speech-to-text/v1-generated.ts#L3411">speech-to-text/v1-generated.ts:3411</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>If <code>true</code>, the specified corpus or audio resource overwrites an existing corpus or audio resource with the same name. If <code>false</code>, the request fails if a corpus or audio resource with the same name already exists. The parameter has no effect if a corpus or audio resource with the same name does not already exist.</p>
+							<p>If <code>true</code>, the specified corpus overwrites an existing corpus with the same name. If <code>false</code>, the request fails if a corpus with the same name already exists. The parameter has no effect if a corpus with the same name does not already exist.</p>
 						</div>
 					</div>
 				</section>
@@ -123,12 +123,12 @@
 					<div class="tsd-signature tsd-kind-icon">corpus_<wbr>file<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">FileObject</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ff48c45/speech-to-text/v1-generated.ts#L3056">speech-to-text/v1-generated.ts:3056</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/2ac2c08/speech-to-text/v1-generated.ts#L3409">speech-to-text/v1-generated.ts:3409</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>A plain text file that contains the training data for the corpus. Encode the file in UTF-8 if it contains non-ASCII characters; the service assumes UTF-8 encoding if it encounters non-ASCII characters. With the <code>curl</code> command, use the <code>--data-binary</code> option to upload the file for the request.</p>
+							<p>A plain text file that contains the training data for the corpus. Encode the file in UTF-8 if it contains non-ASCII characters; the service assumes UTF-8 encoding if it encounters non-ASCII characters. Make sure that you know the character encoding of the file. You must use that encoding when working with the words in the custom language model. For more information, see <a href="https://cloud.ibm.com/docs/services/speech-to-text/language-resource.html#charEncoding">Character encoding</a>. With the <code>curl</code> command, use the <code>--data-binary</code> option to upload the file for the request.</p>
 						</div>
 					</div>
 				</section>
@@ -138,7 +138,7 @@
 					<div class="tsd-signature tsd-kind-icon">corpus_<wbr>filename<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ff48c45/speech-to-text/v1-generated.ts#L3060">speech-to-text/v1-generated.ts:3060</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/2ac2c08/speech-to-text/v1-generated.ts#L3413">speech-to-text/v1-generated.ts:3413</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -153,12 +153,12 @@
 					<div class="tsd-signature tsd-kind-icon">corpus_<wbr>name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ff48c45/speech-to-text/v1-generated.ts#L3054">speech-to-text/v1-generated.ts:3054</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/2ac2c08/speech-to-text/v1-generated.ts#L3407">speech-to-text/v1-generated.ts:3407</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The name of the new corpus for the custom language model. Use a localized name that matches the language of the custom model and reflects the contents of the corpus. <em> Include a maximum of 128 characters in the name. </em> Do not include spaces, slashes, or backslashes in the name. <em> Do not use the name of a corpus that has already been added to the custom model. </em> Do not use the name <code>user</code>, which is reserved by the service to denote custom words that are added or modified by the user.</p>
+							<p>The name of the new corpus for the custom language model. Use a localized name that matches the language of the custom model and reflects the contents of the corpus. <em> Include a maximum of 128 characters in the name. </em> Do not include spaces, slashes, or backslashes in the name. <em> Do not use the name of an existing corpus or grammar that is already defined for the custom model. </em> Do not use the name <code>user</code>, which is reserved by the service to denote custom words that are added or modified by the user.</p>
 						</div>
 					</div>
 				</section>
@@ -168,12 +168,12 @@
 					<div class="tsd-signature tsd-kind-icon">customization_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ff48c45/speech-to-text/v1-generated.ts#L3052">speech-to-text/v1-generated.ts:3052</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/2ac2c08/speech-to-text/v1-generated.ts#L3405">speech-to-text/v1-generated.ts:3405</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The customization ID (GUID) of the custom language model that is to be used for the request. You must make the request with service credentials created for the instance of the service that owns the custom model.</p>
+							<p>The customization ID (GUID) of the custom language model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model.</p>
 						</div>
 					</div>
 				</section>
@@ -183,7 +183,7 @@
 					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ff48c45/speech-to-text/v1-generated.ts#L3061">speech-to-text/v1-generated.ts:3061</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/2ac2c08/speech-to-text/v1-generated.ts#L3414">speech-to-text/v1-generated.ts:3414</a></li>
 						</ul>
 					</aside>
 				</section>
