@@ -1,3 +1,12 @@
+# [3.16.0](https://github.com/watson-developer-cloud/node-sdk/compare/v3.15.4...v3.16.0) (2019-01-17)
+
+
+### Features
+
+* **discovery:** add methods `createStopwordList`, `deleteStopwordList`, `createGateway`, `deleteGateway`, `getGateway`, and `listGateways` ([8a6753e](https://github.com/watson-developer-cloud/node-sdk/commit/8a6753e))
+* **speech-to-text:** new methods added: addGrammar, deleteGrammar, getGrammar, listGrammars ([7ab567a](https://github.com/watson-developer-cloud/node-sdk/commit/7ab567a))
+* **visual-recognition:** parameter `accept_language` added to method `detectFaces` ([82190c7](https://github.com/watson-developer-cloud/node-sdk/commit/82190c7))
+
 ## [3.15.4](https://github.com/watson-developer-cloud/node-sdk/compare/v3.15.3...v3.15.4) (2019-01-15)
 
 
