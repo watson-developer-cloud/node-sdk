@@ -110,7 +110,7 @@ describe('profile', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['content', 'content_type'];
+      const requiredParams = ['content'];
 
       personality_insights.profile({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -199,7 +199,7 @@ describe('profileAsCsv', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['content', 'content_type'];
+      const requiredParams = ['content'];
 
       personality_insights.profileAsCsv({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
