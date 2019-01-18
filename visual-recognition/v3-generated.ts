@@ -893,7 +893,7 @@ namespace VisualRecognitionV3 {
     /** Confidence score for the property in the range of 0 to 1. A higher score indicates greater likelihood that the class is depicted in the image. The default threshold for returning scores from a classifier is 0.5. */
     score: number;
     /** Knowledge graph of the property. For example, `/fruit/pome/apple/eating apple/Granny Smith`. Included only if identified. */
-    type_hierarchy: string;
+    type_hierarchy?: string;
   }
 
   /** Results for one image. */
@@ -913,9 +913,9 @@ namespace VisualRecognitionV3 {
   /** Results for all images. */
   export interface ClassifiedImages {
     /** Number of custom classes identified in the images. */
-    custom_classes: number;
+    custom_classes?: number;
     /** Number of images processed for the API call. */
-    images_processed: number;
+    images_processed?: number;
     /** Classified images. */
     images: ClassifiedImage[];
     /** Information about what might cause less than optimal output. For example, a request sent with a corrupt .zip file and a list of image URLs will still complete, but does not return the expected output. Not returned when there is no warning. */
