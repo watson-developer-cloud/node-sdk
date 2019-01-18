@@ -9,51 +9,6 @@ class TextToSpeechV1 extends GeneratedTextToSpeechV1 {
     super(options);
   }
 
-  getCustomizations(params, callback) {
-    console.warn("WARNING: getCustomizations() was renamed to listVoiceModels(). Support for getCustomizations() will be removed in the next major release");
-    return super.listVoiceModels(params, callback);
-  }
-
-  getCustomization(params, callback) {
-    console.warn("WARNING: getCustomization() was renamed to getVoiceModel(). Support for getCustomization() will be removed in the next major release");
-    return super.getVoiceModel(params, callback);
-  }
-
-  updateCustomization(params, callback) {
-    console.warn("WARNING: updateCustomization() was renamed to updateVoiceModel(). Support for updateCustomization() will be removed in the next major release");
-    return super.updateVoiceModel(params, callback);
-  }
-
-  deleteCustomization(params, callback) {
-    console.warn("WARNING: deleteCustomization() was renamed to deleteVoiceModel(). Support for deleteCustomization() will be removed in the next major release");
-    return super.deleteVoiceModel(params, callback);
-  }
-
-  createCustomization(params, callback) {
-    console.warn("WARNING: createCustomization() was renamed to createVoiceModel(). Support for createCustomization() will be removed in the next major release");
-    return super.createVoiceModel(params, callback);
-  }
-
-  getWords(params, callback) {
-    console.warn("WARNING: getWords() was renamed to listWords(). Support for getWords() will be removed in the next major release");
-    return super.listWords(params, callback);
-  }
-
-  voices(params, callback) {
-    console.warn("WARNING: voices() was renamed to listVoices(). Support for voices() will be removed in the next major release");
-    return super.listVoices(params, callback);
-  }
-
-  voice(params, callback) {
-    console.warn("WARNING: voice() was renamed to getVoice(). Support for voice() will be removed in the next major release");
-    return super.getVoice(params, callback);
-  }
-
-  pronunciation(params, callback) {
-    console.warn("WARNING: pronunciation() was renamed to getPronunciation(). Support for pronunciation() will be removed in the next major release");
-    return super.getPronunciation(params, callback);
-  }
-
   /**
    * Repair the WAV header of an audio/wav file.
    *

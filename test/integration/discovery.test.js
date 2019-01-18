@@ -1,6 +1,6 @@
 'use strict';
 
-const DiscoveryV1 = require('../../discovery/v1');
+const DiscoveryV1 = require('../../discovery/v1-generated');
 const authHelper = require('../resources/auth_helper.js');
 const auth = authHelper.auth;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
@@ -90,8 +90,8 @@ describe('discovery_integration', function() {
     );
   });
 
-  it('getCollections()', function(done) {
-    discovery.getCollections(
+  it('listCollections()', function(done) {
+    discovery.listCollections(
       {
         environment_id: environment_id,
         configuration_id: configuration_id,
@@ -142,14 +142,21 @@ describe('discovery_integration', function() {
       });
     });
 
-    it('addJsonDocument()', function(done) {
+    it('addDocument()', function(done) {
+      const jsonFile = {
+        foo: 'bar',
+        from: 'node-sdk integration test',
+        test_date: new Date().toString(),
+      };
+
       const document_obj = {
         environment_id: environment_id,
         collection_id: collection_id,
         file: {
-          foo: 'bar',
-          from: 'node-sdk integration test',
-          test_date: new Date().toString(),
+          value: JSON.stringify(jsonFile),
+          options: {
+            filename: '_.json',
+          },
         },
       };
 

@@ -36,7 +36,6 @@ export interface UserOptions {
   version?: string;
   username?: string;
   password?: string;
-  api_key?: string;
   apikey?: string;
   use_unauthenticated?: boolean;
   headers?: HeaderOptions;
@@ -58,7 +57,6 @@ export interface BaseServiceOptions extends UserOptions {
 export interface Credentials {
   username?: string;
   password?: string;
-  api_key?: string;
   url?: string;
   iam_access_token?: string;
   iam_apikey?: string;
@@ -69,7 +67,6 @@ function hasCredentials(obj: any): boolean {
   return (
     obj &&
     ((obj.username && obj.password) ||
-      obj.api_key ||
       obj.iam_access_token ||
       obj.iam_apikey)
   );
@@ -151,11 +148,6 @@ export class BaseService {
     }
     const options = extend({}, userOptions);
     const _options = this.initCredentials(options);
-    // If url is not specified, visual recognition requires gateway-a for CF instances
-    // https://github.ibm.com/Watson/developer-experience/issues/4589
-    if (_options && this.name === 'watson_vision_combined' && !_options.url && _options.api_key && !_options.iam_apikey){
-      _options.url = 'https://gateway-a.watsonplatform.net/visual-recognition/api';
-    }
     if (options.url) {
       _options.url = stripTrailingSlash(options.url);
     }
@@ -199,9 +191,6 @@ export class BaseService {
     }
     if (this._options.password) {
       credentials.password = this._options.password;
-    }
-    if (this._options.api_key) {
-      credentials.api_key = this._options.api_key;
     }
     if (this._options.url) {
       credentials.url = this._options.url;
@@ -299,9 +288,6 @@ export class BaseService {
       _options = extend(_options, options);
       return _options;
     }
-    if (options.api_key || options.apikey) {
-      _options.api_key = options.api_key || options.apikey;
-    }
     _options.jar = request.jar();
     // Get credentials from environment properties or Bluemix,
     // but prefer credentials provided programatically
@@ -316,8 +302,8 @@ export class BaseService {
       if (!hasCredentials(_options)) {
         const errorMessage = 'Insufficient credentials provided in ' +
           'constructor argument. Refer to the documentation for the ' +
-          'required parameters. Common examples are username/password, ' +
-          'api_key, and iam_access_token.';
+          'required parameters. Common examples are username/password and ' +
+          'iam_access_token.';
         throw new Error(errorMessage);
       }
       if (!hasIamCredentials(_options) && !usesBasicForIam(_options)) {
@@ -328,8 +314,6 @@ export class BaseService {
           ).toString('base64');
           const authHeader = { Authorization: `Basic ${encodedCredentials}` };
           _options.headers = extend(authHeader, _options.headers);
-        } else {
-          _options.qs = extend({ api_key: _options.api_key }, _options.qs);
         }
       }
     }
@@ -365,7 +349,6 @@ export class BaseService {
     const nameWithUnderscore: string = _name.replace(/-/g, '_');
     const username: string = process.env[`${_name}_USERNAME`] || process.env[`${nameWithUnderscore}_USERNAME`];
     const password: string = process.env[`${_name}_PASSWORD`] || process.env[`${nameWithUnderscore}_PASSWORD`];
-    const apiKey: string = process.env[`${_name}_API_KEY`] || process.env[`${nameWithUnderscore}_API_KEY`];
     const url: string = process.env[`${_name}_URL`] || process.env[`${nameWithUnderscore}_URL`];
     const iamAccessToken: string = process.env[`${_name}_IAM_ACCESS_TOKEN`] || process.env[`${nameWithUnderscore}_IAM_ACCESS_TOKEN`];
     const iamApiKey: string = process.env[`${_name}_IAM_APIKEY`] || process.env[`${nameWithUnderscore}_IAM_APIKEY`];
@@ -374,7 +357,6 @@ export class BaseService {
     return {
       username,
       password,
-      api_key: apiKey,
       url,
       iam_access_token: iamAccessToken,
       iam_apikey: iamApiKey,

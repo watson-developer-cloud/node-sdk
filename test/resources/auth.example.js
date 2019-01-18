@@ -152,8 +152,8 @@ module.exports = {
       'X-Watson-Test': 1,
     },
   },
-  conversation: {
-    url: 'https://gateway.watsonplatform.net/conversation/api',
+  assistant: {
+    url: 'https://gateway.watsonplatform.net/assistant/api',
     username: '',
     password: '',
     workspace_id: '',

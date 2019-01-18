@@ -12,14 +12,12 @@
 //   'authorization',
 //   'language_translator',
 //   'tone_analyzer',
-//   'dialog',
 //   'retrieve_and_rank',
 //   'document_conversion',
 //   'search',
 //   'alchemy_language',
 //   'alchemy_vision',
 //   'alchemy_data_news',
-//   'conversation'
 // ];
 //
 // function isService(fileInfo) {

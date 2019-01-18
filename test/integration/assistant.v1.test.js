@@ -101,7 +101,6 @@ const workspace1 = extend(true, {}, workspace, intents, { language: workspace.la
 
 describe('assistant_integration', function() {
   jest.setTimeout(TEN_SECONDS);
-
   auth.conversation.version = '2018-02-16';
   const assistant = new watson.AssistantV1(auth.conversation);
 
@@ -112,7 +111,7 @@ describe('assistant_integration', function() {
           text: 'Turn on the lights',
         },
         alternate_intents: true,
-        workspace_id: auth.conversation.workspace_id,
+        workspace_id: auth.assistant.workspace_id,
         headers: {
           customheader: 'custom',
         },
@@ -130,7 +129,7 @@ describe('assistant_integration', function() {
     });
 
     it('dialog_stack with 2017-02-03 version', function(done) {
-      const constructorParams = assign({}, auth.conversation, {
+      const constructorParams = assign({}, auth.assistant, {
         version: '2017-02-03',
       });
       const assistant = new watson.AssistantV1(constructorParams);
@@ -139,7 +138,7 @@ describe('assistant_integration', function() {
         input: {
           text: 'Turn on the lights',
         },
-        workspace_id: auth.conversation.workspace_id,
+        workspace_id: auth.assistant.workspace_id,
       };
 
       assistant.message(params, function(err, result) {
@@ -154,7 +153,7 @@ describe('assistant_integration', function() {
     });
 
     it('dialog_stack with 2016-09-20 version', function(done) {
-      const constructorParams = assign({}, auth.conversation, {
+      const constructorParams = assign({}, auth.assistant, {
         version: '2016-09-20',
       });
       const assistant = new watson.AssistantV1(constructorParams);
@@ -163,7 +162,7 @@ describe('assistant_integration', function() {
         input: {
           text: 'Turn on the lights',
         },
-        workspace_id: auth.conversation.workspace_id,
+        workspace_id: auth.assistant.workspace_id,
       };
 
       assistant.message(params, function(err, result) {
@@ -178,7 +177,7 @@ describe('assistant_integration', function() {
     });
 
     it('dialog_stack with 2016-07-11 version', function(done) {
-      const constructorParams = assign({}, auth.conversation, {
+      const constructorParams = assign({}, auth.assistant, {
         version: '2016-07-11',
       });
       const assistant = new watson.AssistantV1(constructorParams);
@@ -187,7 +186,7 @@ describe('assistant_integration', function() {
         input: {
           text: 'Turn on the lights',
         },
-        workspace_id: auth.conversation.workspace_id,
+        workspace_id: auth.assistant.workspace_id,
       };
 
       assistant.message(params, function(err, result) {

@@ -8,6 +8,7 @@ const pjson = require('../../package.json');
 
 describe('requestwrapper', () => {
   const noop = function() {};
+
   it('should emit error stream on missing parameters when callback is undefined', done => {
     const parameters = {
       options: {
@@ -45,7 +46,9 @@ describe('requestwrapper', () => {
     const assistant_ow = new watson.AssistantV1(service2);
     const payload = {
       workspace_id: 'workspace1',
+      intent: 'intent1',
     };
+
     const req = assistant.listIntents(payload, noop);
     const req2 = assistant_ow.listIntents(payload, noop);
     expect(req.headers['User-Agent']).toBe('watson-developer-cloud-nodejs-' + pjson.version + ';');

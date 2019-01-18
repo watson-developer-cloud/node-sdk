@@ -8,8 +8,7 @@
     "url": "https://github.com/watson-developer-cloud/node-sdk.git"
   },
   "keywords": [
-    "conversation",
-    "dialog",
+    "assistant",
     "discovery",
     "ibm",
     "natural language classifier",
@@ -95,7 +94,7 @@
     "websocket": "~1.0.26"
   },
   "engines": {
-    "node": ">=4"
+    "node": ">=6"
   },
   "scripts": {
     "precommit": "lint-staged",

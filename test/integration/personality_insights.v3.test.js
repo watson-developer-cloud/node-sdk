@@ -54,6 +54,6 @@ describe('personality_insights_v3_integration', function() {
         accept: 'text/csv',
       },
     };
-    personality_insights.profile_csv(params, done);
+    personality_insights.profileAsCsv(params, done);
   });
 });

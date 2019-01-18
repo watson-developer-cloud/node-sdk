@@ -98,9 +98,9 @@ export function formatErrorIfExists(cb: Function): request.RequestCallback {
         });
         body.error = errObj.description;
       } else if (typeof body.error === 'object' && typeof body.error.error === 'object') {
-        // this can happen with, for example, the conversation createSynonym() API
+        // this can happen with, for example, the assistant createSynonym() API
         body.rawError = body.error;
-        body.error = JSON.stringify(body.error.error); //
+        body.error = JSON.stringify(body.error.error);
       }
       // language translaton returns json with error_code and error_message
       error = new Error(body.error || body.error_message || 'Error Code: ' + body.error_code);
@@ -112,8 +112,6 @@ export function formatErrorIfExists(cb: Function): request.RequestCallback {
     }
     // If we still don't have an error and there was an error...
     if (!error && (response.statusCode < 200 || response.statusCode >= 300)) {
-      // The JSON stringify for the error below is for the Dialog service
-      // It stringifies "[object Object]" into the correct error (PR #445)
       error = new Error(typeof body === 'object' ? JSON.stringify(body) : body);
       error.code = response.statusCode;
       body = null;
@@ -221,12 +219,9 @@ export function sendRequest(parameters, _callback) {
 
   // Query params
   if (options.qs && Object.keys(options.qs).length > 0) {
-    // dialog doesn't like qs params joined with a `,`
-    if (!parameters.defaultOptions.url.match(/dialog\/api/)) {
-      Object.keys(options.qs).forEach(
-        key => Array.isArray(options.qs[key]) && (options.qs[key] = options.qs[key].join(','))
-      );
-    }
+    Object.keys(options.qs).forEach(
+      key => Array.isArray(options.qs[key]) && (options.qs[key] = options.qs[key].join(','))
+    );
     options.useQuerystring = true;
   }
 
