@@ -71,12 +71,8 @@ class VisualRecognitionV3 extends BaseService {
    * it encounters non-ASCII characters.
    *
    * You can also include an image with the **url** parameter.
-   * @param {string} [params.accept_language] - The language of the output class names. The full set of languages is
-   * supported for the built-in classifier IDs: `default`, `food`, and `explicit`. The class names of custom classifiers
-   * are not translated.
-   *
-   * The response might not be in the specified language when the requested language is not supported or when there is
-   * no translation for the class name.
+   * @param {string} [params.accept_language] - The desired language of parts of the response. See the response for
+   * details.
    * @param {string} [params.url] - The URL of an image to analyze. Must be in .jpg, or .png format. The minimum
    * recommended pixel density is 32X32 pixels per inch, and the maximum image size is 10 MB.
    *
@@ -156,7 +152,7 @@ class VisualRecognitionV3 extends BaseService {
    * **Important:** On April 2, 2018, the identity information in the response to calls to the Face model was removed.
    * The identity information refers to the `name` of the person, `score`, and `type_hierarchy` knowledge graph. For
    * details about the enhanced Face model, see the [Release
-   * notes](https://console.bluemix.net/docs/services/visual-recognition/release-notes.html#2april2018).
+   * notes](https://cloud.ibm.com/docs/services/visual-recognition/release-notes.html#2april2018).
    *
    * Analyze and get data about faces in images. Responses can include estimated age and gender. This feature uses a
    * built-in model, so no training is necessary. The Detect faces method does not support general biometric facial
@@ -178,6 +174,8 @@ class VisualRecognitionV3 extends BaseService {
    * followed, so you can use a shortened URL.
    *
    * You can also include images with the **images_file** parameter.
+   * @param {string} [params.accept_language] - The desired language of parts of the response. See the response for
+   * details.
    * @param {string} [params.images_file_content_type] - The content type of images_file.
    * @param {string} [params.images_filename] - The filename for images_file.
    * @param {Object} [params.headers] - Custom request headers
@@ -215,6 +213,7 @@ class VisualRecognitionV3 extends BaseService {
         headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'multipart/form-data',
+          'Accept-Language': _params.accept_language
         }, _params.headers),
       }),
     };
@@ -253,6 +252,9 @@ class VisualRecognitionV3 extends BaseService {
    *
    * Encode special characters in the file name in UTF-8.
    * @param {string} [params.positive_examples_filename] - The filename for positive_examples.
+   *
+   * Specify the filename by appending `_positive_examples_filename` to the class name. For example,
+   * the filename parameter for `goldenretriever_positive_examples` would be `goldenretriever_positive_examples_filename`
    * @param {string} [params.negative_examples_filename] - The filename for negative_examples.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -474,7 +476,7 @@ class VisualRecognitionV3 extends BaseService {
    * Update a custom classifier by adding new positive or negative classes (examples) or by adding new images to
    * existing classes. You must supply at least one set of positive or negative examples. For details, see [Updating
    * custom
-   * classifiers](https://console.bluemix.net/docs/services/visual-recognition/customizing.html#updating-custom-classifiers).
+   * classifiers](https://cloud.ibm.com/docs/services/visual-recognition/customizing.html#updating-custom-classifiers).
    *
    * Encode all names in UTF-8 if they contain non-ASCII characters (.zip and image file names, and classifier and class
    * names). The service assumes UTF-8 encoding if it encounters non-ASCII characters.
@@ -501,6 +503,9 @@ class VisualRecognitionV3 extends BaseService {
    *
    * Encode special characters in the file name in UTF-8.
    * @param {string} [params.positive_examples_filename] - The filename for positive_examples.
+   *
+   * Specify the filename by appending `_positive_examples_filename` to the class name. For example,
+   * the filename parameter for `goldenretriever_positive_examples` would be `goldenretriever_positive_examples_filename`
    * @param {string} [params.negative_examples_filename] - The filename for negative_examples.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -644,7 +649,7 @@ class VisualRecognitionV3 extends BaseService {
    *
    * You associate a customer ID with data by passing the `X-Watson-Metadata` header with a request that passes data.
    * For more information about personal data and customer IDs, see [Information
-   * security](https://console.bluemix.net/docs/services/visual-recognition/information-security.html).
+   * security](https://cloud.ibm.com/docs/services/visual-recognition/information-security.html).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customer_id - The customer ID for which all data is to be deleted.
@@ -729,7 +734,7 @@ namespace VisualRecognitionV3 {
   export interface ClassifyParams {
     /** An image file (.jpg, .png) or .zip file with images. Maximum image size is 10 MB. Include no more than 20 images and limit the .zip file to 100 MB. Encode the image and .zip file names in UTF-8 if they contain non-ASCII characters. The service assumes UTF-8 encoding if it encounters non-ASCII characters. You can also include an image with the **url** parameter. */
     images_file?: NodeJS.ReadableStream|FileObject|Buffer;
-    /** The language of the output class names. The full set of languages is supported for the built-in classifier IDs: `default`, `food`, and `explicit`. The class names of custom classifiers are not translated. The response might not be in the specified language when the requested language is not supported or when there is no translation for the class name. */
+    /** The desired language of parts of the response. See the response for details. */
     accept_language?: ClassifyConstants.AcceptLanguage | string;
     /** The URL of an image to analyze. Must be in .jpg, or .png format. The minimum recommended pixel density is 32X32 pixels per inch, and the maximum image size is 10 MB. You can also include images with the **images_file** parameter. */
     url?: string;
@@ -749,7 +754,7 @@ namespace VisualRecognitionV3 {
 
   /** Constants for the `classify` operation. */
   export namespace ClassifyConstants {
-    /** The language of the output class names. The full set of languages is supported for the built-in classifier IDs: `default`, `food`, and `explicit`. The class names of custom classifiers are not translated. The response might not be in the specified language when the requested language is not supported or when there is no translation for the class name. */
+    /** The desired language of parts of the response. See the response for details. */
     export enum AcceptLanguage {
       EN = 'en',
       AR = 'ar',
@@ -771,12 +776,32 @@ namespace VisualRecognitionV3 {
     images_file?: NodeJS.ReadableStream|FileObject|Buffer;
     /** The URL of an image to analyze. Must be in .gif, .jpg, .png, or .tif format. The minimum recommended pixel density is 32X32 pixels per inch, and the maximum image size is 10 MB. Redirects are followed, so you can use a shortened URL. You can also include images with the **images_file** parameter. */
     url?: string;
+    /** The desired language of parts of the response. See the response for details. */
+    accept_language?: DetectFacesConstants.AcceptLanguage | string;
     /** The content type of images_file. */
     images_file_content_type?: string;
     /** The filename for images_file. */
     images_filename?: string;
     headers?: Object;
     return_response?: boolean;
+  }
+
+  /** Constants for the `detectFaces` operation. */
+  export namespace DetectFacesConstants {
+    /** The desired language of parts of the response. See the response for details. */
+    export enum AcceptLanguage {
+      EN = 'en',
+      AR = 'ar',
+      DE = 'de',
+      ES = 'es',
+      FR = 'fr',
+      IT = 'it',
+      JA = 'ja',
+      KO = 'ko',
+      PT_BR = 'pt-br',
+      ZH_CN = 'zh-cn',
+      ZH_TW = 'zh-tw',
+    }
   }
 
   /** Parameters for the `createClassifier` operation. */
@@ -863,7 +888,7 @@ namespace VisualRecognitionV3 {
 
   /** Result of a class within a classifier. */
   export interface ClassResult {
-    /** Name of the class. */
+    /** Name of the class. Class names are translated in the language defined by the **Accept-Language** request header for the build-in classifier IDs (`default`, `food`, and `explicit`). Class names of custom classifiers are not translated. The response might not be in the specified language when the requested language is not supported or when there is no translation for the class name. */
     class_name: string;
     /** Confidence score for the property in the range of 0 to 1. A higher score indicates greater likelihood that the class is depicted in the image. The default threshold for returning scores from a classifier is 0.5. */
     score: number;
@@ -981,6 +1006,8 @@ namespace VisualRecognitionV3 {
   export interface FaceGender {
     /** Gender identified by the face. For example, `MALE` or `FEMALE`. */
     gender: string;
+    /** The word for "male" or "female" in the language defined by the **Accept-Language** request header. */
+    gender_label: string;
     /** Confidence score in the range of 0 to 1. A higher score indicates greater confidence in the estimated value for the property. */
     score: number;
   }

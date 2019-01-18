@@ -78,7 +78,7 @@ class ToneAnalyzerV3 extends BaseService {
    * service removes HTML tags and analyzes only the textual content.
    *
    * **See also:** [Using the general-purpose
-   * endpoint](/docs/services/tone-analyzer/using-tone.html#using-the-general-purpose-endpoint).
+   * endpoint](https://cloud.ibm.com/docs/services/tone-analyzer/using-tone.html#using-the-general-purpose-endpoint).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {ToneInput|string} params.tone_input - JSON, plain text, or HTML input that contains the content to be
@@ -166,7 +166,7 @@ class ToneAnalyzerV3 extends BaseService {
    * UTF-8.
    *
    * **See also:** [Using the customer-engagement
-   * endpoint](/docs/services/tone-analyzer/using-tone-chat.html#using-the-customer-engagement-endpoint).
+   * endpoint](https://cloud.ibm.com/docs/services/tone-analyzer/using-tone-chat.html#using-the-customer-engagement-endpoint).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {Utterance[]} params.utterances - An array of `Utterance` objects that provides the input content that the

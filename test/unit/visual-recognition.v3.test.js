@@ -130,11 +130,13 @@ describe('detectFaces', () => {
       // parameters
       const images_file = 'fake_images_file';
       const url = 'fake_url';
+      const accept_language = 'fake_accept_language';
       const images_file_content_type = 'fake_images_file_content_type';
       const images_filename = 'fake_images_filename';
       const params = {
         images_file,
         url,
+        accept_language,
         images_file_content_type,
         images_filename,
       };
@@ -152,6 +154,7 @@ describe('detectFaces', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = 'multipart/form-data';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+      checkUserHeader(createRequestMock, 'Accept-Language', accept_language);
       expect(options.formData['images_file'].data).toEqual(images_file);
       expect(options.formData['images_file'].filename).toEqual(images_filename);
       expect(options.formData['images_file'].contentType).toEqual(images_file_content_type);
@@ -205,15 +208,15 @@ describe('createClassifier', () => {
     test('should pass the right params to createRequest', () => {
       // parameters
       const name = 'fake_name';
-      const classname_positive_examples = 'fake_positive_examples';
+      const fake_positive_examples = 'fake_positive_examples';
       const negative_examples = 'fake_negative_examples';
-      const classname_positive_examples_filename = 'fake_positive_examples_filename';
+      const fake_positive_examples_filename = 'fake_positive_examples_filename';
       const negative_examples_filename = 'fake_negative_examples_filename';
       const params = {
         name,
-        classname_positive_examples,
+        fake_positive_examples,
         negative_examples,
-        classname_positive_examples_filename,
+        fake_positive_examples_filename,
         negative_examples_filename,
       };
 
@@ -231,13 +234,11 @@ describe('createClassifier', () => {
       const expectedContentType = 'multipart/form-data';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.formData['name']).toEqual(name);
-      expect(options.formData['classname_positive_examples'].data).toEqual(
-        classname_positive_examples
+      expect(options.formData['fake_positive_examples'].data).toEqual(fake_positive_examples);
+      expect(options.formData['fake_positive_examples'].filename).toEqual(
+        fake_positive_examples_filename
       );
-      expect(options.formData['classname_positive_examples'].filename).toEqual(
-        classname_positive_examples_filename
-      );
-      expect(options.formData['classname_positive_examples'].contentType).toEqual(
+      expect(options.formData['fake_positive_examples'].contentType).toEqual(
         'application/octet-stream'
       );
       expect(options.formData['negative_examples'].data).toEqual(negative_examples);
@@ -248,12 +249,12 @@ describe('createClassifier', () => {
     test('should prioritize user-given headers', () => {
       // parameters
       const name = 'fake_name';
-      const classname_positive_examples = 'fake_positive_examples';
+      const positive_examples = 'fake_positive_examples';
       const accept = 'fake/header';
       const contentType = 'fake/header';
       const params = {
         name,
-        classname_positive_examples,
+        positive_examples,
         headers: {
           Accept: accept,
           'Content-Type': contentType,
@@ -584,15 +585,15 @@ describe('updateClassifier', () => {
     test('should pass the right params to createRequest', () => {
       // parameters
       const classifier_id = 'fake_classifier_id';
-      const classname_positive_examples = 'fake_positive_examples';
+      const fake_positive_examples = 'fake_positive_examples';
       const negative_examples = 'fake_negative_examples';
-      const classname_positive_examples_filename = 'fake_positive_examples_filename';
+      const fake_positive_examples_filename = 'fake_positive_examples_filename';
       const negative_examples_filename = 'fake_negative_examples_filename';
       const params = {
         classifier_id,
-        classname_positive_examples,
+        fake_positive_examples,
         negative_examples,
-        classname_positive_examples_filename,
+        fake_positive_examples_filename,
         negative_examples_filename,
       };
 
@@ -609,13 +610,11 @@ describe('updateClassifier', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = 'multipart/form-data';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.formData['classname_positive_examples'].data).toEqual(
-        classname_positive_examples
+      expect(options.formData['fake_positive_examples'].data).toEqual(fake_positive_examples);
+      expect(options.formData['fake_positive_examples'].filename).toEqual(
+        fake_positive_examples_filename
       );
-      expect(options.formData['classname_positive_examples'].filename).toEqual(
-        classname_positive_examples_filename
-      );
-      expect(options.formData['classname_positive_examples'].contentType).toEqual(
+      expect(options.formData['fake_positive_examples'].contentType).toEqual(
         'application/octet-stream'
       );
       expect(options.formData['negative_examples'].data).toEqual(negative_examples);

@@ -1130,7 +1130,7 @@ class DiscoveryV1 extends BaseService {
   };
 
   /*************************
-   * expansions
+   * queryModifications
    ************************/
 
   /**
@@ -1199,6 +1199,66 @@ class DiscoveryV1 extends BaseService {
         headers: extend(true, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
+
+  /**
+   * Create stopword list.
+   *
+   * Upload a custom stopword list to use with the specified collection.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.environment_id - The ID of the environment.
+   * @param {string} params.collection_id - The ID of the collection.
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} params.stopword_file - The content of the stopword list to ingest.
+   * @param {string} [params.stopword_filename] - The filename for stopword_file.
+   * @param {Object} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {NodeJS.ReadableStream|void}
+   */
+  public createStopwordList(params: DiscoveryV1.CreateStopwordListParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TokenDictStatusResponse>): NodeJS.ReadableStream | void {
+    const _params = extend({}, params);
+    const _callback = (callback) ? callback : () => { /* noop */ };
+    const requiredParams = ['environment_id', 'collection_id', 'stopword_file'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+    if (_params.stopword_file && !_params.stopword_filename) {
+      console.warn(
+        'WARNING: `stopword_filename` should be provided if `stopword_file` is not null. This will be REQUIRED in the next major release.'
+      );
+    }
+
+    const formData = {
+      'stopword_file': {
+        data: _params.stopword_file,
+        filename: _params.stopword_filename,
+        contentType: 'application/octet-stream'
+      }
+    };
+
+    const path = {
+      'environment_id': _params.environment_id,
+      'collection_id': _params.collection_id
+    };
+ 
+    const parameters = {
+      options: {
+        url: '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/stopwords',
+        method: 'POST',
+        path,
+        formData
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, {
+          'Accept': 'application/json',
+          'Content-Type': 'multipart/form-data',
         }, _params.headers),
       }),
     };
@@ -1306,6 +1366,51 @@ class DiscoveryV1 extends BaseService {
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/expansions',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
+
+  /**
+   * Delete a custom stopword list.
+   *
+   * Delete a custom stopword list from the collection. After a custom stopword list is deleted, the default list is
+   * used for the collection.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.environment_id - The ID of the environment.
+   * @param {string} params.collection_id - The ID of the collection.
+   * @param {Object} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {NodeJS.ReadableStream|void}
+   */
+  public deleteStopwordList(params: DiscoveryV1.DeleteStopwordListParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): NodeJS.ReadableStream | void {
+    const _params = extend({}, params);
+    const _callback = (callback) ? callback : () => { /* noop */ };
+    const requiredParams = ['environment_id', 'collection_id'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const path = {
+      'environment_id': _params.environment_id,
+      'collection_id': _params.collection_id
+    };
+ 
+    const parameters = {
+      options: {
+        url: '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/stopwords',
         method: 'DELETE',
         path,
       },
@@ -3431,6 +3536,7 @@ class DiscoveryV1 extends BaseService {
    * -  `box` indicates the credentials are used to connect an instance of Enterprise Box.
    * -  `salesforce` indicates the credentials are used to connect to Salesforce.
    * -  `sharepoint` indicates the credentials are used to connect to Microsoft SharePoint Online.
+   * -  `web_crawl` indicates the credentials are used to perform a web crawl.
    * @param {CredentialDetails} [params.credential_details] - Object containing details of the stored credentials.
    *
    * Obtain credentials for your source from the administrator of the source.
@@ -3657,6 +3763,7 @@ class DiscoveryV1 extends BaseService {
    * -  `box` indicates the credentials are used to connect an instance of Enterprise Box.
    * -  `salesforce` indicates the credentials are used to connect to Salesforce.
    * -  `sharepoint` indicates the credentials are used to connect to Microsoft SharePoint Online.
+   * -  `web_crawl` indicates the credentials are used to perform a web crawl.
    * @param {CredentialDetails} [params.credential_details] - Object containing details of the stored credentials.
    *
    * Obtain credentials for your source from the administrator of the source.
@@ -3698,6 +3805,189 @@ class DiscoveryV1 extends BaseService {
         method: 'PUT',
         json: true,
         body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
+
+  /*************************
+   * gatewayConfiguration
+   ************************/
+
+  /**
+   * Create Gateway.
+   *
+   * Create a gateway configuration to use with a remotely installed gateway.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.environment_id - The ID of the environment.
+   * @param {string} [params.name] - User-defined name.
+   * @param {Object} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {NodeJS.ReadableStream|void}
+   */
+  public createGateway(params: DiscoveryV1.CreateGatewayParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Gateway>): NodeJS.ReadableStream | void {
+    const _params = extend({}, params);
+    const _callback = (callback) ? callback : () => { /* noop */ };
+    const requiredParams = ['environment_id'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const body = {
+      'name': _params.name
+    };
+
+    const path = {
+      'environment_id': _params.environment_id
+    };
+ 
+    const parameters = {
+      options: {
+        url: '/v1/environments/{environment_id}/gateways',
+        method: 'POST',
+        json: true,
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
+
+  /**
+   * Delete Gateway.
+   *
+   * Delete the specified gateway configuration.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.environment_id - The ID of the environment.
+   * @param {string} params.gateway_id - The requested gateway ID.
+   * @param {Object} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {NodeJS.ReadableStream|void}
+   */
+  public deleteGateway(params: DiscoveryV1.DeleteGatewayParams, callback?: DiscoveryV1.Callback<DiscoveryV1.GatewayDelete>): NodeJS.ReadableStream | void {
+    const _params = extend({}, params);
+    const _callback = (callback) ? callback : () => { /* noop */ };
+    const requiredParams = ['environment_id', 'gateway_id'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const path = {
+      'environment_id': _params.environment_id,
+      'gateway_id': _params.gateway_id
+    };
+ 
+    const parameters = {
+      options: {
+        url: '/v1/environments/{environment_id}/gateways/{gateway_id}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
+
+  /**
+   * List Gateway Details.
+   *
+   * List information about the specified gateway.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.environment_id - The ID of the environment.
+   * @param {string} params.gateway_id - The requested gateway ID.
+   * @param {Object} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {NodeJS.ReadableStream|void}
+   */
+  public getGateway(params: DiscoveryV1.GetGatewayParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Gateway>): NodeJS.ReadableStream | void {
+    const _params = extend({}, params);
+    const _callback = (callback) ? callback : () => { /* noop */ };
+    const requiredParams = ['environment_id', 'gateway_id'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const path = {
+      'environment_id': _params.environment_id,
+      'gateway_id': _params.gateway_id
+    };
+ 
+    const parameters = {
+      options: {
+        url: '/v1/environments/{environment_id}/gateways/{gateway_id}',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
+
+  /**
+   * List Gateways.
+   *
+   * List the currently configured gateways.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.environment_id - The ID of the environment.
+   * @param {Object} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {NodeJS.ReadableStream|void}
+   */
+  public listGateways(params: DiscoveryV1.ListGatewaysParams, callback?: DiscoveryV1.Callback<DiscoveryV1.GatewayList>): NodeJS.ReadableStream | void {
+    const _params = extend({}, params);
+    const _callback = (callback) ? callback : () => { /* noop */ };
+    const requiredParams = ['environment_id'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const path = {
+      'environment_id': _params.environment_id
+    };
+ 
+    const parameters = {
+      options: {
+        url: '/v1/environments/{environment_id}/gateways',
+        method: 'GET',
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
@@ -4054,6 +4344,19 @@ namespace DiscoveryV1 {
     return_response?: boolean;
   }
 
+  /** Parameters for the `createStopwordList` operation. */
+  export interface CreateStopwordListParams {
+    /** The ID of the environment. */
+    environment_id: string;
+    /** The ID of the collection. */
+    collection_id: string;
+    /** The content of the stopword list to ingest. */
+    stopword_file: NodeJS.ReadableStream|FileObject|Buffer;
+    /** The filename for stopword_file. */
+    stopword_filename?: string;
+    headers?: Object;
+  }
+
   /** Parameters for the `createTokenizationDictionary` operation. */
   export interface CreateTokenizationDictionaryParams {
     /** The ID of the environment. */
@@ -4074,6 +4377,15 @@ namespace DiscoveryV1 {
     collection_id: string;
     headers?: Object;
     return_response?: boolean;
+  }
+
+  /** Parameters for the `deleteStopwordList` operation. */
+  export interface DeleteStopwordListParams {
+    /** The ID of the environment. */
+    environment_id: string;
+    /** The ID of the collection. */
+    collection_id: string;
+    headers?: Object;
   }
 
   /** Parameters for the `deleteTokenizationDictionary` operation. */
@@ -4689,7 +5001,7 @@ namespace DiscoveryV1 {
   export interface CreateCredentialsParams {
     /** The ID of the environment. */
     environment_id: string;
-    /** The source that this credentials object connects to. -  `box` indicates the credentials are used to connect an instance of Enterprise Box. -  `salesforce` indicates the credentials are used to connect to Salesforce. -  `sharepoint` indicates the credentials are used to connect to Microsoft SharePoint Online. */
+    /** The source that this credentials object connects to. -  `box` indicates the credentials are used to connect an instance of Enterprise Box. -  `salesforce` indicates the credentials are used to connect to Salesforce. -  `sharepoint` indicates the credentials are used to connect to Microsoft SharePoint Online. -  `web_crawl` indicates the credentials are used to perform a web crawl. */
     source_type?: CreateCredentialsConstants.SourceType | string;
     /** Object containing details of the stored credentials. Obtain credentials for your source from the administrator of the source. */
     credential_details?: CredentialDetails;
@@ -4699,11 +5011,12 @@ namespace DiscoveryV1 {
 
   /** Constants for the `createCredentials` operation. */
   export namespace CreateCredentialsConstants {
-    /** The source that this credentials object connects to. -  `box` indicates the credentials are used to connect an instance of Enterprise Box. -  `salesforce` indicates the credentials are used to connect to Salesforce. -  `sharepoint` indicates the credentials are used to connect to Microsoft SharePoint Online. */
+    /** The source that this credentials object connects to. -  `box` indicates the credentials are used to connect an instance of Enterprise Box. -  `salesforce` indicates the credentials are used to connect to Salesforce. -  `sharepoint` indicates the credentials are used to connect to Microsoft SharePoint Online. -  `web_crawl` indicates the credentials are used to perform a web crawl. */
     export enum SourceType {
       BOX = 'box',
       SALESFORCE = 'salesforce',
       SHAREPOINT = 'sharepoint',
+      WEB_CRAWL = 'web_crawl',
     }
   }
 
@@ -4741,7 +5054,7 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The unique identifier for a set of source credentials. */
     credential_id: string;
-    /** The source that this credentials object connects to. -  `box` indicates the credentials are used to connect an instance of Enterprise Box. -  `salesforce` indicates the credentials are used to connect to Salesforce. -  `sharepoint` indicates the credentials are used to connect to Microsoft SharePoint Online. */
+    /** The source that this credentials object connects to. -  `box` indicates the credentials are used to connect an instance of Enterprise Box. -  `salesforce` indicates the credentials are used to connect to Salesforce. -  `sharepoint` indicates the credentials are used to connect to Microsoft SharePoint Online. -  `web_crawl` indicates the credentials are used to perform a web crawl. */
     source_type?: UpdateCredentialsConstants.SourceType | string;
     /** Object containing details of the stored credentials. Obtain credentials for your source from the administrator of the source. */
     credential_details?: CredentialDetails;
@@ -4751,12 +5064,47 @@ namespace DiscoveryV1 {
 
   /** Constants for the `updateCredentials` operation. */
   export namespace UpdateCredentialsConstants {
-    /** The source that this credentials object connects to. -  `box` indicates the credentials are used to connect an instance of Enterprise Box. -  `salesforce` indicates the credentials are used to connect to Salesforce. -  `sharepoint` indicates the credentials are used to connect to Microsoft SharePoint Online. */
+    /** The source that this credentials object connects to. -  `box` indicates the credentials are used to connect an instance of Enterprise Box. -  `salesforce` indicates the credentials are used to connect to Salesforce. -  `sharepoint` indicates the credentials are used to connect to Microsoft SharePoint Online. -  `web_crawl` indicates the credentials are used to perform a web crawl. */
     export enum SourceType {
       BOX = 'box',
       SALESFORCE = 'salesforce',
       SHAREPOINT = 'sharepoint',
+      WEB_CRAWL = 'web_crawl',
     }
+  }
+
+  /** Parameters for the `createGateway` operation. */
+  export interface CreateGatewayParams {
+    /** The ID of the environment. */
+    environment_id: string;
+    /** User-defined name. */
+    name?: string;
+    headers?: Object;
+  }
+
+  /** Parameters for the `deleteGateway` operation. */
+  export interface DeleteGatewayParams {
+    /** The ID of the environment. */
+    environment_id: string;
+    /** The requested gateway ID. */
+    gateway_id: string;
+    headers?: Object;
+  }
+
+  /** Parameters for the `getGateway` operation. */
+  export interface GetGatewayParams {
+    /** The ID of the environment. */
+    environment_id: string;
+    /** The requested gateway ID. */
+    gateway_id: string;
+    headers?: Object;
+  }
+
+  /** Parameters for the `listGateways` operation. */
+  export interface ListGatewaysParams {
+    /** The ID of the environment. */
+    environment_id: string;
+    headers?: Object;
   }
 
   /*************************
@@ -4861,15 +5209,15 @@ namespace DiscoveryV1 {
 
   /** Object containing details of the stored credentials. Obtain credentials for your source from the administrator of the source. */
   export interface CredentialDetails {
-    /** The authentication method for this credentials definition. The  **credential_type** specified must be supported by the **source_type**. The following combinations are possible: -  `"source_type": "box"` - valid `credential_type`s: `oauth2` -  `"source_type": "salesforce"` - valid `credential_type`s: `username_password` -  `"source_type": "sharepoint"` - valid `credential_type`s: `saml`. */
+    /** The authentication method for this credentials definition. The  **credential_type** specified must be supported by the **source_type**. The following combinations are possible: -  `"source_type": "box"` - valid `credential_type`s: `oauth2` -  `"source_type": "salesforce"` - valid `credential_type`s: `username_password` -  `"source_type": "sharepoint"` - valid `credential_type`s: `saml` with **source_version** of `online`, or `ntml_v1` with **source_version** of `2016` -  `"source_type": "web_crawl"` - valid `credential_type`s: `noauth` or `basic`. */
     credential_type?: string;
     /** The **client_id** of the source that these credentials connect to. Only valid, and required, with a **credential_type** of `oauth2`. */
     client_id?: string;
     /** The **enterprise_id** of the Box site that these credentials connect to. Only valid, and required, with a **source_type** of `box`. */
     enterprise_id?: string;
-    /** The **url** of the source that these credentials connect to. Only valid, and required, with a **credential_type** of `username_password`. */
+    /** The **url** of the source that these credentials connect to. Only valid, and required, with a **credential_type** of `username_password`, `noauth`, and `basic`. */
     url?: string;
-    /** The **username** of the source that these credentials connect to. Only valid, and required, with a **credential_type** of `saml` and `username_password`. */
+    /** The **username** of the source that these credentials connect to. Only valid, and required, with a **credential_type** of `saml`, `username_password`, `basic`, or `ntml_v1`. */
     username?: string;
     /** The **organization_url** of the source that these credentials connect to. Only valid, and required, with a **credential_type** of `saml`. */
     organization_url?: string;
@@ -4883,15 +5231,23 @@ namespace DiscoveryV1 {
     private_key?: string;
     /** The **passphrase** of the source that these credentials connect to. Only valid, and required, with a **credential_type** of `oauth2`. This value is never returned and is only used when creating or modifying **credentials**. */
     passphrase?: string;
-    /** The **password** of the source that these credentials connect to. Only valid, and required, with **credential_type**s of `saml` and `username_password`. **Note:** When used with a **source_type** of `salesforce`, the password consists of the Salesforce password and a valid Salesforce security token concatenated. This value is never returned and is only used when creating or modifying **credentials**. */
+    /** The **password** of the source that these credentials connect to. Only valid, and required, with **credential_type**s of `saml`, `username_password`, `basic`, or `ntml_v1`. **Note:** When used with a **source_type** of `salesforce`, the password consists of the Salesforce password and a valid Salesforce security token concatenated. This value is never returned and is only used when creating or modifying **credentials**. */
     password?: string;
+    /** The ID of the **gateway** to be connected through (when connecting to intranet sites). Only valid with a **credential_type** of `noauth`, `basic`, or `ntml_v1`. Gateways are created using the `/v1/environments/{environment_id}/gateways` methods. */
+    gateway_id?: string;
+    /** The type of Sharepoint repository to connect to. Only valid, and required, with a **source_type** of `sharepoint`. */
+    source_version?: string;
+    /** SharePoint OnPrem WebApplication URL. Only valid, and required, with a **source_version** of `2016`. */
+    web_application_url?: string;
+    /** The domain used to log in to your OnPrem SharePoint account. Only valid, and required, with a **source_version** of `2016`. */
+    domain?: string;
   }
 
   /** Object containing credential information. */
   export interface Credentials {
     /** Unique identifier for this set of credentials. */
     credential_id?: string;
-    /** The source that this credentials object connects to. -  `box` indicates the credentials are used to connect an instance of Enterprise Box. -  `salesforce` indicates the credentials are used to connect to Salesforce. -  `sharepoint` indicates the credentials are used to connect to Microsoft SharePoint Online. */
+    /** The source that this credentials object connects to. -  `box` indicates the credentials are used to connect an instance of Enterprise Box. -  `salesforce` indicates the credentials are used to connect to Salesforce. -  `sharepoint` indicates the credentials are used to connect to Microsoft SharePoint Online. -  `web_crawl` indicates the credentials are used to perform a web crawl. */
     source_type?: string;
     /** Object containing details of the stored credentials. Obtain credentials for your source from the administrator of the source. */
     credential_details?: CredentialDetails;
@@ -5121,6 +5477,34 @@ namespace DiscoveryV1 {
     bold?: boolean;
     italic?: boolean;
     name?: string;
+  }
+
+  /** Object describing a specific gateway. */
+  export interface Gateway {
+    /** The gateway ID of the gateway. */
+    gateway_id?: string;
+    /** The user defined name of the gateway. */
+    name?: string;
+    /** The current status of the gateway. `connected` means the gateway is connected to the remotly installed gateway. `idle` means this gateway is not currently in use. */
+    status?: string;
+    /** The generated **token** for this gateway. The value of this field is used when configuring the remotly installed gateway. */
+    token?: string;
+    /** The generated **token_id** for this gateway. The value of this field is used when configuring the remotly installed gateway. */
+    token_id?: string;
+  }
+
+  /** Gatway deletion confirmation. */
+  export interface GatewayDelete {
+    /** The gateway ID of the deleted gateway. */
+    gateway_id?: string;
+    /** The status of the request. */
+    status?: string;
+  }
+
+  /** Object containing gateways array. */
+  export interface GatewayList {
+    /** Array of configured gateway connections. */
+    gateways?: Gateway[];
   }
 
   /** A list of HTML conversion settings. */
@@ -5653,7 +6037,7 @@ namespace DiscoveryV1 {
 
   /** Object containing source parameters for the configuration. */
   export interface Source {
-    /** The type of source to connect to. -  `box` indicates the configuration is to connect an instance of Enterprise Box. -  `salesforce` indicates the configuration is to connect to Salesforce. -  `sharepoint` indicates the configuration is to connect to Microsoft SharePoint Online. */
+    /** The type of source to connect to. -  `box` indicates the configuration is to connect an instance of Enterprise Box. -  `salesforce` indicates the configuration is to connect to Salesforce. -  `sharepoint` indicates the configuration is to connect to Microsoft SharePoint Online. -  `web_crawl` indicates the configuration is to perform a web page crawl. */
     type?: string;
     /** The **credential_id** of the credentials to use to connect to the source. Credentials are defined using the **credentials** method. The **source_type** of the credentials used must match the **type** field specified in this object. */
     credential_id?: string;
@@ -5671,6 +6055,8 @@ namespace DiscoveryV1 {
     objects?: SourceOptionsObject[];
     /** Array of Microsoft SharePointoint Online site collections to crawl from the SharePoint source. Only valid and required when the **type** field of the **source** object is set to `sharepoint`. */
     site_collections?: SourceOptionsSiteColl[];
+    /** Array of Web page URLs to begin crawling the web from. Only valid and required when the **type** field of the **source** object is set to `web_crawl`. */
+    urls?: SourceOptionsWebCrawl[];
   }
 
   /** Object that defines a box folder to crawl with this configuration. */
@@ -5697,6 +6083,24 @@ namespace DiscoveryV1 {
     site_collection_path: string;
     /** The maximum number of documents to crawl for this site collection. By default, all documents in the site collection are crawled. */
     limit?: number;
+  }
+
+  /** Object defining which URL to crawl and how to crawl it. */
+  export interface SourceOptionsWebCrawl {
+    /** The starting URL to crawl. */
+    url: string;
+    /** When `true`, crawls of the specified URL are limited to the host part of the **url** field. */
+    limit_to_starting_hosts?: boolean;
+    /** The number of concurrent URLs to fetch. `gentle` means one URL is fetched at a time with a delay between each call. `normal` means as many as two URLs are fectched concurrently with a short delay between fetch calls. `aggressive` means that up to ten URLs are fetched concurrently with a short delay between fetch calls. */
+    crawl_speed?: string;
+    /** When `true`, allows the crawl to interact with HTTPS sites with SSL certificates with untrusted signers. */
+    allow_untrusted_certificate?: boolean;
+    /** The maximum number of hops to make from the initial URL. When a page is crawled each link on that page will also be crawled if it is within the **maximum_hops** from the initial URL. The first page crawled is 0 hops, each link crawled from the first page is 1 hop, each link crawled from those pages is 2 hops, and so on. */
+    maximum_hops?: number;
+    /** The maximum milliseconds to wait for a response from the web server. */
+    request_timeout?: number;
+    /** When `true`, the crawler will ignore any `robots.txt` encountered by the crawler. This should only ever be done when crawling a web site the user owns. This must be be set to `true` when a **gateway_id** is specied in the **credentials**. */
+    override_robots_txt?: boolean;
   }
 
   /** Object containing the schedule information for the source. */
@@ -5745,11 +6149,11 @@ namespace DiscoveryV1 {
     part_of_speech: string;
   }
 
-  /** Object describing the current status of the tokenization dictionary. */
+  /** Object describing the current status of the wordlist. */
   export interface TokenDictStatusResponse {
-    /** Current tokenization dictionary status for the specified collection. */
+    /** Current wordlist status for the specified collection. */
     status?: string;
-    /** The type for this dictionary. Always returns `tokenization_dictionary`. */
+    /** The type for this wordlist. Can be `tokenization_dictionary` or `stopwords`. */
     type?: string;
   }
 

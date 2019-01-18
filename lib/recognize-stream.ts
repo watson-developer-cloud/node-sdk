@@ -45,7 +45,9 @@ const QUERY_PARAMS_ALLOWED = [
   'watson-token',
   'language_customization_id',
   'customization_id',
-  'acoustic_customization_id'
+  'acoustic_customization_id',
+  'grammar_name',
+  'redaction'
 ];
 
 interface RecognizeStream extends Duplex {
@@ -120,6 +122,8 @@ class RecognizeStream extends Duplex {
    * Multiple versions of a base model can exist when a model is updated for internal improvements. The parameter is intended primarily for use with custom models that have been upgraded for a new base model.
    * The default value depends on whether the parameter is used with or without a custom model. For more information, see [Base model version](https://console.bluemix.net/docs/services/speech-to-text/input.html#version).
    * @param {Boolean} [options.rejectUnauthorized] - If true, disable SSL verification for the WebSocket connection
+   * @param {String} [options.grammar_name] - The name of a grammar that is to be used with the recognition request. If you specify a grammar, you must also use the `language_customization_id` parameter to specify the name of the custom language model for which the grammar is defined. The service recognizes only strings that are recognized by the specified grammar; it does not recognize other custom words from the model's words resource. See [Grammars](https://cloud.ibm.com/docs/services/speech-to-text/output.html)
+   * @param {Boolean} [options.redaction] - If `true`, the service redacts, or masks, numeric data from final transcripts. The feature redacts any number that has three or more consecutive digits by replacing each digit with an `X` character. It is intended to redact sensitive numeric data, such as credit card numbers. By default, the service performs no redaction. When you enable redaction, the service automatically enables smart formatting, regardless of whether you explicitly disable that feature. To ensure maximum security, the service also disables keyword spotting (ignores the `keywords` and `keywords_threshold` parameters) and returns only a single final transcript (forces the `max_alternatives` parameter to be `1`). **Note:** Applies to US English, Japanese, and Korean transcription only. See [Numeric redaction](https://cloud.ibm.com/docs/services/speech-to-text/output.html#redaction)
    *
    * @constructor
    */

@@ -219,7 +219,7 @@ describe('feedback', () => {
   });
 });
 
-describe('batches', () => {
+describe('batches @slow', () => {
   let batchId;
   test('createBatch / updateBatch', done => {
     const params = {

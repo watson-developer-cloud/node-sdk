@@ -190,7 +190,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * (`ja`), Korean (`ko`), Brazilian Portuguese (`pt`), and Spanish (`es`).
    * @param {NodeJS.ReadableStream|FileObject|Buffer} params.training_data - Training data in CSV format. Each text
    * value must have at least one class. The data can include up to 3,000 classes and 20,000 records. For details, see
-   * [Data preparation](https://console.bluemix.net/docs/services/natural-language-classifier/using-your-data.html).
+   * [Data preparation](https://cloud.ibm.com/docs/services/natural-language-classifier/using-your-data.html).
    * @param {string} [params.metadata_filename] - The filename for training_metadata.
    * @param {string} [params.training_data_filename] - The filename for training_data.
    * @param {Object} [params.headers] - Custom request headers
@@ -438,7 +438,7 @@ namespace NaturalLanguageClassifierV1 {
   export interface CreateClassifierParams {
     /** Metadata in JSON format. The metadata identifies the language of the data, and an optional name to identify the classifier. Specify the language with the 2-letter primary language code as assigned in ISO standard 639. Supported languages are English (`en`), Arabic (`ar`), French (`fr`), German, (`de`), Italian (`it`), Japanese (`ja`), Korean (`ko`), Brazilian Portuguese (`pt`), and Spanish (`es`). */
     metadata: NodeJS.ReadableStream|FileObject|Buffer;
-    /** Training data in CSV format. Each text value must have at least one class. The data can include up to 3,000 classes and 20,000 records. For details, see [Data preparation](https://console.bluemix.net/docs/services/natural-language-classifier/using-your-data.html). */
+    /** Training data in CSV format. Each text value must have at least one class. The data can include up to 3,000 classes and 20,000 records. For details, see [Data preparation](https://cloud.ibm.com/docs/services/natural-language-classifier/using-your-data.html). */
     training_data: NodeJS.ReadableStream|FileObject|Buffer;
     /** The filename for training_metadata. */
     metadata_filename?: string;

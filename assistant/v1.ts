@@ -1887,7 +1887,7 @@ class AssistantV1 extends BaseService {
    * @param {string[]} [params.patterns] - An array of patterns for the entity value. You can provide either synonyms or
    * patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 512 characters.
    * For more information about how to specify a pattern, see the
-   * [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities).
+   * [documentation](https://cloud.ibm.com/docs/services/assistant/entities.html#creating-entities).
    * @param {string} [params.value_type] - Specifies the type of value.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -2165,7 +2165,7 @@ class AssistantV1 extends BaseService {
    * @param {string[]} [params.new_patterns] - An array of patterns for the entity value. You can provide either
    * synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 512
    * characters. For more information about how to specify a pattern, see the
-   * [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities).
+   * [documentation](https://cloud.ibm.com/docs/services/assistant/entities.html#creating-entities).
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
@@ -2576,7 +2576,7 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.previous_sibling] - The ID of the previous dialog node.
    * @param {DialogNodeOutput} [params.output] - The output of the dialog node. For more information about how to
    * specify dialog node output, see the
-   * [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex).
+   * [documentation](https://cloud.ibm.com/docs/services/assistant/dialog-overview.html#complex).
    * @param {Object} [params.context] - The context for the dialog node.
    * @param {Object} [params.metadata] - The metadata for the dialog node.
    * @param {DialogNodeNextStep} [params.next_step] - The next step to execute following this dialog node.
@@ -2863,7 +2863,7 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.new_previous_sibling] - The ID of the previous sibling dialog node.
    * @param {DialogNodeOutput} [params.new_output] - The output of the dialog node. For more information about how to
    * specify dialog node output, see the
-   * [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex).
+   * [documentation](https://cloud.ibm.com/docs/services/assistant/dialog-overview.html#complex).
    * @param {Object} [params.new_context] - The context for the dialog node.
    * @param {Object} [params.new_metadata] - The metadata for the dialog node.
    * @param {DialogNodeNextStep} [params.new_next_step] - The next step to execute following this dialog node.
@@ -2965,7 +2965,7 @@ class AssistantV1 extends BaseService {
    * @param {string} params.filter - A cacheable parameter that limits the results to those matching the specified
    * filter. You must specify a filter query that includes a value for `language`, as well as a value for `workspace_id`
    * or `request.context.metadata.deployment`. For more information, see the
-   * [documentation](https://console.bluemix.net/docs/services/conversation/filter-reference.html#filter-query-syntax).
+   * [documentation](https://cloud.ibm.com/docs/services/assistant/filter-reference.html#filter-query-syntax).
    * @param {string} [params.sort] - How to sort the returned log events. You can sort by **request_timestamp**. To
    * reverse the sort order, prefix the parameter value with a minus sign (`-`).
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
@@ -3029,7 +3029,7 @@ class AssistantV1 extends BaseService {
    * reverse the sort order, prefix the parameter value with a minus sign (`-`).
    * @param {string} [params.filter] - A cacheable parameter that limits the results to those matching the specified
    * filter. For more information, see the
-   * [documentation](https://console.bluemix.net/docs/services/conversation/filter-reference.html#filter-query-syntax).
+   * [documentation](https://cloud.ibm.com/docs/services/assistant/filter-reference.html#filter-query-syntax).
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {Object} [params.headers] - Custom request headers
@@ -3094,7 +3094,7 @@ class AssistantV1 extends BaseService {
    *
    * You associate a customer ID with data by passing the `X-Watson-Metadata` header with a request that passes data.
    * For more information about personal data and customer IDs, see [Information
-   * security](https://console.bluemix.net/docs/services/conversation/information-security.html).
+   * security](https://cloud.ibm.com/docs/services/assistant/information-security.html).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customer_id - The customer ID for which all data is to be deleted.
@@ -3663,7 +3663,7 @@ namespace AssistantV1 {
     metadata?: Object;
     /** An array containing any synonyms for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A synonym must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
     synonyms?: string[];
-    /** An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 512 characters. For more information about how to specify a pattern, see the [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities). */
+    /** An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 512 characters. For more information about how to specify a pattern, see the [documentation](https://cloud.ibm.com/docs/services/assistant/entities.html#creating-entities). */
     patterns?: string[];
     /** Specifies the type of value. */
     value_type?: CreateValueConstants.ValueType | string;
@@ -3755,7 +3755,7 @@ namespace AssistantV1 {
     new_type?: UpdateValueConstants.ValueType | string;
     /** An array of synonyms for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A synonym must conform to the following resrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
     new_synonyms?: string[];
-    /** An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 512 characters. For more information about how to specify a pattern, see the [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities). */
+    /** An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 512 characters. For more information about how to specify a pattern, see the [documentation](https://cloud.ibm.com/docs/services/assistant/entities.html#creating-entities). */
     new_patterns?: string[];
     headers?: Object;
     return_response?: boolean;
@@ -3875,7 +3875,7 @@ namespace AssistantV1 {
     parent?: string;
     /** The ID of the previous dialog node. */
     previous_sibling?: string;
-    /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex). */
+    /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://cloud.ibm.com/docs/services/assistant/dialog-overview.html#complex). */
     output?: DialogNodeOutput;
     /** The context for the dialog node. */
     context?: Object;
@@ -4013,7 +4013,7 @@ namespace AssistantV1 {
     new_parent?: string;
     /** The ID of the previous sibling dialog node. */
     new_previous_sibling?: string;
-    /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex). */
+    /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://cloud.ibm.com/docs/services/assistant/dialog-overview.html#complex). */
     new_output?: DialogNodeOutput;
     /** The context for the dialog node. */
     new_context?: Object;
@@ -4088,7 +4088,7 @@ namespace AssistantV1 {
 
   /** Parameters for the `listAllLogs` operation. */
   export interface ListAllLogsParams {
-    /** A cacheable parameter that limits the results to those matching the specified filter. You must specify a filter query that includes a value for `language`, as well as a value for `workspace_id` or `request.context.metadata.deployment`. For more information, see the [documentation](https://console.bluemix.net/docs/services/conversation/filter-reference.html#filter-query-syntax). */
+    /** A cacheable parameter that limits the results to those matching the specified filter. You must specify a filter query that includes a value for `language`, as well as a value for `workspace_id` or `request.context.metadata.deployment`. For more information, see the [documentation](https://cloud.ibm.com/docs/services/assistant/filter-reference.html#filter-query-syntax). */
     filter: string;
     /** How to sort the returned log events. You can sort by **request_timestamp**. To reverse the sort order, prefix the parameter value with a minus sign (`-`). */
     sort?: string;
@@ -4106,7 +4106,7 @@ namespace AssistantV1 {
     workspace_id: string;
     /** How to sort the returned log events. You can sort by **request_timestamp**. To reverse the sort order, prefix the parameter value with a minus sign (`-`). */
     sort?: string;
-    /** A cacheable parameter that limits the results to those matching the specified filter. For more information, see the [documentation](https://console.bluemix.net/docs/services/conversation/filter-reference.html#filter-query-syntax). */
+    /** A cacheable parameter that limits the results to those matching the specified filter. For more information, see the [documentation](https://cloud.ibm.com/docs/services/assistant/filter-reference.html#filter-query-syntax). */
     filter?: string;
     /** The number of records to return in each page of results. */
     page_limit?: number;
@@ -4184,7 +4184,7 @@ namespace AssistantV1 {
     parent?: string;
     /** The ID of the previous dialog node. */
     previous_sibling?: string;
-    /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex). */
+    /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://cloud.ibm.com/docs/services/assistant/dialog-overview.html#complex). */
     output?: DialogNodeOutput;
     /** The context for the dialog node. */
     context?: Object;
@@ -4210,8 +4210,6 @@ namespace AssistantV1 {
     digress_out_slots?: string;
     /** A label that can be displayed externally to describe the purpose of the node to users. This string must be no longer than 512 characters. */
     user_label?: string;
-    /** Whether to consider the dialog node during runtime evaluation.  Set to `true` to ignore the dialog node. */
-    disabled?: boolean;
   }
 
   /** CreateEntity. */
@@ -4254,7 +4252,7 @@ namespace AssistantV1 {
     metadata?: Object;
     /** An array containing any synonyms for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A synonym must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
     synonyms?: string[];
-    /** An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 512 characters. For more information about how to specify a pattern, see the [documentation](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities). */
+    /** An array of patterns for the entity value. You can provide either synonyms or patterns (as indicated by **type**), but not both. A pattern is a regular expression no longer than 512 characters. For more information about how to specify a pattern, see the [documentation](https://cloud.ibm.com/docs/services/assistant/entities.html#creating-entities). */
     patterns?: string[];
     /** Specifies the type of value. */
     value_type?: string;
@@ -4272,7 +4270,7 @@ namespace AssistantV1 {
     parent?: string;
     /** The ID of the previous sibling dialog node. This property is not returned if the dialog node has no previous sibling. */
     previous_sibling?: string;
-    /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex). */
+    /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://cloud.ibm.com/docs/services/assistant/dialog-overview.html#complex). */
     output?: DialogNodeOutput;
     /** The context (if defined) for the dialog node. */
     context?: Object;
@@ -4288,6 +4286,8 @@ namespace AssistantV1 {
     actions?: DialogNodeAction[];
     /** The alias used to identify the dialog node. */
     title?: string;
+    /** For internal use only. */
+    disabled?: boolean;
     /** How the dialog node is processed. */
     node_type?: string;
     /** How an `event_handler` node is processed. */
@@ -4336,7 +4336,7 @@ namespace AssistantV1 {
     selector?: string;
   }
 
-  /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://console.bluemix.net/docs/services/conversation/dialog-overview.html#complex). */
+  /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://cloud.ibm.com/docs/services/assistant/dialog-overview.html#complex). */
   export interface DialogNodeOutput {
     /** An array of objects describing the output defined for the dialog node. */
     generic?: DialogNodeOutputGeneric[];
@@ -4390,7 +4390,7 @@ namespace AssistantV1 {
 
   /** An object defining the message input to be sent to the Watson Assistant service if the user selects the corresponding option. */
   export interface DialogNodeOutputOptionsElementValue {
-    /** The user input. */
+    /** An input object that includes the input text. */
     input?: InputData;
   }
 
@@ -4450,7 +4450,7 @@ namespace AssistantV1 {
 
   /** An object defining the message input, intents, and entities to be sent to the Watson Assistant service if the user selects the corresponding disambiguation option. */
   export interface DialogSuggestionValue {
-    /** The user input. */
+    /** An input object that includes the input text. */
     input?: InputData;
     /** An array of intents to be sent along with the user input. */
     intents?: RuntimeIntent[];
@@ -4538,7 +4538,7 @@ namespace AssistantV1 {
     pagination: Pagination;
   }
 
-  /** The user input. */
+  /** An input object that includes the input text. */
   export interface InputData {
     /** The text of the user input. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 2048 characters. */
     text: string;
@@ -4588,7 +4588,7 @@ namespace AssistantV1 {
 
   /** LogExport. */
   export interface LogExport {
-    /** A message request formatted for the Watson Assistant service. */
+    /** A request sent to the workspace, including the user input and context. */
     request: MessageRequest;
     /** A response from the Watson Assistant service. */
     response: MessageResponse;
@@ -4646,7 +4646,7 @@ namespace AssistantV1 {
     text?: string;
   }
 
-  /** A message request formatted for the Watson Assistant service. */
+  /** A request sent to the workspace, including the user input and context. */
   export interface MessageRequest {
     /** The user input. */
     input?: InputData;
@@ -4662,7 +4662,7 @@ namespace AssistantV1 {
     output?: OutputData;
   }
 
-  /** A response from the Watson Assistant service. */
+  /** The response sent by the workspace, including the output text, detected intents and entities, and context. */
   export interface MessageResponse {
     /** The text of the user input. */
     input?: MessageInput;
@@ -4872,7 +4872,7 @@ namespace AssistantV1 {
     dialog_nodes?: DialogNode[];
   }
 
-  /** WorkspaceSystemSettings. */
+  /** Global settings for the workspace. */
   export interface WorkspaceSystemSettings {
     /** Workspace settings related to the Watson Assistant tool. */
     tooling?: WorkspaceSystemSettingsTooling;
@@ -4882,7 +4882,7 @@ namespace AssistantV1 {
     human_agent_assist?: Object;
   }
 
-  /** WorkspaceSystemSettingsDisambiguation. */
+  /** Workspace settings related to the disambiguation feature. **Note:** This feature is available only to Premium users. */
   export interface WorkspaceSystemSettingsDisambiguation {
     /** The text of the introductory prompt that accompanies disambiguation options presented to the user. */
     prompt?: string;
@@ -4894,7 +4894,7 @@ namespace AssistantV1 {
     sensitivity?: string;
   }
 
-  /** WorkspaceSystemSettingsTooling. */
+  /** Workspace settings related to the Watson Assistant tool. */
   export interface WorkspaceSystemSettingsTooling {
     /** Whether the dialog JSON editor displays text responses within the `output.generic` object. */
     store_generic_responses?: boolean;

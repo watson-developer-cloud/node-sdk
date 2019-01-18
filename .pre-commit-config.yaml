@@ -1,0 +1,5 @@
+- repo: git@github.ibm.com:Whitewater/whitewater-detect-secrets
+  rev: master
+  hooks:
+    -   id: detect-secrets # pragma: whitelist secret
+        args: [--baseline, .secrets.baseline, --no-keyword-scan ]

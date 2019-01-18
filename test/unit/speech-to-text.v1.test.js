@@ -2573,6 +2573,319 @@ describe('listWords', () => {
     });
   });
 });
+describe('addGrammar', () => {
+  describe('positive tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsSuccess);
+    });
+    test('should pass the right params to createRequest', () => {
+      // parameters
+      const customization_id = 'fake_customization_id';
+      const grammar_name = 'fake_grammar_name';
+      const grammar_file = 'fake_grammar_file';
+      const content_type = 'fake_content_type';
+      const allow_overwrite = 'fake_allow_overwrite';
+      const params = {
+        customization_id,
+        grammar_name,
+        grammar_file,
+        content_type,
+        allow_overwrite,
+      };
+
+      // invoke method
+      speech_to_text.addGrammar(params);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+      const options = getOptions(createRequestMock);
+
+      checkUrlAndMethod(
+        options,
+        '/v1/customizations/{customization_id}/grammars/{grammar_name}',
+        'POST'
+      );
+      checkCallback(createRequestMock);
+      const expectedAccept = 'application/json';
+      const expectedContentType = content_type;
+      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+      checkUserHeader(createRequestMock, 'Content-Type', content_type);
+      expect(options.body).toEqual(grammar_file);
+      expect(options.json).toEqual(content_type === 'application/json');
+      expect(options.qs['allow_overwrite']).toEqual(allow_overwrite);
+      expect(options.path['customization_id']).toEqual(customization_id);
+      expect(options.path['grammar_name']).toEqual(grammar_name);
+    });
+
+    test('should prioritize user-given headers', () => {
+      // parameters
+      const customization_id = 'fake_customization_id';
+      const grammar_name = 'fake_grammar_name';
+      const grammar_file = 'fake_grammar_file';
+      const content_type = 'fake_content_type';
+      const accept = 'fake/header';
+      const contentType = 'fake/header';
+      const params = {
+        customization_id,
+        grammar_name,
+        grammar_file,
+        content_type,
+        headers: {
+          Accept: accept,
+          'Content-Type': contentType,
+        },
+      };
+
+      speech_to_text.addGrammar(params);
+      checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+  });
+  describe('negative tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsError);
+    });
+
+    test('should convert a `null` value for `params` to an empty object', done => {
+      speech_to_text.addGrammar(null, () => {
+        checkForEmptyObject(missingParamsMock);
+        done();
+      });
+    });
+
+    test('should enforce required parameters', done => {
+      // required parameters for this method
+      const requiredParams = ['customization_id', 'grammar_name', 'grammar_file', 'content_type'];
+
+      speech_to_text.addGrammar({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+  });
+});
+describe('deleteGrammar', () => {
+  describe('positive tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsSuccess);
+    });
+    test('should pass the right params to createRequest', () => {
+      // parameters
+      const customization_id = 'fake_customization_id';
+      const grammar_name = 'fake_grammar_name';
+      const params = {
+        customization_id,
+        grammar_name,
+      };
+
+      // invoke method
+      speech_to_text.deleteGrammar(params);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+      const options = getOptions(createRequestMock);
+
+      checkUrlAndMethod(
+        options,
+        '/v1/customizations/{customization_id}/grammars/{grammar_name}',
+        'DELETE'
+      );
+      checkCallback(createRequestMock);
+      const expectedAccept = 'application/json';
+      const expectedContentType = 'application/json';
+      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+      expect(options.path['customization_id']).toEqual(customization_id);
+      expect(options.path['grammar_name']).toEqual(grammar_name);
+    });
+
+    test('should prioritize user-given headers', () => {
+      // parameters
+      const customization_id = 'fake_customization_id';
+      const grammar_name = 'fake_grammar_name';
+      const accept = 'fake/header';
+      const contentType = 'fake/header';
+      const params = {
+        customization_id,
+        grammar_name,
+        headers: {
+          Accept: accept,
+          'Content-Type': contentType,
+        },
+      };
+
+      speech_to_text.deleteGrammar(params);
+      checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+  });
+  describe('negative tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsError);
+    });
+
+    test('should convert a `null` value for `params` to an empty object', done => {
+      speech_to_text.deleteGrammar(null, () => {
+        checkForEmptyObject(missingParamsMock);
+        done();
+      });
+    });
+
+    test('should enforce required parameters', done => {
+      // required parameters for this method
+      const requiredParams = ['customization_id', 'grammar_name'];
+
+      speech_to_text.deleteGrammar({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+  });
+});
+describe('getGrammar', () => {
+  describe('positive tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsSuccess);
+    });
+    test('should pass the right params to createRequest', () => {
+      // parameters
+      const customization_id = 'fake_customization_id';
+      const grammar_name = 'fake_grammar_name';
+      const params = {
+        customization_id,
+        grammar_name,
+      };
+
+      // invoke method
+      speech_to_text.getGrammar(params);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+      const options = getOptions(createRequestMock);
+
+      checkUrlAndMethod(
+        options,
+        '/v1/customizations/{customization_id}/grammars/{grammar_name}',
+        'GET'
+      );
+      checkCallback(createRequestMock);
+      const expectedAccept = 'application/json';
+      const expectedContentType = 'application/json';
+      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+      expect(options.path['customization_id']).toEqual(customization_id);
+      expect(options.path['grammar_name']).toEqual(grammar_name);
+    });
+
+    test('should prioritize user-given headers', () => {
+      // parameters
+      const customization_id = 'fake_customization_id';
+      const grammar_name = 'fake_grammar_name';
+      const accept = 'fake/header';
+      const contentType = 'fake/header';
+      const params = {
+        customization_id,
+        grammar_name,
+        headers: {
+          Accept: accept,
+          'Content-Type': contentType,
+        },
+      };
+
+      speech_to_text.getGrammar(params);
+      checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+  });
+  describe('negative tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsError);
+    });
+
+    test('should convert a `null` value for `params` to an empty object', done => {
+      speech_to_text.getGrammar(null, () => {
+        checkForEmptyObject(missingParamsMock);
+        done();
+      });
+    });
+
+    test('should enforce required parameters', done => {
+      // required parameters for this method
+      const requiredParams = ['customization_id', 'grammar_name'];
+
+      speech_to_text.getGrammar({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+  });
+});
+describe('listGrammars', () => {
+  describe('positive tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsSuccess);
+    });
+    test('should pass the right params to createRequest', () => {
+      // parameters
+      const customization_id = 'fake_customization_id';
+      const params = {
+        customization_id,
+      };
+
+      // invoke method
+      speech_to_text.listGrammars(params);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+      const options = getOptions(createRequestMock);
+
+      checkUrlAndMethod(options, '/v1/customizations/{customization_id}/grammars', 'GET');
+      checkCallback(createRequestMock);
+      const expectedAccept = 'application/json';
+      const expectedContentType = 'application/json';
+      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+      expect(options.path['customization_id']).toEqual(customization_id);
+    });
+
+    test('should prioritize user-given headers', () => {
+      // parameters
+      const customization_id = 'fake_customization_id';
+      const accept = 'fake/header';
+      const contentType = 'fake/header';
+      const params = {
+        customization_id,
+        headers: {
+          Accept: accept,
+          'Content-Type': contentType,
+        },
+      };
+
+      speech_to_text.listGrammars(params);
+      checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+  });
+  describe('negative tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsError);
+    });
+
+    test('should convert a `null` value for `params` to an empty object', done => {
+      speech_to_text.listGrammars(null, () => {
+        checkForEmptyObject(missingParamsMock);
+        done();
+      });
+    });
+
+    test('should enforce required parameters', done => {
+      // required parameters for this method
+      const requiredParams = ['customization_id'];
+
+      speech_to_text.listGrammars({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+  });
+});
 describe('createAcousticModel', () => {
   describe('positive tests', () => {
     beforeAll(() => {

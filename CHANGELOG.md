@@ -1,3 +1,34 @@
+# [3.16.0](https://github.com/watson-developer-cloud/node-sdk/compare/v3.15.4...v3.16.0) (2019-01-17)
+
+
+### Features
+
+* **discovery:** add methods `createStopwordList`, `deleteStopwordList`, `createGateway`, `deleteGateway`, `getGateway`, and `listGateways` ([8a6753e](https://github.com/watson-developer-cloud/node-sdk/commit/8a6753e))
+* **speech-to-text:** new methods added: addGrammar, deleteGrammar, getGrammar, listGrammars ([7ab567a](https://github.com/watson-developer-cloud/node-sdk/commit/7ab567a))
+* **visual-recognition:** parameter `accept_language` added to method `detectFaces` ([82190c7](https://github.com/watson-developer-cloud/node-sdk/commit/82190c7))
+
+## [3.15.4](https://github.com/watson-developer-cloud/node-sdk/compare/v3.15.3...v3.15.4) (2019-01-15)
+
+
+### Bug Fixes
+
+* fix bug that prevents `audio` from being sent as a buffer for `recognize` ([3f97b80](https://github.com/watson-developer-cloud/node-sdk/commit/3f97b80))
+
+## [3.15.3](https://github.com/watson-developer-cloud/node-sdk/compare/v3.15.2...v3.15.3) (2019-01-15)
+
+
+### Bug Fixes
+
+* package.json to reduce vulnerabilities ([e61d1de](https://github.com/watson-developer-cloud/node-sdk/commit/e61d1de))
+
+## [3.15.2](https://github.com/watson-developer-cloud/node-sdk/compare/v3.15.1...v3.15.2) (2019-01-14)
+
+
+### Bug Fixes
+
+* query parameters no longer cause text-to-speech over websockets to crash ([775e6d2](https://github.com/watson-developer-cloud/node-sdk/commit/775e6d2))
+* Remove the `disabled` property from `CreateDialogNode`. It is for internal use only. ([4b72d0e](https://github.com/watson-developer-cloud/node-sdk/commit/4b72d0e))
+
 ## [3.15.1](https://github.com/watson-developer-cloud/node-sdk/compare/v3.15.0...v3.15.1) (2019-01-07)
 
 

@@ -351,7 +351,7 @@ namespace AssistantV2 {
 
   /** An object defining the message input to be sent to the assistant if the user selects the corresponding option. */
   export interface DialogNodeOutputOptionsElementValue {
-    /** The user input. */
+    /** An input object that includes the input text. */
     input?: MessageInput;
   }
 
@@ -405,7 +405,7 @@ namespace AssistantV2 {
 
   /** An object defining the message input to be sent to the assistant if the user selects the corresponding disambiguation option. */
   export interface DialogSuggestionValue {
-    /** The user input. */
+    /** An input object that includes the input text. */
     input?: MessageInput;
   }
 
@@ -445,7 +445,7 @@ namespace AssistantV2 {
     [propName: string]: any;
   }
 
-  /** The user input. */
+  /** An input object that includes the input text. */
   export interface MessageInput {
     /** The type of user input. Currently, only text input is supported. */
     message_type?: string;
@@ -465,7 +465,7 @@ namespace AssistantV2 {
   export interface MessageInputOptions {
     /** Whether to return additional diagnostic information. Set to `true` to return additional information under the `output.debug` key. */
     debug?: boolean;
-    /** Whether to start a new conversation with this user input. Specify `true` to clear the state information stored by the session. */
+    /** Whether to restart dialog processing at the root of the dialog, regardless of any previously visited nodes. **Note:** This does not affect `turn_count` or any other context variables. */
     restart?: boolean;
     /** Whether to return more than one intent. Set to `true` to return all matching intents. */
     alternate_intents?: boolean;
