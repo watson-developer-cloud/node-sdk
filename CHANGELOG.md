@@ -1,3 +1,10 @@
+## [3.16.1](https://github.com/watson-developer-cloud/node-sdk/compare/v3.16.0...v3.16.1) (2019-01-19)
+
+
+### Bug Fixes
+
+* fix `getTransactionId` method for the `RecognizeStream` class ([e5bbe2c](https://github.com/watson-developer-cloud/node-sdk/commit/e5bbe2c))
+
 # [3.16.0](https://github.com/watson-developer-cloud/node-sdk/compare/v3.15.4...v3.16.0) (2019-01-17)
 
 
