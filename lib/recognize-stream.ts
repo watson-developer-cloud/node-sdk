@@ -36,7 +36,9 @@ const OPENING_MESSAGE_PARAMS_ALLOWED = [
   'word_alternatives_threshold',
   'profanity_filter',
   'smart_formatting',
-  'speaker_labels'
+  'speaker_labels',
+  'grammar_name',
+  'redaction'
 ];
 
 const QUERY_PARAMS_ALLOWED = [
@@ -45,9 +47,7 @@ const QUERY_PARAMS_ALLOWED = [
   'watson-token',
   'language_customization_id',
   'customization_id',
-  'acoustic_customization_id',
-  'grammar_name',
-  'redaction'
+  'acoustic_customization_id'
 ];
 
 interface RecognizeStream extends Duplex {
@@ -506,7 +506,7 @@ class RecognizeStream extends Duplex {
           this.socket._client.response.headers['x-global-transaction-id']
         );
       } else {
-        this.on('connect', () =>
+        this.on('open', () =>
           resolve(
             this.socket._client.response.headers['x-global-transaction-id']
           )
