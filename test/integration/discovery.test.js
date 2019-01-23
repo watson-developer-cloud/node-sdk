@@ -25,8 +25,8 @@ describe('discovery_integration', function() {
     })
   );
 
-  it('should getEnvironments()', function(done) {
-    discovery.getEnvironments(null, function(err, res) {
+  it('should listEnvironments()', function(done) {
+    discovery.listEnvironments(null, function(err, res) {
       expect(err).toBeNull();
       expect(Array.isArray(res.environments)).toBe(true);
       const environment_ids = res.environments.map(e => e.environment_id);
@@ -44,8 +44,8 @@ describe('discovery_integration', function() {
     });
   });
 
-  it('should getConfigurations()', function(done) {
-    discovery.getConfigurations({ environment_id: environment_id }, function(err, res) {
+  it('should listConfigurations()', function(done) {
+    discovery.listConfigurations({ environment_id: environment_id }, function(err, res) {
       expect(err).toBeNull();
       expect(Array.isArray(res.configurations)).toBeDefined();
       expect(res.configurations[0]).toBeDefined();
@@ -160,7 +160,7 @@ describe('discovery_integration', function() {
         },
       };
 
-      discovery.addJsonDocument(document_obj, function(err, response) {
+      discovery.addDocument(document_obj, function(err, response) {
         expect(err).toBeNull();
         expect(response.document_id).toBeDefined();
         done(err);

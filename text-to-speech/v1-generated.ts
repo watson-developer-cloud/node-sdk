@@ -259,10 +259,9 @@ class TextToSpeechV1 extends BaseService {
       options: {
         url: '/v1/synthesize',
         method: 'POST',
-        json: true,
         body,
         qs: query,
-        encoding: null,
+        responseType: 'stream',
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, {

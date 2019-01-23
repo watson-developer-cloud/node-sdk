@@ -1,60 +1,60 @@
 'use strict';
 
+const axios = require('axios');
 const sendRequest = require('../../lib/requestwrapper').sendRequest;
 const formatError = require('../../lib/requestwrapper').formatErrorIfExists;
-const isStream = require('isstream');
-const watson = require('../../index');
 const pjson = require('../../package.json');
 
-describe('requestwrapper', () => {
-  const noop = function() {};
+// mock axios and test what gets passed into it
+jest.mock('axios');
+axios.mockResolvedValue({ data: 'fake-data' });
 
-  it('should emit error stream on missing parameters when callback is undefined', done => {
-    const parameters = {
-      options: {
-        url: '/stuff/',
-        qs: { fake: 'fake' },
+describe('sendRequest', () => {
+  afterEach(() => {
+    axios.mockClear();
+  });
+
+  it('should set default user agent header', done => {
+    const params = {
+      defaultOptions: {
+        username: 'batman',
+        password: 'bruce-wayne',
+        url: 'http://ibm.com:80',
+        version: '2017-05-26',
       },
-      requiredParams: ['fake_param'],
-      defaultOptions: { url: 'more' },
     };
-    const stream = sendRequest(parameters);
-    stream.on('error', err => {
-      expect(isStream(stream)).toBe(true);
-      expect(err.toString().includes('Missing required parameters: fake_param')).toBe(true);
+
+    sendRequest(params, (err, res) => {
+      expect(axios).toHaveBeenCalledTimes(1);
+      const req = axios.mock.calls[0][0];
+      expect(req.headers['User-Agent']).toBe(
+        'watson-developer-cloud-nodejs-' + pjson.version + ';'
+      );
       done();
     });
   });
 
-  it('header should be accurate', () => {
-    const service = {
-      username: 'batman',
-      password: 'bruce-wayne',
-      url: 'http://ibm.com:80',
-      version: '2017-05-26',
-    };
-    const service2 = {
-      username: 'batman',
-      password: 'bruce-wayne',
-      url: 'http://ibm.com:80',
-      version: '2017-05-26',
-      headers: {
-        'User-Agent': 'openwhisk',
+  it('should set custom user agent header', done => {
+    const params = {
+      defaultOptions: {
+        username: 'batman',
+        password: 'bruce-wayne',
+        url: 'http://ibm.com:80',
+        version: '2017-05-26',
+        headers: {
+          'User-Agent': 'openwhisk',
+        },
       },
     };
-    const assistant = new watson.AssistantV1(service);
-    const assistant_ow = new watson.AssistantV1(service2);
-    const payload = {
-      workspace_id: 'workspace1',
-      intent: 'intent1',
-    };
 
-    const req = assistant.listIntents(payload, noop);
-    const req2 = assistant_ow.listIntents(payload, noop);
-    expect(req.headers['User-Agent']).toBe('watson-developer-cloud-nodejs-' + pjson.version + ';');
-    expect(req2.headers['User-Agent']).toBe(
-      'watson-developer-cloud-nodejs-' + pjson.version + ';' + 'openwhisk'
-    );
+    sendRequest(params, (err, res) => {
+      expect(axios).toHaveBeenCalledTimes(1);
+      const req = axios.mock.calls[0][0];
+      expect(req.headers['User-Agent']).toBe(
+        'watson-developer-cloud-nodejs-' + pjson.version + ';' + 'openwhisk'
+      );
+      done();
+    });
   });
 });
 

@@ -26,10 +26,10 @@ describe('text_to_speech_integration', function() {
     it('synthesize using http', function(done) {
       // wav.Reader parses the wav header and will throw if it isn't valid
       const reader = new wav.Reader();
-      text_to_speech
-        .synthesize(params)
-        .pipe(reader)
-        .on('format', done.bind(null, null));
+      text_to_speech.synthesize(params, (err, res) => {
+        expect(err).toBeNull();
+        res.pipe(reader).on('format', done.bind(null, null));
+      });
     });
 
     it('synthesize using websocket', function(done) {

@@ -14,8 +14,10 @@
  * limitations under the License.
  */
 
+import axios from 'axios';
 import extend = require('extend');
-import request = require('request');
+import FormData = require('form-data');
+import querystring = require('querystring');
 import { PassThrough as readableStream } from 'stream';
 import { buildRequestFileObject, getMissingParams, isEmptyObject, isFileParam } from './helper';
 
@@ -46,7 +48,7 @@ function parsePath(path: string, params: Object): string {
  * @private
  * @returns {request.RequestCallback}
  */
-export function formatErrorIfExists(cb: Function): request.RequestCallback {
+export function formatErrorIfExists(cb: Function) {
   return (error, response, body) => {
     // eslint-disable-line complexity
 
@@ -74,14 +76,14 @@ export function formatErrorIfExists(cb: Function): request.RequestCallback {
 
     // for api-key services
     if (response.statusMessage === 'invalid-api-key') {
-      const error = {
+      const err = {
         error: response.statusMessage,
         code: response.statusMessage === 'invalid-api-key' ? 401 : 400,
       };
       if (response.headers) {
-        error[globalTransactionId] = response.headers[globalTransactionId];
+        err[globalTransactionId] = response.headers[globalTransactionId];
       }
-      cb(error, null);
+      cb(err, null);
       return;
     }
 
@@ -141,36 +143,11 @@ export function formatErrorIfExists(cb: Function): request.RequestCallback {
  * @throws {Error}
  */
 export function sendRequest(parameters, _callback) {
-  let missingParams = null;
   const options = extend(true, {}, parameters.defaultOptions, parameters.options);
-  const { path, body, form, formData, qs } = options;
+  const { path, body, form, formData, qs, method } = options;
+  let { url, headers } = options;
 
-  // Missing parameters
-  if (parameters.options.requiredParams) {
-    // eslint-disable-next-line no-console
-    console.warn(
-      new Error(
-        'requiredParams set on parameters.options - it should be set directly on parameters'
-      )
-    );
-  }
-
-  missingParams = getMissingParams(
-    parameters.originalParams || extend({}, qs, body, form, formData, path),
-    parameters.requiredParams
-  );
-
-  if (missingParams) {
-    if (typeof _callback === 'function') {
-      return _callback(missingParams);
-    } else {
-      const errorStream = new readableStream();
-      setTimeout(() => {
-        errorStream.emit('error', missingParams);
-      }, 0);
-      return errorStream;
-    }
-  }
+  const multipartForm = new FormData();
 
   // Form params
   if (formData) {
@@ -179,59 +156,111 @@ export function sendRequest(parameters, _callback) {
     // Remove non-valid inputs for buildRequestFileObject,
     // i.e things like {contentType: <contentType>}
     Object.keys(formData).forEach(key => {
-      // tslint:disable-next-line:no-unused-expression
-      (formData[key] == null ||
+      if (formData[key] == null ||
         isEmptyObject(formData[key]) ||
-        (formData[key].hasOwnProperty('contentType') && !formData[key].hasOwnProperty('data'))) &&
+        (formData[key].hasOwnProperty('contentType') && !formData[key].hasOwnProperty('data'))) {
         delete formData[key];
+      }
     });
     // Convert file form parameters to request-style objects
-    Object.keys(formData).forEach(
-      key => formData[key].data != null && (formData[key] = buildRequestFileObject(formData[key]))
-    );
+    Object.keys(formData).forEach(key => {
+      if (formData[key].data != null) {
+        formData[key] = buildRequestFileObject(formData[key]);
+      }
+    });
 
     // Stringify arrays
-    Object.keys(formData).forEach(
-      key => Array.isArray(formData[key]) && (formData[key] = formData[key].join(','))
-    );
+    Object.keys(formData).forEach(key => {
+      if (Array.isArray(formData[key])) {
+        formData[key] = formData[key].join(',');
+      }
+    });
 
     // Convert non-file form parameters to strings
-    Object.keys(formData).forEach(
-      key =>
-        !isFileParam(formData[key]) &&
+    Object.keys(formData).forEach(key => {
+      if (!isFileParam(formData[key]) &&
         !Array.isArray(formData[key]) &&
-        typeof formData[key] === 'object' &&
-        (formData[key] = JSON.stringify(formData[key]))
-    );
+        typeof formData[key] === 'object') {
+        (formData[key] = JSON.stringify(formData[key]));
+      }
+    });
+
+    // build multipart form data
+    Object.keys(formData).forEach(key => {
+      // handle files differently to maintain options
+      if (formData[key].value) {
+        multipartForm.append(key, formData[key].value, formData[key].options);
+      } else {
+        multipartForm.append(key, formData[key]);
+      }
+    });
   }
 
   // Path params
-  options.url = parsePath(options.url, path);
-  delete options.path;
+  url = parsePath(url, path);
 
   // Headers
-  options.headers = extend({}, options.headers);
+  headers = extend({}, headers);
   if (!isBrowser) {
-    options.headers['User-Agent'] = `${pkg.name}-nodejs-${pkg.version};${options.headers[
-      'User-Agent'
-    ] || ''}`;
+    headers['User-Agent'] = `${pkg.name}-nodejs-${pkg.version};${headers['User-Agent'] || ''}`;
   }
 
-  // Query params
-  if (options.qs && Object.keys(options.qs).length > 0) {
-    Object.keys(options.qs).forEach(
-      key => Array.isArray(options.qs[key]) && (options.qs[key] = options.qs[key].join(','))
+  // Convert array-valued query params to strings
+  if (qs && Object.keys(qs).length > 0) {
+    Object.keys(qs).forEach(
+      key => Array.isArray(qs[key]) && (qs[key] = qs[key].join(','))
     );
-    options.useQuerystring = true;
   }
 
   // Add service default endpoint if options.url start with /
-  if (options.url.charAt(0) === '/') {
-    options.url = parameters.defaultOptions.url + options.url;
+  if (url && url.charAt(0) === '/') {
+    url = parameters.defaultOptions.url + url;
   }
 
-  // Compression support
-  options.gzip = true;
+  let data = body;
 
-  return request(options, formatErrorIfExists(_callback));
+  if (form) {
+    data = querystring.stringify(form);
+    headers['Content-type'] = 'application/x-www-form-urlencoded';
+  }
+
+  if (formData) {
+    data = multipartForm;
+    // form-data generates headers that MUST be included or the request will fail
+    headers = extend(true, {}, headers, multipartForm.getHeaders());
+  }
+
+  const axiosObject = {
+    url,
+    method,
+    headers,
+    params: qs,
+    data,
+    responseType: options.responseType || 'json',
+    paramsSerializer: params => {
+      return querystring.stringify(params);
+    }
+  };
+
+  axios(axiosObject)
+    .then(res => {
+      _callback(null, res.data, res);
+    })
+    .catch(error => {
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        delete error.response.config;
+        delete error.response.request;
+        _callback(error.response);
+      } else if (error.request) {
+        // The request was made but no response was received
+        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+        // http.ClientRequest in node.js
+        _callback(error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        _callback(error.message);
+      }
+    });
 }
