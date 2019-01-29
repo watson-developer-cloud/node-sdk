@@ -74,19 +74,6 @@ export function formatErrorIfExists(cb: Function) {
       // if it fails, just return the body as-is
     }
 
-    // for api-key services
-    if (response.statusMessage === 'invalid-api-key') {
-      const err = {
-        error: response.statusMessage,
-        code: response.statusMessage === 'invalid-api-key' ? 401 : 400,
-      };
-      if (response.headers) {
-        err[globalTransactionId] = response.headers[globalTransactionId];
-      }
-      cb(err, null);
-      return;
-    }
-
     // If we have a response and it contains an error
     if (body && (body.error || body.error_code)) {
       // visual recognition sets body.error to a json object with code/description/error_id instead of putting them top-left
@@ -230,7 +217,7 @@ export function sendRequest(parameters, _callback) {
     headers = extend(true, {}, headers, multipartForm.getHeaders());
   }
 
-  const axiosObject = {
+  const requestParams = {
     url,
     method,
     headers,
@@ -242,7 +229,7 @@ export function sendRequest(parameters, _callback) {
     }
   };
 
-  axios(axiosObject)
+  axios(requestParams)
     .then(res => {
       _callback(null, res.data, res);
     })
