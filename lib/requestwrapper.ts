@@ -17,6 +17,7 @@
 import axios from 'axios';
 import extend = require('extend');
 import FormData = require('form-data');
+import https = require('https');
 import querystring = require('querystring');
 import { PassThrough as readableStream } from 'stream';
 import { buildRequestFileObject, getMissingParams, isEmptyObject, isFileParam } from './helper';
@@ -131,7 +132,7 @@ export function formatErrorIfExists(cb: Function) {
  */
 export function sendRequest(parameters, _callback) {
   const options = extend(true, {}, parameters.defaultOptions, parameters.options);
-  const { path, body, form, formData, qs, method } = options;
+  const { path, body, form, formData, qs, method, rejectUnauthorized } = options;
   let { url, headers } = options;
 
   const multipartForm = new FormData();
@@ -226,7 +227,8 @@ export function sendRequest(parameters, _callback) {
     responseType: options.responseType || 'json',
     paramsSerializer: params => {
       return querystring.stringify(params);
-    }
+    },
+    httpsAgent: new https.Agent({ rejectUnauthorized }),
   };
 
   axios(requestParams)
