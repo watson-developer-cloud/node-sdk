@@ -218,6 +218,9 @@ export function sendRequest(parameters, _callback) {
     headers = extend(true, {}, headers, multipartForm.getHeaders());
   }
 
+  // accept gzip encoded responses if Accept-Encoding is not already set
+  headers['Accept-Encoding'] = headers['Accept-Encoding'] || 'gzip';
+
   const requestParams = {
     url,
     method,
