@@ -17,6 +17,7 @@
 import * as extend from 'extend';
 import { RequestResponse } from 'request';
 import { BaseService } from '../lib/base_service';
+import { getDefaultHeaders } from '../lib/common';
 import { getMissingParams } from '../lib/helper';
 import { FileObject } from '../lib/helper';
 
@@ -84,6 +85,8 @@ class NaturalLanguageClassifierV1 extends BaseService {
     const path = {
       'classifier_id': _params.classifier_id
     };
+
+    const defaultHeaders = getDefaultHeaders('natural_language_classifier', 'v1', 'classify');
  
     const parameters = {
       options: {
@@ -94,7 +97,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -136,6 +139,8 @@ class NaturalLanguageClassifierV1 extends BaseService {
     const path = {
       'classifier_id': _params.classifier_id
     };
+
+    const defaultHeaders = getDefaultHeaders('natural_language_classifier', 'v1', 'classifyCollection');
  
     const parameters = {
       options: {
@@ -146,7 +151,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -203,6 +208,8 @@ class NaturalLanguageClassifierV1 extends BaseService {
         contentType: 'text/csv'
       }
     };
+
+    const defaultHeaders = getDefaultHeaders('natural_language_classifier', 'v1', 'createClassifier');
  
     const parameters = {
       options: {
@@ -211,7 +218,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'multipart/form-data',
         }, _params.headers),
@@ -243,6 +250,8 @@ class NaturalLanguageClassifierV1 extends BaseService {
     const path = {
       'classifier_id': _params.classifier_id
     };
+
+    const defaultHeaders = getDefaultHeaders('natural_language_classifier', 'v1', 'deleteClassifier');
  
     const parameters = {
       options: {
@@ -251,7 +260,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -285,6 +294,8 @@ class NaturalLanguageClassifierV1 extends BaseService {
     const path = {
       'classifier_id': _params.classifier_id
     };
+
+    const defaultHeaders = getDefaultHeaders('natural_language_classifier', 'v1', 'getClassifier');
  
     const parameters = {
       options: {
@@ -293,7 +304,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -316,6 +327,8 @@ class NaturalLanguageClassifierV1 extends BaseService {
   public listClassifiers(params?: NaturalLanguageClassifierV1.ListClassifiersParams, callback?: NaturalLanguageClassifierV1.Callback<NaturalLanguageClassifierV1.ClassifierList>): NodeJS.ReadableStream | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+
+    const defaultHeaders = getDefaultHeaders('natural_language_classifier', 'v1', 'listClassifiers');
  
     const parameters = {
       options: {
@@ -323,7 +336,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
         method: 'GET',
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),

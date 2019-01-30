@@ -17,6 +17,7 @@
 import * as extend from 'extend';
 import { RequestResponse } from 'request';
 import { BaseService } from '../lib/base_service';
+import { getDefaultHeaders } from '../lib/common';
 import { getMissingParams } from '../lib/helper';
 import { FileObject } from '../lib/helper';
 
@@ -93,6 +94,8 @@ class DiscoveryV1 extends BaseService {
       'description': _params.description,
       'size': _params.size
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'createEnvironment');
  
     const parameters = {
       options: {
@@ -102,7 +105,7 @@ class DiscoveryV1 extends BaseService {
         body,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -134,6 +137,8 @@ class DiscoveryV1 extends BaseService {
     const path = {
       'environment_id': _params.environment_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'deleteEnvironment');
  
     const parameters = {
       options: {
@@ -142,7 +147,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -174,6 +179,8 @@ class DiscoveryV1 extends BaseService {
     const path = {
       'environment_id': _params.environment_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'getEnvironment');
  
     const parameters = {
       options: {
@@ -182,7 +189,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -210,6 +217,8 @@ class DiscoveryV1 extends BaseService {
     const query = {
       'name': _params.name
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'listEnvironments');
  
     const parameters = {
       options: {
@@ -218,7 +227,7 @@ class DiscoveryV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -257,6 +266,8 @@ class DiscoveryV1 extends BaseService {
     const path = {
       'environment_id': _params.environment_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'listFields');
  
     const parameters = {
       options: {
@@ -266,7 +277,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -311,6 +322,8 @@ class DiscoveryV1 extends BaseService {
     const path = {
       'environment_id': _params.environment_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'updateEnvironment');
  
     const parameters = {
       options: {
@@ -321,7 +334,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -383,6 +396,8 @@ class DiscoveryV1 extends BaseService {
     const path = {
       'environment_id': _params.environment_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'createConfiguration');
  
     const parameters = {
       options: {
@@ -393,7 +408,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -432,6 +447,8 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environment_id,
       'configuration_id': _params.configuration_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'deleteConfiguration');
  
     const parameters = {
       options: {
@@ -440,7 +457,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -474,6 +491,8 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environment_id,
       'configuration_id': _params.configuration_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'getConfiguration');
  
     const parameters = {
       options: {
@@ -482,7 +501,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -521,6 +540,8 @@ class DiscoveryV1 extends BaseService {
     const path = {
       'environment_id': _params.environment_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'listConfigurations');
  
     const parameters = {
       options: {
@@ -530,7 +551,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -588,6 +609,8 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environment_id,
       'configuration_id': _params.configuration_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'updateConfiguration');
  
     const parameters = {
       options: {
@@ -598,7 +621,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -678,6 +701,8 @@ class DiscoveryV1 extends BaseService {
     const path = {
       'environment_id': _params.environment_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'testConfigurationInEnvironment');
  
     const parameters = {
       options: {
@@ -688,7 +713,7 @@ class DiscoveryV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'multipart/form-data',
         }, _params.headers),
@@ -736,6 +761,8 @@ class DiscoveryV1 extends BaseService {
     const path = {
       'environment_id': _params.environment_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'createCollection');
  
     const parameters = {
       options: {
@@ -746,7 +773,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -780,6 +807,8 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'deleteCollection');
  
     const parameters = {
       options: {
@@ -788,7 +817,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -822,6 +851,8 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'getCollection');
  
     const parameters = {
       options: {
@@ -830,7 +861,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -866,6 +897,8 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'listCollectionFields');
  
     const parameters = {
       options: {
@@ -874,7 +907,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -913,6 +946,8 @@ class DiscoveryV1 extends BaseService {
     const path = {
       'environment_id': _params.environment_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'listCollections');
  
     const parameters = {
       options: {
@@ -922,7 +957,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -965,6 +1000,8 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'updateCollection');
  
     const parameters = {
       options: {
@@ -975,7 +1012,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -1034,6 +1071,8 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'createExpansions');
  
     const parameters = {
       options: {
@@ -1044,7 +1083,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -1095,6 +1134,8 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'createStopwordList');
  
     const parameters = {
       options: {
@@ -1104,7 +1145,7 @@ class DiscoveryV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'multipart/form-data',
         }, _params.headers),
@@ -1147,6 +1188,8 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'createTokenizationDictionary');
  
     const parameters = {
       options: {
@@ -1157,7 +1200,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -1194,6 +1237,8 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'deleteExpansions');
  
     const parameters = {
       options: {
@@ -1202,7 +1247,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -1239,6 +1284,8 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'deleteStopwordList');
  
     const parameters = {
       options: {
@@ -1247,7 +1294,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -1283,6 +1330,8 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'deleteTokenizationDictionary');
  
     const parameters = {
       options: {
@@ -1291,7 +1340,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -1327,6 +1376,8 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'getTokenizationDictionaryStatus');
  
     const parameters = {
       options: {
@@ -1335,7 +1386,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -1372,6 +1423,8 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'listExpansions');
  
     const parameters = {
       options: {
@@ -1380,7 +1433,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -1463,6 +1516,8 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'addDocument');
  
     const parameters = {
       options: {
@@ -1472,7 +1527,7 @@ class DiscoveryV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'multipart/form-data',
         }, _params.headers),
@@ -1511,6 +1566,8 @@ class DiscoveryV1 extends BaseService {
       'collection_id': _params.collection_id,
       'document_id': _params.document_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'deleteDocument');
  
     const parameters = {
       options: {
@@ -1519,7 +1576,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -1559,6 +1616,8 @@ class DiscoveryV1 extends BaseService {
       'collection_id': _params.collection_id,
       'document_id': _params.document_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'getDocumentStatus');
  
     const parameters = {
       options: {
@@ -1567,7 +1626,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -1630,6 +1689,8 @@ class DiscoveryV1 extends BaseService {
       'collection_id': _params.collection_id,
       'document_id': _params.document_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'updateDocument');
  
     const parameters = {
       options: {
@@ -1639,7 +1700,7 @@ class DiscoveryV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'multipart/form-data',
         }, _params.headers),
@@ -1759,6 +1820,8 @@ class DiscoveryV1 extends BaseService {
     const path = {
       'environment_id': _params.environment_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'federatedQuery');
  
     const parameters = {
       options: {
@@ -1769,7 +1832,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
           'X-Watson-Logging-Opt-Out': _params.logging_opt_out
@@ -1858,6 +1921,8 @@ class DiscoveryV1 extends BaseService {
     const path = {
       'environment_id': _params.environment_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'federatedQueryNotices');
  
     const parameters = {
       options: {
@@ -1867,7 +1932,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -1985,6 +2050,8 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'query');
  
     const parameters = {
       options: {
@@ -1995,7 +2062,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
           'X-Watson-Logging-Opt-Out': _params.logging_opt_out
@@ -2050,6 +2117,8 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'queryEntities');
  
     const parameters = {
       options: {
@@ -2060,7 +2129,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -2158,6 +2227,8 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'queryNotices');
  
     const parameters = {
       options: {
@@ -2167,7 +2238,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -2224,6 +2295,8 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'queryRelations');
  
     const parameters = {
       options: {
@@ -2234,7 +2307,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -2283,6 +2356,8 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'addTrainingData');
  
     const parameters = {
       options: {
@@ -2293,7 +2368,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -2340,6 +2415,8 @@ class DiscoveryV1 extends BaseService {
       'collection_id': _params.collection_id,
       'query_id': _params.query_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'createTrainingExample');
  
     const parameters = {
       options: {
@@ -2350,7 +2427,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -2386,6 +2463,8 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'deleteAllTrainingData');
  
     const parameters = {
       options: {
@@ -2394,7 +2473,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -2432,6 +2511,8 @@ class DiscoveryV1 extends BaseService {
       'collection_id': _params.collection_id,
       'query_id': _params.query_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'deleteTrainingData');
  
     const parameters = {
       options: {
@@ -2440,7 +2521,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -2480,6 +2561,8 @@ class DiscoveryV1 extends BaseService {
       'query_id': _params.query_id,
       'example_id': _params.example_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'deleteTrainingExample');
  
     const parameters = {
       options: {
@@ -2488,7 +2571,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -2526,6 +2609,8 @@ class DiscoveryV1 extends BaseService {
       'collection_id': _params.collection_id,
       'query_id': _params.query_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'getTrainingData');
  
     const parameters = {
       options: {
@@ -2534,7 +2619,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -2574,6 +2659,8 @@ class DiscoveryV1 extends BaseService {
       'query_id': _params.query_id,
       'example_id': _params.example_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'getTrainingExample');
  
     const parameters = {
       options: {
@@ -2582,7 +2669,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -2618,6 +2705,8 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environment_id,
       'collection_id': _params.collection_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'listTrainingData');
  
     const parameters = {
       options: {
@@ -2626,7 +2715,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -2664,6 +2753,8 @@ class DiscoveryV1 extends BaseService {
       'collection_id': _params.collection_id,
       'query_id': _params.query_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'listTrainingExamples');
  
     const parameters = {
       options: {
@@ -2672,7 +2763,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -2719,6 +2810,8 @@ class DiscoveryV1 extends BaseService {
       'query_id': _params.query_id,
       'example_id': _params.example_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'updateTrainingExample');
  
     const parameters = {
       options: {
@@ -2729,7 +2822,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -2772,6 +2865,8 @@ class DiscoveryV1 extends BaseService {
     const query = {
       'customer_id': _params.customer_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'deleteUserData');
  
     const parameters = {
       options: {
@@ -2780,7 +2875,7 @@ class DiscoveryV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -2821,6 +2916,8 @@ class DiscoveryV1 extends BaseService {
       'type': _params.type,
       'data': _params.data
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'createEvent');
  
     const parameters = {
       options: {
@@ -2830,7 +2927,7 @@ class DiscoveryV1 extends BaseService {
         body,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -2866,6 +2963,8 @@ class DiscoveryV1 extends BaseService {
       'end_time': _params.end_time,
       'result_type': _params.result_type
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'getMetricsEventRate');
  
     const parameters = {
       options: {
@@ -2874,7 +2973,7 @@ class DiscoveryV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -2908,6 +3007,8 @@ class DiscoveryV1 extends BaseService {
       'end_time': _params.end_time,
       'result_type': _params.result_type
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'getMetricsQuery');
  
     const parameters = {
       options: {
@@ -2916,7 +3017,7 @@ class DiscoveryV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -2952,6 +3053,8 @@ class DiscoveryV1 extends BaseService {
       'end_time': _params.end_time,
       'result_type': _params.result_type
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'getMetricsQueryEvent');
  
     const parameters = {
       options: {
@@ -2960,7 +3063,7 @@ class DiscoveryV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -2995,6 +3098,8 @@ class DiscoveryV1 extends BaseService {
       'end_time': _params.end_time,
       'result_type': _params.result_type
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'getMetricsQueryNoResults');
  
     const parameters = {
       options: {
@@ -3003,7 +3108,7 @@ class DiscoveryV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -3033,6 +3138,8 @@ class DiscoveryV1 extends BaseService {
     const query = {
       'count': _params.count
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'getMetricsQueryTokenEvent');
  
     const parameters = {
       options: {
@@ -3041,7 +3148,7 @@ class DiscoveryV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -3084,6 +3191,8 @@ class DiscoveryV1 extends BaseService {
       'offset': _params.offset,
       'sort': _params.sort
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'queryLog');
  
     const parameters = {
       options: {
@@ -3092,7 +3201,7 @@ class DiscoveryV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -3146,6 +3255,8 @@ class DiscoveryV1 extends BaseService {
     const path = {
       'environment_id': _params.environment_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'createCredentials');
  
     const parameters = {
       options: {
@@ -3156,7 +3267,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -3192,6 +3303,8 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environment_id,
       'credential_id': _params.credential_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'deleteCredentials');
  
     const parameters = {
       options: {
@@ -3200,7 +3313,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -3239,6 +3352,8 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environment_id,
       'credential_id': _params.credential_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'getSourceCredentials');
  
     const parameters = {
       options: {
@@ -3247,7 +3362,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -3283,6 +3398,8 @@ class DiscoveryV1 extends BaseService {
     const path = {
       'environment_id': _params.environment_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'listCredentials');
  
     const parameters = {
       options: {
@@ -3291,7 +3408,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -3342,6 +3459,8 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environment_id,
       'credential_id': _params.credential_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'updateCredentials');
  
     const parameters = {
       options: {
@@ -3352,7 +3471,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -3395,6 +3514,8 @@ class DiscoveryV1 extends BaseService {
     const path = {
       'environment_id': _params.environment_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'createGateway');
  
     const parameters = {
       options: {
@@ -3405,7 +3526,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -3441,6 +3562,8 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environment_id,
       'gateway_id': _params.gateway_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'deleteGateway');
  
     const parameters = {
       options: {
@@ -3449,7 +3572,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -3485,6 +3608,8 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environment_id,
       'gateway_id': _params.gateway_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'getGateway');
  
     const parameters = {
       options: {
@@ -3493,7 +3618,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -3527,6 +3652,8 @@ class DiscoveryV1 extends BaseService {
     const path = {
       'environment_id': _params.environment_id
     };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'listGateways');
  
     const parameters = {
       options: {
@@ -3535,7 +3662,7 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
