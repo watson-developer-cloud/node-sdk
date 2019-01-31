@@ -1,5 +1,6 @@
 'use strict';
 
+const os = require('os');
 const sendRequest = require('../../lib/requestwrapper').sendRequest;
 const formatError = require('../../lib/requestwrapper').formatErrorIfExists;
 const isStream = require('isstream');
@@ -25,32 +26,23 @@ describe('requestwrapper', () => {
     });
   });
 
-  it('header should be accurate', () => {
+  it('should set default headers', () => {
     const service = {
       username: 'batman',
       password: 'bruce-wayne',
       url: 'http://ibm.com:80',
       version: '2017-05-26',
     };
-    const service2 = {
-      username: 'batman',
-      password: 'bruce-wayne',
-      url: 'http://ibm.com:80',
-      version: '2017-05-26',
-      headers: {
-        'User-Agent': 'openwhisk',
-      },
-    };
     const assistant = new watson.AssistantV1(service);
-    const assistant_ow = new watson.AssistantV1(service2);
     const payload = {
       workspace_id: 'workspace1',
     };
     const req = assistant.listIntents(payload, noop);
-    const req2 = assistant_ow.listIntents(payload, noop);
-    expect(req.headers['User-Agent']).toBe('watson-developer-cloud-nodejs-' + pjson.version + ';');
-    expect(req2.headers['User-Agent']).toBe(
-      'watson-developer-cloud-nodejs-' + pjson.version + ';' + 'openwhisk'
+    expect(req.headers['User-Agent']).toBe(
+      `watson-apis-node-sdk-${pjson.version} ${os.platform()} ${os.release()} ${process.version}`
+    );
+    expect(req.headers['X-IBMCloud-SDK-Analytics']).toBe(
+      'service_name=conversation;service_version=v1;operation_id=listIntents,async=true'
     );
   });
 });

@@ -213,11 +213,6 @@ export function sendRequest(parameters, _callback) {
 
   // Headers
   options.headers = extend({}, options.headers);
-  if (!isBrowser) {
-    options.headers['User-Agent'] = `${pkg.name}-nodejs-${pkg.version};${options.headers[
-      'User-Agent'
-    ] || ''}`;
-  }
 
   // Query params
   if (options.qs && Object.keys(options.qs).length > 0) {
