@@ -1,6 +1,5 @@
 'use strict';
-// note: this has a lot of overlap with test.wrapper.js
-// many/most of those tests should be moved here
+
 const BaseService = require('../../lib/base_service').BaseService;
 const requestwrapper = require('../../lib/requestwrapper');
 const util = require('util');
@@ -166,14 +165,27 @@ describe('BaseService', function() {
     expect(instance.tokenManager).not.toBeNull();
   });
 
-  it('should prefer hard-coded credentials over environment properties', function() {
-    process.env.TEST_USERNAME = 'env_user';
-    process.env.TEST_PASSWORD = 'env_pass';
+  it('should prefer hard-coded credentials over ibm credentials file', function() {
+    process.env.IBM_CREDENTIALS_FILE = __dirname + '../resources/ibm-credentials.env';
     const instance = new TestService({ username: 'user', password: 'pass' });
     const actual = instance.getCredentials();
     const expected = {
       username: 'user',
       password: 'pass',
+      url: 'https://gateway.watsonplatform.net/test/api',
+    };
+    expect(actual).toEqual(expected);
+  });
+
+  it('should prefer ibm credentials file over environment properties', function() {
+    process.env.IBM_CREDENTIALS_FILE = __dirname + '/../resources/ibm-credentials.env';
+    process.env.TEST_USERNAME = 'env_user';
+    process.env.TEST_PASSWORD = 'env_pass';
+    const instance = new TestService();
+    const actual = instance.getCredentials();
+    const expected = {
+      username: '123456789',
+      password: 'abcd',
       url: 'https://gateway.watsonplatform.net/test/api',
     };
     expect(actual).toEqual(expected);

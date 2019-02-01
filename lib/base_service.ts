@@ -23,6 +23,7 @@ import semver = require('semver');
 import vcapServices = require('vcap_services');
 import { IamTokenManagerV1 } from '../iam-token-manager/v1';
 import { stripTrailingSlash } from './helper';
+import { readCredentialsFile } from './read-credentials-file';
 import { sendRequest } from './requestwrapper';
 
 // custom interfaces
@@ -308,7 +309,8 @@ export class BaseService {
     _options = extend(
       {},
       this.getCredentialsFromBluemix(this.name),
-      this.getCredentialsFromEnvironment(this.name),
+      this.getCredentialsFromEnvironment(process.env, this.name),
+      this.getCredentialsFromEnvironment(readCredentialsFile(), this.name),
       options,
       _options
     );
@@ -352,24 +354,24 @@ export class BaseService {
    * @param {string} name - the service snake case name
    * @returns {Credentials}
    */
-  private getCredentialsFromEnvironment(name: string): Credentials {
+  private getCredentialsFromEnvironment(envObj: any, name: string): Credentials {
     if (name === 'watson_vision_combined') {
-      return this.getCredentialsFromEnvironment('visual_recognition');
+      return this.getCredentialsFromEnvironment(envObj, 'visual_recognition');
     }
     // Case handling for assistant - should look for assistant env variables before conversation
-    if (name === 'conversation' && (process.env[`ASSISTANT_USERNAME`] ||  process.env[`ASSISTANT_IAM_APIKEY`])) {
-       return this.getCredentialsFromEnvironment('assistant');
+    if (name === 'conversation' && (envObj[`ASSISTANT_USERNAME`] ||  envObj[`ASSISTANT_IAM_APIKEY`])) {
+       return this.getCredentialsFromEnvironment(envObj, 'assistant');
     }
     const _name: string = name.toUpperCase();
     // https://github.com/watson-developer-cloud/node-sdk/issues/605
     const nameWithUnderscore: string = _name.replace(/-/g, '_');
-    const username: string = process.env[`${_name}_USERNAME`] || process.env[`${nameWithUnderscore}_USERNAME`];
-    const password: string = process.env[`${_name}_PASSWORD`] || process.env[`${nameWithUnderscore}_PASSWORD`];
-    const apiKey: string = process.env[`${_name}_API_KEY`] || process.env[`${nameWithUnderscore}_API_KEY`];
-    const url: string = process.env[`${_name}_URL`] || process.env[`${nameWithUnderscore}_URL`];
-    const iamAccessToken: string = process.env[`${_name}_IAM_ACCESS_TOKEN`] || process.env[`${nameWithUnderscore}_IAM_ACCESS_TOKEN`];
-    const iamApiKey: string = process.env[`${_name}_IAM_APIKEY`] || process.env[`${nameWithUnderscore}_IAM_APIKEY`];
-    const iamUrl: string = process.env[`${_name}_IAM_URL`] || process.env[`${nameWithUnderscore}_IAM_URL`];
+    const username: string = envObj[`${_name}_USERNAME`] || envObj[`${nameWithUnderscore}_USERNAME`];
+    const password: string = envObj[`${_name}_PASSWORD`] || envObj[`${nameWithUnderscore}_PASSWORD`];
+    const apiKey: string = envObj[`${_name}_API_KEY`] || envObj[`${nameWithUnderscore}_API_KEY`];
+    const url: string = envObj[`${_name}_URL`] || envObj[`${nameWithUnderscore}_URL`];
+    const iamAccessToken: string = envObj[`${_name}_IAM_ACCESS_TOKEN`] || envObj[`${nameWithUnderscore}_IAM_ACCESS_TOKEN`];
+    const iamApiKey: string = envObj[`${_name}_IAM_APIKEY`] || envObj[`${nameWithUnderscore}_IAM_APIKEY`];
+    const iamUrl: string = envObj[`${_name}_IAM_URL`] || envObj[`${nameWithUnderscore}_IAM_URL`];
 
     return {
       username,
