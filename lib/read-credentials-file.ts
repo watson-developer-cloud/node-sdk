@@ -10,13 +10,19 @@ export function readCredentialsFile() {
   // it should be the path to the file
 
   const givenFilepath: string = process.env['IBM_CREDENTIALS_FILE'] || '';
-  const homeDir: string = os.homedir();
-  const workingDir: string = process.cwd();
+  const homeDir: string = constructFilepath(os.homedir());
+  const workingDir: string = constructFilepath(process.cwd());
 
   let filepathToUse: string;
 
-  if (givenFilepath && fileExistsAtPath(givenFilepath)) {
-    filepathToUse = givenFilepath;
+  if (givenFilepath) {
+    if (fileExistsAtPath(givenFilepath)) {
+      // see if user gave a path to a file named something other than `ibm-credentials.env`
+      filepathToUse = givenFilepath;
+    } else if (fileExistsAtPath(constructFilepath(givenFilepath))) {
+      // see if user gave a path to the directory where file is located
+      filepathToUse = constructFilepath(givenFilepath);
+    }
   } else if (fileExistsAtPath(homeDir)) {
     filepathToUse = homeDir;
   } else if (fileExistsAtPath(workingDir)) {
@@ -26,14 +32,13 @@ export function readCredentialsFile() {
     return {};
   }
 
-  const credsFile = fs.readFileSync(constructFilepath(filepathToUse));
+  const credsFile = fs.readFileSync(filepathToUse);
 
   return dotenv.parse(credsFile);
 }
 
 export function fileExistsAtPath(filepath): boolean {
-  filepath = constructFilepath(filepath);
-  return fs.existsSync(filepath);
+  return fs.existsSync(filepath) && fs.lstatSync(filepath).isFile();
 }
 
 export function constructFilepath(filepath): string {

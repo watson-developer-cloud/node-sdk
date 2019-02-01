@@ -166,7 +166,7 @@ describe('BaseService', function() {
   });
 
   it('should prefer hard-coded credentials over ibm credentials file', function() {
-    process.env.IBM_CREDENTIALS_FILE = __dirname + '../resources/ibm-credentials.env';
+    process.env.IBM_CREDENTIALS_FILE = __dirname + '/../resources/ibm-credentials.env';
     const instance = new TestService({ username: 'user', password: 'pass' });
     const actual = instance.getCredentials();
     const expected = {
