@@ -1,3 +1,10 @@
+# [3.17.0](https://github.com/watson-developer-cloud/node-sdk/compare/v3.16.1...v3.17.0) (2019-02-04)
+
+
+### Features
+
+* enable reading credentials from ibm-credentials.env file ([ce02aa8](https://github.com/watson-developer-cloud/node-sdk/commit/ce02aa8))
+
 ## [3.16.1](https://github.com/watson-developer-cloud/node-sdk/compare/v3.16.0...v3.16.1) (2019-01-19)
 
 
