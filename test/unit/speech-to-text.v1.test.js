@@ -161,7 +161,7 @@ describe('recognize', () => {
       const audio = 'fake_audio';
       const content_type = 'fake_content_type';
       const model = 'fake_model';
-      const customization_id = 'fake_customization_id';
+      const language_customization_id = 'fake_language_customization_id';
       const acoustic_customization_id = 'fake_acoustic_customization_id';
       const base_model_version = 'fake_base_model_version';
       const customization_weight = 'fake_customization_weight';
@@ -175,11 +175,14 @@ describe('recognize', () => {
       const profanity_filter = 'fake_profanity_filter';
       const smart_formatting = 'fake_smart_formatting';
       const speaker_labels = 'fake_speaker_labels';
+      const customization_id = 'fake_customization_id';
+      const grammar_name = 'fake_grammar_name';
+      const redaction = 'fake_redaction';
       const params = {
         audio,
         content_type,
         model,
-        customization_id,
+        language_customization_id,
         acoustic_customization_id,
         base_model_version,
         customization_weight,
@@ -193,6 +196,9 @@ describe('recognize', () => {
         profanity_filter,
         smart_formatting,
         speaker_labels,
+        customization_id,
+        grammar_name,
+        redaction,
       };
 
       // invoke method
@@ -212,7 +218,7 @@ describe('recognize', () => {
       expect(options.body).toEqual(audio);
       expect(options.json).toEqual(content_type === 'application/json');
       expect(options.qs['model']).toEqual(model);
-      expect(options.qs['customization_id']).toEqual(customization_id);
+      expect(options.qs['language_customization_id']).toEqual(language_customization_id);
       expect(options.qs['acoustic_customization_id']).toEqual(acoustic_customization_id);
       expect(options.qs['base_model_version']).toEqual(base_model_version);
       expect(options.qs['customization_weight']).toEqual(customization_weight);
@@ -226,17 +232,18 @@ describe('recognize', () => {
       expect(options.qs['profanity_filter']).toEqual(profanity_filter);
       expect(options.qs['smart_formatting']).toEqual(smart_formatting);
       expect(options.qs['speaker_labels']).toEqual(speaker_labels);
+      expect(options.qs['customization_id']).toEqual(customization_id);
+      expect(options.qs['grammar_name']).toEqual(grammar_name);
+      expect(options.qs['redaction']).toEqual(redaction);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
       const audio = 'fake_audio';
-      const content_type = 'fake_content_type';
       const accept = 'fake/header';
       const contentType = 'fake/header';
       const params = {
         audio,
-        content_type,
         headers: {
           Accept: accept,
           'Content-Type': contentType,
@@ -403,7 +410,7 @@ describe('createJob', () => {
       const events = 'fake_events';
       const user_token = 'fake_user_token';
       const results_ttl = 'fake_results_ttl';
-      const customization_id = 'fake_customization_id';
+      const language_customization_id = 'fake_language_customization_id';
       const acoustic_customization_id = 'fake_acoustic_customization_id';
       const base_model_version = 'fake_base_model_version';
       const customization_weight = 'fake_customization_weight';
@@ -417,6 +424,9 @@ describe('createJob', () => {
       const profanity_filter = 'fake_profanity_filter';
       const smart_formatting = 'fake_smart_formatting';
       const speaker_labels = 'fake_speaker_labels';
+      const customization_id = 'fake_customization_id';
+      const grammar_name = 'fake_grammar_name';
+      const redaction = 'fake_redaction';
       const params = {
         audio,
         content_type,
@@ -425,7 +435,7 @@ describe('createJob', () => {
         events,
         user_token,
         results_ttl,
-        customization_id,
+        language_customization_id,
         acoustic_customization_id,
         base_model_version,
         customization_weight,
@@ -439,6 +449,9 @@ describe('createJob', () => {
         profanity_filter,
         smart_formatting,
         speaker_labels,
+        customization_id,
+        grammar_name,
+        redaction,
       };
 
       // invoke method
@@ -462,7 +475,7 @@ describe('createJob', () => {
       expect(options.qs['events']).toEqual(events);
       expect(options.qs['user_token']).toEqual(user_token);
       expect(options.qs['results_ttl']).toEqual(results_ttl);
-      expect(options.qs['customization_id']).toEqual(customization_id);
+      expect(options.qs['language_customization_id']).toEqual(language_customization_id);
       expect(options.qs['acoustic_customization_id']).toEqual(acoustic_customization_id);
       expect(options.qs['base_model_version']).toEqual(base_model_version);
       expect(options.qs['customization_weight']).toEqual(customization_weight);
@@ -476,17 +489,18 @@ describe('createJob', () => {
       expect(options.qs['profanity_filter']).toEqual(profanity_filter);
       expect(options.qs['smart_formatting']).toEqual(smart_formatting);
       expect(options.qs['speaker_labels']).toEqual(speaker_labels);
+      expect(options.qs['customization_id']).toEqual(customization_id);
+      expect(options.qs['grammar_name']).toEqual(grammar_name);
+      expect(options.qs['redaction']).toEqual(redaction);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
       const audio = 'fake_audio';
-      const content_type = 'fake_content_type';
       const accept = 'fake/header';
       const contentType = 'fake/header';
       const params = {
         audio,
-        content_type,
         headers: {
           Accept: accept,
           'Content-Type': contentType,
@@ -2629,9 +2643,11 @@ describe('upgradeAcousticModel', () => {
       // parameters
       const customization_id = 'fake_customization_id';
       const custom_language_model_id = 'fake_custom_language_model_id';
+      const force = 'fake_force';
       const params = {
         customization_id,
         custom_language_model_id,
+        force,
       };
 
       // invoke method
@@ -2652,6 +2668,7 @@ describe('upgradeAcousticModel', () => {
       const expectedContentType = 'application/json';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['custom_language_model_id']).toEqual(custom_language_model_id);
+      expect(options.qs['force']).toEqual(force);
       expect(options.path['customization_id']).toEqual(customization_id);
     });
 
@@ -2748,14 +2765,12 @@ describe('addAudio', () => {
       const customization_id = 'fake_customization_id';
       const audio_name = 'fake_audio_name';
       const audio_resource = 'fake_audio_resource';
-      const content_type = 'fake_content_type';
       const accept = 'fake/header';
       const contentType = 'fake/header';
       const params = {
         customization_id,
         audio_name,
         audio_resource,
-        content_type,
         headers: {
           Accept: accept,
           'Content-Type': contentType,

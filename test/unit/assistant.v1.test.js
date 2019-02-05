@@ -282,10 +282,12 @@ describe('getWorkspace', () => {
       const workspace_id = 'fake_workspace_id';
       const _export = 'fake_export';
       const include_audit = 'fake_include_audit';
+      const sort = 'fake_sort';
       const params = {
         workspace_id,
         export: _export,
         include_audit,
+        sort,
       };
 
       // invoke method
@@ -303,6 +305,7 @@ describe('getWorkspace', () => {
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['export']).toEqual(_export);
       expect(options.qs['include_audit']).toEqual(include_audit);
+      expect(options.qs['sort']).toEqual(sort);
       expect(options.path['workspace_id']).toEqual(workspace_id);
     });
 
