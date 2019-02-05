@@ -516,6 +516,18 @@ describe('discovery_integration', function() {
         done();
       });
     });
+    it('should getStopwordListStatus', function(done) {
+      const params = {
+        environment_id,
+        collection_id,
+      };
+      discovery.getStopwordListStatus(params, (err, res) => {
+        expect(err).toBeNull();
+        expect(res.type).toBeDefined();
+        expect(res.status).toBeDefined();
+        done();
+      });
+    });
     it('should deleteStopwordList', function(done) {
       const params = {
         environment_id,
