@@ -58,6 +58,7 @@
     "eslint-plugin-node": "~6.0.1",
     "eslint-plugin-prettier": "~2.6.1",
     "husky": "~0.14.3",
+    "installed-check": "^2.2.0",
     "jest": "^23.6.0",
     "jsdoc": "~3.5.5",
     "lint-staged": "~7.2.0",
@@ -83,7 +84,7 @@
     "async": "~2.6.1",
     "buffer-from": "~1.1.0",
     "csv-stringify": "~1.0.2",
-    "dotenv": "^5.0.1",
+    "dotenv": "^2.0.0",
     "extend": "~3.0.2",
     "file-type": "^7.7.1",
     "isstream": "~0.1.2",
@@ -96,7 +97,7 @@
     "websocket": "~1.0.26"
   },
   "engines": {
-    "node": ">=4"
+    "node": ">=4.0.0"
   },
   "scripts": {
     "precommit": "lint-staged",
@@ -121,7 +122,8 @@
     "report-coverage": "codecov",
     "watch-doc": "nodemon --watch ./ --ext js,tmpl,json --ignore dist/ --ignore doc/ --ignore test/ --ignore examples/ --exec npm run doc",
     "watch": "npm run test-unit -- --watch",
-    "watchify": "watchify index.js --standalone Watson --outfile dist/watson.js --debug --verbose"
+    "watchify": "watchify index.js --standalone Watson --outfile dist/watson.js --debug --verbose",
+    "check-packages": "installed-check -e -d"
   },
   "lint-staged": {
     "**/*.ts": [
