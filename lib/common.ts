@@ -14,7 +14,7 @@ export function getDefaultHeaders(serviceName: string, serviceVersion: string, o
 
   const headers = {
     'User-Agent': `${sdkName}-${sdkVersion} ${osName} ${osVersion} ${nodeVersion}`,
-    'X-IBMCloud-SDK-Analytics': `service_name=${serviceName};service_version=${serviceVersion};operation_id=${operationId},async=true`,
+    'X-IBMCloud-SDK-Analytics': `service_name=${serviceName};service_version=${serviceVersion};operation_id=${operationId};async=true`,
   }
 
   return headers;
