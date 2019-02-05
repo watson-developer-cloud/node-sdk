@@ -66,27 +66,28 @@ class VisualRecognitionV3 extends BaseService {
    * Classify images with built-in or custom classifiers.
    *
    * @param {Object} [params] - The parameters to send to the service.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.images_file] - An image file (.jpg, .png) or .zip file
-   * with images. Maximum image size is 10 MB. Include no more than 20 images and limit the .zip file to 100 MB. Encode
-   * the image and .zip file names in UTF-8 if they contain non-ASCII characters. The service assumes UTF-8 encoding if
-   * it encounters non-ASCII characters.
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.images_file] - An image file (.gif, .jpg, .png, .tif) or
+   * .zip file with images. Maximum image size is 10 MB. Include no more than 20 images and limit the .zip file to 100
+   * MB. Encode the image and .zip file names in UTF-8 if they contain non-ASCII characters. The service assumes UTF-8
+   * encoding if it encounters non-ASCII characters.
    *
    * You can also include an image with the **url** parameter.
    * @param {string} [params.accept_language] - The desired language of parts of the response. See the response for
    * details.
-   * @param {string} [params.url] - The URL of an image to analyze. Must be in .jpg, or .png format. The minimum
-   * recommended pixel density is 32X32 pixels per inch, and the maximum image size is 10 MB.
+   * @param {string} [params.url] - The URL of an image (.gif, .jpg, .png, .tif) to analyze. The minimum recommended
+   * pixel density is 32X32 pixels, but the service tends to perform better with images that are at least 224 x 224
+   * pixels. The maximum image size is 10 MB.
    *
    * You can also include images with the **images_file** parameter.
    * @param {number} [params.threshold] - The minimum score a class must have to be displayed in the response. Set the
-   * threshold to `0.0` to ignore the classification score and return all values.
-   * @param {string[]} [params.owners] - The categories of classifiers to apply. Use `IBM` to classify against the
-   * `default` general classifier, and use `me` to classify against your custom classifiers. To analyze the image
-   * against both classifier categories, set the value to both `IBM` and `me`.
-   *
-   * The built-in `default` classifier is used if both **classifier_ids** and **owners** parameters are empty.
-   *
-   * The **classifier_ids** parameter overrides **owners**, so make sure that **classifier_ids** is empty.
+   * threshold to `0.0` to return all identified classes.
+   * @param {string[]} [params.owners] - The categories of classifiers to apply. The **classifier_ids** parameter
+   * overrides **owners**, so make sure that **classifier_ids** is empty.
+   * - Use `IBM` to classify against the `default` general classifier. You get the same result if both
+   * **classifier_ids** and **owners** parameters are empty.
+   * - Use `me` to classify against all your custom classifiers. However, for better performance use **classifier_ids**
+   * to specify the specific custom classifiers to apply.
+   * - Use both `IBM` and `me` to analyze the image against both classifier categories.
    * @param {string[]} [params.classifier_ids] - Which classifiers to apply. Overrides the **owners** parameter. You can
    * specify both custom and built-in classifier IDs. The built-in `default` classifier is used if both
    * **classifier_ids** and **owners** parameters are empty.
@@ -154,7 +155,8 @@ class VisualRecognitionV3 extends BaseService {
    * recognition.
    *
    * Supported image formats include .gif, .jpg, .png, and .tif. The maximum image size is 10 MB. The minimum
-   * recommended pixel density is 32X32 pixels per inch.
+   * recommended pixel density is 32X32 pixels, but the service tends to perform better with images that are at least
+   * 224 x 224 pixels.
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.images_file] - An image file (gif, .jpg, .png, .tif.) or
@@ -165,8 +167,8 @@ class VisualRecognitionV3 extends BaseService {
    *
    * You can also include an image with the **url** parameter.
    * @param {string} [params.url] - The URL of an image to analyze. Must be in .gif, .jpg, .png, or .tif format. The
-   * minimum recommended pixel density is 32X32 pixels per inch, and the maximum image size is 10 MB. Redirects are
-   * followed, so you can use a shortened URL.
+   * minimum recommended pixel density is 32X32 pixels, but the service tends to perform better with images that are at
+   * least 224 x 224 pixels. The maximum image size is 10 MB. Redirects are followed, so you can use a shortened URL.
    *
    * You can also include images with the **images_file** parameter.
    * @param {string} [params.accept_language] - The desired language of parts of the response. See the response for
@@ -438,9 +440,8 @@ class VisualRecognitionV3 extends BaseService {
   /**
    * Update a classifier.
    *
-   * Update a custom classifier by adding new positive or negative classes (examples) or by adding new images to
-   * existing classes. You must supply at least one set of positive or negative examples. For details, see [Updating
-   * custom
+   * Update a custom classifier by adding new positive or negative classes or by adding new images to existing classes.
+   * You must supply at least one set of positive or negative examples. For details, see [Updating custom
    * classifiers](https://cloud.ibm.com/docs/services/visual-recognition/customizing.html#updating-custom-classifiers).
    *
    * Encode all names in UTF-8 if they contain non-ASCII characters (.zip and image file names, and classifier and class
@@ -679,15 +680,15 @@ namespace VisualRecognitionV3 {
 
   /** Parameters for the `classify` operation. */
   export interface ClassifyParams {
-    /** An image file (.jpg, .png) or .zip file with images. Maximum image size is 10 MB. Include no more than 20 images and limit the .zip file to 100 MB. Encode the image and .zip file names in UTF-8 if they contain non-ASCII characters. The service assumes UTF-8 encoding if it encounters non-ASCII characters. You can also include an image with the **url** parameter. */
+    /** An image file (.gif, .jpg, .png, .tif) or .zip file with images. Maximum image size is 10 MB. Include no more than 20 images and limit the .zip file to 100 MB. Encode the image and .zip file names in UTF-8 if they contain non-ASCII characters. The service assumes UTF-8 encoding if it encounters non-ASCII characters. You can also include an image with the **url** parameter. */
     images_file?: NodeJS.ReadableStream|FileObject|Buffer;
     /** The desired language of parts of the response. See the response for details. */
     accept_language?: ClassifyConstants.AcceptLanguage | string;
-    /** The URL of an image to analyze. Must be in .jpg, or .png format. The minimum recommended pixel density is 32X32 pixels per inch, and the maximum image size is 10 MB. You can also include images with the **images_file** parameter. */
+    /** The URL of an image (.gif, .jpg, .png, .tif) to analyze. The minimum recommended pixel density is 32X32 pixels, but the service tends to perform better with images that are at least 224 x 224 pixels. The maximum image size is 10 MB. You can also include images with the **images_file** parameter. */
     url?: string;
-    /** The minimum score a class must have to be displayed in the response. Set the threshold to `0.0` to ignore the classification score and return all values. */
+    /** The minimum score a class must have to be displayed in the response. Set the threshold to `0.0` to return all identified classes. */
     threshold?: number;
-    /** The categories of classifiers to apply. Use `IBM` to classify against the `default` general classifier, and use `me` to classify against your custom classifiers. To analyze the image against both classifier categories, set the value to both `IBM` and `me`. The built-in `default` classifier is used if both **classifier_ids** and **owners** parameters are empty. The **classifier_ids** parameter overrides **owners**, so make sure that **classifier_ids** is empty. */
+    /** The categories of classifiers to apply. The **classifier_ids** parameter overrides **owners**, so make sure that **classifier_ids** is empty. - Use `IBM` to classify against the `default` general classifier. You get the same result if both **classifier_ids** and **owners** parameters are empty. - Use `me` to classify against all your custom classifiers. However, for better performance use **classifier_ids** to specify the specific custom classifiers to apply. - Use both `IBM` and `me` to analyze the image against both classifier categories. */
     owners?: string[];
     /** Which classifiers to apply. Overrides the **owners** parameter. You can specify both custom and built-in classifier IDs. The built-in `default` classifier is used if both **classifier_ids** and **owners** parameters are empty. The following built-in classifier IDs require no training: - `default`: Returns classes from thousands of general tags. - `food`: Enhances specificity and accuracy for images of food items. - `explicit`: Evaluates whether the image might be pornographic. */
     classifier_ids?: string[];
@@ -720,7 +721,7 @@ namespace VisualRecognitionV3 {
   export interface DetectFacesParams {
     /** An image file (gif, .jpg, .png, .tif.) or .zip file with images. Limit the .zip file to 100 MB. You can include a maximum of 15 images in a request. Encode the image and .zip file names in UTF-8 if they contain non-ASCII characters. The service assumes UTF-8 encoding if it encounters non-ASCII characters. You can also include an image with the **url** parameter. */
     images_file?: NodeJS.ReadableStream|FileObject|Buffer;
-    /** The URL of an image to analyze. Must be in .gif, .jpg, .png, or .tif format. The minimum recommended pixel density is 32X32 pixels per inch, and the maximum image size is 10 MB. Redirects are followed, so you can use a shortened URL. You can also include images with the **images_file** parameter. */
+    /** The URL of an image to analyze. Must be in .gif, .jpg, .png, or .tif format. The minimum recommended pixel density is 32X32 pixels, but the service tends to perform better with images that are at least 224 x 224 pixels. The maximum image size is 10 MB. Redirects are followed, so you can use a shortened URL. You can also include images with the **images_file** parameter. */
     url?: string;
     /** The desired language of parts of the response. See the response for details. */
     accept_language?: DetectFacesConstants.AcceptLanguage | string;
@@ -866,7 +867,7 @@ namespace VisualRecognitionV3 {
     classifier_id: string;
     /** Name of the classifier. */
     name: string;
-    /** Unique ID of the account who owns the classifier. Returned when verbose=`true`. Might not be returned by some requests. */
+    /** Unique ID of the account who owns the classifier. Might not be returned by some requests. */
     owner?: string;
     /** Training status of classifier. */
     status?: string;
@@ -878,9 +879,9 @@ namespace VisualRecognitionV3 {
     created?: string;
     /** Classes that define a classifier. */
     classes?: Class[];
-    /** Date and time in Coordinated Universal Time (UTC) that the classifier was updated. Returned when verbose=`true`. Might not be returned by some requests. Identical to `updated` and retained for backward compatibility. */
+    /** Date and time in Coordinated Universal Time (UTC) that the classifier was updated. Might not be returned by some requests. Identical to `updated` and retained for backward compatibility. */
     retrained?: string;
-    /** Date and time in Coordinated Universal Time (UTC) that the classifier was most recently updated. The field matches either `retrained` or `created`.  Returned when verbose=`true`. Might not be returned by some requests. */
+    /** Date and time in Coordinated Universal Time (UTC) that the classifier was most recently updated. The field matches either `retrained` or `created`. Might not be returned by some requests. */
     updated?: string;
   }
 
