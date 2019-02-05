@@ -17,6 +17,7 @@
 import * as extend from 'extend';
 import { RequestResponse } from 'request';
 import { BaseService } from '../lib/base_service';
+import { getDefaultHeaders } from '../lib/common';
 import { getMissingParams } from '../lib/helper';
 import { FileObject } from '../lib/helper';
 
@@ -62,7 +63,7 @@ class CompareComplyV1 extends BaseService {
   /**
    * Convert file to HTML.
    *
-   * Uploads an input file. The response includes an HTML version of the document.
+   * Convert an uploaded file to HTML.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {NodeJS.ReadableStream|FileObject|Buffer} params.file - The file to convert.
@@ -102,6 +103,8 @@ class CompareComplyV1 extends BaseService {
     const query = {
       'model_id': _params.model_id
     };
+
+    const defaultHeaders = getDefaultHeaders('compare-comply', 'v1', 'convertToHtml');
  
     const parameters = {
       options: {
@@ -111,7 +114,7 @@ class CompareComplyV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'multipart/form-data',
         }, _params.headers),
@@ -128,7 +131,7 @@ class CompareComplyV1 extends BaseService {
   /**
    * Classify the elements of a document.
    *
-   * Uploads a file. The response includes an analysis of the document's structural and semantic elements.
+   * Analyze an uploaded file's structural and semantic elements.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {NodeJS.ReadableStream|FileObject|Buffer} params.file - The file to classify.
@@ -163,6 +166,8 @@ class CompareComplyV1 extends BaseService {
     const query = {
       'model_id': _params.model_id
     };
+
+    const defaultHeaders = getDefaultHeaders('compare-comply', 'v1', 'classifyElements');
  
     const parameters = {
       options: {
@@ -172,7 +177,7 @@ class CompareComplyV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'multipart/form-data',
         }, _params.headers),
@@ -189,7 +194,7 @@ class CompareComplyV1 extends BaseService {
   /**
    * Extract a document's tables.
    *
-   * Uploads a file. The response includes an analysis of the document's tables.
+   * Extract and analyze an uploaded file's tables.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {NodeJS.ReadableStream|FileObject|Buffer} params.file - The file on which to run table extraction.
@@ -224,6 +229,8 @@ class CompareComplyV1 extends BaseService {
     const query = {
       'model_id': _params.model_id
     };
+
+    const defaultHeaders = getDefaultHeaders('compare-comply', 'v1', 'extractTables');
  
     const parameters = {
       options: {
@@ -233,7 +240,7 @@ class CompareComplyV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'multipart/form-data',
         }, _params.headers),
@@ -250,8 +257,7 @@ class CompareComplyV1 extends BaseService {
   /**
    * Compare two documents.
    *
-   * Uploads two input files. The response includes JSON comparing the two documents. Uploaded files must be in the same
-   * file format.
+   * Compare two uploaded input files. Uploaded files must be in the same file format.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {NodeJS.ReadableStream|FileObject|Buffer} params.file_1 - The first file to compare.
@@ -298,6 +304,8 @@ class CompareComplyV1 extends BaseService {
       'file_2_label': _params.file_2_label,
       'model_id': _params.model_id
     };
+
+    const defaultHeaders = getDefaultHeaders('compare-comply', 'v1', 'compareDocuments');
  
     const parameters = {
       options: {
@@ -307,7 +315,7 @@ class CompareComplyV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'multipart/form-data',
         }, _params.headers),
@@ -351,6 +359,8 @@ class CompareComplyV1 extends BaseService {
       'user_id': _params.user_id,
       'comment': _params.comment
     };
+
+    const defaultHeaders = getDefaultHeaders('compare-comply', 'v1', 'addFeedback');
  
     const parameters = {
       options: {
@@ -360,7 +370,7 @@ class CompareComplyV1 extends BaseService {
         body,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -374,7 +384,7 @@ class CompareComplyV1 extends BaseService {
    * Deletes a specified feedback entry.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.feedback_id - An string that specifies the feedback entry to be deleted from the document.
+   * @param {string} params.feedback_id - A string that specifies the feedback entry to be deleted from the document.
    * @param {string} [params.model_id] - The analysis model to be used by the service. For the
    * `/v1/element_classification` and `/v1/comparison` methods, the default is `contracts`. For the `/v1/tables` method,
    * the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in
@@ -400,6 +410,8 @@ class CompareComplyV1 extends BaseService {
     const path = {
       'feedback_id': _params.feedback_id
     };
+
+    const defaultHeaders = getDefaultHeaders('compare-comply', 'v1', 'deleteFeedback');
  
     const parameters = {
       options: {
@@ -409,7 +421,7 @@ class CompareComplyV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -423,7 +435,7 @@ class CompareComplyV1 extends BaseService {
    * List a specified feedback entry.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.feedback_id - An string that specifies the feedback entry to be included in the output.
+   * @param {string} params.feedback_id - A string that specifies the feedback entry to be included in the output.
    * @param {string} [params.model_id] - The analysis model to be used by the service. For the
    * `/v1/element_classification` and `/v1/comparison` methods, the default is `contracts`. For the `/v1/tables` method,
    * the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in
@@ -449,6 +461,8 @@ class CompareComplyV1 extends BaseService {
     const path = {
       'feedback_id': _params.feedback_id
     };
+
+    const defaultHeaders = getDefaultHeaders('compare-comply', 'v1', 'getFeedback');
  
     const parameters = {
       options: {
@@ -458,7 +472,7 @@ class CompareComplyV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -537,6 +551,8 @@ class CompareComplyV1 extends BaseService {
       'sort': _params.sort,
       'include_total': _params.include_total
     };
+
+    const defaultHeaders = getDefaultHeaders('compare-comply', 'v1', 'listFeedback');
  
     const parameters = {
       options: {
@@ -545,7 +561,7 @@ class CompareComplyV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -564,9 +580,9 @@ class CompareComplyV1 extends BaseService {
    *
    * Run Compare and Comply methods over a collection of input documents.
    * **Important:** Batch processing requires the use of the [IBM Cloud Object Storage
-   * service](https://console.bluemix.net/docs/services/cloud-object-storage/about-cos.html#about-ibm-cloud-object-storage).
+   * service](https://cloud.ibm.com/docs/services/cloud-object-storage/about-cos.html#about-ibm-cloud-object-storage).
    * The use of IBM Cloud Object Storage with Compare and Comply is discussed at [Using batch
-   * processing](https://console.bluemix.net/docs/services/compare-comply/batching.html#before-you-batch).
+   * processing](https://cloud.ibm.com/docs/services/compare-comply/batching.html#before-you-batch).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params._function - The Compare and Comply method to run across the submitted input documents.
@@ -625,6 +641,8 @@ class CompareComplyV1 extends BaseService {
       'function': _params._function,
       'model_id': _params.model_id
     };
+
+    const defaultHeaders = getDefaultHeaders('compare-comply', 'v1', 'createBatch');
  
     const parameters = {
       options: {
@@ -634,7 +652,7 @@ class CompareComplyV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'multipart/form-data',
         }, _params.headers),
@@ -645,9 +663,9 @@ class CompareComplyV1 extends BaseService {
   };
 
   /**
-   * Gets information about a specific batch-processing request.
+   * Get information about a specific batch-processing request.
    *
-   * Gets information about a batch-processing request with a specified ID.
+   * Get information about a batch-processing request with a specified ID.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.batch_id - The ID of the batch-processing request whose information you want to retrieve.
@@ -668,6 +686,8 @@ class CompareComplyV1 extends BaseService {
     const path = {
       'batch_id': _params.batch_id
     };
+
+    const defaultHeaders = getDefaultHeaders('compare-comply', 'v1', 'getBatch');
  
     const parameters = {
       options: {
@@ -676,7 +696,7 @@ class CompareComplyV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -687,9 +707,9 @@ class CompareComplyV1 extends BaseService {
   };
 
   /**
-   * Gets the list of submitted batch-processing jobs.
+   * List submitted batch-processing jobs.
    *
-   * Gets the list of batch-processing jobs submitted by users.
+   * List the batch-processing jobs submitted by users.
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {Object} [params.headers] - Custom request headers
@@ -699,6 +719,8 @@ class CompareComplyV1 extends BaseService {
   public listBatches(params?: CompareComplyV1.ListBatchesParams, callback?: CompareComplyV1.Callback<CompareComplyV1.Batches>): NodeJS.ReadableStream | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+
+    const defaultHeaders = getDefaultHeaders('compare-comply', 'v1', 'listBatches');
  
     const parameters = {
       options: {
@@ -706,7 +728,7 @@ class CompareComplyV1 extends BaseService {
         method: 'GET',
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -717,9 +739,9 @@ class CompareComplyV1 extends BaseService {
   };
 
   /**
-   * Updates a pending or active batch-processing request.
+   * Update a pending or active batch-processing request.
    *
-   * Updates a pending or active batch-processing request. You can rescan the input bucket to check for new documents or
+   * Update a pending or active batch-processing request. You can rescan the input bucket to check for new documents or
    * cancel a request.
    *
    * @param {Object} params - The parameters to send to the service.
@@ -751,6 +773,8 @@ class CompareComplyV1 extends BaseService {
     const path = {
       'batch_id': _params.batch_id
     };
+
+    const defaultHeaders = getDefaultHeaders('compare-comply', 'v1', 'updateBatch');
  
     const parameters = {
       options: {
@@ -760,7 +784,7 @@ class CompareComplyV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -827,6 +851,8 @@ namespace CompareComplyV1 {
     /** The content type of file. */
     export enum FileContentType {
       APPLICATION_PDF = 'application/pdf',
+      APPLICATION_MSWORD = 'application/msword',
+      APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_DOCUMENT = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
       IMAGE_BMP = 'image/bmp',
       IMAGE_GIF = 'image/gif',
       IMAGE_JPEG = 'image/jpeg',
@@ -859,6 +885,8 @@ namespace CompareComplyV1 {
     /** The content type of file. */
     export enum FileContentType {
       APPLICATION_PDF = 'application/pdf',
+      APPLICATION_MSWORD = 'application/msword',
+      APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_DOCUMENT = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
       IMAGE_BMP = 'image/bmp',
       IMAGE_GIF = 'image/gif',
       IMAGE_JPEG = 'image/jpeg',
@@ -890,6 +918,8 @@ namespace CompareComplyV1 {
     /** The content type of file. */
     export enum FileContentType {
       APPLICATION_PDF = 'application/pdf',
+      APPLICATION_MSWORD = 'application/msword',
+      APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_DOCUMENT = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
       IMAGE_BMP = 'image/bmp',
       IMAGE_GIF = 'image/gif',
       IMAGE_JPEG = 'image/jpeg',
@@ -933,6 +963,8 @@ namespace CompareComplyV1 {
     export enum File1ContentType {
       APPLICATION_PDF = 'application/pdf',
       APPLICATION_JSON = 'application/json',
+      APPLICATION_MSWORD = 'application/msword',
+      APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_DOCUMENT = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
       IMAGE_BMP = 'image/bmp',
       IMAGE_GIF = 'image/gif',
       IMAGE_JPEG = 'image/jpeg',
@@ -943,6 +975,8 @@ namespace CompareComplyV1 {
     export enum File2ContentType {
       APPLICATION_PDF = 'application/pdf',
       APPLICATION_JSON = 'application/json',
+      APPLICATION_MSWORD = 'application/msword',
+      APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_DOCUMENT = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
       IMAGE_BMP = 'image/bmp',
       IMAGE_GIF = 'image/gif',
       IMAGE_JPEG = 'image/jpeg',
@@ -964,7 +998,7 @@ namespace CompareComplyV1 {
 
   /** Parameters for the `deleteFeedback` operation. */
   export interface DeleteFeedbackParams {
-    /** An string that specifies the feedback entry to be deleted from the document. */
+    /** A string that specifies the feedback entry to be deleted from the document. */
     feedback_id: string;
     /** The analysis model to be used by the service. For the `/v1/element_classification` and `/v1/comparison` methods, the default is `contracts`. For the `/v1/tables` method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
     model_id?: DeleteFeedbackConstants.ModelId | string;
@@ -982,7 +1016,7 @@ namespace CompareComplyV1 {
 
   /** Parameters for the `getFeedback` operation. */
   export interface GetFeedbackParams {
-    /** An string that specifies the feedback entry to be included in the output. */
+    /** A string that specifies the feedback entry to be included in the output. */
     feedback_id: string;
     /** The analysis model to be used by the service. For the `/v1/element_classification` and `/v1/comparison` methods, the default is `contracts`. For the `/v1/tables` method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
     model_id?: GetFeedbackConstants.ModelId | string;
@@ -1138,7 +1172,7 @@ namespace CompareComplyV1 {
 
   /** List of document attributes. */
   export interface Attribute {
-    /** The type of attribute. Possible values are `Currency`, `DateTime`, `Location`, `Organization`, and `Person`. */
+    /** The type of attribute. */
     type?: string;
     /** The text associated with the attribute. */
     text?: string;
@@ -1192,12 +1226,19 @@ namespace CompareComplyV1 {
     column_index_begin?: number;
     /** The `end` index of this cell's `column` location in the current table. */
     column_index_end?: number;
-    row_header_ids?: RowHeaderIds[];
-    row_header_texts?: RowHeaderTexts[];
-    row_header_texts_normalized?: RowHeaderTextsNormalized[];
-    column_header_ids?: ColumnHeaderIds[];
-    column_header_texts?: ColumnHeaderTexts[];
-    column_header_texts_normalized?: ColumnHeaderTextsNormalized[];
+    /** An array of values, each being the `id` value of a row header that is applicable to this body cell. */
+    row_header_ids?: string[];
+    /** An array of values, each being the `text` value of a row header that is applicable to this body cell. */
+    row_header_texts?: string[];
+    /** If you provide customization input, the normalized version of the row header texts according to the customization; otherwise, the same value as `row_header_texts`. */
+    row_header_texts_normalized?: string[];
+    /** An array of values, each being the `id` value of a column header that is applicable to the current cell. */
+    column_header_ids?: string[];
+    /** An array of values, each being the `text` value of a column header that is applicable to the current cell. */
+    column_header_texts?: string[];
+    /** If you provide customization input, the normalized version of the column header texts according to the customization; otherwise, the same value as `column_header_texts`. */
+    column_header_texts_normalized?: string[];
+    attributes?: Attribute[];
   }
 
   /** Information defining an element's subject matter. */
@@ -1230,24 +1271,6 @@ namespace CompareComplyV1 {
     contract_amounts?: ContractAmts[];
     /** The input document's termination dates. */
     termination_dates?: TerminationDates[];
-  }
-
-  /** An array of values, each being the `id` value of a column header that is applicable to the current cell. */
-  export interface ColumnHeaderIds {
-    /** The `id` value of a column header. */
-    id?: string;
-  }
-
-  /** An array of values, each being the `text` value of a column header that is applicable to the current cell. */
-  export interface ColumnHeaderTexts {
-    /** The `text` value of a column header. */
-    text?: string;
-  }
-
-  /** If you provide customization input, the normalized version of the column header texts according to the customization; otherwise, the same value as `column_header_texts`. */
-  export interface ColumnHeaderTextsNormalized {
-    /** The normalized version of a column header text. */
-    text_normalized?: string;
   }
 
   /** Column-level cells, each applicable as a header to other cells in the same column as itself, of the current table. */
@@ -1296,6 +1319,8 @@ namespace CompareComplyV1 {
   export interface ContractAmts {
     /** The monetary amount. */
     text?: string;
+    /** The confidence level in the identification of the contract amount. */
+    confidence_level?: string;
     /** The numeric location of the identified element in the document, represented with two integers labeled `begin` and `end`. */
     location?: Location;
   }
@@ -1338,7 +1363,7 @@ namespace CompareComplyV1 {
     html?: string;
     /** The MD5 hash value of the input document. */
     hash?: string;
-    /** The label applied to the input document with the calling method's `file1_label` or `file2_label` value. */
+    /** The label applied to the input document with the calling method's `file_1_label` or `file_2_label` value. This field is specified only in the output of the **Comparing two documents** method. */
     label?: string;
   }
 
@@ -1346,6 +1371,8 @@ namespace CompareComplyV1 {
   export interface EffectiveDates {
     /** The effective date, listed as a string. */
     text?: string;
+    /** The confidence level in the identification of the effective date. */
+    confidence_level?: string;
     /** The numeric location of the identified element in the document, represented with two integers labeled `begin` and `end`. */
     location?: Location;
   }
@@ -1498,7 +1525,7 @@ namespace CompareComplyV1 {
     text?: string;
     /** The numeric location of the identified element in the document, represented with two integers labeled `begin` and `end`. */
     location?: Location;
-    /** An array of `location` objects listing the locations of detected leading sentences. */
+    /** An array of `location` objects that lists the locations of detected leading sentences. */
     element_locations?: ElementLocations[];
   }
 
@@ -1546,30 +1573,14 @@ namespace CompareComplyV1 {
   export interface Parties {
     /** A string identifying the party. */
     party?: string;
+    /** A string that identifies the importance of the party. */
+    importance?: string;
     /** A string identifying the party's role. */
     role?: string;
     /** List of the party's address or addresses. */
     addresses?: Address[];
     /** List of the names and roles of contacts identified in the input document. */
     contacts?: Contact[];
-  }
-
-  /** An array of values, each being the `id` value of a row header that is applicable to this body cell. */
-  export interface RowHeaderIds {
-    /** The `id` values of a row header. */
-    id?: string;
-  }
-
-  /** An array of values, each being the `text` value of a row header that is applicable to this body cell. */
-  export interface RowHeaderTexts {
-    /** The `text` value of a row header. */
-    text?: string;
-  }
-
-  /** If you provide customization input, the normalized version of the row header texts according to the customization; otherwise, the same value as `row_header_texts`. */
-  export interface RowHeaderTextsNormalized {
-    /** The normalized version of a row header text. */
-    text_normalized?: string;
   }
 
   /** Row-level cells, each applicable as a header to other cells in the same row as itself, of the current table. */
@@ -1608,7 +1619,7 @@ namespace CompareComplyV1 {
     location?: Location;
     /** An integer indicating the level at which the section is located in the input document. For example, `1` represents a top-level section, `2` represents a subsection within the level `1` section, and so forth. */
     level?: number;
-    /** An array of `location` objects listing the locations of detected leading sentences. */
+    /** An array of `location` objects that lists the locations of detected section titles. */
     element_locations?: ElementLocations[];
   }
 
@@ -1672,6 +1683,8 @@ namespace CompareComplyV1 {
   export interface TerminationDates {
     /** The termination date. */
     text?: string;
+    /** The confidence level in the identification of the termination date. */
+    confidence_level?: string;
     /** The numeric location of the identified element in the document, represented with two integers labeled `begin` and `end`. */
     location?: Location;
   }
