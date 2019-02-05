@@ -4228,6 +4228,8 @@ namespace AssistantV1 {
   export interface InputData {
     /** The text of the user input. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 2048 characters. */
     text: string;
+    /** InputData accepts additional properties. */
+    [propName: string]: any;
   }
 
   /** Intent. */
@@ -4364,8 +4366,6 @@ namespace AssistantV1 {
     output: OutputData;
     /** An array of objects describing any actions requested by the dialog node. */
     actions?: DialogNodeAction[];
-    /** MessageResponse accepts additional properties. */
-    [propName: string]: any;
   }
 
   /** An output object that includes the response to the user, the dialog nodes that were triggered, and messages from the log. */
