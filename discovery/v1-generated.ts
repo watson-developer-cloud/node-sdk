@@ -1351,6 +1351,52 @@ class DiscoveryV1 extends BaseService {
   };
 
   /**
+   * Get stopword list status.
+   *
+   * Returns the current status of the stopword list for the specified collection.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.environment_id - The ID of the environment.
+   * @param {string} params.collection_id - The ID of the collection.
+   * @param {Object} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {NodeJS.ReadableStream|void}
+   */
+  public getStopwordListStatus(params: DiscoveryV1.GetStopwordListStatusParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TokenDictStatusResponse>): NodeJS.ReadableStream | void {
+    const _params = extend({}, params);
+    const _callback = (callback) ? callback : () => { /* noop */ };
+    const requiredParams = ['environment_id', 'collection_id'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const path = {
+      'environment_id': _params.environment_id,
+      'collection_id': _params.collection_id
+    };
+
+    const defaultHeaders = getDefaultHeaders('discovery', 'v1', 'getStopwordListStatus');
+ 
+    const parameters = {
+      options: {
+        url: '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/stopwords',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, defaultHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
+
+  /**
    * Get tokenization dictionary status.
    *
    * Returns the current status of the tokenization dictionary for the specified collection.
@@ -4047,6 +4093,15 @@ namespace DiscoveryV1 {
     headers?: Object;
   }
 
+  /** Parameters for the `getStopwordListStatus` operation. */
+  export interface GetStopwordListStatusParams {
+    /** The ID of the environment. */
+    environment_id: string;
+    /** The ID of the collection. */
+    collection_id: string;
+    headers?: Object;
+  }
+
   /** Parameters for the `getTokenizationDictionaryStatus` operation. */
   export interface GetTokenizationDictionaryStatusParams {
     /** The ID of the environment. */
@@ -4935,7 +4990,7 @@ namespace DiscoveryV1 {
   export interface DocumentAccepted {
     /** The unique identifier of the ingested document. */
     document_id?: string;
-    /** Status of the document in the ingestion process. */
+    /** Status of the document in the ingestion process. A status of `processing` is returned for documents that are ingested with a *version* date before `2019-01-01`. The `pending` status is returned for all others. */
     status?: string;
     /** Array of notices produced by the document-ingestion process. */
     notices?: Notice[];
@@ -4949,6 +5004,8 @@ namespace DiscoveryV1 {
     processing?: number;
     /** The number of documents in the collection that failed to be ingested. */
     failed?: number;
+    /** The number of documents that have been uploaded to the collection, but have not yet started processing. */
+    pending?: number;
   }
 
   /** DocumentSnapshot. */

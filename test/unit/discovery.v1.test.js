@@ -1903,6 +1903,83 @@ describe('deleteTokenizationDictionary', () => {
     });
   });
 });
+describe('getStopwordListStatus', () => {
+  describe('positive tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsSuccess);
+    });
+    test('should pass the right params to createRequest', () => {
+      // parameters
+      const environment_id = 'fake_environment_id';
+      const collection_id = 'fake_collection_id';
+      const params = {
+        environment_id,
+        collection_id,
+      };
+
+      // invoke method
+      discovery.getStopwordListStatus(params);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+      const options = getOptions(createRequestMock);
+
+      checkUrlAndMethod(
+        options,
+        '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/stopwords',
+        'GET'
+      );
+      checkCallback(createRequestMock);
+      const expectedAccept = 'application/json';
+      const expectedContentType = 'application/json';
+      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+      expect(options.path['environment_id']).toEqual(environment_id);
+      expect(options.path['collection_id']).toEqual(collection_id);
+    });
+
+    test('should prioritize user-given headers', () => {
+      // parameters
+      const environment_id = 'fake_environment_id';
+      const collection_id = 'fake_collection_id';
+      const accept = 'fake/header';
+      const contentType = 'fake/header';
+      const params = {
+        environment_id,
+        collection_id,
+        headers: {
+          Accept: accept,
+          'Content-Type': contentType,
+        },
+      };
+
+      discovery.getStopwordListStatus(params);
+      checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+  });
+  describe('negative tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsError);
+    });
+
+    test('should convert a `null` value for `params` to an empty object', done => {
+      discovery.getStopwordListStatus(null, () => {
+        checkForEmptyObject(missingParamsMock);
+        done();
+      });
+    });
+
+    test('should enforce required parameters', done => {
+      // required parameters for this method
+      const requiredParams = ['environment_id', 'collection_id'];
+
+      discovery.getStopwordListStatus({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+  });
+});
 describe('getTokenizationDictionaryStatus', () => {
   describe('positive tests', () => {
     beforeAll(() => {

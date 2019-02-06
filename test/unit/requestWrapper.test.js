@@ -42,7 +42,7 @@ describe('requestwrapper', () => {
       `watson-apis-node-sdk-${pjson.version} ${os.platform()} ${os.release()} ${process.version}`
     );
     expect(req.headers['X-IBMCloud-SDK-Analytics']).toBe(
-      'service_name=conversation;service_version=v1;operation_id=listIntents,async=true'
+      'service_name=conversation;service_version=v1;operation_id=listIntents;async=true'
     );
   });
 });
