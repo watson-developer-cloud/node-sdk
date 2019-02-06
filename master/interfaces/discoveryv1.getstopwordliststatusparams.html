@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>RowHeaderTextsNormalized | watson-developer-cloud</title>
+	<title>GetStopwordListStatusParams | watson-developer-cloud</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,13 +54,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../classes/comparecomplyv1.html">CompareComplyV1</a>
+					<a href="../classes/discoveryv1.html">DiscoveryV1</a>
 				</li>
 				<li>
-					<a href="comparecomplyv1.rowheadertextsnormalized.html">RowHeaderTextsNormalized</a>
+					<a href="discoveryv1.getstopwordliststatusparams.html">GetStopwordListStatusParams</a>
 				</li>
 			</ul>
-			<h1>Interface RowHeaderTextsNormalized</h1>
+			<h1>Interface GetStopwordListStatusParams</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>If you provide customization input, the normalized version of the row header texts according to the customization; otherwise, the same value as <code>row_header_texts</code>.</p>
+						<p>Parameters for the <code>getStopwordListStatus</code> operation.</p>
 					</div>
 				</div>
 			</section>
@@ -78,7 +78,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">RowHeaderTextsNormalized</span>
+						<span class="target">GetStopwordListStatusParams</span>
 					</li>
 				</ul>
 			</section>
@@ -89,7 +89,9 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="comparecomplyv1.rowheadertextsnormalized.html#text_normalized" class="tsd-kind-icon">text_<wbr>normalized</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.getstopwordliststatusparams.html#collection_id" class="tsd-kind-icon">collection_<wbr>id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.getstopwordliststatusparams.html#environment_id" class="tsd-kind-icon">environment_<wbr>id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.getstopwordliststatusparams.html#headers" class="tsd-kind-icon">headers</a></li>
 							</ul>
 						</section>
 					</div>
@@ -98,19 +100,44 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="text_normalized" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> text_<wbr>normalized</h3>
-					<div class="tsd-signature tsd-kind-icon">text_<wbr>normalized<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="collection_id" class="tsd-anchor"></a>
+					<h3>collection_<wbr>id</h3>
+					<div class="tsd-signature tsd-kind-icon">collection_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/b43f3f0/compare-comply/v1.ts#L1572">compare-comply/v1.ts:1572</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/dc38567/discovery/v1-generated.ts#L4101">discovery/v1-generated.ts:4101</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The normalized version of a row header text.</p>
+							<p>The ID of the collection.</p>
 						</div>
 					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="environment_id" class="tsd-anchor"></a>
+					<h3>environment_<wbr>id</h3>
+					<div class="tsd-signature tsd-kind-icon">environment_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/dc38567/discovery/v1-generated.ts#L4099">discovery/v1-generated.ts:4099</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The ID of the environment.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="headers" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> headers</h3>
+					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/dc38567/discovery/v1-generated.ts#L4102">discovery/v1-generated.ts:4102</a></li>
+						</ul>
+					</aside>
 				</section>
 			</section>
 		</div>
@@ -133,16 +160,31 @@
 					<li class=" tsd-kind-class">
 						<a href="../classes/authorizationv1.html" class="tsd-kind-icon">Authorization<wbr>V1</a>
 					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/comparecomplyv1.html" class="tsd-kind-icon">Compare<wbr>Comply<wbr>V1</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/conversationv1.html" class="tsd-kind-icon">Conversation<wbr>V1</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/dialogv1.html" class="tsd-kind-icon">Dialog<wbr>V1</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
-						<a href="../classes/comparecomplyv1.html" class="tsd-kind-icon">Compare<wbr>Comply<wbr>V1</a>
+						<a href="../classes/discoveryv1.html" class="tsd-kind-icon">Discovery<wbr>V1</a>
 						<ul>
 							<li class="current tsd-kind-interface tsd-parent-kind-class">
-								<a href="comparecomplyv1.rowheadertextsnormalized.html" class="tsd-kind-icon">Row<wbr>Header<wbr>Texts<wbr>Normalized</a>
+								<a href="discoveryv1.getstopwordliststatusparams.html" class="tsd-kind-icon">Get<wbr>Stopword<wbr>List<wbr>Status<wbr>Params</a>
 								<ul>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="comparecomplyv1.rowheadertextsnormalized.html#text_normalized" class="tsd-kind-icon">text_<wbr>normalized</a>
+										<a href="discoveryv1.getstopwordliststatusparams.html#collection_id" class="tsd-kind-icon">collection_<wbr>id</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="discoveryv1.getstopwordliststatusparams.html#environment_id" class="tsd-kind-icon">environment_<wbr>id</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="discoveryv1.getstopwordliststatusparams.html#headers" class="tsd-kind-icon">headers</a>
 									</li>
 								</ul>
 							</li>
@@ -150,15 +192,6 @@
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-class">
-						<a href="../classes/conversationv1.html" class="tsd-kind-icon">Conversation<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/dialogv1.html" class="tsd-kind-icon">Dialog<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/discoveryv1.html" class="tsd-kind-icon">Discovery<wbr>V1</a>
-					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/languagetranslatorv3.html" class="tsd-kind-icon">Language<wbr>Translator<wbr>V3</a>
 					</li>
