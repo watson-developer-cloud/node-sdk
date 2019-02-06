@@ -1,3 +1,12 @@
+# [3.18.0](https://github.com/watson-developer-cloud/node-sdk/compare/v3.17.0...v3.18.0) (2019-02-06)
+
+
+### Features
+
+* **compare-comply:** new constants and new model properties added ([d9dc7cc](https://github.com/watson-developer-cloud/node-sdk/commit/d9dc7cc))
+* **discovery:** add method `getStopwordListStatus` ([ea9eaf9](https://github.com/watson-developer-cloud/node-sdk/commit/ea9eaf9))
+* **speech-to-text:** optional parameter `force` added to the method `upgradeAcousticModel` ([ceaa843](https://github.com/watson-developer-cloud/node-sdk/commit/ceaa843))
+
 # [3.17.0](https://github.com/watson-developer-cloud/node-sdk/compare/v3.16.1...v3.17.0) (2019-02-04)
 
 
