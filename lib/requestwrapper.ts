@@ -44,80 +44,92 @@ function parsePath(path: string, params: Object): string {
 }
 
 /**
- * Check if the service/request have error and try to format them.
+ * Determine if the error is due to bad credentials
+ * @private
+ * @param {Object} error - error object returned from axios
+ * @returns {boolean} true if error is due to authentication
+ */
+function isAuthenticationError(error: any): boolean {
+  let isAuthErr = false;
+  const code = error.status;
+  const body = error.data;
+
+  // handle specific error from iam service, should be relevant across platforms
+  const isIamServiceError = body.context &&
+    body.context.url &&
+    body.context.url.indexOf('iam') > -1;
+
+  if (code === 401 || code === 403 || isIamServiceError) {
+    isAuthErr = true;
+  }
+
+  return isAuthErr;
+}
+
+/**
+ * Format error returned by axios
  * @param  {Function} cb the request callback
  * @private
  * @returns {request.RequestCallback}
  */
-export function formatErrorIfExists(cb: Function) {
-  return (error, response, body) => {
-    // eslint-disable-line complexity
+export function formatError(axiosError: any) {
+  // return an actual error object,
+  // but make it flexible so we can add properties like 'body'
+  const error: any = new Error();
 
-    // If we have an error return it.
-    if (error) {
-      // first ensure that it's an instanceof Error
-      if (!(error instanceof Error)) {
-        body = error;
-        error = new Error(error.message || error.error || error);
-        error.body = body;
-      }
-      if (response && response.headers) {
-        error[globalTransactionId] = response.headers[globalTransactionId];
-      }
-      cb(error, body, response);
-      return;
-    }
+  // axios specific handling
+  if (axiosError.response) {
+    axiosError = axiosError.response;
+    // The request was made and the server responded with a status code
+    // that falls out of the range of 2xx
+    delete axiosError.config;
+    delete axiosError.request;
 
+    error.name = axiosError.statusText;
+    error.code = axiosError.status;
+    error.message = axiosError.data.error || axiosError.statusText;
+
+    // some services bury the useful error message within 'data'
+    // adding it to the error under the key 'body' as a string or object
+    let errorBody;
     try {
-      // in most cases, request will have already parsed the body as JSON
-      body = JSON.parse(body);
+      // try/catch to handle objects with circular references
+      errorBody = JSON.stringify(axiosError.data);
     } catch (e) {
-      // if it fails, just return the body as-is
+      // ignore the error, use the object, and tack on a warning
+      errorBody = axiosError.data;
+      errorBody.warning = 'body contains circular reference';
     }
 
-    // If we have a response and it contains an error
-    if (body && (body.error || body.error_code)) {
-      // visual recognition sets body.error to a json object with code/description/error_id instead of putting them top-left
-      if (typeof body.error === 'object' && body.error.description) {
-        const errObj = body.error; // just in case there's a body.error.error...
-        Object.keys(body.error).forEach(key => {
-          body[key] = body.error[key];
-        });
-        Object.keys(body.error).forEach(key => {
-          body[key] = body.error[key];
-        });
-        body.error = errObj.description;
-      } else if (typeof body.error === 'object' && typeof body.error.error === 'object') {
-        // this can happen with, for example, the assistant createSynonym() API
-        body.rawError = body.error;
-        body.error = JSON.stringify(body.error.error);
-      }
-      // language translaton returns json with error_code and error_message
-      error = new Error(body.error || body.error_message || 'Error Code: ' + body.error_code);
-      error.code = body.error_code;
-      Object.keys(body).forEach(key => {
-        error[key] = body[key];
-      });
-      body = null;
-    }
-    // If we still don't have an error and there was an error...
-    if (!error && (response.statusCode < 200 || response.statusCode >= 300)) {
-      error = new Error(typeof body === 'object' ? JSON.stringify(body) : body);
-      error.code = response.statusCode;
-      body = null;
+    error.body = errorBody;
+
+    // iam service uses transaction-id
+    if (axiosError.headers['transaction-id']) {
+      error['transaction-id'] = axiosError.headers['transaction-id'];
     }
 
-    // ensure a more descriptive error message
-    if (error && (error.code === 401 || error.code === 403)) {
-      error.body = error.message;
-      error.message = 'Unauthorized: Access is denied due to invalid credentials.';
+    // other services use x-global-transaction-id
+    if (axiosError.headers['x-global-transaction-id']) {
+      error['x-global-transaction-id'] = axiosError.headers['x-global-transaction-id'];
     }
-    if (error && response && response.headers) {
-      error[globalTransactionId] = response.headers[globalTransactionId];
+
+    // print a more descriptive error message for auth issues
+    if (isAuthenticationError(axiosError)) {
+      error.message = 'Access is denied due to invalid credentials.';
     }
-    cb(error, body, response);
-    return;
-  };
+
+  } else if (axiosError.request) {
+    // The request was made but no response was received
+    // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+    // http.ClientRequest in node.js
+    error.message = axiosError.request;
+
+  } else {
+    // Something happened in setting up the request that triggered an Error
+    error.message = axiosError.message;
+  }
+
+  return error;
 }
 
 /**
@@ -239,20 +251,6 @@ export function sendRequest(parameters, _callback) {
       _callback(null, res.data, res);
     })
     .catch(error => {
-      if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        delete error.response.config;
-        delete error.response.request;
-        _callback(error.response);
-      } else if (error.request) {
-        // The request was made but no response was received
-        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-        // http.ClientRequest in node.js
-        _callback(error.request);
-      } else {
-        // Something happened in setting up the request that triggered an Error
-        _callback(error.message);
-      }
+      _callback(formatError(error));
     });
 }
