@@ -87,7 +87,9 @@ export function formatError(axiosError: any) {
 
     error.name = axiosError.statusText;
     error.code = axiosError.status;
-    error.message = axiosError.data.error || axiosError.statusText;
+    error.message = axiosError.data.error && typeof axiosError.data.error === 'string' 
+      ? axiosError.data.error
+      : axiosError.statusText;
 
     // some services bury the useful error message within 'data'
     // adding it to the error under the key 'body' as a string or object
@@ -103,15 +105,8 @@ export function formatError(axiosError: any) {
 
     error.body = errorBody;
 
-    // iam service uses transaction-id
-    if (axiosError.headers['transaction-id']) {
-      error['transaction-id'] = axiosError.headers['transaction-id'];
-    }
-
-    // other services use x-global-transaction-id
-    if (axiosError.headers['x-global-transaction-id']) {
-      error['x-global-transaction-id'] = axiosError.headers['x-global-transaction-id'];
-    }
+    // attach headers to error object
+    error.headers = axiosError.headers;
 
     // print a more descriptive error message for auth issues
     if (isAuthenticationError(axiosError)) {
@@ -122,7 +117,8 @@ export function formatError(axiosError: any) {
     // The request was made but no response was received
     // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
     // http.ClientRequest in node.js
-    error.message = axiosError.request;
+    error.message = 'Response not received. Body of error is HTTP ClientRequest object';
+    error.body = axiosError.request;
 
   } else {
     // Something happened in setting up the request that triggered an Error

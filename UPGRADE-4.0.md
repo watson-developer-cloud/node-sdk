@@ -25,7 +25,9 @@ The object returned is of class `Error` and has the following properties:
 - `code`: HTTP status code. Ex) 404
 - `message`: More descriptive error message. Ex) Model not found.
 - `body`: Full error object returned by the service, stringified. If the object cannot be stringified due to a circular reference, it will be left as an object 
-- `x-global-transaction-id`: Transacation ID for the request. If error occurs with IAM service, it will be called `transaction-id`
+- `headers`: Object containing response headers returned from the service, including the transaction id
+
+If a request is made but no response is received (very rare), `error.body` will be an instance of [HTTP.ClientRequest](https://nodejs.org/api/http.html#http_class_http_clientrequest).
 
 ### Removed Services
 The following services have been deprecated for an extended period of time and will no longer be supported in the SDK:
