@@ -717,7 +717,6 @@ describe('getCoreMlModel', () => {
       const expectedContentType = 'application/json';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['classifier_id']).toEqual(classifier_id);
-      expect(options.encoding).toBeNull();
     });
 
     test('should prioritize user-given headers', () => {

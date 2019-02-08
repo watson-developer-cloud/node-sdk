@@ -17,6 +17,7 @@
 import * as extend from 'extend';
 import { RequestResponse } from 'request';
 import { BaseService } from '../lib/base_service';
+import { getDefaultHeaders } from '../lib/common';
 import { getMissingParams } from '../lib/helper';
 
 /**
@@ -97,6 +98,8 @@ class AssistantV2 extends BaseService {
     const path = {
       'assistant_id': _params.assistant_id
     };
+
+    const defaultHeaders = getDefaultHeaders('conversation', 'v2', 'createSession');
  
     const parameters = {
       options: {
@@ -105,7 +108,7 @@ class AssistantV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -153,6 +156,8 @@ class AssistantV2 extends BaseService {
       'assistant_id': _params.assistant_id,
       'session_id': _params.session_id
     };
+
+    const defaultHeaders = getDefaultHeaders('conversation', 'v2', 'deleteSession');
  
     const parameters = {
       options: {
@@ -161,7 +166,7 @@ class AssistantV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -221,6 +226,8 @@ class AssistantV2 extends BaseService {
       'assistant_id': _params.assistant_id,
       'session_id': _params.session_id
     };
+
+    const defaultHeaders = getDefaultHeaders('conversation', 'v2', 'message');
  
     const parameters = {
       options: {
@@ -231,7 +238,7 @@ class AssistantV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),

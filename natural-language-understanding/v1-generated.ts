@@ -17,6 +17,7 @@
 import * as extend from 'extend';
 import { RequestResponse } from 'request';
 import { BaseService } from '../lib/base_service';
+import { getDefaultHeaders } from '../lib/common';
 import { getMissingParams } from '../lib/helper';
 
 /**
@@ -131,6 +132,8 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
       'language': _params.language,
       'limit_text_characters': _params.limit_text_characters
     };
+
+    const defaultHeaders = getDefaultHeaders('natural-language-understanding', 'v1', 'analyze');
  
     const parameters = {
       options: {
@@ -140,7 +143,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         body,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -186,6 +189,8 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     const path = {
       'model_id': _params.model_id
     };
+
+    const defaultHeaders = getDefaultHeaders('natural-language-understanding', 'v1', 'deleteModel');
  
     const parameters = {
       options: {
@@ -194,7 +199,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -227,6 +232,8 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         });
       });
     }
+
+    const defaultHeaders = getDefaultHeaders('natural-language-understanding', 'v1', 'listModels');
  
     const parameters = {
       options: {
@@ -234,7 +241,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         method: 'GET',
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),

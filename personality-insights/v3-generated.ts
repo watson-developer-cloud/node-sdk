@@ -17,6 +17,7 @@
 import * as extend from 'extend';
 import { RequestResponse } from 'request';
 import { BaseService } from '../lib/base_service';
+import { getDefaultHeaders } from '../lib/common';
 import { getMissingParams } from '../lib/helper';
 import { FileObject } from '../lib/helper';
 
@@ -153,6 +154,8 @@ class PersonalityInsightsV3 extends BaseService {
       'csv_headers': _params.csv_headers,
       'consumption_preferences': _params.consumption_preferences
     };
+
+    const defaultHeaders = getDefaultHeaders('personality_insights', 'v3', 'profile');
  
     const parameters = {
       options: {
@@ -163,7 +166,7 @@ class PersonalityInsightsV3 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': _params.content_type,
           'Content-Language': _params.content_language,
@@ -267,6 +270,8 @@ class PersonalityInsightsV3 extends BaseService {
       'csv_headers': _params.csv_headers,
       'consumption_preferences': _params.consumption_preferences
     };
+
+    const defaultHeaders = getDefaultHeaders('personality_insights', 'v3', 'profileAsCsv');
  
     const parameters = {
       options: {
@@ -277,7 +282,7 @@ class PersonalityInsightsV3 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'text/csv',
           'Content-Type': _params.content_type,
           'Content-Language': _params.content_language,

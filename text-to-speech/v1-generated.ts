@@ -17,6 +17,7 @@
 import * as extend from 'extend';
 import { RequestResponse } from 'request';
 import { BaseService } from '../lib/base_service';
+import { getDefaultHeaders } from '../lib/common';
 import { getMissingParams } from '../lib/helper';
 import { FileObject } from '../lib/helper';
 
@@ -98,6 +99,8 @@ class TextToSpeechV1 extends BaseService {
     const path = {
       'voice': _params.voice
     };
+
+    const defaultHeaders = getDefaultHeaders('text_to_speech', 'v1', 'getVoice');
  
     const parameters = {
       options: {
@@ -107,7 +110,7 @@ class TextToSpeechV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -140,6 +143,8 @@ class TextToSpeechV1 extends BaseService {
         });
       });
     }
+
+    const defaultHeaders = getDefaultHeaders('text_to_speech', 'v1', 'listVoices');
  
     const parameters = {
       options: {
@@ -147,7 +152,7 @@ class TextToSpeechV1 extends BaseService {
         method: 'GET',
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -278,18 +283,19 @@ class TextToSpeechV1 extends BaseService {
       'voice': _params.voice,
       'customization_id': _params.customization_id
     };
+
+    const defaultHeaders = getDefaultHeaders('text_to_speech', 'v1', 'synthesize');
  
     const parameters = {
       options: {
         url: '/v1/synthesize',
         method: 'POST',
-        json: true,
         body,
         qs: query,
-        encoding: null,
+        responseType: 'stream',
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Content-Type': 'application/json',
           'Accept': _params.accept
         }, _params.headers),
@@ -355,6 +361,8 @@ class TextToSpeechV1 extends BaseService {
       'format': _params.format,
       'customization_id': _params.customization_id
     };
+
+    const defaultHeaders = getDefaultHeaders('text_to_speech', 'v1', 'getPronunciation');
  
     const parameters = {
       options: {
@@ -363,7 +371,7 @@ class TextToSpeechV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -421,6 +429,8 @@ class TextToSpeechV1 extends BaseService {
       'language': _params.language,
       'description': _params.description
     };
+
+    const defaultHeaders = getDefaultHeaders('text_to_speech', 'v1', 'createVoiceModel');
  
     const parameters = {
       options: {
@@ -430,7 +440,7 @@ class TextToSpeechV1 extends BaseService {
         body,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -479,6 +489,8 @@ class TextToSpeechV1 extends BaseService {
     const path = {
       'customization_id': _params.customization_id
     };
+
+    const defaultHeaders = getDefaultHeaders('text_to_speech', 'v1', 'deleteVoiceModel');
  
     const parameters = {
       options: {
@@ -487,7 +499,7 @@ class TextToSpeechV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
         }, _params.headers),
       }),
     };
@@ -535,6 +547,8 @@ class TextToSpeechV1 extends BaseService {
     const path = {
       'customization_id': _params.customization_id
     };
+
+    const defaultHeaders = getDefaultHeaders('text_to_speech', 'v1', 'getVoiceModel');
  
     const parameters = {
       options: {
@@ -543,7 +557,7 @@ class TextToSpeechV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -588,6 +602,8 @@ class TextToSpeechV1 extends BaseService {
     const query = {
       'language': _params.language
     };
+
+    const defaultHeaders = getDefaultHeaders('text_to_speech', 'v1', 'listVoiceModels');
  
     const parameters = {
       options: {
@@ -596,7 +612,7 @@ class TextToSpeechV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -670,6 +686,8 @@ class TextToSpeechV1 extends BaseService {
     const path = {
       'customization_id': _params.customization_id
     };
+
+    const defaultHeaders = getDefaultHeaders('text_to_speech', 'v1', 'updateVoiceModel');
  
     const parameters = {
       options: {
@@ -680,7 +698,7 @@ class TextToSpeechV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -764,6 +782,8 @@ class TextToSpeechV1 extends BaseService {
       'customization_id': _params.customization_id,
       'word': _params.word
     };
+
+    const defaultHeaders = getDefaultHeaders('text_to_speech', 'v1', 'addWord');
  
     const parameters = {
       options: {
@@ -774,7 +794,7 @@ class TextToSpeechV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Content-Type': 'application/json',
         }, _params.headers),
       }),
@@ -848,6 +868,8 @@ class TextToSpeechV1 extends BaseService {
     const path = {
       'customization_id': _params.customization_id
     };
+
+    const defaultHeaders = getDefaultHeaders('text_to_speech', 'v1', 'addWords');
  
     const parameters = {
       options: {
@@ -858,7 +880,7 @@ class TextToSpeechV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -909,6 +931,8 @@ class TextToSpeechV1 extends BaseService {
       'customization_id': _params.customization_id,
       'word': _params.word
     };
+
+    const defaultHeaders = getDefaultHeaders('text_to_speech', 'v1', 'deleteWord');
  
     const parameters = {
       options: {
@@ -917,7 +941,7 @@ class TextToSpeechV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
         }, _params.headers),
       }),
     };
@@ -967,6 +991,8 @@ class TextToSpeechV1 extends BaseService {
       'customization_id': _params.customization_id,
       'word': _params.word
     };
+
+    const defaultHeaders = getDefaultHeaders('text_to_speech', 'v1', 'getWord');
  
     const parameters = {
       options: {
@@ -975,7 +1001,7 @@ class TextToSpeechV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -1024,6 +1050,8 @@ class TextToSpeechV1 extends BaseService {
     const path = {
       'customization_id': _params.customization_id
     };
+
+    const defaultHeaders = getDefaultHeaders('text_to_speech', 'v1', 'listWords');
  
     const parameters = {
       options: {
@@ -1032,7 +1060,7 @@ class TextToSpeechV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -1085,6 +1113,8 @@ class TextToSpeechV1 extends BaseService {
     const query = {
       'customer_id': _params.customer_id
     };
+
+    const defaultHeaders = getDefaultHeaders('text_to_speech', 'v1', 'deleteUserData');
  
     const parameters = {
       options: {
@@ -1093,7 +1123,7 @@ class TextToSpeechV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
         }, _params.headers),
       }),
     };

@@ -217,6 +217,8 @@ describe('recognize', () => {
       const smart_formatting = 'fake_smart_formatting';
       const speaker_labels = 'fake_speaker_labels';
       const customization_id = 'fake_customization_id';
+      const grammar_name = 'fake_grammar_name';
+      const redaction = 'fake_redaction';
       const params = {
         audio,
         content_type,
@@ -236,6 +238,8 @@ describe('recognize', () => {
         smart_formatting,
         speaker_labels,
         customization_id,
+        grammar_name,
+        redaction,
       };
 
       // invoke method
@@ -270,6 +274,8 @@ describe('recognize', () => {
       expect(options.qs['smart_formatting']).toEqual(smart_formatting);
       expect(options.qs['speaker_labels']).toEqual(speaker_labels);
       expect(options.qs['customization_id']).toEqual(customization_id);
+      expect(options.qs['grammar_name']).toEqual(grammar_name);
+      expect(options.qs['redaction']).toEqual(redaction);
     });
 
     test('should prioritize user-given headers', () => {
@@ -528,6 +534,8 @@ describe('createJob', () => {
       const smart_formatting = 'fake_smart_formatting';
       const speaker_labels = 'fake_speaker_labels';
       const customization_id = 'fake_customization_id';
+      const grammar_name = 'fake_grammar_name';
+      const redaction = 'fake_redaction';
       const params = {
         audio,
         content_type,
@@ -551,6 +559,8 @@ describe('createJob', () => {
         smart_formatting,
         speaker_labels,
         customization_id,
+        grammar_name,
+        redaction,
       };
 
       // invoke method
@@ -589,6 +599,8 @@ describe('createJob', () => {
       expect(options.qs['smart_formatting']).toEqual(smart_formatting);
       expect(options.qs['speaker_labels']).toEqual(speaker_labels);
       expect(options.qs['customization_id']).toEqual(customization_id);
+      expect(options.qs['grammar_name']).toEqual(grammar_name);
+      expect(options.qs['redaction']).toEqual(redaction);
     });
 
     test('should prioritize user-given headers', () => {
@@ -3456,9 +3468,11 @@ describe('upgradeAcousticModel', () => {
       // parameters
       const customization_id = 'fake_customization_id';
       const custom_language_model_id = 'fake_custom_language_model_id';
+      const force = 'fake_force';
       const params = {
         customization_id,
         custom_language_model_id,
+        force,
       };
 
       // invoke method
@@ -3479,6 +3493,7 @@ describe('upgradeAcousticModel', () => {
       const expectedContentType = 'application/json';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['custom_language_model_id']).toEqual(custom_language_model_id);
+      expect(options.qs['force']).toEqual(force);
       expect(options.path['customization_id']).toEqual(customization_id);
     });
 

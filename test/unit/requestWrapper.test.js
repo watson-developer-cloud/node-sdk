@@ -1,146 +1,103 @@
 'use strict';
 
-const sendRequest = require('../../lib/requestwrapper').sendRequest;
-const formatError = require('../../lib/requestwrapper').formatErrorIfExists;
-const isStream = require('isstream');
-const watson = require('../../index');
-const pjson = require('../../package.json');
-
-describe('requestwrapper', () => {
-  const noop = function() {};
-
-  it('should emit error stream on missing parameters when callback is undefined', done => {
-    const parameters = {
-      options: {
-        url: '/stuff/',
-        qs: { fake: 'fake' },
-      },
-      requiredParams: ['fake_param'],
-      defaultOptions: { url: 'more' },
-    };
-    const stream = sendRequest(parameters);
-    stream.on('error', err => {
-      expect(isStream(stream)).toBe(true);
-      expect(err.toString().includes('Missing required parameters: fake_param')).toBe(true);
-      done();
-    });
-  });
-
-  it('header should be accurate', () => {
-    const service = {
-      username: 'batman',
-      password: 'bruce-wayne',
-      url: 'http://ibm.com:80',
-      version: '2017-05-26',
-    };
-    const service2 = {
-      username: 'batman',
-      password: 'bruce-wayne',
-      url: 'http://ibm.com:80',
-      version: '2017-05-26',
-      headers: {
-        'User-Agent': 'openwhisk',
-      },
-    };
-    const assistant = new watson.AssistantV1(service);
-    const assistant_ow = new watson.AssistantV1(service2);
-    const payload = {
-      workspace_id: 'workspace1',
-      intent: 'intent1',
-    };
-
-    const req = assistant.listIntents(payload, noop);
-    const req2 = assistant_ow.listIntents(payload, noop);
-    expect(req.headers['User-Agent']).toBe('watson-developer-cloud-nodejs-' + pjson.version + ';');
-    expect(req2.headers['User-Agent']).toBe(
-      'watson-developer-cloud-nodejs-' + pjson.version + ';' + 'openwhisk'
-    );
-  });
-});
+const formatError = require('../../lib/requestwrapper').formatError;
 
 describe('formatError', () => {
-  it('should check for error in response', () => {
-    const _error = undefined;
-    const _response = { statusCode: 401 };
-    const _body = 'fake body';
-    const cb = (err, body, res) => {
-      expect(body).toBeNull();
-      expect(err).toBeInstanceOf(Error);
-      expect(err.message).toBe('Unauthorized: Access is denied due to invalid credentials.');
-    };
-    const formatted = formatError(cb);
-    formatted(_error, _response, _body);
+  const basicAxiosError = {
+    response: {
+      config: 'large object',
+      request: 'large object',
+      statusText: 'Not Found',
+      status: 404,
+      data: {
+        error: 'Model not found.',
+        code: 404,
+      },
+      headers: {
+        'content-type': 'application/json',
+        'content-length': '65',
+        'x-global-transaction-id': 'fhd7s8hfudj9ksoo0wpnd78a',
+      },
+    },
+    request: {
+      message: 'request was made but no response was received',
+    },
+    message: 'error in building the request',
+  };
+
+  it('should build an error from a basic error response', () => {
+    const error = formatError(basicAxiosError);
+    expect(error instanceof Error).toBe(true);
+    expect(error.name).toBe('Not Found');
+    expect(error.code).toBe(404);
+    expect(error.message).toBe('Model not found.');
+    expect(error.body).toBe('{"error":"Model not found.","code":404}');
+    expect(error.headers).toEqual(basicAxiosError.response.headers);
   });
 
-  it('should check for error in body with error_code', () => {
-    const _error = undefined;
-    const _response = {};
-    const _body = { error_code: '555', fake_key: 'fake_value' };
-    const cb = (err, body, res) => {
-      expect(body).toBeNull();
-      expect(err).toBeInstanceOf(Error);
-      expect(err.code).toBe(_body.error_code);
-      expect(err.fake_key).toBe(_body.fake_key);
-    };
-    const formatted = formatError(cb);
-    formatted(_error, _response, _body);
+  it('check the unauthenticated thing - 401', () => {
+    basicAxiosError.response.status = 401;
+    const error = formatError(basicAxiosError);
+    expect(error instanceof Error).toBe(true);
+    expect(error.message).toBe('Access is denied due to invalid credentials.');
   });
 
-  it('should check for error in body with error', () => {
-    const _error = undefined;
-    const _response = {};
-    const _body = {
-      error: { description: 'fake description' },
-      fake_key: 'fake_value',
-    };
-    const cb = (err, body, res) => {
-      expect(body).toBeNull();
-      expect(err).toBeInstanceOf(Error);
-      expect(err.description).toBe('fake description');
-      expect(err.fake_key).toBe('fake_value');
-    };
-    const formatted = formatError(cb);
-    formatted(_error, _response, _body);
+  it('check the unauthenticated thing - 403', () => {
+    basicAxiosError.response.status = 403;
+    const error = formatError(basicAxiosError);
+    expect(error instanceof Error).toBe(true);
+    expect(error.message).toBe('Access is denied due to invalid credentials.');
   });
 
-  it('should check for error in body with error.error', () => {
-    const _error = undefined;
-    const _response = {};
-    const _body = {
-      error: { error: { error: 'fake description' } },
-      fake_key: 'fake_value',
+  it('check the unauthenticated thing - iam', () => {
+    basicAxiosError.response.status = 400;
+    basicAxiosError.response.data.context = {
+      url: 'http://iam.bluemix.net',
     };
-    const cb = (err, body, res) => {
-      expect(body).toBeNull();
-      expect(err).toBeInstanceOf(Error);
-      expect(err.error).toBe(JSON.stringify({ error: 'fake description' }));
-      expect(err.fake_key).toBe('fake_value');
-    };
-    const formatted = formatError(cb);
-    formatted(_error, _response, _body);
+    const error = formatError(basicAxiosError);
+    expect(error instanceof Error).toBe(true);
+    expect(error.message).toBe('Access is denied due to invalid credentials.');
+
+    // clean up
+    delete basicAxiosError.response.data.context;
   });
 
-  it('should check for error if its not null', () => {
-    const _error = { message: 'fake error' };
-    const _response = {};
-    const _body = {};
-    const cb = (err, body, res) => {
-      expect(err).toBeInstanceOf(Error);
-      expect(err.message).toBe(_error.message);
-    };
-    const formatted = formatError(cb);
-    formatted(_error, _response, _body);
+  it('check what happens when there is no data.error', () => {
+    delete basicAxiosError.response.data.error;
+    const error = formatError(basicAxiosError);
+    expect(error instanceof Error).toBe(true);
+    expect(error.message).toBe('Not Found');
   });
 
-  it('should format error for invalid api keys', () => {
-    const _error = undefined;
-    const _response = { statusMessage: 'invalid-api-key' };
-    const _body = {};
-    const cb = (err, body, res) => {
-      expect(err.error).toBe(_response.statusMessage);
-      expect(err.code).toBe(401);
+  it('check error with circular ref in data', () => {
+    const otherObject = {
+      a: {
+        b: 'c',
+      },
     };
-    const formatted = formatError(cb);
-    formatted(_error, _response, _body);
+    basicAxiosError.response.data = {
+      error: otherObject,
+    };
+    // create a circular reference
+    basicAxiosError.response.data.error.a.newKey = otherObject;
+    const error = formatError(basicAxiosError);
+    expect(error instanceof Error).toBe(true);
+    expect(typeof error.body).toBe('object');
+    expect(error.message).toBe('Not Found');
+  });
+
+  it('check the request flow', () => {
+    delete basicAxiosError.response;
+    const error = formatError(basicAxiosError);
+    expect(error instanceof Error).toBe(true);
+    expect(error.message).toBe('Response not received. Body of error is HTTP ClientRequest object');
+    expect(error.body).toEqual(basicAxiosError.request);
+  });
+
+  it('check the message flow', () => {
+    delete basicAxiosError.request;
+    const error = formatError(basicAxiosError);
+    expect(error instanceof Error).toBe(true);
+    expect(error.message).toBe('error in building the request');
   });
 });

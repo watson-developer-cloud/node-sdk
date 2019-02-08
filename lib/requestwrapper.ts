@@ -14,8 +14,11 @@
  * limitations under the License.
  */
 
+import axios from 'axios';
 import extend = require('extend');
-import request = require('request');
+import FormData = require('form-data');
+import https = require('https');
+import querystring = require('querystring');
 import { PassThrough as readableStream } from 'stream';
 import { buildRequestFileObject, getMissingParams, isEmptyObject, isFileParam } from './helper';
 
@@ -41,93 +44,88 @@ function parsePath(path: string, params: Object): string {
 }
 
 /**
- * Check if the service/request have error and try to format them.
+ * Determine if the error is due to bad credentials
+ * @private
+ * @param {Object} error - error object returned from axios
+ * @returns {boolean} true if error is due to authentication
+ */
+function isAuthenticationError(error: any): boolean {
+  let isAuthErr = false;
+  const code = error.status;
+  const body = error.data;
+
+  // handle specific error from iam service, should be relevant across platforms
+  const isIamServiceError = body.context &&
+    body.context.url &&
+    body.context.url.indexOf('iam') > -1;
+
+  if (code === 401 || code === 403 || isIamServiceError) {
+    isAuthErr = true;
+  }
+
+  return isAuthErr;
+}
+
+/**
+ * Format error returned by axios
  * @param  {Function} cb the request callback
  * @private
  * @returns {request.RequestCallback}
  */
-export function formatErrorIfExists(cb: Function): request.RequestCallback {
-  return (error, response, body) => {
-    // eslint-disable-line complexity
+export function formatError(axiosError: any) {
+  // return an actual error object,
+  // but make it flexible so we can add properties like 'body'
+  const error: any = new Error();
 
-    // If we have an error return it.
-    if (error) {
-      // first ensure that it's an instanceof Error
-      if (!(error instanceof Error)) {
-        body = error;
-        error = new Error(error.message || error.error || error);
-        error.body = body;
-      }
-      if (response && response.headers) {
-        error[globalTransactionId] = response.headers[globalTransactionId];
-      }
-      cb(error, body, response);
-      return;
-    }
+  // axios specific handling
+  if (axiosError.response) {
+    axiosError = axiosError.response;
+    // The request was made and the server responded with a status code
+    // that falls out of the range of 2xx
+    delete axiosError.config;
+    delete axiosError.request;
 
+    error.name = axiosError.statusText;
+    error.code = axiosError.status;
+    error.message = axiosError.data.error && typeof axiosError.data.error === 'string' 
+      ? axiosError.data.error
+      : axiosError.statusText;
+
+    // some services bury the useful error message within 'data'
+    // adding it to the error under the key 'body' as a string or object
+    let errorBody;
     try {
-      // in most cases, request will have already parsed the body as JSON
-      body = JSON.parse(body);
+      // try/catch to handle objects with circular references
+      errorBody = JSON.stringify(axiosError.data);
     } catch (e) {
-      // if it fails, just return the body as-is
+      // ignore the error, use the object, and tack on a warning
+      errorBody = axiosError.data;
+      errorBody.warning = 'body contains circular reference';
     }
 
-    // for api-key services
-    if (response.statusMessage === 'invalid-api-key') {
-      const error = {
-        error: response.statusMessage,
-        code: response.statusMessage === 'invalid-api-key' ? 401 : 400,
-      };
-      if (response.headers) {
-        error[globalTransactionId] = response.headers[globalTransactionId];
-      }
-      cb(error, null);
-      return;
+    error.body = errorBody;
+
+    // attach headers to error object
+    error.headers = axiosError.headers;
+
+    // print a more descriptive error message for auth issues
+    if (isAuthenticationError(axiosError)) {
+      error.message = 'Access is denied due to invalid credentials.';
     }
 
-    // If we have a response and it contains an error
-    if (body && (body.error || body.error_code)) {
-      // visual recognition sets body.error to a json object with code/description/error_id instead of putting them top-left
-      if (typeof body.error === 'object' && body.error.description) {
-        const errObj = body.error; // just in case there's a body.error.error...
-        Object.keys(body.error).forEach(key => {
-          body[key] = body.error[key];
-        });
-        Object.keys(body.error).forEach(key => {
-          body[key] = body.error[key];
-        });
-        body.error = errObj.description;
-      } else if (typeof body.error === 'object' && typeof body.error.error === 'object') {
-        // this can happen with, for example, the assistant createSynonym() API
-        body.rawError = body.error;
-        body.error = JSON.stringify(body.error.error);
-      }
-      // language translaton returns json with error_code and error_message
-      error = new Error(body.error || body.error_message || 'Error Code: ' + body.error_code);
-      error.code = body.error_code;
-      Object.keys(body).forEach(key => {
-        error[key] = body[key];
-      });
-      body = null;
-    }
-    // If we still don't have an error and there was an error...
-    if (!error && (response.statusCode < 200 || response.statusCode >= 300)) {
-      error = new Error(typeof body === 'object' ? JSON.stringify(body) : body);
-      error.code = response.statusCode;
-      body = null;
-    }
+  } else if (axiosError.request) {
+    // The request was made but no response was received
+    // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+    // http.ClientRequest in node.js
+    error.message = 'Response not received. Body of error is HTTP ClientRequest object';
+    error.body = axiosError.request;
 
-    // ensure a more descriptive error message
-    if (error && (error.code === 401 || error.code === 403)) {
-      error.body = error.message;
-      error.message = 'Unauthorized: Access is denied due to invalid credentials.';
-    }
-    if (error && response && response.headers) {
-      error[globalTransactionId] = response.headers[globalTransactionId];
-    }
-    cb(error, body, response);
-    return;
-  };
+  } else {
+    // Something happened in setting up the request that triggered an Error
+    error.message = axiosError.message;
+  }
+
+  return error;
 }
 
 /**
@@ -141,36 +139,11 @@ export function formatErrorIfExists(cb: Function): request.RequestCallback {
  * @throws {Error}
  */
 export function sendRequest(parameters, _callback) {
-  let missingParams = null;
   const options = extend(true, {}, parameters.defaultOptions, parameters.options);
-  const { path, body, form, formData, qs } = options;
+  const { path, body, form, formData, qs, method, rejectUnauthorized } = options;
+  let { url, headers } = options;
 
-  // Missing parameters
-  if (parameters.options.requiredParams) {
-    // eslint-disable-next-line no-console
-    console.warn(
-      new Error(
-        'requiredParams set on parameters.options - it should be set directly on parameters'
-      )
-    );
-  }
-
-  missingParams = getMissingParams(
-    parameters.originalParams || extend({}, qs, body, form, formData, path),
-    parameters.requiredParams
-  );
-
-  if (missingParams) {
-    if (typeof _callback === 'function') {
-      return _callback(missingParams);
-    } else {
-      const errorStream = new readableStream();
-      setTimeout(() => {
-        errorStream.emit('error', missingParams);
-      }, 0);
-      return errorStream;
-    }
-  }
+  const multipartForm = new FormData();
 
   // Form params
   if (formData) {
@@ -179,59 +152,98 @@ export function sendRequest(parameters, _callback) {
     // Remove non-valid inputs for buildRequestFileObject,
     // i.e things like {contentType: <contentType>}
     Object.keys(formData).forEach(key => {
-      // tslint:disable-next-line:no-unused-expression
-      (formData[key] == null ||
+      if (formData[key] == null ||
         isEmptyObject(formData[key]) ||
-        (formData[key].hasOwnProperty('contentType') && !formData[key].hasOwnProperty('data'))) &&
+        (formData[key].hasOwnProperty('contentType') && !formData[key].hasOwnProperty('data'))) {
         delete formData[key];
+      }
     });
     // Convert file form parameters to request-style objects
-    Object.keys(formData).forEach(
-      key => formData[key].data != null && (formData[key] = buildRequestFileObject(formData[key]))
-    );
+    Object.keys(formData).forEach(key => {
+      if (formData[key].data != null) {
+        formData[key] = buildRequestFileObject(formData[key]);
+      }
+    });
 
     // Stringify arrays
-    Object.keys(formData).forEach(
-      key => Array.isArray(formData[key]) && (formData[key] = formData[key].join(','))
-    );
+    Object.keys(formData).forEach(key => {
+      if (Array.isArray(formData[key])) {
+        formData[key] = formData[key].join(',');
+      }
+    });
 
     // Convert non-file form parameters to strings
-    Object.keys(formData).forEach(
-      key =>
-        !isFileParam(formData[key]) &&
+    Object.keys(formData).forEach(key => {
+      if (!isFileParam(formData[key]) &&
         !Array.isArray(formData[key]) &&
-        typeof formData[key] === 'object' &&
-        (formData[key] = JSON.stringify(formData[key]))
-    );
+        typeof formData[key] === 'object') {
+        (formData[key] = JSON.stringify(formData[key]));
+      }
+    });
+
+    // build multipart form data
+    Object.keys(formData).forEach(key => {
+      // handle files differently to maintain options
+      if (formData[key].value) {
+        multipartForm.append(key, formData[key].value, formData[key].options);
+      } else {
+        multipartForm.append(key, formData[key]);
+      }
+    });
   }
 
   // Path params
-  options.url = parsePath(options.url, path);
-  delete options.path;
+  url = parsePath(url, path);
 
   // Headers
   options.headers = extend({}, options.headers);
-  if (!isBrowser) {
-    options.headers['User-Agent'] = `${pkg.name}-nodejs-${pkg.version};${options.headers[
-      'User-Agent'
-    ] || ''}`;
-  }
 
-  // Query params
-  if (options.qs && Object.keys(options.qs).length > 0) {
-    Object.keys(options.qs).forEach(
-      key => Array.isArray(options.qs[key]) && (options.qs[key] = options.qs[key].join(','))
+  // Convert array-valued query params to strings
+  if (qs && Object.keys(qs).length > 0) {
+    Object.keys(qs).forEach(
+      key => Array.isArray(qs[key]) && (qs[key] = qs[key].join(','))
     );
-    options.useQuerystring = true;
   }
 
   // Add service default endpoint if options.url start with /
-  if (options.url.charAt(0) === '/') {
-    options.url = parameters.defaultOptions.url + options.url;
+  if (url && url.charAt(0) === '/') {
+    url = parameters.defaultOptions.url + url;
   }
 
-  // Compression support
-  options.gzip = true;
+  let data = body;
 
-  return request(options, formatErrorIfExists(_callback));
+  if (form) {
+    data = querystring.stringify(form);
+    headers['Content-type'] = 'application/x-www-form-urlencoded';
+  }
+
+  if (formData) {
+    data = multipartForm;
+    // form-data generates headers that MUST be included or the request will fail
+    headers = extend(true, {}, headers, multipartForm.getHeaders());
+  }
+
+  // accept gzip encoded responses if Accept-Encoding is not already set
+  headers['Accept-Encoding'] = headers['Accept-Encoding'] || 'gzip';
+
+  const requestParams = {
+    url,
+    method,
+    headers,
+    params: qs,
+    data,
+    responseType: options.responseType || 'json',
+    paramsSerializer: params => {
+      return querystring.stringify(params);
+    },
+    httpsAgent: new https.Agent({ rejectUnauthorized }),
+  };
+
+  axios(requestParams)
+    .then(res => {
+      _callback(null, res.data, res);
+    })
+    .catch(error => {
+      _callback(formatError(error));
+    });
 }

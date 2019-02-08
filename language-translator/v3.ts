@@ -17,6 +17,7 @@
 import * as extend from 'extend';
 import { RequestResponse } from 'request';
 import { BaseService } from '../lib/base_service';
+import { getDefaultHeaders } from '../lib/common';
 import { getMissingParams } from '../lib/helper';
 import { FileObject } from '../lib/helper';
 
@@ -101,6 +102,8 @@ class LanguageTranslatorV3 extends BaseService {
       'source': _params.source,
       'target': _params.target
     };
+
+    const defaultHeaders = getDefaultHeaders('language_translator', 'v3', 'translate');
  
     const parameters = {
       options: {
@@ -110,7 +113,7 @@ class LanguageTranslatorV3 extends BaseService {
         body,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -153,6 +156,8 @@ class LanguageTranslatorV3 extends BaseService {
       return _callback(missingParams);
     }
     const body = _params.text;
+
+    const defaultHeaders = getDefaultHeaders('language_translator', 'v3', 'identify');
  
     const parameters = {
       options: {
@@ -162,7 +167,7 @@ class LanguageTranslatorV3 extends BaseService {
         body,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'text/plain',
         }, _params.headers),
@@ -194,6 +199,8 @@ class LanguageTranslatorV3 extends BaseService {
         });
       });
     }
+
+    const defaultHeaders = getDefaultHeaders('language_translator', 'v3', 'listIdentifiableLanguages');
  
     const parameters = {
       options: {
@@ -201,7 +208,7 @@ class LanguageTranslatorV3 extends BaseService {
         method: 'GET',
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -286,6 +293,8 @@ class LanguageTranslatorV3 extends BaseService {
       'base_model_id': _params.base_model_id,
       'name': _params.name
     };
+
+    const defaultHeaders = getDefaultHeaders('language_translator', 'v3', 'createModel');
  
     const parameters = {
       options: {
@@ -295,7 +304,7 @@ class LanguageTranslatorV3 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'multipart/form-data',
         }, _params.headers),
@@ -337,6 +346,8 @@ class LanguageTranslatorV3 extends BaseService {
     const path = {
       'model_id': _params.model_id
     };
+
+    const defaultHeaders = getDefaultHeaders('language_translator', 'v3', 'deleteModel');
  
     const parameters = {
       options: {
@@ -345,7 +356,7 @@ class LanguageTranslatorV3 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -387,6 +398,8 @@ class LanguageTranslatorV3 extends BaseService {
     const path = {
       'model_id': _params.model_id
     };
+
+    const defaultHeaders = getDefaultHeaders('language_translator', 'v3', 'getModel');
  
     const parameters = {
       options: {
@@ -395,7 +408,7 @@ class LanguageTranslatorV3 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -437,6 +450,8 @@ class LanguageTranslatorV3 extends BaseService {
       'target': _params.target,
       'default': _params.default_models
     };
+
+    const defaultHeaders = getDefaultHeaders('language_translator', 'v3', 'listModels');
  
     const parameters = {
       options: {
@@ -445,7 +460,7 @@ class LanguageTranslatorV3 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),

@@ -17,6 +17,7 @@
 import * as extend from 'extend';
 import { RequestResponse } from 'request';
 import { BaseService } from '../lib/base_service';
+import { getDefaultHeaders } from '../lib/common';
 import { getMissingParams } from '../lib/helper';
 
 /**
@@ -130,6 +131,8 @@ class ToneAnalyzerV3 extends BaseService {
       'sentences': _params.sentences,
       'tones': _params.tones
     };
+
+    const defaultHeaders = getDefaultHeaders('tone_analyzer', 'v3', 'tone');
  
     const parameters = {
       options: {
@@ -140,7 +143,7 @@ class ToneAnalyzerV3 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': _params.content_type,
           'Content-Language': _params.content_language,
@@ -205,6 +208,8 @@ class ToneAnalyzerV3 extends BaseService {
     const body = {
       'utterances': _params.utterances
     };
+
+    const defaultHeaders = getDefaultHeaders('tone_analyzer', 'v3', 'toneChat');
  
     const parameters = {
       options: {
@@ -214,7 +219,7 @@ class ToneAnalyzerV3 extends BaseService {
         body,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, {
+        headers: extend(true, defaultHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
           'Content-Language': _params.content_language,

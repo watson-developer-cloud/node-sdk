@@ -228,10 +228,8 @@ describe('synthesize', () => {
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       checkUserHeader(createRequestMock, 'Accept', accept);
       expect(options.body['text']).toEqual(text);
-      expect(options.json).toEqual(true);
       expect(options.qs['voice']).toEqual(voice);
       expect(options.qs['customization_id']).toEqual(customization_id);
-      expect(options.encoding).toBeNull();
     });
 
     test('should prioritize user-given headers', () => {
