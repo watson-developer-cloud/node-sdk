@@ -196,10 +196,7 @@ export function sendRequest(parameters, _callback) {
   url = parsePath(url, path);
 
   // Headers
-  headers = extend({}, headers);
-  if (!isBrowser) {
-    headers['User-Agent'] = `${pkg.name}-nodejs-${pkg.version};${headers['User-Agent'] || ''}`;
-  }
+  options.headers = extend({}, options.headers);
 
   // Convert array-valued query params to strings
   if (qs && Object.keys(qs).length > 0) {

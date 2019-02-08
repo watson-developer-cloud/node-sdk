@@ -1,62 +1,6 @@
 'use strict';
 
-const axios = require('axios');
-const sendRequest = require('../../lib/requestwrapper').sendRequest;
 const formatError = require('../../lib/requestwrapper').formatError;
-const pjson = require('../../package.json');
-
-// mock axios and test what gets passed into it
-jest.mock('axios');
-axios.mockResolvedValue({ data: 'fake-data' });
-
-describe('sendRequest', () => {
-  afterEach(() => {
-    axios.mockClear();
-  });
-
-  it('should set default user agent header', done => {
-    const params = {
-      defaultOptions: {
-        username: 'batman',
-        password: 'bruce-wayne',
-        url: 'http://ibm.com:80',
-        version: '2017-05-26',
-      },
-    };
-
-    sendRequest(params, (err, res) => {
-      expect(axios).toHaveBeenCalledTimes(1);
-      const req = axios.mock.calls[0][0];
-      expect(req.headers['User-Agent']).toBe(
-        'watson-developer-cloud-nodejs-' + pjson.version + ';'
-      );
-      done();
-    });
-  });
-
-  it('should set custom user agent header', done => {
-    const params = {
-      defaultOptions: {
-        username: 'batman',
-        password: 'bruce-wayne',
-        url: 'http://ibm.com:80',
-        version: '2017-05-26',
-        headers: {
-          'User-Agent': 'openwhisk',
-        },
-      },
-    };
-
-    sendRequest(params, (err, res) => {
-      expect(axios).toHaveBeenCalledTimes(1);
-      const req = axios.mock.calls[0][0];
-      expect(req.headers['User-Agent']).toBe(
-        'watson-developer-cloud-nodejs-' + pjson.version + ';' + 'openwhisk'
-      );
-      done();
-    });
-  });
-});
 
 describe('formatError', () => {
   const basicAxiosError = {
