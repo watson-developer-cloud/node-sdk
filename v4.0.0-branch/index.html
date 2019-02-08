@@ -139,19 +139,42 @@
 				<h3 id="getting-credentials">Getting credentials</h3>
 				<p>To find out which authentication to use, view the service credentials. You find the service credentials for authentication the same way for all Watson services:</p>
 				<ol>
-					<li>Go to the IBM Cloud <a href="https://console.bluemix.net/dashboard/apps?category=ai">Dashboard</a> page.</li>
-					<li>Either click an existing Watson service instance or click <a href="https://console.bluemix.net/catalog/?category=ai"><strong>Create resource &gt; AI</strong></a> and create a service instance.</li>
-					<li>Click <strong>Show</strong> to view your service credentials.</li>
-					<li>Copy the <code>url</code> and either <code>apikey</code> or <code>username</code> and <code>password</code>.</li>
+					<li>Go to the IBM Cloud <a href="https://cloud.ibm.com/">Dashboard</a> page.</li>
+					<li>Either click an existing Watson service instance in your <a href="https://cloud.ibm.com/resources">resource list</a> or click <a href="https://cloud.ibm.com/catalog?category=ai"><strong>Create resource &gt; AI</strong></a> and create a service instance.</li>
+					<li>Click on the <strong>Manage</strong> item in the left nav bar of your service instance.</li>
 				</ol>
-				<h3 id="iam">IAM</h3>
+				<p>On this page, you should be able to see your credentials for accessing your service instance.</p>
+				<p>In your code, you can use these values in the service constructor or with a method call after instantiating your service.</p>
+				<h3 id="supplying-credentials">Supplying credentials</h3>
+				<p>There are two ways to supply the credentials you found above to the SDK for authentication:</p>
+				<h4 id="credentials-file-easier-">Credentials file (easier!)</h4>
+				<p>With a credentials file, you just need to put the file in the right place and the SDK will do the work of parsing it and authenticating. You can get this file by clicking the <strong>Download</strong> button for the credentials in the <strong>Manage</strong> tab of your service instance.</p>
+				<p>The file downloaded will be called <code>ibm-credentials.env</code>. This is the name the SDK will search for and <strong>must</strong> be preserved unless you want to configure the file path (more on that later). The SDK will look for your <code>ibm-credentials.env</code> file in the following places (in order):</p>
+				<ul>
+					<li>Directory provided by the environment variable <code>IBM_CREDENTIALS_FILE</code></li>
+					<li>Your system&#39;s home directory</li>
+					<li>Your current working directory (the directory Node is executed from)</li>
+				</ul>
+				<p>As long as you set that up correctly, you don&#39;t have to worry about setting any authentication options in your code. So, for example, if you created and downloaded the credential file for your Discovery instance, you just need to do the following:</p>
+				<pre><code class="lang-js"><span class="hljs-keyword">const</span> DiscoveryV1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'watson-developer-cloud/discovery/v1'</span>);
+<span class="hljs-keyword">const</span> discovery = <span class="hljs-keyword">new</span> DiscoveryV1({ <span class="hljs-attr">version</span>: <span class="hljs-string">'2019-02-01'</span> });
+</code></pre>
+				<p>And that&#39;s it!</p>
+				<p>If you&#39;re using more than one service at a time in your code and get two different <code>ibm-credentials.env</code> files, just put the contents together in one <code>ibm-credentials.env</code> file and the SDK will handle assigning credentials to their appropriate services.</p>
+				<p>If you would like to configure the location/name of your credential file, you can set an environment variable called <code>IBM_CREDENTIALS_FILE</code>. <strong>This will take precedence over the locations specified above.</strong> Here&#39;s how you can do that:</p>
+				<pre><code class="lang-bash"><span class="hljs-built_in">export</span> IBM_CREDENTIALS_FILE=<span class="hljs-string">"&lt;path&gt;"</span>
+</code></pre>
+				<p>where <code>&lt;path&gt;</code> is something like <code>/home/user/Downloads/&lt;file_name&gt;.env</code>. If you just provide a path to a directory, the SDK will look for a file called <code>ibm-credentials.env</code> in that directory.</p>
+				<h4 id="manually">Manually</h4>
+				<p>The SDK also supports setting credentials manually in your code. You will either use IAM credentials or Basic Authentication (username/password) credentials.</p>
+				<h5 id="iam">IAM</h5>
 				<p>Some services use token-based Identity and Access Management (IAM) authentication. IAM authentication uses a service API key to get an access token that is passed with the call. Access tokens are valid for approximately one hour and must be regenerated.</p>
 				<p>You supply either an IAM service <strong>API key</strong> or an <strong>access token</strong>:</p>
 				<ul>
 					<li>Use the API key to have the SDK manage the lifecycle of the access token. The SDK requests an access token, ensures that the access token is valid, and refreshes it if necessary.</li>
 					<li>Use the access token if you want to manage the lifecycle yourself. For details, see <a href="https://console.bluemix.net/docs/services/watson/getting-started-iam.html">Authenticating with IAM tokens</a>. If you want to switch to API key, override your stored IAM credentials with an IAM API key.</li>
 				</ul>
-				<h4 id="supplying-the-iam-api-key">Supplying the IAM API key</h4>
+				<h6 id="supplying-the-iam-api-key">Supplying the IAM API key</h6>
 				<pre><code class="lang-js"><span class="hljs-comment">// in the constructor, letting the SDK manage the IAM token</span>
 <span class="hljs-keyword">const</span> discovery = <span class="hljs-keyword">new</span> DiscoveryV1({
   <span class="hljs-attr">url</span>: <span class="hljs-string">'&lt;service_url&gt;'</span>,
@@ -160,7 +183,7 @@
   <span class="hljs-attr">iam_url</span>: <span class="hljs-string">'&lt;iam_url&gt;'</span>, <span class="hljs-comment">// optional - the default value is https://iam.bluemix.net/identity/token</span>
 });
 </code></pre>
-				<h4 id="supplying-the-access-token">Supplying the access token</h4>
+				<h6 id="supplying-the-access-token">Supplying the access token</h6>
 				<pre><code class="lang-js"><span class="hljs-comment">// in the constructor, assuming control of managing IAM token</span>
 <span class="hljs-keyword">const</span> discovery = <span class="hljs-keyword">new</span> DiscoveryV1({
   <span class="hljs-attr">url</span>: <span class="hljs-string">'&lt;service_url&gt;'</span>,
