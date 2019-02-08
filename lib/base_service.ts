@@ -18,7 +18,6 @@
 // `buffer-from` uses the new api when possible but falls back to the old one otherwise
 import bufferFrom = require('buffer-from');
 import extend = require('extend');
-import request = require('request');
 import semver = require('semver');
 import vcapServices = require('vcap_services');
 import { IamTokenManagerV1 } from '../iam-token-manager/v1';
@@ -50,7 +49,6 @@ export interface UserOptions {
 export interface BaseServiceOptions extends UserOptions {
   headers: HeaderOptions;
   url: string;
-  jar?: request.CookieJar;
   qs: any;
   rejectUnauthorized?: boolean;
 }
@@ -289,7 +287,6 @@ export class BaseService {
       _options = extend(_options, options);
       return _options;
     }
-    _options.jar = request.jar();
     // Get credentials from environment properties or Bluemix,
     // but prefer credentials provided programatically
     _options = extend(

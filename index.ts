@@ -34,7 +34,7 @@ export import NaturalLanguageClassifierV1 = require('./natural-language-classifi
 
 export import NaturalLanguageUnderstandingV1 = require('./natural-language-understanding/v1-generated');
 
-export import PersonalityInsightsV3 = require('./personality-insights/v3');
+export import PersonalityInsightsV3 = require('./personality-insights/v3-generated');
 
 export import SpeechToTextV1 = require('./speech-to-text/v1');
 

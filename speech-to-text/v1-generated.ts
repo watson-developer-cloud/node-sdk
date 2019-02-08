@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
+import { AxiosResponse } from 'axios';
 import * as extend from 'extend';
-import { RequestResponse } from 'request';
 import { BaseService } from '../lib/base_service';
 import { getDefaultHeaders } from '../lib/common';
 import { getMissingParams } from '../lib/helper';
@@ -3121,7 +3121,7 @@ namespace SpeechToTextV1 {
   }
 
   /** The callback for a service request. */
-  export type Callback<T> = (error: any, body?: T, response?: RequestResponse) => void;
+  export type Callback<T> = (error: any, body?: T, response?: AxiosResponse<T>) => void;
 
   /** The body of a service request that returns no response data. */
   export interface Empty { }
