@@ -26,11 +26,11 @@ describe('tone_analyzer_integration', function() {
       { tone_input: mobydick, content_type: 'invalid content type' },
       (err, res) => {
         expect(err).toBeTruthy();
-        expect(err['x-global-transaction-id']).toBeDefined();
-        expect(typeof err['x-global-transaction-id']).toBe('string');
+        expect(err.headers['x-global-transaction-id']).toBeDefined();
+        expect(typeof err.headers['x-global-transaction-id']).toBe('string');
+        done();
       }
     );
-    done();
   });
 
   it('toneChat()', function(done) {

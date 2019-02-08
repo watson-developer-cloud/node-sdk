@@ -560,7 +560,7 @@ class VisualRecognitionV3 extends BaseService {
         url: '/v3/classifiers/{classifier_id}/core_ml_model',
         method: 'GET',
         path,
-        encoding: null,
+        responseType: 'stream',
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, {

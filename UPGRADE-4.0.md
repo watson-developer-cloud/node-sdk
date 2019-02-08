@@ -1,5 +1,7 @@
 # Upgrading to watson-developer-cloud@4.0
 - [Breaking changes]
+   - [Methods no longer return stream]
+   - [Error Handling Compatibility]
    - [Removed Services]
    - [Constructor Compatibility]
    - [Discovery Compatibility]
@@ -12,6 +14,21 @@
 
 
 ## Breaking changes
+### Methods no longer return stream
+Previously, if a callback was not provided, each service method would return a pipeable stream. Now, this will no longer happen. This should not affect many users, as authenticating with IAM already prevented methods from returning streams.
+
+### Error Handling Compatibility
+The logic that formats errors returned from a service has been changed. That means that the Error object returned now has a different structure. If there is logic in your code that parses the error returned from service methods, this will need to change. The new structure is outlined below.
+
+The object returned is of class `Error` and has the following properties:
+- `name`: Short title describing the error. Ex) 'Not Found'
+- `code`: HTTP status code. Ex) 404
+- `message`: More descriptive error message. Ex) Model not found.
+- `body`: Full error object returned by the service, stringified. If the object cannot be stringified due to a circular reference, it will be left as an object 
+- `headers`: Object containing response headers returned from the service, including the transaction id
+
+If a request is made but no response is received (very rare), `error.body` will be an instance of [HTTP.ClientRequest](https://nodejs.org/api/http.html#http_class_http_clientrequest).
+
 ### Removed Services
 The following services have been deprecated for an extended period of time and will no longer be supported in the SDK:
 - Dialog
