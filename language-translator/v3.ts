@@ -78,10 +78,18 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public translate(params: LanguageTranslatorV3.TranslateParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationResult>): NodeJS.ReadableStream | void {
+  public translate(params: LanguageTranslatorV3.TranslateParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationResult>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['text'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.translate(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -130,10 +138,18 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public identify(params: LanguageTranslatorV3.IdentifyParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.IdentifiedLanguages>): NodeJS.ReadableStream | void {
+  public identify(params: LanguageTranslatorV3.IdentifyParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.IdentifiedLanguages>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['text'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.identify(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -172,9 +188,17 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listIdentifiableLanguages(params?: LanguageTranslatorV3.ListIdentifiableLanguagesParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.IdentifiableLanguages>): NodeJS.ReadableStream | void {
+  public listIdentifiableLanguages(params?: LanguageTranslatorV3.ListIdentifiableLanguagesParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.IdentifiableLanguages>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listIdentifiableLanguages(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const defaultHeaders = getDefaultHeaders('language_translator', 'v3', 'listIdentifiableLanguages');
  
@@ -234,10 +258,18 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public createModel(params: LanguageTranslatorV3.CreateModelParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationModel>): NodeJS.ReadableStream | void {
+  public createModel(params: LanguageTranslatorV3.CreateModelParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationModel>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['base_model_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createModel(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -293,10 +325,18 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteModel(params: LanguageTranslatorV3.DeleteModelParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.DeleteModelResult>): NodeJS.ReadableStream | void {
+  public deleteModel(params: LanguageTranslatorV3.DeleteModelParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.DeleteModelResult>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['model_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteModel(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -337,10 +377,18 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getModel(params: LanguageTranslatorV3.GetModelParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationModel>): NodeJS.ReadableStream | void {
+  public getModel(params: LanguageTranslatorV3.GetModelParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationModel>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['model_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getModel(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -385,9 +433,17 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listModels(params?: LanguageTranslatorV3.ListModelsParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationModels>): NodeJS.ReadableStream | void {
+  public listModels(params?: LanguageTranslatorV3.ListModelsParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationModels>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listModels(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
  
     const query = {
       'source': _params.source,
@@ -458,6 +514,7 @@ namespace LanguageTranslatorV3 {
     /** Translation target language code. */
     target?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `identify` operation. */
@@ -465,11 +522,13 @@ namespace LanguageTranslatorV3 {
     /** Input text in UTF-8 format. */
     text: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listIdentifiableLanguages` operation. */
   export interface ListIdentifiableLanguagesParams {
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `createModel` operation. */
@@ -487,6 +546,7 @@ namespace LanguageTranslatorV3 {
     /** The filename for parallel_corpus. */
     parallel_corpus_filename?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteModel` operation. */
@@ -494,6 +554,7 @@ namespace LanguageTranslatorV3 {
     /** Model ID of the model to delete. */
     model_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getModel` operation. */
@@ -501,6 +562,7 @@ namespace LanguageTranslatorV3 {
     /** Model ID of the model to get. */
     model_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listModels` operation. */
@@ -512,6 +574,7 @@ namespace LanguageTranslatorV3 {
     /** If the default parameter isn't specified, the service will return all models (default and non-default) for each language pair. To return only default models, set this to `true`. To return only non-default models, set this to `false`. There is exactly one default model per language pair, the IBM provided base model. */
     default_models?: boolean;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /*************************

@@ -12,6 +12,7 @@ const checkMediaHeaders = utils.checkMediaHeaders;
 const checkForEmptyObject = utils.checkForEmptyObject;
 const checkRequiredParamsHandling = utils.checkRequiredParamsHandling;
 const getOptions = utils.getOptions;
+const expectToBePromise = utils.expectToBePromise;
 
 const service = {
   username: 'batman',
@@ -23,6 +24,7 @@ const service = {
 const conversation = new AssistantV2(service);
 const createRequestMock = jest.spyOn(conversation, 'createRequest');
 const missingParamsMock = jest.spyOn(helper, 'getMissingParams');
+const noop = () => {};
 
 afterEach(() => {
   createRequestMock.mockReset();
@@ -42,7 +44,7 @@ describe('createSession', () => {
       };
 
       // invoke method
-      conversation.createSession(params);
+      conversation.createSession(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -55,6 +57,21 @@ describe('createSession', () => {
       const expectedContentType = 'application/json';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['assistant_id']).toEqual(assistant_id);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const assistant_id = 'fake_assistant_id';
+      const params = {
+        assistant_id,
+      };
+
+      // invoke method
+      const createSessionPromise = conversation.createSession(params);
+      expectToBePromise(createSessionPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
 
     test('should prioritize user-given headers', () => {
@@ -70,7 +87,7 @@ describe('createSession', () => {
         },
       };
 
-      conversation.createSession(params);
+      conversation.createSession(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
@@ -95,6 +112,19 @@ describe('createSession', () => {
         done();
       });
     });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['assistant_id'];
+
+      const createSessionPromise = conversation.createSession();
+      expectToBePromise(createSessionPromise);
+
+      createSessionPromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
   });
 });
 describe('deleteSession', () => {
@@ -112,7 +142,7 @@ describe('deleteSession', () => {
       };
 
       // invoke method
-      conversation.deleteSession(params);
+      conversation.deleteSession(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -143,8 +173,23 @@ describe('deleteSession', () => {
         },
       };
 
-      conversation.deleteSession(params);
+      conversation.deleteSession(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const assistant_id = 'fake_assistant_id';
+      const params = {
+        assistant_id,
+      };
+
+      // invoke method
+      const deleteSessionPromise = conversation.createSession(params);
+      expectToBePromise(deleteSessionPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
   describe('negative tests', () => {
@@ -164,6 +209,19 @@ describe('deleteSession', () => {
       const requiredParams = ['assistant_id', 'session_id'];
 
       conversation.deleteSession({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['assistant_id'];
+
+      const deleteSessionPromise = conversation.createSession();
+      expectToBePromise(deleteSessionPromise);
+
+      deleteSessionPromise.catch(err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
@@ -189,7 +247,7 @@ describe('message', () => {
       };
 
       // invoke method
-      conversation.message(params);
+      conversation.message(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -227,8 +285,23 @@ describe('message', () => {
         },
       };
 
-      conversation.message(params);
+      conversation.message(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const assistant_id = 'fake_assistant_id';
+      const params = {
+        assistant_id,
+      };
+
+      // invoke method
+      const messagePromise = conversation.createSession(params);
+      expectToBePromise(messagePromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
   describe('negative tests', () => {
@@ -248,6 +321,19 @@ describe('message', () => {
       const requiredParams = ['assistant_id', 'session_id'];
 
       conversation.message({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['assistant_id'];
+
+      const messagePromise = conversation.createSession();
+      expectToBePromise(messagePromise);
+
+      messagePromise.catch(err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });

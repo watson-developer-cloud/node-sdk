@@ -13,6 +13,7 @@ const checkDefaultSuccessArgs = utils.checkDefaultSuccessArgs;
 const checkForEmptyObject = utils.checkForEmptyObject;
 const checkRequiredParamsHandling = utils.checkRequiredParamsHandling;
 const getOptions = utils.getOptions;
+const expectToBePromise = utils.expectToBePromise;
 
 const service = {
   username: 'batman',
@@ -46,7 +47,7 @@ describe('classify', () => {
       };
 
       // invoke method
-      natural_language_classifier.classify(params);
+      natural_language_classifier.classify(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -78,8 +79,25 @@ describe('classify', () => {
         },
       };
 
-      natural_language_classifier.classify(params);
+      natural_language_classifier.classify(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const classifier_id = 'fake_classifier_id';
+      const text = 'fake_text';
+      const params = {
+        classifier_id,
+        text,
+      };
+
+      // invoke method
+      const classifyPromise = natural_language_classifier.classify(params);
+      expectToBePromise(classifyPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
   describe('negative tests', () => {
@@ -103,6 +121,19 @@ describe('classify', () => {
         done();
       });
     });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['classifier_id', 'text'];
+
+      const classifyPromise = natural_language_classifier.classify();
+      expectToBePromise(classifyPromise);
+
+      classifyPromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
   });
 });
 describe('classifyCollection', () => {
@@ -120,7 +151,7 @@ describe('classifyCollection', () => {
       };
 
       // invoke method
-      natural_language_classifier.classifyCollection(params);
+      natural_language_classifier.classifyCollection(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -152,8 +183,25 @@ describe('classifyCollection', () => {
         },
       };
 
-      natural_language_classifier.classifyCollection(params);
+      natural_language_classifier.classifyCollection(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const classifier_id = 'fake_classifier_id';
+      const collection = 'fake_collection';
+      const params = {
+        classifier_id,
+        collection,
+      };
+
+      // invoke method
+      const classifyCollectionPromise = natural_language_classifier.classifyCollection(params);
+      expectToBePromise(classifyCollectionPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
   describe('negative tests', () => {
@@ -173,6 +221,19 @@ describe('classifyCollection', () => {
       const requiredParams = ['classifier_id', 'collection'];
 
       natural_language_classifier.classifyCollection({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['classifier_id', 'collection'];
+
+      const classifyCollectionPromise = natural_language_classifier.classifyCollection();
+      expectToBePromise(classifyCollectionPromise);
+
+      classifyCollectionPromise.catch(err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
@@ -198,7 +259,7 @@ describe('createClassifier', () => {
       };
 
       // invoke method
-      natural_language_classifier.createClassifier(params);
+      natural_language_classifier.createClassifier(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -233,8 +294,25 @@ describe('createClassifier', () => {
         },
       };
 
-      natural_language_classifier.createClassifier(params);
+      natural_language_classifier.createClassifier(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const metadata = 'fake_metadata';
+      const training_data = 'fake_training_data';
+      const params = {
+        metadata,
+        training_data,
+      };
+
+      // invoke method
+      const createClassifierPromise = natural_language_classifier.createClassifier(params);
+      expectToBePromise(createClassifierPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
   describe('negative tests', () => {
@@ -258,6 +336,19 @@ describe('createClassifier', () => {
         done();
       });
     });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['metadata', 'training_data'];
+
+      const createClassifierPromise = natural_language_classifier.createClassifier();
+      expectToBePromise(createClassifierPromise);
+
+      createClassifierPromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
   });
 });
 describe('deleteClassifier', () => {
@@ -273,7 +364,7 @@ describe('deleteClassifier', () => {
       };
 
       // invoke method
-      natural_language_classifier.deleteClassifier(params);
+      natural_language_classifier.deleteClassifier(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -301,8 +392,23 @@ describe('deleteClassifier', () => {
         },
       };
 
-      natural_language_classifier.deleteClassifier(params);
+      natural_language_classifier.deleteClassifier(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const classifier_id = 'fake_classifier_id';
+      const params = {
+        classifier_id,
+      };
+
+      // invoke method
+      const deleteClassifierPromise = natural_language_classifier.deleteClassifier(params);
+      expectToBePromise(deleteClassifierPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
   describe('negative tests', () => {
@@ -326,6 +432,19 @@ describe('deleteClassifier', () => {
         done();
       });
     });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['classifier_id'];
+
+      const deleteClassifierPromise = natural_language_classifier.deleteClassifier();
+      expectToBePromise(deleteClassifierPromise);
+
+      deleteClassifierPromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
   });
 });
 describe('getClassifier', () => {
@@ -341,7 +460,7 @@ describe('getClassifier', () => {
       };
 
       // invoke method
-      natural_language_classifier.getClassifier(params);
+      natural_language_classifier.getClassifier(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -369,8 +488,23 @@ describe('getClassifier', () => {
         },
       };
 
-      natural_language_classifier.getClassifier(params);
+      natural_language_classifier.getClassifier(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const classifier_id = 'fake_classifier_id';
+      const params = {
+        classifier_id,
+      };
+
+      // invoke method
+      const getClassifierPromise = natural_language_classifier.getClassifier(params);
+      expectToBePromise(getClassifierPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
   describe('negative tests', () => {
@@ -394,6 +528,19 @@ describe('getClassifier', () => {
         done();
       });
     });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['classifier_id'];
+
+      const getClassifierPromise = natural_language_classifier.getClassifier();
+      expectToBePromise(getClassifierPromise);
+
+      getClassifierPromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
   });
 });
 describe('listClassifiers', () => {
@@ -406,7 +553,7 @@ describe('listClassifiers', () => {
       const params = {};
 
       // invoke method
-      natural_language_classifier.listClassifiers(params);
+      natural_language_classifier.listClassifiers(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -431,12 +578,24 @@ describe('listClassifiers', () => {
         },
       };
 
-      natural_language_classifier.listClassifiers(params);
+      natural_language_classifier.listClassifiers(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const params = {};
+
+      // invoke method
+      const listClassifiersPromise = natural_language_classifier.listClassifiers(params);
+      expectToBePromise(listClassifiersPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
     test('should not have any problems when no parameters are passed in', () => {
       // invoke the method
-      natural_language_classifier.listClassifiers();
+      natural_language_classifier.listClassifiers({}, noop);
       checkDefaultSuccessArgs(createRequestMock);
     });
 

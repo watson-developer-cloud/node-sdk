@@ -20,6 +20,7 @@ Node.js client library to use the Watson APIs.
     * [IAM](#iam)
     * [Username and password](#username-and-password)
     * [API key](#api-key)
+  * [Callbacks vs Promises](#callbacks-vs-promises)
   * [Sending request headers](#sending-request-headers)
   * [Parsing HTTP response](#parsing-http-response)
   * [Data collection opt-out](#data-collection-opt-out)
@@ -187,6 +188,40 @@ var discovery = new DiscoveryV1({
   });
 ```
 
+### Callbacks vs Promises
+
+All SDK methods are asynchronous, as they are making network requests to Watson services. To handle receiving the data from these requests, the SDK offers support for both Promises and Callback functions. A Promise will be returned by default unless a Callback function is provided.
+
+```js
+const discovery = new watson.DiscoveryV1({
+/* iam_apikey, version, url, etc... */
+});
+
+// using Promises
+discovery.listEnvironments()
+  .then(body => {
+    console.log(JSON.stringify(body, null, 2));
+  })
+  .catch(err => {
+    console.log(err);
+  });
+
+// using Promises provides the ability to use async / await
+async function callDiscovery() { // note that callDiscovery also returns a Promise
+  const body = await discovery.listEnvironments();
+}
+
+// using a Callback function
+discovery.listEnvironments((err, res) => {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log(JSON.stringify(res, null, 2));
+  }
+});
+
+```
+
 ### Sending request headers
 
 Custom headers can be passed with any request. Each method has an optional parameter `headers` which can be used to pass in these custom headers, which can override headers that we use as parameters.
@@ -219,6 +254,8 @@ assistant.message({
 
 To retrieve the HTTP response, all methods can be called with a callback function with three parameters, with the third being the response. Users for example may retrieve the response headers with this usage pattern.
 
+If using Promises, the parameter `return_response` must be added and set to `true`. Then, the result returned will be equivalent to the third argument in the callback function - the entire response.
+
 Here is an example of how to access the response headers for Watson Assistant:
 
 ```js
@@ -232,6 +269,18 @@ assistant.message(params,  function(err, result, response) {
   else
     console.log(response.headers);
 });
+
+// using Promises
+
+params.return_response = true;
+
+assistant.message(params)
+  .then(response => {
+    console.log(response.headers);
+  })
+  .catch(err => {
+    console.log('error:', err);
+  });
 
 ```
 

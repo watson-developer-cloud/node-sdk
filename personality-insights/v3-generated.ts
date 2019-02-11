@@ -130,10 +130,18 @@ class PersonalityInsightsV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public profile(params: PersonalityInsightsV3.ProfileParams, callback?: PersonalityInsightsV3.Callback<PersonalityInsightsV3.Profile>): NodeJS.ReadableStream | void {
+  public profile(params: PersonalityInsightsV3.ProfileParams, callback?: PersonalityInsightsV3.Callback<PersonalityInsightsV3.Profile>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['content'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.profile(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -238,10 +246,18 @@ class PersonalityInsightsV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public profileAsCsv(params: PersonalityInsightsV3.ProfileAsCsvParams, callback?: PersonalityInsightsV3.Callback<NodeJS.ReadableStream|FileObject|Buffer>): NodeJS.ReadableStream | void {
+  public profileAsCsv(params: PersonalityInsightsV3.ProfileAsCsvParams, callback?: PersonalityInsightsV3.Callback<NodeJS.ReadableStream|FileObject|Buffer>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['content'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.profileAsCsv(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -329,6 +345,7 @@ namespace PersonalityInsightsV3 {
     /** Indicates whether consumption preferences are returned with the results. By default, no consumption preferences are returned. */
     consumption_preferences?: boolean;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `profile` operation. */
@@ -380,6 +397,7 @@ namespace PersonalityInsightsV3 {
     /** Indicates whether consumption preferences are returned with the results. By default, no consumption preferences are returned. */
     consumption_preferences?: boolean;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `profileAsCsv` operation. */

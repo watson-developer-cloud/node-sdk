@@ -77,10 +77,18 @@ class CompareComplyV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public convertToHtml(params: CompareComplyV1.ConvertToHtmlParams, callback?: CompareComplyV1.Callback<CompareComplyV1.HTMLReturn>): NodeJS.ReadableStream | void {
+  public convertToHtml(params: CompareComplyV1.ConvertToHtmlParams, callback?: CompareComplyV1.Callback<CompareComplyV1.HTMLReturn>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['file'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.convertToHtml(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -145,10 +153,18 @@ class CompareComplyV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public classifyElements(params: CompareComplyV1.ClassifyElementsParams, callback?: CompareComplyV1.Callback<CompareComplyV1.ClassifyReturn>): NodeJS.ReadableStream | void {
+  public classifyElements(params: CompareComplyV1.ClassifyElementsParams, callback?: CompareComplyV1.Callback<CompareComplyV1.ClassifyReturn>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['file'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.classifyElements(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -208,10 +224,18 @@ class CompareComplyV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public extractTables(params: CompareComplyV1.ExtractTablesParams, callback?: CompareComplyV1.Callback<CompareComplyV1.TableReturn>): NodeJS.ReadableStream | void {
+  public extractTables(params: CompareComplyV1.ExtractTablesParams, callback?: CompareComplyV1.Callback<CompareComplyV1.TableReturn>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['file'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.extractTables(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -276,10 +300,18 @@ class CompareComplyV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public compareDocuments(params: CompareComplyV1.CompareDocumentsParams, callback?: CompareComplyV1.Callback<CompareComplyV1.CompareReturn>): NodeJS.ReadableStream | void {
+  public compareDocuments(params: CompareComplyV1.CompareDocumentsParams, callback?: CompareComplyV1.Callback<CompareComplyV1.CompareReturn>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['file_1', 'file_2'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.compareDocuments(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -344,10 +376,18 @@ class CompareComplyV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public addFeedback(params: CompareComplyV1.AddFeedbackParams, callback?: CompareComplyV1.Callback<CompareComplyV1.FeedbackReturn>): NodeJS.ReadableStream | void {
+  public addFeedback(params: CompareComplyV1.AddFeedbackParams, callback?: CompareComplyV1.Callback<CompareComplyV1.FeedbackReturn>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['feedback_data'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.addFeedback(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -393,10 +433,18 @@ class CompareComplyV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteFeedback(params: CompareComplyV1.DeleteFeedbackParams, callback?: CompareComplyV1.Callback<CompareComplyV1.FeedbackDeleted>): NodeJS.ReadableStream | void {
+  public deleteFeedback(params: CompareComplyV1.DeleteFeedbackParams, callback?: CompareComplyV1.Callback<CompareComplyV1.FeedbackDeleted>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['feedback_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteFeedback(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -444,10 +492,18 @@ class CompareComplyV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getFeedback(params: CompareComplyV1.GetFeedbackParams, callback?: CompareComplyV1.Callback<CompareComplyV1.GetFeedback>): NodeJS.ReadableStream | void {
+  public getFeedback(params: CompareComplyV1.GetFeedbackParams, callback?: CompareComplyV1.Callback<CompareComplyV1.GetFeedback>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['feedback_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getFeedback(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -529,9 +585,17 @@ class CompareComplyV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listFeedback(params?: CompareComplyV1.ListFeedbackParams, callback?: CompareComplyV1.Callback<CompareComplyV1.FeedbackList>): NodeJS.ReadableStream | void {
+  public listFeedback(params?: CompareComplyV1.ListFeedbackParams, callback?: CompareComplyV1.Callback<CompareComplyV1.FeedbackList>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listFeedback(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
  
     const query = {
       'feedback_type': _params.feedback_type,
@@ -610,10 +674,18 @@ class CompareComplyV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public createBatch(params: CompareComplyV1.CreateBatchParams, callback?: CompareComplyV1.Callback<CompareComplyV1.BatchStatus>): NodeJS.ReadableStream | void {
+  public createBatch(params: CompareComplyV1.CreateBatchParams, callback?: CompareComplyV1.Callback<CompareComplyV1.BatchStatus>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['_function', 'input_credentials_file', 'input_bucket_location', 'input_bucket_name', 'output_credentials_file', 'output_bucket_location', 'output_bucket_name'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createBatch(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -673,10 +745,18 @@ class CompareComplyV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getBatch(params: CompareComplyV1.GetBatchParams, callback?: CompareComplyV1.Callback<CompareComplyV1.BatchStatus>): NodeJS.ReadableStream | void {
+  public getBatch(params: CompareComplyV1.GetBatchParams, callback?: CompareComplyV1.Callback<CompareComplyV1.BatchStatus>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['batch_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getBatch(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -716,9 +796,17 @@ class CompareComplyV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listBatches(params?: CompareComplyV1.ListBatchesParams, callback?: CompareComplyV1.Callback<CompareComplyV1.Batches>): NodeJS.ReadableStream | void {
+  public listBatches(params?: CompareComplyV1.ListBatchesParams, callback?: CompareComplyV1.Callback<CompareComplyV1.Batches>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listBatches(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const defaultHeaders = getDefaultHeaders('compare-comply', 'v1', 'listBatches');
  
@@ -755,10 +843,18 @@ class CompareComplyV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public updateBatch(params: CompareComplyV1.UpdateBatchParams, callback?: CompareComplyV1.Callback<CompareComplyV1.BatchStatus>): NodeJS.ReadableStream | void {
+  public updateBatch(params: CompareComplyV1.UpdateBatchParams, callback?: CompareComplyV1.Callback<CompareComplyV1.BatchStatus>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['batch_id', 'action'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.updateBatch(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -839,6 +935,7 @@ namespace CompareComplyV1 {
     /** The filename for file. */
     filename?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `convertToHtml` operation. */
@@ -873,6 +970,7 @@ namespace CompareComplyV1 {
     /** The filename for file. */
     filename?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `classifyElements` operation. */
@@ -906,6 +1004,7 @@ namespace CompareComplyV1 {
     /** The filename for file. */
     filename?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `extractTables` operation. */
@@ -950,6 +1049,7 @@ namespace CompareComplyV1 {
     /** The filename for file_2. */
     file_2_filename?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `compareDocuments` operation. */
@@ -994,6 +1094,7 @@ namespace CompareComplyV1 {
     /** An optional comment on or description of the feedback. */
     comment?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteFeedback` operation. */
@@ -1003,6 +1104,7 @@ namespace CompareComplyV1 {
     /** The analysis model to be used by the service. For the `/v1/element_classification` and `/v1/comparison` methods, the default is `contracts`. For the `/v1/tables` method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
     model_id?: DeleteFeedbackConstants.ModelId | string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `deleteFeedback` operation. */
@@ -1021,6 +1123,7 @@ namespace CompareComplyV1 {
     /** The analysis model to be used by the service. For the `/v1/element_classification` and `/v1/comparison` methods, the default is `contracts`. For the `/v1/tables` method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
     model_id?: GetFeedbackConstants.ModelId | string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `getFeedback` operation. */
@@ -1067,6 +1170,7 @@ namespace CompareComplyV1 {
     /** An optional boolean value. If specified as `true`, the `pagination` object in the output includes a value called `total` that gives the total count of feedback created. */
     include_total?: boolean;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `createBatch` operation. */
@@ -1092,6 +1196,7 @@ namespace CompareComplyV1 {
     /** The filename for output_credentials_file. */
     output_credentials_filename?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `createBatch` operation. */
@@ -1114,11 +1219,13 @@ namespace CompareComplyV1 {
     /** The ID of the batch-processing request whose information you want to retrieve. */
     batch_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listBatches` operation. */
   export interface ListBatchesParams {
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `updateBatch` operation. */
@@ -1130,6 +1237,7 @@ namespace CompareComplyV1 {
     /** The analysis model to be used by the service. For the `/v1/element_classification` and `/v1/comparison` methods, the default is `contracts`. For the `/v1/tables` method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
     model_id?: UpdateBatchConstants.ModelId | string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `updateBatch` operation. */

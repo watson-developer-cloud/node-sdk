@@ -236,11 +236,13 @@ export function sendRequest(parameters, _callback) {
     paramsSerializer: params => {
       return querystring.stringify(params);
     },
+    // a custom httpsAgent is needed to support ICP
     httpsAgent: new https.Agent({ rejectUnauthorized }),
   };
 
   axios(requestParams)
     .then(res => {
+      // the other sdks use the interface `result` for the body
       _callback(null, res.data, res);
     })
     .catch(error => {

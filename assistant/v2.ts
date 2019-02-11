@@ -77,10 +77,18 @@ class AssistantV2 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public createSession(params: AssistantV2.CreateSessionParams, callback?: AssistantV2.Callback<AssistantV2.SessionResponse>): NodeJS.ReadableStream | void {
+  public createSession(params: AssistantV2.CreateSessionParams, callback?: AssistantV2.Callback<AssistantV2.SessionResponse>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['assistant_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createSession(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -126,10 +134,18 @@ class AssistantV2 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteSession(params: AssistantV2.DeleteSessionParams, callback?: AssistantV2.Callback<AssistantV2.Empty>): NodeJS.ReadableStream | void {
+  public deleteSession(params: AssistantV2.DeleteSessionParams, callback?: AssistantV2.Callback<AssistantV2.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['assistant_id', 'session_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteSession(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -177,16 +193,24 @@ class AssistantV2 extends BaseService {
    *
    * **Note:** Currently, the v2 API does not support creating assistants.
    * @param {string} params.session_id - Unique identifier of the session.
-   * @param {MessageInput} [params.input] - An input object that includes the input text.
+   * @param {MessageInput} [params.input] - The user input.
    * @param {MessageContext} [params.context] - State information for the conversation.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public message(params: AssistantV2.MessageParams, callback?: AssistantV2.Callback<AssistantV2.MessageResponse>): NodeJS.ReadableStream | void {
+  public message(params: AssistantV2.MessageParams, callback?: AssistantV2.Callback<AssistantV2.MessageResponse>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['assistant_id', 'session_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.message(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -263,6 +287,7 @@ namespace AssistantV2 {
     /** Unique identifier of the assistant. You can find the assistant ID of an assistant on the **Assistants** tab of the Watson Assistant tool. For information about creating assistants, see the [documentation](https://console.bluemix.net/docs/services/assistant/create-assistant.html#creating-assistants). **Note:** Currently, the v2 API does not support creating assistants. */
     assistant_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteSession` operation. */
@@ -272,6 +297,7 @@ namespace AssistantV2 {
     /** Unique identifier of the session. */
     session_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `message` operation. */
@@ -280,11 +306,12 @@ namespace AssistantV2 {
     assistant_id: string;
     /** Unique identifier of the session. */
     session_id: string;
-    /** An input object that includes the input text. */
+    /** The user input. */
     input?: MessageInput;
     /** State information for the conversation. */
     context?: MessageContext;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /*************************

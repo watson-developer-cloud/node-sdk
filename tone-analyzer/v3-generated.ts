@@ -108,10 +108,18 @@ class ToneAnalyzerV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public tone(params: ToneAnalyzerV3.ToneParams, callback?: ToneAnalyzerV3.Callback<ToneAnalyzerV3.ToneAnalysis>): NodeJS.ReadableStream | void {
+  public tone(params: ToneAnalyzerV3.ToneParams, callback?: ToneAnalyzerV3.Callback<ToneAnalyzerV3.ToneAnalysis>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['tone_input'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.tone(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -179,10 +187,18 @@ class ToneAnalyzerV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public toneChat(params: ToneAnalyzerV3.ToneChatParams, callback?: ToneAnalyzerV3.Callback<ToneAnalyzerV3.UtteranceAnalyses>): NodeJS.ReadableStream | void {
+  public toneChat(params: ToneAnalyzerV3.ToneChatParams, callback?: ToneAnalyzerV3.Callback<ToneAnalyzerV3.UtteranceAnalyses>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['utterances'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.toneChat(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -264,6 +280,7 @@ namespace ToneAnalyzerV3 {
     /** The desired language of the response. For two-character arguments, regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. You can use different languages for **Content-Language** and **Accept-Language**. */
     accept_language?: ToneConstants.AcceptLanguage | string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `tone` operation. */
@@ -310,6 +327,7 @@ namespace ToneAnalyzerV3 {
     /** The desired language of the response. For two-character arguments, regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. You can use different languages for **Content-Language** and **Accept-Language**. */
     accept_language?: ToneChatConstants.AcceptLanguage | string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `toneChat` operation. */

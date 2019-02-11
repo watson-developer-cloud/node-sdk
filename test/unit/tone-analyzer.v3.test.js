@@ -13,6 +13,7 @@ const checkUserHeader = utils.checkUserHeader;
 const checkForEmptyObject = utils.checkForEmptyObject;
 const checkRequiredParamsHandling = utils.checkRequiredParamsHandling;
 const getOptions = utils.getOptions;
+const expectToBePromise = utils.expectToBePromise;
 
 const service = {
   username: 'batman',
@@ -24,6 +25,7 @@ const service = {
 const tone_analyzer = new ToneAnalyzerV3(service);
 const createRequestMock = jest.spyOn(tone_analyzer, 'createRequest');
 const missingParamsMock = jest.spyOn(helper, 'getMissingParams');
+const noop = () => {};
 
 afterEach(() => {
   createRequestMock.mockReset();
@@ -53,7 +55,7 @@ describe('tone', () => {
       };
 
       // invoke method
-      tone_analyzer.tone(params);
+      tone_analyzer.tone(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -77,20 +79,33 @@ describe('tone', () => {
     test('should prioritize user-given headers', () => {
       // parameters
       const tone_input = 'fake_tone_input';
-      const content_type = 'fake_content_type';
       const accept = 'fake/header';
       const contentType = 'fake/header';
       const params = {
         tone_input,
-        content_type,
         headers: {
           Accept: accept,
           'Content-Type': contentType,
         },
       };
 
-      tone_analyzer.tone(params);
+      tone_analyzer.tone(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const tone_input = 'fake_tone_input';
+      const params = {
+        tone_input,
+      };
+
+      // invoke method
+      const tonePromise = tone_analyzer.tone(params);
+      expectToBePromise(tonePromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
   describe('negative tests', () => {
@@ -114,6 +129,19 @@ describe('tone', () => {
         done();
       });
     });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['tone_input'];
+
+      const tonePromise = tone_analyzer.tone();
+      expectToBePromise(tonePromise);
+
+      tonePromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
   });
 });
 describe('toneChat', () => {
@@ -133,7 +161,7 @@ describe('toneChat', () => {
       };
 
       // invoke method
-      tone_analyzer.toneChat(params);
+      tone_analyzer.toneChat(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -164,8 +192,23 @@ describe('toneChat', () => {
         },
       };
 
-      tone_analyzer.toneChat(params);
+      tone_analyzer.toneChat(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const utterances = 'fake_utterances';
+      const params = {
+        utterances,
+      };
+
+      // invoke method
+      const toneChatPromise = tone_analyzer.toneChat(params);
+      expectToBePromise(toneChatPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
   describe('negative tests', () => {
@@ -185,6 +228,19 @@ describe('toneChat', () => {
       const requiredParams = ['utterances'];
 
       tone_analyzer.toneChat({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['utterances'];
+
+      const toneChatPromise = tone_analyzer.toneChat();
+      expectToBePromise(toneChatPromise);
+
+      toneChatPromise.catch(err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });

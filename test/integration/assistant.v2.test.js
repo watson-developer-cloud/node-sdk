@@ -42,7 +42,7 @@ describe('assistant v2 integration', function() {
     });
   });
 
-  it('should message - non-generic', function(done) {
+  it('should message - non-generic (Promise)', function(done) {
     const input = {
       text: 'please tell me a joke',
     };
@@ -51,16 +51,21 @@ describe('assistant v2 integration', function() {
       session_id,
       input,
     };
-    assistant.message(params, function(err, res) {
-      expect(err).toBeNull();
-      expect(res.output).toBeDefined();
-      expect(Array.isArray(res.output.generic)).toBe(true);
-      expect(res.output.generic[0].response_type).toBe('text');
-      expect(res.output.generic[0].text).toBeDefined();
-      expect(Array.isArray(res.output.intents)).toBe(true);
-      expect(Array.isArray(res.output.entities)).toBe(true);
-      done();
-    });
+
+    assistant
+      .message(params)
+      .then(res => {
+        expect(res.output).toBeDefined();
+        expect(Array.isArray(res.output.generic)).toBe(true);
+        expect(res.output.generic[0].response_type).toBe('text');
+        expect(res.output.generic[0].text).toBeDefined();
+        expect(Array.isArray(res.output.intents)).toBe(true);
+        expect(Array.isArray(res.output.entities)).toBe(true);
+        done();
+      })
+      .catch(err => {
+        throw new Error(err);
+      });
   });
 
   it('should deleteSession', function(done) {

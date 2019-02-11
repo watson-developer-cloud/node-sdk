@@ -523,19 +523,21 @@ describe('assistant_integration', function() {
   });
 
   describe('getCounterexample()', function() {
-    it('should return a counterexample', function(done) {
+    it('should return a counterexample - using promise', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
         text: counterexampleText,
       };
 
-      assistant.getCounterexample(params, function(err, result) {
-        if (err) {
+      assistant
+        .getCounterexample(params)
+        .then(result => {
+          expect(result.text).toBe(counterexampleText);
+          done();
+        })
+        .catch(err => {
           return done(err);
-        }
-        expect(result.text).toBe(counterexampleText);
-        done();
-      });
+        });
     });
   });
 

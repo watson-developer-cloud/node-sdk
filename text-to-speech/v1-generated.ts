@@ -74,10 +74,18 @@ class TextToSpeechV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getVoice(params: TextToSpeechV1.GetVoiceParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Voice>): NodeJS.ReadableStream | void {
+  public getVoice(params: TextToSpeechV1.GetVoiceParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Voice>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['voice'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getVoice(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -124,9 +132,17 @@ class TextToSpeechV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listVoices(params?: TextToSpeechV1.ListVoicesParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Voices>): NodeJS.ReadableStream | void {
+  public listVoices(params?: TextToSpeechV1.ListVoicesParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Voices>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listVoices(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const defaultHeaders = getDefaultHeaders('text_to_speech', 'v1', 'listVoices');
  
@@ -241,10 +257,18 @@ class TextToSpeechV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public synthesize(params: TextToSpeechV1.SynthesizeParams, callback?: TextToSpeechV1.Callback<NodeJS.ReadableStream|FileObject|Buffer>): NodeJS.ReadableStream | void {
+  public synthesize(params: TextToSpeechV1.SynthesizeParams, callback?: TextToSpeechV1.Callback<NodeJS.ReadableStream|FileObject|Buffer>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['text'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.synthesize(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -313,10 +337,18 @@ class TextToSpeechV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getPronunciation(params: TextToSpeechV1.GetPronunciationParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Pronunciation>): NodeJS.ReadableStream | void {
+  public getPronunciation(params: TextToSpeechV1.GetPronunciationParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Pronunciation>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['text'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getPronunciation(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -374,10 +406,18 @@ class TextToSpeechV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public createVoiceModel(params: TextToSpeechV1.CreateVoiceModelParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.VoiceModel>): NodeJS.ReadableStream | void {
+  public createVoiceModel(params: TextToSpeechV1.CreateVoiceModelParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.VoiceModel>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['name'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createVoiceModel(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -428,10 +468,18 @@ class TextToSpeechV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteVoiceModel(params: TextToSpeechV1.DeleteVoiceModelParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): NodeJS.ReadableStream | void {
+  public deleteVoiceModel(params: TextToSpeechV1.DeleteVoiceModelParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['customization_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteVoiceModel(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -478,10 +526,18 @@ class TextToSpeechV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getVoiceModel(params: TextToSpeechV1.GetVoiceModelParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.VoiceModel>): NodeJS.ReadableStream | void {
+  public getVoiceModel(params: TextToSpeechV1.GetVoiceModelParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.VoiceModel>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['customization_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getVoiceModel(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -531,9 +587,17 @@ class TextToSpeechV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listVoiceModels(params?: TextToSpeechV1.ListVoiceModelsParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.VoiceModels>): NodeJS.ReadableStream | void {
+  public listVoiceModels(params?: TextToSpeechV1.ListVoiceModelsParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.VoiceModels>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listVoiceModels(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
  
     const query = {
       'language': _params.language
@@ -595,10 +659,18 @@ class TextToSpeechV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public updateVoiceModel(params: TextToSpeechV1.UpdateVoiceModelParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): NodeJS.ReadableStream | void {
+  public updateVoiceModel(params: TextToSpeechV1.UpdateVoiceModelParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['customization_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.updateVoiceModel(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -683,10 +755,18 @@ class TextToSpeechV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public addWord(params: TextToSpeechV1.AddWordParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): NodeJS.ReadableStream | void {
+  public addWord(params: TextToSpeechV1.AddWordParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['customization_id', 'word', 'translation'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.addWord(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -763,10 +843,18 @@ class TextToSpeechV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public addWords(params: TextToSpeechV1.AddWordsParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): NodeJS.ReadableStream | void {
+  public addWords(params: TextToSpeechV1.AddWordsParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['customization_id', 'words'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.addWords(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -821,10 +909,18 @@ class TextToSpeechV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteWord(params: TextToSpeechV1.DeleteWordParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): NodeJS.ReadableStream | void {
+  public deleteWord(params: TextToSpeechV1.DeleteWordParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['customization_id', 'word'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteWord(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -873,10 +969,18 @@ class TextToSpeechV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getWord(params: TextToSpeechV1.GetWordParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Translation>): NodeJS.ReadableStream | void {
+  public getWord(params: TextToSpeechV1.GetWordParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Translation>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['customization_id', 'word'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getWord(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -925,10 +1029,18 @@ class TextToSpeechV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listWords(params: TextToSpeechV1.ListWordsParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Words>): NodeJS.ReadableStream | void {
+  public listWords(params: TextToSpeechV1.ListWordsParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Words>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['customization_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listWords(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -980,10 +1092,18 @@ class TextToSpeechV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteUserData(params: TextToSpeechV1.DeleteUserDataParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): NodeJS.ReadableStream | void {
+  public deleteUserData(params: TextToSpeechV1.DeleteUserDataParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['customer_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteUserData(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1051,6 +1171,7 @@ namespace TextToSpeechV1 {
     /** The customization ID (GUID) of a custom voice model for which information is to be returned. You must make the request with service credentials created for the instance of the service that owns the custom model. Omit the parameter to see information about the specified voice with no customization. */
     customization_id?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `getVoice` operation. */
@@ -1077,6 +1198,7 @@ namespace TextToSpeechV1 {
   /** Parameters for the `listVoices` operation. */
   export interface ListVoicesParams {
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `synthesize` operation. */
@@ -1090,6 +1212,7 @@ namespace TextToSpeechV1 {
     /** The customization ID (GUID) of a custom voice model to use for the synthesis. If a custom voice model is specified, it is guaranteed to work only if it matches the language of the indicated voice. You must make the request with service credentials created for the instance of the service that owns the custom model. Omit the parameter to use the specified voice with no customization. */
     customization_id?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `synthesize` operation. */
@@ -1140,6 +1263,7 @@ namespace TextToSpeechV1 {
     /** The customization ID (GUID) of a custom voice model for which the pronunciation is to be returned. The language of a specified custom model must match the language of the specified voice. If the word is not defined in the specified custom model, the service returns the default translation for the custom model's language. You must make the request with service credentials created for the instance of the service that owns the custom model. Omit the parameter to see the translation for the specified voice with no customization. */
     customization_id?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `getPronunciation` operation. */
@@ -1177,6 +1301,7 @@ namespace TextToSpeechV1 {
     /** A description of the new custom voice model. Specifying a description is recommended. */
     description?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `createVoiceModel` operation. */
@@ -1201,6 +1326,7 @@ namespace TextToSpeechV1 {
     /** The customization ID (GUID) of the custom voice model. You must make the request with service credentials created for the instance of the service that owns the custom model. */
     customization_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getVoiceModel` operation. */
@@ -1208,6 +1334,7 @@ namespace TextToSpeechV1 {
     /** The customization ID (GUID) of the custom voice model. You must make the request with service credentials created for the instance of the service that owns the custom model. */
     customization_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listVoiceModels` operation. */
@@ -1215,6 +1342,7 @@ namespace TextToSpeechV1 {
     /** The language for which custom voice models that are owned by the requesting service credentials are to be returned. Omit the parameter to see all custom voice models that are owned by the requester. */
     language?: ListVoiceModelsConstants.Language | string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `listVoiceModels` operation. */
@@ -1245,6 +1373,7 @@ namespace TextToSpeechV1 {
     /** An array of `Word` objects that provides the words and their translations that are to be added or updated for the custom voice model. Pass an empty array to make no additions or updates. */
     words?: Word[];
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `addWord` operation. */
@@ -1258,6 +1387,7 @@ namespace TextToSpeechV1 {
     /** **Japanese only.** The part of speech for the word. The service uses the value to produce the correct intonation for the word. You can create only a single entry, with or without a single part of speech, for any word; you cannot create multiple entries with different parts of speech for the same word. For more information, see [Working with Japanese entries](https://cloud.ibm.com/docs/services/text-to-speech/custom-rules.html#jaNotes). */
     part_of_speech?: AddWordConstants.PartOfSpeech | string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `addWord` operation. */
@@ -1291,6 +1421,7 @@ namespace TextToSpeechV1 {
     /** The **Add custom words** method accepts an array of `Word` objects. Each object provides a word that is to be added or updated for the custom voice model and the word's translation. The **List custom words** method returns an array of `Word` objects. Each object shows a word and its translation from the custom voice model. The words are listed in alphabetical order, with uppercase letters listed before lowercase letters. The array is empty if the custom model contains no words. */
     words: Word[];
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteWord` operation. */
@@ -1300,6 +1431,7 @@ namespace TextToSpeechV1 {
     /** The word that is to be deleted from the custom voice model. */
     word: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getWord` operation. */
@@ -1309,6 +1441,7 @@ namespace TextToSpeechV1 {
     /** The word that is to be queried from the custom voice model. */
     word: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listWords` operation. */
@@ -1316,6 +1449,7 @@ namespace TextToSpeechV1 {
     /** The customization ID (GUID) of the custom voice model. You must make the request with service credentials created for the instance of the service that owns the custom model. */
     customization_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteUserData` operation. */
@@ -1323,6 +1457,7 @@ namespace TextToSpeechV1 {
     /** The customer ID for which all data is to be deleted. */
     customer_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /*************************

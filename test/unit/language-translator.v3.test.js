@@ -13,6 +13,7 @@ const checkDefaultSuccessArgs = utils.checkDefaultSuccessArgs;
 const checkForEmptyObject = utils.checkForEmptyObject;
 const checkRequiredParamsHandling = utils.checkRequiredParamsHandling;
 const getOptions = utils.getOptions;
+const expectToBePromise = utils.expectToBePromise;
 
 const service = {
   username: 'batman',
@@ -50,7 +51,7 @@ describe('translate', () => {
       };
 
       // invoke method
-      language_translator.translate(params);
+      language_translator.translate(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -82,8 +83,23 @@ describe('translate', () => {
         },
       };
 
-      language_translator.translate(params);
+      language_translator.translate(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const text = 'fake_text';
+      const params = {
+        text,
+      };
+
+      // invoke method
+      const translatePromise = language_translator.translate(params);
+      expectToBePromise(translatePromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
   describe('negative tests', () => {
@@ -107,6 +123,19 @@ describe('translate', () => {
         done();
       });
     });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['text'];
+
+      const translatePromise = language_translator.translate();
+      expectToBePromise(translatePromise);
+
+      translatePromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
   });
 });
 describe('identify', () => {
@@ -122,7 +151,7 @@ describe('identify', () => {
       };
 
       // invoke method
-      language_translator.identify(params);
+      language_translator.identify(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -151,8 +180,23 @@ describe('identify', () => {
         },
       };
 
-      language_translator.identify(params);
+      language_translator.identify(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const text = 'fake_text';
+      const params = {
+        text,
+      };
+
+      // invoke method
+      const identifyPromise = language_translator.identify(params);
+      expectToBePromise(identifyPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
   describe('negative tests', () => {
@@ -176,6 +220,19 @@ describe('identify', () => {
         done();
       });
     });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['text'];
+
+      const identifyPromise = language_translator.identify();
+      expectToBePromise(identifyPromise);
+
+      identifyPromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
   });
 });
 describe('listIdentifiableLanguages', () => {
@@ -188,7 +245,7 @@ describe('listIdentifiableLanguages', () => {
       const params = {};
 
       // invoke method
-      language_translator.listIdentifiableLanguages(params);
+      language_translator.listIdentifiableLanguages(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -213,12 +270,26 @@ describe('listIdentifiableLanguages', () => {
         },
       };
 
-      language_translator.listIdentifiableLanguages(params);
+      language_translator.listIdentifiableLanguages(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const params = {};
+
+      // invoke method
+      const listIdentifiableLanguagesPromise = language_translator.listIdentifiableLanguages(
+        params
+      );
+      expectToBePromise(listIdentifiableLanguagesPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
     test('should not have any problems when no parameters are passed in', () => {
       // invoke the method
-      language_translator.listIdentifiableLanguages();
+      language_translator.listIdentifiableLanguages({}, noop);
       checkDefaultSuccessArgs(createRequestMock);
     });
 
@@ -252,7 +323,7 @@ describe('createModel', () => {
       };
 
       // invoke method
-      language_translator.createModel(params);
+      language_translator.createModel(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -287,8 +358,23 @@ describe('createModel', () => {
         },
       };
 
-      language_translator.createModel(params);
+      language_translator.createModel(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const base_model_id = 'fake_base_model_id';
+      const params = {
+        base_model_id,
+      };
+
+      // invoke method
+      const createModelPromise = language_translator.createModel(params);
+      expectToBePromise(createModelPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
   describe('negative tests', () => {
@@ -312,6 +398,19 @@ describe('createModel', () => {
         done();
       });
     });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['base_model_id'];
+
+      const createModelPromise = language_translator.createModel();
+      expectToBePromise(createModelPromise);
+
+      createModelPromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
   });
 });
 describe('deleteModel', () => {
@@ -327,7 +426,7 @@ describe('deleteModel', () => {
       };
 
       // invoke method
-      language_translator.deleteModel(params);
+      language_translator.deleteModel(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -355,8 +454,23 @@ describe('deleteModel', () => {
         },
       };
 
-      language_translator.deleteModel(params);
+      language_translator.deleteModel(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const model_id = 'fake_model_id';
+      const params = {
+        model_id,
+      };
+
+      // invoke method
+      const deleteModelPromise = language_translator.deleteModel(params);
+      expectToBePromise(deleteModelPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
   describe('negative tests', () => {
@@ -380,6 +494,19 @@ describe('deleteModel', () => {
         done();
       });
     });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['model_id'];
+
+      const deleteModelPromise = language_translator.deleteModel();
+      expectToBePromise(deleteModelPromise);
+
+      deleteModelPromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
   });
 });
 describe('getModel', () => {
@@ -395,7 +522,7 @@ describe('getModel', () => {
       };
 
       // invoke method
-      language_translator.getModel(params);
+      language_translator.getModel(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -423,8 +550,23 @@ describe('getModel', () => {
         },
       };
 
-      language_translator.getModel(params);
+      language_translator.getModel(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const model_id = 'fake_model_id';
+      const params = {
+        model_id,
+      };
+
+      // invoke method
+      const getModelPromise = language_translator.getModel(params);
+      expectToBePromise(getModelPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
   describe('negative tests', () => {
@@ -448,6 +590,19 @@ describe('getModel', () => {
         done();
       });
     });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['model_id'];
+
+      const getModelPromise = language_translator.getModel();
+      expectToBePromise(getModelPromise);
+
+      getModelPromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
   });
 });
 describe('listModels', () => {
@@ -467,7 +622,7 @@ describe('listModels', () => {
       };
 
       // invoke method
-      language_translator.listModels(params);
+      language_translator.listModels(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -495,12 +650,24 @@ describe('listModels', () => {
         },
       };
 
-      language_translator.listModels(params);
+      language_translator.listModels(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const params = {};
+
+      // invoke method
+      const listModelsPromise = language_translator.listModels(params);
+      expectToBePromise(listModelsPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
     test('should not have any problems when no parameters are passed in', () => {
       // invoke the method
-      language_translator.listModels();
+      language_translator.listModels({}, noop);
       checkDefaultSuccessArgs(createRequestMock);
     });
 

@@ -102,9 +102,17 @@ class VisualRecognitionV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public classify(params?: VisualRecognitionV3.ClassifyParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.ClassifiedImages>): NodeJS.ReadableStream | void {
+  public classify(params?: VisualRecognitionV3.ClassifyParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.ClassifiedImages>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.classify(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const formData = {
       'images_file': {
@@ -179,9 +187,17 @@ class VisualRecognitionV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public detectFaces(params?: VisualRecognitionV3.DetectFacesParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.DetectedFaces>): NodeJS.ReadableStream | void {
+  public detectFaces(params?: VisualRecognitionV3.DetectFacesParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.DetectedFaces>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.detectFaces(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const formData = {
       'images_file': {
@@ -251,10 +267,18 @@ class VisualRecognitionV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public createClassifier(params: VisualRecognitionV3.CreateClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>): NodeJS.ReadableStream | void {
+  public createClassifier(params: VisualRecognitionV3.CreateClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['name'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createClassifier(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const positiveExamplesKeys = Object.keys(_params).filter(key => {
       return key.match(/^.+_positive_examples$/);
@@ -323,10 +347,18 @@ class VisualRecognitionV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteClassifier(params: VisualRecognitionV3.DeleteClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Empty>): NodeJS.ReadableStream | void {
+  public deleteClassifier(params: VisualRecognitionV3.DeleteClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['classifier_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteClassifier(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -367,10 +399,18 @@ class VisualRecognitionV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getClassifier(params: VisualRecognitionV3.GetClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>): NodeJS.ReadableStream | void {
+  public getClassifier(params: VisualRecognitionV3.GetClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['classifier_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getClassifier(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -410,9 +450,17 @@ class VisualRecognitionV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listClassifiers(params?: VisualRecognitionV3.ListClassifiersParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifiers>): NodeJS.ReadableStream | void {
+  public listClassifiers(params?: VisualRecognitionV3.ListClassifiersParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifiers>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listClassifiers(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
  
     const query = {
       'verbose': _params.verbose
@@ -477,10 +525,18 @@ class VisualRecognitionV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public updateClassifier(params: VisualRecognitionV3.UpdateClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>): NodeJS.ReadableStream | void {
+  public updateClassifier(params: VisualRecognitionV3.UpdateClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['classifier_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.updateClassifier(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const positiveExamplesKeys = Object.keys(_params).filter(key => {
       return key.match(/^.+_positive_examples$/);
@@ -557,10 +613,18 @@ class VisualRecognitionV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getCoreMlModel(params: VisualRecognitionV3.GetCoreMlModelParams, callback?: VisualRecognitionV3.Callback<NodeJS.ReadableStream|FileObject|Buffer>): NodeJS.ReadableStream | void {
+  public getCoreMlModel(params: VisualRecognitionV3.GetCoreMlModelParams, callback?: VisualRecognitionV3.Callback<NodeJS.ReadableStream|FileObject|Buffer>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['classifier_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getCoreMlModel(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -611,10 +675,18 @@ class VisualRecognitionV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteUserData(params: VisualRecognitionV3.DeleteUserDataParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Empty>): NodeJS.ReadableStream | void {
+  public deleteUserData(params: VisualRecognitionV3.DeleteUserDataParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['customer_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteUserData(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -697,6 +769,7 @@ namespace VisualRecognitionV3 {
     /** The filename for images_file. */
     images_filename?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `classify` operation. */
@@ -730,6 +803,7 @@ namespace VisualRecognitionV3 {
     /** The filename for images_file. */
     images_filename?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `detectFaces` operation. */
@@ -763,6 +837,7 @@ namespace VisualRecognitionV3 {
     /** The filename for negative_examples. */
     negative_examples_filename?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteClassifier` operation. */
@@ -770,6 +845,7 @@ namespace VisualRecognitionV3 {
     /** The ID of the classifier. */
     classifier_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getClassifier` operation. */
@@ -777,6 +853,7 @@ namespace VisualRecognitionV3 {
     /** The ID of the classifier. */
     classifier_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listClassifiers` operation. */
@@ -784,6 +861,7 @@ namespace VisualRecognitionV3 {
     /** Specify `true` to return details about the classifiers. Omit this parameter to return a brief list of classifiers. */
     verbose?: boolean;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `updateClassifier` operation. */
@@ -799,6 +877,7 @@ namespace VisualRecognitionV3 {
     /** The filename for negative_examples. */
     negative_examples_filename?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getCoreMlModel` operation. */
@@ -806,6 +885,7 @@ namespace VisualRecognitionV3 {
     /** The ID of the classifier. */
     classifier_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteUserData` operation. */
@@ -813,6 +893,7 @@ namespace VisualRecognitionV3 {
     /** The customer ID for which all data is to be deleted. */
     customer_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /*************************

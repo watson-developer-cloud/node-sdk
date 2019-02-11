@@ -21,7 +21,7 @@ import { getDefaultHeaders } from '../lib/common';
 import { getMissingParams } from '../lib/helper';
 
 /**
- * Analyze various features of text content at scale. Provide text, raw HTML, or a public URL and IBM Watson Natural Language Understanding will give you results for the features you request. The service cleans HTML content before analysis by default, so the results can ignore most advertisements and other unwanted content.  You can create [custom models](https://cloud.ibm.com/docs/services/natural-language-understanding/customizing.html) with Watson Knowledge Studio to detect custom entities and relations in Natural Language Understanding.
+ * Analyze various features of text content at scale. Provide text, raw HTML, or a public URL and IBM Watson Natural Language Understanding will give you results for the features you request. The service cleans HTML content before analysis by default, so the results can ignore most advertisements and other unwanted content.  You can create [custom models](/docs/services/natural-language-understanding/customizing.html) with Watson Knowledge Studio to detect custom entities and relations in Natural Language Understanding.
  */
 
 class NaturalLanguageUnderstandingV1 extends BaseService {
@@ -102,10 +102,18 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public analyze(params: NaturalLanguageUnderstandingV1.AnalyzeParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.AnalysisResults>): NodeJS.ReadableStream | void {
+  public analyze(params: NaturalLanguageUnderstandingV1.AnalyzeParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.AnalysisResults>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['features'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.analyze(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -160,10 +168,18 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteModel(params: NaturalLanguageUnderstandingV1.DeleteModelParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.InlineResponse200>): NodeJS.ReadableStream | void {
+  public deleteModel(params: NaturalLanguageUnderstandingV1.DeleteModelParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.InlineResponse200>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['model_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteModel(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -205,9 +221,17 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listModels(params?: NaturalLanguageUnderstandingV1.ListModelsParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.ListModelsResults>): NodeJS.ReadableStream | void {
+  public listModels(params?: NaturalLanguageUnderstandingV1.ListModelsParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.ListModelsResults>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listModels(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const defaultHeaders = getDefaultHeaders('natural-language-understanding', 'v1', 'listModels');
  
@@ -271,9 +295,9 @@ namespace NaturalLanguageUnderstandingV1 {
     html?: string;
     /** The webpage to analyze. One of the `text`, `html`, or `url` parameters is required. */
     url?: string;
-    /** Set this to `false` to disable webpage cleaning. To learn more about webpage cleaning, see the [Analyzing webpages](https://cloud.ibm.com/docs/services/natural-language-understanding/analyzing-webpages.html) documentation. */
+    /** Set this to `false` to disable webpage cleaning. To learn more about webpage cleaning, see the [Analyzing webpages](/docs/services/natural-language-understanding/analyzing-webpages.html) documentation. */
     clean?: boolean;
-    /** An [XPath query](https://cloud.ibm.com/docs/services/natural-language-understanding/analyzing-webpages.html#xpath) to perform on `html` or `url` input. Results of the query will be appended to the cleaned webpage text before it is analyzed. To analyze only the results of the XPath query, set the `clean` parameter to `false`. */
+    /** An [XPath query](/docs/services/natural-language-understanding/analyzing-webpages.html#xpath) to perform on `html` or `url` input. Results of the query will be appended to the cleaned webpage text before it is analyzed. To analyze only the results of the XPath query, set the `clean` parameter to `false`. */
     xpath?: string;
     /** Whether to use raw HTML content if text cleaning fails. */
     fallback_to_raw?: boolean;
@@ -284,6 +308,7 @@ namespace NaturalLanguageUnderstandingV1 {
     /** Sets the maximum number of characters that are processed by the service. */
     limit_text_characters?: number;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteModel` operation. */
@@ -291,11 +316,13 @@ namespace NaturalLanguageUnderstandingV1 {
     /** Model ID of the model to delete. */
     model_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listModels` operation. */
   export interface ListModelsParams {
     headers?: Object;
+    return_response?: boolean;
   }
 
   /*************************
@@ -346,7 +373,7 @@ namespace NaturalLanguageUnderstandingV1 {
 
   /** A categorization of the analyzed text. */
   export interface CategoriesResult {
-    /** The path to the category through the 5-level taxonomy hierarchy. For the complete list of categories, see the [Categories hierarchy](https://cloud.ibm.com/docs/services/natural-language-understanding/categories.html#categories-hierarchy) documentation. */
+    /** The path to the category through the 5-level taxonomy hierarchy. For the complete list of categories, see the [Categories hierarchy](/docs/services/natural-language-understanding/categories.html#categories-hierarchy) documentation. */
     label?: string;
     /** Confidence score for the category classification. Higher values indicate greater confidence. */
     score?: number;
@@ -488,7 +515,7 @@ namespace NaturalLanguageUnderstandingV1 {
     keywords?: KeywordsOptions;
     /** Returns information from the document, including author name, title, RSS/ATOM feeds, prominent page image, and publication date. Supports URL and HTML input types only. */
     metadata?: MetadataOptions;
-    /** Recognizes when two entities are related and identifies the type of relation. For example, an `awardedTo` relation might connect the entities "Nobel Prize" and "Albert Einstein". See [Relation types](https://cloud.ibm.com/docs/services/natural-language-understanding/relations.html). Supported languages: Arabic, English, German, Japanese, Korean, Spanish. Chinese, Dutch, French, Italian, and Portuguese custom models are also supported. */
+    /** Recognizes when two entities are related and identifies the type of relation. For example, an `awardedTo` relation might connect the entities "Nobel Prize" and "Albert Einstein". See [Relation types](/docs/services/natural-language-understanding/relations.html). Supported languages: Arabic, English, German, Japanese, Korean, Spanish. Chinese, Dutch, French, Italian, and Portuguese custom models are also supported. */
     relations?: RelationsOptions;
     /** Parses sentences into subject, action, and object form. Supported languages: English, German, Japanese, Korean, Spanish. */
     semantic_roles?: SemanticRolesOptions;
@@ -592,9 +619,9 @@ namespace NaturalLanguageUnderstandingV1 {
     type?: string;
   }
 
-  /** Recognizes when two entities are related and identifies the type of relation. For example, an `awardedTo` relation might connect the entities "Nobel Prize" and "Albert Einstein". See [Relation types](https://cloud.ibm.com/docs/services/natural-language-understanding/relations.html). Supported languages: Arabic, English, German, Japanese, Korean, Spanish. Chinese, Dutch, French, Italian, and Portuguese custom models are also supported. */
+  /** Recognizes when two entities are related and identifies the type of relation. For example, an `awardedTo` relation might connect the entities "Nobel Prize" and "Albert Einstein". See [Relation types](/docs/services/natural-language-understanding/relations.html). Supported languages: Arabic, English, German, Japanese, Korean, Spanish. Chinese, Dutch, French, Italian, and Portuguese custom models are also supported. */
   export interface RelationsOptions {
-    /** Enter a [custom model](https://cloud.ibm.com/docs/services/natural-language-understanding/customizing.html) ID to override the default model. */
+    /** Enter a [custom model](/docs/services/natural-language-understanding/customizing.html) ID to override the default model. */
     model?: string;
   }
 
