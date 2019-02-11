@@ -92,15 +92,22 @@ describe('text_to_speech_integration', function() {
       );
     });
 
-    it('listVoiceModels()', function(done) {
-      text_to_speech.listVoiceModels({}, function(err, response) {
-        // console.log(JSON.stringify(err || response, null, 2));
-        if (err) {
-          return done(err);
-        }
-        expect(Array.isArray(response.customizations)).toBe(true);
-        done();
-      });
+    it('should return promise with entire response if return_response is true (listVoiceModels)', function(done) {
+      text_to_speech
+        .listVoiceModels({ return_response: true })
+        .then(response => {
+          expect(Array.isArray(response.data.customizations)).toBe(true);
+          expect(response.data).toBeDefined();
+          expect(response.headers).toBeDefined();
+          expect(response.status).toBeDefined();
+          expect(response.statusText).toBeDefined();
+          expect(response.request).toBeDefined();
+          expect(response.config).toBeDefined();
+          done();
+        })
+        .catch(err => {
+          done(err);
+        });
     });
 
     it('listVoiceModels() with language', function(done) {

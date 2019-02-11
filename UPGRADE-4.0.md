@@ -15,7 +15,19 @@
 
 ## Breaking changes
 ### Methods no longer return stream
-Previously, if a callback was not provided, each service method would return a pipeable stream. Now, this will no longer happen. This should not affect many users, as authenticating with IAM already prevented methods from returning streams.
+Previously, if a callback was not provided, each service method would return a pipeable stream. Now, this will no longer happen. A Promise is returned instead. This should not affect many users, as authenticating with IAM already prevented methods from returning streams.
+
+### Response Handling Compatibility
+The entire response is received with the third callback (if using callbacks) or when using Promises with `return_response: true` set as a parameter. This response now has a different structure for consistency with the other Watson SDKs.
+
+The object returned has the following properties:
+- `data`: The body of the response
+- `headers`: The HTTP response headers
+- `status`: The HTTP status code
+- `statusText`: The HTTP status message
+- `request`: The actual request instance sent to the service
+- `config`: The parameters used to build the request
+
 
 ### Error Handling Compatibility
 The logic that formats errors returned from a service has been changed. That means that the Error object returned now has a different structure. If there is logic in your code that parses the error returned from service methods, this will need to change. The new structure is outlined below.
