@@ -80,29 +80,30 @@
 					</em> <a href="#iam">IAM</a>
 					<em> <a href="#username-and-password">Username and password</a>
 					</em> <a href="#api-key">API key</a>
-					<em> <a href="#sending-request-headers">Sending request headers</a>
-					</em> <a href="#parsing-http-response">Parsing HTTP response</a>
-					<em> <a href="#data-collection-opt-out">Data collection opt-out</a>
-					</em> <a href="#documentation">Documentation</a>
-					<em> <a href="#questions">Questions</a>
-					</em> <a href="#ibm-watson-services">IBM Watson services</a>
-					<em> <a href="#authorization">Authorization</a>
-					</em> <a href="#assistant-v2">Assistant v2</a>
-					<em> <a href="#assistant-v1">Assistant v1</a>
-					</em> <a href="#discovery">Discovery</a>
-					<em> <a href="#language-translator">Language Translator</a>
-					</em> <a href="#natural-language-classifier">Natural Language Classifier</a>
-					<em> <a href="#natural-language-understanding">Natural Language Understanding</a>
-					</em> <a href="#personality-insights">Personality Insights</a>
-					<em> <a href="#speech-to-text">Speech to Text</a>
-					</em> <a href="#text-to-speech">Text to Speech</a>
-					<em> <a href="#tone-analyzer">Tone Analyzer</a>
-					</em> <a href="#visual-recognition">Visual Recognition</a>
-					<em> <a href="#composing-services">Composing Services</a>
-					</em> <a href="#debug">Debug</a>
-					<em> <a href="#tests">Tests</a>
-					</em> <a href="#license">License</a>
-					* <a href="#contributing">Contributing</a>
+					<em> <a href="#callbacks-vs-promises">Callbacks vs Promises</a>
+					</em> <a href="#sending-request-headers">Sending request headers</a>
+					<em> <a href="#parsing-http-response">Parsing HTTP response</a>
+					</em> <a href="#data-collection-opt-out">Data collection opt-out</a>
+					<em> <a href="#documentation">Documentation</a>
+					</em> <a href="#questions">Questions</a>
+					<em> <a href="#ibm-watson-services">IBM Watson services</a>
+					</em> <a href="#authorization">Authorization</a>
+					<em> <a href="#assistant-v2">Assistant v2</a>
+					</em> <a href="#assistant-v1">Assistant v1</a>
+					<em> <a href="#discovery">Discovery</a>
+					</em> <a href="#language-translator">Language Translator</a>
+					<em> <a href="#natural-language-classifier">Natural Language Classifier</a>
+					</em> <a href="#natural-language-understanding">Natural Language Understanding</a>
+					<em> <a href="#personality-insights">Personality Insights</a>
+					</em> <a href="#speech-to-text">Speech to Text</a>
+					<em> <a href="#text-to-speech">Text to Speech</a>
+					</em> <a href="#tone-analyzer">Tone Analyzer</a>
+					<em> <a href="#visual-recognition">Visual Recognition</a>
+					</em> <a href="#composing-services">Composing Services</a>
+					<em> <a href="#debug">Debug</a>
+					</em> <a href="#tests">Tests</a>
+					<em> <a href="#license">License</a>
+					</em> <a href="#contributing">Contributing</a>
 				</details>
 				<h2 id="before-you-begin">Before you begin</h2>
 				<ul>
@@ -208,6 +209,36 @@ discovery.setAccessToken(<span class="hljs-string">'&lt;access-token&gt;'</span>
     <span class="hljs-attr">password</span>: <span class="hljs-string">'{password}'</span>
   });
 </code></pre>
+				<h3 id="callbacks-vs-promises">Callbacks vs Promises</h3>
+				<p>All SDK methods are asynchronous, as they are making network requests to Watson services. To handle receiving the data from these requests, the SDK offers support for both Promises and Callback functions. A Promise will be returned by default unless a Callback function is provided.</p>
+				<pre><code class="lang-js"><span class="hljs-keyword">const</span> discovery = <span class="hljs-keyword">new</span> watson.DiscoveryV1({
+<span class="hljs-comment">/* iam_apikey, version, url, etc... */</span>
+});
+
+<span class="hljs-comment">// using Promises</span>
+discovery.listEnvironments()
+  .then(<span class="hljs-function"><span class="hljs-params">body</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">JSON</span>.stringify(body, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>));
+  })
+  .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(err);
+  });
+
+<span class="hljs-comment">// using Promises provides the ability to use async / await</span>
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">callDiscovery</span>(<span class="hljs-params"></span>) </span>{ <span class="hljs-comment">// note that callDiscovery also returns a Promise</span>
+  <span class="hljs-keyword">const</span> body = <span class="hljs-keyword">await</span> discovery.listEnvironments();
+}
+
+<span class="hljs-comment">// using a Callback function</span>
+discovery.listEnvironments(<span class="hljs-function">(<span class="hljs-params">err, res</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) {
+    <span class="hljs-built_in">console</span>.log(err);
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">JSON</span>.stringify(res, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>));
+  }
+});
+
+</code></pre>
 				<h3 id="sending-request-headers">Sending request headers</h3>
 				<p>Custom headers can be passed with any request. Each method has an optional parameter <code>headers</code> which can be used to pass in these custom headers, which can override headers that we use as parameters.</p>
 				<p>For example, this is how you can pass in custom headers to Watson Assistant service. In this example, the <code>&#39;custom&#39;</code> value for <code>&#39;Accept-Language&#39;</code> will override the default header for <code>&#39;Accept-Language&#39;</code>, and the <code>&#39;Custom-Header&#39;</code> while not overriding the default headers, will additionally be sent with the request.</p>
@@ -233,6 +264,7 @@ assistant.message({
 </code></pre>
 				<h3 id="parsing-http-response">Parsing HTTP response</h3>
 				<p>To retrieve the HTTP response, all methods can be called with a callback function with three parameters, with the third being the response. Users for example may retrieve the response headers with this usage pattern.</p>
+				<p>If using Promises, the parameter <code>return_response</code> must be added and set to <code>true</code>. Then, the result returned will be equivalent to the third argument in the callback function - the entire response.</p>
 				<p>Here is an example of how to access the response headers for Watson Assistant:</p>
 				<pre><code class="lang-js"><span class="hljs-keyword">var</span> assistant = <span class="hljs-keyword">new</span> watson.AssistantV1({
 <span class="hljs-comment">/* username, password, version, url, etc... */</span>
@@ -244,6 +276,18 @@ assistant.message(params,  <span class="hljs-function"><span class="hljs-keyword
   <span class="hljs-keyword">else</span>
     <span class="hljs-built_in">console</span>.log(response.headers);
 });
+
+<span class="hljs-comment">// using Promises</span>
+
+params.return_response = <span class="hljs-literal">true</span>;
+
+assistant.message(params)
+  .then(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(response.headers);
+  })
+  .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'error:'</span>, err);
+  });
 
 </code></pre>
 				<h3 id="data-collection-opt-out">Data collection opt-out</h3>
