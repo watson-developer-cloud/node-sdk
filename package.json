@@ -78,7 +78,6 @@
     "@types/file-type": "~5.2.1",
     "@types/is-stream": "~1.1.0",
     "@types/node": "~10.3.5",
-    "@types/request": "~2.47.1",
     "async": "~2.6.1",
     "axios": "^0.18.0",
     "buffer-from": "~1.1.0",
