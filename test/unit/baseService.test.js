@@ -90,6 +90,14 @@ describe('BaseService', function() {
     expect(actual).toEqual(expected);
   });
 
+  it('should allow URL to be changed after service init', function() {
+    const instance = new TestService({ username: 'user', password: 'pass' });
+    const expected = 'https://gateway-wdc.watsonplatform.net/test/api';
+    instance.setServiceUrl(expected);
+    const actual = instance.getCredentials()['url'];
+    expect(actual).toEqual(expected);
+  });
+
   it('should return credentials and url from the environment', function() {
     process.env.TEST_USERNAME = 'env_user';
     process.env.TEST_PASSWORD = 'env_pass';

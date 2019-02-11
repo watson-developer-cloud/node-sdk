@@ -187,6 +187,16 @@ export class BaseService {
   }
 
   /**
+   * Set the URL of the service instance.
+   *
+   * @param {string} url - The url of the service instance
+   * @returns {void}
+   */
+  public setServiceUrl(url: string) {
+    this._options.url = stripTrailingSlash(url);
+  }
+
+  /**
    * Retrieve this service's credentials - useful for passing to the authorization service
    *
    * Only returns a URL when token auth is used.
@@ -265,7 +275,7 @@ export class BaseService {
 
   /**
    * Wrapper around `sendRequest` that determines whether or not IAM tokens
-   * are being used to authenticate the request. If so, the token is 
+   * are being used to authenticate the request. If so, the token is
    * retrieved by the token manager.
    *
    * @param {Object} parameters - service request options passed in by user
