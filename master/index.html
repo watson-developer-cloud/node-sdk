@@ -112,7 +112,7 @@
 				<pre><code class="lang-sh">npm install watson-developer-cloud
 </code></pre>
 				<h2 id="usage">Usage</h2>
-				<p>The <a href="https://github.com/watson-developer-cloud/node-sdk/tree/master/examples">examples</a> folder has basic and advanced examples. The examples within each service assume that you already have <a href="#getting-credentials">service credentials</a>. </p>
+				<p>The <a href="https://github.com/watson-developer-cloud/node-sdk/tree/master/examples">examples</a> folder has basic and advanced examples. The examples within each service assume that you already have <a href="#getting-credentials">service credentials</a>.</p>
 				<p>Credentials are checked for in the following order:</p>
 				<ol>
 					<li><p>Hard-coded or programatic credentials passed to the service constructor</p>
@@ -125,7 +125,7 @@
 					<li><p>IBM-Cloud-supplied credentials (via the <code>VCAP_SERVICES</code> JSON-encoded environment property)</p>
 					</li>
 				</ol>
-				<p>If you run your app in IBM Cloud, the SDK gets credentials from the <a href="https://console.bluemix.net/docs/services/watson/getting-started-variables.html"><code>VCAP_SERVICES</code></a> environment variable. </p>
+				<p>If you run your app in IBM Cloud, the SDK gets credentials from the <a href="https://console.bluemix.net/docs/services/watson/getting-started-variables.html"><code>VCAP_SERVICES</code></a> environment variable.</p>
 				<h3 id="client-side-usage">Client-side usage</h3>
 				<p>See the <code>examples/</code> folder for <a href="http://browserify.org/">Browserify</a> and <a href="http://webpack.github.io/">Webpack</a> client-side SDK examples (with server-side generation of auth tokens.)</p>
 				<p>Note: not all services currently support CORS, and therefore not all services can be used client-side.
@@ -207,6 +207,14 @@ discovery.setAccessToken(<span class="hljs-string">'&lt;access-token&gt;'</span>
     <span class="hljs-attr">username</span>: <span class="hljs-string">'{username}'</span>,
     <span class="hljs-attr">password</span>: <span class="hljs-string">'{password}'</span>
   });
+</code></pre>
+				<h3 id="setting-the-service-url">Setting the service URL</h3>
+				<p>You can set the service URL by calling the setServiceUrl() method.</p>
+				<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> discovery = <span class="hljs-keyword">new</span> DiscoveryV1({
+  <span class="hljs-attr">version</span>: <span class="hljs-string">'&lt;version-date&gt;'</span>
+});
+
+discovery.setServiceUrl(<span class="hljs-string">'https://gateway-wdc.watsonplatform.net/discovery/api'</span>);
 </code></pre>
 				<h3 id="sending-request-headers">Sending request headers</h3>
 				<p>Custom headers can be passed with any request. Each method has an optional parameter <code>headers</code> which can be used to pass in these custom headers, which can override headers that we use as parameters.</p>
