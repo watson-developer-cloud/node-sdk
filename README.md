@@ -780,7 +780,7 @@ $ npm test
 
 Running a specific test:
 ```sh
-$ mocha -g '<test name>'
+$ jest '<path to test>'
 ```
 
 ## Open source @ IBM
