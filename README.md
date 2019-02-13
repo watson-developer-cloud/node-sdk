@@ -58,7 +58,7 @@ npm install watson-developer-cloud
 
 ## Usage
 
-The [examples][examples] folder has basic and advanced examples. The examples within each service assume that you already have [service credentials](#getting-credentials). 
+The [examples][examples] folder has basic and advanced examples. The examples within each service assume that you already have [service credentials](#getting-credentials).
 
 Credentials are checked for in the following order:
 
@@ -70,7 +70,7 @@ Credentials are checked for in the following order:
 
 3. IBM-Cloud-supplied credentials (via the `VCAP_SERVICES` JSON-encoded environment property)
 
-If you run your app in IBM Cloud, the SDK gets credentials from the [`VCAP_SERVICES`][vcap_services] environment variable. 
+If you run your app in IBM Cloud, the SDK gets credentials from the [`VCAP_SERVICES`][vcap_services] environment variable.
 
 ### Client-side usage
 
@@ -219,7 +219,18 @@ discovery.listEnvironments((err, res) => {
     console.log(JSON.stringify(res, null, 2));
   }
 });
+```
 
+### Setting the service URL
+
+You can set the service URL by calling the setServiceUrl() method.
+
+```javascript
+const discovery = new DiscoveryV1({
+  version: '<version-date>'
+});
+
+discovery.setServiceUrl('https://gateway-wdc.watsonplatform.net/discovery/api');
 ```
 
 ### Sending request headers
@@ -239,7 +250,7 @@ assistant.message({
   headers: {
     'Custom-Header': 'custom',
     'Accept-Language': 'custom'
-  
+
   }
 },  function(err, result, response) {
   if (err)
@@ -817,7 +828,7 @@ $ npm test
 
 Running a specific test:
 ```sh
-$ mocha -g '<test name>'
+$ jest '<path to test>'
 ```
 
 ## Open source @ IBM
