@@ -113,7 +113,7 @@
 				<pre><code class="lang-sh">npm install watson-developer-cloud
 </code></pre>
 				<h2 id="usage">Usage</h2>
-				<p>The <a href="https://github.com/watson-developer-cloud/node-sdk/tree/master/examples">examples</a> folder has basic and advanced examples. The examples within each service assume that you already have <a href="#getting-credentials">service credentials</a>. </p>
+				<p>The <a href="https://github.com/watson-developer-cloud/node-sdk/tree/master/examples">examples</a> folder has basic and advanced examples. The examples within each service assume that you already have <a href="#getting-credentials">service credentials</a>.</p>
 				<p>Credentials are checked for in the following order:</p>
 				<ol>
 					<li><p>Hard-coded or programatic credentials passed to the service constructor</p>
@@ -126,7 +126,7 @@
 					<li><p>IBM-Cloud-supplied credentials (via the <code>VCAP_SERVICES</code> JSON-encoded environment property)</p>
 					</li>
 				</ol>
-				<p>If you run your app in IBM Cloud, the SDK gets credentials from the <a href="https://console.bluemix.net/docs/services/watson/getting-started-variables.html"><code>VCAP_SERVICES</code></a> environment variable. </p>
+				<p>If you run your app in IBM Cloud, the SDK gets credentials from the <a href="https://console.bluemix.net/docs/services/watson/getting-started-variables.html"><code>VCAP_SERVICES</code></a> environment variable.</p>
 				<h3 id="client-side-usage">Client-side usage</h3>
 				<p>See the <code>examples/</code> folder for <a href="http://browserify.org/">Browserify</a> and <a href="http://webpack.github.io/">Webpack</a> client-side SDK examples (with server-side generation of auth tokens.)</p>
 				<p>Note: not all services currently support CORS, and therefore not all services can be used client-side.
@@ -237,7 +237,14 @@ discovery.listEnvironments(<span class="hljs-function">(<span class="hljs-params
     <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">JSON</span>.stringify(res, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>));
   }
 });
+</code></pre>
+				<h3 id="setting-the-service-url">Setting the service URL</h3>
+				<p>You can set the service URL by calling the setServiceUrl() method.</p>
+				<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> discovery = <span class="hljs-keyword">new</span> DiscoveryV1({
+  <span class="hljs-attr">version</span>: <span class="hljs-string">'&lt;version-date&gt;'</span>
+});
 
+discovery.setServiceUrl(<span class="hljs-string">'https://gateway-wdc.watsonplatform.net/discovery/api'</span>);
 </code></pre>
 				<h3 id="sending-request-headers">Sending request headers</h3>
 				<p>Custom headers can be passed with any request. Each method has an optional parameter <code>headers</code> which can be used to pass in these custom headers, which can override headers that we use as parameters.</p>
@@ -728,7 +735,7 @@ visualRecognition.classify(params, <span class="hljs-function"><span class="hljs
 				<pre><code class="lang-sh">$ npm <span class="hljs-built_in">test</span>
 </code></pre>
 				<p>Running a specific test:</p>
-				<pre><code class="lang-sh">$ mocha -g <span class="hljs-string">'&lt;test name&gt;'</span>
+				<pre><code class="lang-sh">$ jest <span class="hljs-string">'&lt;path to test&gt;'</span>
 </code></pre>
 				<h2 id="open-source-ibm">Open source @ IBM</h2>
 				<p><a href="http://ibm.github.io/">Find more open source projects on the IBM Github Page.</a></p>
