@@ -14,6 +14,7 @@ script:
 - tsc
 - if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then npm run test-travis; else npm run
   test-unit-travis; fi
+- npm run check-packages
 - sh scripts/typedoc/generate_typedoc.sh
 after_success:
 - npm run report-coverage
