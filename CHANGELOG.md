@@ -1,3 +1,10 @@
+## [3.18.1](https://github.com/watson-developer-cloud/node-sdk/compare/v3.18.0...v3.18.1) (2019-02-14)
+
+
+### Bug Fixes
+
+* use dotenv v5 to maintain node 4.x compatibility ([c311651](https://github.com/watson-developer-cloud/node-sdk/commit/c311651))
+
 # [3.18.0](https://github.com/watson-developer-cloud/node-sdk/compare/v3.17.0...v3.18.0) (2019-02-06)
 
 
