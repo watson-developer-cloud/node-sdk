@@ -81,7 +81,6 @@
     "async": "~2.6.1",
     "axios": "^0.18.0",
     "buffer-from": "~1.1.0",
-    "csv-stringify": "~1.0.2",
     "dotenv": "^6.2.0",
     "extend": "~3.0.2",
     "file-type": "^7.7.1",
