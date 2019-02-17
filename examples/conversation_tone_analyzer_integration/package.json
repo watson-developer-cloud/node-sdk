@@ -7,7 +7,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "bluebird": "^3.4.1",
-    "dotenv": "^2.0.0",
+    "dotenv": "^6.2.0",
     "watson-developer-cloud": "latest"
   },
   "engines": {
