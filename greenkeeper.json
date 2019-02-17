@@ -1,0 +1,14 @@
+{
+  "groups": {
+    "default": {
+      "packages": [
+        "examples/browserify/package.json",
+        "examples/conversation_tone_analyzer_integration/package.json",
+        "examples/package.json",
+        "examples/speech_to_text_microphone_input/package.json",
+        "examples/webpack/package.json",
+        "package.json"
+      ]
+    }
+  }
+}
