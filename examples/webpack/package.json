@@ -9,12 +9,12 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "dotenv": "^2.0.0",
+    "dotenv": "^6.2.0",
     "express": "^4.14.0",
     "shebang-loader": "0.0.1",
     "watson-developer-cloud": "latest",
-    "webpack": "^2.2.1",
-    "webpack-dev-middleware": "^1.10.0"
+    "webpack": "^4.29.4",
+    "webpack-dev-middleware": "^3.5.2"
   },
   "devDependencies": {},
   "engines": {
