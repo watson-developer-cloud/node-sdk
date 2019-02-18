@@ -97,6 +97,10 @@ The following services have been deprecated for an extended period of time and w
 - Parameter name changed: `passages.fields` -> `passages_fields`
 - Parameter name changed: `passages.count` -> `passages_count`
 - Parameter name changed: `passages.characters` -> `passages_characters`
+- Parameter type changed from Array to String: `return_fields`, `sort`, `passages_fields`, `collection_ids`, `similar_document_ids`, `similar_fields`
+
+#### federatedQuery
+- Parameter type changed from Array to String: `return_fields`, `sort`, `passages_fields`, `collection_ids`, `similar_document_ids`, `similar_fields`
 
 #### model QueryResultResultMetadata
 - Model name changed: `QueryResultResultMetadata` -> `QueryResultMetadata`
