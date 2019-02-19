@@ -1259,10 +1259,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public createStopwordList(params: DiscoveryV1.CreateStopwordListParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TokenDictStatusResponse>): NodeJS.ReadableStream | void {
+  public createStopwordList(params: DiscoveryV1.CreateStopwordListParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TokenDictStatusResponse>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'collection_id', 'stopword_file'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createStopwordList(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1438,10 +1446,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteStopwordList(params: DiscoveryV1.DeleteStopwordListParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): NodeJS.ReadableStream | void {
+  public deleteStopwordList(params: DiscoveryV1.DeleteStopwordListParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteStopwordList(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1538,10 +1554,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getStopwordListStatus(params: DiscoveryV1.GetStopwordListStatusParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TokenDictStatusResponse>): NodeJS.ReadableStream | void {
+  public getStopwordListStatus(params: DiscoveryV1.GetStopwordListStatusParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TokenDictStatusResponse>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getStopwordListStatus(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -3983,10 +4007,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public createGateway(params: DiscoveryV1.CreateGatewayParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Gateway>): NodeJS.ReadableStream | void {
+  public createGateway(params: DiscoveryV1.CreateGatewayParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Gateway>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createGateway(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -4034,10 +4066,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteGateway(params: DiscoveryV1.DeleteGatewayParams, callback?: DiscoveryV1.Callback<DiscoveryV1.GatewayDelete>): NodeJS.ReadableStream | void {
+  public deleteGateway(params: DiscoveryV1.DeleteGatewayParams, callback?: DiscoveryV1.Callback<DiscoveryV1.GatewayDelete>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'gateway_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteGateway(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -4080,10 +4120,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getGateway(params: DiscoveryV1.GetGatewayParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Gateway>): NodeJS.ReadableStream | void {
+  public getGateway(params: DiscoveryV1.GetGatewayParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Gateway>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id', 'gateway_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getGateway(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -4125,10 +4173,18 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listGateways(params: DiscoveryV1.ListGatewaysParams, callback?: DiscoveryV1.Callback<DiscoveryV1.GatewayList>): NodeJS.ReadableStream | void {
+  public listGateways(params: DiscoveryV1.ListGatewaysParams, callback?: DiscoveryV1.Callback<DiscoveryV1.GatewayList>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['environment_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listGateways(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -4512,6 +4568,7 @@ namespace DiscoveryV1 {
     /** The filename for stopword_file. */
     stopword_filename?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `createTokenizationDictionary` operation. */
@@ -4543,6 +4600,7 @@ namespace DiscoveryV1 {
     /** The ID of the collection. */
     collection_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteTokenizationDictionary` operation. */
@@ -4562,6 +4620,7 @@ namespace DiscoveryV1 {
     /** The ID of the collection. */
     collection_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getTokenizationDictionaryStatus` operation. */
@@ -5246,6 +5305,7 @@ namespace DiscoveryV1 {
     /** User-defined name. */
     name?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteGateway` operation. */
@@ -5255,6 +5315,7 @@ namespace DiscoveryV1 {
     /** The requested gateway ID. */
     gateway_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getGateway` operation. */
@@ -5264,6 +5325,7 @@ namespace DiscoveryV1 {
     /** The requested gateway ID. */
     gateway_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listGateways` operation. */
@@ -5271,6 +5333,7 @@ namespace DiscoveryV1 {
     /** The ID of the environment. */
     environment_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /*************************

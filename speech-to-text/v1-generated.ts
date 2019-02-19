@@ -2280,10 +2280,18 @@ class SpeechToTextV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public addGrammar(params: SpeechToTextV1.AddGrammarParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): NodeJS.ReadableStream | void {
+  public addGrammar(params: SpeechToTextV1.AddGrammarParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['customization_id', 'grammar_name', 'grammar_file', 'content_type'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.addGrammar(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2343,10 +2351,18 @@ class SpeechToTextV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteGrammar(params: SpeechToTextV1.DeleteGrammarParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): NodeJS.ReadableStream | void {
+  public deleteGrammar(params: SpeechToTextV1.DeleteGrammarParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['customization_id', 'grammar_name'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteGrammar(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2395,10 +2411,18 @@ class SpeechToTextV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getGrammar(params: SpeechToTextV1.GetGrammarParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Grammar>): NodeJS.ReadableStream | void {
+  public getGrammar(params: SpeechToTextV1.GetGrammarParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Grammar>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['customization_id', 'grammar_name'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getGrammar(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2446,10 +2470,18 @@ class SpeechToTextV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listGrammars(params: SpeechToTextV1.ListGrammarsParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Grammars>): NodeJS.ReadableStream | void {
+  public listGrammars(params: SpeechToTextV1.ListGrammarsParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Grammars>): NodeJS.ReadableStream | Promise<any> | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
     const requiredParams = ['customization_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listGrammars(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -3934,6 +3966,7 @@ namespace SpeechToTextV1 {
     /** If `true`, the specified grammar overwrites an existing grammar with the same name. If `false`, the request fails if a grammar with the same name already exists. The parameter has no effect if a grammar with the same name does not already exist. */
     allow_overwrite?: boolean;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `addGrammar` operation. */
@@ -3952,6 +3985,7 @@ namespace SpeechToTextV1 {
     /** The name of the grammar for the custom language model. */
     grammar_name: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getGrammar` operation. */
@@ -3961,6 +3995,7 @@ namespace SpeechToTextV1 {
     /** The name of the grammar for the custom language model. */
     grammar_name: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listGrammars` operation. */
@@ -3968,6 +4003,7 @@ namespace SpeechToTextV1 {
     /** The customization ID (GUID) of the custom language model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
     customization_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `createAcousticModel` operation. */
