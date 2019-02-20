@@ -78,9 +78,16 @@ personalityInsights.profile(
  * https://console.bluemix.net/docs/services/personality-insights/output-csv.html#outputCSV
  */
 personalityInsights
-  .profileAsCsv({
+  .profileAsCsv(
+  {
     content: 'Enter more than 100 unique words here...',
     content_type: 'text/plain',
     csv_headers: true
-  })
-  .pipe(fs.createWriteStream('./output.csv'));
+  },
+  (err, res) => {
+    if (err) {
+      console.log('error:', err);
+    } else {
+      fs.writeFileSync('./output.csv', res);
+    }
+  });

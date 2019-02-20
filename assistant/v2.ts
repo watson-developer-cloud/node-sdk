@@ -77,7 +77,7 @@ class AssistantV2 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public createSession(params: AssistantV2.CreateSessionParams, callback?: AssistantV2.Callback<AssistantV2.SessionResponse>): NodeJS.ReadableStream | Promise<any> | void {
+  public createSession(params: AssistantV2.CreateSessionParams, callback?: AssistantV2.Callback<AssistantV2.SessionResponse>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['assistant_id'];
@@ -134,7 +134,7 @@ class AssistantV2 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteSession(params: AssistantV2.DeleteSessionParams, callback?: AssistantV2.Callback<AssistantV2.Empty>): NodeJS.ReadableStream | Promise<any> | void {
+  public deleteSession(params: AssistantV2.DeleteSessionParams, callback?: AssistantV2.Callback<AssistantV2.Empty>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['assistant_id', 'session_id'];
@@ -199,7 +199,7 @@ class AssistantV2 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public message(params: AssistantV2.MessageParams, callback?: AssistantV2.Callback<AssistantV2.MessageResponse>): NodeJS.ReadableStream | Promise<any> | void {
+  public message(params: AssistantV2.MessageParams, callback?: AssistantV2.Callback<AssistantV2.MessageResponse>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['assistant_id', 'session_id'];

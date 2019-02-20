@@ -108,7 +108,7 @@ class ToneAnalyzerV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public tone(params: ToneAnalyzerV3.ToneParams, callback?: ToneAnalyzerV3.Callback<ToneAnalyzerV3.ToneAnalysis>): NodeJS.ReadableStream | Promise<any> | void {
+  public tone(params: ToneAnalyzerV3.ToneParams, callback?: ToneAnalyzerV3.Callback<ToneAnalyzerV3.ToneAnalysis>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['tone_input'];
@@ -187,7 +187,7 @@ class ToneAnalyzerV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public toneChat(params: ToneAnalyzerV3.ToneChatParams, callback?: ToneAnalyzerV3.Callback<ToneAnalyzerV3.UtteranceAnalyses>): NodeJS.ReadableStream | Promise<any> | void {
+  public toneChat(params: ToneAnalyzerV3.ToneChatParams, callback?: ToneAnalyzerV3.Callback<ToneAnalyzerV3.UtteranceAnalyses>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['utterances'];

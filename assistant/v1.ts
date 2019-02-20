@@ -87,7 +87,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public message(params: AssistantV1.MessageParams, callback?: AssistantV1.Callback<AssistantV1.MessageResponse>): NodeJS.ReadableStream | Promise<any> | void {
+  public message(params: AssistantV1.MessageParams, callback?: AssistantV1.Callback<AssistantV1.MessageResponse>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id'];
@@ -175,7 +175,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public createWorkspace(params?: AssistantV1.CreateWorkspaceParams, callback?: AssistantV1.Callback<AssistantV1.Workspace>): NodeJS.ReadableStream | Promise<any> | void {
+  public createWorkspace(params?: AssistantV1.CreateWorkspaceParams, callback?: AssistantV1.Callback<AssistantV1.Workspace>): Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
@@ -233,7 +233,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteWorkspace(params: AssistantV1.DeleteWorkspaceParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
+  public deleteWorkspace(params: AssistantV1.DeleteWorkspaceParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id'];
@@ -295,7 +295,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getWorkspace(params: AssistantV1.GetWorkspaceParams, callback?: AssistantV1.Callback<AssistantV1.WorkspaceExport>): NodeJS.ReadableStream | Promise<any> | void {
+  public getWorkspace(params: AssistantV1.GetWorkspaceParams, callback?: AssistantV1.Callback<AssistantV1.WorkspaceExport>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id'];
@@ -361,7 +361,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listWorkspaces(params?: AssistantV1.ListWorkspacesParams, callback?: AssistantV1.Callback<AssistantV1.WorkspaceCollection>): NodeJS.ReadableStream | Promise<any> | void {
+  public listWorkspaces(params?: AssistantV1.ListWorkspacesParams, callback?: AssistantV1.Callback<AssistantV1.WorkspaceCollection>): Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
@@ -434,7 +434,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public updateWorkspace(params: AssistantV1.UpdateWorkspaceParams, callback?: AssistantV1.Callback<AssistantV1.Workspace>): NodeJS.ReadableStream | Promise<any> | void {
+  public updateWorkspace(params: AssistantV1.UpdateWorkspaceParams, callback?: AssistantV1.Callback<AssistantV1.Workspace>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id'];
@@ -519,7 +519,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public createIntent(params: AssistantV1.CreateIntentParams, callback?: AssistantV1.Callback<AssistantV1.Intent>): NodeJS.ReadableStream | Promise<any> | void {
+  public createIntent(params: AssistantV1.CreateIntentParams, callback?: AssistantV1.Callback<AssistantV1.Intent>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id', 'intent'];
@@ -582,7 +582,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteIntent(params: AssistantV1.DeleteIntentParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
+  public deleteIntent(params: AssistantV1.DeleteIntentParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id', 'intent'];
@@ -643,7 +643,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getIntent(params: AssistantV1.GetIntentParams, callback?: AssistantV1.Callback<AssistantV1.IntentExport>): NodeJS.ReadableStream | Promise<any> | void {
+  public getIntent(params: AssistantV1.GetIntentParams, callback?: AssistantV1.Callback<AssistantV1.IntentExport>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id', 'intent'];
@@ -714,7 +714,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listIntents(params: AssistantV1.ListIntentsParams, callback?: AssistantV1.Callback<AssistantV1.IntentCollection>): NodeJS.ReadableStream | Promise<any> | void {
+  public listIntents(params: AssistantV1.ListIntentsParams, callback?: AssistantV1.Callback<AssistantV1.IntentCollection>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id'];
@@ -786,7 +786,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public updateIntent(params: AssistantV1.UpdateIntentParams, callback?: AssistantV1.Callback<AssistantV1.Intent>): NodeJS.ReadableStream | Promise<any> | void {
+  public updateIntent(params: AssistantV1.UpdateIntentParams, callback?: AssistantV1.Callback<AssistantV1.Intent>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id', 'intent'];
@@ -860,7 +860,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public createExample(params: AssistantV1.CreateExampleParams, callback?: AssistantV1.Callback<AssistantV1.Example>): NodeJS.ReadableStream | Promise<any> | void {
+  public createExample(params: AssistantV1.CreateExampleParams, callback?: AssistantV1.Callback<AssistantV1.Example>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id', 'intent', 'text'];
@@ -924,7 +924,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteExample(params: AssistantV1.DeleteExampleParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
+  public deleteExample(params: AssistantV1.DeleteExampleParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id', 'intent', 'text'];
@@ -983,7 +983,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getExample(params: AssistantV1.GetExampleParams, callback?: AssistantV1.Callback<AssistantV1.Example>): NodeJS.ReadableStream | Promise<any> | void {
+  public getExample(params: AssistantV1.GetExampleParams, callback?: AssistantV1.Callback<AssistantV1.Example>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id', 'intent', 'text'];
@@ -1051,7 +1051,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listExamples(params: AssistantV1.ListExamplesParams, callback?: AssistantV1.Callback<AssistantV1.ExampleCollection>): NodeJS.ReadableStream | Promise<any> | void {
+  public listExamples(params: AssistantV1.ListExamplesParams, callback?: AssistantV1.Callback<AssistantV1.ExampleCollection>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id', 'intent'];
@@ -1122,7 +1122,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public updateExample(params: AssistantV1.UpdateExampleParams, callback?: AssistantV1.Callback<AssistantV1.Example>): NodeJS.ReadableStream | Promise<any> | void {
+  public updateExample(params: AssistantV1.UpdateExampleParams, callback?: AssistantV1.Callback<AssistantV1.Example>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id', 'intent', 'text'];
@@ -1194,7 +1194,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public createCounterexample(params: AssistantV1.CreateCounterexampleParams, callback?: AssistantV1.Callback<AssistantV1.Counterexample>): NodeJS.ReadableStream | Promise<any> | void {
+  public createCounterexample(params: AssistantV1.CreateCounterexampleParams, callback?: AssistantV1.Callback<AssistantV1.Counterexample>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id', 'text'];
@@ -1255,7 +1255,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteCounterexample(params: AssistantV1.DeleteCounterexampleParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
+  public deleteCounterexample(params: AssistantV1.DeleteCounterexampleParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id', 'text'];
@@ -1312,7 +1312,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getCounterexample(params: AssistantV1.GetCounterexampleParams, callback?: AssistantV1.Callback<AssistantV1.Counterexample>): NodeJS.ReadableStream | Promise<any> | void {
+  public getCounterexample(params: AssistantV1.GetCounterexampleParams, callback?: AssistantV1.Callback<AssistantV1.Counterexample>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id', 'text'];
@@ -1378,7 +1378,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listCounterexamples(params: AssistantV1.ListCounterexamplesParams, callback?: AssistantV1.Callback<AssistantV1.CounterexampleCollection>): NodeJS.ReadableStream | Promise<any> | void {
+  public listCounterexamples(params: AssistantV1.ListCounterexamplesParams, callback?: AssistantV1.Callback<AssistantV1.CounterexampleCollection>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id'];
@@ -1442,7 +1442,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public updateCounterexample(params: AssistantV1.UpdateCounterexampleParams, callback?: AssistantV1.Callback<AssistantV1.Counterexample>): NodeJS.ReadableStream | Promise<any> | void {
+  public updateCounterexample(params: AssistantV1.UpdateCounterexampleParams, callback?: AssistantV1.Callback<AssistantV1.Counterexample>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id', 'text'];
@@ -1518,7 +1518,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public createEntity(params: AssistantV1.CreateEntityParams, callback?: AssistantV1.Callback<AssistantV1.Entity>): NodeJS.ReadableStream | Promise<any> | void {
+  public createEntity(params: AssistantV1.CreateEntityParams, callback?: AssistantV1.Callback<AssistantV1.Entity>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id', 'entity'];
@@ -1583,7 +1583,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteEntity(params: AssistantV1.DeleteEntityParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
+  public deleteEntity(params: AssistantV1.DeleteEntityParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id', 'entity'];
@@ -1644,7 +1644,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getEntity(params: AssistantV1.GetEntityParams, callback?: AssistantV1.Callback<AssistantV1.EntityExport>): NodeJS.ReadableStream | Promise<any> | void {
+  public getEntity(params: AssistantV1.GetEntityParams, callback?: AssistantV1.Callback<AssistantV1.EntityExport>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id', 'entity'];
@@ -1715,7 +1715,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listEntities(params: AssistantV1.ListEntitiesParams, callback?: AssistantV1.Callback<AssistantV1.EntityCollection>): NodeJS.ReadableStream | Promise<any> | void {
+  public listEntities(params: AssistantV1.ListEntitiesParams, callback?: AssistantV1.Callback<AssistantV1.EntityCollection>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id'];
@@ -1790,7 +1790,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public updateEntity(params: AssistantV1.UpdateEntityParams, callback?: AssistantV1.Callback<AssistantV1.Entity>): NodeJS.ReadableStream | Promise<any> | void {
+  public updateEntity(params: AssistantV1.UpdateEntityParams, callback?: AssistantV1.Callback<AssistantV1.Entity>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id', 'entity'];
@@ -1866,7 +1866,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listMentions(params: AssistantV1.ListMentionsParams, callback?: AssistantV1.Callback<AssistantV1.EntityMentionCollection>): NodeJS.ReadableStream | Promise<any> | void {
+  public listMentions(params: AssistantV1.ListMentionsParams, callback?: AssistantV1.Callback<AssistantV1.EntityMentionCollection>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id', 'entity'];
@@ -1948,7 +1948,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public createValue(params: AssistantV1.CreateValueParams, callback?: AssistantV1.Callback<AssistantV1.Value>): NodeJS.ReadableStream | Promise<any> | void {
+  public createValue(params: AssistantV1.CreateValueParams, callback?: AssistantV1.Callback<AssistantV1.Value>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id', 'entity', 'value'];
@@ -2015,7 +2015,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteValue(params: AssistantV1.DeleteValueParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
+  public deleteValue(params: AssistantV1.DeleteValueParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id', 'entity', 'value'];
@@ -2077,7 +2077,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getValue(params: AssistantV1.GetValueParams, callback?: AssistantV1.Callback<AssistantV1.ValueExport>): NodeJS.ReadableStream | Promise<any> | void {
+  public getValue(params: AssistantV1.GetValueParams, callback?: AssistantV1.Callback<AssistantV1.ValueExport>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id', 'entity', 'value'];
@@ -2149,7 +2149,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listValues(params: AssistantV1.ListValuesParams, callback?: AssistantV1.Callback<AssistantV1.ValueCollection>): NodeJS.ReadableStream | Promise<any> | void {
+  public listValues(params: AssistantV1.ListValuesParams, callback?: AssistantV1.Callback<AssistantV1.ValueCollection>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id', 'entity'];
@@ -2233,7 +2233,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public updateValue(params: AssistantV1.UpdateValueParams, callback?: AssistantV1.Callback<AssistantV1.Value>): NodeJS.ReadableStream | Promise<any> | void {
+  public updateValue(params: AssistantV1.UpdateValueParams, callback?: AssistantV1.Callback<AssistantV1.Value>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id', 'entity', 'value'];
@@ -2309,7 +2309,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public createSynonym(params: AssistantV1.CreateSynonymParams, callback?: AssistantV1.Callback<AssistantV1.Synonym>): NodeJS.ReadableStream | Promise<any> | void {
+  public createSynonym(params: AssistantV1.CreateSynonymParams, callback?: AssistantV1.Callback<AssistantV1.Synonym>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
@@ -2374,7 +2374,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteSynonym(params: AssistantV1.DeleteSynonymParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
+  public deleteSynonym(params: AssistantV1.DeleteSynonymParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
@@ -2435,7 +2435,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getSynonym(params: AssistantV1.GetSynonymParams, callback?: AssistantV1.Callback<AssistantV1.Synonym>): NodeJS.ReadableStream | Promise<any> | void {
+  public getSynonym(params: AssistantV1.GetSynonymParams, callback?: AssistantV1.Callback<AssistantV1.Synonym>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
@@ -2505,7 +2505,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listSynonyms(params: AssistantV1.ListSynonymsParams, callback?: AssistantV1.Callback<AssistantV1.SynonymCollection>): NodeJS.ReadableStream | Promise<any> | void {
+  public listSynonyms(params: AssistantV1.ListSynonymsParams, callback?: AssistantV1.Callback<AssistantV1.SynonymCollection>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id', 'entity', 'value'];
@@ -2577,7 +2577,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public updateSynonym(params: AssistantV1.UpdateSynonymParams, callback?: AssistantV1.Callback<AssistantV1.Synonym>): NodeJS.ReadableStream | Promise<any> | void {
+  public updateSynonym(params: AssistantV1.UpdateSynonymParams, callback?: AssistantV1.Callback<AssistantV1.Synonym>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
@@ -2674,7 +2674,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public createDialogNode(params: AssistantV1.CreateDialogNodeParams, callback?: AssistantV1.Callback<AssistantV1.DialogNode>): NodeJS.ReadableStream | Promise<any> | void {
+  public createDialogNode(params: AssistantV1.CreateDialogNodeParams, callback?: AssistantV1.Callback<AssistantV1.DialogNode>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id', 'dialog_node'];
@@ -2752,7 +2752,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteDialogNode(params: AssistantV1.DeleteDialogNodeParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
+  public deleteDialogNode(params: AssistantV1.DeleteDialogNodeParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id', 'dialog_node'];
@@ -2809,7 +2809,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getDialogNode(params: AssistantV1.GetDialogNodeParams, callback?: AssistantV1.Callback<AssistantV1.DialogNode>): NodeJS.ReadableStream | Promise<any> | void {
+  public getDialogNode(params: AssistantV1.GetDialogNodeParams, callback?: AssistantV1.Callback<AssistantV1.DialogNode>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id', 'dialog_node'];
@@ -2875,7 +2875,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listDialogNodes(params: AssistantV1.ListDialogNodesParams, callback?: AssistantV1.Callback<AssistantV1.DialogNodeCollection>): NodeJS.ReadableStream | Promise<any> | void {
+  public listDialogNodes(params: AssistantV1.ListDialogNodesParams, callback?: AssistantV1.Callback<AssistantV1.DialogNodeCollection>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id'];
@@ -2969,7 +2969,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public updateDialogNode(params: AssistantV1.UpdateDialogNodeParams, callback?: AssistantV1.Callback<AssistantV1.DialogNode>): NodeJS.ReadableStream | Promise<any> | void {
+  public updateDialogNode(params: AssistantV1.UpdateDialogNodeParams, callback?: AssistantV1.Callback<AssistantV1.DialogNode>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id', 'dialog_node'];
@@ -3059,7 +3059,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listAllLogs(params: AssistantV1.ListAllLogsParams, callback?: AssistantV1.Callback<AssistantV1.LogCollection>): NodeJS.ReadableStream | Promise<any> | void {
+  public listAllLogs(params: AssistantV1.ListAllLogsParams, callback?: AssistantV1.Callback<AssistantV1.LogCollection>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['filter'];
@@ -3123,7 +3123,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public listLogs(params: AssistantV1.ListLogsParams, callback?: AssistantV1.Callback<AssistantV1.LogCollection>): NodeJS.ReadableStream | Promise<any> | void {
+  public listLogs(params: AssistantV1.ListLogsParams, callback?: AssistantV1.Callback<AssistantV1.LogCollection>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspace_id'];
@@ -3191,7 +3191,7 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public deleteUserData(params: AssistantV1.DeleteUserDataParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): NodeJS.ReadableStream | Promise<any> | void {
+  public deleteUserData(params: AssistantV1.DeleteUserDataParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['customer_id'];
