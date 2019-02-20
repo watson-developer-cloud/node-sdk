@@ -23,4 +23,11 @@ reader.on('format', function(format) {
   reader.pipe(new Speaker(format));
 });
 
-textToSpeech.synthesize({ text: 'hello from IBM Watson', accept: 'audio/wav' }).pipe(reader);
+textToSpeech
+  .synthesize({ text: 'hello from IBM Watson', accept: 'audio/wav' })
+  .then(res => {
+    res.pipe(reader);
+  })
+  .catch(err => {
+    console.log(err);
+  });
