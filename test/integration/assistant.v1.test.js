@@ -274,7 +274,7 @@ describe('assistant_integration', function() {
   describe('getWorkspace()', function() {
     it('should get the workspace with the right intent', function(done) {
       const params = {
-        export: true,
+        _export: true,
         workspace_id: workspace1.workspace_id,
       };
 
@@ -312,7 +312,7 @@ describe('assistant_integration', function() {
     it('should get intents of the workspace', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        export: true,
+        _export: true,
       };
 
       assistant.listIntents(params, function(err, result) {
@@ -328,7 +328,7 @@ describe('assistant_integration', function() {
     it('should have pagination information', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        export: true,
+        _export: true,
         page_limit: 1,
         include_count: true,
         sort: 'intent',
@@ -632,7 +632,7 @@ describe('assistant_integration', function() {
     it('should get entities of the workspace', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        export: true,
+        _export: true,
       };
 
       assistant.listEntities(params, function(err, result) {
@@ -648,7 +648,7 @@ describe('assistant_integration', function() {
     it('should have pagination information', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        export: true,
+        _export: true,
         page_limit: 1,
         include_count: true,
         sort: 'entity',
@@ -728,7 +728,7 @@ describe('assistant_integration', function() {
       const params = {
         workspace_id: workspace1.workspace_id,
         entity: test_entities_update.entity,
-        export: true,
+        _export: true,
       };
 
       assistant.listValues(params, function(err, result) {
@@ -745,7 +745,7 @@ describe('assistant_integration', function() {
       const params = {
         workspace_id: workspace1.workspace_id,
         entity: test_entities_update.entity,
-        export: true,
+        _export: true,
         page_limit: 1,
         include_count: true,
         sort: 'value',
@@ -825,7 +825,7 @@ describe('assistant_integration', function() {
         workspace_id: workspace1.workspace_id,
         entity: test_entities_update.entity,
         value: test_value_update.value,
-        export: true,
+        _export: true,
       };
 
       assistant.listSynonyms(params, function(err, result) {
@@ -842,7 +842,7 @@ describe('assistant_integration', function() {
         workspace_id: workspace1.workspace_id,
         entity: test_entities_update.entity,
         value: test_value_update.value,
-        export: true,
+        _export: true,
         page_limit: 1,
         include_count: true,
       };
@@ -900,7 +900,7 @@ describe('assistant_integration', function() {
     it('should return logs', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        export: true,
+        _export: true,
         page_limit: 1,
       };
 

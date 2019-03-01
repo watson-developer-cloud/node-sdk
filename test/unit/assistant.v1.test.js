@@ -354,7 +354,7 @@ describe('getWorkspace', () => {
       const sort = 'fake_sort';
       const params = {
         workspace_id,
-        export: _export,
+        _export,
         include_audit,
         sort,
       };
@@ -882,7 +882,7 @@ describe('getIntent', () => {
       const params = {
         workspace_id,
         intent,
-        export: _export,
+        _export,
         include_audit,
       };
 
@@ -993,7 +993,7 @@ describe('listIntents', () => {
       const include_audit = 'fake_include_audit';
       const params = {
         workspace_id,
-        export: _export,
+        _export,
         page_limit,
         include_count,
         sort,
@@ -2552,7 +2552,7 @@ describe('getEntity', () => {
       const params = {
         workspace_id,
         entity,
-        export: _export,
+        _export,
         include_audit,
       };
 
@@ -2663,7 +2663,7 @@ describe('listEntities', () => {
       const include_audit = 'fake_include_audit';
       const params = {
         workspace_id,
-        export: _export,
+        _export,
         page_limit,
         include_count,
         sort,
@@ -2894,7 +2894,7 @@ describe('listMentions', () => {
       const params = {
         workspace_id,
         entity,
-        export: _export,
+        _export,
         include_audit,
       };
 
@@ -3242,7 +3242,7 @@ describe('getValue', () => {
         workspace_id,
         entity,
         value,
-        export: _export,
+        _export,
         include_audit,
       };
 
@@ -3364,7 +3364,7 @@ describe('listValues', () => {
       const params = {
         workspace_id,
         entity,
-        export: _export,
+        _export,
         page_limit,
         include_count,
         sort,
