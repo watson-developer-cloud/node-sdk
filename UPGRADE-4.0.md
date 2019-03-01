@@ -4,6 +4,7 @@
    - [Error Handling Compatibility]
    - [Removed Services]
    - [Constructor Compatibility]
+   - [Assistant Compatibility]
    - [Discovery Compatibility]
    - [Natural Language Classifier Compatibility]
    - [Personality Insights v3 Compatibility]
@@ -52,6 +53,8 @@ The following services have been deprecated for an extended period of time and w
 - Parameter name changed: `version_date` -> `version`
 - The parameter `apikey` is no longer supported
 
+### Assistant Compatibility
+- Parameter name changed: `export` -> `_export` (_All instances_)
 
 ### Discovery Compatibility
 #### getEnvironments
