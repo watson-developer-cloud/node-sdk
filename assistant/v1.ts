@@ -70,7 +70,7 @@ class AssistantV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {InputData} [params.input] - The user input.
+   * @param {InputData} [params.input] - An input object that includes the input text.
    * @param {boolean} [params.alternate_intents] - Whether to return more than one intent. Set to `true` to return all
    * matching intents.
    * @param {Context} [params.context] - State information for the conversation. To maintain state, include the context
@@ -283,7 +283,7 @@ class AssistantV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {boolean} [params.export] - Whether to include all element content in the returned data. If
+   * @param {boolean} [params._export] - Whether to include all element content in the returned data. If
    * **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all
    * content, including subelements, is included.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
@@ -314,7 +314,7 @@ class AssistantV1 extends BaseService {
     }
  
     const query = {
-      'export': _params.export,
+      'export': _params._export,
       'include_audit': _params.include_audit,
       'sort': _params.sort
     };
@@ -634,7 +634,7 @@ class AssistantV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.intent - The intent name.
-   * @param {boolean} [params.export] - Whether to include all element content in the returned data. If
+   * @param {boolean} [params._export] - Whether to include all element content in the returned data. If
    * **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all
    * content, including subelements, is included.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
@@ -662,7 +662,7 @@ class AssistantV1 extends BaseService {
     }
  
     const query = {
-      'export': _params.export,
+      'export': _params._export,
       'include_audit': _params.include_audit
     };
 
@@ -700,7 +700,7 @@ class AssistantV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {boolean} [params.export] - Whether to include all element content in the returned data. If
+   * @param {boolean} [params._export] - Whether to include all element content in the returned data. If
    * **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all
    * content, including subelements, is included.
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
@@ -733,7 +733,7 @@ class AssistantV1 extends BaseService {
     }
  
     const query = {
-      'export': _params.export,
+      'export': _params._export,
       'page_limit': _params.page_limit,
       'include_count': _params.include_count,
       'sort': _params.sort,
@@ -1635,7 +1635,7 @@ class AssistantV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
-   * @param {boolean} [params.export] - Whether to include all element content in the returned data. If
+   * @param {boolean} [params._export] - Whether to include all element content in the returned data. If
    * **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all
    * content, including subelements, is included.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
@@ -1663,7 +1663,7 @@ class AssistantV1 extends BaseService {
     }
  
     const query = {
-      'export': _params.export,
+      'export': _params._export,
       'include_audit': _params.include_audit
     };
 
@@ -1701,7 +1701,7 @@ class AssistantV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {boolean} [params.export] - Whether to include all element content in the returned data. If
+   * @param {boolean} [params._export] - Whether to include all element content in the returned data. If
    * **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all
    * content, including subelements, is included.
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
@@ -1734,7 +1734,7 @@ class AssistantV1 extends BaseService {
     }
  
     const query = {
-      'export': _params.export,
+      'export': _params._export,
       'page_limit': _params.page_limit,
       'include_count': _params.include_count,
       'sort': _params.sort,
@@ -1857,7 +1857,7 @@ class AssistantV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
-   * @param {boolean} [params.export] - Whether to include all element content in the returned data. If
+   * @param {boolean} [params._export] - Whether to include all element content in the returned data. If
    * **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all
    * content, including subelements, is included.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
@@ -1885,7 +1885,7 @@ class AssistantV1 extends BaseService {
     }
  
     const query = {
-      'export': _params.export,
+      'export': _params._export,
       'include_audit': _params.include_audit
     };
 
@@ -2068,7 +2068,7 @@ class AssistantV1 extends BaseService {
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
    * @param {string} params.value - The text of the entity value.
-   * @param {boolean} [params.export] - Whether to include all element content in the returned data. If
+   * @param {boolean} [params._export] - Whether to include all element content in the returned data. If
    * **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all
    * content, including subelements, is included.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
@@ -2096,7 +2096,7 @@ class AssistantV1 extends BaseService {
     }
  
     const query = {
-      'export': _params.export,
+      'export': _params._export,
       'include_audit': _params.include_audit
     };
 
@@ -2135,7 +2135,7 @@ class AssistantV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
-   * @param {boolean} [params.export] - Whether to include all element content in the returned data. If
+   * @param {boolean} [params._export] - Whether to include all element content in the returned data. If
    * **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all
    * content, including subelements, is included.
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
@@ -2168,7 +2168,7 @@ class AssistantV1 extends BaseService {
     }
  
     const query = {
-      'export': _params.export,
+      'export': _params._export,
       'page_limit': _params.page_limit,
       'include_count': _params.include_count,
       'sort': _params.sort,
@@ -3269,7 +3269,7 @@ namespace AssistantV1 {
   export interface MessageParams {
     /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** The user input. */
+    /** An input object that includes the input text. */
     input?: InputData;
     /** Whether to return more than one intent. Set to `true` to return all matching intents. */
     alternate_intents?: boolean;
@@ -3326,7 +3326,7 @@ namespace AssistantV1 {
     /** Unique identifier of the workspace. */
     workspace_id: string;
     /** Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included. */
-    export?: boolean;
+    _export?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
     /** Indicates how the returned workspace data will be sorted. This parameter is valid only if **export**=`true`. Specify `sort=stable` to sort all workspace objects by unique identifier, in ascending alphabetical order. */
@@ -3429,7 +3429,7 @@ namespace AssistantV1 {
     /** The intent name. */
     intent: string;
     /** Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included. */
-    export?: boolean;
+    _export?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
     headers?: Object;
@@ -3441,7 +3441,7 @@ namespace AssistantV1 {
     /** Unique identifier of the workspace. */
     workspace_id: string;
     /** Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included. */
-    export?: boolean;
+    _export?: boolean;
     /** The number of records to return in each page of results. */
     page_limit?: number;
     /** Whether to include information about the number of records returned. */
@@ -3672,7 +3672,7 @@ namespace AssistantV1 {
     /** The name of the entity. */
     entity: string;
     /** Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included. */
-    export?: boolean;
+    _export?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
     headers?: Object;
@@ -3684,7 +3684,7 @@ namespace AssistantV1 {
     /** Unique identifier of the workspace. */
     workspace_id: string;
     /** Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included. */
-    export?: boolean;
+    _export?: boolean;
     /** The number of records to return in each page of results. */
     page_limit?: number;
     /** Whether to include information about the number of records returned. */
@@ -3735,7 +3735,7 @@ namespace AssistantV1 {
     /** The name of the entity. */
     entity: string;
     /** Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included. */
-    export?: boolean;
+    _export?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
     headers?: Object;
@@ -3792,7 +3792,7 @@ namespace AssistantV1 {
     /** The text of the entity value. */
     value: string;
     /** Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included. */
-    export?: boolean;
+    _export?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
     headers?: Object;
@@ -3806,7 +3806,7 @@ namespace AssistantV1 {
     /** The name of the entity. */
     entity: string;
     /** Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included. */
-    export?: boolean;
+    _export?: boolean;
     /** The number of records to return in each page of results. */
     page_limit?: number;
     /** Whether to include information about the number of records returned. */
@@ -4683,7 +4683,7 @@ namespace AssistantV1 {
   export interface LogExport {
     /** A request sent to the workspace, including the user input and context. */
     request: MessageRequest;
-    /** A response from the Watson Assistant service. */
+    /** The response sent by the workspace, including the output text, detected intents and entities, and context. */
     response: MessageResponse;
     /** A unique identifier for the logged event. */
     log_id: string;
@@ -4741,7 +4741,7 @@ namespace AssistantV1 {
 
   /** A request sent to the workspace, including the user input and context. */
   export interface MessageRequest {
-    /** The user input. */
+    /** An input object that includes the input text. */
     input?: InputData;
     /** Whether to return more than one intent. Set to `true` to return all matching intents. */
     alternate_intents?: boolean;
