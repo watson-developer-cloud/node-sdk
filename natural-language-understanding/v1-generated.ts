@@ -15,10 +15,10 @@
  */
 
 import * as extend from 'extend';
+import { BaseService } from 'ibm-cloud-sdk-core';
+import { getMissingParams } from 'ibm-cloud-sdk-core';
 import { RequestResponse } from 'request';
-import { BaseService } from '../lib/base_service';
 import { getDefaultHeaders } from '../lib/common';
-import { getMissingParams } from '../lib/helper';
 
 /**
  * Analyze various features of text content at scale. Provide text, raw HTML, or a public URL and IBM Watson Natural Language Understanding will give you results for the features you request. The service cleans HTML content before analysis by default, so the results can ignore most advertisements and other unwanted content.  You can create [custom models](https://cloud.ibm.com/docs/services/natural-language-understanding/customizing.html) with Watson Knowledge Studio to detect custom entities and relations in Natural Language Understanding.

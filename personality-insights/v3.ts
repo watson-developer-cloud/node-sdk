@@ -15,10 +15,10 @@
  */
 
 import extend = require('extend');
+import { BaseService } from 'ibm-cloud-sdk-core';
+import { getMissingParams, isHTML, toLowerKeys } from 'ibm-cloud-sdk-core';
 import pick = require('object.pick');
 import { RequestResponse } from 'request';
-import { BaseService } from '../lib/base_service';
-import { getMissingParams, isHTML, toLowerKeys } from '../lib/helper';
 import GeneratedPersonalityInsightsV3 = require('./v3-generated');
 
 class PersonalityInsightsV3 extends GeneratedPersonalityInsightsV3 {

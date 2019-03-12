@@ -1,9 +1,9 @@
 import async = require('async');
 import extend = require('extend');
+import { getMissingParams } from 'ibm-cloud-sdk-core';
 import isStream = require('isstream');
 import pick = require('object.pick');
 import { parse } from 'url';
-import { getMissingParams } from '../lib/helper';
 import RecognizeStream = require('../lib/recognize-stream');
 import GeneratedSpeechToTextV1 = require('./v1-generated');
 

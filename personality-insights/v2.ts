@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
+import { BaseService } from 'ibm-cloud-sdk-core';
+import { isHTML } from 'ibm-cloud-sdk-core';
 import pick = require('object.pick');
 import { RequestResponse } from 'request';
-import { BaseService } from '../lib/base_service';
-import { isHTML } from '../lib/helper';
 
 class PersonalityInsightsV2 extends BaseService {
   static URL: string = 'https://gateway.watsonplatform.net/personality-insights/api';

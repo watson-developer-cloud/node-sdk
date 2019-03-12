@@ -1,7 +1,7 @@
 'use strict';
 
 const PersonalityInsightsV3 = require('../../personality-insights/v3-generated');
-const helper = require('../../lib/helper');
+const helper = require('ibm-cloud-sdk-core');
 const utils = require('../resources/unitTestUtils');
 
 const missingParamsError = utils.missingParamsError;

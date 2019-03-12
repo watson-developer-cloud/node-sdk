@@ -15,12 +15,11 @@
  */
 
 import extend = require('extend');
+import { contentType, qs } from 'ibm-cloud-sdk-core';
 import omit = require('object.omit');
 import pick = require('object.pick');
 import { Duplex } from 'stream';
 import websocket = require ('websocket');
-import contentType = require('./content-type');
-import qs = require('./querystring');
 
 const w3cWebSocket = websocket.w3cwebsocket;
 
@@ -80,7 +79,6 @@ class RecognizeStream extends Duplex {
   private initialized: boolean;
   private finished: boolean;
   private socket;
-  private promise = require('./to-promise');
   private authenticated: boolean;
 
 

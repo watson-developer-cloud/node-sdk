@@ -15,11 +15,9 @@
  */
 
 import * as extend from 'extend';
+import { BaseService, FileObject, getMissingParams} from 'ibm-cloud-sdk-core';
 import { RequestResponse } from 'request';
-import { BaseService } from '../lib/base_service';
 import { getDefaultHeaders } from '../lib/common';
-import { getMissingParams } from '../lib/helper';
-import { FileObject } from '../lib/helper';
 
 /**
  * The IBM Watson&trade; Visual Recognition service uses deep learning algorithms to identify scenes, objects, and faces  in images you upload to the service. You can create and train a custom classifier to identify subjects that suit your needs.

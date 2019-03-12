@@ -15,7 +15,7 @@
  */
 
 import extend = require('extend');
-import { getMissingParams } from '../lib/helper';
+import { getMissingParams } from 'ibm-cloud-sdk-core';
 import GeneratedToneAnalyzerV3 = require('./v3-generated');
 
 class ToneAnalyzerV3 extends GeneratedToneAnalyzerV3 {

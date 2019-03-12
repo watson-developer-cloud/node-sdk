@@ -1,7 +1,7 @@
 'use strict';
 
 const CompareComplyV1 = require('../../compare-comply/v1');
-const helper = require('../../lib/helper');
+const helper = require('ibm-cloud-sdk-core');
 const utils = require('../resources/unitTestUtils');
 
 const missingParamsError = utils.missingParamsError;
