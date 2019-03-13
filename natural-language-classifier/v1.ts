@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
+import { getMissingParams } from 'ibm-cloud-sdk-core';
 import isStream = require('isstream');
 import omit = require('object.omit');
-import { getMissingParams } from '../lib/helper';
 import toCSV = require('../lib/json-training-to-csv');
 import GeneratedNaturalLanguageClassifierV1 = require('./v1-generated');
 

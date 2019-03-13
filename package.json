@@ -87,6 +87,7 @@
     "dotenv": "^2.0.0",
     "extend": "~3.0.2",
     "file-type": "^7.7.1",
+    "ibm-cloud-sdk-core": "0.0.1",
     "isstream": "~0.1.2",
     "mime-types": "~2.1.18",
     "object.omit": "~3.0.0",

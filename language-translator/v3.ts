@@ -15,12 +15,11 @@
  */
 
 import * as extend from 'extend';
+import { BaseService } from 'ibm-cloud-sdk-core';
+import { getMissingParams } from 'ibm-cloud-sdk-core';
+import { FileObject } from 'ibm-cloud-sdk-core';
 import { RequestResponse } from 'request';
-import { BaseService } from '../lib/base_service';
 import { getDefaultHeaders } from '../lib/common';
-import { getMissingParams } from '../lib/helper';
-import { FileObject } from '../lib/helper';
-
 /**
  * IBM Watson&trade; Language Translator translates text from one language to another. The service offers multiple IBM provided translation models that you can customize based on your unique terminology and language. Use Language Translator to take news from across the globe and present it in your language, communicate with your customers in their own language, and more.
  */

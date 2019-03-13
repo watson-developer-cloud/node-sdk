@@ -15,10 +15,10 @@
  */
 
 import * as extend from 'extend';
+import { BaseService } from 'ibm-cloud-sdk-core';
+import { getMissingParams } from 'ibm-cloud-sdk-core';
 import { RequestResponse } from 'request';
-import { BaseService } from '../lib/base_service';
 import { getDefaultHeaders } from '../lib/common';
-import { getMissingParams } from '../lib/helper';
 
 /**
  * The IBM Watson&trade; Assistant service combines machine learning, natural language understanding, and integrated dialog tools to create conversation flows between your apps and your users.

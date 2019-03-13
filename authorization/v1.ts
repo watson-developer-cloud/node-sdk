@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
+import { BaseService } from 'ibm-cloud-sdk-core';
 import url = require('url');
-import { BaseService } from '../lib/base_service';
 
 class AuthorizationV1 extends BaseService {
   static URL: string = 'https://stream.watsonplatform.net/authorization/api';

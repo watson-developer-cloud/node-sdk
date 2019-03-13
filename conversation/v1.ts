@@ -15,7 +15,7 @@
  */
 
 import extend = require('extend');
-import { getMissingParams } from '../lib/helper';
+import { getMissingParams } from 'ibm-cloud-sdk-core';
 import GeneratedConversationV1 = require('./v1-generated');
 
 class ConversationV1 extends GeneratedConversationV1 {

@@ -15,10 +15,9 @@
  */
 
 import * as extend from 'extend';
+import { BaseService, getMissingParams} from 'ibm-cloud-sdk-core';
 import { RequestResponse } from 'request';
-import { BaseService } from '../lib/base_service';
 import { getDefaultHeaders } from '../lib/common';
-import { getMissingParams } from '../lib/helper';
 
 /**
  * The IBM Watson&trade; Tone Analyzer service uses linguistic analysis to detect emotional and language tones in written text. The service can analyze tone at both the document and sentence levels. You can use the service to understand how your written communications are perceived and then to improve the tone of your communications. Businesses can use the service to learn the tone of their customers' communications and to respond to each customer appropriately, or to understand and improve their customer conversations.  **Note:** Request logging is disabled for the Tone Analyzer service. Regardless of whether you set the `X-Watson-Learning-Opt-Out` request header, the service does not log or retain data from requests and responses.

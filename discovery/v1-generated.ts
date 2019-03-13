@@ -15,11 +15,11 @@
  */
 
 import * as extend from 'extend';
+import { BaseService } from 'ibm-cloud-sdk-core';
+import { getMissingParams } from 'ibm-cloud-sdk-core';
+import { FileObject } from 'ibm-cloud-sdk-core';
 import { RequestResponse } from 'request';
-import { BaseService } from '../lib/base_service';
 import { getDefaultHeaders } from '../lib/common';
-import { getMissingParams } from '../lib/helper';
-import { FileObject } from '../lib/helper';
 
 /**
  * The IBM Watson&trade; Discovery Service is a cognitive search and content analytics engine that you can add to applications to identify patterns, trends and actionable insights to drive better decision-making. Securely unify structured and unstructured data with pre-enriched content, and use a simplified query language to eliminate the need for manual filtering of results.

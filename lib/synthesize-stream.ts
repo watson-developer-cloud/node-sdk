@@ -15,10 +15,10 @@
  */
 
 import extend = require('extend');
+import { qs } from 'ibm-cloud-sdk-core';
 import pick = require('object.pick');
 import { Readable } from 'stream';
 import websocket = require ('websocket');
-import qs = require('./querystring');
 
 const w3cWebSocket = websocket.w3cwebsocket;
 

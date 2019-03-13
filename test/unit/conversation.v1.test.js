@@ -1,7 +1,7 @@
 'use strict';
 
 const ConversationV1 = require('../../conversation/v1-generated');
-const helper = require('../../lib/helper');
+const helper = require('ibm-cloud-sdk-core');
 const utils = require('../resources/unitTestUtils');
 
 const missingParamsError = utils.missingParamsError;

@@ -15,12 +15,12 @@
  */
 
 import extend = require('extend');
+import { BaseService } from 'ibm-cloud-sdk-core';
+import { FileObject } from 'ibm-cloud-sdk-core';
 import isStream = require('isstream');
 import omit = require('object.omit');
 import pick = require('object.pick');
 import { RequestResponse } from 'request';
-import { BaseService } from '../lib/base_service';
-import { FileObject } from '../lib/helper';
 
 class DialogV1 extends BaseService {
   static URL: string = 'https://gateway.watsonplatform.net/dialog/api';
