@@ -15,9 +15,9 @@
  */
 
 import * as extend from 'extend';
-import { RequestResponse } from 'request';
 import { BaseService } from 'ibm-cloud-sdk-core';
 import { getMissingParams } from 'ibm-cloud-sdk-core';
+import { RequestResponse } from 'request';
 import { getDefaultHeaders } from '../lib/common';
 
 /**
