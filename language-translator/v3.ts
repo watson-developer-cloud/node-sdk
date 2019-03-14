@@ -19,7 +19,7 @@ import { BaseService } from 'ibm-cloud-sdk-core';
 import { getMissingParams } from 'ibm-cloud-sdk-core';
 import { FileObject } from 'ibm-cloud-sdk-core';
 import { RequestResponse } from 'request';
-import { getDefaultHeaders } from '../lib/common';
+import { getSdkHeaders } from '../lib/common';
 /**
  * IBM Watson&trade; Language Translator translates text from one language to another. The service offers multiple IBM provided translation models that you can customize based on your unique terminology and language. Use Language Translator to take news from across the globe and present it in your language, communicate with your customers in their own language, and more.
  */
@@ -94,7 +94,7 @@ class LanguageTranslatorV3 extends BaseService {
       'target': _params.target
     };
 
-    const defaultHeaders = getDefaultHeaders('language_translator', 'v3', 'translate');
+    const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'translate');
  
     const parameters = {
       options: {
@@ -104,7 +104,7 @@ class LanguageTranslatorV3 extends BaseService {
         body,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -140,7 +140,7 @@ class LanguageTranslatorV3 extends BaseService {
     }
     const body = _params.text;
 
-    const defaultHeaders = getDefaultHeaders('language_translator', 'v3', 'identify');
+    const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'identify');
  
     const parameters = {
       options: {
@@ -150,7 +150,7 @@ class LanguageTranslatorV3 extends BaseService {
         body,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'text/plain',
         }, _params.headers),
@@ -175,7 +175,7 @@ class LanguageTranslatorV3 extends BaseService {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
 
-    const defaultHeaders = getDefaultHeaders('language_translator', 'v3', 'listIdentifiableLanguages');
+    const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'listIdentifiableLanguages');
  
     const parameters = {
       options: {
@@ -183,7 +183,7 @@ class LanguageTranslatorV3 extends BaseService {
         method: 'GET',
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -261,7 +261,7 @@ class LanguageTranslatorV3 extends BaseService {
       'name': _params.name
     };
 
-    const defaultHeaders = getDefaultHeaders('language_translator', 'v3', 'createModel');
+    const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'createModel');
  
     const parameters = {
       options: {
@@ -271,7 +271,7 @@ class LanguageTranslatorV3 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'multipart/form-data',
         }, _params.headers),
@@ -306,7 +306,7 @@ class LanguageTranslatorV3 extends BaseService {
       'model_id': _params.model_id
     };
 
-    const defaultHeaders = getDefaultHeaders('language_translator', 'v3', 'deleteModel');
+    const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'deleteModel');
  
     const parameters = {
       options: {
@@ -315,7 +315,7 @@ class LanguageTranslatorV3 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -350,7 +350,7 @@ class LanguageTranslatorV3 extends BaseService {
       'model_id': _params.model_id
     };
 
-    const defaultHeaders = getDefaultHeaders('language_translator', 'v3', 'getModel');
+    const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'getModel');
  
     const parameters = {
       options: {
@@ -359,7 +359,7 @@ class LanguageTranslatorV3 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -394,7 +394,7 @@ class LanguageTranslatorV3 extends BaseService {
       'default': _params.default_models
     };
 
-    const defaultHeaders = getDefaultHeaders('language_translator', 'v3', 'listModels');
+    const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'listModels');
  
     const parameters = {
       options: {
@@ -403,7 +403,7 @@ class LanguageTranslatorV3 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
