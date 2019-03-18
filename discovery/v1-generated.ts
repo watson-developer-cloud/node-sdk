@@ -1262,7 +1262,7 @@ class DiscoveryV1 extends BaseService {
   public createStopwordList(params: DiscoveryV1.CreateStopwordListParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TokenDictStatusResponse>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = (callback) ? callback : () => { /* noop */ };
-    const requiredParams = ['environment_id', 'collection_id', 'stopword_file'];
+    const requiredParams = ['environment_id', 'collection_id', 'stopword_file', 'stopword_filename'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {

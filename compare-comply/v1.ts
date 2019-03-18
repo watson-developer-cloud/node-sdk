@@ -80,7 +80,7 @@ class CompareComplyV1 extends BaseService {
   public convertToHtml(params: CompareComplyV1.ConvertToHtmlParams, callback?: CompareComplyV1.Callback<CompareComplyV1.HTMLReturn>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['file'];
+    const requiredParams = ['file', 'filename'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
