@@ -1,3 +1,10 @@
+## [3.18.3](https://github.com/watson-developer-cloud/node-sdk/compare/v3.18.2...v3.18.3) (2019-03-19)
+
+
+### Bug Fixes
+
+* expose token manager from core code as a module ([4376e7c](https://github.com/watson-developer-cloud/node-sdk/commit/4376e7c))
+
 ## [3.18.2](https://github.com/watson-developer-cloud/node-sdk/compare/v3.18.1...v3.18.2) (2019-03-15)
 
 
