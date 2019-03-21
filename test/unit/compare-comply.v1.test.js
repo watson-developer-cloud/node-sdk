@@ -115,7 +115,7 @@ describe('convertToHtml', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['file'];
+      const requiredParams = ['file', 'filename'];
 
       compareComply.convertToHtml({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -125,7 +125,7 @@ describe('convertToHtml', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['file'];
+      const requiredParams = ['file', 'filename'];
 
       const convertToHtmlPromise = compareComply.convertToHtml();
       expectToBePromise(convertToHtmlPromise);
