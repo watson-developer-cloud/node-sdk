@@ -2132,7 +2132,12 @@ describe('createStopwordList', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id', 'stopword_file'];
+      const requiredParams = [
+        'environment_id',
+        'collection_id',
+        'stopword_file',
+        'stopword_filename',
+      ];
 
       discovery.createStopwordList({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);

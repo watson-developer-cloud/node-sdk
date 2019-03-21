@@ -3,7 +3,8 @@ var express = require('express'); // eslint-disable-line node/no-missing-require
 var app = express();
 var expressBrowserify = require('express-browserify'); // eslint-disable-line node/no-missing-require
 var dotenv = require('dotenv');
-var watson = require('watson-developer-cloud');
+var AuthorizationV1 = require('watson-developer-cloud/authorization/v1');
+var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
 
 var isDev = app.get('env') === 'development';
 app.get(
@@ -20,10 +21,10 @@ app.use(express.static('public/'));
 dotenv.load({ silent: true });
 
 // For local development, specify the username and password or set env properties
-var ltAuthService = new watson.AuthorizationV1({
+var ltAuthService = new AuthorizationV1({
   username: process.env.TONE_ANALYZER_USERNAME || '<username>',
   password: process.env.TONE_ANALYZER_PASSWORD || '<password>',
-  url: watson.ToneAnalyzerV3.URL
+  url: ToneAnalyzerV3.URL
 });
 
 app.get('/api/token/tone_analyzer', function(req, res) {
