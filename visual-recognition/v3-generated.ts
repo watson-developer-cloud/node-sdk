@@ -16,10 +16,8 @@
 
 import { AxiosResponse } from 'axios';
 import * as extend from 'extend';
-import { BaseService } from '../lib/base_service';
-import { getDefaultHeaders } from '../lib/common';
-import { getMissingParams } from '../lib/helper';
-import { FileObject } from '../lib/helper';
+import { BaseService, FileObject, getMissingParams} from 'ibm-cloud-sdk-core';
+import { getSdkHeaders } from '../lib/common';
 
 /**
  * The IBM Watson&trade; Visual Recognition service uses deep learning algorithms to identify scenes, objects, and faces  in images you upload to the service. You can create and train a custom classifier to identify subjects that suit your needs.
@@ -126,7 +124,7 @@ class VisualRecognitionV3 extends BaseService {
       'classifier_ids': _params.classifier_ids
     };
 
-    const defaultHeaders = getDefaultHeaders('watson_vision_combined', 'v3', 'classify');
+    const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'classify');
  
     const parameters = {
       options: {
@@ -135,7 +133,7 @@ class VisualRecognitionV3 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'multipart/form-data',
           'Accept-Language': _params.accept_language
@@ -208,7 +206,7 @@ class VisualRecognitionV3 extends BaseService {
       'url': _params.url
     };
 
-    const defaultHeaders = getDefaultHeaders('watson_vision_combined', 'v3', 'detectFaces');
+    const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'detectFaces');
  
     const parameters = {
       options: {
@@ -217,7 +215,7 @@ class VisualRecognitionV3 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'multipart/form-data',
           'Accept-Language': _params.accept_language
@@ -319,7 +317,7 @@ class VisualRecognitionV3 extends BaseService {
       };
     });
 
-    const defaultHeaders = getDefaultHeaders('watson_vision_combined', 'v3', 'createClassifier');
+    const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'createClassifier');
  
     const parameters = {
       options: {
@@ -328,7 +326,7 @@ class VisualRecognitionV3 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'multipart/form-data',
         }, _params.headers),
@@ -369,7 +367,7 @@ class VisualRecognitionV3 extends BaseService {
       'classifier_id': _params.classifier_id
     };
 
-    const defaultHeaders = getDefaultHeaders('watson_vision_combined', 'v3', 'deleteClassifier');
+    const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'deleteClassifier');
  
     const parameters = {
       options: {
@@ -378,7 +376,7 @@ class VisualRecognitionV3 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -421,7 +419,7 @@ class VisualRecognitionV3 extends BaseService {
       'classifier_id': _params.classifier_id
     };
 
-    const defaultHeaders = getDefaultHeaders('watson_vision_combined', 'v3', 'getClassifier');
+    const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'getClassifier');
  
     const parameters = {
       options: {
@@ -430,7 +428,7 @@ class VisualRecognitionV3 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -466,7 +464,7 @@ class VisualRecognitionV3 extends BaseService {
       'verbose': _params.verbose
     };
 
-    const defaultHeaders = getDefaultHeaders('watson_vision_combined', 'v3', 'listClassifiers');
+    const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'listClassifiers');
  
     const parameters = {
       options: {
@@ -475,7 +473,7 @@ class VisualRecognitionV3 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -577,7 +575,7 @@ class VisualRecognitionV3 extends BaseService {
       'classifier_id': _params.classifier_id
     };
 
-    const defaultHeaders = getDefaultHeaders('watson_vision_combined', 'v3', 'updateClassifier');
+    const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'updateClassifier');
  
     const parameters = {
       options: {
@@ -587,7 +585,7 @@ class VisualRecognitionV3 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'multipart/form-data',
         }, _params.headers),
@@ -635,7 +633,7 @@ class VisualRecognitionV3 extends BaseService {
       'classifier_id': _params.classifier_id
     };
 
-    const defaultHeaders = getDefaultHeaders('watson_vision_combined', 'v3', 'getCoreMlModel');
+    const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'getCoreMlModel');
  
     const parameters = {
       options: {
@@ -645,7 +643,7 @@ class VisualRecognitionV3 extends BaseService {
         responseType: 'stream',
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/octet-stream',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -697,7 +695,7 @@ class VisualRecognitionV3 extends BaseService {
       'customer_id': _params.customer_id
     };
 
-    const defaultHeaders = getDefaultHeaders('watson_vision_combined', 'v3', 'deleteUserData');
+    const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'deleteUserData');
  
     const parameters = {
       options: {
@@ -706,7 +704,7 @@ class VisualRecognitionV3 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),

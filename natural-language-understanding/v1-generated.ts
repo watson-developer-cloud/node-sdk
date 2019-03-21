@@ -16,9 +16,8 @@
 
 import { AxiosResponse } from 'axios';
 import * as extend from 'extend';
-import { BaseService } from '../lib/base_service';
-import { getDefaultHeaders } from '../lib/common';
-import { getMissingParams } from '../lib/helper';
+import { BaseService, getMissingParams } from 'ibm-cloud-sdk-core';
+import { getSdkHeaders } from '../lib/common';
 
 /**
  * Analyze various features of text content at scale. Provide text, raw HTML, or a public URL and IBM Watson Natural Language Understanding will give you results for the features you request. The service cleans HTML content before analysis by default, so the results can ignore most advertisements and other unwanted content.  You can create [custom models](/docs/services/natural-language-understanding/customizing.html) with Watson Knowledge Studio to detect custom entities and relations in Natural Language Understanding.
@@ -133,7 +132,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
       'limit_text_characters': _params.limit_text_characters
     };
 
-    const defaultHeaders = getDefaultHeaders('natural-language-understanding', 'v1', 'analyze');
+    const sdkHeaders = getSdkHeaders('natural-language-understanding', 'v1', 'analyze');
  
     const parameters = {
       options: {
@@ -143,7 +142,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         body,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -190,7 +189,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
       'model_id': _params.model_id
     };
 
-    const defaultHeaders = getDefaultHeaders('natural-language-understanding', 'v1', 'deleteModel');
+    const sdkHeaders = getSdkHeaders('natural-language-understanding', 'v1', 'deleteModel');
  
     const parameters = {
       options: {
@@ -199,7 +198,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -233,7 +232,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
       });
     }
 
-    const defaultHeaders = getDefaultHeaders('natural-language-understanding', 'v1', 'listModels');
+    const sdkHeaders = getSdkHeaders('natural-language-understanding', 'v1', 'listModels');
  
     const parameters = {
       options: {
@@ -241,7 +240,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         method: 'GET',
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),

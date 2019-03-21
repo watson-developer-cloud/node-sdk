@@ -1,7 +1,7 @@
 'use strict';
 
 const VisualRecognitionV3 = require('../../visual-recognition/v3-generated');
-const helper = require('../../lib/helper');
+const helper = require('ibm-cloud-sdk-core');
 const utils = require('../resources/unitTestUtils');
 
 const missingParamsError = utils.missingParamsError;

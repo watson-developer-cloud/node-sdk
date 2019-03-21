@@ -15,12 +15,11 @@
  */
 
 import extend = require('extend');
+import { contentType, qs } from 'ibm-cloud-sdk-core';
 import omit = require('object.omit');
 import pick = require('object.pick');
 import { Duplex } from 'stream';
 import websocket = require ('websocket');
-import contentType = require('./content-type');
-import qs = require('./querystring');
 
 const w3cWebSocket = websocket.w3cwebsocket;
 
@@ -47,7 +46,8 @@ const QUERY_PARAMS_ALLOWED = [
   'watson-token',
   'language_customization_id',
   'customization_id',
-  'acoustic_customization_id'
+  'acoustic_customization_id',
+  'access_token'
 ];
 
 interface RecognizeStream extends Duplex {
@@ -80,7 +80,6 @@ class RecognizeStream extends Duplex {
   private initialized: boolean;
   private finished: boolean;
   private socket;
-  private promise = require('./to-promise');
   private authenticated: boolean;
 
 
@@ -99,6 +98,7 @@ class RecognizeStream extends Duplex {
    * @param {String} [options.model='en-US_BroadbandModel'] - voice model to use. Microphone streaming only supports broadband models.
    * @param {String} [options.url='wss://stream.watsonplatform.net/speech-to-text/api'] base URL for service
    * @param {String} [options.token] - Auth token
+   * @param {String} [options.access_token] - IAM auth token
    * @param {Object} [options.headers] - Only works in Node.js, not in browsers. Allows for custom headers to be set, including an Authorization header (preventing the need for auth tokens)
    * @param {String} [options.content-type='audio/wav'] - content type of audio; can be automatically determined from file header in most cases. only wav, flac, ogg/opus, and webm are supported
    * @param {Boolean} [options.interim_results=false] - Send back non-final previews of each "sentence" as it is being processed. These results are ignored in text mode.

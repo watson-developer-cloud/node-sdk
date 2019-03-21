@@ -1,7 +1,7 @@
 'use strict';
 
 const AssistantV2 = require('../../assistant/v2');
-const helper = require('../../lib/helper');
+const helper = require('ibm-cloud-sdk-core');
 const utils = require('../resources/unitTestUtils');
 
 const missingParamsError = utils.missingParamsError;

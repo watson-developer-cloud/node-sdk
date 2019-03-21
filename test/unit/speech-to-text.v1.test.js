@@ -1,7 +1,7 @@
 'use strict';
 
 const SpeechToTextV1 = require('../../speech-to-text/v1-generated');
-const helper = require('../../lib/helper');
+const helper = require('ibm-cloud-sdk-core');
 const utils = require('../resources/unitTestUtils');
 
 const missingParamsError = utils.missingParamsError;

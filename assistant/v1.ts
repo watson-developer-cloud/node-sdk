@@ -16,9 +16,8 @@
 
 import { AxiosResponse } from 'axios';
 import * as extend from 'extend';
-import { BaseService } from '../lib/base_service';
-import { getDefaultHeaders } from '../lib/common';
-import { getMissingParams } from '../lib/helper';
+import { BaseService, getMissingParams } from 'ibm-cloud-sdk-core';
+import { getSdkHeaders } from '../lib/common';
 
 /**
  * The IBM Watson&trade; Assistant service combines machine learning, natural language understanding, and integrated dialog tools to create conversation flows between your apps and your users.
@@ -122,7 +121,7 @@ class AssistantV1 extends BaseService {
       'workspace_id': _params.workspace_id
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'message');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'message');
  
     const parameters = {
       options: {
@@ -134,7 +133,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -200,7 +199,7 @@ class AssistantV1 extends BaseService {
       'system_settings': _params.system_settings
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'createWorkspace');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'createWorkspace');
  
     const parameters = {
       options: {
@@ -210,7 +209,7 @@ class AssistantV1 extends BaseService {
         body,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -255,7 +254,7 @@ class AssistantV1 extends BaseService {
       'workspace_id': _params.workspace_id
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'deleteWorkspace');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteWorkspace');
  
     const parameters = {
       options: {
@@ -264,7 +263,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -323,7 +322,7 @@ class AssistantV1 extends BaseService {
       'workspace_id': _params.workspace_id
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'getWorkspace');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'getWorkspace');
  
     const parameters = {
       options: {
@@ -333,7 +332,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -381,7 +380,7 @@ class AssistantV1 extends BaseService {
       'include_audit': _params.include_audit
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'listWorkspaces');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listWorkspaces');
  
     const parameters = {
       options: {
@@ -390,7 +389,7 @@ class AssistantV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -473,7 +472,7 @@ class AssistantV1 extends BaseService {
       'workspace_id': _params.workspace_id
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'updateWorkspace');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'updateWorkspace');
  
     const parameters = {
       options: {
@@ -485,7 +484,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -547,7 +546,7 @@ class AssistantV1 extends BaseService {
       'workspace_id': _params.workspace_id
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'createIntent');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'createIntent');
  
     const parameters = {
       options: {
@@ -558,7 +557,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -605,7 +604,7 @@ class AssistantV1 extends BaseService {
       'intent': _params.intent
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'deleteIntent');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteIntent');
  
     const parameters = {
       options: {
@@ -614,7 +613,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -671,7 +670,7 @@ class AssistantV1 extends BaseService {
       'intent': _params.intent
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'getIntent');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'getIntent');
  
     const parameters = {
       options: {
@@ -681,7 +680,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -745,7 +744,7 @@ class AssistantV1 extends BaseService {
       'workspace_id': _params.workspace_id
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'listIntents');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listIntents');
  
     const parameters = {
       options: {
@@ -755,7 +754,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -815,7 +814,7 @@ class AssistantV1 extends BaseService {
       'intent': _params.intent
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'updateIntent');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'updateIntent');
  
     const parameters = {
       options: {
@@ -826,7 +825,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -888,7 +887,7 @@ class AssistantV1 extends BaseService {
       'intent': _params.intent
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'createExample');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'createExample');
  
     const parameters = {
       options: {
@@ -899,7 +898,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -948,7 +947,7 @@ class AssistantV1 extends BaseService {
       'text': _params.text
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'deleteExample');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteExample');
  
     const parameters = {
       options: {
@@ -957,7 +956,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -1011,7 +1010,7 @@ class AssistantV1 extends BaseService {
       'text': _params.text
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'getExample');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'getExample');
  
     const parameters = {
       options: {
@@ -1021,7 +1020,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -1082,7 +1081,7 @@ class AssistantV1 extends BaseService {
       'intent': _params.intent
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'listExamples');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listExamples');
  
     const parameters = {
       options: {
@@ -1092,7 +1091,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -1151,7 +1150,7 @@ class AssistantV1 extends BaseService {
       'text': _params.text
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'updateExample');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'updateExample');
  
     const parameters = {
       options: {
@@ -1162,7 +1161,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -1220,7 +1219,7 @@ class AssistantV1 extends BaseService {
       'workspace_id': _params.workspace_id
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'createCounterexample');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'createCounterexample');
  
     const parameters = {
       options: {
@@ -1231,7 +1230,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -1278,7 +1277,7 @@ class AssistantV1 extends BaseService {
       'text': _params.text
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'deleteCounterexample');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteCounterexample');
  
     const parameters = {
       options: {
@@ -1287,7 +1286,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -1339,7 +1338,7 @@ class AssistantV1 extends BaseService {
       'text': _params.text
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'getCounterexample');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'getCounterexample');
  
     const parameters = {
       options: {
@@ -1349,7 +1348,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -1408,7 +1407,7 @@ class AssistantV1 extends BaseService {
       'workspace_id': _params.workspace_id
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'listCounterexamples');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listCounterexamples');
  
     const parameters = {
       options: {
@@ -1418,7 +1417,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -1469,7 +1468,7 @@ class AssistantV1 extends BaseService {
       'text': _params.text
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'updateCounterexample');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'updateCounterexample');
  
     const parameters = {
       options: {
@@ -1480,7 +1479,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -1548,7 +1547,7 @@ class AssistantV1 extends BaseService {
       'workspace_id': _params.workspace_id
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'createEntity');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'createEntity');
  
     const parameters = {
       options: {
@@ -1559,7 +1558,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -1606,7 +1605,7 @@ class AssistantV1 extends BaseService {
       'entity': _params.entity
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'deleteEntity');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteEntity');
  
     const parameters = {
       options: {
@@ -1615,7 +1614,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -1672,7 +1671,7 @@ class AssistantV1 extends BaseService {
       'entity': _params.entity
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'getEntity');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'getEntity');
  
     const parameters = {
       options: {
@@ -1682,7 +1681,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -1746,7 +1745,7 @@ class AssistantV1 extends BaseService {
       'workspace_id': _params.workspace_id
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'listEntities');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listEntities');
  
     const parameters = {
       options: {
@@ -1756,7 +1755,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -1821,7 +1820,7 @@ class AssistantV1 extends BaseService {
       'entity': _params.entity
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'updateEntity');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'updateEntity');
  
     const parameters = {
       options: {
@@ -1832,7 +1831,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -1894,7 +1893,7 @@ class AssistantV1 extends BaseService {
       'entity': _params.entity
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'listMentions');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listMentions');
  
     const parameters = {
       options: {
@@ -1904,7 +1903,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -1979,7 +1978,7 @@ class AssistantV1 extends BaseService {
       'entity': _params.entity
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'createValue');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'createValue');
  
     const parameters = {
       options: {
@@ -1990,7 +1989,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -2039,7 +2038,7 @@ class AssistantV1 extends BaseService {
       'value': _params.value
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'deleteValue');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteValue');
  
     const parameters = {
       options: {
@@ -2048,7 +2047,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -2106,7 +2105,7 @@ class AssistantV1 extends BaseService {
       'value': _params.value
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'getValue');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'getValue');
  
     const parameters = {
       options: {
@@ -2116,7 +2115,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -2181,7 +2180,7 @@ class AssistantV1 extends BaseService {
       'entity': _params.entity
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'listValues');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listValues');
  
     const parameters = {
       options: {
@@ -2191,7 +2190,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -2265,7 +2264,7 @@ class AssistantV1 extends BaseService {
       'value': _params.value
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'updateValue');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'updateValue');
  
     const parameters = {
       options: {
@@ -2276,7 +2275,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -2337,7 +2336,7 @@ class AssistantV1 extends BaseService {
       'value': _params.value
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'createSynonym');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'createSynonym');
  
     const parameters = {
       options: {
@@ -2348,7 +2347,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -2399,7 +2398,7 @@ class AssistantV1 extends BaseService {
       'synonym': _params.synonym
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'deleteSynonym');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteSynonym');
  
     const parameters = {
       options: {
@@ -2408,7 +2407,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -2464,7 +2463,7 @@ class AssistantV1 extends BaseService {
       'synonym': _params.synonym
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'getSynonym');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'getSynonym');
  
     const parameters = {
       options: {
@@ -2474,7 +2473,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -2537,7 +2536,7 @@ class AssistantV1 extends BaseService {
       'value': _params.value
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'listSynonyms');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listSynonyms');
  
     const parameters = {
       options: {
@@ -2547,7 +2546,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -2606,7 +2605,7 @@ class AssistantV1 extends BaseService {
       'synonym': _params.synonym
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'updateSynonym');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'updateSynonym');
  
     const parameters = {
       options: {
@@ -2617,7 +2616,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -2717,7 +2716,7 @@ class AssistantV1 extends BaseService {
       'workspace_id': _params.workspace_id
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'createDialogNode');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'createDialogNode');
  
     const parameters = {
       options: {
@@ -2728,7 +2727,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -2775,7 +2774,7 @@ class AssistantV1 extends BaseService {
       'dialog_node': _params.dialog_node
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'deleteDialogNode');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteDialogNode');
  
     const parameters = {
       options: {
@@ -2784,7 +2783,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -2836,7 +2835,7 @@ class AssistantV1 extends BaseService {
       'dialog_node': _params.dialog_node
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'getDialogNode');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'getDialogNode');
  
     const parameters = {
       options: {
@@ -2846,7 +2845,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -2905,7 +2904,7 @@ class AssistantV1 extends BaseService {
       'workspace_id': _params.workspace_id
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'listDialogNodes');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listDialogNodes');
  
     const parameters = {
       options: {
@@ -2915,7 +2914,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -3013,7 +3012,7 @@ class AssistantV1 extends BaseService {
       'dialog_node': _params.dialog_node
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'updateDialogNode');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'updateDialogNode');
  
     const parameters = {
       options: {
@@ -3024,7 +3023,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -3084,7 +3083,7 @@ class AssistantV1 extends BaseService {
       'cursor': _params.cursor
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'listAllLogs');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listAllLogs');
  
     const parameters = {
       options: {
@@ -3093,7 +3092,7 @@ class AssistantV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -3152,7 +3151,7 @@ class AssistantV1 extends BaseService {
       'workspace_id': _params.workspace_id
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'listLogs');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listLogs');
  
     const parameters = {
       options: {
@@ -3162,7 +3161,7 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -3213,7 +3212,7 @@ class AssistantV1 extends BaseService {
       'customer_id': _params.customer_id
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v1', 'deleteUserData');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteUserData');
  
     const parameters = {
       options: {
@@ -3222,7 +3221,7 @@ class AssistantV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),

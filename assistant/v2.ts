@@ -16,9 +16,9 @@
 
 import { AxiosResponse } from 'axios';
 import * as extend from 'extend';
-import { BaseService } from '../lib/base_service';
-import { getDefaultHeaders } from '../lib/common';
-import { getMissingParams } from '../lib/helper';
+import { BaseService } from 'ibm-cloud-sdk-core';
+import { getMissingParams } from 'ibm-cloud-sdk-core';
+import { getSdkHeaders } from '../lib/common';
 
 /**
  * The IBM Watson&trade; Assistant service combines machine learning, natural language understanding, and integrated dialog tools to create conversation flows between your apps and your users.
@@ -99,7 +99,7 @@ class AssistantV2 extends BaseService {
       'assistant_id': _params.assistant_id
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v2', 'createSession');
+    const sdkHeaders = getSdkHeaders('conversation', 'v2', 'createSession');
  
     const parameters = {
       options: {
@@ -108,7 +108,7 @@ class AssistantV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -157,7 +157,7 @@ class AssistantV2 extends BaseService {
       'session_id': _params.session_id
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v2', 'deleteSession');
+    const sdkHeaders = getSdkHeaders('conversation', 'v2', 'deleteSession');
  
     const parameters = {
       options: {
@@ -166,7 +166,7 @@ class AssistantV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
       }),
@@ -227,7 +227,7 @@ class AssistantV2 extends BaseService {
       'session_id': _params.session_id
     };
 
-    const defaultHeaders = getDefaultHeaders('conversation', 'v2', 'message');
+    const sdkHeaders = getSdkHeaders('conversation', 'v2', 'message');
  
     const parameters = {
       options: {
@@ -238,7 +238,7 @@ class AssistantV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),

@@ -16,9 +16,8 @@
 
 import { AxiosResponse } from 'axios';
 import * as extend from 'extend';
-import { BaseService } from '../lib/base_service';
-import { getDefaultHeaders } from '../lib/common';
-import { getMissingParams } from '../lib/helper';
+import { BaseService, getMissingParams} from 'ibm-cloud-sdk-core';
+import { getSdkHeaders } from '../lib/common';
 
 /**
  * The IBM Watson&trade; Tone Analyzer service uses linguistic analysis to detect emotional and language tones in written text. The service can analyze tone at both the document and sentence levels. You can use the service to understand how your written communications are perceived and then to improve the tone of your communications. Businesses can use the service to learn the tone of their customers' communications and to respond to each customer appropriately, or to understand and improve their customer conversations.  **Note:** Request logging is disabled for the Tone Analyzer service. Regardless of whether you set the `X-Watson-Learning-Opt-Out` request header, the service does not log or retain data from requests and responses.
@@ -132,7 +131,7 @@ class ToneAnalyzerV3 extends BaseService {
       'tones': _params.tones
     };
 
-    const defaultHeaders = getDefaultHeaders('tone_analyzer', 'v3', 'tone');
+    const sdkHeaders = getSdkHeaders('tone_analyzer', 'v3', 'tone');
  
     const parameters = {
       options: {
@@ -143,7 +142,7 @@ class ToneAnalyzerV3 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': _params.content_type,
           'Content-Language': _params.content_language,
@@ -209,7 +208,7 @@ class ToneAnalyzerV3 extends BaseService {
       'utterances': _params.utterances
     };
 
-    const defaultHeaders = getDefaultHeaders('tone_analyzer', 'v3', 'toneChat');
+    const sdkHeaders = getSdkHeaders('tone_analyzer', 'v3', 'toneChat');
  
     const parameters = {
       options: {
@@ -219,7 +218,7 @@ class ToneAnalyzerV3 extends BaseService {
         body,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
           'Content-Language': _params.content_language,

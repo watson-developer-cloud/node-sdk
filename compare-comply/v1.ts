@@ -16,10 +16,8 @@
 
 import { AxiosResponse } from 'axios';
 import * as extend from 'extend';
-import { BaseService } from '../lib/base_service';
-import { getDefaultHeaders } from '../lib/common';
-import { getMissingParams } from '../lib/helper';
-import { FileObject } from '../lib/helper';
+import { BaseService, getMissingParams, FileObject } from 'ibm-cloud-sdk-core';
+import { getSdkHeaders } from '../lib/common';
 
 /**
  * IBM Watson&trade; Compare and Comply analyzes governing documents to provide details about critical aspects of the documents.
@@ -112,7 +110,7 @@ class CompareComplyV1 extends BaseService {
       'model_id': _params.model_id
     };
 
-    const defaultHeaders = getDefaultHeaders('compare-comply', 'v1', 'convertToHtml');
+    const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'convertToHtml');
  
     const parameters = {
       options: {
@@ -122,7 +120,7 @@ class CompareComplyV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'multipart/form-data',
         }, _params.headers),
@@ -183,7 +181,7 @@ class CompareComplyV1 extends BaseService {
       'model_id': _params.model_id
     };
 
-    const defaultHeaders = getDefaultHeaders('compare-comply', 'v1', 'classifyElements');
+    const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'classifyElements');
  
     const parameters = {
       options: {
@@ -193,7 +191,7 @@ class CompareComplyV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'multipart/form-data',
         }, _params.headers),
@@ -254,7 +252,7 @@ class CompareComplyV1 extends BaseService {
       'model_id': _params.model_id
     };
 
-    const defaultHeaders = getDefaultHeaders('compare-comply', 'v1', 'extractTables');
+    const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'extractTables');
  
     const parameters = {
       options: {
@@ -264,7 +262,7 @@ class CompareComplyV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'multipart/form-data',
         }, _params.headers),
@@ -337,7 +335,7 @@ class CompareComplyV1 extends BaseService {
       'model_id': _params.model_id
     };
 
-    const defaultHeaders = getDefaultHeaders('compare-comply', 'v1', 'compareDocuments');
+    const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'compareDocuments');
  
     const parameters = {
       options: {
@@ -347,7 +345,7 @@ class CompareComplyV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'multipart/form-data',
         }, _params.headers),
@@ -400,7 +398,7 @@ class CompareComplyV1 extends BaseService {
       'comment': _params.comment
     };
 
-    const defaultHeaders = getDefaultHeaders('compare-comply', 'v1', 'addFeedback');
+    const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'addFeedback');
  
     const parameters = {
       options: {
@@ -410,7 +408,7 @@ class CompareComplyV1 extends BaseService {
         body,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -459,7 +457,7 @@ class CompareComplyV1 extends BaseService {
       'feedback_id': _params.feedback_id
     };
 
-    const defaultHeaders = getDefaultHeaders('compare-comply', 'v1', 'deleteFeedback');
+    const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'deleteFeedback');
  
     const parameters = {
       options: {
@@ -469,7 +467,7 @@ class CompareComplyV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -518,7 +516,7 @@ class CompareComplyV1 extends BaseService {
       'feedback_id': _params.feedback_id
     };
 
-    const defaultHeaders = getDefaultHeaders('compare-comply', 'v1', 'getFeedback');
+    const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'getFeedback');
  
     const parameters = {
       options: {
@@ -528,7 +526,7 @@ class CompareComplyV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -616,7 +614,7 @@ class CompareComplyV1 extends BaseService {
       'include_total': _params.include_total
     };
 
-    const defaultHeaders = getDefaultHeaders('compare-comply', 'v1', 'listFeedback');
+    const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'listFeedback');
  
     const parameters = {
       options: {
@@ -625,7 +623,7 @@ class CompareComplyV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -714,7 +712,7 @@ class CompareComplyV1 extends BaseService {
       'model_id': _params.model_id
     };
 
-    const defaultHeaders = getDefaultHeaders('compare-comply', 'v1', 'createBatch');
+    const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'createBatch');
  
     const parameters = {
       options: {
@@ -724,7 +722,7 @@ class CompareComplyV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'multipart/form-data',
         }, _params.headers),
@@ -767,7 +765,7 @@ class CompareComplyV1 extends BaseService {
       'batch_id': _params.batch_id
     };
 
-    const defaultHeaders = getDefaultHeaders('compare-comply', 'v1', 'getBatch');
+    const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'getBatch');
  
     const parameters = {
       options: {
@@ -776,7 +774,7 @@ class CompareComplyV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -808,7 +806,7 @@ class CompareComplyV1 extends BaseService {
       });
     }
 
-    const defaultHeaders = getDefaultHeaders('compare-comply', 'v1', 'listBatches');
+    const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'listBatches');
  
     const parameters = {
       options: {
@@ -816,7 +814,7 @@ class CompareComplyV1 extends BaseService {
         method: 'GET',
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -870,7 +868,7 @@ class CompareComplyV1 extends BaseService {
       'batch_id': _params.batch_id
     };
 
-    const defaultHeaders = getDefaultHeaders('compare-comply', 'v1', 'updateBatch');
+    const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'updateBatch');
  
     const parameters = {
       options: {
@@ -880,7 +878,7 @@ class CompareComplyV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),

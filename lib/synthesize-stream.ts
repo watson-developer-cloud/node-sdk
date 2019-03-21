@@ -15,10 +15,10 @@
  */
 
 import extend = require('extend');
+import { qs } from 'ibm-cloud-sdk-core';
 import pick = require('object.pick');
 import { Readable } from 'stream';
 import websocket = require ('websocket');
-import qs = require('./querystring');
 
 const w3cWebSocket = websocket.w3cwebsocket;
 
@@ -33,7 +33,8 @@ const QUERY_PARAMS_ALLOWED = [
   'voice',
   'customization_id',
   'x-watson-learning-opt-out',
-  'x-watson-metadata'
+  'x-watson-metadata',
+  'access_token'
 ];
 
 interface SynthesizeStream extends Readable {
@@ -75,6 +76,7 @@ class SynthesizeStream extends Readable {
    * @param {String} [options.customization_id] - The customization ID (GUID) of a custom voice model that is to be used for the synthesis.
    * @param {String} [options.url='wss://stream.watsonplatform.net/speech-to-text/api'] base URL for service
    * @param {String} [options.watson-token] - Auth token
+   * @param {String} [options.access_token] - IAM auth token
    * @param {Object} [options.headers] - Only works in Node.js, not in browsers. Allows for custom headers to be set, including an Authorization header (preventing the need for auth tokens)
    * @param {Boolean} [options.x-watson-learning-opt-out=false] - set to true to opt-out of allowing Watson to use this request to improve it's services
    * @param {String} [options.x-watson-metadata] - Associates a customer ID with data that is passed over the connection.

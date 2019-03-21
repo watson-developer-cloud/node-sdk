@@ -16,10 +16,8 @@
 
 import { AxiosResponse } from 'axios';
 import * as extend from 'extend';
-import { BaseService } from '../lib/base_service';
-import { getDefaultHeaders } from '../lib/common';
-import { getMissingParams } from '../lib/helper';
-import { FileObject } from '../lib/helper';
+import { BaseService, getMissingParams, FileObject } from 'ibm-cloud-sdk-core';
+import { getSdkHeaders } from '../lib/common';
 
 /**
  * IBM Watson&trade; Natural Language Classifier uses machine learning algorithms to return the top matching predefined classes for short text input. You create and train a classifier to connect predefined classes to example texts so that the service can apply those classes to new inputs.
@@ -94,7 +92,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
       'classifier_id': _params.classifier_id
     };
 
-    const defaultHeaders = getDefaultHeaders('natural_language_classifier', 'v1', 'classify');
+    const sdkHeaders = getSdkHeaders('natural_language_classifier', 'v1', 'classify');
  
     const parameters = {
       options: {
@@ -105,7 +103,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -156,7 +154,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
       'classifier_id': _params.classifier_id
     };
 
-    const defaultHeaders = getDefaultHeaders('natural_language_classifier', 'v1', 'classifyCollection');
+    const sdkHeaders = getSdkHeaders('natural_language_classifier', 'v1', 'classifyCollection');
  
     const parameters = {
       options: {
@@ -167,7 +165,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -233,7 +231,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
       }
     };
 
-    const defaultHeaders = getDefaultHeaders('natural_language_classifier', 'v1', 'createClassifier');
+    const sdkHeaders = getSdkHeaders('natural_language_classifier', 'v1', 'createClassifier');
  
     const parameters = {
       options: {
@@ -242,7 +240,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'multipart/form-data',
         }, _params.headers),
@@ -283,7 +281,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
       'classifier_id': _params.classifier_id
     };
 
-    const defaultHeaders = getDefaultHeaders('natural_language_classifier', 'v1', 'deleteClassifier');
+    const sdkHeaders = getSdkHeaders('natural_language_classifier', 'v1', 'deleteClassifier');
  
     const parameters = {
       options: {
@@ -292,7 +290,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -335,7 +333,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
       'classifier_id': _params.classifier_id
     };
 
-    const defaultHeaders = getDefaultHeaders('natural_language_classifier', 'v1', 'getClassifier');
+    const sdkHeaders = getSdkHeaders('natural_language_classifier', 'v1', 'getClassifier');
  
     const parameters = {
       options: {
@@ -344,7 +342,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),
@@ -376,7 +374,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
       });
     }
 
-    const defaultHeaders = getDefaultHeaders('natural_language_classifier', 'v1', 'listClassifiers');
+    const sdkHeaders = getSdkHeaders('natural_language_classifier', 'v1', 'listClassifiers');
  
     const parameters = {
       options: {
@@ -384,7 +382,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
         method: 'GET',
       },
       defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, defaultHeaders, {
+        headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }, _params.headers),

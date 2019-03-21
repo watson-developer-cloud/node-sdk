@@ -70,6 +70,7 @@
     "./authorization/*.ts",
     "./iam-token-manager/*.ts",
     "./compare-comply/*.ts",
+    "./iam-token-manager/*.ts",
     "index.ts"
   ]
 }
