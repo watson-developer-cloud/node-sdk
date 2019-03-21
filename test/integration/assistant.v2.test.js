@@ -1,13 +1,13 @@
 'use strict';
 
-const watson = require('../../index');
+const AssistantV2 = require('../../assistant/v2');
 const authHelper = require('../resources/auth_helper.js');
 
 const auth = authHelper.auth.assistant;
 auth.version = '2018-09-19';
 
 describe('assistant v2 integration', function() {
-  const assistant = new watson.AssistantV2(auth);
+  const assistant = new AssistantV2(auth);
   const assistant_id = auth.assistant_id;
   let session_id;
 

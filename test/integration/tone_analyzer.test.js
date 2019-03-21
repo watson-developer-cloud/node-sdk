@@ -1,7 +1,7 @@
 'use strict';
 
 const fs = require('fs');
-const watson = require('../../index');
+const ToneAnalyzerV3 = require('../../tone-analyzer/v3');
 const path = require('path');
 const authHelper = require('../resources/auth_helper.js');
 const auth = authHelper.auth;
@@ -12,7 +12,7 @@ describe('tone_analyzer_integration', function() {
   jest.setTimeout(TWENTY_SECONDS);
 
   auth.tone_analyzer.version = '2016-06-19';
-  const tone_analyzer = new watson.ToneAnalyzerV3(auth.tone_analyzer);
+  const tone_analyzer = new ToneAnalyzerV3(auth.tone_analyzer);
 
   it('tone()', function(done) {
     const mobydick = fs.readFileSync(path.join(__dirname, '../resources/tweet.txt'), 'utf8');

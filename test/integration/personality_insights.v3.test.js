@@ -1,7 +1,7 @@
 'use strict';
 
 const fs = require('fs');
-const watson = require('../../index');
+const PersonalityInsightsV3 = require('../../personality-insights/v3');
 const path = require('path');
 const authHelper = require('../resources/auth_helper.js');
 const auth = authHelper.auth;
@@ -13,7 +13,7 @@ describe('personality_insights_v3_integration', function() {
 
   const mobydick = fs.readFileSync(path.join(__dirname, '../resources/mobydick.txt'), 'utf8');
   auth.personality_insights.version = '2016-10-19';
-  const personality_insights = new watson.PersonalityInsightsV3(auth.personality_insights);
+  const personality_insights = new PersonalityInsightsV3(auth.personality_insights);
 
   it('profile with text content', function(done) {
     const params = {

@@ -1,6 +1,6 @@
 'use strict';
 
-const watson = require('../../index');
+const TextToSpeechV1 = require('../../text-to-speech/v1');
 const wav = require('wav');
 const authHelper = require('../resources/auth_helper.js');
 const auth = authHelper.auth;
@@ -10,7 +10,7 @@ const TWENTY_SECONDS = 20000;
 describe('text_to_speech_integration', function() {
   jest.setTimeout(TWENTY_SECONDS);
 
-  const text_to_speech = new watson.TextToSpeechV1(auth.text_to_speech);
+  const text_to_speech = new TextToSpeechV1(auth.text_to_speech);
 
   it('listVoices()', function(done) {
     text_to_speech.listVoices(null, done);

@@ -3,7 +3,7 @@
 const authHelper = require('../resources/auth_helper.js');
 const auth = authHelper.auth;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
-const watson = require('../../index');
+const SpeechToTextV1 = require('../../speech-to-text/v1');
 const fs = require('fs');
 const concat = require('concat-stream');
 const path = require('path');
@@ -15,8 +15,8 @@ const TWO_MINUTES = 2 * 60 * 1000;
 describe('speech_to_text_integration', function() {
   jest.setTimeout(TWENTY_SECONDS);
 
-  const speech_to_text = new watson.SpeechToTextV1(auth.speech_to_text);
-  const speech_to_text_rc = new watson.SpeechToTextV1(auth.speech_to_text_rc);
+  const speech_to_text = new SpeechToTextV1(auth.speech_to_text);
+  const speech_to_text_rc = new SpeechToTextV1(auth.speech_to_text_rc);
 
   it('recognize() (RC) @slow', function(done) {
     const params = {
@@ -120,7 +120,7 @@ describe('speech_to_text_integration', function() {
     it('transcribes audio over a websocket, credentials from environment', function(done) {
       process.env.SPEECH_TO_TEXT_IAM_APIKEY = auth.speech_to_text_rc.iam_apikey;
       process.env.SPEECH_TO_TEXT_URL = auth.speech_to_text_rc.url;
-      const speech_to_text_env = new watson.SpeechToTextV1({});
+      const speech_to_text_env = new SpeechToTextV1({});
       const recognizeStream = speech_to_text_env.recognizeUsingWebSocket();
       recognizeStream.setEncoding('utf8');
       fs.createReadStream(path.join(__dirname, '../resources/weather.flac'))
@@ -148,7 +148,7 @@ describe('speech_to_text_integration', function() {
           },
         ],
       });
-      const speech_to_text_vcap = new watson.SpeechToTextV1({});
+      const speech_to_text_vcap = new SpeechToTextV1({});
       const recognizeStream = speech_to_text_vcap.recognizeUsingWebSocket();
       recognizeStream.setEncoding('utf8');
       fs.createReadStream(path.join(__dirname, '../resources/weather.flac'))
@@ -229,7 +229,7 @@ describe('speech_to_text_integration', function() {
         speech_to_text.whenCustomizationReady(
           { customization_id: customization_id, interval: 250, times: 400 },
           function(err) {
-            if (err && err.code !== watson.SpeechToTextV1.ERR_NO_CORPORA) {
+            if (err && err.code !== SpeechToTextV1.ERR_NO_CORPORA) {
               return done(err);
             }
             test(done);
@@ -239,7 +239,7 @@ describe('speech_to_text_integration', function() {
     }
 
     beforeAll(function(done) {
-      const speech_to_text = new watson.SpeechToTextV1(auth.speech_to_text);
+      const speech_to_text = new SpeechToTextV1(auth.speech_to_text);
       speech_to_text.listLanguageModels({}, function(err, result) {
         if (err) {
           // eslint-disable-next-line no-console
