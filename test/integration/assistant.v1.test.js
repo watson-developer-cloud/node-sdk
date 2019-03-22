@@ -1,6 +1,6 @@
 'use strict';
 
-const watson = require('../../index');
+const AssistantV1 = require('../../assistant/v1');
 const authHelper = require('../resources/auth_helper.js');
 const auth = authHelper.auth;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
@@ -102,7 +102,7 @@ const workspace1 = extend(true, {}, workspace, intents, { language: workspace.la
 describe('assistant_integration', function() {
   jest.setTimeout(TEN_SECONDS);
   auth.conversation.version = '2018-02-16';
-  const assistant = new watson.AssistantV1(auth.conversation);
+  const assistant = new AssistantV1(auth.conversation);
 
   describe('message()', function() {
     it('alternate_intents with custom headers', function(done) {
@@ -132,7 +132,7 @@ describe('assistant_integration', function() {
       const constructorParams = assign({}, auth.assistant, {
         version: '2017-02-03',
       });
-      const assistant = new watson.AssistantV1(constructorParams);
+      const assistant = new AssistantV1(constructorParams);
 
       const params = {
         input: {
@@ -156,7 +156,7 @@ describe('assistant_integration', function() {
       const constructorParams = assign({}, auth.assistant, {
         version: '2016-09-20',
       });
-      const assistant = new watson.AssistantV1(constructorParams);
+      const assistant = new AssistantV1(constructorParams);
 
       const params = {
         input: {
@@ -180,7 +180,7 @@ describe('assistant_integration', function() {
       const constructorParams = assign({}, auth.assistant, {
         version: '2016-07-11',
       });
-      const assistant = new watson.AssistantV1(constructorParams);
+      const assistant = new AssistantV1(constructorParams);
 
       const params = {
         input: {

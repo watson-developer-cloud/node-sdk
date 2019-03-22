@@ -1,6 +1,6 @@
 'use strict';
 
-const watson = require('../../index');
+const LanguageTranslatorV3 = require('../../language-translator/v3');
 const authHelper = require('../resources/auth_helper.js');
 const auth = authHelper.auth;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
@@ -11,7 +11,7 @@ describe('language_translator_integration', function() {
   jest.setTimeout(TWENTY_SECONDS * 2);
 
   auth.language_translator.v3.version = '2018-05-01';
-  const language_translator = new watson.LanguageTranslatorV3(auth.language_translator.v3);
+  const language_translator = new LanguageTranslatorV3(auth.language_translator.v3);
 
   it('listModels()', function(done) {
     language_translator.listModels(null, done);
