@@ -6209,7 +6209,7 @@ describe('deleteCredentials', () => {
     });
   });
 });
-describe('getSourceCredentials', () => {
+describe('getCredentials', () => {
   describe('positive tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsSuccess);
@@ -6224,7 +6224,7 @@ describe('getSourceCredentials', () => {
       };
 
       // invoke method
-      discovery.getSourceCredentials(params, noop);
+      discovery.getCredentials(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -6259,7 +6259,7 @@ describe('getSourceCredentials', () => {
         },
       };
 
-      discovery.getSourceCredentials(params, noop);
+      discovery.getCredentials(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
 
@@ -6273,8 +6273,8 @@ describe('getSourceCredentials', () => {
       };
 
       // invoke method
-      const getSourceCredentialsPromise = discovery.getSourceCredentials(params);
-      expectToBePromise(getSourceCredentialsPromise);
+      const getCredentialsPromise = discovery.getCredentials(params);
+      expectToBePromise(getCredentialsPromise);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -6286,7 +6286,7 @@ describe('getSourceCredentials', () => {
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      discovery.getSourceCredentials(null, () => {
+      discovery.getCredentials(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -6296,7 +6296,7 @@ describe('getSourceCredentials', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'credential_id'];
 
-      discovery.getSourceCredentials({}, err => {
+      discovery.getCredentials({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
@@ -6306,10 +6306,10 @@ describe('getSourceCredentials', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'credential_id'];
 
-      const getSourceCredentialsPromise = discovery.getSourceCredentials();
-      expectToBePromise(getSourceCredentialsPromise);
+      const getCredentialsPromise = discovery.getCredentials();
+      expectToBePromise(getCredentialsPromise);
 
-      getSourceCredentialsPromise.catch(err => {
+      getCredentialsPromise.catch(err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });

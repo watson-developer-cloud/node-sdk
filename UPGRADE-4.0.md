@@ -2,6 +2,7 @@
 - [Breaking changes]
    - [Methods no longer return stream]
    - [Error Handling Compatibility]
+   - [Default Methods Compatibility]
    - [Removed Services]
    - [Constructor Compatibility]
    - [Assistant Compatibility]
@@ -42,6 +43,9 @@ The object returned is of class `Error` and has the following properties:
 
 If a request is made but no response is received (very rare), `error.body` will be an instance of [HTTP.ClientRequest](https://nodejs.org/api/http.html#http_class_http_clientrequest).
 
+### Default Methods Compatibility
+- The method `getCredentials`, which formerly returned an object containing all user credentials (username, password, etc.), has been renamed to `getServiceCredentials`
+
 ### Removed Services
 The following services have been deprecated for an extended period of time and will no longer be supported in the SDK:
 - Dialog
@@ -57,6 +61,9 @@ The following services have been deprecated for an extended period of time and w
 - Parameter name changed: `export` -> `_export` (_All instances_)
 
 ### Discovery Compatibility
+#### getSourceCredentials
+- Method name changed: `getSourceCredentials` -> `getCredentials`
+
 #### getEnvironments
 - Method name changed: `getEnvironments` -> `listEnvironments`
 

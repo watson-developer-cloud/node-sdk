@@ -3822,14 +3822,14 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {NodeJS.ReadableStream|void}
    */
-  public getSourceCredentials(params: DiscoveryV1.GetSourceCredentialsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Credentials>): Promise<any> | void {
+  public getCredentials(params: DiscoveryV1.GetCredentialsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Credentials>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environment_id', 'credential_id'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.getSourceCredentials(params, (err, bod, res) => {
+        this.getCredentials(params, (err, bod, res) => {
           err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
         });
       });
@@ -3845,7 +3845,7 @@ class DiscoveryV1 extends BaseService {
       'credential_id': _params.credential_id
     };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getSourceCredentials');
+    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getCredentials');
  
     const parameters = {
       options: {
@@ -5253,8 +5253,8 @@ namespace DiscoveryV1 {
     return_response?: boolean;
   }
 
-  /** Parameters for the `getSourceCredentials` operation. */
-  export interface GetSourceCredentialsParams {
+  /** Parameters for the `getCredentials` operation. */
+  export interface GetCredentialsParams {
     /** The ID of the environment. */
     environment_id: string;
     /** The unique identifier for a set of source credentials. */

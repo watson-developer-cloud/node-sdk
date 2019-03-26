@@ -279,7 +279,7 @@ describe('discovery_integration', function() {
     });
 
     it('should getCredentials', function(done) {
-      discovery.getSourceCredentials(
+      discovery.getCredentials(
         {
           environment_id,
           credential_id: credentialId,
