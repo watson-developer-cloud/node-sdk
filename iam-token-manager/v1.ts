@@ -18,5 +18,5 @@
  * @module iam-token-manager-v1
  */
 
-import { IamTokenManagerV1 } from 'ibm-cloud-sdk-core/iam-token-manager/v1';
+import { IamTokenManagerV1 } from 'ibm-cloud-sdk-core';
 export = IamTokenManagerV1;
