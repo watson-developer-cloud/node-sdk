@@ -8,6 +8,7 @@
    - [Assistant V1 Compatibility]
    - [Assistant V2 Compatibility]
    - [Discovery Compatibility]
+   - [Compare Comply Compatibility]
    - [Natural Language Classifier Compatibility]
    - [Personality Insights v3 Compatibility]
    - [Speech to Text Compatibility]
@@ -124,6 +125,31 @@ The following services have been deprecated for an extended period of time and w
 
 #### model QueryResultResultMetadata
 - Model name changed: `QueryResultResultMetadata` -> `QueryResultMetadata`
+
+### Compare Comply Compatibility
+#### convertToHtml
+- Parameter name changed: `model_id` -> `model`
+
+#### classifyElements
+- Parameter name changed: `model_id` -> `model`
+
+#### extractTables
+- Parameter name changed: `model_id` -> `model`
+
+#### compareDocuments
+- Parameter name changed: `model_id` -> `model`
+
+#### deleteFeedback
+- Parameter name changed: `model_id` -> `model`
+
+#### getFeedback
+- Parameter name changed: `model_id` -> `model`
+
+#### createBatch
+- Parameter name changed: `model_id` -> `model`
+
+#### updateBatch
+- Parameter name changed: `model_id` -> `model`
 
 ### Natural Language Classifier Compatibility
 #### create
