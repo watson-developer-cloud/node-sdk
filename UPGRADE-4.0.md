@@ -5,7 +5,8 @@
    - [Default Methods Compatibility]
    - [Removed Services]
    - [Constructor Compatibility]
-   - [Assistant Compatibility]
+   - [Assistant V1 Compatibility]
+   - [Assistant V2 Compatibility]
    - [Discovery Compatibility]
    - [Natural Language Classifier Compatibility]
    - [Personality Insights v3 Compatibility]
@@ -57,8 +58,11 @@ The following services have been deprecated for an extended period of time and w
 - Parameter name changed: `version_date` -> `version`
 - The parameter `apikey` is no longer supported
 
-### Assistant Compatibility
+### Assistant V1 Compatibility
 - Parameter name changed: `export` -> `_export` (_All instances_)
+
+### Assistant V2 Compatibility
+- Interface `MessageContextSkill` removed
 
 ### Discovery Compatibility
 #### getSourceCredentials

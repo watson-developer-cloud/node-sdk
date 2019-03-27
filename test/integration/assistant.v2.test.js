@@ -4,7 +4,7 @@ const AssistantV2 = require('../../assistant/v2');
 const authHelper = require('../resources/auth_helper.js');
 
 const auth = authHelper.auth.assistant;
-auth.version = '2018-09-19';
+auth.version = '2019-03-27';
 
 describe('assistant v2 integration', function() {
   const assistant = new AssistantV2(auth);

@@ -16,8 +16,7 @@
 
 import { AxiosResponse } from 'axios';
 import * as extend from 'extend';
-import { BaseService } from 'ibm-cloud-sdk-core';
-import { getMissingParams } from 'ibm-cloud-sdk-core';
+import { BaseService, getMissingParams } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -70,12 +69,12 @@ class AssistantV2 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.assistant_id - Unique identifier of the assistant. You can find the assistant ID of an
    * assistant on the **Assistants** tab of the Watson Assistant tool. For information about creating assistants, see
-   * the [documentation](https://console.bluemix.net/docs/services/assistant/create-assistant.html#creating-assistants).
+   * the [documentation](https://console.bluemix.net/docs/services/assistant/assistant-add.html#assistant-add-task).
    *
    * **Note:** Currently, the v2 API does not support creating assistants.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
   public createSession(params: AssistantV2.CreateSessionParams, callback?: AssistantV2.Callback<AssistantV2.SessionResponse>): Promise<any> | void {
     const _params = extend({}, params);
@@ -100,7 +99,7 @@ class AssistantV2 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('conversation', 'v2', 'createSession');
- 
+
     const parameters = {
       options: {
         url: '/v2/assistants/{assistant_id}/sessions',
@@ -110,7 +109,6 @@ class AssistantV2 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -126,13 +124,13 @@ class AssistantV2 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.assistant_id - Unique identifier of the assistant. You can find the assistant ID of an
    * assistant on the **Assistants** tab of the Watson Assistant tool. For information about creating assistants, see
-   * the [documentation](https://console.bluemix.net/docs/services/assistant/create-assistant.html#creating-assistants).
+   * the [documentation](https://console.bluemix.net/docs/services/assistant/assistant-add.html#assistant-add-task).
    *
    * **Note:** Currently, the v2 API does not support creating assistants.
    * @param {string} params.session_id - Unique identifier of the session.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
   public deleteSession(params: AssistantV2.DeleteSessionParams, callback?: AssistantV2.Callback<AssistantV2.Empty>): Promise<any> | void {
     const _params = extend({}, params);
@@ -158,7 +156,7 @@ class AssistantV2 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('conversation', 'v2', 'deleteSession');
- 
+
     const parameters = {
       options: {
         url: '/v2/assistants/{assistant_id}/sessions/{session_id}',
@@ -189,15 +187,17 @@ class AssistantV2 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.assistant_id - Unique identifier of the assistant. You can find the assistant ID of an
    * assistant on the **Assistants** tab of the Watson Assistant tool. For information about creating assistants, see
-   * the [documentation](https://console.bluemix.net/docs/services/assistant/create-assistant.html#creating-assistants).
+   * the [documentation](https://console.bluemix.net/docs/services/assistant/assistant-add.html#assistant-add-task).
    *
    * **Note:** Currently, the v2 API does not support creating assistants.
    * @param {string} params.session_id - Unique identifier of the session.
-   * @param {MessageInput} [params.input] - The user input.
-   * @param {MessageContext} [params.context] - State information for the conversation.
+   * @param {MessageInput} [params.input] - An input object that includes the input text.
+   * @param {MessageContext} [params.context] - State information for the conversation. The context is stored by the
+   * assistant on a per-session basis. You can use this property to set or modify context variables, which can also be
+   * accessed by dialog nodes.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
   public message(params: AssistantV2.MessageParams, callback?: AssistantV2.Callback<AssistantV2.MessageResponse>): Promise<any> | void {
     const _params = extend({}, params);
@@ -228,12 +228,11 @@ class AssistantV2 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('conversation', 'v2', 'message');
- 
+
     const parameters = {
       options: {
         url: '/v2/assistants/{assistant_id}/sessions/{session_id}/message',
         method: 'POST',
-        json: true,
         body,
         path,
       },
@@ -284,7 +283,7 @@ namespace AssistantV2 {
 
   /** Parameters for the `createSession` operation. */
   export interface CreateSessionParams {
-    /** Unique identifier of the assistant. You can find the assistant ID of an assistant on the **Assistants** tab of the Watson Assistant tool. For information about creating assistants, see the [documentation](https://console.bluemix.net/docs/services/assistant/create-assistant.html#creating-assistants). **Note:** Currently, the v2 API does not support creating assistants. */
+    /** Unique identifier of the assistant. You can find the assistant ID of an assistant on the **Assistants** tab of the Watson Assistant tool. For information about creating assistants, see the [documentation](https://console.bluemix.net/docs/services/assistant/assistant-add.html#assistant-add-task). **Note:** Currently, the v2 API does not support creating assistants. */
     assistant_id: string;
     headers?: Object;
     return_response?: boolean;
@@ -292,7 +291,7 @@ namespace AssistantV2 {
 
   /** Parameters for the `deleteSession` operation. */
   export interface DeleteSessionParams {
-    /** Unique identifier of the assistant. You can find the assistant ID of an assistant on the **Assistants** tab of the Watson Assistant tool. For information about creating assistants, see the [documentation](https://console.bluemix.net/docs/services/assistant/create-assistant.html#creating-assistants). **Note:** Currently, the v2 API does not support creating assistants. */
+    /** Unique identifier of the assistant. You can find the assistant ID of an assistant on the **Assistants** tab of the Watson Assistant tool. For information about creating assistants, see the [documentation](https://console.bluemix.net/docs/services/assistant/assistant-add.html#assistant-add-task). **Note:** Currently, the v2 API does not support creating assistants. */
     assistant_id: string;
     /** Unique identifier of the session. */
     session_id: string;
@@ -302,13 +301,13 @@ namespace AssistantV2 {
 
   /** Parameters for the `message` operation. */
   export interface MessageParams {
-    /** Unique identifier of the assistant. You can find the assistant ID of an assistant on the **Assistants** tab of the Watson Assistant tool. For information about creating assistants, see the [documentation](https://console.bluemix.net/docs/services/assistant/create-assistant.html#creating-assistants). **Note:** Currently, the v2 API does not support creating assistants. */
+    /** Unique identifier of the assistant. You can find the assistant ID of an assistant on the **Assistants** tab of the Watson Assistant tool. For information about creating assistants, see the [documentation](https://console.bluemix.net/docs/services/assistant/assistant-add.html#assistant-add-task). **Note:** Currently, the v2 API does not support creating assistants. */
     assistant_id: string;
     /** Unique identifier of the session. */
     session_id: string;
-    /** The user input. */
+    /** An input object that includes the input text. */
     input?: MessageInput;
-    /** State information for the conversation. */
+    /** State information for the conversation. The context is stored by the assistant on a per-session basis. You can use this property to set or modify context variables, which can also be accessed by dialog nodes. */
     context?: MessageContext;
     headers?: Object;
     return_response?: boolean;
@@ -384,7 +383,7 @@ namespace AssistantV2 {
     typing?: boolean;
     /** The URL of the image. */
     source?: string;
-    /** The title to show before the response. */
+    /** The title or introductory text to show before the response. */
     title?: string;
     /** The description to show with the the response. */
     description?: string;
@@ -416,37 +415,31 @@ namespace AssistantV2 {
     input?: MessageInput;
   }
 
-  /** State information for the conversation. */
+  /** MessageContext. */
   export interface MessageContext {
-    /** Contains information that can be shared by all skills within the Assistant. */
+    /** Information that is shared by all skills used by the Assistant. */
     global?: MessageContextGlobal;
-    /** Contains information specific to particular skills within the Assistant. */
+    /** Information specific to particular skills used by the Assistant. **Note:** Currently, only a single property named `main skill` is supported. This object contains variables that apply to the dialog skill used by the assistant. */
     skills?: MessageContextSkills;
   }
 
-  /** Contains information that can be shared by all skills within the Assistant. */
+  /** Information that is shared by all skills used by the Assistant. */
   export interface MessageContextGlobal {
-    /** Properties that are shared by all skills used by the assistant. */
+    /** Built-in system properties that apply to all skills used by the assistant. */
     system?: MessageContextGlobalSystem;
   }
 
-  /** Properties that are shared by all skills used by the assistant. */
+  /** Built-in system properties that apply to all skills used by the assistant. */
   export interface MessageContextGlobalSystem {
     /** The user time zone. The assistant uses the time zone to correctly resolve relative time references. */
     timezone?: string;
     /** A string value that identifies the user who is interacting with the assistant. The client must provide a unique identifier for each individual end user who accesses the application. For Plus and Premium plans, this user ID is used to identify unique users for billing purposes. This string cannot contain carriage return, newline, or tab characters. */
     user_id?: string;
-    /** A counter that is automatically incremented with each turn of the conversation. A value of 1 indicates that this is the the first turn of a new conversation, which can affect the behavior of some skills. */
+    /** A counter that is automatically incremented with each turn of the conversation. A value of 1 indicates that this is the the first turn of a new conversation, which can affect the behavior of some skills (for example, triggering the start node of a dialog). */
     turn_count?: number;
   }
 
-  /** Contains information specific to a particular skill within the Assistant. */
-  export interface MessageContextSkill {
-    /** Arbitrary variables that can be read and written to by a particular skill within the Assistant. */
-    user_defined?: string;
-  }
-
-  /** Contains information specific to particular skills within the Assistant. */
+  /** Information specific to particular skills used by the Assistant. **Note:** Currently, only a single property named `main skill` is supported. This object contains variables that apply to the dialog skill used by the assistant. */
   export interface MessageContextSkills {
     /** MessageContextSkills accepts additional properties. */
     [propName: string]: any;
@@ -512,7 +505,7 @@ namespace AssistantV2 {
   export interface MessageResponse {
     /** Assistant output to be rendered or processed by the client. */
     output: MessageOutput;
-    /** State information for the conversation. */
+    /** State information for the conversation. The context is stored by the assistant on a per-session basis. You can use this property to access context variables. **Note:** The context is included in message responses only if **return_context**=`true` in the message request. */
     context?: MessageContext;
   }
 
