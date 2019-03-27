@@ -101,7 +101,7 @@ const workspace1 = extend(true, {}, workspace, intents, { language: workspace.la
 
 describe('assistant_integration', function() {
   jest.setTimeout(TEN_SECONDS);
-  auth.conversation.version = '2018-02-16';
+  auth.conversation.version = '2019-03-27';
   const assistant = new AssistantV1(auth.conversation);
 
   describe('message()', function() {

@@ -61,6 +61,12 @@ The following services have been deprecated for an extended period of time and w
 ### Assistant V1 Compatibility
 - Parameter name changed: `export` -> `_export` (_All instances_)
 
+#### updateValue
+- Parameter name changed: `new_type` -> `new_value_type`
+
+#### updateDialogNode
+- Parameter name changed: `new_type` -> `new_node_type`
+
 ### Assistant V2 Compatibility
 - Interface `MessageContextSkill` removed
 
