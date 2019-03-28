@@ -10,7 +10,7 @@ const TWENTY_SECONDS = 20000;
 describe('language_translator_integration', function() {
   jest.setTimeout(TWENTY_SECONDS * 2);
 
-  auth.language_translator.v3.version = '2018-05-01';
+  auth.language_translator.v3.version = '2019-03-27';
   const language_translator = new LanguageTranslatorV3(auth.language_translator.v3);
 
   it('listModels()', function(done) {

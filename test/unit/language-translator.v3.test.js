@@ -1,31 +1,34 @@
 'use strict';
 
-const LanguageTranslatorV3 = require('../../language-translator/v3');
 const helper = require('ibm-cloud-sdk-core');
+const LanguageTranslatorV3 = require('../../language-translator/v3');
 const utils = require('../resources/unitTestUtils');
 
-const missingParamsError = utils.missingParamsError;
-const missingParamsSuccess = utils.missingParamsSuccess;
+const getOptions = utils.getOptions;
 const checkUrlAndMethod = utils.checkUrlAndMethod;
 const checkCallback = utils.checkCallback;
 const checkMediaHeaders = utils.checkMediaHeaders;
-const checkDefaultSuccessArgs = utils.checkDefaultSuccessArgs;
+const missingParamsSuccess = utils.missingParamsSuccess;
+const missingParamsError = utils.missingParamsError;
 const checkForEmptyObject = utils.checkForEmptyObject;
 const checkRequiredParamsHandling = utils.checkRequiredParamsHandling;
-const getOptions = utils.getOptions;
-const expectToBePromise = utils.expectToBePromise;
+
+const checkDefaultSuccessArgs = utils.checkDefaultSuccessArgs;
+const noop = () => {};
 
 const service = {
   username: 'batman',
   password: 'bruce-wayne',
-  url: 'https://gateway.watsonplatform.net/language-translator/api',
+  url: 'https://gateway.watsonplatform.net/language-translator/api/language-translator/api',
   version: '2018-10-18',
 };
 
-const language_translator = new LanguageTranslatorV3(service);
-const createRequestMock = jest.spyOn(language_translator, 'createRequest');
+const languageTranslator = new LanguageTranslatorV3(service);
+const createRequestMock = jest.spyOn(languageTranslator, 'createRequest');
 const missingParamsMock = jest.spyOn(helper, 'getMissingParams');
-const noop = () => {};
+
+// dont actually create a request
+createRequestMock.mockImplementation(noop);
 
 afterEach(() => {
   createRequestMock.mockReset();
@@ -51,7 +54,7 @@ describe('translate', () => {
       };
 
       // invoke method
-      language_translator.translate(params, noop);
+      languageTranslator.translate(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -67,7 +70,6 @@ describe('translate', () => {
       expect(options.body['model_id']).toEqual(model_id);
       expect(options.body['source']).toEqual(source);
       expect(options.body['target']).toEqual(target);
-      expect(options.json).toEqual(true);
     });
 
     test('should prioritize user-given headers', () => {
@@ -83,32 +85,18 @@ describe('translate', () => {
         },
       };
 
-      language_translator.translate(params, noop);
+      languageTranslator.translate(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const text = 'fake_text';
-      const params = {
-        text,
-      };
-
-      // invoke method
-      const translatePromise = language_translator.translate(params);
-      expectToBePromise(translatePromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      language_translator.translate(null, () => {
+      languageTranslator.translate(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -118,26 +106,14 @@ describe('translate', () => {
       // required parameters for this method
       const requiredParams = ['text'];
 
-      language_translator.translate({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['text'];
-
-      const translatePromise = language_translator.translate();
-      expectToBePromise(translatePromise);
-
-      translatePromise.catch(err => {
+      languageTranslator.translate({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('identify', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -151,7 +127,7 @@ describe('identify', () => {
       };
 
       // invoke method
-      language_translator.identify(params, noop);
+      languageTranslator.identify(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -164,7 +140,6 @@ describe('identify', () => {
       const expectedContentType = 'text/plain';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.body).toEqual(text);
-      expect(options.json).toEqual(false);
     });
 
     test('should prioritize user-given headers', () => {
@@ -180,32 +155,18 @@ describe('identify', () => {
         },
       };
 
-      language_translator.identify(params, noop);
+      languageTranslator.identify(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const text = 'fake_text';
-      const params = {
-        text,
-      };
-
-      // invoke method
-      const identifyPromise = language_translator.identify(params);
-      expectToBePromise(identifyPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      language_translator.identify(null, () => {
+      languageTranslator.identify(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -215,26 +176,14 @@ describe('identify', () => {
       // required parameters for this method
       const requiredParams = ['text'];
 
-      language_translator.identify({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['text'];
-
-      const identifyPromise = language_translator.identify();
-      expectToBePromise(identifyPromise);
-
-      identifyPromise.catch(err => {
+      languageTranslator.identify({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('listIdentifiableLanguages', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -245,7 +194,7 @@ describe('listIdentifiableLanguages', () => {
       const params = {};
 
       // invoke method
-      language_translator.listIdentifiableLanguages(params, noop);
+      languageTranslator.listIdentifiableLanguages(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -270,36 +219,23 @@ describe('listIdentifiableLanguages', () => {
         },
       };
 
-      language_translator.listIdentifiableLanguages(params, noop);
+      languageTranslator.listIdentifiableLanguages(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
-    });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const params = {};
-
-      // invoke method
-      const listIdentifiableLanguagesPromise = language_translator.listIdentifiableLanguages(
-        params
-      );
-      expectToBePromise(listIdentifiableLanguagesPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
     test('should not have any problems when no parameters are passed in', () => {
       // invoke the method
-      language_translator.listIdentifiableLanguages({}, noop);
+      languageTranslator.listIdentifiableLanguages();
       checkDefaultSuccessArgs(createRequestMock);
     });
 
     test('should use argument as callback function if only one is passed in', () => {
       // invoke the method
-      language_translator.listIdentifiableLanguages(noop);
+      languageTranslator.listIdentifiableLanguages(noop);
       checkDefaultSuccessArgs(createRequestMock);
     });
   });
 });
+
 describe('createModel', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -308,22 +244,18 @@ describe('createModel', () => {
     test('should pass the right params to createRequest', () => {
       // parameters
       const base_model_id = 'fake_base_model_id';
-      const name = 'fake_name';
       const forced_glossary = 'fake_forced_glossary';
       const parallel_corpus = 'fake_parallel_corpus';
-      const forced_glossary_filename = 'fake_forced_glossary_filename';
-      const parallel_corpus_filename = 'fake_parallel_corpus_filename';
+      const name = 'fake_name';
       const params = {
         base_model_id,
-        name,
         forced_glossary,
         parallel_corpus,
-        forced_glossary_filename,
-        parallel_corpus_filename,
+        name,
       };
 
       // invoke method
-      language_translator.createModel(params, noop);
+      languageTranslator.createModel(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -336,10 +268,8 @@ describe('createModel', () => {
       const expectedContentType = 'multipart/form-data';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.formData['forced_glossary'].data).toEqual(forced_glossary);
-      expect(options.formData['forced_glossary'].filename).toEqual(forced_glossary_filename);
       expect(options.formData['forced_glossary'].contentType).toEqual('application/octet-stream');
       expect(options.formData['parallel_corpus'].data).toEqual(parallel_corpus);
-      expect(options.formData['parallel_corpus'].filename).toEqual(parallel_corpus_filename);
       expect(options.formData['parallel_corpus'].contentType).toEqual('application/octet-stream');
       expect(options.qs['base_model_id']).toEqual(base_model_id);
       expect(options.qs['name']).toEqual(name);
@@ -358,32 +288,18 @@ describe('createModel', () => {
         },
       };
 
-      language_translator.createModel(params, noop);
+      languageTranslator.createModel(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const base_model_id = 'fake_base_model_id';
-      const params = {
-        base_model_id,
-      };
-
-      // invoke method
-      const createModelPromise = language_translator.createModel(params);
-      expectToBePromise(createModelPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      language_translator.createModel(null, () => {
+      languageTranslator.createModel(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -393,26 +309,14 @@ describe('createModel', () => {
       // required parameters for this method
       const requiredParams = ['base_model_id'];
 
-      language_translator.createModel({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['base_model_id'];
-
-      const createModelPromise = language_translator.createModel();
-      expectToBePromise(createModelPromise);
-
-      createModelPromise.catch(err => {
+      languageTranslator.createModel({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('deleteModel', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -426,7 +330,7 @@ describe('deleteModel', () => {
       };
 
       // invoke method
-      language_translator.deleteModel(params, noop);
+      languageTranslator.deleteModel(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -454,32 +358,18 @@ describe('deleteModel', () => {
         },
       };
 
-      language_translator.deleteModel(params, noop);
+      languageTranslator.deleteModel(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const model_id = 'fake_model_id';
-      const params = {
-        model_id,
-      };
-
-      // invoke method
-      const deleteModelPromise = language_translator.deleteModel(params);
-      expectToBePromise(deleteModelPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      language_translator.deleteModel(null, () => {
+      languageTranslator.deleteModel(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -489,26 +379,14 @@ describe('deleteModel', () => {
       // required parameters for this method
       const requiredParams = ['model_id'];
 
-      language_translator.deleteModel({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['model_id'];
-
-      const deleteModelPromise = language_translator.deleteModel();
-      expectToBePromise(deleteModelPromise);
-
-      deleteModelPromise.catch(err => {
+      languageTranslator.deleteModel({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('getModel', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -522,7 +400,7 @@ describe('getModel', () => {
       };
 
       // invoke method
-      language_translator.getModel(params, noop);
+      languageTranslator.getModel(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -550,32 +428,18 @@ describe('getModel', () => {
         },
       };
 
-      language_translator.getModel(params, noop);
+      languageTranslator.getModel(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const model_id = 'fake_model_id';
-      const params = {
-        model_id,
-      };
-
-      // invoke method
-      const getModelPromise = language_translator.getModel(params);
-      expectToBePromise(getModelPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      language_translator.getModel(null, () => {
+      languageTranslator.getModel(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -585,26 +449,14 @@ describe('getModel', () => {
       // required parameters for this method
       const requiredParams = ['model_id'];
 
-      language_translator.getModel({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['model_id'];
-
-      const getModelPromise = language_translator.getModel();
-      expectToBePromise(getModelPromise);
-
-      getModelPromise.catch(err => {
+      languageTranslator.getModel({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('listModels', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -622,7 +474,7 @@ describe('listModels', () => {
       };
 
       // invoke method
-      language_translator.listModels(params, noop);
+      languageTranslator.listModels(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -650,30 +502,18 @@ describe('listModels', () => {
         },
       };
 
-      language_translator.listModels(params, noop);
+      languageTranslator.listModels(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
-    });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const params = {};
-
-      // invoke method
-      const listModelsPromise = language_translator.listModels(params);
-      expectToBePromise(listModelsPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
     test('should not have any problems when no parameters are passed in', () => {
       // invoke the method
-      language_translator.listModels({}, noop);
+      languageTranslator.listModels();
       checkDefaultSuccessArgs(createRequestMock);
     });
 
     test('should use argument as callback function if only one is passed in', () => {
       // invoke the method
-      language_translator.listModels(noop);
+      languageTranslator.listModels(noop);
       checkDefaultSuccessArgs(createRequestMock);
     });
   });

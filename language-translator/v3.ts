@@ -16,8 +16,9 @@
 
 import { AxiosResponse } from 'axios';
 import * as extend from 'extend';
-import { BaseService, FileObject, getMissingParams } from 'ibm-cloud-sdk-core';
+import { BaseService, getMissingParams } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
+import { FileObject } from 'ibm-cloud-sdk-core';
 
 /**
  * IBM Watson&trade; Language Translator translates text from one language to another. The service offers multiple IBM provided translation models that you can customize based on your unique terminology and language. Use Language Translator to take news from across the globe and present it in your language, communicate with your customers in their own language, and more.
@@ -74,7 +75,7 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {string} [params.target] - Translation target language code.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
   public translate(params: LanguageTranslatorV3.TranslateParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationResult>): Promise<any> | void {
     const _params = extend({}, params);
@@ -102,12 +103,11 @@ class LanguageTranslatorV3 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'translate');
- 
+
     const parameters = {
       options: {
         url: '/v3/translate',
         method: 'POST',
-        json: true,
         body,
       },
       defaultOptions: extend(true, {}, this._options, {
@@ -134,7 +134,7 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {string} params.text - Input text in UTF-8 format.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
   public identify(params: LanguageTranslatorV3.IdentifyParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.IdentifiedLanguages>): Promise<any> | void {
     const _params = extend({}, params);
@@ -156,12 +156,11 @@ class LanguageTranslatorV3 extends BaseService {
     const body = _params.text;
 
     const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'identify');
- 
+
     const parameters = {
       options: {
         url: '/v3/identify',
         method: 'POST',
-        json: false,
         body,
       },
       defaultOptions: extend(true, {}, this._options, {
@@ -184,7 +183,7 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {Object} [params] - The parameters to send to the service.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
   public listIdentifiableLanguages(params?: LanguageTranslatorV3.ListIdentifiableLanguagesParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.IdentifiableLanguages>): Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
@@ -199,7 +198,7 @@ class LanguageTranslatorV3 extends BaseService {
     }
 
     const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'listIdentifiableLanguages');
- 
+
     const parameters = {
       options: {
         url: '/v3/identifiable_languages',
@@ -240,8 +239,6 @@ class LanguageTranslatorV3 extends BaseService {
    * available models, use the `List models` method. Usually all IBM provided models are customizable. In addition, all
    * your models that have been created via parallel corpus customization, can be further customized with a forced
    * glossary.
-   * @param {string} [params.name] - An optional model name that you can use to identify the model. Valid characters are
-   * letters, numbers, dashes, underscores, spaces and apostrophes. The maximum length is 32 characters.
    * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.forced_glossary] - A TMX file with your customizations.
    * The customizations in the file completely overwrite the domain translaton data, including high frequency or high
    * confidence phrase translations. You can upload only one glossary with a file size less than 10 MB per call. A
@@ -250,11 +247,11 @@ class LanguageTranslatorV3 extends BaseService {
    * source and target language. You can upload multiple parallel_corpus files in one request. All uploaded
    * parallel_corpus files combined, your parallel corpus must contain at least 5,000 parallel sentences to train
    * successfully.
-   * @param {string} [params.forced_glossary_filename] - The filename for forced_glossary.
-   * @param {string} [params.parallel_corpus_filename] - The filename for parallel_corpus.
+   * @param {string} [params.name] - An optional model name that you can use to identify the model. Valid characters are
+   * letters, numbers, dashes, underscores, spaces and apostrophes. The maximum length is 32 characters.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
   public createModel(params: LanguageTranslatorV3.CreateModelParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationModel>): Promise<any> | void {
     const _params = extend({}, params);
@@ -273,16 +270,13 @@ class LanguageTranslatorV3 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
-
     const formData = {
       'forced_glossary': {
         data: _params.forced_glossary,
-        filename: _params.forced_glossary_filename,
         contentType: 'application/octet-stream'
       },
       'parallel_corpus': {
         data: _params.parallel_corpus,
-        filename: _params.parallel_corpus_filename,
         contentType: 'application/octet-stream'
       }
     };
@@ -293,7 +287,7 @@ class LanguageTranslatorV3 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'createModel');
- 
+
     const parameters = {
       options: {
         url: '/v3/models',
@@ -321,7 +315,7 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {string} params.model_id - Model ID of the model to delete.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
   public deleteModel(params: LanguageTranslatorV3.DeleteModelParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.DeleteModelResult>): Promise<any> | void {
     const _params = extend({}, params);
@@ -346,7 +340,7 @@ class LanguageTranslatorV3 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'deleteModel');
- 
+
     const parameters = {
       options: {
         url: '/v3/models/{model_id}',
@@ -373,7 +367,7 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {string} params.model_id - Model ID of the model to get.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
   public getModel(params: LanguageTranslatorV3.GetModelParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationModel>): Promise<any> | void {
     const _params = extend({}, params);
@@ -398,7 +392,7 @@ class LanguageTranslatorV3 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'getModel');
- 
+
     const parameters = {
       options: {
         url: '/v3/models/{model_id}',
@@ -429,7 +423,7 @@ class LanguageTranslatorV3 extends BaseService {
    * provided base model.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
   public listModels(params?: LanguageTranslatorV3.ListModelsParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationModels>): Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
@@ -450,7 +444,7 @@ class LanguageTranslatorV3 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'listModels');
- 
+
     const parameters = {
       options: {
         url: '/v3/models',
@@ -533,16 +527,12 @@ namespace LanguageTranslatorV3 {
   export interface CreateModelParams {
     /** The model ID of the model to use as the base for customization. To see available models, use the `List models` method. Usually all IBM provided models are customizable. In addition, all your models that have been created via parallel corpus customization, can be further customized with a forced glossary. */
     base_model_id: string;
-    /** An optional model name that you can use to identify the model. Valid characters are letters, numbers, dashes, underscores, spaces and apostrophes. The maximum length is 32 characters. */
-    name?: string;
     /** A TMX file with your customizations. The customizations in the file completely overwrite the domain translaton data, including high frequency or high confidence phrase translations. You can upload only one glossary with a file size less than 10 MB per call. A forced glossary should contain single words or short phrases. */
     forced_glossary?: NodeJS.ReadableStream|FileObject|Buffer;
     /** A TMX file with parallel sentences for source and target language. You can upload multiple parallel_corpus files in one request. All uploaded parallel_corpus files combined, your parallel corpus must contain at least 5,000 parallel sentences to train successfully. */
     parallel_corpus?: NodeJS.ReadableStream|FileObject|Buffer;
-    /** The filename for forced_glossary. */
-    forced_glossary_filename?: string;
-    /** The filename for parallel_corpus. */
-    parallel_corpus_filename?: string;
+    /** An optional model name that you can use to identify the model. Valid characters are letters, numbers, dashes, underscores, spaces and apostrophes. The maximum length is 32 characters. */
+    name?: string;
     headers?: Object;
     return_response?: boolean;
   }
