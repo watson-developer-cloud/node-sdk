@@ -35,6 +35,7 @@ assistant/*.js
 compare-comply/*.js
 iam-token-manager/*.js
 index.js
+sdk.js
 .nyc_output
 **/*.d.ts
 !*/blob.d.ts

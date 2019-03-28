@@ -71,6 +71,6 @@
     "./iam-token-manager/*.ts",
     "./compare-comply/*.ts",
     "./iam-token-manager/*.ts",
-    "index.ts"
+    "sdk.ts"
   ]
 }

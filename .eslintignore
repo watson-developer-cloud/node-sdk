@@ -13,4 +13,5 @@ test/resources/auth.js
 lib/*.js
 dialog/v1.js
 index.js
+sdk.js
 scripts/typedoc/
