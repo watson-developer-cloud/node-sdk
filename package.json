@@ -1,6 +1,6 @@
 {
   "name": "watson-developer-cloud",
-  "version": "4.0.0-rc2",
+  "version": "4.0.0",
   "description": "Client library to use the IBM Watson Services",
   "repository": {
     "type": "git",

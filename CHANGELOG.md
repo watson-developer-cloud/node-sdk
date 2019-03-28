@@ -1,3 +1,140 @@
+# [4.0.0](https://github.com/watson-developer-cloud/node-sdk/compare/v3.18.4...v4.0.0) (2019-03-28)
+
+
+### Bug Fixes
+
+* **icp:** disabling ssl verification now works for websocket connection ([f8466c8](https://github.com/watson-developer-cloud/node-sdk/commit/f8466c8))
+* update ibm-cloud-sdk-core to 0.1.1 ([29f87df](https://github.com/watson-developer-cloud/node-sdk/commit/29f87df))
+
+
+### Build System
+
+* remove support for node 4 ([1548413](https://github.com/watson-developer-cloud/node-sdk/commit/1548413))
+
+
+### chore
+
+* remove all code dealing with api_key in the base class ([92d48e2](https://github.com/watson-developer-cloud/node-sdk/commit/92d48e2))
+* **conversation:** remove conversation service and all associated code ([c810de2](https://github.com/watson-developer-cloud/node-sdk/commit/c810de2))
+* **dialog:** remove dialog service and all associated ([7d7408f](https://github.com/watson-developer-cloud/node-sdk/commit/7d7408f))
+* **language-translator-v2:** remove language translator v2 service and all associated code ([83d9232](https://github.com/watson-developer-cloud/node-sdk/commit/83d9232))
+* **personality-insights:** remove Personality Insights v2 ([e5e5302](https://github.com/watson-developer-cloud/node-sdk/commit/e5e5302))
+
+
+### Code Refactoring
+
+* **assistant-v1:** change name of variable `export` to `_export` ([91ed5a4](https://github.com/watson-developer-cloud/node-sdk/commit/91ed5a4))
+* **assistant-v2:** parameter names changed for v4 ([f6adbe9](https://github.com/watson-developer-cloud/node-sdk/commit/f6adbe9))
+* **compare-comply:** parameter names changed for v4 ([908d8e7](https://github.com/watson-developer-cloud/node-sdk/commit/908d8e7))
+* refactor core code to use `axios` instead of `request` for network requests ([f656731](https://github.com/watson-developer-cloud/node-sdk/commit/f656731))
+* **discovery:** remove compatibility layer for discovery ([8571a1f](https://github.com/watson-developer-cloud/node-sdk/commit/8571a1f))
+* **discovery:** rename model `QueryResultResultMetadata` to `QueryResultMetadata` ([b1a124c](https://github.com/watson-developer-cloud/node-sdk/commit/b1a124c))
+* **natural-language-classifier:** remove compatibility layer for natural language classifier ([0ac087c](https://github.com/watson-developer-cloud/node-sdk/commit/0ac087c))
+* **natural-language-understanding:** remove compatibility layer for natural language understanding ([359cc79](https://github.com/watson-developer-cloud/node-sdk/commit/359cc79))
+* **personality-insights-v3:** remove compatibility layer for personality insights v3 ([1b27685](https://github.com/watson-developer-cloud/node-sdk/commit/1b27685))
+* **speech-to-text:** remove compatibility layer for speech to text ([310bdd0](https://github.com/watson-developer-cloud/node-sdk/commit/310bdd0))
+* **text-to-speech:** remove compatibility layer for text to speech ([6994d3c](https://github.com/watson-developer-cloud/node-sdk/commit/6994d3c))
+* **tone-analyzer:** remove compatibility layer for tone analyzer ([9f10898](https://github.com/watson-developer-cloud/node-sdk/commit/9f10898))
+* **visual_recognition:** v4 changes ([3957e2d](https://github.com/watson-developer-cloud/node-sdk/commit/3957e2d))
+* in `query` and `federatedQuery`, only accept string values for certain parameters. ([06d7c65](https://github.com/watson-developer-cloud/node-sdk/commit/06d7c65))
+* in discovery, rename `getSourceCredentials` to `getCredentials` ([6fac701](https://github.com/watson-developer-cloud/node-sdk/commit/6fac701))
+* **visual-recognition:** remove compatibility layer for visual recognition ([6377067](https://github.com/watson-developer-cloud/node-sdk/commit/6377067))
+* remove index.ts file as it was deprecated starting in v3 ([4ea3c27](https://github.com/watson-developer-cloud/node-sdk/commit/4ea3c27))
+* remove module for converting training_data to csv ([dd534f6](https://github.com/watson-developer-cloud/node-sdk/commit/dd534f6))
+* require filenames for `createStopwordList` in discovery and `convertToHTML` in compare comply ([8f7c62f](https://github.com/watson-developer-cloud/node-sdk/commit/8f7c62f))
+* stop using cookies in requests ([09e0e91](https://github.com/watson-developer-cloud/node-sdk/commit/09e0e91))
+
+
+### Features
+
+* **discovery:** add new methods: `createTokenizationDictionary`, `deleteTokenizationDictionary`, and `getTokenizationDictionaryStatus` ([d5ba660](https://github.com/watson-developer-cloud/node-sdk/commit/d5ba660))
+* **discovery:** new parameters added to match updates to the service ([838b044](https://github.com/watson-developer-cloud/node-sdk/commit/838b044))
+* add `sort` query parameter to `getWorkspace()` ([1df75ac](https://github.com/watson-developer-cloud/node-sdk/commit/1df75ac))
+* add model `MessageContextSkill` ([15a4c7f](https://github.com/watson-developer-cloud/node-sdk/commit/15a4c7f))
+* new error formatter, provides the same information regardless of service ([c324ab0](https://github.com/watson-developer-cloud/node-sdk/commit/c324ab0))
+* The SDK now returns a Promise for all methods if a callback is not specified. Callbacks can still be used for backwards compatibility. ([fd6e20b](https://github.com/watson-developer-cloud/node-sdk/commit/fd6e20b))
+
+
+### BREAKING CHANGES
+
+* **visual_recognition:** For `updateClassifier` and `createClassifier`, the parameter `{classname}_positive_examples` is changed to a map called `positive_examples` with classnames as keys.
+
+See the migration guide, UPGRADE-4.0.md, for more information.
+* Node 4 will no longer be supported, considered during development, or tested with.
+
+To migrate your code, upgrade to a newer major version of Node.
+* **assistant-v2:** For `updateValue`, parameter `new_type` is changed to `new_value_type`. For `updateDialogNode`, parameter `new_type` is changed to `new_node_type`.
+* These method renames are breaking changes. Update the method names to migrate your code.
+* There is no more `index.ts` file, so importing with `require('watson-developer-cloud')` will no longer work.
+
+To migrate your code, import only the services that you need, e.g. `require('watson-developer-cloud/speech-to-text/v1')`.
+
+Using the file `sdk.ts` to export all of the services for browserification
+* The methods `createStopwordList` in discovery and `convertToHTML` in comply comply now have new, required parameters
+
+To migrate your code, include the parameter `stopword_filename` for `createStopwordList`, and `filename` for `convertToHTML`
+* **assistant-v1:** The Assistant v1 parameter `export` is now `_export` is all instances.
+
+To migrate your code, change any use of the `export` parameter to `_export`.
+* The SDK used to document and allow array values for these parameters, converting them to strings to be sent to the service.
+
+To migrate your code, convert any array values for these parameters to comma-separated values in a string.
+* The module `json-training-to-csv` is no longer available.
+
+To migrate your code, provide `training_data` to NLC as a CSV file.
+* Cookies will no longer be sent or stored in requests. This should have very little impact on usage but is techincally a breaking change.
+
+This affects internal functionality but has no effect on client code.
+* Errors objects returned from service errors are now different
+
+To migrate your code, see the upgrade guide for the new error structure:
+* Network responses received in callback function may now have different structures (results and errors). Requests no longer return a Stream.
+
+See the UPGRADE-4.0.md file for more information.
+* **personality-insights:** Personality Insights v2 is no longer available in the SDK
+
+To migrate your code, use Personality Insights v3:
+* **compare-comply:** Parameter `model_id` has been changed to `model` for the following methods: convertToHtml, classifyElements, extractTables, compareDocuments, deleteFeedback, getFeedback, createBatch, and updateBatch
+* **speech-to-text:** Deprecated methods in Speech to Text are no longer available. Changed parameter names are no longer interally corrected.
+
+To migrate your code, use the methods and parameters currently available with the service as documented here: https://www.ibm.com/watson/developercloud/speech-to-text/api/v1/node.html?node
+* **text-to-speech:** Deprecated methods in Text to Speech are no longer available. Changed parameter names are no longer interally corrected.
+
+To migrate your code, use the methods and parameters currently available with the service as documented here: https://www.ibm.com/watson/developercloud/text-to-speech/api/v1/node.html?node
+* **visual-recognition:** Deprecated methods in Visual Recognition are no longer available. Changed parameter names are no longer interally corrected.
+
+To migrate your code, use the methods and parameters currently available with the service as documented here: https://www.ibm.com/watson/developercloud/visual-recognition/api/v3/node.html?node
+* **tone-analyzer:** Deprecated methods in Tone Analyzer are no longer available. Changed parameter names are no longer interally corrected.
+
+To migrate your code, use the methods and parameters currently available with the service as documented here: https://www.ibm.com/watson/developercloud/tone-analyzer/api/v3/node.html?node
+* **personality-insights-v3:** Deprecated methods in Personality Insights v3 are no longer available. Changed parameter names are no longer interally corrected.
+
+To migrate your code, use the methods and parameters currently available with the service as documented here: https://www.ibm.com/watson/developercloud/personality-insights/api/v3/node.html?node
+* **natural-language-understanding:** The `version_date` parameter in Natural Language Understanding is no longer supported.
+
+To migrate your code, use the parameter name `version` instead.
+* **natural-language-classifier:** Deprecated methods in Natural Language Classifier are no longer available. Changed parameter names are no longer interally corrected.
+
+To migrate your code, use the methods and parameters currently available with the service as documented here: https://www.ibm.com/watson/developercloud/natural-language-classifier/api/v1/node.html?node
+* **discovery:** Deprecated methods in Discovery are no longer available. Changed parameter names are no longer interally corrected.
+
+To migrate your code, use the methods and parameters currently available with the service as documented here: https://www.ibm.com/watson/developercloud/discovery/api/v1/node.html?node
+* **conversation:** The Conversation service will no longer be available
+
+To migrate your code, use the Assistant v1 or v2 service.
+* **language-translator-v2:** The Language Translator V2 service will no longer be available
+
+To migrate your code, use the Language Translator V3 service.
+* **dialog:** The Dialog service will no longer be available
+
+To migrate your code, use the Assistant v1 or v2 service.
+* Support for the `api_key` parameter has been removed.
+
+For instances of Visual Recognition, use `iam_apikey` to authenticate.
+* **discovery:** The name of the model `QueryResultResultMetadata` has been changed to `QueryResultMetadata`
+
+To migrate your code, use the model `QueryResultMetadata` instead of `QueryResultResultMetadata`:
+
 ## [3.18.4](https://github.com/watson-developer-cloud/node-sdk/compare/v3.18.3...v3.18.4) (2019-03-28)
 
 
