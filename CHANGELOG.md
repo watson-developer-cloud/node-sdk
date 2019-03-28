@@ -1,3 +1,10 @@
+## [3.18.4](https://github.com/watson-developer-cloud/node-sdk/compare/v3.18.3...v3.18.4) (2019-03-28)
+
+
+### Bug Fixes
+
+* allow users to use `iam_apikey` when authenticating for icp ([cdccbc1](https://github.com/watson-developer-cloud/node-sdk/commit/cdccbc1))
+
 ## [3.18.3](https://github.com/watson-developer-cloud/node-sdk/compare/v3.18.2...v3.18.3) (2019-03-19)
 
 
