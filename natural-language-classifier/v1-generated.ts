@@ -17,8 +17,8 @@
 import { AxiosResponse } from 'axios';
 import * as extend from 'extend';
 import { BaseService, getMissingParams } from 'ibm-cloud-sdk-core';
-import { getSdkHeaders } from '../lib/common';
 import { FileObject } from 'ibm-cloud-sdk-core';
+import { getSdkHeaders } from '../lib/common';
 
 /**
  * IBM Watson&trade; Natural Language Classifier uses machine learning algorithms to return the top matching predefined classes for short text input. You create and train a classifier to connect predefined classes to example texts so that the service can apply those classes to new inputs.

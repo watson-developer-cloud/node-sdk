@@ -17,8 +17,8 @@
 import { AxiosResponse } from 'axios';
 import * as extend from 'extend';
 import { BaseService, getMissingParams } from 'ibm-cloud-sdk-core';
-import { getSdkHeaders } from '../lib/common';
 import { FileObject } from 'ibm-cloud-sdk-core';
+import { getSdkHeaders } from '../lib/common';
 
 /**
  * IBM Watson&trade; Language Translator translates text from one language to another. The service offers multiple IBM provided translation models that you can customize based on your unique terminology and language. Use Language Translator to take news from across the globe and present it in your language, communicate with your customers in their own language, and more.

@@ -17,8 +17,8 @@
 import { AxiosResponse } from 'axios';
 import * as extend from 'extend';
 import { BaseService, getMissingParams } from 'ibm-cloud-sdk-core';
-import { getSdkHeaders } from '../lib/common';
 import { FileObject } from 'ibm-cloud-sdk-core';
+import { getSdkHeaders } from '../lib/common';
 
 /**
  * ### Service Overview The IBM&reg; Text to Speech service provides APIs that use IBM's speech-synthesis capabilities to synthesize text into natural-sounding speech in a variety of languages, dialects, and voices. The service supports at least one male or female voice, sometimes both, for each language. The audio is streamed back to the client with minimal delay.   For speech synthesis, the service supports a synchronous HTTP Representational State Transfer (REST) interface. It also supports a WebSocket interface that provides both plain text and SSML input, including the SSML &lt;mark&gt; element and word timings. SSML is an XML-based markup language that provides text annotation for speech-synthesis applications.   The service also offers a customization interface. You can use the interface to define sounds-like or phonetic translations for words. A sounds-like translation consists of one or more words that, when combined, sound like the word. A phonetic translation is based on the SSML phoneme format for representing a word. You can specify a phonetic translation in standard International Phonetic Alphabet (IPA) representation or in the proprietary IBM Symbolic Phonetic Representation (SPR).
