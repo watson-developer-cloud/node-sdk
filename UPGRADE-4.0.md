@@ -298,6 +298,28 @@ The following services have been deprecated for an extended period of time and w
 
 
 ### Visual Recognition Compatibility
+#### createClassifier
+- Parameter `{classname}_positive_examples` changed to map `positive_examples`
+
+Instead of passing in multiple parameters like `car_positive_examples` and `boat_positive_examples`, the method now takes a single map with the classnames as the keys:
+```json
+"positive_examples": {
+   "car": <car examples>,
+   "boat": <boat examples>
+}
+```
+
+#### updateClassifier
+- Parameter `{classname}_positive_examples` changed to map `positive_examples`
+
+Instead of passing in multiple parameters like `car_positive_examples` and `boat_positive_examples`, the method now takes a single map with the classnames as the keys:
+```json
+"positive_examples": {
+   "car": <car examples>,
+   "boat": <boat examples>
+}
+```
+
 #### classify
 - Parameter name changed: `image_file` -> `images_file`
 - Parameter `parameters` is no longer supported

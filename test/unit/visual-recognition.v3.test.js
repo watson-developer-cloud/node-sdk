@@ -1,32 +1,34 @@
 'use strict';
 
-const VisualRecognitionV3 = require('../../visual-recognition/v3-generated');
 const helper = require('ibm-cloud-sdk-core');
+const VisualRecognitionV3 = require('../../visual-recognition/v3-generated');
 const utils = require('../resources/unitTestUtils');
 
-const missingParamsError = utils.missingParamsError;
-const missingParamsSuccess = utils.missingParamsSuccess;
+const getOptions = utils.getOptions;
 const checkUrlAndMethod = utils.checkUrlAndMethod;
 const checkCallback = utils.checkCallback;
 const checkMediaHeaders = utils.checkMediaHeaders;
-const checkUserHeader = utils.checkUserHeader;
-const checkDefaultSuccessArgs = utils.checkDefaultSuccessArgs;
+const missingParamsSuccess = utils.missingParamsSuccess;
+const missingParamsError = utils.missingParamsError;
 const checkForEmptyObject = utils.checkForEmptyObject;
 const checkRequiredParamsHandling = utils.checkRequiredParamsHandling;
-const getOptions = utils.getOptions;
-const expectToBePromise = utils.expectToBePromise;
+const checkUserHeader = utils.checkUserHeader;
+const checkDefaultSuccessArgs = utils.checkDefaultSuccessArgs;
+const noop = () => {};
 
 const service = {
   username: 'batman',
   password: 'bruce-wayne',
-  url: 'https://gateway.watsonplatform.net/visual-recognition/api',
+  url: 'https://gateway.watsonplatform.net/visual-recognition/api/visual-recognition/api',
   version: '2018-10-18',
 };
 
-const watson_vision_combined = new VisualRecognitionV3(service);
-const createRequestMock = jest.spyOn(watson_vision_combined, 'createRequest');
+const visualRecognition = new VisualRecognitionV3(service);
+const createRequestMock = jest.spyOn(visualRecognition, 'createRequest');
 const missingParamsMock = jest.spyOn(helper, 'getMissingParams');
-const noop = () => {};
+
+// dont actually create a request
+createRequestMock.mockImplementation(noop);
 
 afterEach(() => {
   createRequestMock.mockReset();
@@ -41,26 +43,26 @@ describe('classify', () => {
     test('should pass the right params to createRequest', () => {
       // parameters
       const images_file = 'fake_images_file';
-      const accept_language = 'fake_accept_language';
+      const images_filename = 'fake_images_filename';
+      const images_file_content_type = 'fake_images_file_content_type';
       const url = 'fake_url';
       const threshold = 'fake_threshold';
       const owners = 'fake_owners';
       const classifier_ids = 'fake_classifier_ids';
-      const images_file_content_type = 'fake_images_file_content_type';
-      const images_filename = 'fake_images_filename';
+      const accept_language = 'fake_accept_language';
       const params = {
         images_file,
-        accept_language,
+        images_filename,
+        images_file_content_type,
         url,
         threshold,
         owners,
         classifier_ids,
-        images_file_content_type,
-        images_filename,
+        accept_language,
       };
 
       // invoke method
-      watson_vision_combined.classify(params, noop);
+      visualRecognition.classify(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -93,34 +95,23 @@ describe('classify', () => {
         },
       };
 
-      watson_vision_combined.classify(params, noop);
+      visualRecognition.classify(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
-    });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const params = {};
-
-      // invoke method
-      const classifyPromise = watson_vision_combined.classify(params);
-      expectToBePromise(classifyPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
     test('should not have any problems when no parameters are passed in', () => {
       // invoke the method
-      watson_vision_combined.classify({}, noop);
+      visualRecognition.classify();
       checkDefaultSuccessArgs(createRequestMock);
     });
 
     test('should use argument as callback function if only one is passed in', () => {
       // invoke the method
-      watson_vision_combined.classify(noop);
+      visualRecognition.classify(noop);
       checkDefaultSuccessArgs(createRequestMock);
     });
   });
 });
+
 describe('detectFaces', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -129,20 +120,20 @@ describe('detectFaces', () => {
     test('should pass the right params to createRequest', () => {
       // parameters
       const images_file = 'fake_images_file';
+      const images_filename = 'fake_images_filename';
+      const images_file_content_type = 'fake_images_file_content_type';
       const url = 'fake_url';
       const accept_language = 'fake_accept_language';
-      const images_file_content_type = 'fake_images_file_content_type';
-      const images_filename = 'fake_images_filename';
       const params = {
         images_file,
+        images_filename,
+        images_file_content_type,
         url,
         accept_language,
-        images_file_content_type,
-        images_filename,
       };
 
       // invoke method
-      watson_vision_combined.detectFaces(params, noop);
+      visualRecognition.detectFaces(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -172,34 +163,23 @@ describe('detectFaces', () => {
         },
       };
 
-      watson_vision_combined.detectFaces(params, noop);
+      visualRecognition.detectFaces(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
-    });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const params = {};
-
-      // invoke method
-      const detectFacesPromise = watson_vision_combined.detectFaces(params);
-      expectToBePromise(detectFacesPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
     test('should not have any problems when no parameters are passed in', () => {
       // invoke the method
-      watson_vision_combined.detectFaces({}, noop);
+      visualRecognition.detectFaces();
       checkDefaultSuccessArgs(createRequestMock);
     });
 
     test('should use argument as callback function if only one is passed in', () => {
       // invoke the method
-      watson_vision_combined.detectFaces(noop);
+      visualRecognition.detectFaces(noop);
       checkDefaultSuccessArgs(createRequestMock);
     });
   });
 });
+
 describe('createClassifier', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -208,20 +188,18 @@ describe('createClassifier', () => {
     test('should pass the right params to createRequest', () => {
       // parameters
       const name = 'fake_name';
-      const fake_positive_examples = 'fake_positive_examples';
+      const positive_examples = { fake: 'fake_positive_examples' };
       const negative_examples = 'fake_negative_examples';
-      const fake_positive_examples_filename = 'fake_positive_examples_filename';
       const negative_examples_filename = 'fake_negative_examples_filename';
       const params = {
         name,
-        fake_positive_examples,
+        positive_examples,
         negative_examples,
-        fake_positive_examples_filename,
         negative_examples_filename,
       };
 
       // invoke method
-      watson_vision_combined.createClassifier(params, noop);
+      visualRecognition.createClassifier(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -234,10 +212,7 @@ describe('createClassifier', () => {
       const expectedContentType = 'multipart/form-data';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.formData['name']).toEqual(name);
-      expect(options.formData['fake_positive_examples'].data).toEqual(fake_positive_examples);
-      expect(options.formData['fake_positive_examples'].filename).toEqual(
-        fake_positive_examples_filename
-      );
+      expect(options.formData['fake_positive_examples'].data).toEqual(positive_examples['fake']);
       expect(options.formData['fake_positive_examples'].contentType).toEqual(
         'application/octet-stream'
       );
@@ -249,7 +224,7 @@ describe('createClassifier', () => {
     test('should prioritize user-given headers', () => {
       // parameters
       const name = 'fake_name';
-      const positive_examples = 'fake_positive_examples';
+      const positive_examples = { fake: 'fake_positive_examples' };
       const accept = 'fake/header';
       const contentType = 'fake/header';
       const params = {
@@ -261,34 +236,18 @@ describe('createClassifier', () => {
         },
       };
 
-      watson_vision_combined.createClassifier(params, noop);
+      visualRecognition.createClassifier(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const name = 'fake_name';
-      const classname_positive_examples = 'fake_positive_examples';
-      const params = {
-        name,
-        classname_positive_examples,
-      };
-
-      // invoke method
-      const createClassifierPromise = watson_vision_combined.createClassifier(params);
-      expectToBePromise(createClassifierPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      watson_vision_combined.createClassifier(null, () => {
+      visualRecognition.createClassifier(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -296,28 +255,16 @@ describe('createClassifier', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['name', '<classname>_positive_examples'];
+      const requiredParams = ['name', 'positive_examples'];
 
-      watson_vision_combined.createClassifier({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['name', '<classname>_positive_examples'];
-
-      const createClassifierPromise = watson_vision_combined.createClassifier();
-      expectToBePromise(createClassifierPromise);
-
-      createClassifierPromise.catch(err => {
+      visualRecognition.createClassifier({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('deleteClassifier', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -331,7 +278,7 @@ describe('deleteClassifier', () => {
       };
 
       // invoke method
-      watson_vision_combined.deleteClassifier(params, noop);
+      visualRecognition.deleteClassifier(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -341,7 +288,7 @@ describe('deleteClassifier', () => {
       checkUrlAndMethod(options, '/v3/classifiers/{classifier_id}', 'DELETE');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['classifier_id']).toEqual(classifier_id);
     });
@@ -359,32 +306,18 @@ describe('deleteClassifier', () => {
         },
       };
 
-      watson_vision_combined.deleteClassifier(params, noop);
+      visualRecognition.deleteClassifier(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const classifier_id = 'fake_classifier_id';
-      const params = {
-        classifier_id,
-      };
-
-      // invoke method
-      const deleteClassifierPromise = watson_vision_combined.deleteClassifier(params);
-      expectToBePromise(deleteClassifierPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      watson_vision_combined.deleteClassifier(null, () => {
+      visualRecognition.deleteClassifier(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -394,26 +327,14 @@ describe('deleteClassifier', () => {
       // required parameters for this method
       const requiredParams = ['classifier_id'];
 
-      watson_vision_combined.deleteClassifier({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['classifier_id'];
-
-      const deleteClassifierPromise = watson_vision_combined.deleteClassifier();
-      expectToBePromise(deleteClassifierPromise);
-
-      deleteClassifierPromise.catch(err => {
+      visualRecognition.deleteClassifier({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('getClassifier', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -427,7 +348,7 @@ describe('getClassifier', () => {
       };
 
       // invoke method
-      watson_vision_combined.getClassifier(params, noop);
+      visualRecognition.getClassifier(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -437,7 +358,7 @@ describe('getClassifier', () => {
       checkUrlAndMethod(options, '/v3/classifiers/{classifier_id}', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['classifier_id']).toEqual(classifier_id);
     });
@@ -455,32 +376,18 @@ describe('getClassifier', () => {
         },
       };
 
-      watson_vision_combined.getClassifier(params, noop);
+      visualRecognition.getClassifier(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const classifier_id = 'fake_classifier_id';
-      const params = {
-        classifier_id,
-      };
-
-      // invoke method
-      const getClassifierPromise = watson_vision_combined.getClassifier(params);
-      expectToBePromise(getClassifierPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      watson_vision_combined.getClassifier(null, () => {
+      visualRecognition.getClassifier(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -490,26 +397,14 @@ describe('getClassifier', () => {
       // required parameters for this method
       const requiredParams = ['classifier_id'];
 
-      watson_vision_combined.getClassifier({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['classifier_id'];
-
-      const getClassifierPromise = watson_vision_combined.getClassifier();
-      expectToBePromise(getClassifierPromise);
-
-      getClassifierPromise.catch(err => {
+      visualRecognition.getClassifier({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('listClassifiers', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -523,7 +418,7 @@ describe('listClassifiers', () => {
       };
 
       // invoke method
-      watson_vision_combined.listClassifiers(params, noop);
+      visualRecognition.listClassifiers(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -533,7 +428,7 @@ describe('listClassifiers', () => {
       checkUrlAndMethod(options, '/v3/classifiers', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['verbose']).toEqual(verbose);
     });
@@ -549,34 +444,23 @@ describe('listClassifiers', () => {
         },
       };
 
-      watson_vision_combined.listClassifiers(params, noop);
+      visualRecognition.listClassifiers(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
-    });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const params = {};
-
-      // invoke method
-      const listClassifiersPromise = watson_vision_combined.listClassifiers(params);
-      expectToBePromise(listClassifiersPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
     test('should not have any problems when no parameters are passed in', () => {
       // invoke the method
-      watson_vision_combined.listClassifiers({}, noop);
+      visualRecognition.listClassifiers();
       checkDefaultSuccessArgs(createRequestMock);
     });
 
     test('should use argument as callback function if only one is passed in', () => {
       // invoke the method
-      watson_vision_combined.listClassifiers(noop);
+      visualRecognition.listClassifiers(noop);
       checkDefaultSuccessArgs(createRequestMock);
     });
   });
 });
+
 describe('updateClassifier', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -585,20 +469,18 @@ describe('updateClassifier', () => {
     test('should pass the right params to createRequest', () => {
       // parameters
       const classifier_id = 'fake_classifier_id';
-      const fake_positive_examples = 'fake_positive_examples';
+      const positive_examples = { fake: 'fake_positive_examples' };
       const negative_examples = 'fake_negative_examples';
-      const fake_positive_examples_filename = 'fake_positive_examples_filename';
       const negative_examples_filename = 'fake_negative_examples_filename';
       const params = {
         classifier_id,
-        fake_positive_examples,
+        positive_examples,
         negative_examples,
-        fake_positive_examples_filename,
         negative_examples_filename,
       };
 
       // invoke method
-      watson_vision_combined.updateClassifier(params, noop);
+      visualRecognition.updateClassifier(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -610,10 +492,7 @@ describe('updateClassifier', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = 'multipart/form-data';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.formData['fake_positive_examples'].data).toEqual(fake_positive_examples);
-      expect(options.formData['fake_positive_examples'].filename).toEqual(
-        fake_positive_examples_filename
-      );
+      expect(options.formData['fake_positive_examples'].data).toEqual(positive_examples['fake']);
       expect(options.formData['fake_positive_examples'].contentType).toEqual(
         'application/octet-stream'
       );
@@ -636,32 +515,18 @@ describe('updateClassifier', () => {
         },
       };
 
-      watson_vision_combined.updateClassifier(params, noop);
+      visualRecognition.updateClassifier(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const classifier_id = 'fake_classifier_id';
-      const params = {
-        classifier_id,
-      };
-
-      // invoke method
-      const updateClassifierPromise = watson_vision_combined.updateClassifier(params);
-      expectToBePromise(updateClassifierPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      watson_vision_combined.updateClassifier(null, () => {
+      visualRecognition.updateClassifier(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -671,26 +536,14 @@ describe('updateClassifier', () => {
       // required parameters for this method
       const requiredParams = ['classifier_id'];
 
-      watson_vision_combined.updateClassifier({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['classifier_id'];
-
-      const updateClassifierPromise = watson_vision_combined.updateClassifier();
-      expectToBePromise(updateClassifierPromise);
-
-      updateClassifierPromise.catch(err => {
+      visualRecognition.updateClassifier({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('getCoreMlModel', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -704,7 +557,7 @@ describe('getCoreMlModel', () => {
       };
 
       // invoke method
-      watson_vision_combined.getCoreMlModel(params, noop);
+      visualRecognition.getCoreMlModel(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -714,9 +567,10 @@ describe('getCoreMlModel', () => {
       checkUrlAndMethod(options, '/v3/classifiers/{classifier_id}/core_ml_model', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/octet-stream';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['classifier_id']).toEqual(classifier_id);
+      expect(options.responseType).toBe('stream');
     });
 
     test('should prioritize user-given headers', () => {
@@ -732,32 +586,18 @@ describe('getCoreMlModel', () => {
         },
       };
 
-      watson_vision_combined.getCoreMlModel(params, noop);
+      visualRecognition.getCoreMlModel(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const classifier_id = 'fake_classifier_id';
-      const params = {
-        classifier_id,
-      };
-
-      // invoke method
-      const getCoreMlModelPromise = watson_vision_combined.getCoreMlModel(params);
-      expectToBePromise(getCoreMlModelPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      watson_vision_combined.getCoreMlModel(null, () => {
+      visualRecognition.getCoreMlModel(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -767,26 +607,14 @@ describe('getCoreMlModel', () => {
       // required parameters for this method
       const requiredParams = ['classifier_id'];
 
-      watson_vision_combined.getCoreMlModel({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['classifier_id'];
-
-      const getCoreMlModelPromise = watson_vision_combined.getCoreMlModel();
-      expectToBePromise(getCoreMlModelPromise);
-
-      getCoreMlModelPromise.catch(err => {
+      visualRecognition.getCoreMlModel({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('deleteUserData', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -800,7 +628,7 @@ describe('deleteUserData', () => {
       };
 
       // invoke method
-      watson_vision_combined.deleteUserData(params, noop);
+      visualRecognition.deleteUserData(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -810,7 +638,7 @@ describe('deleteUserData', () => {
       checkUrlAndMethod(options, '/v3/user_data', 'DELETE');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['customer_id']).toEqual(customer_id);
     });
@@ -828,32 +656,18 @@ describe('deleteUserData', () => {
         },
       };
 
-      watson_vision_combined.deleteUserData(params, noop);
+      visualRecognition.deleteUserData(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const customer_id = 'fake_customer_id';
-      const params = {
-        customer_id,
-      };
-
-      // invoke method
-      const deleteUserDataPromise = watson_vision_combined.deleteUserData(params);
-      expectToBePromise(deleteUserDataPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      watson_vision_combined.deleteUserData(null, () => {
+      visualRecognition.deleteUserData(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -863,20 +677,7 @@ describe('deleteUserData', () => {
       // required parameters for this method
       const requiredParams = ['customer_id'];
 
-      watson_vision_combined.deleteUserData({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['customer_id'];
-
-      const deleteUserDataPromise = watson_vision_combined.deleteUserData();
-      expectToBePromise(deleteUserDataPromise);
-
-      deleteUserDataPromise.catch(err => {
+      visualRecognition.deleteUserData({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });

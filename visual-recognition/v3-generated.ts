@@ -16,7 +16,8 @@
 
 import { AxiosResponse } from 'axios';
 import * as extend from 'extend';
-import { BaseService, FileObject, getMissingParams} from 'ibm-cloud-sdk-core';
+import { BaseService, getMissingParams } from 'ibm-cloud-sdk-core';
+import { FileObject } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -70,8 +71,8 @@ class VisualRecognitionV3 extends BaseService {
    * encoding if it encounters non-ASCII characters.
    *
    * You can also include an image with the **url** parameter.
-   * @param {string} [params.accept_language] - The desired language of parts of the response. See the response for
-   * details.
+   * @param {string} [params.images_filename] - The filename for images_file.
+   * @param {string} [params.images_file_content_type] - The content type of images_file.
    * @param {string} [params.url] - The URL of an image (.gif, .jpg, .png, .tif) to analyze. The minimum recommended
    * pixel density is 32X32 pixels, but the service tends to perform better with images that are at least 224 x 224
    * pixels. The maximum image size is 10 MB.
@@ -94,11 +95,11 @@ class VisualRecognitionV3 extends BaseService {
    * - `default`: Returns classes from thousands of general tags.
    * - `food`: Enhances specificity and accuracy for images of food items.
    * - `explicit`: Evaluates whether the image might be pornographic.
-   * @param {string} [params.images_file_content_type] - The content type of images_file.
-   * @param {string} [params.images_filename] - The filename for images_file.
+   * @param {string} [params.accept_language] - The desired language of parts of the response. See the response for
+   * details.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
   public classify(params?: VisualRecognitionV3.ClassifyParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.ClassifiedImages>): Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
@@ -111,7 +112,6 @@ class VisualRecognitionV3 extends BaseService {
         });
       });
     }
-
     const formData = {
       'images_file': {
         data: _params.images_file,
@@ -125,7 +125,7 @@ class VisualRecognitionV3 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'classify');
- 
+
     const parameters = {
       options: {
         url: '/v3/classify',
@@ -172,6 +172,8 @@ class VisualRecognitionV3 extends BaseService {
    * encoding if it encounters non-ASCII characters.
    *
    * You can also include an image with the **url** parameter.
+   * @param {string} [params.images_filename] - The filename for images_file.
+   * @param {string} [params.images_file_content_type] - The content type of images_file.
    * @param {string} [params.url] - The URL of an image to analyze. Must be in .gif, .jpg, .png, or .tif format. The
    * minimum recommended pixel density is 32X32 pixels, but the service tends to perform better with images that are at
    * least 224 x 224 pixels. The maximum image size is 10 MB. Redirects are followed, so you can use a shortened URL.
@@ -179,13 +181,11 @@ class VisualRecognitionV3 extends BaseService {
    * You can also include images with the **images_file** parameter.
    * @param {string} [params.accept_language] - The desired language of parts of the response. See the response for
    * details.
-   * @param {string} [params.images_file_content_type] - The content type of images_file.
-   * @param {string} [params.images_filename] - The filename for images_file.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public detectFaces(params?: VisualRecognitionV3.DetectFacesParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.DetectedFaces>): NodeJS.ReadableStream | Promise<any> | void {
+  public detectFaces(params?: VisualRecognitionV3.DetectFacesParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.DetectedFaces>): Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
@@ -196,7 +196,6 @@ class VisualRecognitionV3 extends BaseService {
         });
       });
     }
-
     const formData = {
       'images_file': {
         data: _params.images_file,
@@ -207,7 +206,7 @@ class VisualRecognitionV3 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'detectFaces');
- 
+
     const parameters = {
       options: {
         url: '/v3/detect_faces',
@@ -242,8 +241,9 @@ class VisualRecognitionV3 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.name - The name of the new classifier. Encode special characters in UTF-8.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} params.positive_examples - A .zip file of images that depict the
-   * visual subject of a class in the new classifier. You can include more than one positive example file in a call.
+   * @param {Map<string, NodeJS.ReadableStream|FileObject|Buffer>} params.positive_examples - A dictionary that contains
+   * the value for each classname. The value is a .zip file of images that depict the visual subject of a class in the
+   * new classifier. You can include more than one positive example file in a call.
    *
    * Specify the parameter name by appending `_positive_examples` to the class name. For example,
    * `goldenretriever_positive_examples` creates the class **goldenretriever**.
@@ -256,19 +256,15 @@ class VisualRecognitionV3 extends BaseService {
    * depict the visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images.
    *
    * Encode special characters in the file name in UTF-8.
-   * @param {string} [params.positive_examples_filename] - The filename for positive_examples.
-   *
-   * Specify the filename by appending `_positive_examples_filename` to the class name. For example,
-   * the filename parameter for `goldenretriever_positive_examples` would be `goldenretriever_positive_examples_filename`
    * @param {string} [params.negative_examples_filename] - The filename for negative_examples.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public createClassifier(params: VisualRecognitionV3.CreateClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>): NodeJS.ReadableStream | Promise<any> | void {
+  public createClassifier(params: VisualRecognitionV3.CreateClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['name'];
+    const requiredParams = ['name', 'positive_examples'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
@@ -278,23 +274,10 @@ class VisualRecognitionV3 extends BaseService {
       });
     }
 
-    const positiveExamplesKeys = Object.keys(_params).filter(key => {
-      return key.match(/^.+_positive_examples$/);
-    });
-    if (positiveExamplesKeys.length === 0) {
-        requiredParams.push('<classname>_positive_examples');
-    }
-
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    if (_params.negative_examples && !_params.negative_examples_filename) {
-      console.warn(
-        'WARNING: `negative_examples_filename` should be provided if `negative_examples` is not null. This will be REQUIRED in the next major release.'
-      );
-    }
-
     const formData = {
       'name': _params.name,
       'negative_examples': {
@@ -304,21 +287,16 @@ class VisualRecognitionV3 extends BaseService {
       }
     };
 
-    positiveExamplesKeys.forEach(key => {
-      if (!_params[`${key}_filename`]) {
-        console.warn(
-          `WARNING: \`${key}_filename\` should be provided if \`${key}\` is not null. This will be REQUIRED in the next major release.` 
-        );
-      }
-      formData[key] = {
-        data: _params[key],
-        filename: _params[`${key}_filename`],
+    Object.keys(_params.positive_examples || {}).forEach(key => {
+      const partName = `${key}_positive_examples`
+      formData[partName] = {
+        data: _params.positive_examples[key],
         contentType: 'application/octet-stream',
       };
     });
 
     const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'createClassifier');
- 
+
     const parameters = {
       options: {
         url: '/v3/classifiers',
@@ -343,9 +321,9 @@ class VisualRecognitionV3 extends BaseService {
    * @param {string} params.classifier_id - The ID of the classifier.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public deleteClassifier(params: VisualRecognitionV3.DeleteClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Empty>): NodeJS.ReadableStream | Promise<any> | void {
+  public deleteClassifier(params: VisualRecognitionV3.DeleteClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Empty>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['classifier_id'];
@@ -368,7 +346,7 @@ class VisualRecognitionV3 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'deleteClassifier');
- 
+
     const parameters = {
       options: {
         url: '/v3/classifiers/{classifier_id}',
@@ -378,7 +356,6 @@ class VisualRecognitionV3 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -395,9 +372,9 @@ class VisualRecognitionV3 extends BaseService {
    * @param {string} params.classifier_id - The ID of the classifier.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public getClassifier(params: VisualRecognitionV3.GetClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>): NodeJS.ReadableStream | Promise<any> | void {
+  public getClassifier(params: VisualRecognitionV3.GetClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['classifier_id'];
@@ -420,7 +397,7 @@ class VisualRecognitionV3 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'getClassifier');
- 
+
     const parameters = {
       options: {
         url: '/v3/classifiers/{classifier_id}',
@@ -430,7 +407,6 @@ class VisualRecognitionV3 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -446,9 +422,9 @@ class VisualRecognitionV3 extends BaseService {
    * return a brief list of classifiers.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public listClassifiers(params?: VisualRecognitionV3.ListClassifiersParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifiers>): NodeJS.ReadableStream | Promise<any> | void {
+  public listClassifiers(params?: VisualRecognitionV3.ListClassifiersParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifiers>): Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
@@ -465,7 +441,7 @@ class VisualRecognitionV3 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'listClassifiers');
- 
+
     const parameters = {
       options: {
         url: '/v3/classifiers',
@@ -475,7 +451,6 @@ class VisualRecognitionV3 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -499,9 +474,10 @@ class VisualRecognitionV3 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.classifier_id - The ID of the classifier.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.positive_examples] - A .zip file of images that depict the
-   * visual subject of a class in the classifier. The positive examples create or update classes in the classifier. You
-   * can include more than one positive example file in a call.
+   * @param {Map<string, NodeJS.ReadableStream|FileObject|Buffer>} [params.positive_examples] - A dictionary that
+   * contains the value for each classname. The value is a .zip file of images that depict the visual subject of a class
+   * in the classifier. The positive examples create or update classes in the classifier. You can include more than one
+   * positive example file in a call.
    *
    * Specify the parameter name by appending `_positive_examples` to the class name. For example,
    * `goldenretriever_positive_examples` creates the class `goldenretriever`.
@@ -514,16 +490,12 @@ class VisualRecognitionV3 extends BaseService {
    * depict the visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images.
    *
    * Encode special characters in the file name in UTF-8.
-   * @param {string} [params.positive_examples_filename] - The filename for positive_examples.
-   *
-   * Specify the filename by appending `_positive_examples_filename` to the class name. For example,
-   * the filename parameter for `goldenretriever_positive_examples` would be `goldenretriever_positive_examples_filename`
    * @param {string} [params.negative_examples_filename] - The filename for negative_examples.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public updateClassifier(params: VisualRecognitionV3.UpdateClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>): NodeJS.ReadableStream | Promise<any> | void {
+  public updateClassifier(params: VisualRecognitionV3.UpdateClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['classifier_id'];
@@ -536,20 +508,10 @@ class VisualRecognitionV3 extends BaseService {
       });
     }
 
-    const positiveExamplesKeys = Object.keys(_params).filter(key => {
-      return key.match(/^.+_positive_examples$/);
-    });
-
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    if (_params.negative_examples && !_params.negative_examples_filename) {
-      console.warn(
-        'WARNING: `negative_examples_filename` should be provided if `negative_examples` is not null. This will be REQUIRED in the next major release.'
-      );
-    }
-
     const formData = {
       'negative_examples': {
         data: _params.negative_examples,
@@ -558,15 +520,10 @@ class VisualRecognitionV3 extends BaseService {
       }
     };
 
-    positiveExamplesKeys.forEach(key => {
-      if (!_params[`${key}_filename`]) {
-        console.warn(
-          `WARNING: \`${key}_filename\` should be provided if \`${key}\` is not null. This will be REQUIRED in the next major release.` 
-        );
-      }
-      formData[key] = {
-        data: _params[key],
-        filename: _params[`${key}_filename`],
+    Object.keys(_params.positive_examples || {}).forEach(key => {
+      const partName = `${key}_positive_examples`
+      formData[partName] = {
+        data: _params.positive_examples[key],
         contentType: 'application/octet-stream',
       };
     });
@@ -576,7 +533,7 @@ class VisualRecognitionV3 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'updateClassifier');
- 
+
     const parameters = {
       options: {
         url: '/v3/classifiers/{classifier_id}',
@@ -609,9 +566,9 @@ class VisualRecognitionV3 extends BaseService {
    * @param {string} params.classifier_id - The ID of the classifier.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public getCoreMlModel(params: VisualRecognitionV3.GetCoreMlModelParams, callback?: VisualRecognitionV3.Callback<NodeJS.ReadableStream|FileObject|Buffer>): NodeJS.ReadableStream | Promise<any> | void {
+  public getCoreMlModel(params: VisualRecognitionV3.GetCoreMlModelParams, callback?: VisualRecognitionV3.Callback<NodeJS.ReadableStream|FileObject|Buffer>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['classifier_id'];
@@ -634,7 +591,7 @@ class VisualRecognitionV3 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'getCoreMlModel');
- 
+
     const parameters = {
       options: {
         url: '/v3/classifiers/{classifier_id}/core_ml_model',
@@ -645,7 +602,6 @@ class VisualRecognitionV3 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/octet-stream',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -671,9 +627,9 @@ class VisualRecognitionV3 extends BaseService {
    * @param {string} params.customer_id - The customer ID for which all data is to be deleted.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public deleteUserData(params: VisualRecognitionV3.DeleteUserDataParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Empty>): NodeJS.ReadableStream | Promise<any> | void {
+  public deleteUserData(params: VisualRecognitionV3.DeleteUserDataParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Empty>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['customer_id'];
@@ -696,7 +652,7 @@ class VisualRecognitionV3 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'deleteUserData');
- 
+
     const parameters = {
       options: {
         url: '/v3/user_data',
@@ -706,7 +662,6 @@ class VisualRecognitionV3 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -752,8 +707,10 @@ namespace VisualRecognitionV3 {
   export interface ClassifyParams {
     /** An image file (.gif, .jpg, .png, .tif) or .zip file with images. Maximum image size is 10 MB. Include no more than 20 images and limit the .zip file to 100 MB. Encode the image and .zip file names in UTF-8 if they contain non-ASCII characters. The service assumes UTF-8 encoding if it encounters non-ASCII characters. You can also include an image with the **url** parameter. */
     images_file?: NodeJS.ReadableStream|FileObject|Buffer;
-    /** The desired language of parts of the response. See the response for details. */
-    accept_language?: ClassifyConstants.AcceptLanguage | string;
+    /** The filename for images_file. */
+    images_filename?: string;
+    /** The content type of images_file. */
+    images_file_content_type?: string;
     /** The URL of an image (.gif, .jpg, .png, .tif) to analyze. The minimum recommended pixel density is 32X32 pixels, but the service tends to perform better with images that are at least 224 x 224 pixels. The maximum image size is 10 MB. You can also include images with the **images_file** parameter. */
     url?: string;
     /** The minimum score a class must have to be displayed in the response. Set the threshold to `0.0` to return all identified classes. */
@@ -762,10 +719,8 @@ namespace VisualRecognitionV3 {
     owners?: string[];
     /** Which classifiers to apply. Overrides the **owners** parameter. You can specify both custom and built-in classifier IDs. The built-in `default` classifier is used if both **classifier_ids** and **owners** parameters are empty. The following built-in classifier IDs require no training: - `default`: Returns classes from thousands of general tags. - `food`: Enhances specificity and accuracy for images of food items. - `explicit`: Evaluates whether the image might be pornographic. */
     classifier_ids?: string[];
-    /** The content type of images_file. */
-    images_file_content_type?: string;
-    /** The filename for images_file. */
-    images_filename?: string;
+    /** The desired language of parts of the response. See the response for details. */
+    accept_language?: ClassifyConstants.AcceptLanguage | string;
     headers?: Object;
     return_response?: boolean;
   }
@@ -792,14 +747,14 @@ namespace VisualRecognitionV3 {
   export interface DetectFacesParams {
     /** An image file (gif, .jpg, .png, .tif.) or .zip file with images. Limit the .zip file to 100 MB. You can include a maximum of 15 images in a request. Encode the image and .zip file names in UTF-8 if they contain non-ASCII characters. The service assumes UTF-8 encoding if it encounters non-ASCII characters. You can also include an image with the **url** parameter. */
     images_file?: NodeJS.ReadableStream|FileObject|Buffer;
+    /** The filename for images_file. */
+    images_filename?: string;
+    /** The content type of images_file. */
+    images_file_content_type?: string;
     /** The URL of an image to analyze. Must be in .gif, .jpg, .png, or .tif format. The minimum recommended pixel density is 32X32 pixels, but the service tends to perform better with images that are at least 224 x 224 pixels. The maximum image size is 10 MB. Redirects are followed, so you can use a shortened URL. You can also include images with the **images_file** parameter. */
     url?: string;
     /** The desired language of parts of the response. See the response for details. */
     accept_language?: DetectFacesConstants.AcceptLanguage | string;
-    /** The content type of images_file. */
-    images_file_content_type?: string;
-    /** The filename for images_file. */
-    images_filename?: string;
     headers?: Object;
     return_response?: boolean;
   }
@@ -826,12 +781,10 @@ namespace VisualRecognitionV3 {
   export interface CreateClassifierParams {
     /** The name of the new classifier. Encode special characters in UTF-8. */
     name: string;
-    /** A .zip file of images that depict the visual subject of a class in the new classifier. You can include more than one positive example file in a call. Specify the parameter name by appending `_positive_examples` to the class name. For example, `goldenretriever_positive_examples` creates the class **goldenretriever**. Include at least 10 images in .jpg or .png format. The minimum recommended image resolution is 32X32 pixels. The maximum number of images is 10,000 images or 100 MB per .zip file. Encode special characters in the file name in UTF-8. */
-    positive_examples: NodeJS.ReadableStream|FileObject|Buffer;
+    /** A dictionary that contains the value for each classname. The value is a .zip file of images that depict the visual subject of a class in the new classifier. You can include more than one positive example file in a call. Specify the parameter name by appending `_positive_examples` to the class name. For example, `goldenretriever_positive_examples` creates the class **goldenretriever**. Include at least 10 images in .jpg or .png format. The minimum recommended image resolution is 32X32 pixels. The maximum number of images is 10,000 images or 100 MB per .zip file. Encode special characters in the file name in UTF-8. */
+    positive_examples: Map<string, NodeJS.ReadableStream|FileObject|Buffer>;
     /** A .zip file of images that do not depict the visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images. Encode special characters in the file name in UTF-8. */
     negative_examples?: NodeJS.ReadableStream|FileObject|Buffer;
-    /** The filename for positive_examples. */
-    positive_examples_filename?: string;
     /** The filename for negative_examples. */
     negative_examples_filename?: string;
     headers?: Object;
@@ -866,12 +819,10 @@ namespace VisualRecognitionV3 {
   export interface UpdateClassifierParams {
     /** The ID of the classifier. */
     classifier_id: string;
-    /** A .zip file of images that depict the visual subject of a class in the classifier. The positive examples create or update classes in the classifier. You can include more than one positive example file in a call. Specify the parameter name by appending `_positive_examples` to the class name. For example, `goldenretriever_positive_examples` creates the class `goldenretriever`. Include at least 10 images in .jpg or .png format. The minimum recommended image resolution is 32X32 pixels. The maximum number of images is 10,000 images or 100 MB per .zip file. Encode special characters in the file name in UTF-8. */
-    positive_examples?: NodeJS.ReadableStream|FileObject|Buffer;
+    /** A dictionary that contains the value for each classname. The value is a .zip file of images that depict the visual subject of a class in the classifier. The positive examples create or update classes in the classifier. You can include more than one positive example file in a call. Specify the parameter name by appending `_positive_examples` to the class name. For example, `goldenretriever_positive_examples` creates the class `goldenretriever`. Include at least 10 images in .jpg or .png format. The minimum recommended image resolution is 32X32 pixels. The maximum number of images is 10,000 images or 100 MB per .zip file. Encode special characters in the file name in UTF-8. */
+    positive_examples?: Map<string, NodeJS.ReadableStream|FileObject|Buffer>;
     /** A .zip file of images that do not depict the visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images. Encode special characters in the file name in UTF-8. */
     negative_examples?: NodeJS.ReadableStream|FileObject|Buffer;
-    /** The filename for positive_examples. */
-    positive_examples_filename?: string;
     /** The filename for negative_examples. */
     negative_examples_filename?: string;
     headers?: Object;

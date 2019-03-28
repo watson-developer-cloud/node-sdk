@@ -20,7 +20,7 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', functio
 
   const visual_recognition = new VisualRecognitionV3(
     Object.assign({}, auth.visual_recognition_rc.v3, {
-      version: '2018-03-19',
+      version: '2019-03-27',
     })
   );
 

@@ -13,7 +13,7 @@ describe('visual_recognition_integration', function() {
 
   const visual_recognition = new VisualRecognitionV3(
     Object.assign({}, auth.visual_recognition_rc.v3, {
-      version: '2018-10-01',
+      version: '2019-03-27',
     })
   );
 
