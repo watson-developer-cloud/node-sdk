@@ -65,8 +65,9 @@ Credentials are checked for in the following order:
 1. Hard-coded or programatic credentials passed to the service constructor
 
 2. Environment variables:
-- `SERVICE_NAME_USERNAME` and `SERVICE_NAME_PASSWORD` environment properties (or `SERVICE_NAME_API_KEY` when appropriate) and, optionally, `SERVICE_NAME_URL`
+- `SERVICE_NAME_USERNAME` and `SERVICE_NAME_PASSWORD` environment properties
 - If using IAM: `SERVICE_NAME_IAM_APIKEY` and optionally `SERVICE_NAME_IAM_URL`, or `SERVICE_NAME_IAM_ACCESS_TOKEN`
+- Optionally, `SERVICE_NAME_URL`
 
 3. IBM-Cloud-supplied credentials (via the `VCAP_SERVICES` JSON-encoded environment property)
 
@@ -478,10 +479,6 @@ compareComply.compareDocuments(
 
 ```
 
-### Conversation
-
-This service has been renamed to Assistant.
-
 ### Discovery
 
 Use the [Discovery Service][discovery] to search and analyze structured and unstructured data.
@@ -794,10 +791,10 @@ visualRecognition.classify(params, function(err, res) {
 ## Composing services
 
 ### Integration of Tone Analyzer with Conversation
-Sample code for [integrating Tone Analyzer and Conversation][conversation_tone_analyzer_example] is provided in the [examples directory][examples].
+Sample code for [integrating Tone Analyzer and Assistant][assistant_tone_analyzer_example] is provided in the [examples directory][examples].
 
 ## Unauthenticated requests
-By default, the library tries to use Basic Auth and will ask for `api_key` or `username` and `password` and send an `Authorization: Basic XXXXXXX`. You can avoid this by using:
+By default, the library tries to authenticate and will ask for `iam_apikey`, `iam_access_token`, or `username` and `password` to send an `Authorization` header. You can avoid this by using:
 
 `use_unauthenticated`.
 
@@ -857,7 +854,7 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/maste
 [request_github]: https://github.com/request/request
 [examples]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples
 [document_conversion_integration_example]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/document_conversion_integration.v1.js
-[conversation_tone_analyzer_example]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/conversation_tone_analyzer_integration
+[assistant_tone_analyzer_example]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/conversation_tone_analyzer_integration
 [license]: http://www.apache.org/licenses/LICENSE-2.0
 [vcap_services]: https://console.bluemix.net/docs/services/watson/getting-started-variables.html
 [ibm-cloud-onboarding]: http://console.bluemix.net/registration?target=/developer/watson&cm_sp=WatsonPlatform-WatsonServices-_-OnPageNavLink-IBMWatson_SDKs-_-Node
