@@ -11,7 +11,7 @@ const TWENTY_SECONDS = 20000;
 describe('tone_analyzer_integration', function() {
   jest.setTimeout(TWENTY_SECONDS);
 
-  auth.tone_analyzer.version = '2016-06-19';
+  auth.tone_analyzer.version = '2019-03-27';
   const tone_analyzer = new ToneAnalyzerV3(auth.tone_analyzer);
 
   it('tone()', function(done) {
