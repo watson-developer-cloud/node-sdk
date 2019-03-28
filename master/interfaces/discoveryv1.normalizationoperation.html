@@ -105,7 +105,7 @@
 					<div class="tsd-signature tsd-kind-icon">destination_<wbr>field<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/discovery/v1-generated.ts#L5448">discovery/v1-generated.ts:5448</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/discovery/v1-generated.ts#L5969">discovery/v1-generated.ts:5969</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -120,12 +120,12 @@
 					<div class="tsd-signature tsd-kind-icon">operation<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/discovery/v1-generated.ts#L5444">discovery/v1-generated.ts:5444</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/discovery/v1-generated.ts#L5965">discovery/v1-generated.ts:5965</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Identifies what type of operation to perform. <strong>copy</strong> - Copies the value of the <strong>source_field</strong> to the <strong>destination_field</strong> field. If the <strong>destination_field</strong> already exists, then the value of the <strong>source_field</strong> overwrites the original value of the <strong>destination_field</strong>. <strong>move</strong> - Renames (moves) the <strong>source_field</strong> to the <strong>destination_field</strong>. If the <strong>destination_field</strong> already exists, then the value of the <strong>source_field</strong> overwrites the original value of the <strong>destination_field</strong>. Rename is identical to copy, except that the <strong>source_field</strong> is removed after the value has been copied to the <strong>destination_field</strong> (it is the same as a <em>copy</em> followed by a <em>remove</em>). <strong>merge</strong> - Merges the value of the <strong>source_field</strong> with the value of the <strong>destination_field</strong>. The <strong>destination_field</strong> is converted into an array if it is not already an array, and the value of the <strong>source_field</strong> is appended to the array. This operation removes the <strong>source_field</strong> after the merge. If the <strong>source_field</strong> does not exist in the current document, then the <strong>destination_field</strong> is still converted into an array (if it is not an array already). This conversion ensures the type for <strong>destination_field</strong> is consistent across all documents. <strong>remove</strong> - Deletes the <strong>source_field</strong> field. The <strong>destination_field</strong> is ignored for this operation. <strong>remove_nulls</strong> - Removes all nested null (blank) field values from the JSON tree. <strong>source_field</strong> and <strong>destination_field</strong> are ignored by this operation because _remove_nulls_ operates on the entire JSON tree. Typically, <strong>remove_nulls</strong> is invoked as the last normalization operation (if it is invoked at all, it can be time-expensive).</p>
+							<p>Identifies what type of operation to perform. <strong>copy</strong> - Copies the value of the <strong>source_field</strong> to the <strong>destination_field</strong> field. If the <strong>destination_field</strong> already exists, then the value of the <strong>source_field</strong> overwrites the original value of the <strong>destination_field</strong>. <strong>move</strong> - Renames (moves) the <strong>source_field</strong> to the <strong>destination_field</strong>. If the <strong>destination_field</strong> already exists, then the value of the <strong>source_field</strong> overwrites the original value of the <strong>destination_field</strong>. Rename is identical to copy, except that the <strong>source_field</strong> is removed after the value has been copied to the <strong>destination_field</strong> (it is the same as a <em>copy</em> followed by a <em>remove</em>). <strong>merge</strong> - Merges the value of the <strong>source_field</strong> with the value of the <strong>destination_field</strong>. The <strong>destination_field</strong> is converted into an array if it is not already an array, and the value of the <strong>source_field</strong> is appended to the array. This operation removes the <strong>source_field</strong> after the merge. If the <strong>source_field</strong> does not exist in the current document, then the <strong>destination_field</strong> is still converted into an array (if it is not an array already). This conversion ensures the type for <strong>destination_field</strong> is consistent across all documents. <strong>remove</strong> - Deletes the <strong>source_field</strong> field. The <strong>destination_field</strong> is ignored for this operation. <strong>remove_nulls</strong> - Removes all nested null (blank) field values from the ingested document. <strong>source_field</strong> and <strong>destination_field</strong> are ignored by this operation because <em>remove</em>nulls_ operates on the entire ingested document. Typically, <strong>remove_nulls</strong> is invoked as the last normalization operation (if it is invoked at all, it can be time-expensive).</p>
 						</div>
 					</div>
 				</section>
@@ -135,7 +135,7 @@
 					<div class="tsd-signature tsd-kind-icon">source_<wbr>field<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/discovery/v1-generated.ts#L5446">discovery/v1-generated.ts:5446</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/discovery/v1-generated.ts#L5967">discovery/v1-generated.ts:5967</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -168,12 +168,6 @@
 					<li class=" tsd-kind-class">
 						<a href="../classes/comparecomplyv1.html" class="tsd-kind-icon">Compare<wbr>Comply<wbr>V1</a>
 					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/conversationv1.html" class="tsd-kind-icon">Conversation<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/dialogv1.html" class="tsd-kind-icon">Dialog<wbr>V1</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
@@ -205,9 +199,6 @@
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/naturallanguageunderstandingv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Understanding<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/personalityinsightsv2.html" class="tsd-kind-icon">Personality<wbr>Insights<wbr>V2</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/personalityinsightsv3.html" class="tsd-kind-icon">Personality<wbr>Insights<wbr>V3</a>

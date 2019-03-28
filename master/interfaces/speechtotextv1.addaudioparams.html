@@ -96,6 +96,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.addaudioparams.html#content_type" class="tsd-kind-icon">content_<wbr>type</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.addaudioparams.html#customization_id" class="tsd-kind-icon">customization_<wbr>id</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.addaudioparams.html#headers" class="tsd-kind-icon">headers</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.addaudioparams.html#return_response" class="tsd-kind-icon">return_<wbr>response</a></li>
 							</ul>
 						</section>
 					</div>
@@ -109,7 +110,7 @@
 					<div class="tsd-signature tsd-kind-icon">allow_<wbr>overwrite<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/speech-to-text/v1-generated.ts#L3751">speech-to-text/v1-generated.ts:3751</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/speech-to-text/v1-generated.ts#L4086">speech-to-text/v1-generated.ts:4086</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -124,12 +125,12 @@
 					<div class="tsd-signature tsd-kind-icon">audio_<wbr>name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/speech-to-text/v1-generated.ts#L3743">speech-to-text/v1-generated.ts:3743</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/speech-to-text/v1-generated.ts#L4080">speech-to-text/v1-generated.ts:4080</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The name of the new audio resource for the custom acoustic model. Use a localized name that matches the language of the custom model and reflects the contents of the resource. <em> Include a maximum of 128 characters in the name. </em> Do not include spaces, slashes, or backslashes in the name. * Do not use the name of an audio resource that has already been added to the custom model.</p>
+							<p>The name of the new audio resource for the custom acoustic model. Use a localized name that matches the language of the custom model and reflects the contents of the resource. * Include a maximum of 128 characters in the name. * Do not include spaces, slashes, or backslashes in the name. * Do not use the name of an audio resource that has already been added to the custom model.</p>
 						</div>
 					</div>
 				</section>
@@ -139,7 +140,7 @@
 					<div class="tsd-signature tsd-kind-icon">audio_<wbr>resource<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">FileObject</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/speech-to-text/v1-generated.ts#L3745">speech-to-text/v1-generated.ts:3745</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/speech-to-text/v1-generated.ts#L4082">speech-to-text/v1-generated.ts:4082</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -154,12 +155,12 @@
 					<div class="tsd-signature tsd-kind-icon">contained_<wbr>content_<wbr>type<span class="tsd-signature-symbol">:</span> <a href="../enums/speechtotextv1.addaudioconstants.containedcontenttype.html" class="tsd-signature-type">ContainedContentType</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/speech-to-text/v1-generated.ts#L3749">speech-to-text/v1-generated.ts:3749</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/speech-to-text/v1-generated.ts#L4084">speech-to-text/v1-generated.ts:4084</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>For an archive-type resource, specifies the format of the audio files that are contained in the archive file. The parameter accepts all of the audio formats that are supported for use with speech recognition, including the <code>rate</code>, <code>channels</code>, and <code>endianness</code> parameters that are used with some formats. For more information, see <strong>Content types for audio-type resources</strong> in the method description.</p>
+							<p><em>For an archive-type resource,*</em> specify the format of the audio files that are contained in the archive file if they are of type <code>audio/alaw</code>, <code>audio/basic</code>, <code>audio/l16</code>, or <code>audio/mulaw</code>. Include the <code>rate</code>, <code>channels</code>, and <code>endianness</code> parameters where necessary. In this case, all audio files that are contained in the archive file must be of the indicated type. For all other audio formats, you can omit the header. In this case, the audio files can be of multiple types as long as they are not of the types listed in the previous paragraph. The parameter accepts all of the audio formats that are supported for use with speech recognition. For more information, see <strong>Content types for audio-type resources</strong> in the method description. <strong>For an audio-type resource,</strong> omit the header.</p>
 						</div>
 					</div>
 				</section>
@@ -169,7 +170,7 @@
 					<div class="tsd-signature tsd-kind-icon">content_<wbr>type<span class="tsd-signature-symbol">:</span> <a href="../enums/speechtotextv1.addaudioconstants.contenttype.html" class="tsd-signature-type">ContentType</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/speech-to-text/v1-generated.ts#L3747">speech-to-text/v1-generated.ts:3747</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/speech-to-text/v1-generated.ts#L4088">speech-to-text/v1-generated.ts:4088</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -184,7 +185,7 @@
 					<div class="tsd-signature tsd-kind-icon">customization_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/speech-to-text/v1-generated.ts#L3741">speech-to-text/v1-generated.ts:3741</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/speech-to-text/v1-generated.ts#L4078">speech-to-text/v1-generated.ts:4078</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -199,7 +200,17 @@
 					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/speech-to-text/v1-generated.ts#L3752">speech-to-text/v1-generated.ts:3752</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/speech-to-text/v1-generated.ts#L4089">speech-to-text/v1-generated.ts:4089</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="return_response" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> return_<wbr>response</h3>
+					<div class="tsd-signature tsd-kind-icon">return_<wbr>response<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/speech-to-text/v1-generated.ts#L4090">speech-to-text/v1-generated.ts:4090</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -228,12 +239,6 @@
 						<a href="../classes/comparecomplyv1.html" class="tsd-kind-icon">Compare<wbr>Comply<wbr>V1</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="../classes/conversationv1.html" class="tsd-kind-icon">Conversation<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/dialogv1.html" class="tsd-kind-icon">Dialog<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
 						<a href="../classes/discoveryv1.html" class="tsd-kind-icon">Discovery<wbr>V1</a>
 					</li>
 					<li class=" tsd-kind-class">
@@ -244,9 +249,6 @@
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/naturallanguageunderstandingv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Understanding<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/personalityinsightsv2.html" class="tsd-kind-icon">Personality<wbr>Insights<wbr>V2</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/personalityinsightsv3.html" class="tsd-kind-icon">Personality<wbr>Insights<wbr>V3</a>
@@ -282,6 +284,9 @@
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="speechtotextv1.addaudioparams.html#headers" class="tsd-kind-icon">headers</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="speechtotextv1.addaudioparams.html#return_response" class="tsd-kind-icon">return_<wbr>response</a>
 									</li>
 								</ul>
 							</li>

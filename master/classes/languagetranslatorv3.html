@@ -141,8 +141,8 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="languagetranslatorv3.html#createmodel" class="tsd-kind-icon">create<wbr>Model</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="languagetranslatorv3.html#createrequest" class="tsd-kind-icon">create<wbr>Request</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="languagetranslatorv3.html#deletemodel" class="tsd-kind-icon">delete<wbr>Model</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="languagetranslatorv3.html#getcredentials" class="tsd-kind-icon">get<wbr>Credentials</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="languagetranslatorv3.html#getmodel" class="tsd-kind-icon">get<wbr>Model</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="languagetranslatorv3.html#getservicecredentials" class="tsd-kind-icon">get<wbr>Service<wbr>Credentials</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="languagetranslatorv3.html#identify" class="tsd-kind-icon">identify</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="languagetranslatorv3.html#listidentifiablelanguages" class="tsd-kind-icon">list<wbr>Identifiable<wbr>Languages</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="languagetranslatorv3.html#listmodels" class="tsd-kind-icon">list<wbr>Models</a></li>
@@ -162,7 +162,7 @@
 					<div class="tsd-signature tsd-kind-icon">Callback<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/language-translator/v3.ts#L440">language-translator/v3.ts:440</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/language-translator/v3.ts#L489">language-translator/v3.ts:489</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -175,7 +175,7 @@
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter-siganture">
 								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, body<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">T</span>, response<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">RequestResponse</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, body<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">T</span>, response<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 								</ul>
 								<ul class="tsd-descriptions">
 									<li class="tsd-description">
@@ -188,7 +188,7 @@
 												<h5><span class="tsd-flag ts-flagOptional">Optional</span> body: <span class="tsd-signature-type">T</span></h5>
 											</li>
 											<li>
-												<h5><span class="tsd-flag ts-flagOptional">Optional</span> response: <span class="tsd-signature-type">RequestResponse</span></h5>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> response: <span class="tsd-signature-type">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 											</li>
 										</ul>
 										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -204,7 +204,7 @@
 					<div class="tsd-signature tsd-kind-icon">Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/language-translator/v3.ts#L427">language-translator/v3.ts:427</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/language-translator/v3.ts#L476">language-translator/v3.ts:476</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -259,7 +259,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides BaseService.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/language-translator/v3.ts#L31">language-translator/v3.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/language-translator/v3.ts#L31">language-translator/v3.ts:31</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -299,7 +299,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseService._options</p>
 						<ul>
-							<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:56</li>
+							<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:52</li>
 						</ul>
 					</aside>
 				</section>
@@ -310,7 +310,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.name</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/language-translator/v3.ts#L30">language-translator/v3.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/language-translator/v3.ts#L30">language-translator/v3.ts:30</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -321,7 +321,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseService.serviceDefaults</p>
 						<ul>
-							<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:57</li>
+							<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:53</li>
 						</ul>
 					</aside>
 				</section>
@@ -332,7 +332,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.serviceVersion</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/language-translator/v3.ts#L31">language-translator/v3.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/language-translator/v3.ts#L31">language-translator/v3.ts:31</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -343,7 +343,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseService.tokenManager</p>
 						<ul>
-							<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:58</li>
+							<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:54</li>
 						</ul>
 					</aside>
 				</section>
@@ -354,7 +354,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.URL</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/language-translator/v3.ts#L29">language-translator/v3.ts:29</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/language-translator/v3.ts#L29">language-translator/v3.ts:29</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -365,13 +365,13 @@
 					<a name="createmodel" class="tsd-anchor"></a>
 					<h3>create<wbr>Model</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>Model<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/languagetranslatorv3.createmodelparams.html" class="tsd-signature-type">CreateModelParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="languagetranslatorv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/languagetranslatorv3.translationmodel.html" class="tsd-signature-type">TranslationModel</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Model<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/languagetranslatorv3.createmodelparams.html" class="tsd-signature-type">CreateModelParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="languagetranslatorv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/languagetranslatorv3.translationmodel.html" class="tsd-signature-type">TranslationModel</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/language-translator/v3.ts#L236">language-translator/v3.ts:236</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/language-translator/v3.ts#L256">language-translator/v3.ts:256</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -401,7 +401,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="languagetranslatorv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/languagetranslatorv3.translationmodel.html" class="tsd-signature-type">TranslationModel</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ReadableStream</span>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
 								<span class="tsd-signature-symbol"> | </span>
 								<span class="tsd-signature-type">void</span>
 							</h4>
@@ -419,7 +419,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.createRequest</p>
 								<ul>
-									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:115</li>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:111</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -452,13 +452,13 @@
 					<a name="deletemodel" class="tsd-anchor"></a>
 					<h3>delete<wbr>Model</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">delete<wbr>Model<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/languagetranslatorv3.deletemodelparams.html" class="tsd-signature-type">DeleteModelParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="languagetranslatorv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/languagetranslatorv3.deletemodelresult.html" class="tsd-signature-type">DeleteModelResult</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>Model<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/languagetranslatorv3.deletemodelparams.html" class="tsd-signature-type">DeleteModelParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="languagetranslatorv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/languagetranslatorv3.deletemodelresult.html" class="tsd-signature-type">DeleteModelResult</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/language-translator/v3.ts#L295">language-translator/v3.ts:295</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/language-translator/v3.ts#L320">language-translator/v3.ts:320</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -479,34 +479,10 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="languagetranslatorv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/languagetranslatorv3.deletemodelresult.html" class="tsd-signature-type">DeleteModelResult</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ReadableStream</span>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
 								<span class="tsd-signature-symbol"> | </span>
 								<span class="tsd-signature-type">void</span>
 							</h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-					<a name="getcredentials" class="tsd-anchor"></a>
-					<h3>get<wbr>Credentials</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Credentials<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Credentials</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Inherited from BaseService.getCredentials</p>
-								<ul>
-									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:82</li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Retrieve this service&#39;s credentials - useful for passing to the authorization service</p>
-								</div>
-								<p>Only returns a URL when token auth is used.</p>
-							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Credentials</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -514,13 +490,13 @@
 					<a name="getmodel" class="tsd-anchor"></a>
 					<h3>get<wbr>Model</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Model<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/languagetranslatorv3.getmodelparams.html" class="tsd-signature-type">GetModelParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="languagetranslatorv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/languagetranslatorv3.translationmodel.html" class="tsd-signature-type">TranslationModel</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Model<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/languagetranslatorv3.getmodelparams.html" class="tsd-signature-type">GetModelParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="languagetranslatorv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/languagetranslatorv3.translationmodel.html" class="tsd-signature-type">TranslationModel</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/language-translator/v3.ts#L339">language-translator/v3.ts:339</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/language-translator/v3.ts#L372">language-translator/v3.ts:372</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -542,10 +518,34 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="languagetranslatorv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/languagetranslatorv3.translationmodel.html" class="tsd-signature-type">TranslationModel</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ReadableStream</span>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
 								<span class="tsd-signature-symbol"> | </span>
 								<span class="tsd-signature-type">void</span>
 							</h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="getservicecredentials" class="tsd-anchor"></a>
+					<h3>get<wbr>Service<wbr>Credentials</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Service<wbr>Credentials<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Credentials</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from BaseService.getServiceCredentials</p>
+								<ul>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:78</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Retrieve this service&#39;s credentials - useful for passing to the authorization service</p>
+								</div>
+								<p>Only returns a URL when token auth is used.</p>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Credentials</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -553,13 +553,13 @@
 					<a name="identify" class="tsd-anchor"></a>
 					<h3>identify</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">identify<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/languagetranslatorv3.identifyparams.html" class="tsd-signature-type">IdentifyParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="languagetranslatorv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/languagetranslatorv3.identifiedlanguages.html" class="tsd-signature-type">IdentifiedLanguages</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">identify<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/languagetranslatorv3.identifyparams.html" class="tsd-signature-type">IdentifyParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="languagetranslatorv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/languagetranslatorv3.identifiedlanguages.html" class="tsd-signature-type">IdentifiedLanguages</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/language-translator/v3.ts#L132">language-translator/v3.ts:132</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/language-translator/v3.ts#L139">language-translator/v3.ts:139</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -580,7 +580,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="languagetranslatorv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/languagetranslatorv3.identifiedlanguages.html" class="tsd-signature-type">IdentifiedLanguages</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ReadableStream</span>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
 								<span class="tsd-signature-symbol"> | </span>
 								<span class="tsd-signature-type">void</span>
 							</h4>
@@ -591,13 +591,13 @@
 					<a name="listidentifiablelanguages" class="tsd-anchor"></a>
 					<h3>list<wbr>Identifiable<wbr>Languages</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">list<wbr>Identifiable<wbr>Languages<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/languagetranslatorv3.listidentifiablelanguagesparams.html" class="tsd-signature-type">ListIdentifiableLanguagesParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="languagetranslatorv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/languagetranslatorv3.identifiablelanguages.html" class="tsd-signature-type">IdentifiableLanguages</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">list<wbr>Identifiable<wbr>Languages<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/languagetranslatorv3.listidentifiablelanguagesparams.html" class="tsd-signature-type">ListIdentifiableLanguagesParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="languagetranslatorv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/languagetranslatorv3.identifiablelanguages.html" class="tsd-signature-type">IdentifiableLanguages</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/language-translator/v3.ts#L174">language-translator/v3.ts:174</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/language-translator/v3.ts#L188">language-translator/v3.ts:188</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -616,7 +616,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="languagetranslatorv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/languagetranslatorv3.identifiablelanguages.html" class="tsd-signature-type">IdentifiableLanguages</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ReadableStream</span>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
 								<span class="tsd-signature-symbol"> | </span>
 								<span class="tsd-signature-type">void</span>
 							</h4>
@@ -627,13 +627,13 @@
 					<a name="listmodels" class="tsd-anchor"></a>
 					<h3>list<wbr>Models</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">list<wbr>Models<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/languagetranslatorv3.listmodelsparams.html" class="tsd-signature-type">ListModelsParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="languagetranslatorv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/languagetranslatorv3.translationmodels.html" class="tsd-signature-type">TranslationModels</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">list<wbr>Models<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/languagetranslatorv3.listmodelsparams.html" class="tsd-signature-type">ListModelsParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="languagetranslatorv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/languagetranslatorv3.translationmodels.html" class="tsd-signature-type">TranslationModels</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/language-translator/v3.ts#L387">language-translator/v3.ts:387</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/language-translator/v3.ts#L428">language-translator/v3.ts:428</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -651,7 +651,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="languagetranslatorv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/languagetranslatorv3.translationmodels.html" class="tsd-signature-type">TranslationModels</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ReadableStream</span>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
 								<span class="tsd-signature-symbol"> | </span>
 								<span class="tsd-signature-type">void</span>
 							</h4>
@@ -669,7 +669,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.preAuthenticate</p>
 								<ul>
-									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:105</li>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:101</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -703,7 +703,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.setAccessToken</p>
 								<ul>
-									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:95</li>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:91</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -733,13 +733,13 @@
 					<a name="translate" class="tsd-anchor"></a>
 					<h3>translate</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">translate<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/languagetranslatorv3.translateparams.html" class="tsd-signature-type">TranslateParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="languagetranslatorv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/languagetranslatorv3.translationresult.html" class="tsd-signature-type">TranslationResult</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">translate<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/languagetranslatorv3.translateparams.html" class="tsd-signature-type">TranslateParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="languagetranslatorv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/languagetranslatorv3.translationresult.html" class="tsd-signature-type">TranslationResult</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/language-translator/v3.ts#L80">language-translator/v3.ts:80</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/language-translator/v3.ts#L80">language-translator/v3.ts:80</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -760,7 +760,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="languagetranslatorv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/languagetranslatorv3.translationresult.html" class="tsd-signature-type">TranslationResult</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ReadableStream</span>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
 								<span class="tsd-signature-symbol"> | </span>
 								<span class="tsd-signature-type">void</span>
 							</h4>
@@ -790,12 +790,6 @@
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="comparecomplyv1.html" class="tsd-kind-icon">Compare<wbr>Comply<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="conversationv1.html" class="tsd-kind-icon">Conversation<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="dialogv1.html" class="tsd-kind-icon">Dialog<wbr>V1</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="discoveryv1.html" class="tsd-kind-icon">Discovery<wbr>V1</a>
@@ -892,11 +886,11 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="languagetranslatorv3.html#deletemodel" class="tsd-kind-icon">delete<wbr>Model</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="languagetranslatorv3.html#getcredentials" class="tsd-kind-icon">get<wbr>Credentials</a>
-							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="languagetranslatorv3.html#getmodel" class="tsd-kind-icon">get<wbr>Model</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="languagetranslatorv3.html#getservicecredentials" class="tsd-kind-icon">get<wbr>Service<wbr>Credentials</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="languagetranslatorv3.html#identify" class="tsd-kind-icon">identify</a>
@@ -925,9 +919,6 @@
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="naturallanguageunderstandingv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Understanding<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="personalityinsightsv2.html" class="tsd-kind-icon">Personality<wbr>Insights<wbr>V2</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="personalityinsightsv3.html" class="tsd-kind-icon">Personality<wbr>Insights<wbr>V3</a>

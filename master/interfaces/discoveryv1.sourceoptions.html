@@ -89,6 +89,8 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.sourceoptions.html#buckets" class="tsd-kind-icon">buckets</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.sourceoptions.html#crawl_all_buckets" class="tsd-kind-icon">crawl_<wbr>all_<wbr>buckets</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.sourceoptions.html#folders" class="tsd-kind-icon">folders</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.sourceoptions.html#objects" class="tsd-kind-icon">objects</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.sourceoptions.html#site_collections" class="tsd-kind-icon">site_<wbr>collections</a></li>
@@ -101,12 +103,42 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="buckets" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> buckets</h3>
+					<div class="tsd-signature tsd-kind-icon">buckets<span class="tsd-signature-symbol">:</span> <a href="discoveryv1.sourceoptionsbuckets.html" class="tsd-signature-type">SourceOptionsBuckets</a><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/discovery/v1-generated.ts#L6265">discovery/v1-generated.ts:6265</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Array of cloud object store buckets to begin crawling. Only valid and required when the <strong>type</strong> field of the <strong>source</strong> object is set to <code>cloud_object_store</code>, and the <strong>crawl_all_buckets</strong> field is <code>false</code> or not specified.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="crawl_all_buckets" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> crawl_<wbr>all_<wbr>buckets</h3>
+					<div class="tsd-signature tsd-kind-icon">crawl_<wbr>all_<wbr>buckets<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/discovery/v1-generated.ts#L6267">discovery/v1-generated.ts:6267</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>When <code>true</code>, all buckets in the specified cloud object store are crawled. If set to <code>true</code>, the <strong>buckets</strong> array must not be specified.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="folders" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> folders</h3>
 					<div class="tsd-signature tsd-kind-icon">folders<span class="tsd-signature-symbol">:</span> <a href="discoveryv1.sourceoptionsfolder.html" class="tsd-signature-type">SourceOptionsFolder</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/discovery/v1-generated.ts#L5724">discovery/v1-generated.ts:5724</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/discovery/v1-generated.ts#L6257">discovery/v1-generated.ts:6257</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -121,7 +153,7 @@
 					<div class="tsd-signature tsd-kind-icon">objects<span class="tsd-signature-symbol">:</span> <a href="discoveryv1.sourceoptionsobject.html" class="tsd-signature-type">SourceOptionsObject</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/discovery/v1-generated.ts#L5726">discovery/v1-generated.ts:5726</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/discovery/v1-generated.ts#L6259">discovery/v1-generated.ts:6259</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -136,7 +168,7 @@
 					<div class="tsd-signature tsd-kind-icon">site_<wbr>collections<span class="tsd-signature-symbol">:</span> <a href="discoveryv1.sourceoptionssitecoll.html" class="tsd-signature-type">SourceOptionsSiteColl</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/discovery/v1-generated.ts#L5728">discovery/v1-generated.ts:5728</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/discovery/v1-generated.ts#L6261">discovery/v1-generated.ts:6261</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -151,7 +183,7 @@
 					<div class="tsd-signature tsd-kind-icon">urls<span class="tsd-signature-symbol">:</span> <a href="discoveryv1.sourceoptionswebcrawl.html" class="tsd-signature-type">SourceOptionsWebCrawl</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/discovery/v1-generated.ts#L5730">discovery/v1-generated.ts:5730</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/discovery/v1-generated.ts#L6263">discovery/v1-generated.ts:6263</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -184,12 +216,6 @@
 					<li class=" tsd-kind-class">
 						<a href="../classes/comparecomplyv1.html" class="tsd-kind-icon">Compare<wbr>Comply<wbr>V1</a>
 					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/conversationv1.html" class="tsd-kind-icon">Conversation<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/dialogv1.html" class="tsd-kind-icon">Dialog<wbr>V1</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
@@ -198,6 +224,12 @@
 							<li class="current tsd-kind-interface tsd-parent-kind-class">
 								<a href="discoveryv1.sourceoptions.html" class="tsd-kind-icon">Source<wbr>Options</a>
 								<ul>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="discoveryv1.sourceoptions.html#buckets" class="tsd-kind-icon">buckets</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="discoveryv1.sourceoptions.html#crawl_all_buckets" class="tsd-kind-icon">crawl_<wbr>all_<wbr>buckets</a>
+									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="discoveryv1.sourceoptions.html#folders" class="tsd-kind-icon">folders</a>
 									</li>
@@ -224,9 +256,6 @@
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/naturallanguageunderstandingv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Understanding<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/personalityinsightsv2.html" class="tsd-kind-icon">Personality<wbr>Insights<wbr>V2</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/personalityinsightsv3.html" class="tsd-kind-icon">Personality<wbr>Insights<wbr>V3</a>

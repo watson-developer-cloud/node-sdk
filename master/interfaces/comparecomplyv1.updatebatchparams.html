@@ -92,7 +92,8 @@
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="comparecomplyv1.updatebatchparams.html#action" class="tsd-kind-icon">action</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="comparecomplyv1.updatebatchparams.html#batch_id" class="tsd-kind-icon">batch_<wbr>id</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="comparecomplyv1.updatebatchparams.html#headers" class="tsd-kind-icon">headers</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="comparecomplyv1.updatebatchparams.html#model_id" class="tsd-kind-icon">model_<wbr>id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="comparecomplyv1.updatebatchparams.html#model" class="tsd-kind-icon">model</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="comparecomplyv1.updatebatchparams.html#return_response" class="tsd-kind-icon">return_<wbr>response</a></li>
 							</ul>
 						</section>
 					</div>
@@ -106,12 +107,12 @@
 					<div class="tsd-signature tsd-kind-icon">action<span class="tsd-signature-symbol">:</span> <a href="../enums/comparecomplyv1.updatebatchconstants.action.html" class="tsd-signature-type">Action</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/compare-comply/v1.ts#L1129">compare-comply/v1.ts:1129</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/compare-comply/v1.ts#L1200">compare-comply/v1.ts:1200</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The action you want to perform on the specified batch-processing request.</p>
+							<p>The action you want to perform on the specified batch-processing job.</p>
 						</div>
 					</div>
 				</section>
@@ -121,12 +122,12 @@
 					<div class="tsd-signature tsd-kind-icon">batch_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/compare-comply/v1.ts#L1127">compare-comply/v1.ts:1127</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/compare-comply/v1.ts#L1198">compare-comply/v1.ts:1198</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The ID of the batch-processing request you want to update.</p>
+							<p>The ID of the batch-processing job you want to update.</p>
 						</div>
 					</div>
 				</section>
@@ -136,24 +137,34 @@
 					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/compare-comply/v1.ts#L1132">compare-comply/v1.ts:1132</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/compare-comply/v1.ts#L1203">compare-comply/v1.ts:1203</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="model_id" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> model_<wbr>id</h3>
-					<div class="tsd-signature tsd-kind-icon">model_<wbr>id<span class="tsd-signature-symbol">:</span> <a href="../enums/comparecomplyv1.updatebatchconstants.modelid.html" class="tsd-signature-type">ModelId</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<a name="model" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> model</h3>
+					<div class="tsd-signature tsd-kind-icon">model<span class="tsd-signature-symbol">:</span> <a href="../enums/comparecomplyv1.updatebatchconstants.model.html" class="tsd-signature-type">Model</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/compare-comply/v1.ts#L1131">compare-comply/v1.ts:1131</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/compare-comply/v1.ts#L1202">compare-comply/v1.ts:1202</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The analysis model to be used by the service. For the <code>/v1/element_classification</code> and <code>/v1/comparison</code> methods, the default is <code>contracts</code>. For the <code>/v1/tables</code> method, the default is <code>tables</code>. These defaults apply to the standalone methods as well as to the methods&#39; use in batch-processing requests.</p>
+							<p>The analysis model to be used by the service. For the <strong>Element classification</strong> and <strong>Compare two documents</strong> methods, the default is <code>contracts</code>. For the <strong>Extract tables</strong> method, the default is <code>tables</code>. These defaults apply to the standalone methods as well as to the methods&#39; use in batch-processing requests.</p>
 						</div>
 					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="return_response" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> return_<wbr>response</h3>
+					<div class="tsd-signature tsd-kind-icon">return_<wbr>response<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/compare-comply/v1.ts#L1204">compare-comply/v1.ts:1204</a></li>
+						</ul>
+					</aside>
 				</section>
 			</section>
 		</div>
@@ -194,7 +205,10 @@
 										<a href="comparecomplyv1.updatebatchparams.html#headers" class="tsd-kind-icon">headers</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="comparecomplyv1.updatebatchparams.html#model_id" class="tsd-kind-icon">model_<wbr>id</a>
+										<a href="comparecomplyv1.updatebatchparams.html#model" class="tsd-kind-icon">model</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="comparecomplyv1.updatebatchparams.html#return_response" class="tsd-kind-icon">return_<wbr>response</a>
 									</li>
 								</ul>
 							</li>
@@ -202,12 +216,6 @@
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-class">
-						<a href="../classes/conversationv1.html" class="tsd-kind-icon">Conversation<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/dialogv1.html" class="tsd-kind-icon">Dialog<wbr>V1</a>
-					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/discoveryv1.html" class="tsd-kind-icon">Discovery<wbr>V1</a>
 					</li>
@@ -219,9 +227,6 @@
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/naturallanguageunderstandingv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Understanding<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/personalityinsightsv2.html" class="tsd-kind-icon">Personality<wbr>Insights<wbr>V2</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/personalityinsightsv3.html" class="tsd-kind-icon">Personality<wbr>Insights<wbr>V3</a>

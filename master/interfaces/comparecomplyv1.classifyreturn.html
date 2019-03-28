@@ -70,7 +70,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>The analysis of objects returned by the <code>/v1/element_classification</code> method.</p>
+						<p>The analysis of objects returned by the <strong>Element classification</strong> method.</p>
 					</div>
 				</div>
 			</section>
@@ -90,6 +90,7 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="comparecomplyv1.classifyreturn.html#contract_amounts" class="tsd-kind-icon">contract_<wbr>amounts</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="comparecomplyv1.classifyreturn.html#contract_type" class="tsd-kind-icon">contract_<wbr>type</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="comparecomplyv1.classifyreturn.html#document" class="tsd-kind-icon">document</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="comparecomplyv1.classifyreturn.html#document_structure" class="tsd-kind-icon">document_<wbr>structure</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="comparecomplyv1.classifyreturn.html#effective_dates" class="tsd-kind-icon">effective_<wbr>dates</a></li>
@@ -112,12 +113,27 @@
 					<div class="tsd-signature tsd-kind-icon">contract_<wbr>amounts<span class="tsd-signature-symbol">:</span> <a href="comparecomplyv1.contractamts.html" class="tsd-signature-type">ContractAmts</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/compare-comply/v1.ts#L1271">compare-comply/v1.ts:1271</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/compare-comply/v1.ts#L1343">compare-comply/v1.ts:1343</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The monetary amounts identified in the input document.</p>
+							<p>The monetary amounts that identify the total amount of the contract that needs to be paid from one party to another.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="contract_type" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> contract_<wbr>type</h3>
+					<div class="tsd-signature tsd-kind-icon">contract_<wbr>type<span class="tsd-signature-symbol">:</span> <a href="comparecomplyv1.contracttype.html" class="tsd-signature-type">ContractType</a><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/compare-comply/v1.ts#L1347">compare-comply/v1.ts:1347</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The document&#39;s contract type or types as declared in the document.</p>
 						</div>
 					</div>
 				</section>
@@ -127,7 +143,7 @@
 					<div class="tsd-signature tsd-kind-icon">document<span class="tsd-signature-symbol">:</span> <a href="comparecomplyv1.document.html" class="tsd-signature-type">Document</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/compare-comply/v1.ts#L1255">compare-comply/v1.ts:1255</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/compare-comply/v1.ts#L1327">compare-comply/v1.ts:1327</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -142,7 +158,7 @@
 					<div class="tsd-signature tsd-kind-icon">document_<wbr>structure<span class="tsd-signature-symbol">:</span> <a href="comparecomplyv1.docstructure.html" class="tsd-signature-type">DocStructure</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/compare-comply/v1.ts#L1265">compare-comply/v1.ts:1265</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/compare-comply/v1.ts#L1337">compare-comply/v1.ts:1337</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -157,12 +173,12 @@
 					<div class="tsd-signature tsd-kind-icon">effective_<wbr>dates<span class="tsd-signature-symbol">:</span> <a href="comparecomplyv1.effectivedates.html" class="tsd-signature-type">EffectiveDates</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/compare-comply/v1.ts#L1269">compare-comply/v1.ts:1269</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/compare-comply/v1.ts#L1341">compare-comply/v1.ts:1341</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The effective dates of the input document.</p>
+							<p>The date or dates on which the document becomes effective.</p>
 						</div>
 					</div>
 				</section>
@@ -172,7 +188,7 @@
 					<div class="tsd-signature tsd-kind-icon">elements<span class="tsd-signature-symbol">:</span> <a href="comparecomplyv1.element.html" class="tsd-signature-type">Element</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/compare-comply/v1.ts#L1261">compare-comply/v1.ts:1261</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/compare-comply/v1.ts#L1333">compare-comply/v1.ts:1333</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -187,12 +203,12 @@
 					<div class="tsd-signature tsd-kind-icon">model_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/compare-comply/v1.ts#L1257">compare-comply/v1.ts:1257</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/compare-comply/v1.ts#L1329">compare-comply/v1.ts:1329</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The analysis model used to classify the input document. For the <code>/v1/element_classification</code> method, the only valid value is <code>contracts</code>.</p>
+							<p>The analysis model used to classify the input document. For the <strong>Element classification</strong> method, the only valid value is <code>contracts</code>.</p>
 						</div>
 					</div>
 				</section>
@@ -202,7 +218,7 @@
 					<div class="tsd-signature tsd-kind-icon">model_<wbr>version<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/compare-comply/v1.ts#L1259">compare-comply/v1.ts:1259</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/compare-comply/v1.ts#L1331">compare-comply/v1.ts:1331</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -217,7 +233,7 @@
 					<div class="tsd-signature tsd-kind-icon">parties<span class="tsd-signature-symbol">:</span> <a href="comparecomplyv1.parties.html" class="tsd-signature-type">Parties</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/compare-comply/v1.ts#L1267">compare-comply/v1.ts:1267</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/compare-comply/v1.ts#L1339">compare-comply/v1.ts:1339</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -232,7 +248,7 @@
 					<div class="tsd-signature tsd-kind-icon">tables<span class="tsd-signature-symbol">:</span> <a href="comparecomplyv1.tables.html" class="tsd-signature-type">Tables</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/compare-comply/v1.ts#L1263">compare-comply/v1.ts:1263</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/compare-comply/v1.ts#L1335">compare-comply/v1.ts:1335</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -247,12 +263,12 @@
 					<div class="tsd-signature tsd-kind-icon">termination_<wbr>dates<span class="tsd-signature-symbol">:</span> <a href="comparecomplyv1.terminationdates.html" class="tsd-signature-type">TerminationDates</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/compare-comply/v1.ts#L1273">compare-comply/v1.ts:1273</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/compare-comply/v1.ts#L1345">compare-comply/v1.ts:1345</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The input document&#39;s termination dates.</p>
+							<p>The date or dates on which the document is to be terminated.</p>
 						</div>
 					</div>
 				</section>
@@ -289,6 +305,9 @@
 										<a href="comparecomplyv1.classifyreturn.html#contract_amounts" class="tsd-kind-icon">contract_<wbr>amounts</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="comparecomplyv1.classifyreturn.html#contract_type" class="tsd-kind-icon">contract_<wbr>type</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="comparecomplyv1.classifyreturn.html#document" class="tsd-kind-icon">document</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
@@ -322,12 +341,6 @@
 				</ul>
 				<ul class="after-current">
 					<li class=" tsd-kind-class">
-						<a href="../classes/conversationv1.html" class="tsd-kind-icon">Conversation<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/dialogv1.html" class="tsd-kind-icon">Dialog<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
 						<a href="../classes/discoveryv1.html" class="tsd-kind-icon">Discovery<wbr>V1</a>
 					</li>
 					<li class=" tsd-kind-class">
@@ -338,9 +351,6 @@
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/naturallanguageunderstandingv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Understanding<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/personalityinsightsv2.html" class="tsd-kind-icon">Personality<wbr>Insights<wbr>V2</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/personalityinsightsv3.html" class="tsd-kind-icon">Personality<wbr>Insights<wbr>V3</a>

@@ -90,8 +90,8 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.example.html#created" class="tsd-kind-icon">created</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.example.html#example_text" class="tsd-kind-icon">example_<wbr>text</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.example.html#mentions" class="tsd-kind-icon">mentions</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.example.html#text" class="tsd-kind-icon">text</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.example.html#updated" class="tsd-kind-icon">updated</a></li>
 							</ul>
 						</section>
@@ -106,37 +106,22 @@
 					<div class="tsd-signature tsd-kind-icon">created<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/assistant/v1.ts#L4211">assistant/v1.ts:4211</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/assistant/v1.ts#L4558">assistant/v1.ts:4558</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The timestamp for creation of the example.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="example_text" class="tsd-anchor"></a>
-					<h3>example_<wbr>text</h3>
-					<div class="tsd-signature tsd-kind-icon">example_<wbr>text<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/assistant/v1.ts#L4209">assistant/v1.ts:4209</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The text of the user input example.</p>
+							<p>The timestamp for creation of the object.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="mentions" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> mentions</h3>
-					<div class="tsd-signature tsd-kind-icon">mentions<span class="tsd-signature-symbol">:</span> <a href="assistantv1.mentions.html" class="tsd-signature-type">Mentions</a><span class="tsd-signature-symbol">[]</span></div>
+					<div class="tsd-signature tsd-kind-icon">mentions<span class="tsd-signature-symbol">:</span> <a href="assistantv1.mention.html" class="tsd-signature-type">Mention</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/assistant/v1.ts#L4215">assistant/v1.ts:4215</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/assistant/v1.ts#L4556">assistant/v1.ts:4556</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -146,17 +131,32 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="text" class="tsd-anchor"></a>
+					<h3>text</h3>
+					<div class="tsd-signature tsd-kind-icon">text<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/assistant/v1.ts#L4554">assistant/v1.ts:4554</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The text of a user input example. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 1024 characters.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="updated" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> updated</h3>
 					<div class="tsd-signature tsd-kind-icon">updated<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/assistant/v1.ts#L4213">assistant/v1.ts:4213</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/assistant/v1.ts#L4560">assistant/v1.ts:4560</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The timestamp for the last update to the example.</p>
+							<p>The timestamp for the most recent update to the object.</p>
 						</div>
 					</div>
 				</section>
@@ -184,10 +184,10 @@
 										<a href="assistantv1.example.html#created" class="tsd-kind-icon">created</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="assistantv1.example.html#example_text" class="tsd-kind-icon">example_<wbr>text</a>
+										<a href="assistantv1.example.html#mentions" class="tsd-kind-icon">mentions</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="assistantv1.example.html#mentions" class="tsd-kind-icon">mentions</a>
+										<a href="assistantv1.example.html#text" class="tsd-kind-icon">text</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="assistantv1.example.html#updated" class="tsd-kind-icon">updated</a>
@@ -208,12 +208,6 @@
 						<a href="../classes/comparecomplyv1.html" class="tsd-kind-icon">Compare<wbr>Comply<wbr>V1</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="../classes/conversationv1.html" class="tsd-kind-icon">Conversation<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/dialogv1.html" class="tsd-kind-icon">Dialog<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
 						<a href="../classes/discoveryv1.html" class="tsd-kind-icon">Discovery<wbr>V1</a>
 					</li>
 					<li class=" tsd-kind-class">
@@ -224,9 +218,6 @@
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/naturallanguageunderstandingv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Understanding<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/personalityinsightsv2.html" class="tsd-kind-icon">Personality<wbr>Insights<wbr>V2</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/personalityinsightsv3.html" class="tsd-kind-icon">Personality<wbr>Insights<wbr>V3</a>

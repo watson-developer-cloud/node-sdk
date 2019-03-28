@@ -92,6 +92,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="toneanalyzerv3.tonechatparams.html#accept_language" class="tsd-kind-icon">accept_<wbr>language</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="toneanalyzerv3.tonechatparams.html#content_language" class="tsd-kind-icon">content_<wbr>language</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="toneanalyzerv3.tonechatparams.html#headers" class="tsd-kind-icon">headers</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="toneanalyzerv3.tonechatparams.html#return_response" class="tsd-kind-icon">return_<wbr>response</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="toneanalyzerv3.tonechatparams.html#utterances" class="tsd-kind-icon">utterances</a></li>
 							</ul>
 						</section>
@@ -106,7 +107,7 @@
 					<div class="tsd-signature tsd-kind-icon">accept_<wbr>language<span class="tsd-signature-symbol">:</span> <a href="../enums/toneanalyzerv3.tonechatconstants.acceptlanguage.html" class="tsd-signature-type">AcceptLanguage</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/tone-analyzer/v3-generated.ts#L310">tone-analyzer/v3-generated.ts:310</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/tone-analyzer/v3-generated.ts#L325">tone-analyzer/v3-generated.ts:325</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -121,12 +122,12 @@
 					<div class="tsd-signature tsd-kind-icon">content_<wbr>language<span class="tsd-signature-symbol">:</span> <a href="../enums/toneanalyzerv3.tonechatconstants.contentlanguage.html" class="tsd-signature-type">ContentLanguage</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/tone-analyzer/v3-generated.ts#L308">tone-analyzer/v3-generated.ts:308</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/tone-analyzer/v3-generated.ts#L323">tone-analyzer/v3-generated.ts:323</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The language of the input text for the request: English or French. Regional variants are treated as their parent language; for example, <code>en-US</code> is interpreted as <code>en</code>. The input content must match the specified language. Do not submit content that contains both languages. You can use different languages for <strong>Content-Language</strong> and <strong>Accept-Language</strong>. <em> <strong><code>2017-09-21</code>:</strong> Accepts <code>en</code> or <code>fr</code>. </em> <strong><code>2016-05-19</code>:</strong> Accepts only <code>en</code>.</p>
+							<p>The language of the input text for the request: English or French. Regional variants are treated as their parent language; for example, <code>en-US</code> is interpreted as <code>en</code>. The input content must match the specified language. Do not submit content that contains both languages. You can use different languages for <strong>Content-Language</strong> and <strong>Accept-Language</strong>. * <strong><code>2017-09-21</code>:</strong> Accepts <code>en</code> or <code>fr</code>. * <strong><code>2016-05-19</code>:</strong> Accepts only <code>en</code>.</p>
 						</div>
 					</div>
 				</section>
@@ -136,7 +137,17 @@
 					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/tone-analyzer/v3-generated.ts#L311">tone-analyzer/v3-generated.ts:311</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/tone-analyzer/v3-generated.ts#L326">tone-analyzer/v3-generated.ts:326</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="return_response" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> return_<wbr>response</h3>
+					<div class="tsd-signature tsd-kind-icon">return_<wbr>response<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/tone-analyzer/v3-generated.ts#L327">tone-analyzer/v3-generated.ts:327</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -146,7 +157,7 @@
 					<div class="tsd-signature tsd-kind-icon">utterances<span class="tsd-signature-symbol">:</span> <a href="toneanalyzerv3.utterance.html" class="tsd-signature-type">Utterance</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/db39076/tone-analyzer/v3-generated.ts#L306">tone-analyzer/v3-generated.ts:306</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/08e9784/tone-analyzer/v3-generated.ts#L321">tone-analyzer/v3-generated.ts:321</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -180,12 +191,6 @@
 						<a href="../classes/comparecomplyv1.html" class="tsd-kind-icon">Compare<wbr>Comply<wbr>V1</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="../classes/conversationv1.html" class="tsd-kind-icon">Conversation<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/dialogv1.html" class="tsd-kind-icon">Dialog<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
 						<a href="../classes/discoveryv1.html" class="tsd-kind-icon">Discovery<wbr>V1</a>
 					</li>
 					<li class=" tsd-kind-class">
@@ -196,9 +201,6 @@
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/naturallanguageunderstandingv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Understanding<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/personalityinsightsv2.html" class="tsd-kind-icon">Personality<wbr>Insights<wbr>V2</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/personalityinsightsv3.html" class="tsd-kind-icon">Personality<wbr>Insights<wbr>V3</a>
@@ -243,6 +245,9 @@
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="toneanalyzerv3.tonechatparams.html#headers" class="tsd-kind-icon">headers</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="toneanalyzerv3.tonechatparams.html#return_response" class="tsd-kind-icon">return_<wbr>response</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="toneanalyzerv3.tonechatparams.html#utterances" class="tsd-kind-icon">utterances</a>
@@ -301,7 +306,7 @@
 								<a href="../classes/toneanalyzerv3.html#createrequest" class="tsd-kind-icon">create<wbr>Request</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="../classes/toneanalyzerv3.html#getcredentials" class="tsd-kind-icon">get<wbr>Credentials</a>
+								<a href="../classes/toneanalyzerv3.html#getservicecredentials" class="tsd-kind-icon">get<wbr>Service<wbr>Credentials</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 								<a href="../classes/toneanalyzerv3.html#preauthenticate" class="tsd-kind-icon">pre<wbr>Authenticate</a>
